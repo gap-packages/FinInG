@@ -1,0 +1,12 @@
+gap> ag := AffineSpace(3, 3);
+AG(3, 3)
+gap> lines := Lines( ag );
+&lt;lines of AG(3, 3)>
+gap> enum := Enumerator( lines );
+&lt;enumerator of &lt;lines of AG(3, 3)>>
+gap> l := enum[20];
+&lt;a line in AG(3, 3)>
+gap> Display(l);
+Affine line:
+Coset representative: [ 0*Z(3), 0*Z(3), Z(3)^0 ]
+Coset (direction): [ [ Z(3)^0, 0*Z(3), Z(3) ] ]

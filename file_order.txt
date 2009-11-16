@@ -1,0 +1,1 @@
+geometry.gi: line 58: move installed method to projectivespace.gi

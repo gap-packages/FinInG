@@ -1,0 +1,318 @@
+<!-- 
+
+  Projective_and_polar.xml    FinInG package documentation
+                                                                   John Bamberg
+                                                               and Jan De Beule
+                                                                  and Maska Law
+                                                             and Michael Pauley
+                                                            and Max Neunhoeffer
+                                                              and Sven Reichard
+
+  Copyright (C) 2006, University of Western Australia
+                      Lehrstuhl D fuer Mathematik
+                      Ghent University
+
+This is the chapter of the documentation describing the 
+projective and polar spaces.
+
+-->
+
+<Chapter Label="polaritiesofps">
+<Heading>Polarities of Projective Spaces</Heading>
+
+A polarity of a incidence structure is
+an incidence reversing, bijective, and involutory map on the elements of the
+incidence structure. It is well known that every polarity of a projective space
+is just an involutory correlation of the projective space. Construction of
+correlations of a projective space is described in Chapter <Ref Chap="projgroup"/>.
+
+In this chapter we describe methods and operations dealing with the construction
+and use of polarities of projective spaces in <Package>FinInG</Package>. 
+
+<Section>
+<Heading>Creating polarities of projective spaces</Heading>
+
+Since polarities of a projective space necessarily have an involutory field
+automorphism as companion automorphism and the standardduality of the projective
+space as the companion projective space isomorphism, a polarity of a projective
+space is determined completely by a suitable matrix <M>A</M>. Every polaritiy of
+a projective space <M>PG(n,q)</M> is listed in the following table, including
+the conditions on the matrix <M>A</M>.  
+<Table Align="|l|l|l|">
+ <Caption>polarities of a projective space</Caption>
+ <HorLine/>
+  <Row><Item> </Item><Item><M>q</M> odd</Item><Item><M>q</M> even</Item></Row>
+ <HorLine/>
+   <Row><Item>hermitian</Item><Item> 
+   <Alt Not="HTML"><M>A^{\theta}=A^T</M></Alt><Alt Only="HTML">A&lt;sup>&#952; &lt;/sup> = A&lt;sup>T &lt;/sup></Alt>
+   </Item>
+   <Item>
+   <Alt Not="HTML"><M>A^{\theta}=A^T</M></Alt><Alt Only="HTML">A&lt;sup>&#952; &lt;/sup> = A&lt;sup>T &lt;/sup></Alt>
+   </Item></Row>
+   <Row><Item>symplectic</Item><Item>
+   <Alt Not="HTML"><M>A^T=-A</M></Alt><Alt Only="HTML">A&lt;sup>T &lt;/sup> = - A</Alt>
+   </Item>
+   <Item>
+   <Alt Not="HTML"><M>A^T=A</M>, all <M>a_{ii}=0</M></Alt><Alt
+   Only="HTML">A&lt;sup>T &lt;/sup> = A, all a&lt;sub>ii&lt;/sub>=0</Alt>
+   </Item></Row>
+   <Row><Item>orthogonal</Item><Item>
+   <Alt Not="HTML"><M>A^T=A</M></Alt><Alt Only="HTML">A&lt;sup>T &lt;/sup> = - A</Alt>
+   </Item></Row>
+   <Row><Item>pseudo</Item><Item> </Item>
+   <Item>
+   <Alt Not="HTML"><M>A^T=A</M>, all <M>a_{ii}=0</M></Alt><Alt
+   Only="HTML">A&lt;sup>T &lt;/sup> = A, not all a&lt;sub>ii&lt;/sub>=0</Alt>
+   </Item></Row>
+ <HorLine/>
+</Table>
+A hermitian polarity of the projective space <M>PG(n,q)</M> exists if and only
+if the field <M>GF(q)</M> admits an involutory field automorphism <Alt
+Not="HTML"><M>\theta</M></Alt><Alt Only="HTML">&#952;</Alt>.<P/>
+It is well known that there is a correspondence between polarities of projective
+spaces and non-degenerate sesquilinear forms on the underlying vector space.
+Consider a sesquilinear form <M>f</M> on the vector space <M>V(n+1,q)</M>. Then
+<M>f</M> induces a map on the elements of <M>PG(n,q)</M> as follows: every
+element with underlying subspace by <Alt
+Not="HTML"><M>\alpha</M></Alt><Alt Only="HTML">&#945;</Alt> is mapped to the
+element with underlying subspace <Alt Not="HTML"><M>\alpha^\perp</M></Alt><Alt
+Only="HTML">&#945;&lt;sup>&#8869;&lt;/sup></Alt>, i.e. the subspace of
+<M>V(n+1,q)</M> orhtogonal to <Alt Not="HTML"><M>\alpha</M></Alt><Alt
+Only="HTML">&#945;</Alt> with relation to the form <M>f</M>. It is clear that
+this induced map is a polarity of <M>PG(n,q)</M>. Also the converse is true,
+with any polarity of <M>PG(n,q)</M> corresponds a sesquilinear form on
+<M>V(n+1,q)</M>. The above classification of polarities of <M>PG(n,q)</M>follows
+from the classification of sesquilinear forms on <M>V(n+1,q)</M>. For more
+information, we refer to <Cite Key="HirschfeldThas"/> and <Cite
+Key="KleidmanLiebeck"/>. We mention that the implementation of the action of
+correlations on projective points (see <Ref Sect="projgroup_actions"/>)
+garantuees that a sesquilinear form with matrix <M>M</M> and field automorphism <Alt
+Not="HTML"><M>\theta</M></Alt><Alt Only="HTML">&#952;</Alt> corresponds to a
+polarity with matrix <M>M</M> and field automorphism <Alt
+Not="HTML"><M>\theta</M></Alt><Alt Only="HTML">&#952;</Alt> and vice versa.<P/>
+
+In <Package>FinInG</Package>, polarities of projective spaces are always
+objects in the category <C>IsPolarityOfProjectiveSpace</C>, which is a
+subcategory of the category <C>IsProjGrpElWithFrobWithPSIsom</C>. 
+
+<ManSection>
+<Oper Name="PolarityOfProjectiveSpace" Arg="mat, f"/>
+<Returns>a polarity of a projective space</Returns>
+<Description>the underlying correlation of
+the projective space is constructed using <A>mat</A>, <A>f</A>, the identity
+mapping as field automorphism and the standardduality of the projective space.
+It is checked whether the <A>mat</A> satisfies the necessary conditions to
+induce a polaritiy.
+<Example>
+<#Include SYSTEM "../examples/include/polarities_construct1.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="PolarityOfProjectiveSpace" Arg="mat, frob, f"/>
+<Oper Name="HermitianPolarityOfProjectiveSpace" Arg="mat, f"/>
+<Returns>a polarity of a projective space</Returns>
+<Description>the underlying correlation of
+the projective space is constructed using <A>mat</A>, <A>frob</A>, <A>f</A> as matrix,
+field automorphism, field, and the standardduality of the projective space. It is
+checked whether the <A>mat</A> satisfies the necessary conditions to 
+induce a polaritiy, and whether <A>frob</A> is a non-trivial involutory field
+automorphism. The second operation only needs the arguments <A>mat</A> and
+<A>f</A> to construct a hermitian polarity of a projective space, provided the
+field <A>f</A> allows an involutory field automorphism and <A>mat</A> satisfies
+the necessary conditions.
+<Example>
+<#Include SYSTEM "../examples/include/polarities_construct2.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="PolarityOfProjectiveSpace" Arg="form"/>
+<Returns>a polarity of a projective space</Returns>
+<Description>the polarity of the projective space is constructed using a
+non-degenerate sesquilinear form <A>form</A>. It is checked whether the given
+form is non-degenerate.
+<Example>
+<#Include SYSTEM "../examples/include/polarities_fromform.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="PolarityOfProjectiveSpace" Arg="ps"/>
+<Returns>a polarity of a projective space</Returns>
+<Description>the polarity of the projective space is constructed using the
+non-degenerate sesquilinear form that defines
+the polar space <A>ps</A>. When <A>ps</A> is a parabolic
+quadric in even characteristic, no polarity of the ambient
+projective space can be associated to <A>ps</A>, and an
+error message is returned.
+<Example>
+<#Include SYSTEM "../examples/include/polarities_frompolarspace.include"> 
+</Example>
+</Description>
+</ManSection>
+
+
+</Section>
+
+<Section>
+<Heading>Operations, attributes and properties for polarties of projective spaces</Heading>
+
+<ManSection>
+<Attr Name="SesquilinearForm" Arg="f"/>
+<Returns>a sesquilinear form</Returns>
+<Description>The sesquilinear form corresponding to the given polarity is
+returned.
+<Example>
+<#Include SYSTEM "../examples/include/polarities_toform.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Attr Name="BaseField" Arg="f"/>
+<Returns>a field</Returns>
+<Description>the basefield over which the polarity was constructed.
+<Example>
+<#Include SYSTEM "../examples/include/polarities_basefield.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Attr Name="GramMatrix" Arg="f"/>
+<Returns>a matrix</Returns>
+<Description>the Gram matrix of the polarity.
+<Example>
+<#Include SYSTEM "../examples/include/polarities_grammatrix.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Attr Name="CompanionAutomorphism" Arg="f"/>
+<Returns>a field automorphism</Returns>
+<Description>the involutory fieldautomorphism accompanying the polarity
+<Example>
+<#Include SYSTEM "../examples/include/polarities_automorphism.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Prop Name="IsHermitianPolarityOfProjectiveSpace" Arg="f"/>
+<Returns>true or false</Returns>
+<Description>The polarity <A>f</A> is a hermitian polarity of a projective space if
+and only if the underlying matrix is hermitian.
+<Example>
+<#Include SYSTEM "../examples/include/polarities_ishermitian.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Prop Name="IsSymplecticPolarityOfProjectiveSpace" Arg="f"/>
+<Returns>true or false</Returns>
+<Description>The polarity <A>f</A> is a symplectic polarity of a projective space if
+and only if the underlying matrix is hermitian.
+<Example>
+<#Include SYSTEM "../examples/include/polarities_issymplectic.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Prop Name="IsOrthogonalPolarityOfProjectiveSpace" Arg="f"/>
+<Returns>true or false</Returns>
+<Description>The polarity <A>f</A> is an orthogonal polarity of a projective space if
+and only if the underlying matrix is symmetric and the characteristic of the
+field is odd.
+<Example>
+<#Include SYSTEM "../examples/include/polarities_isorthogonal.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Prop Name="IsPseudoPolarityOfProjectiveSpace" Arg="f"/>
+<Returns>true or false</Returns>
+<Description>The polarity <A>f</A> is a pseudo polarity of a projective space if
+and only if the underlying matrix is symmetric, not all elements on the main
+diagonal are zeor and the characteristic of the field is even.
+<Example>
+<#Include SYSTEM "../examples/include/polarities_ispseudo.include"> 
+</Example>
+</Description>
+</ManSection>
+
+</Section>
+
+<Section>
+<Heading>Polarities, absolute points, totally isotropic elements and polar
+spaces</Heading>
+
+We already mentioned the equivalence between polarities of <M>PG(n,q)</M> and
+sesquilinear forms on <M>V(n+1,q)</M>, hence there is a relation between
+polarities of <M>PG(n,q)</M> and polar spaces induced by sesquilinear forms. The
+following concepts express these relations geometrically.<P/>
+Suppose that <Alt Not="HTML"><M>\phi</M></Alt><Alt Only="HTML">&#966;</Alt> is a
+polarity of <M>PG(n,q)</M> and that <Alt Not="HTML"><M>\alpha</M></Alt><Alt
+Only="HTML">&#945;</Alt> is an element of <M>PG(n,q)</M>. We call <Alt
+Not="HTML"><M>\alpha</M></Alt><Alt Only="HTML">&#945;</Alt> a <E>totally
+isotropic element</E> or an <E>absolute element</E> if and only if <Alt
+Not="HTML"><M>\alpha</M></Alt><Alt Only="HTML">&#945;</Alt> is incident with
+<Alt Not="HTML"><M>\alpha^\phi</M></Alt><Alt
+Only="HTML">&#945;&lt;sup>&#966;&lt;/sup></Alt>. An absolute element that is a
+point, is also called an <E>absolute point</E> or an <E>isotropic point</E>. It
+is clear that an element of <M>PG(n,q)</M> is absolute if and only if the
+underlying vectorspace is totally isotropic with relation to the sesquilinear
+form equivalent to <Alt Not="HTML"><M>\phi</M></Alt><Alt
+Only="HTML">&#966;</Alt>. Hence the absolute elements induce a polar space, the
+same that is induced by the equivalent sesquilinear form. When <Alt
+Not="HTML"><M>\phi</M></Alt><Alt Only="HTML">&#966;</Alt> is a speudo polarity,
+the set of absolute elements are the elements of a hyperplane of <M>PG(n,q)</M>.
+
+<ManSection>
+<Oper Name="GeometryOfAbsolutePoints" Arg="f"/>
+<Returns>a polar space or a hyperplane</Returns>
+<Description>When <A>f</A> is not a pseudo polarity, this operation returns the
+polar space induced by <A>f</A>. When <A>f</A> is a pseudo polartiy, this
+operation returns the hyperplane containing all absolute elements.
+<Example>
+<#Include SYSTEM "../examples/include/polarities_geometryofabsolutepoints.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="AbsolutePoints" Arg="f"/>
+<Returns>a set of points</Returns>
+<Description>This operation returns all points that are absolute with relation
+to <A>f</A>.
+<Example>
+<#Include SYSTEM "../examples/include/polarities_absolutepoints.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="PolarSpace" Arg="f"/>
+<Returns>a polar space </Returns>
+<Description>When <A>f</A> is not a pseudo polarity, this operation returns the
+polar space induced by <A>f</A>.
+<Example>
+<#Include SYSTEM "../examples/include/polarities_polarspace.include"> 
+</Example>
+</Description>
+</ManSection>
+
+
+
+</Section>
+</Chapter>
+
+<Alt Not="HTML"><M>A^T = -A</M></Alt><Alt Only="HTML">A &lt; sup>T &lt; /sup>=-A</Alt>.
+<Alt Not="HTML"><M>A^{\theta}=A^T</M></Alt><Alt Only="HTML">A &lt; sup> &#952; &lt; /sup> = A &lt; sup>T &lt; /sup></Alt>.

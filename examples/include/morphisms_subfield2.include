@@ -1,0 +1,10 @@
+gap> w := SymplecticSpace(5, 3);
+W(5, 3)
+gap> h := HermitianVariety(5, 3^2);
+H(5, 3^2)
+gap> em := NaturalEmbeddingBySubfield(w, h);
+&lt;geometry morphism from &lt;Elements of W(5, 3)> to &lt;Elements of H(5, 3^2)>>
+gap> points := AsList(Points(w));;
+gap> image := ImagesSet(em, points);;
+gap> ForAll(image, x -> x in h);
+true

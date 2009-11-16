@@ -1,0 +1,8 @@
+gap> f := GF(3);
+GF(3)
+gap> id := IdentityMat(2, f);;
+gap> clan := List( f, t -> t * id );;
+gap> IsqClan( clan, f );
+true
+gap> egq := EGQByqClan( clan, f );
+&lt;EGQ of order [ 9, 3 ] and basepoint 0>

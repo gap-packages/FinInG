@@ -1,0 +1,10 @@
+gap> as := AffineSpace(3, 3);
+AG(3, 3)
+gap> l := Random( Lines( as ) );
+&lt;a line in AG(3, 3)>
+gap> pclass := ParallelClass( l );
+&lt;parallel class of lines in AG(3, 3)>
+gap> AsList(pclass);
+[ &lt;a line in AG(3, 3)>, &lt;a line in AG(3, 3)>, &lt;a line in AG(3, 3)>, 
+  &lt;a line in AG(3, 3)>, &lt;a line in AG(3, 3)>, &lt;a line in AG(3, 3)>, 
+  &lt;a line in AG(3, 3)>, &lt;a line in AG(3, 3)>, &lt;a line in AG(3, 3)> ]

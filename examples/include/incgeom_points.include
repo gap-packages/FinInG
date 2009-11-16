@@ -1,0 +1,4 @@
+gap> ps := HermitianVariety(2,64);
+H(2, 8^2)
+gap> Points(ps);
+&lt;points of H(2, 8^2)>

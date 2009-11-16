@@ -1,0 +1,8 @@
+gap> ps := ProjectiveSpace(5,9);
+PG(5, 9)
+gap> line := Random(Lines(ps));
+&lt;a line in PG(5, 9)>
+gap> pos := EllipticQuadric(5,9);
+Q-(5, 9)
+gap> line in pos;
+false

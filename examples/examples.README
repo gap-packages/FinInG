@@ -1,0 +1,30 @@
+This text file describes how to create the include files in the 
+examples/include directory
+
+1. All example files used in the documentation are found in the directory
+examples/gap. Each files has the extension '.g'. The first line of the file must
+be a comment, this can be some description where the example is used in the
+documentation. The second line is the first command to be executed in GAP.
+
+2. The last line in a file MUST be the GAP command 'quit;'
+
+3. If the example is going to cause a break loop, to demonstrate an error, see
+e.g. 'bg_th_ex1.g', then an extra 'quit;' MUST be included to leave the break
+loop. 
+
+4. The script 'generate_example_files.g' contains all GAP code to produce the
+'.out' files in the examples/out directory and the '.include' files in the
+/examples/include directory. The '.out' file contains a logged version of the
+example, the '.include' file contains a version of the '.out' file suitable to
+be included directly in the xml files of the documentation. 
+
+5. To produce the '.out' and '.include' files, start up GAP, change the first
+line of the script describing which files need to be processed. You can 
+now issue a 'Read("generate_examples.g")' to execute the file and 
+generate all examples at once. Alternatively, you can cut and paste the 
+first part of the code in GAP. Wait until GAP returns the prompt, and
+then cut and paste the second part of the code.
+
+6. This is not meant to be user friendly, it is just a way to generate files
+that can be included directly in the docs from the '.g' files. It is now
+easy to change a '.g' file and see the result in de docs.

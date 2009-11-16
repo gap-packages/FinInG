@@ -1,0 +1,9 @@
+gap> mat := [[1,0,1,0],[0,1,0,1],[1,0,0,0],[0,1,0,0]]*Z(16)^0;
+[ [ Z(2)^0, 0*Z(2), Z(2)^0, 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2), Z(2)^0 ], 
+  [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ] ]
+gap> phi := PolarityOfProjectiveSpace(mat,GF(8));
+&lt;polarity of PG(3, GF(2^3)), [ [ Z(2)^0, 0*Z(2), Z(2)^0, 0*Z(2) ], 
+  [ 0*Z(2), Z(2)^0, 0*Z(2), Z(2)^0 ], [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ], 
+  [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ] ], F^0 >
+gap> IsPseudoPolarityOfProjectiveSpace(phi);
+true

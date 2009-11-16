@@ -1,0 +1,12 @@
+gap> form := BilinearFormByMatrix( IdentityMat(3,GF(3)), GF(3) );
+&lt; bilinear form >
+gap> ps := PolarSpace(form);
+&lt;polar space of rank 2 over GF(3)>
+gap> pq := ParabolicQuadric(2,3);
+Q(2, 3)
+gap> iso := IsomorphismPolarSpaces(ps, pq);
+&lt;geometry morphism from &lt;Elements of &lt;polar space of rank 2 over GF(
+3)>> to &lt;Elements of Q(2, 3)>>
+gap> KnownAttributesOfObject(iso);
+[ "Range", "Source", "Intertwiner" ]
+gap> hom := Intertwiner(iso);;

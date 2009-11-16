@@ -1,0 +1,16 @@
+\alpha &#945;
+\nu &#957;
+\phi &#966;
+\lambda &#411;
+\lambda &#955;
+\in &#8712;
+\perp &#8869;
+\epsilon &#949;
+
+# in text:
+<Alt Not="HTML"> </Alt><Alt Only="HTML"> </Alt>
+
+\begin{pmatrix}
+0 & r \\
+-r & 0
+\end{pmatrix}

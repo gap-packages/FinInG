@@ -1,0 +1,65 @@
+<!-- 
+
+  intro.xml            FinInG package documentation 
+                                                                   John Bamberg
+                                                              and Philippe Cara
+                                                               and Jan De Beule
+                                                             and Michel Lavrauw
+                                                                  and Maska Law
+                                                             and Michael Pauley
+                                                            and Max Neunhoeffer
+                                                              and Sven Reichard
+
+  Copyright 2008 University of Western Australia, Perth
+                 Lehrstuhl D fuer Mathematik, RWTH Aachen
+                 Ghent University
+                 Colorado State University
+                 Vrije Universiteit Brussel
+                 
+This chapter gives a short introduction and explains the philosophy
+behind the package.
+
+-->
+
+<Chapter Label="intro">
+<Heading>Introduction</Heading>
+
+<Section Label="philosophy">
+<Heading>Philosophy</Heading>
+
+<Package>FinInG</Package> is a package for computation in 
+finite geometry. It provides users with the basic tools to 
+work in various areas of finite geometry from the realms of 
+projective spaces to the flat lands of generalised polygons. 
+The algebraic power of GAP is employed, particularly in its 
+facility with matrix and permutation groups.
+
+</Section>
+
+<Section Label="overview">
+<Heading>Overview over this manual</Heading>
+
+Chapter <Ref Chap="install"/> describes the installation of this package.
+
+<E>More text on other chapters to be written.</E><P/>
+
+Finally, Chapter <Ref Chap="examples"/>
+shows instructive examples for the usage of this package.
+
+</Section>
+
+<Section Label="philosophy">
+<Heading>The Development Team</Heading>
+<Alt Only="HTML">This is the development team, from left to right: Philippe
+Cara, Michel Lavrauw, Max Neunh&#246;ffer, Jan De Beule, and John
+Bamberg,</Alt><Alt Only="LaTeX">This is the development team, from left to
+right: Philippe Cara, Michel Lavrauw, Max Neunh\"offer, Jan De Beule and John
+Bamberg,</Alt> meeting in St. Andrews in september 2008.<P/>
+<Alt Only="HTML">&lt;img src="devteamstasep08.jpg">&lt;/img></Alt>
+<Alt Only="LaTeX">\includegraphics{devteamstasep08.jpg}</Alt>
+</Section>
+
+
+<!-- ############################################################ -->
+
+</Chapter>

@@ -1,0 +1,550 @@
+<!-- 
+
+  Projective_and_polar.xml    FinInG package documentation
+                                                                   John Bamberg
+                                                               and Jan De Beule
+                                                                  and Maska Law
+                                                             and Michael Pauley
+                                                            and Max Neunhoeffer
+                                                              and Sven Reichard
+
+  Copyright (C) 2009, University of Western Australia
+                      Lehrstuhl D fuer Mathematik
+                      Ghent University
+
+This is the chapter of the documentation describing the 
+projective and polar spaces.
+
+-->
+
+<Chapter Label="projectivepolar">
+<Heading>Projective and Polar Spaces</Heading>
+
+In this chapter we describe how to use <Package>FinInG</Package> to work 
+with finite projective and polar spaces. 
+
+<Section>
+<Heading>Creating Projective Spaces</Heading>
+
+A <E>projective space</E> is a point-line
+incidence geometry, satisfying few well known axioms. In
+<Package>FinInG</Package>, we deal with finite Desarguesion projective
+spaces. It is well known that these geometries can be described completely using
+vector spaces over finite fields. Hence, the underlying vector space and matrix
+group are to our advantage. We refer the reader to
+<Cite Key="HirschfeldThas"/> for the necessary background theory (if it is not
+otherwise provided).<P/> 
+
+<ManSection>
+<Oper Name="ProjectiveSpace" Arg="d, F"/>
+<Oper Name="ProjectiveSpace" Arg="d, q"/>    
+<Oper Name="PG" Arg="d, q"/>    
+
+<Returns>a projective space</Returns>
+<Description><A>d</A> must be a positive integer. 
+In the first form, <A>F</A> is a field and the function returns the projective
+space of dimension <A>d</A> over <A>F</A>. In the second form, <A>q</A> is
+a prime power specifying the size of the field. The user may also use an alias,
+namely, the common abbreviation <C>PG(d, q)</C>.
+<Example>
+<#Include SYSTEM "../examples/include/projpol_projectivespace.include"> 
+</Example>
+</Description>
+</ManSection>
+</Section>
+
+<Section>
+<Heading>Creating Polar Spaces</Heading>
+
+A <E>polar space</E> is also a point-line incidence geometry, also satisfying few well
+known axioms. Well known examples of <E>finite</E> polar spaces are the
+geometries attached to sesquilinear and quadratic forms of vector spaces over a
+finite field, these geometries are called the <E>finite classical polar
+spaces</E>. As in the previous case, the underlying vector space and matrix
+group are to our advantage. We refer the reader to <Cite Key="HirschfeldThas"/>
+and <Cite Key="Cameron"/> for the necessary background theory (if it is not
+otherwise provided), and we follow the approach of <Cite Key="Cameron"/> to
+introduce all different flavours.<P/> 
+
+Consider the projective space <M>PG(n,q)</M> with underlying vector space
+<M>V(n+1,q)</M>. Consider a non-degenerate sesquilinear form <M>f</M>. Then
+<M>f</M> is either Hermitian, alternating or symmetric. When the characteristic
+of the field is odd, respectively even, a symmetric bilinear form is called
+orthogonal, respectively, pseudo. We do not consider the pseudo case, so we
+suppose that <M>f</M> is Hermitian, symplectic or orthogonal. It is well known
+that the geometry consisting of the subspaces of <M>PG(n,q)</M> whose underlying
+vector subspace is totally isotropic with relation to <M>f</M>, is a polar space
+<M>P</M>. We call a polar space <E>Hermitian</E>, respectively,
+<E>symplectic</E>, <E>orthogonal</E>, if the underlying sesquilinear form is
+Hermitian, respectively, symplectic, orthogonal.<P/> 
+
+Symmetric bilinear forms have completely different geometric properties in even
+characteristic than in odd characteristic. On the other hand, polar spaces
+geometrically comparable to orthogonal polar spaces in odd characteristic, do
+exist in even characteristic. The algebraic background is now established by
+quadratic forms on a vector space instead of bilinear forms. Consider a
+non-singular quadratic form <M>q</M> on a vector space <M>V(n+1,q)</M>. It is
+well known that the geometry consisting of the subspaces of <M>PG(n,q)</M> whose
+underlying vector subspace is totally singular with relation to <M>q</M>, is a
+polar space <M>P</M>. The connection with orthogonal polar spaces in odd
+characteristic is clear, since in odd characteristic, quadratic forms and
+symmetric bilinear forms are equivalent. Therefore, we call polar spaces with an
+underlying quadratic form in even characteristic also <E>orthogonal</E> polar spaces.
+
+<ManSection>
+<Oper Name="PolarSpace" Arg="form"/>
+<Returns>a classical polar space</Returns>
+<Description><A>form</A> must be a bilinear, quadratic, or hermitian form
+created by use of the GAP package <Package>forms</Package>.
+<Example>
+<#Include SYSTEM "../examples/include/projpol_polarspaceform.include"> 
+</Example>
+</Description>
+</ManSection>
+</Section>
+
+<Section>
+<Heading>Canonical Polar Spaces</Heading>
+
+To introduce the classification of polar spaces, we use the classification of
+the underlying forms in similarity classes. We follow mostly the approach and
+terminology of <Cite Key="KleidmanLiebeck"/>, as we did in the manual of the package
+<Package>Forms</Package>.<P/>
+
+Consider a vector space <M>V=V(n+1,q)</M> and a sequilinear form <M>f</M> on
+<M>V</M>. The couple <M>(V,f)</M> is called a formed space. Consider now two
+formed spaces <M>(V,f)</M> and <M>(V,f')</M>, where <M>f</M> and <M>f'</M> are
+two sesquilinear forms on <M>V</M>. A non-degenerate linear map <Alt
+Not="HTML"><M>\phi</M></Alt> <Alt Only="HTML">&#966;</Alt> from <M>V</M> to itself
+induces a <E>similarity</E> of the formed space <M>(V,f)</M> to the formed space
+<M>(V,f')</M> if and only if <Alt Not="HTML"><M>f(v,w) = \lambda f'(\phi(v),
+\phi(w)).</M></Alt> <Alt Only="HTML">f(v,w) = &#955;
+(f'(&#966;(v),&#966;(w)))</Alt>, for all vectors <M>v,w</M> some non-zero <Alt  
+Only="HTML">&#955; in <M>GF(q)</M></Alt>. Up to similarity, there is only one
+class of non-degenerate Hermitian forms, and one class of non-degenerate
+symplectic forms on a given vector space <M>V</M>. For symmetric bilinear forms
+in odd characteristic, the number of similarity classes is dependent of the
+dimension of <M>V</M>. In odd dimension, there is only one similarity class, and
+non-degenerate forms in this class are called parabolic (bilinear) forms. In
+even dimension, there are two similarity classes, and non-degenerate forms are
+either elliptic (bilinear) forms or hyperbolic (bilinear) forms.<P/>
+
+Consider now a vector space <M>V</M> and a quadratic form <M>q</M> on <M>V</M>.
+The couple <M>(V,q)</M> is called a formed space. Consider now two formed spaces
+<M>(V,q)</M> and <M>(V,q')</M>, where <M>q</M> and <M>q'</M> are two quadratic
+forms on <M>V</M>. A non-degenerate linear map <Alt Not="HTML"><M>\phi</M></Alt>
+<Alt Only="HTML">&#966;</Alt> from <M>V</M> to itself induces a
+<E>similarity</E> of the formed space <M>(V,q)</M> to the formed space 
+<M>(V,q')</M> if and only if <Alt Not="HTML"><M>q(v) = \lambda f'(\phi(v))).</M></Alt>
+<Alt Only="HTML">f(v) = &#955; (f'(&#966;(v)))</Alt>, for all vectors <M>v</M>
+some non-zero <Alt Only="HTML">&#955; in <M>GF(q)</M></Alt>. For quadratic
+forms in even characteristic, the number of similarity classes is
+dependent of the dimension of <M>V</M>. In odd dimension, there is only one
+similarity class, and non-degenerate forms in this class are called parabolic
+(bilinear) forms. In even dimension, there are two similarity classes, and
+non-degenerate forms are either elliptic (bilinear) forms or hyperbolic
+(bilinear) forms.<P/>
+In the following table, we summerize the above information on polar spaces,
+together with the canonical forms that are chosen in
+<Package>FinInG</Package>.
+
+<Table Align="|l|l|l|l|">
+ <Caption>finite classical polar spaces</Caption>
+ <HorLine/>
+  <Row><Item>polar space</Item><Item>canonical form</Item><Item>characteristic</Item>
+  <Item>projective dimension</Item></Row>
+ <HorLine/>
+   <Row><Item>hermitian variety</Item>
+   <Item><Alt Not="HTML"><M>X_0^{q+1} + X_1^{q+1} + \ldots + X_{n}^{q+1}=0</M></Alt>
+         <Alt Only="HTML">X&lt;sub>0&lt;/sub>&lt;sup>q+1&lt;/sup> +
+	 X&lt;sub>1&lt;/sub>&lt;sup>q+1&lt;/sup> ... +
+	 X&lt;sub>n&lt;/sub>&lt;sup>q+1&lt;/sup> = 0</Alt> 
+   </Item><Item>odd and even</Item><Item>odd and even</Item></Row>
+   <Row><Item>symplectic space</Item>
+   <Item><Alt Not="HTML"><M> X_0 Y_1 - Y_0X_1+ \ldots + X_{n-1}Y_n - Y_{n-1}X_n = 0
+         </M></Alt><Alt Only="HTML">X&lt;sub>0&lt;/sub> Y&lt;sub>1&lt;/sub> -
+	 X&lt;sub>1&lt;/sub>Y&lt;sub>0&lt;/sub> + ... +
+	 X&lt;sub>n-1&lt;/sub>Y&lt;sub>n&lt;/sub> -
+	 X&lt;sub>n&lt;/sub>Y&lt;sub>n-1&lt;/sub> = 0</Alt>
+   </Item><Item>odd and even</Item><Item>odd</Item></Row>
+   <Row><Item>hyperbolic quadric</Item>
+   <Item><Alt Not="HTML"><M> X_0 X_1 + \ldots + X_{n-1}X_n = 0
+         </M></Alt><Alt Only="HTML">X&lt;sub>0&lt;/sub> X&lt;sub>1&lt;/sub> + ... +
+	 X&lt;sub>n-1&lt;/sub>X&lt;sub>n-1&lt;/sub> = 0</Alt>
+   </Item><Item>odd and even</Item><Item>odd</Item></Row>
+   <Row><Item>parabolic quadric</Item>
+   <Item><Alt Not="HTML"><M> X_0^2 + X_1X_2 + \ldots + X_{n-1}X_n = 0
+         </M></Alt><Alt Only="HTML">X&lt;sub>0&lt;/sub>&lt;sup>2&lt;/sup> +
+	 X&lt;sub>1&lt;/sub> X&lt;sub>2&lt;/sub> + ... +
+	 X&lt;sub>n-1&lt;/sub>X&lt;sub>n-1&lt;/sub> = 0</Alt>
+   </Item><Item>odd and even</Item><Item>even</Item></Row>
+   <Row><Item>elliptic quadric</Item>
+   <Item><Alt Not="HTML"><M>\nu X_0^2 + X_1^2 + X_2X_3 + \ldots + X_{n-1}X_n = 0
+         </M>, <M>\nu</M> a non-square</Alt><Alt Only="HTML">&#957; X&lt;sub>0&lt;/sub>&lt;sup>2&lt;/sup> +
+	 X&lt;sub>1&lt;/sub>&lt;sup>2&lt;/sup> +  X&lt;sub>2&lt;/sub>
+	 X&lt;sub>3&lt;/sub> + ... + X&lt;sub>n-1&lt;/sub>X&lt;sub>n-1&lt;/sub>
+	 = 0, &#957; a non-square</Alt>
+   </Item><Item>odd</Item><Item>odd</Item></Row>
+   <Row><Item>elliptic quadric</Item>
+   <Item><Alt Not="HTML"><M>d X_0^2 + X_0X_1 + X_1^2 + X_2X_3 + \ldots + X_{n-1}X_n = 0
+         </M>, <M>Tr(d)=1</M></Alt><Alt Only="HTML">d X&lt;sub>0&lt;/sub>&lt;sup>2&lt;/sup> +
+	 X&lt;sub>0&lt;/sub>X&lt;sub>1&lt;/sub> +
+	 X&lt;sub>1&lt;/sub>&lt;sup>2&lt;/sup> +  X&lt;sub>2&lt;/sub> 
+	 X&lt;sub>3&lt;/sub> + ... + X&lt;sub>n-1&lt;/sub>X&lt;sub>n-1&lt;/sub>
+	 = 0, Tr(d) = 1</Alt>
+   </Item><Item>even</Item><Item>odd</Item></Row>
+<HorLine/>
+</Table>
+
+<ManSection>
+<Oper Name="SymplecticSpace" Arg="d,F"/>
+<Oper Name="SymplecticSpace" Arg="d,q"/>
+<Returns>a symplectic polar space</Returns>
+<Description>
+This function returns the symplectic polar space of dimension <A>d</A>
+over <A>F</A> for a field <A>F</A> or over GF(<A>q</A>) for a prime power
+<A>q</A>.
+<Example>
+<#Include SYSTEM "../examples/include/projpol_symplectic.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="HermitianVariety" Arg="d,F"/>
+<Oper Name="HermitianVariety" Arg="d,q"/>
+<Returns>a Hermitian variety</Returns>
+<Description>
+This function returns the Hermitian variety of dimension <A>d</A>
+over <A>F</A> for a field <A>F</A> or over GF(<A>q</A>) for a prime power
+<A>q</A>.
+<Example>
+<#Include SYSTEM "../examples/include/projpol_hermitian.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="ParabolicQuadric" Arg="d,F"/>
+<Oper Name="ParabolicQuadric" Arg="d,q"/>
+<Returns>a parabolic quadric</Returns>
+<Description> <A>d</A> must be an even positive integer.
+This function returns the parabolic quadric of dimension <A>d</A>
+over <A>F</A> for a field <A>F</A> or over GF(<A>q</A>) for a prime power
+<A>q</A>.
+<Example>
+<#Include SYSTEM "../examples/include/projpol_parabolic.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="HyperbolicQuadric" Arg="d,F"/>
+<Oper Name="HyperbolicQuadric" Arg="d,q"/>
+<Returns>a hyperbolic quadric</Returns>
+<Description> <A>d</A> must be an odd positive integer.
+This function returns the hyperbolic quadric of dimension <A>d</A>
+over <A>F</A> for a field <A>F</A> or over GF(<A>q</A>) for a prime power
+<A>q</A>.
+<Example>
+<#Include SYSTEM "../examples/include/projpol_hyperbolic.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="EllipticQuadric" Arg="d,F"/>
+<Oper Name="EllipticQuadric" Arg="d,q"/>
+<Returns>an elliptic quadric</Returns>
+<Description> <A>d</A> must be an odd positive integer.
+This function returns the elliptic quadric of dimension <A>d</A>
+over <A>F</A> for a field <A>F</A> or over GF(<A>q</A>) for a prime power
+<A>q</A>.
+<Example>
+<#Include SYSTEM "../examples/include/projpol_elliptic.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="CanonicalPolarSpace" Arg="form"/>
+<Oper Name="CanonicalPolarSpace" Arg="P"/>
+<Returns>a classical polar space</Returns>
+<Description>the canonical polar space similar to the given polar space <A>P</A> of
+the classical polar space with underlying form <A>form</A>
+</Description>
+</ManSection>
+</Section>
+
+<Section>
+<Heading>Basic operations on Projective and Polar Spaces</Heading>
+
+<ManSection>
+<Oper Name="VectorSpaceToElement" Arg="geo, v"/>
+<Returns>an element</Returns>
+<Description>
+<A>geo</A> is a projective space or a polar space, such as <C>ProjectiveSpace(3,3)</C> or
+<C>EllipticQuadric(7,5)</C>, and <A>v</A> is either a row vector (for points) or an <M>m x
+n</M> matrix (for an <M>(m-1)</M>-subspace of a geometry of projective dimension <M>n-1</M>).
+In the case that <A>v</A> is a matrix, the rows represent basis vectors for the subspace. An
+exceptional case is when <A>v</A> is a zero-vector, whereby the trivial subspace <C>[]</C> is
+returned (note: by convention, the empty set is the unique subspace of projective dimension
+-1). When <A>geo</A> is a polar space, it is checked whether <A>v</A> determines a point or an
+element <A>geo</A>.
+<Example>
+<#Include SYSTEM "../examples/include/projpol_element1.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="\in" Arg="geo, v"/>
+<Returns>true or false</Returns>
+<Description>
+<A>v</A> is an element of an incidencestructure. It is checked whether <A>v</A>
+is a subspace of the polar space <A>geo</A>.
+<Example>
+<#Include SYSTEM "../examples/include/projpol_in.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="Join" Arg="u,v"/>
+<Returns> an element </Returns>
+<Description>
+<A>u</A> and <A>v</A> are elements of a projective or polar space.
+This function returns the join of the two elements, that is, the span
+of the two subspaces. 
+<Example>
+gap> ps := ProjectiveSpace(3,3);;
+gap> pi := Random(Planes(ps));;
+gap> tau := Random(Planes(ps));;
+gap> Join(pi,tau);
+PG(3, 3)
+gap> u := Random(Points(ps));;
+gap> v := Random(Points(ps));;
+gap> Join(u,v);
+&lt;a line in PG(3, 3)&gt;
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="Meet" Arg="u,v"/>
+<Returns>an element</Returns>
+<Description>
+<A>u</A> and <A>v</A> are elements of a projective or polar space.
+This function returns the meet of the two elements. If two
+elements do not meet, then Meet returns <C>[ ]</C>, which in <Package>FinInG</Package>,
+is a element with projective dimension -1. (Note that the poset
+of subspaces of a polar space is a meet-semilattice, but not closed under
+taking joins).
+<Example>
+gap> ps := HyperbolicQuadric(5,3);;
+gap> pi := Random( Planes(ps) );;
+gap> tau := Random( Planes(ps) );;
+gap> Meet(pi,tau);
+&lt;a point in Q+(5, 3)&gt;
+</Example>
+Note: the above example will return different answers depending on the two
+planes chosen at random.
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="IsCollinear" Arg="ps,u,v"/>
+<Returns> Boolean </Returns>
+<Description>
+<A>u</A> and <A>v</A> are elements of the polar space
+<A>ps</A>. This function returns True if <A>u</A> and <A>v</A> are incident 
+with a common line and False otherwise.
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="Polarity" Arg="ps"/>
+<Returns>a function for the polarity</Returns>
+<Description> <A>ps</A> must be a polar space.
+This operation returns the polarity of the polar space <A>ps</A> in
+the form of a function. (Put more here when Jan has implemented polarities).
+<Example>
+gap> pq := ParabolicQuadric(4,3);
+Q(4, 3)
+gap> perp := Polarity(pq);
+function( v ) ... end
+gap> lines := Lines(ps);
+&lt;lines of Q(4, 3)&gt;
+gap> l:=Random(lines);
+&lt;a line in Q(4, 3)&gt;
+gap> perp(l);
+&lt;a plane in PG(4, 3)&gt;
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="AmbientSpace" Arg="ps"/>
+<Returns> the ambient projective space </Returns>
+<Description>
+<A>ps</A> is a polar space.
+This function returns the ambient projective spce of <A>ps</A>.
+</Description>
+</ManSection>
+
+</Section>
+
+
+<Section>
+<Heading>Specification of form</Heading>
+
+<Package>FinInG</Package> relies on the package <Package>forms</Package> for its facility
+with sesquilinear and quadratic forms. One can specify a polar space with a user-defined
+form, and we refer to the documention for <Package>forms</Package> for information
+on how one can create and use forms. Here we just display a worked example.
+
+<Example>
+gap> id := IdentityMat(7, GF(3));;
+gap> form := QuadraticFormByMatrix(id, GF(3));
+&lt; quadratic form &gt;
+gap> ps := PolarSpace( form );
+&lt;polar space of dimension 6 over GF(3)&gt;
+gap> ## The construction of the ovoid: ##
+gap> psl32 := PSL(3,2);
+Group([ (4,6)(5,7), (1,2,4)(3,6,5) ])
+gap> reps:=[[1,1,1,0,0,0,0], [-1,1,1,0,0,0,0],
+[1,-1,1,0,0,0,0], [1,1,-1,0,0,0,0]]*Z(3)^0;;
+gap> ovoid := Union( List(reps, x-> Orbit(psl32, x, Permuted)) );;
+gap> ovoid := List(ovoid, x -> VectorSpaceToElement(ps, x));;
+gap> planes := AsList( Planes( ps ) );;
+gap> ForAll(planes, p -> Number(ovoid, x -> x in p) = 1);
+true
+</Example>
+</Section>
+
+<Section>
+<Heading>All the elements or just one at a time</Heading>
+
+In <Package>FinInG</Package>, we can either use
+<F>AsList</F> to get all of the elements of a projective/polar
+space efficiently, or we can ask for an iterator or enumerator
+of a collection of elements. The word collection is important here.
+Subspaces of a vector space are not calculated on calling <F>Subspaces</F>,
+rather primitive information is stored in an <F>IsComponentObjectRep</F>.
+So for example
+
+<Example>
+gap> v:=GF(31)^5;
+( GF(31)^5 )
+gap> subs:=Subspaces(v,1);
+Subspaces( ( GF(31)^5 ), 1 )
+</Example>
+
+takes almost no time at all. But if you want a random element from this set,
+you could be waiting a while. Instead, the user is better off using an iterator
+or an enumerator to access elements of this collection. So too do we have
+such a facility for the elements of a projective or polar space. At the moment,
+we have made available iterators for projective spaces, and enumerators for polar spaces.
+
+<Subsection>
+<Heading>Enumerators for polar spaces</Heading>
+
+If you are not familiar with ``enumerators'' in GAP, it
+is worthy to explain a little bit about them in this section.
+An <F>enumerator</F> is a particular object in GAP which allows
+the user to compute the i-th entry in a collection. Mathematically
+speaking, it is a bijection from the positive integers to the given collection.
+So for example, the rationals are totally ordered and there is an enumerator in
+GAP so that the user can access rational numbers one at a time:
+
+<Example>
+gap> enum:=Enumerator(Rationals);
+&lt;enumerator of Rationals&gt;
+gap> enum[10];
+3/2
+</Example>
+
+For more on enumerators, see the relevant section in the GAP manual.
+</Subsection>
+
+
+<ManSection>
+<Oper Name="Enumerator" Arg="elements"/>
+<Returns> an enumerator </Returns>
+<Description>
+<A>elements</A> is a collection of elements, such as
+<F>Points( ParabolicQuadric( 4, 3 ))</F>.
+This function returns an enumerator for <A>elements</A>.
+
+<Example>
+gap> lines := Lines( ParabolicQuadric(6, 3) );
+&lt;lines of Q(6, 3)&gt;
+gap> enum := Enumerator( lines );
+EnumeratorOfSubspacesOfClassicalPolarSpace( &lt;lines of Q(6, 3)&gt; )
+gap> enum[10];
+&lt;a line in Q(6, 3)&gt;
+</Example>
+</Description>
+</ManSection>
+
+<Subsection>
+<Heading>Iterators for projective spaces</Heading>
+
+An <F>iterator</F> is a particular object in GAP which allows
+the user to compute the <B>next</B> entry in a collection. 
+So iterators are a way to loop over the elements of a (countable) 
+collection or a list, without repetition. The most important operations
+for the user are <F>NextIterator</F> and <F>IsDoneIterator</F>. We
+show an example of how this works with the rationals.
+
+<Example>
+gap> iter := Iterator( Rationals );                                   
+&lt;iterator&gt;
+gap> x := NextIterator( iter );
+0
+gap> x := NextIterator( iter );
+1
+gap> x := NextIterator( iter );
+-1
+gap> x := NextIterator( iter );
+1/2
+gap> x := NextIterator( iter );
+2
+gap> IsDoneIterator( iter );
+false
+</Example>
+
+For more on iterators, see the relevant section in the GAP manual.
+
+</Subsection>
+
+<ManSection>
+<Oper Name="Iterator" Arg="elements"/>
+<Returns> an iterator </Returns>
+<Description>
+<A>elements</A> is a collection of elements, such as
+<F>Points( ProjectiveSpace( 4, 3 ))</F>.
+This function returns an iterator for <A>elements</A>.
+
+<Example>
+gap> lines := Lines( ProjectiveSpace(6, 3) );
+&lt;lines of PG(6, 3)&gt;
+gap> iter := Iterator(lines);
+&lt;iterator&gt;
+gap> x := NextIterator( iter );
+&lt;a line in PG(6, 3)&gt;
+gap> x := NextIterator( iter );
+&lt;a line in PG(6, 3)&gt;
+gap> Display( x );
+ 1 . . . . . .
+ . 1 . . . . 1
+gap> IsDoneIterator( iter );
+false
+</Example>
+</Description>
+</ManSection>
+
+
+
+</Section>
+</Chapter>

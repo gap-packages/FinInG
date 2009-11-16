@@ -1,0 +1,6 @@
+gap> g:=CollineationGroup( ProjectiveSpace(3,3));
+PGL(4,3)
+gap> x:=Random(g);;
+gap> UnderlyingMatrix(x);
+[ [ 0*Z(3), Z(3), Z(3), Z(3)^0 ], [ Z(3)^0, 0*Z(3), Z(3)^0, Z(3)^0 ], 
+  [ 0*Z(3), Z(3)^0, Z(3), Z(3) ], [ Z(3)^0, Z(3)^0, 0*Z(3), Z(3)^0 ] ]

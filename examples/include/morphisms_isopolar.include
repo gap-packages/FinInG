@@ -1,0 +1,17 @@
+gap> id := IdentityMat(6, GF(5));;
+gap> form := BilinearFormByMatrix( id, GF(5) );
+&lt; bilinear form >
+gap> ps := PolarSpace( form );
+&lt;polar space of rank 5 over GF(5)>
+gap> PolarSpaceType( ps );
+"hyperbolic"
+gap> quadric := HyperbolicQuadric( 5, 5 );
+Q+(5, 5)
+gap> iso := IsomorphismPolarSpaces( ps, quadric );
+&lt;geometry morphism from &lt;Elements of &lt;polar space of rank 5 over GF(
+5)>> to &lt;Elements of Q+(5, 5)>>
+gap> HasCollineationGroup( ps );
+true
+gap> hom := Intertwiner( iso );;
+gap> ImagesSet(hom, SpecialIsometryGroup( ps ));
+&lt;projective group with Frobenius of size 14508000000 with 3 generators>

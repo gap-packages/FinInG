@@ -1,0 +1,176 @@
+<!-- 
+
+  incidence_geometry.xml    FinInG package documentation
+                                                                   John Bamberg
+                                                               and Jan De Beule
+                                                                  and Maska Law
+                                                             and Michael Pauley
+                                                            and Max Neunhoeffer
+                                                              and Sven Reichard
+
+  Copyright (C) 2009, University of Western Australia
+                      Lehrstuhl D fuer Mathematik
+                      Ghent University
+
+This is the chapter of the documentation describing incidence geometry
+in general.
+
+-->
+
+<Chapter Label="incidencegeometry">
+<Heading>Incidence Geometry</Heading>
+
+The term geometry, or incidence geometry, is interpreted broadly in this package.
+The basis for the construction of the objects in this package is an abstract
+incidence geometry consisting of elements, types, and an incidence relation. 
+To be more specific, an <E>incidence geometry</E> consists of a set of elements
+a symmetric relation on the elements and a type function from the set of
+elements to an index set (i.e., every element has a ``type''). There are two axioms: 
+(i) no two elements of the same type are incident; (ii) every maximal flag contains
+an element of each type. Thus, a projective 5-space is an incidence geometry
+with five types of elements; points, lines, planes, solids, and hyperplanes.<P/>
+
+<Package>FinInG</Package> concerns itself primarily with the most
+commonly studied incidence geometries of rank more than 2: projective spaces,
+polar spaces, and affine spaces. However, some facility with generalised polygons
+has been included. Throughout, no matter the geometry, we have made the convention that
+an element of type 1 is a ``point'', an element of type 2 is a ``line'', and so forth.
+The examples we use in this section use projective spaces, which have not introduced the 
+reader to yet in this manual. For further information on projective spaces,
+see Chapter <Ref Chap="projectivepolar"/>.
+
+<Section>
+<Heading>Basic operations on incidence geometries</Heading>
+
+<ManSection>
+<Oper Name="ElementsOfIncidenceStructure" Arg="ps, j"/>
+<Returns>a list of elements</Returns>
+<Description><A>ps</A> must be an incidence geometry. <A>j</A> must be
+a type of element of <A>ps</A>. This function returns a list of all elements
+of <A>ps</A> of type <A>j</A>. In an alternative form of this function
+<A>j</A> can be one of ``points", ``lines", ``planes" or ``solids" and the
+function returns the elements of type 1, 2, 3 or 4 respectively.
+<Example>
+<#Include SYSTEM "../examples/include/incgeom_elementsj.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="Points" Arg="ps"/>
+<Returns>a list of elements of type 1</Returns>
+<Description><A>ps</A> must be an incidence geometry. 
+This function returns a list of all elements
+of <A>ps</A> of type 1.
+<Example>
+<#Include SYSTEM "../examples/include/incgeom_points.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="Lines" Arg="ps"/>
+<Returns>a list of elements of type 2</Returns>
+<Description><A>ps</A> must be an incidence geometry. 
+This function returns a list of all elements
+of <A>ps</A> of type 2.
+<Example>
+<#Include SYSTEM "../examples/include/incgeom_lines.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="Planes" Arg="ps"/>
+<Returns>a list of elements of type 3</Returns>
+<Description><A>ps</A> must be an incidence geometry. 
+This function returns a list of all elements
+of <A>ps</A> of type 3.
+<Example>
+<#Include SYSTEM "../examples/include/incgeom_planes.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="Solids" Arg="ps"/>
+<Returns>a list of elements of type 4</Returns>
+<Description><A>ps</A> must be an incidence geometry. 
+This function returns a list of all elements
+of <A>ps</A> of type 4.
+<Example>
+<#Include SYSTEM "../examples/include/incgeom_solids.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="Hyperplanes" Arg="ps"/>
+<Returns>a list of elements of maximal type</Returns>
+<Description><A>ps</A> must be an incidence geometry. 
+This function returns a list of all elements
+of <A>ps</A> of the maximum type. This operation is
+perhaps more synonomous and better suited when using projective
+and affine spaces, however one can also use it for
+an arbitrary incidence geometry.
+<Example>
+<#Include SYSTEM "../examples/include/incgeom_hyperplanes.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="IsIncident" Arg="u,v"/>
+<Oper Name="\in" Arg="u,v"/>
+<Returns>Boolean</Returns>
+<Description>
+<A>u</A> and <A>v</A> must be elements of an incidence geometry.
+This function returns True if <A>u</A> and <A>v</A> are incident
+and False otherwise. We have installed an overload of the operation
+<C>in</C> which the user should think of as ``incident'' rather
+than set theoretic inclusion. You can use these operations symmstrically,
+that is <C>x in y</C> will return the same boolean value as <C>y in x</C>.
+<Example>
+<#Include SYSTEM "../examples/include/incgeom_isincident.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="ShadowOfElement" Arg="geom, v, j"/>
+<Returns> a collection of elements </Returns>
+<Description>
+<A>geom</A> is an incidence geometry. <A>v</A> must be an element of <A>geom</A>. This function returns a list of all elements of 
+<A>geom</A> of type <A>j</A> which are incident with <A>v</A>.
+This operation may not be installed for all incidence geometries.
+In some case, such as when we are working with objects of
+projective or polar spaces, we can just type <C>Points(v)</C> for the
+set of points of the ambient geometry incident with <A>v</A>. We
+can perform a similar operation with <C>Lines</C>, <C>Planes</C> and
+<C>Solids</C>.
+<Example>
+<#Include SYSTEM "../examples/include/incgeom_shadowofelement.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="ShadowOfFlag" Arg="geom, v, j"/>
+<Returns> a collection of elements </Returns>
+<Description>
+<A>geom</A> must be aan incidence geometry. <A>v</A> must be a
+list of elements of <A>geom</A>.
+This function returns
+a list of all elements of <A>geom</A> of type <A>j</A> which are incident
+with every element of the list. The function assumes that the list <A>v</A>
+is a flag; that is, every element of <A>v</A> is incident with every other
+element of <A>v</A>. If <A>v</A> is not a flag then the return value
+is unspecified. This operation may not be installed for all incidence geometries.
+<Example>
+<#Include SYSTEM "../examples/include/incgeom_shadowofflag.include"> 
+</Example>
+</Description>
+</ManSection>
+</Section>
+
+</Chapter>

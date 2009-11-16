@@ -1,0 +1,54 @@
+How to install orb, cvec and io under gap on a powerpc MacOSX platform?
+
+1. Make sure you have an installed version of gap. We assume this is installed
+in the directory '/opt/gap4r4/'. We assume that the 'gap.sh' file is copied into
+a central exec directory, e.g. '/usr/bin/'. So we start GAP by issuing 'gap4r4'.
+
+2. Localise the bin directory of the existing gap installation, this is e.g.
+'/opt/gap4r4/bin/powerpc-apple-darwin8.8.0-gcc/'
+
+3. GAP packages can be installed in the central gap/pkg directorty or under a
+local pkg directory of a user. We assume here the latter. In this example we
+install packages in '/Users/jdebeule/pkg/'
+
+4. Dowload and unpack the 'orb' package. Test the installation.
+
+5. Dowload and unpack the 'io' package.
+
+6. Dowload and upack the 'cvec' package.
+
+7. We will have to compile io and cvec statically in the GAP kernel. Therefore,
+go to the '/opt/gap4r4/bin/powerpc-apple-darwin8.8.0-gcc/' directory, and issue
+the following command:
+
+'./gac -o gap-static -p "-DIOSTATIC -DCVECSTATIC" 
+/Users/jdebeule/pkg/io/src/io.c /Users/jdebeule/pkg/cvec/src/cvec.c'
+
+This command compiles 'io.c' and 'cvec.c', and links afterwards all '.o' files,
+including the 'io.o' and 'cvec.o' to the GAP kernel. 
+
+8. If the above command is succesful, there must a an executable called
+'gap-static' in the directory '/opt/gap4r4/bin/powerpc-apple-darwin8.8.0-gcc/'. 
+
+9. Go into the '/opt/gap4r4/bin' directory and copy the file 'gap.sh' into a
+central directory like '/usr/bin' (where the other GAP startup script is
+located). If you want, give it an appropriate name, e.g. 'gap4r4static'.
+
+10. Open the file '/usr/bin/gap4r4static' and edit nearly at the end of the
+file, edit  
+
+if [ "x$GAP_PRG" = "x" ];  then
+GAP_PRG=powerpc-apple-darwin8.8.0-gcc/gap
+fi
+
+into 
+
+if [ "x$GAP_PRG" = "x" ];  then
+GAP_PRG=powerpc-apple-darwin8.8.0-gcc/gap-static
+fi
+
+11. Issuing the command 'gap4r4static' with your usual options, should startup
+GAP, with 'IO' loaded.
+
+12. 'LoadPackage("cvec"); should load now the orb package and the cvec package.
+

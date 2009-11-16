@@ -1,0 +1,13 @@
+gap> as := AffineSpace(3, 3);
+AG(3, 3)
+gap> l := Random( Lines( as ) );
+&lt;a line in AG(3, 3)>
+gap> x := Random( Points( as ) );
+&lt;a point in AG(3, 3)>
+gap> flag := [x, l];
+[ &lt;a point in AG(3, 3)>, &lt;a line in AG(3, 3)> ]
+gap> shadow := ShadowOfFlag( as, flag, 3 );
+&lt;shadow planes in AG(3, 3)>
+gap> AsList(shadow);
+[ &lt;a plane in AG(3, 3)>, &lt;a plane in AG(3, 3)>, &lt;a plane in AG(3, 3)>, 
+  &lt;a plane in AG(3, 3)> ]

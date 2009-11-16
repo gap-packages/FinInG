@@ -1,0 +1,16 @@
+gap> ag := AffineSpace(3,3);
+AG(3, 3)
+gap> points := Points(ag);;
+gap> x := Random(points);
+&lt;a point in AG(3, 3)>
+gap> Display(x);
+Affine point: [ Z(3), Z(3), 0*Z(3) ]
+gap> planes := AsList( Planes(ag) );;
+gap> p := Random(planes);
+&lt;a plane in AG(3, 3)>
+gap> Display(p);
+Affine plane:
+Coset representative: [ 0*Z(3), 0*Z(3), 0*Z(3) ]
+Coset (direction): [ [ Z(3)^0, 0*Z(3), Z(3) ], [ 0*Z(3), Z(3)^0, 0*Z(3) ] ]
+gap> g := CollineationGroup( ag );
+AGL(3,3)

@@ -1,0 +1,21 @@
+gap> w := SymplecticSpace(5, 3);
+W(5, 3)
+gap> g := IsometryGroup(w);
+#I  Computing nice monomorphism...
+PSp(6,3)
+gap> syl := SylowSubgroup(g, 13);
+&lt;projective semilinear group of size 13>
+gap> planes := Planes( w );
+&lt;planes of W(5, 3)>
+gap> points := Points( w );
+&lt;points of W(5, 3)>
+gap> orbs := Orbits(syl, planes , OnProjSubspaces);;
+gap> IsPartialSpread := x -> Number(points, p ->
+>          ForAny(x, i-> p in i)) = Size(x)*13;;                                        \
+                                
+gap> partialspreads := Filtered(orbs, IsPartialSpread);;
+gap> 13s := Filtered(partialspreads, i -> Size(i) = 13);;
+gap> 26s := List(Combinations(13s,2), Union);;
+gap> two := Union(Filtered(partialspreads, i -> Size(i) = 1));;
+gap> good26s := Filtered(26s, x->IsPartialSpread(Union(x, two)));;
+gap> spreads := List(good26s, x->Union(x, two));;

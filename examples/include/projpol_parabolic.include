@@ -1,0 +1,29 @@
+gap> ps := ParabolicQuadric(2,9);
+Q(2, 9)
+gap> Display(ps);
+Q(2, 9)
+Non-degenerate parabolic bilinear form
+Gram Matrix:
+ 1 . .
+ . . 2
+ . 2 .
+Witt Index: 1
+gap> ps := ParabolicQuadric(4,16);
+Q(4, 16)
+gap> Display(ps);
+Q(4, 16)
+Non-singular parabolic quadratic form
+Gram Matrix:
+ 1 . . . .
+ . . 1 . .
+ . . . . .
+ . . . . 1
+ . . . . .
+Witt Index: 2
+Bilinear form
+Gram Matrix:
+ . . . . .
+ . . 1 . .
+ . 1 . . .
+ . . . . 1
+ . . . 1 .

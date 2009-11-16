@@ -1,0 +1,141 @@
+How to install FinInF on any unix like system.
+
+I. General instructions.
+
+1. Get the latest version of GAP on www.gap-system.org. It is not necessary to get *all*
+accepted/deposited packages.
+
+2. Install GAP the way you like it.  At the end you should have a working GAP
+distribution. You will now have to install seperate packages for GAP. This can
+be done in two ways: using the central 'pkg' directory in the /gap4r4/ tree, ore
+using a 'pkg' directory in your homedirectory, or even using both.  Only don't
+forget that when you use not the central directory, you have to either change or
+create a gaprc file or start gap in such a way that it also looks for packages
+in your local 'pkg' dir, e.g.: gap4r4 -l "/Users/jdebeule/pkg/;/opt/gap4r4".
+This is an example: here the local pkg directory is just a directory in my home
+directory, which is /Users/jdebeule, and I upacked the GAP-tarball in the
+directory /opt/. The 'gap4r4' command is just a small shell script that was
+place in my /usr/bin directory. These things are also clearly explained in the
+GAP documentation.
+
+3. Get necessary packages:
+   a. GAPDoc 1.2
+   b. GenSS 0.95
+   c. GRAPE 4.3
+   d. orb 2.0
+   e. io
+   f. cvec
+
+The package cvec is not necessary for this version of FinInG, but will become
+necessary with high probability in near future. So you can ignore it for this
+version.
+   
+4. Install packages a-b-c-d as usual. For PC/linux and Intel/Mac, this also
+applies to e-f. For PowerPC/Mac, read part II: 'compiling io and cvec'
+statically in the GAP-kernel, to install these packages.
+
+5. Get the forms 1.1 package at cage.ugent.be/geometry/software, and install it. 
+
+6. Get and install desargues. 
+
+7. The orb 2.0 needs a patch. You can find it in the directory 'pkg/fining/patch/'. The file hash.gi
+replaces the file 'hash.gi' in the orb package. You have to manually do this, so
+copy 'pkg/fining/patch/hash.gi' to './pkg/orb/gap/'
+
+8. start GAP and issue the command LoadPackage("fining"). You should see:
+
+gap> LoadPackage("fining");
+---------------------------------------------------------------------
+Loading 'Forms' 1.1
+by John Bamberg (http://cage.ugent.be/~bamberg)
+   Jan De Beule (http://cage.ugent.be/~jdebeule)
+For help, type: ?Forms 
+---------------------------------------------------------------------
+-----------------------------------------------------------------------------
+Loading  orb 2.0 (orb - Methods to enumerate orbits)
+by Juergen Mueller (http://www.math.rwth-aachen.de/~Juergen.Mueller),
+   Max Neunhoeffer (http://www-groups.mcs.st-and.ac.uk/~neunhoef), and
+   Felix Noeske (http://www.math.rwth-aachen.de/~Felix.Noeske).
+-----------------------------------------------------------------------------
+-----------------------------------------------------------------------------
+Loading  genss 0.95 (genss - generic Schreier-Sims)
+by Max Neunhoeffer (http://www.math.rwth-aachen.de/~Max.Neunhoeffer) and
+   Felix Noeske (http://www.math.rwth-aachen.de/~Felix.Noeske).
+-----------------------------------------------------------------------------
+
+Loading  GRAPE 4.3  (GRaph Algorithms using PErmutation groups),
+by L.H.Soicher@qmul.ac.uk.
+
+---------------------------------------------------------------------
+Loading  FinInG 1.0
+by John Bamberg (http://cage.ugent.be/~bamberg)
+   Anton Betten (http://www.math.colostate.edu/~betten)
+   Jan De Beule (http://cage.ugent.be/~jdebeule)
+   Philippe Cara (http://homepages.vub.ac.be/~pcara)
+   Michel Lavrauw (http://cage.ugent.be/~ml)
+   Maska Law (https://www.maths.uwa.edu.au/Members/maska)
+   Max Neunhoeffer (http://www.math.rwth-aachen.de/~Max.Neunhoeffer)
+   Michael Pauley (https://www.maths.uwa.edu.au/Members/pauley)
+   Sven Reichard (https://www.maths.uwa.edu.au/Members/reichard)
+For help, type: ?FinInG package 
+---------------------------------------------------------------------
+#I  method installed for ChooseHashFunction matches more than one declaration
+true
+
+If you see just 'fail' after issueing the LoadPackage command, check carefully
+whether all necessary packages are installed.
+
+
+II. compiling io and cvec statically in the GAP-kernel
+
+1. Make sure you have an installed version of gap. We assume this is installed
+in the directory '/opt/gap4r4/'. We assume that the 'gap.sh' file is copied into
+a central exec directory, e.g. '/usr/bin/'. So we start GAP by issuing 'gap4r4'.
+
+2. Localise the bin directory of the existing gap installation, this is e.g.
+'/opt/gap4r4/bin/powerpc-apple-darwin8.8.0-gcc/'
+
+3. GAP packages can be installed in the central gap/pkg directorty or under a
+local pkg directory of a user. We assume here the latter. In this example we
+install packages in '/Users/jdebeule/pkg/'
+
+4. Dowload and unpack the 'orb' package. Test the installation.
+
+5. Dowload and unpack the 'io' package.
+
+6. Dowload and upack the 'cvec' package.
+
+7. We will have to compile io and cvec statically in the GAP kernel. Therefore,
+go to the '/opt/gap4r4/bin/powerpc-apple-darwin8.8.0-gcc/' directory, and issue
+the following command:
+
+'./gac -o gap-static -p "-DIOSTATIC -DCVECSTATIC" 
+/Users/jdebeule/pkg/io/src/io.c /Users/jdebeule/pkg/cvec/src/cvec.c'
+
+This command compiles 'io.c' and 'cvec.c', and links afterwards all '.o' files,
+including the 'io.o' and 'cvec.o' to the GAP kernel. 
+
+8. If the above command is succesful, there must a an executable called
+'gap-static' in the directory '/opt/gap4r4/bin/powerpc-apple-darwin8.8.0-gcc/'. 
+
+9. Go into the '/opt/gap4r4/bin' directory and copy the file 'gap.sh' into a
+central directory like '/usr/bin' (where the other GAP startup script is
+located). If you want, give it an appropriate name, e.g. 'gap4r4static'.
+
+10. Open the file '/usr/bin/gap4r4static' and edit nearly at the end of the
+file, edit  
+
+if [ "x$GAP_PRG" = "x" ];  then
+GAP_PRG=powerpc-apple-darwin8.8.0-gcc/gap
+fi
+
+into 
+
+if [ "x$GAP_PRG" = "x" ];  then
+GAP_PRG=powerpc-apple-darwin8.8.0-gcc/gap-static
+fi
+
+11. Issuing the command 'gap4r4static' with your usual options, should startup
+GAP, with 'IO' loaded.
+
+12. 'LoadPackage("cvec"); should load now the orb package and the cvec package.

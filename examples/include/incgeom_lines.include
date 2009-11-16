@@ -1,0 +1,4 @@
+gap> ps := EllipticQuadric(5,16);
+Q-(5, 16)
+gap> Lines(ps);
+&lt;lines of Q-(5, 16)>

@@ -1,0 +1,5 @@
+gap> g:=CollineationGroup( ProjectiveSpace(3,9));
+PGammaL(4,9)
+gap> x:=Random(g);;
+gap> FieldAutomorphism(x);
+IdentityMapping( GF(3^2) )

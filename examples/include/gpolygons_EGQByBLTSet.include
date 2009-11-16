@@ -1,0 +1,20 @@
+gap> f := GF(3);
+GF(3)
+gap> id := IdentityMat(2, f);;
+gap> clan := List( f, t -> t * id );;
+gap> bltset := BLTSetByqClan( clan, f );
+[ &lt;a point in Q(4, 3)>, &lt;a point in Q(4, 3)>, &lt;a point in Q(4, 3)>, &lt;a point in Q(4, 3)> ]
+gap> geo := AmbientGeometry( bltset[1] );
+Q(4, 3)
+gap> Display( geo );
+Q(4, 3)
+Non-degenerate parabolic bilinear form
+Gram Matrix:
+ . . . . 1
+ . . . 1 .
+ . . 1 . .
+ . 1 . . .
+ 1 . . . .
+Witt Index: 2
+gap> egq := EGQByBLTSet( bltset );
+&lt;EGQ of order [ 9, 3 ] and basepoint [ Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ]>

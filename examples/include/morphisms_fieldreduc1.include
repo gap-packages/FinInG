@@ -1,0 +1,12 @@
+gap> pg1 := ProjectiveSpace(2,9);
+PG(2, 9)
+gap> pg2 := ProjectiveSpace(5,3);
+PG(5, 3)
+gap> em := NaturalEmbeddingByFieldReduction(pg1, pg2);
+&lt;geometry morphism from &lt;Elements of PG(2, 9)> to &lt;Elements of PG(5, 3)>>
+gap> line := Random( Lines(pg1) );
+&lt;a line in PG(2, 9)>
+gap> solid := line ^ em;
+&lt;a solid in PG(5, 3)>
+gap> l := em!.prefun(solid);
+&lt;a line in PG(2, 9)>

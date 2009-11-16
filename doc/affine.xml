@@ -1,0 +1,477 @@
+<!-- 
+
+  affine.xml    FinInG package documentation
+                                                                   John Bamberg
+                                                                   Anton Betten
+                                                                  Philippe Cara
+                                                                   Jan De Beule
+                                                                 Michel Lavrauw
+                                                                      Maska Law
+                                                                 Michael Pauley
+                                                                Max Neunhoeffer
+                                                                  Sven Reichard
+
+  Copyright (C) 2008, University of Western Australia
+                      Lehrstuhl D fuer Mathematik
+                      Ghent University
+
+This is the chapter of the documentation describing affine spaces.
+-->
+
+<Chapter Label="affine">
+<Heading>Affine Geometry</Heading>
+
+In this chapter we show how one can work with finite affine
+spaces in <Package>FinInG</Package>. 
+
+
+<Section>
+<Heading>Overview</Heading>
+
+An affine space can be
+loosely described as the ``geometry you get'' when you remove a
+hyperplane from a projective space. Lines which were concurrent
+in a point of the subtracted hyperplane, are now <E>parallel</E>.
+Conversely, one can ``complete''
+an affine space naturally to produce a projective space, by
+adding a <E>hyperplane at infinity</E>. 
+
+In order to implement (Desarguesian) affine spaces in <Package>FinInG</Package>,
+we have to represent the subspaces in a standard fashion. The common representation
+is that of a coset of a vector subspace
+<Display>v+S.</Display>
+Hence one can think of an affine variety as consisting of: (i) a projective
+variety, and (ii) a ``direction''. Thus in <Package>FinInG</Package>,
+we represent a variety of rank at least 2 by a pair 
+<Display>[v, mat]</Display>
+where <A>v</A> is a row vector and <A>mat</A> is a matrix (representing a basis of the
+associated projective variety). For affine points, we simply use vectors.
+
+Here is a basic example of how we can work with affine spaces in <Package>FinInG</Package>.
+
+<Example>
+<#Include SYSTEM "../examples/include/affine_basic.include"> 
+</Example>
+</Section>
+
+<Section>
+<Heading>Construction of affine spaces and subspaces</Heading>
+
+<ManSection>
+<Oper Name="AffineSpace" Arg="d, F"/>
+<Oper Name="AffineSpace" Arg="d, q"/>    
+<Oper Name="AG" Arg="d, F"/>
+<Oper Name="AG" Arg="d, q"/>    
+<Returns>an affine space</Returns>
+<Description><A>d</A> must be a positive integer. 
+In the first form, <A>F</A> is a field and the function returns the (Desarguesian)
+affine space of dimension <A>d</A> over <A>F</A>. In the second form, <A>q</A> is
+a prime power specifying the size of the field. We have also installed the
+synonym <C>AG</C>, as this is the customary shorthand notation for an affine space.
+<Example>
+gap> AffineSpace(3,GF(3));
+AG(3, 3)
+gap> AffineSpace(3,3);
+AG(3, 3)
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="AffineSubspace" Arg="geo, v"/>
+<Oper Name="AffineSubspace" Arg="geo, v, M"/>
+<Returns> a subspace of an affine space </Returns>
+<Description>
+<A>geo</A> is an affine space,
+<A>v</A> is a row vector, and <A>M</A> is a matrix.
+There are two representations necessary for affine subspaces
+in <Package>FinInG</Package>: (i) points represented as
+vectors and (ii) subspaces of dimension at least 2 represented as
+a coset of a vector subspace:
+<Display>v+S.</Display>
+For the former, the underlying object is
+just a vector, whereas the second is a pair <M>[v, M]</M> where
+<M>v</M> is a vector and <M>M</M> is a matrix representing the basis
+of <M>S</M>. Now there is a canonical representative for the coset
+<M>v+ S</M>, and the matrix <M>M</M> is in semi-echelon form , therefore
+we can easily compare two affine subspaces. 
+If no matrix is given in the arguments, then it is assumed that the
+user is constructing an affine point.
+<Example>
+<#Include SYSTEM "../examples/include/affine_elements.include"> 
+</Example>
+</Description>
+</ManSection>
+</Section>
+
+<Section>
+<Heading>Basic operations</Heading>
+
+<ManSection>
+<Oper Name="Join" Arg="u, v"/>
+<Returns> a subspace </Returns>
+<Description>
+<A>u</A> and <A>v</A> are subspaces of an affine space.
+This function returns the join of the two subspaces, that is, the span
+of the two subspaces. 
+<Example>
+<#Include SYSTEM "../examples/include/affine_join.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="Meet" Arg="u, v"/>
+<Returns> a subspace </Returns>
+<Description>
+<A>u</A> and <A>v</A> are subspaces of an affine space.
+This function returns the meet of the two subspaces. If the two
+subspaces are disjoint, then Meet returns [ ].
+<Example>
+<#Include SYSTEM "../examples/include/affine_meet.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="ShadowOfElement" Arg="as, v, type"/>
+<Returns> the subspaces of the affine space <A>as</A> of dimension <A>type</A> which 
+are incident with <A>v</A>
+</Returns>
+<Description>
+<A>as</A> is an affine space and <A>v</A> is an element of <A>as</A>. 
+This operation computes and returns the subspaces of dimension <A>type</A> which
+are incident with <A>v</A>. In fact, this operation returns a collection
+which is only computed when iterated (such as when applying <C>AsList</C> to
+the collection). Some shorthand notation for <C>ShadowOfElement</C> is available
+for affine spaces: <C>Points(as,v)</C>, <C>Points(v)</C>, <C>Lines(v)</C>, etc.
+<Example>
+<#Include SYSTEM "../examples/include/affine_shadow1.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="ShadowOfFlag" Arg="as, list, type"/>
+<Returns> the subspaces of the affine space <A>as</A> of dimension <A>type</A> which 
+are incident with each element of <A>list</A>
+</Returns>
+<Description>
+<A>as</A> is an affine space and <A>list</A> is a list of pairwise incident elements of <A>as</A>. 
+This operation computes and returns the subspaces of dimension <A>type</A> which
+are incident with every element of <A>list</A>. In fact, this operation returns a collection
+which is only computed when iterated (such as when applying <C>AsList</C> to
+the collection).
+<Example>
+<#Include SYSTEM "../examples/include/affine_shadow2.include"> 
+</Example>
+</Description>
+</ManSection>
+
+
+<ManSection>
+<Oper Name="IsParallel" Arg="u, v"/>
+<Returns> true or false
+</Returns>
+<Description>
+The arguments <A>u</A> and <A>v</A> must be affine subspaces of a common affine space,
+of the same dimension. These two subspaces are parallel if and only if they
+are cosets of the same vector subspace. 
+</Description>
+</ManSection>
+
+
+<ManSection>
+<Oper Name="ParallelClass" Arg="as, v"/>
+<Oper Name="ParallelClass" Arg="v"/>
+<Returns> a collection of affine subspaces
+</Returns>
+<Description>
+The argument <A>v</A> is an affine subspace of <A>as</A>. This operation
+returns a collection for which an iterator is installed for it.
+The collection represents the set of elements of <A>as</A> of the same
+type as <A>v</A> which are parallel to <A>v</A>; they have the same
+direction. If <A>v</A> is a point, then this operation returns the
+collection of all points of <A>as</A>. If one argument is given,
+then it is assumed that the affine space which we are working
+with is that which <A>v</A> contains as a component.
+<Example>
+<#Include SYSTEM "../examples/include/affine_parallel.include"> 
+</Example>
+</Description>
+</ManSection>
+</Section>
+
+
+<Section>
+<Heading>Iterators and enumerators</Heading>
+
+Recall from ``All the subspaces or just one at a time'' from
+Chapter <Ref Chap="projectivepolar"/>, that an iterator allows us to 
+obtain elements from a collection one at a time in sequence, whereas
+an enumerator for a collection give us a way of picking out the i-th element.
+In <Package>FinInG</Package> we have enumerators and iterators for
+subspace collections of affine spaces.
+
+
+<ManSection>
+<Oper Name="Iterator" Arg="subs"/>
+<Returns> an iterator for the given subspaces collection </Returns>
+<Description>
+<A>subs</A>  is a collection of subspaces of an affine space, such as
+<F>Points( AffineSpace(3, 3) )</F>.
+<Example>
+<#Include SYSTEM "../examples/include/affine_iterator.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="Enumerator" Arg="subs"/>
+<Returns> an enumerator for the the given subspaces collection </Returns>
+<Description>
+<A>subs</A>  is a collection of subspaces of an affine space, such as
+<F>Points( AffineSpace(3, 3) )</F>.
+<Example>
+<#Include SYSTEM "../examples/include/affine_enumerator.include"> 
+</Example>
+</Description>
+</ManSection>
+
+
+One technical aspect of the design behind affine spaces in <Package>FinInG</Package>
+are having canonical transversals for subspaces of vector spaces. So we provide some
+documentation below for the interested user.
+
+<ManSection>
+<Filt Name = "IsVectorSpaceTransversal"/>
+<Description>
+The category <C>IsVectorSpaceTransversal</C> represents a special object
+in <Package>FinInG</Package> which carries a record with two components:
+<A>space</A> and <A>subspace</A>. This category is a subcategory of
+<C>IsSubspacesOfVectorSpace</C>, however, we do not recommend that the
+user apply methods normally used for this category to our objects (they won't work!). Our
+objects are only used in order to facilitate computing enumerators
+of subspace collections.
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="VectorSpaceTransversal" Arg="space, mat"/>
+<Returns> a collection for representing a transversal of a subspaces of a vector space </Returns>
+<Description>
+<A>space</A> is a vector space <M>V</M> and <A>mat</A> is a matrix whose rows are a basis for a subspace
+<M>U</M> of <M>V</M>. A transversal for <M>U</M> in <M>V</M> is a set of coset representatives
+for the quotient <M>V/U</M>. This collection comes equipped with an enumerator operation.
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="VectorSpaceTransversalElement" Arg="space, mat, vector"/>
+<Returns> a canonical coset representative </Returns>
+<Description>
+<A>space</A> is a vector space <M>V</M>, <A>mat</A> is a matrix whose rows are a basis for a subspace
+<M>U</M> of <M>V</M>, and <A>vector</A> is a vector <M>v</M> of <M>V</M>. 
+A canonical representative <M>v'</M> is returned for the coset <M>U+v</M>.
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="ComplementSpace" Arg="space, mat"/>
+<Returns> a collection for representing a transversal of a subspaces of a vector space </Returns>
+<Description>
+<A>space</A> is a vector space <M>V</M> and <A>mat</A> is a matrix whose rows are a basis for a subspace
+<M>U</M> of <M>V</M>. The operation is almost a complete copy of the function <C>BaseSteinitzVector</C>
+except that just a basis for the complement of <M>U</M> is returned instead of a full record.
+</Description>
+</ManSection>
+
+
+
+</Section>
+
+
+
+
+
+<Section>
+<Heading>Affine groups</Heading>
+
+
+A <E>collineation</E> of an affine space is a permutation of
+the points which preserves the relation of collinearity
+within the affine space. The fundamental theorem of affine geometry states
+that the collineations of an affine space <M>AG(d,F)</M> form
+the group <Alt Not="HTML"><M>A\Gamma L(d,F)</M></Alt><Alt Only="HTML">A&#915;L(d,F)</Alt>, 
+which is generated by the 
+translations <M>T</M>, matrices of <M>GL(d,F)</M> and the automorphisms
+of the field <M>F</M>. Since the translations <M>T</M> form
+a normal subgroup of <Alt Not="HTML"><M>A\Gamma L(d,F)</M></Alt><Alt Only="HTML">A&#915;L(d,F)</Alt>, 
+we see that
+<Alt Not="HTML"><M>A\Gamma L(d,F)</M></Alt><Alt Only="HTML">A&#915;L(d,F)</Alt>
+is the semidirect product of <M>T</M> and
+<Alt Not="HTML"><M>\Gamma L(d,F)</M></Alt><Alt Only="HTML">&#915;L(d,F)</Alt>.
+
+In <Package>FinInG</Package>, we represent the affine groups
+as projective semilinear transformations so that we can use all the
+functionality that exists for collineations of projective spaces.
+Suppose we have an affine transformation of the form <M>x+A</M>
+where <M>x</M> is a vector representing a translation, and <M>A</M>
+is a matrix in <M>GL(d,q)</M>. Then by using the natural
+embedding of <M>AGL(d,q)</M> in <M>PGL(d+1,q)</M>,
+we can write this collineation as a matrix:
+
+<Alt Only="HTML">
+&lt;table style="color:#000">&lt;tr>
+&lt;td>&lt;table border=0 cellpadding=0 cellspacing=0px style="border-left:1px solid #000; border-right:1px solid #000; color:#000">&lt;tr>
+&lt;td style ="border-top:1px solid #000; border-bottom:1px solid #000;">&nbsp;&lt;/td>&lt;td>&lt;table border=0 cellpadding=0 cellspacing=0 style="color:#000;">
+&lt;tr>
+&lt;td align="center" valign="center" width=30> &lt;/td>
+&lt;td align="center" valign="center" width=30> &lt;/td>
+&lt;td align="center" valign="center" width=30> &lt;/td>
+&lt;td align="center" valign="center" width=30>0&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td align="center" valign="center" width=30> &lt;/td>
+&lt;td align="center" valign="center" width=30>A&lt;/td>
+&lt;td align="center" valign="center" width=30> &lt;/td>
+&lt;td align="center" valign="center" width=30>0&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td align="center" valign="center" width=30> &lt;/td>
+&lt;td align="center" valign="center" width=30> &lt;/td>
+&lt;td align="center" valign="center" width=30> &lt;/td>
+&lt;td align="center" valign="center" width=30>0&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td align="center" valign="center" width=30>---&lt;/td>
+&lt;td align="center" valign="center" width=30>x&lt;/td>
+&lt;td align="center" valign="center" width=30>---&lt;/td>
+&lt;td align="center" valign="center" width=30>1&lt;/td>
+&lt;/tr>
+&lt;/table>&lt;/td>&lt;td style ="border-top:1px solid #000; border-bottom:1px solid #000;">&nbsp;&lt;/td>&lt;/tr>&lt;/table>&lt;/td>
+&lt;/tr>&lt;/table> 
+</Alt>
+<Alt Only="LaTeX"><M>
+\left(\begin{array}{ccccc|c} 
+&amp; &amp; &amp; &amp; &amp; 0\\
+&amp; A &amp; &amp; &amp; 0\\
+&amp; &amp; &amp; &amp; &amp; 0\\
+\hline
+&amp; &amp; x &amp; &amp; &amp; 1
+\end{array}\right)
+</M></Alt>
+
+We can also extend this idea to the full affine collineation group by adjoining
+the field automorphisms as we would for projective collineations. Here is an example:
+
+<Example>
+gap> ag := AffineSpace(3,3);
+AG(3, 3)
+gap> g := AffineGroup(ag);
+AGL(3,3)
+gap> x:=Random(g);;
+gap> Display(x);
+&lt;projective element with Frobenius, underlying matrix:
+ 2 1 2 .
+ 1 2 2 .
+ 1 1 2 .
+ 1 2 2 1
+, F^0&gt;
+</Example>
+
+Here we see that this affine transformation is 
+<Alt Only="HTML">
+&lt;table style="color:#000">&lt;tr>
+&lt;td>&lt;table border=0 cellpadding=0 cellspacing=0px style="border-left:1px solid #000; border-right:1px solid #000; color:#000">&lt;tr>
+&lt;td style ="border-top:1px solid #000; border-bottom:1px solid #000;">&nbsp;&lt;/td>&lt;td>&lt;table border=0 cellpadding=0 cellspacing=0 style="color:#000;">
+&lt;tr>
+&lt;td align="center" valign="center" width=30>1&lt;/td>
+&lt;td align="center" valign="center" width=30>2&lt;/td>
+&lt;td align="center" valign="center" width=30>2&lt;/td>
+&lt;/tr>
+&lt;/table>&lt;/td>&lt;td style ="border-top:1px solid #000; border-bottom:1px solid #000;">&nbsp;&lt;/td>&lt;/tr>&lt;/table>&lt;/td>
+&lt;td align="center" valign="center" width=30>+&lt;/td>
+&lt;td>&lt;table border=0 cellpadding=0 cellspacing=0px style="border-left:1px solid #000; border-right:1px solid #000; color:#000">&lt;tr>
+&lt;td style ="border-top:1px solid #000; border-bottom:1px solid #000;">&nbsp;&lt;/td>&lt;td>&lt;table border=0 cellpadding=0 cellspacing=0 style="color:#000;">
+&lt;tr>
+&lt;td align="center" valign="center" width=30>2&lt;/td>
+&lt;td align="center" valign="center" width=30>1&lt;/td>
+&lt;td align="center" valign="center" width=30>2&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td align="center" valign="center" width=30>1&lt;/td>
+&lt;td align="center" valign="center" width=30>2&lt;/td>
+&lt;td align="center" valign="center" width=30>2&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td align="center" valign="center" width=30>1&lt;/td>
+&lt;td align="center" valign="center" width=30>1&lt;/td>
+&lt;td align="center" valign="center" width=30>2&lt;/td>
+&lt;/tr>
+&lt;/table>&lt;/td>&lt;td style ="border-top:1px solid #000; border-bottom:1px solid #000;">&nbsp;&lt;/td>&lt;/tr>&lt;/table>&lt;/td>
+&lt;/tr>&lt;/table>
+</Alt>
+<Alt Only="LaTeX">
+<Display>(1,2,2) + \left(
+\begin{array}
+2&amp; 1&amp; 2\\
+1&amp; 2&amp; 2\\
+1&amp; 1&amp; 2
+\end{matrix}\right).
+</Display>
+</Alt>
+
+<ManSection>
+<Oper Name="AffineGroup" Arg="as"/>
+<Returns> a group
+</Returns>
+<Description>
+This operation returnes the affine linear group <M>AGL(V)</M> acting
+on the affine space with underlying vector space <M>V</M>.
+The elements of this group are collineations of the associated projective space.
+In order to get the full group of collineations of the affine space, one may
+need to use the operation <C>CollineationGroup</C>.
+<Example>
+gap> as := AffineSpace(4, 7);
+AG(4, 7)
+gap> g := AffineGroup( as );
+AGL(4,7)
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="CollineationGroup" Arg="as"/>
+<Returns> a group
+</Returns>
+<Description>
+This operation returnes the affine semilinear group <M>A\Gamma L(V)</M> acting
+on the affine space with underlying vector space <M>V</M>.
+The elements of this group are collineations of the associated projective space.
+Note that if the defining field has prime order, then <M>A\Gamma L(V)=AGL(V)</M>.
+<Example>
+gap> as := AffineSpace(4, 8);
+AG(4, 8)
+gap> g := CollineationGroup( as );
+AGammaL(4,8)
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="OnAffineSpaces" Arg="subspace, el"/>
+<Returns> an element of an affine space
+</Returns>
+<Description>
+<A>subspace</A> must be an element of an affine space and <A>el</A>
+is a collineation of an affine space (which is in fact also a collineation
+of an associated projective space). This is the action one should use for
+collineations of affine spaces, and it acts on subspaces of all types of
+affine spaces: points, lines, planes, etc.
+</Description>
+</ManSection>
+
+</Section>
+
+</Chapter>

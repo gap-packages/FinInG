@@ -1,0 +1,18 @@
+gap> pg1 := ProjectiveSpace(2, 3);
+PG(2, 3)
+gap> pg2 := ProjectiveSpace(2, 9);
+PG(2, 9)
+gap> em := NaturalEmbeddingBySubfield(pg1,pg2);
+&lt;geometry morphism from &lt;Elements of PG(2, 3)> to &lt;Elements of PG(2, 9)>>
+gap> points := AsList(Points( pg1 ));
+[ &lt;a point in PG(2, 3)>, &lt;a point in PG(2, 3)>, &lt;a point in PG(2, 3)>, 
+  &lt;a point in PG(2, 3)>, &lt;a point in PG(2, 3)>, &lt;a point in PG(2, 3)>, 
+  &lt;a point in PG(2, 3)>, &lt;a point in PG(2, 3)>, &lt;a point in PG(2, 3)>, 
+  &lt;a point in PG(2, 3)>, &lt;a point in PG(2, 3)>, &lt;a point in PG(2, 3)>, 
+  &lt;a point in PG(2, 3)> ]
+gap> image := ImagesSet(em, points);
+[ &lt;a point in PG(2, 9)>, &lt;a point in PG(2, 9)>, &lt;a point in PG(2, 9)>, 
+  &lt;a point in PG(2, 9)>, &lt;a point in PG(2, 9)>, &lt;a point in PG(2, 9)>, 
+  &lt;a point in PG(2, 9)>, &lt;a point in PG(2, 9)>, &lt;a point in PG(2, 9)>, 
+  &lt;a point in PG(2, 9)>, &lt;a point in PG(2, 9)>, &lt;a point in PG(2, 9)>, 
+  &lt;a point in PG(2, 9)> ]

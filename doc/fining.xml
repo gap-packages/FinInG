@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE Book SYSTEM "gapdoc.dtd">
+<?LaTeX ExtraPreamble="\usepackage{graphicx}"?>
+
+<!--
+
+  fining.xml          FinInG package documentation    
+                                                                   John Bamberg
+                                                              and Philippe Cara
+                                                               and Jan De Beule
+                                                             and Michel Lavrauw
+                                                                  and Maska Law
+                                                             and Michael Pauley
+                                                            and Max Neunhoeffer
+                                                              and Sven Reichard
+
+  Copyright 2009 University of Western Australia, Perth
+                 Lehrstuhl D fuer Mathematik, RWTH Aachen
+                 Ghent University
+                 Colorado State University
+                 Vrije Universiteit Brussel
+
+-->
+
+<Book Name="FinInG">
+
+<TitlePage>
+    <Title>GAP 4 Package <Package>FinInG</Package></Title>
+    <Subtitle>Finite Incidence Geometry</Subtitle>
+    <Version>
+      <#Include SYSTEM "../VERSION">
+    </Version>
+<Date>March 2009</Date>
+	<Author>John Bamberg, Anton Betten, Philippe Cara, Jan De Beule, Michel Lavrauw, Maska Law, Max Neunhoeffer, Michael Pauley, Sven Reichard
+	</Author>
+<!--
+    <Author>John Bamberg
+<Address>
+Ghent University, Belgium.
+</Address>
+    <Email>bamberg@cage.ugent.be</Email>
+    <Homepage>http://cage.ugent.be/&tilde;bamberg</Homepage>
+</Author>
+    <Author>Anton Betten
+<Address>
+Colorado State University, USA.
+</Address>
+    <Email>betten@math.colostate.edu</Email>
+    <Homepage>http://www.math.colostate.edu/&tilde;betten/</Homepage>
+    </Author>
+    <Author>Jan De Beule
+<Address>
+Ghent University, Belgium
+</Address>
+    <Email>jdebeule@cage.ugent.be</Email>
+    <Homepage>http://cage.ugent.be/&tilde;jdebeule</Homepage>
+    </Author>
+
+ <Author>Philippe Cara
+<Address>
+Vrije Universiteit Brussel, Belgium
+</Address>
+    <Email>pcara@vub.ac.be</Email>
+    <Homepage>http://homepages.vub.ac.be/&tilde;pcara</Homepage>
+    </Author>
+<Author>Michel Lavrauw
+<Address>
+Ghent University, Belgium
+</Address>
+    <Email>ml@cage.ugent.be</Email>
+    <Homepage>http://cage.ugent.be/&tilde;ml</Homepage>
+    </Author>
+
+    <Author>Maska Law
+<Address>
+The University of Western Australia, Australia
+</Address>
+    <Email>maska@maths.uwa.edu.au</Email>
+    <Homepage>https://www.maths.uwa.edu.au/Members/&tilde;maska</Homepage>
+    </Author>
+    <Author>Max Neunhoeffer
+<Address>
+St Andrews, United Kingdom.
+</Address>
+    <Email>max.neunhoeffer@math.rwth-aachen.de</Email>
+    <Homepage>http://www.math.rwth-aachen.de/&tilde;Max.Neunhoeffer</Homepage>
+    </Author>
+<Author>Michael Pauley
+<Address>
+The University of Western Australia, Australia
+</Address>
+    <Email>pauley@maths.uwa.edu.au</Email>
+    <Homepage>https://www.maths.uwa.edu.au/Members/&tilde;pauley</Homepage>
+    </Author>
+    <Author>Sven Reichard
+<Address>
+The University of Western Australia, Australia
+</Address>
+    <Email>reichard@maths.uwa.edu.au</Email>
+    <Homepage>https://www.maths.uwa.edu.au/Members/&tilde;reichard</Homepage>
+    </Author>
+-->    
+
+<Copyright>
+  &copyright; 2009 by the authors<P/>
+
+  This package may be distributed under the terms and conditions of the
+  GNU Public License Version 2 or higher.
+</Copyright>
+
+</TitlePage>
+
+<!--  TableOfContents  . . . . . .  generate a table of contents   -->
+<TableOfContents/>
+
+<Body>
+<#Include SYSTEM "intro.xml">
+<#Include SYSTEM "install.xml">
+<#Include SYSTEM "examples.xml">
+<#Include SYSTEM "incidence_geometry.xml">
+<#Include SYSTEM "projective_and_polar.xml">
+<#Include SYSTEM "projgroups.xml">
+<#Include SYSTEM "polaritiesofps.xml">
+<#Include SYSTEM "affine.xml">
+<#Include SYSTEM "morphisms.xml">
+<!--#Include SYSTEM "schemes.xml"-->
+<#Include SYSTEM "varieties.xml">
+<#Include SYSTEM "gpolygons.xml">
+<#Include SYSTEM "diagramgeometries.xml">
+</Body>
+
+<Bibliography Databases="fining"/>
+
+<!--  And finally an index as well   -->
+<TheIndex/>
+
+</Book>

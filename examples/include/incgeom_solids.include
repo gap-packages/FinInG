@@ -1,0 +1,4 @@
+gap> ps := SymplecticSpace(7,2);
+W(7, 2)
+gap> Solids(ps);
+&lt;solids of W(7, 2)>

@@ -1,0 +1,32 @@
+gap> ps := EllipticQuadric(3,27);
+Q-(3, 27)
+gap> Display(ps);
+Q-(3, 27)
+Non-degenerate elliptic bilinear form
+Gram Matrix:
+ 1 . . .
+ . 1 . .
+ . . . 2
+ . . 2 .
+Witt Index: 1
+gap> ps := EllipticQuadric(5,8);
+Q-(5, 8)
+gap> Display(ps);
+Q-(5, 8)
+Non-singular elliptic quadratic form
+Gram Matrix:
+ 1 1 . . . .
+ . 1 . . . .
+ . . . 1 . .
+ . . . . . .
+ . . . . . 1
+ . . . . . .
+Witt Index: 2
+Bilinear form
+Gram Matrix:
+ . 1 . . . .
+ 1 . . . . .
+ . . . 1 . .
+ . . 1 . . .
+ . . . . . 1
+ . . . . 1 .

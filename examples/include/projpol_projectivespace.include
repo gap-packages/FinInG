@@ -1,0 +1,4 @@
+gap> ProjectiveSpace(3,GF(3));
+PG(3, 3)
+gap> ProjectiveSpace(3,3);
+PG(3, 3)

@@ -1,0 +1,30 @@
+gap> ps := HyperbolicQuadric(5,3);
+Q+(5, 3)
+gap> Display(ps);
+Q+(5, 3)
+Non-degenerate hyperbolic bilinear form
+Gram Matrix:
+ . 2 . . . .
+ 2 . . . . .
+ . . . 2 . .
+ . . 2 . . .
+ . . . . . 2
+ . . . . 2 .
+Witt Index: 3
+gap> ps := HyperbolicQuadric(3,4);
+Q+(3, 4)
+gap> Display(ps);
+Q+(3, 4)
+Non-singular hyperbolic quadratic form
+Gram Matrix:
+ . 1 . .
+ . . . .
+ . . . 1
+ . . . .
+Witt Index: 2
+Bilinear form
+Gram Matrix:
+ . 1 . .
+ 1 . . .
+ . . . 1
+ . . 1 .

@@ -1,0 +1,33 @@
+gap> ps := ProjectiveSpace(6,7);
+PG(6, 7)
+gap> v := [3,5,6,0,3,2,3,1]*Z(7)^0;
+[ Z(7), Z(7)^5, Z(7)^3, 0*Z(7), Z(7), Z(7)^2, Z(7), Z(7)^0 ]
+gap> p := VectorSpaceToElement(ps,v);
+&lt;a point in PG(6, 7)>
+gap> Display(p);
+[ Z(7)^0, Z(7)^4, Z(7)^2, 0*Z(7), Z(7)^0, Z(7), Z(7)^0, Z(7)^5 ]
+gap> prs := ProjectiveSpace(3,4);
+PG(3, 4)
+gap> pos := SymplecticSpace(3,4);
+W(3, 4)
+gap> v := [1,1,0,1]*Z(4)^0;
+[ Z(2)^0, Z(2)^0, 0*Z(2), Z(2)^0 ]
+gap> p := VectorSpaceToElement(prs,v);
+&lt;a point in PG(3, 4)>
+gap> p := VectorSpaceToElement(pos,v);
+&lt;a point in W(3, 4)>
+gap> mat := [[1,0,0,1],[0,1,1,0]]*Z(4)^0;
+[ [ Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0 ], [ 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2) ] ]
+gap> line := VectorSpaceToElement(prs,mat);
+&lt;a line in PG(3, 4)>
+gap> line := VectorSpaceToElement(pos,mat);
+&lt;a line in W(3, 4)>
+gap> mat := [[1,0,0,1],[0,1,0,1]]*Z(4)^0;
+[ [ Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0 ], [ 0*Z(2), Z(2)^0, 0*Z(2), Z(2)^0 ] ]
+gap> line := VectorSpaceToElement(pos,mat);
+Error, &lt;x> does not generate an element of &lt;geom> called from
+&lt;function>( &lt;arguments> ) called from read-eval-loop
+Entering break read-eval-print loop ...
+you can 'quit;' to quit to outer loop, or
+you can 'return;' to continue
+brk> quit;

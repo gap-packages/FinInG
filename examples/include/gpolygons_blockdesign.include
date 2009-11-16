@@ -1,0 +1,26 @@
+gap> f := GF(3);
+GF(3)
+gap> id := IdentityMat(2, f);;
+gap> clan := List( f, t -> t*id );;
+gap> egq := EGQByqClan( clan, f );
+&lt;EGQ of order [ 9, 3 ] and basepoint 0>
+gap> HasElationGroup( egq );
+true
+gap> design := BlockDesignOfGeneralisedPolygon( egq );;
+gap> aut := AutGroupBlockDesign( design );
+&lt;permutation group with 5 generators>
+gap> NrBlockDesignPoints( design );
+280
+gap> NrBlockDesignBlocks( design );
+112
+gap> DisplayCompositionSeries(aut);
+G (5 gens, size 26127360)
+ | Z(2)
+S (4 gens, size 13063680)
+ | Z(2)
+S (4 gens, size 6531840)
+ | Z(2)
+S (3 gens, size 3265920)
+ | 2A(3,3) = U(4,3) ~ 2D(3,3) = O-(6,3)
+1 (0 gens, size 1)
+

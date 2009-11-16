@@ -1,0 +1,486 @@
+<!-- 
+
+  morphisms.xml    FinInG package documentation
+                                                                   John Bamberg
+                                                                   Anton Betten
+                                                                   Jan De Beule
+                                                                  Philippe Cara
+                                                                 Michel Lavrauw
+                                                                  and Maska Law
+                                                             and Michael Pauley
+                                                            and Max Neunhoeffer
+                                                              and Sven Reichard
+
+  Copyright (C) 2008, University of Western Australia
+                      Colorado State University
+                      Lehrstuhl D fuer Mathematik
+                      Ghent University
+                      Vrije Universiteit Brussel
+
+This is the chapter of the documentation describing geometry morphisms.
+
+XML code to remember:
+<A> </A>:  for arguments
+<E> </A>:  emphasise
+<C> </C>:  for code
+<M> </M>:  maths
+
+-->
+
+<Chapter Label="morphisms">
+<Heading>Geometry Morphisms</Heading>
+
+Here we describe what is meant by a <E>geometry morphism</E>
+in <Package>FinInG</Package> and the various operations and tools available
+to the user.
+
+<Section>
+<Heading>Geometry morphisms in FinInG</Heading>
+
+A <E>geometry morphism</E> from <A>P</A> to <A>P'</A> is defined to be a map
+from the elements of <A>P</A> to the elements of <A>P'</A> which preserves
+incidence and induces a function from the type set of <A>P</A> to the
+type set of <A>P'</A>. For instance, a correlation and a collineation are
+examples of geometry morphisms, but they have been dealt with in more specific
+ways in <Package>FinInG</Package>.  We will mainly be concerned with geometry
+morphisms where the source and range are different. Hence, the natural embedding
+of a projective space in a larger projective space, the mapping induced by field
+reduction, and the Klein correspondence are examples of such geometry morphisms.
+
+<ManSection>
+<Fam Name = "IsGeometryMorphism"/>
+<Description>
+The category <C>IsGeometryMorphism</C> represents a special object
+in <Package>FinInG</Package> which carries attributes and the given element
+map. The element map is given as a <C>IsGeneralMapping</C>, and so has a source
+and range.
+<Example>
+gap> ShowImpliedFilters(IsGeometryMorphism);
+Implies:
+   IsGeneralMapping
+   IsTotal
+   Tester(IsTotal)
+   IsSingleValued
+   Tester(IsSingleValued)
+</Example>
+The usual operations of <C>ImagesElm</C>, <C>ImagesSet</C>, <C>PreImagesElm</C>, 
+<C>PreImagesSet</C> work for geometry
+morphisms, as well as the overload operator <C>\^</C>. Since <C>Image</C> is
+a &GAP; function, we advise the user to not use this for geometry morphisms.
+</Description>
+</ManSection>
+
+
+
+For some geometry morphisms, there is also an accompanying intertwiner for
+the automorphism groups of the source range. Given a geometry morphism
+<M>f</M> from <A>P</A> to <A>P'</A>, an intertwiner <M>\phi</M> is a map
+from the automorphism group of <A>P</A> to the automorphism group of 
+<A>P'</A>, such that for every element <M>p</M> of <A>P</A> and every
+automorphism <M>g</M> of <A>P</A>, we have
+ <Display> f(p^g) = f(p)^{\phi(g)} .</Display> 
+
+
+<ManSection>
+<Attr Name = "Intertwiner" Arg = "f"/>
+<Returns>a group homomorphism</Returns>
+<Description>
+The arguments <A>f</A> is a geometry morphism. If <A>f</A> comes equipped with
+a natural intertwiner from the the automorphism group of the source of <A>f</A> to
+the automorphism group to the image of <A>f</A>, then the user may be able
+to obtain the intertwiner by calling this operation (see the individual geometry
+morphism constructions). Here is a simple example of the intertwiner for the isomorphism
+of two polar spaces (see <Ref Oper="IsomorphismPolarSpaces" Style="Text"/>).
+<Example>
+<#Include SYSTEM "../examples/include/morphisms_intertwiners.include"> 
+</Example>
+</Description>
+</ManSection>
+</Section>
+
+<Section>
+<Heading>When will you use geometry morphisms?</Heading>
+
+When using groups in &GAP;, we often use homomorphisms to pass from
+one situation to another, even though mathematically it may appear to
+be unneccessary, there can be ambiguities if the functionality
+is too flexible. This also applies to finite geometry. Take for example
+the usual exercise of thinking of a hyperplane in a projective
+space as another projective space. To conform with similar things in
+&GAP;, the right thing to do is to embed one projective space into another,
+rather than having one projective space automatically a substructure
+of another. The reason for this is that there are many ways one can
+do this embedding, even though we may dispense with this choice when we
+are working mathematically. So to avoid ambiguity, we stipulate that
+one should construct the embedding explicitly. How this is done will
+be the subject of the following section.
+</Section>
+
+
+<Section>
+<Heading>Natural geometry morphisms</Heading>
+
+The most natural of geometry morphisms include, for example, the embedding of a
+projective space into another via a subspace, or the projection of a polar space
+to a smaller polar space of the same type via a totally isotropic subspace.
+
+
+<ManSection>
+<Oper Name="NaturalEmbeddingBySubspace" Arg="geom1, geom2, v"/>
+<Oper Name="NaturalEmbeddingBySubspaceNC" Arg="geom1, geom2, v"/>
+<Returns>a geometry morphism</Returns>
+<Description>
+The arguments <A>geom1</A> and <A>geom2</A> are both projective spaces,
+or both polar spaces, and <A>v</A> is an element of a projective or polar space.  This function
+returns a geometry morphism representing the natural embedding of <A>geom1</A>
+into <A>geom2</A> as the subspace <A>v</A>. Hence <A>geom1</A> and <A>v</A> must
+be equivalent as geometries. The operation <C>NaturalEmbeddingBySubspaceNC</C>
+is the ``no check'' version of <C>NaturalEmbeddingBySubspace</C>.
+<Example>
+<#Include SYSTEM "../examples/include/morphisms_embedding1.include"> 
+</Example>
+Another example, this time with polar spaces:
+<Example>
+<#Include SYSTEM "../examples/include/morphisms_embedding2.include"> 
+</Example>
+</Description>
+</ManSection>
+
+
+
+<ManSection>
+<Oper Name="TypeOfSubspace" Arg="ps, v"/>
+<Returns>a string</Returns>
+<Description>
+This operation is a convenient way to find out the intersection type
+of a projective subspace with a polar space. The argument <A>ps</A> is 
+a nondegenerate polar space, and the argument <A>v</A> is a subspace of
+the ambient projective space. The operation returns a string in accordance
+with the type of subspace: <Q>degenerate</Q>, <Q>symplectic</Q>, <Q>hermitian</Q>,
+<Q>elliptic</Q>, <Q>hyperbolic</Q> or <Q>parabolic</Q>. 
+<Example>
+<#Include SYSTEM "../examples/include/morphisms_typesubspace.include"> 
+</Example>
+</Description>
+</ManSection>
+
+
+
+<ManSection>
+<Oper Name="NaturalEmbeddingByFieldReduction" Arg="geom1, geom2"/>
+<Oper Name="NaturalEmbeddingByFieldReduction" Arg="geom1, geom2, B"/>
+<Oper Name="NaturalEmbeddingByFieldReduction" Arg="geom1, geom2, boolean"/>
+<Returns>a geometry morphism</Returns>
+<Description>
+The arguments <A>geom1</A> and <A>geom2</A> are projective or polar spaces.
+This function returns a geometry morphism representing the natural embedding
+of <A>geom1</A> into <A>geom2</A> via field reduction. By <E>natural</E> for projective spaces,
+we mean that the embedding is induced by considering the field <M>F_1</M>
+of <A>geom1</A> as a vector space over the field <M>F_2</M> of <A>geom2</A>, perhaps with
+a choice of basis <A>B</A> in the case we have projective spaces.
+If <A>geom1</A> and <A>geom2</A> are polar spaces, then the only such possible embeddings are
+listed in the table below (see <Cite Key="Gill"/>):
+
+<Table Align="l|l|l">
+ <Caption>Field reduction of polar spaces</Caption>
+  <Row>
+   <Item>Polar Space 1</Item><Item>Polar Space 2</Item><Item>Conditions</Item>
+  </Row>
+ <HorLine/>
+ <HorLine/>
+  <Row>
+   <Item><M>W(2n-1,q^a)</M></Item><Item><M>W(2na-1,q)</M></Item><Item>--</Item>
+  </Row>
+ <Row>
+   <Item><M>Q^+(2n-1,q^a)</M></Item><Item><M>Q^+(2na-1,q)</M></Item><Item>--</Item>
+  </Row>
+ <Row>
+   <Item><M>Q^-(2n-1,q^a)</M></Item><Item><M>Q^-(2na-1,q)</M></Item><Item>--</Item>
+  </Row>
+ <Row>
+   <Item><M>Q(2n,q^{2a})</M></Item><Item><M>Q^+(2(2n+1)a-1,q)</M></Item><Item>q=1 mod 4</Item>
+ </Row>
+ <Row>
+   <Item><M>Q(2n,q^{2a})</M></Item><Item><M>Q^-(2(2n+1)a-1,q)</M></Item><Item>q=3 mod 4</Item>
+ </Row>
+ <Row>
+   <Item><M>Q(2n,q^{2a+1})</M></Item><Item><M>Q((2a+1)(2n+1)-1,q)</M></Item><Item>q odd</Item>
+ </Row>
+<Row>
+   <Item><M>H(n,q^{2a+1})</M></Item><Item><M>H((2a+1)(n+1)-1,q)</M></Item><Item>q square</Item>
+ </Row>
+<Row>
+   <Item><M>H(2n,q^{2a})</M></Item><Item><M>Q^+(2a(2n+1)-1,q)</M></Item><Item>q odd square</Item>
+ </Row>
+<Row>
+   <Item><M>H(2n-1,q^{2a})</M></Item><Item><M>Q^-(4an-1,q)</M></Item><Item>q odd square</Item>
+ </Row>
+<Row>
+   <Item><M>H(n,q^{2a})</M></Item><Item><M>W(2n-1,q)</M></Item><Item>--</Item>
+ </Row>
+</Table>
+
+The geometry morphism also comes equipped with an intertwiner (see 
+<Ref Attr="Intertwiner" Style="Text"/>). In the case polar spaces,
+this intertwiner has as its domain the isometry group of <A>geom1</A>.
+The optional third argument <A>boolean</A> can take either <C>true</C> or
+<C>false</C> as input, and then our operation will or will not compute the 
+intertwiner accordingly. The user may wish that the intertwiner is not computed
+when embedding into large polar spaces. The default (when calling the operation
+with two arguments) is set to <C>true</C>.
+Here is a simple example where the geometry morphism takes the points
+of <M>PG(2,9)</M> and maps them to the lines of <M>PG(5,3)</M>.
+<Example>
+<#Include SYSTEM "../examples/include/morphisms_fieldreduc1.include"> 
+</Example>
+
+Suppose we have field reduction from a polar space <M>P_1</M> to a polar space <M>P_2</M>, and suppose
+that they are both defined by sesquilinear forms. Let <M>M</M> be the Gram matrix for the sesquilinear form
+defining <M>P_1</M> and let <M>\{b_1,..,b_m\}</M> be a basis for the larger defining field of <M>F</M> <M>P_1</M> over
+the smaller defining field <M>K</M> of <M>P_2</M>. Now the <C>BlownUpMat</C> command takes as input a matrix <A>mat</A>
+over <M>F</M> and returns the matrix of the linear transformation on the row space <M>K^{mn}</M> with respect to
+the <M>K</M>-basis whose vectors are <M>\{b_1 v_1, ... b_m v_1, ..., b_mv_n\}</M>, where
+<M>\{v_1,...,v_n\}</M> is a basis for <M>F^n</M>. Hence if we have a singular vector <M>x=(x_1,...,x_n)</M>
+of <M>P_1</M>, then the blow-up of <M>x</M> will be singular if and only if
+for all <M>i,j \in \{1,...,m\}</M>, we have
+<Display>\sum_{k=1}^n Coeff(x_kb_i)\cdot Coeff(M_k\cdot x b_j)=0</Display>
+where <M>Coeff</M> is the map which takes the coefficients of an element of <M>F</M> with respect to
+<M>\{b_1,..,b_m\}</M>, and <M>M_k</M> is the k-th row of <M>M</M>.
+
+<Par></Par>
+In this example, we consider the image of the Hermitian variety <M>H(2,25)</M> in <M>Q^-(5,5)</M>.
+<Example>
+<#Include SYSTEM "../examples/include/morphisms_fieldreduc2.include"> 
+</Example>
+</Description>
+</ManSection>
+
+
+<ManSection>
+<Oper Name="NaturalEmbeddingBySubField" Arg="geom1, geom2"/>
+<Oper Name="NaturalEmbeddingBySubField" Arg="geom1, geom2, boolean"/>
+<Returns>a geometry morphism</Returns>
+<Description>
+The arguments <A>geom1</A> and <A>geom2</A> are projective or polar spaces of
+the same dimension. This function returns a geometry morphism representing the natural embedding
+of <A>geom1</A> into <A>geom2</A> as a subfield geometry.  If <A>geom1</A>
+and <A>geom2</A> are polar spaces, then the only such possible embeddings are
+listed in the table below (see <Cite Key="KleidmanLiebeck"/>):
+
+
+<Table Align="l|l|l">
+ <Caption>Subfield embeddings of polar spaces</Caption>
+  <Row>
+   <Item>Polar Space 1</Item><Item>Polar Space 2</Item><Item>Conditions</Item>
+  </Row>
+ <HorLine/>
+ <HorLine/>
+  <Row>
+   <Item><M>W(2n-1,q)</M></Item><Item><M>W(2n-1,q^a)</M></Item><Item>--</Item>
+  </Row> 
+  <Row>
+   <Item><M>W(2n-1,q)</M></Item><Item><M>H(2n-1,q^2)</M></Item><Item>--</Item>
+  </Row>  
+  <Row>
+   <Item><M>H(d,q^2)</M></Item><Item><M>H(d,q^{2r})</M></Item><Item>r odd</Item>
+  </Row>
+  <Row>
+   <Item><M>O^\epsilon(d,q)</M></Item><Item><M>H(d,q^2)</M></Item><Item>q odd</Item>
+  </Row>
+  <Row>
+   <Item><M>O^\epsilon(d,q)</M></Item><Item><M>O^{\epsilon'}(d,q^r)</M></Item><Item><M>\epsilon=(\epsilon')^r</M></Item>
+  </Row>
+</Table>
+
+The geometry morphism also comes equipped with an intertwiner (see 
+<Ref Attr="Intertwiner" Style="Text"/>). The optional third argument <A>boolean</A> 
+can take either <C>true</C> or
+<C>false</C> as input, and then our operation will or will not compute the 
+intertwiner accordingly. The user may wish that the intertwiner is not computed
+when embedding into large polar spaces. The default (when calling the operation
+with two arguments) is set to <C>true</C>.
+Here is a simple example where the geometry morphism takes the points
+of <M>PG(2,3)</M> and embeds them into <M>PG(2,9)</M>.
+<Example>
+<#Include SYSTEM "../examples/include/morphisms_subfield1.include"> 
+</Example>
+In this example, we embed <M>W(5,3)</M> in <M>H(5,3^2)</M>.
+<Example>
+<#Include SYSTEM "../examples/include/morphisms_subfield2.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="IsomorphismPolarSpaces" Arg="ps1, ps2"/>
+<Oper Name="IsomorphismPolarSpaces" Arg="ps1, ps2, boolean"/>
+<Returns>a geometry morphism</Returns>
+<Description>
+The arguments <A>ps1</A> and <A>ps2</A> are equivalent polar spaces, and this
+function returns a geometry isomorphism between them. 
+The optional third argument <A>boolean</A> can take either <C>true</C> or
+<C>false</C> as input, and then our operation will or will not compute the 
+intertwiner accordingly. The user may wish that the intertwiner is not computed
+when working with large polar spaces. The default (when calling the operation
+with two arguments) is set to <C>true</C>, and in this case,
+if at least one of <A>ps1</A> or <A>ps2</A> has
+a collineation group installed as an attribute, then an intertwining
+homomorphism is installed as an attribute. That is, we also obtain a natural
+group isomorphism from the collineation group of <A>ps1</A> onto the collineation
+group of <A>ps2</A> (see also <Ref Attr="Intertwiner" Style="Text"/>).
+<Example>
+<#Include SYSTEM "../examples/include/morphisms_isopolar.include"> 
+</Example>
+</Description>
+</ManSection>
+
+
+<ManSection>
+<Oper Name="NaturalProjectionBySubspace" Arg="ps, v"/>
+<Oper Name="NaturalProjectionBySubspaceNC" Arg="ps, v"/>
+<Returns>a geometry morphism</Returns>
+<Description>
+The argument <A>ps</A> is a projective or polar space, and <A>v</A> is a
+subspace of <A>ps</A>. In the case that <A>ps</A> is a projective space, this
+operation returns a geometry morphism from the subspaces containing
+<A>v</A> to the subspaces of a smaller projective space over the same
+field. Similarly, if <A>ps</A> is a polar space, this operation returns a
+geometry morphism from the totally singular subspaces containing <A>v</A> to a
+polar space of smaller dimension, but of the same polar space type.
+The operation <C>NaturalProjectionBySubspaceNC</C> performs in exactly
+the same way as <C>NaturalProjectionBySubspace</C> except that there
+are fewer checks such as whether <A>v</A> is a subspace of <A>ps</A>,
+and whether the input of the function and preimage of the returned
+geometry morphism is valid or not. We should also mention here a shorthand for
+this operation which is basically and overload of the quotient operation. So,
+for example, <C>SymplecticSpace(3, 3) / v</C> achieves the same thing
+as <C>NaturalProjectionBySubspace(SymplecticSpace(3,3), v)</C>.
+<Example>
+<#Include SYSTEM "../examples/include/morphisms_projection.include"> 
+</Example>
+</Description>
+</ManSection>
+
+</Section>
+
+
+
+
+
+		
+<Section>
+<Heading>Some special kinds of geometry morphisms</Heading>
+
+In this section we provide some more specialised geometry morphisms,
+that are commonly used in finite geometry.
+
+		   
+<ManSection>
+<Oper Name="KleinCorrespondence" Arg="quadric"/>
+<Returns>a geometry morphism</Returns>
+<Description>
+The argument <A>quadric</A> is a 5-dimensional hyperbolic quadric
+<M>Q+^(5,q)</M>, and this function returns the Klein correspondence from the lines
+of <M>PG(3,q)</M> to the points of <A>quadric</A>.
+<Example>
+<#Include SYSTEM "../examples/include/morphisms_klein.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="NaturalDuality" Arg="gq"/>
+<Returns>a geometry morphism</Returns>
+<Description>
+The argument <A>gq</A> is either the symplectic generalised quadrangle
+<C>W(3,q)</C> or the hermitian generalised quadrangle <C>H(3,q^2)</C>.  By the
+Klein correspondence, the lines of <M>W(3,q)</M> are mapped to the points
+of <M>Q(4,q)</M>, which results in a point-line duality from <M>W(3,q)</M>
+onto <M>Q(4,q)</M>. Likewise, the Klein correspondence induces a duality
+between <M>H(3,q^2)</M> and <M>Q^-(5,q)</M>.  At the moment, the geometry
+morphism returned is a map from lines to points.  This operation does not
+require that the input is the canonical version of the generalised quadrangle;
+it suffices that the input has the correct polarity type.
+<Example>
+<#Include SYSTEM "../examples/include/morphisms_duality.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="ProjectiveCompletion" Arg="as"/>
+<Returns>a geometry morphism</Returns>
+<Description>
+The argument <A>as</A> is an affine space. This operation returns an embedding
+of <A>as</A> into the projective space <A>ps</A> of the same dimension, and over the same field.
+For example, the point <M>(x, y, z)</M> goes to the projective point with
+homogeneous coordinates <M>(1, x, y, z)</M>. An intertwiner is unnecessary, 
+<F>CollineationGroup(as)</F> is a subgroup of <F>CollineationGroup(ps)</F>.
+<Example>
+<#Include SYSTEM "../examples/include/morphisms_completion.include"> 
+</Example>
+</Description>
+</ManSection>
+
+
+
+
+
+<!--
+<ManSection>
+<Oper Name="GrassmannMap" Arg="k, n, q"/>
+<Oper Name="GrassmannMap" Arg="k, ps"/>
+<Oper Name="GrassmannMap" Arg="vars"/>
+<Returns>a geometry morphism</Returns>
+<Description>
+If one argument <A>vars</A> is given, then <A>vars</A> is the set of
+k-subspaces of a projective space. If two arguments are given, then
+<A>k</A> is a dimension and <A>ps</A> is a projective space. Finally,
+if three arguments <A>k</A>, <A>n</A>, and <A>q</A> are given, then they
+represent k-subspaces of the projective space <M>PG(n,q)</M>. Here,
+k must be at least 1 but at most n-2. This operation returns a projective
+algebraic variety; the Grassmann variety
+<M>Gr(k,n,q)</M>.
+<Example>
+gap> g := GrassmannMap(lines);
+&lt;geometry morphism from &lt;lines of PG(3, 3)&gt; to &lt;points of Gr(1, 3, 3)&gt;&gt;
+gap> l := Random(lines);
+&lt;a line in PG(3, 3)&gt;
+gap> l^g;
+&lt;a point in Gr(1, 3, 3)&gt;
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="SegreMap" Arg="list"/>
+<Returns>a geometry morphism</Returns>
+<Description>
+<Example>
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="VeroneseMap" Arg="n, q"/>
+<Oper Name="VeroneseMap" Arg="n, F"/>
+<Oper Name="VeroneseMap" Arg="ps"/>
+<Returns>a geometry morphism</Returns>
+<Description>
+<Example>
+gap> pg:=ProjectiveSpace(3,3);
+PG(3, 3)
+gap> vmap:=VeroneseMap(pg);
+&lt;geometry morphism from &lt;points of PG(3, 3)&gt; to &lt;points of Ver(9, 3)&gt;&gt;
+gap> p:=Random(Points(pg));
+&lt;a point in PG(3, 3)&gt;
+gap> p^vmap;
+&lt;a point in Ver(9, 3)&gt;
+</Example>
+</Description>
+</ManSection>
+-->
+
+
+</Section>
+</Chapter>

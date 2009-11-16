@@ -1,0 +1,9 @@
+gap> mat := [[1,0,0],[0,0,2],[0,2,0]]*Z(5)^0;
+[ [ Z(5)^0, 0*Z(5), 0*Z(5) ], [ 0*Z(5), 0*Z(5), Z(5) ], 
+  [ 0*Z(5), Z(5), 0*Z(5) ] ]
+gap> phi := PolarityOfProjectiveSpace(mat,GF(25));
+&lt;polarity of PG(2, GF(5^2)), 
+[ [ Z(5)^0, 0*Z(5), 0*Z(5) ], [ 0*Z(5), 0*Z(5), Z(5) ], 
+  [ 0*Z(5), Z(5), 0*Z(5) ] ], F^0 >
+gap> BaseField(phi);
+GF(5^2)

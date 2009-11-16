@@ -1,0 +1,15 @@
+gap> hexagon := SplitCayleyHexagon( 3 );
+&lt;generalised hexagon of order [ 3, 3 ]>
+gap> points := Points( hexagon );
+&lt;points of &lt;generalised hexagon of order [ 3, 3 ]>>
+gap> lines := AsList( Lines(hexagon) );;
+gap> lines[1];
+&lt;a line in Q(6, 3)>
+gap> AmbientSpace( hexagon );
+Q(6, 3)
+gap> coll := CollineationGroup( hexagon );
+G_2(3)
+gap> DisplayCompositionSeries( coll );
+G (size 4245696)
+ | G(2,3)
+1 (size 1)

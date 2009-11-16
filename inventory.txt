@@ -1,0 +1,14 @@
+Categories.
+
+geometry.gd
+IsIncidenceStructure
+IsElementOfIncidenceStructure
+IsElementOfIncidenceStructure (collectioncategory)
+IsElementsOfIncidenceStructure
+IsAllElementsOfIncidenceStructure
+IsIncidenceGeometry
+IsElementOfIncidenceGeometry
+IsElementOfIncidenceGeometry (collectioncategory)
+IsElementsOfIncidenceGeometry
+IsAllElementsOfIncidenceGeometry
+

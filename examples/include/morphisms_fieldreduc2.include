@@ -1,0 +1,16 @@
+gap> h := HermitianVariety(2, 5^2);
+H(2, 5^2)
+gap> quadric := EllipticQuadric(5, 5);
+Q-(5, 5)
+gap> em := NaturalEmbeddingByFieldReduction(h, quadric);
+#I  Testing degeneracy of the *associated bilinear form*
+&lt;geometry morphism from &lt;Elements of H(2, 5^2)> to &lt;Elements of Q-(5, 5)>>
+gap> points := AsList(Points(h));;
+gap> image := ImagesSet(em, points);;
+gap> image[1];
+&lt;a line in Q-(5, 5)>
+gap> hom := Intertwiner( em );;
+gap> g := Range( hom );
+&lt;projective group with Frobenius of size 378000 with 2 generators>
+gap> OrbitLengths(g, image);
+[ 126 ]

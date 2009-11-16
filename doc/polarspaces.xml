@@ -1,0 +1,269 @@
+<!-- 
+
+  polarspaces.xml            FinInG package documentation
+                                                                   John Bamberg
+                                                               and Jan De Beule
+                                                                  and Maska Law
+                                                             and Michael Pauley
+                                                            and Max Neunhoeffer
+                                                              and Sven Reichard
+
+  Copyright (C) 2006, University of Western Australia
+                      Lehrstuhl D fuer Mathematik
+                      Ghent University
+
+This is the chapter of the documentation describing the polar spaces.
+
+-->
+
+<Chapter Label="polarspaces">
+<Heading>Polar Spaces</Heading>
+
+<Section>
+<Heading>Creating Projective and Polar Spaces</Heading>
+
+<ManSection>
+<Oper Name="ProjectiveSpace" Arg="d, F"/>
+<Oper Name="ProjectiveSpace" Arg="d, q"/>    
+<Returns>a projective space</Returns>
+<Description><A>d</A> must be a positive integer. 
+In the first form, <A>F</A> is a field and the function returns the projective
+space of dimension <A>d</A> over <A>F</A>. In the second form, <A>q</A> is
+a prime power specifying the size of the field.
+<Example>
+gap> ProjectiveSpace(3,GF(3));
+PG(3, 3)
+gap> ProjectiveSpace(3,3);
+PG(3, 3)
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="PolarSpace" Arg="mat,f,g,act"/>
+<Returns>a classical polar space</Returns>
+<Description><A>mat</A> must be a compressed matrix over a finite field. 
+Creates the polar space with gram matrix <A>mat</A>, over the field
+<A>f</A>, with collineation group <A>g</A> equipped with
+the action <A>act</A>.
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="SymplecticSpace" Arg="d,F"/>
+<Oper Name="SymplecticSpace" Arg="d,q"/>
+<Returns>a polar space equipped with an alternating form</Returns>
+<Description> <A>d</A> must be an odd positive integer.
+This function returns the symplectic space of dimension <A>d</A>
+over <A>F</A> for a field <A>F</A> or over GF(<A>q</A>) for a prime power
+<A>q</A>.
+</Description>
+</ManSection>
+</Section>
+
+<ManSection>
+<Oper Name="HermitianVariety" Arg="d,F"/>
+<Oper Name="HermitianVariety" Arg="d,q"/>
+<Returns>a Hermitian variety</Returns>
+<Description>
+This function returns the Hermitian variety of dimension <A>d</A>
+over <A>F</A> for a field <A>F</A> or over GF(<A>q</A>) for a prime power
+<A>q</A>.
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="ParabolicQuadric" Arg="d,F"/>
+<Oper Name="ParabolicQuadric" Arg="d,q"/>
+<Returns>a parabolic quadric</Returns>
+<Description> <A>d</A> must be an even positive integer.
+This function returns the parabolic quadric of dimension <A>d</A>
+over <A>F</A> for a field <A>F</A> or over GF(<A>q</A>) for a prime power
+<A>q</A>.
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="HyperbolicQuadric" Arg="d,F"/>
+<Oper Name="HyperbolicQuadric" Arg="d,q"/>
+<Returns>a hyperbolic quadric</Returns>
+<Description> <A>d</A> must be an odd positive integer.
+This function returns the hyperbolic quadric of dimension <A>d</A>
+over <A>F</A> for a field <A>F</A> or over GF(<A>q</A>) for a prime power
+<A>q</A>.
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="EllipticQuadric" Arg="d,F"/>
+<Oper Name="EllipticQuadric" Arg="d,q"/>
+<Returns>an elliptic quadric</Returns>
+<Description> <A>d</A> must be an odd positive integer.
+This function returns the elliptic quadric of dimension <A>d</A>
+over <A>F</A> for a field <A>F</A> or over GF(<A>q</A>) for a prime power
+<A>q</A>.
+</Description>
+</ManSection>
+</Section>
+
+<Section>
+<Heading>Varieties of projective and polar spaces</Heading>
+
+<ManSection>
+<Oper Name="Varieties" Arg="ps, j"/>
+<Returns>a list of varieties</Returns>
+<Description><A>ps</A> must be an incidence geometry. <A>j</A> must be
+a type of variety of <A>ps</A>. This function returns a list of all varieties
+of <A>ps</A> of type <A>j</A>. In an alternative form of this function
+<A>j</A> can be one of "points", "lines", "planes" or "solids" and the
+function returns the varieties of type 1, 2, 3 or 4 respectively.
+<Example>
+gap> ps := ProjectiveSpace(3,3);
+PG(3, 3)
+gap> l := Varieties(ps, 2);;
+gap> Size(l);
+130
+gap> Random(l);
+&lt;a line in PG(3, 3)&gt;
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="IsIncident" Arg="u,v"/>
+<Oper Name="\in" Arg="u,v"/>
+<Returns> Boolean </Returns>
+<Description>
+<A>u</A> and <A>v</A> must be varieties of a projective or polar space.
+This function returns True if <A>u</A> and <A>v</A> are incident
+and False otherwise.
+</Description>
+</ManSection>
+
+<ManSection>
+<Heading> Join and Meet </Heading>
+<Oper Name="Join" Arg="u,v"/>
+<Oper Name="Meet" Arg="u,v"/>
+<Returns> A variety </Returns>
+<Description>
+<A>u</A> and <A>v</A> must be varieties of a projective or polar space.
+These functions return the join and meet of the two varieties. If two
+varieties do not meet, then Meet returns [ ].
+<Example>
+gap> ps := ProjectiveSpace(3,3);;
+gap> pi := Random(Varieties(ps,3));;
+gap> tau := Random(Varieties(ps,3));;
+gap> Meet(pi,tau);
+&lt;a line in PG(3, 3)&gt;
+gap> Join(pi,tau);
+PG(3, 3)
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="IsCollinear" Arg="ps,u,v"/>
+<Returns> Boolean </Returns>
+<Description>
+<A>u</A> and <A>v</A> must be varieties of the polar space
+<A>ps</A> (at this stage).
+This function returns True if <A>u</A> and <A>v</A> are incident with a common line
+and False otherwise.
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="ResidualOfVariety" Arg="ps, v, j"/>
+<Returns> a collection of varieties </Returns>
+<Description>
+<A>ps</A> must be a projective or polar space. <A>v</A> must be a list
+of varieties of <A>ps</A>.
+
+This function returns a list of all varieties of <A>ps</A> of type <A>j</A>
+which are incident with <A>v</A>.
+<Example>
+gap> ps := ProjectiveSpace(3,3);;
+gap> pi := Random(Varieties(ps,3));;
+gap> lines := ResidualOfVariety(ps,pi,2);
+&lt;residual lines of PG(3, 3)&gt;
+gap> Size(lines);
+13
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="ResidualOfFlag" Arg="ps, v, j"/>
+<Returns> a collection of varieties </Returns>
+<Description>
+<A>ps</A> must be a projective space. <A>v</A> must be a
+list of varieties of <A>ps</A>.
+
+This function returns
+a list of all varieties of <A>ps</A> of type <A>j</A> which are incident
+with every element of the list. The function assumes that the list <A>v</A>
+is a flag; that is, every element of <A>v</A> is incident with every other
+element of <A>v</A>. If <A>v</A> is not a flag then the return value
+is unspecified.
+<Example>
+gap> ps := ProjectiveSpace(3,3);;
+gap> pi := Random(Varieties(ps,3));;
+gap> x := Random(ResidualOfVariety(ps,pi,1));;
+&lt;a point in PG(3, 3)&gt;
+gap> lines := ResidualOfFlag(ps,[x,pi],2);
+&lt;residual lines of PG(3, 3)&gt;
+gap> Size(lines);
+4
+</Example>
+</Description>
+</ManSection>
+</Section>
+
+<Section>
+<Heading>Operations on polar spaces</Heading>
+
+<ManSection>
+<Oper Name="Polarity" Arg="ps"/>
+<Returns>a function for the polarity</Returns>
+<Description> <A>ps</A> must be a polar space.
+This operation returns the polarity of the polar space <A>ps</A> in
+the form of a function. 
+<Example>
+gap> pq := ParabolicQuadric(4,3);
+Q(4, 3)
+gap> perp := Polarity(pq);
+function( v ) ... end
+gap> lines := Varieties(pq,2);
+&lt;lines of Q(4, 3)&gt;
+gap> l:=Random(lines);
+&lt;a line in Q(4, 3)&gt;
+gap> perp(l);
+&lt;a plane in PG(4, 3)&gt;
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="AmbientSpace" Arg="ps"/>
+<Returns> the ambient projective space </Returns>
+<Description>
+<A>ps</A> is a polar space.
+This function returns the ambient projective spce of <A>ps</A>.
+</Description>
+</ManSection>
+
+</Section>
+
+
+<Section>
+<Heading>Specification and change of form</Heading>
+To be completed.
+
+
+
+
+
+</Section>
+
+
+</Chapter>

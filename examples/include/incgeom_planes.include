@@ -1,0 +1,4 @@
+gap> ps := HyperbolicQuadric(5,9);
+Q+(5, 9)
+gap> Planes(ps);
+&lt;planes of Q+(5, 9)>

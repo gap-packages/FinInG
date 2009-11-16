@@ -1,0 +1,22 @@
+gap> ps := ProjectiveSpace(3,3);
+PG(3, 3)
+gap> l := ElementsOfIncidenceStructure(ps,2);
+&lt;lines of PG(3, 3)>
+gap> Size(l);
+130
+gap> Random(l);
+&lt;a line in PG(3, 3)>
+gap> Display(last);
+ 1 . . 2
+ . 1 . 2
+gap> ps := EllipticQuadric(5,9);
+Q-(5, 9)
+gap> lines := ElementsOfIncidenceStructure(ps,2);
+&lt;lines of Q-(5, 9)>
+gap> planes := ElementsOfIncidenceStructure(ps,3);
+Error, &lt;geo> has no elements of type &lt;j> called from
+&lt;function>( &lt;arguments> ) called from read-eval-loop
+Entering break read-eval-print loop ...
+you can 'quit;' to quit to outer loop, or
+you can 'return;' to continue
+brk> quit;

@@ -1,0 +1,29 @@
+gap> mat := [[1,0,0],[3,0,2],[0,5,4]]*Z(7^3);
+[ [ Z(7^3), 0*Z(7), 0*Z(7) ], [ Z(7^3)^58, 0*Z(7), Z(7^3)^115 ], 
+  [ 0*Z(7), Z(7^3)^286, Z(7^3)^229 ] ]
+gap> phi1 := CorrelationOfProjectiveSpace(mat,GF(7^3));
+&lt;projective element with Frobenius with projectivespace isomorphism
+[ [ Z(7^3), 0*Z(7), 0*Z(7) ], [ Z(7^3)^58, 0*Z(7), Z(7^3)^115 ], 
+  [ 0*Z(7), Z(7^3)^286, Z(7^3)^229 ] ], F^0, IdentityMapping( &lt;Elements of PG(
+3, 343)> ) >
+gap> frob := FrobeniusAutomorphism(GF(7^3));
+FrobeniusAutomorphism( GF(7^3) )
+gap> phi2 := CorrelationOfProjectiveSpace(mat,frob,GF(7^3));
+&lt;projective element with Frobenius with projectivespace isomorphism
+[ [ Z(7^3), 0*Z(7), 0*Z(7) ], [ Z(7^3)^58, 0*Z(7), Z(7^3)^115 ], 
+  [ 0*Z(7), Z(7^3)^286, Z(7^3)^229 ] ], F^7, IdentityMapping( &lt;Elements of PG(
+3, 343)> ) >
+gap> delta := StandardDualityOfProjectiveSpace(ProjectiveSpace(2,GF(7^3)));
+StandardDuality( ElementsOfIncidenceStructure( ProjectiveSpace(2,GF(7^3)) ) )
+gap> phi3 := CorrelationOfProjectiveSpace(mat,GF(7^3),delta);
+&lt;projective element with Frobenius with projectivespace isomorphism
+[ [ Z(7^3), 0*Z(7), 0*Z(7) ], [ Z(7^3)^58, 0*Z(7), Z(7^3)^115 ], 
+  [ 0*Z(7), Z(7^3)^286, Z(7^3)^229 ] 
+ ], F^0, StandardDuality( ElementsOfIncidenceStructure( ProjectiveSpace(2,GF(
+7^3)) ) ) >
+gap> phi4 := CorrelationOfProjectiveSpace(mat,frob,GF(7^3),delta);
+&lt;projective element with Frobenius with projectivespace isomorphism
+[ [ Z(7^3), 0*Z(7), 0*Z(7) ], [ Z(7^3)^58, 0*Z(7), Z(7^3)^115 ], 
+  [ 0*Z(7), Z(7^3)^286, Z(7^3)^229 ] ], F^
+7, StandardDuality( ElementsOfIncidenceStructure( ProjectiveSpace(2,GF(7^
+3)) ) ) >

@@ -1,0 +1,35 @@
+gap> SetInfoLevel( InfoDesargues, 0 );
+gap> q := 9;
+9
+gap> f := GF(q);
+GF(3^2)
+gap> squares := AsList(Group(Z(q)^2));
+[ Z(3)^0, Z(3), Z(3^2)^2, Z(3^2)^6 ]
+gap> n := First(GF(q), x -> not IsZero(x) and not x in squares);
+Z(3^2)
+gap> sigma := FrobeniusAutomorphism( f );
+FrobeniusAutomorphism( GF(3^2) )
+gap> zero := Zero(f);
+0*Z(3)
+gap> qclan := List(GF(q), t -> [[t, zero], [zero,-n * t^sigma]] );
+[ [ [ 0*Z(3), 0*Z(3) ], [ 0*Z(3), 0*Z(3) ] ], 
+  [ [ Z(3^2), 0*Z(3) ], [ 0*Z(3), Z(3)^0 ] ], 
+  [ [ Z(3^2)^5, 0*Z(3) ], [ 0*Z(3), Z(3) ] ], 
+  [ [ Z(3)^0, 0*Z(3) ], [ 0*Z(3), Z(3^2)^5 ] ], 
+  [ [ Z(3^2)^2, 0*Z(3) ], [ 0*Z(3), Z(3^2)^3 ] ], 
+  [ [ Z(3^2)^3, 0*Z(3) ], [ 0*Z(3), Z(3^2)^6 ] ], 
+  [ [ Z(3), 0*Z(3) ], [ 0*Z(3), Z(3^2) ] ], 
+  [ [ Z(3^2)^7, 0*Z(3) ], [ 0*Z(3), Z(3^2)^2 ] ], 
+  [ [ Z(3^2)^6, 0*Z(3) ], [ 0*Z(3), Z(3^2)^7 ] ] ]
+gap> IsqClan( qclan, f );
+true
+gap> egq1 := EGQByqClan( qclan, f );  
+&lt;EGQ of order [ 81, 9 ] and basepoint 0>
+gap> blt := BLTSetByqClan( qclan, f );
+[ &lt;a point in Q(4, 9)>, &lt;a point in Q(4, 9)>, &lt;a point in Q(4, 9)>, 
+  &lt;a point in Q(4, 9)>, &lt;a point in Q(4, 9)>, &lt;a point in Q(4, 9)>, 
+  &lt;a point in Q(4, 9)>, &lt;a point in Q(4, 9)>, &lt;a point in Q(4, 9)>, 
+  &lt;a point in Q(4, 9)> ]
+gap> egq2 := EGQByBLTSet( blt );
+&lt;EGQ of order [ 81, 9 ] and basepoint [ Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3),
+   0*Z(3), 0*Z(3) ]>

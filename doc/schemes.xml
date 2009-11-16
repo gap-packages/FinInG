@@ -1,0 +1,84 @@
+<!-- 
+
+  schemes.xml    FinInG package documentation
+                                                                   John Bamberg
+                                                               and Anton Betten
+                                                               and Jan De Beule
+                                                              and Philippe Cara
+                                                             and Michel Lavrauw
+                                                                  and Maska Law
+                                                             and Michael Pauley
+                                                            and Max Neunhoeffer
+                                                              and Sven Reichard
+
+  Copyright (C) 2007, University of Western Australia
+                      Lehrstuhl D fuer Mathematik
+                      Ghent University
+
+This is the chapter of the documentation describing 
+projective algebraic varieties.
+
+
+Common commands I use:
+
+<E>emphasise</E>
+<A>blocky</A>
+<M>maths</M>
+
+
+-->
+
+<Chapter Label="schemes">
+<Heading>Projective Algebraic Varieties</Heading>
+
+In <Package>FinInG</Package> we include some facility with finite
+<E>projective algebraic varieties</E>, or <E>schemes</E> as
+they are sometimes called, together with some constructions of examples
+that are most commonly used in finite geometry.
+
+<Section>
+<Heading>Projective algebraic varieties in FinInG</Heading>
+
+A <E>projective algebraic variety</E> is...
+
+
+<ManSection>
+<Oper Name="ProjectiveAlgebraicVariety" Arg="pg, poly"/>
+<Returns>a projective algebraic variety</Returns>
+<Description>
+The argument <A>pg</A> is a projective space, and the
+argument <A>poly</A> is a polynomial defined over a 
+field compatible with defined for <A>pg</A>.
+<Example>
+gap> gf := GF(8);
+GF(2^3)
+gap> pg := ProjectiveSpace(2, gf);
+PG(2, 8)
+gap> r := PolynomialRing( gf, 3 );
+GF(2^3)[x_1,x_2,x_3]
+gap> poly := r.1^2 + r.2 * r.3;
+x_1^2+x_2*x_3
+gap> scheme := ProjectiveAlgebraicVariety( pg, poly );
+V( x_1^2+x_2*x_3 )
+</Example>
+</Description>
+</ManSection>
+
+</Section>
+
+<Section>
+<Heading>Grassmann varieties</Heading>
+
+</Section>
+
+<Section>
+<Heading>Segre varieties</Heading>
+
+</Section>
+
+<Section>
+<Heading>Veronese varieties</Heading>
+
+</Section>
+
+</Chapter>

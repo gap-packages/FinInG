@@ -1,0 +1,90 @@
+<!-- 
+
+  varieties.xml    FinInG package documentation
+                                                                   John Bamberg
+                                                                   Anton Betten
+                                                                   Jan De Beule
+                                                                  Philippe Cara
+                                                                 Michel Lavrauw
+                                                                  and Maska Law
+                                                             and Michael Pauley
+                                                            and Max Neunhoeffer
+                                                              and Sven Reichard
+
+  Copyright (C) 2008, University of Western Australia
+                      Colorado State University
+                      Lehrstuhl D fuer Mathematik
+                      Ghent University
+                      Vrije Universiteit Brussel
+
+This is the chapter of the documentation describing the algebraic varieties.
+
+-->
+
+<Chapter Label="varieties">
+<Heading>Algebraic Varieties</Heading>
+In <Package>FinInG</Package> we provide some basic functionality for algebraic varieties defined over finite fields. The algebraic varieties in <Package>FinInG</Package> are defined by a list of multivariate polynomials over a finite field, and an ambient geometry. This ambient geometry is either a projective space, and then the algebraic variety is called a <E>projective variety</E>, or an affine geometry, and then the algebraic variety is called an <E>affine variety</E>. In this chapter we give a brief overview of the features of <Package>FinInG</Package> concerning these two types of algebraic varieties.
+
+
+<!--SECTION PROJECTIVE VARIETIES -->
+<Section Label="projectivevarieties">
+<Heading>Projective Varieties</Heading>
+A <E>projective variety</E> in <Package>FinInG</Package> is an algebraic variety in a projective space defined by a list of homogeneous polynomials over a finite field.
+
+<ManSection>
+    <Oper Name="ProjectiveVariety" Arg="pg, pring, pollist"/>
+    <Oper Name="ProjectiveVariety" Arg="pg, pollist"/>
+    <Oper Name="AlgebraicVariety" Arg="pg, pring, pollist"/>
+    <Oper Name="AlgebraicVariety" Arg="pg, pollist"/>
+    <Returns>a projective algebraic variety</Returns>
+    <Description>
+        The argument <A>pg</A> is a projective space over a finite field <A>F</A>, the
+        argument <A>pring</A> is a multivariate polynomial ring defined over 
+        (a subfield of) <A>F</A>, and <A>pollist</A> is a list of homogeneous 
+        polynomials in <A>pring</A>.
+        <Example>
+gap> F:=GF(9);
+GF(3^2)
+gap> r:=PolynomialRing(F,4);
+GF(3^2)[x_1,x_2,x_3,x_4]
+gap> pg:=PG(3,9);
+PG(3, 9)
+gap> f1:=r.1*r.3-r.2^2;
+x_1*x_3-x_2^2
+gap> f2:=r.4*r.1^2-r.4^3;
+x_1^2*x_4-x_4^3
+gap> var:=AlgebraicVariety(pg,[f1,f2]); 
+Algebraic Variety V( [ x_1*x_3-x_2^2, x_1^2*x_4-x_4^3 ] ) in PG(3, 9)
+        </Example>
+    </Description>
+</ManSection>
+
+
+</Section>
+
+
+<!--SECTION AFFINE VARIETIES -->
+<Section Label="affinevarieties">
+<Heading>Affine Varieties</Heading>
+An <E>affine variety</E> in <Package>FinInG</Package> is an algebraic variety in an affine space defined by a list of polynomials over a finite field.
+
+<ManSection>
+    <Oper Name="AffineVariety" Arg="ag, pring, pollist"/>
+    <Oper Name="AffineVariety" Arg="ag, pollist"/>
+    <Oper Name="AlgebraicVariety" Arg="ag, pring, pollist"/>
+    <Oper Name="AlgebraicVariety" Arg="ag, pollist"/>
+    <Returns>an affine algebraic variety</Returns>
+    <Description>
+        The argument <A>ag</A> is an affine space over a finite field <A>F</A>, the
+        argument <A>pring</A> is a multivariate polynomial ring defined over 
+        (a subfield of) <A>F</A>, and <A>pollist</A> is a list of 
+        polynomials in <A>pring</A>.
+        <Example>
+
+        </Example>
+    </Description>
+</ManSection>
+
+</Section> 
+
+</Chapter>
