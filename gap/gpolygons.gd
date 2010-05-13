@@ -52,6 +52,16 @@ DeclareRepresentation( "IsElementOfKantorFamilyRep", IsElementOfKantorFamily,
   [ "geo", "type", "class", "obj" ]);
 
 
+### new stuff
+
+DeclareCategory( "IsqClanObj", IsComponentObjectRep and IsAttributeStoringRep );
+DeclareRepresentation( "IsqClanRep", IsqClanObj, [ "matrices", "basefield" ] ); 
+
+BindGlobal( "qClanFamily", NewFamily( "qClanFamily" ) );
+
+
+
+
 #############################################################################
 # Attributes:
 #############################################################################
@@ -62,6 +72,7 @@ DeclareAttribute( "CollineationAction", IsGroup);
 DeclareAttribute( "ElationGroup", IsElationGQ);
 DeclareAttribute( "BasePointOfEGQ", IsElationGQ);
 DeclareAttribute( "IncidenceMatrixOfGeneralisedPolygon", IsGeneralisedPolygon);
+DeclareAttribute( "IsLinearqClan", IsqClanObj );
 
 
 #############################################################################
@@ -75,18 +86,37 @@ DeclareOperation( "SplitCayleyHexagon", [IsPosInt] );
 DeclareOperation( "TwistedTrialityHexagon", [IsField and IsFinite] );
 DeclareOperation( "TwistedTrialityHexagon", [IsPosInt] );
 
-## Just for Elation Generalised Quadrangles
+## q-clans
+DeclareOperation( "IsAnisotropic", [IsFFECollColl,  IsField and IsFinite]);
+DeclareOperation( "IsqClan", [ IsFFECollCollColl, IsField and IsFinite ]);
+DeclareOperation( "qClan", [ IsFFECollCollColl, IsField ] );
+DeclareOperation( "LinearqClan", [ IsPosInt ] );
+DeclareOperation( "FisherThasWalkerKantorBettenqClan", [ IsPosInt ] );
+DeclareOperation( "KantorMonomialqClan", [ IsPosInt ] );
+DeclareOperation( "KantorKnuthqClan", [ IsPosInt ] );
+DeclareOperation( "FisherqClan", [ IsPosInt ] );
+
+## Elation Generalised Quadrangles
 
 DeclareOperation( "EGQByKantorFamily", [IsGroup, IsList, IsList] );
 DeclareOperation( "Wrap", [IsElationGQByKantorFamily, IsPosInt, IsPosInt, IsObject] );
 DeclareOperation( "IsKantorFamily", [IsGroup, IsList, IsList]);
-DeclareOperation( "IsAnisotropic", [IsFFECollColl,  IsField and IsFinite]);
-DeclareOperation( "IsqClan", [ IsFFECollCollColl, IsField and IsFinite ]);
-DeclareOperation( "EGQByqClan", [ IsFFECollCollColl, IsField and IsFinite ]);
-DeclareOperation( "KantorFamilyByqClan", [ IsFFECollCollColl, IsField and IsFinite ]);
-DeclareOperation( "BLTSetByqClan", [ IsFFECollCollColl, IsField and IsFinite ]);
+
+#---------------------
+## obselete operations
+# DeclareOperation( "EGQByqClan", [ IsFFECollCollColl, IsField and IsFinite ]);
+# DeclareOperation( "KantorFamilyByqClan", [ IsFFECollCollColl, IsField and IsFinite ]); 
+# DeclareOperation( "BLTSetByqClan", [ IsFFECollCollColl, IsField and IsFinite ]);
+#---------------------
+
 DeclareOperation( "EGQByBLTSet", [IsList, IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace] );
 DeclareOperation( "EGQByBLTSet", [IsList] );
+
+
+DeclareOperation( "FlockGQByqClan", [ IsqClanObj ] );
+DeclareOperation( "BLTSetByqClan", [ IsqClanObj and IsqClanRep ] );
+DeclareOperation( "KantorFamilyByqClan", [ IsqClanObj and IsqClanRep ] );
+DeclareOperation( "EGQByqClan", [ IsqClanObj and IsqClanRep ] );
 
 
 #############################################################################

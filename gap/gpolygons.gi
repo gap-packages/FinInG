@@ -633,15 +633,288 @@ InstallMethod( IsqClan, "input are 2x2 matrices",
     return ForAll(Combinations(clan,2), x -> IsAnisotropic(x[1]-x[2], f));
   end );
 
-InstallMethod( KantorFamilyByqClan, "input are 2x2 matrices", 
-              [ IsFFECollCollColl, IsField and IsFinite ],
-  function( clan, f )
-    local g, q, i, omega, mat, at, ainf, ainfstar, 
-          ainfgens, centregens, as, astars, k;
-    if not IsqClan(clan, f) then 
-       Error("Invalid input"); return;
+InstallMethod( qClan, [ IsFFECollCollColl, IsField ],
+  function( m, f ) 
+    local qclan;
+    ## test to see if it is a qClan
+    if not ForAll(Combinations(m, 2), x -> IsAnisotropic(x[1]-x[2], f)) then
+       Error("These matrices do not form a q-clan");
+    fi;
+	qclan := rec( matrices := m, basefield := f );
+    Objectify( NewType( qClanFamily, IsqClanObj and IsqClanRep ), qclan );
+    return qclan;
+  end );
+
+InstallMethod( ViewObj, [ IsqClanObj and IsqClanRep ],
+  function( x )
+    Print("<q-clan over ",x!.basefield,">");
+  end );
+
+InstallMethod( PrintObj, [ IsqClanObj and IsqClanRep ],
+  function( x )
+    Print("qClan( ", x!.matrices, ", ", x!.basefield , ")");
+  end );
+
+InstallOtherMethod( AsList, [IsqClanObj and IsqClanRep],
+  function( qclan )
+    return qclan!.matrices;
+  end );
+
+InstallOtherMethod( AsSet, [IsqClanObj and IsqClanRep],
+  function( qclan )
+    return Set(qclan!.matrices);
+  end );
+
+InstallMethod( BaseField, [IsqClanObj and IsqClanRep],
+  function( qclan )
+    return qclan!.basefield;
+  end );
+
+InstallMethod( IsLinearqClan, [ IsqClanObj ],
+  function( qclan )
+    local blt;
+    blt := BLTSetByqClan( qclan ); 
+    return ProjectiveDimension(Join(blt)) = 2;
+  end );
+
+
+InstallMethod( LinearqClan, [ IsPosInt ],
+  function(q)
+    local f, g, clan, n;
+    if not IsPrimePowerInt(q) then
+       Error("Argument must be a prime power");
+    fi;
+    n := First(GF(q), t -> not IsZero(t) and LogFFE(t, Z(q)^2) = fail);
+    if n = fail then
+       Error("Couldn't find nonsquare");
+    fi;
+    f := t -> 0 * Z(q)^0;
+    g := t -> -n * t;
+    clan := List(GF(q), t -> [[t, f(t)], [f(t), g(t)]]);
+    clan := qClan(clan, GF(q));
+    SetIsLinearqClan(clan, true);
+    return clan;
+end );
+
+InstallMethod( FisherThasWalkerKantorBettenqClan, [ IsPosInt ],
+  function(q)
+    local f, g, clan;
+    if not IsPrimePowerInt(q) then
+       Error("Argument must be a prime power");
+    fi;
+    if q mod 3 <> 2 then
+       Error("q must be congruent to 2 mod (3)");
+    fi;
+    f := t -> 3/2 * t^2;
+    g := t -> 3 * t^3;
+    clan := List(GF(q), t -> [[t, f(t)], [f(t), g(t)]]);
+  return qClan(clan, GF(q));
+end );
+
+InstallMethod( KantorMonomialqClan, [ IsPosInt ],
+  function(q)
+    local f, g, clan;
+    if not IsPrimePowerInt(q) then
+       Error("Argument must be a prime power");
+    fi;
+	if not q mod 5 in [2, 3] then
+       Error("q must be congruent to 2 mod (3)");
+    fi;
+    f := t -> 5/2 * t^3;
+    g := t -> 5 * t^5;
+    clan := List(GF(q), t -> [[t, f(t)], [f(t), g(t)]]);
+  return qClan(clan, GF(q));
+end );
+
+InstallMethod( KantorKnuthqClan, [ IsPosInt ],
+  function(q)
+    local f, g, clan, n, sigma;
+    if not IsPrimePowerInt(q) then
+       Error("Argument must be a prime power");
+    fi;
+    if IsPrime(q) then
+       Error("q is a prime");
+    fi;
+    sigma := FrobeniusAutomorphism(GF(q));
+    n := First(GF(q), t -> not IsZero(t) and LogFFE(t, Z(q)^2) = fail);
+    if n = fail then
+       Error("Couldn't find nonsquare");
     fi;
 
+    f := t -> 0 * Z(q)^0;
+    g := t -> -n * t^sigma;
+    clan := List(GF(q), t -> [[t, f(t)], [f(t), g(t)]]);
+  return qClan(clan, GF(q));
+end );
+
+
+InstallMethod( FisherqClan, [ IsPosInt ],
+  function(q)
+    local f, g, clan, n, zeta, omega, squares, nonsquares, i, z, a, t, j;
+    if not IsPrimePowerInt(q) or IsEvenInt(q) then
+       Error("Argument must be an odd prime power");
+    fi;
+	squares := ShallowCopy(AsList(Group(Z(q)^2)));; Add(squares, 0*Z(q));
+	nonsquares := Difference(AsList(GF(q)),squares);;
+	n := First(nonsquares, t -> t-1 in squares);
+
+	zeta := PrimitiveRoot(GF(q^2));
+	omega := zeta^(q+1);
+	i := zeta^((q+1)/2);
+	z := zeta^(q-1);
+	a := (z+z^q)/2;
+	clan := [];  
+	for t in GF(q) do
+	    if t^2-2/(1+a) in squares then 
+	       Add(clan, [[t, 0],[0,-omega*t]] * Z(q)^0);
+	    fi;
+	od;
+
+	for j in [0..(q-1)/2] do
+	    Add(clan, [[-(z^(2*j+1)+z^(-2*j))/(z+1), i*(z^(2*j+1)-z^(-2*j))/(z+1)],
+	       [i*(z^(2*j+1)-z^(-2*j))/(z+1), -omega*(z^(2*j+1)+z^(-2*j))/(z+1)]] * Z(q)^0 );
+	od;
+
+  return qClan(clan, GF(q));
+end );
+
+
+InstallMethod( FlockGQByqClan, [ IsqClanObj ],
+ function( qclan )
+  local f, q, mat, form, w5, p, blt, x, perp, pperp, pg5, a, bas, gens, zero, elations, action,
+        projpoints, gqpoints, gqlines, gqpoints2, gqlines2, res, geo, ty, points, lines, clan,
+		pgammasp, stabp, stabblt;
+  f := qclan!.basefield;
+  clan := qclan!.matrices; 
+  q := Size(f);
+  if not IsOddInt(q) then 
+       Error("Invalid input"); return;
+  fi;
+
+  mat := [[0,0,0,0,0,1],[0,0,0,0,1,0],[0,0,0,1,0,0],
+          [0,0,-1,0,0,0],[0,-1,0,0,0,0],[-1,0,0,0,0,0]] * Z(q)^0;
+  form := BilinearFormByMatrix(mat, GF(q));
+  w5 := PolarSpace( form );
+  p := VectorSpaceToElement(w5, [1,0,0,0,0,0] * Z(q)^0);
+
+  blt := [ VectorSpaceToElement(w5, [[1,0,0,0,0,0], [0,0,0,1,0,0],[0,0,0,0,1,0]]*One(f)) ];
+  for x in clan do
+      Add(blt, VectorSpaceToElement(w5, [[1,0,0,0,0,0], [0,1,0,x[1][2],x[1][1],0], [0,0,1,x[2][2],x[1][2],0]] * One(f)));
+  od;
+    Info(InfoDesargues, 1, "Making flock GQ...");
+
+  perp := Polarity(w5);;
+  pperp := perp(p);
+  pg5 := AmbientSpace( w5 );;
+  projpoints := Points(pg5);;
+
+	Info(InfoDesargues, 1, "...points outside of perp of P...");
+
+  gqpoints := Filtered(projpoints, x -> not x in pperp);;
+  Add(gqpoints, p);
+
+  gqlines := ShallowCopy(blt);;
+  gqpoints2 := [];;
+
+    Info(InfoDesargues, 1, "...lines contained in some BLT-set element...");
+
+  for x in gqlines do
+      res := ShadowOfElement(pg5, x, 2);
+      res := Filtered(res, t -> not p in t);
+      Append(gqpoints2, res);
+  od;
+  gqpoints2 := Set(gqpoints2);;
+  gqlines2 := [];;
+  
+    Info(InfoDesargues, 1, "...planes meeting some BLT-set element in a line...");
+  for x in gqpoints2 do 
+      res := ShadowOfFlag(pg5, [x,perp(x)], 3);
+      res := Filtered(res, t -> not p in t);  
+      Append(gqlines2, res); 
+  od;
+
+    Info(InfoDesargues, 1, "...sorting the points and lines...");  
+
+  points := SortedList( Concatenation(gqpoints, gqpoints2) );;
+  lines := SortedList( Concatenation(gqlines, gqlines2) );;
+
+  geo := rec( points := points, lines := lines, incidence := IsIncident);;
+
+  ty := NewType( GeometriesFamily, IsElationGQ and IsGeneralisedPolygonRep);
+  Objectify( ty, geo );
+  SetBasePointOfEGQ( geo, Wrap(geo, 1, p) );  
+  SetAmbientSpace(geo, w5);
+  SetOrder(geo, [q^2, q]);
+  SetTypesOfElementsOfIncidenceStructure(geo, ["point","line"]);
+
+  Info(InfoDesargues, 1, "Computing collineation group in PGammaSp(6,q)...");
+  pgammasp := CollineationGroup( w5 );
+  stabp := SetwiseStabilizer(pgammasp, OnProjSubspaces, [p])!.setstab;
+  stabblt := SetwiseStabilizer(stabp, OnProjSubspaces, blt)!.setstab;  
+  SetCollineationGroup( geo, stabblt );
+  action := function(el, x)
+               return Wrap( geo, el!.type, OnProjSubspaces(el!.obj, x));
+             end;
+  SetCollineationAction( stabblt, action );
+
+  ## Now we construct the elation group. See Maska Law's Thesis for details 
+
+  Info(InfoDesargues, 1, "Computing elation group...");
+  mat := function(a,b,c,d,e)
+            local m;
+            m := IdentityMat(6, f);
+            m[6]{[1..5]} := [e,d,c,-b,-a];
+            m[2][1] := a; m[3][1] := b; m[4][1] := c; m[5][1] := d;
+            return m;
+         end;
+  bas := AsList(Basis(f));
+  gens := [];
+  zero := Zero(f);
+  for a in bas do
+       Add(gens, mat(a,zero,zero,zero,zero) );
+       Add(gens, mat(zero,a,zero,zero,zero) );
+       Add(gens, mat(zero,zero,a,zero,zero) );
+       Add(gens, mat(zero,zero,zero,a,zero) );
+       Add(gens, mat(zero,zero,zero,zero,a) );
+  od;
+  gens := List(gens, t -> ProjectiveSemilinearMap(t,f));
+  elations := Subgroup( stabblt, gens ); 
+  SetElationGroup( geo, elations );
+  SetCollineationAction( elations, action );
+
+  return geo;
+end );
+
+
+InstallMethod( BLTSetByqClan, "input is a q-Clan", 
+              [ IsqClanObj and IsqClanRep ],
+  function( clan )
+    ##
+    ## The q-clan must consist only of symmetric matrices
+    ##
+    local q, i, f,  blt, m, sesq, c1, c2, change, w, ps;
+    f := clan!.basefield;
+    q := Size(f);
+    i := One(f); 
+    blt := List(clan!.matrices, t -> [i, t[2][2], -t[1][2], t[1][1],  t[1][2]^2 -t[1][1]*t[2][2]]);
+    Add(blt, [0,0,0,0,1]*i);  ## last point is distinguished point.
+      
+    ## This BLT-set is in Q(4,q) defined by Gram matrix
+    w := PrimitiveRoot(f);
+    m := [[0,0,0,0,1],[0,0,0,1,0],[0,0,w^((q+1)/2),0,0],[0,1,0,0,0],[1,0,0,0,0]]*i;
+    sesq := BilinearFormByMatrix(m, f);
+    ps := PolarSpace( sesq );    
+    return List(blt, x -> VectorSpaceToElement(ps, x)); 
+end );
+
+
+InstallMethod( KantorFamilyByqClan, "input is a q-Clan", 
+              [ IsqClanObj and IsqClanRep ],
+  function( clan )
+    local g, q, f, i, omega, mat, at, ainf, ainfstar, clanmats,
+          ainfgens, centregens, as, astars, k;
+    f := clan!.basefield;
+    clanmats := clan!.matrices;
     q := Size(f);
     i := One(f); 
     omega := PrimitiveElement(f);
@@ -672,51 +945,30 @@ InstallMethod( KantorFamilyByqClan, "input are 2x2 matrices",
        return gens;
     end;
 
-    g := Group(Union( ainfgens, centregens, at(clan[1]) ));
-    as := List(clan, m -> Group( at(m) ));
+    g := Group(Union( ainfgens, centregens, at(clanmats[1]) ));
+    as := List(clanmats, m -> Group( at(m) ));
     Add(as, ainf);
-    astars := List(clan, m -> Group(Union(at(m), centregens)));
+    astars := List(clanmats, m -> Group(Union(at(m), centregens)));
     Add(astars, ainfstar);
     return [g, as, astars];
   end );
 
-InstallMethod( EGQByqClan, "input are 2x2 matrices", 
-              [ IsFFECollCollColl, IsField and IsFinite ],
-  function( clan, f )
-    local kantor;
-    if not IsqClan(clan, f) then 
-       Error("Invalid input"); return;
-    fi;
 
-    kantor := KantorFamilyByqClan( clan, f );
+InstallMethod( EGQByqClan, "input is a q-Clan", 
+              [ IsqClanObj and IsqClanRep ],
+  function( clan )
+    local kantor;
+    kantor := KantorFamilyByqClan( clan );
     
     Info(InfoDesargues, 1, "Computed Kantor family. Now computing EGQ...");
     return EGQByKantorFamily(kantor[1], kantor[2], kantor[3]);
   end );
 
-InstallMethod( BLTSetByqClan, "input are 2x2 matrices over an odd field", 
-              [ IsFFECollCollColl, IsField and IsFinite ],
-  function( clan, f )
-    ##
-    ## The q-clan must consist only of symmetric matrices
-    ##
-    local q, i, blt, m, sesq, c1, c2, change, w, ps;
-    q := Size(f);
-    if not IsqClan(clan, f) and not IsOddInt(q) then 
-       Error("Invalid input"); return;
-    fi;
 
-    i := One(f); 
-    blt := List(clan, t -> [i, t[2][2], -t[1][2], t[1][1],  t[1][2]^2 -t[1][1]*t[2][2]]);
-    Add(blt, [0,0,0,0,1]*i);  ## last point is distinguished point.
-      
-    ## This BLT-set is in Q(4,q) defined by Gram matrix
-    w := PrimitiveRoot(f);
-    m := [[0,0,0,0,1],[0,0,0,1,0],[0,0,w^((q+1)/2),0,0],[0,1,0,0,0],[1,0,0,0,0]]*i;
-    sesq := BilinearFormByMatrix(m, f);
-    ps := PolarSpace( sesq );    
-    return List(blt, x -> VectorSpaceToElement(ps, x)); 
-end );
+
+
+
+
 
 InstallMethod( EGQByBLTSet, 
          "constructs an EGQ from a BLT-set of lines of W(3,q) via the Knarr construction",
@@ -886,6 +1138,9 @@ InstallMethod( DiagramOfGeometry, [ IsGeneralisedQuadrangle ],
     SetGeometryOfDiagram( diagram, geo );
     return diagram;
   end );
+
+
+
 
 #############################################################################
 #
