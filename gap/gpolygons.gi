@@ -779,11 +779,12 @@ InstallMethod( FisherqClan, [ IsPosInt ],
 end );
 
 
+
 InstallMethod( FlockGQByqClan, [ IsqClanObj ],
  function( qclan )
   local f, q, mat, form, w5, p, blt, x, perp, pperp, pg5, a, bas, gens, zero, elations, action,
         projpoints, gqpoints, gqlines, gqpoints2, gqlines2, res, geo, ty, points, lines, clan,
-		pgammasp, stabp, stabblt;
+		pgammasp, stabp, stabblt, hom, omega, imgs;
   f := qclan!.basefield;
   clan := qclan!.matrices; 
   q := Size(f);
@@ -850,7 +851,23 @@ InstallMethod( FlockGQByqClan, [ IsqClanObj ],
   Info(InfoDesargues, 1, "Computing collineation group in PGammaSp(6,q)...");
   pgammasp := CollineationGroup( w5 );
   stabp := SetwiseStabilizer(pgammasp, OnProjSubspaces, [p])!.setstab;
-  stabblt := SetwiseStabilizer(stabp, OnProjSubspaces, blt)!.setstab;  
+
+  Info(InfoDesargues, 1, "..computed stabiliser of P");
+
+  ## compute the stabiliser of the BLT-set differently...
+
+  hom := ActionHomomorphism(stabp, AsList(Planes(p)), OnProjSubspaces, "surjective"); 
+  omega := HomeEnumerator(UnderlyingExternalSet(hom));;
+  imgs := Filtered([1..Size(omega)], x -> omega[x] in blt);;
+  stabblt := Stabilizer(Image(hom), imgs, OnSets);
+  gens := GeneratorsOfGroup(stabblt);
+  gens := List(gens, x -> PreImagesRepresentative(hom, x));
+  stabblt := GroupWithGenerators(gens);
+
+  Info(InfoDesargues, 1, "..computed stabiliser of BLT set");
+
+###  stabblt := SetwiseStabilizer(stabp, OnProjSubspaces, blt)!.setstab;  
+
   SetCollineationGroup( geo, stabblt );
   action := function(el, x)
                return Wrap( geo, el!.type, OnProjSubspaces(el!.obj, x));
@@ -878,7 +895,7 @@ InstallMethod( FlockGQByqClan, [ IsqClanObj ],
        Add(gens, mat(zero,zero,zero,zero,a) );
   od;
   gens := List(gens, t -> ProjectiveSemilinearMap(t,f));
-  elations := Subgroup( stabblt, gens ); 
+  elations := SubgroupNC( stabblt, gens ); 
   SetElationGroup( geo, elations );
   SetCollineationAction( elations, action );
 

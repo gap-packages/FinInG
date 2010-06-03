@@ -90,22 +90,25 @@ InstallMethod( Enumerator, [ IsAllSubspacesOfClassicalPolarSpace ],
     ## for the points of a hermitian space, and for varieties of 
     ## a symplectic space.
 
-    local ps, j, rep, enum, e, type, eEN, eNE, iso;
+    local ps, j, rep, enum, e, type, eEN, eNE, iso, pscanonical;
      ps := vs!.geometry;
      j := vs!.type;
      type := PolarSpaceType(ps);
 
-     if type in [ "hyperbolic", "elliptic", "parabolic" ] then
-        e := enum_orthogonal(ps, j);
-     elif type = "hermitian" then
-        e := enum_hermitian(ps, j);
-     elif type = "symplectic" then
-        e := enum_symplectic(ps, j);
-     else
-        Error("Unknown polar space type");
-     fi;
+     ## A bug here was fixed. When using non-canonical polar spaces, there was some problem
+     ## in using the enum_* commands before an isomorphism was made. Fixed now. John 02/06/2010
 
      if HasIsCanonicalPolarSpace( ps ) and IsCanonicalPolarSpace( ps ) then     
+        if type in [ "hyperbolic", "elliptic", "parabolic" ] then
+           e := enum_orthogonal(ps, j);
+        elif type = "hermitian" then
+           e := enum_hermitian(ps, j);
+        elif type = "symplectic" then
+           e := enum_symplectic(ps, j);  
+        else
+           Error("Unknown polar space type");
+        fi;
+
         enum := EnumeratorByFunctions( vs, rec(
                   ElementNumber := e!.ElementNumber,
                   NumberElement := e!.NumberElement,
@@ -120,7 +123,23 @@ InstallMethod( Enumerator, [ IsAllSubspacesOfClassicalPolarSpace ],
                     end
                 ) );
      else
-        iso := IsomorphismCanonicalPolarSpace ( ps );        
+        ## The following is an isomorphism from the canonical polar space TO ps
+  
+        iso := IsomorphismCanonicalPolarSpace( ps );
+        pscanonical := Source(iso)!.geometry;     
+
+        if type in [ "hyperbolic", "elliptic", "parabolic" ] then
+           e := enum_orthogonal(pscanonical, j);
+        elif type = "hermitian" then
+           e := enum_hermitian(pscanonical, j);
+        elif type = "symplectic" then
+           e := enum_symplectic(pscanonical, j);  
+        else
+           Error("Unknown polar space type");
+        fi;
+
+        ## These are enumerators in the canonical polar spaces
+
         eEN := e!.ElementNumber;
         eNE := e!.NumberElement;
                                                                         
@@ -229,20 +248,6 @@ InstallMethod( Enumerator, [IsShadowSubspacesOfClassicalPolarSpace and
              return Position( enumps2, proj!.fun(elm ) );
           end ) );
 
-       ## old code
-#       ps2 := res!.factorspace;
-#       iso := IsomorphismPolarSpaces(ps2, img);
-#       newdim := j - b!.type;
-#       canon_quot := ElementsOfIncidenceStructure(ps2, newdim); 	
-#       enumps2 := Enumerator( canon_quot );
-#       enum := EnumeratorByFunctions( res, rec(
-#          ElementNumber := function(e, num)
-#             return proj!.prefun(iso!.fun(enumps2[num]) );  
-#          end, 
-#          NumberElement := function( e, elm )
-#             return Position( enumps2, iso!.prefun( proj!.fun(elm ) ) );
-#          end ) );
-
     fi;
     return enum;
   end );
@@ -264,7 +269,7 @@ InstallGlobalFunction(specialresidual,
 InstallGlobalFunction( enum_orthogonal,
  
   ## This is a "helper" function which makes the enumerator
-  ## for a set of varieties of an orthogonal space.
+  ## for a set of varieties of a canonical orthogonal space.
 
   function( ps, j )
   local hyp, pg, d, f, iter, x, ps2, vs, ressize, 
