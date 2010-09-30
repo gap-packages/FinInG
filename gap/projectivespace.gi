@@ -89,6 +89,7 @@ InstallMethod( ProjectiveDimension, "for a subspace of a projective space",
     return v!.type - 1;
   end );
 
+
 InstallMethod( ProjectiveDimension, [ IsEmpty ], function(x) return -1;end );
 
 
@@ -859,6 +860,18 @@ InstallMethod( Random, "for a collection of subspaces of a projective space",
         return(VectorSpaceToElement(pg,AsList(Basis(W))));
   end );
 
+InstallMethod( StandardFrame, "for a projective space", [IsProjectiveSpace], 
+	# if the dimension of the projective space is n, then StandardFrame 
+	# makes a list of points with coordinates 
+	# (1,0,...0), (0,1,0,...,0), ..., (0,...,0,1) and (1,1,...,1) 
+  function( pg )
+	local bas, frame, unitpt;
+	bas:=Basis(UnderlyingVectorSpace(pg));
+	frame:=List(BasisVectors(bas),v->VectorSpaceToElement(pg,v));
+	unitpt:=VectorSpaceToElement(pg,Sum(BasisVectors(bas)));
+	Add(frame,unitpt);
+	return frame;
+  end );
 
 
 #####################################

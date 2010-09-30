@@ -59,6 +59,9 @@ DeclareAttribute( "SpecialHomographyGroup", IsProjectiveSpace );
 DeclareAttribute( "ProjectiveDimension", IsProjectiveSpace );
 DeclareAttribute( "ProjectiveDimension", IsSubspaceOfProjectiveSpace );
 DeclareAttribute( "ProjectiveDimension", IsEmpty );
+
+DeclareAttribute( "StandardFrame", IsProjectiveSpace );
+
 DeclareAttribute( "AmbientSpace", IsProjectiveSpace );
 
 DeclareSynonymAttr( "ProjectivityGroup", HomographyGroup );
