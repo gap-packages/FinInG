@@ -866,7 +866,7 @@ InstallMethod( StandardFrame, "for a projective space", [IsProjectiveSpace],
 	# (1,0,...0), (0,1,0,...,0), ..., (0,...,0,1) and (1,1,...,1) 
   function( pg )
 	local bas, frame, unitpt;
-	bas:=Basis(UnderlyingVectorSpace(pg));
+	bas:=Basis(pg!.vectorspace);	
 	frame:=List(BasisVectors(bas),v->VectorSpaceToElement(pg,v));
 	unitpt:=VectorSpaceToElement(pg,Sum(BasisVectors(bas)));
 	Add(frame,unitpt);
