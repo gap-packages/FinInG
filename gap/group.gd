@@ -84,9 +84,13 @@ DeclareOperation( "ProjElWithFrob",
 DeclareOperation( "ProjElsWithFrob", [IsList] );
 DeclareOperation( "ProjElsWithFrob", [IsList, IsField] );
 DeclareOperation( "Projectivity", [ IsList, IsField] );
+
 DeclareOperation( "ProjectiveSemilinearMap", [ IsList, IsField] );
 DeclareOperation( "ProjectiveSemilinearMap", [ IsList, IsMapping, IsField] );
 DeclareSynonym( "CollineationOfProjectiveSpace", ProjectiveSemilinearMap);
+
+DeclareOperation( "ProjectivityByImageOfStandardFrameNC", [IsProjectiveSpace, IsList] );
+
 DeclareOperation( "UnderlyingMatrix", [ IsProjGrpEl and IsProjGrpElRep] );
 DeclareOperation( "UnderlyingMatrix", [ IsProjGrpElWithFrob and IsProjGrpElWithFrobRep ] );
 DeclareOperation( "FieldAutomorphism", [ IsProjGrpElWithFrob and IsProjGrpElWithFrobRep ] );

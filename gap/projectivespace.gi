@@ -92,6 +92,68 @@ InstallMethod( ProjectiveDimension, "for a subspace of a projective space",
 
 InstallMethod( ProjectiveDimension, [ IsEmpty ], function(x) return -1;end );
 
+InstallMethod( Dimension, "for a projective space",
+  [ IsProjectiveSpace and IsProjectiveSpaceRep ],
+  function( ps )
+    return ps!.dimension;
+  end );
+
+InstallMethod( Dimension, "for a subspace of a projective space",
+     [ IsSubspaceOfProjectiveSpace ],
+  function( v )
+    return v!.type - 1;
+  end );
+
+InstallMethod( Dimension, [ IsEmpty ], function(x) return -1;end );
+
+InstallMethod( UnderlyingVectorSpace, "for a projective space",
+   [IsProjectiveSpace and IsProjectiveSpaceRep],
+   function(ps)
+   return ShallowCopy(ps!.vectorspace);
+end);
+
+
+
+InstallMethod( StandardFrame, "for a projective space", [IsProjectiveSpace], 
+	# if the dimension of the projective space is n, then StandardFrame 
+	# makes a list of points with coordinates 
+	# (1,0,...0), (0,1,0,...,0), ..., (0,...,0,1) and (1,1,...,1) 
+  function( pg )
+	local bas, frame, unitpt;
+	if not pg!.dimension > 0 then 
+		Error("The argument needs to be a projective space of dimension at least 1!");
+	else
+	bas:=Basis(pg!.vectorspace);	
+	frame:=List(BasisVectors(bas),v->VectorSpaceToElement(pg,v));
+	unitpt:=VectorSpaceToElement(pg,Sum(BasisVectors(bas)));
+	Add(frame,unitpt);
+	return frame;
+	fi;
+  end );
+
+InstallMethod( StandardFrame, "for a subspace of a projective space", 
+	[IsSubspaceOfProjectiveSpace],
+	# if the dimension of the subspace is d (needs to be at least 1), then this returns d+2
+	# points of the subspace, the first d+1 are the points "basispoints"
+	# the last point has as coordinates the sum of the basispoints.
+  function( subspace )
+	local list,v;
+	if not Dimension(subspace) > 0 then 
+		Error("The argument needs to be a projective space of dimension at least 1!");
+	else
+	list:=ShallowCopy(subspace!.obj);
+        Add(list,Sum(subspace!.obj));
+	return List(list,v->VectorSpaceToElement(subspace!.geo,v));
+	fi;
+  end );
+
+InstallMethod( Coordinates, "for a point of a projective space",
+	[IsSubspaceOfProjectiveSpace],
+  function( point )
+	if not Dimension(point)=0 then Error("The argument is not a projective point");
+	else return ShallowCopy(point!.obj);
+	fi;
+  end );
 
 InstallMethod( CollineationGroup, "for a full projective space",
   [ IsProjectiveSpace and IsProjectiveSpaceRep ],
@@ -845,32 +907,17 @@ InstallMethod( Random, "for a collection of subspaces of a projective space",
         # chooses a random element out of the collection of subspaces of given
         # dimension of a projective space
   function( subs )
-    local d, pg, vspace, W, w;
-
-    ## the underlying projective space
-    pg := subs!.geometry;
-        vspace:=pg!.vectorspace;
-
-        if not IsInt(subs!.type) then
-                Error("The subspaces of the collection need to have the same dimension");
+    	local d, pg, vspace, W, w;
+	## the underlying projective space
+	pg := subs!.geometry;
+	vspace:=pg!.vectorspace;
+	if not IsInt(subs!.type) then
+          Error("The subspaces of the collection need to have the same dimension");
         fi;
-
-    ## the common type of elements of subs
-    d := subs!.type;        W:=RandomSubspace(vspace,d);
+	## the common type of elements of subs
+	d := subs!.type;        
+	W:=RandomSubspace(vspace,d);
         return(VectorSpaceToElement(pg,AsList(Basis(W))));
-  end );
-
-InstallMethod( StandardFrame, "for a projective space", [IsProjectiveSpace], 
-	# if the dimension of the projective space is n, then StandardFrame 
-	# makes a list of points with coordinates 
-	# (1,0,...0), (0,1,0,...,0), ..., (0,...,0,1) and (1,1,...,1) 
-  function( pg )
-	local bas, frame, unitpt;
-	bas:=Basis(pg!.vectorspace);	
-	frame:=List(BasisVectors(bas),v->VectorSpaceToElement(pg,v));
-	unitpt:=VectorSpaceToElement(pg,Sum(BasisVectors(bas)));
-	Add(frame,unitpt);
-	return frame;
   end );
 
 

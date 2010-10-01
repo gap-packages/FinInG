@@ -105,6 +105,28 @@ InstallMethod( Projectivity, [ IsMatrix and IsFFECollColl, IsField],
                         IsProjGrpElRep ), el );
     return el;  
   end );
+  
+
+InstallMethod( ProjectivityByImageOfStandardFrameNC, [ IsProjectiveSpace, IsList ],
+	function(pg,image)
+	# If the dimension of the projective space is n, then
+	# given a frame, there is a 
+	# unique projectivity mapping the standard frame to this set of points
+	# THERE IS NO CHECK TO SEE IF THE GIVEN IMAGE CONSISTS OF N+2 POINTS NO N+1 L.D.
+	local d,i,x,vlist,mat,coeffs,mat2;
+	if not Length(image)=Dimension(pg)+2 then 
+	Error("The argument does not have the required length to be the image of a frame");
+	fi;
+	d:=Dimension(pg);
+	vlist:=List(image,x->x!.obj);
+	mat:=List([1..d+1],i->vlist[i]);
+	coeffs:=vlist[d+2]*(mat^-1);
+	mat2:=List([1..d+1],i->coeffs[i]*mat[i]);
+	return CollineationOfProjectiveSpace(mat2,pg!.basefield);
+end );
+
+
+
 
 InstallMethod( ProjectiveSemilinearMap, 
   [ IsMatrix and IsFFECollColl, IsField],

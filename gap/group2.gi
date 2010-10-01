@@ -38,16 +38,6 @@
 ###################################################################
 # Just an extension of projectivespace.gi...
 ###################################################################
-
-DeclareOperation( "UnderlyingVectorSpace",
-                   [IsProjectiveSpace] );
-
-InstallMethod( UnderlyingVectorSpace,
-   "for a projective space",
-   [IsProjectiveSpace and IsProjectiveSpaceRep],
-   function(ps)
-   return ps!.vectorspace;
-end);
    
 InstallMethod( \=,
   "for set of all subspaces of a projective space",

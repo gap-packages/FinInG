@@ -60,7 +60,16 @@ DeclareAttribute( "ProjectiveDimension", IsProjectiveSpace );
 DeclareAttribute( "ProjectiveDimension", IsSubspaceOfProjectiveSpace );
 DeclareAttribute( "ProjectiveDimension", IsEmpty );
 
+DeclareAttribute( "Dimension", IsProjectiveSpace );
+DeclareAttribute( "Dimension", IsSubspaceOfProjectiveSpace );
+DeclareAttribute( "Dimension", IsEmpty );
+
+DeclareAttribute( "Coordinates", IsSubspaceOfProjectiveSpace );
+
 DeclareAttribute( "StandardFrame", IsProjectiveSpace );
+DeclareAttribute( "StandardFrame", IsSubspaceOfProjectiveSpace );
+
+DeclareOperation( "UnderlyingVectorSpace", [IsProjectiveSpace] );
 
 DeclareAttribute( "AmbientSpace", IsProjectiveSpace );
 
