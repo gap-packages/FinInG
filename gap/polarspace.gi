@@ -458,7 +458,7 @@ InstallMethod( CollineationGroup, [ IsClassicalPolarSpace and IsClassicalPolarSp
        
     else    
        iso := IsomorphismCanonicalPolarSpaceWithIntertwiner( ps );
-       Info(InfoDesargues, 1, "Computing collineation group of canonical polar space...");
+       Info(InfoFinInG, 1, "Computing collineation group of canonical polar space...");
        coll := CollineationGroup( Source(iso)!.geometry );
        info := ClassicalGroupInfo( ps );
        twiner := Intertwiner( iso );           
@@ -467,7 +467,7 @@ InstallMethod( CollineationGroup, [ IsClassicalPolarSpace and IsClassicalPolarSp
     
     ## Setting up the NiceMonomorphism
 
-    Info(InfoDesargues, 1, "Computing nice monomorphism...");
+    Info(InfoFinInG, 1, "Computing nice monomorphism...");
     x := RepresentativesOfElements( ps )[1];   
     if DESARGUES.Fast then
        hom := NiceMonomorphismByOrbit( g, x!.obj, OnProjPointsWithFrob, info!.degree);

@@ -29,8 +29,8 @@
 #
 #############################################################################
 
-DeclareInfoClass( "InfoDesargues" );
-SetInfoLevel( InfoDesargues, 1 );
+DeclareInfoClass( "InfoFinInG" );
+SetInfoLevel( InfoFinInG, 1 );
 
 
 #############################################################################

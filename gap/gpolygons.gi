@@ -530,7 +530,7 @@ InstallMethod( EGQByKantorFamily, [IsGroup, IsList, IsList],
     ty := NewType( GeometriesFamily, IsElationGQByKantorFamily and IsGeneralisedPolygonRep );  
     Objectify( ty, geo );
 
-    Info(InfoDesargues, 1, "Computing points from Kantor family...");
+    Info(InfoFinInG, 1, "Computing points from Kantor family...");
 
     ## wrapping
     pts1 := List(g, x -> Wrap(geo,1,1,x));
@@ -538,7 +538,7 @@ InstallMethod( EGQByKantorFamily, [IsGroup, IsList, IsList],
     pts2 := Concatenation(pts2);
     pts2 := List(pts2, x -> Wrap(geo,1,2,x));
 
-    Info(InfoDesargues, 1, "Computing lines from Kantor family...");
+    Info(InfoFinInG, 1, "Computing lines from Kantor family...");
 
     ls1 := Set(f, a -> Set(RightCosets(g,a), x -> [a,CanonicalRightCosetElement(a, Representative(x))]));
     ls1 := Concatenation(ls1); 
@@ -580,7 +580,7 @@ InstallMethod( IsKantorFamily, [IsGroup, IsList, IsList],
        return;
     fi;
 
-    Info(InfoDesargues, 1, "Checking tangency condition...");
+    Info(InfoFinInG, 1, "Checking tangency condition...");
     
     ## K2 tangency condition
     for a in [1..tplus1-1] do
@@ -594,7 +594,7 @@ InstallMethod( IsKantorFamily, [IsGroup, IsList, IsList],
       od;
     od;
 
-    Info(InfoDesargues, 1, "Checking triple condition...");
+    Info(InfoFinInG, 1, "Checking triple condition...");
 
     ## K1 triple condition
     for a in [1..tplus1-2] do
@@ -802,14 +802,14 @@ InstallMethod( FlockGQByqClan, [ IsqClanObj ],
   for x in clan do
       Add(blt, VectorSpaceToElement(w5, [[1,0,0,0,0,0], [0,1,0,x[1][2],x[1][1],0], [0,0,1,x[2][2],x[1][2],0]] * One(f)));
   od;
-    Info(InfoDesargues, 1, "Making flock GQ...");
+    Info(InfoFinInG, 1, "Making flock GQ...");
 
   perp := Polarity(w5);;
   pperp := perp(p);
   pg5 := AmbientSpace( w5 );;
   projpoints := Points(pg5);;
 
-	Info(InfoDesargues, 1, "...points outside of perp of P...");
+	Info(InfoFinInG, 1, "...points outside of perp of P...");
 
   gqpoints := Filtered(projpoints, x -> not x in pperp);;
   Add(gqpoints, p);
@@ -817,7 +817,7 @@ InstallMethod( FlockGQByqClan, [ IsqClanObj ],
   gqlines := ShallowCopy(blt);;
   gqpoints2 := [];;
 
-    Info(InfoDesargues, 1, "...lines contained in some BLT-set element...");
+    Info(InfoFinInG, 1, "...lines contained in some BLT-set element...");
 
   for x in gqlines do
       res := ShadowOfElement(pg5, x, 2);
@@ -827,14 +827,14 @@ InstallMethod( FlockGQByqClan, [ IsqClanObj ],
   gqpoints2 := Set(gqpoints2);;
   gqlines2 := [];;
   
-    Info(InfoDesargues, 1, "...planes meeting some BLT-set element in a line...");
+    Info(InfoFinInG, 1, "...planes meeting some BLT-set element in a line...");
   for x in gqpoints2 do 
       res := ShadowOfFlag(pg5, [x,perp(x)], 3);
       res := Filtered(res, t -> not p in t);  
       Append(gqlines2, res); 
   od;
 
-    Info(InfoDesargues, 1, "...sorting the points and lines...");  
+    Info(InfoFinInG, 1, "...sorting the points and lines...");  
 
   points := SortedList( Concatenation(gqpoints, gqpoints2) );;
   lines := SortedList( Concatenation(gqlines, gqlines2) );;
@@ -848,11 +848,11 @@ InstallMethod( FlockGQByqClan, [ IsqClanObj ],
   SetOrder(geo, [q^2, q]);
   SetTypesOfElementsOfIncidenceStructure(geo, ["point","line"]);
 
-  Info(InfoDesargues, 1, "Computing collineation group in PGammaSp(6,q)...");
+  Info(InfoFinInG, 1, "Computing collineation group in PGammaSp(6,q)...");
   pgammasp := CollineationGroup( w5 );
   stabp := SetwiseStabilizer(pgammasp, OnProjSubspaces, [p])!.setstab;
 
-  Info(InfoDesargues, 1, "..computed stabiliser of P");
+  Info(InfoFinInG, 1, "..computed stabiliser of P");
 
   ## compute the stabiliser of the BLT-set differently...
 
@@ -864,7 +864,7 @@ InstallMethod( FlockGQByqClan, [ IsqClanObj ],
   gens := List(gens, x -> PreImagesRepresentative(hom, x));
   stabblt := GroupWithGenerators(gens);
 
-  Info(InfoDesargues, 1, "..computed stabiliser of BLT set");
+  Info(InfoFinInG, 1, "..computed stabiliser of BLT set");
 
 ###  stabblt := SetwiseStabilizer(stabp, OnProjSubspaces, blt)!.setstab;  
 
@@ -876,7 +876,7 @@ InstallMethod( FlockGQByqClan, [ IsqClanObj ],
 
   ## Now we construct the elation group. See Maska Law's Thesis for details 
 
-  Info(InfoDesargues, 1, "Computing elation group...");
+  Info(InfoFinInG, 1, "Computing elation group...");
   mat := function(a,b,c,d,e)
             local m;
             m := IdentityMat(6, f);
@@ -977,7 +977,7 @@ InstallMethod( EGQByqClan, "input is a q-Clan",
     local kantor;
     kantor := KantorFamilyByqClan( clan );
     
-    Info(InfoDesargues, 1, "Computed Kantor family. Now computing EGQ...");
+    Info(InfoFinInG, 1, "Computed Kantor family. Now computing EGQ...");
     return EGQByKantorFamily(kantor[1], kantor[2], kantor[3]);
   end );
 
@@ -1018,7 +1018,7 @@ InstallMethod( EGQByBLTSet,
    pg5 := AmbientSpace( w5q );
    projpoints := ElementsOfIncidenceStructure(pg5, 1);
    
-   Info(InfoDesargues, 1, "Computing points(1) of Knarr construction...");
+   Info(InfoFinInG, 1, "Computing points(1) of Knarr construction...");
    
    gqpoints := Filtered(projpoints, x -> not x in pperp);;
    Add(gqpoints, p);
@@ -1026,13 +1026,13 @@ InstallMethod( EGQByBLTSet,
    em := NaturalEmbeddingBySubspace(w3q, w5q, solid);
    blt2 := List(blt,t->t^em);
 
-   Info(InfoDesargues, 1, "Computing lines(1) of Knarr construction...");
+   Info(InfoFinInG, 1, "Computing lines(1) of Knarr construction...");
   
    pis := List(blt2, l -> Join(p, l));
    gqlines := pis;
    gqpoints2 := [];
 
-   Info(InfoDesargues, 1, "Computing points(2) of Knarr construction...");
+   Info(InfoFinInG, 1, "Computing points(2) of Knarr construction...");
 
    for x in pis do
        res := ShadowOfElement(pg5, x, 2);
@@ -1041,18 +1041,18 @@ InstallMethod( EGQByBLTSet,
    od;
    gqpoints2 := Set(gqpoints2); 
 
-   Info(InfoDesargues, 1, "Computing lines(2) of Knarr construction...please wait");
+   Info(InfoFinInG, 1, "Computing lines(2) of Knarr construction...please wait");
 
    gqlines2 := [];
-   info := InfoLevel( InfoDesargues );
-   SetInfoLevel(InfoDesargues, 0);
+   info := InfoLevel( InfoFinInG );
+   SetInfoLevel(InfoFinInG, 0);
 
    for x in gqpoints2 do
        res := Planes(w5q, x);
        res := Filtered(res, t -> not t in pperp);
        Append(gqlines2, res); 
    od;
-   SetInfoLevel(InfoDesargues, info);
+   SetInfoLevel(InfoFinInG, info);
  
    points := Concatenation(gqpoints, gqpoints2);
    lines := Concatenation(gqlines, gqlines2);
@@ -1089,14 +1089,14 @@ InstallMethod( EGQByBLTSet,
    iso := IsomorphismPolarSpaces(q4q, q4qcanonical);
    bltdual := PreImagesSet(duality, ImagesSet(iso, blt));
 
-   Info(InfoDesargues, 1, "Now embedding dual BLT-set into W(5,q)...");
+   Info(InfoFinInG, 1, "Now embedding dual BLT-set into W(5,q)...");
 
    geo := EGQByBLTSet( bltdual, p, solid);
 
    ## Now we construct the elation group. See Maska Law's Thesis for details 
    ## (we have a different form though, so we need to apply a base change).
 
-   Info(InfoDesargues, 1, "Computing elation group...");
+   Info(InfoFinInG, 1, "Computing elation group...");
 
    mat := function(a,b,c,d,e)
             local m;
@@ -1312,7 +1312,7 @@ InstallMethod( BlockDesignOfGeneralisedPolygon,
     fi;
     points := gp!.points;
     lines := gp!.lines;
-    Info(InfoDesargues, 1, "Computing block design of generalised polygon...");
+    Info(InfoFinInG, 1, "Computing block design of generalised polygon...");
     des := BlockDesign(Size(points), Set(lines, AsSet));
     Setter( BlockDesignOfGeneralisedPolygonAttr )( gp, des );
     return des;
@@ -1334,11 +1334,11 @@ InstallMethod( BlockDesignOfGeneralisedPolygon,
 
     if IsElationGQ(gp) and HasElationGroup( gp ) then
 	   elations := ElationGroup(gp);
-          Info(InfoDesargues, 1, "Computing orbits on lines of gen. polygon...");
+          Info(InfoFinInG, 1, "Computing orbits on lines of gen. polygon...");
 	   orbs := List( Orbits(elations, lines, CollineationAction(elations)), Representative);
 	   orbs := List(orbs, l -> Filtered([1..Size(points)], i -> points[i] in l));
 	   gg := Action(elations, points, CollineationAction( elations ) );
-          Info(InfoDesargues, 1, "Computing block design of generalised polygon...");    
+          Info(InfoFinInG, 1, "Computing block design of generalised polygon...");    
 	   des := BlockDesign(Size(points), orbs, gg ); 
 	elif HasCollineationGroup(gp) then
 	   gg := CollineationGroup(gp);
@@ -1372,7 +1372,7 @@ InstallMethod( IncidenceGraphOfGeneralisedPolygon,
     points := AsList( Points( gp ) );;  
     lines := AsList( Lines( gp ) );;    
 
-    Info(InfoDesargues, 1, "Computing incidence graph of generalised polygon...");
+    Info(InfoFinInG, 1, "Computing incidence graph of generalised polygon...");
     
     sz := Size(points);
     adj := function(i,j)
@@ -1410,7 +1410,7 @@ InstallMethod( IncidenceGraphOfGeneralisedPolygon,
     points := AsList( Points( gp ) );;  
     lines := AsList( Lines( gp ) );;    
 
-    Info(InfoDesargues, 1, "Computing incidence graph of projective plane...");
+    Info(InfoFinInG, 1, "Computing incidence graph of projective plane...");
     sz := Size(points);
     adj := function(i,j)
              if i <= sz and j > sz then

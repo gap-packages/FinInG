@@ -505,7 +505,7 @@ InstallMethod( IsomorphismPolarSpaces,
           SetIntertwiner( map, hom );      
           UseIsomorphismRelation(coll1,coll2);         
        else 
-          Info(InfoDesargues, 1, "No intertwiner computed. One of the polar spaces must have a collineation group computed");
+          Info(InfoFinInG, 1, "No intertwiner computed. One of the polar spaces must have a collineation group computed");
        fi;
     fi;
     return map;
@@ -588,7 +588,7 @@ InstallMethod( IsomorphismPolarSpacesNC,
 		   SetIntertwiner( map, hom );      
            UseIsomorphismRelation(coll1,coll2);         
        else 
-           Info(InfoDesargues, 1, "No intertwiner computed. One of the polar spaces must have a collineation group computed");
+           Info(InfoFinInG, 1, "No intertwiner computed. One of the polar spaces must have a collineation group computed");
        fi;
     fi;
     return map;
@@ -824,7 +824,7 @@ InstallMethod( NaturalEmbeddingByFieldReduction, [ IsClassicalPolarSpace, IsClas
        elif [type1, type2] = ["hermitian", "symplectic"] and e = 2 then  
        
           ## for the moment, we just use the usual copy of H
-          Info(InfoDesargues, 1, "Only works (at the moment) for the canonical Hermitian variety");
+          Info(InfoFinInG, 1, "Only works (at the moment) for the canonical Hermitian variety");
           
           bas := Basis(vec, LeukBasis(f1,f2) );        
           newgram := CanonicalGramMatrix("symplectic", d2, f2);

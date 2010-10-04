@@ -1,6 +1,6 @@
 ############################################################################
 ##
-##  varieties.gi              Desargues package
+##  varieties.gi              FinInG package
 ##                                                              John Bamberg
 ##                                                              Anton Betten
 ##                                                              Jan De Beule
