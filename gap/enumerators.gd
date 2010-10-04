@@ -1,6 +1,6 @@
 #############################################################################
 ##
-##  enumerators.gd              Desargues package
+##  enumerators.gd              FinInG package
 ##                                                              John Bamberg
 ## 								                                Anton Betten
 ##                                                              Jan De Beule

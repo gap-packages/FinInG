@@ -1,6 +1,6 @@
 #############################################################################
 ##
-##  group.gd              Desargues package
+##  group.gd              FinInG package
 ##                                                              John Bamberg
 ## 								Anton Betten
 ##                                                              Jan De Beule
@@ -117,7 +117,7 @@ DeclareGlobalFunction( "NiceMonomorphismByDomain" );
 ###########################
 
 ## The following are conjugates of the groups in the classical groups
-## library which are compatible with the canonical forms in Desargues
+## library which are compatible with the canonical forms in FinInG 
 
 DeclareOperation( "SOdesargues", [IsInt, IsPosInt, IsField and IsFinite]);
 DeclareOperation( "GOdesargues", [IsInt, IsPosInt, IsField and IsFinite]);

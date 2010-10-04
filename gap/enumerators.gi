@@ -1,6 +1,6 @@
 #############################################################################
 ##
-##  enumerators.gi              Desargues package
+##  enumerators.gi              FinInG package
 ##                                                              John Bamberg
 ##                                                              Anton Betten
 ##                                                              Jan De Beule
@@ -1222,14 +1222,14 @@ InstallMethod( QminusElementNumber, [IsPosInt, IsPosInt, IsInt],
       # "sums of hyperbolic pairs" form x1x2 + x3x4 +...
       # plus c1 x_{2n}^2 + c2 x_{2n}x_{2n+1} + c3 x_{2n+1}^2
       #
-      # The canonical form in Desargues has the anisotropic part
+      # The canonical form in FinInG has the anisotropic part
       # of an elliptic quadric in the first two coordinates. Thus
       # we simply apply a double transposition to the coordinates
       # so that Anton's form is the same as ours.
 
     perm := (1,d)(2,d+1);
 
-    # Choose [c1, c2, c3] compatible with Desargues:
+    # Choose [c1, c2, c3] compatible with FinInG:
     if IsEvenInt(q) then
        form := QuadraticForm( EllipticQuadric(d, q) )!.matrix;
     else
@@ -1338,7 +1338,7 @@ InstallMethod( QminusNumberElement, [IsPosInt, IsPosInt, IsSubspaceOfClassicalPo
     local wittindex, a, v, x, x1, x2, c1, c2, c3, perm,
           form, i, u, w, vv, z, minusz, minuszv, c, b;
 	
-    # Choose [c1, c2, c3] compatible with Desargues:
+    # Choose [c1, c2, c3] compatible with FinInG:
     if IsEvenInt(q) then
        form := QuadraticForm( EllipticQuadric(d, q) )!.matrix;
     else

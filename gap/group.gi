@@ -1545,7 +1545,7 @@ InstallMethod( GammaOminus, [IsPosInt, IsField and IsFinite],
   ## of Kleidman and Liebeck, we find that the following matrix M 
   ## (n.b., you should extrapolate the dimension) together with
   ## the Frobenius automorphism of GF(q) defines a semisimilarity
-  ## of our canonical form in Desargues:
+  ## of our canonical form in FinInG:
   ##    a  .  .  .  .  .  
   ##    .  b  .  .  .  .  
   ##    .  .  .  l  .  .  

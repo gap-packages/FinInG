@@ -1,6 +1,6 @@
 #############################################################################
 ##
-##  liegeometry.gi              Desargues package
+##  liegeometry.gi              FinInG package
 ##                                                              John Bamberg
 ## 								Anton Betten
 ##                                                              Jan De Beule

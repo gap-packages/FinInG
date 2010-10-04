@@ -1,8 +1,8 @@
 #############################################################################
 ##
-##  projectivespace.gi              Desargues package
+##  projectivespace.gi              FinInG package
 ##                                                              John Bamberg
-## 								                                Anton Betten
+## 								Anton Betten
 ##                                                              Jan De Beule
 ##                                                             Philippe Cara
 ## 		                                              Michel Lavrauw

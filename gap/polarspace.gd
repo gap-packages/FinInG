@@ -1,6 +1,6 @@
 #############################################################################
 ##
-##  polarspace.gd              Desargues package
+##  polarspace.gd              FinInG package
 ##                                                              John Bamberg
 ## 								Anton Betten
 ##                                                              Jan De Beule

@@ -1,11 +1,11 @@
 #############################################################################
 ##
-##  projectivespace.gd              Desargues package
+##  projectivespace.gd              FinInG package
 ##                                                              John Bamberg
-## 								                                Anton Betten
+## 								Anton Betten
 ##                                                              Jan De Beule
 ##                                                             Philippe Cara
-## 							                                  Michel Lavrauw
+## 							      Michel Lavrauw
 ##                                                                 Maska Law
 ##                                                           Max Neunhoeffer
 ##                                                            Michael Pauley

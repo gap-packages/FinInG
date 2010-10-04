@@ -1,6 +1,6 @@
 #############################################################################
 ##
-##  group2.gi              Desargues package
+##  group2.gi              FinInG package
 ##                                                              John Bamberg
 ##                                                              Anton Betten
 ##                                                              Jan De Beule

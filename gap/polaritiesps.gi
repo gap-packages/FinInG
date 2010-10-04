@@ -1,6 +1,6 @@
 #############################################################################
 ##
-##  polarities.gi              Desargues package
+##  polarities.gi              FinInG package
 ##                                                              John Bamberg
 ##                                                              Anton Betten
 ##                                                              Jan De Beule

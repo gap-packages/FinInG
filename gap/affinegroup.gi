@@ -1,6 +1,6 @@
 #############################################################################
 ##
-##  affinegroup.gi              Desargues package
+##  affinegroup.gi              FinInG package
 ##                                                              John Bamberg
 ##                                                              Anton Betten
 ##                                                              Jan De Beule

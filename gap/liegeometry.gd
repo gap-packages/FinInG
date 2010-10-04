@@ -1,6 +1,6 @@
 #############################################################################
 ##
-##  liegeometry.gd              Desargues package
+##  liegeometry.gd              FinInG package
 ##                                                              John Bamberg
 ## 								                                Anton Betten
 ##                                                             Philippe Cara

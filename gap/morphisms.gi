@@ -1,6 +1,6 @@
 #############################################################################
 ##
-##  morphisms.gi              Desargues package
+##  morphisms.gi              FinInG package
 ##                                                              John Bamberg
 ##                                                              Anton Betten
 ##                                                              Jan De Beule

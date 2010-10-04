@@ -1,6 +1,6 @@
 #############################################################################
 ##
-##  gpolygons.gi              Desargues package
+##  gpolygons.gi              FinInG package
 ##                                                              John Bamberg
 ##                                                              Anton Betten
 ##                                                             Philippe Cara
@@ -252,7 +252,7 @@ InstallMethod( SplitCayleyHexagon, "input is a finite field",
        ## [1,0,0,0,0,0,0],[0,1,0,0,0,0,0],[0,0,1,0,0,0,0]];
 
        ## now we transfer elements and automorphisms
-       ## to the parabolic quadric given by Desargues
+       ## to the parabolic quadric given by FinInG 
        ps := ParabolicQuadric(6, f);
 
        ## this is Hendrik's form
@@ -402,7 +402,7 @@ InstallMethod( TwistedTrialityHexagon, "input is a finite field",
             [0,  0,  0,  0,  0,  0,  0,  1]]*One(f);
 
        ## now we transfer elements and automorphisms
-       ## to the hyperbolic quadric given by Desargues
+       ## to the hyperbolic quadric given by FinInG 
     ps := HyperbolicQuadric(7, f);
 
        ## this is Hendrik's form

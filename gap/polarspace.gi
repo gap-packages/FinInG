@@ -1,6 +1,6 @@
 #############################################################################
 ##
-##  polarspace.gi              Desargues package
+##  polarspace.gi              FinInG package
 ##                                                              John Bamberg
 ##                                                              Anton Betten
 ##                                                              Jan De Beule
@@ -1555,7 +1555,7 @@ InstallMethod( Display,
 InstallMethod( CanonicalGramMatrix, [IsString, IsPosInt, IsField],
 
 ## Constructs the canonical gram matrix compatible with
-## the corresponding matrix group in Desargues.
+## the corresponding matrix group in FinInG.
 
   function( type, d, f )
     local one, q, m, i, t, x, w, p;
@@ -1648,7 +1648,7 @@ InstallMethod( CanonicalGramMatrix, [IsString, IsPosInt, IsField],
 InstallMethod( CanonicalQuadraticForm, [IsString, IsPosInt, IsField],
 
 ## Constructs the canonical quadratic form matrix compatible with
-## the corresponding matrix group in Desargues. This function is
+## the corresponding matrix group in FinInG. This function is
 ## only used for q even.
 
   function( type, d, f )

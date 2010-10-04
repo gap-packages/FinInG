@@ -1,6 +1,6 @@
 #############################################################################
 ##
-##  diagram.gi              Desargues package
+##  diagram.gi              FinInG package
 ##                                                              John Bamberg
 ##                                                              Anton Betten
 ##                                                              Jan De Beule

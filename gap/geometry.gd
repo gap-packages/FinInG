@@ -1,11 +1,11 @@
 #############################################################################
 ##
-##  geometry.gd              Desargues package
+##  geometry.gd              FinInG package
 ##                                                              John Bamberg
-## 								                                Anton Betten
+## 								Anton Betten
 ##                                                             Philippe Cara
 ##                                                              Jan De Beule
-## 							                                  Michel Lavrauw
+## 							      Michel Lavrauw
 ##                                                                 Maska Law
 ##                                                           Max Neunhoeffer
 ##                                                            Michael Pauley
@@ -35,7 +35,7 @@ SetInfoLevel( InfoDesargues, 1 );
 
 #############################################################################
 #
-# A global place for variables for the Desargues package:
+# A global place for variables for the FinInG package:
 #
 #############################################################################
 

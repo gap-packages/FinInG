@@ -1,6 +1,6 @@
 #############################################################################
 ##
-##  affinespace.gd              Desargues package
+##  affinespace.gd              FinInG package
 ##                                                              John Bamberg
 ## 								                                Anton Betten
 ##                                                             Philippe Cara
