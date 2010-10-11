@@ -548,7 +548,7 @@ InstallMethod( IsConnected, "for coset geometries",
 InstallMethod( IsResiduallyConnected, "for coset geometries",
                [ IsCosetGeometry ],
   function( cg )
-    ## A coset geoemtry is residually connected if and only
+    ## A coset geometry is residually connected if and only
     ## if for every subset J of the types I with |I-J|>1, we have
     ## \cap{Hj: j in J} = < \cap{Hi: i in J-{j}} : j in I-J >
 
@@ -807,7 +807,7 @@ InstallMethod( DiagramOfGeometry, [ IsProjectiveSpace ],
     return diagram;
   end );
 
-InstallMethod( Rk2GeoDiametre, "for a coset geometry", [IsCosetGeometry,
+InstallMethod( Rk2GeoDiameter, "for a coset geometry", [IsCosetGeometry,
 IsPosInt],
   function( cg, type ) # type in {1,2}
     local parabs, d, g, gpchain;

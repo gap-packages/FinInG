@@ -23,6 +23,150 @@ This is the chapter of the documentation describing the projective groups.
 
 <Chapter Label="diagramgeometries">
 <Heading>Diagram Geometries</Heading>
+<Section>
+<Heading>Very preliminary version of the manual</Heading>
+<ManSection>
+<Oper Name="DiagramOfGeometry" Arg="Gamma"/>
+<Returns>The diagram of the geometry <A>Gamma</A></Returns>
+<Description> 
+<A>Gamma</A> must be a coset geometry.
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="DrawDiagram" Arg="Diag,filename"/>
+<Returns>Does not return anything but wirtes a file <A>filename</A>.ps</Returns>
+<Description> 
+<A>Diag</A> must be a diagram. Writes a file <A>filename</A>.ps in the current directory with a pictorial version of the diagram. This command uses the <Package>graphviz</Package> package which is available from http://www.graphviz.org. 
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="CosetGeometry" Arg=""/>
+<Returns></Returns>
+<Description> 
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="" Arg="G,l"/>
+<Returns>Returns the coset geometry defined by the list <A>l</A> of subgroups of the group <A>G</A></Returns>
+<Description> 
+<A>G</A> must be a group and <A>l</A> is a list of subgroups of <A>G</A>. The elements of the coset geometry are the cosets in <A>G</A> of the subgroups in <A>l</A>. Two elements are incident if and only if the corresponding cosets have nonempty intersection. 
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="IsIncident" Arg="ele1,ele2"/>
+<Returns>true if ans only if <A>ele1</A> and <A>ele2</A> are incident</Returns>
+<Description> 
+<A>ele1</A> and <A>ele2</A> must be two elements in thes same coset geometry.
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="ParabolicSubgroups" Arg="cg"/>
+<Returns>List of parabolic subgroups defining the coset geometry <A>cg</A> </Returns>
+<Description> 
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="AmbientGroup" Arg="cg"/>
+<Returns>the group of the coset geometry <A>cg</A></Returns>
+<Description> 
+<A>cg</A> must be a coset geometry.
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="Borelsubgroup" Arg="cg"/>
+<Returns>The Borel subgroup of de geometry <A>cg</A></Returns>
+<Description> 
+The Borel subgroup is equal to the stabilizer of a chamber. It corresponds to the untersection of all parabolic subgrops.
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="IsFlagTransitiveGeometry" Arg="cg"/>
+<Returns>true if and only if the group <A>G</A> defining <A>cg</A> acts flag-transitively.</Returns> 
+<Description> 
+<A>cg</A> must be a coset geometry.
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="IsFirmGeometry" Arg="cg"/>
+<Returns>true if and only if <A>cg</A> is firm.</Returns>
+<Description> 
+An incidence geometry is said to be firm if every nonmaximal flag is contained in at least two chambers. <A>cg</A> must be a coset geometry. 
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="IsConnected" Arg="cg"/>
+<Returns>true if and only if <A>cg</A> is connected.</Returns>
+<Description> 
+A geometry is connected if and only if its incidence graph is connected. <A>cg</A> must be a coset geometry.
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="IsResiduallyConnected" Arg="cg"/>
+<Returns>true if and only if <A>cg</A> is residually connected.</Returns>
+<Description> 
+A geometry is residually connected the incidence graphs of all its residues of rank at least 2 are connected. <A>cg</A> must be a coset geometry.
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="StandardFlagOfCosetGeometry" Arg="cg"/>
+<Returns>Standard chamber of <A>cg</A></Returns>
+<Description> 
+The standard chamber just consists of all parabolic subgroups (i.e. the trivial cosets of these subgroups). <A>cg</A> must be a coset geometry. Maybe this function should be called StandardChamberOfCosetGeometry.
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="FlagToStandardFlag" Arg="cg,fl"/>
+<Returns>element of the defining group of <A>cg</A> which maps <A>fl</A> to the standard chamber of <A>cg</A>.</Returns>
+<Description> 
+<A>fl</A> must be a chamber given as a list of cosets of the parabolic subgroups of <A>cg</A>. The order of the elements of the chamber should be the same as the order of the parabolics defining <A>cg</A>.
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="CanonicalResidueOfFlag" Arg="cg,fl"/>
+<Returns>coset geometry isomorphic to residue of <A>fl</A> in <A>cg</A></Returns>
+<Description> 
+<A>cg</A> must be a coset geometry and <A>fl</A> must be a flag in that geometry. The returned coset geometry for a flag {giGi} is ...
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="ResidueOfFlag" Arg="cg,fl"/>
+<Returns>The residue of <A>fl</A> in <A>cg</A>.</Returns>
+<Description> 
+CHECK the back-mapping.
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="IncidenceGraph" Arg="cg"/>
+<Returns>incidence graph of <A>cg</A>.</Returns>
+<Description> 
+<A>cg</A> must be a coset geometry. The graph returned is a <Package>GRAPE</Package> object. Be sure the <Package>GRAPE</Package> is loaded!
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="Rank2Parameters" Arg="cg"/>
+<Returns>a list of length 3.</Returns>
+<Description> 
+<A>cg</A> must be a coset geometry of rank 2. This function computes the gonality, point and line diameter of <A>cg</A>. These appear as a list in the first entry of the returned list. The second entry contains a list of length 2 with the point order and the total number of points (i.e. elements of type 1) in the geometry. The last entry contains the line order and the number of lines.
+</Description>
+</ManSection>
 
 
+</Section>
 </Chapter>
