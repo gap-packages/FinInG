@@ -7,16 +7,9 @@
 finingpath := PackageInfo("fining")[1].InstallationPath;
 path := Concatenation(finingpath,"/doc");
 
-## It is possible that GAP is started up using multiple path. e.g. using
-## gap4r4 -l "./Gap;./opt/gap4r4"
-## Issuing GAP_ROOT_PATH; yields then [ "./Gap", "/opt/gap4r4" ] (the same order as startup command!
-## I will ask the path as the first item in this list, so it is your responsability to have installed fining
-## there!
-## 
-
 MakeGAPDocDoc(path, "fining", [], "FinInG");
 
-#to create the tex file:
+#to create the tex file (was used by jdebeule, and not yet adapted to fining directory tree)
 path := Directory("~/gap4r4/pkg/desargues/doc/");
 main := "desargues.xml";
 files := [];
