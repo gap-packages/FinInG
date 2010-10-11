@@ -41,14 +41,14 @@ DeclareRepresentation( "IsProjGrpElWithFrobWithPSIsomRep", IsProjGrpElWithFrobWi
 
 BindGlobal( "ProjElsWithFrobWithPSIsomFamily", 
             NewFamily( "ProjElsWithFrobWithPSIsomFamily",IsObject,
-	                 IsProjGrpElWithFrobWithPSIsom) );  
+	                 IsProjGrpElWithFrobWithPSIsom ) );  
 BindGlobal( "ProjElsWithFrobWithPSIsomCollFamily",
             CollectionsFamily(ProjElsWithFrobWithPSIsomFamily) );
 
 BindGlobal( "ProjElsWithFrobWithPSIsomType",
      NewType( ProjElsWithFrobWithPSIsomFamily, 
               IsProjGrpElWithFrobWithPSIsom and 
-	      IsProjGrpElWithFrobWithPSIsomRep) );
+	      IsProjGrpElWithFrobWithPSIsomRep ) );
 
 InstallTrueMethod( IsHandledByNiceMonomorphism, IsProjectiveGroupWithFrob );
 

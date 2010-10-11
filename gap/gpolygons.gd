@@ -25,31 +25,25 @@
 # Collections, families
 #############################################################################
 
-DeclareRepresentation( "IsGeneralisedPolygonRep", IsGeneralisedPolygon, 
-  [ "incidence", "points", "lines" ]);
+DeclareRepresentation( "IsGeneralisedPolygonRep", IsGeneralisedPolygon, [ "incidence", "points", "lines" ]);
 
 DeclareCategory( "IsElementOfGeneralisedPolygon", IsElementOfIncidenceStructure );
 DeclareCategory( "IsAllElementsOfGeneralisedPolygon", IsElementsOfIncidenceStructure );
-DeclareRepresentation( "IsAllElementsOfGeneralisedPolygonRep", IsElementsOfIncidenceStructure, 
-   [ "geometry", "type" ] );
+DeclareRepresentation( "IsAllElementsOfGeneralisedPolygonRep", IsElementsOfIncidenceStructure, [ "geometry", "type" ] );
 
 DeclareCategory( "IsAllElementsOfProjectivePlane", IsAllElementsOfGeneralisedPolygon );
-DeclareRepresentation( "IsAllElementsOfProjectivePlaneRep", 
-                        IsAllElementsOfGeneralisedPolygonRep, [ "geometry", "type" ] );
+DeclareRepresentation( "IsAllElementsOfProjectivePlaneRep", IsAllElementsOfGeneralisedPolygonRep, [ "geometry", "type" ] );
 
 DeclareCategory( "IsAllElementsOfGeneralisedQuadrangle", IsAllElementsOfGeneralisedPolygon );
-DeclareRepresentation( "IsAllElementsOfGeneralisedQuadrangleRep", 
-                        IsAllElementsOfGeneralisedPolygonRep, [ "geometry", "type" ] );
+DeclareRepresentation( "IsAllElementsOfGeneralisedQuadrangleRep", IsAllElementsOfGeneralisedPolygonRep, [ "geometry", "type" ] );
 
 
 DeclareCategory( "IsAllElementsOfGeneralisedHexagon", IsAllElementsOfGeneralisedPolygon );
-DeclareRepresentation( "IsAllElementsOfGeneralisedHexagonRep", 
-                        IsAllElementsOfGeneralisedPolygonRep, [ "geometry", "type" ] );
+DeclareRepresentation( "IsAllElementsOfGeneralisedHexagonRep", IsAllElementsOfGeneralisedPolygonRep, [ "geometry", "type" ] );
 
 DeclareCategory( "IsElementOfKantorFamily", IsElementOfGeneralisedPolygon );
 DeclareCategory( "IsAllElementsOfKantorFamily", IsAllElementsOfGeneralisedPolygon );
-DeclareRepresentation( "IsElementOfKantorFamilyRep", IsElementOfKantorFamily, 
-  [ "geo", "type", "class", "obj" ]);
+DeclareRepresentation( "IsElementOfKantorFamilyRep", IsElementOfKantorFamily, [ "geo", "type", "class", "obj" ]);
 
 
 ### new stuff

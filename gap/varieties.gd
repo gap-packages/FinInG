@@ -31,10 +31,8 @@
 
 DeclareCategory( "IsAlgebraicVariety", IsAttributeStoringRep );
 DeclareRepresentation("IsAlgebraicVarietyRep", IsAlgebraicVariety, ["geometry","polring", "listofpols"] );
-DeclareCategory( "IsAllPointsOfAlgebraicVariety", IsDomain and IsCollection and 
-																IsComponentObjectRep );
-DeclareRepresentation( "IsAllPointsOfAlgebraicVarietyRep", IsAllPointsOfAlgebraicVariety, 
-	["variety"]);
+DeclareCategory( "IsAllPointsOfAlgebraicVariety", IsDomain and IsCollection and IsComponentObjectRep );
+DeclareRepresentation( "IsAllPointsOfAlgebraicVarietyRep", IsAllPointsOfAlgebraicVariety, ["variety"]);
 
 
 ### 1. Projective Varieties ###

@@ -42,11 +42,15 @@ eclareRepresentation := function(filter, supfilters, dummy)
     Print(".\c");
 end;
 
+Print("Categories ");
+
 Read("eclairs3.tmp");
 
 Exec("rm eclairs.tmp"); 
 Exec("rm eclairs2.tmp"); 
 Exec("rm eclairs3.tmp"); 
+
+Print(" Done\nRepresentations");
 
 Exec("grep -h DeclareRepresentation gap/*gd | sed \"s/^D//\" > eclairs.tmp");
 Exec("sed \"s/  / /\" eclairs.tmp > eclairs2.tmp");
@@ -60,7 +64,7 @@ Exec("rm eclairs.tmp");
 Exec("rm eclairs2.tmp");
 Exec("rm eclairs3.tmp");
 
-Print("\nWriting 'filtergraph.dot'...\n");
+Print("Done\nWriting 'filtergraph.dot'...\n");
 
 output := OutputTextFile( "filtergraph.dot", false );
 writestring:="digraph filters {\n\t node [style=filled];\n";

@@ -36,14 +36,10 @@ DeclareCategory( "IsAllSubspacesOfAffineSpace", IsAllElementsOfIncidenceGeometry
 DeclareCategory( "IsShadowSubspacesOfAffineSpace", IsShadowElementsOfIncidenceGeometry );
 DeclareCategory( "IsParallelClassOfAffineSpace", IsElementsOfIncidenceGeometry );
 
-DeclareRepresentation( "IsSubspacesOfAffineSpaceRep", IsElementsOfIncidenceGeometry, 
-                            [ "geometry", "type" ] );
-DeclareRepresentation( "IsAllSubspacesOfAffineSpaceRep", IsAllElementsOfIncidenceGeometry,
-                            [ "geometry", "type" ] );
-DeclareRepresentation( "IsShadowSubspacesOfAffineSpaceRep", IsElementsOfIncidenceGeometry,
-                            [ "geometry", "type", "list" ]);
-DeclareRepresentation( "IsParallelClassOfAffineSpaceRep", IsElementsOfIncidenceGeometry,
-                            [ "geometry", "element" ]);
+DeclareRepresentation( "IsSubspacesOfAffineSpaceRep", IsElementsOfIncidenceGeometry, [ "geometry", "type" ] );
+DeclareRepresentation( "IsAllSubspacesOfAffineSpaceRep", IsAllElementsOfIncidenceGeometry, [ "geometry", "type" ] );
+DeclareRepresentation( "IsShadowSubspacesOfAffineSpaceRep", IsElementsOfIncidenceGeometry, [ "geometry", "type", "list" ]);
+DeclareRepresentation( "IsParallelClassOfAffineSpaceRep", IsElementsOfIncidenceGeometry, [ "geometry", "element" ]);
 
 DeclareCategoryCollections("IsSubspaceOfAffineSpace");
 BindGlobal( "SoASFamily", 
@@ -57,8 +53,7 @@ BindGlobal( "SoASCollFamily", CollectionsFamily(SoASFamily) );
 #############################################################################
 
 DeclareCategory( "IsVectorSpaceTransversal", IsSubspacesVectorSpace );
-DeclareRepresentation( "IsVectorSpaceTransversalRep", IsVectorSpaceTransversal, 
-   [ "vectorspace", "subspace" ]);
+DeclareRepresentation( "IsVectorSpaceTransversalRep", IsVectorSpaceTransversal, [ "vectorspace", "subspace" ]);
 
 DeclareOperation( "VectorSpaceTransversal", [IsVectorSpace, IsFFECollColl]);
 DeclareOperation( "VectorSpaceTransversalElement", [IsVectorSpace, IsFFECollColl, IsVector]);

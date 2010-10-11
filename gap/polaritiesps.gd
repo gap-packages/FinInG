@@ -11,7 +11,7 @@
 #DeclareOperation( "Polarity", [IsIncidenceStructure, IsMultiplicativeElementWithInverse] );
 #DeclareOperation( "PolarityOfProjectiveSpace", [IsProjectiveSpace, IsMultiplicativeElementWithInverse] );
 
-DeclareCategory( "IsPolarityOfProjectiveSpace", IsProjGrpElWithFrobWithPSIsomRep);
+DeclareCategory( "IsPolarityOfProjectiveSpace", IsProjGrpElWithFrobWithPSIsomRep );
 DeclareRepresentation( "IsPolarityOfProjectiveSpaceRep", IsProjGrpElWithFrobWithPSIsomRep, ["mat","fld","frob","psisom", "form"] );
 
 #############################################################################
