@@ -17,7 +17,7 @@
 ##                 Colorado State University
 ##                 Vrije Universiteit Brussel
 ##
-##  Implementation stuff for schemes
+##  Implementation stuff for varieties
 ##
 #############################################################################
 

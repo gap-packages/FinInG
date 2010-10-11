@@ -154,6 +154,30 @@ InstallMethod( Coordinates, "for a point of a projective space",
 	else return ShallowCopy(point!.obj);
 	fi;
   end );
+  
+InstallMethod( CoordinatesOfHyperplane, "for a hyperplane of a projective space",
+	[IsSubspaceOfProjectiveSpace],
+	function(hyp)
+	local pg,perp;
+	pg:=ShallowCopy(hyp!.geo);
+	if not hyp!.type=Dimension(pg) then 
+		Error("The argument is not a hyperplane");
+	else 
+		perp:=StandardDualityOfProjectiveSpace(pg);
+		return Coordinates(hyp^perp);
+	fi;
+end );
+
+InstallMethod( EquationOfHyperplane, "for a hyperplane of a projective space",
+	[IsSubspaceOfProjectiveSpace],
+	function(hyp)
+	local pg,r,v,indets;
+	pg:=AmbientGeometry(hyp);
+	r:=PolynomialRing(pg!.basefield,pg!.dimension + 1);
+	indets:=IndeterminatesOfPolynomialRing(r);
+	v:=CoordinatesOfHyperplane(hyp);
+	return Sum(List([1..Size(indets)],i->v[i]*indets[i]));
+end );
 
 InstallMethod( CollineationGroup, "for a full projective space",
   [ IsProjectiveSpace and IsProjectiveSpaceRep ],

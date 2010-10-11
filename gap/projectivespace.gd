@@ -65,6 +65,8 @@ DeclareAttribute( "Dimension", IsSubspaceOfProjectiveSpace );
 DeclareAttribute( "Dimension", IsEmpty );
 
 DeclareAttribute( "Coordinates", IsSubspaceOfProjectiveSpace );
+DeclareAttribute( "CoordinatesOfHyperplane", IsSubspaceOfProjectiveSpace );
+DeclareAttribute( "EquationOfHyperplane", IsSubspaceOfProjectiveSpace );
 
 DeclareAttribute( "StandardFrame", IsProjectiveSpace );
 DeclareAttribute( "StandardFrame", IsSubspaceOfProjectiveSpace );
