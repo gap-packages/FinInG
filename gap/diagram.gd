@@ -129,7 +129,7 @@ DeclareOperation( "AmbientGroup", [ IsCosetGeometry ] );
 DeclareOperation( "FlagToStandardFlag", [ IsCosetGeometry, IsHomogeneousList ] );
 DeclareOperation( "ResidueOfFlag", [ IsCosetGeometry, IsHomogeneousList ] );
 DeclareOperation( "CanonicalResidueOfFlag", [ IsCosetGeometry, IsHomogeneousList ] );
-DeclareOperation( "Rk2GeoDiametre", [ IsCosetGeometry, IsPosInt] );
+DeclareOperation( "Rk2GeoDiameter", [ IsCosetGeometry, IsPosInt] );
 DeclareAttribute( "Rank2Parameters", IsCosetGeometry );
 
 if not IsBound( Graph ) then 
