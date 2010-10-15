@@ -605,24 +605,67 @@ InstallMethod( IsomorphismPolarSpacesNC,
 InstallGlobalFunction( ShrinkMat, "preimage of BlowUpMat",
   function( B, mat )
   
+  ## THERE WAS A BUG IN THIS FUNCTION: (lavrauw 15/10/2010)
+  ## NOT ALL MATRICES ARE BLOWNUP MATRICES! Here is a new version.
+  ## Here is the explanation that could go into the documentation:
+  ## The result of BlownUpMat(B,A) is the matrix, where each entry a=A_ij is replaced by
+  ## the dxd matrix M_a, representing the linear map x |-> ax with respect to the basis B of
+  ## the field K seen as d-dimensional vectorspace over F. This means that if 
+  ## B={b_1,b_2,...,b_d}, then the first row are the coefficients of ab_1 w.r.t. B, and so on.
+  ## Concersely, if we want to implement ShrinkMat, we need to check if the input is 
+  ## a blown up matrix. 
+  ## This can be done as follows. Let A be a dm x dn matrix. For each dxd block, say M, 
+  ## we need to check that the set {b_i^(-1)\sum_{j=1}^{d}m_ij b_j: i\in \{1,..,d\}} has size one
+  ## (Since this would be the a \in K represented as a linear map by M w.r.t. the basis B)
+  
   ## This function is basically the inverse map of
   ## BlownUpMat.
   
-    local result, vectors, row, i, j, resrow, b;
-    vectors := BasisVectors( B );
-    result := [];
-    b := Size(B);
-    for i in [1..Size(mat)/b] do
-        resrow := [];
-        for j in [1..Size(mat[1])/b] do
-            row :=  mat[(i-1) * b + 1]{[(j-1) * b + 1 .. j * b]};
-            Add(resrow, row * vectors);
-        od;
-        Add(result, resrow);
-    od;
-    ConvertToMatrixRepNC( result );
-    return result;
-  end );
+  local d,vecs,m,n,bmat,blocks,bl,submat,i,j,ij,checklist,row,newmat;
+  d:=Size(B);
+  vecs:=BasisVectors(B);
+  m:=DimensionsMat(mat)[1];
+  n:=DimensionsMat(mat)[2];
+  # First we check if m and n are multiples of d
+  if not (IsInt(m/d) and IsInt(n/d)) then Error("The matrix does not have the right dimensions");
+  fi;
+  blocks:=List(Cartesian([0..m/d-1],[0..n/d-1]),ij->mat{[ij[1]*d+1 .. ij[1]*d+d]}{[ij[2]*d+1 ..ij[2]*d+d]});
+  newmat:=[];
+  for i in [1..m/d] do
+    row:=[]; 
+	for j in [1..n/d] do
+	# HIER VERDER WERKEN !!!!!!!!!!
+		submat:=blocks[(i-1)*d+j];
+		checklist:=List([1..d],i->(vecs[i]^(-1)*(Sum([1..d],j->submat[i][j]*vecs[j]))));
+		if Size(AsSet(checklist))<>1 then Error("The matrix is not a blown up matrix");
+		fi;
+		Add(row,checklist[1]);
+	od;
+	Add(newmat,row);
+  od;
+  return newmat;
+  # DO WE NEED TO USE ConvertToMatrixRepNC ?
+ end);	
+		
+		
+## THE OLD ShrinkMat function:		
+# InstallGlobalFunction( ShrinkMat, "preimage of BlowUpMat",
+#  function( B, mat )
+#    local result, vectors, row, i, j, resrow, b;
+#    vectors := BasisVectors( B );
+#    result := [];
+#    b := Size(B);
+#    for i in [1..Size(mat)/b] do
+#        resrow := [];
+#        for j in [1..Size(mat[1])/b] do
+#            row :=  mat[(i-1) * b + 1]{[(j-1) * b + 1 .. j * b]};
+#            Add(resrow, row * vectors);
+#        od;
+#        Add(result, resrow);
+#    od;
+#    ConvertToMatrixRepNC( result );
+#    return result;
+#  end );
   
   
 InstallMethod( NaturalEmbeddingByFieldReduction, 
