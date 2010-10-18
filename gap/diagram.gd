@@ -138,9 +138,6 @@ fi;
 
 DeclareOperation( "GeometryFromLabelledGraph", [ IsObject and IS_REC ] );
 
-DeclareOperation( "Rk2GeoDiameter", [IsCosetGeometry, IsPosInt] );
-
-
 ## Attributes for vertices 
 
 DeclareAttribute( "OrderVertex", IsVertexOfDiagram );
