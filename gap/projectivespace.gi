@@ -719,7 +719,7 @@ InstallMethod( IsIncident,  [IsSubspaceOfProjectiveSpace,
     return false;
   end );
 
-InstallMethod( Join, [IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
+InstallMethod( Span, [IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
   function( x, y )  
     local ux, uy, ambx, amby, typx, typy, span, temp, F;
     ambx := AmbientSpace(x!.geo);
@@ -729,8 +729,8 @@ InstallMethod( Join, [IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
     F := ambx!.basefield;
 
     if ambx!.vectorspace = amby!.vectorspace then
-      ux := x!.obj; 
-      uy := y!.obj;
+      ux := ShallowCopy(x!.obj); 
+      uy := ShallowCopy(y!.obj);
         
       if typx = 1 then ux := [ux]; fi;
       if typy = 1 then uy := [uy]; fi;
@@ -738,7 +738,7 @@ InstallMethod( Join, [IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
       span := MutableCopyMat(ux);
       Append(span,uy);
       span := MutableCopyMat(SemiEchelonMat(span).vectors);
-      # if the join is the whole space, return that.
+      # if the span is the whole space, return that.
       if Length(span) = ambx!.dimension + 1 then
         return ambx;
       fi;
@@ -747,27 +747,27 @@ InstallMethod( Join, [IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
       if Length(span) > 1 then
          ConvertToMatrixRep(span, F);
       fi;
-      
-      # if it's a polar space, we check if the join is t.i. and if it is
-      # we can say that the join is in the polar space. otherwise it just
-      # lies in the ambient projective space.
-      temp := Wrap(ambx, Rank(span), span);
-      if IsClassicalPolarSpace(x!.geo) and temp in x!.geo then
-        return Wrap( x!.geo, Rank(span), span);
-      else
-        return temp;
-      fi;
+	  # The next line generated an error
+	  # temp := Wrap(ambx, Rank(span), span);
+	  # So we replaced it by:
+	  temp:=VectorSpaceToElement(ambx,span); 
+	  return temp;
     else
       Error("Subspaces belong to different ambient spaces");
     fi;
     return;
   end );
 
-InstallMethod( Join, [ IsHomogeneousList and IsSubspaceOfProjectiveSpaceCollection ],
+InstallMethod( Span, [ IsHomogeneousList and IsSubspaceOfProjectiveSpaceCollection ],
   function( l )  
       # we trust that every member of the list
       # comes from a common geometry
     local unwrapped, r, unr, amb, span, temp, x, F;
+	# first we check that all items in the list belong to the same ambient space
+	if not Size(AsSet(List(l,x->AmbientSpace(x!.geo)!.dimension)))=1 and
+			Size(AsSet(List(l,x->AmbientSpace(x!.geo)!.basefield)))=1 then 
+	 Error("The elements in the list do not have a common ambient space");
+	else
     x := l[1];
     amb := AmbientSpace(x!.geo);
     F := amb!.basefield;
@@ -789,13 +789,15 @@ InstallMethod( Join, [ IsHomogeneousList and IsSubspaceOfProjectiveSpaceCollecti
     if Length(span) > 1 then
        ConvertToMatrixRep(span, F);
     fi;
-    temp := Wrap(amb, Rank(span), span);
-    if IsClassicalPolarSpace(x!.geo) and temp in x!.geo then
-       return Wrap( x!.geo, Rank(span), span);
-    else
-       return temp;
-    fi;
-    return;
+	temp:=VectorSpaceToElement(amb,span);
+    #temp := Wrap(amb, Rank(span), span);
+    #if IsClassicalPolarSpace(x!.geo) and temp in x!.geo then
+    #   return Wrap( x!.geo, Rank(span), span);
+    #else
+    #   return temp;
+    #fi;
+	fi;
+    return temp;
   end );
 
 

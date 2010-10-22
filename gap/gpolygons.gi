@@ -674,7 +674,7 @@ InstallMethod( IsLinearqClan, [ IsqClanObj ],
   function( qclan )
     local blt;
     blt := BLTSetByqClan( qclan ); 
-    return ProjectiveDimension(Join(blt)) = 2;
+    return ProjectiveDimension(Span(blt)) = 2;
   end );
 
 
@@ -1028,7 +1028,7 @@ InstallMethod( EGQByBLTSet,
 
    Info(InfoFinInG, 1, "Computing lines(1) of Knarr construction...");
   
-   pis := List(blt2, l -> Join(p, l));
+   pis := List(blt2, l -> Span(p, l));
    gqlines := pis;
    gqpoints2 := [];
 
@@ -1244,7 +1244,7 @@ InstallMethod( CollineationGroup, "for a projective plane",
     return coll;   
   end );
 
-InstallMethod( Join, "for two elements of a projective plane",
+InstallMethod( Span, "for two elements of a projective plane",
        [IsElementOfGeneralisedPolygon, IsElementOfGeneralisedPolygon],  ## do we want special filters?
   function( x, y )
     local pp, l;  #, mat;

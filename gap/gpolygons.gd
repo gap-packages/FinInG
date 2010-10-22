@@ -73,6 +73,9 @@ DeclareAttribute( "IsLinearqClan", IsqClanObj );
 # Operations and functions 
 #############################################################################
 
+
+DeclareOperation("Span",[IsElementOfGeneralisedPolygon, IsElementOfGeneralisedPolygon]);
+
 DeclareGlobalFunction( "OnKantorFamily" );
 
 DeclareOperation( "SplitCayleyHexagon", [IsField and IsFinite] );

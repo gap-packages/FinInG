@@ -602,7 +602,7 @@ InstallMethod( IsomorphismPolarSpacesNC,
   end );
 
 
-InstallGlobalFunction( ShrinkMat, "preimage of BlowUpMat",
+InstallGlobalFunction( ShrinkMat, "preimage of BlownUpMat",
   function( B, mat )
   
   ## THERE WAS A BUG IN THIS FUNCTION: (lavrauw 15/10/2010)
@@ -634,7 +634,6 @@ InstallGlobalFunction( ShrinkMat, "preimage of BlowUpMat",
   for i in [1..m/d] do
     row:=[]; 
 	for j in [1..n/d] do
-	# HIER VERDER WERKEN !!!!!!!!!!
 		submat:=blocks[(i-1)*d+j];
 		checklist:=List([1..d],i->(vecs[i]^(-1)*(Sum([1..d],j->submat[i][j]*vecs[j]))));
 		if Size(AsSet(checklist))<>1 then Error("The matrix is not a blown up matrix");
@@ -649,7 +648,7 @@ InstallGlobalFunction( ShrinkMat, "preimage of BlowUpMat",
 		
 		
 ## THE OLD ShrinkMat function:		
-# InstallGlobalFunction( ShrinkMat, "preimage of BlowUpMat",
+# InstallGlobalFunction( ShrinkMat, "preimage of BlownUpMat",
 #  function( B, mat )
 #    local result, vectors, row, i, j, resrow, b;
 #    vectors := BasisVectors( B );
@@ -666,7 +665,99 @@ InstallGlobalFunction( ShrinkMat, "preimage of BlowUpMat",
 #    ConvertToMatrixRepNC( result );
 #    return result;
 #  end );
+
+
+InstallGlobalFunction( BlownUpProjectiveSpace,
+    "blows up a projective space by field reduction",
+  function(basis,pg1)
+  local q,t,r,pg2,mat1,mat2;
+  	q:=basis!.q;
+	t:=basis!.d;
+	if not pg1!.basefield=GF(q^t) then Error("The basis and the projective space are not compatible!");
+	fi;
+	r:=Dimension(pg1)+1;
+	pg2:=PG(r*t-1,q);
+	return pg2;
+  end );
+
+
+InstallGlobalFunction( BlownUpSubspaceOfProjectiveSpace,
+    "blows up a subspace of a projective space by field reduction",
+  function(basis,subspace)
+  local pg1,q,t,r,pg2,mat1,mat2;
+    pg1:=AmbientGeometry(subspace);
+  	q:=basis!.q;
+	t:=basis!.d;
+	if not pg1!.basefield=GF(q^t) then Error("The basis and the subspace are not compatible!");
+	fi;
+	r:=Dimension(pg1)+1;
+	pg2:=PG(r*t-1,q);
+	mat1:=subspace!.obj;
+	if subspace!.type = 1 then mat1 := [subspace!.obj]; fi; 
+	mat2:=BlownUpMat(basis,mat1);
+	return VectorSpaceToElement(pg2,mat2);
+  end );
+ 
   
+InstallGlobalFunction( IsDesarguesianSpreadElement, 
+    "checks if a subspace is a blown up point using field reduction",
+  function(basis,subspace)
+      local flag,q,t,pg1,pg2,em,basvecs,v,v1,i,mat,rt,r;
+	flag:=true;
+	q:=basis!.q;
+	t:=basis!.d;
+	pg2:=AmbientGeometry(subspace);
+	rt:=Dimension(pg2)+1;
+	if not (Dimension(subspace)+1 = t and IsInt(rt/t)) then flag:=false;
+	else
+	  r:=rt/t;
+	  pg1:=PG(r-1,q^t);
+	  basvecs:=BasisVectors(basis);
+	  v:=Coordinates(Random(Points(subspace)));
+	  v1:=List([1..r],i->v{[(i-1)*t+1..i*t]}*basvecs);
+	  mat:=BlownUpMat(basis,[v1]);
+	  flag:=subspace = VectorSpaceToElement(pg2,mat);
+	fi;
+	return flag;
+  end );
+	  
+	  
+InstallGlobalFunction( IsBlownUpSubspaceOfProjectiveSpace, "checks if a subspace is blown up using field reduction",
+ # It's important that we include a basis in the arguments, 
+ # since for every subspace there exists some
+ # basis with respect to which the subspace is blown up.
+  function(basis,subspace)
+    local flag,q,F,t,K,pg2,rt,r,pg1,basvecs,mat1,span,x,v,v1,i;
+	flag:=true;
+	q:=basis!.q;
+	F:=GF(q);
+	t:=basis!.d;
+	K:=GF(q^t);
+	pg2:=AmbientGeometry(subspace);
+	rt:=Dimension(pg2)+1;
+	if not (IsInt(rt/t) and IsInt((Dimension(subspace)+1)/t)) then flag:=false;
+	else
+	  r:=rt/t;
+	  pg1:=PG(r-1,q^t);
+	  basvecs:=BasisVectors(basis);
+	  mat1:=[];
+	  span:=[];
+	  repeat
+	  repeat x:=Random(Points(subspace)); until not x in span;
+	    v:=Coordinates(x);
+	    v1:=List([1..r],i->v{[(i-1)*t+1..i*t]}*basvecs);
+	    Add(mat1,v1);
+	    span:=VectorSpaceToElement(pg2,BlownUpMat(basis,mat1));
+	  until Dimension(span)=Dimension(subspace);
+	  if not span = subspace then flag:= false;
+	  fi;
+	fi;
+	return flag;
+ end );	  
+
+
+# HIER VERDER WERKEN!!!
+
   
 InstallMethod( NaturalEmbeddingByFieldReduction, 
      "for a geometry into another, via field reduction, wrt a basis",
@@ -685,7 +776,9 @@ InstallMethod( NaturalEmbeddingByFieldReduction,
     d1 := geom1!.dimension + 1;
     d2 := geom2!.dimension + 1;
        
-    if Size(f1)^d1 = Size(f2)^d2 and IsSubset(f1, f2) and d2 mod d1 = 0 then   
+    # if Size(f1)^d1 = Size(f2)^d2 and IsSubset(f1, f2) and d2 mod d1 = 0 then   
+	# The third condition follows from the first two.
+	if Size(f1)^d1 = Size(f2)^d2 and IsSubset(f1, f2) then 
        e := d2/d1;
        func := function( x )
                  local vx, y;
@@ -695,6 +788,8 @@ InstallMethod( NaturalEmbeddingByFieldReduction,
                  return VectorSpaceToElement(geom2 , y);
                end; 
        prefun := function( x )
+	   # We have built a check to see if a subspace is in the range of the field reduction map
+	   # This check is called IsBlownUpSubspace and is defined above
                    local vx, y;
                    vx := x!.obj;
                    if x!.type = 1 then vx := [vx]; fi; 
