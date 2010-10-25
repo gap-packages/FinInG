@@ -632,7 +632,7 @@ InstallMethod( ViewObj, [ IsVectorSpaceTransversal and IsVectorSpaceTransversalR
 
 #############################################################################
 #
-# Basic methods: IsIncident, Join, Meet, IsParallel, ProjectiveCompletion
+# Basic methods: IsIncident, Span, Meet, IsParallel, ProjectiveCompletion
 #
 #############################################################################
 
@@ -723,7 +723,7 @@ InstallMethod( IsIncident,  [IsSubspaceOfAffineSpace, IsSubspaceOfAffineSpace],
 ## An affine space is a complete lattice 
 ## (with the empty set as bottom element).
 
-InstallMethod( Join, [IsSubspaceOfAffineSpace, IsSubspaceOfAffineSpace],
+InstallMethod( Span, [IsSubspaceOfAffineSpace, IsSubspaceOfAffineSpace],
   function( x, y )  
     local ux1, uy1, ux2, uy2, ambx, amby, typx, typy, span, temp;
     ambx := AmbientSpace(x!.geo);
@@ -745,7 +745,7 @@ InstallMethod( Join, [IsSubspaceOfAffineSpace, IsSubspaceOfAffineSpace],
       Append(span, uy2);
       Append(span, [uy1-ux1]); 
       span := MutableCopyMat(SemiEchelonMat(span).vectors);
-      # if the join is the whole space, return that.
+      # if the span is the whole space, return that.
       if Length(span) = ambx!.dimension + 1 then
         return ambx;
       fi;      
