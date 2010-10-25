@@ -722,7 +722,8 @@ InstallGlobalFunction( IsDesarguesianSpreadElement,
   end );
 	  
 	  
-InstallGlobalFunction( IsBlownUpSubspaceOfProjectiveSpace, "checks if a subspace is blown up using field reduction",
+InstallGlobalFunction( IsBlownUpSubspaceOfProjectiveSpace, 
+	"checks if a subspace is blown up using field reduction",
  # It's important that we include a basis in the arguments, 
  # since for every subspace there exists some
  # basis with respect to which the subspace is blown up.
@@ -756,67 +757,78 @@ InstallGlobalFunction( IsBlownUpSubspaceOfProjectiveSpace, "checks if a subspace
  end );	  
 
 
-# HIER VERDER WERKEN!!!
-
   
 InstallMethod( NaturalEmbeddingByFieldReduction, 
      "for a geometry into another, via field reduction, wrt a basis",
      [ IsProjectiveSpace, IsProjectiveSpace, IsBasis ],
-  function( geom1, geom2, bas )
+  function( geom1, geom2, basis )
   
   ##
-  ## Warning: Preimage does not check to see if input is in the range of
-  ##          the field reduction map.
+  ## This morphism contains a func and prefunc with built-in check.
   ##
   
-    local map, f1, f2, d1, d2, e, func, prefun, 
+    local map, f1, f2, d1, d2, t, func, prefun, 
           g1, gens, newgens, g2, twiner, hom, hominv;
     f1 := geom1!.basefield; 
-    f2 := geom2!.basefield; 
+    f2 := geom2!.basefield;
+	 
     d1 := geom1!.dimension + 1;
     d2 := geom2!.dimension + 1;
+	if not (IsInt(d2/d1)) then 
+		Error("The second geometry is not obtained from the first geometry by field reduction");
+	fi;
+	if not (IsBasis(basis) and f1=GF((basis!.q)^basis!.d) and f2=GF(basis!.q) and d1*(basis!.d)=d2) then
+		Error("The basis is not a basis or is not compatible with the basefields of the geometries");
+	fi;
+	t:=d2/d1;
+	
+	func := function( x ); # This map blows up a subspace of geom1 to a subspace of geom2
+		return BlownUpSubspaceOfProjectiveSpace(basis,x);
+	end; 
+	
+	prefun := function( subspace ) # This map is the inverse of func and returns an error, or a subspace of geom1
+	  local flag,basvecs,mat1,span,x,v,v1,i;
+	  flag:=true;
+	  if not subspace in geom2 then 
+		Error("The input is not in the range fo the field reduction map!");
+	  fi;
+	  if not IsInt((Dimension(subspace)+1)/t) then flag:=false;
+	  else
+		basvecs:=BasisVectors(basis);
+		mat1:=[];
+		span:=[];
+		repeat
+		repeat x:=Random(Points(subspace)); 
+		until not x in span;
+		v:=Coordinates(x);
+		v1:=List([1..d1],i->v{[(i-1)*t+1..i*t]}*basvecs);
+		Add(mat1,v1);
+		span:=VectorSpaceToElement(geom2,BlownUpMat(basis,mat1));
+		until Dimension(span)=Dimension(subspace);
+		if not span = subspace then flag:= false;
+		fi;
+	  fi;
+	  if flag= false then Error("The input is not in the range of the field reduction map!");
+	  fi;
+	  return VectorSpaceToElement(geom1,mat1);
+	end;
        
-    # if Size(f1)^d1 = Size(f2)^d2 and IsSubset(f1, f2) and d2 mod d1 = 0 then   
-	# The third condition follows from the first two.
-	if Size(f1)^d1 = Size(f2)^d2 and IsSubset(f1, f2) then 
-       e := d2/d1;
-       func := function( x )
-                 local vx, y;
-                 vx := x!.obj;
-                 if x!.type = 1 then vx := [vx]; fi; 
-                 y := BlownUpMat(bas, vx);
-                 return VectorSpaceToElement(geom2 , y);
-               end; 
-       prefun := function( x )
-	   # We have built a check to see if a subspace is in the range of the field reduction map
-	   # This check is called IsBlownUpSubspace and is defined above
-                   local vx, y;
-                   vx := x!.obj;
-                   if x!.type = 1 then vx := [vx]; fi; 
-                   y := ShrinkMat(bas, vx);
-                   return VectorSpaceToElement(geom1 , y);
-                 end; 
-       
-       map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(geom1),
+	map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(geom1),
                                          ElementsOfIncidenceStructure(geom2),
                                          func, false, prefun);
                
-    else
-       Error("Dimensions and/or field sizes are incompatible"); return;
-    fi;
-
     ## Now creating intertwiner
 
     hom := function( m )
       local image;      
-      image := BlownUpMat(bas, m!.mat); 
+      image := BlownUpMat(basis, m!.mat); 
       ConvertToMatrixRepNC( image, f1 );       
       return ProjectiveSemilinearMap(image, f1);
     end;
 
     hominv := function( m )
       local preimage;      
-      preimage := ShrinkMat(bas, m!.mat); 
+      preimage := ShrinkMat(basis, m!.mat); 
       ConvertToMatrixRepNC( preimage, f1 );       
       return ProjectiveSemilinearMap(preimage, f1);
     end;
@@ -836,21 +848,10 @@ InstallMethod( NaturalEmbeddingByFieldReduction,
      "for a geometry into another, via field reduction",
      [ IsProjectiveSpace, IsProjectiveSpace ],
   function( geom1, geom2 )
-    local map, f1, f2, d1, d2, bas;
-    f1 := geom1!.basefield; 
-    f2 := geom2!.basefield; 
-    d1 := geom1!.dimension + 1;
-    d2 := geom2!.dimension + 1;
-              
-    if Size(f1)^d1 = Size(f2)^d2 and IsSubset(f1, f2) and d2 mod d1 = 0 then       
-       bas := Basis( AsVectorSpace(f2, f1) );
-       map := NaturalEmbeddingByFieldReduction( geom1, geom2, bas );
-    else
-       Error("Dimensions and/or field sizes are incompatible"); return;
-    fi;
-    return map;  
+	local basis;
+	basis:=Basis(AsVectorSpace(geom2!.basefield,geom1!.basefield));
+	return NaturalEmbeddingByFieldReduction(geom1,geom2,basis);
   end );
-
 
 
 ## need a quicker method for this

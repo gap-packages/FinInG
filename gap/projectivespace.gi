@@ -974,8 +974,6 @@ InstallMethod( Random, "for a collection of subspaces of a projective space",
   end );
   
 
-# HIER VERDER WERKEN !!!!!!
-
 InstallMethod( Random, "for a collection of subspaces of a subspace of a projective space",
                        [ IsShadowSubspacesOfProjectiveSpace ],
         # chooses a random element out of the collection of subspaces of given
