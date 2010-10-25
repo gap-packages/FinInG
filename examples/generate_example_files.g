@@ -1,6 +1,6 @@
 #initialize: 
 affinefiles := ["affine_parallel", "affine_shadow1", "affine_shadow2", "affine_basic", 
-               "affine_elements", "affine_iterator", "affine_enumerator", "affine_join", "affine_meet"];;
+               "affine_elements", "affine_iterator", "affine_enumerator", "affine_span", "affine_meet"];;
 
 examplesfiles := ["examples_pg24", "examples_hermitian", "examples_embedW", "examples_spreads", "examples_qclan", "examples_KantorKnuth"];;
 
