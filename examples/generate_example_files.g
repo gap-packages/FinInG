@@ -13,7 +13,7 @@ morphismsfiles := ["morphisms_intertwiners","morphisms_embedding1","morphisms_em
           "morphisms_isopolar","morphisms_projection","morphisms_completion","morphisms_klein","morphisms_duality"];;
 projpolfiles := ["projpol_projectivespace", "projpol_polarspaceform",
                  "projpol_symplectic", "projpol_hermitian", "projpol_elliptic",
-		 "projpol_parabolic", "projpol_hyperbolic", "projpol_element1", "projpol_in"];
+		 "projpol_parabolic", "projpol_hyperbolic", "projpol_element1", "projpol_in", "projpol_span"];
 
 projgroupsfiles := ["projgroups_basefield",
 	  "projgroups_collineation", "projgroups_collineationgroup",
@@ -32,15 +32,15 @@ polaritiespsfiles := ["polarities_construct1", "polarities_construct2",
 gpolygonfiles := ["gpolygons_projplanes1", "gpolygons_projplanes2", "gpolygons_EGQByKantorFamily", 
                   "gpolygons_EGQByqClan", "gpolygons_EGQByBLTSet", "gpolygons_collineations", "gpolygons_SplitCayleyHexagon"];
 
-files := [polaritiespsfiles[15]];
+files := [projpolfiles[Length(projpolfiles)]];
 
 #create .out files
 #  Jan, these commands almost do the trick. Need to locate binary for gap though.
 homedir := DirectoryCurrent();
-exampledir := DirectoriesPackageLibrary("desargues","examples/gap")[1]; 
-preambledir := DirectoriesPackageLibrary("desargues","examples")[1];
-outputdir := DirectoriesPackageLibrary("desargues", "examples/output")[1];
-gap := Filename(Directory("/usr/bin/"),"gap");  
+exampledir := DirectoriesPackageLibrary("fining","examples/gap")[1]; 
+preambledir := DirectoriesPackageLibrary("fining","examples")[1];
+outputdir := DirectoriesPackageLibrary("fining", "examples/output")[1];
+gap := Filename(Directory("/usr/bin/"),"gap4r4");  
 args := [ JoinStringsWithSeparator(["-l", "./;", GAP_ROOT_PATHS[1]], " ") ];
 
                    
@@ -59,7 +59,7 @@ for filename in files do
   stream := InputOutputLocalProcess( homedir, gap, args);
   cmd := Concatenation("file := \"",filename,".out\";");
   WriteLine(stream,cmd);
-  cmd := Concatenation("dir := Directory(","\"./pkg/desargues/examples/output/\"",");");
+  cmd := Concatenation("dir := Directory(","\"./pkg/fining/examples/output/\"",");");
   WriteLine(stream,cmd);
   preamble := Filename(preambledir,"preamble.g");
   preamble_stream := InputTextFile(preamble);
@@ -82,7 +82,7 @@ od;
 #jdb 13/12 I've added the next line, because replacing '<' by '&lt;' adds some
 #characters, causing a problem in .include files when .out files are just fine. 
 SizeScreen([85,24]);
-includedir := Directory("./pkg/desargues/examples/include/");
+includedir := Directory("./pkg/fining/examples/include/");
 for filename in files do
   i := Filename(outputdir,Concatenation(filename,".out"));
   o := Filename(includedir,Concatenation(filename,".include"));
