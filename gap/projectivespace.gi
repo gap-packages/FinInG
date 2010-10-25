@@ -112,7 +112,14 @@ InstallMethod( UnderlyingVectorSpace, "for a projective space",
    return ShallowCopy(ps!.vectorspace);
 end);
 
-
+InstallMethod( UnderlyingVectorSpace, "for a subspace of a projective space",
+	[IsSubspaceOfProjectiveSpace],
+	function(subspace)
+	local vspace,W;
+	vspace:=UnderlyingVectorSpace(subspace!.geo);
+	W:=SubspaceNC(vspace,subspace!.obj);
+	return W;
+end);
 
 InstallMethod( StandardFrame, "for a projective space", [IsProjectiveSpace], 
 	# if the dimension of the projective space is n, then StandardFrame 
@@ -487,6 +494,7 @@ InstallMethod( ShadowOfElement, [IsProjectiveSpace, IsElementOfIncidenceStructur
           inner := localinner,
           outer := localouter,
           factorspace := localfactorspace,
+		  parentflag := v,
           size := Size(Subspaces(localfactorspace))
         )
       );
@@ -553,6 +561,7 @@ InstallMethod( ShadowOfFlag, [IsProjectiveSpace,
           inner := localinner,
           outer := localouter,
           factorspace := localfactorspace,
+		  parentflag := flag,
           size := Size(Subspaces(localfactorspace))
         )
       );
@@ -926,7 +935,25 @@ InstallMethod( RandomSubspace,"for a projective space and a dimension",
 		W:=RandomSubspace(vspace,d+1);
         return(VectorSpaceToElement(pg,AsList(Basis(W))));
 
+        end );
+
+InstallMethod( RandomSubspace,"for a subspace of a projective space and a dimension",
+                        [IsSubspaceOfProjectiveSpace,IsInt],
+        function(subspace,d)
+                local vspace,list,W,w;
+        
+        if d>ProjectiveDimension(subspace) then
+                Error("The dimension of the random subspace is too large");
+        fi;
+		if IsNegInt(d) then
+				Error("The dimension of the random subspace must be at least 0!");
+		fi;
+        vspace:=UnderlyingVectorSpace(subspace);
+		W:=RandomSubspace(vspace,d+1);
+        return(VectorSpaceToElement(subspace!.geo,AsList(Basis(W))));
+
         end );  
+
 		
 InstallMethod( Random, "for a collection of subspaces of a projective space",
                        [ IsAllSubspacesOfProjectiveSpace ],
@@ -937,6 +964,28 @@ InstallMethod( Random, "for a collection of subspaces of a projective space",
 	## the underlying projective space
 	pg := subs!.geometry;
 	vspace:=pg!.vectorspace;
+	if not IsInt(subs!.type) then
+          Error("The subspaces of the collection need to have the same dimension");
+        fi;
+	## the common type of elements of subs
+	d := subs!.type;        
+	W:=RandomSubspace(vspace,d);
+        return(VectorSpaceToElement(pg,AsList(Basis(W))));
+  end );
+  
+
+# HIER VERDER WERKEN !!!!!!
+
+InstallMethod( Random, "for a collection of subspaces of a subspace of a projective space",
+                       [ IsShadowSubspacesOfProjectiveSpace ],
+        # chooses a random element out of the collection of subspaces of given
+        # dimension of a subspace of a projective space
+  function( subs )
+    	local d, pg, subspace, vspace, W, w;
+	## the underlying projective space
+	pg := subs!.geometry;
+	subspace:=subs!.parentflag;
+	vspace:=UnderlyingVectorSpace(subspace);
 	if not IsInt(subs!.type) then
           Error("The subspaces of the collection need to have the same dimension");
         fi;
