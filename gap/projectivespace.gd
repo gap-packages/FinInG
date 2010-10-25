@@ -97,5 +97,5 @@ DeclareOperation( "BaerSubplaneOnQuadrangle",
 DeclareOperation("RandomSubspace",[IsVectorSpace,IsInt]);
 DeclareOperation("RandomSubspace",[IsProjectiveSpace,IsInt]);
 
-DeclareOperation("Span",[IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace]);
-DeclareOperation("Span",[IsHomogeneousList and IsSubspaceOfProjectiveSpaceCollection ]);
+#DeclareOperation("Span",[IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace]);
+#DeclareOperation("Span",[IsHomogeneousList and IsSubspaceOfProjectiveSpaceCollection ]);

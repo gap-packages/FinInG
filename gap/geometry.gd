@@ -192,9 +192,9 @@ DeclareOperation( "ShadowOfFlag",
 
 DeclareOperation( "IsIncident", [IsElementOfIncidenceStructure, IsElementOfIncidenceStructure] );
 DeclareOperation( "IsCollinear", [IsIncidenceStructure, IsElementOfIncidenceStructure, IsElementOfIncidenceStructure]);
-DeclareOperation( "Join", [IsElementOfIncidenceStructure, IsElementOfIncidenceStructure]);
+DeclareOperation( "Span", [IsElementOfIncidenceStructure, IsElementOfIncidenceStructure]);
 DeclareOperation( "Meet", [IsElementOfIncidenceStructure, IsElementOfIncidenceStructure]);
-DeclareOperation( "Join", [IsHomogeneousList]);
+DeclareOperation( "Span", [IsHomogeneousList]);
 DeclareOperation( "Meet", [IsHomogeneousList]);
 DeclareOperation( "AmbientGeometry", [ IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep ] );
 DeclareOperation( "AmbientGeometry", [ IsAllElementsOfIncidenceStructure and IsAllElementsOfIncidenceStructureRep ] );

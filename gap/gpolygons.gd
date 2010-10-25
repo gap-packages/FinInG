@@ -74,7 +74,7 @@ DeclareAttribute( "IsLinearqClan", IsqClanObj );
 #############################################################################
 
 
-DeclareOperation("Span",[IsElementOfGeneralisedPolygon, IsElementOfGeneralisedPolygon]);
+#DeclareOperation("Span",[IsElementOfGeneralisedPolygon, IsElementOfGeneralisedPolygon]);
 
 DeclareGlobalFunction( "OnKantorFamily" );
 
