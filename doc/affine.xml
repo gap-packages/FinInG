@@ -108,14 +108,14 @@ user is constructing an affine point.
 <Heading>Basic operations</Heading>
 
 <ManSection>
-<Oper Name="Join" Arg="u, v"/>
+<Oper Name="Span" Arg="u, v"/>
 <Returns> a subspace </Returns>
 <Description>
 <A>u</A> and <A>v</A> are subspaces of an affine space.
 This function returns the join of the two subspaces, that is, the span
 of the two subspaces. 
 <Example>
-<#Include SYSTEM "../examples/include/affine_join.include"> 
+<#Include SYSTEM "../examples/include/affine_span.include"> 
 </Example>
 </Description>
 </ManSection>

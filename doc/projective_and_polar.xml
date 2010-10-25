@@ -310,22 +310,14 @@ is a subspace of the polar space <A>geo</A>.
 </ManSection>
 
 <ManSection>
-<Oper Name="Join" Arg="u,v"/>
+<Oper Name="Span" Arg="u,v"/>
 <Returns> an element </Returns>
 <Description>
 <A>u</A> and <A>v</A> are elements of a projective or polar space.
 This function returns the join of the two elements, that is, the span
 of the two subspaces. 
 <Example>
-gap> ps := ProjectiveSpace(3,3);;
-gap> pi := Random(Planes(ps));;
-gap> tau := Random(Planes(ps));;
-gap> Join(pi,tau);
-PG(3, 3)
-gap> u := Random(Points(ps));;
-gap> v := Random(Points(ps));;
-gap> Join(u,v);
-&lt;a line in PG(3, 3)&gt;
+<#Include SYSTEM "../examples/include/projpol_span.include"> 
 </Example>
 </Description>
 </ManSection>
