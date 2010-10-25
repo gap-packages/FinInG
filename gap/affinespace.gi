@@ -745,6 +745,10 @@ InstallMethod( Span, [IsSubspaceOfAffineSpace, IsSubspaceOfAffineSpace],
       Append(span, uy2);
       Append(span, [uy1-ux1]); 
       span := MutableCopyMat(SemiEchelonMat(span).vectors);
+      # if the span is [], then x=y, so return x.
+      if Length(span) = 0 then
+        return x;
+      fi;
       # if the span is the whole space, return that.
       if Length(span) = ambx!.dimension + 1 then
         return ambx;
