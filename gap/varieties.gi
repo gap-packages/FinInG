@@ -392,3 +392,55 @@ end );
 #				[IsProjectiveSpace],
 #	function(pg)
 #	  local vv, var, ty, 
+
+
+
+### 6. Miscellaneous ###
+
+
+InstallMethod( ConicOnFivePoints, "given a set of five points of a projective plane",
+   [ IsHomogeneousList and IsSubspaceOfProjectiveSpaceCollection ],
+ 
+  function( pts )
+
+  #  To find the conic, we simply solve an equation
+  #
+  #  ax^2 + by^2 + cz^2 + dxy + exz + fyz = 0
+  #  [x^2,y^2,z^2,xy,xz,yz] . [a,b,c,d,e] = 0
+  #
+  #  This function returns a projective algebraic variety
+
+    local gf, r, vecs, mat, sol, poly, mat2, plane, embed,
+          pg, d, dplus1, pairs, vars, indets;
+    if Size(pts) < 5 then
+       Error("Not enough points");
+    fi;
+
+    if ForAny(pts, t -> ProjectiveDimension(t) <> 0) then
+       Error("Not a set of points");
+    fi;
+
+    ## check that the points span a plane
+
+    if Rank( List(pts, t -> t!.obj) ) <> 3 then
+       Error("Points do not span a plane");
+    fi;
+
+    pg := AmbientSpace(pts[1]!.geo);
+    gf := pg!.basefield;
+    dplus1 := Dimension(pg) + 1;
+    r := PolynomialRing(gf, dplus1);
+    indets := IndeterminatesOfPolynomialRing(r);
+    vecs := List(pts, t -> Unwrap(t));
+    pairs := UnorderedTuples( [1..dplus1], 2 );;
+    mat := List(vecs, t -> List( pairs, p -> t[p[1]] * t[p[2]] ) );;
+    sol := NullspaceMat(TransposedMat(mat))[1];
+	vars := List(pairs, p -> indets[p[1]] * indets[p[2]]);
+    poly := vars * sol;
+
+    return ProjectiveVariety( pg, [poly] );
+  end ); 
+
+
+
+

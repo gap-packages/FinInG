@@ -102,6 +102,9 @@ DeclareOperation( "GrassmannMap", [IsPosInt, IsPosInt, IsPosInt]);
 DeclareOperation( "GrassmannVariety", [IsPosInt, IsPosInt, IsField]);
 DeclareOperation( "GrassmannVariety", [IsPosInt, IsPosInt, IsPosInt]);
 
+### 7. Miscellaneous ###
+DeclareOperation( "ConicOnFivePoints",  [ IsHomogeneousList and
+                              IsSubspaceOfProjectiveSpaceCollection ] );
 
 
 #############################################################################
