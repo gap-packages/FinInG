@@ -10,10 +10,12 @@ path := Concatenation(finingpath,"/doc");
 MakeGAPDocDoc(path, "fining", [], "FinInG");
 
 #to create the tex file (was used by jdebeule, and not yet adapted to fining directory tree)
-path := Directory("~/gap4r4/pkg/desargues/doc/");
-main := "desargues.xml";
+#november 9th, I changed this to "fining" now, but please check whether the paths apply
+#to your installation... (jdb)
+path := Directory("~/pkg/fining/doc/");
+main := "fining.xml";
 files := [];
-bookname := "desargues";
+bookname := "fining";
 doc := ComposedDocument("GAPDoc", path, main, files, true);;
 r := ParseTreeXMLString(doc[1], doc[2]);
 CheckAndCleanGapDocTree(r);
