@@ -1383,7 +1383,7 @@ InstallMethod( NaturalProjectionBySubspace,
                  y := SemiEchelonMat(y)!.vectors;  
                  ConvertToMatrixRepNC(y, f);
               fi;
-              return Wrap(ps2, x!.type - vdim, y);
+              return VectorSpaceToElement(ps2, y);
            end;
 
     pre := function( y )
@@ -1470,7 +1470,7 @@ InstallMethod( NaturalProjectionBySubspaceNC,
                  y := SemiEchelonMat(y)!.vectors; 
                  ConvertToMatrixRepNC(y, f);
               fi;
-              return Wrap(ps2, x!.type - vdim, y);
+              return VectorSpaceToElement(ps2, y);
             end;
 
     pre := function( y )
