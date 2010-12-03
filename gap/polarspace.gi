@@ -167,6 +167,12 @@ InstallMethod( PolarSpace, [ IsHermitianForm ],
 # methods for some attributes.
 #############################################################################
 
+InstallOtherMethod( Dimension, [ IsClassicalPolarSpace ],
+  function(ps)
+    return Dimension(AmbientSpace(ps));
+  end );
+
+
 #type of a polar space: see manual and conventions for orthogonal polar spaces.
 InstallMethod( PolarSpaceType, [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
   function( ps )
