@@ -1206,14 +1206,14 @@ InstallMethod( NaturalProjectionBySubspace,
                  Error("Subspace is not incident with the subspace of projection");
               fi;
               y := List(x!.obj,i-> Coefficients(bas,i))*basimgs;  
+              y := SemiEchelonMat(y)!.vectors;
+                 ## Note: TriangulizeMat does not return a matrix of full
+                 ##       rank, whereas SemiEchelonMat does!
               if x!.type - vdim = 1 then 
                  y := y[1]; 
                  ConvertToVectorRep(y, f);
               else
                  y := SemiEchelonMat(y)!.vectors;  
-              ## Note: TriangulizeMat does not return a matrix of full
-              ##       rank, whereas SemiEchelonMat does!
-
                  ConvertToMatrixRepNC(y, f);
               fi;
               return Wrap(ps2, x!.type - vdim, y);
@@ -1282,11 +1282,11 @@ InstallMethod( NaturalProjectionBySubspaceNC,
     func := function( x )
               local y;         
               y := List(x!.obj,i-> Coefficients(bas,i))*basimgs;   
+              y := SemiEchelonMat(y)!.vectors;  
               if x!.type - vdim = 1 then 
                  y := y[1]; 
                  ConvertToVectorRep(y, f);
               else
-                 y := SemiEchelonMat(y)!.vectors;  
                  ConvertToMatrixRepNC(y, f);
               fi;
               return Wrap(ps2, x!.type - vdim, y);
@@ -1375,12 +1375,12 @@ InstallMethod( NaturalProjectionBySubspace,
               if not x in ps then
                  Error("Subspace is not an element of the polar space");
               fi;
-              y := List(x!.obj,i-> Coefficients(bas,i))*basimgs;   
+              y := List(x!.obj,i-> Coefficients(bas,i))*basimgs;  
+              y := SemiEchelonMat(y)!.vectors;   
               if x!.type - vdim = 1 then 
                  y := y[1]; 
                  ConvertToVectorRep(y, f);
               else
-                 y := SemiEchelonMat(y)!.vectors;  
                  ConvertToMatrixRepNC(y, f);
               fi;
               return VectorSpaceToElement(ps2, y);
@@ -1463,11 +1463,11 @@ InstallMethod( NaturalProjectionBySubspaceNC,
     func := function( x )
               local y;         
               y := List(x!.obj,i-> Coefficients(bas,i))*basimgs;
+              y := SemiEchelonMat(y)!.vectors;  
               if x!.type - vdim = 1 then 
                  y := y[1]; 
                  ConvertToVectorRepNC(y, f);
               else
-                 y := SemiEchelonMat(y)!.vectors; 
                  ConvertToMatrixRepNC(y, f);
               fi;
               return VectorSpaceToElement(ps2, y);
