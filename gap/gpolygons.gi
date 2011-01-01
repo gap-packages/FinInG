@@ -143,7 +143,7 @@ InstallMethod(Iterator, "for elements of a generalised hexagon",
     j := vs!.type;
     coll := CollineationGroup( ps );
     reps := RepresentativesOfElements( ps );
-    vars := Orbit(coll, reps[j], OnProjSubspaces);
+    vars := Enumerate(Orb(coll, reps[j], OnProjSubspaces));
     return IteratorList( vars );
   end );
 
@@ -1436,8 +1436,8 @@ InstallMethod( IncidenceMatrixOfGeneralisedPolygon,
     ## The matrix above is the adjacency matrix of the
     ## bipartite incidence graph.
     
-    szpoints := Size(gp!.points);
-    szlines := Size(gp!.lines);
+    szpoints := Size(Points(gp));
+    szlines := Size(Lines(gp));
 
     incmat := mat{[1..szpoints]}{[szpoints+1..szpoints+szlines]};
     return incmat;

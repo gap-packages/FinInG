@@ -25,6 +25,13 @@
 
 DeclareGlobalFunction("MakeAllProjectivePoints");
 
+## For later versions of GenSS, Max has changed the number of variables
+## for the operation FindBasePointCandidates.
+
+if PackageInfo("GenSS")[1]!.Version > "0.95" then
+   DeclareOperation( "FindBasePointCandidates", [ IsGroup, IsRecord, IsInt ] );
+fi;
+
 ###################################################################
 # Code for "projective elements", that is matrices modulo scalars:
 ###################################################################
