@@ -1267,6 +1267,40 @@ InstallMethod( FindBasePointCandidates,
   end );
 
 
+
+InstallMethod( FindBasePointCandidates,
+  "for a projective semilinear group",
+  [IsProjectiveGroupWithFrob,IsRecord,IsInt,IsObject],
+#
+# We need a four-argument version of this method for recent versions of GenSS.
+# We don't use "parentS" at all here.
+#
+  function(g,opt,i,parentS)
+    local cand,d,f,gens;
+    if IsBound(g!.basepointcandidates) and
+       g!.basepointcandidates.used < Length(g!.basepointcandidates.points) then
+        return g!.basepointcandidates;
+    fi;
+    gens := GeneratorsOfGroup(g);
+    if IsObjWithMemory(gens[1]) then
+        f := BaseField(gens[1]!.el);
+        d := Length(gens[1]!.el!.mat);
+    else
+        f := BaseField(g);
+        d := Dimension(g);
+    fi;
+    cand := rec( points := IdentityMat(d,f), used := 0,
+                 ops := ListWithIdenticalEntries(d,OnProjPointsWithFrob) );
+    if d > 1 then
+        Add(cand.points,ShallowCopy(cand.points[1]));
+        Add(cand.ops,OnProjPointsWithFrob);
+        cand.points[d+1][2] := PrimitiveRoot(f);
+    fi;
+    return cand;
+  end );
+
+
+
 #################################################
 # Our classical groups:
 #################################################

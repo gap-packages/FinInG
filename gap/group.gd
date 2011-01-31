@@ -30,6 +30,8 @@ DeclareGlobalFunction("MakeAllProjectivePoints");
 
 if PackageInfo("GenSS")[1]!.Version > "0.95" then
    DeclareOperation( "FindBasePointCandidates", [ IsGroup, IsRecord, IsInt ] );
+ else 
+   DeclareOperation( "FindBasePointCandidates", [ IsGroup, IsRecord, IsInt, IsObject ] );
 fi;
 
 ###################################################################
