@@ -336,7 +336,7 @@ InstallMethod( ElementsOfIncidenceStructure, [IsProjectiveSpace, IsPosInt],
       Error("<geo> has no elements of type <j>");
     else
       return Objectify(
-        NewType( ElementsCollFamily, IsSubspacesOfProjectiveSpace and IsSubspacesOfProjectiveSpaceRep),
+        NewType( ElementsCollFamily, IsSubspacesOfProjectiveSpace and IsSubspacesOfProjectiveSpaceRep ),
           rec(
             geometry := ps,
             type := j,
@@ -499,46 +499,11 @@ InstallMethod( Size, [IsShadowSubspacesOfProjectiveSpace and
       vs!.type - Size(vs!.inner)));
   end);
 
-InstallMethod( Iterator, [IsShadowSubspacesOfProjectiveSpace and
-  IsShadowSubspacesOfProjectiveSpaceRep ],
-  function( vs )
-    local ps, j, d, F;
-    ps := vs!.geometry;
-    j := vs!.type;
-    d := ps!.dimension;
-    F := ps!.basefield;
-    return IteratorByFunctions( rec(
-      NextIterator := function(iter)
-        local mat;
-        mat := NextIterator(iter!.S);
-        mat := MutableCopyMat(Concatenation(
-          BasisVectors(Basis(mat)),
-          iter!.innermat
-          ));
-        TriangulizeMat(mat);
-        if j = 1 then
-          mat := mat[1];
-          ConvertToVectorRep(mat, F);
-        else
-          ConvertToMatrixRep(mat, F);
-        fi;
-          return Wrap(ps, j, mat);
-      end,
-      IsDoneIterator := function(iter)
-        return IsDoneIterator(iter!.S);
-      end,
-      ShallowCopy := function(iter)
-        return rec(
-          innermat := iter!.innermat,
-          S := ShallowCopy(iter!.S)
-          );
-      end,
-      innermat := vs!.inner,
-      S := Iterator(Subspaces(vs!.factorspace,j-Size(vs!.inner)))
-    ));
-  end);
 
 InstallMethod( ShadowOfElement, [IsProjectiveSpace, IsElementOfIncidenceStructure, IsPosInt],
+# returns the shadow of an element v as a record containing the projective space (geometry), 
+# the type j of the elements (type), the element v (parentflag), and some extra information
+# useful to compute with the shadows, e.g. iterator
   function( ps, v, j )
     local localinner, localouter, localfactorspace;
     if j < v!.type then
@@ -577,51 +542,50 @@ InstallMethod( ShadowOfElement, [IsProjectiveSpace, IsElementOfIncidenceStructur
 
 InstallMethod( ShadowOfFlag, [IsProjectiveSpace,
     IsList, IsPosInt],
+# returns the shadow of a flag as a record containing the projective space (geometry), 
+# the type j of the elements (type), the flag (parentflag), and some extra information
+# useful to compute with the shadows, e.g. iterator
+
   function( ps, flag, j )
-    local localinner, localouter, localfactorspace, v;
+    local localinner, localouter, localfactorspace, v, smallertypes, biggertypes, ceiling, floor;
     
     #empty flag - return all subspaces of the right type
     if IsEmpty(flag) then
       return ElementsOfIncidenceStructure(ps, j);
     fi;
     
-    # find the element of highest type less than j, and the subspace
-    # of lowest type more than j.
-    for v in flag do
-      if v!.type = j then
-        localinner := v;
-        localouter := v;
-      elif v!.type < j then
-        if not IsBound(localinner) or v!.type > localinner!.type then
-          localinner := v;
-        fi;
-      else
-        if not IsBound(localouter) or v!.type < localouter!.type then
-          localouter := v;
-        fi;
-      fi;
-    od;
-    
-    # convert the subspaces into their respective matrices
-    if IsBound(localinner) then
-      if localinner!.type = 1 then
-        localinner := [localinner!.obj];
-      else
-        localinner := localinner!.obj;
-      fi;
-    else
-      localinner := [];
-    fi;
-    
-    if IsBound(localouter) then
-      if localouter!.type = 1 then
+    # find the element in the flag of highest type less than j, and the subspace
+    # in the flag of lowest type more than j.
+	
+	#listoftypes:=List(flag,x->x!.type);
+	smallertypes:=Filtered([1..Size(flag)],t->flag[t]!.type<=j);
+	biggertypes:=Filtered([1..Size(flag)],t->flag[t]!.type>=j);
+	if smallertypes=[] then localinner := [];
+		ceiling:=Minimum(biggertypes);
+		localouter:=flag[ceiling];
+	elif biggertypes=[] then localouter:=BasisVectors(Basis(ps!.vectorspace));
+		floor:=Maximum(smallertypes);
+		localinner:=flag[floor];
+	else
+		floor:=Maximum(smallertypes);
+		ceiling:=Minimum(biggertypes);
+		localinner:=flag[floor];
+		localouter:=flag[ceiling];
+	fi;
+      if not smallertypes = [] then
+		if localinner!.type = 1 then
+		localinner:=[localinner!.obj];
+		else
+		localinner:=localinner!.obj;
+		fi;
+	  fi;
+      if not biggertypes = [] then
+		if localouter!.type = 1 then
         localouter := [localouter!.obj];
-      else
+        else
         localouter := localouter!.obj;
-      fi;
-    else
-      localouter := BasisVectors(Basis(ps!.vectorspace));
-    fi;
+        fi;
+	  fi;
     
     localfactorspace := Subspace(ps!.vectorspace,
       BaseSteinitzVectors(localouter, localinner).factorspace);
@@ -640,58 +604,40 @@ InstallMethod( ShadowOfFlag, [IsProjectiveSpace,
         )
       );
   end);
-
-#############################################################################
-# Baer sublines and Baer subplanes:
-#############################################################################
-
-InstallMethod( BaerSublineOnThreePoints, [IsSubspaceOfProjectiveSpace,
-                IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
- function( x, y, z )
-  local geo, gfq2, gfq, t, subline;
-  geo := AmbientSpace(x!.geo);
-  gfq2 := geo!.basefield;
-  gfq := GF(Sqrt(Size(gfq2)));
-
-  ## Write z as x + ty
   
-  t := First(gfq2, u -> Rank([z!.obj, x!.obj + u * y!.obj]) = 1); 
-
-  ## Then the subline is just the set of points
-  ## of the form x + w (ty), w in GF(q) (together
-  ## with x and y of course).
   
-  subline := List(gfq, w -> VectorSpaceToElement(geo, x!.obj + w * t * y!.obj));
-  Add( subline, y );
-  return subline;
-end);
+InstallMethod( Iterator, [IsShadowSubspacesOfProjectiveSpace and
+  IsShadowSubspacesOfProjectiveSpaceRep ],
+  function( vs )
+    local ps, j, d, F;
+    ps := vs!.geometry;
+    j := vs!.type;
+    d := ps!.dimension;
+    F := ps!.basefield;
+    return IteratorByFunctions( rec(
+      NextIterator := function(iter)
+        local mat;
+        mat := NextIterator(iter!.S);
+        mat := MutableCopyMat(Concatenation(
+          BasisVectors(Basis(mat)),
+          iter!.innermat
+          ));
+		return VectorSpaceToElement(ps,mat);
+       end,
+      IsDoneIterator := function(iter)
+        return IsDoneIterator(iter!.S);
+      end,
+      ShallowCopy := function(iter)
+        return rec(
+          innermat := iter!.innermat,
+          S := ShallowCopy(iter!.S)
+          );
+      end,
+      innermat := vs!.inner,
+      S := Iterator(Subspaces(vs!.factorspace,j-Size(vs!.inner)))
+    ));
+  end);
 
-InstallMethod( BaerSubplaneOnQuadrangle, [IsSubspaceOfProjectiveSpace, 
-         IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
- function( w, x, y, z )
-  local geo, gfq2, gfq, s, t, subplane, coeffs, ow, ox, oy;
-  geo := AmbientSpace(w!.geo);
-  gfq2 := geo!.basefield;
-  gfq := GF(Sqrt(Size(gfq2)));
-
-  ## Write z as element in <w, x, y>
-  
-  coeffs := SolutionMat([w!.obj,x!.obj,y!.obj], z!.obj);
-  ow := coeffs[1] * w!.obj;  
-  ox := coeffs[2] * x!.obj;  
-  oy := coeffs[3] * y!.obj;  
-
-  ## Then just write down the subplane
-  
-  subplane := List(gfq, t -> VectorSpaceToElement(geo, ox + t * oy));
-  Add( subplane, VectorSpaceToElement(geo, oy) );
-  for s in gfq do
-      for t in gfq do
-          Add( subplane, VectorSpaceToElement(geo, ow + s * ox + t * oy));
-      od;
-  od;
-  return subplane;
-end);
 
 
 
@@ -701,7 +647,7 @@ end);
 
 InstallMethod( ViewObj, [ IsProjectiveSpace and IsProjectiveSpaceRep ],
   function( p )
-    Print("PG(",p!.dimension,", ",Size(p!.basefield),")");
+    Print("ProjectiveSpace(",p!.dimension,", ",Size(p!.basefield),")");
   end );
 
 InstallMethod( PrintObj, [ IsProjectiveSpace and IsProjectiveSpaceRep ],
@@ -721,12 +667,13 @@ InstallMethod( Display, [ IsProjectiveSpace and IsProjectiveSpaceRep ],
 # Basic methods and functions:
 #############################################################################
 
+
+
+InstallMethod( IsIncident,  [IsSubspaceOfProjectiveSpace,
 ## some of this function is based on the
 ## SemiEchelonMat function. we save time by assuming that the matrix of
 ## each subspace is already in semiechelon form.
-## method only applies to projective and polar spaces (where to put it!)
-
-InstallMethod( IsIncident,  [IsSubspaceOfProjectiveSpace,
+## method only applies to projective and polar spaces
   IsSubspaceOfProjectiveSpace],
   function( x, y )
     local ambx, amby, typx, typy, mat,
@@ -797,14 +744,14 @@ InstallMethod( IsIncident,  [IsSubspaceOfProjectiveSpace,
       
       return true;
     else
-      Error( "type is unknown or not implemented" );
+      Error( "The subspaces belong to different ambient spaces" );
     fi;
     return false;
   end );
 
 InstallMethod( Span, [IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
   function( x, y )  
-    local ux, uy, ambx, amby, typx, typy, span, temp, F;
+    local ux, uy, ambx, amby, typx, typy, span, F;
     ambx := AmbientSpace(x!.geo);
     amby := AmbientSpace(y!.geo);
     typx := x!.type;
@@ -825,63 +772,45 @@ InstallMethod( Span, [IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
       if Length(span) = ambx!.dimension + 1 then
         return ambx;
       fi;
-      
-      TriangulizeMat(span);
-      if Length(span) > 1 then
-         ConvertToMatrixRep(span, F);
-      fi;
-	  # The next line generated an error
-	  # temp := Wrap(ambx, Rank(span), span);
-	  # So we replaced it by:
-	  temp:=VectorSpaceToElement(ambx,span); 
-	  return temp;
+	  return VectorSpaceToElement(ambx,span); 
     else
-      Error("Subspaces belong to different ambient spaces");
+      Error("The subspaces belong to different ambient spaces");
     fi;
     return;
   end );
 
 InstallMethod( Span, [ IsHomogeneousList and IsSubspaceOfProjectiveSpaceCollection ],
   function( l )  
-      # we trust that every member of the list
-      # comes from a common geometry
     local unwrapped, r, unr, amb, span, temp, x, F;
 	# first we check that all items in the list belong to the same ambient space
 	if not Size(AsSet(List(l,x->AmbientSpace(x!.geo)!.dimension)))=1 and
 			Size(AsSet(List(l,x->AmbientSpace(x!.geo)!.basefield)))=1 then 
 	 Error("The elements in the list do not have a common ambient space");
 	else
-    x := l[1];
-    amb := AmbientSpace(x!.geo);
-    F := amb!.basefield;
-    unwrapped := [];
-    for r in l do
+      x := l[1];
+      amb := AmbientSpace(x!.geo);
+      F := amb!.basefield;
+      unwrapped := [];
+      for r in l do
         unr := r!.obj;
         if r!.type = 1 then unr := [unr]; fi;
         Append(unwrapped, unr);
-    od;
+      od;
 
-    span := MutableCopyMat(unwrapped);
-    span := MutableCopyMat(SemiEchelonMat(span).vectors);
+      span := MutableCopyMat(unwrapped);
+      span := MutableCopyMat(SemiEchelonMat(span).vectors);
 
-    if Length(span) = amb!.dimension + 1 then
-       return amb;
-    fi;
+      if Length(span) = amb!.dimension + 1 then
+         return amb;
+      fi;
       
-    TriangulizeMat(span);
-    if Length(span) > 1 then
-       ConvertToMatrixRep(span, F);
-    fi;
-	temp:=VectorSpaceToElement(amb,span);
-    #temp := Wrap(amb, Rank(span), span);
-    #if IsClassicalPolarSpace(x!.geo) and temp in x!.geo then
-    #   return Wrap( x!.geo, Rank(span), span);
-    #else
-    #   return temp;
-    #fi;
+	  return VectorSpaceToElement(amb,span);
 	fi;
-    return temp;
   end );
+
+
+# HIER VERDER WERKEN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# ALLOW THE EMPTY PROJECTIVE SPACE AS INPUT OF SPAN, MEET ETC...
 
 
 InstallMethod( Meet, [IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
@@ -900,21 +829,17 @@ InstallMethod( Meet, [IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
 
       int := SumIntersectionMat(ux, uy)[2];
 
-      if not IsEmpty(int) and Rank(int) > 0 then 
-          int := MutableCopyMat(int);
-          TriangulizeMat(int);
-          rk := Rank(int);
-          if rk = 1 then int := int[1]; fi;
+      if Rank(int) > 0 then 
 
           # if one of our varieties is in a polar space, we
           # can say that the meet is in the polar space.
       
           if IsClassicalPolarSpace(x!.geo) then
-             return Wrap( x!.geo, rk, int);
+             return VectorSpaceToElement( x!.geo, int);
           elif IsClassicalPolarSpace(y!.geo) then
-             return Wrap( y!.geo, rk, int);
+             return VectorSpaceToElement( y!.geo, int);
           else
-             return Wrap( AmbientSpace(x!.geo), rk, int);
+             return VectorSpaceToElement( AmbientSpace(x!.geo), int);
           fi;
       else 
           return [];
@@ -1030,7 +955,7 @@ InstallMethod( RandomSubspace,"for a subspace of a projective space and a dimens
 
 		
 InstallMethod( Random, "for a collection of subspaces of a projective space",
-                       [ IsAllSubspacesOfProjectiveSpace ],
+                       [ IsSubspacesOfProjectiveSpace ],
         # chooses a random element out of the collection of subspaces of given
         # dimension of a projective space
   function( subs )
@@ -1276,4 +1201,58 @@ InstallOtherMethod( Dimension,
    [IsProjectiveSpace],
    x->Rank(x)
 );
+
+#############################################################################
+# Baer sublines and Baer subplanes:
+#############################################################################
+
+InstallMethod( BaerSublineOnThreePoints, [IsSubspaceOfProjectiveSpace,
+                IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
+ function( x, y, z )
+  # returns the Baersubline determined by three collinear points x,y,z
+  local geo, gfq2, gfq, t, subline;
+  
+  geo := AmbientSpace(x!.geo);
+  gfq2 := geo!.basefield;
+  gfq := GF(Sqrt(Size(gfq2)));
+
+  ## Write z as x + ty
+  
+  t := First(gfq2, u -> Rank([z!.obj, x!.obj + u * y!.obj]) = 1); 
+
+  ## Then the subline is just the set of points
+  ## of the form x + w (ty), w in GF(q) (together
+  ## with x and y of course).
+  
+  subline := List(gfq, w -> VectorSpaceToElement(geo, x!.obj + w * t * y!.obj));
+  Add( subline, y );
+  return subline;
+end);
+
+InstallMethod( BaerSubplaneOnQuadrangle, [IsSubspaceOfProjectiveSpace, 
+         IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
+ function( w, x, y, z )
+  local geo, gfq2, gfq, s, t, subplane, coeffs, ow, ox, oy;
+  geo := AmbientSpace(w!.geo);
+  gfq2 := geo!.basefield;
+  gfq := GF(Sqrt(Size(gfq2)));
+
+  ## Write z as element in <w, x, y>
+  
+  coeffs := SolutionMat([w!.obj,x!.obj,y!.obj], z!.obj);
+  ow := coeffs[1] * w!.obj;  
+  ox := coeffs[2] * x!.obj;  
+  oy := coeffs[3] * y!.obj;  
+
+  ## Then just write down the subplane
+  
+  subplane := List(gfq, t -> VectorSpaceToElement(geo, ox + t * oy));
+  Add( subplane, VectorSpaceToElement(geo, oy) );
+  for s in gfq do
+      for t in gfq do
+          Add( subplane, VectorSpaceToElement(geo, ow + s * ox + t * oy));
+      od;
+  od;
+  return subplane;
+end);
 
