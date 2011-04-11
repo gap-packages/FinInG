@@ -175,14 +175,15 @@ InstallMethod( Enumerator, [IsElementsOfIncidenceStructure],
     return elms;
   end);
 
- ## overload "in" to mean incident
+ ## overload "in" to mean inclusion.
 
-#InstallMethod( \in, "for two elements",  [IsElementOfIncidenceStructure, IsElementOfIncidenceStructure],
-#  function( a, b )
-#    return IsIncident(b, a) and (a!.type < b!.type); #made a little change here
-#  end ); #to let in correspond with set theoretic containment. jdb 8/2/9
+InstallMethod( \in, "for two elements",  [IsElementOfLieGeometry, IsElementOfLieGeometry],
+  function( a, b )
+    return IsIncident(b, a) and (a!.type <= b!.type); #made a little change here
+  end ); #to let in correspond with set theoretic containment. jdb 8/2/9
+  #During a nice afternoon in Vicenza back enabled. jdb and pc, 11/411
   
-InstallMethod( \in, "for two elements",  [IsElementOfIncidenceStructure, IsElementOfIncidenceStructure],
+InstallOtherMethod( \*, "for two elements",  [IsElementOfIncidenceStructure, IsElementOfIncidenceStructure],
   function( a, b )
     return IsIncident(b, a);
   end );

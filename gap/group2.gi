@@ -634,6 +634,16 @@ InstallMethod( ProjectiveSpaceIsomorphism, [ IsProjGrpElWithFrobWithPSIsom and
   c -> c!.psisom );
 
 #####################################################################
+# Embedding from a collineation group to a correlation group.
+#####################################################################
+InstallOtherMethod( Embedding,
+    "for a collineation group",
+	[IsProjectiveGroupWithFrob, IsProjGroupWithFrobWithPSIsom],
+	function(group,corr)
+	return GroupHomomorphismByFunction(group,corr,x->ProjElWithFrobWithPSIsom(x!.mat,x!.frob,x!.fld));
+end );
+
+#####################################################################
 # Actions
 # We follow the same approach as in goup.gi, i.e. first define the 
 # action of the funnay algebraic elements on vectorspaces
