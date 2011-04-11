@@ -491,16 +491,6 @@ InstallMethod(Iterator,
   end);
 
 
-<<<<<<< .mine
-=======
-InstallMethod( ElementsOfIncidenceStructure, [IsProjectiveSpace],
-  function( ps )
-    return Objectify(
-      NewType( ElementsCollFamily, IsAllSubspacesOfProjectiveSpace and IsAllSubspacesOfProjectiveSpaceRep),
-        rec( geometry := ps )
-      );
-  end);
->>>>>>> .r399
 
 InstallMethod( Size, [IsShadowSubspacesOfProjectiveSpace and
   IsShadowSubspacesOfProjectiveSpaceRep ],
