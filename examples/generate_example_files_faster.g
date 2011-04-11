@@ -8,6 +8,7 @@
 #package "fining".
 #
 #Messy things happen when you do it, so don't try this at home kids!
+#file adapted on april 10th, 2011.
 
 #create workspace with packages
 LoadPackage("fining");
@@ -107,7 +108,7 @@ od;
 #for the include files, some characters will be translated to suitable xml
 #codes, taking more then one character. Therefore we widen the screen a little bit.
 #includir: directory containing the include files: ".../pkg/fining/examples/include"
-SizeScreen([85,24]);
+SizeScreen([256,24]);
 includedir := DirectoriesPackageLibrary("fining","examples/include")[1];
 for filename in files do
   i := Filename(outputdir,Concatenation(filename,".out"));
@@ -120,19 +121,20 @@ for filename in files do
   while line <> "gap> quit;\n" do
     if line <> "\n" then
       line := ReplacedString(line,"\\\n","\n");
-      AppendTo(o,ReplacedString(line,"<","&lt;"));
+      AppendTo(o,ReplacedString(ReplacedString(line,"<","&lt;"),">","&gt;"));
     fi;
     line := ReadLine(input_stream);
   od;
 od;
 SizeScreen([80,24]);
 
-#create .include files suitable for include in html directory (for godsake).
-SizeScreen([90,24]);
-includedir := DirectoriesPackageLibrary("fining","examples/include")[1];
+#create .include files suitable for include in html, e.g. on your homepage directory (for godsake,
+#comment your code!).
+SizeScreen([256,24]);
+includedir := DirectoriesPackageLibrary("fining","examples/html")[1];
 for filename in files do
   i := Filename(outputdir,Concatenation(filename,".out"));
-  o := Filename(includedir,Concatenation(filename,".include"));
+  o := Filename(includedir,Concatenation(filename,".html"));
   PrintTo(o,"");
   input_stream := InputTextFile(i);
   ReadLine(input_stream);
@@ -142,7 +144,8 @@ for filename in files do
   # while line <> fail do
     if line <> "\n" then
       line := ReplacedString(line,"\\\n","\n");
-      line := ReplacedString(line,"<","&lt;");
+      line := ReplacedString(ReplacedString(line,"<","&lt;"),">","&gt;"); 
+      #ReplacedString(line,"<","&lt;");
       AppendTo(o,ReplacedString(line,"\n","<br>\n"));
     fi;
     line := ReadLine(input_stream);

@@ -38,6 +38,11 @@ plane PG(2,4), that is, six points no three collinear.
 Now we may assume that our hyperoval contains the fundamental frame.
 
 <Example>
+<#Include SYSTEM "../examples/include/web_hyperoval24.include"> 
+</Example>
+
+
+<Example>
 gap> frame := [[1,0,0],[0,1,0],[0,0,1],[1,1,1]] * Z(2)^0;
 [ [ Z(2)^0, 0*Z(2), 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2) ], [ 0*Z(2), 0*Z(2), Z(2)^0 ],
   [ Z(2)^0, Z(2)^0, Z(2)^0 ] ]

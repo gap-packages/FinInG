@@ -6,7 +6,7 @@ Display(pointslist[1]);
 frame := [[1,0,0],[0,1,0],[0,0,1],[1,1,1]]*Z(2)^0;
 frame := List(frame,x -> VectorSpaceToElement(pg,x));
 pairs := Combinations(frame,2);
-secants := List(pairs,p -> Join(p[1],p[2]));
+secants := List(pairs,p -> Span(p[1],p[2]));
 leftover := Filtered(pointslist,t->not ForAny(secants,s->t in s));
 hyperoval := Union(frame,leftover);
 g := CollineationGroup(pg);
