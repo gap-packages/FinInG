@@ -426,7 +426,7 @@ InstallMethod( ElementsOfIncidenceStructure, [IsProjectiveSpace, IsPosInt],
 InstallMethod( ElementsOfIncidenceStructure, [IsProjectiveSpace],
   function( ps )
     return Objectify(
-      NewType( ElementsCollFamily, IsAllSubspacesOfProjectiveSpace ),
+      NewType( ElementsCollFamily, IsAllSubspacesOfProjectiveSpace and IsAllSubspacesOfProjectiveSpaceRep),
         rec( geometry := ps )
       );
   end);

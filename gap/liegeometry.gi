@@ -173,7 +173,7 @@ InstallMethod( Hyperplanes, [ IsLieGeometry, IsSubspaceOfProjectiveSpace ],
 InstallMethod( ViewObj, [ IsAllElementsOfLieGeometry and
   IsAllElementsOfLieGeometryRep ],
   function( vs )
-    Print("<",TypesOfElementsOfIncidenceStructurePlural(vs!.geometry)[vs!.type]," of ");
+    Print("<All elements of ");
     ViewObj(vs!.geometry);
     Print(">");
   end );
@@ -181,7 +181,7 @@ InstallMethod( ViewObj, [ IsAllElementsOfLieGeometry and
 InstallMethod( PrintObj, [ IsAllElementsOfLieGeometry and
   IsAllElementsOfLieGeometryRep ],
   function( vs )
-    Print("ElementsOfIncidenceStructure( ",vs!.geometry," , ",vs!.type,")");
+    Print("AllElementsOfIncidenceStructure( ",vs!.geometry," )");
   end );
 
 InstallMethod( ViewObj, [ IsShadowElementsOfLieGeometry and

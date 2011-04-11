@@ -59,7 +59,7 @@ DeclareCategory( "IsElementOfIncidenceStructure", IsComponentObjectRep and IsAtt
 DeclareCategoryCollections("IsElementOfIncidenceStructure");
 
 DeclareCategory( "IsElementsOfIncidenceStructure", IsDomain and IsCollection and IsComponentObjectRep );
-DeclareCategory( "IsAllElementsOfIncidenceStructure", IsDomain and IsCollection );
+DeclareCategory( "IsAllElementsOfIncidenceStructure", IsDomain and IsCollection and IsComponentObjectRep);
 
 # Note that this implies that we have to implement \= and \< for all
 # types of Elements!
