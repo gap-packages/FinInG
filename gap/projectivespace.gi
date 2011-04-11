@@ -336,7 +336,7 @@ InstallMethod( ElementsOfIncidenceStructure, [IsProjectiveSpace, IsPosInt],
       Error("<geo> has no elements of type <j>");
     else
       return Objectify(
-        NewType( ElementsCollFamily, IsSubspacesOfProjectiveSpace ),
+        NewType( ElementsCollFamily, IsSubspacesOfProjectiveSpace and IsSubspacesOfProjectiveSpaceRep),
           rec(
             geometry := ps,
             type := j,
@@ -349,7 +349,7 @@ InstallMethod( ElementsOfIncidenceStructure, [IsProjectiveSpace, IsPosInt],
 InstallMethod( ElementsOfIncidenceStructure, [IsProjectiveSpace],
   function( ps )
     return Objectify(
-      NewType( ElementsCollFamily, IsAllSubspacesOfProjectiveSpace ),
+      NewType( ElementsCollFamily, IsAllSubspacesOfProjectiveSpace and IsAllSubspacesOfProjectiveSpaceRep ),
         rec( geometry := ps )
       );
   end);

@@ -191,3 +191,19 @@ InstallMethod( ViewObj, [ IsShadowElementsOfLieGeometry and
     ViewObj(vs!.geometry);
     Print(">");
   end );
+
+InstallMethod( ViewObj, [ IsElementsOfLieGeometry and
+  IsElementsOfLieGeometryRep ],
+  function( vs )
+    Print("<",TypesOfElementsOfIncidenceStructurePlural(vs!.geometry)[vs!.type]," of ");
+    ViewObj(vs!.geometry);
+    Print(">");
+  end );
+
+InstallMethod( PrintObj, [ IsElementsOfLieGeometry and
+  IsElementsOfLieGeometryRep ],
+  function( vs )
+    Print("ElementsOfIncidenceStructure( ",vs!.geometry," , ",vs!.type,")");
+  end );
+
+
