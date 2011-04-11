@@ -96,6 +96,41 @@ of two polar spaces (see <Ref Oper="IsomorphismPolarSpaces" Style="Text"/>).
 </Example>
 </Description>
 </ManSection>
+
+<ManSection>
+<Oper Name="IsomorphismPolarSpaces" Arg="ps1, ps2"/>
+<Oper Name="IsomorphismPolarSpaces" Arg="ps1, ps2, boolean"/>
+<Returns>a geometry morphism</Returns>
+<Description>
+The arguments <A>ps1</A> and <A>ps2</A> are equivalent polar spaces, and this
+function returns a geometry isomorphism between them. 
+The optional third argument <A>boolean</A> can take either <C>true</C> or
+<C>false</C> as input, and then our operation will or will not compute the 
+intertwiner accordingly. The user may wish that the intertwiner is not computed
+when working with large polar spaces. The default (when calling the operation
+with two arguments) is set to <C>true</C>, and in this case,
+if at least one of <A>ps1</A> or <A>ps2</A> has
+a collineation group installed as an attribute, then an intertwining
+homomorphism is installed as an attribute. That is, we also obtain a natural
+group isomorphism from the collineation group of <A>ps1</A> onto the collineation
+group of <A>ps2</A> (see also <Ref Attr="Intertwiner" Style="Text"/>).
+<Example>
+<#Include SYSTEM "../examples/include/morphisms_isopolar.include"> 
+</Example>
+</Description>
+
+<Description>
+Both functions also have a "no check" version.
+</Description>
+<Oper Name="IsomorphismPolarSpacesNC" Arg="ps1, ps2"/>
+<Oper Name="IsomorphismPolarSpacesNC" Arg="ps1, ps2, boolean"/>
+<Returns>a geometry morphism</Returns>
+
+
+</ManSection>
+
+
+
 </Section>
 
 <Section>
@@ -147,22 +182,6 @@ Another example, this time with polar spaces:
 </ManSection>
 
 
-
-<ManSection>
-<Oper Name="TypeOfSubspace" Arg="ps, v"/>
-<Returns>a string</Returns>
-<Description>
-This operation is a convenient way to find out the intersection type
-of a projective subspace with a polar space. The argument <A>ps</A> is 
-a nondegenerate polar space, and the argument <A>v</A> is a subspace of
-the ambient projective space. The operation returns a string in accordance
-with the type of subspace: <Q>degenerate</Q>, <Q>symplectic</Q>, <Q>hermitian</Q>,
-<Q>elliptic</Q>, <Q>hyperbolic</Q> or <Q>parabolic</Q>. 
-<Example>
-<#Include SYSTEM "../examples/include/morphisms_typesubspace.include"> 
-</Example>
-</Description>
-</ManSection>
 
 
 
@@ -255,6 +274,64 @@ In this example, we consider the image of the Hermitian variety <M>H(2,25)</M> i
 </Description>
 </ManSection>
 
+<ManSection>
+<Oper Name="BlownUpProjectiveSpace" Arg="basis, pg1"/>
+<Returns>a projective space</Returns>
+<Description>
+Blows up the projective space <A>pg1</A> with respect to the <A>basis</A> using field reduction. If the argument <A>pg1</A> is has projective dimension r-1 over the finite field GF(q^t), and <A>basis</A> is a basis of GF(q^t) over GF(q), then this functions returns a projective space of dimension rt-1 over GF(q).
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="BlownUpProjectiveSpaceBySubfield" Arg="subfield,pg"/>
+<Returns>a projective space</Returns>
+<Description>
+Blows up a projective space <A>pg</A> with respect to the standard basis of the basefield of <A>pg</A> over the <A>subfield</A>.
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="BlownUpSubspaceOfProjectiveSpace" Arg="basis,subspace"/>
+<Returns>a subspace of a projective space</Returns>
+<Description>
+Blows up a <A>subspace</A> of a projective space with respect to the <A>basis</A> using field reduction and returns it a subspace of the projective space obtained from blowing up the ambient projective space of <A>subspace</A> with respect to <A>basis</A> using field reduction.
+</Description>
+</ManSection>
+
+
+<ManSection>
+<Oper Name="BlownUpSubspaceOfProjectiveSpaceBySubfield" Arg="subfield,subspace"/>
+<Returns>a subspace of a projective space</Returns>
+<Description>
+Blows up a <A>subspace</A> of a projective space with respect to the
+standard basis of the basefield of <A>subspace</A> over the <A>subfield</A>, using field reduction and 
+returns it a subspace of the projective space obtained from blowing up the ambient projective space of <A>subspace</A> over the subfield.
+</Description>
+</ManSection>
+
+
+<ManSection>
+<Oper Name="IsDesarguesianSpreadElement" Arg="basis,subspace"/>
+<Returns>true or false</Returns>
+<Description>
+Checks wether the <A>subspace</A> is a subspace which is obtained from a blowing up a projective point using field reduction with respect to <A>basis</A>.
+</Description>
+</ManSection>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <ManSection>
 <Oper Name="NaturalEmbeddingBySubField" Arg="geom1, geom2"/>
@@ -307,29 +384,6 @@ of <M>PG(2,3)</M> and embeds them into <M>PG(2,9)</M>.
 In this example, we embed <M>W(5,3)</M> in <M>H(5,3^2)</M>.
 <Example>
 <#Include SYSTEM "../examples/include/morphisms_subfield2.include"> 
-</Example>
-</Description>
-</ManSection>
-
-<ManSection>
-<Oper Name="IsomorphismPolarSpaces" Arg="ps1, ps2"/>
-<Oper Name="IsomorphismPolarSpaces" Arg="ps1, ps2, boolean"/>
-<Returns>a geometry morphism</Returns>
-<Description>
-The arguments <A>ps1</A> and <A>ps2</A> are equivalent polar spaces, and this
-function returns a geometry isomorphism between them. 
-The optional third argument <A>boolean</A> can take either <C>true</C> or
-<C>false</C> as input, and then our operation will or will not compute the 
-intertwiner accordingly. The user may wish that the intertwiner is not computed
-when working with large polar spaces. The default (when calling the operation
-with two arguments) is set to <C>true</C>, and in this case,
-if at least one of <A>ps1</A> or <A>ps2</A> has
-a collineation group installed as an attribute, then an intertwining
-homomorphism is installed as an attribute. That is, we also obtain a natural
-group isomorphism from the collineation group of <A>ps1</A> onto the collineation
-group of <A>ps2</A> (see also <Ref Attr="Intertwiner" Style="Text"/>).
-<Example>
-<#Include SYSTEM "../examples/include/morphisms_isopolar.include"> 
 </Example>
 </Description>
 </ManSection>

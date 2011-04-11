@@ -52,8 +52,8 @@ BindGlobal( "SoPSCollFamily", CollectionsFamily(SoPSFamily) );
 #
 #############################################################################
 
-DeclareOperation( "ProjectiveSpace", [IsPosInt, IsField] );
-DeclareOperation( "ProjectiveSpace", [IsPosInt, IsPosInt] );
+DeclareOperation( "ProjectiveSpace", [IsInt, IsField] );
+DeclareOperation( "ProjectiveSpace", [IsInt, IsPosInt] );
 DeclareAttribute( "HomographyGroup", IsProjectiveSpace );
 DeclareAttribute( "SpecialHomographyGroup", IsProjectiveSpace );
 DeclareAttribute( "ProjectiveDimension", IsProjectiveSpace );

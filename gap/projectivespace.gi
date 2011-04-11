@@ -31,6 +31,8 @@
 
 
 InstallMethod( Wrap, "for a projective space and an object",
+ # This is an internal subroutine which is not expected to be used by the user;
+ # they would be using VectorSpaceToElement.
   [IsProjectiveSpace, IsPosInt, IsObject],
   function( geo, type, o )
     local w;
@@ -43,6 +45,9 @@ InstallMethod( Wrap, "for a projective space and an object",
 InstallMethod( \^, [ IsSubspaceOfProjectiveSpace, IsUnwrapper ],
 # If the object "v" to be unwrapped is a point of a vector space, then we do not want to use
 # return v!.obj, but we want to return a list with one vector, i.e. [v!.obj]
+# e.g. if p is a point of a projective space
+# gap> p^_; 
+# will return a list, with the coordinate vector of the point p
 	function( v, u )
 	  if v!.type = 1 then return [v!.obj];
 	  else return v!.obj;
@@ -50,7 +55,7 @@ InstallMethod( \^, [ IsSubspaceOfProjectiveSpace, IsUnwrapper ],
 	end );
 
 InstallMethod( ProjectiveSpace, "for a proj dimension and a field",
-  [ IsPosInt, IsField ],
+  [ IsInt, IsField ],
   function( d, f )
     local geo, ty;
     geo := rec( dimension := d, basefield := f, 
@@ -61,20 +66,34 @@ InstallMethod( ProjectiveSpace, "for a proj dimension and a field",
     SetAmbientSpace(geo,geo);
     return geo;
   end );
+  
+
+InstallMethod( UnderlyingVectorSpace, "for a projective space",
+   [IsProjectiveSpace and IsProjectiveSpaceRep],
+   function(ps)
+   return ShallowCopy(ps!.vectorspace);
+end);
+
+InstallMethod( UnderlyingVectorSpace, "for a subspace of a projective space",
+	[IsSubspaceOfProjectiveSpace],
+	function(subspace)
+	local vspace,W;
+	vspace:=UnderlyingVectorSpace(subspace!.geo);
+	W:=SubspaceNC(vspace,subspace!.obj);
+	return W;
+end);
+
+  
+InstallMethod( \=, "for two projective spaces",
+	[IsProjectiveSpace, IsProjectiveSpace],
+	function(pg1,pg2);
+	return UnderlyingVectorSpace(pg1) = UnderlyingVectorSpace(pg2);
+end );
 
 InstallMethod( ProjectiveSpace, "for a proj dimension and a prime power",
-  [ IsPosInt, IsPosInt ],
+  [ IsInt, IsPosInt ],
   function( d, q )
           return ProjectiveSpace(d, GF(q));
-  end );
-
-InstallOtherMethod(\QUO,  "quotients for projective spaces",
-   [ IsProjectiveSpace and IsProjectiveSpaceRep, IsSubspaceOfProjectiveSpace],
-  function( ps, v )
-    if not v in ps then 
-       Error( "Subspace does not belong to the projective space" );
-    fi;
-    return Range( NaturalProjectionBySubspace( ps, v ) )!.geometry;
   end );
 
 InstallMethod( ProjectiveDimension, "for a projective space",
@@ -106,21 +125,6 @@ InstallMethod( Dimension, "for a subspace of a projective space",
 
 InstallMethod( Dimension, [ IsEmpty ], function(x) return -1;end );
 
-InstallMethod( UnderlyingVectorSpace, "for a projective space",
-   [IsProjectiveSpace and IsProjectiveSpaceRep],
-   function(ps)
-   return ShallowCopy(ps!.vectorspace);
-end);
-
-InstallMethod( UnderlyingVectorSpace, "for a subspace of a projective space",
-	[IsSubspaceOfProjectiveSpace],
-	function(subspace)
-	local vspace,W;
-	vspace:=UnderlyingVectorSpace(subspace!.geo);
-	W:=SubspaceNC(vspace,subspace!.obj);
-	return W;
-end);
-
 InstallMethod( StandardFrame, "for a projective space", [IsProjectiveSpace], 
 	# if the dimension of the projective space is n, then StandardFrame 
 	# makes a list of points with coordinates 
@@ -130,11 +134,11 @@ InstallMethod( StandardFrame, "for a projective space", [IsProjectiveSpace],
 	if not pg!.dimension > 0 then 
 		Error("The argument needs to be a projective space of dimension at least 1!");
 	else
-	bas:=Basis(pg!.vectorspace);	
-	frame:=List(BasisVectors(bas),v->VectorSpaceToElement(pg,v));
-	unitpt:=VectorSpaceToElement(pg,Sum(BasisVectors(bas)));
-	Add(frame,unitpt);
-	return frame;
+		bas:=Basis(pg!.vectorspace);	
+		frame:=List(BasisVectors(bas),v->VectorSpaceToElement(pg,v));
+		unitpt:=VectorSpaceToElement(pg,Sum(BasisVectors(bas)));
+		Add(frame,unitpt);
+		return frame;
 	fi;
   end );
 
@@ -193,6 +197,8 @@ InstallMethod( CollineationGroup, "for a full projective space",
     f := ps!.basefield;
     q := Size(f);
     d := ProjectiveDimension(ps);
+	if d <= -1 then Error("The dimension of the projective spaces needs to be at least 0");
+	fi;
     g := GL(d+1,q);
     frob := FrobeniusAutomorphism(f);
     newgens := List(GeneratorsOfGroup(g),x->[x,frob^0]);
@@ -217,6 +223,8 @@ InstallMethod( HomographyGroup, "for a full projective space",
     f := ps!.basefield;
     q := Size(f);
     d := ProjectiveDimension(ps);
+	if d <= -1 then Error("The dimension of the projective spaces needs to be at least 0");
+	fi;
     g := GL(d+1,q);
     frob := FrobeniusAutomorphism(f);
     newgens := List(GeneratorsOfGroup(g),x->[x,frob^0]);
@@ -235,6 +243,8 @@ InstallMethod( SpecialHomographyGroup, "for a full projective space",
     f := ps!.basefield;
     q := Size(f);
     d := ProjectiveDimension(ps);
+	if d <= -1 then Error("The dimension of the projective spaces needs to be at least 0");
+	fi;
     g := SL(d+1,q);
     frob := FrobeniusAutomorphism(f);
     newgens := List(GeneratorsOfGroup(g),x->[x,frob^0]);
@@ -246,7 +256,7 @@ InstallMethod( SpecialHomographyGroup, "for a full projective space",
     return gg;
   end );
 
-InstallMethod( RankAttr, "for a projective space",
+InstallMethod( Rank, "for a projective space",
   [ IsProjectiveSpace and IsProjectiveSpaceRep ],
   function( ps )
     return ps!.dimension;
@@ -256,6 +266,7 @@ InstallMethod( BaseField, "for a projective space", [IsProjectiveSpace],
   pg -> pg!.basefield );
   
 InstallMethod( RepresentativesOfElements, "for a projective space", [IsProjectiveSpace],
+ # returns the canonical maximal flag
   function( ps )
     local d, gf, id, elts;  
     d := ProjectiveDimension(ps);
@@ -304,12 +315,14 @@ InstallMethod( \in, "for a subspace of a projective space and projective space",
   end );
 
 InstallMethod( \in, "for an element and set of elements",  
+	# 1*SUM_FLAGS+3 increases the ranking for this method
      [IsElementOfIncidenceStructure, IsElementsOfIncidenceStructure], 1*SUM_FLAGS+3,
   function( x, dom )
     return x in dom!.geometry and x!.type = dom!.type;
   end );
 
 InstallMethod( \in, "for an element and domain",  
+	# 1*SUM_FLAGS+3 increases the ranking for this method
      [IsElementOfIncidenceStructure, IsAllElementsOfIncidenceStructure], 1*SUM_FLAGS+3,
   function( x, dom )
     return x in dom!.geometry;

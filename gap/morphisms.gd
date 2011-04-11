@@ -104,7 +104,9 @@ DeclareOperation( "NaturalDuality", [ IsSymplecticSpace and IsGeneralisedPolygon
 DeclareOperation( "NaturalDuality", [ IsHermitianVariety and IsGeneralisedPolygon ]);
 DeclareOperation( "ProjectiveCompletion", [ IsAffineSpace ] );
 
+DeclareOperation( "ShrinkMat", [IsBasis, IsMatrix] );
 
+#DeclareGlobalFunction( "ShrinkMat" ); #change to operation.
 
 
 
@@ -117,10 +119,10 @@ DeclareOperation( "ProjectiveCompletion", [ IsAffineSpace ] );
 
 DeclareGlobalFunction( "LeukBasis" );
 
-DeclareGlobalFunction( "ShrinkMat" ); #change to operation.
-
 DeclareGlobalFunction( "BlownUpProjectiveSpace" );  #change to operation.
+DeclareGlobalFunction( "BlownUpProjectiveSpaceBySubfield"); #operation.
 DeclareGlobalFunction( "BlownUpSubspaceOfProjectiveSpace" ); #change to operation.
+DeclareGlobalFunction( "BlownUpSubspaceOfProjectiveSpaceBySubfield" ); #change to operation.
 DeclareGlobalFunction( "IsDesarguesianSpreadElement" ); #change to operation.
 DeclareGlobalFunction( "IsBlownUpSubspaceOfProjectiveSpace" ); #change to operation.
 

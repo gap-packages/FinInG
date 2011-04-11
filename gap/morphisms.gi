@@ -56,7 +56,7 @@
 
 
 ############################################################
-##
+## 9.1 GENERAL 
 ## Here are some methods for the Image* operations
 ## for IsGeometryMorphism. 
 ##
@@ -134,9 +134,19 @@ InstallMethod( GeometryMorphismByFunction,
     SetFilterObj( morphism, IsGeometryMorphism ); 
     return morphism;
   end );  
+  
+##########################################################
+### 9.2 When to use geometry morphisms in FinInG (see documentation)
+##########################################################
+  
 
+##########################################################
+### 9.3 NATURAL GEOMETRY MORPHISMS
+##########################################################
 
 ## The specialised operations...
+
+### 9.3-1 NaturalEmbeddingBySubspace
 
 InstallMethod( NaturalEmbeddingBySubspace, 
       "for a geometry into another, via a specified subspace",  
@@ -602,7 +612,10 @@ InstallMethod( IsomorphismPolarSpacesNC,
   end );
 
 
-InstallGlobalFunction( ShrinkMat, "preimage of BlownUpMat",
+### 9.3-2 NaturalEmbeddingByFieldReduction
+
+InstallMethod( ShrinkMat, "preimage of BlownUpMat",
+	[ IsBasis, IsMatrix ],
   function( B, mat )
   
   ## THERE WAS A BUG IN THIS FUNCTION: (lavrauw 15/10/2010)
@@ -667,6 +680,7 @@ InstallGlobalFunction( ShrinkMat, "preimage of BlownUpMat",
 #  end );
 
 
+
 InstallGlobalFunction( BlownUpProjectiveSpace,
     "blows up a projective space by field reduction",
   function(basis,pg1)
@@ -678,6 +692,19 @@ InstallGlobalFunction( BlownUpProjectiveSpace,
 	r:=Dimension(pg1)+1;
 	pg2:=PG(r*t-1,q);
 	return pg2;
+  end );
+
+InstallGlobalFunction( BlownUpProjectiveSpaceBySubfield,
+    "blows up a projective space by field reduction w.r.t. the canonical basis",
+  function(subfield,pg)
+  local t,r,field;
+        field:=LeftActingDomain(UnderlyingVectorSpace(pg));
+        if not subfield in Subfields(field) then
+        	Error("The first argument is not a subfield of the basefield of the projective space!");
+        fi;
+        t:=Dimension(AsVectorSpace(subfield,field));
+        r:=Dimension(pg)+1;
+        return PG(r*t-1,Size(subfield));
   end );
 
 
@@ -697,7 +724,21 @@ InstallGlobalFunction( BlownUpSubspaceOfProjectiveSpace,
 	mat2:=BlownUpMat(basis,mat1);
 	return VectorSpaceToElement(pg2,mat2);
   end );
- 
+
+InstallGlobalFunction( BlownUpSubspaceOfProjectiveSpaceBySubfield,
+# This is w.r.t. to the canonical basis of the field over the subfield.
+	"blows up a subspace of projective space by field reduction",
+	function(subfield,subspace)
+	local pg,field,basis;
+		pg:=AmbientGeometry(subspace);
+		field:=LeftActingDomain(UnderlyingVectorSpace(pg));
+		if not subfield in Subfields(field) then
+			Error("The first argument is not a subfield of the basefield of the projective space!");
+		fi;
+		basis:=Basis(AsVectorSpace(subfield,field));
+		return BlownUpSubspaceOfProjectiveSpace(basis,subspace);
+	end );
+
   
 InstallGlobalFunction( IsDesarguesianSpreadElement, 
     "checks if a subspace is a blown up point using field reduction",
@@ -725,7 +766,7 @@ InstallGlobalFunction( IsDesarguesianSpreadElement,
 InstallGlobalFunction( IsBlownUpSubspaceOfProjectiveSpace, 
 	"checks if a subspace is blown up using field reduction",
  # It's important that we include a basis in the arguments, 
- # since for every subspace there exists some
+ # since for every subspace, provided it has the right dimension, there exists some
  # basis with respect to which the subspace is blown up.
   function(basis,subspace)
     local flag,q,F,t,K,pg2,rt,r,pg1,basvecs,mat1,span,x,v,v1,i;
@@ -845,7 +886,7 @@ InstallMethod( NaturalEmbeddingByFieldReduction,
   end );
 
 InstallMethod( NaturalEmbeddingByFieldReduction, 
-     "for a geometry into another, via field reduction",
+     "for a projective space into another, via field reduction",
      [ IsProjectiveSpace, IsProjectiveSpace ],
   function( geom1, geom2 )
 	local basis;
@@ -1303,6 +1344,17 @@ InstallMethod( NaturalProjectionBySubspaceNC,
     map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(ps), 
                                       ElementsOfIncidenceStructure(ps2), func, pre );
     return map;
+  end );
+
+
+
+InstallOtherMethod(\QUO,  "quotients for projective spaces",
+   [ IsProjectiveSpace and IsProjectiveSpaceRep, IsSubspaceOfProjectiveSpace],
+  function( ps, v )
+    if not v in ps then 
+       Error( "Subspace does not belong to the projective space" );
+    fi;
+    return Range( NaturalProjectionBySubspace( ps, v ) )!.geometry;
   end );
 
 
