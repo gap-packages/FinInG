@@ -328,13 +328,33 @@ InstallMethod( \in, "for an element and domain",
     return x in dom!.geometry;
   end );
 
-InstallMethod(Size, "for subspaces of a projective space",
-        [IsAllSubspacesOfProjectiveSpace],
-        function( vs )
-          return vs!.size;
-        end);
+InstallMethod( ElementsOfIncidenceStructure, [IsProjectiveSpace, IsPosInt],
+  function( ps, j )
+    local r;
+    r := Rank(ps);
+    if j > r then
+      Error("<geo> has no elements of type <j>");
+    else
+      return Objectify(
+        NewType( ElementsCollFamily, IsSubspacesOfProjectiveSpace ),
+          rec(
+            geometry := ps,
+            type := j,
+            size := Size(Subspaces(ps!.vectorspace, j))
+          )
+       );
+     fi;
+  end);
 
-InstallMethod( AsList, [IsAllSubspacesOfProjectiveSpace],
+InstallMethod( ElementsOfIncidenceStructure, [IsProjectiveSpace],
+  function( ps )
+    return Objectify(
+      NewType( ElementsCollFamily, IsAllSubspacesOfProjectiveSpace ),
+        rec( geometry := ps )
+      );
+  end);
+  
+InstallMethod( AsList, [IsSubspacesOfProjectiveSpace],
  function( vs )
 
   ## We use the package "orb" by Mueller, Neunhoeffer and Noeske,
@@ -359,6 +379,79 @@ InstallMethod( AsList, [IsAllSubspacesOfProjectiveSpace],
    fi;
    return o;
  end );
+ 
+ 
+ # One of the best features of all of the orb package is the FindSuborbits command
+ # Here's an example
+ #
+# gap> pg:=PG(3,4);
+#PG(3, 4)
+#gap> lines:=AsList(Lines(pg));
+#<closed orbit, 357 points>
+#gap> g:=ProjectivityGroup(pg);
+#PGL(4,4)
+#gap> h:=SylowSubgroup(g,5);
+#<projective semilinear group of size 25>
+#gap> FindSuborbits(lines,GeneratorsOfGroup(h));
+##I  Have suborbits, compiling result record...
+#rec( o := <closed orbit, 357 points>, nrsuborbits := 21,
+# reps := [ 1, 2, 3, 4, 5, 7, 9, 10, 12, 16, 18, 25, 26, 28, 36, 39, 56, 62,
+#     124, 276, 324 ],
+# words := [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+# lens := [ 25, 25, 25, 25, 5, 25, 25, 25, 25, 25, 5, 25, 25, 25, 5, 25, 5,
+#     5, 5, 1, 1 ],
+# suborbnr := [ 1, 2, 3, 4, 5, 3, 6, 6, 7, 8, 2, 9, 8, 4, 1, 10, 7, 11, 2, 6,
+#     6, 8, 1, 7, 12, 13, 3, 14, 8, 12, 13, 10, 14, 12, 7, 15, 13, 1, 16, 9,
+#     4, 8, 7, 2, 10, 12, 10, 1, 4, 10, 3, 8, 14, 7, 7, 17, 6, 1, 14, 9, 10,
+#     18, 4, 9, 1, 3, 14, 12, 6, 1, 9, 8, 17, 8, 2, 13, 2, 4, 6, 16, 13, 13,
+#     3, 3, 1, 10, 1, 14, 3, 12, 14, 14, 7, 10, 1, 14, 1, 4, 13, 2, 16, 2,
+#     14, 16, 4, 9, 13, 12, 3, 14, 10, 6, 15, 12, 1, 16, 4, 6, 6, 8, 17, 12,
+#     4, 19, 3, 13, 10, 9, 9, 16, 16, 7, 9, 4, 7, 1, 5, 3, 10, 19, 12, 13, 9,
+#     2, 6, 10, 6, 16, 2, 2, 3, 6, 10, 4, 4, 16, 8, 14, 6, 13, 9, 12, 12, 16,
+#     15, 13, 3, 9, 3, 10, 2, 1, 4, 7, 10, 8, 8, 14, 10, 11, 7, 9, 1, 8, 7,
+#     2, 1, 12, 17, 4, 6, 15, 16, 16, 7, 14, 13, 14, 3, 8, 18, 12, 7, 16, 14,
+#     6, 14, 7, 16, 13, 1, 9, 13, 1, 14, 18, 16, 16, 1, 17, 13, 6, 10, 16,
+#     10, 6, 10, 7, 3, 18, 13, 15, 2, 3, 7, 8, 1, 4, 2, 2, 13, 7, 4, 8, 8, 2,
+#     13, 14, 1, 10, 6, 10, 19, 6, 12, 12, 7, 13, 9, 2, 2, 7, 19, 2, 16, 14,
+#     3, 13, 10, 5, 14, 12, 8, 8, 9, 20, 13, 14, 9, 12, 6, 9, 12, 13, 7, 12,
+#     6, 11, 16, 4, 5, 2, 12, 10, 2, 12, 9, 9, 14, 14, 3, 11, 9, 8, 3, 8, 4,
+#     16, 8, 1, 2, 12, 5, 4, 8, 11, 4, 3, 6, 6, 9, 3, 3, 21, 9, 4, 2, 8, 16,
+#     16, 12, 3, 7, 7, 9, 6, 4, 8, 9, 14, 2, 3, 16, 7, 16, 1, 13, 4, 16, 4,
+#     13, 10, 18, 12, 1, 10, 19 ],
+# suborbs := [ [ 1, 15, 23, 38, 48, 58, 65, 70, 85, 87, 95, 97, 115, 136,
+#         172, 183, 187, 211, 214, 219, 237, 249, 310, 346, 355 ],
+#     [ 2, 11, 19, 44, 75, 77, 100, 102, 144, 149, 150, 171, 186, 233, 239,
+#         240, 246, 260, 261, 264, 292, 295, 311, 327, 341 ],
+#     [ 3, 6, 27, 51, 66, 83, 84, 89, 109, 125, 138, 151, 167, 169, 199, 229,
+#         234, 267, 301, 305, 318, 322, 323, 332, 342 ],
+#     [ 4, 14, 41, 49, 63, 78, 98, 105, 117, 123, 134, 154, 155, 173, 190,
+#         238, 243, 290, 307, 314, 317, 326, 337, 348, 350 ],
+#     [ 5, 137, 270, 291, 313 ],
+#     [ 7, 8, 20, 21, 57, 69, 79, 112, 118, 119, 145, 147, 152, 159, 191,
+#         206, 222, 226, 251, 254, 281, 287, 319, 320, 336 ],
+#     [ 9, 17, 24, 35, 43, 54, 55, 93, 132, 135, 174, 181, 185, 195, 203,
+#         208, 228, 235, 242, 257, 262, 285, 333, 334, 344 ],
+#     [ 10, 13, 22, 29, 42, 52, 72, 74, 120, 157, 176, 177, 184, 200, 236,
+#         244, 245, 273, 274, 304, 306, 309, 315, 328, 338 ],
+#     [ 12, 40, 60, 64, 71, 106, 128, 129, 133, 143, 161, 168, 182, 212, 259,
+#         275, 279, 282, 297, 298, 303, 321, 325, 335, 339 ],
+#     [ 16, 32, 45, 47, 50, 61, 86, 94, 111, 127, 139, 146, 153, 170, 175,
+#         179, 223, 225, 227, 250, 252, 269, 294, 352, 356 ],
+#     [ 18, 180, 288, 302, 316 ],
+#     [ 25, 30, 34, 46, 68, 90, 108, 114, 122, 141, 162, 163, 188, 202, 255,
+#         256, 272, 280, 283, 286, 293, 296, 312, 331, 354 ],
+#     [ 26, 31, 37, 76, 81, 82, 99, 107, 126, 142, 160, 166, 197, 210, 213,
+#         221, 231, 241, 247, 258, 268, 277, 284, 347, 351 ],
+#     [ 28, 33, 53, 59, 67, 88, 91, 92, 96, 103, 110, 158, 178, 196, 198,
+#         205, 207, 215, 248, 266, 271, 278, 299, 300, 340 ],
+#     [ 36, 113, 165, 192, 232 ],
+#     [ 39, 80, 101, 104, 116, 130, 131, 148, 156, 164, 193, 194, 204, 209,
+#         217, 218, 224, 265, 289, 308, 329, 330, 343, 345, 349 ],
+#     [ 56, 73, 121, 189, 220 ], [ 62, 201, 216, 230, 353 ],
+#     [ 124, 140, 253, 263, 357 ], [ 276 ], [ 324 ] ],
+# conjsuborbit := [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+#     0, 0 ], issuborbitrecord := true )
+
 
 
 
@@ -371,7 +464,7 @@ InstallMethod( AsList, [IsAllSubspacesOfProjectiveSpace],
 
 InstallMethod(Iterator,
   "for subspaces of a projective space",
-        [IsAllSubspacesOfProjectiveSpace],
+        [IsSubspacesOfProjectiveSpace],
         function( vs )
           local ps, j, d, F;
           ps := vs!.geometry;
@@ -383,13 +476,7 @@ InstallMethod(Iterator,
               local mat;
               mat := NextIterator(iter!.S);
               mat := BasisVectors(Basis(mat));
-              if j = 1 then
-                mat := mat[1];
-                ConvertToVectorRep(mat, F);
-              else
-                ConvertToMatrixRep(mat, F);
-              fi;
-                return Wrap(ps, j, mat);
+			  return VectorSpaceToElement(ps,mat);	         
             end,
             IsDoneIterator := function(iter)
               return IsDoneIterator(iter!.S);
@@ -403,26 +490,9 @@ InstallMethod(Iterator,
           ));
   end);
 
-InstallMethod( ElementsOfIncidenceStructure, [IsProjectiveSpace, IsPosInt],
-  function( ps, j )
-    local r;
-    r := Rank(ps);
-    if j > r then
-      Error("<geo> has no elements of type <j>");
-    else
-      return Objectify(
-        NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
-                                  IsAllSubspacesOfProjectiveSpace and
-                                  IsAllSubspacesOfProjectiveSpaceRep),
-          rec(
-            geometry := ps,
-            type := j,
-            size := Size(Subspaces(ps!.vectorspace, j))
-          )
-       );
-     fi;
-  end);
 
+<<<<<<< .mine
+=======
 InstallMethod( ElementsOfIncidenceStructure, [IsProjectiveSpace],
   function( ps )
     return Objectify(
@@ -430,6 +500,7 @@ InstallMethod( ElementsOfIncidenceStructure, [IsProjectiveSpace],
         rec( geometry := ps )
       );
   end);
+>>>>>>> .r399
 
 InstallMethod( Size, [IsShadowSubspacesOfProjectiveSpace and
   IsShadowSubspacesOfProjectiveSpaceRep ],
