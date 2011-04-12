@@ -865,35 +865,6 @@ InstallMethod( Span, [ IsHomogeneousList and IsSubspaceOfProjectiveSpaceCollecti
 
 
 
-InstallMethod( Span, [ IsList ],
-  function( l )  
-    local unwrapped, r, unr, amb, span, temp, x, F;
-	# first we check that all items in the list belong to the same ambient space
-	if not Size(AsSet(List(l,x->AmbientSpace(x!.geo)!.dimension)))=1 and
-			Size(AsSet(List(l,x->AmbientSpace(x!.geo)!.basefield)))=1 then 
-	 Error("The elements in the list do not have a common ambient space");
-	else
-      x := l[1];
-      amb := AmbientSpace(x!.geo);
-      F := amb!.basefield;
-      unwrapped := [];
-      for r in l do
-        unr := r!.obj;
-        if r!.type = 1 then unr := [unr]; fi;
-        Append(unwrapped, unr);
-      od;
-
-      span := MutableCopyMat(unwrapped);
-      span := MutableCopyMat(SemiEchelonMat(span).vectors);
-
-      if Length(span) = amb!.dimension + 1 then
-         return amb;
-      fi;
-      
-	  return VectorSpaceToElement(amb,span);
-	fi;
-  end );
-
 
 # HIER VERDER WERKEN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # ALLOW THE EMPTY PROJECTIVE SPACE AS INPUT OF SPAN, MEET ETC...
