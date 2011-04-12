@@ -77,6 +77,9 @@ DeclareOperation( "UnderlyingVectorSpace", [IsSubspaceOfProjectiveSpace] );
 DeclareOperation( "IsIncident", [IsSubspaceOfProjectiveSpace, IsProjectiveSpace] );
 DeclareOperation( "IsIncident", [IsProjectiveSpace, IsSubspaceOfProjectiveSpace] );
 
+DeclareOperation( "Meet", [IsSubspaceOfProjectiveSpace, IsProjectiveSpace] );
+DeclareOperation( "Meet", [IsProjectiveSpace, IsSubspaceOfProjectiveSpace] );
+
 
 DeclareAttribute( "AmbientSpace", IsProjectiveSpace );
 
@@ -106,6 +109,9 @@ DeclareOperation("RandomSubspace",[IsSubspaceOfProjectiveSpace,IsInt]);
 
 
 DeclareOperation("Span",[IsProjectiveSpace, IsSubspaceOfProjectiveSpace]);
-
 DeclareOperation("Span",[IsSubspaceOfProjectiveSpace, IsProjectiveSpace]);
+
+DeclareOperation( "Meet", [IsSubspaceOfProjectiveSpace, IsProjectiveSpace] );
+DeclareOperation( "Meet", [IsProjectiveSpace, IsSubspaceOfProjectiveSpace] );
+
 #DeclareOperation("Span",[IsHomogeneousList and IsSubspaceOfProjectiveSpaceCollection ]);

@@ -870,6 +870,20 @@ InstallMethod( Span, [ IsHomogeneousList and IsSubspaceOfProjectiveSpaceCollecti
 # ALLOW THE EMPTY PROJECTIVE SPACE AS INPUT OF SPAN, MEET ETC...
 
 
+InstallMethod( Meet, [IsProjectiveSpace, IsSubspaceOfProjectiveSpace],
+        function(x,y)
+        if y in x then return y;
+	fi;
+end );
+
+InstallMethod( Meet, [IsSubspaceOfProjectiveSpace, IsProjectiveSpace],
+        function(x,y)
+        if x in y then return x;
+        fi;
+end );
+
+
+
 InstallMethod( Meet, [IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
   function( x, y )
     local ux, uy, typx, typy, int, f, rk;
