@@ -982,15 +982,21 @@ InstallMethod( NaturalEmbeddingByFieldReduction, [ IsClassicalPolarSpace, IsClas
             (([type1, type2] = ["hermitian", "elliptic"] and IsOddInt(d1) and IsEvenInt(e))) then
        
           ## This part has been tested for small examples 
-       
-          bas := Basis(vec);
+          ## THe new form is B'(x,y) = Tr( B(x,y) )
+          ## Matrix?        
+
+          bas := Basis(vec, LeukBasis(f1,f2) );
           w := First(bas, t->not t in f2);
           block := [[1,w],[w^q2,w^(q2+1)]]*One(f2);
           newgram := IdentityMat(d2, f2);
           for i in [1..d2/2] do
               newgram{[2*i-1,2*i]}{[2*i-1,2*i]} := block;
           od;
-          form := QuadraticFormByMatrix(newgram, f2);
+gram := GramMatrix( SesquilinearForm(geom1) );
+newgram := BlownUpMat( bas, gram );
+      #    form := QuadraticFormByMatrix(newgram, f2);
+
+          form := QuadraticFormByMatrix(newgram, f1);
 
        elif [type1, type2] = ["hermitian", "hermitian"] and IsOddInt(e) then
        
@@ -1019,8 +1025,7 @@ InstallMethod( NaturalEmbeddingByFieldReduction, [ IsClassicalPolarSpace, IsClas
     ps := PolarSpace(form);
     iso := IsomorphismPolarSpacesNC(ps, geom2, computeintertwiner);
 
-
-	pgmap := NaturalEmbeddingByFieldReduction( AmbientSpace(geom1), AmbientSpace(geom2), bas);
+    pgmap := NaturalEmbeddingByFieldReduction( AmbientSpace(geom1), AmbientSpace(geom2), bas);
     func := x -> iso!.fun( pgmap!.fun( x ) );
     prefun := x -> pgmap!.prefun( iso!.prefun( x ) );
     map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(geom1), 
