@@ -1360,9 +1360,9 @@ InstallMethod( BlockDesignOfGeneralisedPolygon,
   end );
 
 InstallMethod( IncidenceGraphOfGeneralisedPolygon,
-             [ IsGeneralisedPolygon and IsGeneralisedPolygonRep ], 
+             [ IsGeneralisedPolygon ], 
   function( gp )
-    local points, lines, graph, sz, adj, elations, gg;
+    local points, lines, graph, sz, adj, elations, gg, coll;
     if not "grape" in RecNames(GAPInfo.PackagesLoaded) then
        Error("You must load the GRAPE package\n");
     fi;
@@ -1385,7 +1385,11 @@ InstallMethod( IncidenceGraphOfGeneralisedPolygon,
              fi;
            end;
 
-    if IsElationGQ(gp) and HasElationGroup( gp ) then
+	if HasCollineationGroup(gp) then
+	   coll := CollineationGroup(gp);
+	   gg := Action(coll, Concatenation(points, lines));  ## here we have not assumed an action!
+	   graph := Graph( gg, [1..sz+Size(lines)], OnPoints, adj );  
+	elif IsElationGQ(gp) and HasElationGroup( gp ) then
 	   elations := ElationGroup(gp);
 	   gg := Action(elations, Concatenation(points, lines), CollineationAction( elations ) );
 	   graph := Graph( gg, [1..sz+Size(lines)], OnPoints, adj );  
@@ -1427,7 +1431,7 @@ InstallMethod( IncidenceGraphOfGeneralisedPolygon,
   end );
 
 InstallMethod( IncidenceMatrixOfGeneralisedPolygon,
-             [ IsGeneralisedPolygon and IsGeneralisedPolygonRep ],
+             [ IsGeneralisedPolygon ],
   function( gp )
     local graph, mat, incmat, szpoints, szlines;
     graph := IncidenceGraphOfGeneralisedPolygon( gp );

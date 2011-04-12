@@ -130,17 +130,15 @@ DeclareOperation( "ProjectivePlaneByIncidenceMatrix", [ IsMatrix ] );
 if not IsBound( BlockDesign ) then 
    BlockDesign := function(arg) return 1; end;
 fi;
-if not IsBound( CollapsedAdjacencyMat ) then 
-   CollapsedAdjacencyMat := function(arg) return 1; end;
-fi;
+
 
 BlockDesignOfGeneralisedPolygonAttr := NewAttribute( "BlockDesignOfGeneralisedPolygonAttr", 
-                    IsGeneralisedPolygon and IsGeneralisedPolygonRep, "mutable" );
+                    IsGeneralisedPolygon, "mutable" );
 IncidenceGraphOfGeneralisedPolygonAttr := NewAttribute( "IncidenceGraphOfGeneralisedPolygonAttr", 
-					IsGeneralisedPolygon and IsGeneralisedPolygonRep, "mutable" );
+					IsGeneralisedPolygon, "mutable" );
 
-DeclareOperation( "BlockDesignOfGeneralisedPolygon", [ IsGeneralisedPolygon and IsGeneralisedPolygonRep ] );
-DeclareOperation( "IncidenceGraphOfGeneralisedPolygon", [ IsGeneralisedPolygon and IsGeneralisedPolygonRep ]);
+DeclareOperation( "BlockDesignOfGeneralisedPolygon", [ IsGeneralisedPolygon ] );
+DeclareOperation( "IncidenceGraphOfGeneralisedPolygon", [ IsGeneralisedPolygon ]);
 
 
 
