@@ -749,35 +749,64 @@ InstallMethod( IsIncident,  [IsSubspaceOfProjectiveSpace,
     return false;
   end );
 
-InstallMethod( Span, [IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
-  function( x, y )  
-    local ux, uy, ambx, amby, typx, typy, span, F;
-    ambx := AmbientSpace(x!.geo);
-    amby := AmbientSpace(y!.geo);
-    typx := x!.type;
-    typy := y!.type;
-    F := ambx!.basefield;
+#InstallMethod( Span, [IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
+#  function( x, y )  
+#    local ux, uy, ambx, amby, typx, typy, span, F;
+#    ambx := AmbientSpace(x!.geo);
+#    amby := AmbientSpace(y!.geo);
+#    typx := x!.type;
+#    typy := y!.type;
+#    F := ambx!.basefield;
 
-    if ambx!.vectorspace = amby!.vectorspace then
-      ux := ShallowCopy(x!.obj); 
-      uy := ShallowCopy(y!.obj);
-        
-      if typx = 1 then ux := [ux]; fi;
-      if typy = 1 then uy := [uy]; fi;
+#    if ambx!.vectorspace = amby!.vectorspace then
+#      ux := ShallowCopy(x!.obj); 
+#      uy := ShallowCopy(y!.obj);
+#        
+#      if typx = 1 then ux := [ux]; fi;
+#      if typy = 1 then uy := [uy]; fi;
 
-      span := MutableCopyMat(ux);
-      Append(span,uy);
-      span := MutableCopyMat(SemiEchelonMat(span).vectors);
-      # if the span is the whole space, return that.
-      if Length(span) = ambx!.dimension + 1 then
-        return ambx;
-      fi;
-	  return VectorSpaceToElement(ambx,span); 
-    else
-      Error("The subspaces belong to different ambient spaces");
-    fi;
-    return;
-  end );
+#      span := MutableCopyMat(ux);
+#      Append(span,uy);
+#      span := MutableCopyMat(SemiEchelonMat(span).vectors);
+#      # if the span is the whole space, return that.
+#      if Length(span) = ambx!.dimension + 1 then
+#        return ambx;
+#      fi;
+#	  return VectorSpaceToElement(ambx,span); 
+#    else
+#      Error("The subspaces belong to different ambient spaces");
+#    fi;
+#    return;
+#  end );
+
+InstallMethod( Span, [IsSubspaceOfProjectiveSpace,
+IsSubspaceOfProjectiveSpace],
+ function( x, y )
+   ## This method is quicker than the old one
+   local ux, uy, typx, typy, span, vec;
+   typx := x!.type;
+   typy := y!.type;
+   vec := x!.geo!.vectorspace;
+   if vec = y!.geo!.vectorspace then
+     ux := Unwrap(x);
+     uy := Unwrap(y);
+
+     if typx = 1 then ux := [ux]; fi;
+     if typy = 1 then uy := [uy]; fi;
+
+     span := SumIntersectionMat(ux, uy)[1];
+
+     if Length(span) < vec!.DimensionOfVectors then
+        return VectorSpaceToElement( AmbientSpace(x!.geo), span);
+     else
+        return AmbientSpace(x!.geo);
+     fi;
+   else
+     Error("Subspaces belong to different ambient spaces");
+   fi;
+ end );
+
+
 
 InstallMethod( Span, [ IsHomogeneousList and IsSubspaceOfProjectiveSpaceCollection ],
   function( l )  
