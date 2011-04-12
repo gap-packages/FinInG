@@ -77,9 +77,6 @@ DeclareOperation( "UnderlyingVectorSpace", [IsSubspaceOfProjectiveSpace] );
 DeclareOperation( "IsIncident", [IsSubspaceOfProjectiveSpace, IsProjectiveSpace] );
 DeclareOperation( "IsIncident", [IsProjectiveSpace, IsSubspaceOfProjectiveSpace] );
 
-DeclareOperation( "Meet", [IsSubspaceOfProjectiveSpace, IsProjectiveSpace] );
-DeclareOperation( "Meet", [IsProjectiveSpace, IsSubspaceOfProjectiveSpace] );
-
 
 DeclareAttribute( "AmbientSpace", IsProjectiveSpace );
 
