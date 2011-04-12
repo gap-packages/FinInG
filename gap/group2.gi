@@ -563,7 +563,7 @@ InstallMethod( CorrelationGroup, "for a full projective space",
     Add(newgens,[One(g),frob^0,tau]);
     newgens := ProjElsWithFrobWithPSIsom(newgens, f);
     corr := GroupWithGenerators(newgens);
-    SetSize(corr, Size(g) / (q - 1) * Order(frob));
+    SetSize(corr, Size(g) / (q - 1) * Order(frob) * 2); #* 2 for the standard duality.
     return corr;
   end );
 
@@ -740,7 +740,7 @@ InstallMethod( ActionOnPointsHyperplanes,
     for m in orb do
         Add(orb2, flip(m));
     od;
-    orb := Concatenation(orb,orb2);
+    orb := List(Concatenation(orb,orb2),x->VectorSpaceToElement(ps,x)); #corrected 12/4/11
     a := ActionHomomorphism(pg, orb,
               OnProjSubspacesReversing, "surjective");
     SetIsInjective(a,true);
