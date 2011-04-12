@@ -74,6 +74,9 @@ DeclareAttribute( "StandardFrame", IsSubspaceOfProjectiveSpace );
 DeclareOperation( "UnderlyingVectorSpace", [IsProjectiveSpace] );
 DeclareOperation( "UnderlyingVectorSpace", [IsSubspaceOfProjectiveSpace] );
 
+DeclareOperation( "IsIncident", [IsSubspaceOfProjectiveSpace, IsProjectiveSpace] );
+DeclareOperation( "IsIncident", [IsProjectiveSpace, IsSubspaceOfProjectiveSpace] );
+
 
 DeclareAttribute( "AmbientSpace", IsProjectiveSpace );
 
@@ -90,6 +93,7 @@ DeclareOperation( "Hyperplanes", [IsProjectiveSpace] );
 #
 #############################################################################
 
+
 DeclareOperation( "BaerSublineOnThreePoints", 
   [ IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace] );
 DeclareOperation( "BaerSubplaneOnQuadrangle", 
@@ -100,5 +104,8 @@ DeclareOperation("RandomSubspace",[IsVectorSpace,IsInt]);
 DeclareOperation("RandomSubspace",[IsProjectiveSpace,IsInt]);
 DeclareOperation("RandomSubspace",[IsSubspaceOfProjectiveSpace,IsInt]);
 
-#DeclareOperation("Span",[IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace]);
+
+DeclareOperation("Span",[IsProjectiveSpace, IsSubspaceOfProjectiveSpace]);
+
+DeclareOperation("Span",[IsSubspaceOfProjectiveSpace, IsProjectiveSpace]);
 #DeclareOperation("Span",[IsHomogeneousList and IsSubspaceOfProjectiveSpaceCollection ]);

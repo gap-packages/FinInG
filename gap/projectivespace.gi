@@ -668,6 +668,20 @@ InstallMethod( Display, [ IsProjectiveSpace and IsProjectiveSpaceRep ],
 #############################################################################
 
 
+InstallMethod( IsIncident,  [IsSubspaceOfProjectiveSpace,
+        IsProjectiveSpace],
+        # returns true if the subspace is contained in the projective space
+        function(x,y)
+                return x in y;
+        end );
+
+InstallMethod( IsIncident,  [IsProjectiveSpace,
+        IsSubspaceOfProjectiveSpace],
+        # returns true if the subspace is contained in the projective space
+        function(x,y)
+                return y in x;
+        end );
+
 
 InstallMethod( IsIncident,  [IsSubspaceOfProjectiveSpace,
 ## some of this function is based on the
@@ -749,6 +763,18 @@ InstallMethod( IsIncident,  [IsSubspaceOfProjectiveSpace,
     return false;
   end );
 
+InstallMethod( Span, [IsProjectiveSpace, IsSubspaceOfProjectiveSpace],
+        function(x,y)
+        if y in x then return x;
+	fi;
+end );
+
+InstallMethod( Span, [IsSubspaceOfProjectiveSpace, IsProjectiveSpace],
+        function(x,y)
+        if x in y then return y;
+        fi;
+end );
+
 #InstallMethod( Span, [IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
 #  function( x, y )  
 #    local ux, uy, ambx, amby, typx, typy, span, F;
@@ -809,6 +835,37 @@ IsSubspaceOfProjectiveSpace],
 
 
 InstallMethod( Span, [ IsHomogeneousList and IsSubspaceOfProjectiveSpaceCollection ],
+  function( l )  
+    local unwrapped, r, unr, amb, span, temp, x, F;
+	# first we check that all items in the list belong to the same ambient space
+	if not Size(AsSet(List(l,x->AmbientSpace(x!.geo)!.dimension)))=1 and
+			Size(AsSet(List(l,x->AmbientSpace(x!.geo)!.basefield)))=1 then 
+	 Error("The elements in the list do not have a common ambient space");
+	else
+      x := l[1];
+      amb := AmbientSpace(x!.geo);
+      F := amb!.basefield;
+      unwrapped := [];
+      for r in l do
+        unr := r!.obj;
+        if r!.type = 1 then unr := [unr]; fi;
+        Append(unwrapped, unr);
+      od;
+
+      span := MutableCopyMat(unwrapped);
+      span := MutableCopyMat(SemiEchelonMat(span).vectors);
+
+      if Length(span) = amb!.dimension + 1 then
+         return amb;
+      fi;
+      
+	  return VectorSpaceToElement(amb,span);
+	fi;
+  end );
+
+
+
+InstallMethod( Span, [ IsList ],
   function( l )  
     local unwrapped, r, unr, amb, span, temp, x, F;
 	# first we check that all items in the list belong to the same ambient space
