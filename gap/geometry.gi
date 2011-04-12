@@ -58,6 +58,9 @@ InstallMethod( \^, [ IsElementOfIncidenceStructure, IsUnwrapper ],
 
 InstallMethod( AmbientGeometry, [ IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep ], x -> x!.geo );
 
+#notice the small difference with the previous line :-)
+InstallMethod( AmbientGeometry, [ IsElementsOfIncidenceStructure and IsElementsOfIncidenceStructureRep ], x -> x!.geometry );
+
 InstallMethod( AmbientGeometry, [ IsAllElementsOfIncidenceStructure and IsAllElementsOfIncidenceStructureRep ], x -> x!.geometry );
 
 InstallMethod( Type, [ IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep ], x -> x!.type );

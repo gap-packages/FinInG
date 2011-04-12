@@ -197,6 +197,7 @@ DeclareOperation( "Meet", [IsElementOfIncidenceStructure, IsElementOfIncidenceSt
 DeclareOperation( "Span", [IsHomogeneousList]);
 DeclareOperation( "Meet", [IsHomogeneousList]);
 DeclareOperation( "AmbientGeometry", [ IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep ] );
+DeclareOperation( "AmbientGeometry", [ IsElementsOfIncidenceStructure and IsElementsOfIncidenceStructureRep ] );
 DeclareOperation( "AmbientGeometry", [ IsAllElementsOfIncidenceStructure and IsAllElementsOfIncidenceStructureRep ] );
 
 DeclareOperation( "Type", [ IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep ] );
