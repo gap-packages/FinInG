@@ -11,11 +11,12 @@
 ##                                                            Michael Pauley
 ##                                                             Sven Reichard
 ##
-##  Copyright 2008 University of Western Australia, Perth
-##                 Lehrstuhl D fuer Mathematik, RWTH Aachen
+##  Copyright 2011 University of Western Australia, Perth
+##                 University of St. Andrews
 ##                 Ghent University
 ##                 Colorado State University
 ##                 Vrije Universiteit Brussel
+##                 Università degli Studi di Padova
 ##
 ##  Implementation stuff for correlation groups
 ##
