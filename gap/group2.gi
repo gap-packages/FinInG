@@ -131,6 +131,27 @@ InstallMethod( \*,
    return One(delta1);
 end);
 
+InstallMethod( \*,
+   "for multiplying a standard-duality of a projective space",
+   [IsIdentityMappingOfElementsOfProjectiveSpace, IsStandardDualityOfProjectiveSpace],
+   function(delta1,delta2)
+   return delta2;
+end);
+
+InstallMethod( \*,
+   "for multiplying a standard-duality of a projective space",
+   [IsStandardDualityOfProjectiveSpace, IsIdentityMappingOfElementsOfProjectiveSpace],
+   function(delta1,delta2)
+   return delta1;
+end);
+
+InstallMethod( \*,
+   "for multiplying a standard-duality of a projective space",
+   [IsIdentityMappingOfElementsOfProjectiveSpace, IsIdentityMappingOfElementsOfProjectiveSpace],
+   function(delta1,delta2)
+   return delta1;
+end);
+
 InstallMethod( \^,
     "for psisom and zero",
     [ IsProjectiveSpaceIsomorphism, IsZeroCyc ],
@@ -198,7 +219,7 @@ InstallMethod( ProjElWithFrobWithPSIsom,
     local el,isom,q,n;
     q := Size(f); 
     n := Length(m);
-    isom := IdentityMappingOfElementsOfProjectiveSpace(ProjectiveSpace(n,f));  ## I hope this works!
+    isom := IdentityMappingOfElementsOfProjectiveSpace(ProjectiveSpace(n-1,f));  ## I hope this works! was wrong, for godsake, don't tell Celle about this type of mistakes :-(
     el := rec( mat := m, fld := f, frob := frob, psisom := isom);
     Objectify( ProjElsWithFrobWithPSIsomType, el );
     return el;
@@ -375,10 +396,11 @@ InstallMethod( \*,
    IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep],
   function( a, b )
     local el;  
-    el := rec( mat := (a!.mat * (b!.mat^(a!.frob^-1)))^a!.psisom, fld := a!.fld, 
+    el := rec( mat := a!.mat * ((b!.mat^(a!.frob^-1)))^a!.psisom, fld := a!.fld, #O Celle, dear friend, you missed this correction :-)
                frob := a!.frob * b!.frob, psisom := a!.psisom * b!.psisom );
     Objectify( ProjElsWithFrobWithPSIsomType, el);
-    return el;
+   	#Print("method4\n");
+	return el;
   end );
 
 InstallMethod(\<,  [IsProjGrpElWithFrobWithPSIsom, IsProjGrpElWithFrobWithPSIsom],
@@ -458,7 +480,8 @@ InstallMethod( \*,
     el := rec( mat := (a!.mat * (b!.mat^(a!.frob^-1)))^a!.psisom, fld := a!.fld, 
                frob := a!.frob * b!.frob, psisom := a!.psisom * b!.psisom );
     Objectify( ProjElsWithFrobWithPSIsomType, el);
-    return el;
+	#Print("method1\n");
+	return el;
   end );
 
 InstallMethod( \*, 
@@ -470,7 +493,8 @@ InstallMethod( \*,
     el := rec( mat := (a!.mat * (b!.mat^(a!.frob^-1))), fld := a!.fld, 
                frob := a!.frob * b!.frob, psisom := b!.psisom );
     Objectify( ProjElsWithFrobWithPSIsomType, el);
-    return el;
+   	#Print("method2\n");
+	return el;
   end );
 
 InstallMethod( \*, 
@@ -482,6 +506,7 @@ InstallMethod( \*,
     el := rec( mat := (a!.mat * (b!.mat^(a!.frob^-1)))^a!.psisom, fld := a!.fld, 
                frob := a!.frob * b!.frob, psisom := a!.psisom  );
     Objectify( ProjElsWithFrobWithPSIsomType, el);
+	#Print("method3\n");
     return el;
   end );
 
@@ -641,7 +666,15 @@ InstallOtherMethod( Embedding,
     "for a collineation group",
 	[IsProjectiveGroupWithFrob, IsProjGroupWithFrobWithPSIsom],
 	function(group,corr)
-	return GroupHomomorphismByFunction(group,corr,x->ProjElWithFrobWithPSIsom(x!.mat,x!.frob,x!.fld));
+	return GroupHomomorphismByFunction(group,corr,
+	y->ProjElWithFrobWithPSIsom(y!.mat,y!.frob,y!.fld),false,
+	function(x)
+		if IsOne(x!.psisom) then
+			return ProjElWithFrob(x!.mat,x!.frob,x!.fld);
+		else
+			Error("<x> has no preimage");
+		fi; 
+	end);
 end );
 
 #####################################################################

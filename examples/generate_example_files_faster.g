@@ -55,7 +55,7 @@ gpolygonfiles := ["gpolygons_projplanes1", "gpolygons_projplanes2", "gpolygons_E
 
 websitefiles := ["web_hyperoval24", "web_inumbersherm", "web_embedding", "web_spreads", "web_ovoidq63"];
 
-files := [ "examples_PSL211" ];
+files := [ "projgroups_psisomorphism" ];
 
 #initialize directorynames
 #exampledir = dir where .g files are located : ".../pkg/fining/examples/gap"

@@ -220,7 +220,7 @@ of projective semilinear map here.
 <A>g</A> is a correlation of a projective space. This function returns the
 companion isomorphism of the projective space which defines <A>g</A>. 
 <Example>
-example in projgroups_psisomorphis gives an error.
+<#Include SYSTEM "../examples/include/projgroups_psisomorphism.include"> 
 </Example>
 </Description>
 </ManSection>
@@ -312,6 +312,10 @@ the base field of the vector space on which the group acts.
 the dimension of the vector space on which the group acts.
 </Description>
 </ManSection>
+
+</Section>
+<Section Label="nice_mono">
+<Heading>Nice Monomorphisms</Heading>
 
 <ManSection>
 <Oper Name="CanComputeActionOnPoints" Arg="g"/>
