@@ -1,0 +1,21 @@
+gap&gt; w3 := SymplecticSpace(3,3);
+W(3, 3)
+gap&gt; w5 := SymplecticSpace(5,3);
+W(5, 3)
+gap&gt; pg := AmbientSpace(w5);
+PG(5, 3)
+gap&gt; iter := Iterator(ElementsOfIncidenceStructure(pg,4));
+&lt;iterator&gt;
+gap&gt; perp := PolarityOfProjectiveSpace(w5);
+&lt;polarity of PG(5, GF(3)), &lt; immutable compressed matrix 6x6 over GF(
+3) &gt;, F^0 &gt;
+gap&gt; solid := NextIterator(iter);
+&lt;a solid in PG(5, 3)&gt;
+gap&gt; em := NaturalEmbeddingBySubspace(w3,w5,solid);
+&lt;geometry morphism from &lt;Elements of W(3, 3)&gt; to &lt;Elements of W(5, 3)&gt;&gt;
+gap&gt; points := Points(w3);
+&lt;points of W(3, 3)&gt;
+gap&gt; points2 := ImagesSet(em,AsSet(points));;
+#I  Computing nice monomorphism...
+gap&gt; ForAll(points2,x -&gt; x in solid);
+true
