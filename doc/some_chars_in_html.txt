@@ -6,6 +6,7 @@
 \in &#8712;
 \perp &#8869;
 \epsilon &#949;
+\delta &#948;
 
 # in text:
 <Alt Not="HTML"> </Alt><Alt Only="HTML"> </Alt>
