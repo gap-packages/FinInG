@@ -109,7 +109,7 @@ InstallMethod( ProjectiveDimension, "for a subspace of a projective space",
   end );
 
 
-InstallMethod( ProjectiveDimension, [ IsEmpty ], function(x) return -1;end );
+#InstallMethod( ProjectiveDimension, [ IsEmpty ], function(x) return -1;end );
 
 InstallMethod( Dimension, "for a projective space",
   [ IsProjectiveSpace and IsProjectiveSpaceRep ],
@@ -123,7 +123,7 @@ InstallMethod( Dimension, "for a subspace of a projective space",
     return v!.type - 1;
   end );
 
-InstallMethod( Dimension, [ IsEmpty ], function(x) return -1;end );
+#InstallMethod( Dimension, [ IsEmpty ], function(x) return -1;end );
 
 InstallMethod( StandardFrame, "for a projective space", [IsProjectiveSpace], 
 	# if the dimension of the projective space is n, then StandardFrame 
@@ -353,6 +353,11 @@ InstallMethod( ElementsOfIncidenceStructure, [IsProjectiveSpace],
         rec( geometry := ps )
       );
   end);
+  
+InstallMethod( AmbientSpace, [IsSubspaceOfProjectiveSpace],
+	function(subspace)
+		return subspace!.geo;
+	end );
   
 InstallMethod( AsList, [IsSubspacesOfProjectiveSpace],
  function( vs )
@@ -836,10 +841,9 @@ IsSubspaceOfProjectiveSpace],
 
 InstallMethod( Span, [ IsHomogeneousList and IsSubspaceOfProjectiveSpaceCollection ],
   function( l )  
-    local unwrapped, r, unr, amb, span, temp, x, F;
+    local unwrapped, r, unr, amb, span, temp, x, F, list;
 	# first we check that all items in the list belong to the same ambient space
-	if not Size(AsSet(List(l,x->AmbientSpace(x!.geo)!.dimension)))=1 and
-			Size(AsSet(List(l,x->AmbientSpace(x!.geo)!.basefield)))=1 then 
+	if not Size(AsSet(List(l,x->AmbientSpace(x))))=1 then 
 	 Error("The elements in the list do not have a common ambient space");
 	else
       x := l[1];
@@ -864,10 +868,28 @@ InstallMethod( Span, [ IsHomogeneousList and IsSubspaceOfProjectiveSpaceCollecti
   end );
 
 
+InstallMethod( Span, [ IsList ],
+  function( l )  
+    local pg,list,x;
+	# This method is added to allow the list ("l") to contain the projective space 
+	# or the empty subspace. If this method is selected, it follows that the list must
+	# contain the whole projective space or the empty set. 
+	# First we remove the emptysubspace from the list, then we check if the list
+	# contains the whold projective space. If it does, return that, if it doesn't
+	# return the span of the remaining elements of the list, which will then select
+	# the previous method for Span
+	list:=Filtered(l,x->not IsEmptySubspace(x));
+	if not Size(AsSet(List(list,x->AmbientSpace(x))))=1 then 
+	 Error("The elements in the list do not have a common ambient space");
+	else
+	  pg:=AmbientSpace(list[1]);
+	  if pg in list then return pg;
+	  else
+		return Span(list);
+	  fi;
+	fi;
+  end );
 
-
-# HIER VERDER WERKEN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-# ALLOW THE EMPTY PROJECTIVE SPACE AS INPUT OF SPAN, MEET ETC...
 
 
 InstallMethod( Meet, [IsProjectiveSpace, IsSubspaceOfProjectiveSpace],
@@ -900,7 +922,7 @@ InstallMethod( Meet, [IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
 
       int := SumIntersectionMat(ux, uy)[2];
 
-      if Rank(int) > 0 then 
+      if not int=[] then 
 
           # if one of our varieties is in a polar space, we
           # can say that the meet is in the polar space.
@@ -910,10 +932,10 @@ InstallMethod( Meet, [IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
           elif IsClassicalPolarSpace(y!.geo) then
              return VectorSpaceToElement( y!.geo, int);
           else
-             return VectorSpaceToElement( AmbientSpace(x!.geo), int);
+             return VectorSpaceToElement( AmbientSpace(x), int);
           fi;
       else 
-          return [];
+          return EmptySubspace;
       fi;
     else
       Error("Subspaces belong to different ambient spaces");
@@ -922,22 +944,68 @@ InstallMethod( Meet, [IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
   end );
 
 InstallMethod( Meet, [ IsHomogeneousList and IsSubspaceOfProjectiveSpaceCollection],
-  function( l )  
-      # we trust that every member of the list
-      # comes from a common geometry.
+ function( l )  
+     local int, iter;
+	 # first we check if all subspaces have the same ambient geometry
+  if not Size(AsSet(List(l,x->AmbientSpace(x))))=1 then 
+    Error("The elements in the list do not have a common ambient space");
+  else
       # We use recursion for this routine.
       # Not ideal, but there is no "SumIntersectionMat" for lists
-    local int, iter;
+
     if not IsEmpty(l) then
+	  if Length(l)=1 then return l;
+	  else
        iter := Iterator(l);
        int := NextIterator(iter);
        repeat
          int := Meet(int, NextIterator(iter));
        until int = [] or IsDoneIterator(iter);
        return int;
-    else return l;
+	  fi;
+    else return EmptySubspace;
     fi;
-  end );
+  fi;
+ end );
+
+InstallMethod( Meet, [ IsList ],
+  function( l )  
+    local pg,checklist,list,x;
+	# This method is added to allow the list ("l") to contain the projective space 
+	# or the empty subspace. If this method is selected, it follows that the list must
+	# contain the whole projective space or the empty set. 
+	if not IsEmpty(l) then
+	  if Length(l)=1 then return l;
+	  else
+
+    	# First we check that the non emptysubspace elements belong to the same ambient space
+	  checklist:=Filtered(l,x->not IsEmptySubspace(x));
+	  if not Size(AsSet(List(checklist,x->AmbientSpace(x))))=1 then 
+	   Error("The elements in the list do not have a common ambient space");
+	  else	
+	  # First we remove the whole space from the list, then we check if the list
+	  # contains the whold projective space. If it does, return that, if it doesn't
+	  # return the span of the remaining elements of the list, which will then select
+	  # the previous method for Span
+	    if EmptySubspace in l then return EmptySubspace;
+	    else
+	      pg:=AmbientSpace(checklist[1]); # the first element in l could be the emptysubspace,
+	      # so we choose the first element of the checklist
+	      list:=Filtered(l,x->not x = pg);
+		  return Meet(list);
+	    fi;
+	  fi;
+	fi;
+  fi;
+end );
+
+
+
+#####
+##
+## Methods for random selection of elements
+##
+####
   
   
 InstallMethod( Random, "for a collection of subspaces of a vector space",

@@ -76,9 +76,18 @@ DeclareOperation( "UnderlyingVectorSpace", [IsSubspaceOfProjectiveSpace] );
 
 DeclareOperation( "IsIncident", [IsSubspaceOfProjectiveSpace, IsProjectiveSpace] );
 DeclareOperation( "IsIncident", [IsProjectiveSpace, IsSubspaceOfProjectiveSpace] );
+#DeclareOperation( "IsIncident", [IsEmptySubspace, IsSubspaceOfProjectiveSpace]);
+#DeclareOperation( "IsIncident", [IsSubspaceOfProjectiveSpace, IsEmptySubspace]);
+#DeclareOperation( "IsIncident", [IsEmptySubspace, IsProjectiveSpace]);
+#DeclareOperation( "IsIncident", [IsProjectiveSpace, IsEmptySubspace]);
+DeclareOperation( "IsIncident", [IsProjectiveSpace, IsProjectiveSpace]);
+#DeclareOperation( "IsIncident", [IsEmptySubspace, IsEmptySubspace]);
+
 
 
 DeclareAttribute( "AmbientSpace", IsProjectiveSpace );
+DeclareAttribute( "AmbientSpace", IsSubspaceOfProjectiveSpace );
+
 
 DeclareSynonymAttr( "ProjectivityGroup", HomographyGroup );
 DeclareSynonymAttr( "SpecialProjectivityGroup", SpecialHomographyGroup );
@@ -107,8 +116,9 @@ DeclareOperation("RandomSubspace",[IsSubspaceOfProjectiveSpace,IsInt]);
 
 DeclareOperation("Span",[IsProjectiveSpace, IsSubspaceOfProjectiveSpace]);
 DeclareOperation("Span",[IsSubspaceOfProjectiveSpace, IsProjectiveSpace]);
+#DeclareOperation("Span",[IsHomogeneousList and IsSubspaceOfProjectiveSpaceCollection ]);
+DeclareOperation("Span",[IsList]);
 
 DeclareOperation( "Meet", [IsSubspaceOfProjectiveSpace, IsProjectiveSpace] );
 DeclareOperation( "Meet", [IsProjectiveSpace, IsSubspaceOfProjectiveSpace] );
-
-#DeclareOperation("Span",[IsHomogeneousList and IsSubspaceOfProjectiveSpaceCollection ]);
+DeclareOperation( "Meet", [IsList]);
