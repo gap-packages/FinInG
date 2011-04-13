@@ -58,8 +58,19 @@ DeclareCategory( "IsIncidenceStructure", IsComponentObjectRep and IsAttributeSto
 DeclareCategory( "IsElementOfIncidenceStructure", IsComponentObjectRep and IsAttributeStoringRep and CanEasilyCompareElements and CanEasilySortElements );
 DeclareCategoryCollections("IsElementOfIncidenceStructure");
 
-DeclareCategory( "IsElementsOfIncidenceStructure", IsDomain and IsCollection and IsComponentObjectRep );
-DeclareCategory( "IsAllElementsOfIncidenceStructure", IsDomain and IsCollection and IsComponentObjectRep);
+#DeclareCategory( "IsElementsOfIncidenceStructure", IsDomain and IsCollection and IsComponentObjectRep );
+#DeclareCategory( "IsAllElementsOfIncidenceStructure", IsDomain and IsCollection and IsComponentObjectRep);
+
+DeclareCategory( "IsAnyElementsOfIncidenceStructure", IsDomain and IsCollection and IsComponentObjectRep );
+   ## e.g.,  Points(PG(3,4)) or ElementsOfIncidenceStructure(PG(3,4));
+
+
+DeclareCategory( "IsElementsOfIncidenceStructure", IsAnyElementsOfIncidenceStructure );
+   ## e.g.,  Points(PG(3,4)) 
+
+DeclareCategory( "IsAllElementsOfIncidenceStructure", IsAnyElementsOfIncidenceStructure);
+   ## e.g.,  ElementsOfIncidenceStructure(PG(3,4));
+
 
 # Note that this implies that we have to implement \= and \< for all
 # types of Elements!

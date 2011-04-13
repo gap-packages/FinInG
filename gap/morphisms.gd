@@ -39,15 +39,15 @@ DeclareAttribute( "Intertwiner", IsGeometryMorphism );
 
 
 DeclareOperation( "GeometryMorphismByFunction", 
-  [ IsAllElementsOfIncidenceStructure, IsAllElementsOfIncidenceStructure,
+  [ IsAnyElementsOfIncidenceStructure, IsAnyElementsOfIncidenceStructure,
     IsFunction, IsBool, IsFunction ] );
     
 DeclareOperation( "GeometryMorphismByFunction", 
-  [ IsAllElementsOfIncidenceStructure, IsAllElementsOfIncidenceStructure,
+  [ IsAnyElementsOfIncidenceStructure, IsAnyElementsOfIncidenceStructure,
     IsFunction, IsFunction ] );
 
 DeclareOperation( "GeometryMorphismByFunction", 
-  [ IsAllElementsOfIncidenceStructure, IsAllElementsOfIncidenceStructure,
+  [ IsAnyElementsOfIncidenceStructure, IsAnyElementsOfIncidenceStructure,
     IsFunction ] );
 
 

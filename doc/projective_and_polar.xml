@@ -53,6 +53,7 @@ namely, the common abbreviation <C>PG(d, q)</C>.
 </ManSection>
 </Section>
 
+
 <Section>
 <Heading>Creating Polar Spaces</Heading>
 
@@ -280,6 +281,108 @@ the classical polar space with underlying form <A>form</A>
 <Heading>Basic operations on Projective and Polar Spaces</Heading>
 
 <ManSection>
+<Oper Name="UnderlyingVectorSpace" Arg="ps"/>
+
+<Returns>a vector space</Returns>
+<Description>
+<Example>
+</Example>
+</Description>
+</ManSection>
+
+Equality of projective spaces?
+Projective dimension of a projective space and of an element
+
+
+<ManSection>
+<Oper Name="ProjectiveDimension" Arg="ps"/>
+<Oper Name="Dimension" Arg="ps"/>
+<Oper Name="Rank" Arg="ps"/>
+
+<Returns></Returns>
+<Description>
+<Example>
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="StandardFrame" Arg="ps"/>
+
+<Returns></Returns>
+<Description>
+<Example>
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="Coordinates" Arg="v"/>
+
+<Returns></Returns>
+<Description>
+<Example>
+</Example>
+</Description>
+</ManSection>
+
+
+<ManSection>
+<Oper Name="EquationOfHyperplane" Arg="ps"/>
+
+<Returns></Returns>
+<Description>
+<Example>
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="BaseField" Arg="ps"/>
+
+<Returns></Returns>
+<Description>
+<Example>
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="AsList" Arg="subspaces"/>
+
+<Returns>an Orb object or list</Returns>
+<Description>
+<Example>
+<#Include SYSTEM "../examples/include/projpol_aslist.include"> 
+</Example>
+</Description>
+</ManSection>
+
+
+<ManSection>
+<Oper Name="Random" Arg="subspaces"/>
+
+<Returns></Returns>
+<Description>
+<Example>
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="RandomSubspace" Arg="pg, i"/>
+
+<Returns></Returns>
+<Description>
+<Example>
+</Example>
+</Description>
+</ManSection>
+
+
+
+
+<ManSection>
 <Oper Name="VectorSpaceToElement" Arg="geo, v"/>
 <Returns>an element</Returns>
 <Description>
@@ -297,11 +400,26 @@ element <A>geo</A>.
 </Description>
 </ManSection>
 
+
 <ManSection>
-<Oper Name="\in" Arg="geo, v"/>
+<Var Name = "EmptySubspace" />
+<Returns>a GAP object</Returns>
+<Description>
+<A>EmptySubspace</A> is a GAP object which represents the ubiquitous 
+trivial subspace of a projective or polar space, and is contained in
+every projective space.
+<Example>
+<#Include SYSTEM "../examples/include/projpol_emptysubspace.include"> 
+</Example>
+</Description>
+</ManSection>
+
+
+<ManSection>
+<Oper Name="\in" Arg="v, geo"/>
 <Returns>true or false</Returns>
 <Description>
-<A>v</A> is an element of an incidencestructure. It is checked whether <A>v</A>
+<A>v</A> is an element of an incidence structure. It is checked whether <A>v</A>
 is a subspace of the polar space <A>geo</A>.
 <Example>
 <#Include SYSTEM "../examples/include/projpol_in.include"> 
@@ -328,10 +446,10 @@ of the two subspaces.
 <Description>
 <A>u</A> and <A>v</A> are elements of a projective or polar space.
 This function returns the meet of the two elements. If two
-elements do not meet, then Meet returns <C>[ ]</C>, which in <Package>FinInG</Package>,
-is a element with projective dimension -1. (Note that the poset
+elements do not meet, then Meet returns <C>EmptySubspace</C>, which in <Package>FinInG</Package>,
+is an element with projective dimension -1. (Note that the poset
 of subspaces of a polar space is a meet-semilattice, but not closed under
-taking joins).
+taking spans).
 <Example>
 gap> ps := HyperbolicQuadric(5,3);;
 gap> pi := Random( Planes(ps) );;

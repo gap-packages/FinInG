@@ -706,7 +706,7 @@ InstallMethod( IncidenceGraph, [ IsCosetGeometry ],
 
     vars := Concatenation( List(allvars, AsList) );
     gamma := Graph( g, vars, OnCosetGeometryElement, 
-                function(x,y) return x in y; end, true);
+                function(x,y) return x * y; end, true);
     
     Setter( IncidenceGraphAttr )( geo, gamma );
     return gamma;

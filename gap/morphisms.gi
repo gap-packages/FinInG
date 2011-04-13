@@ -101,12 +101,12 @@ InstallOtherMethod( PreImagesSet, [IsGeometryMorphism, IsElementOfIncidenceStruc
 
 
 ## The three methods for GeometryMorphismByFunction are analogous
-## ith the MappingByFunction function. It behaves in exactly the same
+## with the MappingByFunction function. It behaves in exactly the same
 ## way except that we return an IsGeometryMorphism.
 
 
 InstallMethod( GeometryMorphismByFunction, 
-  [ IsAllElementsOfIncidenceStructure, IsAllElementsOfIncidenceStructure,
+  [ IsAnyElementsOfIncidenceStructure, IsAnyElementsOfIncidenceStructure,
     IsFunction, IsBool, IsFunction ],
   function( els1, els2, fun, bool, prefun )
     local morphism;
@@ -116,7 +116,7 @@ InstallMethod( GeometryMorphismByFunction,
   end );  
   
 InstallMethod( GeometryMorphismByFunction, 
-  [ IsAllElementsOfIncidenceStructure, IsAllElementsOfIncidenceStructure,
+  [ IsAnyElementsOfIncidenceStructure, IsAnyElementsOfIncidenceStructure,
     IsFunction, IsFunction ],
   function( els1, els2, fun, inv )
     local morphism;
@@ -126,7 +126,7 @@ InstallMethod( GeometryMorphismByFunction,
   end );  
 
 InstallMethod( GeometryMorphismByFunction, 
-  [ IsAllElementsOfIncidenceStructure, IsAllElementsOfIncidenceStructure,
+  [ IsAnyElementsOfIncidenceStructure, IsAnyElementsOfIncidenceStructure,
     IsFunction ],
   function( els1, els2, fun )
     local morphism;
@@ -134,6 +134,7 @@ InstallMethod( GeometryMorphismByFunction,
     SetFilterObj( morphism, IsGeometryMorphism ); 
     return morphism;
   end );  
+
   
 ##########################################################
 ### 9.2 When to use geometry morphisms in FinInG (see documentation)
