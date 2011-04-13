@@ -113,6 +113,8 @@ DeclareOperation("RandomSubspace",[IsVectorSpace,IsInt]);
 DeclareOperation("RandomSubspace",[IsProjectiveSpace,IsInt]);
 DeclareOperation("RandomSubspace",[IsSubspaceOfProjectiveSpace,IsInt]);
 
+DeclareOperation("RandomSubspace",[IsProjectiveSpace]);
+
 
 DeclareOperation("Span",[IsProjectiveSpace, IsSubspaceOfProjectiveSpace]);
 DeclareOperation("Span",[IsSubspaceOfProjectiveSpace, IsProjectiveSpace]);

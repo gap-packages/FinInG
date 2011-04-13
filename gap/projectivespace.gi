@@ -1097,6 +1097,15 @@ InstallMethod( RandomSubspace,"for a subspace of a projective space and a dimens
 
         end );  
 
+InstallMethod( RandomSubspace, "for a projective space",
+					[IsProjectiveSpace],
+		function(pg)
+			local list,i;
+			list:=[0..Dimension(pg)-1];
+			i:=Random(list);
+			return RandomSubspace(pg,i);
+		end );
+			
 		
 InstallMethod( Random, "for a collection of subspaces of a projective space",
                        [ IsSubspacesOfProjectiveSpace ],
