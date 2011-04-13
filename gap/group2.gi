@@ -666,7 +666,8 @@ InstallOtherMethod( Embedding,
     "for a collineation group",
 	[IsProjectiveGroupWithFrob, IsProjGroupWithFrobWithPSIsom],
 	function(group,corr)
-	return GroupHomomorphismByFunction(group,corr,
+	local hom;
+	hom :=  GroupHomomorphismByFunction(group,corr,
 	y->ProjElWithFrobWithPSIsom(y!.mat,y!.frob,y!.fld),false,
 	function(x)
 		if IsOne(x!.psisom) then
@@ -676,6 +677,8 @@ InstallOtherMethod( Embedding,
 			Error("<x> has no preimage");
 		fi; 
 	end);
+	SetIsInjective(hom,true);
+	return hom;
 end );
 
 #####################################################################
