@@ -843,7 +843,7 @@ InstallMethod( Span, [ IsHomogeneousList and IsSubspaceOfProjectiveSpaceCollecti
   function( l )  
     local unwrapped, r, unr, amb, span, temp, x, F, list;
 	# first we check that all items in the list belong to the same ambient space
-	if not Size(AsSet(List(l,x->AmbientSpace(x))))=1 then 
+	if not Size(AsDuplicateFreeList(List(l,x->AmbientSpace(x))))=1 then 
 	 Error("The elements in the list do not have a common ambient space");
 	else
       x := l[1];
@@ -878,8 +878,11 @@ InstallMethod( Span, [ IsList ],
 	# contains the whold projective space. If it does, return that, if it doesn't
 	# return the span of the remaining elements of the list, which will then select
 	# the previous method for Span
+  if Length(l)=0 then return EmptySubspace;
+  elif Length(l)=1 then return l;
+  else
 	list:=Filtered(l,x->not IsEmptySubspace(x));
-	if not Size(AsSet(List(list,x->AmbientSpace(x))))=1 then 
+	if not Size(AsDuplicateFreeList(List(list,x->AmbientSpace(x))))=1 then 
 	 Error("The elements in the list do not have a common ambient space");
 	else
 	  pg:=AmbientSpace(list[1]);
@@ -888,6 +891,7 @@ InstallMethod( Span, [ IsList ],
 		return Span(list);
 	  fi;
 	fi;
+  fi;
   end );
 
 
@@ -947,7 +951,7 @@ InstallMethod( Meet, [ IsHomogeneousList and IsSubspaceOfProjectiveSpaceCollecti
  function( l )  
      local int, iter;
 	 # first we check if all subspaces have the same ambient geometry
-  if not Size(AsSet(List(l,x->AmbientSpace(x))))=1 then 
+  if not Size(AsDuplicateFreeList(List(l,x->AmbientSpace(x))))=1 then 
     Error("The elements in the list do not have a common ambient space");
   else
       # We use recursion for this routine.
@@ -974,13 +978,14 @@ InstallMethod( Meet, [ IsList ],
 	# This method is added to allow the list ("l") to contain the projective space 
 	# or the empty subspace. If this method is selected, it follows that the list must
 	# contain the whole projective space or the empty set. 
-	if not IsEmpty(l) then
+	if IsEmpty(l) then return EmptySubspace;
+	else
 	  if Length(l)=1 then return l;
 	  else
 
     	# First we check that the non emptysubspace elements belong to the same ambient space
-	  checklist:=Filtered(l,x->not IsEmptySubspace(x));
-	  if not Size(AsSet(List(checklist,x->AmbientSpace(x))))=1 then 
+	  checklist:=Filtered(l,x->not IsEmptySubspace(x) and not IsProjectiveSpace(x));
+	  if not Size(AsDuplicateFreeList(List(checklist,x->AmbientSpace(x))))=1 then 
 	   Error("The elements in the list do not have a common ambient space");
 	  else	
 	  # First we remove the whole space from the list, then we check if the list
