@@ -1,0 +1,5 @@
+gap&gt; hq := HyperbolicQuadric(5,3);
+Q+(5, 3)
+gap&gt; SpecialIsometryGroup(hq);
+#I  Computing nice monomorphism...
+PSO(1,6,3)

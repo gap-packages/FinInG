@@ -1,0 +1,5 @@
+gap&gt; w := SymplecticSpace(5,3);
+W(5, 3)
+gap&gt; SimilarityGroup(w);
+#I  Computing nice monomorphism...
+PGSp(6,3)

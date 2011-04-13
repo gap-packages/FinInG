@@ -1,0 +1,5 @@
+gap&gt; w := SymplecticSpace(3,8);
+W(3, 8)
+gap&gt; IsometryGroup(w);
+#I  Computing nice monomorphism...
+PSp(4,8)

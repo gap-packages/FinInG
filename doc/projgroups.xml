@@ -45,6 +45,42 @@ Only="HTML">P&#915;L(n+1,q)</Alt> is defined as the group <Alt Not="HTML"><M>\Ga
 L(n+1,q) / Sc(n+1,q)</M></Alt><Alt Only="HTML">&#915;L(n+1,q)/Sc(n+1,q)</Alt>, and
 <M>PGL(n+1,q) = GL(n+1,q) / Sc(n+1,q)</M>.<P/>
 
+Consider the projective space <M>PG(n,q)</M>. As described in Chapter <Ref
+Chap="projectivepolar"/>, a point of <M>PG(n,q)</M> is represented by a row
+vector. A <M>k</M>-dimensional subspace of <M>PG(n,q)</M> is represented by a
+generating set of <M>k+1</M> points, and as such, by a 
+<Alt Not="HTML"><M>(k+1) \times (n+1)</M></Alt><Alt Only="HTML">(k+1) x (n+1)</Alt>
+matrix. The convention in <Package>FinInG</Package> is that a collineation  
+<Alt Not="HTML"><M>\phi</M></Alt><Alt
+Only="HTML">&#966;</Alt> with underlying matrix <M>A</M> and field automorphism
+<Alt Not="HTML"><M>\theta</M></Alt><Alt Only="HTML">&#952;</Alt> maps that projective 
+point represented by row vector <Alt Not="HTML"><M>(x_0, x_1, \ldots,
+x_n)</M></Alt><Alt Only="HTML">(x&lt;sub>0&lt;/sub>,x&lt;sub>1&lt;/sub>,...,x&lt;sub>n&lt;/sub>)</Alt>
+to the projective point represented by row vector <Alt Not="HTML"><M>(y_0,y_1,\ldots,y_n)
+= ((x_0, x_1, \ldots, x_n) A)^{\theta}</M></Alt><Alt
+Only="HTML">(y&lt;sub>0&lt;/sub>,y&lt;sub>1&lt;/sub>,...,y&lt;sub>n&lt;/sub>) =
+((x&lt;sub>0&lt;/sub>,x&lt;sub>1&lt;/sub>,...,x&lt;sub>n&lt;/sub>)A)&lt;sup>&#952;&lt;/sup>
+</Alt>. This convention determines completely the action of collineations on all elements 
+of a projective space, and it follows that the product of two collineations 
+<Alt Not="HTML"><M>\phi_1,\phi_2</M></Alt><Alt
+Only="HTML">&#966;&lt;sub>1&lt;/sub>,&#966;&lt;sub>2&lt;/sub></Alt> with respective
+underlying matrices <Alt Not="HTML"><M>A_1,A_2</M></Alt><Alt
+Only="HTML">A&lt;sub>1&lt;/sub>,A&lt;sub>2&lt;/sub></Alt> and respective underlying
+field automorphisms <Alt Not="HTML"><M>\theta_1,\theta_2</M></Alt><Alt
+Only="HTML">&#952;&lt;sub>1&lt;/sub>,&#952;&lt;sub>2&lt;/sub></Alt> is the collineation with
+underlying matrix <Alt Not="HTML"><M>A_1 \cdot A_2^{\theta_2^{-1}}</M></Alt><Alt
+Only="HTML">A&lt;sub>1&lt;/sub>A&lt;sub>2&lt;/sub>&lt;sup>&#952;&lt;sub>2&lt;/sub>&lt;sup>-1&lt;/sup>&lt;/sup></Alt> 
+and underlying field automorphism <Alt Not="HTML"><M>\theta_1 \theta_2</M></Alt>
+<Alt Only="HTML">&#952;&lt;sub>1&lt;/sub>&#952;&lt;sub>2&lt;/sub></Alt>.
+
+<P/>
+Consider a point <M>p</M> with row vector <Alt Not="HTML"><M>(x_0, x_1, \ldots,
+x_n)</M></Alt><Alt
+Only="HTML">(x&lt;sub>0&lt;/sub>,x&lt;sub>1&lt;/sub>,...,x&lt;sub>n&lt;/sub>)</Alt>,
+and a collineation or correlation <Alt Not="HTML"><M>\phi</M></Alt><Alt
+Only="HTML">&#966;</Alt> with underlying matrix <M>A</M> and field automorphism
+<Alt Not="HTML"><M>\theta</M></Alt><Alt Only="HTML">&#952;</Alt>.
+
 An element of the group <M>PGL(n+1,q)</M> is also called a <E>projectivity</E> of
 <M>PG(n,q)</M>, and the group <M>PGL(n+1,q)</M> is called the <E>projectivity
 group</E> of <M>PG(n,q)</M>. An element of <Alt Not="HTML"><M>P\Gamma L(n+1,q)</M></Alt><Alt
@@ -254,10 +290,7 @@ the full group of semi-similarities of <A>geom</A>.
 This operation returns the full group of similarities of <A>geom</A>
 (those collineations which preserve the form up to a scalar).
 <Example>
-gap> w := SymplecticSpace(5,3);
-W(5, 3)
-gap> SimilarityGroup(w);
-&lt;projective group with Frobenius with 3 generators&gt;
+<#Include SYSTEM "../examples/include/projgroups_simgroup.include"> 
 </Example>
 </Description>
 </ManSection>
@@ -269,25 +302,19 @@ gap> SimilarityGroup(w);
 This operation returns the full group of isometries of <A>geom</A>
 (those collineations which preserve the form).
 <Example>
-gap> w := SymplecticSpace(5,3);
-W(5, 3)
-gap> IsometryGroup(w);
-&lt;projective group with Frobenius with 2 generators&gt;
+<#Include SYSTEM "../examples/include/projgroups_isomgroup.include"> 
 </Example>
 </Description>
 </ManSection>
 
 <ManSection>
-<Oper Name="IsometryGroup" Arg="geom"/>
+<Oper Name="SpecialIsometryGroup" Arg="geom"/>
 <Returns>a group of collineations of geom</Returns>
 <Description><A>geom</A> must be a polar space.
 This operation returns those isometries of <A>geom</A>
 which have unit determinant.
 <Example>
-gap> hq := HyperbolicQuadric(5,3);
-Q+(5, 3)
-gap> SpecialIsometryGroup(hq);
-&lt;projective group with Frobenius with 3 generators&gt;
+<#Include SYSTEM "../examples/include/projgroups_specialisomgroup.include"> 
 </Example>
 </Description>
 </ManSection>
@@ -312,37 +339,23 @@ the base field of the vector space on which the group acts.
 the dimension of the vector space on which the group acts.
 </Description>
 </ManSection>
-
 </Section>
-<Section Label="nice_mono">
-<Heading>Nice Monomorphisms</Heading>
 
-<ManSection>
-<Oper Name="CanComputeActionOnPoints" Arg="g"/>
-<Returns>true or false</Returns>
-<Description><A>g</A> must be a projective group. This function returns
-true if GAP can feasibly compute the action of <A>g</A> on the
-points of the projective space on which it acts. This function can be used
-(and is, by other parts of FinInG) to determine whether it is worth
-trying to compute the action.
 
-This function actually checks if the number of points of the corresponding
-projective space is less than the constant
-<C>DESARGUES.LimitForCanComputeActionOnPoints</C>.
+<Section>
+<Heading>Collineation group as a subgroup of a correlation group</Heading>
+In <Package>FinInG</Package> a collineation group is not constructed as a subgroup of a correlation group.
+However, collineations can be multiplied with correlations (if they both belong mathematically to the same 
+correlation group.
 
 <Example>
-gap> NiceMonomorphism(CollineationGroup(ProjectiveSpace(6,7)));
-Error, action on projective points not feasible to calculate
- ...
-gap> DESARGUES.LimitForCanComputeActionOnPoints := 500000;
-500000
-gap> NiceMonomorphism(CollineationGroup(ProjectiveSpace(6,7)));
-&lt;action isomorphism&gt;
+<#Include SYSTEM "../examples/include/projgroups_mult.include"> 
 </Example>
-</Description>
-</ManSection>
+
 
 </Section>
+
+
 <Section Label="projgroup_actions">
 <Heading>Projective group actions</Heading>
 
@@ -410,5 +423,36 @@ subspace of the same dimension if <A>el</A> is a collineation.
 
 
 </Section>
+
+<Section Label="nice_mono">
+<Heading>Nice Monomorphisms</Heading>
+
+<ManSection>
+<Oper Name="CanComputeActionOnPoints" Arg="g"/>
+<Returns>true or false</Returns>
+<Description><A>g</A> must be a projective group. This function returns
+true if GAP can feasibly compute the action of <A>g</A> on the
+points of the projective space on which it acts. This function can be used
+(and is, by other parts of FinInG) to determine whether it is worth
+trying to compute the action.
+
+This function actually checks if the number of points of the corresponding
+projective space is less than the constant
+<C>DESARGUES.LimitForCanComputeActionOnPoints</C>.
+
+<Example>
+gap> NiceMonomorphism(CollineationGroup(ProjectiveSpace(6,7)));
+Error, action on projective points not feasible to calculate
+ ...
+gap> DESARGUES.LimitForCanComputeActionOnPoints := 500000;
+500000
+gap> NiceMonomorphism(CollineationGroup(ProjectiveSpace(6,7)));
+&lt;action isomorphism&gt;
+</Example>
+</Description>
+</ManSection>
+
+</Section>
+
 
 </Chapter>
