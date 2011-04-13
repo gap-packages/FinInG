@@ -62,13 +62,13 @@ InstallMethod( ViewObj,
   local dim, field;
   field := el!.fld;
   dim := Size(el!.mat);
-  Print("<polarity of PG(", dim-1, ", ", field, "), ");
-  ViewObj(el!.mat);
-  if IsOne(el!.frob) then
-      Print(", F^0");
-  else
-      Print(", F^",el!.frob!.power);
-  fi;
+  Print("<polarity of PG(", dim-1, ", ", field, ")");
+  #ViewObj(el!.mat);
+  #if IsOne(el!.frob) then
+  #    Print(", F^0");
+  #else
+  #    Print(", F^",el!.frob!.power);
+  #fi;
   Print(" >");
   end);
 

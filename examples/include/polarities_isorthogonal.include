@@ -1,9 +1,7 @@
-gap> mat := [[1,0,2,0],[0,2,0,1],[2,0,0,0],[0,1,0,0]]*Z(9)^0;
+gap&gt; mat := [[1,0,2,0],[0,2,0,1],[2,0,0,0],[0,1,0,0]]*Z(9)^0;
 [ [ Z(3)^0, 0*Z(3), Z(3), 0*Z(3) ], [ 0*Z(3), Z(3), 0*Z(3), Z(3)^0 ], 
   [ Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ], [ 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3) ] ]
-gap> phi := PolarityOfProjectiveSpace(mat,GF(9));
-&lt;polarity of PG(3, GF(3^2)), [ [ Z(3)^0, 0*Z(3), Z(3), 0*Z(3) ], 
-  [ 0*Z(3), Z(3), 0*Z(3), Z(3)^0 ], [ Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ], 
-  [ 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3) ] ], F^0 >
-gap> IsOrthogonalPolarityOfProjectiveSpace(phi);
+gap&gt; phi := PolarityOfProjectiveSpace(mat,GF(9));
+&lt;polarity of PG(3, GF(3^2)) &gt;
+gap&gt; IsOrthogonalPolarityOfProjectiveSpace(phi);
 true

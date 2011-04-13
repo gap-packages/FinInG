@@ -1,18 +1,14 @@
-gap> mat := IdentityMat(4,GF(3));
+gap&gt; mat := IdentityMat(4,GF(3));
 [ [ Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3) ], [ 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3) ], 
   [ 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3) ], [ 0*Z(3), 0*Z(3), 0*Z(3), Z(3)^0 ] ]
-gap> phi := PolarityOfProjectiveSpace(mat,GF(3));
-&lt;polarity of PG(3, GF(3)), [ [ Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3) ], 
-  [ 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3) ], [ 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3) ], 
-  [ 0*Z(3), 0*Z(3), 0*Z(3), Z(3)^0 ] ], F^0 >
-gap> points := AbsolutePoints(phi);
-&lt;points of &lt;polar space over GF(3)>>
-gap> List(points);
-[ #I  Finding base change...
-    #I  Computing nice monomorphism...
-    &lt;a point in Q+(3, 3)>, &lt;a point in Q+(3, 3)>, &lt;a point in Q+(3, 3)>, 
-  &lt;a point in Q+(3, 3)>, &lt;a point in Q+(3, 3)>, &lt;a point in Q+(3, 3)>, 
-  &lt;a point in Q+(3, 3)>, &lt;a point in Q+(3, 3)>, &lt;a point in Q+(3, 3)>, 
-  &lt;a point in Q+(3, 3)>, &lt;a point in Q+(3, 3)>, &lt;a point in Q+(3, 3)>, 
-  &lt;a point in Q+(3, 3)>, &lt;a point in Q+(3, 3)>, &lt;a point in Q+(3, 3)>, 
-  &lt;a point in Q+(3, 3)> ]
+gap&gt; phi := PolarityOfProjectiveSpace(mat,GF(3));
+&lt;polarity of PG(3, GF(3)) &gt;
+gap&gt; points := AbsolutePoints(phi);
+&lt;All elements of Q+(3, 3)&gt;
+gap&gt; List(points);
+[ &lt;a point in Q+(3, 3)&gt;, &lt;a point in Q+(3, 3)&gt;, &lt;a point in Q+(3, 3)&gt;, 
+  &lt;a point in Q+(3, 3)&gt;, &lt;a point in Q+(3, 3)&gt;, &lt;a point in Q+(3, 3)&gt;, 
+  &lt;a point in Q+(3, 3)&gt;, &lt;a point in Q+(3, 3)&gt;, &lt;a point in Q+(3, 3)&gt;, 
+  &lt;a point in Q+(3, 3)&gt;, &lt;a point in Q+(3, 3)&gt;, &lt;a point in Q+(3, 3)&gt;, 
+  &lt;a point in Q+(3, 3)&gt;, &lt;a point in Q+(3, 3)&gt;, &lt;a point in Q+(3, 3)&gt;, 
+  &lt;a point in Q+(3, 3)&gt; ]

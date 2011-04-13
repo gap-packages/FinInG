@@ -50,7 +50,8 @@ polaritiespsfiles := ["polarities_construct1", "polarities_construct2",
 	  "polarities_automorphism", "polarities_grammatrix", "polarities_ishermitian", 
 	  "polarities_issymplectic", "polarities_ispseudo", "polarities_isorthogonal", 
 	  "polarities_geometryofabsolutepoints", "polarities_absolutepoints", 
-	  "polarities_polarspace", "polarities_frompolarspace"];
+	  "polarities_polarspace", "polarities_frompolarspace", 
+	  "polarities_commuting"];
 
 gpolygonfiles := ["gpolygons_projplanes1", "gpolygons_projplanes2", "gpolygons_EGQByKantorFamily", 
                   "gpolygons_EGQByqClan", "gpolygons_EGQByBLTSet", "gpolygons_collineations", "gpolygons_SplitCayleyHexagon"];

@@ -1,18 +1,14 @@
-gap> mat := IdentityMat(4,GF(16));
+gap&gt; mat := IdentityMat(4,GF(16));
 [ [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ], 
   [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2) ], [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ] ]
-gap> phi := HermitianPolarityOfProjectiveSpace(mat,GF(16));
-&lt;polarity of PG(3, GF(2^4)), [ [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ], 
-  [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ], [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2) ], 
-  [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ] ], F^4 >
-gap> geom := GeometryOfAbsolutePoints(phi);
-&lt;polar space over GF(2^4)>
-gap> mat := [[1,0,0,0],[0,0,1,1],[0,1,1,0],[0,1,0,0]]*Z(32)^0;
+gap&gt; phi := HermitianPolarityOfProjectiveSpace(mat,GF(16));
+&lt;polarity of PG(3, GF(2^4)) &gt;
+gap&gt; geom := GeometryOfAbsolutePoints(phi);
+&lt;polar space over GF(2^4)&gt;
+gap&gt; mat := [[1,0,0,0],[0,0,1,1],[0,1,1,0],[0,1,0,0]]*Z(32)^0;
 [ [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ], [ 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0 ], 
   [ 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ] ]
-gap> phi := PolarityOfProjectiveSpace(mat,GF(32));
-&lt;polarity of PG(3, GF(2^5)), [ [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ], 
-  [ 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0 ], [ 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2) ], 
-  [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ] ], F^0 >
-gap> geom := GeometryOfAbsolutePoints(phi);
-&lt;a plane in PG(3, 32)>
+gap&gt; phi := PolarityOfProjectiveSpace(mat,GF(32));
+&lt;polarity of PG(3, GF(2^5)) &gt;
+gap&gt; geom := GeometryOfAbsolutePoints(phi);
+&lt;a plane in ProjectiveSpace(3, 32)&gt;

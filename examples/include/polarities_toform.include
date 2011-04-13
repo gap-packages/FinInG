@@ -1,12 +1,9 @@
-gap> mat := [[0,-2,0,1],[2,0,3,0],[0,-3,0,1],[-1,0,-1,0]]*Z(19)^0;
+gap&gt; mat := [[0,-2,0,1],[2,0,3,0],[0,-3,0,1],[-1,0,-1,0]]*Z(19)^0;
 [ [ 0*Z(19), Z(19)^10, 0*Z(19), Z(19)^0 ], 
   [ Z(19), 0*Z(19), Z(19)^13, 0*Z(19) ], 
   [ 0*Z(19), Z(19)^4, 0*Z(19), Z(19)^0 ], 
   [ Z(19)^9, 0*Z(19), Z(19)^9, 0*Z(19) ] ]
-gap> phi := PolarityOfProjectiveSpace(mat,GF(19));
-&lt;polarity of PG(3, GF(19)), [ [ 0*Z(19), Z(19)^10, 0*Z(19), Z(19)^0 ], 
-  [ Z(19), 0*Z(19), Z(19)^13, 0*Z(19) ], 
-  [ 0*Z(19), Z(19)^4, 0*Z(19), Z(19)^0 ], 
-  [ Z(19)^9, 0*Z(19), Z(19)^9, 0*Z(19) ] ], F^0 >
-gap> form := SesquilinearForm(phi);
-&lt; non-degenerate bilinear form >
+gap&gt; phi := PolarityOfProjectiveSpace(mat,GF(19));
+&lt;polarity of PG(3, GF(19)) &gt;
+gap&gt; form := SesquilinearForm(phi);
+&lt; non-degenerate bilinear form &gt;

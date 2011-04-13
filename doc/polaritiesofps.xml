@@ -121,7 +121,8 @@ induce a polaritiy, and whether <A>frob</A> is a non-trivial involutory field
 automorphism. The second operation only needs the arguments <A>mat</A> and
 <A>f</A> to construct a hermitian polarity of a projective space, provided the
 field <A>f</A> allows an involutory field automorphism and <A>mat</A> satisfies
-the necessary conditions.
+the necessary conditions. The latter is checked by the method constructing the underlying
+hermitian form.
 <Example>
 <#Include SYSTEM "../examples/include/polarities_construct2.include"> 
 </Example>
@@ -309,8 +310,18 @@ polar space induced by <A>f</A>.
 </Description>
 </ManSection>
 
+</Section>
 
+<Section>
+<Heading>Commuting polarities</Heading>
 
+<Package>FinInG</Package> constructs packages as correlations. This allows polarities to be multiplies
+easily, resulting in is collineation. The resulting collineation is constructed in the correlation group
+but can be mapped onto its unique representative in the collineation group. We provide an example.
+
+<Example>
+<#Include SYSTEM "../examples/include/polarities_commuting.include"> 
+</Example>
 </Section>
 </Chapter>
 

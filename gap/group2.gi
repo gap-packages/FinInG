@@ -671,6 +671,7 @@ InstallOtherMethod( Embedding,
 	function(x)
 		if IsOne(x!.psisom) then
 			return ProjElWithFrob(x!.mat,x!.frob,x!.fld);
+			Print("method prefun");
 		else
 			Error("<x> has no preimage");
 		fi; 

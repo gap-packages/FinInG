@@ -1,28 +1,22 @@
-gap> mat := [[1,0,0,0],[0,0,1,1],[0,1,1,0],[0,1,0,0]]*Z(32)^0;
+gap&gt; mat := [[1,0,0,0],[0,0,1,1],[0,1,1,0],[0,1,0,0]]*Z(32)^0;
 [ [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ], [ 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0 ], 
   [ 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ] ]
-gap> phi := PolarityOfProjectiveSpace(mat,GF(32));
-&lt;polarity of PG(3, GF(2^5)), [ [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ], 
-  [ 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0 ], [ 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2) ], 
-  [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ] ], F^0 >
-gap> ps := PolarSpace(phi);
-Error, &lt;polarity> is pseudo and does not induce a polar space called from
-&lt;function>( &lt;arguments> ) called from read-eval-loop
+gap&gt; phi := PolarityOfProjectiveSpace(mat,GF(32));
+&lt;polarity of PG(3, GF(2^5)) &gt;
+gap&gt; ps := PolarSpace(phi);
+Error, &lt;polarity&gt; is pseudo and does not induce a polar space called from
+&lt;function&gt;( &lt;arguments&gt; ) called from read-eval-loop
 Entering break read-eval-print loop ...
 you can 'quit;' to quit to outer loop, or
 you can 'return;' to continue
-brk> quit;
-gap> mat := IdentityMat(5,GF(7));
+brk&gt; quit;
+gap&gt; mat := IdentityMat(5,GF(7));
 [ [ Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7) ], 
   [ 0*Z(7), Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7) ], 
   [ 0*Z(7), 0*Z(7), Z(7)^0, 0*Z(7), 0*Z(7) ], 
   [ 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^0, 0*Z(7) ], 
   [ 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^0 ] ]
-gap> phi := PolarityOfProjectiveSpace(mat,GF(7));
-&lt;polarity of PG(4, GF(7)), [ [ Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7) ], 
-  [ 0*Z(7), Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7) ], 
-  [ 0*Z(7), 0*Z(7), Z(7)^0, 0*Z(7), 0*Z(7) ], 
-  [ 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^0, 0*Z(7) ], 
-  [ 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^0 ] ], F^0 >
-gap> ps := PolarSpace(phi);
-&lt;polar space over GF(7)>
+gap&gt; phi := PolarityOfProjectiveSpace(mat,GF(7));
+&lt;polarity of PG(4, GF(7)) &gt;
+gap&gt; ps := PolarSpace(phi);
+&lt;polar space over GF(7)&gt;

@@ -1,18 +1,14 @@
-gap> ps := HermitianVariety(4,64);
+gap&gt; ps := HermitianVariety(4,64);
 H(4, 8^2)
-gap> phi := PolarityOfProjectiveSpace(ps);
-&lt;polarity of PG(4, GF(2^6)), [ [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ], 
-  [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ], 
-  [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ], 
-  [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2) ], 
-  [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ] ], F^8 >
-gap> ps := ParabolicQuadric(6,8);
+gap&gt; phi := PolarityOfProjectiveSpace(ps);
+&lt;polarity of PG(4, GF(2^6)) &gt;
+gap&gt; ps := ParabolicQuadric(6,8);
 Q(6, 8)
-gap> PolarityOfProjectiveSpace(ps);
-Error, no polarity of the ambient projective space can be associated to &lt;ps> c
+gap&gt; PolarityOfProjectiveSpace(ps);
+Error, no polarity of the ambient projective space can be associated to &lt;ps&gt; c
 alled from
-&lt;function>( &lt;arguments> ) called from read-eval-loop
+&lt;function&gt;( &lt;arguments&gt; ) called from read-eval-loop
 Entering break read-eval-print loop ...
 you can 'quit;' to quit to outer loop, or
 you can 'return;' to continue
-brk> quit;
+brk&gt; quit;

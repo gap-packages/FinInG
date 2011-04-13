@@ -1,9 +1,7 @@
-gap> mat := [[0,2,0,0],[2,0,0,0],[0,0,0,5],[0,0,5,0]]*Z(7)^0;
+gap&gt; mat := [[0,2,0,0],[2,0,0,0],[0,0,0,5],[0,0,5,0]]*Z(7)^0;
 [ [ 0*Z(7), Z(7)^2, 0*Z(7), 0*Z(7) ], [ Z(7)^2, 0*Z(7), 0*Z(7), 0*Z(7) ], 
   [ 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^5 ], [ 0*Z(7), 0*Z(7), Z(7)^5, 0*Z(7) ] ]
-gap> phi := HermitianPolarityOfProjectiveSpace(mat,GF(49));
-&lt;polarity of PG(3, GF(7^2)), [ [ 0*Z(7), Z(7)^2, 0*Z(7), 0*Z(7) ], 
-  [ Z(7)^2, 0*Z(7), 0*Z(7), 0*Z(7) ], [ 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^5 ], 
-  [ 0*Z(7), 0*Z(7), Z(7)^5, 0*Z(7) ] ], F^7 >
-gap> CompanionAutomorphism(phi);
+gap&gt; phi := HermitianPolarityOfProjectiveSpace(mat,GF(49));
+&lt;polarity of PG(3, GF(7^2)) &gt;
+gap&gt; CompanionAutomorphism(phi);
 FrobeniusAutomorphism( GF(7^2) )
