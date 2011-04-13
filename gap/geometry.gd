@@ -194,8 +194,8 @@ DeclareOperation( "IsIncident", [IsElementOfIncidenceStructure, IsElementOfIncid
 DeclareOperation( "IsCollinear", [IsIncidenceStructure, IsElementOfIncidenceStructure, IsElementOfIncidenceStructure]);
 DeclareOperation( "Span", [IsElementOfIncidenceStructure, IsElementOfIncidenceStructure]);
 DeclareOperation( "Meet", [IsElementOfIncidenceStructure, IsElementOfIncidenceStructure]);
-DeclareOperation( "Span", [IsHomogeneousList]);
-DeclareOperation( "Meet", [IsHomogeneousList]);
+#DeclareOperation( "Span", [IsHomogeneousList]);
+#DeclareOperation( "Meet", [IsHomogeneousList]);
 DeclareOperation( "AmbientGeometry", [ IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep ] );
 DeclareOperation( "AmbientGeometry", [ IsElementsOfIncidenceStructure and IsElementsOfIncidenceStructureRep ] );
 DeclareOperation( "AmbientGeometry", [ IsAllElementsOfIncidenceStructure and IsAllElementsOfIncidenceStructureRep ] );
