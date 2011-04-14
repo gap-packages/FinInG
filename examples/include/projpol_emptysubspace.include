@@ -1,1 +1,8 @@
-
+gap&gt; EmptySubspace;
+&lt; trivial subspace &gt;
+gap&gt; line := Random(Lines(PG(5,9)));
+&lt;a line in ProjectiveSpace(5, 9)&gt;
+gap&gt; EmptySubspace * line;
+true
+gap&gt; EmptySubspace * PG(3,11);
+true

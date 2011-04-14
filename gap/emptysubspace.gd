@@ -5,6 +5,8 @@ InstallValue( EmptySubspace, Objectify( NewType(
       NewFamily( "EmptySubspaceFamily" ), IsEmptySubspace ), rec() ));
 
 SetProjectiveDimension(EmptySubspace, -1);
+SetDimension(EmptySubspace, -1);
+
 SetIsTrivial(EmptySubspace, true);
 
 

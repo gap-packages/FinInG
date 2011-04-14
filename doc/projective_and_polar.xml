@@ -51,7 +51,6 @@ namely, the common abbreviation <C>PG(d, q)</C>.
 </Example>
 </Description>
 </ManSection>
-</Section>
 
 <ManSection>
 <Oper Name="ProjectiveDimension" Arg="ps"/>
@@ -110,19 +109,14 @@ every projective subspace and every projective space.
 </Description>
 </ManSection>
 
-
-Equality of projective spaces?
-Projective dimension of a projective space and of an element
-
-
 <ManSection>
-<Oper Name="ProjectiveDimension" Arg="ps"/>
-<Oper Name="Dimension" Arg="ps"/>
-<Oper Name="Rank" Arg="ps"/>
-
-<Returns></Returns>
+<Oper Name="ProjectiveDimension" Arg="sub"/>
+<Oper Name="Dimension" Arg="sub"/>
+<Returns>the projective dimension of a subspace of a projective space. This operation is also applicable on the EmptySubspace
+</Returns>
 <Description>
 <Example>
+<#Include SYSTEM "../examples/include/projpol_projdimension_element.include"> 
 </Example>
 </Description>
 </ManSection>

@@ -35,7 +35,11 @@ morphismsfiles := ["morphisms_intertwiners","morphisms_embedding1","morphisms_em
 
 
 projpolfiles1 := ["projpol_projectivespace", "projpol_projdimension",
-                 "projpol_underlyingvs", "projpol_hermitian", "projpol_elliptic",
+                 "projpol_underlyingvs", "projpol_element1", "projpol_emptysubspace",
+		 "projpol_projdimension_element"];
+		 
+		 
+		 "projpol_hermitian", "projpol_elliptic",
 		 "projpol_parabolic", "projpol_hyperbolic", "projpol_element1", "projpol_in"];
 
 projpolfiles1 := ["projpol_projectivespace", "projpol_polarspaceform",

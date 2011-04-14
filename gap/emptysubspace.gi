@@ -126,11 +126,5 @@ InstallMethod( Meet, "for the trivial subspace and the trivial subspace",
 		return x;
 	end );
 
-# OtherMethod for Dimension of EmptySubspace
-
-InstallOtherMethod( Dimension, [IsEmptySubspace],
-  function(x)
-    return -1;
-  end );
 
 
