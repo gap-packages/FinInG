@@ -34,8 +34,8 @@ DeclareGlobalFunction( "enum_line" );
 DeclareGlobalFunction( "enum_BaerSubline" );
 DeclareGlobalFunction( "enum_unital" );
 
-DeclareOperation( "EnumeratorByOrbit", [IsAllSubspacesOfClassicalPolarSpace]);
-DeclareOperation( "AntonEnumerator", [IsAllSubspacesOfClassicalPolarSpace]);
+DeclareOperation( "EnumeratorByOrbit", [IsSubspacesOfClassicalPolarSpace]);
+DeclareOperation( "AntonEnumerator", [IsSubspacesOfClassicalPolarSpace]);
 DeclareOperation( "nb_pts_Nbar", [IsPosInt, IsPosInt]);
 DeclareOperation( "nb_pts_S", [IsPosInt, IsPosInt]);
 DeclareOperation( "nb_pts_N", [IsPosInt, IsPosInt]);

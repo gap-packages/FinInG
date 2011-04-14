@@ -852,7 +852,7 @@ InstallOtherMethod(\QUO,  "quotients for polar spaces",
 # Counting the number of varieties of the polar spaces
 #############################################################################
 
-InstallMethod( Size, [IsAllSubspacesOfClassicalPolarSpace],
+InstallMethod( Size, [IsSubspacesOfClassicalPolarSpace],
   function( vs )
     local geom, q, d, m, ovnum, ordominus, numti, gauss, flavour;
     geom := vs!.geometry; 
@@ -1129,7 +1129,7 @@ InstallMethod( \in, "for a variety and a polar space",
 
 
 InstallMethod(Iterator,  "for subspaces of a polar space",
-        [IsAllSubspacesOfClassicalPolarSpace],
+        [IsSubspacesOfClassicalPolarSpace],
         function( vs )
           local ps, j, d, F, ty, v, ispolar;    
           ps := vs!.geometry;
@@ -1192,9 +1192,11 @@ InstallMethod( ElementsOfIncidenceStructure, [IsClassicalPolarSpace, IsPosInt],
       Error("<geo> has no elements of type <j>");
     else
       return Objectify(
-        NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
-                                  IsAllSubspacesOfClassicalPolarSpace and
-                                  IsAllSubspacesOfClassicalPolarSpaceRep),
+        NewType( ElementsCollFamily, IsSubspacesOfClassicalPolarSpace and
+                                     IsSubspacesOfClassicalPolarSpaceRep ),
+#        NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
+#                                  IsAllSubspacesOfClassicalPolarSpace and
+#                                  IsAllSubspacesOfClassicalPolarSpaceRep),
           rec(
             geometry := ps,
             type := j,
@@ -1304,7 +1306,7 @@ InstallMethod( TypeOfSubspace,
   end );
 
 
-InstallMethod( RandomSubspace, "for a polare space and a dimension",
+InstallMethod( RandomSubspace, "for a polar space and a dimension",
                        [ IsClassicalPolarSpace, IsPosInt ],                                             
   function( ps, d )
     local x, rep;
@@ -1315,7 +1317,7 @@ InstallMethod( RandomSubspace, "for a polare space and a dimension",
 
 
 InstallMethod( Random, "for a collection of subspaces of a polar space",
-                       [ IsAllSubspacesOfClassicalPolarSpace ],
+                       [ IsSubspacesOfClassicalPolarSpace ],
                        
   ## Since it is quick to find a pseudo-random element
   ## of a group (a random subproduct of the generators),

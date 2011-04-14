@@ -28,7 +28,7 @@
 DeclareCategory( "IsSubspaceOfClassicalPolarSpace", IsSubspaceOfProjectiveSpace );
 
 DeclareCategory( "IsSubspacesOfClassicalPolarSpace", IsSubspacesOfProjectiveSpace );
-DeclareRepresentation( "IsSubspaceOfClassicalPolarSpaceRep", IsAllSubspacesOfProjectiveSpaceRep, [ "geometry", "type" ] );
+DeclareRepresentation( "IsSubspacesOfClassicalPolarSpaceRep", IsSubspacesOfProjectiveSpaceRep, [ "geometry", "type" ] );
 
 DeclareCategory( "IsAllSubspacesOfClassicalPolarSpace", IsAllSubspacesOfProjectiveSpace );
 DeclareRepresentation( "IsAllSubspacesOfClassicalPolarSpaceRep", IsAllSubspacesOfProjectiveSpaceRep, [ "geometry", "type" ] );

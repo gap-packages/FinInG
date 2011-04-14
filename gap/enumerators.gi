@@ -40,7 +40,7 @@
 # Constructor operations:
 #############################################################################
 
-InstallMethod( EnumeratorByOrbit, [ IsAllSubspacesOfClassicalPolarSpace ],
+InstallMethod( EnumeratorByOrbit, [ IsSubspacesOfClassicalPolarSpace ],
   function( vs )
 
   ## In this operation, we provide a way to compute the full
@@ -62,17 +62,17 @@ InstallMethod( EnumeratorByOrbit, [ IsAllSubspacesOfClassicalPolarSpace ],
      return vars;
    end );
 
-InstallMethod( AsList, "for subspaces of a polar space", [IsAllSubspacesOfClassicalPolarSpace],
+InstallMethod( AsList, "for subspaces of a polar space", [IsSubspacesOfClassicalPolarSpace],
  function( vs )
    return EnumeratorByOrbit( vs );
  end );
 
-InstallMethod( AsSortedList, "for subspaces of a polar space", [IsAllSubspacesOfClassicalPolarSpace],
+InstallMethod( AsSortedList, "for subspaces of a polar space", [IsSubspacesOfClassicalPolarSpace],
  function( vs )
    return EnumeratorByOrbit( vs );
  end );
 
-InstallMethod( AsSSortedList, "for subspaces of a polar space", [IsAllSubspacesOfClassicalPolarSpace],
+InstallMethod( AsSSortedList, "for subspaces of a polar space", [IsSubspacesOfClassicalPolarSpace],
  function( vs )
    return EnumeratorByOrbit( vs );
  end );
@@ -80,7 +80,7 @@ InstallMethod( AsSSortedList, "for subspaces of a polar space", [IsAllSubspacesO
 
 
 
-InstallMethod( Enumerator, [ IsAllSubspacesOfClassicalPolarSpace ],
+InstallMethod( Enumerator, [ IsSubspacesOfClassicalPolarSpace ],
   function( vs )
 
     ## This method returns the enumerator for the varieties of
@@ -1407,7 +1407,7 @@ InstallMethod( HermNumberElement, [IsPosInt, IsPosInt, IsSubspaceOfClassicalPola
   return 0;
 end );
 
-InstallMethod( AntonEnumerator, [IsAllSubspacesOfClassicalPolarSpace],
+InstallMethod( AntonEnumerator, [IsSubspacesOfClassicalPolarSpace],
 
   ## This operation puts together the Anton's code into
   ## an organised form. It computes an enumerator just
