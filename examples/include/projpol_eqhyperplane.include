@@ -1,0 +1,4 @@
+gap&gt; hyperplane := VectorSpaceToElement(PG(3,2),[[1,1,0,0],[0,0,1,0],[0,0,0,1]]*Z(2)^0);
+&lt;a plane in ProjectiveSpace(3, 2)&gt;
+gap&gt; EquationOfHyperplane(hyperplane);
+x_1+x_2

@@ -1,0 +1,8 @@
+gap&gt; ps := PG(5,8);
+ProjectiveSpace(5, 8)
+gap&gt; ProjectiveDimension(ps);
+5
+gap&gt; Dimension(ps);
+5
+gap&gt; Rank(ps);
+5

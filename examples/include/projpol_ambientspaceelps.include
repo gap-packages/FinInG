@@ -1,0 +1,6 @@
+gap&gt; ps := PG(3,27);
+ProjectiveSpace(3, 27)
+gap&gt; p := VectorSpaceToElement(ps,[1,2,1,0]*Z(3)^3);
+&lt;a point in ProjectiveSpace(3, 27)&gt;
+gap&gt; AmbientSpace(p);
+ProjectiveSpace(3, 27)

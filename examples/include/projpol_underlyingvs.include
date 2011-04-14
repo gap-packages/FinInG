@@ -1,0 +1,4 @@
+gap&gt; ps := ProjectiveSpace(4,7);
+ProjectiveSpace(4, 7)
+gap&gt; vs := UnderlyingVectorSpace(ps);
+( GF(7)^5 )
