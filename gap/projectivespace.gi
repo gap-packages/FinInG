@@ -1365,12 +1365,6 @@ InstallMethod( VectorSpaceToElement, "for an 8-bit vector",
 end );
 
 
-InstallOtherMethod( Dimension,
-   "for projective spaces",
-   [IsProjectiveSpace],
-   x->Rank(x)
-);
-
 #############################################################################
 # Baer sublines and Baer subplanes:
 # These objects are particular cases of subgeometries, and should be returned
