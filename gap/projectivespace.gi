@@ -1377,7 +1377,7 @@ end );
 # CanonicalSubgeometry(projectivespace,primepower)
 # SubgeometryByFrame(projectivespace,primepower,frame)
 # The function
-# ProjectivityByFrame(frame)
+# ProjectivityByFrame(frame) (DONE, see "ProjectivityByImageOfStandardFrameNC")
 # ProjectivityByTwoFrames(frame1,frame2)
 #############################################################################
 
