@@ -1373,15 +1373,28 @@ InstallOtherMethod( Dimension,
 
 #############################################################################
 # Baer sublines and Baer subplanes:
+# These objects are particular cases of subgeometries, and should be returned
+# as embeddings. To construct subgeometries on a general frame, we should
+# use the unique projectivity mapping the standard frame to this frame, and
+# then construct the subgeometry as the image of the canonical subgeometry
+# (this is the one that contains the standard frame)
+#
+# The general functions could be: 
+# CanonicalSubgeometry(projectivespace,primepower)
+# SubgeometryByFrame(projectivespace,primepower,frame)
+# The function
+# ProjectivityByFrame(frame)
+# ProjectivityByTwoFrames(frame1,frame2)
 #############################################################################
 
 InstallMethod( BaerSublineOnThreePoints, [IsSubspaceOfProjectiveSpace,
                 IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
+# UNCHECKED
  function( x, y, z )
   # returns the Baersubline determined by three collinear points x,y,z
   local geo, gfq2, gfq, t, subline;
   
-  geo := AmbientSpace(x!.geo);
+  geo := AmbientSpace(x);
   gfq2 := geo!.basefield;
   gfq := GF(Sqrt(Size(gfq2)));
 
@@ -1400,6 +1413,7 @@ end);
 
 InstallMethod( BaerSubplaneOnQuadrangle, [IsSubspaceOfProjectiveSpace, 
          IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
+# UNCHECKED
  function( w, x, y, z )
   local geo, gfq2, gfq, s, t, subplane, coeffs, ow, ox, oy;
   geo := AmbientSpace(w!.geo);
