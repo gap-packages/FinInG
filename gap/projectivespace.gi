@@ -1174,7 +1174,7 @@ InstallMethod( VectorSpaceToElement, "for a Plist",
       ## when v is empty... 
       
       if IsEmpty(v) then
-        return [];
+        return EmptySubspace;
       fi;
       x := MutableCopyMat(v);
       TriangulizeMat(x);
@@ -1225,7 +1225,7 @@ InstallMethod( VectorSpaceToElement, "for a compressed GF(2)-matrix",
 
     ## when v is empty... 
     if IsEmpty(v) then
-      return [];
+      return EmptySubspace;
     fi;
     x := MutableCopyMat(v);
     TriangulizeMat(x);
@@ -1275,7 +1275,7 @@ InstallMethod( VectorSpaceToElement, "for a compressed basis of a vector subspac
 
   ## when v is empty... 
   if IsEmpty(v) then
-    return [];
+    return EmptySubspace;
   fi;
   x := MutableCopyMat(v);
   TriangulizeMat(x);
@@ -1325,7 +1325,7 @@ InstallMethod( VectorSpaceToElement, "for a row vector",
      ## when v is empty...
 
      if IsEmpty(v) then
-       return [];
+       return EmptySubspace;
      fi;
      x := ShallowCopy(v);
 
@@ -1348,7 +1348,7 @@ InstallMethod( VectorSpaceToElement, "for an 8-bit vector",
      ## when v is empty...
 
      if IsEmpty(v) then
-       return [];
+       return EmptySubspace;
      fi;
      x := ShallowCopy(v);
 

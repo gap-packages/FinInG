@@ -25,7 +25,7 @@ SetPackageInfo( rec(
 ##  This is case sensitive, use your preferred spelling.
 #
 PackageName := "FinInG",
-
+LongTitle := "Finite Incidence Geometry",
 ##  This may be used by a default banner or on a Web page, should fit on
 ##  one line.
 Subtitle := "Finite Incidence Geometry",
@@ -375,7 +375,7 @@ PackageDoc := rec(
   # a longer title of the book, this together with the book name should
   # fit on a single text line (appears with the '?books' command in GAP)
   # LongTitle := "Elementary Divisors of Integer Matrices",
-  LongTitle := "FinInG - Finite Geometry",
+  LongTitle := "FinInG - Finite Incidence Geometry",
   # Should this help book be autoloaded when GAP starts up? This should
   # usually be 'true', otherwise say 'false'. 
   Autoload  := true
@@ -426,7 +426,7 @@ AvailabilityTest := function()
 ##  when it is not shown. *optional* (note the ~-syntax in this example)
 BannerString := Concatenation( 
   "---------------------------------------------------------------------\n",
-  "Loading  FinInG ", ~.Version, "\n",
+  "Loading  FinInG ", ~.Version, " (Finite Incidence Geometry) \n",
   "by ", ~.Persons[1].FirstNames, " ", ~.Persons[1].LastName,
         " (", ~.Persons[1].WWWHome, ")\n",
   "   ", ~.Persons[2].FirstNames, " ", ~.Persons[2].LastName,
@@ -445,7 +445,7 @@ BannerString := Concatenation(
         " (", ~.Persons[8].WWWHome, ")\n",
 "   ", ~.Persons[9].FirstNames, " ", ~.Persons[9].LastName,
         " (", ~.Persons[9].WWWHome, ")\n",
-  "For help, type: ?FinInG package \n",
+  "For help, type: ?FinInG \n",
   "---------------------------------------------------------------------\n" ),
 
 ##  Suggest here if the package should be *automatically loaded* when GAP is 
