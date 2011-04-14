@@ -217,6 +217,8 @@ DeclareOperation( "RandomChamber", [IsIncidenceStructure]);
 
 
 DeclareOperation( "Type", [ IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep ] );
+DeclareOperation( "Type", [ IsElementsOfIncidenceStructure and IsElementsOfIncidenceStructureRep ] );
+
 
 DeclareFilter( "IsUnwrapper" );
 DeclareGlobalVariable( "_" );

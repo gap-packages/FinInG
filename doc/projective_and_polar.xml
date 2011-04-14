@@ -24,7 +24,7 @@ In this chapter we describe how to use <Package>FinInG</Package> to work
 with finite projective and polar spaces. 
 
 <Section>
-<Heading>Creating Projective Spaces</Heading>
+<Heading>Creating Projective Spaces and basic operations</Heading>
 
 A <E>projective space</E> is a point-line
 incidence geometry, satisfying few well known axioms. In
@@ -63,10 +63,21 @@ namely, the common abbreviation <C>PG(d, q)</C>.
 </Example>
 </Description>
 </ManSection>
-</Section>
 
+<ManSection>
+<Oper Name="BaseField" Arg="ps"/>
+<Returns>returns the base field for the projective space<A>ps</A>
+</Returns>
+<Description>
+<Example>
+<#Include SYSTEM "../examples/include/projpol_basefieldps.include"> 
+</Example>
+</Description>
+</ManSection>
+
+</Section>
 <Section>
-<Heading>Basic operations for Projective Spaces</Heading>
+<Heading>Operations for elements of projective spaces</Heading>
 
 <ManSection>
 <Oper Name="UnderlyingVectorSpace" Arg="ps"/>
@@ -123,63 +134,85 @@ every projective subspace and every projective space.
 
 <ManSection>
 <Oper Name="StandardFrame" Arg="ps"/>
-
-<Returns></Returns>
+<Returns>returns the standard frame in the projective space <A>ps</A></Returns>
 <Description>
 <Example>
+<#Include SYSTEM "../examples/include/projpol_standardframe.include"> 
 </Example>
 </Description>
 </ManSection>
 
 <ManSection>
-<Oper Name="Coordinates" Arg="v"/>
-
-<Returns></Returns>
+<Oper Name="Coordinates" Arg="p"/>
+<Returns>the coordinates of the projective point <A>p</A>
+</Returns>
 <Description>
 <Example>
+<#Include SYSTEM "../examples/include/projpol_coordinates.include"> 
 </Example>
 </Description>
 </ManSection>
 
 
 <ManSection>
-<Oper Name="EquationOfHyperplane" Arg="ps"/>
-
-<Returns></Returns>
+<Oper Name="EquationOfHyperplane" Arg="h"/>
+<Returns>the equation of the hyperplane <A>h</A> of a projective space</Returns>
 <Description>
 <Example>
+<#Include SYSTEM "../examples/include/projpol_eqhyperplane.include"> 
 </Example>
 </Description>
 </ManSection>
 
 <ManSection>
-<Oper Name="BaseField" Arg="ps"/>
-
-<Returns></Returns>
+<Oper Name="AmbientSpace" Arg="el"/>
+<Returns>returns the ambient space an element <A>el</A> of a projective space</Returns>
 <Description>
+Remind 
+that the trivial subspace is incident with everything, but is not considered as an 
+element of any geometry. As a byproduct, operations as <C>AmbientSpace</C> are not 
+applicatble on the trivial subspace.
 <Example>
+<#Include SYSTEM "../examples/include/projpol_ambientspaceelps.include"> 
+</Example>
+</Description>
+</ManSection>
+
+
+<ManSection>
+<Oper Name="BaseField" Arg="el"/>
+<Returns>returns the base field of an element <A>el</A> of a projective space</Returns>
+<Description>
+Remind 
+that the trivial subspace is incident with everything, but is not considered as an 
+element of any geometry. As a byproduct, operations as <C>BaseField</C> are not 
+applicatble on the trivial subspace.
+<Example>
+<#Include SYSTEM "../examples/include/projpol_basefieldelps.include"> 
 </Example>
 </Description>
 </ManSection>
 
 <ManSection>
 <Oper Name="AsList" Arg="subspaces"/>
-
 <Returns>an Orb object or list</Returns>
 <Description>
 <Example>
-<#Include SYSTEM "../examples/include/projpol_aslist.include"> 
+John's example works, but it is not clear whether it fits in this part of the manual. I'll ask John to explain
+the difference between using orb and not using orb to list e.g. all lines of PG(3,4), is in the example projpol_Aslist.g
 </Example>
 </Description>
 </ManSection>
 
-
 <ManSection>
-<Oper Name="Random" Arg="subspaces"/>
-
-<Returns></Returns>
+<Oper Name="Random" Arg="elements"/>
+<Returns>a random element from the collection <A>elements</A></Returns>
 <Description>
+The collection <A>elements</A> is an object in the category <C>IsElementsOfIncidenceStructure</C>,
+i.e. an object representing the set of elements of a certain incidence structure of a given type. The 
+latter information can be derived e.g. using <C>AmbientSpace</C> and <C>Type</C>.
 <Example>
+
 </Example>
 </Description>
 </ManSection>

@@ -264,6 +264,9 @@ InstallMethod( Rank, "for a projective space",
 
 InstallMethod( BaseField, "for a projective space", [IsProjectiveSpace],
   pg -> pg!.basefield );
+
+InstallMethod( BaseField, "for an element of a projective space", [IsSubspaceOfProjectiveSpace],
+  sub -> AmbientSpace(sub)!.basefield );
   
 InstallMethod( RepresentativesOfElements, "for a projective space", [IsProjectiveSpace],
  # returns the canonical maximal flag
@@ -1432,4 +1435,3 @@ InstallMethod( BaerSubplaneOnQuadrangle, [IsSubspaceOfProjectiveSpace,
   od;
   return subplane;
 end);
-

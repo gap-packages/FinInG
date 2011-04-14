@@ -63,7 +63,11 @@ InstallMethod( AmbientGeometry, [ IsElementsOfIncidenceStructure and IsElementsO
 
 InstallMethod( AmbientGeometry, [ IsAllElementsOfIncidenceStructure and IsAllElementsOfIncidenceStructureRep ], x -> x!.geometry );
 
+# CHECKED 14/4/2011
 InstallMethod( Type, [ IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep ], x -> x!.type );
+
+# CHECKED 14/4/2011
+InstallMethod( Type, [IsElementsOfIncidenceStructure and IsElementsOfIncidenceStructureRep], x -> x!.type );
 
 InstallMethod( ViewObj, "for a wrapped element",
   [ IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep ],

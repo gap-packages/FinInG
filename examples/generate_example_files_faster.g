@@ -36,7 +36,9 @@ morphismsfiles := ["morphisms_intertwiners","morphisms_embedding1","morphisms_em
 
 projpolfiles1 := ["projpol_projectivespace", "projpol_projdimension",
                  "projpol_underlyingvs", "projpol_element1", "projpol_emptysubspace",
-		 "projpol_projdimension_element"];
+		 "projpol_projdimension_element", "projpol_standardframe", "projpol_coordinates",
+		  "projpol_eqhyperplane", "projpol_basefieldps", "projpol_ambientspaceelps", 
+		  "projpol_basefieldelps"];
 		 
 		 
 		 "projpol_hermitian", "projpol_elliptic",
