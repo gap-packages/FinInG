@@ -9,7 +9,7 @@ InstallMethod( ViewObj, [IsEmptySubspace],
 # Methods for IsIncident with the EmtySubspace  
 
 InstallMethod( IsIncident, "for the trivial subspace and a nontrivial subspace", 
-   [ IsEmptySubspace, IsSubspaceOfProjectiveSpace ],
+   [ IsEmptySubspace, IsEmptySubspace ],
   function( x, y )
     return true;
   end );
@@ -37,6 +37,29 @@ InstallMethod( IsIncident, "for the trivial subspace and the trivial subspace",
 	function (x,y)
 		return true;
 	end );
+
+# Methods for \* with the EmtySubspace  
+
+InstallOtherMethod( \*, "for the non-trivial subspace and a trivial subspace",  [IsSubspaceOfProjectiveSpace, IsEmptySubspace],
+  function( a, b )
+    return IsIncident(b, a);
+  end );
+
+InstallOtherMethod( \*, "for the trivial subspace and a nontrivial subspace",  [IsEmptySubspace, IsSubspaceOfProjectiveSpace],
+  function( a, b )
+    return IsIncident(b, a);
+  end );
+
+InstallOtherMethod( \*, "for the projective space and the trivial subspace",  [IsProjectiveSpace, IsEmptySubspace],
+  function( a, b )
+    return IsIncident(b, a);
+  end );
+
+InstallOtherMethod( \*, "for the trivial subspace and a projective space",  [IsEmptySubspace, IsProjectiveSpace],
+  function( a, b )
+    return IsIncident(b, a);
+  end );
+
 	
 # Methods for Span with the EmptySubspace
 

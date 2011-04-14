@@ -421,7 +421,7 @@ InstallMethod(Iterator, "for elements of a coset geometry",
     return newiter;
   end );
 
-InstallMethod( IsIncident, "for varieties of a coset geometry", 
+InstallMethod( IsIncident, "for elements of a coset geometry", 
               [IsElementOfCosetGeometry, IsElementOfCosetGeometry],
   function( x, y )
     local vx, vy, tx, ty, g, h, k;
@@ -742,7 +742,7 @@ InstallMethod( PrintObj, [ IsCosetGeometry and IsCosetGeometryRep ],
 InstallMethod( ViewObj, [ IsAllElementsOfCosetGeometry and
   IsAllElementsOfCosetGeometryRep ],
   function( vs )
-    Print("<varieties of type ", vs!.type," of ");
+    Print("<elements of type ", vs!.type," of ");
     ViewObj(vs!.geometry);
     Print(">");
   end );
@@ -755,7 +755,7 @@ InstallMethod( PrintObj, [ IsAllElementsOfCosetGeometry and
 
 InstallMethod( ViewObj, [ IsElementOfCosetGeometry ],
   function( v )
-    Print("<variety of type ", v!.type," of ");
+    Print("<element of type ", v!.type," of ");
     ViewObj(v!.geo);
     Print(">");
   end );
@@ -852,4 +852,20 @@ InstallMethod( Rank2Parameters, "for a coset geometry of rank 2", [IsCosetGeomet
   nl:=Index(geo!.group, geo!.parabolics[2]);
   return[[g,dp,dl], [sp,np], [sl,nl]];
 end );
+
+#############################################################################
+# Methods for LT for elements of coset geometries.
+#############################################################################
+
+InstallOtherMethod( \<,
+  [ IsElementOfCosetGeometry and IsElementOfCosetGeometryRep,
+    IsElementOfCosetGeometry and IsElementOfCosetGeometryRep ],
+  function( x, y )
+  if x!.type = y!.type then
+    return x<y;
+  else
+	return x!.type < y!.type;
+  fi;
+end );
+
 

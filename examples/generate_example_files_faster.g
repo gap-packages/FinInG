@@ -32,7 +32,13 @@ incgeomfiles := ["incgeom_elementsj","incgeom_points","incgeom_lines","incgeom_p
 morphismsfiles := ["morphisms_intertwiners","morphisms_embedding1","morphisms_embedding2","morphisms_typesubspace",
           "morphisms_fieldreduc1", "morphisms_fieldreduc2","morphisms_subfield1","morphisms_subfield2",
           "morphisms_isopolar","morphisms_projection","morphisms_completion","morphisms_klein","morphisms_duality"];;
-projpolfiles := ["projpol_projectivespace", "projpol_polarspaceform",
+
+
+projpolfiles1 := ["projpol_projectivespace", "projpol_projdimension",
+                 "projpol_underlyingvs", "projpol_hermitian", "projpol_elliptic",
+		 "projpol_parabolic", "projpol_hyperbolic", "projpol_element1", "projpol_in"];
+
+projpolfiles1 := ["projpol_projectivespace", "projpol_polarspaceform",
                  "projpol_symplectic", "projpol_hermitian", "projpol_elliptic",
 		 "projpol_parabolic", "projpol_hyperbolic", "projpol_element1", "projpol_in"];
 
