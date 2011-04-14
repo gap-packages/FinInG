@@ -1316,38 +1316,54 @@ InstallMethod( VectorSpaceToElement, "for a compressed basis of a vector subspac
      ConvertToMatrixRep(x, geom!.basefield);
      return Wrap(geom, Length(x), x);
   fi;
+end );  
+  
+InstallMethod( VectorSpaceToElement, "for a row vector",
+ [IsProjectiveSpace, IsRowVector],
+ function( geom, v )
+   local  x, n, i;
+     ## when v is empty...
+
+     if IsEmpty(v) then
+       return [];
+     fi;
+     x := ShallowCopy(v);
+
+     ## dimension should be correct
+
+     if Length(v) <> geom!.dimension + 1 then
+        Error("Dimensions are incompatible");
+     fi;
+
+     ## We must also compress our vector.
+
+     ConvertToVectorRep(x, geom!.basefield);
+     return Wrap(geom, 1, x);
 end );
 
-InstallMethod( VectorSpaceToElement, "for a row vector",
-  [IsProjectiveSpace, IsRowVector],
-  function( geom, vec )
-    local  c;
-      if IsZero(vec) then
-         return [];
-      fi;
+InstallMethod( VectorSpaceToElement, "for an 8-bit vector",
+ [IsProjectiveSpace, Is8BitVectorRep],
+ function( geom, v )
+   local  x, n, i;
+     ## when v is empty...
 
-      c := PositionNonZero( vec );
-      if c <= Length( vec )  then
-         vec := Inverse( vec[c] ) * vec;
-      fi;
-      return Wrap(geom, 1, vec);
-  end );
-  
-InstallMethod( VectorSpaceToElement, "for a 8-bit vector",
-  [IsProjectiveSpace, Is8BitVectorRep],
-  function( geom, vec )
-    local  c, gf;
-      if IsZero(vec) then
-         return [];
-      fi;
-      gf := BaseField(vec);
-      c := PositionNonZero( vec );
-      if c <= Length( vec )  then
-         vec := Inverse( vec[c] ) * vec;
-         ConvertToVectorRep( vec, gf );
-      fi;
-      return Wrap(geom, 1, vec);
-  end );
+     if IsEmpty(v) then
+       return [];
+     fi;
+     x := ShallowCopy(v);
+
+     ## dimension should be correct
+
+     if Length(v) <> geom!.dimension + 1 then
+        Error("Dimensions are incompatible");
+     fi;
+
+     ## We must also compress our vector.
+
+     ConvertToVectorRep(x, geom!.basefield);
+     return Wrap(geom, 1, x);
+end );
+
 
 InstallOtherMethod( Dimension,
    "for projective spaces",
