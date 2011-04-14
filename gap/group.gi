@@ -948,7 +948,7 @@ InstallMethod( IsOne, "for a projective group element with Frobenius",
   end );
 
 #made a change, added ^-1 on march 8 2007, J&J
-InstallMethod( \*, "for two projective group element",
+InstallMethod( \*, "for two projective group element with Frobenious",
   [IsProjGrpElWithFrob and IsProjGrpElWithFrobRep,
    IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
   function( a, b )

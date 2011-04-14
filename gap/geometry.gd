@@ -211,6 +211,11 @@ DeclareOperation( "AmbientGeometry", [ IsElementOfIncidenceStructure and IsEleme
 DeclareOperation( "AmbientGeometry", [ IsElementsOfIncidenceStructure and IsElementsOfIncidenceStructureRep ] );
 DeclareOperation( "AmbientGeometry", [ IsAllElementsOfIncidenceStructure and IsAllElementsOfIncidenceStructureRep ] );
 
+DeclareOperation( "RandomFlag", [IsIncidenceStructure]);
+DeclareOperation( "RandomChamber", [IsIncidenceStructure]);
+
+
+
 DeclareOperation( "Type", [ IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep ] );
 
 DeclareFilter( "IsUnwrapper" );
