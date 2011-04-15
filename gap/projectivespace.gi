@@ -846,7 +846,8 @@ InstallMethod( Span, [ IsHomogeneousList and IsSubspaceOfProjectiveSpaceCollecti
   function( l )  
     local unwrapped, r, unr, amb, span, temp, x, F, list;
 	# first we check that all items in the list belong to the same ambient space
-	if not Size(AsDuplicateFreeList(List(l,x->AmbientSpace(x))))=1 then 
+	if Length(l)=0 then return [];
+	elif not Size(AsDuplicateFreeList(List(l,x->AmbientSpace(x))))=1 then 
 	 Error("The elements in the list do not have a common ambient space");
 	else
       x := l[1];
@@ -881,8 +882,8 @@ InstallMethod( Span, [ IsList ],
 	# contains the whold projective space. If it does, return that, if it doesn't
 	# return the span of the remaining elements of the list, which will then select
 	# the previous method for Span
-  if Length(l)=0 then return EmptySubspace;
-  elif Length(l)=1 then return l;
+  if Length(l)=0 then return [];
+  elif Length(l)=1 then return l[1];
   else
 	list:=Filtered(l,x->not IsEmptySubspace(x));
 	if not Size(AsDuplicateFreeList(List(list,x->AmbientSpace(x))))=1 then 
@@ -942,7 +943,7 @@ InstallMethod( Meet, [IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
              return VectorSpaceToElement( AmbientSpace(x), int);
           fi;
       else 
-          return EmptySubspace;
+          return EmptySubspace(AmbientSpace(x));
       fi;
     else
       Error("Subspaces belong to different ambient spaces");
@@ -970,7 +971,7 @@ InstallMethod( Meet, [ IsHomogeneousList and IsSubspaceOfProjectiveSpaceCollecti
        until int = [] or IsDoneIterator(iter);
        return int;
 	  fi;
-    else return EmptySubspace;
+    else return [];
     fi;
   fi;
  end );
@@ -981,9 +982,9 @@ InstallMethod( Meet, [ IsList ],
 	# This method is added to allow the list ("l") to contain the projective space 
 	# or the empty subspace. If this method is selected, it follows that the list must
 	# contain the whole projective space or the empty set. 
-	if IsEmpty(l) then return EmptySubspace;
+	if IsEmpty(l) then return [];
 	else
-	  if Length(l)=1 then return l;
+	  if Length(l)=1 then return l[1];
 	  else
 
     	# First we check that the non emptysubspace elements belong to the same ambient space
@@ -991,11 +992,7 @@ InstallMethod( Meet, [ IsList ],
 	  if not Size(AsDuplicateFreeList(List(checklist,x->AmbientSpace(x))))=1 then 
 	   Error("The elements in the list do not have a common ambient space");
 	  else	
-	  # First we remove the whole space from the list, then we check if the list
-	  # contains the whold projective space. If it does, return that, if it doesn't
-	  # return the span of the remaining elements of the list, which will then select
-	  # the previous method for Span
-	    if EmptySubspace in l then return EmptySubspace;
+	    if EmptySubspace(AmbientSpace(l[1])) in l then return EmptySubspace(AmbientSpace(l[1]));
 	    else
 	      pg:=AmbientSpace(checklist[1]); # the first element in l could be the emptysubspace,
 	      # so we choose the first element of the checklist

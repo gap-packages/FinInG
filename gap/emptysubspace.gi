@@ -1,3 +1,17 @@
+InstallMethod( EmptySubspace, "for a projective space",
+ [IsProjectiveSpace],
+ function( pg )
+   local  vs,x,w,ty;
+	 vs:=UnderlyingVectorSpace(pg);
+     x := ShallowCopy(Zero(vs));
+	 w := rec( geo := pg, obj := x );
+	 ty:= NewType( NewFamily("EmptySubspaceFamily"), IsEmptySubspace and IsEmptySubspaceRep );
+    ObjectifyWithAttributes( w, ty, 
+						AmbientSpace, pg,
+						ProjectiveDimension, -1);
+    return w;
+end );
+
 # Viewmethod for the empty subspace
 
 InstallMethod( ViewObj, [IsEmptySubspace],
@@ -60,6 +74,10 @@ InstallOtherMethod( \*, "for the trivial subspace and a projective space",  [IsE
     return IsIncident(b, a);
   end );
 
+InstallOtherMethod( \*, "for the trivial subspace and a projective space",  [IsEmptySubspace, IsEmptySubspace],
+  function( a, b )
+    return IsIncident(b, a);
+  end );
 	
 # Methods for Span with the EmptySubspace
 
@@ -126,5 +144,8 @@ InstallMethod( Meet, "for the trivial subspace and the trivial subspace",
 		return x;
 	end );
 
-
-
+#InstallMethod( Dimension, "for the empty subspace",
+#	[IsEmptySubspace],
+#	x->ProjectiveDimension(x)
+#	 );
+	
