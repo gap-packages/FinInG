@@ -20,6 +20,14 @@ InstallMethod( ViewObj, [IsEmptySubspace],
   end );
   
 
+# 
+InstallMethod( \=, "for two empty subspaces",
+        [IsEmptySubspace, IsEmptySubspace],
+        function(e1,e2);
+        return AmbientSpace(e1) = AmbientSpace(e2);
+end );
+
+
 # Methods for IsIncident with the EmtySubspace  
 
 InstallMethod( IsIncident, "for the trivial subspace and a nontrivial subspace", 
