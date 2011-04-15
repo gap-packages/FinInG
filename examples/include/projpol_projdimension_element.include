@@ -14,5 +14,5 @@ gap&gt; ProjectiveDimension(p);
 0
 gap&gt; Dimension(p);
 0
-gap&gt; ProjectiveDimension(EmptySubspace);
+gap&gt; ProjectiveDimension(EmptySubspace(ps));
 -1

@@ -19,6 +19,15 @@ InstallMethod( ViewObj, [IsEmptySubspace],
     Print("< trivial subspace >");
   end );
   
+InstallMethod( PrintObj, [IsEmptySubspace],
+  function(x)
+    PrintObj(Zero(UnderlyingVectorSpace(AmbientSpace(x))));
+  end );
+
+InstallMethod( Display, [IsEmptySubspace],
+  function(x)
+    Print("< trivial subspace >");
+  end );
 
 # 
 InstallMethod( \=, "for two empty subspaces",
@@ -30,8 +39,14 @@ end );
 
 # Methods for IsIncident with the EmtySubspace  
 
-InstallMethod( IsIncident, "for the trivial subspace and a nontrivial subspace", 
+InstallMethod( IsIncident, "for the trivial subspace and a trivial subspace", 
    [ IsEmptySubspace, IsEmptySubspace ],
+  function( x, y )
+    return true;
+  end );
+  
+InstallMethod( IsIncident, "for the trivial subspace and a non trivial subspace", 
+   [ IsEmptySubspace, IsSubspaceOfProjectiveSpace ],
   function( x, y )
     return true;
   end );

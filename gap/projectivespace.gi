@@ -1174,9 +1174,10 @@ InstallMethod( VectorSpaceToElement, "for a Plist",
       ## when v is empty... 
       
       if IsEmpty(v) then
-        return EmptySubspace;
+        Error("<v> does not represent any vectorspace");
       fi;
-      x := MutableCopyMat(v);
+      
+	  x := MutableCopyMat(v);
       TriangulizeMat(x);
       
       ## dimension should be correct
@@ -1194,7 +1195,7 @@ InstallMethod( VectorSpaceToElement, "for a Plist",
           i := i+1; 
       od;
       if i = n then
-         return [];
+         return EmptySubspace(geom);
       fi;
       x := x{[1..n-i]};
       if Length(x)=ProjectiveDimension(geom)+1 then
@@ -1225,9 +1226,9 @@ InstallMethod( VectorSpaceToElement, "for a compressed GF(2)-matrix",
 
     ## when v is empty... 
     if IsEmpty(v) then
-      return EmptySubspace;
+      Error("<v> does not represent any vectorspace");
     fi;
-    x := MutableCopyMat(v);
+	x := MutableCopyMat(v);
     TriangulizeMat(x);
   
     ## dimension should be correct
@@ -1245,7 +1246,7 @@ InstallMethod( VectorSpaceToElement, "for a compressed GF(2)-matrix",
          i := i+1; 
     od;
     if i = n then
-       return [];
+       return EmptySubspace(geom);
     fi;
     x := x{[1..n-i]};
     if Length(x)=ProjectiveDimension(geom)+1 then
@@ -1275,7 +1276,7 @@ InstallMethod( VectorSpaceToElement, "for a compressed basis of a vector subspac
 
   ## when v is empty... 
   if IsEmpty(v) then
-    return EmptySubspace;
+    Error("<v> does not represent any vectorspace");
   fi;
   x := MutableCopyMat(v);
   TriangulizeMat(x);
@@ -1295,7 +1296,7 @@ InstallMethod( VectorSpaceToElement, "for a compressed basis of a vector subspac
        i := i+1; 
   od;
   if i = n then
-     return [];
+     return EmptySubspace(geom);
   fi;
   x := x{[1..n-i]};
   if Length(x)=ProjectiveDimension(geom)+1 then
@@ -1318,16 +1319,16 @@ InstallMethod( VectorSpaceToElement, "for a compressed basis of a vector subspac
   fi;
 end );  
   
+# CHECKED 11/04/15 jdb
 InstallMethod( VectorSpaceToElement, "for a row vector",
  [IsProjectiveSpace, IsRowVector],
  function( geom, v )
    local  x, n, i;
      ## when v is empty...
-
      if IsEmpty(v) then
-       return EmptySubspace;
+       Error("<v> does not represent any vectorspace");
      fi;
-     x := ShallowCopy(v);
+	 x := ShallowCopy(v);
 
      ## dimension should be correct
 
@@ -1336,15 +1337,22 @@ InstallMethod( VectorSpaceToElement, "for a row vector",
      fi;
 
      ## We must also compress our vector.
-
      ConvertToVectorRep(x, geom!.basefield);
-     return Wrap(geom, 1, x);
+
+     ## bad characters, such as jdb, checked this with input zero vector...
+ 	 if IsZero(x) then
+	   return EmptySubspace(geom);
+	 else
+	   return Wrap(geom, 1, x);
+	 fi;
 end );
 
+# CHECKED 11/04/15 jdb
 InstallMethod( VectorSpaceToElement, "for an 8-bit vector",
  [IsProjectiveSpace, Is8BitVectorRep],
  function( geom, v )
    local  x, n, i;
+
      ## when v is empty...
 
      if IsEmpty(v) then
@@ -1361,7 +1369,14 @@ InstallMethod( VectorSpaceToElement, "for an 8-bit vector",
      ## We must also compress our vector.
 
      ConvertToVectorRep(x, geom!.basefield);
-     return Wrap(geom, 1, x);
+
+     ## bad characters, such as jdb, checked this with input zero vector...
+ 	 if IsZero(x) then
+	   return EmptySubspace(geom);
+	 else
+	   return Wrap(geom, 1, x);
+	 fi;
+
 end );
 
 

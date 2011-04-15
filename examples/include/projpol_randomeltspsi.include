@@ -1,0 +1,22 @@
+gap&gt; ps := PG(9,49);
+ProjectiveSpace(9, 49)
+gap&gt; RandomSubspace(ps,3);
+&lt;a solid in ProjectiveSpace(9, 49)&gt;
+gap&gt; Display(last);
+z = Z(49)
+    1    .    .    . z^21  z^1 z^38 z^35 z^43 z^36
+    .    1    .    .    2 z^37  z^6 z^14 z^45 z^27
+    .    .    1    . z^39    1 z^11    5  z^6 z^35
+    .    .    .    1  z^2 z^14 z^33 z^34 z^46 z^47
+gap&gt; RandomSubspace(ps,7);
+&lt;a proj. 7-space in ProjectiveSpace(9, 49)&gt;
+gap&gt; Display(last);
+z = Z(49)
+    1    .    .    .    .    .    .    . z^35 z^12
+    .    1    .    .    .    .    .    . z^33    4
+    .    .    1    .    .    .    .    . z^13 z^31
+    .    .    .    1    .    .    .    . z^28 z^47
+    .    .    .    .    1    .    .    .    2 z^29
+    .    .    .    .    .    1    .    . z^13 z^13
+    .    .    .    .    .    .    1    . z^14    5
+    .    .    .    .    .    .    .    1 z^14 z^25

@@ -10,3 +10,4 @@ mat := [[1,0,0,1],[0,1,1,0]]*Z(4)^0;
 line := VectorSpaceToElement(ps,mat);
 e := VectorSpaceToElement(ps,[]);
 quit;
+quit;

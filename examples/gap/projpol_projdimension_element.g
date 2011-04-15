@@ -7,6 +7,6 @@ Dimension(line);
 p := VectorSpaceToElement(ps,[1,2,3]*Z(5)^0);
 ProjectiveDimension(p);
 Dimension(p);
-ProjectiveDimension(EmptySubspace);
+ProjectiveDimension(EmptySubspace(ps));
 quit;
 

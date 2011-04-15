@@ -91,7 +91,15 @@ vector space over the field of order <M>q</M>.
 </Section>
 
 <Section>
-<Heading>Operations for elements of projective spaces</Heading>
+<Heading>Elements of projective spaces</Heading>
+
+The elements of a projective space <M>PG(n,q)</M> are the subspaces of a suitable dimension. The 
+empty subspace, also called the trivial subspace, has dimenion -1, corresponds with the zero dimensional 
+vector space of the underlying vector space of <M>PG(n,q)</M>, and is hence represented by the zero vector
+of lenght <M>n+1</M> over the underlying field <M>GF(q)</M>. The trivial subspace and the whole projective 
+space are mathematically considerd as a subsace of the projective geometry, but not as elements of the 
+incidence geometry, and hence do in <Package>FinInG</Package>
+not belong to the category <C>IsSubspaceOfProjectiveSpace</C>.
 
 <ManSection>
 <Oper Name="VectorSpaceToElement" Arg="geo, v"/>
@@ -109,23 +117,11 @@ returned.
 </ManSection>
 
 <ManSection>
-<Oper Name="ElmentsOfIncidenceStructure" Arg="ps, j"/>
-<Returns>the collection of elements of the projective space <A>ps</A> of type <A>j</A></Returns>
+<Oper Name = "EmptySubspace" Arg="ps"/>
+<Returns>the trivial subspace in the projective <A>ps></A></Returns>
 <Description>
-For the projective space <A>ps</A> of dimension <M>d</M> and the type <A>j</A>, <M>1 lt j lt d</M>
-this operation returns the collection of <M>j-1</M> dimenaional subspaces.  <Example>
-<#Include SYSTEM "../examples/include/projpol_element1.include"> 
-</Example>
-</Description>
-</ManSection>
-
-<ManSection>
-<Var Name = "EmptySubspace" />
-<Returns>a GAP object</Returns>
-<Description>
-<A>EmptySubspace</A> is a Global Variable which represents the ubiquitous 
-trivial subspace of a projective or polar space, and is contained in
-every projective subspace and every projective space.
+The object returned by this operation is contained in
+every projective subspace of the projective space <A>ps</A>
 <Example>
 <#Include SYSTEM "../examples/include/projpol_emptysubspace.include"> 
 </Example>
@@ -140,6 +136,17 @@ every projective subspace and every projective space.
 <Description>
 <Example>
 <#Include SYSTEM "../examples/include/projpol_projdimension_element.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="ElmentsOfIncidenceStructure" Arg="ps, j"/>
+<Returns>the collection of elements of the projective space <A>ps</A> of type <A>j</A></Returns>
+<Description>
+For the projective space <A>ps</A> of dimension <M>d</M> and the type <A>j</A>, <M>1 lt j lt d</M>
+this operation returns the collection of <M>j-1</M> dimenaional subspaces.  <Example>
+<#Include SYSTEM "../examples/include/projpol_element1.include"> 
 </Example>
 </Description>
 </ManSection>
@@ -165,7 +172,6 @@ every projective subspace and every projective space.
 </Description>
 </ManSection>
 
-
 <ManSection>
 <Oper Name="EquationOfHyperplane" Arg="h"/>
 <Returns>the equation of the hyperplane <A>h</A> of a projective space</Returns>
@@ -180,25 +186,18 @@ every projective subspace and every projective space.
 <Oper Name="AmbientSpace" Arg="el"/>
 <Returns>returns the ambient space an element <A>el</A> of a projective space</Returns>
 <Description>
-Remind 
-that the trivial subspace is incident with everything, but is not considered as an 
-element of any geometry. As a byproduct, operations as <C>AmbientSpace</C> are not 
-applicatble on the trivial subspace.
+This operation is also applicable on the trivial subspace.
 <Example>
 <#Include SYSTEM "../examples/include/projpol_ambientspaceelps.include"> 
 </Example>
 </Description>
 </ManSection>
 
-
 <ManSection>
 <Oper Name="BaseField" Arg="el"/>
 <Returns>returns the base field of an element <A>el</A> of a projective space</Returns>
 <Description>
-Remind 
-that the trivial subspace is incident with everything, but is not considered as an 
-element of any geometry. As a byproduct, operations as <C>BaseField</C> are not 
-applicatble on the trivial subspace.
+This operation is also applicable on the trivial subspace.
 <Example>
 <#Include SYSTEM "../examples/include/projpol_basefieldelps.include"> 
 </Example>
@@ -230,14 +229,27 @@ latter information can be derived e.g. using <C>AmbientSpace</C> and <C>Type</C>
 </ManSection>
 
 <ManSection>
-<Oper Name="RandomSubspace" Arg="pg, i"/>
-
-<Returns></Returns>
+<Oper Name="RandomSubspace" Arg="ps, i"/>
+<Returns>returns a random element of type <A>i</A> of the projective space <A>ps</A></Returns>
 <Description>
 <Example>
+<#Include SYSTEM "../examples/include/projpol_randomeltspsi.include"> 
 </Example>
 </Description>
 </ManSection>
+
+<ManSection>
+<Oper Name="RandomSubspace" Arg="ps"/>
+<Returns>returns a random element of a random type of the projective space <A>ps</A></Returns>
+<Description>
+<Example>
+<#Include SYSTEM "../examples/include/projpol_randomeltps.include"> 
+</Example>
+</Description>
+</ManSection>
+
+
+
 
 
 <ManSection>
