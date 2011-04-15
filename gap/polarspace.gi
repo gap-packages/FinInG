@@ -268,6 +268,13 @@ InstallMethod( DiagramOfGeometry, [ IsClassicalPolarSpace ],
     return diagram;
   end );
 
+
+#############################################################################
+## TOT HIER GECHECKT JDB en ML 15/04/11
+#############################################################################
+
+
+
 #############################################################################
 ## The following methods are needed for "naked" polar spaces; those
 ## that on conception are devoid of many of the attributes that
