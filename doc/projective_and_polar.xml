@@ -75,10 +75,6 @@ namely, the common abbreviation <C>PG(d, q)</C>.
 </Description>
 </ManSection>
 
-</Section>
-<Section>
-<Heading>Operations for elements of projective spaces</Heading>
-
 <ManSection>
 <Oper Name="UnderlyingVectorSpace" Arg="ps"/>
 
@@ -92,6 +88,11 @@ vector space over the field of order <M>q</M>.
 </Description>
 </ManSection>
 
+</Section>
+
+<Section>
+<Heading>Operations for elements of projective spaces</Heading>
+
 <ManSection>
 <Oper Name="VectorSpaceToElement" Arg="geo, v"/>
 <Returns>an element</Returns>
@@ -102,6 +103,17 @@ In the case that <A>v</A> is a matrix, the rows represent basis vectors for the 
 exceptional case is when <A>v</A> is a zero-vector, whereby the trivial subspace is
 returned.
 <Example>
+<#Include SYSTEM "../examples/include/projpol_element1.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="ElmentsOfIncidenceStructure" Arg="ps, j"/>
+<Returns>the collection of elements of the projective space <A>ps</A> of type <A>j</A></Returns>
+<Description>
+For the projective space <A>ps</A> of dimension <M>d</M> and the type <A>j</A>, <M>1 lt j lt d</M>
+this operation returns the collection of <M>j-1</M> dimenaional subspaces.  <Example>
 <#Include SYSTEM "../examples/include/projpol_element1.include"> 
 </Example>
 </Description>
@@ -212,7 +224,7 @@ The collection <A>elements</A> is an object in the category <C>IsElementsOfIncid
 i.e. an object representing the set of elements of a certain incidence structure of a given type. The 
 latter information can be derived e.g. using <C>AmbientSpace</C> and <C>Type</C>.
 <Example>
-
+<#Include SYSTEM "../examples/include/projpol_randomeltsps.include"> 
 </Example>
 </Description>
 </ManSection>
