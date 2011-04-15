@@ -112,26 +112,65 @@ InstallMethod( DiagramOfGeometry, [IsCosetGeometry],
     return diagram;
   end );
 
-InstallMethod( DrawDiagram, [ IsDiagram, IsString ],
-  function( diagram, filename )
-    local vertices, edges, longstring, v, e;
+InstallGlobalFunction( DrawDiagram, 
+  function( arg )
+    local diagram, filename, vertices, edges, longstring, v, e, vertexverbosity, edgeverbosity, arglen;
+   
+    vertexverbosity:=0; #default orders and nr of elements
+    edgeverbosity:=1;   #default shorthand for generalized n-gons
+    arglen:=Length(arg);
+#Checking arguments
+    if not(arglen in [2,3,4]) then
+      Error("Usage DrawDiagram: must have at least 2 and at most 4 arguments.\n");
+    elif not(IsDiagram(arg[1]) and IsString(arg[2])) then
+      Error("Usage DrawDiagram: first argument must be a diagram, second argument must be a filename string.\n");
+    fi;
+    diagram:=arg[1];
+    filename:=arg[2];
     vertices := diagram!.vertices;
-    edges := diagram!.edges;
-
+    edges := diagram!.edges;  
+    if arglen > 2 then
+      if IsInt(arg[3]) then
+        vertexverbosity:=arg[3];
+      else
+        Error("Usage DrawDiagram: third argument mus be a vertex verbosity positive integer.\n");
+      fi;
+      if arglen = 4 and IsInt(arg[4]) then
+        edgeverbosity:=arg[4];
+      else
+        Error("Usage DrawDiagram: fourth argument mus be an edge verbosity positive integer.\n");
+      fi;
+    fi;
     longstring := "digraph DIAGRAM{\n rankdir = LR;\n";
     for v in vertices do
       longstring:=Concatenation(longstring, "subgraph cluster", String(v!.type), " {\n");
       longstring:=Concatenation(longstring, "color=transparent\n");    
       longstring:=Concatenation(longstring, "node [shape=circle, width=0.1]; ", String(v!.type), " [label=\"\"];\n");    
       longstring:=Concatenation(longstring, "labelloc=b\n");    
-      longstring:=Concatenation(longstring, "label=\"", String(OrderVertex(v)), "\\n", String(NrElementsVertex(v)),
-                   "\";\n}\n");   
+      if vertexverbosity =2 then
+        longstring:=Concatenation(longstring, "label=\"", "\";\n}\n"); 
+      elif vertexverbosity =1 then
+        longstring:=Concatenation(longstring, "label=\"", String(OrderVertex(v)),
+                   "\";\n}\n"); 
+      else
+        longstring:=Concatenation(longstring, "label=\"", String(OrderVertex(v)), "\\n", String(NrElementsVertex(v)),
+                   "\";\n}\n"); 
+      fi;
     od;
+
     for e in edges do
-      longstring:=Concatenation(longstring, String(e!.edge[1]), " -> ", String(e!.edge[2]), 
-       " [label = \"", String(ParametersEdge(e)[2]), " ", String(ParametersEdge(e)[1]), " ", 
-       String(ParametersEdge(e)[3]), "\", arrowhead = none ];\n");
+      longstring:=Concatenation(longstring, String(e!.edge[1]), " -> ", String(e!.edge[2]));
+      if edgeverbosity = 2 then
+        longstring:=Concatenation(longstring, " [label = \"", "\", arrowhead = none ];\n");
+      elif edgeverbosity = 1 and Size(Set(ParametersEdge(e)))= 1 then
+        longstring:=Concatenation(longstring, " [label = \"", String(ParametersEdge(e)[1]), "\", arrowhead = none ];\n");
+      else
+        longstring:=Concatenation(longstring, " [label = \"", String(ParametersEdge(e)[2]), " ", 
+                  String(ParametersEdge(e)[1]), " ", 
+                  String(ParametersEdge(e)[3]), "\", arrowhead = none ];\n");
+      fi;
     od;    
+
     longstring:=Concatenation(longstring, "}\n");    
     PrintTo( Concatenation(filename, ".dot") , longstring );
     Exec( Concatenation("dot -Tps ", filename, ".dot -o ", filename, ".ps") );
@@ -315,7 +354,7 @@ InstallMethod( PrintObj, [ IsRank2Residue and IsRank2ResidueRep  ],
 ##
 #############################################################################
 
-InstallMethod( CosetGeometry, [ IsGroup, IsHomogeneousList ],
+InstallMethod( CosetGeometry, [ IsGroup , IsHomogeneousList ],
   function( g, l )
 
     ##  We assume the types of the geometry index the set l, the ordering
@@ -328,6 +367,9 @@ InstallMethod( CosetGeometry, [ IsGroup, IsHomogeneousList ],
            AmbientSpace, geo,
            TypesOfElementsOfIncidenceStructure, [1..Size(l)],
            RepresentativesOfElements, l );
+    if HasIsHandledByNiceMonomorphism(g) and IsHandledByNiceMonomorphism(g) and DESARGUES.Fast then
+       SetIsHandledByNiceMonomorphism(geo, true);
+    fi;
     return geo;
   end );
 
@@ -394,6 +436,7 @@ InstallMethod( Wrap, "for a coset geometry and an object (coset)",
       IsElementOfCosetGeometryRep and IsElementOfCosetGeometry ), w );
     return w;
   end );
+
 
 InstallMethod(Iterator, "for elements of a coset geometry",
         [IsAllElementsOfCosetGeometry],
@@ -682,8 +725,29 @@ InstallMethod( ResidueOfFlag, "for coset geometries",
      return CosetGeometry( resg, respabs ); 
   end );
 
+InstallMethod( IncidenceGraph, [ IsCosetGeometry and IsHandledByNiceMonomorphism ],
+  function( geo )
+  
+  ## This operation returns the multiparitite incidence graph
+  ## associated to "geo", and it also sets a mutable attribute
+  ## IncidenceGraphAttr which can be called hence.  
+  
+    local fastgeo, gamma;
 
+    if not "grape" in RecNames(GAPInfo.PackagesLoaded) then
+       Error("You must load the Grape package\n");
+    fi;
 
+    if DESARGUES.Fast then
+      Print("#I Using NiceMonomorphism...\n");
+      fastgeo:=CosetGeometry(NiceObject(geo!.group), List(geo!.parabolics, NiceObject));
+      gamma := IncidenceGraph( fastgeo );
+    else
+      gamma := IncidenceGraph( geo );
+    fi;
+    Setter( IncidenceGraphAttr )( geo, gamma );
+    return gamma;
+  end );
 
 InstallMethod( IncidenceGraph, [ IsCosetGeometry ],
   function( geo )
@@ -862,9 +926,9 @@ InstallOtherMethod( \<,
     IsElementOfCosetGeometry and IsElementOfCosetGeometryRep ],
   function( x, y )
   if x!.type = y!.type then
-    return x<y;
+    return x!.obj < y!.obj;
   else
-	return x!.type < y!.type;
+    return x!.type < y!.type;
   fi;
 end );
 

@@ -166,7 +166,7 @@ DeclareOperation( "MakeRank2Residue", [ IsRank2Residue ] );
 
 ## Drawing diagrams
 
-DeclareOperation( "DrawDiagram", [ IsDiagram, IsString ] );
+DeclareGlobalFunction( "DrawDiagram" );
 
 
 
