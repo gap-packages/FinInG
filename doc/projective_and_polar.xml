@@ -223,33 +223,23 @@ The collection <A>elements</A> is an object in the category <C>IsElementsOfIncid
 i.e. an object representing the set of elements of a certain incidence structure of a given type. The 
 latter information can be derived e.g. using <C>AmbientSpace</C> and <C>Type</C>.
 <Example>
-<#Include SYSTEM "../examples/include/projpol_randomeltsps.include"> 
+<#Include SYSTEM "../examples/include/projpol_randomeltps.include"> 
 </Example>
 </Description>
 </ManSection>
 
 <ManSection>
 <Oper Name="RandomSubspace" Arg="ps, i"/>
-<Returns>returns a random element of type <A>i</A> of the projective space <A>ps</A></Returns>
-<Description>
-<Example>
-<#Include SYSTEM "../examples/include/projpol_randomeltspsi.include"> 
-</Example>
-</Description>
-</ManSection>
-
-<ManSection>
 <Oper Name="RandomSubspace" Arg="ps"/>
-<Returns>returns a random element of a random type of the projective space <A>ps</A></Returns>
+<Returns>the first variant returns a random element of type <A>i</A> of the projective space <A>ps</A>.
+The second variant returns a random element of a random type of the projective space <A>ps</A>
+</Returns>
 <Description>
 <Example>
-<#Include SYSTEM "../examples/include/projpol_randomeltps.include"> 
+<#Include SYSTEM "../examples/include/projpol_randomeltsps.include"> 
 </Example>
 </Description>
 </ManSection>
-
-
-
 
 
 <ManSection>

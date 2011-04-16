@@ -15,7 +15,7 @@
                                                             and Max Neunhoeffer
                                                               and Sven Reichard
 
-  Copyright 2009 University of Western Australia, Perth
+  Copyright 2011 University of Western Australia, Perth
                  Lehrstuhl D fuer Mathematik, RWTH Aachen
                  Ghent University
                  Colorado State University
@@ -119,9 +119,10 @@ The University of Western Australia, Australia
 <#Include SYSTEM "install.xml">
 <#Include SYSTEM "examples.xml">
 <#Include SYSTEM "incidence_geometry.xml">
-<#Include SYSTEM "projective_and_polar.xml">
+<#Include SYSTEM "projectivespaces.xml">
 <#Include SYSTEM "projgroups.xml">
 <#Include SYSTEM "polaritiesofps.xml">
+<#Include SYSTEM "classicalpolarspaces.xml">
 <#Include SYSTEM "affine.xml">
 <#Include SYSTEM "morphisms.xml">
 <!--#Include SYSTEM "schemes.xml"-->

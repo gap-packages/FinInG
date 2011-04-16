@@ -1,15 +1,15 @@
-PG(3, 3)
-gap> pi := Random(Planes(ps));
-&lt;a plane in PG(3, 3)>
-gap> tau := Random(Planes(ps));
-&lt;a plane in PG(3, 3)>
-gap> Span(pi,tau);
-PG(3, 3)
-gap> ps := PG(5,4);
-PG(5, 4)
-gap> u := Random(Points(ps));
-&lt;a point in PG(5, 4)>
-gap> v := Random(Points(ps));
-&lt;a point in PG(5, 4)>
-gap> Span(u,v);
-&lt;a line in PG(5, 4)>
+ProjectiveSpace(3, 3)
+gap&gt; p := Random(Planes(ps));
+&lt;a plane in ProjectiveSpace(3, 3)&gt;
+gap&gt; q := Random(Planes(ps));
+&lt;a plane in ProjectiveSpace(3, 3)&gt;
+gap&gt; s := Span(p,q);
+ProjectiveSpace(3, 3)
+gap&gt; s = Span([p,q]);
+true
+gap&gt; t := Span(EmptySubspace(ps),p);
+&lt;a plane in ProjectiveSpace(3, 3)&gt;
+gap&gt; t = p;
+true
+gap&gt; Span(ps,p);
+ProjectiveSpace(3, 3)

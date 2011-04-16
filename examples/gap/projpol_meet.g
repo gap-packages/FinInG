@@ -1,0 +1,10 @@
+ps := ProjectiveSpace(7,8);
+p := Random(Solids(ps));
+q := Random(Solids(ps));
+s := Meet(p,q);
+Display(s);
+r := Random(Hyperplanes(ps));
+Meet(p,r);
+Meet(q,r);
+Meet([p,q,r]);
+quit;
