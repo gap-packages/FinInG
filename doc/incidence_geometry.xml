@@ -37,10 +37,18 @@ has been included. Throughout, no matter the geometry, we have made the conventi
 an element of type 1 is a ``point'', an element of type 2 is a ``line'', and so forth.
 The examples we use in this section use projective spaces, which have not introduced the 
 reader to yet in this manual. For further information on projective spaces,
-see Chapter <Ref Chap="projectivepolar"/>.
+see Chapter <Ref Chap="projectivepolar"/>.<P/>
 
+probably more detailed information is needed here. E.g. we start to explain Incidence Geometry, but
+suddenly, we talk about Incidence Structures in the next sections. Not clear at all if we mean
+the same thing or not, and, we have Incidence Geometries *and* Incidence Structures in this
+package. 
+
+Essentially, in this chapter we describe functionality that is <B>declared</B> for 
+incidence structures, which does not imply that operations described here will work
+for arbitrarily user constructed incidence geometries. 
 <Section>
-<Heading>Basic operations on incidence geometries</Heading>
+<Heading>Incidence structures</Heading>
 
 <ManSection>
 <Oper Name="ElementsOfIncidenceStructure" Arg="ps, j"/>
@@ -121,15 +129,10 @@ an arbitrary incidence geometry.
 
 <ManSection>
 <Oper Name="IsIncident" Arg="u,v"/>
-<Oper Name="\in" Arg="u,v"/>
 <Returns>Boolean</Returns>
 <Description>
-<A>u</A> and <A>v</A> must be elements of an incidence geometry.
-This function returns True if <A>u</A> and <A>v</A> are incident
-and False otherwise. We have installed an overload of the operation
-<C>in</C> which the user should think of as ``incident'' rather
-than set theoretic inclusion. You can use these operations symmstrically,
-that is <C>x in y</C> will return the same boolean value as <C>y in x</C>.
+<A>u</A> and <A>v</A> must be elements of an incidence structure.
+This function returns 
 <Example>
 <#Include SYSTEM "../examples/include/incgeom_isincident.include"> 
 </Example>

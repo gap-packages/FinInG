@@ -17,10 +17,10 @@ This is the chapter of the documentation describing the polar spaces.
 -->
 
 <Chapter Label="polarspaces">
-<Heading>Polar Spaces</Heading>
+<Heading>Finite Classical Polar Spaces</Heading>
 
 <Section>
-<Heading>Creating Projective and Polar Spaces</Heading>
+<Heading>Creating Finite Classical Polar Spaces</Heading>
 
 <ManSection>
 <Oper Name="ProjectiveSpace" Arg="d, F"/>
