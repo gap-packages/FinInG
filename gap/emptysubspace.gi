@@ -38,69 +38,76 @@ end );
 
 
 # Methods for IsIncident with the EmtySubspace  
+# We change this to methods for \in. (17/04/2011, jdb).
 
-InstallMethod( IsIncident, "for the trivial subspace and a trivial subspace", 
-   [ IsEmptySubspace, IsEmptySubspace ],
-  function( x, y )
-    return true;
-  end );
-  
-InstallMethod( IsIncident, "for the trivial subspace and a non trivial subspace", 
-   [ IsEmptySubspace, IsSubspaceOfProjectiveSpace ],
-  function( x, y )
-    return true;
-  end );
-
-InstallMethod( IsIncident, "for the trivial subspace and a nontrivial subspace", 
-   [ IsSubspaceOfProjectiveSpace, IsEmptySubspace ],
-  function( x, y )
-    return true;
-  end );
-
-InstallMethod( IsIncident, "for the trivial subspace and a projective subspace", 
-   [ IsEmptySubspace, IsProjectiveSpace ],
-  function( x, y )
-    return true;
-  end );
-
-InstallMethod( IsIncident, "for the trivial subspace and a projective subspace", 
-   [ IsProjectiveSpace, IsEmptySubspace ],
-  function( x, y )
-    return true;
-  end );
-  
-InstallMethod( IsIncident, "for the trivial subspace and the trivial subspace",
-	[IsEmptySubspace, IsEmptySubspace],
-	function (x,y)
+InstallOtherMethod( \in, 
+	"for the trivial subspace and a trivial subspace", 
+	[ IsEmptySubspace, IsEmptySubspace ],
+	function( x, y )
 		return true;
+	end );
+  
+InstallOtherMethod( \in, 
+	"for the trivial subspace and a non trivial subspace", 
+	[ IsEmptySubspace, IsSubspaceOfProjectiveSpace ],
+	function( x, y )
+		return true;
+	end );
+	
+InstallOtherMethod( \in, 
+	"for the trivial subspace and a non trivial subspace", 
+	[ IsSubspaceOfProjectiveSpace, IsEmptySubspace ],
+	function( x, y )
+		return false;
+	end );
+
+InstallOtherMethod( \in, 
+	"for a projective subspace and its trivial subspace ", 
+	[ IsProjectiveSpace, IsEmptySubspace ],
+	function( x, y )
+		return false;
+	end );
+  
+InstallOtherMethod( \in, 
+	"for the trivial subspace and a projective subspace", 
+	[ IsEmptySubspace, IsProjectiveSpace ],
+	function( x, y )
+		return true;
+	end );
+
+InstallOtherMethod( \in, 
+	"for the trivial subspace and a projective subspace", 
+	[ IsProjectiveSpace, IsSubspaceOfProjectiveSpace ],
+	function( x, y )
+		return false;
 	end );
 
 # Methods for \* with the EmtySubspace  
 
-InstallOtherMethod( \*, "for the non-trivial subspace and a trivial subspace",  [IsSubspaceOfProjectiveSpace, IsEmptySubspace],
-  function( a, b )
-    return IsIncident(b, a);
-  end );
+#InstallOtherMethod( \*, "for the non-trivial subspace and a trivial subspace",  [IsSubspaceOfProjectiveSpace, IsEmptySubspace],
+#  function( a, b )
+#    return IsIncident(b, a);
+#  end );
 
-InstallOtherMethod( \*, "for the trivial subspace and a nontrivial subspace",  [IsEmptySubspace, IsSubspaceOfProjectiveSpace],
-  function( a, b )
-    return IsIncident(b, a);
-  end );
+#InstallOtherMethod( \*, "for the trivial subspace and a nontrivial subspace",  [IsEmptySubspace, IsSubspaceOfProjectiveSpace],
+#  function( a, b )
+#    return IsIncident(b, a);
+#  end );
 
-InstallOtherMethod( \*, "for the projective space and the trivial subspace",  [IsProjectiveSpace, IsEmptySubspace],
-  function( a, b )
-    return IsIncident(b, a);
-  end );
+#InstallOtherMethod( \*, "for the projective space and the trivial subspace",  [IsProjectiveSpace, IsEmptySubspace],
+#  function( a, b )
+#    return IsIncident(b, a);
+#  end );
 
-InstallOtherMethod( \*, "for the trivial subspace and a projective space",  [IsEmptySubspace, IsProjectiveSpace],
-  function( a, b )
-    return IsIncident(b, a);
-  end );
+#InstallOtherMethod( \*, "for the trivial subspace and a projective space",  [IsEmptySubspace, IsProjectiveSpace],
+#  function( a, b )
+#    return IsIncident(b, a);
+#  end );
 
-InstallOtherMethod( \*, "for the trivial subspace and a projective space",  [IsEmptySubspace, IsEmptySubspace],
-  function( a, b )
-    return IsIncident(b, a);
-  end );
+#InstallOtherMethod( \*, "for the trivial subspace and a projective space",  [IsEmptySubspace, IsEmptySubspace],
+#  function( a, b )
+#    return IsIncident(b, a);
+#  end );
 	
 # Methods for Span with the EmptySubspace
 

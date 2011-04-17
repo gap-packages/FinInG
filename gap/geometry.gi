@@ -35,21 +35,36 @@
 
 InstallValue( DESARGUES, rec() );
 
-InstallMethod( Wrap, "for a geometry and an object",
-  [IsIncidenceGeometry, IsPosInt, IsObject],
-  function( geo, type, o )
-    local w;
-    w := rec( geo := geo, type := type, obj := o );
-    Objectify( NewType( ElementsOfIncidenceStructureFamily, IsElementOfIncidenceStructureRep ), w );
-    return w;
-  end );
+#############################################################################
+#O  Wrap( <geo>, <type>, <o> )
+# general method that just wraps the data (<o>) as an element of a incidence geometry.
+# does not do any checking. <geo> and <type> are obviously also arguments. 
+# Not for users, not documented. More particular wrap methods can be derived from this.
+##
+InstallMethod( Wrap, 
+	"for a geometry and an object",
+	[IsIncidenceGeometry, IsPosInt, IsObject],
+	function( geo, type, o )
+		local w;
+		w := rec( geo := geo, type := type, obj := o );
+		Objectify( NewType( ElementsOfIncidenceStructureFamily, IsElementOfIncidenceStructureRep ), w );
+		return w;	
+	end );
 
-InstallMethod( Unwrap, "for an element",
-  [IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep],
-  function( v )
-    return v!.obj;
-  end );
+# CHECKED 17/04/11 jdb
+#############################################################################
+#O  Unwrap( <v> )
+# general method that returns the data of an element <v>. 
+# Not for users, not documented.
+##
+InstallMethod( Unwrap, 
+	"for an element",
+	[IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep],
+	function( v )
+		return v!.obj;
+	end );
 
+# CHECKED 17/04/11 jdb
 InstallMethod( \^, [ IsElementOfIncidenceStructure, IsUnwrapper ], 
   function( x, u ) 
     return x!.obj;
@@ -181,19 +196,18 @@ InstallMethod( Enumerator, [IsElementsOfIncidenceStructure],
     od;
     return elms;
   end);
-
- ## overload "in" to mean inclusion.
-
-InstallMethod( \in, "for two elements",  [IsElementOfLieGeometry, IsElementOfLieGeometry],
-  function( a, b )
-    return IsIncident(b, a) and (a!.type <= b!.type); #made a little change here
-  end ); #to let in correspond with set theoretic containment. jdb 8/2/9
-  #During a nice afternoon in Vicenza back enabled. jdb and pc, 11/411
   
-InstallOtherMethod( \*, "for two elements",  [IsElementOfIncidenceStructure, IsElementOfIncidenceStructure],
-  function( a, b )
-    return IsIncident(b, a);
-  end );
+# CHECKED 17/04/11 jdb
+#############################################################################
+#O  \*( <a,b> )
+# Alternative for IsIncident.
+##
+InstallOtherMethod( \*, 
+	"for two elements of an incidence structure",
+	[IsElementOfIncidenceStructure, IsElementOfIncidenceStructure],
+	function( a, b )
+		return IsIncident(b, a);
+	end );
 
 InstallMethod( IncidenceStructure, "for a set, incidence, type function and type set",
   [ IsList, IsFunction, IsFunction, IsList ],

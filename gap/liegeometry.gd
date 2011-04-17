@@ -1,21 +1,23 @@
 #############################################################################
 ##
-##  liegeometry.gd              FinInG package
+##  liegeometry.gd            FinInG package
 ##                                                              John Bamberg
-## 								                                Anton Betten
-##                                                             Philippe Cara
+##                                                              Anton Betten
 ##                                                              Jan De Beule
-## 							                                  Michel Lavrauw
+##                                                             Philippe Cara
+##                                                            Michel Lavrauw
 ##                                                                 Maska Law
 ##                                                           Max Neunhoeffer
 ##                                                            Michael Pauley
 ##                                                             Sven Reichard
 ##
-##  Copyright 2008 University of Western Australia, Perth
-##                 Lehrstuhl D fuer Mathematik, RWTH Aachen
-##                 Ghent University
-##                 Colorado State University
-##                 Vrije Universiteit Brussel
+##  Copyright 2011	Colorado State University, Fort Collins
+##					Università degli Studi di Padova
+##					Universeit Gent
+##					University of St. Andrews
+##					University of Western Australia, Perth
+##                  Vrije Universiteit Brussel
+##                 
 ##
 ##  Declaration stuff for Lie geometries.
 ##

@@ -1,8 +1,22 @@
-gap> ps := ProjectiveSpace(5,9);
-PG(5, 9)
-gap> line := Random(Lines(ps));
-&lt;a line in PG(5, 9)>
-gap> pos := EllipticQuadric(5,9);
-Q-(5, 9)
-gap> line in pos;
+gap&gt; ps := ProjectiveSpace(5,9);
+ProjectiveSpace(5, 9)
+gap&gt; p := Random(Points(ps));
+&lt;a point in ProjectiveSpace(5, 9)&gt;
+gap&gt; r := Random(Solids(ps));
+&lt;a solid in ProjectiveSpace(5, 9)&gt;
+gap&gt; IsIncident(p,r);
 false
+gap&gt; IsIncident(r,p);
+false
+gap&gt; p*r;
+false
+gap&gt; r*p;
+false
+gap&gt; p in r;
+false
+gap&gt; r in p;
+false
+gap&gt; EmptySubspace(ps) in r;
+true
+gap&gt; r in ps;
+true

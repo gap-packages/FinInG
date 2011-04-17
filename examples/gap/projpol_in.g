@@ -1,7 +1,14 @@
 #constructing an element of a projective space
 ps := ProjectiveSpace(5,9);
-line := Random(Lines(ps));
-pos := EllipticQuadric(5,9);
-line in pos;
+p := Random(Points(ps));
+r := Random(Solids(ps));
+IsIncident(p,r);
+IsIncident(r,p);
+p*r;
+r*p;
+p in r;
+r in p;
+EmptySubspace(ps) in r;
+r in ps;
 quit;
 

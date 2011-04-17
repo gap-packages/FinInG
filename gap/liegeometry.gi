@@ -1,21 +1,23 @@
 #############################################################################
 ##
-##  liegeometry.gi              FinInG package
+##  liegeometry.gi            FinInG package
 ##                                                              John Bamberg
-## 								Anton Betten
+##                                                              Anton Betten
 ##                                                              Jan De Beule
 ##                                                             Philippe Cara
-## 							      Michel Lavrauw
+##                                                            Michel Lavrauw
 ##                                                                 Maska Law
 ##                                                           Max Neunhoeffer
 ##                                                            Michael Pauley
 ##                                                             Sven Reichard
 ##
-##  Copyright 2008 University of Western Australia, Perth
-##                 Lehrstuhl D fuer Mathematik, RWTH Aachen
-##                 Ghent University
-##                 Colorado State University
-##                 Vrije Universiteit Brussel
+##  Copyright 2011	Colorado State University, Fort Collins
+##					Università degli Studi di Padova
+##					Universeit Gent
+##					University of St. Andrews
+##					University of Western Australia, Perth
+##                  Vrije Universiteit Brussel
+##                 
 ##
 ##  Implementation stuff for Lie geometries.
 ##
@@ -30,28 +32,41 @@
 #
 ########################################
 
-
-
 #############################################################################
 # Constructor methods:
 #############################################################################
 
-InstallMethod( Wrap, "for a Lie geometry and an object",
-  [IsLieGeometry, IsPosInt, IsObject],
-  function( geo, type, o )
-    local w;
-    w := rec( geo := geo, type := type, obj := o );
-    Objectify( NewType( ElementsOfIncidenceStructureFamily, IsElementOfIncidenceStructure and
-      IsElementOfIncidenceStructureRep and IsElementOfLieGeometry ), w );
-    return w;
-  end );
+# CHECKED 17/04/11 jdb
+#############################################################################
+#O  Wrap( <geo>, <type>, <o> )
+# general method that just wraps the data (<o>) as an element of a Lie geometry.
+# does not do any checking. <geo> and <type> are obviously also arguments. 
+# Not for users, not documented.
+##
+InstallMethod( Wrap, 
+	"for a Lie geometry and an object",
+	[IsLieGeometry, IsPosInt, IsObject],
+	function( geo, type, o )
+		local w;
+		w := rec( geo := geo, type := type, obj := o );
+		Objectify( NewType( ElementsOfIncidenceStructureFamily, IsElementOfIncidenceStructure and
+		IsElementOfIncidenceStructureRep and IsElementOfLieGeometry ), w );
+		return w;
+	end );
 
+# CHECKED 17/04/11 jdb
+#############################################################################
+#O  ElementToVectorSpace( <x> )
+# User version of Unwrap, general for elements of Lie geometries.
+##
 InstallMethod( ElementToVectorSpace, 
-   "for an element of a LieGeometry", [IsElementOfLieGeometry],
-  function( x )
-    return Unwrap(x);
-  end );
+	"for an element of a LieGeometry",
+	[IsElementOfLieGeometry],
+	function( x )
+		return Unwrap(x);
+	end );
 
+# jdb thinks that the next 4 methods are never used. 
 InstallMethod( Points, [IsLieGeometry],
   function( ps )
     return ElementsOfIncidenceStructure(ps, 1);
@@ -206,4 +221,24 @@ InstallMethod( PrintObj, [ IsElementsOfLieGeometry and
     Print("ElementsOfIncidenceStructure( ",vs!.geometry," , ",vs!.type,")");
   end );
 
+#############################################################################
+# containment for Lie geometries:
+#############################################################################
+## overload "in" to mean inclusion.
+## in nice geometries like projective spaces and polar spaces, it makes sense
+## to install methods also for ElementsOfIncidenceStructure, IsEmptySubspace 
+## and maybe even the whole space.
+
+# CHECKED 17/04/11 jdb
+#############################################################################
+#O  \in( <a>, <b> )
+# set theoretic containment for elements of a Lie geometry. 
+##
+InstallMethod( \in, 
+	"for two elements",
+	[IsElementOfLieGeometry, IsElementOfLieGeometry],
+	function( a, b )
+		return IsIncident(b, a) and (a!.type <= b!.type); #made a little change here
+	end );	#to let in correspond with set theoretic containment. jdb 8/2/9
+			#During a nice afternoon in Vicenza back enabled. jdb and pc, 11/411
 
