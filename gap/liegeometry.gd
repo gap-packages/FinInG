@@ -46,9 +46,8 @@ DeclareRepresentation( "IsAllElementsOfLieGeometryRep", IsAllElementsOfIncidence
 DeclareRepresentation( "IsElementsOfLieGeometryRep", IsElementsOfIncidenceStructureRep, [ "geometry", "type" ] );
 
 DeclareCategory( "IsFlagOfLieGeometry", IsFlagOfIncidenceStructure );
-DeclareCategory( "IsChamberOfLieGeometry", IsFlagOfLieGeometry );
 
-DeclareRepresentation( "IsFlagOfLieGeometryRep", IsFlagOfLieGeometry, [ "geo", "types", "els" ] );
+#DeclareRepresentation( "IsFlagOfLieGeometryRep", IsFlagOfLieGeometry, [ "geo", "types", "els" ] );
 
 DeclareCategory( "IsShadowElementsOfLieGeometry", IsElementsOfIncidenceStructure );
 DeclareRepresentation( "IsShadowElementsOfLieGeometryRep", IsElementsOfIncidenceStructure, [ "geometry", "type", "inner", "outer", "factorspace" ]);

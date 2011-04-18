@@ -112,18 +112,16 @@ InstallMethod( Type, [ IsElementOfIncidenceStructure and IsElementOfIncidenceStr
 #O  Type( <x> )
 # general method that returns the type of a collection of elements of a particular type.
 ## 
-InstallMethod( Type, [IsElementsOfIncidenceStructure and IsElementsOfIncidenceStructureRep], x -> x!.type );
+InstallMethod( Type, "for IsElementsOfIncidenceStructure(Rep)",
+	[IsElementsOfIncidenceStructure and IsElementsOfIncidenceStructureRep], x -> x!.type );
 
 # CHECKED 18/4/2011 jdb
 #############################################################################
 #O  Rank( <i> )
-# general method that returns the type of a particular element.
+# generic method that calls RankAttr to return the rank of a particular 
+# incidence structure.
 ## 
-InstallMethod( Rank, "for IsIncidenceStructure",
-	[IsIncidenceStructure],
-	function( i )
-		return RankAttr(i);
-	end );
+InstallMethod( Rank, "for IsIncidenceStructure", [IsIncidenceStructure], i -> RankAttr(i) );
 
 # CHECKED 18/4/2011 jdb
 #############################################################################
@@ -139,7 +137,7 @@ InstallMethod( \=, "for two IsElementOfIncidenceStructure",
 
 # CHECKED 18/4/2011 jdb, but also changed 18/4/2011. Volunteers to check again?
 #############################################################################
-#O  \LT( <a>, <b> )
+#O  \<( <a>, <b> )
 # LT for two elements of an incidence structure.
 # first compares types of elements, in case of equality, 
 # relies to comparing underlying 'obj' fields of the arguments.
@@ -247,6 +245,21 @@ InstallMethod( ElementsOfIncidenceStructure,
 		fi;
 		end);
 
+
+# CHECKED 18/4/2011 jdb
+#############################################################################
+#A  IsChamberOfIncidenceStructure( <flag> )
+# returns true if <flag> is a chamber.
+# remind that flags of projective spaces, polar spaces are constructed in 
+# IsFlagOfIncidenceStructureRep, which makes this method generic
+##
+InstallMethod( IsChamberOfIncidenceStructure,
+	"for a flag of an incidence structure",
+	[ IsFlagOfIncidenceStructure and IsFlagOfIncidenceStructureRep ],
+	flag -> Length(flag!.types) = Rank(flag!.geo)
+	);
+
+
 # CHECKED 18/4/2011 jdb
 #############################################################################
 #O  ShadowOfElement( <ps>, <v>, <str> )
@@ -267,9 +280,17 @@ InstallMethod( ShadowOfElement,
 		fi;
 		end);
 
+# CHECKED 18/4/2011 jdb
+#############################################################################
+#O  ShadowOfFlag( <ps>, <v>, <str> )
+# returns the shadow elements of <flag>, i.e. the elements of <ps> of type <j> 
+# incident with all elements of <flag>.
+# relies on installed method for ShadowOfElement for the particular <ps>
+# and <str> is occuring in TypesOfElementsOfIncidenceStructurePlural(<ps>).
+##
 InstallMethod( ShadowOfFlag,
 	"for an incidence structure, a list, and a string",
-	[IsIncidenceStructure, IsList, IsString],
+	[IsIncidenceStructure, IsFlagOfIncidenceStructure, IsString],
 	function( ps, vs, str )
 		local m;
 		m := Position(TypesOfElementsOfIncidenceStructurePlural(ps), str);

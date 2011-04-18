@@ -1,3 +1,4 @@
+#span in projective spaces
 ps := ProjectiveSpace(3,3);
 p := Random(Planes(ps));
 q := Random(Planes(ps));

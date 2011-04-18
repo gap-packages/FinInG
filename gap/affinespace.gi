@@ -942,7 +942,7 @@ InstallMethod( ShadowOfElement, [IsAffineSpace, IsSubspaceOfAffineSpace, IsPosIn
         rec( geometry := as, type := j, list := [v] ) );
   end );
   
-InstallMethod( ShadowOfFlag, [IsAffineSpace, IsList, IsPosInt],
+InstallMethod( ShadowOfFlag, [IsAffineSpace, IsFlagOfIncidenceStructure, IsPosInt],
   function( as, flag, j )
         #   empty flag - return all subspaces of the right type
     if IsEmpty(flag) then

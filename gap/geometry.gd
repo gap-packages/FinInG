@@ -74,7 +74,7 @@ DeclareCategory( "IsAllElementsOfIncidenceStructure", IsAnyElementsOfIncidenceSt
 # types of Elements!
 
 DeclareCategory( "IsFlagOfIncidenceStructure", IsAttributeStoringRep );
-DeclareCategory( "IsChamberOfIncidenceStructure", IsFlagOfIncidenceStructure );
+DeclareAttribute( "IsChamberOfIncidenceStructure", IsFlagOfIncidenceStructure );
 DeclareAttribute( "IsEmptyFlag", IsFlagOfIncidenceStructure);
 
 #############################################################################
@@ -97,7 +97,6 @@ DeclareCategory( "IsAllElementsOfIncidenceGeometry", IsAllElementsOfIncidenceStr
 DeclareCategory( "IsShadowElementsOfIncidenceGeometry", IsElementsOfIncidenceStructure );
 
 DeclareCategory( "IsFlagOfIncidenceGeometry", IsFlagOfIncidenceStructure );
-DeclareCategory( "IsChamberOfIncidenceGeometry", IsFlagOfIncidenceGeometry );
 
 #############################################################################
 #
@@ -215,8 +214,8 @@ DeclareAttribute( "RepresentativesOfElements", IsIncidenceStructure );
 InstallTrueMethod( IsFinite, IsElementsOfIncidenceStructure );
 InstallTrueMethod( IsFinite, IsAllElementsOfIncidenceStructure );
 
-DeclareOperation( "FlagOfIncidenceStructure", [ IsElementOfIncidenceStructureCollection ]);
-DeclareOperation( "FlagOfIncidenceStructure", [ IsList and IsEmptyList ]);
+DeclareOperation( "FlagOfIncidenceStructure", [ IsIncidenceStructure, IsElementOfIncidenceStructureCollection ]);
+DeclareOperation( "FlagOfIncidenceStructure", [ IsIncidenceStructure, IsList and IsEmpty ]);
 DeclareOperation( "ChamberOfIncidenceStructure", [ IsElementOfIncidenceStructureCollection ]);
 
 DeclareOperation( "ShadowOfElement",
@@ -225,9 +224,9 @@ DeclareOperation( "ShadowOfElement",
   [IsIncidenceStructure, IsElementOfIncidenceStructure, IsString] );
 
 DeclareOperation( "ShadowOfFlag",
-  [IsIncidenceStructure, IsList, IsPosInt] );
+  [IsIncidenceStructure, IsFlagOfIncidenceStructure, IsPosInt] );
 DeclareOperation( "ShadowOfFlag",
-  [IsIncidenceStructure, IsList, IsString] );
+  [IsIncidenceStructure, IsFlagOfIncidenceStructure, IsString] );
 
 DeclareOperation( "IsIncident", [IsElementOfIncidenceStructure, IsElementOfIncidenceStructure] );
 DeclareOperation( "IsCollinear", [IsIncidenceStructure, IsElementOfIncidenceStructure, IsElementOfIncidenceStructure]);

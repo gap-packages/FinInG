@@ -32,9 +32,8 @@ DeclareCategory( "IsSubspacesOfProjectiveSpace", IsElementsOfLieGeometry );
 DeclareCategory( "IsAllSubspacesOfProjectiveSpace", IsAllElementsOfLieGeometry );
 
 DeclareCategory( "IsFlagOfProjectiveSpace", IsFlagOfLieGeometry );
-DeclareCategory( "IsChamberOfProjectiveSpace", IsFlagOfProjectiveSpace );
 
-DeclareRepresentation( "IsFlagOfProjectiveSpaceRep", IsFlagOfProjectiveSpace, [ "geo", "types", "els" ] );
+#DeclareRepresentation( "IsFlagOfProjectiveSpaceRep", IsFlagOfProjectiveSpace, [ "geo", "types", "els" ] );
 
 DeclareCategory( "IsShadowSubspacesOfProjectiveSpace", IsShadowElementsOfLieGeometry );
 
@@ -55,7 +54,7 @@ BindGlobal( "SoPSCollFamily", CollectionsFamily(SoPSFamily) );
 BindGlobal( "FlagsOfPS", NewFamily( "FlagsOfPSFamily", IsObject ));  
 
 BindGlobal( "IsFlagOfPSType", NewType( FlagsOfPS,
-                                    IsFlagOfProjectiveSpace and IsFlagOfProjectiveSpaceRep) );
+                                    IsFlagOfProjectiveSpace and IsFlagOfIncidenceStructureRep) );
 
 #############################################################################
 #

@@ -49,6 +49,24 @@ incidence structures, which does not imply that operations described here will w
 for arbitrarily user constructed incidence geometries. 
 <Section>
 <Heading>Incidence structures</Heading>
+particular and general examples of incidence structures. 
+
+<ManSection>
+<Oper Name="TypesOfElementsOfIncidenceStructure" Arg="ig"/>
+<Oper Name="TypesOfElementsOfIncidenceStructurePlural" Arg="ig"/>
+<Returns>a list of strings</Returns>
+<Description>
+<Example>
+</Example>
+</Description>
+</ManSection>
+
+
+
+</Section>
+
+<Section>
+<Heading>Elements of incidence structures</Heading>
 
 <ManSection>
 <Oper Name="ElementsOfIncidenceStructure" Arg="ps, j"/>
@@ -138,6 +156,11 @@ This function returns
 </Example>
 </Description>
 </ManSection>
+
+</Section>
+
+<Section>
+<Heading>Shadows of elements</Heading>
 
 <ManSection>
 <Oper Name="ShadowOfElement" Arg="geom, v, j"/>

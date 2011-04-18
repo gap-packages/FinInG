@@ -557,56 +557,91 @@ InstallMethod( ShadowOfElement, [IsProjectiveSpace, IsElementOfIncidenceStructur
 #
 #############################################################################
 
+# CHECKED 18/4/2011 jdb
+#############################################################################
+#O  FlagOfIncidenceStructure( <ps>, <els> )
+# returns the flag of the projective space <ps> with elements in <els>.
+# the method checks whether the input really determines a flag.
+##
 InstallMethod( FlagOfIncidenceStructure,
-	"for a list of subspaces of a projective space",
-	[ IsSubspaceOfProjectiveSpaceCollection ],
-	function(els)
-		local list,i,test,type,geo,flag;
+	"for a projective space and list of subspaces of the projective space",
+	[ IsProjectiveSpace, IsSubspaceOfProjectiveSpaceCollection ],
+	function(ps,els)
+		local list,i,test,type,flag;
 		list := Set(ShallowCopy(els));
-		if (Length(list) < 2 or Length(list) > Rank(AmbientSpace(list[1]))) then
-		  Error("A flag must contain at least two elements and at most r elemnts");
+		if Length(list) > Rank(ps) then
+		  Error("A flag must contain at least two elements and at most Rank(<ps>) elemnts");
 		fi;
 		test := Set(List([1..Length(list)-1],i -> IsIncident(list[i],list[i+1])));
-		if test <> [ true ] then
+		if (test <> [ true ] and test <> []) then
 		  Error("<els> does not determine a flag>");
 		fi;
-		flag := rec(geo := AmbientSpace(list[1]), types := List(list,x->x!.type), els := list);
-		return ObjectifyWithAttributes(IsFlagOfPSType, flag, IsEmptyFlag, false);
+		flag := rec(geo := ps, types := List(list,x->x!.type), els := list);
+		ObjectifyWithAttributes(flag, IsFlagOfPSType, IsEmptyFlag, false);
+		return flag;
+	end);
+
+# CHECKED 18/4/2011 jdb
+#############################################################################
+#O  FlagOfIncidenceStructure( <ps>, <els> )
+# returns the empty flag of the projective space <ps>.
+##
+InstallMethod( FlagOfIncidenceStructure,
+	"for a projective space and an empty list",
+	[ IsProjectiveSpace, IsList and IsEmpty ],
+	function(ps,els)
+		local flag;
+		flag := rec(geo := ps, types := [], els := []);
+		ObjectifyWithAttributes(flag, IsFlagOfPSType, IsEmptyFlag, true);
+		return flag;
 	end);
 
 #############################################################################
-# Display methods for flags
+# View/Print/Display methods for flags
 #############################################################################
 
-InstallMethod( ViewObj, [ IsFlagOfProjectiveSpace and IsFlagOfProjectiveSpaceRep ],
+InstallMethod( ViewObj, "for a flag of a projective space",
+	[ IsFlagOfProjectiveSpace and IsFlagOfIncidenceStructureRep ],
 	function( flag )
 		Print("<a flag of ProjectiveSpace(",flag!.geo!.dimension,", ",Size(flag!.geo!.basefield),")>");
 	end );
 
-InstallMethod( PrintObj, [ IsFlagOfProjectiveSpace and IsFlagOfProjectiveSpaceRep ],
+InstallMethod( PrintObj, "for a flag of a projective space",
+	[ IsFlagOfProjectiveSpace and IsFlagOfIncidenceStructureRep ],
 	function( flag )
 		PrintObj(flag!.els);
 	end );
 
-InstallMethod( Display, [ IsFlagOfProjectiveSpace and IsFlagOfProjectiveSpaceRep  ],
+InstallMethod( Display, "for a flag of a projective space",
+	[ IsFlagOfProjectiveSpace and IsFlagOfIncidenceStructureRep  ],
 	function( flag )
 		Print("<a flag of ProjectiveSpace(",flag!.geo!.dimension,", ",Size(flag!.geo!.basefield),")> with elements of types ",flag!.types,"\n");
-		Print("spanned by\n");
+		Print("respectively spanned by\n");
 		Display(flag!.els);
 	end );
 
+InstallMethod( Display, "for a flag of a projective space",
+	[ IsFlagOfProjectiveSpace and IsFlagOfIncidenceStructureRep and IsEmptyFlag ],
+	function( flag )
+		Print("<empty flag of ProjectiveSpace(",flag!.geo!.dimension,", ",Size(flag!.geo!.basefield),")>\n");
+	end );
 
-InstallMethod( ShadowOfFlag, [IsProjectiveSpace,
-    IsList, IsPosInt],
+# CHECKED 18/4/2011 jdb
+#############################################################################
+#O  ShadowOfFlag( <ps>, <flag>, <j> )
+# returns the shadow elements of <flag>, i.e. the elements of <ps> of type <j> 
+# incident with all elements of <flag>.
 # returns the shadow of a flag as a record containing the projective space (geometry), 
 # the type j of the elements (type), the flag (parentflag), and some extra information
 # useful to compute with the shadows, e.g. iterator
-
-  function( ps, flag, j )
+##
+InstallMethod( ShadowOfFlag, "for a projective space, a flag and an integer",
+	[IsProjectiveSpace, IsFlagOfProjectiveSpace, IsPosInt],
+	function( ps, flag, j )
     local localinner, localouter, localfactorspace, v, smallertypes, biggertypes, ceiling, floor;
     
     #empty flag - return all subspaces of the right type
-    if IsEmpty(flag) then
+    if IsEmptyFlag(flag) then
       return ElementsOfIncidenceStructure(ps, j);
     fi;
     
@@ -614,39 +649,40 @@ InstallMethod( ShadowOfFlag, [IsProjectiveSpace,
     # in the flag of lowest type more than j.
 	
 	#listoftypes:=List(flag,x->x!.type);
-	smallertypes:=Filtered([1..Size(flag)],t->flag[t]!.type<=j);
-	biggertypes:=Filtered([1..Size(flag)],t->flag[t]!.type>=j);
-	if smallertypes=[] then localinner := [];
+	smallertypes:=Filtered(flag!.types,t->t <= j);
+	biggertypes:=Filtered(flag!.types,t->t >= j);
+	if smallertypes=[] then 
+		localinner := [];
 		ceiling:=Minimum(biggertypes);
-		localouter:=flag[ceiling];
-	elif biggertypes=[] then localouter:=BasisVectors(Basis(ps!.vectorspace));
+		localouter:=flag!.els[Position(flag!.types,ceiling)];
+	elif biggertypes=[] then 
+		localouter:=BasisVectors(Basis(ps!.vectorspace));
 		floor:=Maximum(smallertypes);
-		localinner:=flag[floor];
+		localinner:=flag!.els[Position(flag!.types,floor)];
 	else
 		floor:=Maximum(smallertypes);
 		ceiling:=Minimum(biggertypes);
-		localinner:=flag[floor];
-		localouter:=flag[ceiling];
+		localinner:=flag!.els[Position(flag!.types,floor)];
+		localouter:=flag!.els[Position(flag!.types,ceiling)];
 	fi;
-      if not smallertypes = [] then
+	if not smallertypes = [] then
 		if localinner!.type = 1 then
-		localinner:=[localinner!.obj];
+			localinner:=[localinner!.obj];
 		else
-		localinner:=localinner!.obj;
+			localinner:=localinner!.obj;
 		fi;
-	  fi;
-      if not biggertypes = [] then
+	fi;
+    if not biggertypes = [] then
 		if localouter!.type = 1 then
-        localouter := [localouter!.obj];
+			localouter := [localouter!.obj];
         else
-        localouter := localouter!.obj;
+			localouter := localouter!.obj;
         fi;
-	  fi;
-    
-    localfactorspace := Subspace(ps!.vectorspace,
-      BaseSteinitzVectors(localouter, localinner).factorspace);
+	fi;
+    localfactorspace := Subspace(ps!.vectorspace, 
+		BaseSteinitzVectors(localouter, localinner).factorspace);
     return Objectify(
-      NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
+		NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
                                 IsShadowSubspacesOfProjectiveSpace and
                                 IsShadowSubspacesOfProjectiveSpaceRep),
         rec(
@@ -659,8 +695,8 @@ InstallMethod( ShadowOfFlag, [IsProjectiveSpace,
           size := Size(Subspaces(localfactorspace))
         )
       );
-  end);
-  
+	end);
+
   
 InstallMethod( Iterator, [IsShadowSubspacesOfProjectiveSpace and
   IsShadowSubspacesOfProjectiveSpaceRep ],
