@@ -1,21 +1,23 @@
 #############################################################################
 ##
-##  projectivespace.gi              FinInG package
+##  projectivespace.gi        FinInG package
 ##                                                              John Bamberg
-## 								Anton Betten
+##                                                              Anton Betten
 ##                                                              Jan De Beule
 ##                                                             Philippe Cara
-## 		                                              Michel Lavrauw
+##                                                            Michel Lavrauw
 ##                                                                 Maska Law
 ##                                                           Max Neunhoeffer
 ##                                                            Michael Pauley
 ##                                                             Sven Reichard
 ##
-##  Copyright 2008 University of Western Australia, Perth
-##                 Lehrstuhl D fuer Mathematik, RWTH Aachen
-##                 Ghent University
-##                 Colorado State University
-##                 Vrije Universiteit Brussel
+##  Copyright 2011	Colorado State University, Fort Collins
+##					Università degli Studi di Padova
+##					Universeit Gent
+##					University of St. Andrews
+##					University of Western Australia, Perth
+##                  Vrije Universiteit Brussel
+##                 
 ##
 ##  Implementation stuff for projective spaces.
 ##
@@ -27,8 +29,7 @@
 
 ## To do
 #  Use compressed matrices
-
-
+#  Order functions in this file, and write more comments.
 
 InstallMethod( Wrap, "for a projective space and an object",
  # This is an internal subroutine which is not expected to be used by the user;
@@ -331,7 +332,9 @@ InstallMethod( \in, "for an element and domain",
     return x in dom!.geometry;
   end );
 
-InstallMethod( ElementsOfIncidenceStructure, [IsProjectiveSpace, IsPosInt],
+InstallMethod( ElementsOfIncidenceStructure, 
+	"for a projective space and an integer",
+[IsProjectiveSpace, IsPosInt],
   function( ps, j )
     local r;
     r := Rank(ps);
@@ -547,6 +550,51 @@ InstallMethod( ShadowOfElement, [IsProjectiveSpace, IsElementOfIncidenceStructur
       );
   end);
   
+
+#############################################################################
+#
+# creation of flags.
+#
+#############################################################################
+
+InstallMethod( FlagOfIncidenceStructure,
+	"for a list of subspaces of a projective space",
+	[ IsSubspaceOfProjectiveSpaceCollection ],
+	function(els)
+		local list,i,test,type,geo,flag;
+		list := Set(ShallowCopy(els));
+		if (Length(list) < 2 or Length(list) > Rank(AmbientSpace(list[1]))) then
+		  Error("A flag must contain at least two elements and at most r elemnts");
+		fi;
+		test := Set(List([1..Length(list)-1],i -> IsIncident(list[i],list[i+1])));
+		if test <> [ true ] then
+		  Error("<els> does not determine a flag>");
+		fi;
+		flag := rec(geo := AmbientSpace(list[1]), types := List(list,x->x!.type), els := list);
+		return ObjectifyWithAttributes(IsFlagOfPSType, flag, IsEmptyFlag, false);
+	end);
+
+#############################################################################
+# Display methods for flags
+#############################################################################
+
+InstallMethod( ViewObj, [ IsFlagOfProjectiveSpace and IsFlagOfProjectiveSpaceRep ],
+	function( flag )
+		Print("<a flag of ProjectiveSpace(",flag!.geo!.dimension,", ",Size(flag!.geo!.basefield),")>");
+	end );
+
+InstallMethod( PrintObj, [ IsFlagOfProjectiveSpace and IsFlagOfProjectiveSpaceRep ],
+	function( flag )
+		PrintObj(flag!.els);
+	end );
+
+InstallMethod( Display, [ IsFlagOfProjectiveSpace and IsFlagOfProjectiveSpaceRep  ],
+	function( flag )
+		Print("<a flag of ProjectiveSpace(",flag!.geo!.dimension,", ",Size(flag!.geo!.basefield),")> with elements of types ",flag!.types,"\n");
+		Print("spanned by\n");
+		Display(flag!.els);
+	end );
+
 
 InstallMethod( ShadowOfFlag, [IsProjectiveSpace,
     IsList, IsPosInt],

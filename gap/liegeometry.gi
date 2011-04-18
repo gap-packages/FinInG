@@ -33,7 +33,7 @@
 ########################################
 
 #############################################################################
-# Constructor methods:
+# General methods.
 #############################################################################
 
 # CHECKED 17/04/11 jdb
@@ -57,7 +57,7 @@ InstallMethod( Wrap,
 # CHECKED 17/04/11 jdb
 #############################################################################
 #O  ElementToVectorSpace( <x> )
-# User version of Unwrap, general for elements of Lie geometries.
+# User version of Unwrap, for elements of Lie geometries.
 ##
 InstallMethod( ElementToVectorSpace, 
 	"for an element of a LieGeometry",
@@ -66,31 +66,116 @@ InstallMethod( ElementToVectorSpace,
 		return Unwrap(x);
 	end );
 
-# jdb thinks that the next 4 methods are never used. 
-InstallMethod( Points, [IsLieGeometry],
-  function( ps )
-    return ElementsOfIncidenceStructure(ps, 1);
-  end);
+#############################################################################
+# containment for Lie geometries:
+#############################################################################
+## overload "in" to mean inclusion.
+## in nice geometries like projective spaces and polar spaces, it makes sense
+## to install methods also for ElementsOfIncidenceStructure, IsEmptySubspace 
+## and maybe even the whole space.
 
-InstallMethod( Lines, [IsLieGeometry],
-  function( ps )
-    return ElementsOfIncidenceStructure(ps, 2);
-  end);
+# CHECKED 17/04/11 jdb
+#############################################################################
+#O  \in( <a>, <b> )
+# set theoretic containment for elements of a Lie geometry. 
+##
+InstallMethod( \in, 
+	"for two IsElementOfLieGeometry",
+	[IsElementOfLieGeometry, IsElementOfLieGeometry],
+	function( a, b )
+		return IsIncident(b, a) and (a!.type <= b!.type); #made a little change here
+	end );	#to let in correspond with set theoretic containment. jdb 8/2/9
+			#During a nice afternoon in Vicenza back enabled. jdb and pc, 11/411
 
-InstallMethod( Planes, [IsLieGeometry],
-  function( ps )
-    return ElementsOfIncidenceStructure(ps, 3);
-  end);
+#############################################################################
+# Viewing/Printing/Displaying methods.
+#############################################################################
 
-InstallMethod( Solids, [IsLieGeometry],
-  function( ps )
-    return ElementsOfIncidenceStructure(ps, 4);
-  end);
+InstallMethod( ViewObj, "for IsAllElementsOfLieGeometry",
+	[ IsAllElementsOfLieGeometry and IsAllElementsOfLieGeometryRep ],
+	function( vs )
+		Print("<All elements of ");
+		ViewObj(vs!.geometry);
+		Print(">");
+	end );
 
-InstallMethod( Hyperplanes, [IsProjectiveSpace],
-  function( ps )
-    return ElementsOfIncidenceStructure(ps, ps!.dimension);
-  end);
+InstallMethod( PrintObj, "for IsAllElementsOfLieGeometry",
+	[ IsAllElementsOfLieGeometry and IsAllElementsOfLieGeometryRep ],
+	function( vs )
+		Print("AllElementsOfIncidenceStructure( ",vs!.geometry," )");
+	end );
+
+InstallMethod( ViewObj, "for IsAllElementsOfLieGeometry",
+	[ IsElementsOfLieGeometry and IsElementsOfLieGeometryRep ],
+	function( vs )
+		Print("<",TypesOfElementsOfIncidenceStructurePlural(vs!.geometry)[vs!.type]," of ");
+		ViewObj(vs!.geometry);
+		Print(">");
+	end );
+
+InstallMethod( PrintObj, "for IsElementsOfLieGeometry",
+	[ IsElementsOfLieGeometry and IsElementsOfLieGeometryRep ],
+	function( vs )
+		Print("ElementsOfIncidenceStructure( ",vs!.geometry," , ",vs!.type,")");
+	end );
+
+#############################################################################
+# User friendly named operations for points, lines, planes, solids
+# for Lie geometries.
+#############################################################################
+
+# CHECKED 18/4/2011 jdb
+#############################################################################
+#O  Points( <ps> )
+# returns ElementsOfIncidenceStructure(ps,1), <ps> a Lie Geometry.
+## 
+InstallMethod( Points, "for IsLieGeometry",
+	[IsLieGeometry],
+	function( ps )
+		return ElementsOfIncidenceStructure(ps, 1);
+	end);
+
+# CHECKED 18/4/2011 jdb
+#############################################################################
+#O  Lines( <ps> )
+# returns ElementsOfIncidenceStructure(ps,2), <ps> a Lie Geometry.
+## 
+InstallMethod( Lines, "for IsLieGeometry",
+	[IsLieGeometry],
+	function( ps )
+		return ElementsOfIncidenceStructure(ps, 2);
+	end);
+
+# CHECKED 18/4/2011 jdb
+#############################################################################
+#O  Planes( <ps> )
+# returns ElementsOfIncidenceStructure(ps,3), <ps> a Lie Geometry.
+## 
+InstallMethod( Planes, "for IsLieGeometry",
+	[IsLieGeometry],
+	function( ps )
+		return ElementsOfIncidenceStructure(ps, 3);
+	end);
+
+# CHECKED 18/4/2011 jdb
+#############################################################################
+#O  Solids( <ps> )
+# returns ElementsOfIncidenceStructure(ps,4), <ps> a Lie Geometry.
+## 
+InstallMethod( Solids, "for IsLieGeometry",
+	[IsLieGeometry],
+	function( ps )
+		return ElementsOfIncidenceStructure(ps, 4);
+	end);
+
+
+# CHECKED 18/4/2011 jdb
+# I will move this piece to projectivespace.gi.
+InstallMethod( Hyperplanes, "for IsProjectiveSpace",
+	[IsProjectiveSpace],
+	function( ps )
+		return ElementsOfIncidenceStructure(ps, ps!.dimension);
+	end);
 
 InstallGlobalFunction( OnProjSubspaces,
   function( var, el )
@@ -115,11 +200,11 @@ InstallGlobalFunction( OnSetsProjSubspaces,
     return Set( var, i -> OnProjSubspaces( i, el ) );
   end );
 
-
-
 #############################################################################
 #
-# Nice methods for shadows of elements
+# Nice methods for shadows of elements. Remind that shadow functionality 
+# is to be implemented for the particular Lie geometries. See corresponding
+# files.
 #
 #############################################################################
 
@@ -181,23 +266,6 @@ InstallMethod( Hyperplanes, [ IsLieGeometry, IsSubspaceOfProjectiveSpace ],
     return ShadowOfElement( geo, var, var!.type - 1 );
   end );
 
-#############################################################################
-# View methods:
-#############################################################################
-
-InstallMethod( ViewObj, [ IsAllElementsOfLieGeometry and
-  IsAllElementsOfLieGeometryRep ],
-  function( vs )
-    Print("<All elements of ");
-    ViewObj(vs!.geometry);
-    Print(">");
-  end );
-
-InstallMethod( PrintObj, [ IsAllElementsOfLieGeometry and
-  IsAllElementsOfLieGeometryRep ],
-  function( vs )
-    Print("AllElementsOfIncidenceStructure( ",vs!.geometry," )");
-  end );
 
 InstallMethod( ViewObj, [ IsShadowElementsOfLieGeometry and
   IsShadowElementsOfLieGeometryRep ],
@@ -206,39 +274,4 @@ InstallMethod( ViewObj, [ IsShadowElementsOfLieGeometry and
     ViewObj(vs!.geometry);
     Print(">");
   end );
-
-InstallMethod( ViewObj, [ IsElementsOfLieGeometry and
-  IsElementsOfLieGeometryRep ],
-  function( vs )
-    Print("<",TypesOfElementsOfIncidenceStructurePlural(vs!.geometry)[vs!.type]," of ");
-    ViewObj(vs!.geometry);
-    Print(">");
-  end );
-
-InstallMethod( PrintObj, [ IsElementsOfLieGeometry and
-  IsElementsOfLieGeometryRep ],
-  function( vs )
-    Print("ElementsOfIncidenceStructure( ",vs!.geometry," , ",vs!.type,")");
-  end );
-
-#############################################################################
-# containment for Lie geometries:
-#############################################################################
-## overload "in" to mean inclusion.
-## in nice geometries like projective spaces and polar spaces, it makes sense
-## to install methods also for ElementsOfIncidenceStructure, IsEmptySubspace 
-## and maybe even the whole space.
-
-# CHECKED 17/04/11 jdb
-#############################################################################
-#O  \in( <a>, <b> )
-# set theoretic containment for elements of a Lie geometry. 
-##
-InstallMethod( \in, 
-	"for two elements",
-	[IsElementOfLieGeometry, IsElementOfLieGeometry],
-	function( a, b )
-		return IsIncident(b, a) and (a!.type <= b!.type); #made a little change here
-	end );	#to let in correspond with set theoretic containment. jdb 8/2/9
-			#During a nice afternoon in Vicenza back enabled. jdb and pc, 11/411
 

@@ -36,12 +36,19 @@
 #############################################################################
 
 DeclareCategory( "IsElementOfLieGeometry", IsElementOfIncidenceStructure );
+DeclareCategoryCollections("IsElementOfLieGeometry");
+
 DeclareCategory( "IsElementsOfLieGeometry", IsElementsOfIncidenceStructure );
 DeclareCategory( "IsAllElementsOfLieGeometry", IsAllElementsOfIncidenceStructure );
 
 DeclareRepresentation( "IsAllElementsOfLieGeometryRep", IsAllElementsOfIncidenceStructureRep, [ "geometry", "type" ] );
   
 DeclareRepresentation( "IsElementsOfLieGeometryRep", IsElementsOfIncidenceStructureRep, [ "geometry", "type" ] );
+
+DeclareCategory( "IsFlagOfLieGeometry", IsFlagOfIncidenceStructure );
+DeclareCategory( "IsChamberOfLieGeometry", IsFlagOfLieGeometry );
+
+DeclareRepresentation( "IsFlagOfLieGeometryRep", IsFlagOfLieGeometry, [ "geo", "types", "els" ] );
 
 DeclareCategory( "IsShadowElementsOfLieGeometry", IsElementsOfIncidenceStructure );
 DeclareRepresentation( "IsShadowElementsOfLieGeometryRep", IsElementsOfIncidenceStructure, [ "geometry", "type", "inner", "outer", "factorspace" ]);

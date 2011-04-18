@@ -31,6 +31,11 @@ DeclareCategory( "IsSubspaceOfProjectiveSpace", IsElementOfLieGeometry );
 DeclareCategory( "IsSubspacesOfProjectiveSpace", IsElementsOfLieGeometry );
 DeclareCategory( "IsAllSubspacesOfProjectiveSpace", IsAllElementsOfLieGeometry );
 
+DeclareCategory( "IsFlagOfProjectiveSpace", IsFlagOfLieGeometry );
+DeclareCategory( "IsChamberOfProjectiveSpace", IsFlagOfProjectiveSpace );
+
+DeclareRepresentation( "IsFlagOfProjectiveSpaceRep", IsFlagOfProjectiveSpace, [ "geo", "types", "els" ] );
+
 DeclareCategory( "IsShadowSubspacesOfProjectiveSpace", IsShadowElementsOfLieGeometry );
 
 DeclareRepresentation( "IsSubspacesOfProjectiveSpaceRep", IsElementsOfLieGeometryRep, [ "geometry", "type" ] );
@@ -45,7 +50,13 @@ DeclareCategoryCollections("IsSubspaceOfProjectiveSpace");
 BindGlobal( "SoPSFamily", 
   NewFamily( "SoPSFamily", IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace));
 BindGlobal( "SoPSCollFamily", CollectionsFamily(SoPSFamily) );
- 
+
+
+BindGlobal( "FlagsOfPS", NewFamily( "FlagsOfPSFamily", IsObject ));  
+
+BindGlobal( "IsFlagOfPSType", NewType( FlagsOfPS,
+                                    IsFlagOfProjectiveSpace and IsFlagOfProjectiveSpaceRep) );
+
 #############################################################################
 #
 # Constructor operations, and attributes
@@ -82,8 +93,6 @@ DeclareOperation( "IsIncident", [IsProjectiveSpace, IsSubspaceOfProjectiveSpace]
 #DeclareOperation( "IsIncident", [IsProjectiveSpace, IsEmptySubspace]);
 DeclareOperation( "IsIncident", [IsProjectiveSpace, IsProjectiveSpace]);
 #DeclareOperation( "IsIncident", [IsEmptySubspace, IsEmptySubspace]);
-
-
 
 DeclareAttribute( "AmbientSpace", IsProjectiveSpace );
 DeclareAttribute( "AmbientSpace", IsSubspaceOfProjectiveSpace );

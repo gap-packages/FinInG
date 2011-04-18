@@ -21,7 +21,7 @@ projective and polar spaces.
 <Heading>Projective Spaces</Heading>
 
 In this chapter we describe how to use <Package>FinInG</Package> to work 
-with finite projective and polar spaces. 
+with finite projective spaces. 
 
 <Section>
 <Heading>Creating Projective Spaces and basic operations</Heading>
@@ -297,7 +297,36 @@ in must be applicable on subspaces, hence also trivial one.
 </Section>
 
 <Section>
+
 <Heading>Shadows of Projective Subspaces</Heading>
+
+<ManSection>
+<Oper Name="ShadowOfElement" Arg="ps, el, i"/>
+<Oper Name="ShadowOfElement" Arg="ps, el, str"/>
+<Returns>the shadow elements of type <A>i</A> in <A>el</A>. The second variant determines 
+the type <A>i</A> from the position of <A>str</A> in the list returned by 
+<F>TypesOfElementsOfIncidenceStructurePlural</F></Returns>
+<Description>
+Given the element <A>el</A> in the projective space <A>ps</A>, this
+operation returns the elements of <A>ps</A> of type <A>i</A> incident
+with <A>el</A>.
+<Example>
+<#Include SYSTEM "../examples/include/projpol_shadowofelement.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="ShadowOfFlag" Arg="ps, el, i"/>
+<Oper Name="ShadowOfFlag" Arg="ps, el, str"/>
+<Returns></Returns>
+<Description>
+<Example>
+</Example>
+</Description>
+</ManSection>
+
+
 
 </Section>
 </Chapter>

@@ -2,26 +2,27 @@
 ##
 ##  geometry.gd              FinInG package
 ##                                                              John Bamberg
-## 								Anton Betten
-##                                                             Philippe Cara
+##                                                              Anton Betten
 ##                                                              Jan De Beule
-## 							      Michel Lavrauw
+##                                                             Philippe Cara
+##                                                            Michel Lavrauw
 ##                                                                 Maska Law
 ##                                                           Max Neunhoeffer
 ##                                                            Michael Pauley
 ##                                                             Sven Reichard
 ##
-##  Copyright 2008 University of Western Australia, Perth
-##                 Lehrstuhl D fuer Mathematik, RWTH Aachen
-##                 Ghent University
-##                 Colorado State University
-##                 Vrije Universiteit Brussel
+##  Copyright 2011	Colorado State University, Fort Collins
+##					Università degli Studi di Padova
+##					Universeit Gent
+##					University of St. Andrews
+##					University of Western Australia, Perth
+##                  Vrije Universiteit Brussel
+##                 
 ##
-##  Declaration stuff for geometries. changed by the new gang of four september
-##  24, 2008, st. andrews.
+##  Declaration stuff for geometries. changed by the new gang of 
+##  four, September 24, 2008, st. andrews.
 ##
 #############################################################################
-
 
 #############################################################################
 # 
@@ -52,7 +53,6 @@ DeclareGlobalVariable( "DESARGUES" );
 
 DeclareCategory( "IsIncidenceStructure", IsComponentObjectRep and IsAttributeStoringRep );
 
-
 # categories for elements of incidence structures.
 
 DeclareCategory( "IsElementOfIncidenceStructure", IsComponentObjectRep and IsAttributeStoringRep and CanEasilyCompareElements and CanEasilySortElements );
@@ -64,16 +64,25 @@ DeclareCategoryCollections("IsElementOfIncidenceStructure");
 DeclareCategory( "IsAnyElementsOfIncidenceStructure", IsDomain and IsCollection and IsComponentObjectRep );
    ## e.g.,  Points(PG(3,4)) or ElementsOfIncidenceStructure(PG(3,4));
 
-
 DeclareCategory( "IsElementsOfIncidenceStructure", IsAnyElementsOfIncidenceStructure );
    ## e.g.,  Points(PG(3,4)) 
 
 DeclareCategory( "IsAllElementsOfIncidenceStructure", IsAnyElementsOfIncidenceStructure);
    ## e.g.,  ElementsOfIncidenceStructure(PG(3,4));
 
-
 # Note that this implies that we have to implement \= and \< for all
 # types of Elements!
+
+DeclareCategory( "IsFlagOfIncidenceStructure", IsAttributeStoringRep );
+DeclareCategory( "IsChamberOfIncidenceStructure", IsFlagOfIncidenceStructure );
+DeclareAttribute( "IsEmptyFlag", IsFlagOfIncidenceStructure);
+
+#############################################################################
+#
+# Abstract incidence geometries:
+#
+#############################################################################
+
 
 # categories for incidence geometries
 DeclareCategory( "IsIncidenceGeometry", IsIncidenceStructure );
@@ -87,8 +96,14 @@ DeclareCategory( "IsElementsOfIncidenceGeometry", IsElementsOfIncidenceStructure
 DeclareCategory( "IsAllElementsOfIncidenceGeometry", IsAllElementsOfIncidenceStructure );
 DeclareCategory( "IsShadowElementsOfIncidenceGeometry", IsElementsOfIncidenceStructure );
 
+DeclareCategory( "IsFlagOfIncidenceGeometry", IsFlagOfIncidenceStructure );
+DeclareCategory( "IsChamberOfIncidenceGeometry", IsFlagOfIncidenceGeometry );
 
-# further categories for geometries.
+#############################################################################
+#
+# further categories for geometries:
+#
+#############################################################################
 
 DeclareCategory( "IsLieGeometry", IsIncidenceGeometry );
 
@@ -133,6 +148,10 @@ DeclareRepresentation( "IsElementOfIncidenceStructureRep", IsElementOfIncidenceS
 DeclareRepresentation( "IsElementsOfIncidenceStructureRep", IsElementsOfIncidenceStructure, [ "geometry", "type"  ] );
 DeclareRepresentation( "IsAllElementsOfIncidenceStructureRep", IsAllElementsOfIncidenceStructure, [ "geometry", "type"  ] );
 
+# representations for flags/chambers
+
+DeclareRepresentation( "IsFlagOfIncidenceStructureRep", IsFlagOfIncidenceStructure, [ "geo", "types", "els" ] );
+
 #############################################################################
 #
 # definitions to create complete types for objects.
@@ -145,10 +164,15 @@ BindGlobal( "GeometriesFamily", NewFamily( "GeometriesFamily" ) );
 BindGlobal( "ElementsOfIncidenceStructureFamily", NewFamily( "ElementsOfIncidenceStructureFamily", IsObject ));   
 BindGlobal( "ElementsCollFamily", CollectionsFamily(ElementsOfIncidenceStructureFamily) );
 
+BindGlobal( "FlagsOfIncidenceStructureFamily", NewFamily( "FlagsOfIncidenceStructureFamily", IsObject ));   
+
 # types
 
 BindGlobal( "IsElementOfIncidenceStructureType", NewType( ElementsOfIncidenceStructureFamily,
                                     IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep) );
+
+BindGlobal( "IsFlagOfIncidenceStructureType", NewType( FlagsOfIncidenceStructureFamily,
+                                    IsFlagOfIncidenceStructure and IsFlagOfIncidenceStructureRep) );
 
 #############################################################################
 #
@@ -190,6 +214,10 @@ DeclareAttribute( "RepresentativesOfElements", IsIncidenceStructure );
 
 InstallTrueMethod( IsFinite, IsElementsOfIncidenceStructure );
 InstallTrueMethod( IsFinite, IsAllElementsOfIncidenceStructure );
+
+DeclareOperation( "FlagOfIncidenceStructure", [ IsElementOfIncidenceStructureCollection ]);
+DeclareOperation( "FlagOfIncidenceStructure", [ IsList and IsEmptyList ]);
+DeclareOperation( "ChamberOfIncidenceStructure", [ IsElementOfIncidenceStructureCollection ]);
 
 DeclareOperation( "ShadowOfElement",
   [IsIncidenceStructure, IsElementOfIncidenceStructure, IsPosInt] );
