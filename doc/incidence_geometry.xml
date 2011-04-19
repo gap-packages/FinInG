@@ -47,43 +47,123 @@ package.
 Essentially, in this chapter we describe functionality that is <B>declared</B> for 
 incidence structures, which does not imply that operations described here will work
 for arbitrarily user constructed incidence geometries. 
+
 <Section>
 <Heading>Incidence structures</Heading>
 particular and general examples of incidence structures. Show categorie graph?
 
+<ManSection>
+<Filt Name="IsIncidenceStructure" Type="Category"/>
+<Description>
+General Top level category for all objects representing an incidence structure.
+<F>IsIncidenceStructure</F>. 
+</Description>
+</ManSection>
+
+<ManSection>
+<Filt Name="IsIncidenceGeometry" Type="Category"/>
+<Description>
+General category for all objects representing an incidence geometry.
+</Description>
+</ManSection>
+
+Lie Geometries, i.e. geometries with a projective space as ambient geometry, affine spaces and 
+generalised polygons have their category, as a subcategory of <C>IsIncidenceGeometry</C>.
+<ManSection>
+<Heading>Main categories in <C>IsIncidenceGeometry</C></Heading>
+<Filt Name="IsLieGeometry" Type="Category"/>
+<Filt Name="IsAffineSpace" Type="Category"/>
+<Filt Name="IsGeneralisedPolygon" Type="Category"/>
+</ManSection>
+
+<ManSection>
+<Heading>Main categories in <C>IsLieGeometry</C></Heading>
+<Filt Name="IsProjectiveSpace" Type="Category"/>
+<Filt Name="IsClassicalPolarSpace" Type="Category"/>
+<Description>
+Lie geometries bundle projective spaces and classical polar spaces. Both classes of geometries 
+have their category, as a subcategory of <C>IsLieGeometry</C>.
+</Description>
+</ManSection>
 
 
+The following categories for geometries are not considered as main categories.
+<ManSection>
+<Heading>Categories in <C>IsGeneralisedPolygon</C></Heading>
+<Filt Name="IsGeneralisedQuadrangle" Type="Category"/>
+<Filt Name="IsGeneralisedHexagon" Type="Category"/>
+<Filt Name="IsGeneralisedOctogon" Type="Category"/>
+<Description>
+Within <C>IsGeneralisedPolygon</C>, categories are declared for generalised quadrangles,
+generalised hexagons, and generalised octogons.
+</Description>
+</ManSection>
 
+<ManSection>
+<Filt Name="IsElationGQ" Type="Category"/>
+<Description>
+Within <C>IsGeneralisedQuadrangle</C>, this category is declared to construct 
+elation generalised quadrangles.
+</Description>
+</ManSection>
 
+<ManSection>
+<Filt Name="IsClassicalGQ" Type="Category"/>
+<Description>
+This category lies in <C>IsElationGQ</C> and <C>IsClassicalPolarSpace</C>.
+</Description>
+</ManSection>
+
+<ManSection>
+<Heading>Examples of categories of incidence geometries</Heading>
+<Description>
+<Example>
+<#Include SYSTEM "../examples/include/incgeom_categories1.include"> 
+</Example>
+</Description>
+</ManSection>
 
 <ManSection>
 <Oper Name="TypesOfElementsOfIncidenceStructure" Arg="ig"/>
 <Oper Name="TypesOfElementsOfIncidenceStructurePlural" Arg="ig"/>
 <Returns>a list of strings</Returns>
 <Description>
+Any incidence structure contains elements of a set of types. Names can be 
+given to an element of each type, and this operation returns the names for the
+particular <A>ig</A>. The second variant returs the list of plurals of these names.
 <Example>
+<#Include SYSTEM "../examples/include/incgeom_typesofels.include"> 
 </Example>
 </Description>
 </ManSection>
 
-
 <ManSection>
-<Oper Name="RankAttr" Arg="ig"/>
+<Oper Name="Rank" Arg="ig"/>
 <Returns>rank of <A>ig</A></Returns>
 <Description>
 <Example>
 </Example>
 </Description>
 </ManSection>
-
-
-
-
-
 </Section>
 
 <Section>
 <Heading>Elements of incidence structures</Heading>
+
+<ManSection>
+<Heading>Main categories for individual elements of incidence structures</Heading>
+<Filt Name="IsElementOfIncidenceStructure" Type="Category"/>
+<Filt Name="IsElementOfIncidenceGeometry" Type="Category"/>
+<Filt Name="IsElementOfLieGeometry" Type="Category"/>
+<Filt Name="IsElementOfAffineSpace" Type="Category"/>
+<Filt Name="IsSubspaceOfProjectiveSpace" Type="Category"/>
+<Filt Name="IsSubspaceOfClassicalPolarSpace" Type="Category"/>
+<Description>
+In <Package>FinInG</Package> a category for the indidual elements of a geometry
+in a category <C>IsCat</C> is declared and named <C>IsElementOfCat</C>. The inclusion for
+different categories of geometries is followed for their elements.
+</Description>
+</ManSection>
 
 <ManSection>
 <Oper Name="ElementsOfIncidenceStructure" Arg="ps"/>
@@ -156,7 +236,7 @@ of <A>ps</A> of type 4.
 of <A>ps</A> of the maximum type.
 <A>ps</A> must be an incidence geometry, but
 only methods for projective and affine spaces are installed, since
-a ``hyerplane'' has either no, either a completely different meaning
+a ``hyperplane'' has either no, either a completely different meaning
 in other geometires than projective and affine spaces.
  This operation is
 perhaps more synonomous and better suited when using projective

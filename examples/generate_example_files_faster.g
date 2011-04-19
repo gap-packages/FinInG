@@ -25,7 +25,8 @@ affinefiles := ["affine_parallel", "affine_shadow1", "affine_shadow2", "affine_b
 examplesfiles := ["examples_pg24", "examples_hermitian", "examples_embedW", "examples_spreads", 
                   "examples_qclan", "examples_KantorKnuth","examples_PSL211"];;
 
-incgeomfiles := ["incgeom_elementsj","incgeom_points","incgeom_lines","incgeom_planes",
+incgeomfiles := ["incgeom_categories1", "incgeom_rank", "incgeom_typesofels", "incgeom_elementsj",
+                 "incgeom_points","incgeom_lines","incgeom_planes",
                  "incgeom_solids", "incgeom_isincident", "incgeom_shadowofelement",
 		 "incgeom_shadowofflag" ]; 
 
