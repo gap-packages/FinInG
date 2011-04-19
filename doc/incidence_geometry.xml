@@ -49,7 +49,12 @@ incidence structures, which does not imply that operations described here will w
 for arbitrarily user constructed incidence geometries. 
 <Section>
 <Heading>Incidence structures</Heading>
-particular and general examples of incidence structures. 
+particular and general examples of incidence structures. Show categorie graph?
+
+
+
+
+
 
 <ManSection>
 <Oper Name="TypesOfElementsOfIncidenceStructure" Arg="ig"/>
@@ -62,6 +67,18 @@ particular and general examples of incidence structures.
 </ManSection>
 
 
+<ManSection>
+<Oper Name="RankAttr" Arg="ig"/>
+<Returns>rank of <A>ig</A></Returns>
+<Description>
+<Example>
+</Example>
+</Description>
+</ManSection>
+
+
+
+
 
 </Section>
 
@@ -69,7 +86,9 @@ particular and general examples of incidence structures.
 <Heading>Elements of incidence structures</Heading>
 
 <ManSection>
+<Oper Name="ElementsOfIncidenceStructure" Arg="ps"/>
 <Oper Name="ElementsOfIncidenceStructure" Arg="ps, j"/>
+<Oper Name="ElementsOfIncidenceStructure" Arg="ps, str"/>
 <Returns>a list of elements</Returns>
 <Description><A>ps</A> must be an incidence geometry. <A>j</A> must be
 a type of element of <A>ps</A>. This function returns a list of all elements
@@ -132,13 +151,17 @@ of <A>ps</A> of type 4.
 
 <ManSection>
 <Oper Name="Hyperplanes" Arg="ps"/>
-<Returns>a list of elements of maximal type</Returns>
-<Description><A>ps</A> must be an incidence geometry. 
-This function returns a list of all elements
-of <A>ps</A> of the maximum type. This operation is
+<Returns>a list of hyerplanes</Returns>
+<Description>This function returns a list of all elements
+of <A>ps</A> of the maximum type.
+<A>ps</A> must be an incidence geometry, but
+only methods for projective and affine spaces are installed, since
+a ``hyerplane'' has either no, either a completely different meaning
+in other geometires than projective and affine spaces.
+ This operation is
 perhaps more synonomous and better suited when using projective
 and affine spaces, however one can also use it for
-an arbitrary incidence geometry.
+an arbitrary incidence geometry. 
 <Example>
 <#Include SYSTEM "../examples/include/incgeom_hyperplanes.include"> 
 </Example>
