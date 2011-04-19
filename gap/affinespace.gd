@@ -82,12 +82,15 @@ DeclareAttribute( "AmbientSpace", IsAffineSpace );
 
 DeclareOperation( "ParallelClass", [IsAffineSpace, IsSubspaceOfAffineSpace] );
 DeclareOperation( "ParallelClass", [IsSubspaceOfAffineSpace] );
-DeclareOperation( "Points", [ IsSubspaceOfAffineSpace ] );
-DeclareOperation( "Lines", [ IsSubspaceOfAffineSpace ] );
-DeclareOperation( "Planes", [ IsSubspaceOfAffineSpace ] );
-DeclareOperation( "Solids", [ IsSubspaceOfAffineSpace ] );
 
-DeclareOperation( "Points", [ IsAffineSpace, IsSubspaceOfAffineSpace ] );
-DeclareOperation( "Lines", [ IsAffineSpace, IsSubspaceOfAffineSpace ] );
-DeclareOperation( "Planes", [ IsAffineSpace, IsSubspaceOfAffineSpace ] );
-DeclareOperation( "Solids", [ IsAffineSpace, IsSubspaceOfAffineSpace ] );
+#commented out next declarations, because I put them in geometry.gd for more general filters. jdb 19/4/2011.
+
+#DeclareOperation( "Points", [ IsSubspaceOfAffineSpace ] );
+#DeclareOperation( "Lines", [ IsSubspaceOfAffineSpace ] );
+#DeclareOperation( "Planes", [ IsSubspaceOfAffineSpace ] );
+#DeclareOperation( "Solids", [ IsSubspaceOfAffineSpace ] );
+
+#DeclareOperation( "Points", [ IsAffineSpace, IsSubspaceOfAffineSpace ] );
+#DeclareOperation( "Lines", [ IsAffineSpace, IsSubspaceOfAffineSpace ] );
+#DeclareOperation( "Planes", [ IsAffineSpace, IsSubspaceOfAffineSpace ] );
+#DeclareOperation( "Solids", [ IsAffineSpace, IsSubspaceOfAffineSpace ] );

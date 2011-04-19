@@ -67,15 +67,15 @@ DeclareGlobalFunction( "OnSetsProjSubspaces" );
 
 ## Shadows
 
-DeclareOperation( "Points", [ IsElementOfLieGeometry ] );
-DeclareOperation( "Lines", [ IsElementOfLieGeometry ] );
-DeclareOperation( "Planes", [ IsElementOfLieGeometry ] );
-DeclareOperation( "Solids", [ IsElementOfLieGeometry ] );
-DeclareOperation( "Hyperplanes", [ IsElementOfLieGeometry ] );
+#DeclareOperation( "Points", [ IsElementOfLieGeometry ] );
+#DeclareOperation( "Lines", [ IsElementOfLieGeometry ] );
+#DeclareOperation( "Planes", [ IsElementOfLieGeometry ] );
+#DeclareOperation( "Solids", [ IsElementOfLieGeometry ] );
+#DeclareOperation( "Hyperplanes", [ IsElementOfLieGeometry ] );
 
-DeclareOperation( "Points", [ IsLieGeometry, IsElementOfLieGeometry ] );
-DeclareOperation( "Lines", [ IsLieGeometry, IsElementOfLieGeometry ] );
-DeclareOperation( "Planes", [ IsLieGeometry, IsElementOfLieGeometry ] );
-DeclareOperation( "Solids", [ IsLieGeometry, IsElementOfLieGeometry ] );
-DeclareOperation( "Hyperplanes", [ IsLieGeometry, IsElementOfLieGeometry ] );
+#DeclareOperation( "Points", [ IsLieGeometry, IsElementOfLieGeometry ] );
+#DeclareOperation( "Lines", [ IsLieGeometry, IsElementOfLieGeometry ] );
+#DeclareOperation( "Planes", [ IsLieGeometry, IsElementOfLieGeometry ] );
+#DeclareOperation( "Solids", [ IsLieGeometry, IsElementOfLieGeometry ] );
+#DeclareOperation( "Hyperplanes", [ IsLieGeometry, IsElementOfLieGeometry ] );
 

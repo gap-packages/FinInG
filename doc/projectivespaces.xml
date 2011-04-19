@@ -346,16 +346,20 @@ with <A>el</A>.
 </ManSection>
 
 <ManSection>
-<Oper Name="ShadowOfFlag" Arg="ps, el, i"/>
-<Oper Name="ShadowOfFlag" Arg="ps, el, str"/>
-<Returns></Returns>
+<Oper Name="ShadowOfFlag" Arg="ps, flag, i"/>
+<Oper Name="ShadowOfFlag" Arg="ps, flag, str"/>
+<Returns>the shadow elements of type <A>i</A> in the flag <A>flag</A>. The
+second variant determines the type <A>i</A> from the position of <A>str</A> in the list
+returned by <F>TypesOfElementsOfIncidenceStructurePlural</F>
+</Returns>
 <Description>
 <Example>
+<#Include SYSTEM "../examples/include/projpol_shadowofflag.include"> 
 </Example>
 </Description>
 </ManSection>
 
-
+Shadows of elements are used internally to compute elements incident with a given element.
 
 </Section>
 </Chapter>

@@ -204,51 +204,83 @@ InstallGlobalFunction( OnSetsProjSubspaces,
 #
 # Nice methods for shadows of elements. Remind that shadow functionality 
 # is to be implemented for the particular Lie geometries. See corresponding
-# files.
+# files. Very important: although we see functions here for Lie geometries
+# where one could expect "containment" to be more in use than "incidence"
+# the methods for Points, etc. really refer to "is incident with" than to
+# is contained in. So these are really shortcuts to ElementsIncidentWithElementOfIncidenceStructure
 #
 #############################################################################
 
 
-InstallMethod( Points, [ IsElementOfLieGeometry ],
-  function( var )
-    return ShadowOfElement(var!.geo, var, 1);
-  end );
+# CHECKED 19/4/2011 jdb
+#############################################################################
+#O  ElementsIncidentWithElementOfIncidenceStructure( <el>, <i> )
+# returns the elements of type <i> in <el>, relying on ShadowOfElement 
+# for particular <el>.
+## 
+InstallMethod( ElementsIncidentWithElementOfIncidenceStructure, "for IsElementOfLieGeometry",
+	[ IsElementOfLieGeometry, IsPosInt],
+	function( el, i )
+		return ShadowOfElement(el!.geo, el, i);
+	end );
 
-InstallMethod( Points, [ IsLieGeometry, IsElementOfLieGeometry ],
-  function( geo, var )
-    return ShadowOfElement(geo, var, 1);
-  end );
+# CHECKED 19/4/2011 jdb
+InstallMethod( Points, "for IsElementOfLieGeometry",
+	[ IsElementOfLieGeometry ],
+	function( var )
+		return ShadowOfElement(var!.geo, var, 1);
+	end );
 
-InstallMethod( Lines, [ IsElementOfLieGeometry ],
-  function( var )
-    return ShadowOfElement(var!.geo, var, 2);
-  end );
+# CHECKED 19/4/2011 jdb
+InstallMethod( Points, "for IsLieGeometry and IsElementOfLieGeometry", 
+	[ IsLieGeometry, IsElementOfLieGeometry ],
+	function( geo, var )
+		return ShadowOfElement(geo, var, 1);
+	end );
 
-InstallMethod( Lines, [ IsLieGeometry, IsElementOfLieGeometry ],
-  function( geo, var )
-    return ShadowOfElement(geo, var, 2);
-  end );
+# CHECKED 19/4/2011 jdb
+InstallMethod( Lines, "for IsElementOfLieGeometry", 
+	[ IsElementOfLieGeometry ],
+	function( var )
+		return ShadowOfElement(var!.geo, var, 2);
+	end );
 
-InstallMethod( Planes, [ IsElementOfLieGeometry ],
-  function( var )
-    return ShadowOfElement(var!.geo, var, 3);
-  end );
+# CHECKED 19/4/2011 jdb
+InstallMethod( Lines, "for IsLieGeometry and IsElementOfLieGeometry", 
+	[ IsLieGeometry, IsElementOfLieGeometry ],
+	function( geo, var )
+		return ShadowOfElement(geo, var, 2);
+	end );
 
-InstallMethod( Planes, [ IsLieGeometry, IsElementOfLieGeometry ],
-  function( geo, var )
-    return ShadowOfElement(geo, var, 3);
-  end );
+# CHECKED 19/4/2011 jdb
+InstallMethod( Planes, "for IsElementOfLieGeometry", 
+	[ IsElementOfLieGeometry ],
+	function( var )
+		return ShadowOfElement(var!.geo, var, 3);
+	end );
 
+# CHECKED 19/4/2011 jdb
+InstallMethod( Planes, "for IsLieGeometry and IsElementOfLieGeometry", 
+	[ IsLieGeometry, IsElementOfLieGeometry ],
+	function( geo, var )
+		return ShadowOfElement(geo, var, 3);
+	end );
+
+# CHECKED 19/4/2011 jdb
 InstallMethod( Solids, [ IsElementOfLieGeometry ],
   function( var )
     return ShadowOfElement(var!.geo, var, 4);
   end );
 
-InstallMethod( Solids, [ IsLieGeometry, IsElementOfLieGeometry ],
-  function( geo, var )
-    return ShadowOfElement(geo, var, 4);
-  end );
+# CHECKED 19/4/2011 jdb
+InstallMethod( Solids, "for IsElementOfLieGeometry", 
+	[ IsLieGeometry, IsElementOfLieGeometry ],
+	function( geo, var )
+		return ShadowOfElement(geo, var, 4);
+	end );
 
+
+#maybe move this bit to projective spaces?
 InstallMethod( Hyperplanes, [ IsSubspaceOfProjectiveSpace ],
   function( var )
     local geo, d, f;

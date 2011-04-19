@@ -218,16 +218,6 @@ DeclareOperation( "FlagOfIncidenceStructure", [ IsIncidenceStructure, IsElementO
 DeclareOperation( "FlagOfIncidenceStructure", [ IsIncidenceStructure, IsList and IsEmpty ]);
 DeclareOperation( "ChamberOfIncidenceStructure", [ IsElementOfIncidenceStructureCollection ]);
 
-DeclareOperation( "ShadowOfElement",
-  [IsIncidenceStructure, IsElementOfIncidenceStructure, IsPosInt] );
-DeclareOperation( "ShadowOfElement",
-  [IsIncidenceStructure, IsElementOfIncidenceStructure, IsString] );
-
-DeclareOperation( "ShadowOfFlag",
-  [IsIncidenceStructure, IsFlagOfIncidenceStructure, IsPosInt] );
-DeclareOperation( "ShadowOfFlag",
-  [IsIncidenceStructure, IsFlagOfIncidenceStructure, IsString] );
-
 DeclareOperation( "IsIncident", [IsElementOfIncidenceStructure, IsElementOfIncidenceStructure] );
 DeclareOperation( "IsCollinear", [IsIncidenceStructure, IsElementOfIncidenceStructure, IsElementOfIncidenceStructure]);
 DeclareOperation( "Span", [IsElementOfIncidenceStructure, IsElementOfIncidenceStructure]);
@@ -257,4 +247,40 @@ DeclareOperation( "\^", [IsElementOfIncidenceStructure, IsUnwrapper ] );
 
 # commenting this out had not effect, presumably...
 #DeclareOperation( "ChooseHashFunction", [IsElementOfIncidenceStructure,IsInt] );
+
+#############################################################################
+#
+# Shadow related operations:
+# The declaration of these operation does however not imply that methods are installed
+# for particular cases.
+#
+#############################################################################
+
+#new on 19/4/2011
+DeclareCategory( "IsShadowElementsOfIncidenceStructure", IsElementsOfIncidenceStructure );
+
+DeclareOperation( "ShadowOfElement",
+  [IsIncidenceStructure, IsElementOfIncidenceStructure, IsPosInt] );
+DeclareOperation( "ShadowOfElement",
+  [IsIncidenceStructure, IsElementOfIncidenceStructure, IsString] );
+
+DeclareOperation( "ShadowOfFlag",
+  [IsIncidenceStructure, IsFlagOfIncidenceStructure, IsPosInt] );
+DeclareOperation( "ShadowOfFlag",
+  [IsIncidenceStructure, IsFlagOfIncidenceStructure, IsString] );
+
+#now a very general operation. 
+DeclareOperation( "ElementsIncidentWithElementOfIncidenceStructure", [ IsElementOfIncidenceStructure, IsPosInt ] );
+DeclareOperation( "Points", [ IsElementOfIncidenceStructure ] );
+DeclareOperation( "Lines", [ IsElementOfIncidenceStructure ] );
+DeclareOperation( "Planes", [ IsElementOfIncidenceStructure ] );
+DeclareOperation( "Solids", [ IsElementOfIncidenceStructure ] );
+DeclareOperation( "Hyperplanes", [ IsElementOfIncidenceStructure ] );
+
+DeclareOperation( "Points", [ IsIncidenceStructure, IsElementOfIncidenceStructure ] );
+DeclareOperation( "Lines", [ IsIncidenceStructure, IsElementOfIncidenceStructure ] );
+DeclareOperation( "Planes", [ IsIncidenceStructure, IsElementOfIncidenceStructure ] );
+DeclareOperation( "Solids", [ IsIncidenceStructure, IsElementOfIncidenceStructure ] );
+DeclareOperation( "Hyperplanes", [ IsIncidenceStructure, IsElementOfIncidenceStructure ] );
+
 
