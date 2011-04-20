@@ -39,8 +39,23 @@
 
 InstallGlobalFunction( MakeAllProjectivePoints, 
 function(f,d)
+
   # f is a finite field
   # d an integer >= 1
+  # This function is used for computing the permutation representation (NiceMonomorphism)
+  # quickly and with the least memory used as possible, for a projective group.
+  # Later, we will convert everything here to CVec's, which should give us an
+  # improved permutation representation. For example:
+  #   gap> pg:=PG(5,5);
+  #   ProjectiveSpace(5, 5)
+  #   gap> g:=ProjectivityGroup(pg);
+  #   PGL(6,5)
+  #   gap> hom := NiceMonomorphism(g);
+  #   <action isomorphism>
+  #   gap> omega:=UnderlyingExternalSet(hom);;
+  #   gap> Random(omega);
+  #   ## returns a compressed vector
+
   local els,i,j,l,q,sp,v,vs,w,ww,x;
   els := Elements(f);
   q := Length(els);
