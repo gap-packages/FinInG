@@ -7,7 +7,7 @@
 \perp &#8869;
 \epsilon &#949;
 \delta &#948;
-
+\pi &#960;
 # in text:
 <Alt Not="HTML"> </Alt><Alt Only="HTML"> </Alt>
 

@@ -615,15 +615,13 @@ InstallMethod( PrintObj, "for a flag of a projective space",
 InstallMethod( Display, "for a flag of a projective space",
 	[ IsFlagOfProjectiveSpace and IsFlagOfIncidenceStructureRep  ],
 	function( flag )
-		Print("<a flag of ProjectiveSpace(",flag!.geo!.dimension,", ",Size(flag!.geo!.basefield),")> with elements of types ",flag!.types,"\n");
-		Print("respectively spanned by\n");
-		Display(flag!.els);
-	end );
-
-InstallMethod( Display, "for a flag of a projective space",
-	[ IsFlagOfProjectiveSpace and IsFlagOfIncidenceStructureRep and IsEmptyFlag ],
-	function( flag )
-		Print("<empty flag of ProjectiveSpace(",flag!.geo!.dimension,", ",Size(flag!.geo!.basefield),")>\n");
+		if IsEmptyFlag(flag) then
+			Print("<empty flag of ProjectiveSpace(",flag!.geo!.dimension,", ",Size(flag!.geo!.basefield),")>\n");
+		else
+			Print("<a flag of ProjectiveSpace(",flag!.geo!.dimension,", ",Size(flag!.geo!.basefield),")> with elements of types ",flag!.types,"\n");
+			Print("respectively spanned by\n");
+			Display(flag!.els);
+		fi;
 	end );
 
 # CHECKED 18/4/2011 jdb

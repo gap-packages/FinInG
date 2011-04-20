@@ -145,6 +145,35 @@ particular <A>ig</A>. The second variant returs the list of plurals of these nam
 </Example>
 </Description>
 </ManSection>
+
+<ManSection>
+<Oper Name="AmbientGeometry" Arg="ig"/>
+<Returns></Returns>
+<Description>
+<Example>
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="AmbientSpace" Arg="ig"/>
+<Returns></Returns>
+<Description>
+<Example>
+</Example>
+</Description>
+</ManSection>
+
+
+<ManSection>
+<Oper Name="IsIncident" Arg="ig"/>
+<Returns></Returns>
+<Description>
+<Example>
+</Example>
+</Description>
+</ManSection>
+
 </Section>
 
 <Section>
@@ -159,11 +188,38 @@ particular <A>ig</A>. The second variant returs the list of plurals of these nam
 <Filt Name="IsSubspaceOfProjectiveSpace" Type="Category"/>
 <Filt Name="IsSubspaceOfClassicalPolarSpace" Type="Category"/>
 <Description>
-In <Package>FinInG</Package> a category for the indidual elements of a geometry
-in a category <C>IsCat</C> is declared and named <C>IsElementOfCat</C>. The inclusion for
-different categories of geometries is followed for their elements.
+In <Package>FinInG</Package> a category for the indidual elements of an incidence structure
+in a category <C>IsIncStr</C> is declared and named <C>IsElementOfIncStr</C>. The inclusion for
+different categories of geometries is followed for their elements, except for <C>IsSubspaceOfClassicalPolarSpace</C>,
+which is a subcategory of <C>IsSubspaceOfProjectiveSpace</C>, while <C>IsClassicalPolarSpace</C> is not a subcategory of
+<C>IsProjectiveSpace</C>. The reasons for this construction are obvious.
+<Example>
+<#Include SYSTEM "../examples/include/incgeom_categories2.include"> 
+</Example>
 </Description>
 </ManSection>
+
+
+<ManSection>
+<Heading>Main categories for collections of elements of incidence structures</Heading>
+<Filt Name="IsElementsOfIncidenceStructure" Type="Category"/>
+<Filt Name="IsElementsOfIncidenceGeometry" Type="Category"/>
+<Filt Name="IsElementsOfLieGeometry" Type="Category"/>
+<Filt Name="IsElemenstOfAffineSpace" Type="Category"/>
+<Filt Name="IsSubspacesOfProjectiveSpace" Type="Category"/>
+<Filt Name="IsSubspacesOfClassicalPolarSpace" Type="Category"/>
+<Description>
+In <Package>FinInG</Package> for an incidence structure <A>ig</A> in the category <C>IsIncStr</C>, a category
+<C>IsElementsOfIncStr</C> is declared for objects representing a set of elements of <A>ig</A>, 
+all of the same type. E.g. the set of all elements of a given type of <A>ig</A> will be constructed in
+<C>IsElementsOfIncStr</C>. The chain of inclusions for <C>IsElementsOfIncStr</C> follows the chain of inclusions
+of <C>IsElementOfIncStr</C>.
+<Example>
+</Example>
+</Description>
+</ManSection>
+
+
 
 <ManSection>
 <Oper Name="ElementsOfIncidenceStructure" Arg="ps"/>

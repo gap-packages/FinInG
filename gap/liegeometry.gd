@@ -35,17 +35,17 @@
 #
 #############################################################################
 
-DeclareCategory( "IsElementOfLieGeometry", IsElementOfIncidenceStructure );
+DeclareCategory( "IsElementOfLieGeometry", IsElementOfIncidenceGeometry );
 DeclareCategoryCollections("IsElementOfLieGeometry");
 
-DeclareCategory( "IsElementsOfLieGeometry", IsElementsOfIncidenceStructure );
-DeclareCategory( "IsAllElementsOfLieGeometry", IsAllElementsOfIncidenceStructure );
+DeclareCategory( "IsElementsOfLieGeometry", IsElementsOfIncidenceGeometry );
+DeclareCategory( "IsAllElementsOfLieGeometry", IsAllElementsOfIncidenceGeometry );
 
 DeclareRepresentation( "IsAllElementsOfLieGeometryRep", IsAllElementsOfIncidenceStructureRep, [ "geometry", "type" ] );
   
 DeclareRepresentation( "IsElementsOfLieGeometryRep", IsElementsOfIncidenceStructureRep, [ "geometry", "type" ] );
 
-DeclareCategory( "IsFlagOfLieGeometry", IsFlagOfIncidenceStructure );
+DeclareCategory( "IsFlagOfLieGeometry", IsFlagOfIncidenceGeometry );
 
 #DeclareRepresentation( "IsFlagOfLieGeometryRep", IsFlagOfLieGeometry, [ "geo", "types", "els" ] );
 
