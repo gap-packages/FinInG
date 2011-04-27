@@ -71,6 +71,8 @@ polaritiespsfiles := ["polarities_construct1", "polarities_construct2",
 gpolygonfiles := ["gpolygons_projplanes1", "gpolygons_projplanes2", "gpolygons_EGQByKantorFamily", 
                   "gpolygons_EGQByqClan", "gpolygons_EGQByBLTSet", "gpolygons_collineations", "gpolygons_SplitCayleyHexagon"];
 
+diagramfiles := ["diagram_cosetgeom"];
+
 websitefiles := ["web_hyperoval24", "web_inumbersherm", "web_embedding", "web_spreads", "web_ovoidq63"];
 
 files := [ "projgroups_mult" ];
