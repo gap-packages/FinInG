@@ -120,13 +120,13 @@ InstallMethod( ElementsOfIncidenceStructure, [IsCosetGeometry, IsPosInt],
     vars := rec( geometry := cg, type := j );
     Objectify(
       NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
-                                IsAllElementsOfCosetGeometry and
-                                IsAllElementsOfCosetGeometryRep),
+                                IsElementsOfCosetGeometry and
+                                IsElementsOfCosetGeometryRep),
         vars );
     return vars;
 end );
 
-InstallMethod(Size, [IsAllElementsOfCosetGeometry],
+InstallMethod(Size, [IsElementsOfCosetGeometry],
   function( vs )
 
     local cg;
