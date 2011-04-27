@@ -53,7 +53,7 @@
 ##
 #############################################################################
 
-InstallMethod( CosetGeometry, [ IsGroup , IsHomogeneousList ],
+InstallMethod( CosetGeometry, "for groups and list of subgroups",[ IsGroup , IsHomogeneousList ],
   function( g, l )
 
     ##  We assume the types of the geometry index the set l, the ordering

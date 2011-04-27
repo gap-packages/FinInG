@@ -315,6 +315,20 @@ InstallMethod( ShadowOfFlag,
 		return ShadowOfFlag(ps,FlagOfIncidenceStructure(ps,list),j);
 	end);
 
+# CHECKED 27/4/2011 jdb
+#############################################################################
+#O  ShadowOfFlag( <ps>, <list>, <str> )
+# returns the shadow elements of the flag <list>, provided <list> determines
+# a flag in <ps>. Relies completely on FlagOfIncidenceStructure for <ps>,
+# and on ShadowOfFlag for <ps> <v> and <str>, so this implementation is generic.
+##
+InstallMethod( ShadowOfFlag,
+	"for an incidence structure, a list, and an integer",
+	[IsIncidenceStructure, IsList, IsString],
+	function( ps, list, str )
+		return ShadowOfFlag(ps,FlagOfIncidenceStructure(ps,list),str);
+	end);
+	
 
 InstallMethod( Enumerator, [IsElementsOfIncidenceStructure],
   ## This operation simply makes an enumerator out

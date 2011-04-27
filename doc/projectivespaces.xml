@@ -348,7 +348,8 @@ with <A>el</A>.
 <ManSection>
 <Oper Name="ShadowOfFlag" Arg="ps, flag, i"/>
 <Oper Name="ShadowOfFlag" Arg="ps, flag, str"/>
-<Returns>the shadow elements of type <A>i</A> in the flag <A>flag</A>. The
+<Returns>the shadow elements of type <A>i</A> in the flag <A>flag</A>, i.e. the elements of type
+<A>i</A> incident with all elements of <A>flag</A>. The
 second variant determines the type <A>i</A> from the position of <A>str</A> in the list
 returned by <F>TypesOfElementsOfIncidenceStructurePlural</F>
 </Returns>
@@ -359,7 +360,41 @@ returned by <F>TypesOfElementsOfIncidenceStructurePlural</F>
 </Description>
 </ManSection>
 
-Shadows of elements are used internally to compute elements incident with a given element.
+<ManSection>
+<Oper Name="ShadowOfFlag" Arg="ps, list, i"/>
+<Oper Name="ShadowOfFlag" Arg="ps, list, str"/>
+<Returns>the shadow elements of type <A>i</A> in the flag determined by <A>list</A>, i.e. the elements of type
+<A>i</A> incident with all elements of the flag. The
+second variant determines the type <A>i</A> from the position of <A>str</A> in the list
+returned by <F>TypesOfElementsOfIncidenceStructurePlural</F>
+</Returns>
+<Description>
+Internally, the function <F>FlagOfIncidenceStructure</F> is used to create a flag from <A>list</A>. This function
+also performs the checking.
+<Example>
+<#Include SYSTEM "../examples/include/projpol_shadowofflag.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="ElementsIncidentWithElementOfIncidenceStructure" Arg="el, i"/>
+<Returns>the elements of type <A>i</A> incident with <A>el</A>, in other words,
+the shadow of the elements of 
+
+the shadow elements of type <A>i</A> in the flag determined by <A>list</A>, i.e. the elements of type
+<A>i</A> incident with all elements of the flag. The
+second variant determines the type <A>i</A> from the position of <A>str</A> in the list
+returned by <F>TypesOfElementsOfIncidenceStructurePlural</F>
+</Returns>
+<Description>
+Internally, the function <F>FlagOfIncidenceStructure</F> is used to create a flag from <A>list</A>. This function
+also performs the checking.
+<Example>
+<#Include SYSTEM "../examples/include/projpol_shadowofflag.include"> 
+</Example>
+</Description>
+</ManSection>
 
 </Section>
 </Chapter>

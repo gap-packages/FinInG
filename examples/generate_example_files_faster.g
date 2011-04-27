@@ -40,7 +40,8 @@ projpolfiles1 := ["projpol_projectivespace", "projpol_projdimension",
 		 "projpol_projdimension_element", "projpol_standardframe", "projpol_coordinates",
 		  "projpol_eqhyperplane", "projpol_basefieldps", "projpol_ambientspaceelps", 
 		  "projpol_basefieldelps", "projpol_randomeltsps", "projpol_randomelps",
-		  "projpol_span", "projpol_meet", "projpol_shadowofelement", "projpol_flag"];
+		  "projpol_span", "projpol_meet", "projpol_shadowofelement", "projpol_flag",
+		  "projpol_shadowofflag"];
 		 
 		 
 		 "projpol_hermitian", "projpol_elliptic",

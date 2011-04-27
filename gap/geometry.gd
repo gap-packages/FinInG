@@ -205,6 +205,8 @@ DeclareAttribute( "CollineationAction", IsIncidenceStructure );
 DeclareAttribute( "CorrelationAction", IsIncidenceStructure );
 DeclareAttribute( "RepresentativesOfElements", IsIncidenceStructure );
 
+DeclareAttribute( "AmbientGeometry", IsIncidenceStructure );
+
 #############################################################################
 #
 # Attributes and operations for elements of incidence structures:
@@ -224,9 +226,9 @@ DeclareOperation( "Span", [IsElementOfIncidenceStructure, IsElementOfIncidenceSt
 DeclareOperation( "Meet", [IsElementOfIncidenceStructure, IsElementOfIncidenceStructure]);
 #DeclareOperation( "Span", [IsHomogeneousList]);
 #DeclareOperation( "Meet", [IsHomogeneousList]);
-DeclareOperation( "AmbientGeometry", [ IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep ] );
-DeclareOperation( "AmbientGeometry", [ IsElementsOfIncidenceStructure and IsElementsOfIncidenceStructureRep ] );
-DeclareOperation( "AmbientGeometry", [ IsAllElementsOfIncidenceStructure and IsAllElementsOfIncidenceStructureRep ] );
+DeclareAttribute( "AmbientGeometry", IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep  );
+DeclareAttribute( "AmbientGeometry", IsElementsOfIncidenceStructure and IsElementsOfIncidenceStructureRep );
+DeclareAttribute( "AmbientGeometry", IsAllElementsOfIncidenceStructure and IsAllElementsOfIncidenceStructureRep );
 
 DeclareOperation( "RandomFlag", [IsIncidenceStructure]);
 DeclareOperation( "RandomChamber", [IsIncidenceStructure]);
@@ -267,7 +269,10 @@ DeclareOperation( "ShadowOfFlag",
 DeclareOperation( "ShadowOfFlag",
   [IsIncidenceStructure, IsFlagOfIncidenceStructure, IsString] );  
 DeclareOperation( "ShadowOfFlag",
-  [IsIncidenceStructure, IsList, IsPosInt] );  
+  [IsIncidenceStructure, IsList, IsPosInt] );
+DeclareOperation( "ShadowOfFlag",
+  [IsIncidenceStructure, IsList, IsString] );  
+
 
 #now a very general operation. 
 DeclareOperation( "ElementsIncidentWithElementOfIncidenceStructure", [ IsElementOfIncidenceStructure, IsPosInt ] );
