@@ -1,0 +1,16 @@
+gap&gt; ps := PG(6,9);
+ProjectiveSpace(6, 9)
+gap&gt; p := VectorSpaceToElement(ps,[1,0,1,0,0,0,0]*Z(9)^0);
+&lt;a point in ProjectiveSpace(6, 9)&gt;
+gap&gt; els := ElementsIncidentWithElementOfIncidenceStructure(p,3);
+&lt;shadow planes in ProjectiveSpace(6, 9)&gt;
+gap&gt; line := VectorSpaceToElement(ps,[[1,1,1,1,0,0,0],[0,0,0,0,1,1,1]]*Z(9)^0);
+&lt;a line in ProjectiveSpace(6, 9)&gt;
+gap&gt; els := ElementsIncidentWithElementOfIncidenceStructure(line,1);
+&lt;shadow points in ProjectiveSpace(6, 9)&gt;
+gap&gt; List(els);
+[ &lt;a point in ProjectiveSpace(6, 9)&gt;, &lt;a point in ProjectiveSpace(6, 9)&gt;, 
+  &lt;a point in ProjectiveSpace(6, 9)&gt;, &lt;a point in ProjectiveSpace(6, 9)&gt;, 
+  &lt;a point in ProjectiveSpace(6, 9)&gt;, &lt;a point in ProjectiveSpace(6, 9)&gt;, 
+  &lt;a point in ProjectiveSpace(6, 9)&gt;, &lt;a point in ProjectiveSpace(6, 9)&gt;, 
+  &lt;a point in ProjectiveSpace(6, 9)&gt;, &lt;a point in ProjectiveSpace(6, 9)&gt; ]

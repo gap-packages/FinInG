@@ -380,18 +380,13 @@ also performs the checking.
 <ManSection>
 <Oper Name="ElementsIncidentWithElementOfIncidenceStructure" Arg="el, i"/>
 <Returns>the elements of type <A>i</A> incident with <A>el</A>, in other words,
-the shadow of the elements of 
-
-the shadow elements of type <A>i</A> in the flag determined by <A>list</A>, i.e. the elements of type
-<A>i</A> incident with all elements of the flag. The
-second variant determines the type <A>i</A> from the position of <A>str</A> in the list
-returned by <F>TypesOfElementsOfIncidenceStructurePlural</F>
+the shadow of the elements of type i of the element <A>el</A>
 </Returns>
 <Description>
 Internally, the function <F>FlagOfIncidenceStructure</F> is used to create a flag from <A>list</A>. This function
 also performs the checking.
 <Example>
-<#Include SYSTEM "../examples/include/projpol_shadowofflag.include"> 
+<#Include SYSTEM "../examples/include/projpol_elsel.include"> 
 </Example>
 </Description>
 </ManSection>

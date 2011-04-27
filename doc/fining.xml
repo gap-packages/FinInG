@@ -128,7 +128,7 @@ The University of Western Australia, Australia
 <!--#Include SYSTEM "schemes.xml"-->
 <#Include SYSTEM "varieties.xml">
 <#Include SYSTEM "gpolygons.xml">
-<!--#Include SYSTEM "diagramgeometries.xml"-->
+<#Include SYSTEM "diagramgeometries.xml">
 </Body>
 
 <Bibliography Databases="fining"/>
