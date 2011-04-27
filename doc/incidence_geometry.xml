@@ -199,7 +199,6 @@ which is a subcategory of <C>IsSubspaceOfProjectiveSpace</C>, while <C>IsClassic
 </Description>
 </ManSection>
 
-
 <ManSection>
 <Heading>Main categories for collections of elements of incidence structures</Heading>
 <Filt Name="IsElementsOfIncidenceStructure" Type="Category"/>
@@ -219,18 +218,23 @@ of <C>IsElementOfIncStr</C>.
 </Description>
 </ManSection>
 
+The object representing the set of elements of a given type can be computed using 
+the general operation <F>ElementsOfIncidenceStructure</F>, of course assuming that
+a method is installed for the particular incidence structure.
 
 
 <ManSection>
-<Oper Name="ElementsOfIncidenceStructure" Arg="ps"/>
-<Oper Name="ElementsOfIncidenceStructure" Arg="ps, j"/>
-<Oper Name="ElementsOfIncidenceStructure" Arg="ps, str"/>
+<Oper Name="ElementsOfIncidenceStructure" Arg="ig"/>
+<Oper Name="ElementsOfIncidenceStructure" Arg="ig, j"/>
+<Oper Name="ElementsOfIncidenceStructure" Arg="ig, str"/>
 <Returns>a list of elements</Returns>
-<Description><A>ps</A> must be an incidence geometry. <A>j</A> must be
-a type of element of <A>ps</A>. This function returns a list of all elements
-of <A>ps</A> of type <A>j</A>. In an alternative form of this function
-<A>j</A> can be one of ``points", ``lines", ``planes" or ``solids" and the
-function returns the elements of type 1, 2, 3 or 4 respectively.
+<Description><A>ig</A> must be an incidence geometry. <A>j</A> must be
+a type of element of <A>ig</A>. This function returns a list of all elements
+of <A>ig</A> of type <A>j</A>, and an error is displayed if <A>ig</A> has no 
+elements of type <A>j</A>. In an alternative form of this function
+<A>str</A> can be one of ``points", ``lines", ``planes" or ``solids" and the
+function returns the elements of type 1, 2, 3 or 4 respectively, of course
+if <A>ig</A> has elements of the deduced type.
 <Example>
 <#Include SYSTEM "../examples/include/incgeom_elementsj.include"> 
 </Example>
@@ -238,49 +242,14 @@ function returns the elements of type 1, 2, 3 or 4 respectively.
 </ManSection>
 
 <ManSection>
+<Heading>Short names for ElementsOfIncidenceStructure</Heading>
 <Oper Name="Points" Arg="ps"/>
-<Returns>a list of elements of type 1</Returns>
-<Description><A>ps</A> must be an incidence geometry. 
-This function returns a list of all elements
-of <A>ps</A> of type 1.
-<Example>
-<#Include SYSTEM "../examples/include/incgeom_points.include"> 
-</Example>
-</Description>
-</ManSection>
-
-<ManSection>
 <Oper Name="Lines" Arg="ps"/>
-<Returns>a list of elements of type 2</Returns>
-<Description><A>ps</A> must be an incidence geometry. 
-This function returns a list of all elements
-of <A>ps</A> of type 2.
-<Example>
-<#Include SYSTEM "../examples/include/incgeom_lines.include"> 
-</Example>
-</Description>
-</ManSection>
-
-<ManSection>
 <Oper Name="Planes" Arg="ps"/>
-<Returns>a list of elements of type 3</Returns>
-<Description><A>ps</A> must be an incidence geometry. 
-This function returns a list of all elements
-of <A>ps</A> of type 3.
+<Returns>The elements of <A>ps</A> of respective type 1,2, and 3.</Returns>
+<Description>
 <Example>
-<#Include SYSTEM "../examples/include/incgeom_planes.include"> 
-</Example>
-</Description>
-</ManSection>
-
-<ManSection>
-<Oper Name="Solids" Arg="ps"/>
-<Returns>a list of elements of type 4</Returns>
-<Description><A>ps</A> must be an incidence geometry. 
-This function returns a list of all elements
-of <A>ps</A> of type 4.
-<Example>
-<#Include SYSTEM "../examples/include/incgeom_solids.include"> 
+<#Include SYSTEM "../examples/include/incgeom_short.include"> 
 </Example>
 </Description>
 </ManSection>
@@ -315,6 +284,30 @@ This function returns
 </Example>
 </Description>
 </ManSection>
+
+<ManSection>
+<Oper Name="Random" Arg="u,v"/>
+<Returns>Boolean</Returns>
+<Description>
+<A>u</A> and <A>v</A> must be elements of an incidence structure.
+This function returns 
+<Example>
+</Example>
+</Description>
+</ManSection>
+
+
+<ManSection>
+<Oper Name="Size" Arg="u,v"/>
+<Returns>Boolean</Returns>
+<Description>
+<A>u</A> and <A>v</A> must be elements of an incidence structure.
+This function returns 
+<Example>
+</Example>
+</Description>
+</ManSection>
+
 
 </Section>
 

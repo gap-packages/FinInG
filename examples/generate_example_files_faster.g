@@ -26,8 +26,7 @@ examplesfiles := ["examples_pg24", "examples_hermitian", "examples_embedW", "exa
                   "examples_qclan", "examples_KantorKnuth","examples_PSL211"];;
 
 incgeomfiles := ["incgeom_categories1", "incgeom_rank", "incgeom_typesofels", "incgeom_categories2", 
-                 "incgeom_elementsj",
-                 "incgeom_points","incgeom_lines","incgeom_planes",
+                 "incgeom_elementsj", "incgeom_short",
                  "incgeom_solids", "incgeom_isincident", "incgeom_shadowofelement",
 		 "incgeom_shadowofflag" ]; 
 

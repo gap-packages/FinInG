@@ -231,8 +231,6 @@ DeclareOperation( "AmbientGeometry", [ IsAllElementsOfIncidenceStructure and IsA
 DeclareOperation( "RandomFlag", [IsIncidenceStructure]);
 DeclareOperation( "RandomChamber", [IsIncidenceStructure]);
 
-
-
 DeclareOperation( "Type", [ IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep ] );
 DeclareOperation( "Type", [ IsElementsOfIncidenceStructure and IsElementsOfIncidenceStructureRep ] );
 
@@ -267,7 +265,9 @@ DeclareOperation( "ShadowOfElement",
 DeclareOperation( "ShadowOfFlag",
   [IsIncidenceStructure, IsFlagOfIncidenceStructure, IsPosInt] );
 DeclareOperation( "ShadowOfFlag",
-  [IsIncidenceStructure, IsFlagOfIncidenceStructure, IsString] );
+  [IsIncidenceStructure, IsFlagOfIncidenceStructure, IsString] );  
+DeclareOperation( "ShadowOfFlag",
+  [IsIncidenceStructure, IsList, IsPosInt] );  
 
 #now a very general operation. 
 DeclareOperation( "ElementsIncidentWithElementOfIncidenceStructure", [ IsElementOfIncidenceStructure, IsPosInt ] );

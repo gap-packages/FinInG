@@ -289,7 +289,7 @@ InstallMethod( ShadowOfElement,
 # and <str> is occuring in TypesOfElementsOfIncidenceStructurePlural(<ps>).
 ##
 InstallMethod( ShadowOfFlag,
-	"for an incidence structure, a list, and a string",
+	"for an incidence structure, a flag, and a string",
 	[IsIncidenceStructure, IsFlagOfIncidenceStructure, IsString],
 	function( ps, vs, str )
 		local m;
@@ -299,6 +299,20 @@ InstallMethod( ShadowOfFlag,
 		else
 			return ShadowOfFlag(ps, vs, m);
 		fi;
+	end);
+
+# CHECKED 27/4/2011 jdb
+#############################################################################
+#O  ShadowOfFlag( <ps>, <list>, <j> )
+# returns the shadow elements of the flag <list>, provided <list> determines
+# a flag in <ps>. Relies completely on FlagOfIncidenceStructure for <ps>,
+# so this implementation is generic.
+##
+InstallMethod( ShadowOfFlag,
+	"for an incidence structure, a list, and an integer",
+	[IsIncidenceStructure, IsList, IsPosInt],
+	function( ps, list, j )
+		return ShadowOfFlag(ps,FlagOfIncidenceStructure(ps,list),j);
 	end);
 
 
