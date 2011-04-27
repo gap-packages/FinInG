@@ -31,41 +31,32 @@ geometry <M>\Gamma</M>. This means that a group <M>G</M> of
 automorphisms of <M>\Gamma</M> is also given such that <M>G</M> is
 transitive on the set of chambers of <M>\Gamma</M>. This implies
 that <M>G</M> is also transitive on the set of all elements of any
-chosen type <M>i</M>. If we consider a chamber <M>c<sub>1</sub>,c<sub>2</sub>,... ,c<sub>n</sub></M>
-such that <M>c<sub>i</sub></M> is of type <M>i</M>, we can look at the
-stabilizer <M>G<sub>i</sub></M> of <M>c<sub>i</sub></M>. The
-subgroups <M>G<sub>i</sub></A> are 
+chosen type <M>i</M>. If we consider a chamber <M>c_{1},c_{2},... ,c_{n}</M>
+such that <M>c_{i}</M> is of type <M>i</M>, we can look at the
+stabilizer <M>G_{i}</M> of <M>c_{i}</M> in <M>G</M>. The
+subgroups <M>G_{i}</M> are 
 called <E>parabolic subgroups</E> of <M>\Gamma</M>. For a
 type <M>i</M>, transitivity of <M>G</M> on the elements of
 type <M>i</M> gives a correspondence between the cosets of the
-stabilizer <M>G<sub>i</sub></M> and the elements of type <M>i</M>
+stabilizer <M>G_{i}</M> and the elements of type <M>i</M>
 in <M>\Gamma</M>. Two elements of <M>\Gamma</M> are incident if and only
 if the corresponding cosets have a nonempty intersection.
 
 We now use the above oservation to define an incidence structure from
-a group <M>G</M> together with a set of subgroups <M>G<sub>1</sub>,G<sub>2</sub>,... ,G<sub>n</sub></A>.
-
-<ManSection>
-<Oper Name="DiagramOfGeometry" Arg="Gamma"/>
-<Returns>The diagram of the geometry <A>Gamma</A></Returns>
-<Description> 
-<A>Gamma</A> must be a coset geometry.
-</Description>
-</ManSection>
-
-<ManSection>
-<Oper Name="DrawDiagram" Arg="Diag,filename"/>
-<Returns>Does not return anything but wirtes a file <A>filename</A>.ps</Returns>
-<Description> 
-<A>Diag</A> must be a diagram. Writes a file <A>filename</A>.ps in the current directory with a pictorial version of the diagram. This command uses the <Package>graphviz</Package> package which is available from http://www.graphviz.org. 
-</Description>
-</ManSection>
+a group <M>G</M> together with a set of
+subgroups <M>G_{1},G_{2},... ,G_{n}</M>. The type set
+is <M>\{1,2,...,n\}</M>. By definition the elements of
+type <M>i</M> are the (right) cosets of the subgroup <M>G_{i}</M>. Two
+cosets are incident if and only if their intersection is not
+empty.
 
 <ManSection>
 <Oper Name="CosetGeometry" Arg="G,l"/>
 <Returns>Returns the coset geometry defined by the list <A>l</A> of subgroups of the group <A>G</A></Returns>
 <Description> 
-<A>G</A> must be a group and <A>l</A> is a list of subgroups of <A>G</A>. The elements of the coset geometry are the cosets in <A>G</A> of the subgroups in <A>l</A>. Two elements are incident if and only if the corresponding cosets have nonempty intersection. 
+<A>G</A> must be a group and <A>l</A> is a list of subgroups
+of <A>G</A>. The subgroups in <A>l</A> will be the <E>parabolic subgroups</E>
+of the <E>coset geometry</E> whose rank equals the length of <A>l</A>.
 </Description>
 </ManSection>
 
@@ -91,6 +82,23 @@ a group <M>G</M> together with a set of subgroups <M>G<sub>1</sub>,G<sub>2</sub>
 <A>cg</A> must be a coset geometry.
 </Description>
 </ManSection>
+
+<ManSection>
+<Oper Name="DiagramOfGeometry" Arg="Gamma"/>
+<Returns>The diagram of the geometry <A>Gamma</A></Returns>
+<Description> 
+<A>Gamma</A> must be a coset geometry.
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="DrawDiagram" Arg="Diag,filename"/>
+<Returns>Does not return anything but wirtes a file <A>filename</A>.ps</Returns>
+<Description> 
+<A>Diag</A> must be a diagram. Writes a file <A>filename</A>.ps in the current directory with a pictorial version of the diagram. This command uses the <Package>graphviz</Package> package which is available from http://www.graphviz.org. 
+</Description>
+</ManSection>
+
 
 <ManSection>
 <Oper Name="Borelsubgroup" Arg="cg"/>
