@@ -44,307 +44,6 @@
 
 
 
-#############################################################################
-##
-##  Diagrams and the drawing of them
-##
-#############################################################################
-
-
-InstallMethod( \=, [ IsVertexOfDiagram and IsVertexOfDiagramRep, 
-                     IsVertexOfDiagram and IsVertexOfDiagramRep ],
-  function( u, v )
-    return u!.type = v!.type;
-  end );
-
-InstallMethod( \=, [ IsEdgeOfDiagram and IsEdgeOfDiagramRep, 
-                     IsEdgeOfDiagram and IsEdgeOfDiagramRep ],
-  function( u, v )
-    return u!.edge = v!.edge;
-  end );
-
-InstallMethod( DiagramOfGeometry, [IsCosetGeometry],
-  function( cg )
-    local rank2residues, vertices, types, x, v, edges, parameters, e, diagram, parabolics;
-    rank2residues := Rank2Residues( cg );
-    Perform(rank2residues, MakeRank2Residue);
-
-    parabolics := cg!.parabolics;
-	vertices := [];
-    types := TypesOfElementsOfIncidenceStructure( cg );
-
-  ## Wrapping up... 
-    for x in types do
-      v := rec( type := x );
-      Objectify( NewType( VertexOfDiagramFamily, IsVertexOfDiagram and
-                      IsVertexOfDiagramRep ), v);
-      Add( vertices, v );
-    od;
-
-    edges := [];
-
-  ## Wrapping up...
-    for x in rank2residues do
-        parameters := Rank2Parameters( x!.residuegeometry );
-        if not parameters[1] = [2,2,2] then
-           e := rec( edge := x!.edge );
-           Objectify( NewType( EdgeOfDiagramFamily, 
-                        IsEdgeOfDiagram and IsEdgeOfDiagramRep ), e);
-           SetParametersEdge(e, parameters[1]);
-           if not HasOrderVertex( vertices[x!.edge[1]] ) then
-              SetOrderVertex( vertices[x!.edge[1]], parameters[2][1] );
-              SetNrElementsVertex( vertices[x!.edge[1]], IndexNC(cg!.group, parabolics[x!.edge[1]]) );
-              SetStabiliserVertex( vertices[x!.edge[1]], parabolics[x!.edge[1]] );
-           fi;
-           if not HasOrderVertex( vertices[x!.edge[2]] ) then
-              SetOrderVertex( vertices[x!.edge[2]], parameters[3][1] );
-              SetNrElementsVertex( vertices[x!.edge[2]], IndexNC(cg!.group, parabolics[x!.edge[2]]) );
-              SetStabiliserVertex( vertices[x!.edge[2]], parabolics[x!.edge[2]] );
-           fi;
-
-           # SetResidueLabelForEdge( e, "P");
-           Add( edges, e );
-        fi;
-    od;
-	diagram := rec( vertices := vertices, edges := edges );;
-    Objectify( NewType( DiagramFamily, IsDiagram and IsDiagramRep ), diagram);
-    SetGeometryOfDiagram( diagram, cg );
-    return diagram;
-  end );
-
-InstallGlobalFunction( DrawDiagram, 
-  function( arg )
-    local diagram, filename, vertices, edges, longstring, v, e, vertexverbosity, edgeverbosity, arglen;
-   
-    vertexverbosity:=0; #default orders and nr of elements
-    edgeverbosity:=1;   #default shorthand for generalized n-gons
-    arglen:=Length(arg);
-#Checking arguments
-    if not(arglen in [2,3,4]) then
-      Error("Usage DrawDiagram: must have at least 2 and at most 4 arguments.\n");
-    elif not(IsDiagram(arg[1]) and IsString(arg[2])) then
-      Error("Usage DrawDiagram: first argument must be a diagram, second argument must be a filename string.\n");
-    fi;
-    diagram:=arg[1];
-    filename:=arg[2];
-    vertices := diagram!.vertices;
-    edges := diagram!.edges;  
-    if arglen > 2 then
-      if IsInt(arg[3]) then
-        vertexverbosity:=arg[3];
-      else
-        Error("Usage DrawDiagram: third argument mus be a vertex verbosity positive integer.\n");
-      fi;
-      if arglen = 4 and IsInt(arg[4]) then
-        edgeverbosity:=arg[4];
-      else
-        Error("Usage DrawDiagram: fourth argument mus be an edge verbosity positive integer.\n");
-      fi;
-    fi;
-    longstring := "digraph DIAGRAM{\n rankdir = LR;\n";
-    for v in vertices do
-      longstring:=Concatenation(longstring, "subgraph cluster", String(v!.type), " {\n");
-      longstring:=Concatenation(longstring, "color=transparent\n");    
-      longstring:=Concatenation(longstring, "node [shape=circle, width=0.1]; ", String(v!.type), " [label=\"\"];\n");    
-      longstring:=Concatenation(longstring, "labelloc=b\n");    
-      if vertexverbosity =2 then
-        longstring:=Concatenation(longstring, "label=\"", "\";\n}\n"); 
-      elif vertexverbosity =1 then
-        longstring:=Concatenation(longstring, "label=\"", String(OrderVertex(v)),
-                   "\";\n}\n"); 
-      else
-        longstring:=Concatenation(longstring, "label=\"", String(OrderVertex(v)), "\\n", String(NrElementsVertex(v)),
-                   "\";\n}\n"); 
-      fi;
-    od;
-
-    for e in edges do
-      longstring:=Concatenation(longstring, String(e!.edge[1]), " -> ", String(e!.edge[2]));
-      if edgeverbosity = 2 then
-        longstring:=Concatenation(longstring, " [label = \"", "\", arrowhead = none ];\n");
-      elif edgeverbosity = 1 and Size(Set(ParametersEdge(e)))= 1 then
-        longstring:=Concatenation(longstring, " [label = \"", String(ParametersEdge(e)[1]), "\", arrowhead = none ];\n");
-      else
-        longstring:=Concatenation(longstring, " [label = \"", String(ParametersEdge(e)[2]), " ", 
-                  String(ParametersEdge(e)[1]), " ", 
-                  String(ParametersEdge(e)[3]), "\", arrowhead = none ];\n");
-      fi;
-    od;    
-
-    longstring:=Concatenation(longstring, "}\n");    
-    PrintTo( Concatenation(filename, ".dot") , longstring );
-    Exec( Concatenation("dot -Tps ", filename, ".dot -o ", filename, ".ps") );
-    return;
-  end );
-
-
-InstallGlobalFunction( Drawing_Diagram,
-  function( verts, edges, way )
-    local mat, v, e, v1, v2, c1, c2, posvertices,
-          breadth, height, edges2, label, unit;
-
-    ## The unit we use for the character size of an edge
-    unit := 3;
-
-    ## First find dimensions of diagram
-
-    breadth := Maximum( List(way, t->t[2]) );
-    height := Maximum( List(way, t->t[1]) );
-    edges2 := List(edges, t -> [Position(verts, t!.edge[1]), Position(verts, t!.edge[2]), t] );;
-
-    # We now work out where to put the lines,
-    # and what type of lines they are  
-    # 1: ---
-    # 2: |
-    # 3: /
-    # 4: \
-
-    mat := NullMat( (unit + 1)*(height - 1) + 1, (unit + 1) * (breadth - 1) + 1, Integers);
-
-    ## put vertices in (-1)
-    posvertices := List( way, v -> 
-           [ (unit + 1) * (v[1] - 1) + 1, (unit + 1) *(v[2] - 1) + 1] );
-
-    for v in posvertices do
-      mat[v[1]][v[2]] := -1;
-    od;
-
-    ## put lines in
-
-    for e in edges2 do
-        v1 := posvertices[ e[1] ];
-        v2 := posvertices[ e[2] ];
-
-        ## start at middle of edge
-
-        c1 := (v1[1]+v2[1])/2;
-        c2 := (v1[2]+v2[2])/2;
-        if HasResidueLabelForEdge( e[3] ) then
-           label := ResidueLabelForEdge( e[3] );
-           if label = "GQ" then
-              if v1[1] = v2[1] then 
-                 mat[c1]{[c2-1,c2,c2+1]} := [ "=", "=", "="];
-              elif v1[2] = v2[2] then
-                 mat{[c1-1,c1,c1+1]}[c2] := ["||", "||", "||"];
-              elif (v1[1] - v2[1]) * (v1[2]-v2[2]) < 0  then
-                 mat[c1+1][c2-1] := "//";
-                 mat[c1][c2] := "//";
-                 mat[c1-1][c2+1] := "//";
-              else
-                 mat[c1-1][c2+1] := "\\\\";
-                 mat[c1][c2] := "\\\\";
-                 mat[c1+1][c2-1] := "\\\\";
-              fi;
-
-           elif label = "P" or label = "-" then
-              if v1[1] = v2[1] then 
-                 mat[c1]{[c2-1,c2,c2+1]} := [ "-", "-", "-"];
-              elif v1[2] = v2[2] then
-                 mat{[c1-1,c1,c1+1]}[c2] := ["|", "|", "|"];
-              elif (v1[1] - v2[1]) * (v1[2]-v2[2]) < 0  then
-                 mat[c1+1][c2-1] := "/";
-                 mat[c1][c2] := "/";
-                 mat[c1-1][c2+1] := "/";
-              else
-                 mat[c1-1][c2-1] := "\\";
-                 mat[c1][c2] := "\\";
-                 mat[c1+1][c2+1] := "\\";
-              fi;
-
-           else  
-              if v1[1] = v2[1] then 
-                mat[c1]{[c2-1,c2,c2+1]} := ["-", label, "-"];
-              elif v1[2] = v2[2] then
-                mat{[c1-1,c1,c1+1]}[c2] := ["|", label, "|"];
-              elif (v1[1] - v2[1]) * (v1[2]-v2[2]) < 0  then
-                mat[c1+1][c2-1] := "/";
-                mat[c1][c2] := label;
-                mat[c1-1][c2+1] := "/";
-              else
-                mat[c1-1][c2+1] := "\\";
-                mat[c1][c2] := label;
-                mat[c1+1][c2-1] := "\\";
-              fi;
-           fi;
-        else
-           if v1[1] = v2[1] then 
-              mat[c1]{[c2-1,c2,c2+1]} := [1,1,1]; 
-           elif v1[2] = v2[2] then
-              mat[c1][c2] := 2;
-           elif (v1[1] - v2[1]) * (v1[2]-v2[2]) < 0  then
-              mat[c1][c2] := 3;
-           else
-              mat[c1][c2] := 4;
-           fi;
-        fi;
-    od;
-    return mat;
-  end ); 
-
-
-InstallMethod( Display, [ IsDiagram and IsDiagramRep ],
-  function( diag )
-    local way, verts, edges, breadth, height, i, j, mat;
-    way := diag!.drawing;
-    verts := diag!.vertices;
-    edges := diag!.edges;
-    mat := Drawing_Diagram( verts, edges, way ); 
-
-    for i in [1..Size(mat)] do
-      for j in [1..Size(mat[1])] do 
-          if mat[i][j] = 0 then Print(" ");
-            # if IsOddInt(j) then Print( " " );
-            # else Print( "  " );
-            # fi;
-          elif mat[i][j] = -1 then
-             Print( "o" );
-          elif mat[i][j] = 1 then
-             Print( "-" );
-          elif mat[i][j] = 2 then
-             Print( "|" );
-          elif mat[i][j] = 3 then
-             Print( " /" );
-          elif mat[i][j] = 4 then
-             Print( " \\" );
-          else 
-             Print( mat[i][j] );
-          fi;
-      od;
-      Print("\n");
-  od;
-  return; 
-  end );
-
-
-InstallMethod( ViewObj, [ IsVertexOfDiagram and IsVertexOfDiagramRep ],
-  function( v )
-    Print("Vertex(",v!.type,")");
-  end );
-
-InstallMethod( PrintObj, [ IsVertexOfDiagram and IsVertexOfDiagramRep ],
-  function( v )
-    Print("Vertex(",v!.type,")");
-  end );
-
-InstallMethod( ViewObj, [ IsEdgeOfDiagram and IsEdgeOfDiagramRep ],
-  function( e )
-    Print("Edge(",e!.edge,")");
-  end );
-
-InstallMethod( PrintObj, [ IsEdgeOfDiagram and IsEdgeOfDiagramRep ],
-  function( e )
-    Print("Edge(",e!.edge,")");
-  end );
-
-InstallMethod( ViewObj, [ IsRank2Residue and IsRank2ResidueRep ],
-  function( e )
-    Print("Rank2Residue(",e!.edge,") of ", e!.geo);
-  end );
-
-InstallMethod( PrintObj, [ IsRank2Residue and IsRank2ResidueRep  ],
-  function( e )
-    Print("Rank2Residue(",e!.edge,") of ", e!.geo);
-  end );
 
 
 
@@ -364,9 +63,10 @@ InstallMethod( CosetGeometry, [ IsGroup , IsHomogeneousList ],
     geo := rec( group := g, parabolics := l );
     ty := NewType( GeometriesFamily, IsCosetGeometry and IsCosetGeometryRep );
     ObjectifyWithAttributes( geo, ty,
-           AmbientSpace, geo,
+           AmbientGeometry, geo,
            TypesOfElementsOfIncidenceStructure, [1..Size(l)],
            RepresentativesOfElements, l );
+    ## To speed up IncidenceGraph (and hence also DiagramOfGeometry)
     if HasIsHandledByNiceMonomorphism(g) and IsHandledByNiceMonomorphism(g) and DESARGUES.Fast then
        SetIsHandledByNiceMonomorphism(geo, true);
     fi;
@@ -403,13 +103,19 @@ InstallMethod( MakeRank2Residue, [ IsRank2Residue ],
       fi;
 end );
 
+####################################################
+## Natural action on coset geometry element
+##
+####################################################
+
 InstallGlobalFunction( OnCosetGeometryElement,
   function( c, t )
     return Wrap(c!.geo, c!.type, OnRight(c!.obj, t));
-  end ); 
+end ); 
 
 InstallMethod( ElementsOfIncidenceStructure, [IsCosetGeometry, IsPosInt],
   function( cg, j )
+
     local vars;
     vars := rec( geometry := cg, type := j );
     Objectify(
@@ -418,29 +124,32 @@ InstallMethod( ElementsOfIncidenceStructure, [IsCosetGeometry, IsPosInt],
                                 IsAllElementsOfCosetGeometryRep),
         vars );
     return vars;
-  end );
+end );
 
 InstallMethod(Size, [IsAllElementsOfCosetGeometry],
   function( vs )
+
     local cg;
     cg := vs!.geometry;
-    return Index(cg!.group, cg!.parabolics[vs!.type]);
+    return IndexNC(cg!.group, cg!.parabolics[vs!.type]);
   end );
 
 InstallMethod( Wrap, "for a coset geometry and an object (coset)",
   [IsCosetGeometry, IsPosInt, IsObject],
   function( geo, type, o )
+
     local w;
     w := rec( geo := geo, type := type, obj := o );
     Objectify( NewType( ElementsOfIncidenceStructureFamily,
       IsElementOfCosetGeometryRep and IsElementOfCosetGeometry ), w );
     return w;
-  end );
+end );
 
 
 InstallMethod(Iterator, "for elements of a coset geometry",
         [IsAllElementsOfCosetGeometry],
   function( vs )
+
     local cg, j, g, h, iter, newiter;
     cg := vs!.geometry;
     j := vs!.type;
@@ -462,15 +171,16 @@ InstallMethod(Iterator, "for elements of a coset geometry",
             end,
             S := iter ));
     return newiter;
-  end );
+end );
 
 InstallMethod( IsIncident, "for elements of a coset geometry", 
               [IsElementOfCosetGeometry, IsElementOfCosetGeometry],
   function( x, y )
+
     local vx, vy, tx, ty, g, h, k;
     vx := x!.obj; vy := y!.obj;
     tx := x!.type; ty := y!.type;
-    if tx = ty then 
+    if (tx = ty) and not(vx = vy) then 
        return false;
     fi;
     ## Let Ha and Kb be two right cosets, and let g=ab^-1.
@@ -480,7 +190,13 @@ InstallMethod( IsIncident, "for elements of a coset geometry",
     h := ActingDomain(vx);
     k := ActingDomain(vy);
     return g in DoubleCoset(h, One(h), k);
-  end );
+end );
+
+###################################################
+## Extract components from Coset geometry object
+##
+##
+###################################################
 
 InstallMethod( ParabolicSubgroups, "for coset geometries",
                [ IsCosetGeometry ],  cg -> cg!.parabolics );
@@ -490,6 +206,12 @@ InstallMethod( AmbientGroup, "for coset geometries",
 
 InstallMethod( BorelSubgroup, "for coset geometries",
                [ IsCosetGeometry ],  cg -> Intersection(cg!.parabolics) );
+
+##############################################################
+## Investigate some properties for Coset geometries
+##
+##
+##############################################################
 
 InstallMethod( IsFlagTransitiveGeometry, "for coset geometries",
                [ IsCosetGeometry ],
@@ -543,11 +265,12 @@ InstallMethod( IsFlagTransitiveGeometry, "for coset geometries",
     od;
 
     return true;
-  end );
+end );
 
 InstallMethod( IsFirmGeometry, "for coset geometries",
                [ IsCosetGeometry ],
   function( cg )
+
     local parabolics, pis, without_i, int, borel, i;
     parabolics := ParabolicSubgroups( cg );
     pis := [];
@@ -572,7 +295,7 @@ InstallMethod( IsFirmGeometry, "for coset geometries",
        return not ForAny([1..Size(parabolics)], i -> 
               IsSubset(parabolics[i], pis[i]) );
     fi;
-  end );
+end );
 
 InstallMethod( IsConnected, "for coset geometries",
                [ IsCosetGeometry ],
@@ -585,9 +308,9 @@ InstallMethod( IsConnected, "for coset geometries",
     parabolics := ParabolicSubgroups( cg );
     gens := Union( List(parabolics, GeneratorsOfGroup) );
     return Group( gens ) = g;
-  end );
+end );
 
-
+#############!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 InstallMethod( IsResiduallyConnected, "for coset geometries",
                [ IsCosetGeometry ],
   function( cg )
@@ -595,9 +318,10 @@ InstallMethod( IsResiduallyConnected, "for coset geometries",
     ## if for every subset J of the types I with |I-J|>1, we have
     ## \cap{Hj: j in J} = < \cap{Hi: i in J-{j}} : j in I-J >
 
-    # to be completed
+    # to be completed!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     return true;
-  end );
+end );
+###############!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 InstallMethod( StandardFlagOfCosetGeometry, "for coset geometries",
 	       [ IsCosetGeometry ],
@@ -731,7 +455,8 @@ InstallMethod( IncidenceGraph, [ IsCosetGeometry and IsHandledByNiceMonomorphism
   ## This operation returns the multiparitite incidence graph
   ## associated to "geo", and it also sets a mutable attribute
   ## IncidenceGraphAttr which can be called hence.  
-  
+  ## Here we have a speedup from the NiceMonomorphism
+
     local fastgeo, gamma;
 
     if not "grape" in RecNames(GAPInfo.PackagesLoaded) then
@@ -755,6 +480,7 @@ InstallMethod( IncidenceGraph, [ IsCosetGeometry ],
   ## This operation returns the multiparitite incidence graph
   ## associated to "geo", and it also sets a mutable attribute
   ## IncidenceGraphAttr which can be called hence.  
+  ## Slower version
   
     local g, vars, gamma, allvars, reps;
 
@@ -792,7 +518,6 @@ InstallMethod( ViewObj, [ IsDiagram and IsDiagramRep and HasGeometryOfDiagram],
     Print("< Diagram of ", geo ," >");
   end );
 
-
 InstallMethod( ViewObj, [ IsCosetGeometry and IsCosetGeometryRep ],
   function( geo )
     Print("CosetGeometry( ", geo!.group, " )");
@@ -829,9 +554,324 @@ InstallMethod( PrintObj, [ IsElementOfCosetGeometry ],
     Print(v!.obj);
   end );
 
+InstallMethod( ViewObj, [ IsVertexOfDiagram and IsVertexOfDiagramRep ],
+  function( v )
+    Print("Diagram vertex(",v!.type,")");
+  end );
+
+InstallMethod( PrintObj, [ IsVertexOfDiagram and IsVertexOfDiagramRep ],
+  function( v )
+    Print("Vertex(",v!.type,")");
+  end );
+
+InstallMethod( ViewObj, [ IsEdgeOfDiagram and IsEdgeOfDiagramRep ],
+  function( e )
+    Print("Diagram edge(",e!.edge,")");
+  end );
+
+InstallMethod( PrintObj, [ IsEdgeOfDiagram and IsEdgeOfDiagramRep ],
+  function( e )
+    Print("Edge(",e!.edge,")");
+  end );
+
+InstallMethod( ViewObj, [ IsRank2Residue and IsRank2ResidueRep ],
+  function( e )
+    Print("Rank 2 residue of type ",e!.edge," of ", e!.geo);
+  end );
+
+InstallMethod( PrintObj, [ IsRank2Residue and IsRank2ResidueRep  ],
+  function( e )
+    Print("Rank2Residue(",e!.edge,") of ", e!.geo);
+  end );
+
 #############################################################################
 # Methods for diagrams of geometries.
 #############################################################################
+
+InstallMethod( \=, [ IsVertexOfDiagram and IsVertexOfDiagramRep, 
+                     IsVertexOfDiagram and IsVertexOfDiagramRep ],
+  function( u, v )
+    return u!.type = v!.type;
+  end );
+
+InstallMethod( \=, [ IsEdgeOfDiagram and IsEdgeOfDiagramRep, 
+                     IsEdgeOfDiagram and IsEdgeOfDiagramRep ],
+  function( u, v )
+    return u!.edge = v!.edge;
+  end );
+
+InstallMethod( DiagramOfGeometry, [IsCosetGeometry],
+  function( cg )
+    local rank2residues, vertices, types, x, v, edges, parameters, e, diagram, parabolics;
+    rank2residues := Rank2Residues( cg );
+    Perform(rank2residues, MakeRank2Residue);
+
+    parabolics := cg!.parabolics;
+	vertices := [];
+    types := TypesOfElementsOfIncidenceStructure( cg );
+
+  ## Wrapping up... 
+    for x in types do
+      v := rec( type := x );
+      Objectify( NewType( VertexOfDiagramFamily, IsVertexOfDiagram and
+                      IsVertexOfDiagramRep ), v);
+      Add( vertices, v );
+    od;
+
+    edges := [];
+
+  ## Wrapping up...
+    for x in rank2residues do
+        parameters := Rank2Parameters( x!.residuegeometry );
+        if not parameters[1] = [2,2,2] then
+           e := rec( edge := x!.edge );
+           Objectify( NewType( EdgeOfDiagramFamily, 
+                        IsEdgeOfDiagram and IsEdgeOfDiagramRep ), e);
+           SetParametersEdge(e, parameters[1]);
+           if not HasOrderVertex( vertices[x!.edge[1]] ) then
+              SetOrderVertex( vertices[x!.edge[1]], parameters[2][1] );
+              SetNrElementsVertex( vertices[x!.edge[1]], IndexNC(cg!.group, parabolics[x!.edge[1]]) );
+              SetStabiliserVertex( vertices[x!.edge[1]], parabolics[x!.edge[1]] );
+           fi;
+           if not HasOrderVertex( vertices[x!.edge[2]] ) then
+              SetOrderVertex( vertices[x!.edge[2]], parameters[3][1] );
+              SetNrElementsVertex( vertices[x!.edge[2]], IndexNC(cg!.group, parabolics[x!.edge[2]]) );
+              SetStabiliserVertex( vertices[x!.edge[2]], parabolics[x!.edge[2]] );
+           fi;
+           Add( edges, e );
+        fi;
+    od;
+
+	diagram := rec( vertices := vertices, edges := edges );;
+    Objectify( NewType( DiagramFamily, IsDiagram and IsDiagramRep ), diagram);
+
+    SetGeometryOfDiagram( diagram, cg );
+    return diagram;
+  end );
+
+InstallGlobalFunction( DrawDiagram, 
+  function( arg )
+    local diagram, filename, vertices, edges, longstring, v, e, vertexverbosity, edgeverbosity, arglen;
+   
+    vertexverbosity:=0; #default orders and nr of elements
+    edgeverbosity:=1;   #default shorthand for generalized n-gons
+    arglen:=Length(arg);
+    ############################# Checking arguments and initializing
+    if not(arglen in [2,3,4]) then
+      Error("usage DrawDiagram: must have at least 2 and at most 4 arguments.\n");
+    elif not(IsDiagram(arg[1]) and IsString(arg[2])) then
+      Error("usage DrawDiagram: first argument must be a diagram, second argument must be a filename string.\n");
+    fi;
+
+    diagram:=arg[1];
+    filename:=arg[2];
+    vertices := diagram!.vertices;
+    edges := diagram!.edges;  
+
+    if arglen > 2 then
+      if IsPosInt(arg[3]) or IsZero(arg[3]) then
+        vertexverbosity:=arg[3];
+      else
+        Error("usage DrawDiagram: third argument must be a vertex verbosity natural number.\n");
+      fi;
+      if arglen = 4 and (IsPosInt(arg[4]) or IsZero(arg[4])) then
+        edgeverbosity:=arg[4];
+      else
+        Error("Usage DrawDiagram: fourth argument must be an edge verbosity natural number.\n");
+      fi;
+    fi;
+    ##################Done checking!
+    longstring := "digraph DIAGRAM{\n rankdir = LR;\n";
+    for v in vertices do
+      longstring:=Concatenation(longstring, "subgraph cluster", String(v!.type), " {\n");
+      longstring:=Concatenation(longstring, "color=transparent\n");    
+      longstring:=Concatenation(longstring, "node [shape=circle, width=0.1]; ", String(v!.type), " [label=\"\"];\n");    
+      longstring:=Concatenation(longstring, "labelloc=b\n");    
+      if vertexverbosity =2 then
+        longstring:=Concatenation(longstring, "label=\"", "\";\n}\n"); 
+      elif vertexverbosity =1 then
+        longstring:=Concatenation(longstring, "label=\"", String(OrderVertex(v)),
+                   "\";\n}\n"); 
+      else
+        longstring:=Concatenation(longstring, "label=\"", String(OrderVertex(v)), "\\n", String(NrElementsVertex(v)),
+                   "\";\n}\n"); 
+      fi;
+    od;
+
+    for e in edges do
+      longstring:=Concatenation(longstring, String(e!.edge[1]), " -> ", String(e!.edge[2]));
+      if edgeverbosity = 2 then
+        longstring:=Concatenation(longstring, " [label = \"", "\", arrowhead = none ];\n");
+      elif edgeverbosity = 1 and Size(Set(ParametersEdge(e)))= 1 then
+        longstring:=Concatenation(longstring, " [label = \"", String(ParametersEdge(e)[1]), "\", arrowhead = none ];\n");
+      else
+        longstring:=Concatenation(longstring, " [label = \"", String(ParametersEdge(e)[2]), " ", 
+                  String(ParametersEdge(e)[1]), " ", 
+                  String(ParametersEdge(e)[3]), "\", arrowhead = none ];\n");
+      fi;
+    od;    
+
+    longstring:=Concatenation(longstring, "}\n");    
+    PrintTo( Concatenation(filename, ".dot") , longstring );
+    Exec( Concatenation("dot -Tps ", filename, ".dot -o ", filename, ".ps") );
+    return;
+  end );
+
+####################################
+## Draw diagram using ASCII characters, mainly for Display
+##
+##
+###################################
+
+InstallGlobalFunction( Drawing_Diagram,
+  function( verts, edges, way )
+    local mat, v, e, v1, v2, c1, c2, posvertices,
+          breadth, height, edges2, label, unit;
+
+    ## The unit we use for the character size of an edge
+    unit := 3;
+
+    ## First find dimensions of diagram
+
+    breadth := Maximum( List(way, t->t[2]) );
+    height := Maximum( List(way, t->t[1]) );
+    edges2 := List(edges, t -> [Position(verts, t!.edge[1]), Position(verts, t!.edge[2]), t] );;
+
+    # We now work out where to put the lines,
+    # and what type of lines they are  
+    # 1: ---
+    # 2: |
+    # 3: /
+    # 4: \
+
+    mat := NullMat( (unit + 1)*(height - 1) + 1, (unit + 1) * (breadth - 1) + 1, Integers);
+
+    ## put vertices in (-1)
+    posvertices := List( way, v -> 
+           [ (unit + 1) * (v[1] - 1) + 1, (unit + 1) *(v[2] - 1) + 1] );
+
+    for v in posvertices do
+      mat[v[1]][v[2]] := -1;
+    od;
+
+    ## put lines in
+
+    for e in edges2 do
+        v1 := posvertices[ e[1] ];
+        v2 := posvertices[ e[2] ];
+
+        ## start at middle of edge
+
+        c1 := (v1[1]+v2[1])/2;
+        c2 := (v1[2]+v2[2])/2;
+        if HasResidueLabelForEdge( e[3] ) then
+           label := ResidueLabelForEdge( e[3] );
+           if label = "4" then
+              if v1[1] = v2[1] then 
+                 mat[c1]{[c2-1,c2,c2+1]} := [ "=", "=", "="];
+              elif v1[2] = v2[2] then
+                 mat{[c1-1,c1,c1+1]}[c2] := ["||", "||", "||"];
+              elif (v1[1] - v2[1]) * (v1[2]-v2[2]) < 0  then
+                 mat[c1+1][c2-1] := "//";
+                 mat[c1][c2] := "//";
+                 mat[c1-1][c2+1] := "//";
+              else
+                 mat[c1-1][c2+1] := "\\\\";
+                 mat[c1][c2] := "\\\\";
+                 mat[c1+1][c2-1] := "\\\\";
+              fi;
+
+           elif label = "3" or label = "-" then
+              if v1[1] = v2[1] then 
+                 mat[c1]{[c2-1,c2,c2+1]} := [ "-", "-", "-"];
+              elif v1[2] = v2[2] then
+                 mat{[c1-1,c1,c1+1]}[c2] := ["|", "|", "|"];
+              elif (v1[1] - v2[1]) * (v1[2]-v2[2]) < 0  then
+                 mat[c1+1][c2-1] := "/";
+                 mat[c1][c2] := "/";
+                 mat[c1-1][c2+1] := "/";
+              else
+                 mat[c1-1][c2-1] := "\\";
+                 mat[c1][c2] := "\\";
+                 mat[c1+1][c2+1] := "\\";
+              fi;
+
+           else  
+              if v1[1] = v2[1] then 
+                mat[c1]{[c2-1,c2,c2+1]} := ["-", label, "-"];
+              elif v1[2] = v2[2] then
+                mat{[c1-1,c1,c1+1]}[c2] := ["|", label, "|"];
+              elif (v1[1] - v2[1]) * (v1[2]-v2[2]) < 0  then
+                mat[c1+1][c2-1] := "/";
+                mat[c1][c2] := label;
+                mat[c1-1][c2+1] := "/";
+              else
+                mat[c1-1][c2+1] := "\\";
+                mat[c1][c2] := label;
+                mat[c1+1][c2-1] := "\\";
+              fi;
+           fi;
+        else
+           if v1[1] = v2[1] then 
+              mat[c1]{[c2-1,c2,c2+1]} := [1,1,1]; 
+           elif v1[2] = v2[2] then
+              mat[c1][c2] := 2;
+           elif (v1[1] - v2[1]) * (v1[2]-v2[2]) < 0  then
+              mat[c1][c2] := 3;
+           else
+              mat[c1][c2] := 4;
+           fi;
+        fi;
+    od;
+    return mat;
+  end ); 
+
+#############################################
+## Display diagram using ASCII
+##
+##
+#############################################
+
+InstallMethod( Display, [ IsDiagram and IsDiagramRep ],
+  function( diag )
+    local way, verts, edges, breadth, height, i, j, mat;
+    way := diag!.drawing;
+    verts := diag!.vertices;
+    edges := diag!.edges;
+    mat := Drawing_Diagram( verts, edges, way ); 
+
+    for i in [1..Size(mat)] do
+      for j in [1..Size(mat[1])] do 
+          if mat[i][j] = 0 then Print(" ");
+            # if IsOddInt(j) then Print( " " );
+            # else Print( "  " );
+            # fi;
+          elif mat[i][j] = -1 then
+             Print( "o" );
+          elif mat[i][j] = 1 then
+             Print( "-" );
+          elif mat[i][j] = 2 then
+             Print( "|" );
+          elif mat[i][j] = 3 then
+             Print( " /" );
+          elif mat[i][j] = 4 then
+             Print( " \\" );
+          else 
+             Print( mat[i][j] );
+          fi;
+      od;
+      Print("\n");
+  od;
+  return; 
+  end );
+
+####################################################
+## Viewing and printing
+##
+##
+####################################################
+
+
 
 InstallMethod( DiagramOfGeometry, [ IsProjectiveSpace ],
   function( geo )
@@ -858,7 +898,7 @@ InstallMethod( DiagramOfGeometry, [ IsProjectiveSpace ],
       e := rec( edge := x );
       Objectify( NewType( EdgeOfDiagramFamily, 
                       IsEdgeOfDiagram and IsEdgeOfDiagramRep ), e);
-      SetResidueLabelForEdge( e, "P");
+      SetResidueLabelForEdge( e, "3");
       Add( newedges, e );
     od;
 
@@ -919,6 +959,10 @@ end );
 
 #############################################################################
 # Methods for LT for elements of coset geometries.
+# Are needed when you make incidence graph since GRAPE wants to 
+# order the elements.
+#
+# CHECKED PhC 110414
 #############################################################################
 
 InstallOtherMethod( \<,

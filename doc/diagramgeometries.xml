@@ -22,9 +22,29 @@ This is the chapter of the documentation describing the projective groups.
 -->
 
 <Chapter Label="diagramgeometries">
-<Heading>Diagram Geometries</Heading>
+<Heading>Coset Geometries and Diagrams</Heading>
 <Section>
-<Heading>Very preliminary version of the manual</Heading>
+<Heading>Preliminary version of the manual</Heading>
+
+Suppose we have a flag-transitive incidence
+geometry <M>\Gamma</M>. This means that a group <M>G</M> of
+automorphisms of <M>\Gamma</M> is also given such that <M>G</M> is
+transitive on the set of chambers of <M>\Gamma</M>. This implies
+that <M>G</M> is also transitive on the set of all elements of any
+chosen type <M>i</M>. If we consider a chamber <M>c<sub>1</sub>,c<sub>2</sub>,... ,c<sub>n</sub></M>
+such that <M>c<sub>i</sub></M> is of type <M>i</M>, we can look at the
+stabilizer <M>G<sub>i</sub></M> of <M>c<sub>i</sub></M>. The
+subgroups <M>G<sub>i</sub></A> are 
+called <E>parabolic subgroups</E> of <M>\Gamma</M>. For a
+type <M>i</M>, transitivity of <M>G</M> on the elements of
+type <M>i</M> gives a correspondence between the cosets of the
+stabilizer <M>G<sub>i</sub></M> and the elements of type <M>i</M>
+in <M>\Gamma</M>. Two elements of <M>\Gamma</M> are incident if and only
+if the corresponding cosets have a nonempty intersection.
+
+We now use the above oservation to define an incidence structure from
+a group <M>G</M> together with a set of subgroups <M>G<sub>1</sub>,G<sub>2</sub>,... ,G<sub>n</sub></A>.
+
 <ManSection>
 <Oper Name="DiagramOfGeometry" Arg="Gamma"/>
 <Returns>The diagram of the geometry <A>Gamma</A></Returns>

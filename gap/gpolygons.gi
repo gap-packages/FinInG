@@ -1148,7 +1148,7 @@ InstallMethod( DiagramOfGeometry, [ IsGeneralisedQuadrangle ],
     e := rec( edge := [v1,v2] );
     Objectify( NewType( EdgeOfDiagramFamily, 
                       IsEdgeOfDiagram and IsEdgeOfDiagramRep ), e);
-    SetResidueLabelForEdge( e, "GQ");
+    SetResidueLabelForEdge( e, "4");
     way := [[1,1], [1,2]];
     diagram := rec( vertices := [v1, v2], edges := [e], drawing := way );;
     Objectify( NewType( DiagramFamily, IsDiagram and IsDiagramRep ), diagram);

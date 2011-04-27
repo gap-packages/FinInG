@@ -255,9 +255,9 @@ InstallMethod( DiagramOfGeometry, [ IsClassicalPolarSpace ],
       Objectify( NewType( EdgeOfDiagramFamily, 
                       IsEdgeOfDiagram and IsEdgeOfDiagramRep ), e);
       if x < Size(edges) then
-          SetResidueLabelForEdge( e, "P");
+          SetResidueLabelForEdge( e, "3");
       else
-          SetResidueLabelForEdge( e, "GQ");
+          SetResidueLabelForEdge( e, "4");
       fi;
       Add( newedges, e );
     od;
