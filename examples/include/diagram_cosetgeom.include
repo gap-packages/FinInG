@@ -1,0 +1,10 @@
+gap&gt; LogTo("diagram_cosetgeom.include");
+#I  Already logging to ./examples/output/diagram_cosetgeom.out
+gap&gt; g:=SymmetricGroup(5);
+Sym( [ 1 .. 5 ] )
+gap&gt; g1:=Stabilizer(g,[1,2],OnSets);
+Group([ (4,5), (3,5), (1,2)(4,5) ])
+gap&gt; g2:=Stabilizer(g,[1,2,3],OnSets);
+Group([ (4,5), (2,3), (1,2,3) ])
+gap&gt; cg:=CosetGeometry(g,[g1,g2]);
+CosetGeometry( SymmetricGroup( [ 1 .. 5 ] ) )

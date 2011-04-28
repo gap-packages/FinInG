@@ -57,6 +57,9 @@ empty.
 <A>G</A> must be a group and <A>l</A> is a list of subgroups
 of <A>G</A>. The subgroups in <A>l</A> will be the <E>parabolic subgroups</E>
 of the <E>coset geometry</E> whose rank equals the length of <A>l</A>.
+<Example>
+<#Include SYSTEM "../examples/include/diagram_cosetgeom.include"> 
+</Example>
 </Description>
 </ManSection>
 
