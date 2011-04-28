@@ -1,5 +1,3 @@
-gap&gt; LogTo("diagram_cosetgeom.include");
-#I  Already logging to ./examples/output/diagram_cosetgeom.out
 gap&gt; g:=SymmetricGroup(5);
 Sym( [ 1 .. 5 ] )
 gap&gt; g1:=Stabilizer(g,[1,2],OnSets);

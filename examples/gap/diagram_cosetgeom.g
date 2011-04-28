@@ -1,5 +1,4 @@
 #Coset geometry
-LogTo("diagram_cosetgeom.include");
 g:=SymmetricGroup(5);
 g1:=Stabilizer(g,[1,2],OnSets);
 g2:=Stabilizer(g,[1,2,3],OnSets);
