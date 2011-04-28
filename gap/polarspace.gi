@@ -167,6 +167,12 @@ InstallMethod( PolarSpace, [ IsHermitianForm ],
 # methods for some attributes.
 #############################################################################
 
+InstallMethod( UnderlyingVectorSpace, "for a polar space",
+   [IsClassicalPolarSpace and IsClassicalPolarSpaceRep],
+   function(ps)
+   return ShallowCopy(ps!.vectorspace);
+end);
+
 InstallOtherMethod( Dimension, [ IsClassicalPolarSpace ],
   function(ps)
     return Dimension(AmbientSpace(ps));

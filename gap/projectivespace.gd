@@ -81,9 +81,6 @@ DeclareAttribute( "EquationOfHyperplane", IsSubspaceOfProjectiveSpace );
 DeclareAttribute( "StandardFrame", IsProjectiveSpace );
 DeclareAttribute( "StandardFrame", IsSubspaceOfProjectiveSpace );
 
-DeclareOperation( "UnderlyingVectorSpace", [IsProjectiveSpace] );
-DeclareOperation( "UnderlyingVectorSpace", [IsSubspaceOfProjectiveSpace] );
-
 DeclareOperation( "IsIncident", [IsSubspaceOfProjectiveSpace, IsProjectiveSpace] );
 DeclareOperation( "IsIncident", [IsProjectiveSpace, IsSubspaceOfProjectiveSpace] );
 #DeclareOperation( "IsIncident", [IsEmptySubspace, IsSubspaceOfProjectiveSpace]);

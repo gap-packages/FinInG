@@ -2,6 +2,8 @@ DeclareCategory( "IsEmptySubspace", IsAttributeStoringRep );
 DeclareRepresentation( "IsEmptySubspaceRep", IsEmptySubspace, ["geo", "obj"] );
 
 DeclareOperation( "EmptySubspace", [IsProjectiveSpace] );
+DeclareOperation( "EmptySubspace", [IsClassicalPolarSpace] );
+
 #DeclareOperation( "EmptySubspace", [IsSubspaceOfProjectiveSpace] );
 
 

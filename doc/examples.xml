@@ -41,17 +41,6 @@ Now we may assume that our hyperoval contains the fundamental frame.
 <#Include SYSTEM "../examples/include/web_hyperoval24.include"> 
 </Example>
 
-
-<Example>
-gap> frame := [[1,0,0],[0,1,0],[0,0,1],[1,1,1]] * Z(2)^0;
-[ [ Z(2)^0, 0*Z(2), 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2) ], [ 0*Z(2), 0*Z(2), Z(2)^0 ],
-  [ Z(2)^0, Z(2)^0, Z(2)^0 ] ]
-gap> ## We now convert these points to projective points
-gap> frame := List(frame, x -> VectorSpaceToElement(pg, x) );
-[ &lt;a point in PG(2, 4)&gt;, &lt;a point in PG(2, 4)&gt;, &lt;a point in PG(2, 4)&gt;, 
-  &lt;a point in PG(2, 4)&gt; ]
-</Example>
-
 There are six secant lines to this frame ("four choose two"). So we 
 put together these secant lines from the pairs of points of this frame.
 

@@ -12,6 +12,21 @@ InstallMethod( EmptySubspace, "for a projective space",
     return w;
 end );
 
+InstallMethod( EmptySubspace, "for a polar space",
+ [IsClassicalPolarSpace],
+ function( pg )
+   local  vs,x,w,ty;
+	 vs:=UnderlyingVectorSpace(pg);
+     x := ShallowCopy(Zero(vs));
+	 w := rec( geo := pg, obj := x );
+	 ty:= NewType( NewFamily("EmptySubspaceFamily"), IsEmptySubspace and IsEmptySubspaceRep );
+    ObjectifyWithAttributes( w, ty, 
+						AmbientSpace, pg,
+						ProjectiveDimension, -1);
+    return w;
+end );
+
+
 # Viewmethod for the empty subspace
 
 InstallMethod( ViewObj, [IsEmptySubspace],

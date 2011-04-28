@@ -52,6 +52,10 @@ DeclareCategory( "IsFlagOfLieGeometry", IsFlagOfIncidenceGeometry );
 DeclareCategory( "IsShadowElementsOfLieGeometry", IsElementsOfIncidenceStructure );
 DeclareRepresentation( "IsShadowElementsOfLieGeometryRep", IsElementsOfIncidenceStructure, [ "geometry", "type", "inner", "outer", "factorspace" ]);
 
+DeclareOperation( "UnderlyingVectorSpace", [IsLieGeometry] );
+DeclareOperation( "UnderlyingVectorSpace", [IsElementOfLieGeometry] );
+
+
 DeclareOperation( "VectorSpaceToElement", [IsLieGeometry, IsRowVector] );
 DeclareOperation( "VectorSpaceToElement", [IsLieGeometry, Is8BitVectorRep] );
 DeclareOperation( "VectorSpaceToElement", [IsLieGeometry, IsPlistRep] );
