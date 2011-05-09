@@ -502,6 +502,12 @@ InstallMethod(Iterator,
   end);
 
 
+InstallMethod( Size,
+			"for subspaces of a projective space",
+			[IsSubspacesOfProjectiveSpace and IsSubspacesOfProjectiveSpaceRep],
+	function(subs);
+		return ShallowCopy(subs!.size);
+	end);
 
 InstallMethod( Size, [IsShadowSubspacesOfProjectiveSpace and
   IsShadowSubspacesOfProjectiveSpaceRep ],

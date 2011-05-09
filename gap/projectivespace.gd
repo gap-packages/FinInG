@@ -100,6 +100,9 @@ DeclareSynonymAttr( "SpecialProjectivityGroup", SpecialHomographyGroup );
 DeclareSynonym( "PG", ProjectiveSpace ); 
 
 DeclareOperation( "Hyperplanes", [IsProjectiveSpace] );
+
+
+DeclareAttribute( "Size", IsSubspacesOfProjectiveSpace);
   
 #############################################################################
 #

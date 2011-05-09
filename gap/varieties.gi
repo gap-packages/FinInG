@@ -287,7 +287,8 @@ end );
 InstallMethod( SegreVariety, "given a list of projective spaces", [IsHomogeneousList],
 	function(listofpgs)
 	
-	local sv, var, ty, k,F,l,i,listofdims,cart,eta,dim,d,field,r,indets,cartcart,list1,pollist,ij,ij2,s1,s2,s,polset,newpollist,f;
+	local sv, var, ty, k, F, l, i, listofdims, cart, eta, dim, d, field, r, indets, cartcart, list1, 
+										pollist, ij, ij2, s1, s2, s, polset, newpollist, f;
 
     F := listofpgs[1]!.basefield;
     listofdims := List(listofpgs, i -> ProjectiveDimension(i) + 1);
@@ -327,7 +328,8 @@ InstallMethod( SegreVariety, "given a list of projective spaces", [IsHomogeneous
 	od;
 
 	sv:=ProjectiveVariety(PG(dim-1,field),r,newpollist);
-	var:=rec( geometry:=PG(dim-1,field), polring:=r, listofpols:=newpollist, inverseimage:=listofpgs, segremap:=SegreMap(listofpgs));
+	var:=rec( geometry:=PG(dim-1,field), polring:=r, listofpols:=newpollist, 
+								inverseimage:=listofpgs, segremap:=SegreMap(listofpgs));
 	ty:=NewType( NewFamily("SegreVarietiesFamily"), IsSegreVariety and 
 								IsSegreVarietyRep );
 	ObjectifyWithAttributes(var,ty,
@@ -363,6 +365,21 @@ InstallMethod( PrintObj, [ IsSegreVariety and
   end );
 
 
+InstallMethod( PointsOfSegreVariety, "for a Segre variety",
+			[IsSegreVariety],
+		# returns a list of the points of a Segre variety using the Segre map
+	function(sv)
+		local sm,cart,listofpgs,pg,pts;
+		sm:=sv!.segremap;
+		listofpgs:=sv!.inverseimage;
+		cart:=Cartesian(List(listofpgs,pg->Points(pg)));
+		pts:=List(cart,sm);
+		return pts;
+	end );
+
+# IteratorOfPointsOfSegreVariety
+# FamiliesOfMaximalSubspacesOfSegreVariety
+		
 
 ### 5. Veronese Varieties ###
 

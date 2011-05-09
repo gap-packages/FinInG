@@ -51,7 +51,8 @@ DeclareRepresentation( "IsAffineVarietyRep", IsAffineVariety, ["geometry","polri
 ### 4. Segre Varieties ###
 
 DeclareCategory("IsSegreVariety", IsProjectiveVariety );
-DeclareRepresentation("IsSegreVarietyRep", IsSegreVariety, ["geometry","listofpols","inverseimage","segremap", "polring"]);
+DeclareRepresentation("IsSegreVarietyRep", IsSegreVariety, 
+				["geometry","listofpols","inverseimage","segremap", "polring"]);
 
 
 #############################################################################
@@ -89,6 +90,9 @@ DeclareOperation( "Points", [IsAlgebraicVariety] );
 DeclareOperation( "SegreMap", [ IsHomogeneousList ] ); # list of projective spaces
 DeclareOperation( "SegreVariety", [ IsHomogeneousList ]);  
 DeclareOperation( "SegreVariety", [ IsHomogeneousList, IsField ]);  
+
+DeclareOperation("PointsOfSegreVariety", [IsSegreVariety] );
+
 
 
 ### 5. Veronese Varities ###
