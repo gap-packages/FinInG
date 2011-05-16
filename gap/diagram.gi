@@ -926,6 +926,12 @@ IsPosInt],
     return d;
    end );
 
+
+InstallMethod( GeometryOfRank2Residue, [IsRank2Residue],
+  function( residue )
+    return residue!.residuegeometry;
+  end );
+
 InstallMethod( Rank2Parameters, "for a coset geometry of rank 2", [IsCosetGeometry], 
   function(geo)
 
