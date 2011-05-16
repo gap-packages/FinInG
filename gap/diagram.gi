@@ -180,7 +180,7 @@ InstallMethod( IsIncident, "for elements of a coset geometry",
     local vx, vy, tx, ty, g, h, k;
     vx := x!.obj; vy := y!.obj;
     tx := x!.type; ty := y!.type;
-    if (tx = ty) and not(vx = vy) then 
+    if (tx = ty) then #and not(vx = vy) then 
        return false;
     fi;
     ## Let Ha and Kb be two right cosets, and let g=ab^-1.
@@ -496,7 +496,7 @@ InstallMethod( IncidenceGraph, [ IsCosetGeometry ],
 
     vars := Concatenation( List(allvars, AsList) );
     gamma := Graph( g, vars, OnCosetGeometryElement, 
-                function(x,y) return x * y; end, true);
+                function(x,y) return IsIncident(x,y); end, true);
     
     Setter( IncidenceGraphAttr )( geo, gamma );
     return gamma;
