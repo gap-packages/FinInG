@@ -11,7 +11,7 @@ q := 5;
 pg := ProjectiveSpace(3, q);
 eq := EllipticQuadric(3, q);
 eqpoints := Points( eq );
-rho := Polarity( eq );
+rho := PolarityOfProjectiveSpace( eq );
 
 ## The following is a Gram matrix for a nice symplectic space
 
@@ -19,16 +19,16 @@ mat := [[0,0,1,0], [0,0,0,1], [-1,0,0,0], [0,-1,0,0]] * Z(q)^0;
 form := BilinearFormByMatrix(mat, GF(q));
 
 w := PolarSpace( form );
-sigma := Polarity( w );
+sigma := PolarityOfProjectiveSpace( w );
 
 # Now we test whether this symplectic space is the one we want
 
-tangentlines := p -> ShadowOfFlag(pg, [p, rho(p)], 2);
-ForAll( eqpoints, p -> Number( tangentlines(p), l -> sigma(l) = l ) = 1 );
+tangentlines := p -> ShadowOfFlag(pg, [p, p^rho], 2);
+ForAll( eqpoints, p -> Number( tangentlines(p), l -> l^sigma = l ) = 1 );
 
 # If the last line returns true, then we proceed to make the 2-ovoid
 
-twoovoid := Union(AsSet(eqpoints), Set(eqpoints, x-> sigma( rho(x) )) );;
+twoovoid := Union(AsSet(eqpoints), Set(eqpoints, x-> (x^rho)^sigma ) );;
 
 # Now we test to see if this object really is a 2-ovoid
 

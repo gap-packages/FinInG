@@ -147,7 +147,7 @@ end );
 
 
 InstallMethod(Iterator, "for elements of a coset geometry",
-        [IsAllElementsOfCosetGeometry],
+        [IsElementsOfCosetGeometry],
   function( vs )
 
     local cg, j, g, h, iter, newiter;
@@ -528,16 +528,16 @@ InstallMethod( PrintObj, [ IsCosetGeometry and IsCosetGeometryRep ],
     Print("CosetGeometry( ", geo!.group, " , ", geo!.parabolics , " )");
   end );
 
-InstallMethod( ViewObj, [ IsAllElementsOfCosetGeometry and
-  IsAllElementsOfCosetGeometryRep ],
+InstallMethod( ViewObj, [ IsElementsOfCosetGeometry and
+  			IsElementsOfCosetGeometryRep ],
   function( vs )
     Print("<elements of type ", vs!.type," of ");
     ViewObj(vs!.geometry);
     Print(">");
   end );
 
-InstallMethod( PrintObj, [ IsAllElementsOfCosetGeometry and
-  IsAllElementsOfCosetGeometryRep ],
+InstallMethod( PrintObj, [ IsElementsOfCosetGeometry and
+  			IsElementsOfCosetGeometryRep ],
   function( vs )
     Print("ElementsOfIncidenceStructure( ",vs!.geometry," , ",vs!.type,")");
   end );

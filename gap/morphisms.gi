@@ -1271,18 +1271,23 @@ InstallMethod( NaturalProjectionBySubspace,
               if not v in x then
                  Error("Subspace is not incident with the subspace of projection");
               fi;
-              y := List(x!.obj,i-> Coefficients(bas,i))*basimgs;  
-              y := SemiEchelonMat(y)!.vectors;
-                 ## Note: TriangulizeMat does not return a matrix of full
-                 ##       rank, whereas SemiEchelonMat does!
-              if x!.type - vdim = 1 then 
-                 y := y[1]; 
-                 ConvertToVectorRep(y, f);
-              else
-                 y := SemiEchelonMat(y)!.vectors;  
-                 ConvertToMatrixRepNC(y, f);
+              y := List(x^_,i-> Coefficients(bas,i))*basimgs;  
+              if not IsEmpty(y) then 
+                  ## Note: TriangulizeMat does not return a matrix of full
+                  ##       rank, whereas SemiEchelonMat does!
+                if x!.type - vdim = 1 then 
+                   y := y[1]; 
+                   ConvertToVectorRep(y, f);
+                else
+                   y := SemiEchelonMat(y)!.vectors;  
+                   ConvertToMatrixRepNC(y, f);
+                fi;
               fi;
-              return Wrap(ps2, x!.type - vdim, y);
+              if not IsEmpty(y) then  
+                return Wrap(ps2, x!.type - vdim, y);
+              else  
+                return EmptySubspace(ps2);
+              fi;
            end;
     pre := function( y )
               local x;          
@@ -1452,15 +1457,19 @@ InstallMethod( NaturalProjectionBySubspace,
               if not x in ps then
                  Error("Subspace is not an element of the polar space");
               fi;
-              y := List(x!.obj,i-> Coefficients(bas,i))*basimgs;  
-              y := SemiEchelonMat(y)!.vectors;   
-              if x!.type - vdim = 1 then 
-                 y := y[1]; 
-                 ConvertToVectorRep(y, f);
+              if v = x then return
+                 EmptySubspace(ps2); 
               else
-                 ConvertToMatrixRepNC(y, f);
+                 y := List(x!.obj,i-> Coefficients(bas,i))*basimgs;  
+                 y := SemiEchelonMat(y)!.vectors;   
+                 if x!.type - vdim = 1 then 
+                    y := y[1]; 
+                    ConvertToVectorRep(y, f);
+                 else
+                    ConvertToMatrixRepNC(y, f);
+                 fi;
+                 return VectorSpaceToElement(ps2, y);
               fi;
-              return VectorSpaceToElement(ps2, y);
            end;
 
     pre := function( y )
