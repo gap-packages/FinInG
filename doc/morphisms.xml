@@ -434,7 +434,7 @@ that are commonly used in finite geometry.
 <Returns>a geometry morphism</Returns>
 <Description>
 The argument <A>quadric</A> is a 5-dimensional hyperbolic quadric
-<M>Q+^(5,q)</M>, and this function returns the Klein correspondence from the lines
+<M>Q^+(5,q)</M>, and this function returns the Klein correspondence from the lines
 of <M>PG(3,q)</M> to the points of <A>quadric</A>.
 <Example>
 <#Include SYSTEM "../examples/include/morphisms_klein.include"> 

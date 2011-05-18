@@ -118,7 +118,7 @@ returned.
 
 <ManSection>
 <Oper Name = "EmptySubspace" Arg="ps"/>
-<Returns>the trivial subspace in the projective <A>ps></A></Returns>
+<Returns>the trivial subspace in the projective <A>ps</A></Returns>
 <Description>
 The object returned by this operation is contained in
 every projective subspace of the projective space <A>ps</A>
@@ -144,7 +144,7 @@ every projective subspace of the projective space <A>ps</A>
 <Oper Name="ElmentsOfIncidenceStructure" Arg="ps, j"/>
 <Returns>the collection of elements of the projective space <A>ps</A> of type <A>j</A></Returns>
 <Description>
-For the projective space <A>ps</A> of dimension <M>d</M> and the type <A>j</A>, <M>1 lt j lt d</M>
+For the projective space <A>ps</A> of dimension <M>d</M> and the type <A>j</A>, <M>1 \leq j \leq d</M>
 this operation returns the collection of <M>j-1</M> dimenaional subspaces.  <Example>
 <#Include SYSTEM "../examples/include/projpol_element1.include"> 
 </Example>
@@ -163,7 +163,7 @@ this operation returns the collection of <M>j-1</M> dimenaional subspaces.  <Exa
 
 <ManSection>
 <Oper Name="Coordinates" Arg="p"/>
-<Returns>the coordinates of the projective point <A>p</A>
+<Returns>the homogeneous coordinates of the projective point <A>p</A>
 </Returns>
 <Description>
 <Example>

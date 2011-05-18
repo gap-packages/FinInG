@@ -188,7 +188,7 @@ particular <A>ig</A>. The second variant returs the list of plurals of these nam
 <Filt Name="IsSubspaceOfProjectiveSpace" Type="Category"/>
 <Filt Name="IsSubspaceOfClassicalPolarSpace" Type="Category"/>
 <Description>
-In <Package>FinInG</Package> a category for the indidual elements of an incidence structure
+In <Package>FinInG</Package> a category for the individual elements of an incidence structure
 in a category <C>IsIncStr</C> is declared and named <C>IsElementOfIncStr</C>. The inclusion for
 different categories of geometries is followed for their elements, except for <C>IsSubspaceOfClassicalPolarSpace</C>,
 which is a subcategory of <C>IsSubspaceOfProjectiveSpace</C>, while <C>IsClassicalPolarSpace</C> is not a subcategory of
@@ -234,7 +234,8 @@ of <A>ig</A> of type <A>j</A>, and an error is displayed if <A>ig</A> has no
 elements of type <A>j</A>. In an alternative form of this function
 <A>str</A> can be one of ``points", ``lines", ``planes" or ``solids" and the
 function returns the elements of type 1, 2, 3 or 4 respectively, of course
-if <A>ig</A> has elements of the deduced type.
+if <A>ig</A> has elements of the deduced type. When no type is
+specified one gets all elements of all type of <A>ig</A>.
 <Example>
 <#Include SYSTEM "../examples/include/incgeom_elementsj.include"> 
 </Example>

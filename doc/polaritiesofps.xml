@@ -61,7 +61,7 @@ the conditions on the matrix <M>A</M>.
    </Item></Row>
    <Row><Item>pseudo</Item><Item> </Item>
    <Item>
-   <Alt Not="HTML"><M>A^T=A</M>, all <M>a_{ii}=0</M></Alt><Alt
+   <Alt Not="HTML"><M>A^T=A</M>, not all <M>a_{ii}=0</M></Alt><Alt
    Only="HTML">A&lt;sup>T &lt;/sup> = A, not all a&lt;sub>ii&lt;/sub>=0</Alt>
    </Item></Row>
  <HorLine/>
@@ -242,7 +242,7 @@ field is odd.
 <Returns>true or false</Returns>
 <Description>The polarity <A>f</A> is a pseudo polarity of a projective space if
 and only if the underlying matrix is symmetric, not all elements on the main
-diagonal are zeor and the characteristic of the field is even.
+diagonal are zero and the characteristic of the field is even.
 <Example>
 <#Include SYSTEM "../examples/include/polarities_ispseudo.include"> 
 </Example>
@@ -315,8 +315,8 @@ polar space induced by <A>f</A>.
 <Section>
 <Heading>Commuting polarities</Heading>
 
-<Package>FinInG</Package> constructs packages as correlations. This allows polarities to be multiplies
-easily, resulting in is collineation. The resulting collineation is constructed in the correlation group
+<Package>FinInG</Package> constructs packages as correlations. This allows polarities to be multiplied
+easily, resulting in a collineation. The resulting collineation is constructed in the correlation group
 but can be mapped onto its unique representative in the collineation group. We provide an example.
 
 <Example>
