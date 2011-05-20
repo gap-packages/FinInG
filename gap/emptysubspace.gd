@@ -3,6 +3,7 @@ DeclareRepresentation( "IsEmptySubspaceRep", IsEmptySubspace, ["geo", "obj"] );
 
 DeclareOperation( "EmptySubspace", [IsProjectiveSpace] );
 DeclareOperation( "EmptySubspace", [IsClassicalPolarSpace] );
+DeclareOperation( "\^", [IsEmptySubspace, IsUnwrapper] );
 
 #DeclareOperation( "EmptySubspace", [IsSubspaceOfProjectiveSpace] );
 

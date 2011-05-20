@@ -49,7 +49,14 @@ InstallMethod( \=, "for two empty subspaces",
         [IsEmptySubspace, IsEmptySubspace],
         function(e1,e2);
         return AmbientSpace(e1) = AmbientSpace(e2);
-end );
+  end );
+
+
+InstallMethod( \^, "unwrapping an empty subspace",
+  [ IsEmptySubspace, IsUnwrapper ],
+  function( e, u )
+    return [];
+  end );
 
 
 # Methods for IsIncident with the EmtySubspace  

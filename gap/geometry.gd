@@ -245,6 +245,7 @@ DeclareOperation( "Wrap", [IsIncidenceGeometry, IsPosInt, IsObject] );
 DeclareOperation( "Unwrap", [IsElementOfIncidenceStructure] );
 DeclareOperation( "\^", [IsElementOfIncidenceStructure, IsUnwrapper ] ); 
 
+
 # commenting this out had not effect, presumably...
 #DeclareOperation( "ChooseHashFunction", [IsElementOfIncidenceStructure,IsInt] );
 

@@ -101,8 +101,11 @@ DeclareSynonym( "PG", ProjectiveSpace );
 
 DeclareOperation( "Hyperplanes", [IsProjectiveSpace] );
 
-
-DeclareAttribute( "Size", IsSubspacesOfProjectiveSpace);
+#
+# This does not need to be declared, as "Size" is already declared for
+# higher order filers (e.g., IsCollection)
+#
+#DeclareAttribute( "Size", IsSubspacesOfProjectiveSpace);
   
 #############################################################################
 #
