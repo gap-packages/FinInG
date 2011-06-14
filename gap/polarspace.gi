@@ -1208,11 +1208,11 @@ InstallMethod( NumberOfTotallySingularSubspaces, [IsClassicalPolarSpace, IsPosIn
     r := RankAttr(ps);
     d := ps!.dimension;
     type := PolarSpaceType(ps);
-    q := Size(ps!.basefield);
+    q := Size(ps!.basefield); 
 
-    if type = "elliptic" then e := 2;
-    elif type = "hyperbolic" then e:= 0;
-    elif type = "parabolic" or type = "symplectic" then e:=1;
+    if type = "elliptic" then e := 2; qe := q^e;
+    elif type = "hyperbolic" then e:= 0; qe := q^e;
+    elif type = "parabolic" or type = "symplectic" then e:=1; qe := q^e;
     elif type = "hermitian" and IsEvenInt(ps!.dimension) then e:=3; 
          qe := RootInt(q,2)^e;
     elif type = "hermitian" and IsOddInt(ps!.dimension) then e:=1; 
