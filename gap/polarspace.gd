@@ -85,6 +85,7 @@ DeclareOperation( "CanonicalGramMatrix", [IsString, IsPosInt, IsField]);
 DeclareOperation( "CanonicalQuadraticForm", [IsString, IsPosInt, IsField]); 
 DeclareOperation( "CanonicalOrbitRepresentativeForSubspaces", [IsString, IsPosInt, IsField]);
 DeclareOperation( "RandomSubspace", [IsClassicalPolarSpace, IsPosInt]);
+DeclareOperation( "NumberOfTotallySingularSubspaces", [IsClassicalPolarSpace, IsPosInt]);
 
 
 DeclareOperation( "EllipticQuadric", [IsPosInt, IsField] );

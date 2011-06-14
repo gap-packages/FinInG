@@ -1197,6 +1197,32 @@ InstallMethod(Iterator,  "for subspaces of a polar space",
           ));
   end);
 
+InstallMethod( NumberOfTotallySingularSubspaces, [IsClassicalPolarSpace, IsPosInt],
+  function(ps, j)
+
+  ## In a classical finit epolar space of rank r with parameters (q,q^e), 
+  ## the number of subspaces of algebraic dimension j is given by
+  ## [d, n] Prod_{i=1}^{n} (q^{r+e-i}+1)
+
+    local r, d, type, e, q, qe;
+    r := RankAttr(ps);
+    d := ps!.dimension;
+    type := PolarSpaceType(ps);
+    q := Size(ps!.basefield);
+
+    if type = "elliptic" then e := 2;
+    elif type = "hyperbolic" then e:= 0;
+    elif type = "parabolic" or type = "symplectic" then e:=1;
+    elif type = "hermitian" and IsEvenInt(ps!.dimension) then e:=3; 
+         qe := RootInt(q,2)^e;
+    elif type = "hermitian" and IsOddInt(ps!.dimension) then e:=1; 
+         qe := RootInt(q,2)^e;
+    else Error("Polar space doesn't know its type!");
+    fi;
+
+    return Size(Subspaces(GF(q)^r, j)) * Product(List([1..j], i -> q^(r-i) * qe +1));
+  end);
+
 InstallMethod( ElementsOfIncidenceStructure, [IsClassicalPolarSpace, IsPosInt],
   function( ps, j )
     local r;
@@ -1207,13 +1233,10 @@ InstallMethod( ElementsOfIncidenceStructure, [IsClassicalPolarSpace, IsPosInt],
       return Objectify(
         NewType( ElementsCollFamily, IsSubspacesOfClassicalPolarSpace and
                                      IsSubspacesOfClassicalPolarSpaceRep ),
-#        NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
-#                                  IsAllSubspacesOfClassicalPolarSpace and
-#                                  IsAllSubspacesOfClassicalPolarSpaceRep),
           rec(
             geometry := ps,
             type := j,
-            size := Size(Subspaces(ps!.vectorspace, j))
+            size := NumberOfTotallySingularSubspaces(ps, j)
           )
         );
     fi;
