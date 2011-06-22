@@ -380,7 +380,7 @@ InstallMethod( CanonicalResidueOfFlag, "for coset geometries",
 
     local typesflag, types, parabolics, i, resg, respabs;
 
-    if IsFlagTransitiveGeometry( cg ) then
+#    if IsFlagTransitiveGeometry( cg ) then
        typesflag := Set(flag, t->t!.type);
        if IsEmpty( typesflag ) then
          return cg;
@@ -397,9 +397,9 @@ InstallMethod( CanonicalResidueOfFlag, "for coset geometries",
        for i in parabolics do
           Add( respabs, Intersection( resg, i ) );
        od;
-     else
-       Error("not implemented for not flag-transitive geometries");
-     fi;
+#     else
+#       Error("not implemented for not flag-transitive geometries");
+#     fi;
      
      return CosetGeometry( resg, respabs ); 
   end );
@@ -464,8 +464,9 @@ InstallMethod( IncidenceGraph, [ IsCosetGeometry and IsHandledByNiceMonomorphism
     fi;
 
     if DESARGUES.Fast then
-      Print("#I Using NiceMonomorphism...\n");
-      fastgeo:=CosetGeometry(NiceObject(geo!.group), List(geo!.parabolics, NiceObject));
+      Print("#I Using NiceMonomorphism...\n");   
+      hom := NiceMonomorphism(geo!.group);
+      fastgeo:=CosetGeometry(NiceObject(geo!.group), List(geo!.parabolics, h -> Image(hom, h)));
       gamma := IncidenceGraph( fastgeo );
     else
       gamma := IncidenceGraph( geo );
@@ -482,7 +483,7 @@ InstallMethod( IncidenceGraph, [ IsCosetGeometry ],
   ## IncidenceGraphAttr which can be called hence.  
   ## Slower version
   
-    local g, vars, gamma, allvars, reps;
+    local g, vars, gamma, allvars, reps, hom1, hom2, im1, im2, d, em1, em2, gens, newgens, diagonal;
 
     if not "grape" in RecNames(GAPInfo.PackagesLoaded) then
        Error("You must load the Grape package\n");
@@ -490,14 +491,31 @@ InstallMethod( IncidenceGraph, [ IsCosetGeometry ],
 
     g := geo!.group;
 
-    allvars := List( [1..Size(TypesOfElementsOfIncidenceStructure(geo))],
-       i -> ElementsOfIncidenceStructure(geo, i) );
-#    reps:=RepresentativesOfElements(geo);
+    if Size(ParabolicSubgroups(geo)) = 2 then
+      
+       hom1 := FactorCosetAction(g, ParabolicSubgroups(geo)[1]);
+       hom2 := FactorCosetAction(g, ParabolicSubgroups(geo)[2]);
+       im1 := Image(hom1);
+       im2 := Image(hom2);
+       d := DirectProduct(im1,im2);
+       em1 := Embedding(d,1);
+       em2 := Embedding(d,2);
+       gens := GeneratorsOfGroup(g);
+       newgens := List(gens, x -> Image(em1,Image(hom1,x)) * Image(em2,Image(hom2,x)));
+       diagonal:=Group(newgens);
+       gamma := NullGraph(diagonal);   
+   	   ## [A,B]
+       AddEdgeOrbit(gamma, [1, DegreeAction(im1)+1]);
+       AddEdgeOrbit(gamma, [DegreeAction(im1)+1, 1]);
 
-    vars := Concatenation( List(allvars, AsList) );
-    gamma := Graph( g, vars, OnCosetGeometryElement, 
+    else
+
+       allvars := List( [1..Size(TypesOfElementsOfIncidenceStructure(geo))],
+                    i -> ElementsOfIncidenceStructure(geo, i) );
+       vars := Concatenation( List(allvars, AsList) );
+       gamma := Graph( g, vars, OnCosetGeometryElement, 
                 function(x,y) return IsIncident(x,y); end, true);
-    
+    fi; 
     Setter( IncidenceGraphAttr )( geo, gamma );
     return gamma;
   end );
