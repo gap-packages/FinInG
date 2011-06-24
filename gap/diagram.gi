@@ -457,7 +457,7 @@ InstallMethod( IncidenceGraph, [ IsCosetGeometry and IsHandledByNiceMonomorphism
   ## IncidenceGraphAttr which can be called hence.  
   ## Here we have a speedup from the NiceMonomorphism
 
-    local fastgeo, gamma;
+    local fastgeo, gamma, hom;
 
     if not "grape" in RecNames(GAPInfo.PackagesLoaded) then
        Error("You must load the Grape package\n");
