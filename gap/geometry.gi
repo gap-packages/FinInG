@@ -356,3 +356,15 @@ InstallMethod( IncidenceStructure, "for a set, incidence, type function and type
     #Objectify(ty,geo);
     return geo;
   end );
+
+# CHECKED 27/6/2011 jdb and pc
+#############################################################################
+#O  Intersection2( <el1>, <el2> )
+# method for Intersection2, referring to Meet.
+##
+InstallOtherMethod( Intersection2,
+	"for two elements of an incidence structure, relying on Meet",
+	[IsElementOfIncidenceStructure, IsElementOfIncidenceStructure],
+	function( el1, el2 )
+		return Meet(el1,el2);
+	end);
