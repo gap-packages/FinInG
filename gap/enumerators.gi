@@ -40,6 +40,12 @@
 
 # pos is the inverse function of ffenumber:
 
+PositionNonZeroFromRight := function(x)
+  local perm;
+  perm := PermList( List([1..Length(x)],y->Length(x)-y+1) );
+  return Length(x)-PositionNonZero( Permuted(x, perm) )+1;
+end;
+
 pos := function(q, x)
   return Position(AsList(GF(q)), x) - 1;
 end;
@@ -1910,15 +1916,6 @@ InstallMethod( QminusNumberElement, [IsPosInt, IsPosInt, IsSubspaceOfClassicalPo
 end );
 
 ########
-InstallMethod( HermElementNumber, [IsPosInt, IsPosInt, IsInt],
-  function(d, q, a)
-      # The hermitian form here is simply 
-      # x(1) x(2)^q + ... + x(n-1) x(n)^q
-	# we need to do something here! 
-	local n, v;
-    return v;
-end );
-
 
 InstallMethod( HermElementNumber, [IsPosInt, IsPosInt, IsInt],
   function(d, q, a)
@@ -1934,10 +1931,15 @@ InstallMethod( HermElementNumber, [IsPosInt, IsPosInt, IsInt],
     return v;
 end );
 
-
 InstallMethod( HermNumberElement, [IsPosInt, IsPosInt, IsSubspaceOfClassicalPolarSpace],
   function(d, q, var)
-  return 0;
+    local wittindex, a, v,y;
+	v := StructuralCopy(var!.obj);        
+	y := v[PositionNonZeroFromRight(v)];
+	v := v/y;
+    #wittindex := (d+1)/2;
+    a := herm_Sbar_rank(RootInt(q,2), v, 1, d+1);
+    return a + 1; ## adjustment for lists beginning at 1
 end );
 
 #########
@@ -2042,4 +2044,5 @@ InstallMethod( AntonEnumerator, [IsSubspacesOfClassicalPolarSpace],
     fi;
     return enum;
   end );
+
 
