@@ -1936,6 +1936,9 @@ InstallMethod( HermNumberElement, [IsPosInt, IsPosInt, IsSubspaceOfClassicalPola
     local wittindex, a, v,y;
 	v := StructuralCopy(var!.obj);        
 	y := v[PositionNonZeroFromRight(v)];
+	if IsOddInt(q) then
+	  y := y/(Z(q)^((RootInt(q,2)-1)/2)); #Strange Anton normalization...
+	fi;
 	v := v/y;
     #wittindex := (d+1)/2;
     a := herm_Sbar_rank(RootInt(q,2), v, 1, d+1);
