@@ -93,17 +93,25 @@ beta_power := function(q, a)
   return Z(Q)^((q + 1) * a);
 end;
 
-log_beta := function(q, x)   
-	local b, Q;
-	Q := q * q;
-	if IsZero(x) then
-		Error("Error in log_beta: x is zero");
-	fi;
-	b := pos(Q, x) - 1;
-	if ((b mod (q + 1)) > 0) then
-		Error("Error in log_beta");
-	fi;
-	return div(b, q + 1);
+#log_beta := function(q, x)   
+#	local b, Q;
+#	Q := q * q;
+#	if IsZero(x) then
+#		Error("Error in log_beta: x is zero");
+#	fi;
+#	b := pos(Q, x) - 1;
+#	if ((b mod (q + 1)) > 0) then
+#		Error("Error in log_beta");
+#	fi;
+#	return div(b, q + 1);
+#end;
+
+# New one: JB.
+
+log_beta := function(q, x)
+  local Q;
+  Q := q * q;
+  return LogFFE(x,Z(Q)^(q+1));
 end;
 
 norm_one_element := function(q, a)
