@@ -34,7 +34,97 @@
 # - documentation
 #
 ########################################
+#now comes a separate section with function to be renamed :-)
+#don't tell celle now about this disaster programming style :-D
+## utility functions
 
+# pos is the inverse function of ffenumber:
+
+pos := function(q, x)
+  return Position(AsList(GF(q)), x) - 1;
+end;
+
+div := function(a, b)
+	return (a - (a mod b)) / b;
+end;
+
+ffenumber := function(q, a)       
+  if a = 0 then return 0 * Z(q);
+  else return Z(q)^(a-1);
+  fi;
+end;
+
+# the next six are brand new.
+unrank_GFQ := function(q, rk)
+  local Q;
+  Q := q * q;
+  if rk = 0 then
+    return 0*Z(Q);
+  fi;
+  return Z(Q)^(rk-1);
+end;
+
+rank_GFQ := function(q, x)
+  local Q;
+  Q := q * q;
+  return Position(AsList(GF(Q)), x) - 1;
+end;
+
+alpha_power := function(q, a)
+  local Q;
+  Q := q * q;     
+  return Z(Q)^a;
+end;
+
+log_alpha := function(q, x)   
+	local b, Q;
+
+	Q := q * q;
+	if IsZero(x) then
+		Error("Error in log_alpha: x is zero");
+	fi;
+	b := pos(Q, x);
+	return b;
+end;
+
+beta_power := function(q, a)
+  local Q;   
+  Q := q * q;
+  return Z(Q)^((q + 1) * a);
+end;
+
+log_beta := function(q, x)   
+	local b, Q;
+
+	Q := q * q;
+	if IsZero(x) then
+		Error("Error in log_beta: x is zero");
+	fi;
+    #Print("log_beta x=", x, "\n");
+	b := pos(Q, x) - 1;
+    #Print("log_beta x=", x, " b=", b, "\n");
+	if ((b mod (q + 1)) > 0) then
+		Error("Error in log_beta");
+	fi;
+	return div(b, q + 1);
+end;
+
+norm_one_element := function(q, a)
+  local Q;
+  Q := q * q;
+  return Z(Q)^((q - 1) * a);
+end;
+
+index_of_norm_one_element := function(q, x)   
+	local b, Q;
+
+	Q := q * q;
+	b := log_alpha(Q, x);
+	if ((b mod (q - 1)) > 0) then
+		Error("Error in index_of_norm_one_element");
+	fi;
+	return div(b, q - 1);
+end;
 
 #############################################################################
 # Constructor operations:
@@ -499,16 +589,6 @@ end );
 
 ## counting functions
 
-div := function(a, b)
-	return (a - (a mod b)) / b;
-end;
-
-ffenumber := function(q, a)       
-  if a = 0 then return 0 * Z(q);
-  else return Z(q)^(a-1);
-  fi;
-end;
-
 InstallMethod(nb_pts_Nbar, [IsPosInt, IsPosInt],  
   function(n, q)
 	if n = 1 then
@@ -562,6 +642,62 @@ InstallMethod(nb_pts_Sbar, [IsPosInt, IsPosInt],
 	a := a + nb_pts_Nbar(1, q) * nb_pts_N1(n - 1, q);
 	return a;
   end );
+
+#counting functions for hermitian. to be renamed.
+
+# June 25, 2011, Anton
+
+InstallMethod(herm_nb_pts_N, [IsPosInt, IsPosInt],  
+  function(n, q)
+	local Q, a, b, c;
+	Q := q * q;
+	if n = 1 then
+		return Q - 1;
+	fi;
+	a := herm_nb_pts_N(n - 1, q) * (Q - q - 1);
+	b := herm_nb_pts_S(n - 1, q) * (Q - 1);
+	c := a + b;
+	return c;
+  end );
+
+InstallMethod(herm_nb_pts_S, [IsPosInt, IsPosInt],  
+  function(n, q)
+	local Q, a, b, c;
+	Q := q * q;
+	if n = 1 then
+		return 1;
+	fi;
+	a := herm_nb_pts_N(n - 1, q) * (q + 1);
+	b := herm_nb_pts_S(n - 1, q);
+	c := a + b;
+	return c;
+  end );
+
+InstallMethod(herm_nb_pts_N1, [IsPosInt, IsPosInt],  
+  function(n, q)
+	local Q, a, b, c;
+	Q := q * q;
+	if n = 1 then
+		return q + 1;
+	fi;
+	a := herm_nb_pts_N1(n - 1, q);
+	b := herm_nb_pts_N1(n - 1, q) * (q - 2) * (q + 1);
+	c := herm_nb_pts_S(n - 1, q) * (q + 1);
+	return a + b + c;
+  end );
+
+InstallMethod(herm_nb_pts_Sbar, [IsPosInt, IsPosInt],  
+  function(n, q)
+	local Q, a, b;
+	Q := q * q;
+	if n = 1 then
+		return 0;
+	fi;
+	a := herm_nb_pts_Sbar(n - 1, q);
+	b := herm_nb_pts_N1(n - 1, q);
+	return a + b;
+  end );
+
 
 ##############################
 # "ElementNumber" functions
@@ -817,6 +953,334 @@ InstallMethod(N_unrank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt, IsInt],
   Error("Error in N_unrank(2)");
 end );
 
+#######hermitian ranking stuff, new from Anton.
+## New hermitian stuff...
+
+##############################
+# unrank/rank functions in pairs: herm_N_unrank / herm_N_rank
+##############################
+
+InstallMethod(herm_N_unrank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt, IsInt], 
+  function(q, v, offset, n, a)
+  local Q, A, coset, rk1, x, one, zero, val, coset0, rk0, m_val, log, nb, l;
+  Print("herm_N_unrank v=", v, " n=", n, " rk=", a, " offset=", offset, "\n");
+  Q := q * q;
+  one := Z(Q)^0;
+  zero := 0*Z(Q);
+  if n = 1 then
+     l := Q - 1;
+     if a < l then
+        x := alpha_power(q, a);
+        v[offset + 0] := x;
+        return;
+     fi;
+     Error("Error in herm_N_unrank");
+  fi;
+  A := Q - q - 1;
+  nb := herm_nb_pts_N(n - 1, q);
+  if a < A * nb then
+    coset := div(a, nb);
+	rk1 := a mod nb;
+    herm_N_unrank(q, v, offset, n - 1, rk1);
+    if coset = 0 then
+      v[offset + n - 1] := zero;
+    else
+      coset := coset - 1;
+      val := evaluate_hermitian_form(q, v, offset, n - 1);
+      coset0 := div(coset, q + 1);
+      rk0 := coset mod q + 1;
+      m_val := - val;
+      log := log_beta(q, m_val);
+      if coset0 >= log then
+        coset0 := coset0 + 1;
+      fi;
+      v[offset + n - 1] := alpha_power(q, coset0) * norm_one_element(q, rk0);     
+    fi;
+  else
+    a := a - A * nb;
+	nb := herm_nb_pts_S(n - 1, q);
+    rk1 := a mod nb;
+    coset := div(a, nb);
+    herm_S_unrank(q, v, offset, n - 1, rk1);
+    v[offset + n - 1] := alpha_power(q, coset);
+  fi;
+end );
+
+InstallMethod(herm_N_rank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt],
+  function(q, v, offset, n)
+  local Q, rk, val, m_val, alpha, A, rk1, coset, a, coset0, rk0, beta, nb, log;
+  Q := q * q;
+  if n = 1 then
+     alpha := v[offset + 0];
+     rk := log_alpha(q, alpha);  
+     return rk;
+  fi;
+  val := evaluate_hermitian_form(q, v, offset, n - 1);
+  nb := herm_nb_pts_N(n - 1, q);
+  if not IsZero(val) then
+    rk1 := herm_N_rank(q, v, offset, n - 1);
+    if IsZero(v[offset + n - 1]) then
+      coset := 0;
+    else
+      m_val := - val;
+      log := log_beta(q, m_val);
+      a := v[offset + n - 1]^(q + 1);
+      coset0 := log_beta(q, a);
+      beta := v[offset + n - 1] * alpha_power(q, coset0)^-1;
+      if coset0 > log then
+        coset0 := coset0 - 1;
+      fi;
+      rk0 := index_of_norm_one_element(q, beta);
+      coset := coset0 * (q + 1) + rk0;
+      coset := coset + 1;
+    fi;
+	rk := coset * nb + rk1;
+  else
+    A := Q - q - 1;
+    rk := A * nb;
+    coset := log_alpha(q, v[offset + n - 1]);
+	rk1 := herm_S_rank(q, v, offset, n - 1);
+    rk := rk + coset * herm_nb_pts_S(n - 1, q) + rk1;
+  fi;
+  return rk;
+end );
+
+
+##############################
+# unrank/rank functions in pairs: herm_S_unrank / herm_S_rank
+##############################
+
+InstallMethod(herm_S_unrank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt, IsInt], 
+  function(q, v, offset, n, rk)
+  local Q, zero, nb, coset, rk1, log, val, m_val;
+  Print("herm_S_unrank v=", v, " n=", n, " rk=", rk, " offset=", offset, "\n");
+  Q := q * q;
+  #one := Z(Q)^0;
+  zero := 0*Z(Q);
+  if n = 1 then
+     v[offset + 0] := zero;
+     return;
+  fi;
+  nb := herm_nb_pts_N(n - 1, q);
+  if rk < (q + 1) * nb then
+    coset := div(rk, nb);
+    rk1 := rk mod nb;
+    herm_N_unrank(q, v, offset, n - 1, rk1);
+    val := evaluate_hermitian_form(q, v, offset, n - 1);
+    m_val := - val;
+    log := log_beta(q, m_val);
+    v[offset + n - 1] := alpha_power(q, log) * norm_one_element(q, coset);
+  else
+    rk := rk - (q + 1) * nb;
+    herm_S_unrank(q, v, offset, n - 1, rk);
+    v[offset + n - 1] := zero;
+  fi;
+  Print("herm_S_unrank done: v=", v, " n=", n, " rk=", rk, "\n");
+end );
+
+InstallMethod(herm_S_rank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt],
+  function(q, v, offset, n)
+  local val, rk, rk1, m_val, log, a, log1, nb, coset;
+  if n = 1 then
+     return 0;
+  fi;
+  rk := 0;
+  if not IsZero(v[offset + n - 1]) then
+    rk1 := herm_N_rank(q, v, offset, n - 1);
+    val := evaluate_hermitian_form(q, v, offset, n - 1);
+    m_val := - val;
+    log := log_beta(a, m_val);
+    a := v[offset + n - 1]^(q + 1);
+    log1 := log_beta(q, a);
+    if log1 <> log then
+      Error("Error in hermitian::S_rank fatal: log1 != log");
+    fi;
+    a := v[offset + n - 1] * alpha_power(q, log)^-1;
+    coset := index_of_norm_one_element(q, a);
+    nb := herm_nb_pts_N(n - 1, q);
+    rk := coset * nb + rk1;
+  else
+    rk := herm_S_rank(q, v, offset, n - 1);
+    rk := rk + (q + 1) * nb;
+  fi;
+  return rk;
+end );
+
+
+##############################
+# unrank/rank functions in pairs: herm_N1_unrank / herm_N1_rank
+##############################
+
+InstallMethod(herm_N1_unrank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt, IsInt], 
+  function(q, v, offset, n, rk)
+  local Q, i, one, zero, nb, rk1, rk2, coset, coset1, coset2, nb1, a, val, new_val, log, A;
+
+  Print("herm_N1_unrank v=", v, " n=", n, " rk=", rk, " offset=", offset, "\n");
+
+  Q := q * q;
+  one := Z(Q)^0;
+  zero := 0*Z(Q);
+  if n = 1 then
+     v[offset + 0] := norm_one_element(q, rk);
+     Print("herm_N1_unrank done: v=", v, " n=", n, " rk=", rk, "\n");
+     return;
+  fi;
+  nb := herm_nb_pts_N1(n - 1, q);
+  if rk < nb then
+    herm_N1_unrank(q, v, offset, n - 1, rk);
+    v[offset + n - 1] := zero;
+    Print("herm_N1_unrank done: v=", v, " n=", n, " rk=", rk, "\n");
+    return;
+  else
+    rk := rk - nb;
+    A := (q + 1) * (q - 2) * nb;
+    if rk < A then
+      nb1 := (q - 2) * nb;
+      coset1 := div(rk, nb1);
+      rk1 := rk mod nb1;
+      coset2 := div(rk1, nb);
+      rk2 := rk1 mod nb;
+      Print("herm_N1_unrank before call to herm_N1_unrank: v=", v, " n=", n, " rk2=", rk2, "\n");
+      herm_N1_unrank(q, v, offset, n - 1, rk2);
+      Print("herm_N1_unrank after call to herm_N1_unrank: v=", v, " IsFFECollection(v)=", IsFFECollection(v)," n=", n, " rk=", rk, " offset=", offset, "\n");
+      val := evaluate_hermitian_form(q, v, offset, n - 1);
+      coset2 := coset2 + 1;
+      a := alpha_power(q, coset2);
+      for i in [0 .. n - 2] do
+        v[offset + i] := a * v[offset + i];
+      od;
+      Print("herm_N1_unrank before second call to evaluate_hermitian_form: v=", v, " IsFFECollection(v)=", IsFFECollection(v)," n=", n, " rk=", rk, " offset=", offset, "\n");
+      val := evaluate_hermitian_form(q, v, offset, n - 1);
+      new_val := one - val;
+      log := log_beta(q, new_val);
+      v[offset + n - 1] := alpha_power(q, log) * norm_one_element(q, coset1);
+	else
+      rk := rk - A;
+      nb := herm_nb_pts_S(n - 1, q);
+      coset := div(rk, nb);
+      rk1 := rk mod nb;
+      herm_S_unrank(q, v, offset, n - 1, rk1);
+      v[offset + n - 1] := norm_one_element(q, coset);
+    fi;
+
+  fi;
+  Print("herm_N1_unrank done: v=", v, " n=", n, " rk=", rk, "\n");
+
+end );
+
+
+InstallMethod(herm_N1_rank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt],
+  function(q, v, offset, n)
+  local Q, one, val, rk, rk1, nb, nb1, A, coset, coset1, coset2, a, av, i, new_val, log, rk2, log1;
+  Q := q * q;
+  one := Z(Q)^0;
+  if n = 1 then
+     return index_of_norm_one_element(q, v[offset + 0]);
+  fi;
+  rk := 0;
+  if IsZero(v[offset + n - 1]) then
+    rk := herm_N1_rank(q, v, offset, n - 1, rk);
+    return rk;
+  fi;
+  nb := herm_nb_pts_N1(n - 1, q);
+  rk := nb;
+  nb1 := (q - 2) * nb;
+  A := (q + 1) * nb1;
+	val := evaluate_hermitian_form(q, v, offset, n - 1);
+	if not IsZero(val) then
+		coset2 := log_beta(q, val);
+		a := alpha_power(q, coset2);
+		av := a^(-1);
+		for i in [0 .. n - 2] do
+			v[offset + i] := av * v[offset + i];
+		od;
+		rk2 := herm_N1_rank(q, v, offset, n - 1);
+		coset2 := coset2 - 1;
+		new_val := one - val;
+		log := log_beta(q, new_val);
+		a := v[offset + n - 1]^(q + 1);
+		log1 := log_beta(q, a);
+		a := alpha_power(q, log)^(-1);
+		a := a * v[offset + n - 1];
+		coset1 := index_of_norm_one_element(q, a);
+		rk1 := coset2 * nb + rk2;
+		rk := rk + coset1 * nb1 + rk1;
+	else
+		rk := rk + A;
+
+		rk1 := herm_S_rank(q, v, offset, n - 1);
+		coset := index_of_norm_one_element(q, v[offset + n - 1]);
+		rk := rk + coset * herm_nb_pts_S(n - 1, q) + rk1;
+    fi;
+  return rk;
+
+
+end );
+
+
+
+##############################
+# unrank/rank functions in pairs: herm_Sbar_unrank / herm_Sbar_rank
+##############################
+
+InstallMethod(herm_Sbar_unrank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt, IsInt], 
+  function(q, v, offset, n, rk)
+  local Q, one, zero, a, log, nb;
+  Print("herm_Sbar_unrank: v=", v, " n=", n, " rk=", rk, "\n");
+  Q := q * q;
+  one := Z(Q)^0;
+  zero := 0*Z(Q);
+  if n = 1 then
+    Error("herm_Sbar_unrank error: n = 1");
+  fi;
+    nb := herm_nb_pts_Sbar(n - 1, q);
+
+	if rk < nb then
+		herm_Sbar_unrank(q, v, offset, n - 1, rk);
+		v[offset + n - 1] := zero;
+	else
+		rk := rk - nb;
+
+		herm_N1_unrank(q, v, offset, n - 1, rk);
+		a := - one;
+		log := log_beta(q, a);
+		v[offset + n - 1] := alpha_power(q, log) * norm_one_element(q, 0);
+	fi;
+  Print("herm_Sbar_unrank done: v=", v, " n=", n, " rk=", rk, "\n");
+
+end );
+
+
+InstallMethod(herm_Sbar_rank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt],
+  function(q, v, offset, n)
+  local val, rk, nb, i, a, b, bv;
+  if n = 1 then
+    Error("herm_Sbar_rank error: n = 1");
+  fi;
+	if IsZero(v[offset + n - 1]) then
+		rk := herm_Sbar_rank(q, v, offset, n - 1);
+	else
+  		nb := herm_nb_pts_Sbar(n - 1, q);
+		rk := nb;
+
+		val := evaluate_hermitian_form(q, v, offset, n - 1);
+		if not IsOne(val) then
+			a := log_beta(q, val);
+			b := alpha_power(q, a);
+			bv := b^(-1);
+			for i in [0 .. n - 1] do
+				v[offset + i] := bv * v[offset + i];
+			od;
+		fi;
+		val := evaluate_hermitian_form(q, v, offset, n - 1);
+
+		rk := rk + herm_N1_rank(q, v, offset, n - 1);
+	fi;
+  return rk;
+end );
+
+####################
+
 ## New hermitian stuff...
 
 InstallGlobalFunction( enum_line,
@@ -928,9 +1392,34 @@ PG_element_normalize := function(v, offset, n)
   Error("zero vector");
 end;
 
-pos := function(q, x)
-  return Position(AsList(GF(q)), x) - 1;
-end;
+#merge these two, give it a sensible name, see if one can be thrown away...
+
+InstallGlobalFunction(my_PG_element_normalize,
+	[IsFFECollection, IsPosInt, IsPosInt],
+	function(v, offset, n)
+
+  ## This function takes the first nonzero element
+  ## from the right (!) and normalises the vector v
+  ## by this element.
+
+  local ii, i, a, one;
+  one := One(v[1]);	   
+  for ii in [0..n - 1] do 
+      i := n - 1 - ii;    
+      a := v[offset + i]; 
+      if not IsZero(a) then
+         if IsOne(a) then  
+	     return;
+         fi;
+         a := a^-1;
+         v{[offset..i-1+offset]} := a * v{[offset..i-1+offset]};
+         v[offset + i] := one;
+         return;
+      fi;
+  od;
+  Error("zero vector");
+
+end );
 
 InstallMethod(S_rank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt],
   function(q, v, offset, n)
@@ -1143,8 +1632,24 @@ InstallMethod(evaluate_hyperbolic_quadratic_form,
     return alpha;
 end );
 
+####new Anton stuff
+
+InstallMethod(evaluate_hermitian_form, 
+                   [IsPosInt, IsFFECollection, IsPosInt, IsInt],
+  function(q, v, offset, n)
+ # Print("evaluate_hermitian_form q=", q, " v=", v, " offset=", offset, " n=", n, "\n");
+    local alpha, beta, u, Q;
+	Q := q * q;	
+    alpha := 0*Z(Q);
+    for u in [0..n-1] do
+	 beta := v[offset + u]^(q + 1);
+	 alpha := alpha + beta;
+    od;
+    return alpha;
+end );
 
 
+####
 
 
 ##########################
@@ -1290,15 +1795,6 @@ InstallMethod( QminusElementNumber, [IsPosInt, IsPosInt, IsInt],
     return Permuted(v, perm);
 end );
 
-InstallMethod( HermElementNumber, [IsPosInt, IsPosInt, IsInt],
-  function(d, q, a)
-      # The hermitian form here is simply 
-      # x(1) x(2)^q + ... + x(n-1) x(n)^q
-    local n, v;
-    return v;
-end );
-
-
 InstallMethod( QNumberElement, [IsPosInt, IsPosInt, IsSubspaceOfClassicalPolarSpace],
   function(d, q, var)
     local wittindex, x, a, b, v, i, cyc;
@@ -1402,10 +1898,24 @@ InstallMethod( QminusNumberElement, [IsPosInt, IsPosInt, IsSubspaceOfClassicalPo
     return a + b * x + c + 1;  ## adjustment for lists beginning at 1
 end );
 
+########
+InstallMethod( HermElementNumber, [IsPosInt, IsPosInt, IsInt],
+  function(d, q, a)
+      # The hermitian form here is simply 
+      # x(1) x(2)^q + ... + x(n-1) x(n)^q
+	# we need to do something here! 
+	local n, v;
+    return v;
+end );
+
+
 InstallMethod( HermNumberElement, [IsPosInt, IsPosInt, IsSubspaceOfClassicalPolarSpace],
   function(d, q, var)
   return 0;
 end );
+
+#########
+
 
 InstallMethod( AntonEnumerator, [IsSubspacesOfClassicalPolarSpace],
 
@@ -1506,3 +2016,4 @@ InstallMethod( AntonEnumerator, [IsSubspacesOfClassicalPolarSpace],
     fi;
     return enum;
   end );
+
