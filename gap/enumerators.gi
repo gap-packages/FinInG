@@ -95,14 +95,11 @@ end;
 
 log_beta := function(q, x)   
 	local b, Q;
-
 	Q := q * q;
 	if IsZero(x) then
 		Error("Error in log_beta: x is zero");
 	fi;
-    #Print("log_beta x=", x, "\n");
 	b := pos(Q, x) - 1;
-    #Print("log_beta x=", x, " b=", b, "\n");
 	if ((b mod (q + 1)) > 0) then
 		Error("Error in log_beta");
 	fi;
@@ -118,7 +115,7 @@ end;
 ## Made a new version of index_of_norm_one_element: JB 8/7/2011
 
 index_of_norm_one_element := function(q, x)
-  return LogFFE(x,Z(Q)^(q-1));
+  return LogFFE(x,Z(q^2)^(q-1));
 end;
 
 
