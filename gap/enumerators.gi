@@ -115,16 +115,22 @@ norm_one_element := function(q, a)
   return Z(Q)^((q - 1) * a);
 end;
 
-index_of_norm_one_element := function(q, x)   
-	local b, Q;
+## Made a new version of index_of_norm_one_element: JB 8/7/2011
 
-	Q := q * q;
-	b := log_alpha(Q, x);
-	if ((b mod (q - 1)) > 0) then
-		Error("Error in index_of_norm_one_element");
-	fi;
-	return div(b, q - 1);
+index_of_norm_one_element := function(q, x)
+  return LogFFE(x,Z(Q)^(q-1));
 end;
+
+
+#index_of_norm_one_element := function(q, x)   
+#	local b, Q;
+#	Q := q * q;
+#	b := log_alpha(Q, x);
+#	if ((b mod (q - 1)) > 0) then
+#		Error("Error in index_of_norm_one_element");
+#	fi;
+#	return div(b, q - 1);
+#end;
 
 #############################################################################
 # Constructor operations:
