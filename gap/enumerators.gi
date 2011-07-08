@@ -1190,7 +1190,7 @@ InstallMethod(herm_N1_rank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt],
   fi;
   rk := 0;
   if IsZero(v[offset + n - 1]) then
-    rk := herm_N1_rank(q, v, offset, n - 1, rk);
+    rk := herm_N1_rank(q, v, offset, n - 1);
     return rk;
   fi;
   nb := herm_nb_pts_N1(n - 1, q);
