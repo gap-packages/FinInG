@@ -1920,6 +1920,21 @@ InstallMethod( HermElementNumber, [IsPosInt, IsPosInt, IsInt],
 end );
 
 
+InstallMethod( HermElementNumber, [IsPosInt, IsPosInt, IsInt],
+  function(d, q, a)
+      # The hermitian form here is simply 
+      # x(1) x(2)^q + ... + x(n-1) x(n)^q
+
+    local n, v, i, a2;
+    #zero := 0*Z(q);	
+    a2 := a - 1;
+    v := ListWithIdenticalEntries(d+1,Z(q)^0);
+	n := Int((d+1) / 2);
+	herm_Sbar_unrank(RootInt(q,2),v,1,d+1,a2);
+    return v;
+end );
+
+
 InstallMethod( HermNumberElement, [IsPosInt, IsPosInt, IsSubspaceOfClassicalPolarSpace],
   function(d, q, var)
   return 0;
