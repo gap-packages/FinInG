@@ -24,6 +24,9 @@
 if InstalledPackageVersion("forms") < "1.2" then
    ReadPackage("fining","gap/forms_ext.gi"); 
 fi;
+if InstalledPackageVersion("forms") < "1.2.2" then
+   Forms_RESET := RESET; 
+fi;
 
 ReadPackage("fining","gap/geometry.gi");
 ReadPackage("fining","gap/group.gi"); 
