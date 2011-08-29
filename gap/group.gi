@@ -1631,9 +1631,9 @@ InstallMethod( GammaOminus, [IsPosInt, IsField and IsFinite],
 ## No problem for q = 32.
 
      gram := CanonicalQuadraticForm("elliptic", d, f);
-     block := RESET( MutableCopyMat( gram{[1,2]}{[1,2]} ), 2, q);
+     block :=Forms_RESET( MutableCopyMat( gram{[1,2]}{[1,2]} ), 2, q);
 	 frob := FrobeniusAutomorphism( f );
-     mat := First( GL(2,f), t -> RESET(t * block^frob *TransposedMat(t), 2, q) = block);
+     mat := First( GL(2,f), t -> Forms_RESET(t * block^frob *TransposedMat(t), 2, q) = block);
      mat2 := IdentityMat(d,f);  #NullMat(d,d,f);
     # for i in [1..d/2-1] do
     #     mat2{[2*i+1,2*i+2]}{[2*i+1,2*i+2]} := [[0,1],[1,0]] * One(f);
