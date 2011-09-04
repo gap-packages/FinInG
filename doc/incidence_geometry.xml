@@ -352,4 +352,27 @@ is unspecified. This operation may not be installed for all incidence geometries
 </ManSection>
 </Section>
 
+<Section>
+<Heading>Enumerating elements of an incidence structure</Heading>
+In several situations, it can be usful to compute a complete list of objects statisfying one or more conditions.
+To list all elements of a given type of an incidence structure, is a typical example. <Package>FinInG</Package> 
+provides functionality that is common in GAP for this purpose. 
+
+For collections of elements, <Package>FinInG</Package> provides methods to compute iterators. An iterator is a GAP object
+that gives a user friendly way to loop over all elements without repetition. Only three operations are applicable on an iterator:
+<F>NextIterator</F>, <F>IsDoneIterator</F>, and <F>ShallowCopy</F>.
+
+<ManSection>
+<Oper Name="Iterator" Arg="C"/>
+<Returns> an iterator for the collection <A>C</A></Returns>
+<Description>
+<A>C</A> is a collection of elements of an incidence structure. An iterator is returned.
+<Example>
+<#Include SYSTEM "../examples/include/incgeom_iterator.include"> 
+</Example>
+</Description>
+</ManSection>
+More to be written on the concept enumerator (seems not to be the same for all incidence geometries).
+
+</Section>
 </Chapter>

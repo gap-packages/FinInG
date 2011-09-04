@@ -36,7 +36,7 @@
 #
 ########################################
 
-InstallValue( DESARGUES, rec() );
+InstallValue( DESARGUES, rec() ); #name of this variable will remind us for ever that this package was called Desargues in earlier days.
 
 #############################################################################
 # General methods.
@@ -181,8 +181,10 @@ InstallMethod( ChooseHashFunction, "for an element and a hash length",
 #############################################################################
 # Viewing/Printing/Displaying methods.
 #############################################################################
+# 5 CHECKED 4/09/11 jdb
 
-InstallMethod( ViewObj, "for IsElementOfIncidenceStructure",
+InstallMethod( ViewObj, 
+	"for IsElementOfIncidenceStructure",
 	[ IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep ],
 	function( v )
 		Print("<a ",TypesOfElementsOfIncidenceStructure(v!.geo)[v!.type]," in ");
@@ -190,19 +192,22 @@ InstallMethod( ViewObj, "for IsElementOfIncidenceStructure",
 		Print(">");
 	end );
 
-InstallMethod( PrintObj, "for IsElementOfIncidenceStructure",
+InstallMethod( PrintObj, 
+	"for IsElementOfIncidenceStructure",
 	[ IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep ],
 	function( v )
 		Print( v!.obj );
 	end );
 
-InstallMethod( Display, "for IsElementOfIncidenceStructure",
+InstallMethod( Display, 
+	"for IsElementOfIncidenceStructure",
 	[ IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep ],
 	function( v )
 		Display(v!.obj);
 	end );
 
-InstallMethod( ViewObj, "for IsAllElementsOfIncidenceStructure",
+InstallMethod( ViewObj, 
+	"for IsAllElementsOfIncidenceStructure",
 	[ IsAllElementsOfIncidenceStructure ],
 	function( vs )
 		Print("<Elements of ");
@@ -210,7 +215,8 @@ InstallMethod( ViewObj, "for IsAllElementsOfIncidenceStructure",
 		Print(">");
 	end );
 
-InstallMethod( PrintObj, "for IsAllElementsOfIncidenceStructure",
+InstallMethod( PrintObj, 
+	"for IsAllElementsOfIncidenceStructure",
 	[ IsAllElementsOfIncidenceStructure ],
 	function( vs )
 		Print("ElementsOfIncidenceStructure( ",vs!.geometry," )");
@@ -329,19 +335,24 @@ InstallMethod( ShadowOfFlag,
 		return ShadowOfFlag(ps,FlagOfIncidenceStructure(ps,list),str);
 	end);
 	
-
-InstallMethod( Enumerator, [IsElementsOfIncidenceStructure],
-  ## This operation simply makes an enumerator out
-  ## of an iterator.
-  function ( D )
-    local  iter, elms;
-    iter := Iterator( D );
-    elms := [  ];
-    while not IsDoneIterator( iter )  do
-      Add( elms, NextIterator( iter ) );
-    od;
-    return elms;
-  end);
+# CHECKED 4/9/2011 jdb
+#############################################################################
+#O  Enumerator( <D> )
+# generic method that enumerates D, using an Iterator for D
+# assuming D belongs to IsElementsOfIncidenceStructure
+##
+InstallMethod( Enumerator,
+	"generic method for IsElementsOfIncidenceStructure",
+	[IsElementsOfIncidenceStructure],
+	function ( D )
+	local  iter, elms;
+	iter := Iterator( D );
+	elms := [  ];
+	while not IsDoneIterator( iter )  do
+		Add( elms, NextIterator( iter ) );
+	od;
+	return elms;
+	end);
   
 InstallMethod( IncidenceStructure, "for a set, incidence, type function and type set",
   [ IsList, IsFunction, IsFunction, IsList ],
