@@ -367,7 +367,7 @@ the dimension of the vector space on which the group acts.
 
 
 <Section>
-<Heading>Collineation group as a subgroup of a correlation group</Heading>
+<Heading>Natural embedding of a collineation group in a correlation group</Heading>
 In <Package>FinInG</Package> a collineation group is not constructed as a subgroup of a correlation group.
 However, collineations can be multiplied with correlations (if they both belong mathematically to the same 
 correlation group.
@@ -376,6 +376,18 @@ correlation group.
 <#Include SYSTEM "../examples/include/projgroups_mult.include"> 
 </Example>
 
+<ManSection>
+<Func Name="Embedding" Arg="coll, corr"/>
+<Description>
+Let <A>coll</A> be a the full collineation group of a projective space, and <A>corr</A> its full correlation
+group. <Package>FinInG</Package> provides a method for this operation <F>Embedding</F>, returning the natural embedding
+from <A>coll</A> into <A>corr</A>. Remark that only an embedding of a collineation group into a correlation group with exactly the
+same underlying projective space is possible.
+<Example>
+<#Include SYSTEM "../examples/include/projgroups_embedding.include"> 
+</Example>
+</Description>
+</ManSection>
 
 </Section>
 

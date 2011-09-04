@@ -574,24 +574,25 @@ InstallMethod( ProjElsWithFrobWithPSIsom,
     return objectlist;
   end );
 
-InstallMethod( CorrelationGroup, "for a full projective space",
-  [ IsProjectiveSpace and IsProjectiveSpaceRep ],
-  function( ps )
-    local corr,d,f,frob,g,newgens,q,tau;
-    f := ps!.basefield;
-    q := Size(f);
-    d := ProjectiveDimension(ps);
-    g := GL(d+1,q);
-    frob := FrobeniusAutomorphism(f);
-    tau := StandardDualityOfProjectiveSpace(ps);
-    newgens := List(GeneratorsOfGroup(g),x->[x,frob^0,tau^0]);
-    Add(newgens,[One(g),frob,tau^0]);
-    Add(newgens,[One(g),frob^0,tau]);
-    newgens := ProjElsWithFrobWithPSIsom(newgens, f);
-    corr := GroupWithGenerators(newgens);
-    SetSize(corr, Size(g) / (q - 1) * Order(frob) * 2); #* 2 for the standard duality.
-    return corr;
-  end );
+InstallMethod( CorrelationGroup, 
+	"for a full projective space",
+	[ IsProjectiveSpace and IsProjectiveSpaceRep ],
+	function( ps )
+		local corr,d,f,frob,g,newgens,q,tau;
+		f := ps!.basefield;
+		q := Size(f);
+		d := ProjectiveDimension(ps);
+		g := GL(d+1,q);
+		frob := FrobeniusAutomorphism(f);
+		tau := StandardDualityOfProjectiveSpace(ps);
+		newgens := List(GeneratorsOfGroup(g),x->[x,frob^0,tau^0]);
+		Add(newgens,[One(g),frob,tau^0]);
+		Add(newgens,[One(g),frob^0,tau]);
+		newgens := ProjElsWithFrobWithPSIsom(newgens, f);
+		corr := GroupWithGenerators(newgens);
+		SetSize(corr, Size(g) / (q - 1) * Order(frob) * 2); #* 2 for the standard duality.
+		return corr;
+	end );
 
 #####################################################################
 # User friendly Methods to construct a correlation of a projective space.
@@ -660,13 +661,16 @@ InstallMethod( ProjectiveSpaceIsomorphism, [ IsProjGrpElWithFrobWithPSIsom and
   c -> c!.psisom );
 
 #####################################################################
-# Embedding from a collineation group to a correlation group.
+# Embedding from a collineation group into a correlation group.
 #####################################################################
 InstallOtherMethod( Embedding,
     "for a collineation group",
 	[IsProjectiveGroupWithFrob, IsProjGroupWithFrobWithPSIsom],
 	function(group,corr)
 	local hom;
+	if not ((BaseField(group)=BaseField(corr)) and (Dimension(group)=Dimension(corr))) then
+	  Error("Embedding not allowed, dimension and/or base field do not match");
+	fi;
 	hom :=  GroupHomomorphismByFunction(group,corr,
 	y->ProjElWithFrobWithPSIsom(y!.mat,y!.frob,y!.fld),false,
 	function(x)

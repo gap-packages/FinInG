@@ -315,7 +315,7 @@ polar space induced by <A>f</A>.
 <Section>
 <Heading>Commuting polarities</Heading>
 
-<Package>FinInG</Package> constructs packages as correlations. This allows polarities to be multiplied
+<Package>FinInG</Package> constructs polarites of projective spaces as correlations. This allows polarities to be multiplied
 easily, resulting in a collineation. The resulting collineation is constructed in the correlation group
 but can be mapped onto its unique representative in the collineation group. We provide an example.
 
