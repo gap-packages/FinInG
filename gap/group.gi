@@ -37,6 +37,12 @@
 
 ## helping function. came from projectivespace.gi
 
+# CHECKED 5/09/11 jdb
+#############################################################################
+#F  MakeAllProjectivePoints( f,d )
+# Global function to compute all points of a projective space. Not for users.
+# <f>: field; <d>: *projective* dimension.
+##
 InstallGlobalFunction( MakeAllProjectivePoints, 
 function(f,d)
 
@@ -93,6 +99,12 @@ function(f,d)
   od;
   return Set(sp);
 end);
+
+###################################################################
+# 
+#
+###################################################################
+
 
 
 ###################################################################
