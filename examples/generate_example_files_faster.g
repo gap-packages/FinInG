@@ -28,7 +28,7 @@ examplesfiles := ["examples_pg24", "examples_hermitian", "examples_embedW", "exa
 incgeomfiles := ["incgeom_categories1", "incgeom_rank", "incgeom_typesofels", "incgeom_categories2", 
                  "incgeom_elementsj", "incgeom_short",
                  "incgeom_solids", "incgeom_isincident", "incgeom_shadowofelement",
-		 "incgeom_shadowofflag" ]; 
+		 "incgeom_shadowofflag", "incgeom_iterator" ]; 
 
 morphismsfiles := ["morphisms_intertwiners","morphisms_embedding1","morphisms_embedding2","morphisms_typesubspace",
           "morphisms_fieldreduc1", "morphisms_fieldreduc2","morphisms_subfield1","morphisms_subfield2",
@@ -58,7 +58,7 @@ projgroupsfiles := ["projgroups_basefield",
 	  "projgroups_stduality", "projgroups_underlyingmatrix", "projgroups_onprojsubspaces",
 	  "projgroups_onprojsubspacesreversing", "projgroups_simgroup", 
 	  "projgroups_isomgroup", "projgroups_specialisomgroup", 
-	  "projgroups_mult"];;
+	  "projgroups_mult", "projgroups_embedding"];;
 
 polaritiespsfiles := ["polarities_construct1", "polarities_construct2",
           "polarities_fromform", "polarities_toform", "polarities_basefield", 
@@ -75,7 +75,7 @@ diagramfiles := ["diagram_cosetgeom"];
 
 websitefiles := ["web_hyperoval24", "web_inumbersherm", "web_embedding", "web_spreads", "web_ovoidq63"];
 
-files := [ "projgroups_mult" ];
+files := [ "projgroups_embedding", "incgeom_iterator" ];
 
 #initialize directorynames
 #exampledir = dir where .g files are located : ".../pkg/fining/examples/gap"

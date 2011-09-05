@@ -4,3 +4,4 @@ planes := Planes(ps);
 iter := Iterator(planes);
 NextIterator(iter);
 IsDoneIterator(iter);
+quit;

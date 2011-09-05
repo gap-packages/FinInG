@@ -1,0 +1,10 @@
+gap&gt; ps := PG(3,7);
+ProjectiveSpace(3, 7)
+gap&gt; planes := Planes(ps);
+&lt;planes of ProjectiveSpace(3, 7)&gt;
+gap&gt; iter := Iterator(planes);
+&lt;iterator&gt;
+gap&gt; NextIterator(iter);
+&lt;a plane in ProjectiveSpace(3, 7)&gt;
+gap&gt; IsDoneIterator(iter);
+false
