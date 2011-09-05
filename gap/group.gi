@@ -101,17 +101,68 @@ function(f,d)
 end);
 
 ###################################################################
-# 
-#
+# Construction of "projective elements", that is matrices modulo scalars:
 ###################################################################
 
+## A lot of the following is now obselete. We should consider
+## deleting some of it.
 
+# CHECKED 5/09/11 jdb
+#############################################################################
+#O  ProjEl( <mat> )
+# method to construct an object in the category IsProjGrpEl, i.e. projectivities, 
+# aka "matrices modulo scalars". This method is not intended for the users. 
+# it has no checks built in. It relies on DefaultFieldOfMatrix to determine the 
+# field to be used.
+##
+InstallMethod( ProjEl, 
+	"for a ffe matrix",
+	[IsMatrix and IsFFECollColl],
+	function( m )
+		local el, m2, f;
+	    m2 := ShallowCopy( m );
+		f := DefaultFieldOfMatrix(m);
+		ConvertToMatrixRepNC( m2, f );
+		el := rec( mat := m2, fld := f );
+		Objectify( NewType( ProjElsFamily,
+							IsProjGrpEl and
+							IsProjGrpElRep ), el );
+		return el;
+	end );
 
-###################################################################
-# Use friendly code which makes projectivities and collineations
-# these user fiendly functions do some checks.
-###################################################################
+# CHECKED 5/09/11 jdb
+#############################################################################
+#O  ProjEls( <mat> )
+# method to construct objects in the category IsProjGrpEl, i.e. projectivities, 
+# aka "matrices modulo scalars". This method is not intended for the users.
+# it has no checks built in, and is almost liek ProjEl.
+## 
+InstallMethod( ProjEls, "for a list of ffe matrices",
+  [IsList],
+  function( l )
+    local el,fld,ll,m,ty,m2;
+    fld := FieldOfMatrixList(l);
+    ll := [];
+    ty := NewType( ProjElsFamily,
+                   IsProjGrpEl and
+                   IsProjGrpElRep );
+    for m in l do
+        m2 := ShallowCopy(m);
+		ConvertToMatrixRepNC( m2, fld );
+        el := rec( mat := m2, fld := fld );
+        Objectify( ty, el );
+        Add(ll,el);
+    od;
+    return ll;
+  end );
 
+# CHECKED 5/09/11 jdb
+#############################################################################
+#O  Projectivity( <mat>, <gf> )
+# method to construct an object in the category IsProjGrpEl, i.e. a projectivity, 
+# This method is intended for the users, and contains
+# a check whether the matrix is non-singular.
+## 
 InstallMethod( Projectivity, [ IsMatrix and IsFFECollColl, IsField],
   function( mat, gf )
     local el, m2;
@@ -132,25 +183,153 @@ InstallMethod( Projectivity, [ IsMatrix and IsFFECollColl, IsField],
                         IsProjGrpElRep ), el );
     return el;  
   end );
+
+###################################################################
+# Construction of "projective semilinear maps", that is matrices 
+# modulo scalars with frobenius automorphism
+###################################################################
+
+# CHECKED 5/09/11 jdb
+#############################################################################
+#O  ProjElWithFrob( <mat>, <frob>, <f> )
+# method to construct an object in the category IsProjGrpElWithFrob, i.e. projective 
+# semilinear maps aka "matrices modulo scalars with frob". This method is not 
+# intended for the users, it has no checks built in.
+##
+InstallMethod( ProjElWithFrob, 
+	"for a ffe matrix and a Frobenius automorphism, and a field",
+	[IsMatrix and IsFFECollColl,
+	IsRingHomomorphism and IsMultiplicativeElementWithInverse,
+	IsField],
+	function( m, frob, f )
+		local el, m2;
+		m2 := ShallowCopy(m);
+		ConvertToMatrixRepNC( m2, f );
+		el := rec( mat := m2, fld := f, frob := frob );
+		Objectify( ProjElsWithFrobType, el );
+		return el;
+	end );
+
+# CHECKED 5/09/11 jdb
+#############################################################################
+#O  ProjElWithFrob( <mat>, <frob> )
+# method to construct an object in the category IsProjGrpElWithFrob, i.e. projective 
+# semilinear maps aka "matrices modulo scalars with frob". This method is not 
+# intended for the users, although there are some checks built in. 
+# This method relies on DefaultFieldOfMatrix and Range(<frbo>) to determine the field to be used
+##
+InstallMethod( ProjElWithFrob, 
+	"for a ffe matrix and a Frobenius automorphism",
+	[IsMatrix and IsFFECollColl,
+	IsRingHomomorphism and IsMultiplicativeElementWithInverse],
+	function ( m, frob )
+		local matrixfield, frobfield, mchar, fchar, dim;
+		matrixfield := DefaultFieldOfMatrix(m);
+		mchar := Characteristic(matrixfield);
+		frobfield := Range(frob);
+		fchar := Characteristic(frobfield);
+		if mchar <> fchar then
+		  Error("the matrix and automorphism do not agree on the characteristic");
+		fi;
+		
+		# figure out a field which contains the matrices and admits the
+		# automorphisms (nontrivially)
+		dim := Lcm(
+		  LogInt(Size(matrixfield),mchar),
+			LogInt(Size(frobfield),fchar)
+			);
+	return ProjElWithFrob( m, frob, GF(mchar^dim) );
+	end);
+ 
+# CHECKED 5/09/11 jdb
+#############################################################################
+#O  ProjElWithFrob( <mat>, <frob> )
+# method to construct an object in the category IsProjGrpElWithFrob, i.e. projective 
+# semilinear maps aka "matrices modulo scalars with frob". This method is not 
+# intended for the users; in fact this method is almost the same as the first version.
+# This method relies on DefaultFieldOfMatrix to determine the field to be used
+##
+InstallMethod( ProjElWithFrob, 
+	"for a ffe matrix and a trivial Frobenius automorphism",
+	[IsMatrix and IsFFECollColl, IsMapping and IsOne],
+	function( m, frob )
+		local el, m2;
+		m2 := ShallowCopy(m); 
+		ConvertToMatrixRepNC( m2 );
+		el := rec( mat := m2, fld := DefaultFieldOfMatrix(m), frob := frob );
+		Objectify( ProjElsWithFrobType, el );
+		return el;
+	end );
+
+InstallMethod( ProjElsWithFrob,
+"for a list of pairs of ffe matrices and frobenius automorphisms, and a field",
+	[IsList, IsField],
+	function( l, f )
+	  local objectlist, m;
+		objectlist := [];
+		for m in l do
+		  Add(objectlist, ProjElWithFrob(m[1],m[2],f));
+		od;
+		return objectlist;
+	end );
+
+InstallMethod( ProjElsWithFrob, 
+  "for a list of pairs of ffe matrices and Frobenius automorphisms",
+  [IsList],
+  function( l )
+    local matrixfield, frobfield, mchar, fchar, oldchar,
+		      f, dim, m, objectlist;
+
+    if(IsEmpty(l)) then
+		  return [];
+		fi;
+		
+		dim := 1;
+
+		# get the characteristic of the field that we want to work in.
+		# it should be the same for every matrix and every automorphism --
+		# if not we will raise an error.
+		oldchar := Characteristic(l[1][1]);
+		
+		for m in l do
+  		matrixfield := DefaultFieldOfMatrix(m[1]);
+  		mchar := Characteristic(matrixfield);
+  		frobfield := Range(m[2]);
+  		fchar := Characteristic(frobfield);
+  		if mchar <> fchar or mchar <> oldchar then
+  		  Error("matrices and automorphisms do not agree on the characteristic");
+  		fi;
+		
+  		# at each step we increase the dimension of the desired field
+		# so that it contains all the matrices and admits all the automorphisms
+		# (nontrivially.)
+  
+  		dim := Lcm(
+			  dim,
+  		  LogInt(Size(matrixfield),mchar),
+  			LogInt(Size(frobfield),fchar)
+  			);
+  	od;
+
+		f := GF(oldchar ^ dim);
+		objectlist := [];
+		for m in l do
+		  Add(objectlist, ProjElWithFrob(m[1],m[2],f));
+		od;
+		return objectlist;
+  end );
+
+
+
+
+
+###################################################################
+# Use friendly code which makes projectivities 
+# these user fiendly functions do some checks.
+###################################################################
+
   
 
-InstallMethod( ProjectivityByImageOfStandardFrameNC, [ IsProjectiveSpace, IsList ],
-	function(pg,image)
-	# If the dimension of the projective space is n, then
-	# given a frame, there is a 
-	# unique projectivity mapping the standard frame to this set of points
-	# THERE IS NO CHECK TO SEE IF THE GIVEN IMAGE CONSISTS OF N+2 POINTS NO N+1 L.D.
-	local d,i,x,vlist,mat,coeffs,mat2;
-	if not Length(image)=Dimension(pg)+2 then 
-	Error("The argument does not have the required length to be the image of a frame");
-	fi;
-	d:=Dimension(pg);
-	vlist:=List(image,x->x!.obj);
-	mat:=List([1..d+1],i->vlist[i]);
-	coeffs:=vlist[d+2]*(mat^-1);
-	mat2:=List([1..d+1],i->coeffs[i]*mat[i]);
-	return CollineationOfProjectiveSpace(mat2,pg!.basefield);
-end );
 
 
 
@@ -174,6 +353,37 @@ InstallMethod( ProjectiveSemilinearMap,
     return ProjElWithFrob( mat, frob, gf);
   end );
 
+# CHECKED 5/09/11 jdb
+#############################################################################
+#O  ProjectivityByImageOfStandardFrameNC( <pg>, <image> )
+# method to construct a projectivity if the image of a standard frame is given.
+# THERE IS NO CHECK TO SEE IF THE GIVEN IMAGE CONSISTS OF N+2 POINTS NO N+1 L.D.
+# for this reason, this function is not documented (yet).
+# despite its name (projectivity), this function returns a projective semlinear map.
+## 
+InstallMethod( ProjectivityByImageOfStandardFrameNC, [ IsProjectiveSpace, IsList ],
+	function(pg,image)
+	# If the dimension of the projective space is n, then
+	# given a frame, there is a 
+	# unique projectivity mapping the standard frame to this set of points
+	# THERE IS NO CHECK TO SEE IF THE GIVEN IMAGE CONSISTS OF N+2 POINTS NO N+1 L.D.
+	local d,i,x,vlist,mat,coeffs,mat2;
+	if not Length(image)=Dimension(pg)+2 then 
+	Error("The argument does not have the required length to be the image of a frame");
+	fi;
+	d:=Dimension(pg);
+	vlist:=List(image,x->x!.obj);
+	mat:=List([1..d+1],i->vlist[i]);
+	coeffs:=vlist[d+2]*(mat^-1);
+	mat2:=List([1..d+1],i->coeffs[i]*mat[i]);
+	return CollineationOfProjectiveSpace(mat2,pg!.basefield);
+end );
+
+
+
+
+
+
 InstallMethod( UnderlyingMatrix, [ IsProjGrpEl and IsProjGrpElRep],
   c -> c!.mat );
   
@@ -186,43 +396,6 @@ InstallMethod( FieldAutomorphism, [ IsProjGrpElWithFrob and
   c -> c!.frob );
 
 
-###################################################################
-# Code for "projective elements", that is matrices modulo scalars:
-###################################################################
-
-## A lot of the following is now obselete. We should consider
-## deleting some of it.
-
-InstallMethod( ProjEl, "for a ffe matrix",
-  [IsMatrix and IsFFECollColl],
-  function( m )
-    local el, m2, f;
-    f := DefaultFieldOfMatrix(m);
-    m2 := ConvertToMatrixRepNC( m, f );
-    el := rec( mat := m2, fld := f );
-    Objectify( NewType( ProjElsFamily,
-                        IsProjGrpEl and
-                        IsProjGrpElRep ), el );
-    return el;
-  end );
-
-InstallMethod( ProjEls, "for a list of ffe matrices",
-  [IsList],
-  function( l )
-    local el,fld,ll,m,ty,m2;
-    fld := FieldOfMatrixList(l);
-    ll := [];
-    ty := NewType( ProjElsFamily,
-                   IsProjGrpEl and
-                   IsProjGrpElRep );
-    for m in l do
-        m2 := ConvertToMatrixRepNC( m, fld );
-        el := rec( mat := m, fld := fld );
-        Objectify( ty, el );
-        Add(ll,el);
-    od;
-    return ll;
-  end );
 
 InstallMethod( ViewObj, "for a projective group element",
   [IsProjGrpEl and IsProjGrpElRep],
@@ -723,112 +896,6 @@ InstallOtherMethod( \^,
     return m;
   end );
 
-
-InstallMethod( ProjElWithFrob, 
-  "for a ffe matrix and a Frobenius automorphism, and a field",
-  [IsMatrix and IsFFECollColl,
-	  IsRingHomomorphism and IsMultiplicativeElementWithInverse,
-	  IsField],
-  function( m, frob, f )
-    local el, m2;
-    m2 := ConvertToMatrixRepNC( m, f );
-    el := rec( mat := m, fld := f, frob := frob );
-    Objectify( ProjElsWithFrobType, el );
-    return el;
-  end );
-
-InstallMethod( ProjElWithFrob, 
-  "for a ffe matrix and a Frobenius automorphism",
-  [IsMatrix and IsFFECollColl,
-	  IsRingHomomorphism and IsMultiplicativeElementWithInverse],
-	function ( m, frob )
-	  local matrixfield, frobfield, mchar, fchar, dim;
-		
-		matrixfield := DefaultFieldOfMatrix(m);
-		mchar := Characteristic(matrixfield);
-		frobfield := Range(frob);
-		fchar := Characteristic(frobfield);
-		if mchar <> fchar then
-		  Error("the matrix and automorphism do not agree on the characteristic");
-		fi;
-		
-		# figure out a field which contains the matrices and admits the
-		# automorphisms (nontrivially)
-		dim := Lcm(
-		  LogInt(Size(matrixfield),mchar),
-			LogInt(Size(frobfield),fchar)
-			);
-	  return ProjElWithFrob( m, frob, GF(mchar^dim) );
-  end);
- 
-InstallMethod( ProjElWithFrob, 
-  "for a ffe matrix and a trivial Frobenius automorphism",
-  [IsMatrix and IsFFECollColl, IsMapping and IsOne],
-  function( m, frob )
-    local el, m2;
-    m2 := ConvertToMatrixRepNC( m );
-    el := rec( mat := m, fld := DefaultFieldOfMatrix(m), frob := frob );
-    Objectify( ProjElsWithFrobType, el );
-    return el;
-  end );
-
-InstallMethod( ProjElsWithFrob,
-"for a list of pairs of ffe matrices and frobenius automorphisms, and a field",
-	[IsList, IsField],
-	function( l, f )
-	  local objectlist, m;
-		objectlist := [];
-		for m in l do
-		  Add(objectlist, ProjElWithFrob(m[1],m[2],f));
-		od;
-		return objectlist;
-	end );
-
-InstallMethod( ProjElsWithFrob, 
-  "for a list of pairs of ffe matrices and Frobenius automorphisms",
-  [IsList],
-  function( l )
-    local matrixfield, frobfield, mchar, fchar, oldchar,
-		      f, dim, m, objectlist;
-
-    if(IsEmpty(l)) then
-		  return [];
-		fi;
-		
-		dim := 1;
-
-		# get the characteristic of the field that we want to work in.
-		# it should be the same for every matrix and every automorphism --
-		# if not we will raise an error.
-		oldchar := Characteristic(l[1][1]);
-		
-		for m in l do
-  		matrixfield := DefaultFieldOfMatrix(m[1]);
-  		mchar := Characteristic(matrixfield);
-  		frobfield := Range(m[2]);
-  		fchar := Characteristic(frobfield);
-  		if mchar <> fchar or mchar <> oldchar then
-  		  Error("matrices and automorphisms do not agree on the characteristic");
-  		fi;
-		
-  		# at each step we increase the dimension of the desired field
-		# so that it contains all the matrices and admits all the automorphisms
-		# (nontrivially.)
-  
-  		dim := Lcm(
-			  dim,
-  		  LogInt(Size(matrixfield),mchar),
-  			LogInt(Size(frobfield),fchar)
-  			);
-  	od;
-
-		f := GF(oldchar ^ dim);
-		objectlist := [];
-		for m in l do
-		  Add(objectlist, ProjElWithFrob(m[1],m[2],f));
-		od;
-		return objectlist;
-  end );
 
 InstallMethod( ViewObj, "for a projective group element with Frobenius",
   [IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],

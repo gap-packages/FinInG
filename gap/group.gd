@@ -2,21 +2,22 @@
 ##
 ##  group.gd              FinInG package
 ##                                                              John Bamberg
-## 								Anton Betten
+##                                                              Anton Betten
 ##                                                              Jan De Beule
 ##                                                             Philippe Cara
-## 							      Michel Lavrauw
+##                                                            Michel Lavrauw
 ##                                                                 Maska Law
 ##                                                           Max Neunhoeffer
 ##                                                            Michael Pauley
 ##                                                             Sven Reichard
 ##
-##  Copyright 2006 University of Western Australia, Perth
-##                 Lehrstuhl D fuer Mathematik, RWTH Aachen
-##                 Ghent University
-##                 Colorado State University
-##                 Vrije Universiteit Brussel
-##
+##  Copyright 2011	Colorado State University, Fort Collins
+##					Università degli Studi di Padova
+##					Universeit Gent
+##					University of St. Andrews
+##					University of Western Australia, Perth
+##                  Vrije Universiteit Brussel
+##                 
 ##  Declaration stuff for some new group representations
 ##
 ##  Declaration stuff for groups. changed by the new gang of four september
@@ -35,7 +36,8 @@ if PackageInfo("GenSS")[1]!.Version > "0.95" then
 fi;
 
 ###################################################################
-# Code for "projective elements", that is matrices modulo scalars:
+# Construction operations for projective elements, that is matrices modulo scalars
+# including representations
 ###################################################################
 
 DeclareCategory( "IsProjGrpEl", IsComponentObjectRep and IsMultiplicativeElementWithInverse );
@@ -58,23 +60,16 @@ DeclareSynonym( "IsProjectiveGroup", IsGroup and IsProjGrpElCollection);
 
 InstallTrueMethod(IsHandledByNiceMonomorphism, IsProjectiveGroup);
 
-DeclareGlobalFunction( "OnProjPoints" );
-DeclareGlobalFunction( "OnProjSubspacesNoFrob" );
+DeclareOperation( "Projectivity", [ IsList, IsField] );
 
-DeclareOperation( "ActionOnAllProjPoints", [IsProjectiveGroup] );
-DeclareOperation( "SetAsNiceMono", [IsProjectiveGroup, IsGroupHomomorphism] );
-
-DeclareAttribute( "Dimension", IsProjectiveGroup );
-DeclareProperty( "CanComputeActionOnPoints", IsProjectiveGroup );
-
-#################################################
-# Frobenius automorphisms and groups using them:
-#################################################
+###################################################################
+# Construction operations for projective semilinear elements, that is matrices modulo scalars
+# and a Frobenius automorphism, including representations
+###################################################################
 
 DeclareCategory( "IsProjGrpElWithFrob", IsComponentObjectRep and IsMultiplicativeElementWithInverse );
 DeclareCategoryCollections( "IsProjGrpElWithFrob" );
-InstallTrueMethod( IsGeneratorsOfMagmaWithInverses, 
-                 IsProjGrpElWithFrobCollection );
+InstallTrueMethod( IsGeneratorsOfMagmaWithInverses, IsProjGrpElWithFrobCollection );
 
 DeclareRepresentation( "IsProjGrpElWithFrobRep", IsProjGrpElWithFrob, ["mat","fld","frob"] );
 
@@ -86,26 +81,39 @@ BindGlobal( "ProjElsWithFrobType",
      NewType( ProjElsWithFrobFamily, 
               IsProjGrpElWithFrob and IsProjGrpElWithFrobRep) );
 
-DeclareOperation( "ProjElWithFrob",
-   [IsMatrix and IsFFECollColl, IsMapping] );
-DeclareOperation( "ProjElWithFrob",
-   [IsMatrix and IsFFECollColl, IsMapping, IsField] );
+DeclareOperation( "ProjElWithFrob", [IsMatrix and IsFFECollColl, IsMapping] );
+DeclareOperation( "ProjElWithFrob", [IsMatrix and IsFFECollColl, IsMapping, IsField] );
 DeclareOperation( "ProjElsWithFrob", [IsList] );
 DeclareOperation( "ProjElsWithFrob", [IsList, IsField] );
-DeclareOperation( "Projectivity", [ IsList, IsField] );
 
 DeclareOperation( "ProjectiveSemilinearMap", [ IsList, IsField] );
 DeclareOperation( "ProjectiveSemilinearMap", [ IsList, IsMapping, IsField] );
 DeclareSynonym( "CollineationOfProjectiveSpace", ProjectiveSemilinearMap);
-
 DeclareOperation( "ProjectivityByImageOfStandardFrameNC", [IsProjectiveSpace, IsList] );
 
-DeclareOperation( "UnderlyingMatrix", [ IsProjGrpEl and IsProjGrpElRep] );
+
+#################################################
+# Frobenius automorphisms and groups using them:
+#################################################
+
+DeclareGlobalFunction( "OnProjPoints" );
+DeclareGlobalFunction( "OnProjSubspacesNoFrob" );
+
+DeclareOperation( "ActionOnAllProjPoints", [IsProjectiveGroup] );
+DeclareOperation( "SetAsNiceMono", [IsProjectiveGroup, IsGroupHomomorphism] );
+
+DeclareAttribute( "Dimension", IsProjectiveGroup );
+DeclareProperty( "CanComputeActionOnPoints", IsProjectiveGroup );
+
+
+
+
+
 DeclareOperation( "UnderlyingMatrix", [ IsProjGrpElWithFrob and IsProjGrpElWithFrobRep ] );
+DeclareOperation( "UnderlyingMatrix", [ IsProjGrpEl and IsProjGrpElRep] );
 DeclareOperation( "FieldAutomorphism", [ IsProjGrpElWithFrob and IsProjGrpElWithFrobRep ] );
 
-DeclareSynonym( "IsProjectiveGroupWithFrob", 
-  IsGroup and IsProjGrpElWithFrobCollection);
+DeclareSynonym( "IsProjectiveGroupWithFrob", IsGroup and IsProjGrpElWithFrobCollection);
 
 InstallTrueMethod( IsHandledByNiceMonomorphism, IsProjectiveGroupWithFrob );
 
