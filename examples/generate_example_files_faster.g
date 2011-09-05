@@ -58,7 +58,7 @@ projgroupsfiles := ["projgroups_basefield",
 	  "projgroups_stduality", "projgroups_underlyingmatrix", "projgroups_onprojsubspaces",
 	  "projgroups_onprojsubspacesreversing", "projgroups_simgroup", 
 	  "projgroups_isomgroup", "projgroups_specialisomgroup", 
-	  "projgroups_mult", "projgroups_embedding"];;
+	  "projgroups_mult", "projgroups_embedding", "projgroups_representative"];;
 
 polaritiespsfiles := ["polarities_construct1", "polarities_construct2",
           "polarities_fromform", "polarities_toform", "polarities_basefield", 
@@ -75,7 +75,7 @@ diagramfiles := ["diagram_cosetgeom"];
 
 websitefiles := ["web_hyperoval24", "web_inumbersherm", "web_embedding", "web_spreads", "web_ovoidq63"];
 
-files := [ "projgroups_embedding", "incgeom_iterator" ];
+files := [ "projgroups_representative" ];
 
 #initialize directorynames
 #exampledir = dir where .g files are located : ".../pkg/fining/examples/gap"

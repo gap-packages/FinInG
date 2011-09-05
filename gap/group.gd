@@ -91,6 +91,13 @@ DeclareOperation( "ProjectiveSemilinearMap", [ IsList, IsMapping, IsField] );
 DeclareSynonym( "CollineationOfProjectiveSpace", ProjectiveSemilinearMap);
 DeclareOperation( "ProjectivityByImageOfStandardFrameNC", [IsProjectiveSpace, IsList] );
 
+###################################################################
+# Some operations for elements
+###################################################################
+
+DeclareOperation( "UnderlyingMatrix", [ IsProjGrpElWithFrob and IsProjGrpElWithFrobRep ] );
+DeclareOperation( "UnderlyingMatrix", [ IsProjGrpEl and IsProjGrpElRep] );
+DeclareOperation( "FieldAutomorphism", [ IsProjGrpElWithFrob and IsProjGrpElWithFrobRep ] );
 
 #################################################
 # Frobenius automorphisms and groups using them:
@@ -106,14 +113,10 @@ DeclareAttribute( "Dimension", IsProjectiveGroup );
 DeclareProperty( "CanComputeActionOnPoints", IsProjectiveGroup );
 
 
-
-
-
-DeclareOperation( "UnderlyingMatrix", [ IsProjGrpElWithFrob and IsProjGrpElWithFrobRep ] );
-DeclareOperation( "UnderlyingMatrix", [ IsProjGrpEl and IsProjGrpElRep] );
-DeclareOperation( "FieldAutomorphism", [ IsProjGrpElWithFrob and IsProjGrpElWithFrobRep ] );
-
 DeclareSynonym( "IsProjectiveGroupWithFrob", IsGroup and IsProjGrpElWithFrobCollection);
+
+
+
 
 InstallTrueMethod( IsHandledByNiceMonomorphism, IsProjectiveGroupWithFrob );
 

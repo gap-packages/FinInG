@@ -11,11 +11,13 @@
 ##                                                            Michael Pauley
 ##                                                             Sven Reichard
 ##
-##  Copyright 2008 University of Western Australia, Perth
-##                 Lehrstuhl D fuer Mathematik, RWTH Aachen
-##                 Ghent University
-##                 Colorado State University
-##                 Vrije Universiteit Brussel
+##  Copyright 2011	Colorado State University, Fort Collins
+##					Università degli Studi di Padova
+##					Universeit Gent
+##					University of St. Andrews
+##					University of Western Australia, Perth
+##                  Vrije Universiteit Brussel
+##                 
 ##
 ##  Implementation stuff for some new group representations
 ##
@@ -25,7 +27,7 @@
 #
 # Things To Do:
 #
-# - Order for a projective semlinear element
+# - Order for a projective semilinear element
 # - GammaOminus (q even)
 # - Optimise the action operations/functions
 # - Have ProjEl, ProjElWithFrob, and ProjElWithFrobWithVSIsom
@@ -160,7 +162,7 @@ InstallMethod( ProjEls, "for a list of ffe matrices",
 #############################################################################
 #O  Projectivity( <mat>, <gf> )
 # method to construct an object in the category IsProjGrpEl, i.e. a projectivity, 
-# This method is intended for the users, and contains
+# This method is intended for the user, and contains
 # a check whether the matrix is non-singular.
 ## 
 InstallMethod( Projectivity, [ IsMatrix and IsFFECollColl, IsField],
@@ -221,9 +223,13 @@ InstallMethod( ProjElWithFrob,
 InstallMethod( ProjElWithFrob, 
 	"for a ffe matrix and a Frobenius automorphism",
 	[IsMatrix and IsFFECollColl,
-	IsRingHomomorphism and IsMultiplicativeElementWithInverse],
+	IsRingHomomorphism and IsMultiplicativeElementWithInverse], 
+	1, #to set higher priority than the next method.
 	function ( m, frob )
 		local matrixfield, frobfield, mchar, fchar, dim;
+		if IsOne(frob) then
+		  TryNextMethod();
+		fi;
 		matrixfield := DefaultFieldOfMatrix(m);
 		mchar := Characteristic(matrixfield);
 		frobfield := Range(frob);
@@ -248,12 +254,19 @@ InstallMethod( ProjElWithFrob,
 # semilinear maps aka "matrices modulo scalars with frob". This method is not 
 # intended for the users; in fact this method is almost the same as the first version.
 # This method relies on DefaultFieldOfMatrix to determine the field to be used
+# This method should only be called from the above one, if IsOne(frob) is true,
+# but we built in a little check to abvoid disasters.
 ##
 InstallMethod( ProjElWithFrob, 
 	"for a ffe matrix and a trivial Frobenius automorphism",
-	[IsMatrix and IsFFECollColl, IsMapping and IsOne],
+	[IsMatrix and IsFFECollColl,
+	IsRingHomomorphism and IsMultiplicativeElementWithInverse], 
+	0, #to set lower priority than the previous method.
 	function( m, frob )
 		local el, m2;
+		if not IsOne(frob) then
+		  Error("<frob> is not trivial. Something went wrong when calling this method");
+		fi;
 		m2 := ShallowCopy(m); 
 		ConvertToMatrixRepNC( m2 );
 		el := rec( mat := m2, fld := DefaultFieldOfMatrix(m), frob := frob );
@@ -261,36 +274,52 @@ InstallMethod( ProjElWithFrob,
 		return el;
 	end );
 
+# CHECKED 5/09/11 jdb
+#############################################################################
+#O  ProjElsWithFrob( <l>, <f> )
+# method to construct a list of objects in the category IsProjGrpElWithFrob,
+# using a list of pairs of matrix/frobenius automorphism, and a field.
+# This method relies of ProjElWithFrob, and is not inteded for the user.
+# no checks are built in. This could result in e.g. the use of a field that is 
+# not compatible with (some of) the matrices, and result in a non user friendly 
+# error
+##
 InstallMethod( ProjElsWithFrob,
-"for a list of pairs of ffe matrices and frobenius automorphisms, and a field",
+	"for a list of pairs of ffe matrices and frobenius automorphisms, and a field",
 	[IsList, IsField],
 	function( l, f )
-	  local objectlist, m;
+	local objectlist, m;
 		objectlist := [];
 		for m in l do
-		  Add(objectlist, ProjElWithFrob(m[1],m[2],f));
+			Add(objectlist, ProjElWithFrob(m[1],m[2],f));
 		od;
 		return objectlist;
 	end );
 
+# CHECKED 5/09/11 jdb
+#############################################################################
+#O  ProjElsWithFrob( <l>, <f> )
+# method to construct a list of objects in the category IsProjGrpElWithFrob,
+# using a list of pairs of matrix/frobenius automorphism. It is checked if 
+# the given matrices/automorphism pairs can be considered over a common field.
+# This method relies eventually also on ProjElWithFrob, and is not inteded for the user,
+# although the mechanism of fining the suitable field will display an error 
+# if this is not possible.
+##
 InstallMethod( ProjElsWithFrob, 
-  "for a list of pairs of ffe matrices and Frobenius automorphisms",
-  [IsList],
-  function( l )
-    local matrixfield, frobfield, mchar, fchar, oldchar,
-		      f, dim, m, objectlist;
-
+	"for a list of pairs of ffe matrices and Frobenius automorphisms",
+	[IsList],
+	function( l )
+    local matrixfield, frobfield, mchar, fchar, oldchar, f, dim, m, objectlist;
     if(IsEmpty(l)) then
-		  return [];
+		return [];
 		fi;
-		
 		dim := 1;
 
 		# get the characteristic of the field that we want to work in.
 		# it should be the same for every matrix and every automorphism --
 		# if not we will raise an error.
 		oldchar := Characteristic(l[1][1]);
-		
 		for m in l do
   		matrixfield := DefaultFieldOfMatrix(m[1]);
   		mchar := Characteristic(matrixfield);
@@ -304,54 +333,60 @@ InstallMethod( ProjElsWithFrob,
 		# so that it contains all the matrices and admits all the automorphisms
 		# (nontrivially.)
   
-  		dim := Lcm(
-			  dim,
-  		  LogInt(Size(matrixfield),mchar),
-  			LogInt(Size(frobfield),fchar)
-  			);
-  	od;
+  		dim := Lcm( dim, LogInt(Size(matrixfield),mchar),
+  			LogInt(Size(frobfield),fchar));
+		od;
 
 		f := GF(oldchar ^ dim);
 		objectlist := [];
 		for m in l do
-		  Add(objectlist, ProjElWithFrob(m[1],m[2],f));
+			Add(objectlist, ProjElWithFrob(m[1],m[2],f));
 		od;
 		return objectlist;
-  end );
+	end );
 
 
-
-
-
-###################################################################
-# Use friendly code which makes projectivities 
-# these user fiendly functions do some checks.
-###################################################################
-
-  
-
-
-
-
-
+# CHECKED 5/09/11 jdb
+#############################################################################
+#O  ProjectiveSemilinearMap( <mat>, <gf> )
+# method to construct an object in the category IsProjGrpElWithFrob, i.e. a 
+# collineation of a projective space, aka a projective semilinear map. 
+# This method is intended for the user, and contains
+# a check whether the matrix is non-singular. The method relies on ProjElWithFrob,
+# which will produce an error if the entries of <mat> do not all belong to <gf>
+# the automorphism will be trivial
+## 
 InstallMethod( ProjectiveSemilinearMap, 
-  [ IsMatrix and IsFFECollColl, IsField],
-  function( mat, gf )
+	[ IsMatrix and IsFFECollColl, IsField],
+	function( mat, gf )
     if Rank(mat) <> Size(mat) then
-      Error("<mat> must not be singular");
+		Error("<mat> must not be singular");
     fi;
     return ProjElWithFrob( mat, IdentityMapping(gf), gf);
-  end );
+	end );
   
+# CHECKED 5/09/11 jdb
+# 5/09/11 jdb: added a check to see if frob has <gf> as source
+#############################################################################
+#O  ProjectiveSemilinearMap( <mat>, <frob>, <gf> )
+# method to construct an object in the category IsProjGrpElWithFrob, i.e. a 
+# collineation of a projective space, aka a projective semilinear map. 
+# This method is intended for the user, and contains
+# a check whether the matrix is non-singular. The method relies on ProjElWithFrob,
+# which will produce an error if the entries of <mat> do not all belong to <gf>
+## 
 InstallMethod( ProjectiveSemilinearMap,  
-  [ IsMatrix and IsFFECollColl, IsRingHomomorphism and
+	[ IsMatrix and IsFFECollColl, IsRingHomomorphism and
     IsMultiplicativeElementWithInverse, IsField], 
-  function( mat, frob, gf )
+	function( mat, frob, gf )
     if Rank(mat) <> Size(mat) then
-      Error("<mat> must not be singular");
+		Error("<mat> must not be singular");
     fi;
-    return ProjElWithFrob( mat, frob, gf);
-  end );
+    if Source(frob) <> gf then
+		Error("<frob> must be defined as an automorphis of <gf>");
+	fi;
+	return ProjElWithFrob( mat, frob, gf);
+	end );
 
 # CHECKED 5/09/11 jdb
 #############################################################################
@@ -379,23 +414,87 @@ InstallMethod( ProjectivityByImageOfStandardFrameNC, [ IsProjectiveSpace, IsList
 	return CollineationOfProjectiveSpace(mat2,pg!.basefield);
 end );
 
+###################################################################
+# Some operations for elements (without and with frobenius automorphism
+###################################################################
 
-
-
-
-
+# CHECKED 5/09/11 jdb
+#############################################################################
+#O  UnderlyingMatrix( <c> )
+# returns the underlying matrix of <c> 
+##
 InstallMethod( UnderlyingMatrix, [ IsProjGrpEl and IsProjGrpElRep],
-  c -> c!.mat );
-  
-InstallMethod( UnderlyingMatrix, [ IsProjGrpElWithFrob and 
-                                   IsProjGrpElWithFrobRep],
-  c -> c!.mat );
-  
-InstallMethod( FieldAutomorphism, [ IsProjGrpElWithFrob and 
-                                    IsProjGrpElWithFrobRep],
-  c -> c!.frob );
+	c -> c!.mat );
 
+# CHECKED 5/09/11 jdb
+#############################################################################
+#O  UnderlyingMatrix( <c> )
+# returns the underlying matrix of <c> 
+##  
+InstallMethod( UnderlyingMatrix, [ IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
+	c -> c!.mat );
+  
+# CHECKED 5/09/11 jdb
+#############################################################################
+#O  UnderlyingMatrix( <c> )
+# returns the underlying matrix of <c> 
+##  
+InstallMethod( FieldAutomorphism, [ IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
+	c -> c!.frob );
 
+# CHECKED 5/09/11 jdb
+#############################################################################
+#O  Representative( <el> )
+# returns the underlying matrix of the projectivity <el> 
+##  
+InstallOtherMethod( Representative, 
+	"for a projective group element",
+	[IsProjGrpEl and IsProjGrpElRep],
+	function( el )
+		return el!.mat;
+	end );
+
+# CHECKED 5/09/11 jdb
+#############################################################################
+#O  BaseField( <el> )
+# returns the underlying field of <el> 
+##  
+InstallMethod( BaseField, 
+	"for a projective group element",
+	[IsProjGrpEl and IsProjGrpElRep],
+	function( el )
+		return el!.fld;
+	end );
+
+# CHECKED 5/09/11 jdb
+#############################################################################
+#O  Representative( <el> )
+# returns the underlying matrix and frobenius automorphism of the projective 
+# semilinear element <el> 
+## 
+InstallOtherMethod( Representative, 
+	"for a projective group element with Frobenius",
+	[IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
+	function( el )
+		return [el!.mat,el!.frob];
+	end );
+
+# CHECKED 5/09/11 jdb
+#############################################################################
+#O  BaseField( <el> )
+# returns the underlying field of <el> 
+##  
+InstallMethod( BaseField, 
+	"for a projective group element with Frobenius",
+	[IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
+	function( el )
+		return el!.fld;
+	end );
+
+# CHECKED 5/09/11 jdb
+###################################################################
+# View, print and display methods for elements (without and with Frobenius)
+###################################################################
 
 InstallMethod( ViewObj, "for a projective group element",
   [IsProjGrpEl and IsProjGrpElRep],
@@ -421,17 +520,44 @@ InstallMethod( PrintObj, "for a projective group element",
     Print(")");
   end );
   
-InstallOtherMethod( Representative, "for a projective group element",
-  [IsProjGrpEl and IsProjGrpElRep],
-  function( el )
-    return el!.mat;
+InstallMethod( ViewObj, "for a projective group element with Frobenius",
+  [IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
+  function(el)
+    Print("<projective semilinear element: ");
+    ViewObj(el!.mat);
+    if IsOne(el!.frob) then
+        Print(", F^0>");
+    else
+        Print(", F^",el!.frob!.power,">");
+    fi;
+  end);
+
+InstallMethod( Display, "for a projective group element with Frobenius",
+  [IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
+  function(el)
+    Print("<projective semilinear element, underlying matrix:\n");
+    Display(el!.mat);
+    if IsOne(el!.frob) then
+        Print(", F^0>\n");
+    else
+        Print(", F^",el!.frob!.power,">\n");
+    fi;
   end );
 
-InstallMethod( BaseField, "for a projective group element",
-  [IsProjGrpEl and IsProjGrpElRep],
-  function( el )
-    return el!.fld;
+InstallMethod( PrintObj, "for a projective group element with Frobenius",
+  [IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
+  function(el)
+    Print("ProjElWithFrob(");
+    PrintObj(el!.mat);
+    Print(",");
+    PrintObj(el!.frob);
+    Print(")");
   end );
+
+# CHECKED 5/09/11 jdb
+###################################################################
+# comparing elements (without and with Frobenius automorphism)
+###################################################################
 
 InstallMethod( \=, "for two projective group elements",
   [IsProjGrpEl and IsProjGrpElRep, IsProjGrpEl and IsProjGrpElRep],
@@ -473,21 +599,142 @@ InstallMethod(\<,
     return false;
   end);
 
-InstallMethod( Order, "for a projective group element",
-  [IsProjGrpEl and IsProjGrpElRep],
-  function( a )
-    return ProjectiveOrder(a!.mat)[1];
+InstallMethod( \=, "for two projective group elements with Frobenius",
+  [IsProjGrpElWithFrob and IsProjGrpElWithFrobRep,
+   IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
+  function( a, b )
+    local aa,bb,p,s,i;
+    if a!.fld <> b!.fld then Error("different base fields"); fi;
+    if a!.frob <> b!.frob then return false; fi;
+    aa := a!.mat;
+    bb := b!.mat;
+    p := PositionNonZero(aa[1]);
+    s := bb[1][p] / aa[1][p];
+    for i in [1..Length(aa)] do
+        if s*aa[i] <> bb[i] then return false; fi;
+    od;
+    return true;
   end );
 
-InstallMethod( IsOne, "for a projective group element",
-  [IsProjGrpEl and IsProjGrpElRep],
-  function( el )
+InstallMethod(\<,
+  [IsProjGrpElWithFrob, IsProjGrpElWithFrob],
+  function(a,b)
+    local aa,bb,pa,pb,sa,sb,i,va,vb;
+    if a!.fld <> b!.fld then Error("different base fields"); fi;
+    if a!.frob < b!.frob then
+        return true;
+    elif b!.frob < a!.frob then
+        return false;
+    fi;
+    aa := a!.mat;
+    bb := b!.mat;
+    pa := PositionNonZero(aa[1]);
+    pb := PositionNonZero(bb[1]);
+    if pa > pb then 
+        return true;
+    elif pa < pb then
+        return false;
+    fi;
+    sa := aa[1][pa]^-1;
+    sb := bb[1][pb]^-1;
+    for i in [1..Length(aa)] do
+        va := sa*aa[i];
+        vb := sb*bb[i];
+        if va < vb then return true; fi;
+        if vb < va then return false; fi;
+    od;
+    return false; 
+  end);
+
+###################################################################
+# More operations for elements (without and with frobenius automorphism)
+###################################################################
+
+# CHECKED 5/09/11 jdb
+#############################################################################
+#O  Order( <a> )
+# returns the order of <a>. This function relies on ProjectiveOrder.
+##  
+InstallMethod( Order, 
+	"for a projective group element",
+	[IsProjGrpEl and IsProjGrpElRep],
+	function( a )
+		return ProjectiveOrder(a!.mat)[1];
+	end );
+
+# CHECKED 5/09/11 jdb
+#############################################################################
+#O  Order( <a> )
+# returns the order of <a>.
+## 
+InstallMethod( Order, 
+	"for a projective group element with Frobenius",
+	[IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
+
+# This algorithm could be improved by using the ideas of
+# Celler and Leedham-Green.
+
+	function( a )
+    local b, frob, bfrob, i;
+	b := a!.mat;
+	frob := a!.frob;
+	if IsOne(frob) then 
+		return ProjectiveOrder(b)[1];
+	fi;
+	if not IsOne(b) then
+		bfrob := b; i := 1;
+		repeat
+			bfrob := bfrob^frob;
+			b := b * bfrob;
+			i := i + 1;
+		until IsScalarMatrix( b );
+		return i;
+	else
+		return Order(frob);
+	fi;
+	return 1;
+	end );
+
+# CHECKED 5/09/11 jdb
+#############################################################################
+#O  IsOne( <a> )
+# returns true if <a> is the identity.
+## 
+InstallMethod( IsOne, 
+	"for a projective group element",
+	[IsProjGrpEl and IsProjGrpElRep],
+	function( el )
     local s;
+    s := el!.mat[1][1];
+    if IsZero(s) then 
+		return false; 
+	fi;
+    s := s^-1;
+    return IsOne( s*el!.mat );
+	end );
+
+# CHECKED 5/09/11 jdb
+#############################################################################
+#O  IsOne( <a> )
+# returns true if <a> is the identity
+## 
+InstallMethod( IsOne, 
+	"for a projective group element with Frobenius",
+	[IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
+	function( el )
+    local s;
+    if not(IsOne(el!.frob)) then 
+		return false; 
+	fi;
     s := el!.mat[1][1];
     if IsZero(s) then return false; fi;
     s := s^-1;
     return IsOne( s*el!.mat );
-  end );
+	end );
+
+###################################################################
+# The things that make it a group :-)
+###################################################################
 
 InstallMethod( \*, "for two projective group elements",
   [IsProjGrpEl and IsProjGrpElRep, IsProjGrpEl and IsProjGrpElRep],
@@ -897,100 +1144,6 @@ InstallOtherMethod( \^,
   end );
 
 
-InstallMethod( ViewObj, "for a projective group element with Frobenius",
-  [IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
-  function(el)
-    Print("<projective semilinear element: ");
-    ViewObj(el!.mat);
-    if IsOne(el!.frob) then
-        Print(", F^0>");
-    else
-        Print(", F^",el!.frob!.power,">");
-    fi;
-  end);
-
-InstallMethod( Display, "for a projective group element with Frobenius",
-  [IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
-  function(el)
-    Print("<projective semilinear element, underlying matrix:\n");
-    Display(el!.mat);
-    if IsOne(el!.frob) then
-        Print(", F^0>\n");
-    else
-        Print(", F^",el!.frob!.power,">\n");
-    fi;
-  end );
-
-InstallMethod( PrintObj, "for a projective group element",
-  [IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
-  function(el)
-    Print("ProjElWithFrob(");
-    PrintObj(el!.mat);
-    Print(",");
-    PrintObj(el!.frob);
-    Print(")");
-  end );
-  
-InstallOtherMethod( Representative, 
-  "for a projective group element with Frobenius",
-  [IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
-  function( el )
-    return [el!.mat,el!.frob];
-  end );
-
-InstallMethod( BaseField, "for a projective group element with Frobenius",
-  [IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
-  function( el )
-    return el!.fld;
-  end );
-
-InstallMethod( \=, "for two projective group elements with Frobenius",
-  [IsProjGrpElWithFrob and IsProjGrpElWithFrobRep,
-   IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
-  function( a, b )
-    local aa,bb,p,s,i;
-    if a!.fld <> b!.fld then Error("different base fields"); fi;
-    if a!.frob <> b!.frob then return false; fi;
-    aa := a!.mat;
-    bb := b!.mat;
-    p := PositionNonZero(aa[1]);
-    s := bb[1][p] / aa[1][p];
-    for i in [1..Length(aa)] do
-        if s*aa[i] <> bb[i] then return false; fi;
-    od;
-    return true;
-  end );
-
-InstallMethod(\<,
-  [IsProjGrpElWithFrob, IsProjGrpElWithFrob],
-  function(a,b)
-    local aa,bb,pa,pb,sa,sb,i,va,vb;
-    if a!.fld <> b!.fld then Error("different base fields"); fi;
-    if a!.frob < b!.frob then
-        return true;
-    elif b!.frob < a!.frob then
-        return false;
-    fi;
-    aa := a!.mat;
-    bb := b!.mat;
-    pa := PositionNonZero(aa[1]);
-    pb := PositionNonZero(bb[1]);
-    if pa > pb then 
-        return true;
-    elif pa < pb then
-        return false;
-    fi;
-    sa := aa[1][pa]^-1;
-    sb := bb[1][pb]^-1;
-    for i in [1..Length(aa)] do
-        va := sa*aa[i];
-        vb := sb*bb[i];
-        if va < vb then return true; fi;
-        if vb < va then return false; fi;
-    od;
-    return false; 
-  end);
-
 ## make this a global function?
 
 IsScalarMatrix := function( a )
@@ -1002,44 +1155,6 @@ IsScalarMatrix := function( a )
      return IsOne(a/n);
   fi;
 end;
-
-InstallMethod( Order, "for a projective group element with Frobenius",
-  [IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
-
-# This algorithm could be improved by using the ideas of
-# Celler and Leedham-Green.
-
-  function( a )
-     local b, frob, bfrob, i;
-  b := a!.mat;
-  frob := a!.frob;
-  if IsOne(frob) then 
-     return ProjectiveOrder(b)[1];
-  fi;
-  if not IsOne(b) then
-     bfrob := b; i := 1;
-     repeat
-       bfrob := bfrob^frob;
-       b := b * bfrob;
-       i := i + 1;
-     until IsScalarMatrix( b );
-     return i;
-  else
-     return Order(frob);
-  fi;
-  return 1;
-  end );
-
-InstallMethod( IsOne, "for a projective group element with Frobenius",
-  [IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
-  function( el )
-    local s;
-    if not(IsOne(el!.frob)) then return false; fi;
-    s := el!.mat[1][1];
-    if IsZero(s) then return false; fi;
-    s := s^-1;
-    return IsOne( s*el!.mat );
-  end );
 
 #made a change, added ^-1 on march 8 2007, J&J
 InstallMethod( \*, "for two projective group element with Frobenious",

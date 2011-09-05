@@ -177,7 +177,8 @@ is a field. This function (and its synonym) returns the collineation with matrix
 <A>mat</A> and automorphism <A>frob</A>. If <A>frob</A> is not specified 
 then the companion automorphism of the resulting group element will be 
 the identity map. The returned object belongs to the category
-<C>IsProjGrpElWithFrob</C>
+<C>IsProjGrpElWithFrob</C>. When the argument <A>frob</A> is given,
+it is checked whether the source of <A>frob</A> equals <A>f</A>.
 <Example>
 <#Include SYSTEM "../examples/include/projgroups_collineation.include"> 
 </Example>
@@ -246,6 +247,20 @@ This function returns the matrix that was used to construct <A>g</A>.
 </Example>
 </Description>
 </ManSection>
+
+<ManSection>
+<Oper Name="Representative" Arg="g"/>
+<Description>
+<A>g</A> is a projectivity, collineation or correlation of a projective space.
+This function returns the reresentative components that determine <A>g</A>, i.e. a matrix, 
+a matricx and a field automorphism, and a matrix, a field automorphism, and a vector space isomorphism, 
+respectively.
+<Example>
+<#Include SYSTEM "../examples/include/projgroups_representative.include"> 
+</Example>
+</Description>
+</ManSection>
+
 
 <ManSection>
 <Oper Name="BaseField" Arg="g"/>
