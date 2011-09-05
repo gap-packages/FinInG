@@ -33,7 +33,9 @@
 #   just calls RankAttr anyway...
 #   jdb: I left as is. In principle, we could declare Rank as an attribute
 #        but maybe this is already a declared attribute, i did not check.
-#
+# - Enumerators for subspaces of vectorspaces? This is not present in GAP, and could be
+#   used to create "real" Enumerators for projective spaces. To be discussed.
+# - check and document operation IncidenceStructure (almost bottom of file).
 ########################################
 
 InstallValue( DESARGUES, rec() ); #name of this variable will remind us for ever that this package was called Desargues in earlier days.
@@ -336,6 +338,7 @@ InstallMethod( ShadowOfFlag,
 	end);
 	
 # CHECKED 4/9/2011 jdb
+# but maybe to be changed later on. See to do list on top of file.
 #############################################################################
 #O  Enumerator( <D> )
 # generic method that enumerates D, using an Iterator for D
