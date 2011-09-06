@@ -1,0 +1,11 @@
+gap&gt; x := Random(CollineationGroup(PG(4,9)));
+&lt;projective semilinear element: 
+[ [ Z(3^2)^3, Z(3)^0, Z(3)^0, Z(3^2)^3, Z(3^2)^2 ], 
+  [ Z(3^2)^6, Z(3), Z(3^2)^2, Z(3), Z(3^2)^2 ], 
+  [ Z(3^2)^2, Z(3), Z(3^2)^5, Z(3)^0, Z(3) ], 
+  [ Z(3)^0, Z(3^2)^5, Z(3^2)^2, Z(3^2)^6, Z(3^2)^7 ], 
+  [ Z(3^2)^6, Z(3^2)^3, Z(3)^0, 0*Z(3), 0*Z(3) ] ], F^0&gt;
+gap&gt; t := Order(x);
+60
+gap&gt; IsOne(x^t);
+true
