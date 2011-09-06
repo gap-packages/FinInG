@@ -130,6 +130,7 @@ InstallGlobalFunction(IsScalarMatrix,
 ## deleting some of it.
 
 # CHECKED 5/09/11 jdb
+# I am not completely happy with the behaviour of this method.
 #############################################################################
 #O  ProjEl( <mat> )
 # method to construct an object in the category IsProjGrpEl, i.e. projectivities, 
@@ -764,7 +765,6 @@ InstallOtherMethod( DegreeFFE, "for projective group element",
     return DegreeOverPrimeField( el!.fld );
   end );
 
-
 # CHECKED 6/09/11 jdb
 #############################################################################
 #O  DegreeFFE( <el> )
@@ -799,7 +799,6 @@ InstallMethod( Characteristic, "for projective group element with Frobenius",
   function( el )
     return Characteristic( el!.fld );
   end );
-
 
 ###################################################################
 # The things that make it a group :-)
