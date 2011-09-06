@@ -88,6 +88,17 @@ vector space over the field of order <M>q</M>.
 </Description>
 </ManSection>
 
+<ManSection>
+<Oper Name="StandardFrame" Arg="ps"/>
+<Returns>the standard frame of the projective space <A>ps</A></Returns>
+<Description>If <A>ps</A> is a projective space of dimension <M>n</M> over the field of order
+<M>q</M>, then this operation simply returns the underlying vector space, i.e. the <M>n+1</M> dimensional
+vector space over the field of order <M>q</M>.
+<Example>
+</Example>
+</Description>
+</ManSection>
+
 </Section>
 
 <Section>

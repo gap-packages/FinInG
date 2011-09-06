@@ -24,37 +24,58 @@
 #############################################################################
 
 #############################################################################
-# Constructor methods:
+# Low level help methods:
 #############################################################################
 
 ## To do
 #  Use compressed matrices
 #  Order functions in this file, and write more comments.
 
-InstallMethod( Wrap, "for a projective space and an object",
- # This is an internal subroutine which is not expected to be used by the user;
- # they would be using VectorSpaceToElement.
-  [IsProjectiveSpace, IsPosInt, IsObject],
-  function( geo, type, o )
-    local w;
-    w := rec( geo := geo, type := type, obj := o );
-    Objectify( NewType( SoPSFamily, IsElementOfIncidenceStructure and
-      IsElementOfIncidenceStructureRep and IsSubspaceOfProjectiveSpace ), w );
-    return w;
-  end );
+# CHECKED 6/09/11 jdb
+#############################################################################
+#O  Wrap( <geo>, <type>, <o> )
+# This is an internal subroutine which is not expected to be used by the user;
+# they would be using VectorSpaceToElement. Recall that Wrap is declared in 
+# geometry.gd. 
+##
+InstallMethod( Wrap, 
+	"for a projective space and an object",
+	[IsProjectiveSpace, IsPosInt, IsObject],
+	function( geo, type, o )
+		local w;
+		w := rec( geo := geo, type := type, obj := o );
+		Objectify( NewType( SoPSFamily, IsElementOfIncidenceStructure and
+			IsElementOfIncidenceStructureRep and IsSubspaceOfProjectiveSpace ), w );
+		return w;
+	end );
 
-InstallMethod( \^, [ IsSubspaceOfProjectiveSpace, IsUnwrapper ],
+# CHECKED 6/09/11 jdb
+#############################################################################
+#O  \^( <v>, <u> )
 # If the object "v" to be unwrapped is a point of a vector space, then we do not want to use
 # return v!.obj, but we want to return a list with one vector, i.e. [v!.obj]
 # e.g. if p is a point of a projective space
 # gap> p^_; 
 # will return a list, with the coordinate vector of the point p
+##
+InstallMethod( \^, 
+	"for a subspace of a projective space and an unwrapper",
+	[ IsSubspaceOfProjectiveSpace, IsUnwrapper ],
 	function( v, u )
-	  if v!.type = 1 then return [v!.obj];
-	  else return v!.obj;
-	  fi;
+		if v!.type = 1 then return [v!.obj];
+		else return v!.obj;
+		fi;
 	end );
 
+#############################################################################
+# Constructor methods and some operations/attributes for projective spaces.
+#############################################################################
+
+# CHECKED 6/09/11 jdb
+#############################################################################
+#O  ProjectiveSpace( <d>, <f> )
+# returns PG(d,f), f a finite field.
+##
 InstallMethod( ProjectiveSpace, "for a proj dimension and a field",
   [ IsInt, IsField ],
   function( d, f )
@@ -68,12 +89,84 @@ InstallMethod( ProjectiveSpace, "for a proj dimension and a field",
     return geo;
   end );
   
-
+# CHECKED 6/09/11 jdb
+#############################################################################
+#O  ProjectiveSpace( <d>, <q> )
+# returns PG(d,q). 
+##
+InstallMethod( ProjectiveSpace, "for a proj dimension and a prime power",
+  [ IsInt, IsPosInt ],
+  function( d, q )
+          return ProjectiveSpace(d, GF(q));
+  end );
+  
+# CHECKED 6/09/11 jdb
+#############################################################################
+#O  UnderlyingVectorSpace( <ps> )
+# returns the Underlying vectorspace of the projective space <ps>
+##
 InstallMethod( UnderlyingVectorSpace, "for a projective space",
    [IsProjectiveSpace and IsProjectiveSpaceRep],
    function(ps)
    return ShallowCopy(ps!.vectorspace);
 end);
+
+# CHECKED 6/09/11 jdb
+#############################################################################
+#O  \=( <pg1>, <pg2> )
+##
+InstallMethod( \=, "for two projective spaces",
+	[IsProjectiveSpace, IsProjectiveSpace],
+	function(pg1,pg2);
+	return UnderlyingVectorSpace(pg1) = UnderlyingVectorSpace(pg2);
+end );
+
+# CHECKED 6/09/11 jdb
+#############################################################################
+#A  ProjectiveDimension( <ps> )
+# returns the projective dimension of <ps>
+##
+InstallMethod( ProjectiveDimension, "for a projective space",
+  [ IsProjectiveSpace and IsProjectiveSpaceRep ],
+  function( ps )
+    return ps!.dimension;
+  end );
+  
+# CHECKED 6/09/11 jdb
+#############################################################################
+#A  Dimension( <ps> )
+# returns the projective dimension of <ps>
+##
+InstallMethod( Dimension, "for a projective space",
+  [ IsProjectiveSpace and IsProjectiveSpaceRep ],
+  function( ps )
+    return ps!.dimension;
+  end );
+
+# CHECKED 6/09/11 jdb
+#############################################################################
+#O  StandardFrame( <ps> )
+# if the dimension of the projective space is n, then StandardFrame 
+# makes a list of points with coordinates 
+# (1,0,...0), (0,1,0,...,0), ..., (0,...,0,1) and (1,1,...,1) 
+##
+InstallMethod( StandardFrame, 
+	"for a projective space", 
+	[IsProjectiveSpace], 
+	function( pg )
+		local bas, frame, unitpt;
+		if not pg!.dimension > 0 then 
+			Error("The argument needs to be a projective space of dimension at least 1!");
+		else
+			bas:=Basis(pg!.vectorspace);	
+			frame:=List(BasisVectors(bas),v->VectorSpaceToElement(pg,v));
+			unitpt:=VectorSpaceToElement(pg,Sum(BasisVectors(bas)));
+			Add(frame,unitpt);
+			return frame;
+		fi;
+	end );
+
+
 
 InstallMethod( UnderlyingVectorSpace, "for a subspace of a projective space",
 	[IsSubspaceOfProjectiveSpace],
@@ -84,24 +177,6 @@ InstallMethod( UnderlyingVectorSpace, "for a subspace of a projective space",
 	return W;
 end);
 
-  
-InstallMethod( \=, "for two projective spaces",
-	[IsProjectiveSpace, IsProjectiveSpace],
-	function(pg1,pg2);
-	return UnderlyingVectorSpace(pg1) = UnderlyingVectorSpace(pg2);
-end );
-
-InstallMethod( ProjectiveSpace, "for a proj dimension and a prime power",
-  [ IsInt, IsPosInt ],
-  function( d, q )
-          return ProjectiveSpace(d, GF(q));
-  end );
-
-InstallMethod( ProjectiveDimension, "for a projective space",
-  [ IsProjectiveSpace and IsProjectiveSpaceRep ],
-  function( ps )
-    return ps!.dimension;
-  end );
 
 InstallMethod( ProjectiveDimension, "for a subspace of a projective space",
      [ IsSubspaceOfProjectiveSpace ],
@@ -112,12 +187,6 @@ InstallMethod( ProjectiveDimension, "for a subspace of a projective space",
 
 #InstallMethod( ProjectiveDimension, [ IsEmpty ], function(x) return -1;end );
 
-InstallMethod( Dimension, "for a projective space",
-  [ IsProjectiveSpace and IsProjectiveSpaceRep ],
-  function( ps )
-    return ps!.dimension;
-  end );
-
 InstallMethod( Dimension, "for a subspace of a projective space",
      [ IsSubspaceOfProjectiveSpace ],
   function( v )
@@ -125,23 +194,6 @@ InstallMethod( Dimension, "for a subspace of a projective space",
   end );
 
 #InstallMethod( Dimension, [ IsEmpty ], function(x) return -1;end );
-
-InstallMethod( StandardFrame, "for a projective space", [IsProjectiveSpace], 
-	# if the dimension of the projective space is n, then StandardFrame 
-	# makes a list of points with coordinates 
-	# (1,0,...0), (0,1,0,...,0), ..., (0,...,0,1) and (1,1,...,1) 
-  function( pg )
-	local bas, frame, unitpt;
-	if not pg!.dimension > 0 then 
-		Error("The argument needs to be a projective space of dimension at least 1!");
-	else
-		bas:=Basis(pg!.vectorspace);	
-		frame:=List(BasisVectors(bas),v->VectorSpaceToElement(pg,v));
-		unitpt:=VectorSpaceToElement(pg,Sum(BasisVectors(bas)));
-		Add(frame,unitpt);
-		return frame;
-	fi;
-  end );
 
 InstallMethod( StandardFrame, "for a subspace of a projective space", 
 	[IsSubspaceOfProjectiveSpace],
@@ -190,6 +242,11 @@ InstallMethod( EquationOfHyperplane, "for a hyperplane of a projective space",
 	v:=CoordinatesOfHyperplane(hyp);
 	return Sum(List([1..Size(indets)],i->v[i]*indets[i]));
 end );
+
+
+#############################################################################
+# Constructors for groups of projective spaces.
+#############################################################################
 
 InstallMethod( CollineationGroup, "for a full projective space",
   [ IsProjectiveSpace and IsProjectiveSpaceRep ],
