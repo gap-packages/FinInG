@@ -65,6 +65,7 @@ InstallMethod( CosetGeometry, "for groups and list of subgroups",[ IsGroup , IsH
     ObjectifyWithAttributes( geo, ty,
            AmbientGeometry, geo,
            TypesOfElementsOfIncidenceStructure, [1..Size(l)],
+	   RankAttr, Size(l),
            RepresentativesOfElements, l );
     ## To speed up IncidenceGraph (and hence also DiagramOfGeometry)
     if HasIsHandledByNiceMonomorphism(g) and IsHandledByNiceMonomorphism(g) and DESARGUES.Fast then
@@ -173,15 +174,29 @@ InstallMethod(Iterator, "for elements of a coset geometry",
     return newiter;
 end );
 
-InstallMethod( IsIncident, "for elements of a coset geometry", 
-              [IsElementOfCosetGeometry, IsElementOfCosetGeometry],
+
+# CHECKED 06/09/11 PhC
+#############################################################################
+#O  IsIncident( <ele1>, <ele2> )
+# for elements ele1 and ele2 from the same coset geometry. Checks nonempty 
+# intersection unless types are the same, then only EQUAL elements can be 
+# incident.
+##
+
+InstallMethod( IsIncident, 
+		"for elements of a coset geometry", 
+              	[IsElementOfCosetGeometry, IsElementOfCosetGeometry],
   function( x, y )
 
     local vx, vy, tx, ty, g, h, k;
     vx := x!.obj; vy := y!.obj;
     tx := x!.type; ty := y!.type;
-    if (tx = ty) then #and not(vx = vy) then 
-       return false;
+    if (tx = ty) then 
+      if vx=vy then
+	return true;
+      else # There was a problem here when making the incidence graph, because of loops. 
+        return false;
+      fi;
     fi;
     ## Let Ha and Kb be two right cosets, and let g=ab^-1.
     ## Then Ha and Kb intersect if and only if g is an element of the double
@@ -297,7 +312,14 @@ InstallMethod( IsFirmGeometry, "for coset geometries",
     fi;
 end );
 
-InstallMethod( IsConnected, "for coset geometries",
+# CHECKED 06/09/11 PhC
+#############################################################################
+#O  IsConnected( <cg> )
+# Returns true iff the coset geometry cg is connected
+##
+
+InstallMethod( IsConnected, 
+		"for coset geometries",
                [ IsCosetGeometry ],
   function( cg )
     ## A coset geometry is connected if and only if the
