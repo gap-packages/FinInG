@@ -25,6 +25,7 @@
 #############################################################################
 
 DeclareGlobalFunction("MakeAllProjectivePoints");
+DeclareGlobalFunction("IsScalarMatrix");
 
 ## For later versions of GenSS, Max has changed the number of variables
 ## for the operation FindBasePointCandidates.

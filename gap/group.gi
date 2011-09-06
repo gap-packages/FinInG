@@ -102,6 +102,26 @@ function(f,d)
   return Set(sp);
 end);
 
+
+## make this a global function? Definitely (jdb, 6/9/11).
+
+# CHECKED 6/09/11 jdb
+#############################################################################
+#F  IsScalarMatrix( a)
+#returns true if <a> is a scalar matrix.
+##
+InstallGlobalFunction(IsScalarMatrix,
+	function( a )
+	local n;
+	n := a[1][1];
+	if IsZero(n) then 
+		return false;
+	else
+		return IsOne(a/n);
+	fi;
+	end );
+
+
 ###################################################################
 # Construction of "projective elements", that is matrices modulo scalars:
 ###################################################################
@@ -732,10 +752,64 @@ InstallMethod( IsOne,
     return IsOne( s*el!.mat );
 	end );
 
+# CHECKED 6/09/11 jdb
+#############################################################################
+#O  DegreeFFE( <el> )
+# for projectivities. returns the degree of the underlying field over its 
+# prime field.
+## 
+InstallOtherMethod( DegreeFFE, "for projective group element",
+  [IsProjGrpEl and IsProjGrpElRep],
+  function( el )
+    return DegreeOverPrimeField( el!.fld );
+  end );
+
+
+# CHECKED 6/09/11 jdb
+#############################################################################
+#O  DegreeFFE( <el> )
+# for projective semilinear maps. returns the degree of the underlying 
+# field over its prime field.
+## 
+InstallOtherMethod( DegreeFFE, "for projective group element with Frobenius",
+  [IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
+  function( el )
+    return DegreeOverPrimeField( el!.fld );
+  end );
+
+
+# CHECKED 6/09/11 jdb
+#############################################################################
+#O  Characteristic( <el> )
+# for projectivities. returns the characteristic of the underlying field.
+## 
+InstallMethod( Characteristic, "for projective group element",
+  [IsProjGrpEl and IsProjGrpElRep],
+  function( el )
+    return Characteristic( el!.fld );
+  end );
+
+# CHECKED 6/09/11 jdb
+#############################################################################
+#O  Characteristic( <el> )
+# for projective semilinear maps. returns the characteristic of the underlying field.
+## 
+InstallMethod( Characteristic, "for projective group element with Frobenius",
+  [IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
+  function( el )
+    return Characteristic( el!.fld );
+  end );
+
+
 ###################################################################
 # The things that make it a group :-)
 ###################################################################
 
+# CHECKED 5/09/11 jdb
+#############################################################################
+#O  \*( <a>, <b> )
+# returns a*b, for IsProjGrpEl
+## 
 InstallMethod( \*, "for two projective group elements",
   [IsProjGrpEl and IsProjGrpElRep, IsProjGrpEl and IsProjGrpElRep],
   function( a, b )
@@ -745,6 +819,11 @@ InstallMethod( \*, "for two projective group elements",
     return el;
   end );
 
+# CHECKED 5/09/11 jdb
+#############################################################################
+#O  InverseSameMutability( <el> )
+# returns el^-1, for IsProjGrpEl, keeps mutability.
+## 
 InstallMethod( InverseSameMutability, "for a projective group element",
   [IsProjGrpEl and IsProjGrpElRep],
   function( el )
@@ -754,6 +833,11 @@ InstallMethod( InverseSameMutability, "for a projective group element",
     return m;
   end );
 
+# CHECKED 5/09/11 jdb
+#############################################################################
+#O  InverseMutable( <el> )
+# returns el^-1 (mutable) for IsProjGrpEl
+## 
 InstallMethod( InverseMutable, "for a projective group element",
   [IsProjGrpEl and IsProjGrpElRep],
   function( el )
@@ -763,17 +847,6 @@ InstallMethod( InverseMutable, "for a projective group element",
     return m;
   end );
 
-InstallOtherMethod( DegreeFFE, "for projective group element",
-  [IsProjGrpEl and IsProjGrpElRep],
-  function( el )
-    return DegreeOverPrimeField( el!.fld );
-  end );
-
-InstallMethod( Characteristic, "for projective group element",
-  [IsProjGrpEl and IsProjGrpElRep],
-  function( el )
-    return Characteristic( el!.fld );
-  end );
 
 InstallMethod( OneImmutable, "for a projective group",
   [IsGroup and IsProjectiveGroup],
@@ -1144,17 +1217,6 @@ InstallOtherMethod( \^,
   end );
 
 
-## make this a global function?
-
-IsScalarMatrix := function( a )
-  local n;
-  n := a[1][1];
-  if IsZero(n) then 
-     return false;
-  else
-     return IsOne(a/n);
-  fi;
-end;
 
 #made a change, added ^-1 on march 8 2007, J&J
 InstallMethod( \*, "for two projective group element with Frobenious",
@@ -1194,18 +1256,6 @@ InstallMethod( InverseMutable,
               frob := f^-1 );
     Objectify( ProjElsWithFrobType, m );
     return m;
-  end );
-
-InstallOtherMethod( DegreeFFE, "for projective group element with Frobenius",
-  [IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
-  function( el )
-    return DegreeOverPrimeField( el!.fld );
-  end );
-
-InstallMethod( Characteristic, "for projective group element with Frobenius",
-  [IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
-  function( el )
-    return Characteristic( el!.fld );
   end );
 
 InstallMethod( OneImmutable, "for a projective semilinear group",
