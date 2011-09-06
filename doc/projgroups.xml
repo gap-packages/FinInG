@@ -249,20 +249,6 @@ This function returns the matrix that was used to construct <A>g</A>.
 </ManSection>
 
 <ManSection>
-<Oper Name="Representative" Arg="g"/>
-<Description>
-<A>g</A> is a projectivity, collineation or correlation of a projective space.
-This function returns the reresentative components that determine <A>g</A>, i.e. a matrix, 
-a matricx and a field automorphism, and a matrix, a field automorphism, and a vector space isomorphism, 
-respectively.
-<Example>
-<#Include SYSTEM "../examples/include/projgroups_representative.include"> 
-</Example>
-</Description>
-</ManSection>
-
-
-<ManSection>
 <Oper Name="BaseField" Arg="g"/>
 <Returns>a field</Returns>
 <Description>
@@ -299,6 +285,31 @@ companion isomorphism of the projective space which defines <A>g</A>.
 </Example>
 </Description>
 </ManSection>
+
+<ManSection>
+<Oper Name="Representative" Arg="g"/>
+<Description>
+<A>g</A> is a projectivity, collineation or correlation of a projective space.
+This function returns the reresentative components that determine <A>g</A>, i.e. a matrix, 
+a matricx and a field automorphism, and a matrix, a field automorphism, and a vector space isomorphism, 
+respectively.
+<Example>
+<#Include SYSTEM "../examples/include/projgroups_representative.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="Order" Arg="g"/>
+<Description>
+<A>g</A> is a projectivity, collineation or correlation of a projective space.
+This function returns the order of <A>g</A>.
+<Example>
+<#Include SYSTEM "../examples/include/projgroups_order.include"> 
+</Example>
+</Description>
+</ManSection>
+
 
 </Section>
 
@@ -372,7 +383,7 @@ the base field of the vector space on which the group acts.
 </ManSection>
 
 <ManSection>
-<Oper Name="Dimension" Arg="g"/>
+<Attr Name="Dimension" Arg="g"/>
 <Returns>a number</Returns>
 <Description><A>g</A> must be a projective group. This function finds
 the dimension of the vector space on which the group acts.

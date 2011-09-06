@@ -759,11 +759,12 @@ InstallMethod( IsOne,
 # for projectivities. returns the degree of the underlying field over its 
 # prime field.
 ## 
-InstallOtherMethod( DegreeFFE, "for projective group element",
-  [IsProjGrpEl and IsProjGrpElRep],
-  function( el )
-    return DegreeOverPrimeField( el!.fld );
-  end );
+InstallOtherMethod( DegreeFFE, 
+	"for projective group element",
+	[IsProjGrpEl and IsProjGrpElRep],
+	function( el )
+		return DegreeOverPrimeField( el!.fld );
+	end );
 
 # CHECKED 6/09/11 jdb
 #############################################################################
@@ -771,37 +772,39 @@ InstallOtherMethod( DegreeFFE, "for projective group element",
 # for projective semilinear maps. returns the degree of the underlying 
 # field over its prime field.
 ## 
-InstallOtherMethod( DegreeFFE, "for projective group element with Frobenius",
-  [IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
-  function( el )
-    return DegreeOverPrimeField( el!.fld );
-  end );
-
+InstallOtherMethod( DegreeFFE, 
+	"for projective group element with Frobenius",
+	[IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
+	function( el )
+		return DegreeOverPrimeField( el!.fld );
+	end );
 
 # CHECKED 6/09/11 jdb
 #############################################################################
 #O  Characteristic( <el> )
 # for projectivities. returns the characteristic of the underlying field.
 ## 
-InstallMethod( Characteristic, "for projective group element",
-  [IsProjGrpEl and IsProjGrpElRep],
-  function( el )
-    return Characteristic( el!.fld );
-  end );
+InstallMethod( Characteristic, 
+	"for projective group element",
+	[IsProjGrpEl and IsProjGrpElRep],
+	function( el )
+		return Characteristic( el!.fld );
+	end );
 
 # CHECKED 6/09/11 jdb
 #############################################################################
 #O  Characteristic( <el> )
 # for projective semilinear maps. returns the characteristic of the underlying field.
 ## 
-InstallMethod( Characteristic, "for projective group element with Frobenius",
-  [IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
-  function( el )
-    return Characteristic( el!.fld );
-  end );
+InstallMethod( Characteristic, 
+	"for projective group element with Frobenius",
+	[IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
+	function( el )
+		return Characteristic( el!.fld );
+	end );
 
 ###################################################################
-# The things that make it a group :-)
+# The things that make it a group :-) (without Frobenius)
 ###################################################################
 
 # CHECKED 5/09/11 jdb
@@ -809,165 +812,555 @@ InstallMethod( Characteristic, "for projective group element with Frobenius",
 #O  \*( <a>, <b> )
 # returns a*b, for IsProjGrpEl
 ## 
-InstallMethod( \*, "for two projective group elements",
-  [IsProjGrpEl and IsProjGrpElRep, IsProjGrpEl and IsProjGrpElRep],
-  function( a, b )
-    local el;
-    el := rec( mat := a!.mat * b!.mat, fld := a!.fld );
-    Objectify( ProjElsType, el );
-    return el;
-  end );
+InstallMethod( \*, 
+	"for two projective group elements",
+	[IsProjGrpEl and IsProjGrpElRep, IsProjGrpEl and IsProjGrpElRep],
+	function( a, b )
+		local el;
+		el := rec( mat := a!.mat * b!.mat, fld := a!.fld );
+		Objectify( ProjElsType, el );
+		return el;
+	end );
 
-# CHECKED 5/09/11 jdb
+# CHECKED 6/09/11 jdb
 #############################################################################
 #O  InverseSameMutability( <el> )
 # returns el^-1, for IsProjGrpEl, keeps mutability.
 ## 
-InstallMethod( InverseSameMutability, "for a projective group element",
-  [IsProjGrpEl and IsProjGrpElRep],
-  function( el )
-    local m;
-    m := rec( mat := InverseSameMutability(el!.mat), fld := el!.fld );
-    Objectify( ProjElsType, m );
-    return m;
-  end );
+InstallMethod( InverseSameMutability, 
+	"for a projective group element",
+	[IsProjGrpEl and IsProjGrpElRep],
+	function( el )
+		local m;
+		m := rec( mat := InverseSameMutability(el!.mat), fld := el!.fld );
+		Objectify( ProjElsType, m );
+		return m;
+	end );
 
-# CHECKED 5/09/11 jdb
+# CHECKED 6/09/11 jdb
 #############################################################################
 #O  InverseMutable( <el> )
 # returns el^-1 (mutable) for IsProjGrpEl
 ## 
-InstallMethod( InverseMutable, "for a projective group element",
-  [IsProjGrpEl and IsProjGrpElRep],
-  function( el )
-    local m;
-    m := rec( mat := InverseMutable(el!.mat), fld := el!.fld );
-    Objectify( ProjElsType, m );
+InstallMethod( InverseMutable, 
+	"for a projective group element",
+	[IsProjGrpEl and IsProjGrpElRep],
+	function( el )
+		local m;
+		m := rec( mat := InverseMutable(el!.mat), fld := el!.fld );
+		Objectify( ProjElsType, m );
+		return m;
+	end );
+
+# CHECKED 6/09/11 jdb
+#############################################################################
+#O  OneImmutable( <el> )
+# returns immutable one of the group of <el>
+## 
+InstallMethod( OneImmutable, 
+	"for a projective group element",
+	[IsProjGrpEl and IsProjGrpElRep],
+	function( el )
+		local o;
+		o := rec( mat := OneImmutable( el!.mat ), fld := el!.fld );
+		Objectify( NewType(FamilyObj(el), IsProjGrpElRep), o );
+		return o;
+	end );
+
+# CHECKED 6/09/11 jdb
+#############################################################################
+#O  InverseMutable( <el> )
+# returns one of the group of <el> with same mutability of <el>.
+## 
+InstallMethod( OneSameMutability, 
+	"for a projective group element",
+	[IsProjGrpEl and IsProjGrpElRep],
+	function( el )
+		local o;
+		o := rec( mat := OneImmutable( el!.mat ), fld := el!.fld );
+		Objectify( NewType(FamilyObj(el), IsProjGrpElRep), o );
+		return o;
+	end );
+
+###################################################################
+# The things that make it a group :-) (with Frobenius)
+###################################################################
+# we first need: 
+#################################################
+# Frobenius automorphisms and groups using them:
+#################################################
+#12 CHECKED 6/09/11 jdb
+
+InstallOtherMethod( \^, "for a FFE vector and a Frobenius automorphism",
+  [ IsVector and IsFFECollection, IsFrobeniusAutomorphism ],
+  function( v, f )
+    return List(v,x->x^f);
+  end );
+
+InstallOtherMethod( \^, "for a FFE vector and a trivial Frobenius automorphism",
+  [ IsVector and IsFFECollection, IsMapping and IsOne ],
+  function( v, f )
+    return v;
+  end );
+
+InstallOtherMethod( \^, 
+  "for a compressed GF2 vector and a Frobenius automorphism",
+  [ IsVector and IsFFECollection and IsGF2VectorRep, IsFrobeniusAutomorphism ],
+  function( v, f )
+    local w;
+    w := List(v,x->x^f);
+    ConvertToVectorRepNC(w,2);
+    return w;
+  end );
+
+InstallOtherMethod( \^, 
+  "for a compressed GF2 vector and a trivial Frobenius automorphism",
+  [ IsVector and IsFFECollection and IsGF2VectorRep, IsMapping and IsOne ],
+  function( v, f )
+    return v;
+  end );
+
+InstallOtherMethod( \^, 
+  "for a compressed 8bit vector and a Frobenius automorphism",
+  [ IsVector and IsFFECollection and Is8BitVectorRep, IsFrobeniusAutomorphism ],
+  function( v, f )
+    local w;
+    w := List(v,x->x^f);
+    ConvertToVectorRepNC(w,Q_VEC8BIT(v));
+    return w;
+  end );
+
+InstallOtherMethod( \^, 
+  "for a compressed 8bit vector and a trivial Frobenius automorphism",
+  [ IsVector and IsFFECollection and Is8BitVectorRep, IsMapping and IsOne ],
+  function( v, f )
+    return v;
+  end );
+
+InstallOtherMethod( \^, "for a FFE matrix and a Frobenius automorphism",
+  [ IsMatrix and IsFFECollColl, IsFrobeniusAutomorphism ],
+  function( m, f )
+    return List(m,v->List(v,x->x^f));
+  end );
+
+InstallOtherMethod( \^, "for a FFE matrix and a trivial Frobenius automorphism",
+  [ IsMatrix and IsFFECollColl, IsMapping and IsOne ],
+  function( m, f )
+    return m;
+  end );
+
+InstallOtherMethod( \^, 
+  "for a compressed GF2 matrix and a Frobenius automorphism",
+  [ IsMatrix and IsFFECollColl and IsGF2MatrixRep, IsFrobeniusAutomorphism ],
+  function( m, f )
+    local w,l,i;
+    l := [];
+    for i in [1..Length(m)] do
+        w := List(m[i],x->x^f);
+        ConvertToVectorRepNC(w,2);
+        Add(l,w);
+    od;
+    ConvertToMatrixRepNC(l,2);
+    return l;
+  end );
+
+InstallOtherMethod( \^, 
+  "for a compressed GF2 matrix and a trivial Frobenius automorphism",
+  [ IsMatrix and IsFFECollColl and IsGF2MatrixRep, IsMapping and IsOne ],
+  function( m, f )
+    return m;
+  end );
+
+InstallOtherMethod( \^, 
+  "for a compressed 8bit matrix and a Frobenius automorphism",
+  [ IsMatrix and IsFFECollColl and Is8BitMatrixRep, IsFrobeniusAutomorphism ],
+  function( m, f )
+    local w,l,i,q;
+    l := [];
+    q := Q_VEC8BIT(m[1]);
+    for i in [1..Length(m)] do
+        w := List(m[i],x->x^f);
+        ConvertToVectorRepNC(w,q);
+        Add(l,w);
+    od;
+    ConvertToMatrixRepNC(l,q);
+    return l;
+  end );
+
+InstallOtherMethod( \^, 
+  "for a compressed 8bit matrix and a trivial Frobenius automorphism",
+  [ IsMatrix and IsFFECollColl and Is8BitMatrixRep, IsMapping and IsOne ],
+  function( m, f )
     return m;
   end );
 
 
-InstallMethod( OneImmutable, "for a projective group",
-  [IsGroup and IsProjectiveGroup],
-  function( g )
-    local gens, o;
-    gens := GeneratorsOfGroup(g);
-    if Length(gens) = 0 then
-        if HasParent(g) then
-            gens := GeneratorsOfGroup(Parent(g));
-        else
-            Error("sorry, no generators, no one");
-        fi;
-    fi;
-    o := rec( mat := OneImmutable( gens[1]!.mat ), fld := gens[1]!.fld );
-    Objectify( NewType(FamilyObj(gens[1]), IsProjGrpElRep), o );
-    return o;
+# CHECKED 6/09/11 jdb
+#############################################################################
+#O  \*( <a>, <b> )
+# returns a*b, for IsProjGrpElWithFrob
+## 
+#made a change, added ^-1 on march 8 2007, J&J
+InstallMethod( \*, "for two projective group element with Frobenious",
+  [IsProjGrpElWithFrob and IsProjGrpElWithFrobRep,
+   IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
+  function( a, b )
+    local el;
+    el := rec( mat := a!.mat * (b!.mat^(a!.frob^-1)), fld := a!.fld, 
+               frob := a!.frob * b!.frob );
+    Objectify( ProjElsWithFrobType, el);
+    return el;
   end );
 
-InstallMethod( OneImmutable, "for a projective group element",
-  [IsProjGrpEl and IsProjGrpElRep],
+# CHECKED 6/09/11 jdb
+#############################################################################
+#O  InverseSameMutability( <el> )
+# returns el^-1, for IsProjGrpElWithFrob, keeps mutability.
+## 
+#found a bug 23/09/08 in st. andrews.
+#J&J feel a great relief.
+#C&P too.
+#all after Max concluded that there was a big bug.
+InstallMethod( InverseSameMutability, 
+  "for a projective group element with Frobenius",
+  [IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
+  function( el )
+    local m,f;
+    f := el!.frob;
+    m := rec( mat := (InverseSameMutability(el!.mat))^f, fld := el!.fld,
+              frob := f^-1 );
+    Objectify( ProjElsWithFrobType, m );
+    return m;
+  end );
+
+# CHECKED 6/09/11 jdb
+#############################################################################
+#O  InverseMutable( <el> )
+# returns mutable el^-1, for IsProjGrpElWithFrob
+## 
+InstallMethod( InverseMutable, 
+  "for a projective group element with Frobenius",
+  [IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
+  function( el )
+    local m,f;
+    f := el!.frob;
+    m := rec( mat := (InverseMutable(el!.mat))^f, fld := el!.fld,
+              frob := f^-1 );
+    Objectify( ProjElsWithFrobType, m );
+    return m;
+  end );
+
+# CHECKED 6/09/11 jdb
+#############################################################################
+#O  OneImmutable( <el> )
+# returns immutable one of the group of <el>
+## 
+InstallMethod( OneImmutable, "for a projective group element with Frobenius",
+  [IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
   function( el )
     local o;
-    o := rec( mat := OneImmutable( el!.mat ), fld := el!.fld );
-    Objectify( NewType(FamilyObj(el), IsProjGrpElRep), o );
+    o := rec( mat := OneImmutable( el!.mat ), fld := el!.fld,
+              frob := el!.frob^0 );
+    Objectify( ProjElsWithFrobType, o);
     return o;
   end );
 
-InstallMethod( OneSameMutability, "for a projective group element",
-  [IsProjGrpEl and IsProjGrpElRep],
+# CHECKED 6/09/11 jdb
+#############################################################################
+#O  OneSameMutability( <el> )
+# returns one of the group of <el> with same mutability
+## 
+InstallMethod( OneSameMutability, 
+  "for a projective group element with Frobenius",
+  [IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
   function( el )
     local o;
-    o := rec( mat := OneImmutable( el!.mat ), fld := el!.fld );
-    Objectify( NewType(FamilyObj(el), IsProjGrpElRep), o );
+    o := rec( mat := OneImmutable( el!.mat ), fld := el!.fld,
+              frob := el!.frob^0 );
+    Objectify( ProjElsWithFrobType, o);
     return o;
   end );
 
-InstallMethod( ViewObj, "for a projective group",
-  [IsProjectiveGroup],
-  function( g )
-    Print("<projective group>");
-  end );
+###################################################################
+# General methods to deal with projective groups.
+# Construction of (projective) groups is done in the appropriate files
+# that deal with geometries.
+###################################################################
 
-InstallMethod( ViewObj, "for a trivial projective group",
-  [IsProjectiveGroup and IsTrivial],
-  function( g )
-    Print("<trivial projective group>");
-  end );
+# 10 CHECKED 6/09/11 jdb
+###################################################################
+# View, print and display methods for projective groups 
+# (without and with Frobenius)
+###################################################################
 
-InstallMethod( ViewObj, "for a projective group with gens",
-  [IsProjectiveGroup and HasGeneratorsOfGroup],
-  function( g )
-    local gens;
-    gens := GeneratorsOfGroup(g);
-    if Length(gens) = 0 then
-        Print("<trivial projective group>");
-    else
-        Print("<projective group with ",Length(gens),
+InstallMethod( ViewObj, 
+	"for a projective group",
+	[IsProjectiveGroup],
+	function( g )
+		Print("<projective group>");
+	end );
+
+InstallMethod( ViewObj, 
+	"for a trivial projective group",
+	[IsProjectiveGroup and IsTrivial],
+	function( g )
+		Print("<trivial projective group>");
+	end );
+
+InstallMethod( ViewObj, 
+	"for a projective group with gens",
+	[IsProjectiveGroup and HasGeneratorsOfGroup],
+	function( g )
+		local gens;
+		gens := GeneratorsOfGroup(g);
+		if Length(gens) = 0 then
+			Print("<trivial projective group>");
+		else
+			Print("<projective group with ",Length(gens),
               " generators>");
-    fi;
-  end );
+		fi;
+	end );
 
 InstallMethod( ViewObj, 
-  "for a projective group with size",
-  [IsProjectiveGroup and HasSize],
-  function( g )
-    if Size(g) = 1 then
-        Print("<trivial projective group>");
-    else
-        Print("<projective group of size ",Size(g),">");
-    fi;
-  end );
+	"for a projective group with size",
+	[IsProjectiveGroup and HasSize],
+	function( g )
+		if Size(g) = 1 then
+			Print("<trivial projective group>");
+		else
+			Print("<projective group of size ",Size(g),">");
+		fi;
+	end );
 
 InstallMethod( ViewObj, 
-  "for a projective group with gens and size",
-  [IsProjectiveGroup and HasGeneratorsOfGroup and HasSize],
-  function( g )
-    local gens;
-    gens := GeneratorsOfGroup(g);
-    if Length(gens) = 0 then
-        Print("<trivial projective group>");
-    else
-        Print("<projective group of size ",Size(g)," with ",
+	"for a projective group with gens and size",
+	[IsProjectiveGroup and HasGeneratorsOfGroup and HasSize],
+	function( g )
+		local gens;
+		gens := GeneratorsOfGroup(g);
+		if Length(gens) = 0 then
+			Print("<trivial projective group>");
+		else
+			Print("<projective group of size ",Size(g)," with ",
               Length(gens)," generators>");
-    fi;
-  end );
+		fi;
+	end );
+	
+InstallMethod( ViewObj,	
+	"for a projective semilinear group",
+	[IsProjectiveGroupWithFrob],
+	function( g )
+		Print("<projective semilinear group>");
+	end );
 
-InstallMethod( BaseField, "for a projective group",
-  [IsProjectiveGroup],
-  function( g )
-    local f,gens;
-    if IsBound(g!.basefield) then
-        return g!.basefield;
-    fi;
-    if HasParent(g) then
-        f := BaseField(Parent(g));
-        g!.basefield := f;
-        return f;
-    fi;
+InstallMethod( ViewObj, 
+	"for a trivial projective semilinear group",
+	[IsProjectiveGroupWithFrob and IsTrivial],
+	function( g )
+		Print("<trivial projective semilinear group>");
+	end );
+
+InstallMethod( ViewObj, 
+	"for a projective semilinear group with gens",
+	[IsProjectiveGroupWithFrob and HasGeneratorsOfGroup],
+	function( g )
+		local gens;
+		gens := GeneratorsOfGroup(g);
+		if Length(gens) = 0 then
+			Print("<trivial projective semilinear group>");
+		else
+			Print("<projective semilinear group with ",Length(gens),
+              " generators>");
+		fi;
+	end );
+
+InstallMethod( ViewObj, 
+	"for a projective semilinear group with size",
+	[IsProjectiveGroupWithFrob and HasSize],
+	function( g )
+		if Size(g) = 1 then
+			Print("<trivial projective semilinear group>");
+		else
+			Print("<projective semilinear group of size ",Size(g),">");
+		fi;
+	end );
+
+InstallMethod( ViewObj, 
+	"for a projective semilinear group with gens and size",
+	[IsProjectiveGroupWithFrob and HasGeneratorsOfGroup and HasSize],
+	function( g )
+		local gens;
+		gens := GeneratorsOfGroup(g);
+		if Length(gens) = 0 then
+			Print("<trivial projective semilinear group>");
+		else
+			Print("<projective semilinear group of size ",Size(g)," with ",
+              Length(gens)," generators>");
+		fi;
+	end );
+
+
+###################################################################
+# Some operations for projective groups (without and with frobenius automorphism)
+###################################################################
+
+# CHECKED 6/09/11 jdb
+#############################################################################
+#O  BaseField( <g> )
+# returns the base field of the projective group <g>
+## 
+InstallMethod( BaseField, 
+	"for a projective group",
+	[IsProjectiveGroup],
+	function( g )
+		local f,gens;
+		if IsBound(g!.basefield) then
+			return g!.basefield;
+		fi;
+		if HasParent(g) then
+			f := BaseField(Parent(g));
+			g!.basefield := f;
+			return f;
+		fi;
     # Now start to investigate:
-    gens := GeneratorsOfGroup(g);
-    if Length(gens) > 0 then
-        g!.basefield := gens[1]!.fld;
-        return g!.basefield;
-    fi;
+		gens := GeneratorsOfGroup(g);
+		if Length(gens) > 0 then
+			g!.basefield := gens[1]!.fld;
+			return g!.basefield;
+		fi;
     # Now we have to give up:
-    Error("base field could not be determined");
-  end );
+		Error("base field could not be determined");
+	end );
 
-InstallMethod( Dimension, "for a projective group",
-  [IsProjectiveGroup],
-  function( g )
-    local gens;
-    if HasParent(g) then
-        return Dimension(Parent(g));
-    fi;
+# CHECKED 6/09/11 jdb
+#############################################################################
+#O  BaseField( <g> )
+# returns the base field of the projective semilinear group <g>
+## 
+InstallMethod( BaseField, 
+	"for a projective semilinear group",
+	[IsProjectiveGroupWithFrob],
+	function( g )
+		local f,gens;
+		if IsBound(g!.basefield) then
+			return g!.basefield;
+		fi;
+		if HasParent(g) then
+			f := BaseField(Parent(g));
+			g!.basefield := f;
+			return f;
+		fi;
     # Now start to investigate:
-    gens := GeneratorsOfGroup(g);
-    if Length(gens) > 0 then
-        return Length(gens[1]!.mat);
-    fi;
-    Error("dimension could not be determined");
-  end );
+		gens := GeneratorsOfGroup(g);
+		if Length(gens) > 0 then
+			g!.basefield := gens[1]!.fld;
+			return g!.basefield;
+		fi;
+    # Now we have to give up:
+		Error("base field could not be determined");
+	end );
+
+# CHECKED 6/09/11 jdb
+#############################################################################
+#O  Dimension( <g> )
+# returns the dimension of the projective group <g>. The dimension of this 
+# group is defined as the vector space dimension of the projective space  
+# of which <g> was defined as a projective group, or, in other words, as the 
+# size of the matrices.
+## 
+InstallMethod( Dimension, 
+	"for a projective group",
+	[IsProjectiveGroup],
+	function( g )
+		local gens;
+		if HasParent(g) then
+			return Dimension(Parent(g));
+		fi;
+    # Now start to investigate:
+		gens := GeneratorsOfGroup(g);
+		if Length(gens) > 0 then
+			return Length(gens[1]!.mat);
+		fi;
+		Error("dimension could not be determined");
+	end );
+
+# CHECKED 6/09/11 jdb
+#############################################################################
+#O  Dimension( <g> )
+# returns the dimension of the projective semilinear group <g>. The dimension of this 
+# group is defined as the vector space dimension of the projective space  
+# of which <g> was defined as a projective group, or, in other words, as the 
+# size of the matrices minus one.
+## 
+InstallMethod( Dimension, 
+	"for a projective semilinear group",
+	[IsProjectiveGroupWithFrob],
+	function( g )
+		local gens;
+		if HasParent(g) then
+			return Dimension(Parent(g));
+		fi;
+    # Now start to investigate:
+		gens := GeneratorsOfGroup(g);
+		if Length(gens) > 0 then
+			return Length(gens[1]!.mat);
+		fi;
+		Error("dimension could not be determined");
+	end );
+
+# CHECKED 6/09/11 jdb
+#############################################################################
+#O  OneImmutable( <g> )
+# returns an immutable one of the projectivity group <g>
+## 
+InstallMethod( OneImmutable, 
+	"for a projective group",
+	# was: [IsGroup and IsProjectiveGroup], I think might be
+	[IsProjectiveGroup],
+	function( g )
+		local gens, o;
+		gens := GeneratorsOfGroup(g);
+		if Length(gens) = 0 then
+			if HasParent(g) then
+				gens := GeneratorsOfGroup(Parent(g));
+			else
+				Error("sorry, no generators, no one");
+			fi;
+		fi;
+		o := rec( mat := OneImmutable( gens[1]!.mat ), fld := gens[1]!.fld );
+		Objectify( NewType(FamilyObj(gens[1]), IsProjGrpElRep), o );
+		return o;
+	end );
+
+# CHECKED 6/09/11 jdb
+#############################################################################
+#O  OneImmutable( <g> )
+# returns immutable one of the group <g>
+## 
+InstallMethod( OneImmutable, 
+	"for a projective semilinear group",
+	# was [IsGroup and IsProjectiveGroupWithFrob], I think might be
+	[IsProjectiveGroupWithFrob],
+	function( g )
+		local gens, o;
+		gens := GeneratorsOfGroup(g);
+		if Length(gens) = 0 then
+			if HasParent(g) then
+				gens := GeneratorsOfGroup(Parent(g));
+			else
+				Error("sorry, no generators, no one");
+			fi;
+		fi;
+		o := rec( mat := OneImmutable( gens[1]!.mat ), fld := BaseField(g),
+				frob := gens[1]!.frob^0 );
+		Objectify( ProjElsWithFrobType, o);
+		return o;
+	end );
+
+###################################################################
+# Action functions for projective groups and projective semilinear
+# groups.
+###################################################################
 
 InstallMethod( CanComputeActionOnPoints, "for a projective group",
   [IsProjectiveGroup],
@@ -1108,280 +1501,6 @@ InstallMethod( NiceMonomorphism,
     fi;
   end );
  
-#################################################
-# Frobenius automorphisms and groups using them:
-#################################################
-
-InstallOtherMethod( \^, "for a FFE vector and a Frobenius automorphism",
-  [ IsVector and IsFFECollection, IsFrobeniusAutomorphism ],
-  function( v, f )
-    return List(v,x->x^f);
-  end );
-
-InstallOtherMethod( \^, "for a FFE vector and a trivial Frobenius automorphism",
-  [ IsVector and IsFFECollection, IsMapping and IsOne ],
-  function( v, f )
-    return v;
-  end );
-
-InstallOtherMethod( \^, 
-  "for a compressed GF2 vector and a Frobenius automorphism",
-  [ IsVector and IsFFECollection and IsGF2VectorRep, IsFrobeniusAutomorphism ],
-  function( v, f )
-    local w;
-    w := List(v,x->x^f);
-    ConvertToVectorRepNC(w,2);
-    return w;
-  end );
-
-InstallOtherMethod( \^, 
-  "for a compressed GF2 vector and a trivial Frobenius automorphism",
-  [ IsVector and IsFFECollection and IsGF2VectorRep, IsMapping and IsOne ],
-  function( v, f )
-    return v;
-  end );
-
-InstallOtherMethod( \^, 
-  "for a compressed 8bit vector and a Frobenius automorphism",
-  [ IsVector and IsFFECollection and Is8BitVectorRep, IsFrobeniusAutomorphism ],
-  function( v, f )
-    local w;
-    w := List(v,x->x^f);
-    ConvertToVectorRepNC(w,Q_VEC8BIT(v));
-    return w;
-  end );
-
-InstallOtherMethod( \^, 
-  "for a compressed 8bit vector and a trivial Frobenius automorphism",
-  [ IsVector and IsFFECollection and Is8BitVectorRep, IsMapping and IsOne ],
-  function( v, f )
-    return v;
-  end );
-
-InstallOtherMethod( \^, "for a FFE matrix and a Frobenius automorphism",
-  [ IsMatrix and IsFFECollColl, IsFrobeniusAutomorphism ],
-  function( m, f )
-    return List(m,v->List(v,x->x^f));
-  end );
-
-InstallOtherMethod( \^, "for a FFE matrix and a trivial Frobenius automorphism",
-  [ IsMatrix and IsFFECollColl, IsMapping and IsOne ],
-  function( m, f )
-    return m;
-  end );
-
-InstallOtherMethod( \^, 
-  "for a compressed GF2 matrix and a Frobenius automorphism",
-  [ IsMatrix and IsFFECollColl and IsGF2MatrixRep, IsFrobeniusAutomorphism ],
-  function( m, f )
-    local w,l,i;
-    l := [];
-    for i in [1..Length(m)] do
-        w := List(m[i],x->x^f);
-        ConvertToVectorRepNC(w,2);
-        Add(l,w);
-    od;
-    ConvertToMatrixRepNC(l,2);
-    return l;
-  end );
-
-InstallOtherMethod( \^, 
-  "for a compressed GF2 matrix and a trivial Frobenius automorphism",
-  [ IsMatrix and IsFFECollColl and IsGF2MatrixRep, IsMapping and IsOne ],
-  function( m, f )
-    return m;
-  end );
-
-InstallOtherMethod( \^, 
-  "for a compressed 8bit matrix and a Frobenius automorphism",
-  [ IsMatrix and IsFFECollColl and Is8BitMatrixRep, IsFrobeniusAutomorphism ],
-  function( m, f )
-    local w,l,i,q;
-    l := [];
-    q := Q_VEC8BIT(m[1]);
-    for i in [1..Length(m)] do
-        w := List(m[i],x->x^f);
-        ConvertToVectorRepNC(w,q);
-        Add(l,w);
-    od;
-    ConvertToMatrixRepNC(l,q);
-    return l;
-  end );
-
-InstallOtherMethod( \^, 
-  "for a compressed 8bit matrix and a trivial Frobenius automorphism",
-  [ IsMatrix and IsFFECollColl and Is8BitMatrixRep, IsMapping and IsOne ],
-  function( m, f )
-    return m;
-  end );
-
-
-
-#made a change, added ^-1 on march 8 2007, J&J
-InstallMethod( \*, "for two projective group element with Frobenious",
-  [IsProjGrpElWithFrob and IsProjGrpElWithFrobRep,
-   IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
-  function( a, b )
-    local el;
-    el := rec( mat := a!.mat * (b!.mat^(a!.frob^-1)), fld := a!.fld, 
-               frob := a!.frob * b!.frob );
-    Objectify( ProjElsWithFrobType, el);
-    return el;
-  end );
-
-#found a bug 23/09/08 in st. andrews.
-#J&J feel a great relief.
-#C&P too.
-#all after Max concluded that there was a big bug.
-InstallMethod( InverseSameMutability, 
-  "for a projective group element with Frobenius",
-  [IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
-  function( el )
-    local m,f;
-    f := el!.frob;
-    m := rec( mat := (InverseSameMutability(el!.mat))^f, fld := el!.fld,
-              frob := f^-1 );
-    Objectify( ProjElsWithFrobType, m );
-    return m;
-  end );
-
-InstallMethod( InverseMutable, 
-  "for a projective group element with Frobenius",
-  [IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
-  function( el )
-    local m,f;
-    f := el!.frob;
-    m := rec( mat := (InverseMutable(el!.mat))^f, fld := el!.fld,
-              frob := f^-1 );
-    Objectify( ProjElsWithFrobType, m );
-    return m;
-  end );
-
-InstallMethod( OneImmutable, "for a projective semilinear group",
-  [IsGroup and IsProjectiveGroupWithFrob],
-  function( g )
-    local gens, o;
-    gens := GeneratorsOfGroup(g);
-    if Length(gens) = 0 then
-        if HasParent(g) then
-            gens := GeneratorsOfGroup(Parent(g));
-        else
-            Error("sorry, no generators, no one");
-        fi;
-    fi;
-    o := rec( mat := OneImmutable( gens[1]!.mat ), fld := BaseField(g),
-              frob := gens[1]!.frob^0 );
-    Objectify( ProjElsWithFrobType, o);
-    return o;
-  end );
-
-InstallMethod( OneImmutable, "for a projective group element with Frobenius",
-  [IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
-  function( el )
-    local o;
-    o := rec( mat := OneImmutable( el!.mat ), fld := el!.fld,
-              frob := el!.frob^0 );
-    Objectify( ProjElsWithFrobType, o);
-    return o;
-  end );
-
-InstallMethod( OneSameMutability, 
-  "for a projective group element with Frobenius",
-  [IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
-  function( el )
-    local o;
-    o := rec( mat := OneImmutable( el!.mat ), fld := el!.fld,
-              frob := el!.frob^0 );
-    Objectify( ProjElsWithFrobType, o);
-    return o;
-  end );
-
-InstallMethod( ViewObj, "for a projective semilinear group",
-  [IsProjectiveGroupWithFrob],
-  function( g )
-    Print("<projective semilinear group>");
-  end );
-
-InstallMethod( ViewObj, "for a trivial projective semilinear group",
-  [IsProjectiveGroupWithFrob and IsTrivial],
-  function( g )
-    Print("<trivial projective semilinear group>");
-  end );
-
-InstallMethod( ViewObj, "for a projective semilinear group with gens",
-  [IsProjectiveGroupWithFrob and HasGeneratorsOfGroup],
-  function( g )
-    local gens;
-    gens := GeneratorsOfGroup(g);
-    if Length(gens) = 0 then
-        Print("<trivial projective semilinear group>");
-    else
-        Print("<projective semilinear group with ",Length(gens),
-              " generators>");
-    fi;
-  end );
-
-InstallMethod( ViewObj, 
-  "for a projective semilinear group with size",
-  [IsProjectiveGroupWithFrob and HasSize],
-  function( g )
-    if Size(g) = 1 then
-        Print("<trivial projective semilinear group>");
-    else
-        Print("<projective semilinear group of size ",Size(g),">");
-    fi;
-  end );
-
-InstallMethod( ViewObj, 
-  "for a projective semilinear group with gens and size",
-  [IsProjectiveGroupWithFrob and HasGeneratorsOfGroup and HasSize],
-  function( g )
-    local gens;
-    gens := GeneratorsOfGroup(g);
-    if Length(gens) = 0 then
-        Print("<trivial projective semilinear group>");
-    else
-        Print("<projective semilinear group of size ",Size(g)," with ",
-              Length(gens)," generators>");
-    fi;
-  end );
-
-InstallMethod( BaseField, "for a projective semilinear group",
-  [IsProjectiveGroupWithFrob],
-  function( g )
-    local f,gens;
-    if IsBound(g!.basefield) then
-        return g!.basefield;
-    fi;
-    if HasParent(g) then
-        f := BaseField(Parent(g));
-        g!.basefield := f;
-        return f;
-    fi;
-    # Now start to investigate:
-    gens := GeneratorsOfGroup(g);
-    if Length(gens) > 0 then
-        g!.basefield := gens[1]!.fld;
-        return g!.basefield;
-    fi;
-    # Now we have to give up:
-    Error("base field could not be determined");
-  end );
-
-InstallMethod( Dimension, "for a projective semilinear group",
-  [IsProjectiveGroupWithFrob],
-  function( g )
-    local gens;
-    if HasParent(g) then
-        return Dimension(Parent(g));
-    fi;
-    # Now start to investigate:
-    gens := GeneratorsOfGroup(g);
-    if Length(gens) > 0 then
-        return Length(gens[1]!.mat);
-    fi;
-    Error("dimension could not be determined");
-  end );
 
 InstallMethod( CanComputeActionOnPoints, "for a projective group with frob",
   [IsProjectiveGroupWithFrob],

@@ -113,11 +113,11 @@ DeclareOperation( "SetAsNiceMono", [IsProjectiveGroup, IsGroupHomomorphism] );
 DeclareAttribute( "Dimension", IsProjectiveGroup );
 DeclareProperty( "CanComputeActionOnPoints", IsProjectiveGroup );
 
-
 DeclareSynonym( "IsProjectiveGroupWithFrob", IsGroup and IsProjGrpElWithFrobCollection);
 
-
-
+#################################################
+# action functions:
+#################################################
 
 InstallTrueMethod( IsHandledByNiceMonomorphism, IsProjectiveGroupWithFrob );
 
