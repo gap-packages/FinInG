@@ -488,7 +488,7 @@ subspace of the same dimension if <A>el</A> is a collineation.
 
 <Section Label="nice_mono">
 <Heading>Nice Monomorphisms</Heading>
-
+This section needs some technical explanation on the DESARGUES.Fast stuff etc. To be done.
 <ManSection>
 <Oper Name="CanComputeActionOnPoints" Arg="g"/>
 <Returns>true or false</Returns>

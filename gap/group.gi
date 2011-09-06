@@ -27,7 +27,7 @@
 #
 # Things To Do:
 #
-# - Order for a projective semilinear element
+# - Order for a projective semilinear element: done?
 # - GammaOminus (q even)
 # - Optimise the action operations/functions
 # - Have ProjEl, ProjElWithFrob, and ProjElWithFrobWithVSIsom
@@ -1358,33 +1358,202 @@ InstallMethod( OneImmutable,
 	end );
 
 ###################################################################
-# Action functions for projective groups and projective semilinear
-# groups.
+# All about actions. But low level stuff. In each appropriate files
+# for particular geometries, user-friendly action functions must be
+# provided.
 ###################################################################
 
-InstallMethod( CanComputeActionOnPoints, "for a projective group",
-  [IsProjectiveGroup],
-  function( g )
-    local d,q;
-    d := Dimension( g );
-    q := Size( BaseField( g ) );
-    if (q^d - 1)/(q-1) > DESARGUES.LimitForCanComputeActionOnPoints then
-        return false;
-    else
-        return true;
-    fi;
-  end );
+# CHECKED 6/09/11 jdb
+#############################################################################
+#P  CanComputeActionOnPoints( <g> )
+# is set true if we consider the computation of the action feasible.
+# for projective groups.
+## 
+InstallMethod( CanComputeActionOnPoints, 
+	"for a projective group",
+	[IsProjectiveGroup],
+	function( g )
+		local d,q;
+		d := Dimension( g );
+		q := Size( BaseField( g ) );
+		if (q^d - 1)/(q-1) > DESARGUES.LimitForCanComputeActionOnPoints then
+			return false;
+		else
+			return true;
+		fi;
+	end );
+  
+# CHECKED 6/09/11 jdb
+#############################################################################
+#P  CanComputeActionOnPoints( <g> )
+# is set true if we consider the computation of the action feasible.
+# for projective semilinear groups.
+## 
+InstallMethod( CanComputeActionOnPoints, 
+	"for a projective group with frob",
+	[IsProjectiveGroupWithFrob],
+	function( g )
+		local d,q;
+		d := Dimension( g );
+		q := Size( BaseField( g ) );
+		if (q^d - 1)/(q-1) > DESARGUES.LimitForCanComputeActionOnPoints then
+			return false;
+		else
+			return true;
+		fi;
+	end );
+  
+###################################################################
+# Action functions for projective groups and projective semilinear
+# groups. The four action functions here are low level and not 
+# intended for the user.
+###################################################################
 
+# CHECKED 6/09/11 jdb
+#############################################################################
+#F  OnProjPoints( <line>, <el> )
+# computes <line>^<el> where this action is the "natural" one, and <line> represents
+# a projective point. We called it line, since this functions relies on the Gap action
+# function OnLines, which is the "natural" actions of a matrix on a vector line.
+# Important: despite its natural name, this function is *not* intended for the user.
+# <line>: just a row vector, representing a vector line
+# <el>: a projective group element (so a projectivity, *not* a projective semilinear element.
+# normalizing the result is handled by the Gap function OnLines. This function assumes that 
+# the input vector is also normalized (says the GAP manual).
+## 
 InstallGlobalFunction( OnProjPoints,
+	function( line, el )
+		return OnLines(line,el!.mat);
+	end );
+
+# CHECKED 6/09/11 jdb
+#############################################################################
+#F  OnProjPointsWithFrob( <line>, <el> )
+# computes <line>^<el> where this action is the "natural" one, and <line> represents
+# a projective point. This function relies on the GAP function OnPoints, which represents
+# the natural action of matrices on row *vectors* (So the result is *not* normalized, neither
+# it is assumed that the input is normalized.
+# Important: despite its natural name, this function is *not* intended for the user.
+# <line>: just a row vector, representing a projective point.
+# <el>: a projective semilinear element 
+## 
+InstallGlobalFunction( OnProjPointsWithFrob,
   function( line, el )
-    return OnLines(line,el!.mat);
+    local vec,c;
+    vec := OnPoints(line,el!.mat)^el!.frob;
+    c := PositionNonZero(vec);
+    if c <= Length( vec )  then
+        if not(IsMutable(vec)) then
+            vec := ShallowCopy(vec);
+        fi;
+        MultRowVector(vec,Inverse( vec[c] ));
+    fi;
+    return vec;
   end );
 
+# CHECKED 6/09/11 jdb
+#############################################################################
+#F  OnProjSubspacesNoFrob( <subspace>, <el> )
+# computes <subspace>^<el> where this action is the "natural" one, and <subspace> represents
+# a projective subspace. This function relies on the GAP action function
+# OnSubspacesByCanonicalBasis. This function assumes as arguments a list (mat) of linearly 
+# independent row vectors, in Hermite normal form (triangulied), and return the 
+# mat*<el> in Hermite normal form.
+# Important: despite its natural name, this function is *not* intended for the user.
+# <el>: a projective group element (so a projectivity, *not* a projective semilinear element.
+## 
 InstallGlobalFunction( OnProjSubspacesNoFrob,
+	function( subspace, el )
+		return OnSubspacesByCanonicalBasis(subspace,el!.mat);
+	end );
+
+# CHECKED 6/09/11 jdb
+#############################################################################
+#F  OnProjSubspacesWithFrob( <subspace>, <el> )
+# computes <subspace>^<el> where this action is the "natural" one, and <subspace> represents
+# a projective subspace. This function relies on the GAP action function
+# OnRight, which computs the action of a matrix on a sub vector space. 
+# Important: despite its natural name, this function is *not* intended for the user.
+# <el>: a projective group element (so a projectivity, *not* a projective semilinear element.
+##
+InstallGlobalFunction( OnProjSubspacesWithFrob,
   function( subspace, el )
-    return OnSubspacesByCanonicalBasis(subspace,el!.mat);
+    local vec,c;
+    vec := OnRight(subspace,el!.mat)^el!.frob;
+    if not(IsMutable(vec)) then
+        vec := MutableCopyMat(vec);
+    fi;
+    TriangulizeMat(vec);
+    return vec;
   end );
 
+###################################################################
+# Higher level user friendly operations to compute the action of a
+# projective and a projective semilinear group. These operations
+# are based on the low level functions above.
+###################################################################
+
+# CHECKED 6/09/11 jdb
+#############################################################################
+#P  ActionOnAllProjPoints( <g> )
+# returns the action of the projective group <g> on the projective points
+# of the underlying projective space.
+## 
+InstallMethod( ActionOnAllProjPoints, 
+	"for a projective group",
+	[ IsProjectiveGroup ],
+	function( pg )
+		local a,d,f,orb;
+		f := BaseField(pg);
+		d := Dimension(pg);
+		orb := MakeAllProjectivePoints(f,d);
+		a := ActionHomomorphism(pg,orb,OnProjPoints,"surjective");
+		SetIsInjective(a,true);
+		return a;
+	end );
+
+# CHECKED 6/09/11 jdb
+#############################################################################
+#P  ActionOnAllProjPoints( <g> )
+# returns the action of the projective semilinear group <g> on the projective points
+# of the underlying projective space.
+## 
+InstallMethod( ActionOnAllProjPoints, "for a projective semilinear group",
+	[ IsProjectiveGroupWithFrob ],
+	function( pg )
+		local a,d,f,o,on,orb,v,zero, m, j;
+		f := BaseField(pg);
+		d := Dimension(pg);
+		o := One(f);
+		on := One(pg);
+		v := ZeroMutable(on!.mat[1]);
+		v[1] := o;
+		# orb := Orbit(pg,v,OnProjPointsWithFrob);
+		zero := Zero(f);
+		orb := [];
+		for m in f^d do
+			j := PositionNot(m, zero);
+		if j <= d and m[j] = o then
+			Add(orb, m);
+		fi;
+		od;
+		a := ActionHomomorphism(pg,orb,OnProjPointsWithFrob,"surjective");
+		SetIsInjective(a,true);
+		return a;
+	end );
+
+###################################################################
+# NiceMonomorphism material for projective and projective semilinear 
+# groups. 
+###################################################################
+
+# CHECKED 6/09/11 jdb
+#############################################################################
+#F  NiceMonomorphismByOrbit( <g>, <x>, <op>, <orblen> )
+# <g>: projective groups; <x>: an element; <op> operation suitable for <x> and <g>
+# important: this functions relies on the GenSS package. 
+# As you can probably guess: this is not intended for a user.
+##
 InstallGlobalFunction( NiceMonomorphismByOrbit,
   function(g,x,op,orblen)
     # g a funny group, Size attribute set!
@@ -1412,6 +1581,13 @@ InstallGlobalFunction( NiceMonomorphismByOrbit,
     return iso;
   end );
 
+# CHECKED 6/09/11 jdb
+#############################################################################
+#F  NiceMonomorphismByDomain( <g>, <x>, <op>, <orblen> )
+# <g>: projective groups, size attribute *set* ; <x>: an element; 
+# <op> operation suitable for <x> and <g>
+# important: this functions relies on the GenSS package. 
+##
 InstallGlobalFunction( NiceMonomorphismByDomain,
   function(g,dom,op)
     # g a funny group, Size attribute set!
@@ -1440,19 +1616,8 @@ InstallGlobalFunction( NiceMonomorphismByDomain,
     return iso;  
   end );
 
-InstallMethod( ActionOnAllProjPoints, "for a projective group",
-  [ IsProjectiveGroup ],
-  function( pg )
-    local a,d,f,orb;
-    f := BaseField(pg);
-    d := Dimension(pg);
-    orb := MakeAllProjectivePoints(f,d);
-    a := ActionHomomorphism(pg,orb,OnProjPoints,"surjective");
-    SetIsInjective(a,true);
-    return a;
-  end );
-
 ## Is this operation ever used? I think it obselete (JB: 26/09/08)
+## John is probably right. A grep of SetAsNiceMono on all *.gi files gives only the InstallMethod( parts. (jdb 6/9/11). 
 
 InstallMethod( SetAsNiceMono, "for a projective group and an action hom",
   [IsProjectiveGroup, IsGroupHomomorphism and IsInjective],
@@ -1460,111 +1625,7 @@ InstallMethod( SetAsNiceMono, "for a projective group and an action hom",
     SetNiceMonomorphism(pg,a);
     SetNiceObject(pg,Image(a));
   end );
-
-InstallMethod( NiceMonomorphism, 
-  "for a projective group (feasible case)",
-  [IsProjectiveGroup and CanComputeActionOnPoints and
-   IsHandledByNiceMonomorphism], 50,
-  function( pg )
-    local hom, dom;
   
-    dom := MakeAllProjectivePoints( BaseField(pg), Dimension(pg) - 1);
-
-    if DESARGUES.Fast then
-       hom := NiceMonomorphismByDomain( pg, dom, OnProjPointsWithFrob );
-    else 
-       hom := ActionHomomorphism(pg, dom, OnProjPointsWithFrob, "surjective");    
-       SetIsBijective(hom, true);
-    fi;
-  
-    return hom;
-  end );
-  
-InstallMethod( NiceMonomorphism, 
-  "for a projective group (nasty case)",
-  [IsProjectiveGroupWithFrob and IsHandledByNiceMonomorphism], 50,
-  function( pg )
-    local can, dom, hom;
-    can := CanComputeActionOnPoints(pg);
-    if not(can) then
-        Error("action on projective points not feasible to calculate");
-    else
-        dom := MakeAllProjectivePoints( BaseField(pg), Dimension(pg) - 1 );
-
-        if DESARGUES.Fast then
-           hom := NiceMonomorphismByDomain( pg, dom, OnProjPointsWithFrob );
-        else 
-           hom := ActionHomomorphism(pg, dom, OnProjPointsWithFrob, "surjective");    
-           SetIsBijective(hom, true);
-        fi;
-        return hom; 
-    fi;
-  end );
- 
-
-InstallMethod( CanComputeActionOnPoints, "for a projective group with frob",
-  [IsProjectiveGroupWithFrob],
-  function( g )
-    local d,q;
-    d := Dimension( g );
-    q := Size( BaseField( g ) );
-    if (q^d - 1)/(q-1) > DESARGUES.LimitForCanComputeActionOnPoints then
-        return false;
-    else
-        return true;
-    fi;
-  end );
-
-InstallGlobalFunction( OnProjPointsWithFrob,
-  function( line, el )
-    local vec,c;
-    vec := OnPoints(line,el!.mat)^el!.frob;
-    c := PositionNonZero(vec);
-    if c <= Length( vec )  then
-        if not(IsMutable(vec)) then
-            vec := ShallowCopy(vec);
-        fi;
-        MultRowVector(vec,Inverse( vec[c] ));
-    fi;
-    return vec;
-  end );
-
-InstallGlobalFunction( OnProjSubspacesWithFrob,
-  function( line, el )
-    local vec,c;
-    vec := OnRight(line,el!.mat)^el!.frob;
-    if not(IsMutable(vec)) then
-        vec := MutableCopyMat(vec);
-    fi;
-    TriangulizeMat(vec);
-    return vec;
-  end );
-
-InstallMethod( ActionOnAllProjPoints, "for a projective semilinear group",
-  [ IsProjectiveGroupWithFrob ],
-  function( pg )
-    local a,d,f,o,on,orb,v,
-		      zero, m, j;
-    f := BaseField(pg);
-    d := Dimension(pg);
-    o := One(f);
-    on := One(pg);
-    v := ZeroMutable(on!.mat[1]);
-    v[1] := o;
-    # orb := Orbit(pg,v,OnProjPointsWithFrob);
-    zero := Zero(f);
-    orb := [];
-    for m in f^d do
-        j := PositionNot(m, zero);
-	if j <= d and m[j] = o then
-	   Add(orb, m);
-	fi;
-    od;
-    a := ActionHomomorphism(pg,orb,OnProjPointsWithFrob,"surjective");
-    SetIsInjective(a,true);
-    return a;
-  end );
-
 InstallMethod( SetAsNiceMono, 
   "for a projective semilinear group and an action hom",
   [IsProjectiveGroupWithFrob, IsGroupHomomorphism and IsInjective],
@@ -1573,26 +1634,85 @@ InstallMethod( SetAsNiceMono,
     SetNiceObject(pg,Image(a));
   end );
 
+# CHECKED 6/09/11 jdb
+#############################################################################
+#O  NiceMonomorphism( <pg> )
+# <pg> is a projective group. This operation returns a nice monomorphism.
+##
 InstallMethod( NiceMonomorphism, 
-  "for a projective semilinear group (feasible case)",
-  [IsProjectiveGroupWithFrob and CanComputeActionOnPoints and
-   IsHandledByNiceMonomorphism], 50,
-  function( pg )
-    return ActionOnAllProjPoints( pg );
-  end );
-  
-InstallMethod( NiceMonomorphism, 
-  "for a projective semilinear group (nasty case)",
-  [IsProjectiveGroupWithFrob and IsHandledByNiceMonomorphism], 50,
-  function( pg )
-    local can;
-    can := CanComputeActionOnPoints(pg);
-    if not(can) then
-        Error("action on projective points not feasible to calculate");
-    else
-        return ActionOnAllProjPoints( pg );
+	"for a projective group (feasible case)",
+	[IsProjectiveGroup and CanComputeActionOnPoints and IsHandledByNiceMonomorphism], 
+	50,
+	function( pg )
+	local hom, dom;
+    dom := MakeAllProjectivePoints( BaseField(pg), Dimension(pg) - 1);
+    if DESARGUES.Fast then
+       hom := NiceMonomorphismByDomain( pg, dom, OnProjPointsWithFrob );
+    else 
+       hom := ActionHomomorphism(pg, dom, OnProjPointsWithFrob, "surjective");    
+       SetIsBijective(hom, true);
     fi;
-  end );
+    return hom;
+	end );
+  
+# CHECKED 6/09/11 jdb
+#############################################################################
+#O  NiceMonomorphism( <pg> )
+# <pg> is a projective group. This operation returns a nice monomorphism.
+##
+InstallMethod( NiceMonomorphism, 
+	"for a projective group (nasty case)",
+	[IsProjectiveGroupWithFrob and IsHandledByNiceMonomorphism], 
+	50,
+	function( pg )
+		local can, dom, hom;
+		can := CanComputeActionOnPoints(pg);
+		if not(can) then
+			Error("action on projective points not feasible to calculate");
+		else
+			dom := MakeAllProjectivePoints( BaseField(pg), Dimension(pg) - 1 );
+			if DESARGUES.Fast then
+				hom := NiceMonomorphismByDomain( pg, dom, OnProjPointsWithFrob );
+			else 
+				hom := ActionHomomorphism(pg, dom, OnProjPointsWithFrob, "surjective");    
+				SetIsBijective(hom, true);
+			fi;
+			return hom; 
+		fi;
+	end );
+
+# CHECKED 6/09/11 jdb
+#############################################################################
+#O  NiceMonomorphism( <pg> )
+# <pg> is a projective semilinear group. This operation returns a nice monomorphism.
+##
+InstallMethod( NiceMonomorphism, 
+	"for a projective semilinear group (feasible case)",
+	[IsProjectiveGroupWithFrob and CanComputeActionOnPoints and
+	IsHandledByNiceMonomorphism], 50,
+	function( pg )
+		return ActionOnAllProjPoints( pg );
+	end );
+  
+# CHECKED 6/09/11 jdb
+#############################################################################
+#O  NiceMonomorphism( <pg> )
+# <pg> is a projective semilinear group. This operation returns a nice monomorphism.
+##
+InstallMethod( NiceMonomorphism, 
+	"for a projective semilinear group (nasty case)",
+	[IsProjectiveGroupWithFrob and IsHandledByNiceMonomorphism], 50,
+	function( pg )
+		local can;
+		can := CanComputeActionOnPoints(pg);
+		if not(can) then
+			Error("action on projective points not feasible to calculate");
+		else
+			return ActionOnAllProjPoints( pg );
+		fi;
+	end );
+
+## FindBasePointCandidates: are these methods also obsolete in the sense that they are never used?
 
 InstallMethod( FindBasePointCandidates,
   "for a projective group",
@@ -1643,8 +1763,6 @@ InstallMethod( FindBasePointCandidates,
     return cand;
   end );
 
-
-
 InstallMethod( FindBasePointCandidates,
   "for a projective semilinear group",
   [IsProjectiveGroupWithFrob,IsRecord,IsInt,IsObject],
@@ -1675,8 +1793,6 @@ InstallMethod( FindBasePointCandidates,
     fi;
     return cand;
   end );
-
-
 
 #################################################
 # Our classical groups:

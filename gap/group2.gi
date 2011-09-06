@@ -578,7 +578,7 @@ InstallMethod( CorrelationGroup,
 	"for a full projective space",
 	[ IsProjectiveSpace and IsProjectiveSpaceRep ],
 	function( ps )
-		local corr,d,f,frob,g,newgens,q,tau;
+		local corr,d,f,frob,g,newgens,q,tau,pow,string;
 		f := ps!.basefield;
 		q := Size(f);
 		d := ProjectiveDimension(ps);
@@ -591,6 +591,14 @@ InstallMethod( CorrelationGroup,
 		newgens := ProjElsWithFrobWithPSIsom(newgens, f);
 		corr := GroupWithGenerators(newgens);
 		SetSize(corr, Size(g) / (q - 1) * Order(frob) * 2); #* 2 for the standard duality.
+	    pow := LogInt(q, Characteristic(f));
+		if pow > 1 then 
+			string := Concatenation("PGammaL(",String(d+1),",",String(q),")");
+		else
+			string := Concatenation("PGL(",String(d+1),",",String(q),")");
+		fi;
+		string := Concatenation(string," : 2");
+		SetName(corr,string);
 		return corr;
 	end );
 

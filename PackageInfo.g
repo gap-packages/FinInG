@@ -424,7 +424,14 @@ AvailabilityTest := function()
 ##  in this file. If you are not happy with it, you can provide a string
 ##  here that is used as a banner. GAP decides when the banner is shown and
 ##  when it is not shown. *optional* (note the ~-syntax in this example)
+##this one was made using http://www.network-science.de/ascii/ :-)
 BannerString := Concatenation( 
+  "---------------------------------------------------------------------\n",
+  "    ______________       ________      _________\n",
+  "___  ____/__(_)__________  _/________  ____/\n",
+  "__  /_   __  /__  __ \__  / __  __ \  / __  \n",
+  "_  __/   _  / _  / / /_/ /  _  / / / /_/ /  \n",
+  "/_/      /_/  /_/ /_//___/  /_/ /_/\____/  \n",
   "---------------------------------------------------------------------\n",
   "Loading  FinInG ", ~.Version, " (Finite Incidence Geometry) \n",
   "by ", ~.Persons[1].FirstNames, " ", ~.Persons[1].LastName,
