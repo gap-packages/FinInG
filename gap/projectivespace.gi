@@ -166,6 +166,244 @@ InstallMethod( StandardFrame,
 		fi;
 	end );
 
+#############################################################################
+# Constructor methods and some operations/attributes for subspaces of 
+# projective spaces.
+#############################################################################
+
+#############################################################################
+# A bit funny maybe, but we first deal with empty subspaces.
+#############################################################################
+
+
+#############################################################################
+#  VectorSpaceToElement methods
+#############################################################################
+
+## Things to check for (dodgy input)
+## ---------------------------------
+## - dimension
+## - field
+## - compress the matrix at the end
+## - rank of matrix
+## - an empty list
+
+## Much of the following will need to change in the new
+## version of GAP, with the new Row and Matrix types.
+
+## Should we have methods for the new types given by the cvec package?
+## Currently we don't load the cvec package.
+
+
+# CHECKED 7/09/11 jdb
+#############################################################################
+#O  VectorSpaceToElement( <ps> )
+##
+InstallMethod( VectorSpaceToElement, 
+	"for a projective space and a Plist",
+	[IsProjectiveSpace, IsPlistRep],
+	function( geom, v )
+		local  x, n, i;
+		## when v is empty... 
+        if IsEmpty(v) then
+			Error("<v> does not represent any vectorspace");
+		fi;
+        x := MutableCopyMat(v);
+		TriangulizeMat(x);
+        ## dimension should be correct
+		if Length(v[1]) <> geom!.dimension + 1 then
+			Error("Dimensions are incompatible");
+		fi;
+        ## Remove zero rows. It is possible the the user
+		## has inputted a matrix which does not have full rank
+        n := Length(x);
+		i := 0;
+		while i < n and ForAll(x[n-i], IsZero) do
+			i := i+1; 
+		od;
+		if i = n then
+			return EmptySubspace(geom);
+		fi;
+		x := x{[1..n-i]};
+		if Length(x)=ProjectiveDimension(geom)+1 then
+			return geom;
+		fi;
+        ## It is possible that (a) the user has entered a
+		## matrix with one row, or that (b) the user has
+		## entered a matrix with rank 1 (thus at this stage
+		## we will have a matrix with one row).
+        ## We must also compress our vector/matrix.
+        if Length(x) = 1 then
+			ConvertToVectorRep(x, geom!.basefield);
+			return Wrap(geom, 1, x[1]);
+		else
+			ConvertToMatrixRep(x, geom!.basefield);
+			return Wrap(geom, Length(x), x);
+		fi;
+	end );
+
+
+InstallMethod( VectorSpaceToElement, "for a compressed GF(2)-matrix",
+  [IsProjectiveSpace, IsGF2MatrixRep],
+  function( geom, v )
+    local  x, n, i;
+
+    ## when v is empty... 
+    if IsEmpty(v) then
+      Error("<v> does not represent any vectorspace");
+    fi;
+	x := MutableCopyMat(v);
+    TriangulizeMat(x);
+  
+    ## dimension should be correct
+  
+    if Length(v[1]) <> geom!.dimension + 1 then
+       Error("Dimensions are incompatible");
+    fi;
+  
+    ## Remove zero rows. It is possible the the user
+    ## has inputted a matrix which does not have full rank
+  
+    n := Length(x);
+    i := 0;
+    while i < n and ForAll(x[n-i], IsZero) do
+         i := i+1; 
+    od;
+    if i = n then
+       return EmptySubspace(geom);
+    fi;
+    x := x{[1..n-i]};
+    if Length(x)=ProjectiveDimension(geom)+1 then
+       return geom;
+    fi;
+  
+    ## It is possible that (a) the user has entered a
+    ## matrix with one row, or that (b) the user has
+    ## entered a matrix with rank 1 (thus at this stage
+    ## we will have a matrix with one row).
+  
+    ## We must also compress our vector/matrix.
+  
+    if Length(x) = 1 then
+       ConvertToVectorRep(x, geom!.basefield);
+       return Wrap(geom, 1, x[1]);
+    else
+       ConvertToMatrixRep(x, geom!.basefield);
+       return Wrap(geom, Length(x), x);
+    fi;
+  end );
+  
+InstallMethod( VectorSpaceToElement, "for a compressed basis of a vector subspace",
+  [IsProjectiveSpace, Is8BitMatrixRep],
+  function( geom, v )
+  local  x, n, i;
+
+  ## when v is empty... 
+  if IsEmpty(v) then
+    Error("<v> does not represent any vectorspace");
+  fi;
+  x := MutableCopyMat(v);
+  TriangulizeMat(x);
+
+  ## dimension should be correct
+
+  if Length(v[1]) <> geom!.dimension + 1 then
+     Error("Dimensions are incompatible");
+  fi;
+
+  ## Remove zero rows. It is possible the the user
+  ## has inputted a matrix which does not have full rank
+
+  n := Length(x);
+  i := 0;
+  while i < n and ForAll(x[n-i], IsZero) do
+       i := i+1; 
+  od;
+  if i = n then
+     return EmptySubspace(geom);
+  fi;
+  x := x{[1..n-i]};
+  if Length(x)=ProjectiveDimension(geom)+1 then
+     return geom;
+  fi;
+
+  ## It is possible that (a) the user has entered a
+  ## matrix with one row, or that (b) the user has
+  ## entered a matrix with rank 1 (thus at this stage
+  ## we will have a matrix with one row).
+
+  ## We must also compress our vector/matrix.
+
+  if Length(x) = 1 then
+     ConvertToVectorRep(x, geom!.basefield);
+     return Wrap(geom, 1, x[1]);
+  else
+     ConvertToMatrixRep(x, geom!.basefield);
+     return Wrap(geom, Length(x), x);
+  fi;
+end );  
+  
+# CHECKED 11/04/15 jdb
+InstallMethod( VectorSpaceToElement, "for a row vector",
+ [IsProjectiveSpace, IsRowVector],
+ function( geom, v )
+   local  x, n, i;
+     ## when v is empty...
+     if IsEmpty(v) then
+       Error("<v> does not represent any vectorspace");
+     fi;
+	 x := ShallowCopy(v);
+
+     ## dimension should be correct
+
+     if Length(v) <> geom!.dimension + 1 then
+        Error("Dimensions are incompatible");
+     fi;
+
+     ## We must also compress our vector.
+     ConvertToVectorRep(x, geom!.basefield);
+
+     ## bad characters, such as jdb, checked this with input zero vector...
+ 	 if IsZero(x) then
+	   return EmptySubspace(geom);
+	 else
+	   return Wrap(geom, 1, x);
+	 fi;
+end );
+
+# CHECKED 11/04/15 jdb
+InstallMethod( VectorSpaceToElement, "for an 8-bit vector",
+ [IsProjectiveSpace, Is8BitVectorRep],
+ function( geom, v )
+   local  x, n, i;
+
+     ## when v is empty...
+
+     if IsEmpty(v) then
+       return EmptySubspace;
+     fi;
+     x := ShallowCopy(v);
+
+     ## dimension should be correct
+
+     if Length(v) <> geom!.dimension + 1 then
+        Error("Dimensions are incompatible");
+     fi;
+
+     ## We must also compress our vector.
+
+     ConvertToVectorRep(x, geom!.basefield);
+
+     ## bad characters, such as jdb, checked this with input zero vector...
+ 	 if IsZero(x) then
+	   return EmptySubspace(geom);
+	 else
+	   return Wrap(geom, 1, x);
+	 fi;
+
+end );
+
+
 
 
 InstallMethod( UnderlyingVectorSpace, "for a subspace of a projective space",
@@ -1290,239 +1528,6 @@ InstallMethod( Random, "for a collection of subspaces of a subspace of a project
         return(VectorSpaceToElement(pg,AsList(Basis(W))));
   end );
 
-
-#####################################
-#
-#  VectorSpaceToElement methods
-#
-#####################################
-
-## Things to check for (dodgy input)
-## ---------------------------------
-## - dimension
-## - field
-## - compress the matrix at the end
-## - rank of matrix
-## - an empty list
-
-## Much of the following will need to change in the new
-## version of GAP, with the new Row and Matrix types.
-
-## Should we have methods for the new types given by the cvec package?
-## Currently we don't load the cvec package.
-
-
-InstallMethod( VectorSpaceToElement, "for a Plist",
-  [IsProjectiveSpace, IsPlistRep],
-  function( geom, v )
-    local  x, n, i;
-      ## when v is empty... 
-      
-      if IsEmpty(v) then
-        Error("<v> does not represent any vectorspace");
-      fi;
-      
-	  x := MutableCopyMat(v);
-      TriangulizeMat(x);
-      
-      ## dimension should be correct
-      
-      if Length(v[1]) <> geom!.dimension + 1 then
-         Error("Dimensions are incompatible");
-      fi;
-      
-      ## Remove zero rows. It is possible the the user
-      ## has inputted a matrix which does not have full rank
-      
-      n := Length(x);
-      i := 0;
-      while i < n and ForAll(x[n-i], IsZero) do
-          i := i+1; 
-      od;
-      if i = n then
-         return EmptySubspace(geom);
-      fi;
-      x := x{[1..n-i]};
-      if Length(x)=ProjectiveDimension(geom)+1 then
-         return geom;
-      fi;
-      
-      ## It is possible that (a) the user has entered a
-      ## matrix with one row, or that (b) the user has
-      ## entered a matrix with rank 1 (thus at this stage
-      ## we will have a matrix with one row).
-      
-      ## We must also compress our vector/matrix.
-      
-      if Length(x) = 1 then
-         ConvertToVectorRep(x, geom!.basefield);
-         return Wrap(geom, 1, x[1]);
-      else
-         ConvertToMatrixRep(x, geom!.basefield);
-         return Wrap(geom, Length(x), x);
-      fi;
- end );
-
-
-InstallMethod( VectorSpaceToElement, "for a compressed GF(2)-matrix",
-  [IsProjectiveSpace, IsGF2MatrixRep],
-  function( geom, v )
-    local  x, n, i;
-
-    ## when v is empty... 
-    if IsEmpty(v) then
-      Error("<v> does not represent any vectorspace");
-    fi;
-	x := MutableCopyMat(v);
-    TriangulizeMat(x);
-  
-    ## dimension should be correct
-  
-    if Length(v[1]) <> geom!.dimension + 1 then
-       Error("Dimensions are incompatible");
-    fi;
-  
-    ## Remove zero rows. It is possible the the user
-    ## has inputted a matrix which does not have full rank
-  
-    n := Length(x);
-    i := 0;
-    while i < n and ForAll(x[n-i], IsZero) do
-         i := i+1; 
-    od;
-    if i = n then
-       return EmptySubspace(geom);
-    fi;
-    x := x{[1..n-i]};
-    if Length(x)=ProjectiveDimension(geom)+1 then
-       return geom;
-    fi;
-  
-    ## It is possible that (a) the user has entered a
-    ## matrix with one row, or that (b) the user has
-    ## entered a matrix with rank 1 (thus at this stage
-    ## we will have a matrix with one row).
-  
-    ## We must also compress our vector/matrix.
-  
-    if Length(x) = 1 then
-       ConvertToVectorRep(x, geom!.basefield);
-       return Wrap(geom, 1, x[1]);
-    else
-       ConvertToMatrixRep(x, geom!.basefield);
-       return Wrap(geom, Length(x), x);
-    fi;
-  end );
-  
-InstallMethod( VectorSpaceToElement, "for a compressed basis of a vector subspace",
-  [IsProjectiveSpace, Is8BitMatrixRep],
-  function( geom, v )
-  local  x, n, i;
-
-  ## when v is empty... 
-  if IsEmpty(v) then
-    Error("<v> does not represent any vectorspace");
-  fi;
-  x := MutableCopyMat(v);
-  TriangulizeMat(x);
-
-  ## dimension should be correct
-
-  if Length(v[1]) <> geom!.dimension + 1 then
-     Error("Dimensions are incompatible");
-  fi;
-
-  ## Remove zero rows. It is possible the the user
-  ## has inputted a matrix which does not have full rank
-
-  n := Length(x);
-  i := 0;
-  while i < n and ForAll(x[n-i], IsZero) do
-       i := i+1; 
-  od;
-  if i = n then
-     return EmptySubspace(geom);
-  fi;
-  x := x{[1..n-i]};
-  if Length(x)=ProjectiveDimension(geom)+1 then
-     return geom;
-  fi;
-
-  ## It is possible that (a) the user has entered a
-  ## matrix with one row, or that (b) the user has
-  ## entered a matrix with rank 1 (thus at this stage
-  ## we will have a matrix with one row).
-
-  ## We must also compress our vector/matrix.
-
-  if Length(x) = 1 then
-     ConvertToVectorRep(x, geom!.basefield);
-     return Wrap(geom, 1, x[1]);
-  else
-     ConvertToMatrixRep(x, geom!.basefield);
-     return Wrap(geom, Length(x), x);
-  fi;
-end );  
-  
-# CHECKED 11/04/15 jdb
-InstallMethod( VectorSpaceToElement, "for a row vector",
- [IsProjectiveSpace, IsRowVector],
- function( geom, v )
-   local  x, n, i;
-     ## when v is empty...
-     if IsEmpty(v) then
-       Error("<v> does not represent any vectorspace");
-     fi;
-	 x := ShallowCopy(v);
-
-     ## dimension should be correct
-
-     if Length(v) <> geom!.dimension + 1 then
-        Error("Dimensions are incompatible");
-     fi;
-
-     ## We must also compress our vector.
-     ConvertToVectorRep(x, geom!.basefield);
-
-     ## bad characters, such as jdb, checked this with input zero vector...
- 	 if IsZero(x) then
-	   return EmptySubspace(geom);
-	 else
-	   return Wrap(geom, 1, x);
-	 fi;
-end );
-
-# CHECKED 11/04/15 jdb
-InstallMethod( VectorSpaceToElement, "for an 8-bit vector",
- [IsProjectiveSpace, Is8BitVectorRep],
- function( geom, v )
-   local  x, n, i;
-
-     ## when v is empty...
-
-     if IsEmpty(v) then
-       return EmptySubspace;
-     fi;
-     x := ShallowCopy(v);
-
-     ## dimension should be correct
-
-     if Length(v) <> geom!.dimension + 1 then
-        Error("Dimensions are incompatible");
-     fi;
-
-     ## We must also compress our vector.
-
-     ConvertToVectorRep(x, geom!.basefield);
-
-     ## bad characters, such as jdb, checked this with input zero vector...
- 	 if IsZero(x) then
-	   return EmptySubspace(geom);
-	 else
-	   return Wrap(geom, 1, x);
-	 fi;
-
-end );
 
 
 #############################################################################
