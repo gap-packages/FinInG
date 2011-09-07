@@ -75,6 +75,7 @@ InstallMethod( ElementToVectorSpace,
 ## and maybe even the whole space.
 
 # CHECKED 17/04/11 jdb
+# this makes me unhappy now. \in is more general than IsIncident. 
 #############################################################################
 #O  \in( <a>, <b> )
 # set theoretic containment for elements of a Lie geometry. 
@@ -86,6 +87,23 @@ InstallMethod( \in,
 		return IsIncident(b, a) and (a!.type <= b!.type); #made a little change here
 	end );	#to let in correspond with set theoretic containment. jdb 8/2/9
 			#During a nice afternoon in Vicenza back enabled. jdb and pc, 11/411
+
+
+# CHECKED 7/09/11 jdb
+#############################################################################
+#O  \in( <x>, <y> )
+# set theoretic containment for a projective space and a subspace. 
+##
+InstallOtherMethod( \in, 
+	"for a projective space and any of its subspaces", 
+	[ IsProjectiveSpace, IsSubspaceOfProjectiveSpace ],
+	function( x, y )
+		if x = y!.geo then
+			return false;
+		else
+			Error( "<x> is different from the ambient space of <y>" );
+		fi;
+	end );
 
 #############################################################################
 # Viewing/Printing/Displaying methods.
@@ -168,7 +186,6 @@ InstallMethod( Solids, "for IsLieGeometry",
 		return ElementsOfIncidenceStructure(ps, 4);
 	end);
 
-
 # CHECKED 18/4/2011 jdb
 # I will move this piece to projectivespace.gi.
 InstallMethod( Hyperplanes, "for IsProjectiveSpace",
@@ -199,6 +216,166 @@ InstallGlobalFunction( OnSetsProjSubspaces,
   function( var, el )
     return Set( var, i -> OnProjSubspaces( i, el ) );
   end );
+
+
+#############################################################################
+# Generic methods for the emptysubspace of Lie geometries.
+#############################################################################
+
+#InstallMethod( EmptySubspace, "for a projective space",
+# [IsProjectiveSpace],
+# function( pg )
+#   local  vs,x,w,ty;
+#	 vs:=UnderlyingVectorSpace(pg);
+#     x := ShallowCopy(Zero(vs));
+#	 w := rec( geo := pg, obj := x );
+#	 ty:= NewType( NewFamily("EmptySubspaceFamily"), IsEmptySubspace and IsEmptySubspaceRep );
+#    ObjectifyWithAttributes( w, ty, 
+#						AmbientSpace, pg,
+#						ProjectiveDimension, -1);
+#    return w;
+#end );
+
+#InstallMethod( EmptySubspace, "for a polar space",
+# [IsClassicalPolarSpace],
+# function( pg )
+#   local  vs,x,w,ty;
+#	 vs:=UnderlyingVectorSpace(pg);
+#     x := ShallowCopy(Zero(vs));
+#	 w := rec( geo := pg, obj := x );
+#	 ty:= NewType( NewFamily("EmptySubspaceFamily"), IsEmptySubspace and IsEmptySubspaceRep );
+#    ObjectifyWithAttributes( w, ty, 
+#						AmbientSpace, pg,
+#						ProjectiveDimension, -1);
+#    return w;
+#end );
+
+# CHECKED 7/09/2011 jdb
+#############################################################################
+#O  EmptySubspace( <g> )
+# returns the empty subspace in the Lie geometry <g>
+## 
+InstallMethod( EmptySubspace, 
+	"for a Lie geometry",
+	[IsLieGeometry],
+	function( g )
+		local  vs,x,w,ty;
+		vs:=UnderlyingVectorSpace(g);
+		x := ShallowCopy(Zero(vs));
+		w := rec( geo := g, obj := x );
+		ty:= NewType( NewFamily("EmptySubspaceFamily"), IsEmptySubspace and IsEmptySubspaceRep );
+		ObjectifyWithAttributes( w, ty, AmbientSpace, g, ProjectiveDimension, -1);
+		return w;
+	end );
+
+# 3 CHECKED 7/09/2011 jdb
+#############################################################################
+# View, PRint and Display for IsEmptySubspace
+#############################################################################
+
+InstallMethod( ViewObj, [IsEmptySubspace],
+  function(x)
+    Print("< trivial subspace >");
+  end );
+  
+InstallMethod( PrintObj, [IsEmptySubspace],
+  function(x)
+    PrintObj(Zero(UnderlyingVectorSpace(AmbientSpace(x))));
+  end );
+
+InstallMethod( Display, [IsEmptySubspace],
+  function(x)
+    Print("< trivial subspace >");
+  end );
+
+# CHECKED 7/09/2011 jdb
+#############################################################################
+#O  \=( <e1>, <e2> )
+# returns true if <e1> and <e2> are empty spaces in the same ambient spaces.
+# Remark: this method is correct, but at this very moment, I might get unhappy
+# with the meaning of AmbientSpace (and its sibling AmbientGeometry). Making me
+# happy again with these concepts, might change the code below later on.
+## 
+InstallMethod( \=, "for two empty subspaces",
+        [IsEmptySubspace, IsEmptySubspace],
+        function(e1,e2);
+        return AmbientSpace(e1) = AmbientSpace(e2);
+  end );
+
+# CHECKED 7/09/2011 jdb
+#############################################################################
+#O  \^( <e>, <u> )
+# unwrapping the empty subspace
+## 
+InstallMethod( \^, "unwrapping an empty subspace",
+  [ IsEmptySubspace, IsUnwrapper ],
+  function( e, u )
+    return [];
+  end );
+
+#############################################################################
+# Methods for \in with the EmtySubspace. Since the empty subspace is not 
+# an element of an incidence geometry, we don't provide methods for IsIncident.
+# This was decided on 17/04/2011 (Vicenza).
+# Now I add the extra checks to see if two empty subspaces belong to the same
+# space.
+#############################################################################
+
+InstallOtherMethod( \in, 
+	"for the trivial subspace and a trivial subspace", 
+	[ IsEmptySubspace, IsEmptySubspace ],
+	function( x, y )
+		if x!.geo = y!.geo then
+			return true;
+		else
+			Error( "The subspaces <x> and <y> belong to different ambient spaces" );
+		fi;
+	end );
+  
+InstallOtherMethod( \in, 
+	"for the trivial subspace and a non trivial subspace", 
+	[ IsEmptySubspace, IsSubspaceOfProjectiveSpace ],
+	function( x, y )
+		if x!.geo = y!.geo then
+			return true;
+		else
+			Error( "The subspaces <x> and <y> belong to different ambient spaces" );
+		fi;
+	end );
+	
+InstallOtherMethod( \in, 
+	"for the trivial subspace and a non trivial subspace", 
+	[ IsSubspaceOfProjectiveSpace, IsEmptySubspace ],
+	function( x, y )
+		if x!.geo = y!.geo then
+			return false;
+		else
+			Error( "The subspaces <x> and <y> belong to different ambient spaces" );
+		fi;
+	end );
+
+InstallOtherMethod( \in, 
+	"for a projective subspace and its trivial subspace ", 
+	[ IsProjectiveSpace, IsEmptySubspace ],
+	function( x, y )
+		if x = y!.geo then
+			return false;
+		else
+			Error( "<x> is different from the ambient space of <y>" );
+		fi;
+	end );
+  
+InstallOtherMethod( \in, 
+	"for the trivial subspace and a projective subspace", 
+	[ IsEmptySubspace, IsProjectiveSpace ],
+	function( x, y )
+		if x!.geo = y then
+			return false;
+		else
+			Error( "The subspace <x> has a different ambient space than <y>" );
+		fi;
+	end );
+
 
 #############################################################################
 #
