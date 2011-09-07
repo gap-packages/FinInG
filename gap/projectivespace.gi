@@ -166,75 +166,22 @@ InstallMethod( StandardFrame,
 		fi;
 	end );
 
+# CHECKED 18/4/2011 jdb
+#############################################################################
+#O  Hyperplanes( <ps> )
+# returns Hyperplanes(ps,ps!.dimension), <ps> a projective space
+## 
+InstallMethod( Hyperplanes,
+	"for a projective space",
+	[ IsProjectiveSpace ],
+	function( ps )
+		return ElementsOfIncidenceStructure(ps, ps!.dimension);
+	end);
+
 #############################################################################
 # Constructor methods and some operations/attributes for subspaces of 
 # projective spaces.
 #############################################################################
-
-
-
-InstallMethod( Span, "for the trivial subspace and a projective subspace", 
-   [ IsEmptySubspace, IsSubspaceOfProjectiveSpace ],
-  function( x, y )
-    return y;
-  end );
-
-InstallMethod( Span, "for the trivial subspace and a projective subspace", 
-   [ IsSubspaceOfProjectiveSpace, IsEmptySubspace ],
-  function( x, y )
-    return x;
-  end );
-
-InstallMethod( Span, "for the trivial subspace and a projective subspace", 
-   [ IsEmptySubspace, IsProjectiveSpace ],
-  function( x, y )
-    return y;
-  end );
-
-InstallMethod( Span, "for the trivial subspace and a projective subspace", 
-   [ IsProjectiveSpace, IsEmptySubspace ],
-  function( x, y )
-    return x;
-  end );
-  
-InstallMethod( Span, "for the trivial subspace and the trivial subspace",
-	[IsEmptySubspace, IsEmptySubspace],
-	function (x,y)
-		return x;
-	end );
-
-
-# Methods for Meet with the EmptySubspace
-
-InstallMethod( Meet, "for the trivial subspace and a projective subspace", 
-   [ IsEmptySubspace, IsSubspaceOfProjectiveSpace ],
-  function( x, y )
-    return x;
-  end );
-
-InstallMethod( Meet, "for the trivial subspace and a projective subspace", 
-   [ IsSubspaceOfProjectiveSpace, IsEmptySubspace ],
-  function( x, y )
-    return y;
-  end );
-
-InstallMethod( Meet, "for the trivial subspace and a projective subspace", 
-   [ IsEmptySubspace, IsProjectiveSpace ],
-  function( x, y )
-    return x;
-  end );
-
-InstallMethod( Meet, "for the trivial subspace and a projective subspace", 
-   [ IsProjectiveSpace, IsEmptySubspace ],
-  function( x, y )
-    return y;
-  end );
-
-InstallMethod( Meet, "for the trivial subspace and the trivial subspace",
-	[IsEmptySubspace, IsEmptySubspace],
-	function (x,y)
-		return x;
-	end );
 
 #############################################################################
 #  VectorSpaceToElement methods
@@ -463,8 +410,9 @@ InstallMethod( VectorSpaceToElement, "for an 8-bit vector",
 
 end );
 
-
-
+#############################################################################
+#  attributes/operations for subspaces
+#############################################################################
 
 InstallMethod( UnderlyingVectorSpace, "for a subspace of a projective space",
 	[IsSubspaceOfProjectiveSpace],
@@ -541,10 +489,157 @@ InstallMethod( EquationOfHyperplane, "for a hyperplane of a projective space",
 	return Sum(List([1..Size(indets)],i->v[i]*indets[i]));
 end );
 
+#############################################################################
+#  Span/Meet for trivial subspaces
+#############################################################################
+
+InstallMethod( Span, "for the trivial subspace and a projective space", 
+   [ IsEmptySubspace, IsProjectiveSpace ],
+  function( x, y )
+    return y;
+  end );
+
+InstallMethod( Span, "for the trivial subspace and a projective space", 
+   [ IsProjectiveSpace, IsEmptySubspace ],
+  function( x, y )
+    return x;
+  end );
+  
+
+# Methods for Meet with the EmptySubspace
+
+
+InstallMethod( Meet, "for the trivial subspace and a projective subspace", 
+   [ IsEmptySubspace, IsProjectiveSpace ],
+  function( x, y )
+    return x;
+  end );
+
+InstallMethod( Meet, "for the trivial subspace and a projective subspace", 
+   [ IsProjectiveSpace, IsEmptySubspace ],
+  function( x, y )
+    return y;
+  end );
+
+#############################################################################
+# ShadowOfElement methods.
+#############################################################################
+
+InstallMethod( ShadowOfElement, [IsProjectiveSpace, IsElementOfIncidenceStructure, IsPosInt],
+# returns the shadow of an element v as a record containing the projective space (geometry), 
+# the type j of the elements (type), the element v (parentflag), and some extra information
+# useful to compute with the shadows, e.g. iterator
+  function( ps, v, j )
+    local localinner, localouter, localfactorspace;
+    if j < v!.type then
+      localinner := [];
+      localouter := v!.obj;
+    elif j = v!.type then
+      localinner := v!.obj;
+      localouter := localinner;
+    else
+      localinner := v!.obj;
+      localouter := BasisVectors(Basis(ps!.vectorspace));
+    fi;
+    
+    if IsVector(localinner) and not IsMatrix(localinner) then
+      localinner := [localinner]; fi;
+    if IsVector(localouter) and not IsMatrix(localouter) then
+      localouter := [localouter]; fi;
+    localfactorspace := Subspace(ps!.vectorspace,
+      BaseSteinitzVectors(localouter, localinner).factorspace);
+    return Objectify(
+      NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
+                                IsShadowSubspacesOfProjectiveSpace and
+                                IsShadowSubspacesOfProjectiveSpaceRep),
+        rec(
+          geometry := ps,
+          type := j,
+          inner := localinner,
+          outer := localouter,
+          factorspace := localfactorspace,
+		  parentflag := v,
+          size := Size(Subspaces(localfactorspace))
+        )
+      );
+  end);
+
+
+
+
+
+
+#############################################################################
+# Shortcuts to ShadowOfElement, specifically for projective spaces. 
+#############################################################################
+
+# CHECKED 7/09/2011 jdb
+#############################################################################
+#O  Hyperplanes( <el> )
+# returns the hyperplanes, i.e. elements of type el!type-1 in <el>. 
+# relying on ShadowOfElement for particular <el>.
+##
+InstallMethod( Hyperplanes, 
+	"for elements of a Lie geometry",
+	[ IsSubspaceOfProjectiveSpace ],
+	function( var )
+		local geo, d, f;
+		geo := var!.geo;
+		#d := geo!.dimension;
+		#f := geo!.basefield;
+		# return ShadowOfElement( ProjectiveSpace(d, f), var, var!.type - 1 ); changed this into
+	    return ShadowOfElement( geo, var, geo!.dimension );
+  end );
+
+# CHECKED 7/09/2011 jdb
+#############################################################################
+#O  Hyperplanes( <el> )
+# returns the hyperplanes, i.e. elements of type el!type-1 in <el>, all in <geo> 
+# relying on ShadowOfElement for particular <geo> and <el>.
+##
+InstallMethod( Hyperplanes, 
+	"for a Lie geometry and elements of a Lie geometry",
+	[ IsProjectiveSpace, IsSubspaceOfProjectiveSpace ],
+	function( geo, var )
+		local d, f;
+		d := geo!.dimension;
+		f := geo!.basefield;
+		return ShadowOfElement( geo, var, geo!.dimension );
+  end );
+
+
+
+#############################################################################
+# Action functions intended for the user.
+#############################################################################
+
+InstallGlobalFunction( OnProjSubspaces,
+  function( var, el )
+    local amb,geo,newvar;
+    geo := var!.geo;   
+    if var!.type = 1 then
+        newvar := OnProjPointsWithFrob(var!.obj,el);
+    else
+        newvar := OnProjSubspacesWithFrob(var!.obj,el);
+    fi;
+    return Wrap(geo,var!.type,newvar);
+  end );
+
+InstallOtherMethod( \^, [IsElementOfIncidenceStructure, IsProjGrpElWithFrob],
+  function(x, em)
+    return OnProjSubspaces(x,em);
+  end );
+
+InstallGlobalFunction( OnSetsProjSubspaces,
+  function( var, el )
+    return Set( var, i -> OnProjSubspaces( i, el ) );
+  end );
 
 #############################################################################
 # Constructors for groups of projective spaces.
 #############################################################################
+
+
 
 InstallMethod( CollineationGroup, "for a full projective space",
   [ IsProjectiveSpace and IsProjectiveSpaceRep ],
@@ -663,6 +758,18 @@ InstallMethod( TypesOfElementsOfIncidenceStructurePlural, "for a projective spac
     od;
     return types;
   end );
+
+InstallOtherMethod( \in, 
+	"for a projective subspace and its trivial subspace ", 
+	[ IsProjectiveSpace, IsEmptySubspace ],
+	function( x, y )
+		if x = y!.geo then
+			return false;
+		else
+			Error( "<x> is different from the ambient space of <y>" );
+		fi;
+	end );
+  
 
 InstallMethod( \in, "for a subspace of a projective space and projective space",  
      [IsSubspaceOfProjectiveSpace, IsProjectiveSpace],
@@ -872,44 +979,6 @@ InstallMethod( Size, [IsShadowSubspacesOfProjectiveSpace and
   end);
 
 
-InstallMethod( ShadowOfElement, [IsProjectiveSpace, IsElementOfIncidenceStructure, IsPosInt],
-# returns the shadow of an element v as a record containing the projective space (geometry), 
-# the type j of the elements (type), the element v (parentflag), and some extra information
-# useful to compute with the shadows, e.g. iterator
-  function( ps, v, j )
-    local localinner, localouter, localfactorspace;
-    if j < v!.type then
-      localinner := [];
-      localouter := v!.obj;
-    elif j = v!.type then
-      localinner := v!.obj;
-      localouter := localinner;
-    else
-      localinner := v!.obj;
-      localouter := BasisVectors(Basis(ps!.vectorspace));
-    fi;
-    
-    if IsVector(localinner) and not IsMatrix(localinner) then
-      localinner := [localinner]; fi;
-    if IsVector(localouter) and not IsMatrix(localouter) then
-      localouter := [localouter]; fi;
-    localfactorspace := Subspace(ps!.vectorspace,
-      BaseSteinitzVectors(localouter, localinner).factorspace);
-    return Objectify(
-      NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
-                                IsShadowSubspacesOfProjectiveSpace and
-                                IsShadowSubspacesOfProjectiveSpaceRep),
-        rec(
-          geometry := ps,
-          type := j,
-          inner := localinner,
-          outer := localouter,
-          factorspace := localfactorspace,
-		  parentflag := v,
-          size := Size(Subspaces(localfactorspace))
-        )
-      );
-  end);
   
 
 #############################################################################
