@@ -49,6 +49,9 @@ DeclareCategory( "IsFlagOfLieGeometry", IsFlagOfIncidenceGeometry );
 
 #DeclareRepresentation( "IsFlagOfLieGeometryRep", IsFlagOfLieGeometry, [ "geo", "types", "els" ] );
 
+DeclareCategory( "IsEmptySubspace", IsAttributeStoringRep );
+DeclareRepresentation( "IsEmptySubspaceRep", IsEmptySubspace, ["geo", "obj"] );
+
 DeclareCategory( "IsShadowElementsOfLieGeometry", IsElementsOfIncidenceStructure );
 DeclareRepresentation( "IsShadowElementsOfLieGeometryRep", IsElementsOfIncidenceStructure, [ "geometry", "type", "inner", "outer", "factorspace" ]);
 
@@ -62,6 +65,13 @@ DeclareOperation( "VectorSpaceToElement", [IsLieGeometry, IsPlistRep] );
 DeclareOperation( "VectorSpaceToElement", [IsLieGeometry, Is8BitMatrixRep] );
 DeclareOperation( "VectorSpaceToElement", [IsLieGeometry, IsGF2MatrixRep] );
 DeclareOperation( "ElementToVectorSpace", [IsElementOfLieGeometry] );
+#DeclareOperation( "EmptySubspace", [IsClassicalPolarSpace] );
+#DeclareOperation( "EmptySubspace", [IsProjectiveSpace] );
+DeclareOperation( "EmptySubspace", [IsLieGeometry] );
+
+DeclareOperation( "\^", [IsEmptySubspace, IsUnwrapper] );
+
+
 
 DeclareGlobalFunction( "OnProjSubspaces" );
 DeclareGlobalFunction( "OnSetsProjSubspaces" );
@@ -82,4 +92,48 @@ DeclareGlobalFunction( "OnSetsProjSubspaces" );
 #DeclareOperation( "Planes", [ IsLieGeometry, IsElementOfLieGeometry ] );
 #DeclareOperation( "Solids", [ IsLieGeometry, IsElementOfLieGeometry ] );
 #DeclareOperation( "Hyperplanes", [ IsLieGeometry, IsElementOfLieGeometry ] );
+
+#more for EmptySubspace
+
+#was:
+
+#DeclareOperation( "IsIncident", [IsEmptySubspace, IsSubspaceOfProjectiveSpace]);
+#DeclareOperation( "IsIncident", [IsSubspaceOfProjectiveSpace, IsEmptySubspace]);
+#DeclareOperation( "IsIncident", [IsEmptySubspace, IsProjectiveSpace]);
+#DeclareOperation( "IsIncident", [IsProjectiveSpace, IsEmptySubspace]);
+#DeclareOperation( "IsIncident", [IsEmptySubspace, IsEmptySubspace]);
+
+
+#DeclareOperation( "Span", [IsEmptySubspace, IsSubspaceOfProjectiveSpace]);
+#DeclareOperation( "Span", [IsSubspaceOfProjectiveSpace, IsEmptySubspace]);
+#DeclareOperation( "Span", [IsEmptySubspace, IsProjectiveSpace]);
+#DeclareOperation( "Span", [IsProjectiveSpace, IsEmptySubspace]);
+#DeclareOperation( "Span", [IsEmptySubspace, IsEmptySubspace]);
+
+
+#DeclareOperation( "Meet", [IsEmptySubspace, IsSubspaceOfProjectiveSpace]);
+#DeclareOperation( "Meet", [IsSubspaceOfProjectiveSpace, IsEmptySubspace]);
+#DeclareOperation( "Meet", [IsEmptySubspace, IsProjectiveSpace]);
+#DeclareOperation( "Meet", [IsProjectiveSpace, IsEmptySubspace]);
+#DeclareOperation( "Meet", [IsEmptySubspace, IsEmptySubspace]);
+
+#became (6/0 AD 2011, jdb)
+
+DeclareOperation( "IsIncident", [IsEmptySubspace, IsElementOfLieGeometry]);
+DeclareOperation( "IsIncident", [IsElementOfLieGeometry, IsEmptySubspace]);
+DeclareOperation( "IsIncident", [IsEmptySubspace, IsLieGeometry]);
+DeclareOperation( "IsIncident", [IsLieGeometry, IsEmptySubspace]);
+DeclareOperation( "IsIncident", [IsEmptySubspace, IsEmptySubspace]);
+
+DeclareOperation( "Span", [IsEmptySubspace, IsElementOfLieGeometry]);
+DeclareOperation( "Span", [IsElementOfLieGeometry, IsEmptySubspace]);
+DeclareOperation( "Span", [IsEmptySubspace, IsLieGeometry]);
+DeclareOperation( "Span", [IsLieGeometry, IsEmptySubspace]);
+DeclareOperation( "Span", [IsEmptySubspace, IsEmptySubspace]);
+
+DeclareOperation( "Meet", [IsEmptySubspace, IsElementOfLieGeometry]);
+DeclareOperation( "Meet", [IsElementOfLieGeometry, IsEmptySubspace]);
+DeclareOperation( "Meet", [IsEmptySubspace, IsLieGeometry]);
+DeclareOperation( "Meet", [IsLieGeometry, IsEmptySubspace]);
+DeclareOperation( "Meet", [IsEmptySubspace, IsEmptySubspace]);
 

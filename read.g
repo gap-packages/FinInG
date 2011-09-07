@@ -42,7 +42,7 @@ ReadPackage("fining","gap/group2.gi");
 ReadPackage("fining","gap/affinespace.gi");
 ReadPackage("fining","gap/affinegroup.gi");
 ReadPackage("fining","gap/gpolygons.gi");
-ReadPackage("fining","gap/emptysubspace.gi");
+#ReadPackage("fining","gap/emptysubspace.gi");
 
 ReadPackage("fining","gap/linearalgebra_patch.g");
 
