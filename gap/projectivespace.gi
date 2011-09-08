@@ -30,6 +30,9 @@
 ## To do
 #  Use compressed matrices
 #  Order functions in this file, and write more comments.
+#  Create a HyperplanesOf function? can be done in liegeometry.gi (jdb)
+#  think about generic methods for dimension, projective dimension, basefield, underlying vector space
+#  for Lie geometries and their elements, to be placed in liegeometry.gi of course.
 
 # CHECKED 6/09/11 jdb
 #############################################################################
@@ -121,27 +124,50 @@ InstallMethod( \=, "for two projective spaces",
 	return UnderlyingVectorSpace(pg1) = UnderlyingVectorSpace(pg2);
 end );
 
-# CHECKED 6/09/11 jdb
+# CHECKED 8/09/11 jdb
 #############################################################################
 #A  ProjectiveDimension( <ps> )
 # returns the projective dimension of <ps>
 ##
-InstallMethod( ProjectiveDimension, "for a projective space",
-  [ IsProjectiveSpace and IsProjectiveSpaceRep ],
-  function( ps )
-    return ps!.dimension;
-  end );
-  
-# CHECKED 6/09/11 jdb
+InstallMethod( ProjectiveDimension,
+	"for a projective space",
+	[ IsProjectiveSpace and IsProjectiveSpaceRep ],
+	ps -> ps!.dimension
+	);
+	
+# CHECKED 8/09/11 jdb
 #############################################################################
 #A  Dimension( <ps> )
 # returns the projective dimension of <ps>
 ##
-InstallMethod( Dimension, "for a projective space",
-  [ IsProjectiveSpace and IsProjectiveSpaceRep ],
-  function( ps )
-    return ps!.dimension;
-  end );
+InstallMethod( Dimension, 
+	"for a projective space",
+	[ IsProjectiveSpace and IsProjectiveSpaceRep ],
+	ps -> ps!.dimension
+	);
+
+# CHECKED 8/09/11 jdb
+#############################################################################
+#O  Rank( <ps> )
+# returns the projective dimension of <ps>
+##
+InstallMethod( Rank, 
+	"for a projective space",
+	[ IsProjectiveSpace and IsProjectiveSpaceRep ],
+	ps -> ps!.dimension
+	);
+
+# CHECKED 8/09/11 jdb
+#############################################################################
+#O  Rank( <ps> )
+# returns the projective dimension of <ps>
+##
+InstallMethod( BaseField, "for a projective space", [IsProjectiveSpace],
+  pg -> pg!.basefield );
+
+InstallMethod( BaseField, "for an element of a projective space", [IsSubspaceOfProjectiveSpace],
+  sub -> AmbientSpace(sub)!.basefield );
+
 
 # CHECKED 6/09/11 jdb
 #############################################################################
@@ -204,7 +230,8 @@ InstallMethod( Hyperplanes,
 
 # CHECKED 7/09/11 jdb
 #############################################################################
-#O  VectorSpaceToElement( <ps> )
+#O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
+# by the vectorspace <v>. Several checks are built in. 
 ##
 InstallMethod( VectorSpaceToElement, 
 	"for a projective space and a Plist",
@@ -250,324 +277,385 @@ InstallMethod( VectorSpaceToElement,
 	end );
 
 
-InstallMethod( VectorSpaceToElement, "for a compressed GF(2)-matrix",
-  [IsProjectiveSpace, IsGF2MatrixRep],
-  function( geom, v )
-    local  x, n, i;
-
-    ## when v is empty... 
-    if IsEmpty(v) then
-      Error("<v> does not represent any vectorspace");
-    fi;
-	x := MutableCopyMat(v);
-    TriangulizeMat(x);
+# CHECKED 8/09/11 jdb
+#############################################################################
+#O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
+# by the vectorspace <v>. Several checks are built in. 
+##
+InstallMethod( VectorSpaceToElement, 
+	"for a compressed GF(2)-matrix",
+	[IsProjectiveSpace, IsGF2MatrixRep],
+	function( geom, v )
+		local  x, n, i;
+		## when v is empty... 
+		if IsEmpty(v) then
+			Error("<v> does not represent any vectorspace");
+		fi;
+		x := MutableCopyMat(v);
+		TriangulizeMat(x);
+		## dimension should be correct
+		if Length(v[1]) <> geom!.dimension + 1 then
+			Error("Dimensions are incompatible");
+		fi;
+		## Remove zero rows. It is possible the the user
+		## has inputted a matrix which does not have full rank
+		n := Length(x);
+		i := 0;
+		while i < n and ForAll(x[n-i], IsZero) do
+			i := i+1; 
+		od;
+		if i = n then
+			return EmptySubspace(geom);
+		fi;
+		x := x{[1..n-i]};
+		if Length(x)=ProjectiveDimension(geom)+1 then
+			return geom;
+		fi;
+		## It is possible that (a) the user has entered a
+		## matrix with one row, or that (b) the user has
+		## entered a matrix with rank 1 (thus at this stage
+		## we will have a matrix with one row).
+	    ## We must also compress our vector/matrix.
+		if Length(x) = 1 then
+			ConvertToVectorRep(x, geom!.basefield);
+			return Wrap(geom, 1, x[1]);
+		else
+			ConvertToMatrixRep(x, geom!.basefield);
+			return Wrap(geom, Length(x), x);
+		fi;
+	end );
   
-    ## dimension should be correct
-  
-    if Length(v[1]) <> geom!.dimension + 1 then
-       Error("Dimensions are incompatible");
-    fi;
-  
-    ## Remove zero rows. It is possible the the user
-    ## has inputted a matrix which does not have full rank
-  
-    n := Length(x);
-    i := 0;
-    while i < n and ForAll(x[n-i], IsZero) do
-         i := i+1; 
-    od;
-    if i = n then
-       return EmptySubspace(geom);
-    fi;
-    x := x{[1..n-i]};
-    if Length(x)=ProjectiveDimension(geom)+1 then
-       return geom;
-    fi;
-  
-    ## It is possible that (a) the user has entered a
-    ## matrix with one row, or that (b) the user has
-    ## entered a matrix with rank 1 (thus at this stage
-    ## we will have a matrix with one row).
-  
-    ## We must also compress our vector/matrix.
-  
-    if Length(x) = 1 then
-       ConvertToVectorRep(x, geom!.basefield);
-       return Wrap(geom, 1, x[1]);
-    else
-       ConvertToMatrixRep(x, geom!.basefield);
-       return Wrap(geom, Length(x), x);
-    fi;
-  end );
-  
-InstallMethod( VectorSpaceToElement, "for a compressed basis of a vector subspace",
-  [IsProjectiveSpace, Is8BitMatrixRep],
-  function( geom, v )
-  local  x, n, i;
-
-  ## when v is empty... 
-  if IsEmpty(v) then
-    Error("<v> does not represent any vectorspace");
-  fi;
-  x := MutableCopyMat(v);
-  TriangulizeMat(x);
-
-  ## dimension should be correct
-
-  if Length(v[1]) <> geom!.dimension + 1 then
-     Error("Dimensions are incompatible");
-  fi;
-
-  ## Remove zero rows. It is possible the the user
-  ## has inputted a matrix which does not have full rank
-
-  n := Length(x);
-  i := 0;
-  while i < n and ForAll(x[n-i], IsZero) do
-       i := i+1; 
-  od;
-  if i = n then
-     return EmptySubspace(geom);
-  fi;
-  x := x{[1..n-i]};
-  if Length(x)=ProjectiveDimension(geom)+1 then
-     return geom;
-  fi;
-
-  ## It is possible that (a) the user has entered a
-  ## matrix with one row, or that (b) the user has
-  ## entered a matrix with rank 1 (thus at this stage
-  ## we will have a matrix with one row).
-
-  ## We must also compress our vector/matrix.
-
-  if Length(x) = 1 then
-     ConvertToVectorRep(x, geom!.basefield);
-     return Wrap(geom, 1, x[1]);
-  else
-     ConvertToMatrixRep(x, geom!.basefield);
-     return Wrap(geom, Length(x), x);
-  fi;
-end );  
+# CHECKED 8/09/11 jdb
+#############################################################################
+#O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
+# by the vectorspace <v>. Several checks are built in. 
+##
+InstallMethod( VectorSpaceToElement, 
+	"for a compressed basis of a vector subspace",
+	[IsProjectiveSpace, Is8BitMatrixRep],
+	function( geom, v )
+		local  x, n, i;
+		## when v is empty... 
+		if IsEmpty(v) then
+			Error("<v> does not represent any vectorspace");
+		fi;
+		x := MutableCopyMat(v);
+		TriangulizeMat(x);
+		## dimension should be correct
+		if Length(v[1]) <> geom!.dimension + 1 then
+			Error("Dimensions are incompatible");
+		fi;	
+		## Remove zero rows. It is possible the the user
+		## has inputted a matrix which does not have full rank
+		n := Length(x);
+		i := 0;
+		while i < n and ForAll(x[n-i], IsZero) do
+			i := i+1; 
+		od;
+		if i = n then
+			return EmptySubspace(geom);
+		fi;
+		x := x{[1..n-i]};
+		if Length(x)=ProjectiveDimension(geom)+1 then
+			return geom;
+		fi;
+		## It is possible that (a) the user has entered a
+		## matrix with one row, or that (b) the user has
+		## entered a matrix with rank 1 (thus at this stage
+		## we will have a matrix with one row).
+		## We must also compress our vector/matrix.
+		if Length(x) = 1 then
+			ConvertToVectorRep(x, geom!.basefield);
+			return Wrap(geom, 1, x[1]);
+		else
+			ConvertToMatrixRep(x, geom!.basefield);
+			return Wrap(geom, Length(x), x);
+		fi;
+	end );  
   
 # CHECKED 11/04/15 jdb
-InstallMethod( VectorSpaceToElement, "for a row vector",
- [IsProjectiveSpace, IsRowVector],
- function( geom, v )
-   local  x, n, i;
-     ## when v is empty...
-     if IsEmpty(v) then
-       Error("<v> does not represent any vectorspace");
-     fi;
-	 x := ShallowCopy(v);
-
-     ## dimension should be correct
-
-     if Length(v) <> geom!.dimension + 1 then
-        Error("Dimensions are incompatible");
-     fi;
-
-     ## We must also compress our vector.
-     ConvertToVectorRep(x, geom!.basefield);
-
-     ## bad characters, such as jdb, checked this with input zero vector...
- 	 if IsZero(x) then
-	   return EmptySubspace(geom);
-	 else
-	   return Wrap(geom, 1, x);
-	 fi;
-end );
+#############################################################################
+#O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
+# by the rowvector <v>. Several checks are built in.
+##
+InstallMethod( VectorSpaceToElement,
+	"for a row vector",
+	[IsProjectiveSpace, IsRowVector],
+	function( geom, v )
+		local  x, n, i;
+		## when v is empty...
+		if IsEmpty(v) then
+			Error("<v> does not represent any vectorspace");
+		fi;
+		x := ShallowCopy(v);
+		## dimension should be correct
+		if Length(v) <> geom!.dimension + 1 then
+			Error("Dimensions are incompatible");
+		fi;
+		## We must also compress our vector.
+		ConvertToVectorRep(x, geom!.basefield);
+		## bad characters, such as jdb, checked this with input zero vector...
+		if IsZero(x) then
+			return EmptySubspace(geom);
+		else
+			return Wrap(geom, 1, x);
+		fi;
+	end );
 
 # CHECKED 11/04/15 jdb
-InstallMethod( VectorSpaceToElement, "for an 8-bit vector",
- [IsProjectiveSpace, Is8BitVectorRep],
- function( geom, v )
-   local  x, n, i;
-
-     ## when v is empty...
-
-     if IsEmpty(v) then
-       return EmptySubspace;
-     fi;
-     x := ShallowCopy(v);
-
-     ## dimension should be correct
-
-     if Length(v) <> geom!.dimension + 1 then
-        Error("Dimensions are incompatible");
-     fi;
-
-     ## We must also compress our vector.
-
-     ConvertToVectorRep(x, geom!.basefield);
-
-     ## bad characters, such as jdb, checked this with input zero vector...
- 	 if IsZero(x) then
-	   return EmptySubspace(geom);
-	 else
-	   return Wrap(geom, 1, x);
-	 fi;
-
-end );
+#############################################################################
+#O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
+# by the rowvector <v>. Several checks are built in.
+##
+InstallMethod( VectorSpaceToElement, 
+	"for an 8-bit vector",
+	[IsProjectiveSpace, Is8BitVectorRep],
+	function( geom, v )
+		local  x, n, i;
+		## when v is empty...
+		if IsEmpty(v) then
+			return EmptySubspace;
+		fi;
+		x := ShallowCopy(v);
+		## dimension should be correct
+		if Length(v) <> geom!.dimension + 1 then
+			Error("Dimensions are incompatible");
+		fi;
+		## We must also compress our vector.
+		ConvertToVectorRep(x, geom!.basefield);
+		## bad characters, such as jdb, checked this with input zero vector...
+		if IsZero(x) then
+			return EmptySubspace(geom);
+		else
+			return Wrap(geom, 1, x);
+		fi;
+	end );
 
 #############################################################################
 #  attributes/operations for subspaces
 #############################################################################
 
-InstallMethod( UnderlyingVectorSpace, "for a subspace of a projective space",
+# CHECKED 8/09/11 jdb
+#############################################################################
+#O  UnderlyingVectorSpace( <subspace> ) returns the underlying vectorspace of
+# <subspace>, i.e. the vectorspace determining <subspace>
+##
+InstallMethod( UnderlyingVectorSpace, 
+	"for a subspace of a projective space",
 	[IsSubspaceOfProjectiveSpace],
 	function(subspace)
-	local vspace,W;
-	vspace:=UnderlyingVectorSpace(subspace!.geo);
-	W:=SubspaceNC(vspace,subspace!.obj);
-	return W;
-end);
+		local vspace,W;
+		vspace:=UnderlyingVectorSpace(subspace!.geo);
+		W:=SubspaceNC(vspace,subspace!.obj);
+		return W;
+	end);
 
-
-InstallMethod( ProjectiveDimension, "for a subspace of a projective space",
-     [ IsSubspaceOfProjectiveSpace ],
-  function( v )
-    return v!.type - 1;
-  end );
-
+# CHECKED 8/09/11 jdb
+#############################################################################
+#O  ProjectiveDimension( <v> ) returns the projective dimension of <v>
+##
+InstallMethod( ProjectiveDimension, 
+	"for a subspace of a projective space",
+	[ IsSubspaceOfProjectiveSpace ],
+	function( v )
+		return v!.type - 1;
+	end );
 
 #InstallMethod( ProjectiveDimension, [ IsEmpty ], function(x) return -1;end );
 
-InstallMethod( Dimension, "for a subspace of a projective space",
-     [ IsSubspaceOfProjectiveSpace ],
-  function( v )
-    return v!.type - 1;
-  end );
+# CHECKED 8/09/11 jdb
+#############################################################################
+#O  Dimension( <v> ) returns the projective dimension of <v>
+##
+InstallMethod( Dimension, 
+	"for a subspace of a projective space",
+    [ IsSubspaceOfProjectiveSpace ],
+	function( v )
+		return v!.type - 1;
+	end );
 
 #InstallMethod( Dimension, [ IsEmpty ], function(x) return -1;end );
 
-InstallMethod( StandardFrame, "for a subspace of a projective space", 
+# CHECKED 8/09/11 jdb
+#############################################################################
+#O  StandardFrame( <subspace> ) returns a standard frame for <subspace>
+##
+InstallMethod( StandardFrame, 
+	"for a subspace of a projective space", 
 	[IsSubspaceOfProjectiveSpace],
 	# if the dimension of the subspace is d (needs to be at least 1), then this returns d+2
 	# points of the subspace, the first d+1 are the points "basispoints"
 	# the last point has as coordinates the sum of the basispoints.
-  function( subspace )
-	local list,v;
-	if not Dimension(subspace) > 0 then 
-		Error("The argument needs to be a projective space of dimension at least 1!");
-	else
-	list:=ShallowCopy(subspace!.obj);
-        Add(list,Sum(subspace!.obj));
-	return List(list,v->VectorSpaceToElement(subspace!.geo,v));
-	fi;
-  end );
+	function( subspace )
+		local list,v;
+		if not Dimension(subspace) > 0 then 
+			Error("The argument needs to be a projective space of dimension at least 1!");
+		else
+		list:=ShallowCopy(subspace!.obj);
+		Add(list,Sum(subspace!.obj));
+		return List(list,v->VectorSpaceToElement(subspace!.geo,v));
+		fi;
+	end );
 
-InstallMethod( Coordinates, "for a point of a projective space",
+# CHECKED 8/09/11 jdb
+#############################################################################
+#O  Coordinates( <point> ) returns the coordinates of the projective point <point>
+##
+InstallMethod( Coordinates, 
+	"for a point of a projective space",
 	[IsSubspaceOfProjectiveSpace],
-  function( point )
-	if not Dimension(point)=0 then Error("The argument is not a projective point");
-	else return ShallowCopy(point!.obj);
-	fi;
-  end );
+	function( point )
+		if not Dimension(point)=0 then 
+			Error("The argument is not a projective point");
+		else 
+			return ShallowCopy(point!.obj);
+		fi;
+	end );
   
-InstallMethod( CoordinatesOfHyperplane, "for a hyperplane of a projective space",
+# CHECKED 8/09/11 jdb
+#############################################################################
+#O  CoordinatesOfHyperplane( <hyp> ) returns the coordinates of the hyperplane
+# <hyp>
+##
+InstallMethod( CoordinatesOfHyperplane, 
+	"for a hyperplane of a projective space",
 	[IsSubspaceOfProjectiveSpace],
 	function(hyp)
-	local pg,perp;
-	pg:=ShallowCopy(hyp!.geo);
-	if not hyp!.type=Dimension(pg) then 
-		Error("The argument is not a hyperplane");
-	else 
-		perp:=StandardDualityOfProjectiveSpace(pg);
-		return Coordinates(hyp^perp);
-	fi;
-end );
+		local pg,perp;
+		pg:=ShallowCopy(hyp!.geo);
+		if not hyp!.type=Dimension(pg) then 
+			Error("The argument is not a hyperplane");
+		else 
+			perp:=StandardDualityOfProjectiveSpace(pg);
+			return Coordinates(hyp^perp);
+		fi;
+	end );
 
-InstallMethod( EquationOfHyperplane, "for a hyperplane of a projective space",
+# CHECKED 8/09/11 jdb
+#############################################################################
+#O  EquationOfHyperplane( <hyp> ) returns the euqation of the hyperplane
+# <hyp>
+##
+InstallMethod( EquationOfHyperplane, 
+	"for a hyperplane of a projective space",
 	[IsSubspaceOfProjectiveSpace],
 	function(hyp)
-	local pg,r,v,indets;
-	pg:=AmbientGeometry(hyp);
-	r:=PolynomialRing(pg!.basefield,pg!.dimension + 1);
-	indets:=IndeterminatesOfPolynomialRing(r);
-	v:=CoordinatesOfHyperplane(hyp);
-	return Sum(List([1..Size(indets)],i->v[i]*indets[i]));
-end );
+		local pg,r,v,indets;
+		pg:=AmbientGeometry(hyp);
+		r:=PolynomialRing(pg!.basefield,pg!.dimension + 1);
+		indets:=IndeterminatesOfPolynomialRing(r);
+		v:=CoordinatesOfHyperplane(hyp);
+		return Sum(List([1..Size(indets)],i->v[i]*indets[i]));
+	end );
 
 #############################################################################
 #  Span/Meet for trivial subspaces
 #############################################################################
 
-InstallMethod( Span, "for the trivial subspace and a projective space", 
-   [ IsEmptySubspace, IsProjectiveSpace ],
-  function( x, y )
-    return y;
-  end );
-
-InstallMethod( Span, "for the trivial subspace and a projective space", 
-   [ IsProjectiveSpace, IsEmptySubspace ],
-  function( x, y )
-    return x;
-  end );
-  
-
-# Methods for Meet with the EmptySubspace
-
-
-InstallMethod( Meet, "for the trivial subspace and a projective subspace", 
-   [ IsEmptySubspace, IsProjectiveSpace ],
-  function( x, y )
-    return x;
-  end );
-
-InstallMethod( Meet, "for the trivial subspace and a projective subspace", 
-   [ IsProjectiveSpace, IsEmptySubspace ],
-  function( x, y )
-    return y;
-  end );
-
+# CHECKED 8/09/11 jdb
 #############################################################################
-# ShadowOfElement methods.
+#O  Span( <x>, <y> ) returns the span of <x> and <y> 
+##
+InstallMethod( Span, 
+	"for the trivial subspace and a projective space", 
+	[ IsEmptySubspace, IsProjectiveSpace ],
+	function( x, y )
+		if x!.geo!.vectorspace = y!.vectorspace then
+			return y;
+		else
+			Error( "The subspace <x> has a different ambient space than <y>" );
+		fi;
+	end );
+
+# CHECKED 8/09/11 jdb
 #############################################################################
+#O  Span( <x>, <y> ) returns the span of <x> and <y> 
+##
+InstallMethod( Span, 
+	"for the trivial subspace and a projective space", 
+	[ IsProjectiveSpace, IsEmptySubspace ],
+	function( x, y )
+		if x!.vectorspace = y!.geo!.vectorspace then
+			return x;
+		else
+			Error( "The subspace <x> has a different ambient space than <y>" );
+		fi;
+	end );
 
-InstallMethod( ShadowOfElement, [IsProjectiveSpace, IsElementOfIncidenceStructure, IsPosInt],
-# returns the shadow of an element v as a record containing the projective space (geometry), 
-# the type j of the elements (type), the element v (parentflag), and some extra information
-# useful to compute with the shadows, e.g. iterator
-  function( ps, v, j )
-    local localinner, localouter, localfactorspace;
-    if j < v!.type then
-      localinner := [];
-      localouter := v!.obj;
-    elif j = v!.type then
-      localinner := v!.obj;
-      localouter := localinner;
-    else
-      localinner := v!.obj;
-      localouter := BasisVectors(Basis(ps!.vectorspace));
-    fi;
-    
-    if IsVector(localinner) and not IsMatrix(localinner) then
-      localinner := [localinner]; fi;
-    if IsVector(localouter) and not IsMatrix(localouter) then
-      localouter := [localouter]; fi;
-    localfactorspace := Subspace(ps!.vectorspace,
-      BaseSteinitzVectors(localouter, localinner).factorspace);
-    return Objectify(
-      NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
-                                IsShadowSubspacesOfProjectiveSpace and
-                                IsShadowSubspacesOfProjectiveSpaceRep),
-        rec(
-          geometry := ps,
-          type := j,
-          inner := localinner,
-          outer := localouter,
-          factorspace := localfactorspace,
-		  parentflag := v,
-          size := Size(Subspaces(localfactorspace))
-        )
-      );
-  end);
+# CHECKED 8/09/11 jdb
+#############################################################################
+#O  Meet( <x>, <y> ) returns the intersection of <x> and <y> 
+##
+InstallMethod( Meet, 
+	"for the trivial subspace and a projective subspace", 
+	[ IsEmptySubspace, IsProjectiveSpace ],
+	function( x, y )
+		if x!.geo!.vectorspace = y!.vectorspace then
+			return x;
+		else
+			Error( "The subspace <x> has a different ambient space than <y>" );
+		fi;
+	end );
 
+# CHECKED 8/09/11 jdb
+#############################################################################
+#O  Meet( <x>, <y> ) returns the intersection of <x> and <y> 
+##
+InstallMethod( Meet, 
+	"for the trivial subspace and a projective subspace", 
+	[ IsProjectiveSpace, IsEmptySubspace ],
+	function( x, y )
+		if x!.vectorspace = y!.geo!.vectorspace then
+			return y;
+		else
+			Error( "The subspace <x> has a different ambient space than <y>" );
+		fi;
+	end );
 
-
-
-
+# CHECKED 8/09/11 jdb
+#############################################################################
+#O ShadowOfElement(<ps>, <v>, <j> ). Recall that for every particular Lie 
+# geometry a method for ShadowOfElement  must be installed. 
+##
+InstallMethod( ShadowOfElement, 
+	"for a projective space, an element, and an integer",
+	[IsProjectiveSpace, IsSubspaceOfProjectiveSpace, IsPosInt],
+	# returns the shadow of an element v as a record containing the projective space (geometry), 
+	# the type j of the elements (type), the element v (parentflag), and some extra information
+	# useful to compute with the shadows, e.g. iterator
+	function( ps, v, j )
+		local localinner, localouter, localfactorspace;
+		if j < v!.type then
+			localinner := [];
+			localouter := v!.obj;
+		elif j = v!.type then
+			localinner := v!.obj;
+			localouter := localinner;
+		else
+			localinner := v!.obj;
+			localouter := BasisVectors(Basis(ps!.vectorspace));
+		fi;
+    	if IsVector(localinner) and not IsMatrix(localinner) then
+			localinner := [localinner]; 
+		fi;
+		if IsVector(localouter) and not IsMatrix(localouter) then
+			localouter := [localouter]; 
+		fi;
+		localfactorspace := Subspace(ps!.vectorspace,
+		BaseSteinitzVectors(localouter, localinner).factorspace);
+		return Objectify( NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
+							IsShadowSubspacesOfProjectiveSpace and
+							IsShadowSubspacesOfProjectiveSpaceRep),
+							rec( geometry := ps,
+									type := j,
+									inner := localinner,
+									outer := localouter,
+									factorspace := localfactorspace,
+									parentflag := v,
+									size := Size(Subspaces(localfactorspace))
+								)
+						);
+	end);
 
 #############################################################################
 # Shortcuts to ShadowOfElement, specifically for projective spaces. 
@@ -576,8 +664,8 @@ InstallMethod( ShadowOfElement, [IsProjectiveSpace, IsElementOfIncidenceStructur
 # CHECKED 7/09/2011 jdb
 #############################################################################
 #O  Hyperplanes( <el> )
-# returns the hyperplanes, i.e. elements of type el!type-1 in <el>. 
-# relying on ShadowOfElement for particular <el>.
+# returns the hyperplanes incident with <el>, relying on ShadowOfElement 
+# for particular <el>.
 ##
 InstallMethod( Hyperplanes, 
 	"for elements of a Lie geometry",
@@ -594,8 +682,8 @@ InstallMethod( Hyperplanes,
 # CHECKED 7/09/2011 jdb
 #############################################################################
 #O  Hyperplanes( <el> )
-# returns the hyperplanes, i.e. elements of type el!type-1 in <el>, all in <geo> 
-# relying on ShadowOfElement for particular <geo> and <el>.
+# returns the hyperplanes incident with <el>, relying on ShadowOfElement 
+# for particular <el>.
 ##
 InstallMethod( Hyperplanes, 
 	"for a Lie geometry and elements of a Lie geometry",
@@ -607,38 +695,9 @@ InstallMethod( Hyperplanes,
 		return ShadowOfElement( geo, var, geo!.dimension );
   end );
 
-
-
-#############################################################################
-# Action functions intended for the user.
-#############################################################################
-
-InstallGlobalFunction( OnProjSubspaces,
-  function( var, el )
-    local amb,geo,newvar;
-    geo := var!.geo;   
-    if var!.type = 1 then
-        newvar := OnProjPointsWithFrob(var!.obj,el);
-    else
-        newvar := OnProjSubspacesWithFrob(var!.obj,el);
-    fi;
-    return Wrap(geo,var!.type,newvar);
-  end );
-
-InstallOtherMethod( \^, [IsElementOfIncidenceStructure, IsProjGrpElWithFrob],
-  function(x, em)
-    return OnProjSubspaces(x,em);
-  end );
-
-InstallGlobalFunction( OnSetsProjSubspaces,
-  function( var, el )
-    return Set( var, i -> OnProjSubspaces( i, el ) );
-  end );
-
 #############################################################################
 # Constructors for groups of projective spaces.
 #############################################################################
-
 
 
 InstallMethod( CollineationGroup, "for a full projective space",
@@ -707,17 +766,34 @@ InstallMethod( SpecialHomographyGroup, "for a full projective space",
     return gg;
   end );
 
-InstallMethod( Rank, "for a projective space",
-  [ IsProjectiveSpace and IsProjectiveSpaceRep ],
-  function( ps )
-    return ps!.dimension;
+#############################################################################
+# Action functions intended for the user.
+#############################################################################
+
+InstallGlobalFunction( OnProjSubspaces,
+  function( var, el )
+    local amb,geo,newvar;
+    geo := var!.geo;   
+    if var!.type = 1 then
+        newvar := OnProjPointsWithFrob(var!.obj,el);
+    else
+        newvar := OnProjSubspacesWithFrob(var!.obj,el);
+    fi;
+    return Wrap(geo,var!.type,newvar);
   end );
 
-InstallMethod( BaseField, "for a projective space", [IsProjectiveSpace],
-  pg -> pg!.basefield );
+InstallOtherMethod( \^, [IsElementOfIncidenceStructure, IsProjGrpElWithFrob],
+  function(x, em)
+    return OnProjSubspaces(x,em);
+  end );
 
-InstallMethod( BaseField, "for an element of a projective space", [IsSubspaceOfProjectiveSpace],
-  sub -> AmbientSpace(sub)!.basefield );
+InstallGlobalFunction( OnSetsProjSubspaces,
+  function( var, el )
+    return Set( var, i -> OnProjSubspaces( i, el ) );
+  end );
+
+
+
   
 InstallMethod( RepresentativesOfElements, "for a projective space", [IsProjectiveSpace],
  # returns the canonical maximal flag
