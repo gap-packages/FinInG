@@ -23,16 +23,23 @@
 ##
 #############################################################################
 
+## To do
+#  - Use compressed matrices
+#  - Order functions in this file, and write more comments.
+#  - Create a HyperplanesOf function? can be done in liegeometry.gi (jdb)
+#  think about generic methods for dimension, projective dimension, basefield, underlying vector space
+#  for Lie geometries and their elements, to be placed in liegeometry.gi of course.
+#  - Reconsider the function OnProjSubspaces. using this function for elements of a polar space e.g. and
+#    an ProjGrpElWithFrob, can cause to get back a subspace of a projective space which is not an element of 
+#    the polar space. No problem of course, but since Wrap is used (and that should be used for effeciency), 
+#    one can get up with an element of a projective space not belonging to the polar space, but which is displayed
+#    as being an element of the polar space. I kept it as is currently, but I would like to reconsider this when dealing
+#    with the polar space section. jdb 11/9/11
+#  - check wheter output of RepresentativesOfElements can be changed using the Flag stuff. 11/09/11 jdb.
+
 #############################################################################
 # Low level help methods:
 #############################################################################
-
-## To do
-#  Use compressed matrices
-#  Order functions in this file, and write more comments.
-#  Create a HyperplanesOf function? can be done in liegeometry.gi (jdb)
-#  think about generic methods for dimension, projective dimension, basefield, underlying vector space
-#  for Lie geometries and their elements, to be placed in liegeometry.gi of course.
 
 # CHECKED 6/09/11 jdb
 #############################################################################
@@ -103,6 +110,28 @@ InstallMethod( ProjectiveSpace, "for a proj dimension and a prime power",
           return ProjectiveSpace(d, GF(q));
   end );
   
+#############################################################################
+# Display methods:
+#############################################################################
+
+InstallMethod( ViewObj, [ IsProjectiveSpace and IsProjectiveSpaceRep ],
+  function( p )
+    Print("ProjectiveSpace(",p!.dimension,", ",Size(p!.basefield),")");
+  end );
+
+InstallMethod( PrintObj, [ IsProjectiveSpace and IsProjectiveSpaceRep ],
+  function( p )
+          Print("ProjectiveSpace(",p!.dimension,",",p!.basefield,")");
+  end );
+
+InstallMethod( Display, [ IsProjectiveSpace and IsProjectiveSpaceRep ],
+  function( p )
+    Print("ProjectiveSpace(",p!.dimension,",",p!.basefield,")\n");
+    if HasDiagramOfGeometry( p ) then
+       Display( DiagramOfGeometry( p ) );
+    fi;
+  end );
+
 # CHECKED 6/09/11 jdb
 #############################################################################
 #O  UnderlyingVectorSpace( <ps> )
@@ -168,10 +197,9 @@ InstallMethod( BaseField, "for a projective space", [IsProjectiveSpace],
 InstallMethod( BaseField, "for an element of a projective space", [IsSubspaceOfProjectiveSpace],
   sub -> AmbientSpace(sub)!.basefield );
 
-
 # CHECKED 6/09/11 jdb
 #############################################################################
-#O  StandardFrame( <ps> )
+#A  StandardFrame( <ps> )
 # if the dimension of the projective space is n, then StandardFrame 
 # makes a list of points with coordinates 
 # (1,0,...0), (0,1,0,...,0), ..., (0,...,0,1) and (1,1,...,1) 
@@ -192,6 +220,23 @@ InstallMethod( StandardFrame,
 		fi;
 	end );
 
+# CHECKED 11/09/11 jdb
+#############################################################################
+#A  RepresentativesOfElements( <ps> )
+# Returns the canonical maximal flag for the projective space <ps>
+##
+InstallMethod( RepresentativesOfElements, 
+	"for a projective space", [IsProjectiveSpace],
+	# returns the canonical maximal flag
+	function( ps )
+		local d, gf, id, elts;  
+		d := ProjectiveDimension(ps);
+		gf := BaseField(ps);
+		id := IdentityMat(d+1,gf);
+		elts := List([1..d], i -> VectorSpaceToElement(ps, id{[1..i]}));
+		return elts;
+	end );
+
 # CHECKED 18/4/2011 jdb
 #############################################################################
 #O  Hyperplanes( <ps> )
@@ -203,6 +248,128 @@ InstallMethod( Hyperplanes,
 	function( ps )
 		return ElementsOfIncidenceStructure(ps, ps!.dimension);
 	end);
+
+# CHECKED 11/09/11 jdb
+#############################################################################
+#A  TypesOfElementsOfIncidenceStructure( <ps> )
+# retunrs the names of the types of the elements of the projective space <ps>
+# the is a helper operation.
+## 
+InstallMethod( TypesOfElementsOfIncidenceStructure, 
+	"for a projective space", [IsProjectiveSpace],
+	function( ps )
+		local d,i,types;
+		types := ["point"];
+		d := ProjectiveDimension(ps);
+		if d >= 2 then Add(types,"line"); fi;
+		if d >= 3 then Add(types,"plane"); fi;
+		if d >= 4 then Add(types,"solid"); fi;
+		for i in [5..d] do
+			Add(types,Concatenation("proj. ",String(i-1),"-space"));
+		od;
+		return types;
+	end );
+
+# CHECKED 11/09/11 jdb
+#############################################################################
+#A  TypesOfElementsOfIncidenceStructurePlural( <ps> )
+# retunrs the plural of the names of the types of the elements of the 
+# projective space <ps>. This is a helper operation.
+## 
+InstallMethod( TypesOfElementsOfIncidenceStructurePlural, 
+	"for a projective space",
+	[IsProjectiveSpace],
+	function( ps )
+		local d,i,types;
+		types := ["points"];
+		d := ProjectiveDimension(ps);
+		if d >= 2 then Add(types,"lines"); fi;
+		if d >= 3 then Add(types,"planes"); fi;
+		if d >= 4 then Add(types,"solids"); fi;
+		for i in [5..d] do
+			Add(types,Concatenation("proj. ",String(i-1),"-subspaces"));
+		od;
+		return types;
+	end );
+
+# CHECKED 11/09/11 jdb
+#############################################################################
+#O  ElementsOfIncidenceStructure( <ps>, <j> )
+# returns the elements of the projective space <ps> of type <j>
+## 
+InstallMethod( ElementsOfIncidenceStructure, 
+	"for a projective space and an integer",
+	[IsProjectiveSpace, IsPosInt],
+	function( ps, j )
+		local r;
+		r := Rank(ps);
+		if j > r then
+			Error("<geo> has no elements of type <j>");
+		else
+			return Objectify(
+			NewType( ElementsCollFamily, IsSubspacesOfProjectiveSpace and IsSubspacesOfProjectiveSpaceRep ),
+				rec( geometry := ps,
+					type := j,
+					size := Size(Subspaces(ps!.vectorspace, j))
+					)
+					);
+		fi;
+	end);
+
+# CHECKED 11/09/11 jdb
+#############################################################################
+#O  ElementsOfIncidenceStructure( <ps> )
+# returns all the elements of the projective space <ps> 
+## 
+InstallMethod( ElementsOfIncidenceStructure, 
+	"for a projective space",
+	[IsProjectiveSpace],
+	function( ps )
+		return Objectify(
+			NewType( ElementsCollFamily, IsAllSubspacesOfProjectiveSpace and IsAllSubspacesOfProjectiveSpaceRep ),
+				rec( geometry := ps )
+				);
+	end);
+
+# CHECKED 11/09/11 jdb
+#############################################################################
+#O  Size( <subs>) 
+# returns the number of elements in the collection <subs>.
+##
+InstallMethod( Size,
+	"for subspaces of a projective space",
+	[IsSubspacesOfProjectiveSpace and IsSubspacesOfProjectiveSpaceRep],
+	function(subs);
+		return ShallowCopy(subs!.size);
+	end);
+
+# CHECKED 11/09/11 jdb
+#############################################################################
+#O  \in( <x>, <dom> )
+# returns true if <x> belongs to the elements collected in <dom> It is checked if their 
+# geometry matches.
+## 
+InstallMethod( \in, 
+	"for an element and set of elements",  
+	# 1*SUM_FLAGS+3 increases the ranking for this method
+    [IsElementOfIncidenceStructure, IsElementsOfIncidenceStructure], 1*SUM_FLAGS+3,
+	function( x, dom )
+		return x in dom!.geometry and x!.type = dom!.type;
+	end );
+
+# CHECKED 11/09/11 jdb
+#############################################################################
+#O  \in( <x>, <dom> )
+# returns true if <x> belongs to the elements collected in <dom> It is checked if their 
+# geometry matches.
+## 
+InstallMethod( \in, 
+	"for an element and domain",  
+	# 1*SUM_FLAGS+3 increases the ranking for this method
+    [IsElementOfIncidenceStructure, IsAllElementsOfIncidenceStructure], 1*SUM_FLAGS+3,
+	function( x, dom )
+		return x in dom!.geometry;
+	end );
 
 #############################################################################
 # Constructor methods and some operations/attributes for subspaces of 
@@ -226,7 +393,6 @@ InstallMethod( Hyperplanes,
 
 ## Should we have methods for the new types given by the cvec package?
 ## Currently we don't load the cvec package.
-
 
 # CHECKED 7/09/11 jdb
 #############################################################################
@@ -275,7 +441,6 @@ InstallMethod( VectorSpaceToElement,
 			return Wrap(geom, Length(x), x);
 		fi;
 	end );
-
 
 # CHECKED 8/09/11 jdb
 #############################################################################
@@ -547,6 +712,15 @@ InstallMethod( EquationOfHyperplane,
 		v:=CoordinatesOfHyperplane(hyp);
 		return Sum(List([1..Size(indets)],i->v[i]*indets[i]));
 	end );
+	
+# CHECKED 11/09/11 jdb
+#############################################################################
+#O  AmbientSpace( <subspace> ) returns the ambient space of <subspace>
+##
+InstallMethod( AmbientSpace, [IsSubspaceOfProjectiveSpace],
+	function(subspace)
+		return subspace!.geo;
+	end );
 
 #############################################################################
 #  Span/Meet for trivial subspaces
@@ -657,6 +831,19 @@ InstallMethod( ShadowOfElement,
 						);
 	end);
 
+# CHECKED 11/09/11 jdb
+#############################################################################
+#O  Size( <vs>) 
+# returns the number of elements in the shadow collection <vs>.
+##
+InstallMethod( Size, 
+	"for shadow subspaces of a projective space",
+	[IsShadowSubspacesOfProjectiveSpace and IsShadowSubspacesOfProjectiveSpaceRep ],
+	function( vs )
+		return Size(Subspaces(vs!.factorspace,
+		vs!.type - Size(vs!.inner)));
+	end);
+
 #############################################################################
 # Shortcuts to ShadowOfElement, specifically for projective spaces. 
 #############################################################################
@@ -699,77 +886,103 @@ InstallMethod( Hyperplanes,
 # Constructors for groups of projective spaces.
 #############################################################################
 
+# CHECKED 10/09/2011 jdb
+#############################################################################
+#A  CollineationGroup( <ps> )
+# returns the collineation group of the projective space <ps>
+##
+InstallMethod( CollineationGroup, 
+	"for a full projective space",
+	[ IsProjectiveSpace and IsProjectiveSpaceRep ],
+	function( ps )
+		local coll,d,f,frob,g,newgens,q,s,pow;
+		f := ps!.basefield;
+		q := Size(f);
+		d := ProjectiveDimension(ps);
+		if d <= -1 then 
+			Error("The dimension of the projective spaces needs to be at least 0");
+		fi;
+		g := GL(d+1,q);
+		frob := FrobeniusAutomorphism(f);
+		newgens := List(GeneratorsOfGroup(g),x->[x,frob^0]);
+		Add(newgens,[One(g),frob]);
+		newgens := ProjElsWithFrob(newgens);
+		coll := GroupWithGenerators(newgens);
+		pow := LogInt(q, Characteristic(f));
+		s := pow * q^(d*(d+1)/2)*Product(List([2..d+1], i->q^i-1)); 
+		if pow > 1 then 
+			SetName( coll, Concatenation("PGammaL(",String(d+1),",",String(q),")") );
+		else
+			SetName( coll, Concatenation("PGL(",String(d+1),",",String(q),")") );
+		fi;	
+		SetSize( coll, s );    
+		return coll;
+	end );
 
-InstallMethod( CollineationGroup, "for a full projective space",
-  [ IsProjectiveSpace and IsProjectiveSpaceRep ],
-  function( ps )
-    local coll,d,f,frob,g,newgens,q,s,pow;
-    f := ps!.basefield;
-    q := Size(f);
-    d := ProjectiveDimension(ps);
-	if d <= -1 then Error("The dimension of the projective spaces needs to be at least 0");
-	fi;
-    g := GL(d+1,q);
-    frob := FrobeniusAutomorphism(f);
-    newgens := List(GeneratorsOfGroup(g),x->[x,frob^0]);
-    Add(newgens,[One(g),frob]);
-    newgens := ProjElsWithFrob(newgens);
-    coll := GroupWithGenerators(newgens);
-    pow := LogInt(q, Characteristic(f));
-    s := pow * q^(d*(d+1)/2)*Product(List([2..d+1], i->q^i-1)); 
-    if pow > 1 then 
-       SetName( coll, Concatenation("PGammaL(",String(d+1),",",String(q),")") );
-    else
-       SetName( coll, Concatenation("PGL(",String(d+1),",",String(q),")") );
-    fi;
-    SetSize( coll, s );    
-    return coll;
-  end );
+# CHECKED 10/09/2011 jdb
+#############################################################################
+#A  HomographyGroup( <ps> )
+# returns the homogrphy group of the projective space <ps>
+##
+InstallMethod( HomographyGroup, 
+	"for a full projective space",
+	[ IsProjectiveSpace ],
+	function( ps )
+		local gg,d,f,frob,g,newgens,q,s;
+		f := ps!.basefield;
+		q := Size(f);
+		d := ProjectiveDimension(ps);
+		if d <= -1 then 
+			Error("The dimension of the projective spaces needs to be at least 0");
+		fi;
+		g := GL(d+1,q);
+		frob := FrobeniusAutomorphism(f);
+		newgens := List(GeneratorsOfGroup(g),x->[x,frob^0]);
+		newgens := ProjElsWithFrob(newgens);
+		gg := GroupWithGenerators(newgens);
+		s := q^(d*(d+1)/2)*Product(List([2..d+1], i->q^i-1)); 
+		SetName( gg, Concatenation("PGL(",String(d+1),",",String(q),")") );
+		SetSize( gg, s );
+		return gg;
+	end );
 
-InstallMethod( HomographyGroup, "for a full projective space",
-  [ IsProjectiveSpace ],
-  function( ps )
-    local gg,d,f,frob,g,newgens,q,s;
-    f := ps!.basefield;
-    q := Size(f);
-    d := ProjectiveDimension(ps);
-	if d <= -1 then Error("The dimension of the projective spaces needs to be at least 0");
-	fi;
-    g := GL(d+1,q);
-    frob := FrobeniusAutomorphism(f);
-    newgens := List(GeneratorsOfGroup(g),x->[x,frob^0]);
-    newgens := ProjElsWithFrob(newgens);
-    gg := GroupWithGenerators(newgens);
-    s := q^(d*(d+1)/2)*Product(List([2..d+1], i->q^i-1)); 
-    SetName( gg, Concatenation("PGL(",String(d+1),",",String(q),")") );
-    SetSize( gg, s );
-    return gg;
-  end );
-
-InstallMethod( SpecialHomographyGroup, "for a full projective space",
-  [ IsProjectiveSpace ],
-  function( ps )
-    local gg,d,f,frob,g,newgens,q,s;
-    f := ps!.basefield;
-    q := Size(f);
-    d := ProjectiveDimension(ps);
-	if d <= -1 then Error("The dimension of the projective spaces needs to be at least 0");
-	fi;
-    g := SL(d+1,q);
-    frob := FrobeniusAutomorphism(f);
-    newgens := List(GeneratorsOfGroup(g),x->[x,frob^0]);
-    newgens := ProjElsWithFrob(newgens);
-    gg := GroupWithGenerators(newgens);
-    s := q^(d*(d+1)/2)*Product(List([2..d+1], i->q^i-1)) / GCD_INT(q-1, d+1);
-    SetName( gg, Concatenation("PSL(",String(d+1),",",String(q),")") );
-    SetSize( gg, s );    
-    return gg;
-  end );
+# CHECKED 10/09/2011 jdb
+#############################################################################
+#A  SpecialHomographyGroup( <ps> )
+# returns the special homogrphy group of the projective space <ps>
+##
+InstallMethod( SpecialHomographyGroup, 
+	"for a full projective space",
+	[ IsProjectiveSpace ],
+	function( ps )
+		local gg,d,f,frob,g,newgens,q,s;
+		f := ps!.basefield;
+		q := Size(f);
+		d := ProjectiveDimension(ps);
+		if d <= -1 then 
+			Error("The dimension of the projective spaces needs to be at least 0");
+		fi;
+		g := SL(d+1,q);
+		frob := FrobeniusAutomorphism(f);
+		newgens := List(GeneratorsOfGroup(g),x->[x,frob^0]);
+		newgens := ProjElsWithFrob(newgens);
+		gg := GroupWithGenerators(newgens);
+		s := q^(d*(d+1)/2)*Product(List([2..d+1], i->q^i-1)) / GCD_INT(q-1, d+1);
+		SetName( gg, Concatenation("PSL(",String(d+1),",",String(q),")") );
+		SetSize( gg, s );    
+		return gg;
+	end );
 
 #############################################################################
 # Action functions intended for the user.
 #############################################################################
 
+# CHECKED 10/09/2011 jdb, to be reconsidered. See to do in beginning of file.
+#############################################################################
+#A  OnProjSubspaces( <var>, el )
+# computes <var>^<el>, where <var> is an element of a projective space, and 
+# <el> a projective semilinear element.
+##
 InstallGlobalFunction( OnProjSubspaces,
   function( var, el )
     local amb,geo,newvar;
@@ -782,157 +995,69 @@ InstallGlobalFunction( OnProjSubspaces,
     return Wrap(geo,var!.type,newvar);
   end );
 
-InstallOtherMethod( \^, [IsElementOfIncidenceStructure, IsProjGrpElWithFrob],
-  function(x, em)
-    return OnProjSubspaces(x,em);
-  end );
+# CHECKED, but I am unhappy with the too general filter IsElementOfIncidenceStructure
+# I left it, but will reconsider it when dealing with polar spaces.
+# 11/09/11 jdb
+#############################################################################
+#O  /^( <x>, <em> )
+# computes <var>^<el>, where <var> is an element of a incidence structure, and 
+# <em> a projective semilinear element.
+##
+InstallOtherMethod( \^, 
+	"for an element of an incidence structure and a projective semilinear element",
+	[IsElementOfIncidenceStructure, IsProjGrpElWithFrob],
+	function(x, em)
+		return OnProjSubspaces(x,em);
+	end );
 
+# CHECKED 11/09/11 jdb
+#############################################################################
+#F  OnSetsProjSubspaces( <var>, el )
+# computes <x>^<el>, for all x in <var> 
+##
 InstallGlobalFunction( OnSetsProjSubspaces,
   function( var, el )
     return Set( var, i -> OnProjSubspaces( i, el ) );
   end );
 
+#############################################################################
+# Iterator and Eneumerating
+#############################################################################
 
-
-  
-InstallMethod( RepresentativesOfElements, "for a projective space", [IsProjectiveSpace],
- # returns the canonical maximal flag
-  function( ps )
-    local d, gf, id, elts;  
-    d := ProjectiveDimension(ps);
-    gf := BaseField(ps);
-    id := IdentityMat(d+1,gf);
-    elts := List([1..d], i -> VectorSpaceToElement(ps, id{[1..i]}));
-    return elts;
-  end );
-
-InstallMethod( TypesOfElementsOfIncidenceStructure, "for a projective space", [IsProjectiveSpace],
-  function( ps )
-    local d,i,types;
-    types := ["point"];
-    d := ProjectiveDimension(ps);
-    if d >= 2 then Add(types,"line"); fi;
-    if d >= 3 then Add(types,"plane"); fi;
-    if d >= 4 then Add(types,"solid"); fi;
-    for i in [5..d] do
-        Add(types,Concatenation("proj. ",String(i-1),"-space"));
-    od;
-    return types;
-  end );
-
-InstallMethod( TypesOfElementsOfIncidenceStructurePlural, "for a projective space",
-  [IsProjectiveSpace],
-  function( ps )
-    local d,i,types;
-    types := ["points"];
-    d := ProjectiveDimension(ps);
-    if d >= 2 then Add(types,"lines"); fi;
-    if d >= 3 then Add(types,"planes"); fi;
-    if d >= 4 then Add(types,"solids"); fi;
-    for i in [5..d] do
-        Add(types,Concatenation("proj. ",String(i-1),"-subspaces"));
-    od;
-    return types;
-  end );
-
-InstallOtherMethod( \in, 
-	"for a projective subspace and its trivial subspace ", 
-	[ IsProjectiveSpace, IsEmptySubspace ],
-	function( x, y )
-		if x = y!.geo then
-			return false;
-		else
-			Error( "<x> is different from the ambient space of <y>" );
-		fi;
-	end );
-  
-
-InstallMethod( \in, "for a subspace of a projective space and projective space",  
-     [IsSubspaceOfProjectiveSpace, IsProjectiveSpace],
-  function( x, dom )
-    local ps;
-    ps := x!.geo;
-    return ps!.dimension = dom!.dimension and 
-           ps!.basefield = dom!.basefield;
-  end );
-
-InstallMethod( \in, "for an element and set of elements",  
-	# 1*SUM_FLAGS+3 increases the ranking for this method
-     [IsElementOfIncidenceStructure, IsElementsOfIncidenceStructure], 1*SUM_FLAGS+3,
-  function( x, dom )
-    return x in dom!.geometry and x!.type = dom!.type;
-  end );
-
-InstallMethod( \in, "for an element and domain",  
-	# 1*SUM_FLAGS+3 increases the ranking for this method
-     [IsElementOfIncidenceStructure, IsAllElementsOfIncidenceStructure], 1*SUM_FLAGS+3,
-  function( x, dom )
-    return x in dom!.geometry;
-  end );
-
-InstallMethod( ElementsOfIncidenceStructure, 
-	"for a projective space and an integer",
-[IsProjectiveSpace, IsPosInt],
-  function( ps, j )
-    local r;
-    r := Rank(ps);
-    if j > r then
-      Error("<geo> has no elements of type <j>");
-    else
-      return Objectify(
-        NewType( ElementsCollFamily, IsSubspacesOfProjectiveSpace and IsSubspacesOfProjectiveSpaceRep ),
-          rec(
-            geometry := ps,
-            type := j,
-            size := Size(Subspaces(ps!.vectorspace, j))
-          )
-       );
-     fi;
-  end);
-
-InstallMethod( ElementsOfIncidenceStructure, [IsProjectiveSpace],
-  function( ps )
-    return Objectify(
-      NewType( ElementsCollFamily, IsAllSubspacesOfProjectiveSpace and IsAllSubspacesOfProjectiveSpaceRep ),
-        rec( geometry := ps )
-      );
-  end);
-  
-InstallMethod( AmbientSpace, [IsSubspaceOfProjectiveSpace],
-	function(subspace)
-		return subspace!.geo;
-	end );
-  
-InstallMethod( AsList, [IsSubspacesOfProjectiveSpace],
- function( vs )
-
-  ## We use the package "orb" by Mueller, Neunhoeffer and Noeske,
-  ## which is much quicker than using an iterator to get all of the
-  ## projective subspaces of a certain dimension.
-
-   local geo, g, p, o, type, sz;
-   
-   geo := vs!.geometry;
-   g := ProjectivityGroup(geo);
-   type := vs!.type; 
-   sz := Size(vs);
-   
-   if type = 1 then
-      o := MakeAllProjectivePoints(geo!.basefield, geo!.dimension);
-      o := List(o, t -> Wrap(geo, type, t));;   
-   else
-     p := NextIterator(Iterator(vs));
-     o := Orb(g, p, OnProjSubspaces, rec( hashlen:=Int(5/4*sz), 
+# CHECKED 11/09/11 jdb
+#############################################################################
+#O  AsList( <vs>) 
+# returns a list of all elements in <vs>, which is a collection of subspaces of
+# a projective space of a given type. This methods uses functionality from the 
+# orb package.
+##
+InstallMethod( AsList, 
+	"for subspaces of a projective space",
+	[IsSubspacesOfProjectiveSpace],
+	function( vs )
+	## We use the package "orb" by Mueller, Neunhoeffer and Noeske,
+	## which is much quicker than using an iterator to get all of the
+	## projective subspaces of a certain dimension.
+	local geo, g, p, o, type, sz;
+	geo := vs!.geometry;
+	g := ProjectivityGroup(geo);
+	type := vs!.type; 
+	sz := Size(vs);
+	if type = 1 then
+		o := MakeAllProjectivePoints(geo!.basefield, geo!.dimension);
+		o := List(o, t -> Wrap(geo, type, t));;   
+	else
+		p := NextIterator(Iterator(vs));
+		o := Orb(g, p, OnProjSubspaces, rec( hashlen:=Int(5/4*sz), 
                                           orbsizebound := sz ));
-     Enumerate(o, sz);
-   fi;
-   return o;
- end );
- 
- 
- # One of the best features of all of the orb package is the FindSuborbits command
- # Here's an example
- #
+		Enumerate(o, sz);
+	fi;
+	return o;
+	end );
+	
+# One of the best features of all of the orb package is the FindSuborbits command
+# Here's an example
+#
 # gap> pg:=PG(3,4);
 #PG(3, 4)
 #gap> lines:=AsList(Lines(pg));
@@ -1001,31 +1126,32 @@ InstallMethod( AsList, [IsSubspacesOfProjectiveSpace],
 # conjsuborbit := [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 #     0, 0 ], issuborbitrecord := true )
 
-
-
-
 ######################################
 #
 # Put compressed matrices here....
 #
 #####################################
 
-
+# CHECKED 11/09/11 jdb
+#############################################################################
+#O  Iterator( <vs>) 
+# returns an iterator for <vs>, a collection of subspaces of a projective space.
+##
 InstallMethod(Iterator,
-  "for subspaces of a projective space",
-        [IsSubspacesOfProjectiveSpace],
-        function( vs )
-          local ps, j, d, F;
-          ps := vs!.geometry;
-          j := vs!.type;
-          d := ps!.dimension;
-          F := ps!.basefield;
-          return IteratorByFunctions( rec(
-            NextIterator := function(iter)
-              local mat;
-              mat := NextIterator(iter!.S);
-              mat := BasisVectors(Basis(mat));
-			  return VectorSpaceToElement(ps,mat);	         
+	"for subspaces of a projective space",
+	[IsSubspacesOfProjectiveSpace],
+	function( vs )
+		local ps, j, d, F;
+		ps := vs!.geometry;
+		j := vs!.type;
+		d := ps!.dimension;
+		F := ps!.basefield;
+        return IteratorByFunctions( rec(
+			NextIterator := function(iter)
+            local mat;
+            mat := NextIterator(iter!.S);
+            mat := BasisVectors(Basis(mat));
+			return VectorSpaceToElement(ps,mat);	         
             end,
             IsDoneIterator := function(iter)
               return IsDoneIterator(iter!.S);
@@ -1037,25 +1163,7 @@ InstallMethod(Iterator,
             end,
             S := Iterator(Subspaces(ps!.vectorspace,j))
           ));
-  end);
-
-
-InstallMethod( Size,
-			"for subspaces of a projective space",
-			[IsSubspacesOfProjectiveSpace and IsSubspacesOfProjectiveSpaceRep],
-	function(subs);
-		return ShallowCopy(subs!.size);
 	end);
-
-InstallMethod( Size, [IsShadowSubspacesOfProjectiveSpace and
-  IsShadowSubspacesOfProjectiveSpaceRep ],
-  function( vs )
-    return Size(Subspaces(vs!.factorspace,
-      vs!.type - Size(vs!.inner)));
-  end);
-
-
-  
 
 #############################################################################
 #
@@ -1201,67 +1309,80 @@ InstallMethod( ShadowOfFlag, "for a projective space, a flag and an integer",
       );
 	end);
 
-  
-InstallMethod( Iterator, [IsShadowSubspacesOfProjectiveSpace and
-  IsShadowSubspacesOfProjectiveSpaceRep ],
-  function( vs )
-    local ps, j, d, F;
-    ps := vs!.geometry;
-    j := vs!.type;
-    d := ps!.dimension;
-    F := ps!.basefield;
-    return IteratorByFunctions( rec(
-      NextIterator := function(iter)
-        local mat;
-        mat := NextIterator(iter!.S);
-        mat := MutableCopyMat(Concatenation(
-          BasisVectors(Basis(mat)),
-          iter!.innermat
-          ));
-		return VectorSpaceToElement(ps,mat);
-       end,
-      IsDoneIterator := function(iter)
-        return IsDoneIterator(iter!.S);
-      end,
-      ShallowCopy := function(iter)
-        return rec(
-          innermat := iter!.innermat,
-          S := ShallowCopy(iter!.S)
-          );
-      end,
-      innermat := vs!.inner,
-      S := Iterator(Subspaces(vs!.factorspace,j-Size(vs!.inner)))
-    ));
-  end);
-
-
-
+# CHECKED 11/09/11 jdb
+#############################################################################
+#O  Iterator( <vs>) 
+# returns an iterator for <vs>, a collection of shadowsubspaces of a projective space.
+##
+InstallMethod( Iterator, 
+	"for shadows subspaces of a projective space",
+	[IsShadowSubspacesOfProjectiveSpace and IsShadowSubspacesOfProjectiveSpaceRep ],
+	function( vs )
+		local ps, j, d, F;
+		ps := vs!.geometry;
+		j := vs!.type;
+		d := ps!.dimension;
+		F := ps!.basefield;
+		return IteratorByFunctions( rec(
+			NextIterator := function(iter)
+			local mat;
+			mat := NextIterator(iter!.S);
+			mat := MutableCopyMat(Concatenation(
+				BasisVectors(Basis(mat)),
+				iter!.innermat
+			));
+			return VectorSpaceToElement(ps,mat);
+			end,
+			IsDoneIterator := function(iter)
+			return IsDoneIterator(iter!.S);
+			end,
+			ShallowCopy := function(iter)
+			return rec(
+				innermat := iter!.innermat,
+				S := ShallowCopy(iter!.S)
+			);
+			end,
+			innermat := vs!.inner,
+			S := Iterator(Subspaces(vs!.factorspace,j-Size(vs!.inner)))
+		));
+	end);
 
 #############################################################################
-# Display methods:
+# Methods for incidence.
 #############################################################################
 
-InstallMethod( ViewObj, [ IsProjectiveSpace and IsProjectiveSpaceRep ],
-  function( p )
-    Print("ProjectiveSpace(",p!.dimension,", ",Size(p!.basefield),")");
-  end );
-
-InstallMethod( PrintObj, [ IsProjectiveSpace and IsProjectiveSpaceRep ],
-  function( p )
-          Print("ProjectiveSpace(",p!.dimension,",",p!.basefield,")");
-  end );
-
-InstallMethod( Display, [ IsProjectiveSpace and IsProjectiveSpaceRep ],
-  function( p )
-    Print("ProjectiveSpace(",p!.dimension,",",p!.basefield,")\n");
-    if HasDiagramOfGeometry( p ) then
-       Display( DiagramOfGeometry( p ) );
-    fi;
-  end );
-
+# CHECKED 11/09/11 jdb
 #############################################################################
-# Basic methods and functions:
+#O  \in( <x>, <y> )
+# returns false if and only if (and this is checked) <y> is the trivial subspace
+# in the projective space <x>.
+##
+InstallOtherMethod( \in, 
+	"for a projective subspace and its trivial subspace ", 
+	[ IsProjectiveSpace, IsEmptySubspace ],
+	function( x, y )
+		if x = y!.geo then
+			return false;
+		else
+			Error( "<x> is different from the ambient space of <y>" );
+		fi;
+	end );
+
+# CHECKED 11/09/11 jdb
 #############################################################################
+#O  \in( <x>, <dom> )
+# returns true if and only if (and this is checked) <x> is the trivial subspace
+# in the projective space <dom>.
+##
+InstallMethod( \in, 
+	"for a subspace of a projective space and projective space",  
+    [IsSubspaceOfProjectiveSpace, IsProjectiveSpace],
+	function( x, dom )
+		local ps;
+		ps := x!.geo;
+		return ps!.dimension = dom!.dimension and 
+			ps!.basefield = dom!.basefield;
+	end );
 
 
 InstallMethod( IsIncident,  [IsSubspaceOfProjectiveSpace,
@@ -1359,16 +1480,31 @@ InstallMethod( IsIncident,  [IsSubspaceOfProjectiveSpace,
     return false;
   end );
 
-InstallMethod( Span, [IsProjectiveSpace, IsSubspaceOfProjectiveSpace],
-        function(x,y)
-        if y in x then return x;
-	fi;
-end );
+#############################################################################
+# Span/Meet methods in many flavours. 
+#############################################################################
 
-InstallMethod( Span, [IsSubspaceOfProjectiveSpace, IsProjectiveSpace],
-        function(x,y)
-        if x in y then return y;
-        fi;
+# CHECKED 11/09/11 jdb
+#############################################################################
+#O  Span( <x>, <y> )
+# returns <x> if and only if <y> is a subspace in the projective space <x>
+##
+InstallMethod( Span, 
+	"for a projective space and a subspace",
+	[IsProjectiveSpace, IsSubspaceOfProjectiveSpace],
+    function(x,y)
+		if y in x then return x; fi;
+	end );
+
+# CHECKED 11/09/11 jdb
+#############################################################################
+#O  Span( <x>, <y> )
+# returns <y> if and only if <x> is a subspace in the projective space <y>
+##
+InstallMethod( Span, "for a subspace of a projective space and a projective space",
+	[IsSubspaceOfProjectiveSpace, IsProjectiveSpace],
+	function(x,y)
+	if x in y then return y; fi;
 end );
 
 #InstallMethod( Span, [IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
@@ -1401,90 +1537,101 @@ end );
 #    return;
 #  end );
 
-InstallMethod( Span, [IsSubspaceOfProjectiveSpace,
-IsSubspaceOfProjectiveSpace],
- function( x, y )
-   ## This method is quicker than the old one
-   local ux, uy, typx, typy, span, vec;
-   typx := x!.type;
-   typy := y!.type;
-   vec := x!.geo!.vectorspace;
-   if vec = y!.geo!.vectorspace then
-     ux := Unwrap(x);
-     uy := Unwrap(y);
-
-     if typx = 1 then ux := [ux]; fi;
-     if typy = 1 then uy := [uy]; fi;
-
-     span := SumIntersectionMat(ux, uy)[1];
-
-     if Length(span) < vec!.DimensionOfVectors then
-        return VectorSpaceToElement( AmbientSpace(x!.geo), span);
-     else
-        return AmbientSpace(x!.geo);
-     fi;
-   else
-     Error("Subspaces belong to different ambient spaces");
-   fi;
- end );
-
-
-
-InstallMethod( Span, [ IsHomogeneousList and IsSubspaceOfProjectiveSpaceCollection ],
-  function( l )  
-    local unwrapped, r, unr, amb, span, temp, x, F, list;
-	# first we check that all items in the list belong to the same ambient space
-	if Length(l)=0 then return [];
-	elif not Size(AsDuplicateFreeList(List(l,x->AmbientSpace(x))))=1 then 
-	 Error("The elements in the list do not have a common ambient space");
+# CHECKED 11/09/11 jdb
+#############################################################################
+#O  Span( <x>, <y> )
+# returns <x,y>, <x> and <y> two subspaces of a projective space.
+##
+InstallMethod( Span, 
+	"for two subspaces of a projective space",
+	[IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
+	function( x, y )
+	## This method is quicker than the old one
+	local ux, uy, typx, typy, span, vec;
+	typx := x!.type;
+	typy := y!.type;
+	vec := x!.geo!.vectorspace;
+	if vec = y!.geo!.vectorspace then
+		ux := Unwrap(x);
+		uy := Unwrap(y);
+		if typx = 1 then ux := [ux]; fi;
+		if typy = 1 then uy := [uy]; fi;
+		span := SumIntersectionMat(ux, uy)[1];	
+		if Length(span) < vec!.DimensionOfVectors then
+			return VectorSpaceToElement( AmbientSpace(x!.geo), span);
+		else
+			return AmbientSpace(x!.geo);
+		fi;
 	else
-      x := l[1];
-      amb := AmbientSpace(x!.geo);
-      F := amb!.basefield;
-      unwrapped := [];
-      for r in l do
-        unr := r!.obj;
-        if r!.type = 1 then unr := [unr]; fi;
-        Append(unwrapped, unr);
-      od;
-
-      span := MutableCopyMat(unwrapped);
-      span := MutableCopyMat(SemiEchelonMat(span).vectors);
-
-      if Length(span) = amb!.dimension + 1 then
-         return amb;
-      fi;
-      
-	  return VectorSpaceToElement(amb,span);
+		Error("Subspaces belong to different ambient spaces");
 	fi;
-  end );
+	end );
 
+# CHECKED 11/09/11 jdb
+#############################################################################
+#O  Span( <l> )
+# returns the span of the projective subspaces in <l>.
+##
+InstallMethod( Span, "for a homogeneous list of subspaces of a projective space",
+	[ IsHomogeneousList and IsSubspaceOfProjectiveSpaceCollection ],
+	function( l )  
+		local unwrapped, r, unr, amb, span, temp, x, F, list;
+		# first we check that all items in the list belong to the same ambient space
+		if Length(l)=0 then 
+			return [];
+		elif not Size(AsDuplicateFreeList(List(l,x->AmbientSpace(x))))=1 then 
+			Error("The elements in the list do not have a common ambient space");
+		else
+			x := l[1];
+			amb := AmbientSpace(x!.geo);
+			F := amb!.basefield;
+			unwrapped := [];
+			for r in l do
+				unr := r!.obj;
+				if r!.type = 1 then unr := [unr]; fi;
+				Append(unwrapped, unr);
+			od;
+			span := MutableCopyMat(unwrapped);
+			span := MutableCopyMat(SemiEchelonMat(span).vectors);
+			if Length(span) = amb!.dimension + 1 then
+				return amb;
+			fi;
+			return VectorSpaceToElement(amb,span);
+		fi;
+	end );
 
-InstallMethod( Span, [ IsList ],
-  function( l )  
-    local pg,list,x;
-	# This method is added to allow the list ("l") to contain the projective space 
-	# or the empty subspace. If this method is selected, it follows that the list must
-	# contain the whole projective space or the empty set. 
-	# First we remove the emptysubspace from the list, then we check if the list
-	# contains the whold projective space. If it does, return that, if it doesn't
-	# return the span of the remaining elements of the list, which will then select
-	# the previous method for Span
-  if Length(l)=0 then return [];
-  elif Length(l)=1 then return l[1];
-  else
-	list:=Filtered(l,x->not IsEmptySubspace(x));
-	if not Size(AsDuplicateFreeList(List(list,x->AmbientSpace(x))))=1 then 
-	 Error("The elements in the list do not have a common ambient space");
-	else
-	  pg:=AmbientSpace(list[1]);
-	  if pg in list then return pg;
-	  else
-		return Span(list);
-	  fi;
-	fi;
-  fi;
-  end );
+# CHECKED 11/09/11 jdb
+#############################################################################
+#O  Span( <l> )
+# returns the span of the projective subspaces in <l>.
+##
+InstallMethod( Span, 
+	"for a list",
+	[ IsList ],
+	function( l )  
+		local pg,list,x;
+		# This method is added to allow the list ("l") to contain the projective space 
+		# or the empty subspace. If this method is selected, it follows that the list must
+		# contain the whole projective space or the empty set. 
+		# First we remove the emptysubspace from the list, then we check if the list
+		# contains the whold projective space. If it does, return that, if it doesn't
+		# return the span of the remaining elements of the list, which will then select
+		# the previous method for Span
+		if Length(l)=0 then return [];
+		elif Length(l)=1 then return l[1];
+		else
+			list:=Filtered(l,x->not IsEmptySubspace(x));
+			if not Size(AsDuplicateFreeList(List(list,x->AmbientSpace(x))))=1 then 
+				Error("The elements in the list do not have a common ambient space");
+			else
+				pg:=AmbientSpace(list[1]);
+				if pg in list then return pg;
+				else
+					return Span(list);
+				fi;
+			fi;
+		fi;
+	end );
 
 
 
@@ -1592,14 +1739,9 @@ InstallMethod( Meet, [ IsList ],
   fi;
 end );
 
-
-
-#####
-##
+#############################################################################
 ## Methods for random selection of elements
-##
-####
-  
+#############################################################################  
   
 InstallMethod( Random, "for a collection of subspaces of a vector space",
                        [ IsSubspacesVectorSpace ],
