@@ -1349,6 +1349,15 @@ InstallMethod( Iterator,
 
 #############################################################################
 # Methods for incidence.
+# Recall that: - we have a generic method to check set theoretic containment
+#                for two *elements* of a Lie geometry.
+#              - IsIncident is symmetrized set theoretic containment
+#              - we can extend the \in method (if desired) for the particular
+#                Lie geometry, such that we can get true if we ask if an 
+#                element is contained in the complete space, or if we consider
+#                the trivial subspce.
+#              - \* is a different notation for IsIncident, declared and
+#                implement in geometry.g* 
 #############################################################################
 
 # CHECKED 11/09/11 jdb
@@ -1384,101 +1393,135 @@ InstallMethod( \in,
 			ps!.basefield = dom!.basefield;
 	end );
 
+# CHECKED 11/09/11 jdb
+#############################################################################
+#O  \in( <x>, <dom> )
+# returns true if and only if (and this is checked) <x> is the trivial subspace
+# in the projective space <dom>.
+##
+InstallMethod( \in, 
+	"for a subspace of a projective space and projective space",  
+    [IsProjectiveSpace, IsSubspaceOfProjectiveSpace],
+	function( dom, x )
+		local ps;
+		ps := x!.geo;
+		return ps!.dimension = dom!.dimension and 
+			ps!.basefield = dom!.basefield;
+	end );
 
-InstallMethod( IsIncident,  [IsSubspaceOfProjectiveSpace,
-        IsProjectiveSpace],
-        # returns true if the subspace is contained in the projective space
+
+InstallMethod( IsIncident,  
+		[IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
+		# returns true if the subspace is contained in the projective space
         function(x,y)
-                return x in y;
+                return x in y or y in x;
         end );
 
-InstallMethod( IsIncident,  [IsProjectiveSpace,
-        IsSubspaceOfProjectiveSpace],
-        # returns true if the subspace is contained in the projective space
-        function(x,y)
-                return y in x;
-        end );
+#InstallMethod( IsIncident,  [IsProjectiveSpace,
+#        IsSubspaceOfProjectiveSpace],
+#        # returns true if the subspace is contained in the projective space
+#        function(x,y)
+#                return y in x;
+#        end );
+
+#InstallMethod( IsIncident,  [IsSubspaceOfProjectiveSpace,
+#        IsProjectiveSpace],
+#        # returns true if the subspace is contained in the projective space
+#        function(x,y)
+#                return x in y;
+#        end );
+
+#InstallMethod( IsIncident,  [IsProjectiveSpace,
+#        IsSubspaceOfProjectiveSpace],
+#        # returns true if the subspace is contained in the projective space
+#        function(x,y)
+#                return y in x;
+#        end );
 
 
-InstallMethod( IsIncident,  [IsSubspaceOfProjectiveSpace,
+# I will change "drastically" here.
+# this method is converted into a generic method to test set theoretic containment
+# for elements of Lie geometries.
+
+#InstallMethod( IsIncident,  [IsSubspaceOfProjectiveSpace,
 ## some of this function is based on the
 ## SemiEchelonMat function. we save time by assuming that the matrix of
 ## each subspace is already in semiechelon form.
 ## method only applies to projective and polar spaces
-  IsSubspaceOfProjectiveSpace],
-  function( x, y )
-    local ambx, amby, typx, typy, mat,
-          zero,      # zero of the field of <mat>
-          nrows,
-          ncols,     # number of columns in <mat>
-          vectors,   # list of basis vectors
-          nvectors,
-          i,         # loop over rows
-          j,         # loop over columns
-          z,         # a current element
-          nzheads,   # list of non-zero heads
-          row;       # the row of current interest
+#  IsSubspaceOfProjectiveSpace],
+#  function( x, y )
+#    local ambx, amby, typx, typy, mat,
+#          zero,      # zero of the field of <mat>
+#          nrows,
+#          ncols,     # number of columns in <mat>
+#          vectors,   # list of basis vectors
+#          nvectors,
+#          i,         # loop over rows
+#          j,         # loop over columns
+#          z,         # a current element
+#          nzheads,   # list of non-zero heads
+#          row;       # the row of current interest
 
 
-    ambx := x!.geo;
-    amby := y!.geo;
-    typx := x!.type;
-    typy := y!.type;
+#    ambx := x!.geo;
+#    amby := y!.geo;
+#    typx := x!.type;
+#    typy := y!.type;
+#    
+#    if ambx!.vectorspace = amby!.vectorspace then
     
-    if ambx!.vectorspace = amby!.vectorspace then
-    
-        if typx >= typy then
-          vectors := x!.obj;
-          nvectors := typx;
-          mat := MutableCopyMat(y!.obj);
-          nrows := typy;
-        else
-          vectors := y!.obj;
-          nvectors := typy;
-          mat := MutableCopyMat(x!.obj);
-          nrows := typx;
-        fi;
+#        if typx >= typy then
+#          vectors := x!.obj;
+#          nvectors := typx;
+#          mat := MutableCopyMat(y!.obj);
+#          nrows := typy;
+#        else
+#          vectors := y!.obj;
+#          nvectors := typy;
+#          mat := MutableCopyMat(x!.obj);
+#          nrows := typx;
+#        fi;
       # subspaces of type 1 need to be nested to make them lists of vectors
 
-      if nrows = 1 then mat := [mat]; fi;
-      if nvectors = 1 then vectors := [vectors]; fi;
+#      if nrows = 1 then mat := [mat]; fi;
+#      if nvectors = 1 then vectors := [vectors]; fi;
 
-      ncols:= amby!.dimension + 1;
-      zero:= Zero( mat[1][1] );
+#      ncols:= amby!.dimension + 1;
+#      zero:= Zero( mat[1][1] );
 
       # here we are going to treat "vectors" as a list of basis vectors. first
       # figure out which column is the first nonzero column for each row
-      nzheads := [];
-      for i in [ 1 .. nvectors ] do
-        row := vectors[i];
-        j := PositionNot( row, zero );
-        Add(nzheads,j);
-      od;
+#      nzheads := [];
+#      for i in [ 1 .. nvectors ] do
+#        row := vectors[i];
+#        j := PositionNot( row, zero );
+#        Add(nzheads,j);
+#      od;
 
       # now try to reduce each row of "mat" with the basis vectors
-      for i in [ 1 .. nrows ] do
-        row := mat[i];
-        for j in [ 1 .. Length(nzheads) ] do
-            z := row[nzheads[j]];
-            if z <> zero then
-              AddRowVector( row, vectors[ j ], - z );
-            fi;
-        od;
+#      for i in [ 1 .. nrows ] do
+#        row := mat[i];
+#        for j in [ 1 .. Length(nzheads) ] do
+#            z := row[nzheads[j]];
+#            if z <> zero then
+#              AddRowVector( row, vectors[ j ], - z );
+#            fi;
+#        od;
 
         # if the row is now not zero then y is not a subvariety of x
-        j := PositionNot( row, zero );
-        if j <= ncols then
-                return false;
-        fi;
+#        j := PositionNot( row, zero );
+#        if j <= ncols then
+#                return false;
+#        fi;
 
-      od;
+#      od;
       
-      return true;
-    else
-      Error( "The subspaces belong to different ambient spaces" );
-    fi;
-    return false;
-  end );
+#      return true;
+#    else
+#      Error( "The subspaces belong to different ambient spaces" );
+#    fi;
+#    return false;
+#  end );
 
 #############################################################################
 # Span/Meet methods in many flavours. 

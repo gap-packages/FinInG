@@ -348,6 +348,9 @@ InstallOtherMethod( \in,
 #O  \in( <x>, <y> )
 # for the trivial subspace and a Lie geometry. Returns true if the vectorspace 
 # of <x> is the same as the vectorspace of the geomery.
+# Remark that we do not implement a generic method to check if a particular 
+# Lie geometry is contained in the empty subspace. If this is desired, e.g. for
+# projective spces, it should be implemented for this particular space.
 ## 
 InstallOtherMethod( \in, 
 	"for the trivial subspace and a Lie geometry", 
@@ -609,3 +612,91 @@ InstallMethod( ViewObj,
 		Print(">");
 	end );
 
+
+#############################################################################
+# A method to check set theoretic containment for elements of a Lie geometry.
+#############################################################################
+
+
+# CREATED 13/9/2011 jdb
+#############################################################################
+#O  \in( <x>, <y> )
+# returns true if <x> is contained in <y>, from the set theoretic point of view.
+##
+InstallMethod(\in,
+	"for two elements of a Lie geometry",
+	[IsElementOfLieGeometry,   IsElementOfLieGeometry],
+## some of this function is based on the
+## SemiEchelonMat function. we save time by assuming that the matrix of
+## each subspace is already in semiechelon form.
+## method only applies to projective and polar spaces
+  function( x, y )
+    local ambx, amby, typx, typy, mat,
+          zero,      # zero of the field of <mat>
+          nrows,
+          ncols,     # number of columns in <mat>
+          vectors,   # list of basis vectors
+          nvectors,
+          i,         # loop over rows
+          j,         # loop over columns
+          z,         # a current element
+          nzheads,   # list of non-zero heads
+          row;       # the row of current interest
+
+
+    ambx := x!.geo;
+    amby := y!.geo;
+    typx := x!.type;
+    typy := y!.type;
+    
+    if ambx!.vectorspace = amby!.vectorspace then
+    
+        if typx > typy then
+		  return false;
+        else
+          vectors := y!.obj;
+          nvectors := typy;
+          mat := MutableCopyMat(x!.obj);
+          nrows := typx;
+        fi;
+      # subspaces of type 1 need to be nested to make them lists of vectors
+
+      if nrows = 1 then mat := [mat]; fi;
+      if nvectors = 1 then vectors := [vectors]; fi;
+
+      ncols:= amby!.dimension + 1;
+      zero:= Zero( mat[1][1] );
+
+      # here we are going to treat "vectors" as a list of basis vectors. first
+      # figure out which column is the first nonzero column for each row
+      nzheads := [];
+      for i in [ 1 .. nvectors ] do
+        row := vectors[i];
+        j := PositionNot( row, zero );
+        Add(nzheads,j);
+      od;
+
+      # now try to reduce each row of "mat" with the basis vectors
+      for i in [ 1 .. nrows ] do
+        row := mat[i];
+        for j in [ 1 .. Length(nzheads) ] do
+            z := row[nzheads[j]];
+            if z <> zero then
+              AddRowVector( row, vectors[ j ], - z );
+            fi;
+        od;
+
+        # if the row is now not zero then y is not a subvariety of x
+        j := PositionNot( row, zero );
+        if j <= ncols then
+                return false;
+        fi;
+
+      od;
+      
+      return true;
+    else
+      Error( "The subspaces belong to different ambient spaces" );
+    fi;
+    return false;
+  end );
