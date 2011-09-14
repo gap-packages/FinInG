@@ -700,3 +700,62 @@ InstallMethod(\in,
     fi;
     return false;
   end );
+
+#############################################################################
+## Methods for random selection of elements
+#############################################################################  
+
+# CHECKED 14/09/2011 jdb.
+#############################################################################
+#O  Random( <subs> )
+# <subs> must be a collections of subspaces of a vector space, of the same 
+# dimension. Returns a random element from it.
+##
+InstallMethod( Random, 
+	"for a collection of subspaces of a vector space",
+    [ IsSubspacesVectorSpace ],
+	# chooses a random element out of the collection of subspaces of given dimension of a vectorspace
+	function( subs )
+		local d, vspace, V, W, w;
+		## the underlying vector space
+		vspace := subs!.structure;
+		if not IsInt(subs!.dimension) then #here we must know that this field is "all" if it is not an integer.
+			Error("The subspaces of the collection need to have the same dimension");
+		fi;
+		## the common dimension of elements of subs
+		d := subs!.dimension;
+		V:=[];
+		repeat
+			w := Random( vspace );
+			Add(V, w);
+			W := SubspaceNC( vspace, V );
+			until Dimension(W) = d;
+    return W;
+  end );
+
+# CHECKED 14/09/2011 jdb.
+#############################################################################
+#O  RandomSubspace( <vspace>, <d> )
+# <vspace> is a vector space, <d> a dimension. Returns a random subspace of 
+# dimension <d>
+##
+InstallMethod( RandomSubspace,
+	"for a vectorspace and a dimension",
+	[IsVectorSpace,IsInt],
+    function(vspace,d)
+		local list,W,w;
+        if d>Dimension(vspace) then
+                Error("The dimension of the subspace is larger than that of the vectorspace");
+        fi;
+		if not IsPosInt(d) then
+				Error("The dimension of the subspace must be at least 1!");
+		fi;
+        list:=[];
+        repeat
+			w := Random( vspace );
+            Add(list, w);
+            W := SubspaceNC( vspace, list );
+        until Dimension(W) = d;
+        return W;
+	end );  
+

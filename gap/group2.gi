@@ -11,18 +11,17 @@
 ##                                                            Michael Pauley
 ##                                                             Sven Reichard
 ##
-##  Copyright 2011 University of Western Australia, Perth
-##                 University of St. Andrews
-##                 Ghent University
-##                 Colorado State University
-##                 Vrije Universiteit Brussel
-##                 Università degli Studi di Padova
+##  Copyright 2011	Colorado State University, Fort Collins
+##					Università degli Studi di Padova
+##					Universeit Gent
+##					University of St. Andrews
+##					University of Western Australia, Perth
+##                  Vrije Universiteit Brussel
+##                 
 ##
 ##  Implementation stuff for correlation groups
 ##
 #############################################################################
-
-
 
 ########################################
 #
@@ -30,23 +29,8 @@
 #
 # - test CorrelationGroup
 # - Documentation
-# - move "UnderlyingVectorSpace" to projspace.g*
 #
 ########################################
-
-
-
-###################################################################
-# Just an extension of projectivespace.gi...
-###################################################################
-   
-InstallMethod( \=,
-  "for set of all subspaces of a projective space",
-  [ IsAllSubspacesOfProjectiveSpace, IsAllSubspacesOfProjectiveSpace ],
-  function(x,y)
-  return ((x!.geometry!.dimension = y!.geometry!.dimension) and (x!.geometry!.basefield =
-  y!.geometry!.basefield));
-end );
 
 ###################################################################
 # Code for the "standard duality" of a projective space. We want it to 
@@ -56,239 +40,352 @@ end );
 # (because we know that delta^-1 = delta.
 ###################################################################
 
-#added this 16/12/08. jdb
+# CHECKED 14/09/11 jdb
+#############################################################################
+#O  IdentityMappingOfElementsOfProjectiveSpace( <ps> )
+# returns the identity mapping on the collection of subspaces of a projective space <ps>
+## 
 InstallMethod( IdentityMappingOfElementsOfProjectiveSpace, 
    "for a projective space",
    [IsProjectiveSpace],
    function(ps)
-   local map;
-   map := IdentityMapping(ElementsOfIncidenceStructure(ps));
-   SetFilterObj(map,IsIdentityMappingOfElementsOfProjectiveSpace);
-   return map;
-end );
+		local map;
+		map := IdentityMapping(ElementsOfIncidenceStructure(ps));
+		SetFilterObj(map,IsIdentityMappingOfElementsOfProjectiveSpace);
+		return map;
+	end );
 
-InstallMethod( StandardDualityOfProjectiveSpace, [IsProjectiveSpace],
-  function( ps )
+# CHECKED 14/09/11 jdb
+#############################################################################
+#O  IdentityMappingOfElementsOfProjectiveSpace( <ps> )
+# returns the identity mapping on the collection of subspaces of a projective space <ps>
+## 
+InstallMethod( StandardDualityOfProjectiveSpace, 
+	"for a projective space",
+	[IsProjectiveSpace],
+	function( ps )
     ## In this method, we implement the standard duality acting
     ## on projective spaces.
-
-    local map, f, S, ty, obj, one;
-
-    f := function(v)
+		local map, f, S, ty, obj, one;
+		f := function(v)
         local ty, b, newb, rk;
         ty := v!.type;
         b := v!.obj;
         if ty = 1 then
-           b := [b];
+			b := [b];
         fi;       
         newb := NullspaceMat(TransposedMat(b));
         rk := Rank(newb);
         if rk = 1 then 
-           newb := newb[1];
+			newb := newb[1];
         fi;
         return VectorSpaceToElement(ps, newb);  ## check that this normalises the element
-      end;
-    S := ElementsOfIncidenceStructure(ps);   ##    map := MappingByFunction(ElementsOfIncidenceStructure(ps), ElementsOfIncidenceStructure(ps), f, f);
-    ty := TypeOfDefaultGeneralMapping( S, S,
-                                   IsStandardDualityOfProjectiveSpace
-				 and IsSPMappingByFunctionWithInverseRep
-				 and IsBijective and HasOrder and HasIsOne);
-   
-    # We looked at the code to create a MappingByFunction. Restricted the filter
-    # was sufficient to be able to overload \* for my new category of mappings.
-    obj := rec( fun := f, invFun := f, preFun := f, ps := ps );
-    one := IdentityMappingOfElementsOfProjectiveSpace(ps);
-    ObjectifyWithAttributes(obj, ty, Order, 2, IsOne, false, One, one); #this command I learned in st andrews!
-    Setter(InverseAttr)(obj,obj); #cannot set this attribute in previous line, because map does not exist then
-    return obj;
-end );
+		end;
+		S := ElementsOfIncidenceStructure(ps);   ##    map := MappingByFunction(ElementsOfIncidenceStructure(ps), ElementsOfIncidenceStructure(ps), f, f);
+		ty := TypeOfDefaultGeneralMapping( S, S,
+					IsStandardDualityOfProjectiveSpace
+					and IsSPMappingByFunctionWithInverseRep
+					and IsBijective and HasOrder and HasIsOne);
+		# We looked at the code to create a MappingByFunction. Restricted the filter
+		# was sufficient to be able to overload \* for my new category of mappings.
+		obj := rec( fun := f, invFun := f, preFun := f, ps := ps );
+		one := IdentityMappingOfElementsOfProjectiveSpace(ps);
+		ObjectifyWithAttributes(obj, ty, Order, 2, IsOne, false, One, one); #this command I learned in st andrews!
+		Setter(InverseAttr)(obj,obj); #cannot set this attribute in previous line, because map does not exist then
+		return obj;
+	end );
+
+###################################################################
+# ViewObj/Print/Display methods
+###################################################################
+# CHECKED 14/09/11 jdb
 
 InstallMethod( ViewObj,
-   "for such a nice looking standard duality of a projective space",
-   [IsStandardDualityOfProjectiveSpace and IsSPMappingByFunctionWithInverseRep],
-   function(delta)
-   Print("StandardDuality( ",Source(delta)," )");
-end);
+	"for such a nice looking standard duality of a projective space",
+	[IsStandardDualityOfProjectiveSpace and IsSPMappingByFunctionWithInverseRep],
+	function(delta)
+		Print("StandardDuality( ",Source(delta)," )");
+	end);
 
 InstallMethod( Display,
-   "for such a nice looking standard duality of a projective space",
-   [IsStandardDualityOfProjectiveSpace and IsSPMappingByFunctionWithInverseRep],
-   function(delta)
-   Print("StandardDuality( ",Source(delta)," )");
-end);
+	"for such a nice looking standard duality of a projective space",
+	[IsStandardDualityOfProjectiveSpace and IsSPMappingByFunctionWithInverseRep],
+	function(delta)
+		Print("StandardDuality( ",Source(delta)," )");
+	end);
 
 InstallMethod( PrintObj,
-   "for such a nice looking standard duality of a projective space",
-   [IsStandardDualityOfProjectiveSpace and IsSPMappingByFunctionWithInverseRep],
-   function(delta)
-   Print("StandardDuality( ",Source(delta)," )");
-end);
+	"for such a nice looking standard duality of a projective space",
+	[IsStandardDualityOfProjectiveSpace and IsSPMappingByFunctionWithInverseRep],
+	function(delta)
+		Print("StandardDuality( ",Source(delta)," )");
+	end);
 
+###################################################################
+# multiplying projective space isomorphisms. Actually, these methods
+# are not intended for the user, since there is not check to see
+# if the arguments are projective space isomorphisms of the same
+# projective space. On the other hand, the user should only use these 
+# objects as an argument for constructor functions of corrlelations. 
+# The methods here are in the first place helper methods for the methods
+# multiplying correlations. So we allow ourselves here some sloppyness.
+###################################################################
+
+# CHECKED 14/09/11 jdb
+#############################################################################
+#O  \*( <delta1>, <delta2> )
+# returns the product of two standard dualities of a projective space.
+## 
 InstallMethod( \*,
-   "for multiplying a standard-duality of a projective space",
-   [IsStandardDualityOfProjectiveSpace, IsStandardDualityOfProjectiveSpace],
-   function(delta1,delta2)
-   return One(delta1);
-end);
+	"for multiplying a standard-duality of a projective space",
+	[IsStandardDualityOfProjectiveSpace, IsStandardDualityOfProjectiveSpace],
+	function(delta1,delta2)
+		return One(delta1);
+	end);
 
+# CHECKED 14/09/11 jdb
+#############################################################################
+#O  \*( <delta1>, <delta2> )
+# returns the product of the identitymap and the standard duality of a projective space.
+## 
 InstallMethod( \*,
-   "for multiplying a standard-duality of a projective space",
-   [IsIdentityMappingOfElementsOfProjectiveSpace, IsStandardDualityOfProjectiveSpace],
-   function(delta1,delta2)
-   return delta2;
-end);
+	"for multiplying a standard-duality of a projective space",
+	[IsIdentityMappingOfElementsOfProjectiveSpace, IsStandardDualityOfProjectiveSpace],
+	function(delta1,delta2)
+		return delta2;
+	end);
 
+# CHECKED 14/09/11 jdb
+#############################################################################
+#O  \*( <delta1>, <delta2> )
+# returns the product of the standard duality and the identitymap of a projective space.
+## 
 InstallMethod( \*,
-   "for multiplying a standard-duality of a projective space",
-   [IsStandardDualityOfProjectiveSpace, IsIdentityMappingOfElementsOfProjectiveSpace],
-   function(delta1,delta2)
-   return delta1;
-end);
+	"for multiplying a standard-duality of a projective space",
+	[IsStandardDualityOfProjectiveSpace, IsIdentityMappingOfElementsOfProjectiveSpace],
+	function(delta1,delta2)
+		return delta1;
+	end);
 
+# CHECKED 14/09/11 jdb
+#############################################################################
+#O  \*( <delta1>, <delta2> )
+# returns the product of two identitymaps of a projective space.
+## 
 InstallMethod( \*,
-   "for multiplying a standard-duality of a projective space",
-   [IsIdentityMappingOfElementsOfProjectiveSpace, IsIdentityMappingOfElementsOfProjectiveSpace],
-   function(delta1,delta2)
-   return delta1;
-end);
+	"for multiplying a standard-duality of a projective space",
+	[IsIdentityMappingOfElementsOfProjectiveSpace, IsIdentityMappingOfElementsOfProjectiveSpace],
+	function(delta1,delta2)
+		return delta1;
+	end);
 
+# CHECKED 14/09/11 jdb
+#############################################################################
+#O  \*( <delta1>, 0 )
+# returns One(delta1), <delta1> a projective space isomorphism
+## 
 InstallMethod( \^,
     "for psisom and zero",
     [ IsProjectiveSpaceIsomorphism, IsZeroCyc ],
     function(delta,p)
-    return One(delta);
-end);
+		return One(delta);
+	end);
 
+# CHECKED 14/09/11 jdb
+#############################################################################
+#O  \*( <delta1>, <delta2> )
+# returns true iff <delta1>=<delta2>, two standard dualities.
+## 
 InstallMethod( \=,
-   "for comparing two standard-dualities of a projective space",
-   [IsStandardDualityOfProjectiveSpace, IsStandardDualityOfProjectiveSpace],
-   function(delta,eta)
-   return Source(delta) = Source(eta);
-end);
+	"for two standard-dualities of a projective space",
+	[IsStandardDualityOfProjectiveSpace, IsStandardDualityOfProjectiveSpace],
+	function(delta,eta)
+		return Source(delta) = Source(eta);
+	end);
 
+# CHECKED 14/09/11 jdb
+#############################################################################
+#O  \*( <delta1>, <delta2> )
+# returns false, since a duality is not the identitymap.
 InstallMethod( \=,
-   "for comparing a standard-duality of a projective space and a identitymap",
-   [IsStandardDualityOfProjectiveSpace, IsIdentityMappingOfElementsOfProjectiveSpace],
-   function(delta,eta)
-   return false;
-end);
+	"for a standard-duality of a projective space and the identitymap",
+	[IsStandardDualityOfProjectiveSpace, IsIdentityMappingOfElementsOfProjectiveSpace],
+	function(delta,eta)
+		return false;
+	end);
 
+# CHECKED 14/09/11 jdb
+#############################################################################
+#O  \*( <delta1>, <delta2> )
+# returns false, since a duality is not the identitymap.
 InstallMethod( \=,
-   "for comparing a identity map and a standard-duality of a projective space",
-   [IsIdentityMappingOfElementsOfProjectiveSpace, IsStandardDualityOfProjectiveSpace],
-   function(delta,eta)
-   return false;
-end);
+	"for the identity map and a standard-duality of a projective space",
+	[IsIdentityMappingOfElementsOfProjectiveSpace, IsStandardDualityOfProjectiveSpace],
+	function(delta,eta)
+		return false;
+	end);
 
+# CHECKED 14/09/11 jdb
+#############################################################################
+#O  \*( <delta1>, <delta2> )
+# returns true iff <delta1>=<delta2>, two identitymaps of a projective space.
+## 
 InstallMethod( \=,
-   "for comparing a identity map and a standard-duality of a projective space",
-   [IsIdentityMappingOfElementsOfProjectiveSpace, IsIdentityMappingOfElementsOfProjectiveSpace],
-   function(delta,eta)
-   return Source(delta) = Source(eta);
-end);
+	"for two identity maps of a projective space",
+	[IsIdentityMappingOfElementsOfProjectiveSpace, IsIdentityMappingOfElementsOfProjectiveSpace],
+	function(delta,eta)
+		return Source(delta) = Source(eta);
+	end);
 
 ###################################################################
-# Code for "projective elements with frobenius with vector space 
-# isomorphism", 
-# Such an object represent a collineation (delta = identity) OR 
+# Constructor methods for "projective elements with frobenius with 
+# vector space isomorphism", 
+# Such an object represents a collineation (delta = identity) OR 
 # a correlation (delta = standard duality).
 ###################################################################
 
-###################################################################
-# Basic construction methods en viewing, displaying, printing...
-###################################################################
 
+# CHECKED 14/09/11 jdb
+#############################################################################
+#O  ProjElWithFrob( <mat>, <frob>, <f>, <delta> )
+# method to construct an object in the category IsProjGrpElWithFrobWithPSIsom,
+# i.e. correlations. This method is not intended for the users, it has no 
+# checks built in. the fourth argument must be the standard duality of a projective
+# space.
+##
 InstallMethod( ProjElWithFrobWithPSIsom, 
-  "for a ffe matrix and a Frobenius automorphism, a field and the st. duality",
-  [IsMatrix and IsFFECollColl,
-	  IsRingHomomorphism and IsMultiplicativeElementWithInverse,
+	"for a ffe matrix, a Frobenius automorphism, a field and the st. duality",
+	[IsMatrix and IsFFECollColl, IsRingHomomorphism and IsMultiplicativeElementWithInverse,
 	  IsField, IsStandardDualityOfProjectiveSpace],
-  function( m, frob, f, delta )
-    local el;
-    el := rec( mat := m, fld := f, frob := frob, psisom := delta );
-    Objectify( ProjElsWithFrobWithPSIsomType, el );
-    return el;
-  end );
+	function( m, frob, f, delta )
+		local el;
+		el := rec( mat := m, fld := f, frob := frob, psisom := delta );
+		Objectify( ProjElsWithFrobWithPSIsomType, el );
+		return el;
+	end );
   
+
+# CHECKED 14/09/11 jdb
+#############################################################################
+#O  ProjElWithFrob( <mat>, <frob>, <f> )
+# method to construct an object in the category IsProjGrpElWithFrobWithPSIsom,
+# i.e. correlations. This method is not intended for the users, it has no 
+# checks built in. There is no fourth argument, the projective space isomorphism
+# will be the identity mapping of the projective space.
+##
 InstallMethod( ProjElWithFrobWithPSIsom, 
-  "for a ffe matrix and a Frobenius automorphism and a field, no 4th argument, will be identity",
-  [IsMatrix and IsFFECollColl,
-	  IsRingHomomorphism and IsMultiplicativeElementWithInverse,
+	"for a ffe matrix, a Frobenius automorphism and a field",
+	[IsMatrix and IsFFECollColl, IsRingHomomorphism and IsMultiplicativeElementWithInverse,
 	  IsField],
-  function( m, frob, f )
-    local el,isom,q,n;
-    q := Size(f); 
-    n := Length(m);
-    isom := IdentityMappingOfElementsOfProjectiveSpace(ProjectiveSpace(n-1,f));  ## I hope this works! was wrong, for godsake, don't tell Celle about this type of mistakes :-(
-    el := rec( mat := m, fld := f, frob := frob, psisom := isom);
-    Objectify( ProjElsWithFrobWithPSIsomType, el );
-    return el;
-  end );
+	function( m, frob, f )
+		local el,isom,q,n;
+		q := Size(f); 
+		n := Length(m);
+		isom := IdentityMappingOfElementsOfProjectiveSpace(ProjectiveSpace(n-1,f));  ## I hope this works! was wrong, for godsake, don't tell Celle about this type of mistakes :-(
+		el := rec( mat := m, fld := f, frob := frob, psisom := isom);
+		Objectify( ProjElsWithFrobWithPSIsomType, el );
+		return el;
+	end );
 
+# CHECKED 14/09/11 jdb
+#############################################################################
+#O  ProjElWithFrob( <mat>, <frob>, <f>, <delta> )
+# method to construct an object in the category IsProjGrpElWithFrobWithPSIsom,
+# i.e. correlations. This method is not intended for the users, it has no 
+# checks built in. The fourth argument must be the identity mapping of a projective space.
+##
 InstallMethod( ProjElWithFrobWithPSIsom, 
-  "for a ffe matrix and a Frobenius automorphism, a field and the identity mapping",
-  [IsMatrix and IsFFECollColl,
-	  IsRingHomomorphism and IsMultiplicativeElementWithInverse,
-	  IsField, IsGeneralMapping and IsSPGeneralMapping and IsOne],
-  function( m, frob, f, delta )
-    local el;
-    el := rec( mat := m, fld := f, frob := frob, psisom := delta );
-    Objectify( ProjElsWithFrobWithPSIsomType, el );
-    return el;
-  end );
+	"for a ffe matrix and a Frobenius automorphism, a field and the identity mapping",
+	[IsMatrix and IsFFECollColl, IsRingHomomorphism and IsMultiplicativeElementWithInverse,
+	  IsField, IsGeneralMapping	and IsSPGeneralMapping and IsOne],
+	function( m, frob, f, delta )
+		local el;
+		el := rec( mat := m, fld := f, frob := frob, psisom := delta );
+		Objectify( ProjElsWithFrobWithPSIsomType, el );
+		return el;
+	end );
 
-InstallMethod( ViewObj, "for a projective group element with Frobenius with duality",
-  [IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep],
-  function(el)
-    Print("<projective element with Frobenius with projectivespace isomorphism");
-    ViewObj(el!.mat);
-    if IsOne(el!.frob) then
-        Print(", F^0, ");
-    else
-        Print(", F^",el!.frob!.power,", ");
-    fi;
-    ViewObj(el!.psisom);
-    Print(" >");
-  end);
+###################################################################
+# Viewing, displaying, printing methods.
+###################################################################
+# CHECKED 14/09/11 jdb
 
-InstallMethod( Display, "for a projective group element with Frobenius with projective space isomorphism",
-  [IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep],
-  function(el)
-    Print("<projective element with Frobenius, underlying matrix, \n");
-    Display(el!.mat);
-    if IsOne(el!.frob) then
-        Print(", F^0");
-    else
-        Print(", F^",el!.frob!.power);
-    fi;
-    Print(", underlying projective space isomorphism:\n",el!.psisom,">\n");
-  end );
+InstallMethod( ViewObj, 
+	"for a projective group element with Frobenius with duality",
+	[IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep],
+	function(el)
+		Print("<projective element with Frobenius with projectivespace isomorphism");
+		ViewObj(el!.mat);
+		if IsOne(el!.frob) then
+			Print(", F^0, ");
+		else
+			Print(", F^",el!.frob!.power,", ");
+		fi;
+		ViewObj(el!.psisom);
+		Print(" >");
+	end);
 
-InstallMethod( PrintObj, "for a projective group element with Frobenius with projective space isomorphism",
-  [IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep],
-  function(el)
-    Print("ProjElWithFrobWithPSIsom(");
-    PrintObj(el!.mat);
-    Print(",");
-    PrintObj(el!.frob);
-    Print(",");
-    PrintObj(el!.psisom);
-    Print(")");
-  end );
+InstallMethod( Display, 
+	"for a projective group element with Frobenius with projective space isomorphism",
+	[IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep],
+	function(el)
+		Print("<projective element with Frobenius, underlying matrix, \n");
+		Display(el!.mat);
+		if IsOne(el!.frob) then
+			Print(", F^0");
+		else
+			Print(", F^",el!.frob!.power);
+		fi;
+		Print(", underlying projective space isomorphism:\n",el!.psisom,">\n");
+	end );
 
+InstallMethod( PrintObj, 
+	"for a projective group element with Frobenius with projective space isomorphism",
+	[IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep],
+	function(el)
+		Print("ProjElWithFrobWithPSIsom(");
+		PrintObj(el!.mat);
+		Print(",");
+		PrintObj(el!.frob);
+		Print(",");
+		PrintObj(el!.psisom);
+		Print(")");
+	end );
+
+###################################################################
+# Some operations for correlations and correlation groups.
+###################################################################
+
+# CHECKED 14/09/11 jdb
+#############################################################################
+#O  Representative( <el> )
+# returns the underlying matrix, field automorphism and projective space isomorphism
+# of the correlation <el>
+##
 InstallOtherMethod( Representative, 
-  "for a projective group element with Frobenius with projective space isomorphism",
-  [IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep],
-  function( el )
-    return [el!.mat,el!.frob,el!.psisom];
-  end );
+	"for a projective group element with Frobenius with projective space isomorphism",
+	[IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep],
+	function( el )
+		return [el!.mat,el!.frob,el!.psisom];
+	end );
 
-InstallMethod( BaseField, "for a projective group element with Frobenius with proj space isomorphism",
-  [IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep],
-  function( el )
-    return el!.fld;
-  end );
+# CHECKED 14/09/11 jdb
+#############################################################################
+#O  BaseField( <el> )
+# returns the underlying field of the correlation <el> 
+##  
+InstallMethod( BaseField,
+	"for a projective group element with Frobenius with proj space isomorphism",
+	[IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep],
+	function( el )
+		return el!.fld;
+	end );
 
+# CHECKED 14/09/11 jdb
+#############################################################################
+#O  BaseField( <g> )
+# returns the base field of the correlation group group <g>
+## 
 InstallMethod( BaseField, "for a projective group with Frobenius with proj space isomorphism",
   [IsProjGroupWithFrobWithPSIsom],
   function( g )
@@ -311,10 +408,9 @@ InstallMethod( BaseField, "for a projective group with Frobenius with proj space
     Error("base field could not be determined");
   end );
 
-
 ###################################################################
-# code for multiplying,comparing... elements with themselves and 
-# other elements...
+# code for multiplying, comparing... correlations with themselves and 
+# other elements, and more operations.
 ###################################################################
 
 InstallMethod( \=, 

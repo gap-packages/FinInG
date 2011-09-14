@@ -130,7 +130,9 @@ InstallGlobalFunction(IsScalarMatrix,
 ## deleting some of it.
 
 # CHECKED 5/09/11 jdb
-# I am not completely happy with the behaviour of this method.
+# I am not completely happy with the behaviour of this method, since there might
+# be some issue with the field.
+# On the other hand, it is not intended for the user and might even be obselete
 #############################################################################
 #O  ProjEl( <mat> )
 # method to construct an object in the category IsProjGrpEl, i.e. projectivities, 

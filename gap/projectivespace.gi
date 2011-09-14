@@ -38,6 +38,10 @@
 #  - check wheter output of RepresentativesOfElements can be changed using the Flag stuff. 11/09/11 jdb.
 #  - make some tiny changes at Meet for lists, such that, when possible, the empty subspace is returned and not []. (this is a
 #    detail). 14/9/2011 jdb.
+#  - think whether it makes sense that Span and Meet return [] when they receive []. (recall that [] used to represent the 
+#    trivial subspace in earlier days. 14/9/2011 jdb.
+#  - improve Random method for shadow elements. see comment there.
+#  - have a closer look at the Baer substuff methods in this file.
 
 #############################################################################
 # Low level help methods:
@@ -139,21 +143,23 @@ InstallMethod( Display, [ IsProjectiveSpace and IsProjectiveSpaceRep ],
 #O  UnderlyingVectorSpace( <ps> )
 # returns the Underlying vectorspace of the projective space <ps>
 ##
-InstallMethod( UnderlyingVectorSpace, "for a projective space",
-   [IsProjectiveSpace and IsProjectiveSpaceRep],
-   function(ps)
-   return ShallowCopy(ps!.vectorspace);
-end);
+InstallMethod( UnderlyingVectorSpace, 
+	"for a projective space",
+	[IsProjectiveSpace and IsProjectiveSpaceRep],
+	function(ps)
+		return ShallowCopy(ps!.vectorspace);
+	end);
 
 # CHECKED 6/09/11 jdb
 #############################################################################
 #O  \=( <pg1>, <pg2> )
 ##
-InstallMethod( \=, "for two projective spaces",
+InstallMethod( \=, 
+	"for two projective spaces",
 	[IsProjectiveSpace, IsProjectiveSpace],
 	function(pg1,pg2);
-	return UnderlyingVectorSpace(pg1) = UnderlyingVectorSpace(pg2);
-end );
+		return UnderlyingVectorSpace(pg1) = UnderlyingVectorSpace(pg2);
+	end );
 
 # CHECKED 8/09/11 jdb
 #############################################################################
@@ -329,9 +335,25 @@ InstallMethod( ElementsOfIncidenceStructure,
 	function( ps )
 		return Objectify(
 			NewType( ElementsCollFamily, IsAllSubspacesOfProjectiveSpace and IsAllSubspacesOfProjectiveSpaceRep ),
-				rec( geometry := ps )
+				rec( geometry := ps,
+					type := "all") #added this field in analogy with the collection that contains all subspaces of a vector space. 14/9/2011 jdb.
 				);
 	end);
+
+# CHECKED 14/09/11 jdb
+#############################################################################
+#O  \=( <x>, <y> )
+# returns true if the collections <x> and <y> of all subspaces of a projective
+# space are the same.
+## 
+InstallMethod( \=,
+  "for set of all subspaces of a projective space",
+  [ IsAllSubspacesOfProjectiveSpace, IsAllSubspacesOfProjectiveSpace ],
+  function(x,y)
+  return ((x!.geometry!.dimension = y!.geometry!.dimension) and (x!.geometry!.basefield =
+  y!.geometry!.basefield));
+end );
+
 
 # CHECKED 11/09/11 jdb
 #############################################################################
@@ -602,7 +624,7 @@ InstallMethod( VectorSpaceToElement,
 #  attributes/operations for subspaces
 #############################################################################
 
-# CHECKED 8/09/11 jdb
+# CHECKED 14/09/11 jdb
 #############################################################################
 #O  UnderlyingVectorSpace( <subspace> ) returns the underlying vectorspace of
 # <subspace>, i.e. the vectorspace determining <subspace>
@@ -613,7 +635,11 @@ InstallMethod( UnderlyingVectorSpace,
 	function(subspace)
 		local vspace,W;
 		vspace:=UnderlyingVectorSpace(subspace!.geo);
-		W:=SubspaceNC(vspace,subspace!.obj);
+		if subspace!.type = 1 then
+			W:=SubspaceNC(vspace,[subspace!.obj]);
+		else
+			W:=SubspaceNC(vspace,subspace!.obj);
+		fi;
 		return W;
 	end);
 
@@ -1168,9 +1194,7 @@ InstallMethod(Iterator,
 	end);
 
 #############################################################################
-#
-# creation of flags.
-#
+# Methods to create flags.
 #############################################################################
 
 # CHECKED 18/4/2011 jdb
@@ -1449,7 +1473,7 @@ InstallMethod( IsIncident,
 
 # I will change "drastically" here.
 # this method is converted into a generic method to test set theoretic containment
-# for elements of Lie geometries.
+# for elements of Lie geometries. Put in the file liegeometry.gi 
 
 #InstallMethod( IsIncident,  [IsSubspaceOfProjectiveSpace,
 ## some of this function is based on the
@@ -1748,196 +1772,206 @@ InstallMethod( Meet,
     #return; #why is this return;?
   end );
 
-InstallMethod( Meet, [ IsHomogeneousList and IsSubspaceOfProjectiveSpaceCollection],
- function( l )  
-     local int, iter;
-	 # first we check if all subspaces have the same ambient geometry
-  if not Size(AsDuplicateFreeList(List(l,x->AmbientSpace(x))))=1 then 
-    Error("The elements in the list do not have a common ambient space");
-  else
-      # We use recursion for this routine.
-      # Not ideal, but there is no "SumIntersectionMat" for lists
+# CHECKED 14/09/2011 jdb.
+#############################################################################
+#O  Meet( <l> )
+# returns the intersection the subspaces of a projective space in the list <l>
+##
+InstallMethod( Meet,
+	"for a homogeneous list that is a collection of subspaces of a projective space",
+	[ IsHomogeneousList and IsSubspaceOfProjectiveSpaceCollection],
+	function( l )  
+		local int, iter, ps,em;
+		# first we check if all subspaces have the same ambient geometry
+		ps := AsDuplicateFreeList(List(l,x->AmbientSpace(x)));
+		if not Size(ps)=1 then 
+			Error("The elements in the list do not have a common ambient space");
+		else
+		# We use recursion for this routine.
+		# Not ideal, but there is no "SumIntersectionMat" for lists
+			ps := ps[1];
+			em := EmptySubspace(ps);
+			if not IsEmpty(l) then
+				if Length(l)=1 then return l;
+				else
+					iter := Iterator(l);
+					int := NextIterator(iter);
+					repeat
+						int := Meet(int, NextIterator(iter));
+					until int = em or IsDoneIterator(iter);
+					return int;
+				fi;
+			else return []; #I think this will never happen, since IsSubspaceOfProjectiveSpaceCollection([]) is false.
+			fi;
+		fi;
+	end );
 
-    if not IsEmpty(l) then
-	  if Length(l)=1 then return l;
-	  else
-       iter := Iterator(l);
-       int := NextIterator(iter);
-       repeat
-         int := Meet(int, NextIterator(iter));
-       until int = [] or IsDoneIterator(iter);
-       return int;
-	  fi;
-    else return [];
-    fi;
-  fi;
- end );
-
-InstallMethod( Meet, [ IsList ],
-  function( l )  
-    local pg,checklist,list,x;
-	# This method is added to allow the list ("l") to contain the projective space 
-	# or the empty subspace. If this method is selected, it follows that the list must
-	# contain the whole projective space or the empty set. 
-	if IsEmpty(l) then return [];
-	else
-	  if Length(l)=1 then return l[1];
-	  else
-
-    	# First we check that the non emptysubspace elements belong to the same ambient space
-	  checklist:=Filtered(l,x->not IsEmptySubspace(x) and not IsProjectiveSpace(x));
-	  if not Size(AsDuplicateFreeList(List(checklist,x->AmbientSpace(x))))=1 then 
-	   Error("The elements in the list do not have a common ambient space");
-	  else	
-	    if EmptySubspace(AmbientSpace(l[1])) in l then return EmptySubspace(AmbientSpace(l[1]));
-	    else
-	      pg:=AmbientSpace(checklist[1]); # the first element in l could be the emptysubspace,
-	      # so we choose the first element of the checklist
-	      list:=Filtered(l,x->not x = pg);
-		  return Meet(list);
-	    fi;
-	  fi;
-	fi;
-  fi;
-end );
+# CHECKED 14/09/2011 jdb.
+#############################################################################
+#O  Meet( <l> )
+# returns the intersection the objects list <l>
+##
+InstallMethod( Meet,
+	"for a list",
+	[ IsList ],
+	function( l )  
+		local pg,checklist,list,x;
+		# This method is added to allow the list ("l") to contain the projective space 
+		# or the empty subspace. If this method is selected, it follows that the list must
+		# contain the whole projective space or the empty set. 
+		if IsEmpty(l) then return [];
+		else
+			if Length(l)=1 then return l[1];
+			else
+				# First we check that the non emptysubspace elements belong to the same ambient space
+				checklist:=Filtered(l,x->not IsEmptySubspace(x) and not IsProjectiveSpace(x));
+				if not Size(AsDuplicateFreeList(List(checklist,x->AmbientSpace(x))))=1 then 
+					Error("The elements in the list do not have a common ambient space");
+				else	
+					if EmptySubspace(AmbientSpace(l[1])) in l then return EmptySubspace(AmbientSpace(l[1]));
+					else
+						pg:=AmbientSpace(checklist[1]); 
+						# the first element in l could be the emptysubspace,
+						# so we choose the first element of the checklist
+						list:=Filtered(l,x->not x = pg);
+						return Meet(list);
+					fi;
+				fi;
+			fi;
+		fi;
+	end );
 
 #############################################################################
 ## Methods for random selection of elements
 #############################################################################  
-  
-InstallMethod( Random, "for a collection of subspaces of a vector space",
-                       [ IsSubspacesVectorSpace ],
-	# chooses a random element out of the collection of subspaces of given dimension of a vectorspace
-  function( subs )
-    local d, vspace, V, W, w;
 
-    ## the underlying vector space
-    vspace := subs!.structure;
-	
-	if not IsInt(subs!.dimension) then
-		Error("The subspaces of the collection need to have the same dimension");
-	fi;
-
-    ## the common dimension of elements of subs
-    d := subs!.dimension;
-
-    V:=[];
-    repeat
-      w := Random( vspace );
-      Add(V, w);
-      W := SubspaceNC( vspace, V );
-    until Dimension(W) = d;
-
-    return W;
-  end );
-
-InstallMethod( RandomSubspace,"for a vectorspace and a dimension",
-                        [IsVectorSpace,IsInt],
-        function(vspace,d)
-                local list,W,w;
-
-        if d>Dimension(vspace) then
-                Error("The dimension of the subspace is larger than that of the vectorspace");
-        fi;
-		if not IsPosInt(d) then
-				Error("The dimension of the subspace must be at least 1!");
-		fi;
-
-        list:=[];
-        repeat
-                w := Random( vspace );
-                Add(list, w);
-                W := SubspaceNC( vspace, list );
-        until Dimension(W) = d;
-        return W;
-
-        end );  
-
-
-InstallMethod( RandomSubspace,"for a projective space and a dimension",
-                        [IsProjectiveSpace,IsInt],
-        function(pg,d)
-                local vspace,list,W,w;
-        
+# CHECKED 14/09/2011 jdb.
+#############################################################################
+#O  RandomSubspace( <pg>, <d> )
+# returns a random subspace of projective dimension <d> in the projective space
+# <pg>
+##
+InstallMethod( RandomSubspace,
+	"for a projective space and a projective dimension",
+	[IsProjectiveSpace,IsInt],
+	function(pg,d)
+		local vspace,list,W,w;
         if d>ProjectiveDimension(pg) then
-                Error("The dimension of the subspace is larger that of the projective space");
+			Error("The dimension of the subspace is larger that of the projective space");
         fi;
 		if IsNegInt(d) then
-				Error("The dimension of the subspace must be at least 0!");
+			Error("The dimension of the subspace must be at least 0!");
 		fi;
-
         vspace:=pg!.vectorspace;
 		W:=RandomSubspace(vspace,d+1);
         return(VectorSpaceToElement(pg,AsList(Basis(W))));
+	end );
 
-        end );
-
-InstallMethod( RandomSubspace,"for a subspace of a projective space and a dimension",
-                        [IsSubspaceOfProjectiveSpace,IsInt],
-        function(subspace,d)
-                local vspace,list,W,w;
-        
+# CHECKED 14/09/2011 jdb.
+#############################################################################
+#O  RandomSubspace( <subspace>, <d> )
+# returns a random subspace of projective dimension <d> contained in the given
+# projective subspace <subspace>
+##
+InstallMethod( RandomSubspace,
+	"for a subspace of a projective space and a dimension",
+    [IsSubspaceOfProjectiveSpace,IsInt],
+    function(subspace,d)
+		local vspace,list,W,w;
         if d>ProjectiveDimension(subspace) then
-                Error("The dimension of the random subspace is too large");
+			Error("The dimension of the random subspace is too large");
         fi;
 		if IsNegInt(d) then
-				Error("The dimension of the random subspace must be at least 0!");
+			Error("The dimension of the random subspace must be at least 0!");
 		fi;
         vspace:=UnderlyingVectorSpace(subspace);
 		W:=RandomSubspace(vspace,d+1);
-        return(VectorSpaceToElement(subspace!.geo,AsList(Basis(W))));
+		return(VectorSpaceToElement(subspace!.geo,AsList(Basis(W))));
+	end );  
 
-        end );  
-
-InstallMethod( RandomSubspace, "for a projective space",
-					[IsProjectiveSpace],
-		function(pg)
-			local list,i;
-			list:=[0..Dimension(pg)-1];
-			i:=Random(list);
-			return RandomSubspace(pg,i);
-		end );
+# CHECKED 14/09/2011 jdb.
+#############################################################################
+#O  RandomSubspace( <pg> )
+# returns a random subspace of random projective dimension in the given projective
+# space <pg>
+##
+InstallMethod( RandomSubspace, 
+	"for a projective space",
+	[IsProjectiveSpace],
+	function(pg)
+		local list,i;
+		list:=[0..Dimension(pg)-1];
+		i:=Random(list);
+		return RandomSubspace(pg,i);
+	end );
 			
 		
-InstallMethod( Random, "for a collection of subspaces of a projective space",
-                       [ IsSubspacesOfProjectiveSpace ],
-        # chooses a random element out of the collection of subspaces of given
-        # dimension of a projective space
-  function( subs )
-    	local d, pg, vspace, W, w;
-	## the underlying projective space
-	pg := subs!.geometry;
-	vspace:=pg!.vectorspace;
-	if not IsInt(subs!.type) then
-          Error("The subspaces of the collection need to have the same dimension");
+# CHECKED 14/09/2011 jdb.
+#############################################################################
+#O  Random( <subs> )
+# returns a random subspace out of the collection of subspaces of given dimension
+# of a projective space.
+##
+InstallMethod( Random, 
+	"for a collection of subspaces of a projective space",
+	[ IsSubspacesOfProjectiveSpace ],
+    # chooses a random element out of the collection of subspaces of given
+    # dimension of a projective space
+	function( subs )
+		local d, pg, vspace, W, w;
+		## the underlying projective space
+		pg := subs!.geometry;
+		vspace:=pg!.vectorspace;
+		if not IsInt(subs!.type) then
+			Error("The subspaces of the collection need to have the same dimension");
         fi;
-	## the common type of elements of subs
-	d := subs!.type;        
-	W:=RandomSubspace(vspace,d);
+		## the common type of elements of subs
+		d := subs!.type;        
+		W:=RandomSubspace(vspace,d);
         return(VectorSpaceToElement(pg,AsList(Basis(W))));
   end );
   
+# CHECKED 14/09/2011 jdb.
+#############################################################################
+#O  Random( <subs> )
+# returns a random subspace out of the collection of all subspaces of 
+# a projective space.
+##
+InstallMethod( Random, 
+	"for a collection of all subspaces of a projective space",
+	[ IsAllSubspacesOfProjectiveSpace ],
+    # chooses a random element out of the collection of all subspaces of a projective space
+	function( subs )
+	    return RandomSubspace(subs!.geometry);
+	end );
 
-InstallMethod( Random, "for a collection of subspaces of a subspace of a projective space",
-                       [ IsShadowSubspacesOfProjectiveSpace ],
-        # chooses a random element out of the collection of subspaces of given
-        # dimension of a subspace of a projective space
-  function( subs )
-    	local d, pg, subspace, vspace, W, w;
-	## the underlying projective space
-	pg := subs!.geometry;
-	subspace:=subs!.parentflag;
-	vspace:=UnderlyingVectorSpace(subspace);
-	if not IsInt(subs!.type) then
-          Error("The subspaces of the collection need to have the same dimension");
+# CHECKED 14/09/2011 jdb.
+# but I am unhappy with this method, since it is not possible to select e.g. 
+# a random line through a point now.
+#############################################################################
+#O  Random( <subs> )
+# returns a random element out of the collection of subspaces of given
+# dimension contained in a subspace of a projective space
+##
+InstallMethod( Random, 
+	"for a collection of subspaces of a subspace of a projective space",
+	[ IsShadowSubspacesOfProjectiveSpace ],
+    # chooses a random element out of the collection of subspaces of given
+    # dimension of a subspace of a projective space
+	function( subs )
+		local d, pg, subspace, vspace, W, w;
+		## the underlying projective space
+		pg := subs!.geometry;
+		subspace:=subs!.parentflag;
+		vspace:=UnderlyingVectorSpace(subspace);
+		if not IsInt(subs!.type) then
+			Error("The subspaces of the collection need to have the same dimension");
         fi;
-	## the common type of elements of subs
-	d := subs!.type;        
-	W:=RandomSubspace(vspace,d);
+		## the common type of elements of subs
+		d := subs!.type;        
+		W:=RandomSubspace(vspace,d);
         return(VectorSpaceToElement(pg,AsList(Basis(W))));
-  end );
-
-
+	end );
 
 #############################################################################
 # Baer sublines and Baer subplanes:
