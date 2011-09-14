@@ -25,7 +25,7 @@
 
 ## To do
 #  - Use compressed matrices
-#  - Order functions in this file, and write more comments.
+#  - Order functions in this file, and write more comments. (almost done, jdb).
 #  - Create a HyperplanesOf function? can be done in liegeometry.gi (jdb)
 #  think about generic methods for dimension, projective dimension, basefield, underlying vector space
 #  for Lie geometries and their elements, to be placed in liegeometry.gi of course.
@@ -36,6 +36,8 @@
 #    as being an element of the polar space. I kept it as is currently, but I would like to reconsider this when dealing
 #    with the polar space section. jdb 11/9/11
 #  - check wheter output of RepresentativesOfElements can be changed using the Flag stuff. 11/09/11 jdb.
+#  - make some tiny changes at Meet for lists, such that, when possible, the empty subspace is returned and not []. (this is a
+#    detail). 14/9/2011 jdb.
 
 #############################################################################
 # Low level help methods:
@@ -1350,12 +1352,12 @@ InstallMethod( Iterator,
 #############################################################################
 # Methods for incidence.
 # Recall that: - we have a generic method to check set theoretic containment
-#                for two *elements* of a Lie geometry.
+#                for two *elements* of a Lie geometry, and trivial subspaces.
 #              - IsIncident is symmetrized set theoretic containment
 #              - we can extend the \in method (if desired) for the particular
 #                Lie geometry, such that we can get true if we ask if an 
 #                element is contained in the complete space, or if we consider
-#                the trivial subspce.
+#                the whole space and the trivial subspce.
 #              - \* is a different notation for IsIncident, declared and
 #                implement in geometry.g* 
 #############################################################################
@@ -1410,6 +1412,12 @@ InstallMethod( \in,
 	end );
 
 
+# CHECKED 14/09/11 jdb
+#############################################################################
+#O  IsIncident( <x>, <y> )
+# returns true if and only if <x> is incident with <y>. Relies on set theoretic
+# containment, which is implemented genericly for elements of Lie geometries.
+##
 InstallMethod( IsIncident,  
 		[IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
 		# returns true if the subspace is contained in the projective space
@@ -1676,57 +1684,68 @@ InstallMethod( Span,
 		fi;
 	end );
 
-
-
-InstallMethod( Meet, [IsProjectiveSpace, IsSubspaceOfProjectiveSpace],
-        function(x,y)
-        if y in x then return y;
+# CHECKED 14/09/11 jdb
+#############################################################################
+#O  Meet( <x>, <y> )
+# returns <y> if and only if <y> is a subspace in the projective space <x>
+##
+InstallMethod( Meet, 
+	"for a projective space and a subspace of a projective space",
+	[IsProjectiveSpace, IsSubspaceOfProjectiveSpace],
+    function(x,y)
+		if y in x then return y;
 	fi;
 end );
 
-InstallMethod( Meet, [IsSubspaceOfProjectiveSpace, IsProjectiveSpace],
-        function(x,y)
-        if x in y then return x;
-        fi;
+# CHECKED 14/09/11 jdb
+#############################################################################
+#O  Meet( <x>, <y> )
+# returns <y> if and only if <y> is a subspace in the projective space <x>
+##
+InstallMethod( Meet, 
+	"for a subspace of a projective space and a projective space",
+	[IsSubspaceOfProjectiveSpace, IsProjectiveSpace],
+	function(x,y)
+		if x in y then return x;
+	fi;
 end );
 
-
-
-InstallMethod( Meet, [IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
-  function( x, y )
-    local ux, uy, typx, typy, int, f, rk;
-    typx := x!.type;
-    typy := y!.type;
-  
-    if x!.geo!.vectorspace = y!.geo!.vectorspace then 
-      ux := Unwrap(x); 
-      uy := Unwrap(y);
-        
-      if typx = 1 then ux := [ux]; fi;
-      if typy = 1 then uy := [uy]; fi;
-      f := x!.geo!.basefield; 
-
-      int := SumIntersectionMat(ux, uy)[2];
-
-      if not int=[] then 
-
-          # if one of our varieties is in a polar space, we
-          # can say that the meet is in the polar space.
-      
-          if IsClassicalPolarSpace(x!.geo) then
-             return VectorSpaceToElement( x!.geo, int);
-          elif IsClassicalPolarSpace(y!.geo) then
-             return VectorSpaceToElement( y!.geo, int);
-          else
-             return VectorSpaceToElement( AmbientSpace(x), int);
-          fi;
-      else 
-          return EmptySubspace(AmbientSpace(x));
-      fi;
-    else
-      Error("Subspaces belong to different ambient spaces");
-    fi;
-    return;
+# CHECKED 14/09/2011 jdb.
+#############################################################################
+#O  Meet( <x>, <y> )
+# returns the intersection of <x> and <y>, two subspaces of a projective space.
+##
+InstallMethod( Meet,
+	"for two subspaces of a projective space",
+	[IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
+	function( x, y )
+		local ux, uy, typx, typy, int, f, rk;
+		typx := x!.type;
+		typy := y!.type;
+		if x!.geo!.vectorspace = y!.geo!.vectorspace then 
+			ux := Unwrap(x); 
+			uy := Unwrap(y);
+			if typx = 1 then ux := [ux]; fi;
+			if typy = 1 then uy := [uy]; fi;
+			f := x!.geo!.basefield; 
+			int := SumIntersectionMat(ux, uy)[2];
+			if not int=[] then 
+			# if one of our varieties is in a polar space, we
+			# can say that the meet is in the polar space.
+				if IsClassicalPolarSpace(x!.geo) then
+					return VectorSpaceToElement( x!.geo, int);
+				elif IsClassicalPolarSpace(y!.geo) then
+					return VectorSpaceToElement( y!.geo, int);
+				else
+					return VectorSpaceToElement( AmbientSpace(x), int);
+				fi;
+			else 
+				return EmptySubspace(AmbientSpace(x));
+			fi;
+		else
+			Error("Subspaces belong to different ambient spaces");
+		fi;
+    #return; #why is this return;?
   end );
 
 InstallMethod( Meet, [ IsHomogeneousList and IsSubspaceOfProjectiveSpaceCollection],
