@@ -29,6 +29,7 @@
 #
 # - test CorrelationGroup
 # - Documentation
+# - Random for correlation groups
 #
 ########################################
 
@@ -413,25 +414,35 @@ InstallMethod( BaseField, "for a projective group with Frobenius with proj space
 # other elements, and more operations.
 ###################################################################
 
+# CHECKED 15/09/11 jdb
+#############################################################################
+#O  \=( <a>, <b> )
+# returns true iff the correlations <a> and <b> are the same.
+##
 InstallMethod( \=, 
-  "for two projective group els with Frobenius with projective space isomorphism",
-  [IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep,
-   IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep],
-  function( a, b )
-    local aa,bb,p,s,i;
-    if a!.fld <> b!.fld then Error("different base fields"); fi;
-    if a!.frob <> b!.frob then return false; fi;
-    aa := a!.mat;
-    bb := b!.mat;
-    p := PositionNonZero(aa[1]);
-    s := bb[1][p] / aa[1][p];
-    for i in [1..Length(aa)] do
-        if s*aa[i] <> bb[i] then return false; fi;
-    od;
-    if a!.psisom <> b!.psisom then return false; fi;
-    return true;
-  end );
+	"for two projective group els with Frobenius with projective space isomorphism",
+	[IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep,
+	IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep],
+	function( a, b )
+		local aa,bb,p,s,i;
+		if a!.fld <> b!.fld then Error("different base fields"); fi;
+		if a!.frob <> b!.frob then return false; fi;
+		aa := a!.mat;
+		bb := b!.mat;
+		p := PositionNonZero(aa[1]);
+		s := bb[1][p] / aa[1][p];
+		for i in [1..Length(aa)] do
+			if s*aa[i] <> bb[i] then return false; fi;
+		od;
+		if a!.psisom <> b!.psisom then return false; fi;
+		return true;
+	end );
 
+# CHECKED 15/09/11 jdb
+#############################################################################
+#O  IsOne( <a> )
+# returns true if the correlation <a> is the identity.
+##
 InstallMethod( IsOne, 
   "for a projective group elm with Frobenius with projective space isomorphism",
   [IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep],
@@ -445,97 +456,177 @@ InstallMethod( IsOne,
     return IsOne( s*el!.mat );
   end );
 
+# CHECKED 15/09/11 jdb
+#############################################################################
+#O  OneImmutable( <el> )
+# returns immutable one of the group the correlation <el>
+## 
 InstallOtherMethod( OneImmutable, 
-  "for a projective group elm with Frobenius with projective space isomorphism",
-  [IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep],
-  function( el )
-    local o;
-    o := rec( mat := OneImmutable( el!.mat ), fld := el!.fld,
-              frob := el!.frob^0, psisom := el!.psisom^0);
-    Objectify( ProjElsWithFrobWithPSIsomType, o);
-    return o;
-  end );
+	"for a projective group elm with Frobenius with projective space isomorphism",
+	[IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep],
+	function( el )
+		local o;
+		o := rec( mat := OneImmutable( el!.mat ), fld := el!.fld,
+				frob := el!.frob^0, psisom := el!.psisom^0);
+		Objectify( ProjElsWithFrobWithPSIsomType, o);
+		return o;
+	end );
 
+# CHECKED 15/09/11 jdb
+#############################################################################
+#O  OneImmutable( <g> )
+# returns immutable one of the group the correlation group <g>
+## 
 InstallOtherMethod( OneImmutable, 
-  "for a projective group with Frobenius with projective space isomorphism",
-  [IsGroup and IsProjGrpElWithFrobWithPSIsom],
-  function( g )
-    local gens, o;
-    gens := GeneratorsOfGroup(g);
-    if Length(gens) = 0 then
-        if HasParent(g) then
-            gens := GeneratorsOfGroup(Parent(g));
-        else
-            Error("sorry, no generators, no one");
-        fi;
-    fi;
-    o := rec( mat := OneImmutable( gens[1]!.mat ), fld := BaseField(g),
-              frob := gens[1]!.frob^0, psisom := gens[1]!.psisom^0 );
-    Objectify( ProjElsWithFrobWithPSIsomType, o);
-    return o;
-  end );
+	"for a projective group with Frobenius with projective space isomorphism",
+	[IsGroup and IsProjGrpElWithFrobWithPSIsom],
+	function( g )
+		local gens, o;
+		gens := GeneratorsOfGroup(g);
+		if Length(gens) = 0 then
+			if HasParent(g) then
+				gens := GeneratorsOfGroup(Parent(g));
+			else
+				Error("sorry, no generators, no one");
+			fi;
+		fi;
+		o := rec( mat := OneImmutable( gens[1]!.mat ), fld := BaseField(g),
+				frob := gens[1]!.frob^0, psisom := gens[1]!.psisom^0 );
+		Objectify( ProjElsWithFrobWithPSIsomType, o);
+		return o;
+	end );
 
+# CHECKED 15/09/11 jdb
+#############################################################################
+#O  OneSameMutability( <el> )
+# returns one of the group of <el> with same mutability of <el>.
+## 
 InstallMethod( OneSameMutability, 
-  "for a projective group element with Frobenius with projective space isomorphism",
-  [IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep],
-  function( el )
-    local o;
-    o := rec( mat := OneImmutable( el!.mat ), fld := el!.fld,
-              frob := el!.frob^0, psisom := el!.psisom^0 );
-    Objectify( ProjElsWithFrobWithPSIsomType, o);
-    return o;
+	"for a projective group element with Frobenius with projective space isomorphism",
+	[IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep],
+	function( el )
+		local o;
+		o := rec( mat := OneImmutable( el!.mat ), fld := el!.fld,
+				frob := el!.frob^0, psisom := el!.psisom^0 );
+		Objectify( ProjElsWithFrobWithPSIsomType, o);
+		return o;
+	end );
+
+
+###################################################################
+# The things that make it a group :-) 
+###################################################################
+# we first need: 
+###################################
+# Methods for \^ (standard duality)
+###################################
+#7 CHECKED 15/09/11 jdb
+
+InstallOtherMethod( \^, "for a FFE vector and a id. mapping of el. of ps.",
+  [ IsVector and IsFFECollection, IsIdentityMappingOfElementsOfProjectiveSpace ],
+  function( v, f )
+    return v;
   end );
 
+InstallOtherMethod( \^, 
+  "for a compressed GF2 vector and a id. mapping of el. of ps.",
+  [ IsVector and IsFFECollection and IsGF2VectorRep, IsIdentityMappingOfElementsOfProjectiveSpace ],
+  function( v, f )
+    return v;
+  end );
+
+InstallOtherMethod( \^, 
+  "for a compressed 8bit vector and a id. mapping of el. of ps.",
+  [ IsVector and IsFFECollection and Is8BitVectorRep, IsIdentityMappingOfElementsOfProjectiveSpace ],
+  function( v, f )
+    return v;
+  end );
+
+InstallOtherMethod( \^, "for a FFE matrix and a st. duality",
+  [ IsMatrix and IsFFECollColl, IsStandardDualityOfProjectiveSpace ],
+  function( m, f )
+    return TransposedMat(Inverse(m));
+  end );
+
+InstallOtherMethod( \^, "for a FFE matrix and a id. mapping of el. of ps.",
+  [ IsMatrix and IsFFECollColl, IsIdentityMappingOfElementsOfProjectiveSpace ],
+  function( m, f )
+    return m;
+  end );
+
+InstallOtherMethod( \^, "for an element of a projective space and a id. mapping of el. of ps.",
+  [ IsSubspaceOfProjectiveSpace, IsIdentityMappingOfElementsOfProjectiveSpace ],
+  function( p, f)
+    return p;
+  end );
+
+InstallOtherMethod( \^, "for an elements of a projective space and a st. duality",
+  [ IsSubspaceOfProjectiveSpace, IsStandardDualityOfProjectiveSpace ],
+  function( p, f)
+    return f!.fun(p);
+  end );
+
+# CHECKED 15/09/11 jdb
+#############################################################################
+#O  \*( <a>, <b> )
+# returns a*b, for two correlations <a> and <b>
+## 
 InstallMethod( \*, 
-  "for two projective group elements with frobenius with projective space isomorphism",
-  [IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep,
-   IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep],
-  function( a, b )
-    local el;  
-    el := rec( mat := a!.mat * ((b!.mat^(a!.frob^-1)))^a!.psisom, fld := a!.fld, #O Celle, dear friend, you missed this correction :-)
-               frob := a!.frob * b!.frob, psisom := a!.psisom * b!.psisom );
-    Objectify( ProjElsWithFrobWithPSIsomType, el);
-   	#Print("method4\n");
-	return el;
-  end );
+	"for two projective group elements with frobenius with projective space isomorphism",
+	[IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep,
+	IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep],
+	function( a, b )
+		local el;  
+		el := rec( mat := a!.mat * ((b!.mat^(a!.frob^-1)))^a!.psisom, fld := a!.fld, #O Celle, dear friend, you missed this correction :-)
+				frob := a!.frob * b!.frob, psisom := a!.psisom * b!.psisom );
+		Objectify( ProjElsWithFrobWithPSIsomType, el);
+		return el;
+	end );
 
-InstallMethod(\<,  [IsProjGrpElWithFrobWithPSIsom, IsProjGrpElWithFrobWithPSIsom],
-  function(a,b)
-    local aa,bb,pa,pb,sa,sb,i,va,vb;
-    if a!.fld <> b!.fld then Error("different base fields"); fi;
-    if a!.psisom < b!.psisom then
-        return true;
-    elif b!.psisom < a!.psisom then
-        return false;
-    fi;
-    if a!.frob < b!.frob then
-        return true;
-    elif b!.frob < a!.frob then
-        return false;
-    fi;
-    aa := a!.mat;
-    bb := b!.mat;
-    pa := PositionNonZero(aa[1]);
-    pb := PositionNonZero(bb[1]);
-    if pa > pb then 
-        return true;
-    elif pa < pb then
-        return false;
-    fi;
-    sa := aa[1][pa]^-1;
-    sb := bb[1][pb]^-1;
-    for i in [1..Length(aa)] do
-        va := sa*aa[i];
-        vb := sb*bb[i];
-        if va < vb then return true; fi;
-        if vb < va then return false; fi;
-    od;
-    return false;
-  end);
+# CHECKED 14/09/11 jdb
+#############################################################################
+#O  \<( <a>, <b> )
+# method for LT, for two correlations.
+## 
+InstallMethod(\<, 
+	"for two correlations",
+	[IsProjGrpElWithFrobWithPSIsom, IsProjGrpElWithFrobWithPSIsom],
+	function(a,b)
+		local aa,bb,pa,pb,sa,sb,i,va,vb;
+		if a!.fld <> b!.fld then Error("different base fields"); fi;
+		if a!.psisom < b!.psisom then
+			return true;
+		elif b!.psisom < a!.psisom then
+			return false;
+		fi;
+		if a!.frob < b!.frob then
+			return true;
+		elif b!.frob < a!.frob then
+			return false;
+		fi;
+		aa := a!.mat;
+		bb := b!.mat;
+		pa := PositionNonZero(aa[1]);
+		pb := PositionNonZero(bb[1]);
+		if pa > pb then 
+			return true;
+		elif pa < pb then
+			return false;
+		fi;
+		sa := aa[1][pa]^-1;
+		sb := bb[1][pb]^-1;
+		for i in [1..Length(aa)] do
+			va := sa*aa[i];
+			vb := sb*bb[i];
+			if va < vb then return true; fi;
+			if vb < va then return false; fi;
+		od;
+		return false;
+	end);
 
 ## Let M be a matrix, f be a Frobenius aut, and t be a psisom.
 ## Then the inverse of Mft is 
-##        t^-1 f^-1 M^-1 = M^(ft) f^-1 t^-1
+##        t^-1 f^-1 M^-1 = (M^-1)^(ft) f^-1 t^-1
 
 InstallMethod( InverseSameMutability, 
   "for a projective group element with Frobenius with projective space isomorphism",
@@ -604,54 +695,6 @@ InstallMethod( \*,
     Objectify( ProjElsWithFrobWithPSIsomType, el);
 	#Print("method3\n");
     return el;
-  end );
-
-###################################
-# Methods for \^ (standard duality)
-###################################
-
-InstallOtherMethod( \^, "for a FFE vector and a id. mapping of el. of ps.",
-  [ IsVector and IsFFECollection, IsIdentityMappingOfElementsOfProjectiveSpace ],
-  function( v, f )
-    return v;
-  end );
-
-InstallOtherMethod( \^, 
-  "for a compressed GF2 vector and a id. mapping of el. of ps.",
-  [ IsVector and IsFFECollection and IsGF2VectorRep, IsIdentityMappingOfElementsOfProjectiveSpace ],
-  function( v, f )
-    return v;
-  end );
-
-InstallOtherMethod( \^, 
-  "for a compressed 8bit vector and a id. mapping of el. of ps.",
-  [ IsVector and IsFFECollection and Is8BitVectorRep, IsIdentityMappingOfElementsOfProjectiveSpace ],
-  function( v, f )
-    return v;
-  end );
-
-InstallOtherMethod( \^, "for a FFE matrix and a st. duality",
-  [ IsMatrix and IsFFECollColl, IsStandardDualityOfProjectiveSpace ],
-  function( m, f )
-    return TransposedMat(Inverse(m));
-  end );
-
-InstallOtherMethod( \^, "for a FFE matrix and a id. mapping of el. of ps.",
-  [ IsMatrix and IsFFECollColl, IsIdentityMappingOfElementsOfProjectiveSpace ],
-  function( m, f )
-    return m;
-  end );
-
-InstallOtherMethod( \^, "for an element of a projective space and a id. mapping of el. of ps.",
-  [ IsSubspaceOfProjectiveSpace, IsIdentityMappingOfElementsOfProjectiveSpace ],
-  function( p, f)
-    return p;
-  end );
-
-InstallOtherMethod( \^, "for an elements of a projective space and a st. duality",
-  [ IsSubspaceOfProjectiveSpace, IsStandardDualityOfProjectiveSpace ],
-  function( p, f)
-    return f!.fun(p);
   end );
 
 #####################################################################

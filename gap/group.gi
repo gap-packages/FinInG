@@ -34,6 +34,7 @@
 #   all compatible (can multiply them etc)
 # - homography groups need only have ProjEl, it will make them quicker
 # - testing
+# - make tiny changes in agreement with John to the names of the classical groups. jdb 09/2011
 #
 ########################################
 
@@ -871,7 +872,7 @@ InstallMethod( OneImmutable,
 
 # CHECKED 6/09/11 jdb
 #############################################################################
-#O  InverseMutable( <el> )
+#O  OneSameMutability( <el> )
 # returns one of the group of <el> with same mutability of <el>.
 ## 
 InstallMethod( OneSameMutability, 
@@ -1337,7 +1338,7 @@ InstallMethod( OneImmutable,
 # CHECKED 6/09/11 jdb
 #############################################################################
 #O  OneImmutable( <g> )
-# returns immutable one of the group <g>
+# returns immutable one of the projective semilinear group <g>
 ## 
 InstallMethod( OneImmutable, 
 	"for a projective semilinear group",
