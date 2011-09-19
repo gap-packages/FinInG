@@ -42,7 +42,7 @@
 #    trivial subspace in earlier days. 14/9/2011 jdb.
 #  - improve Random method for shadow elements. see comment there.
 #  - have a closer look at the Baer substuff methods in this file.
-
+#  - whenever Wrap is used, check whether the input should be normalized or not.
 #############################################################################
 # Low level help methods:
 #############################################################################
@@ -419,6 +419,7 @@ InstallMethod( \in,
 ## Currently we don't load the cvec package.
 
 # CHECKED 7/09/11 jdb
+# CHANGED 19/9/2011 jdb + ml
 #############################################################################
 #O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
 # by the vectorspace <v>. Several checks are built in. 
@@ -432,23 +433,14 @@ InstallMethod( VectorSpaceToElement,
         if IsEmpty(v) then
 			Error("<v> does not represent any vectorspace");
 		fi;
-        x := MutableCopyMat(v);
-		TriangulizeMat(x);
+		x := SemiEchelonMat(v).vectors;
         ## dimension should be correct
 		if Length(v[1]) <> geom!.dimension + 1 then
 			Error("Dimensions are incompatible");
 		fi;
-        ## Remove zero rows. It is possible the the user
-		## has inputted a matrix which does not have full rank
-        n := Length(x);
-		i := 0;
-		while i < n and ForAll(x[n-i], IsZero) do
-			i := i+1; 
-		od;
-		if i = n then
+		if Length(x) = 0 then
 			return EmptySubspace(geom);
 		fi;
-		x := x{[1..n-i]};
 		if Length(x)=ProjectiveDimension(geom)+1 then
 			return geom;
 		fi;
@@ -458,15 +450,17 @@ InstallMethod( VectorSpaceToElement,
 		## we will have a matrix with one row).
         ## We must also compress our vector/matrix.
         if Length(x) = 1 then
-			ConvertToVectorRep(x, geom!.basefield);
-			return Wrap(geom, 1, x[1]);
+			x := x[1];
+			ConvertToVectorRep(x, geom!.basefield); # the extra basefield is necessary.
+			return Wrap(geom, 1, x);
 		else
-			ConvertToMatrixRep(x, geom!.basefield);
+			ConvertToMatrixRep(x, geom!.basefield); # the same here.
 			return Wrap(geom, Length(x), x);
 		fi;
 	end );
 
 # CHECKED 8/09/11 jdb
+# CHANGED 19/9/2011 jdb + ml
 #############################################################################
 #O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
 # by the vectorspace <v>. Several checks are built in. 
@@ -480,23 +474,14 @@ InstallMethod( VectorSpaceToElement,
 		if IsEmpty(v) then
 			Error("<v> does not represent any vectorspace");
 		fi;
-		x := MutableCopyMat(v);
-		TriangulizeMat(x);
+		x := SemiEchelonMat(v).vectors;
 		## dimension should be correct
 		if Length(v[1]) <> geom!.dimension + 1 then
 			Error("Dimensions are incompatible");
 		fi;
-		## Remove zero rows. It is possible the the user
-		## has inputted a matrix which does not have full rank
-		n := Length(x);
-		i := 0;
-		while i < n and ForAll(x[n-i], IsZero) do
-			i := i+1; 
-		od;
-		if i = n then
+		if Length(x) = 0 then
 			return EmptySubspace(geom);
 		fi;
-		x := x{[1..n-i]};
 		if Length(x)=ProjectiveDimension(geom)+1 then
 			return geom;
 		fi;
@@ -506,8 +491,9 @@ InstallMethod( VectorSpaceToElement,
 		## we will have a matrix with one row).
 	    ## We must also compress our vector/matrix.
 		if Length(x) = 1 then
-			ConvertToVectorRep(x, geom!.basefield);
-			return Wrap(geom, 1, x[1]);
+			x := x[1];
+			ConvertToVectorRep(x, geom!.basefield); # the extra basefield is necessary.
+			return Wrap(geom, 1, x);
 		else
 			ConvertToMatrixRep(x, geom!.basefield);
 			return Wrap(geom, Length(x), x);
@@ -515,6 +501,7 @@ InstallMethod( VectorSpaceToElement,
 	end );
   
 # CHECKED 8/09/11 jdb
+# CHANGED 19/9/2011 jdb + ml
 #############################################################################
 #O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
 # by the vectorspace <v>. Several checks are built in. 
@@ -528,23 +515,14 @@ InstallMethod( VectorSpaceToElement,
 		if IsEmpty(v) then
 			Error("<v> does not represent any vectorspace");
 		fi;
-		x := MutableCopyMat(v);
-		TriangulizeMat(x);
+		x := SemiEchelonMat(v).vectors;
 		## dimension should be correct
 		if Length(v[1]) <> geom!.dimension + 1 then
 			Error("Dimensions are incompatible");
 		fi;	
-		## Remove zero rows. It is possible the the user
-		## has inputted a matrix which does not have full rank
-		n := Length(x);
-		i := 0;
-		while i < n and ForAll(x[n-i], IsZero) do
-			i := i+1; 
-		od;
-		if i = n then
+		if Length(x) = 0 then
 			return EmptySubspace(geom);
 		fi;
-		x := x{[1..n-i]};
 		if Length(x)=ProjectiveDimension(geom)+1 then
 			return geom;
 		fi;
@@ -554,8 +532,9 @@ InstallMethod( VectorSpaceToElement,
 		## we will have a matrix with one row).
 		## We must also compress our vector/matrix.
 		if Length(x) = 1 then
-			ConvertToVectorRep(x, geom!.basefield);
-			return Wrap(geom, 1, x[1]);
+			x := x[1];
+			ConvertToVectorRep(x, geom!.basefield); # the extra basefield is necessary.
+			return Wrap(geom, 1, x);
 		else
 			ConvertToMatrixRep(x, geom!.basefield);
 			return Wrap(geom, Length(x), x);
@@ -563,6 +542,7 @@ InstallMethod( VectorSpaceToElement,
 	end );  
   
 # CHECKED 11/04/15 jdb
+# CHANGED 19/9/2011 jdb + ml
 #############################################################################
 #O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
 # by the rowvector <v>. Several checks are built in.
@@ -582,16 +562,19 @@ InstallMethod( VectorSpaceToElement,
 			Error("Dimensions are incompatible");
 		fi;
 		## We must also compress our vector.
-		ConvertToVectorRep(x, geom!.basefield);
+		#ConvertToVectorRep(x, geom!.basefield);
 		## bad characters, such as jdb, checked this with input zero vector...
 		if IsZero(x) then
 			return EmptySubspace(geom);
 		else
+			MultRowVector(x,Inverse( x[PositionNonZero(x)] ));
+			ConvertToVectorRep(x, geom!.basefield);
 			return Wrap(geom, 1, x);
 		fi;
 	end );
 
 # CHECKED 11/04/15 jdb
+# CHANGED 19/9/2011 jdb + ml
 #############################################################################
 #O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
 # by the rowvector <v>. Several checks are built in.
@@ -603,7 +586,7 @@ InstallMethod( VectorSpaceToElement,
 		local  x, n, i;
 		## when v is empty...
 		if IsEmpty(v) then
-			return EmptySubspace;
+			return EmptySubspace(geom);
 		fi;
 		x := ShallowCopy(v);
 		## dimension should be correct
@@ -611,11 +594,13 @@ InstallMethod( VectorSpaceToElement,
 			Error("Dimensions are incompatible");
 		fi;
 		## We must also compress our vector.
-		ConvertToVectorRep(x, geom!.basefield);
+		#ConvertToVectorRep(x, geom!.basefield);
 		## bad characters, such as jdb, checked this with input zero vector...
 		if IsZero(x) then
 			return EmptySubspace(geom);
 		else
+			MultRowVector(x,Inverse( x[PositionNonZero(x)] ));
+			ConvertToVectorRep(x, geom!.basefield);
 			return Wrap(geom, 1, x);
 		fi;
 	end );
@@ -1006,8 +991,9 @@ InstallMethod( SpecialHomographyGroup,
 #############################################################################
 
 # CHECKED 10/09/2011 jdb, to be reconsidered. See to do in beginning of file.
+# CHANGED 19/09/2011 jdb + ml
 #############################################################################
-#A  OnProjSubspaces( <var>, el )
+#F  OnProjSubspaces( <var>, <el> )
 # computes <var>^<el>, where <var> is an element of a projective space, and 
 # <el> a projective semilinear element.
 ##
@@ -1073,11 +1059,13 @@ InstallMethod( AsList,
 	sz := Size(vs);
 	if type = 1 then
 		o := MakeAllProjectivePoints(geo!.basefield, geo!.dimension);
+		Print("efkes1\n");
 		o := List(o, t -> Wrap(geo, type, t));;   
 	else
 		p := NextIterator(Iterator(vs));
 		o := Orb(g, p, OnProjSubspaces, rec( hashlen:=Int(5/4*sz), 
                                           orbsizebound := sz ));
+		Print("efkes2\n");
 		Enumerate(o, sz);
 	fi;
 	return o;

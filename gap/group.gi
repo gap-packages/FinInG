@@ -322,7 +322,7 @@ InstallMethod( ProjElsWithFrob,
 
 # CHECKED 5/09/11 jdb
 #############################################################################
-#O  ProjElsWithFrob( <l>, <f> )
+#O  ProjElsWithFrob( <l> )
 # method to construct a list of objects in the category IsProjGrpElWithFrob,
 # using a list of pairs of matrix/frobenius automorphism. It is checked if 
 # the given matrices/automorphism pairs can be considered over a common field.
@@ -460,8 +460,8 @@ InstallMethod( UnderlyingMatrix, [ IsProjGrpElWithFrob and IsProjGrpElWithFrobRe
   
 # CHECKED 5/09/11 jdb
 #############################################################################
-#O  UnderlyingMatrix( <c> )
-# returns the underlying matrix of <c> 
+#O  FieldAutomorphism( <c> )
+# returns the underlying field automorphism of <c> 
 ##  
 InstallMethod( FieldAutomorphism, [ IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
 	c -> c!.frob );
@@ -1293,7 +1293,7 @@ InstallMethod( Dimension,
 # returns the dimension of the projective semilinear group <g>. The dimension of this 
 # group is defined as the vector space dimension of the projective space  
 # of which <g> was defined as a projective group, or, in other words, as the 
-# size of the matrices minus one.
+# size of the matrices.
 ## 
 InstallMethod( Dimension, 
 	"for a projective semilinear group",
@@ -1422,7 +1422,7 @@ InstallMethod( CanComputeActionOnPoints,
 # <line>: just a row vector, representing a vector line
 # <el>: a projective group element (so a projectivity, *not* a projective semilinear element.
 # normalizing the result is handled by the Gap function OnLines. This function assumes that 
-# the input vector is also normalized (says the GAP manual).
+# the input vector is also normalized (says the GAP manual). This became reality on september 19, 2011 :-)
 ## 
 InstallGlobalFunction( OnProjPoints,
 	function( line, el )
@@ -1430,12 +1430,13 @@ InstallGlobalFunction( OnProjPoints,
 	end );
 
 # CHECKED 6/09/11 jdb
+# CHANGED 19/09/2011 jdb + ml
+# can be shortened if you use that OnLines normalizes the result.
 #############################################################################
 #F  OnProjPointsWithFrob( <line>, <el> )
 # computes <line>^<el> where this action is the "natural" one, and <line> represents
-# a projective point. This function relies on the GAP function OnPoints, which represents
-# the natural action of matrices on row *vectors* (So the result is *not* normalized, neither
-# it is assumed that the input is normalized.
+# a projective point. This function relies on the GAP function OnLines (see above),
+# the result is hence normalized
 # Important: despite its natural name, this function is *not* intended for the user.
 # <line>: just a row vector, representing a projective point.
 # <el>: a projective semilinear element 
@@ -1443,39 +1444,44 @@ InstallGlobalFunction( OnProjPoints,
 InstallGlobalFunction( OnProjPointsWithFrob,
   function( line, el )
     local vec,c;
-    vec := OnPoints(line,el!.mat)^el!.frob;
-    c := PositionNonZero(vec);
-    if c <= Length( vec )  then
-        if not(IsMutable(vec)) then
-            vec := ShallowCopy(vec);
-        fi;
-        MultRowVector(vec,Inverse( vec[c] ));
-    fi;
+#    vec := OnPoints(line,el!.mat)^el!.frob;
+    vec := OnLines(line,el!.mat)^el!.frob;
+    #c := PositionNonZero(vec);
+    #if c <= Length( vec )  then
+#        if not(IsMutable(vec)) then
+#		 vec := ShallowCopy(vec);
+#        fi;
+#        MultRowVector(vec,Inverse( vec[c] ));
+#    fi;
     return vec;
-  end );
+	end );
 
 # CHECKED 6/09/11 jdb
+# CHANGED 19/09/2011 jdb + ml
 #############################################################################
 #F  OnProjSubspacesNoFrob( <subspace>, <el> )
 # computes <subspace>^<el> where this action is the "natural" one, and <subspace> represents
 # a projective subspace. This function relies on the GAP action function
 # OnSubspacesByCanonicalBasis. This function assumes as arguments a list (mat) of linearly 
 # independent row vectors, in Hermite normal form (triangulied), and return the 
-# mat*<el> in Hermite normal form.
+# mat*<el> in Hermite normal form. To be used in user action functions, we SemiEchelonMat it, so that
+# the output can be used directly in a Wrap.
 # Important: despite its natural name, this function is *not* intended for the user.
 # <el>: a projective group element (so a projectivity, *not* a projective semilinear element.
 ## 
 InstallGlobalFunction( OnProjSubspacesNoFrob,
 	function( subspace, el )
-		return OnSubspacesByCanonicalBasis(subspace,el!.mat);
+		return SemiEchelonMat(OnSubspacesByCanonicalBasis(subspace,el!.mat)).vectors;
 	end );
 
 # CHECKED 6/09/11 jdb
+# CHANGED 19/09/2011 jdb + ml
 #############################################################################
 #F  OnProjSubspacesWithFrob( <subspace>, <el> )
 # computes <subspace>^<el> where this action is the "natural" one, and <subspace> represents
 # a projective subspace. This function relies on the GAP action function
-# OnRight, which computs the action of a matrix on a sub vector space. 
+# OnRight, which computs the action of a matrix on a sub vector space. Here we have to rely on 
+# OnRight, and so we have to SemiEchelonMat afterwards.
 # Important: despite its natural name, this function is *not* intended for the user.
 # <el>: a projective group element (so a projectivity, *not* a projective semilinear element.
 ##
@@ -1483,11 +1489,11 @@ InstallGlobalFunction( OnProjSubspacesWithFrob,
   function( subspace, el )
     local vec,c;
     vec := OnRight(subspace,el!.mat)^el!.frob;
-    if not(IsMutable(vec)) then
-        vec := MutableCopyMat(vec);
-    fi;
-    TriangulizeMat(vec);
-    return vec;
+#    if not(IsMutable(vec)) then
+#        vec := MutableCopyMat(vec);
+#    fi;
+    return SemiEchelonMat(vec).vectors;
+#return vec;
   end );
 
 ###################################################################

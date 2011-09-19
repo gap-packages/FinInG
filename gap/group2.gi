@@ -264,7 +264,6 @@ InstallMethod( ProjElWithFrobWithPSIsom,
 		Objectify( ProjElsWithFrobWithPSIsomType, el );
 		return el;
 	end );
-  
 
 # CHECKED 14/09/11 jdb
 #############################################################################
@@ -628,6 +627,11 @@ InstallMethod(\<,
 ## Then the inverse of Mft is 
 ##        t^-1 f^-1 M^-1 = (M^-1)^(ft) f^-1 t^-1
 
+# CHECKED 19/09/11 jdb
+#############################################################################
+#O  InverseSameMutability( <el> )
+# returns el^-1, for IsProjGrpElWithFrobWithPSIsom, keeps mutability (of matrix).
+## 
 InstallMethod( InverseSameMutability, 
   "for a projective group element with Frobenius with projective space isomorphism",
   [IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep],
@@ -641,6 +645,11 @@ InstallMethod( InverseSameMutability,
     return m;
   end );
 
+# CHECKED 19/09/11 jdb
+#############################################################################
+#O  InverseMutable( <el> )
+# returns el^-1 (mutable) for IsProjGrpElWithFrobWithPSIsom
+## 
 InstallMethod( InverseMutable, 
   "for a projective group element with Frobenius with projective space isomorphism",
   [IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep],
@@ -655,64 +664,77 @@ InstallMethod( InverseMutable,
   end );
 
 #############################################################################################
-# Methods for \* to multiply IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsom
+# Methods for \* to multiply IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrob
 #############################################################################################
 
-InstallMethod( \*, 
-  "for two projective group elements with frobenius with projective space isomorphism",
-  [IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep,
-   IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
-  function( a, b )
-    local el;  
-    el := rec( mat := (a!.mat * (b!.mat^(a!.frob^-1)))^a!.psisom, fld := a!.fld, 
-               frob := a!.frob * b!.frob, psisom := a!.psisom * b!.psisom );
-    Objectify( ProjElsWithFrobWithPSIsomType, el);
-	#Print("method1\n");
-	return el;
-  end );
+#the following method is wrong, and is btw never used.
+#InstallMethod( \*, 
+#  "for two projective group elements with frobenius with projective space isomorphism",
+#  [IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep,
+#   IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
+#  function( a, b )
+#    local el;  
+#    el := rec( mat := (a!.mat * (b!.mat^(a!.frob^-1)))^a!.psisom, fld := a!.fld, 
+#               frob := a!.frob * b!.frob, psisom := a!.psisom * b!.psisom );
+#    Objectify( ProjElsWithFrobWithPSIsomType, el);
+#	return el;
+#  end );
 
 InstallMethod( \*, 
-  "for two projective group elements with frobenius with projective space isomorphism",
-  [IsProjGrpElWithFrob and IsProjGrpElWithFrobRep,
-   IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep],
-  function( a, b )
-    local el;  
-    el := rec( mat := (a!.mat * (b!.mat^(a!.frob^-1))), fld := a!.fld, 
-               frob := a!.frob * b!.frob, psisom := b!.psisom );
-    Objectify( ProjElsWithFrobWithPSIsomType, el);
-   	#Print("method2\n");
-	return el;
-  end );
+	"for a projective group element with frobenius and a correlation",
+	[IsProjGrpElWithFrob and IsProjGrpElWithFrobRep,
+	IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep],
+	function( a, b )
+		local el;  
+		el := rec( mat := (a!.mat * (b!.mat^(a!.frob^-1))), fld := a!.fld, 
+				frob := a!.frob * b!.frob, psisom := b!.psisom );
+		Objectify( ProjElsWithFrobWithPSIsomType, el);
+		return el;
+	end );
 
 InstallMethod( \*, 
-  "for two projective group elements with frobenius with projective space isomorphism",
-  [IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep,
-   IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
-  function( a, b )
-    local el;  
-    el := rec( mat := (a!.mat * (b!.mat^(a!.frob^-1)))^a!.psisom, fld := a!.fld, 
-               frob := a!.frob * b!.frob, psisom := a!.psisom  );
-    Objectify( ProjElsWithFrobWithPSIsomType, el);
-	#Print("method3\n");
-    return el;
-  end );
+	"for a correlation and a projective group element with frobenius",
+	[IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep,
+	IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
+	function( a, b )
+		local el;  
+		el := rec( mat := (a!.mat * (b!.mat^(a!.frob^-1)))^a!.psisom, fld := a!.fld, 
+				frob := a!.frob * b!.frob, psisom := a!.psisom  );
+		Objectify( ProjElsWithFrobWithPSIsomType, el);
+		return el;
+	end );
 
 #####################################################################
 # Methods to construct a collection of ProjElsWithFrobWithPSIsom
 #####################################################################
 
+# CHECKED 19/09/11 jdb
+#############################################################################
+#O  ProjElsWithFrobWithPSIsom( <l>, <f> )
+# method to construct a list of objects in the category IsProjGrpElWithFrobWithPSIsom,
+# using a list of triples of matrix/frobenius automorphism/projective space isomorphism, and a field.
+# This method relies of ProjElWithFrobWithPSIsom, and is not inteded for the user.
+# no checks are built in. This could result in e.g. the use of a field that is 
+# not compatible with (some of) the matrices, and result in a non user friendly 
+# error
+##
 InstallMethod( ProjElsWithFrobWithPSIsom,
-  "for a list of triples of ffe matrice + frob aut + st duality, and a field",
-  [IsList, IsField],
-  function( l, f )
-    local objectlist, m;
-    objectlist := [];
-    for m in l do
-        Add(objectlist, ProjElWithFrobWithPSIsom(m[1],m[2],f,m[3]));
-    od;
-    return objectlist;
-  end );
+	"for a list of triples of ffe matrice + frob aut + st duality, and a field",
+	[IsList, IsField],
+	function( l, f )
+		local objectlist, m;
+		objectlist := [];
+		for m in l do
+			Add(objectlist, ProjElWithFrobWithPSIsom(m[1],m[2],f,m[3]));
+		od;
+		return objectlist;
+	end );
 
+# CHECKED 19/09/2011 jdb
+#############################################################################
+#A  CorrelationGroup( <ps> )
+# returns the collineation group of the projective space <ps>
+##
 InstallMethod( CorrelationGroup, 
 	"for a full projective space",
 	[ IsProjectiveSpace and IsProjectiveSpaceRep ],
@@ -745,64 +767,113 @@ InstallMethod( CorrelationGroup,
 # User friendly Methods to construct a correlation of a projective space.
 #####################################################################
 
-#This method will construct a funny object just using a matrix and a field.
-#the two mappings are the identity mapping.
+# CHECKED 19/09/11 jdb
+#############################################################################
+#O  CorrelationOfProjectiveSpace( <mat>, <gf> )
+# method to construct an object in the category IsProjGrpElWithFrobWithPSIsom, i.e. a 
+# correlation of a projective space. This method is intended for the user, and contains
+# a check whether the matrix is non-singular. The method relies on ProjElWithFrobWithPSIsom,
+# the field automorphism and the projective space automorphism will be trivial
+## 
 InstallMethod( CorrelationOfProjectiveSpace, 
-  [ IsMatrix and IsFFECollColl, IsField],
-  function( mat, gf )
-    if Rank(mat) <> Size(mat) then
-      Error("<mat> must not be singular");
-    fi;
-    return ProjElWithFrobWithPSIsom( mat, IdentityMapping(gf), gf);
-  end );
+	"for a matrix and a finite field",
+	[ IsMatrix and IsFFECollColl, IsField],
+	function( mat, gf )
+		if Rank(mat) <> Size(mat) then
+			Error("<mat> must not be singular");
+		fi;
+		return ProjElWithFrobWithPSIsom( mat, IdentityMapping(gf), gf);
+	end );
 
-#same as previous, but frob is given by user now.
-InstallMethod( CorrelationOfProjectiveSpace,  
-  [ IsMatrix and IsFFECollColl, IsRingHomomorphism and
+# CHECKED 19/09/11 jdb
+#############################################################################
+#O  CorrelationOfProjectiveSpace( <mat>, <frob>, <gf> )
+# method to construct an object in the category IsProjGrpElWithFrobWithPSIsom, i.e. a 
+# correlation of a projective space. This method is intended for the user, and contains
+# a check whether the matrix is non-singular. The method relies on ProjElWithFrobWithPSIsom,
+# the projective space automorphism will be trivial
+## 
+InstallMethod( CorrelationOfProjectiveSpace,
+	"for a matrix, a frobenius automorphism, and a finite field",
+	[ IsMatrix and IsFFECollColl, IsRingHomomorphism and
     IsMultiplicativeElementWithInverse, IsField], 
-  function( mat, frob, gf )
-    if Rank(mat) <> Size(mat) then
-      Error("<mat> must not be singular");
-    fi;
-    return ProjElWithFrobWithPSIsom( mat, frob, gf);
-  end );
+	function( mat, frob, gf )
+		if Rank(mat) <> Size(mat) then
+			Error("<mat> must not be singular");
+		fi;
+		return ProjElWithFrobWithPSIsom( mat, frob, gf);
+	end );
 
-#same as previous, but delta is given by user now.
-InstallMethod( CorrelationOfProjectiveSpace,  
-  [ IsMatrix and IsFFECollColl, IsField, IsStandardDualityOfProjectiveSpace], 
-  function( mat, gf, delta )
-    if Rank(mat) <> Size(mat) then
-      Error("<mat> must not be singular");
-    fi;
-    if delta!.ps!.basefield <> gf then
-      Error("<delta> is not a duality of the correct projective space");
-    fi;
-    return ProjElWithFrobWithPSIsom( mat, IdentityMapping(gf), gf, delta);
-  end );
+# CHECKED 19/09/11 jdb
+#############################################################################
+#O  CorrelationOfProjectiveSpace( <mat>, <gf>, <delta> )
+# method to construct an object in the category IsProjGrpElWithFrobWithPSIsom, i.e. a 
+# correlation of a projective space. This method is intended for the user, and contains
+# a check whether the matrix is non-singular. The method relies on ProjElWithFrobWithPSIsom,
+# the field automorphism will be trivial
+## 
+InstallMethod( CorrelationOfProjectiveSpace,
+	"for a matrix, a finite field, and a projective space isomorphism",
+	[ IsMatrix and IsFFECollColl, IsField, IsStandardDualityOfProjectiveSpace], 
+	function( mat, gf, delta )
+		if Rank(mat) <> Size(mat) then
+			Error("<mat> must not be singular");
+		fi;
+		if delta!.ps!.basefield <> gf then
+			Error("<delta> is not a duality of the correct projective space");
+		fi;
+		return ProjElWithFrobWithPSIsom( mat, IdentityMapping(gf), gf, delta);
+	end );
 
-#same as previous, but frob and delta is given by user now.
-InstallMethod( CorrelationOfProjectiveSpace,  
-  [ IsMatrix and IsFFECollColl, IsRingHomomorphism and
-    IsMultiplicativeElementWithInverse, IsField, 
+# CHECKED 19/09/11 jdb
+#############################################################################
+#O  CorrelationOfProjectiveSpace( <mat>, <frob>, <gf>, <delta> )
+# method to construct an object in the category IsProjGrpElWithFrobWithPSIsom, i.e. a 
+# correlation of a projective space. This method is intended for the user, and contains
+# a check whether the matrix is non-singular. The method relies on ProjElWithFrobWithPSIsom.
+## 
+InstallMethod( CorrelationOfProjectiveSpace,
+	"for a matrix, a frobenius automorphism, a finite field, and a projective space isomorphism",
+	[ IsMatrix and IsFFECollColl, IsRingHomomorphism and IsMultiplicativeElementWithInverse, IsField, 
     IsStandardDualityOfProjectiveSpace], 
-  function( mat, frob, gf, delta )
-    if Rank(mat) <> Size(mat) then
-      Error("<mat> must not be singular");
-    fi;
-    if delta!.ps!.basefield <> gf then
-      Error("<delta> is not a duality of the correct projective space");
-    fi;
-    return ProjElWithFrobWithPSIsom( mat, frob, gf, delta);
-  end ); 
+	function( mat, frob, gf, delta )
+		if Rank(mat) <> Size(mat) then
+			Error("<mat> must not be singular");
+		fi;
+		if delta!.ps!.basefield <> gf then
+			Error("<delta> is not a duality of the correct projective space");
+		fi;
+		return ProjElWithFrobWithPSIsom( mat, frob, gf, delta);
+	end ); 
 
+###################################################################
+# Some operations for correlations
+###################################################################
+
+
+# CHECKED 19/09/11 jdb
+#############################################################################
+#O  UnderlyingMatrix( <c> )
+# returns the underlying matrix of <c> 
+##
 InstallMethod( UnderlyingMatrix, [ IsProjGrpElWithFrobWithPSIsom and 
                                    IsProjGrpElWithFrobWithPSIsomRep],
   c -> c!.mat );
   
+# CHECKED 19/09/11 jdb
+#############################################################################
+#O  FieldAutomorphism( <c> )
+# returns the underlying field automorphism of <c> 
+##
 InstallMethod( FieldAutomorphism, [ IsProjGrpElWithFrobWithPSIsom and 
                                     IsProjGrpElWithFrobWithPSIsomRep],
   c -> c!.frob );
 
+# CHECKED 19/09/11 jdb
+#############################################################################
+#O  ProjectiveSpaceIsomorphism( <c> )
+# returns the underlying projective space isomorphism of <c> 
+##
 InstallMethod( ProjectiveSpaceIsomorphism, [ IsProjGrpElWithFrobWithPSIsom and 
                                     IsProjGrpElWithFrobWithPSIsomRep],
   c -> c!.psisom );
@@ -810,13 +881,21 @@ InstallMethod( ProjectiveSpaceIsomorphism, [ IsProjGrpElWithFrobWithPSIsom and
 #####################################################################
 # Embedding from a collineation group into a correlation group.
 #####################################################################
+
+# CHECKED 19/09/11 jdb
+#############################################################################
+#O  Embedding( <group>, <corr> )
+# returns an embedding from a collineation group into a correlation group,
+# i.e. a group homomorphism (which is in fact trivial), from PG(amma)L(n+1,q) ->
+# PG(amma)L(n+1,q) : 2
+##
 InstallOtherMethod( Embedding,
     "for a collineation group",
 	[IsProjectiveGroupWithFrob, IsProjGroupWithFrobWithPSIsom],
 	function(group,corr)
 	local hom;
 	if not ((BaseField(group)=BaseField(corr)) and (Dimension(group)=Dimension(corr))) then
-	  Error("Embedding not allowed, dimension and/or base field do not match");
+		Error("Embedding not allowed, dimension and/or base field do not match");
 	fi;
 	hom :=  GroupHomomorphismByFunction(group,corr,
 	y->ProjElWithFrobWithPSIsom(y!.mat,y!.frob,y!.fld),false,
@@ -830,7 +909,7 @@ InstallOtherMethod( Embedding,
 	end);
 	SetIsInjective(hom,true);
 	return hom;
-end );
+	end );
 
 #####################################################################
 # Actions
@@ -839,54 +918,94 @@ end );
 # then creating on action that does the general stuff.
 # We will use the fact the st. duality is able to act on subspaces of a 
 # projective space already.
+# Recall that in group.gi we have implemented the methods that do algebraic
+# stuff. The user methods, related to the projective geometry stuff, are 
+# in projectivespace.gi. Here we have both parts, since this file
+# is anyway related to projectivespace.gi
 # 
 #####################################################################
 
-InstallGlobalFunction( OnProjPointWithFrobWithPSIsom,
-  function( line, el )
-    local vec,c;
-    vec := OnPoints(line,el!.mat)^el!.frob;
-    c := PositionNonZero(vec);
-    if c <= Length( vec )  then
-        if not(IsMutable(vec)) then
-            vec := ShallowCopy(vec);
-        fi;
-        MultRowVector(vec,Inverse( vec[c] ));
-    fi;
-    return vec;
-  end );
+# CHECKED 19/09/11 jdb
+#############################################################################
+#F  OnProjPointsWithFrobWithPSIsom( <line>, <el> )
+# computes <line>^<el> where this action is the "natural" one, and <line> represents
+# a projective point. This function relies on the GAP function OnPoints, which represents
+# the natural action of matrices on row *vectors* (So the result is *not* normalized, neither
+# it is assumed that the input is normalized.
+# Important: despite its natural name, this function is *not* intended for the user.
+# <line>: just a row vector, representing a projective point.
+# <el>: a correlation. 
+# Important: since this function is just "doing the algebra", it returns a vector that
+# must be interpreted as the coordinates of a hyperplane now. 
+## 
+InstallGlobalFunction( OnProjPointsWithFrobWithPSIsom,
+	function( line, el )
+		local vec,c;
+		vec := OnPoints(line,el!.mat)^el!.frob;
+		c := PositionNonZero(vec);
+		if c <= Length( vec )  then
+			if not(IsMutable(vec)) then
+				vec := ShallowCopy(vec);
+			fi;
+			MultRowVector(vec,Inverse( vec[c] ));
+		fi;
+		return vec;
+	end );
 
+# CHECKED 19/09/11 jdb
+#############################################################################
+#F  OnProjSubspacesWithFrobWithPSIsom( <subspace>, <el> )
+# computes <subspace>^<el> where this action is the "natural" one, and <subspace> represents
+# a projective subspace. This function relies on the GAP action function
+# OnRight, which computes the action of a matrix on a sub vector space. 
+# Important: despite its natural name, this function is *not* intended for the user.
+# <el>: a projective group element (so a projectivity, *not* a projective semilinear element.
+##
 InstallGlobalFunction( OnProjSubspacesWithFrobWithPSIsom,
-  function( line, el )
-    local vec,c;
-    vec := OnRight(line,el!.mat)^el!.frob;
-    if not(IsMutable(vec)) then
-        vec := MutableCopyMat(vec);
-    fi;
-    TriangulizeMat(vec);
-    return vec;
-  end );
+	function( line, el )
+		local vec,c;
+		vec := OnRight(line,el!.mat)^el!.frob;
+		if not(IsMutable(vec)) then
+			vec := MutableCopyMat(vec);
+		fi;
+		TriangulizeMat(vec);
+		return vec;
+	end );
 
+# CHECKED 19/09/11 jdb
+#############################################################################
+#F  OnProjSubspacesReversing( <sub>, <el> )
+# computes <sub>^<el>, where <sub> is an element of a projective space, and 
+# <el> a correlation.
+##
 InstallGlobalFunction( OnProjSubspacesReversing,
-  function( sub, el )
-    local vec,newsub,ps,ty,newvec,rk;
-    vec := Unwrap(sub);
-    ps := AmbientSpace(sub!.geo);
-    ty := sub!.type;
-    newvec := (vec*el!.mat)^el!.frob;
-    if ty = 1 then
-      newvec := [newvec];
-    fi;       
-    if not IsOne(el!.psisom) then
-      newvec := NullspaceMat(TransposedMat(newvec));
-    fi;
-    rk := Rank(newvec);
-    if rk = 1 then 
-      newvec := newvec[1];
-    fi;
-    return VectorSpaceToElement(ps,newvec);
-end );
+	function( sub, el )
+		local vec,newsub,ps,ty,newvec,rk;
+		vec := Unwrap(sub);
+		ps := AmbientSpace(sub!.geo);
+		ty := sub!.type;
+		newvec := (vec*el!.mat)^el!.frob;
+		if ty = 1 then
+			newvec := [newvec];
+		fi;       
+		if not IsOne(el!.psisom) then
+			newvec := NullspaceMat(TransposedMat(newvec));
+		fi;
+		rk := Rank(newvec);
+		if rk = 1 then 
+			newvec := newvec[1];
+		fi;
+		return VectorSpaceToElement(ps,newvec);
+	end );	
 
+# CHECKED 19/09/11 jdb
+#############################################################################
+#O  Dimension( <g> )
+# returns the dimension of the correlation group <g>. The dimension of this 
+# group is defined as the vector space dimension of the projective space  
+# of which <g> was defined as a projective group, or, in other words, as the 
+# size of the matrices minus one.
+## 
 InstallMethod( Dimension, 
   "for a projective group with Frobenius with vspace isomorphism",
   [IsProjGroupWithFrobWithPSIsom],
@@ -903,38 +1022,44 @@ InstallMethod( Dimension,
     Error("dimension could not be determined");
   end );
 
+# CHECKED 19/09/11 jdb
+#############################################################################
+#P  ActionOnPointsHyperplanes( <g> )
+# returns the action of the correlation group <g> on the projective points
+# an hyperplanes of the underlying projective space.
+## 
 InstallMethod( ActionOnPointsHyperplanes, 
-  "for a projective group with Frobenius with vspace isomorphism",
-  [ IsProjGroupWithFrobWithPSIsom ],
-  function( pg )
-    local a,d,f,o,orb,orb2,zero, m, j, flip, vs, ps;
-    f := BaseField(pg);
-    d := Dimension(pg);
-    ps := ProjectiveSpace(d-1,f);
-    vs := f^d;
-    o := One(f); zero := Zero(f);
-    orb := [];
-    for m in vs do
-      j := PositionNot(m, zero);
-      	if j <= d and m[j] = o then
-	  Add(orb, m);
-	fi;
-    od;
-    flip := function(j)
-       local vec;
-       vec := TriangulizedNullspaceMat(TransposedMat([j]));
-       return vec;
-    end;
-    orb2 := [];
-    for m in orb do
-        Add(orb2, flip(m));
-    od;
-    orb := List(Concatenation(orb,orb2),x->VectorSpaceToElement(ps,x)); #corrected 12/4/11
-    a := ActionHomomorphism(pg, orb,
-              OnProjSubspacesReversing, "surjective");
-    SetIsInjective(a,true);
-    return a;
-  end );
+	"for a correlation group",
+	[ IsProjGroupWithFrobWithPSIsom ],
+	function( pg )
+		local a,d,f,o,orb,orb2,zero, m, j, flip, vs, ps;
+		f := BaseField(pg);
+		d := Dimension(pg);
+		ps := ProjectiveSpace(d-1,f);
+		vs := f^d;
+		o := One(f); zero := Zero(f);
+		orb := [];
+		for m in vs do
+			j := PositionNot(m, zero);
+			if j <= d and m[j] = o then
+				Add(orb, m);
+			fi;
+		od;
+		flip := function(j)
+			local vec;
+			vec := TriangulizedNullspaceMat(TransposedMat([j]));
+			return vec;
+			end;
+		orb2 := [];
+		for m in orb do
+			Add(orb2, flip(m));
+		od;
+		orb := List(Concatenation(orb,orb2),x->VectorSpaceToElement(ps,x)); #corrected 12/4/11
+		a := ActionHomomorphism(pg, orb,
+				OnProjSubspacesReversing, "surjective");
+		SetIsInjective(a,true);
+		return a;
+	end );
 
 InstallMethod( CanComputeActionOnPoints, 
   "for a projective group with frob with pspace isomorphism",
@@ -978,6 +1103,13 @@ InstallMethod( NiceMonomorphism,
         return ActionOnPointsHyperplanes( pg );
     fi;
   end );
+
+
+# CHECKED 19/09/11 jdb
+###################################################################
+# View methods of groups of projective elements with frobenius with 
+# projective space isomorphism
+###################################################################
 
 InstallMethod( ViewObj, 
   "for a projective group with frobenius with pspace isomorphism",

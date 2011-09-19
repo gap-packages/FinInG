@@ -56,7 +56,7 @@ DeclareSynonym( "IsProjGroupWithFrobWithPSIsom", IsGroup and IsProjGrpElWithFrob
 
 InstallTrueMethod( IsHandledByNiceMonomorphism, IsProjGroupWithFrobWithPSIsom );
 
-DeclareGlobalFunction( "OnProjPointWithFrobWithPSIsom" );
+DeclareGlobalFunction( "OnProjPointsWithFrobWithPSIsom" );
 DeclareGlobalFunction( "OnProjSubspacesWithFrobWithPSIsom" );
 DeclareGlobalFunction( "OnProjSubspacesReversing" );
 
