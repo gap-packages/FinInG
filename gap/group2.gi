@@ -969,7 +969,9 @@ InstallGlobalFunction( OnProjSubspacesWithFrobWithPSIsom,
 		if not(IsMutable(vec)) then
 			vec := MutableCopyMat(vec);
 		fi;
-		return EchelonMat(vec).vectors;
+		TriangulizeMat(vec);
+		return vec;
+		#return EchelonMat(vec).vectors;
 	end );
 
 # CHECKED 20/09/11 jdb

@@ -35,6 +35,7 @@
 # - homography groups need only have ProjEl, it will make them quicker
 # - testing
 # - make tiny changes in agreement with John to the names of the classical groups. jdb 09/2011
+# - probably move classical groups to a separate file, to better organise the dependencies.
 #
 ########################################
 
@@ -1472,7 +1473,10 @@ InstallGlobalFunction( OnProjPointsWithFrob,
 ## 
 InstallGlobalFunction( OnProjSubspacesNoFrob,
 	function( subspace, el )
-		return EchelonMat(OnSubspacesByCanonicalBasis(subspace,el!.mat)).vectors;
+		local mat;
+		mat := TriangulizeMat(OnSubspacesByCanonicalBasis(subspace,el!.mat));
+		return mat;
+		#return EchelonMat(OnSubspacesByCanonicalBasis(subspace,el!.mat)).vectors;
 	end );
 
 # CHECKED 6/09/11 jdb
@@ -1491,11 +1495,12 @@ InstallGlobalFunction( OnProjSubspacesWithFrob,
   function( subspace, el )
     local vec,c;
     vec := OnRight(subspace,el!.mat)^el!.frob;
-#    if not(IsMutable(vec)) then
-#        vec := MutableCopyMat(vec);
-#    fi;
-    return EchelonMat(vec).vectors;
-#return vec;
+    if not(IsMutable(vec)) then
+        vec := MutableCopyMat(vec);
+    fi;
+    TriangulizeMat(vec);
+	#return EchelonMat(vec).vectors;
+	return vec;
   end );
 
 ###################################################################

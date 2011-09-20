@@ -42,7 +42,7 @@
 #    trivial subspace in earlier days. 14/9/2011 jdb.
 #  - improve Random method for shadow elements. see comment there.
 #  - have a closer look at the Baer substuff methods in this file.
-#  - whenever Wrap is used, check whether the input should be normalized or not.
+#  - whenever Wrap is used, check whether the input should be normalized or not. Done.
 #############################################################################
 # Low level help methods:
 #############################################################################
@@ -418,9 +418,7 @@ InstallMethod( \in,
 ## Should we have methods for the new types given by the cvec package?
 ## Currently we don't load the cvec package.
 
-# CHECKED 7/09/11 jdb
-# CHANGED 19/9/2011 jdb + ml
-# CHANGED 20/09/2011 jdb + ml (SemiEchelonMat -> EchelonMat).
+# CHECKED 20/09/11
 #############################################################################
 #O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
 # by the vectorspace <v>. Several checks are built in. 
@@ -434,18 +432,36 @@ InstallMethod( VectorSpaceToElement,
         if IsEmpty(v) then
 			Error("<v> does not represent any vectorspace");
 		fi;
-		x := EchelonMat(v).vectors;
-        ## dimension should be correct
+		#x := EchelonMat(v).vectors;
+		x := MutableCopyMat(v);
+		TriangulizeMat(x); 
+		## dimension should be correct
 		if Length(v[1]) <> geom!.dimension + 1 then
 			Error("Dimensions are incompatible");
 		fi;
-		if Length(x) = 0 then
+		#if Length(x) = 0 then
+		#	return EmptySubspace(geom);
+		#fi;
+		#if Length(x)=ProjectiveDimension(geom)+1 then
+		#	return geom;
+		#fi;
+        
+		## Remove zero rows. It is possible the the user
+		## has inputted a matrix which does not have full rank
+        n := Length(x);
+		i := 0;
+		while i < n and ForAll(x[n-i], IsZero) do
+			i := i+1; 
+		od;
+		if i = n then
 			return EmptySubspace(geom);
 		fi;
+		x := x{[1..n-i]};
 		if Length(x)=ProjectiveDimension(geom)+1 then
 			return geom;
 		fi;
-        ## It is possible that (a) the user has entered a
+
+		## It is possible that (a) the user has entered a
 		## matrix with one row, or that (b) the user has
 		## entered a matrix with rank 1 (thus at this stage
 		## we will have a matrix with one row).
@@ -460,9 +476,7 @@ InstallMethod( VectorSpaceToElement,
 		fi;
 	end );
 
-# CHECKED 8/09/11 jdb
-# CHANGED 19/9/2011 jdb + ml
-# CHANGED 20/09/2011 jdb + ml (SemiEchelonMat -> EchelonMat).
+# CHECKED 20/09/11
 #############################################################################
 #O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
 # by the vectorspace <v>. Several checks are built in. 
@@ -476,17 +490,36 @@ InstallMethod( VectorSpaceToElement,
 		if IsEmpty(v) then
 			Error("<v> does not represent any vectorspace");
 		fi;
-		x := EchelonMat(v).vectors;
+		x := MutableCopyMat(v);
+		TriangulizeMat(x); 
+		#x := EchelonMat(v).vectors;
 		## dimension should be correct
 		if Length(v[1]) <> geom!.dimension + 1 then
 			Error("Dimensions are incompatible");
 		fi;
-		if Length(x) = 0 then
+		#if Length(x) = 0 then
+		#	return EmptySubspace(geom);
+		#fi;
+		#if Length(x)=ProjectiveDimension(geom)+1 then
+		#	return geom;
+		#fi;
+		
+		## Remove zero rows. It is possible the the user
+		## has inputted a matrix which does not have full rank
+		n := Length(x);
+		i := 0;
+		while i < n and ForAll(x[n-i], IsZero) do
+			i := i+1; 
+		od;
+		if i = n then
 			return EmptySubspace(geom);
 		fi;
+		x := x{[1..n-i]};
 		if Length(x)=ProjectiveDimension(geom)+1 then
 			return geom;
 		fi;
+
+		
 		## It is possible that (a) the user has entered a
 		## matrix with one row, or that (b) the user has
 		## entered a matrix with rank 1 (thus at this stage
@@ -502,9 +535,7 @@ InstallMethod( VectorSpaceToElement,
 		fi;
 	end );
   
-# CHECKED 8/09/11 jdb
-# CHANGED 19/9/2011 jdb + ml
-# CHANGED 20/09/2011 jdb + ml (SemiEchelonMat -> EchelonMat).
+# CHECKED 20/09/11
 #############################################################################
 #O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
 # by the vectorspace <v>. Several checks are built in. 
@@ -518,17 +549,37 @@ InstallMethod( VectorSpaceToElement,
 		if IsEmpty(v) then
 			Error("<v> does not represent any vectorspace");
 		fi;
-		x := EchelonMat(v).vectors;
+		#x := EchelonMat(v).vectors;
+		
+		x := MutableCopyMat(v);
+		TriangulizeMat(x); 
+		
 		## dimension should be correct
 		if Length(v[1]) <> geom!.dimension + 1 then
 			Error("Dimensions are incompatible");
 		fi;	
-		if Length(x) = 0 then
+		
+		#if Length(x) = 0 then
+		#	return EmptySubspace(geom);
+		#fi;
+		#if Length(x)=ProjectiveDimension(geom)+1 then
+		#	return geom;
+		#fi;
+		
+		n := Length(x);
+		i := 0;
+		while i < n and ForAll(x[n-i], IsZero) do
+			i := i+1; 
+		od;
+		if i = n then
 			return EmptySubspace(geom);
 		fi;
+		x := x{[1..n-i]};
 		if Length(x)=ProjectiveDimension(geom)+1 then
 			return geom;
 		fi;
+
+		
 		## It is possible that (a) the user has entered a
 		## matrix with one row, or that (b) the user has
 		## entered a matrix with rank 1 (thus at this stage
@@ -1651,9 +1702,7 @@ InstallMethod( Span,
 	fi;
 	end );
 
-# CHECKED 11/09/11 jdb
-# CHANGED 20/09/2011 jdb + ml (SemiEchelonMat -> EchelonMat).
-#############################################################################
+# CHECKED 20/09/11 #############################################################################
 #O  Span( <l> )
 # returns the span of the projective subspaces in <l>.
 ##
@@ -1677,7 +1726,7 @@ InstallMethod( Span, "for a homogeneous list of subspaces of a projective space"
 				Append(unwrapped, unr);
 			od;
 			span := MutableCopyMat(unwrapped);
-			span := MutableCopyMat(EchelonMat(span).vectors);
+#			span := MutableCopyMat(EchelonMat(span).vectors); #not necessary anyway, since VectorSpaceToElement is used.
 			if Length(span) = amb!.dimension + 1 then
 				return amb;
 			fi;

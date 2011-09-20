@@ -31,87 +31,103 @@
 # - make sure matrices are compressed.
 #
 ########################################
+# Low level help methods:
+#############################################################################
 
 DESARGUES.LimitForCanComputeActionOnPoints := 1000000;
 DESARGUES.Fast := true;
 
 #############################################################################
-# Constructor methods (not for users)!:
+# Constructor method (not for users)!:
 #############################################################################
 
-#returns an element of a polar space, without checking anything.
-InstallMethod( Wrap, "for a polar space and an object",
-  [IsClassicalPolarSpace, IsPosInt, IsObject],
-  function( geo, type, o )
-    local w;
-    w := rec( geo := geo, type := type, obj := o );
-    Objectify( NewType( SoPSFamily, IsElementOfIncidenceStructure and
-      IsElementOfIncidenceStructureRep and IsSubspaceOfClassicalPolarSpace ), w );
+# CHECKED 20/09/11 jdb
+#############################################################################
+#O  Wrap( <geo>, <type>, <o> )
+# This is an internal subroutine which is not expected to be used by the user;
+# they would be using VectorSpaceToElement. Recall that Wrap is declared in 
+# geometry.gd. 
+##
+InstallMethod( Wrap, 
+	"for a polar space and an object",
+	[IsClassicalPolarSpace, IsPosInt, IsObject],
+	function( geo, type, o )
+		local w;
+		w := rec( geo := geo, type := type, obj := o );
+		Objectify( NewType( SoPSFamily, IsElementOfIncidenceStructure and
+		IsElementOfIncidenceStructureRep and IsSubspaceOfClassicalPolarSpace ), w );
     return w;
-  end );
-
-InstallMethod( ProjectiveDimension, "for a polar space",
-  [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
-  function( ps )
-    return ps!.dimension;  
-  end );
+	end );
 
 #############################################################################
 # Constructor methods for polar spaces.
 #############################################################################
 
-#this method returns a polar space with a lot of knowledge. most likely not for user.
+# CHECKED 20/09/11 jdb
+#############################################################################
+#O  PolarSpace( <m>, <f>, <g>, <act> )
+# This method returns a polar space with a lot of knowledge. most likely not for user.
+# <m> is a sesquilinear form. Furthermore, a field <f>, a group <g> and an action 
+# function <act> are given.
+##
 InstallMethod( PolarSpace, 
-  [ IsSesquilinearForm, IsField, IsGroup, IsFunction ],
-  function( m, f, g, act )
-    local geo,ty,gram;
-    if IsDegenerateForm( m ) then 
-       Error("Form is degenerate");
-    elif IsPseudoForm( m ) then
-      Error("No Polar space can be associated with a pseudo form");
-    fi;
-    gram := m!.matrix;
-    geo := rec( basefield := f, dimension := Length(gram)-1,
-                vectorspace := FullRowSpace(f,Length(gram)) );
-    if WittIndex(m) = 2 then
-       ty := NewType( GeometriesFamily,
-                  IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsClassicalGQ);
-    else ty := NewType( GeometriesFamily,
-                  IsClassicalPolarSpace and IsClassicalPolarSpaceRep );
-    fi;
-    ObjectifyWithAttributes( geo, ty, 
-                            SesquilinearForm, m,
-                            CollineationGroup, g,
-                            CollineationAction, act,
-                            AmbientSpace, ProjectiveSpace(geo.dimension, f) );
-    return geo;
-  end );
+	"for a sesquilinear form, a field, a group and an action function",
+	[ IsSesquilinearForm, IsField, IsGroup, IsFunction ],
+	function( m, f, g, act )
+		local geo,ty,gram;
+		if IsDegenerateForm( m ) then 
+			Error("Form is degenerate");
+		elif IsPseudoForm( m ) then
+			Error("No Polar space can be associated with a pseudo form");
+		fi;
+		gram := m!.matrix;
+		geo := rec( basefield := f, dimension := Length(gram)-1,
+					vectorspace := FullRowSpace(f,Length(gram)) );
+		if WittIndex(m) = 2 then
+			ty := NewType( GeometriesFamily,
+					IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsClassicalGQ);
+		else ty := NewType( GeometriesFamily,
+					IsClassicalPolarSpace and IsClassicalPolarSpaceRep );
+		fi;
+		ObjectifyWithAttributes( geo, ty, 
+								SesquilinearForm, m,
+								CollineationGroup, g,
+								CollineationAction, act,
+								AmbientSpace, ProjectiveSpace(geo.dimension, f) );
+		return geo;
+	end );
 
-#general method to setup a polar space using sesquilinear form. It is checked
-#whether the form is not pseudo.
-InstallMethod( PolarSpace, [ IsSesquilinearForm ],
-  function( m )
-  local geo, ty, gram, f;
-    if IsDegenerateForm( m ) then 
-       Error("Form is degenerate");
-    elif IsPseudoForm( m ) then
-      Error("No Polar space can be associated with a pseudo form");
-    fi;
-    gram := m!.matrix;
-    f := m!.basefield;
-    geo := rec( basefield := f, dimension := Length(gram)-1,
-                vectorspace := FullRowSpace(f,Length(gram)) );
-    if WittIndex(m) = 2 then
-       ty := NewType( GeometriesFamily,
+# CHECKED 20/09/11 jdb
+#############################################################################
+#O  PolarSpace( <m> )
+# general method to setup a polar space using sesquilinear form <m>. It is checked
+# whether the form is not pseudo.##
+##
+InstallMethod( PolarSpace, 
+	"for a sesquilinear form",
+	[ IsSesquilinearForm ],
+	function( m )
+		local geo, ty, gram, f;
+		if IsDegenerateForm( m ) then 
+			Error("Form is degenerate");
+		elif IsPseudoForm( m ) then
+			Error("No Polar space can be associated with a pseudo form");
+		fi;
+		gram := m!.matrix;
+		f := m!.basefield;
+		geo := rec( basefield := f, dimension := Length(gram)-1,
+				vectorspace := FullRowSpace(f,Length(gram)) );
+		if WittIndex(m) = 2 then
+			ty := NewType( GeometriesFamily,
                   IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsClassicalGQ);
-    else ty := NewType( GeometriesFamily,
+		else ty := NewType( GeometriesFamily,
                   IsClassicalPolarSpace and IsClassicalPolarSpaceRep );
-    fi;
-    ObjectifyWithAttributes( geo, ty, 
+		fi;
+		ObjectifyWithAttributes( geo, ty, 
                             SesquilinearForm, m,
                             AmbientSpace, ProjectiveSpace(geo.dimension, f) );
-    return geo;
-  end );
+		return geo;
+	end );
 
 #general method to setup a polar space using quadratic form. Possible in even
 #and odd char.
@@ -163,6 +179,7 @@ InstallMethod( PolarSpace, [ IsHermitianForm ],
     return geo;
   end );
 
+
 #############################################################################
 # methods for some attributes.
 #############################################################################
@@ -172,6 +189,12 @@ InstallMethod( UnderlyingVectorSpace, "for a polar space",
    function(ps)
    return ShallowCopy(ps!.vectorspace);
 end);
+
+InstallMethod( ProjectiveDimension, "for a polar space",
+  [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
+  function( ps )
+    return ps!.dimension;  
+  end );
 
 InstallOtherMethod( Dimension, [ IsClassicalPolarSpace ],
   function(ps)
