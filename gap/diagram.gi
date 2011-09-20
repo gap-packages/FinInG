@@ -1022,4 +1022,60 @@ InstallOtherMethod( \<,
   fi;
 end );
 
+#method to compute the diagram of a cps. Maybe move to another file to make this
+#file shorter?
+InstallMethod( DiagramOfGeometry, [ IsClassicalPolarSpace ],
+  function( geo )
+    local types, v, e, way, diagram, s, t, vertices, 
+          orders, x, edges, newedges, flavour;
+    vertices := [];
+    types := TypesOfElementsOfIncidenceStructure( geo );
+    s := Size( geo!.basefield );
+    for x in [1..Size(types)] do
+      v := rec( type := types[x] );
+      Objectify( NewType( VertexOfDiagramFamily, IsVertexOfDiagram and
+                      IsVertexOfDiagramRep ), v);
+      if x < Size(types) then 
+         SetOrderVertex(v, s);
+      fi;
+      Add( vertices, v );
+    od;
+    if HasPolarSpaceType( geo ) then
+       flavour := PolarSpaceType( geo );       
+       if flavour = "symplectic" or flavour = "parabolic" then 
+          t := s;
+       elif flavour = "elliptic" then
+          t := s^2;
+       elif flavour = "hyperbolic" then
+          t := 1;
+       elif flavour = "hermitian" then
+          if IsEvenInt( geo!.dimension ) then
+             t := Sqrt(s)^3;
+          else
+             t := Sqrt(s);
+          fi;
+       fi;
+       SetOrderVertex(vertices[Size(types)], t);
+    fi;
+
+    edges := List([1..Size(types)-1], i -> vertices{[i,i+1]} );
+    newedges := [];
+    for x in [1..Size(edges)] do
+      e := rec( edge := edges[x] );
+      Objectify( NewType( EdgeOfDiagramFamily, 
+                      IsEdgeOfDiagram and IsEdgeOfDiagramRep ), e);
+      if x < Size(edges) then
+          SetResidueLabelForEdge( e, "3");
+      else
+          SetResidueLabelForEdge( e, "4");
+      fi;
+      Add( newedges, e );
+    od;
+    way := List([1..Size(types)], i -> [1,i] );
+    diagram := rec( vertices := vertices, edges := newedges, drawing := way );;
+    Objectify( NewType( DiagramFamily, IsDiagram and IsDiagramRep ), diagram);
+    SetGeometryOfDiagram( diagram, geo );
+    return diagram;
+  end );
+
 

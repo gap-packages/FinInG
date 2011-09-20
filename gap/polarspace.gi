@@ -29,6 +29,8 @@
 # - Documentation
 # - test
 # - make sure matrices are compressed.
+# - think about the IsClassicalGQ filter. At first sight, we can leave everything as
+#   is, since this will not affect correctness of the code.
 #
 ########################################
 # Low level help methods:
@@ -100,7 +102,7 @@ InstallMethod( PolarSpace,
 # CHECKED 20/09/11 jdb
 #############################################################################
 #O  PolarSpace( <m> )
-# general method to setup a polar space using sesquilinear form <m>. It is checked
+# general method to crete a polar space using sesquilinear form <m>. It is checked
 # whether the form is not pseudo.##
 ##
 InstallMethod( PolarSpace, 
@@ -129,180 +131,166 @@ InstallMethod( PolarSpace,
 		return geo;
 	end );
 
-#general method to setup a polar space using quadratic form. Possible in even
+# CHECKED 20/09/11 jdb
+#############################################################################
+#O  PolarSpace( <m> )
+#general method to create a polar space using quadratic form. Possible in even
 #and odd char.
-InstallMethod( PolarSpace, [ IsQuadraticForm ],
-  function( m )
-  local geo, ty, gram, polar, f, flavour;
-    if IsSingularForm( m ) then 
-       Error("Form is singular"); 
-    fi;
-    f := m!.basefield;
-    gram := m!.matrix;
-    polar := AssociatedBilinearForm( m );
-    geo := rec( basefield := f, dimension := Length(gram)-1,
-                vectorspace := FullRowSpace(f,Length(gram)) );
-    if WittIndex(m) = 2 then
-       ty := NewType( GeometriesFamily,
-                  IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsClassicalGQ);
-    else ty := NewType( GeometriesFamily,
-                  IsClassicalPolarSpace and IsClassicalPolarSpaceRep );
-    fi;
-    ObjectifyWithAttributes( geo, ty, 
-                            QuadraticForm, m,
-                            SesquilinearForm, polar,
-                            AmbientSpace, ProjectiveSpace(geo.dimension, f) );
-    return geo;
-  end );
+##
+InstallMethod( PolarSpace, 
+	"for a quadratic form",
+	[ IsQuadraticForm ],
+	function( m )
+		local geo, ty, gram, polar, f, flavour;
+		if IsSingularForm( m ) then 
+			Error("Form is singular"); 
+		fi;
+		f := m!.basefield;
+		gram := m!.matrix;
+		polar := AssociatedBilinearForm( m );
+		geo := rec( basefield := f, dimension := Length(gram)-1,
+					vectorspace := FullRowSpace(f,Length(gram)) );
+		if WittIndex(m) = 2 then
+			ty := NewType( GeometriesFamily,
+					IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsClassicalGQ);
+		else ty := NewType( GeometriesFamily,
+					IsClassicalPolarSpace and IsClassicalPolarSpaceRep );
+		fi;
+		ObjectifyWithAttributes( geo, ty, 
+								QuadraticForm, m,
+								SesquilinearForm, polar,
+								AmbientSpace, ProjectiveSpace(geo.dimension, f) );
+		return geo;
+	end );
 
-#general method to setup a polar space using hermitian form. Is this method
-#still necessary?
-InstallMethod( PolarSpace, [ IsHermitianForm ],
-  function( m )
-  local geo, ty, gram, f;
-    if IsDegenerateForm( m ) then 
-       Error("Form is degenerate");
-    fi;
-    gram := m!.matrix;
-    f := m!.basefield;
-    geo := rec( basefield := f, dimension := Length(gram)-1,
-                vectorspace := FullRowSpace(f,Length(gram)) );
-    if WittIndex(m) = 2 then
-       ty := NewType( GeometriesFamily,
+# CHECKED 20/09/11 jdb
+#############################################################################
+#O  PolarSpace( <m> )
+# general method to setup a polar space using hermitian form. Is this method
+# still necessary? Maybe not necessary, but maybe usefull, since we know slightly
+# more properties of the polar space if we start from a hermitian form rather than
+# from a sesquilinear form.
+##
+InstallMethod( PolarSpace, 
+	"for a hermitian form",
+	[ IsHermitianForm ],
+	function( m )
+		local geo, ty, gram, f;
+		if IsDegenerateForm( m ) then 
+			Error("Form is degenerate");
+		fi;
+		gram := m!.matrix;
+		f := m!.basefield;
+		geo := rec( basefield := f, dimension := Length(gram)-1,
+					vectorspace := FullRowSpace(f,Length(gram)) );
+		if WittIndex(m) = 2 then
+			ty := NewType( GeometriesFamily,
                   IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsClassicalGQ);
-    else ty := NewType( GeometriesFamily,
+		else ty := NewType( GeometriesFamily,
                   IsClassicalPolarSpace and IsClassicalPolarSpaceRep );
-    fi;
-    ObjectifyWithAttributes( geo, ty, 
+		fi;
+		ObjectifyWithAttributes( geo, ty, 
                             SesquilinearForm, m,
                             AmbientSpace, ProjectiveSpace(geo.dimension, f) );
-    return geo;
-  end );
+		return geo;
+	end );
 
 
 #############################################################################
 # methods for some attributes.
 #############################################################################
 
-InstallMethod( UnderlyingVectorSpace, "for a polar space",
-   [IsClassicalPolarSpace and IsClassicalPolarSpaceRep],
-   function(ps)
-   return ShallowCopy(ps!.vectorspace);
-end);
+# CHECKED 20/09/11 jdb
+#############################################################################
+#O  UnderlyingVectorSpace( <ps> )
+# returns the Underlying vectorspace of the polar space <ps>
+##
+InstallMethod( UnderlyingVectorSpace, 
+	"for a polar space",
+	[IsClassicalPolarSpace and IsClassicalPolarSpaceRep],
+	function(ps)
+		return ShallowCopy(ps!.vectorspace);
+	end);
 
-InstallMethod( ProjectiveDimension, "for a polar space",
-  [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
-  function( ps )
-    return ps!.dimension;  
-  end );
+# CHECKED 20/09/11 jdb
+#############################################################################
+#A  ProjectiveDimension( <ps> )
+# returns the projective dimension of the polar space <ps>, i.e. the dimension
+# of the ambient projective space.
+##
+InstallMethod( ProjectiveDimension, 
+	"for a polar space",
+	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
+	function( ps )
+		return ps!.dimension;  
+	end );
 
-InstallOtherMethod( Dimension, [ IsClassicalPolarSpace ],
-  function(ps)
-    return Dimension(AmbientSpace(ps));
-  end );
+# CHECKED 20/09/11 jdb
+#############################################################################
+#A  Dimension( <ps> )
+# returns the projective dimension of the polar space <ps>, i.e. the dimension
+# of the ambient projective space.
+##
+InstallOtherMethod( Dimension, 
+	"for a polar space",
+	[ IsClassicalPolarSpace ],
+	function(ps)
+		return Dimension(AmbientSpace(ps));
+	end );
 
+# CHECKED 20/09/11 jdb
+#############################################################################
+#A  PolarSpaceType( <ps> )
+# type of a polar space: see manual and conventions for orthogonal polar spaces.
+##
+InstallMethod( PolarSpaceType, 
+	"for a polar space",
+	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
+	function( ps )
+		local ty, form, sesq;
+		if HasQuadraticForm( ps ) then 
+			form := QuadraticForm( ps );
+		else 
+			form := SesquilinearForm( ps );
+		fi;
+		ty := form!.type;
+		if ty = "orthogonal" or ty = "quadratic" then
+			if IsParabolicForm( form ) then
+				ty := "parabolic";
+			elif IsEllipticForm( form ) then
+				ty := "elliptic";
+			else
+				ty := "hyperbolic";
+			fi;
+		fi;
+		return ty;
+	end );
 
-#type of a polar space: see manual and conventions for orthogonal polar spaces.
-InstallMethod( PolarSpaceType, [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
-  function( ps )
-    local ty, form, sesq;
-    
-    if HasQuadraticForm( ps ) then 
-       form := QuadraticForm( ps );
-    else 
-       form := SesquilinearForm( ps );
-    fi;
-
-    ty := form!.type;
-
-    if ty = "orthogonal" or ty = "quadratic" then
-      if IsParabolicForm( form ) then
-         ty := "parabolic";
-      elif IsEllipticForm( form ) then
-         ty := "elliptic";
-      else
-         ty := "hyperbolic";
-      fi;
-    fi;
-    return ty;
-  end );
-
-#companion automorphism of polar space.
-InstallMethod( CompanionAutomorphism, [ IsClassicalPolarSpace ],
-  function( ps )
-    local aut, type;
-    type := PolarSpaceType( ps );
-    aut := FrobeniusAutomorphism(ps!.basefield);
-    if type = "hermitian" then
-       aut := aut ^ (Order(aut)/2);
-    else
-       aut := aut ^ 0;
-    fi;
-    return aut;
-  end );
-
-#method to compute the diagram of a cps. Maybe move to another file to make this
-#file shorter?
-InstallMethod( DiagramOfGeometry, [ IsClassicalPolarSpace ],
-  function( geo )
-    local types, v, e, way, diagram, s, t, vertices, 
-          orders, x, edges, newedges, flavour;
-    vertices := [];
-    types := TypesOfElementsOfIncidenceStructure( geo );
-    s := Size( geo!.basefield );
-    for x in [1..Size(types)] do
-      v := rec( type := types[x] );
-      Objectify( NewType( VertexOfDiagramFamily, IsVertexOfDiagram and
-                      IsVertexOfDiagramRep ), v);
-      if x < Size(types) then 
-         SetOrderVertex(v, s);
-      fi;
-      Add( vertices, v );
-    od;
-    if HasPolarSpaceType( geo ) then
-       flavour := PolarSpaceType( geo );       
-       if flavour = "symplectic" or flavour = "parabolic" then 
-          t := s;
-       elif flavour = "elliptic" then
-          t := s^2;
-       elif flavour = "hyperbolic" then
-          t := 1;
-       elif flavour = "hermitian" then
-          if IsEvenInt( geo!.dimension ) then
-             t := Sqrt(s)^3;
-          else
-             t := Sqrt(s);
-          fi;
-       fi;
-       SetOrderVertex(vertices[Size(types)], t);
-    fi;
-
-    edges := List([1..Size(types)-1], i -> vertices{[i,i+1]} );
-    newedges := [];
-    for x in [1..Size(edges)] do
-      e := rec( edge := edges[x] );
-      Objectify( NewType( EdgeOfDiagramFamily, 
-                      IsEdgeOfDiagram and IsEdgeOfDiagramRep ), e);
-      if x < Size(edges) then
-          SetResidueLabelForEdge( e, "3");
-      else
-          SetResidueLabelForEdge( e, "4");
-      fi;
-      Add( newedges, e );
-    od;
-    way := List([1..Size(types)], i -> [1,i] );
-    diagram := rec( vertices := vertices, edges := newedges, drawing := way );;
-    Objectify( NewType( DiagramFamily, IsDiagram and IsDiagramRep ), diagram);
-    SetGeometryOfDiagram( diagram, geo );
-    return diagram;
-  end );
-
+# CHECKED 20/09/11 jdb
+#############################################################################
+#A  CompanionAutomorphism( <ps> )
+# companion automorphism of polar space, i.e. the companion automorphism of 
+# the sesquilinear form determining the polar space. If the form is quadratic, 
+# or not hermitian, then the trivial automorphism is returned.
+##
+InstallMethod( CompanionAutomorphism, 
+	"for a polar space",
+	[ IsClassicalPolarSpace ],
+	function( ps )
+		local aut, type;
+		type := PolarSpaceType( ps );
+		aut := FrobeniusAutomorphism(ps!.basefield);
+		if type = "hermitian" then
+			aut := aut ^ (Order(aut)/2);
+		else
+			aut := aut ^ 0;
+		fi;
+		return aut;
+	end );
 
 #############################################################################
 ## TOT HIER GECHECKT JDB en ML 15/04/11
 #############################################################################
-
-
 
 #############################################################################
 ## The following methods are needed for "naked" polar spaces; those
@@ -310,6 +298,8 @@ InstallMethod( DiagramOfGeometry, [ IsClassicalPolarSpace ],
 ## the "canonical" polar spaces exhibit (see the code for the
 ## "SymplecticSpace" as an example).
 #############################################################################
+
+#bug for Q(5,7). Start from IdentityMat and see what happens. 
 
 #this method returns a geometry morphism.
 InstallMethod( IsomorphismCanonicalPolarSpace, [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
