@@ -22,8 +22,8 @@
 #############################################################################
 
 ReadPackage("fining","gap/geometry.gd");
-ReadPackage("fining","gap/group.gd");
 ReadPackage("fining","gap/liegeometry.gd");
+ReadPackage("fining","gap/group.gd");
 ReadPackage("fining","gap/projectivespace.gd");
 ReadPackage("fining","gap/group2.gd");
 ReadPackage("fining","gap/diagram.gd");

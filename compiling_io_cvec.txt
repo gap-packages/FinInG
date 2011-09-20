@@ -21,6 +21,10 @@ install packages in '/Users/jdebeule/pkg/'
 go to the '/opt/gap4r4/bin/powerpc-apple-darwin8.8.0-gcc/' directory, and issue
 the following command:
 
+' ./gac -o gap-static -p "-DIOSTATIC 
+-I/opt/gap4r4/pkg/io/bin/i686-apple-darwin10.8.0-gcc -DGAUSSSTATIC" 
+/opt/gap4r4/pkg/io/src/io.c  /Users/jdebeule/pkg/Gauss/src/gauss.c '
+
 './gac -o gap-static -p "-DIOSTATIC -DCVECSTATIC" 
 /Users/jdebeule/pkg/io/src/io.c /Users/jdebeule/pkg/cvec/src/cvec.c'
 

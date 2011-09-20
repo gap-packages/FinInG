@@ -29,8 +29,8 @@ if InstalledPackageVersion("forms") < "1.2.2" then
 fi;
 
 ReadPackage("fining","gap/geometry.gi");
-ReadPackage("fining","gap/group.gi"); 
 ReadPackage("fining","gap/liegeometry.gi"); 
+ReadPackage("fining","gap/group.gi"); 
 ReadPackage("fining","gap/projectivespace.gi");
 ReadPackage("fining","gap/diagram.gi");
 ReadPackage("fining","gap/polarspace.gi");

@@ -48,7 +48,7 @@ DeclareRepresentation( "IsShadowSubspacesOfClassicalPolarSpaceRep", IsShadowElem
 # Attributes and Properties:
 #############################################################################
 
-DeclareAttribute( "ProjectiveDimension", IsClassicalPolarSpace );
+#DeclareAttribute( "ProjectiveDimension", IsClassicalPolarSpace );
 DeclareAttribute( "SesquilinearForm", IsClassicalPolarSpace );
 DeclareAttribute( "QuadraticForm", IsClassicalPolarSpace );
 DeclareAttribute( "AmbientSpace", IsClassicalPolarSpace );

@@ -1458,30 +1458,32 @@ InstallGlobalFunction( OnProjPointsWithFrob,
 
 # CHECKED 6/09/11 jdb
 # CHANGED 19/09/2011 jdb + ml
+# CHANGED 20/09/2011 jdb + ml (SemiEchelonMat -> EchelonMat).
 #############################################################################
 #F  OnProjSubspacesNoFrob( <subspace>, <el> )
 # computes <subspace>^<el> where this action is the "natural" one, and <subspace> represents
 # a projective subspace. This function relies on the GAP action function
 # OnSubspacesByCanonicalBasis. This function assumes as arguments a list (mat) of linearly 
 # independent row vectors, in Hermite normal form (triangulied), and return the 
-# mat*<el> in Hermite normal form. To be used in user action functions, we SemiEchelonMat it, so that
+# mat*<el> in Hermite normal form. To be used in user action functions, we EchelonMat it, so that
 # the output can be used directly in a Wrap.
 # Important: despite its natural name, this function is *not* intended for the user.
 # <el>: a projective group element (so a projectivity, *not* a projective semilinear element.
 ## 
 InstallGlobalFunction( OnProjSubspacesNoFrob,
 	function( subspace, el )
-		return SemiEchelonMat(OnSubspacesByCanonicalBasis(subspace,el!.mat)).vectors;
+		return EchelonMat(OnSubspacesByCanonicalBasis(subspace,el!.mat)).vectors;
 	end );
 
 # CHECKED 6/09/11 jdb
 # CHANGED 19/09/2011 jdb + ml
+# CHANGED 20/09/2011 jdb + ml (SemiEchelonMat -> EchelonMat).
 #############################################################################
 #F  OnProjSubspacesWithFrob( <subspace>, <el> )
 # computes <subspace>^<el> where this action is the "natural" one, and <subspace> represents
 # a projective subspace. This function relies on the GAP action function
 # OnRight, which computs the action of a matrix on a sub vector space. Here we have to rely on 
-# OnRight, and so we have to SemiEchelonMat afterwards.
+# OnRight, and so we have to EchelonMat afterwards.
 # Important: despite its natural name, this function is *not* intended for the user.
 # <el>: a projective group element (so a projectivity, *not* a projective semilinear element.
 ##
@@ -1492,7 +1494,7 @@ InstallGlobalFunction( OnProjSubspacesWithFrob,
 #    if not(IsMutable(vec)) then
 #        vec := MutableCopyMat(vec);
 #    fi;
-    return SemiEchelonMat(vec).vectors;
+    return EchelonMat(vec).vectors;
 #return vec;
   end );
 

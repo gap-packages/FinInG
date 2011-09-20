@@ -75,34 +75,20 @@ InstallMethod( ElementToVectorSpace,
 
 # CHECKED 17/04/11 jdb
 # this makes me unhappy now. \in is more general than IsIncident. 
+# commented out 20/09/2011. I must say that this method got installed twice now. 
+# what a shame of me... jdb. BTW: new method for \in decreases the unhappiness.
 #############################################################################
 #O  \in( <a>, <b> )
 # set theoretic containment for elements of a Lie geometry. 
 ##
-InstallMethod( \in, 
-	"for two IsElementOfLieGeometry",
-	[IsElementOfLieGeometry, IsElementOfLieGeometry],
-	function( a, b )
-		return IsIncident(b, a) and (a!.type <= b!.type); #made a little change here
-	end );	#to let in correspond with set theoretic containment. jdb 8/2/9
-			#During a nice afternoon in Vicenza back enabled. jdb and pc, 11/411
+#InstallMethod( \in, 
+#	"for two IsElementOfLieGeometry",
+#	[IsElementOfLieGeometry, IsElementOfLieGeometry],
+#	function( a, b )
+#		return IsIncident(b, a) and (a!.type <= b!.type); #made a little change here
+#	end );	#to let in correspond with set theoretic containment. jdb 8/2/9
+#			#During a nice afternoon in Vicenza back enabled. jdb and pc, 11/411
 
-
-# CHECKED 7/09/11 jdb
-#############################################################################
-#O  \in( <x>, <y> )
-# set theoretic containment for a projective space and a subspace. 
-##
-InstallOtherMethod( \in, 
-	"for a projective space and any of its subspaces", 
-	[ IsProjectiveSpace, IsSubspaceOfProjectiveSpace ],
-	function( x, y )
-		if x = y!.geo then
-			return false;
-		else
-			Error( "<x> is different from the ambient space of <y>" );
-		fi;
-	end );
 
 #############################################################################
 # Viewing/Printing/Displaying methods.

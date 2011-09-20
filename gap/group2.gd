@@ -62,7 +62,7 @@ DeclareGlobalFunction( "OnProjSubspacesReversing" );
 
 DeclareOperation( "StandardDualityOfProjectiveSpace", [IsProjectiveSpace] );
 DeclareOperation( "IdentityMappingOfElementsOfProjectiveSpace", [IsProjectiveSpace] );
-DeclareOperation( "ActionOnPointsHyperplanes", [IsProjGroupWithFrobWithPSIsom] );    
+DeclareOperation( "ActionOnAllPointsHyperplanes", [IsProjGroupWithFrobWithPSIsom] );    
 DeclareOperation( "ProjElWithFrobWithPSIsom",
    [IsMatrix and IsFFECollColl, IsMapping, IsField] ); 
 DeclareOperation( "ProjElWithFrobWithPSIsom",

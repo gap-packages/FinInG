@@ -392,7 +392,7 @@ Dependencies := rec(
   # insensitive, least version denoted with '>=' prepended to version string.
   # without these, the package will not load
   NeededOtherPackages := [["GAPDoc", ">= 0.99"], ["Forms", ">=1.2"], 
-                          ["Orb",">=2.0"], ["GenSS",">=0.9"], 
+                          ["Orb",">=2.0"], ["GenSS",">=0.9"], ["Gauss", ">=2010.05.29" ],
 			  ["GRAPE",">=4.3"]],
   # without these the package will issue a warning while loading
   # SuggestedOtherPackages := [],

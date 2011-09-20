@@ -68,9 +68,9 @@ DeclareOperation( "ProjectiveSpace", [IsInt, IsField] );
 DeclareOperation( "ProjectiveSpace", [IsInt, IsPosInt] );
 DeclareAttribute( "HomographyGroup", IsProjectiveSpace );
 DeclareAttribute( "SpecialHomographyGroup", IsProjectiveSpace );
-DeclareAttribute( "ProjectiveDimension", IsProjectiveSpace );
-DeclareAttribute( "ProjectiveDimension", IsSubspaceOfProjectiveSpace );
-DeclareAttribute( "ProjectiveDimension", IsEmpty );
+#DeclareAttribute( "ProjectiveDimension", IsProjectiveSpace ); #next three: more general decl in liegeometry.gd
+#DeclareAttribute( "ProjectiveDimension", IsSubspaceOfProjectiveSpace );
+#DeclareAttribute( "ProjectiveDimension", IsEmpty );
 
 DeclareAttribute( "Dimension", IsProjectiveSpace );
 DeclareAttribute( "Dimension", IsSubspaceOfProjectiveSpace );
@@ -92,8 +92,8 @@ DeclareOperation( "IsIncident", [IsProjectiveSpace, IsSubspaceOfProjectiveSpace]
 DeclareOperation( "IsIncident", [IsProjectiveSpace, IsProjectiveSpace]);
 #DeclareOperation( "IsIncident", [IsEmptySubspace, IsEmptySubspace]);
 
-DeclareAttribute( "AmbientSpace", IsProjectiveSpace );
-DeclareAttribute( "AmbientSpace", IsSubspaceOfProjectiveSpace );
+#DeclareAttribute( "AmbientSpace", IsProjectiveSpace ); #next two: more general decl in liegeometry.gd
+#DeclareAttribute( "AmbientSpace", IsSubspaceOfProjectiveSpace );
 
 
 DeclareSynonymAttr( "ProjectivityGroup", HomographyGroup );
@@ -122,7 +122,7 @@ DeclareOperation( "BaerSubplaneOnQuadrangle",
   [ IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace, 
     IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace ] );
 
-DeclareOperation("RandomSubspace",[IsVectorSpace,IsInt]);
+#DeclareOperation("RandomSubspace",[IsVectorSpace,IsInt]); #is for vector spaces -> moves to liegeometry.gd
 DeclareOperation("RandomSubspace",[IsProjectiveSpace,IsInt]);
 DeclareOperation("RandomSubspace",[IsSubspaceOfProjectiveSpace,IsInt]);
 

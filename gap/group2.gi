@@ -30,6 +30,8 @@
 # - test CorrelationGroup
 # - Documentation
 # - Random for correlation groups
+# - a tiny detail: just see if the methods for NiceMonomorphism are called when we
+#   think they are called.
 #
 ########################################
 
@@ -913,12 +915,11 @@ InstallOtherMethod( Embedding,
 
 #####################################################################
 # Actions
-# We follow the same approach as in goup.gi, i.e. first define the 
-# action of the funnay algebraic elements on vectorspaces
-# then creating on action that does the general stuff.
-# We will use the fact the st. duality is able to act on subspaces of a 
-# projective space already.
-# Recall that in group.gi we have implemented the methods that do algebraic
+# We follow almost the same approach as in goup.gi. We  define the 
+# action of a correlation on vectorspaces, but we our user function
+# for actions does not rely on it, since it would cause more function
+# calls. 
+# Also recall that in group.gi we have implemented the methods that do algebraic
 # stuff. The user methods, related to the projective geometry stuff, are 
 # in projectivespace.gi. Here we have both parts, since this file
 # is anyway related to projectivespace.gi
@@ -968,15 +969,15 @@ InstallGlobalFunction( OnProjSubspacesWithFrobWithPSIsom,
 		if not(IsMutable(vec)) then
 			vec := MutableCopyMat(vec);
 		fi;
-		TriangulizeMat(vec);
-		return vec;
+		return EchelonMat(vec).vectors;
 	end );
 
-# CHECKED 19/09/11 jdb
+# CHECKED 20/09/11 jdb
 #############################################################################
 #F  OnProjSubspacesReversing( <sub>, <el> )
 # computes <sub>^<el>, where <sub> is an element of a projective space, and 
-# <el> a correlation.
+# <el> a correlation. This function is stand alone now, and hence we still have
+# to do the canonization. Therefore we use VectorSpaceToElement.
 ##
 InstallGlobalFunction( OnProjSubspacesReversing,
 	function( sub, el )
@@ -1004,7 +1005,7 @@ InstallGlobalFunction( OnProjSubspacesReversing,
 # returns the dimension of the correlation group <g>. The dimension of this 
 # group is defined as the vector space dimension of the projective space  
 # of which <g> was defined as a projective group, or, in other words, as the 
-# size of the matrices minus one.
+# size of the matrices.
 ## 
 InstallMethod( Dimension, 
   "for a projective group with Frobenius with vspace isomorphism",
@@ -1022,13 +1023,13 @@ InstallMethod( Dimension,
     Error("dimension could not be determined");
   end );
 
-# CHECKED 19/09/11 jdb
+# CHECKED 20/09/11 jdb
 #############################################################################
-#P  ActionOnPointsHyperplanes( <g> )
+#P  ActionOnAllPointsHyperplanes( <g> )
 # returns the action of the correlation group <g> on the projective points
 # an hyperplanes of the underlying projective space.
 ## 
-InstallMethod( ActionOnPointsHyperplanes, 
+InstallMethod( ActionOnAllPointsHyperplanes, 
 	"for a correlation group",
 	[ IsProjGroupWithFrobWithPSIsom ],
 	function( pg )
@@ -1061,19 +1062,28 @@ InstallMethod( ActionOnPointsHyperplanes,
 		return a;
 	end );
 
+# CHECKED 20/09/11 jdb
+#############################################################################
+#P  CanComputeActionOnPoints( <g> )
+# is set true if we consider the computation of the action feasible.
+# for correlation groups.
+## 
 InstallMethod( CanComputeActionOnPoints, 
-  "for a projective group with frob with pspace isomorphism",
-  [IsProjGroupWithFrobWithPSIsom],
-  function( g )
-    local d,q;
-    d := Dimension( g );
-    q := Size( BaseField( g ) );
-    if (q^d - 1)/(q-1) > DESARGUES.LimitForCanComputeActionOnPoints then
-        return false;
-    else
-        return true;
-    fi;
-  end );
+	"for a projective group with frob with pspace isomorphism",
+	[IsProjGroupWithFrobWithPSIsom],
+	function( g )
+		local d,q;
+		d := Dimension( g );
+		q := Size( BaseField( g ) );
+		if (q^d - 1)/(q-1) > DESARGUES.LimitForCanComputeActionOnPoints then
+			return false;
+		else
+			return true;
+		fi;
+	end );
+
+## A grep of SetAsNiceMono on all *.gi files gives only the InstallMethod( parts. (jdb 20/9/11), see also comment in 
+## group.gi
 
 InstallMethod( SetAsNiceMono, 
   "for a projective group with Frobenius with pspace isomorphism and an action hom",
@@ -1083,27 +1093,36 @@ InstallMethod( SetAsNiceMono,
     SetNiceObject(pg,Image(a));
   end );
 
+# CHECKED 20/09/11 jdb
+#############################################################################
+#O  NiceMonomorphism( <pg> )
+# <pg> is a correlation group. This operation returns a nice monomorphism.
+##
 InstallMethod( NiceMonomorphism, 
-  "for a projective group with Frobenius with pspace isomorphism (feasible case)",
-  [IsProjGroupWithFrobWithPSIsom and CanComputeActionOnPoints and
-   IsHandledByNiceMonomorphism], 50,
-  function( pg )
-    return ActionOnPointsHyperplanes( pg );
-  end );
+	"for a projective group with Frobenius with pspace isomorphism (feasible case)",
+	[IsProjGroupWithFrobWithPSIsom and CanComputeActionOnPoints and
+	IsHandledByNiceMonomorphism], 50,
+	function( pg )
+		return ActionOnAllPointsHyperplanes( pg );
+	end );
   
+# CHECKED 20/09/11 jdb
+#############################################################################
+#O  NiceMonomorphism( <pg> )
+# <pg> is a correlation group. This operation returns a nice monomorphism.
+##
 InstallMethod( NiceMonomorphism, 
-  "for a projective group with Frobenius with pspace isomorphism (nasty case)",
-  [IsProjGroupWithFrobWithPSIsom and IsHandledByNiceMonomorphism], 50,
-  function( pg )
-    local can;
-    can := CanComputeActionOnPoints(pg);
-    if not(can) then
-        Error("action on projective points not feasible to calculate");
-    else
-        return ActionOnPointsHyperplanes( pg );
-    fi;
-  end );
-
+	"for a projective group with Frobenius with pspace isomorphism (nasty case)",
+	[IsProjGroupWithFrobWithPSIsom and IsHandledByNiceMonomorphism], 50,
+	function( pg )
+		local can;
+		can := CanComputeActionOnPoints(pg);
+		if not(can) then
+			Error("action on projective points not feasible to calculate");
+		else
+			return ActionOnAllPointsHyperplanes( pg );
+		fi;
+	end );
 
 # CHECKED 19/09/11 jdb
 ###################################################################

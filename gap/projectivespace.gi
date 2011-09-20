@@ -420,6 +420,7 @@ InstallMethod( \in,
 
 # CHECKED 7/09/11 jdb
 # CHANGED 19/9/2011 jdb + ml
+# CHANGED 20/09/2011 jdb + ml (SemiEchelonMat -> EchelonMat).
 #############################################################################
 #O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
 # by the vectorspace <v>. Several checks are built in. 
@@ -433,7 +434,7 @@ InstallMethod( VectorSpaceToElement,
         if IsEmpty(v) then
 			Error("<v> does not represent any vectorspace");
 		fi;
-		x := SemiEchelonMat(v).vectors;
+		x := EchelonMat(v).vectors;
         ## dimension should be correct
 		if Length(v[1]) <> geom!.dimension + 1 then
 			Error("Dimensions are incompatible");
@@ -461,6 +462,7 @@ InstallMethod( VectorSpaceToElement,
 
 # CHECKED 8/09/11 jdb
 # CHANGED 19/9/2011 jdb + ml
+# CHANGED 20/09/2011 jdb + ml (SemiEchelonMat -> EchelonMat).
 #############################################################################
 #O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
 # by the vectorspace <v>. Several checks are built in. 
@@ -474,7 +476,7 @@ InstallMethod( VectorSpaceToElement,
 		if IsEmpty(v) then
 			Error("<v> does not represent any vectorspace");
 		fi;
-		x := SemiEchelonMat(v).vectors;
+		x := EchelonMat(v).vectors;
 		## dimension should be correct
 		if Length(v[1]) <> geom!.dimension + 1 then
 			Error("Dimensions are incompatible");
@@ -502,6 +504,7 @@ InstallMethod( VectorSpaceToElement,
   
 # CHECKED 8/09/11 jdb
 # CHANGED 19/9/2011 jdb + ml
+# CHANGED 20/09/2011 jdb + ml (SemiEchelonMat -> EchelonMat).
 #############################################################################
 #O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
 # by the vectorspace <v>. Several checks are built in. 
@@ -515,7 +518,7 @@ InstallMethod( VectorSpaceToElement,
 		if IsEmpty(v) then
 			Error("<v> does not represent any vectorspace");
 		fi;
-		x := SemiEchelonMat(v).vectors;
+		x := EchelonMat(v).vectors;
 		## dimension should be correct
 		if Length(v[1]) <> geom!.dimension + 1 then
 			Error("Dimensions are incompatible");
@@ -995,7 +998,9 @@ InstallMethod( SpecialHomographyGroup,
 #############################################################################
 #F  OnProjSubspaces( <var>, <el> )
 # computes <var>^<el>, where <var> is an element of a projective space, and 
-# <el> a projective semilinear element.
+# <el> a projective semilinear element. Important: we are allowed to use Wrap
+# rather than VectorSpaceToElement, since the OnProjSubspacesWithFrob and OnProjPointsWithFrob
+# deal with making the representation of <var>^<el> canonical.
 ##
 InstallGlobalFunction( OnProjSubspaces,
   function( var, el )
@@ -1035,7 +1040,7 @@ InstallGlobalFunction( OnSetsProjSubspaces,
   end );
 
 #############################################################################
-# Iterator and Eneumerating
+# Iterator and Enumerating
 #############################################################################
 
 # CHECKED 11/09/11 jdb
@@ -1374,6 +1379,22 @@ InstallMethod( Iterator,
 #                implement in geometry.g* 
 #############################################################################
 
+# CHECKED 7/09/11 jdb
+#############################################################################
+#O  \in( <x>, <y> )
+# set theoretic containment for a projective space and a subspace. 
+##
+InstallOtherMethod( \in, 
+	"for a projective space and any of its subspaces", 
+	[ IsProjectiveSpace, IsSubspaceOfProjectiveSpace ],
+	function( x, y )
+		if x = y!.geo then
+			return false;
+		else
+			Error( "<x> is different from the ambient space of <y>" );
+		fi;
+	end );
+
 # CHECKED 11/09/11 jdb
 #############################################################################
 #O  \in( <x>, <y> )
@@ -1588,7 +1609,7 @@ end );
 
 #      span := MutableCopyMat(ux);
 #      Append(span,uy);
-#      span := MutableCopyMat(SemiEchelonMat(span).vectors);
+#      span := MutableCopyMat(EchelonMat(span).vectors);
 #      # if the span is the whole space, return that.
 #      if Length(span) = ambx!.dimension + 1 then
 #        return ambx;
@@ -1631,6 +1652,7 @@ InstallMethod( Span,
 	end );
 
 # CHECKED 11/09/11 jdb
+# CHANGED 20/09/2011 jdb + ml (SemiEchelonMat -> EchelonMat).
 #############################################################################
 #O  Span( <l> )
 # returns the span of the projective subspaces in <l>.
@@ -1655,7 +1677,7 @@ InstallMethod( Span, "for a homogeneous list of subspaces of a projective space"
 				Append(unwrapped, unr);
 			od;
 			span := MutableCopyMat(unwrapped);
-			span := MutableCopyMat(SemiEchelonMat(span).vectors);
+			span := MutableCopyMat(EchelonMat(span).vectors);
 			if Length(span) = amb!.dimension + 1 then
 				return amb;
 			fi;

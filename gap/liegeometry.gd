@@ -58,6 +58,12 @@ DeclareRepresentation( "IsShadowElementsOfLieGeometryRep", IsElementsOfIncidence
 DeclareOperation( "UnderlyingVectorSpace", [IsLieGeometry] );
 DeclareOperation( "UnderlyingVectorSpace", [IsElementOfLieGeometry] );
 
+DeclareAttribute( "AmbientSpace", IsLieGeometry );
+DeclareAttribute( "AmbientSpace", IsElementOfLieGeometry );
+
+DeclareAttribute( "ProjectiveDimension", IsLieGeometry ); #next three: more general decl in liegeometry.gd
+DeclareAttribute( "ProjectiveDimension", IsElementOfLieGeometry );
+DeclareAttribute( "ProjectiveDimension", IsEmptySubspace );
 
 DeclareOperation( "VectorSpaceToElement", [IsLieGeometry, IsRowVector] );
 DeclareOperation( "VectorSpaceToElement", [IsLieGeometry, Is8BitVectorRep] );
@@ -71,6 +77,7 @@ DeclareOperation( "EmptySubspace", [IsLieGeometry] );
 
 DeclareOperation( "\^", [IsEmptySubspace, IsUnwrapper] );
 
+DeclareOperation("RandomSubspace",[IsVectorSpace,IsInt]); #is for vector spaces -> moves to liegeometry.gd
 
 
 DeclareGlobalFunction( "OnProjSubspaces" );
