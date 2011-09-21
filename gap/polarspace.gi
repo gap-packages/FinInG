@@ -11,11 +11,13 @@
 ##                                                            Michael Pauley
 ##                                                             Sven Reichard
 ##
-##  Copyright 2008 University of Western Australia, Perth
-##                 Lehrstuhl D fuer Mathematik, RWTH Aachen
-##                 Ghent University
-##                 Colorado State University
-##                 Vrije Universiteit Brussel
+##  Copyright 2011	Colorado State University, Fort Collins
+##					Università degli Studi di Padova
+##					Universeit Gent
+##					University of St. Andrews
+##					University of Western Australia, Perth
+##                  Vrije Universiteit Brussel
+##                 
 ##
 ##  Implementation stuff for polar spaces
 ##
@@ -31,6 +33,8 @@
 # - make sure matrices are compressed.
 # - think about the IsClassicalGQ filter. At first sight, we can leave everything as
 #   is, since this will not affect correctness of the code.
+# - to do: check if in constructors of standard polar spaces, the Wrap should be
+#   replaced by VectorSpaceToElement
 #
 ########################################
 # Low level help methods:
@@ -99,6 +103,63 @@ InstallMethod( PolarSpace,
 		return geo;
 	end );
 
+#############################################################################
+#O  PolarSpaceStandard( <m> )
+# Method to crete a polar space using sesquilinear form <m>, where we know
+# that this form is the standard one used in Fining. Not intended for users, 
+# all checks are removed.
+##
+InstallMethod( PolarSpaceStandard, 
+	"for a sesquilinear form",
+	[ IsSesquilinearForm ],
+	function( m )
+		local geo, ty, gram, f;
+		gram := m!.matrix;
+		f := m!.basefield;
+		geo := rec( basefield := f, dimension := Length(gram)-1,
+				vectorspace := FullRowSpace(f,Length(gram)) );
+		if WittIndex(m) = 2 then
+			ty := NewType( GeometriesFamily,
+                  IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsClassicalGQ);
+		else ty := NewType( GeometriesFamily,
+                  IsClassicalPolarSpace and IsClassicalPolarSpaceRep );
+		fi;
+		ObjectifyWithAttributes( geo, ty, 
+                            SesquilinearForm, m,
+                            AmbientSpace, ProjectiveSpace(geo.dimension, f),
+							IsStandardPolarSpace, true );
+		return geo;
+	end );
+
+#############################################################################
+#O  PolarSpaceStandard( <m> )
+# general method to create a polar space using quadratic form. Not intended 
+# for the user. no checks.
+##
+InstallMethod( PolarSpaceStandard, 
+	"for a quadratic form",
+	[ IsQuadraticForm ],
+	function( m )
+		local geo, ty, gram, polar, f, flavour;
+		f := m!.basefield;
+		gram := m!.matrix;
+		polar := AssociatedBilinearForm( m );
+		geo := rec( basefield := f, dimension := Length(gram)-1,
+					vectorspace := FullRowSpace(f,Length(gram)) );
+		if WittIndex(m) = 2 then
+			ty := NewType( GeometriesFamily,
+					IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsClassicalGQ);
+		else ty := NewType( GeometriesFamily,
+					IsClassicalPolarSpace and IsClassicalPolarSpaceRep );
+		fi;
+		ObjectifyWithAttributes( geo, ty, 
+								QuadraticForm, m,
+								SesquilinearForm, polar,
+								AmbientSpace, ProjectiveSpace(geo.dimension, f),
+								IsStandardPolarSpace, true );
+		return geo;
+	end );
+
 # CHECKED 20/09/11 jdb
 #############################################################################
 #O  PolarSpace( <m> )
@@ -127,7 +188,8 @@ InstallMethod( PolarSpace,
 		fi;
 		ObjectifyWithAttributes( geo, ty, 
                             SesquilinearForm, m,
-                            AmbientSpace, ProjectiveSpace(geo.dimension, f) );
+                            AmbientSpace, ProjectiveSpace(geo.dimension, f),
+							IsStandardPolarSpace, false );
 		return geo;
 	end );
 
@@ -159,7 +221,8 @@ InstallMethod( PolarSpace,
 		ObjectifyWithAttributes( geo, ty, 
 								QuadraticForm, m,
 								SesquilinearForm, polar,
-								AmbientSpace, ProjectiveSpace(geo.dimension, f) );
+								AmbientSpace, ProjectiveSpace(geo.dimension, f),
+								IsStandardPolarSpace, false );
 		return geo;
 	end );
 
@@ -191,10 +254,571 @@ InstallMethod( PolarSpace,
 		fi;
 		ObjectifyWithAttributes( geo, ty, 
                             SesquilinearForm, m,
-                            AmbientSpace, ProjectiveSpace(geo.dimension, f) );
+                            AmbientSpace, ProjectiveSpace(geo.dimension, f),
+							IsStandardPolarSpace, false );
 		return geo;
 	end );
 
+
+#############################################################################
+## Constructions of Canonical finite classical Polar Spaces
+## Important remark. We use "Canonical" in the mathematical sense, i.e, a polar
+## space that equals one of the "standard" polar spaces constructed by the methods
+## below. So "Standard" refers to a particular form used to construct the polar space. 
+## It is well known that two forms that are similar, i.e. differe on a constant factor,
+## will yield the same polar space. So a polar space is canonical iff its forms is similar with
+## the form of one of the polar spaces constructed with a method below. A polar space is 
+## "standard" iff it is constructed with one of the methods below. So if the user
+## uses his favorite form, his polar space can become canonical, but it can never become standard.
+#############################################################################
+
+#############################################################################
+# Part I: methods for canonical gram matrices and canonical quadratic forms.
+# these methods are not intended for the user.
+# This part also includes a method to setup the representative of the maximal 
+# subspaces for polar spaces of each type.
+#############################################################################
+
+# CHECKED 21/09/11 jdb
+#############################################################################
+#O  CanonicalGramMatrix( <type>, <d>, <f> )
+## Constructs the canonical gram matrix compatible with
+## the corresponding matrix group in FinInG.
+##
+InstallMethod( CanonicalGramMatrix, 
+	"for a string, an integer, and a field",
+	[IsString, IsPosInt, IsField],
+	function( type, d, f )
+		local one, q, m, i, t, x, w, p;
+		one := One( f );
+		q := Size(f);
+
+      # Symplectic Gram matrix
+		if type = "symplectic" then    
+			if IsOddInt(d) then
+				Error( "the dimension <d> must be even" );
+			fi;    
+			m := List( 0 * IdentityMat(d, f), ShallowCopy );
+			for i  in [ 1 .. d/2 ]  do
+				m[2*i][2*i-1] := -one;
+				m[2*i-1][2*i] := one;
+			od;
+    
+      # Unitary Gram matrix      
+		elif type = "hermitian" then
+			if IsOddInt(PrimePowersInt(Size(f))[2]) then
+				Error("field order must be a square");
+			fi;
+			m := IdentityMat(d, f);
+        
+      # Orthogonal Gram matrix
+		elif type = "hyperbolic" then
+			m := List( 0*IdentityMat(d, f), ShallowCopy );
+			p := Characteristic(f);
+			if IsOddInt(p) and (p + 1) mod 4 = 0 then
+				w := one * ((p + 1) / 2);
+			else
+				w := one;
+			fi; 
+			for i  in [ 1 .. d/2 ]  do
+				m[2*i-1][2*i] := w;
+				m[2*i][2*i-1] := w;
+			od;
+		elif type = "elliptic" then   
+			m := List( 0*IdentityMat(d, f), ShallowCopy );
+			p := Characteristic(f);
+      ## if q is congruent to 5,7 mod 8, then
+      ## the anisotropic part is the primitive root.
+			if q mod 4 in [1,2] then 
+				t := Z(q);
+			else
+				t := one;
+			fi;
+			m{[1,2]}{[1,2]} := [ [ 1, 0 ], [ 0, t ] ] * one;
+
+			if IsOddInt(p) then
+				w := one * ((p + 1) / 2);
+			else
+				w := one;
+			fi; 
+			for i in [ 2 .. d/2 ]  do
+				m[2*i-1][2*i] := w;
+				m[2*i][2*i-1] := w;
+			od;
+		elif type = "parabolic" then 
+			m := List( 0*IdentityMat(d, f), ShallowCopy );          
+			p := Characteristic(f);
+			if IsOddInt(p) then
+         ## if q is congruent to 5,7 mod 8, then
+         ## the anisotropic part is the primitive root
+         ## of the prime subfield.
+			if q mod 8 in [5,7] then 
+				t := Z(p);
+			else
+				t := one;
+			fi;
+				m[1][1] := t;
+				w := t * ((p + 1) / 2);
+			else
+				w := one;
+			fi; 
+			for i in [ 1 .. (d-1)/2 ]  do
+				m[2*i][2*i+1] := w;
+				m[2*i+1][2*i] := w;
+			od;
+		else Error( "type is unknown or not implemented" );
+		fi;
+
+    ##  We should return a compressed matrix in order that
+    ##  our computations are efficient
+
+		ConvertToMatrixRep( m, f );
+		return m;
+	end );
+
+# CHECKED 21/09/11 jdb
+#############################################################################
+#O  CanonicalGramMatrix( <type>, <d>, <f> )
+## Constructs the canonical quadric form compatible with
+## the corresponding matrix group in FinInG.
+## only used for q even.
+##
+InstallMethod( CanonicalQuadraticForm, 
+	"for a string, an integer and a field",
+	[IsString, IsPosInt, IsField],
+	function( type, d, f )
+		local m, one, q, p, j, x, R;
+		one := One( f );
+        if type = "hyperbolic" then
+			m := MutableCopyMat(0 * IdentityMat(d, f));
+			for j in [ 1 .. d/2 ]  do
+				m[ 2*j-1 ][ 2*j ] := one;
+			od;
+		elif type = "elliptic" then
+			m := MutableCopyMat(0 * IdentityMat(d, f));
+			m[1][1] := one;
+			m[2][1] := one; 
+			m[d][d-1] := one;
+			for j in [ 2 .. d/2-1 ]  do
+				m[ 2*j-1 ][ 2*j ] := one;
+			od;
+			p := Characteristic(f);
+			q := Size(f);
+			if IsOddInt(Log(q, p)) then
+				m[2][2] := one;
+			else
+				R := PolynomialRing( f, 1 );
+				x := Indeterminate( f );
+				m[2][2] := Z(q)^First( [ 0 .. q-2 ], u -> 
+					Length( Factors( R, x^2+x+PrimitiveRoot( f )^u ) ) = 1 );         
+			fi;
+		elif type = "parabolic" then
+			m := MutableCopyMat(0 * IdentityMat(d, f));
+			m[1][1] := one;
+			for j in [ 1 .. (d-1)/2 ]  do
+				m[ 2*j+1 ][ 2*j ] := one;
+			od;
+		else Error( "type is unknown or not implemented" );
+		fi;
+
+    ##  We should return a compressed matrix in order that
+    ##  our computations are efficient
+
+		ConvertToMatrixRep( m, f );
+		return m;
+	end );
+
+# CHECKED 21/09/11 jdb
+#############################################################################
+#O  CanonicalOrbitRepresentativeForSubspaces( <type>, <d>, <f> )
+## This function returns representatives for the
+## maximal totally isotropic (singular) subspaces
+## of the given canonical polar space
+##
+InstallMethod( CanonicalOrbitRepresentativeForSubspaces, 
+	"for a string, an integer and a field",
+	[IsString, IsPosInt, IsField],		
+	function( type, d, f )
+		local b, i, id, one, w, q, sqrtq;
+		q := Size(f);
+		id := IdentityMat(d, f);
+		if type = "symplectic" then    
+			b := List([1..d/2], i-> id[2*i-1] + id[2*i]);
+		elif type = "hermitian" then     
+			one := One(f);
+			sqrtq := Sqrt(q);
+      ## find element with norm -1
+			w := First(AsList(f), t -> IsZero( t^(sqrtq+1) + one ) );
+			if IsEvenInt(d) then   
+				b := List([1..d/2], i-> w * id[2*i] + id[2*i-1]);
+			else 
+				b := List([1..(d-1)/2], i-> w * id[2*i] + id[2*i-1]);
+			fi;
+		elif type = "parabolic" then 
+			b := id{List([1..(d-1)/2], i -> 2*i)};
+		elif type = "hyperbolic" then 
+			b := id{List([1..d/2], i -> 2*i-1)};
+		elif type = "elliptic" then 
+			b := id{List([1..(d/2-1)],i -> 2*i+1)};
+		else Error( "type is unknown or not implemented");
+		fi;
+		return [b];
+	end );
+
+#############################################################################
+# Part II: constructor methods, for the user of course.
+#############################################################################
+
+# CHECKED 21/09/11 jdb
+#############################################################################
+#O  EllipticQuadric( <d>, <f> )
+# returns the standard elliptic quadrac. See CanonicalQuadraticForm and CanonicalGramMatrix
+# for details on the standard.
+##
+InstallMethod( EllipticQuadric, 
+	"for an integer and a field",
+	[ IsPosInt, IsField ],
+	function( d, f )
+		local eq,m,types,max,reps,q,form;
+		q := Size(f);
+		if IsEvenInt(d) then
+			Error("dimension must be odd");
+			return;
+		fi;
+		if IsEvenInt(q) then
+			m := CanonicalQuadraticForm("elliptic", d+1, f);
+			form := QuadraticFormByMatrix(m, f);
+		else 
+			m := CanonicalGramMatrix("elliptic", d+1, f);  
+			form := BilinearFormByMatrix(m, f);  
+		fi; 
+        eq := PolarSpaceStandard( form );
+		SetRankAttr( eq, (d-1)/2 );
+		types := TypesOfElementsOfIncidenceStructure( AmbientSpace(eq) );
+		SetTypesOfElementsOfIncidenceStructure(eq, types{[1..(d-1)/2]});
+		SetIsEllipticQuadric(eq, true);
+		SetIsCanonicalPolarSpace(eq, true);
+		SetPolarSpaceType(eq, "elliptic");
+		if RankAttr(eq) = 2 then
+			SetOrder( eq, [q, q^2]);
+		fi;
+		max := CanonicalOrbitRepresentativeForSubspaces("elliptic", d+1, f)[1];
+
+	## Here we take the maximal totally isotropic subspace rep
+	## max and make representatives for lower dimensional subspaces
+		reps := [ max[1] ];
+		Append(reps, List([2..(d-1)/2], j -> max{[1..j]}));  
+
+	## We would like the representative to be stored as
+	## compressed matrices. Then they will be more efficient
+	## to work with.
+  
+		for m in reps do
+			if IsMatrix(m) then
+				ConvertToMatrixRep(m,f);
+			else 
+				ConvertToVectorRep(m,f);
+			fi;
+		od;   
+
+    ## Wrap 'em up
+		reps := List([1..(d-1)/2], j -> Wrap(eq, j, reps[j]) );
+		SetRepresentativesOfElements(eq, reps);
+		SetClassicalGroupInfo( eq, rec( degree := (q^((d+1)/2)+1)*(q^((d+1)/2-1)-1)/(q-1) ) );  
+		return eq;
+	end );
+
+# CHECKED 21/09/11 jdb
+#############################################################################
+#O  EllipticQuadric( <d>, <q> )
+# returns the standard elliptic quadric. See EllipticQuadric method above.
+##
+InstallMethod( EllipticQuadric,
+	"for two positive inteters <d> and <q>",	
+	[ IsPosInt, IsPosInt ],
+	function( d, q )  
+		return EllipticQuadric(d,GF(q));
+	end );
+
+# CHECKED 21/09/11 jdb
+#############################################################################
+#O  SymplecticSpace( <d>, <f> )
+# returns the standard symplectic space. See CanonicalGramMatrix
+# for details on the standard.
+##
+InstallMethod( SymplecticSpace,
+	"for an integer and a field",
+	[ IsPosInt, IsField ],
+	function( d, f )
+		local w,frob,m,types,max,reps,q,form;
+		if IsEvenInt(d) then
+			Error("dimension must be odd");
+			return;
+		fi;
+
+	## put compressed matrices here also
+		q := Size(f);
+		m := CanonicalGramMatrix("symplectic", d+1, f);     
+		w := PolarSpaceStandard( BilinearFormByMatrix(m, f) );
+		SetRankAttr( w, (d+1)/2 );
+		types := TypesOfElementsOfIncidenceStructure(AmbientSpace(w));
+		if RankAttr(w) = 2 then
+			SetOrder( w, [q, q]);
+		fi;
+		SetTypesOfElementsOfIncidenceStructure(w,types{[1..(d+1)/2]});
+		SetIsSymplecticSpace(w,true);
+		SetIsCanonicalPolarSpace(w, true);
+		SetPolarSpaceType(w, "symplectic");
+		max := CanonicalOrbitRepresentativeForSubspaces("symplectic", d+1, w!.basefield)[1];    
+
+    ## Here we take the maximal totally isotropic subspace rep
+    ## max and make representatives for lower dimensional subspaces
+		reps := [ max[1] ];
+		Append(reps, List([2..(d+1)/2], j -> max{[1..j]}));  
+
+    ## We would like the representative to be stored as
+    ## compressed matrices. Then they will be more efficient
+    ## to work with.
+		for m in reps do
+			if IsMatrix(m) then
+				ConvertToMatrixRep(m,f);
+			else 
+				ConvertToVectorRep(m,f);
+			fi;
+		od;   
+
+    ## Wrap 'em up
+		reps := List([1..(d+1)/2], j -> Wrap(w, j, reps[j]) );
+		SetRepresentativesOfElements(w, reps);
+        SetClassicalGroupInfo( w, rec(  degree := (q^(d+1)-1)/(q-1) ) );    
+		return w;
+	end );
+
+
+# CHECKED 21/09/11 jdb
+#############################################################################
+#O  SymplecticSpace( <d>, <q> )
+# returns the standard symplectic space. See SymplecticSpace method above.
+##
+InstallMethod(SymplecticSpace, 
+	"for an integer and an integer",
+	[ IsPosInt, IsPosInt ],
+	function( d, q ) 
+		return SymplecticSpace(d, GF(q));
+	end );
+
+# CHECKED 21/09/11 jdb
+#############################################################################
+#O  ParabolicQuadric( <d>, <f> )
+# returns the standard parabolic quadric. See CanonicalQuadraticForm and CanonicalGramMatrix
+# for details on the standard.
+##
+InstallMethod( ParabolicQuadric, 
+	"for an integer and a field",	
+	[ IsPosInt, IsField ],
+	function( d, f )
+		local pq,m,types,max,reps,q,form;
+		if IsOddInt(d) then
+			Error("dimension must be even");
+			return;
+		fi;
+		q := Size(f);
+		if IsEvenInt(q) then
+			m := CanonicalQuadraticForm("parabolic", d+1, f);
+			form := QuadraticFormByMatrix(m, f);
+		else 
+			m := CanonicalGramMatrix("parabolic", d+1, f); 
+			form := BilinearFormByMatrix(m, f);   
+		fi; 
+        pq := PolarSpaceStandard( form );
+		SetRankAttr( pq, d/2 );
+		types := TypesOfElementsOfIncidenceStructure( AmbientSpace(pq) );
+		SetTypesOfElementsOfIncidenceStructure(pq, types{[1..d/2]});
+		SetIsParabolicQuadric(pq, true);
+		SetIsCanonicalPolarSpace(pq, true);
+		SetPolarSpaceType(pq, "parabolic");
+		if RankAttr(pq) = 2 then
+			SetOrder( pq, [q, q]);
+		fi;
+		max := CanonicalOrbitRepresentativeForSubspaces("parabolic", d+1, f)[1];
+
+    ## Here we take the maximal totally isotropic subspace rep
+    ## max and make representatives for lower dimensional subspaces
+
+		reps := [ max[1] ];
+		Append(reps, List([2..d/2], j -> max{[1..j]}));  
+
+    ## We would like the representative to be stored as
+    ## compressed matrices. Then they will be more efficient
+    ## to work with.
+  
+		for m in reps do
+			if IsMatrix(m) then
+				ConvertToMatrixRep(m,f);
+			else 
+				ConvertToVectorRep(m,f);
+			fi;
+		od;   
+
+    ## Wrap 'em up
+		reps := List([1..d/2], j -> Wrap(pq, j, reps[j]) );
+		SetRepresentativesOfElements(pq, reps);
+        SetClassicalGroupInfo( pq, rec( degree := (q^(d/2)-1)/(q-1)*(q^((d+2)/2-1)+1) ) );   
+		return pq;
+	end );
+
+# CHECKED 21/09/11 jdb
+#############################################################################
+#O  ParabolicQuadric( <d>, <q> )
+# returns the standard parabolic quadric. See ParabolicQuadric method above.
+##
+InstallMethod( ParabolicQuadric,
+	"for two integers",
+	[ IsPosInt, IsPosInt ],
+	function( d, q ) 
+		return ParabolicQuadric(d, GF(q));
+	end );
+
+# CHECKED 21/09/11 jdb
+#############################################################################
+#O  HyperbolicQuadric( <d>, <f> )
+# returns the standard hyperbolic quadric. See CanonicalQuadraticForm and CanonicalGramMatrix
+# for details on the standard.
+##
+InstallMethod( HyperbolicQuadric, 
+	"for an integer and a field",	
+	[ IsPosInt, IsField ],
+	function( d, f )
+		local hq,m,types,max,reps,q,form;
+		q := Size(f);
+		if IsEvenInt(d) then
+			Error("dimension must be odd");
+			return;
+		fi;
+		if IsEvenInt(q) then
+			m := CanonicalQuadraticForm("hyperbolic", d+1, f);
+			form := QuadraticFormByMatrix(m, f);
+		else 
+			m := CanonicalGramMatrix("hyperbolic", d+1, f);    
+			form := BilinearFormByMatrix(m, f);
+		fi; 
+		hq := PolarSpaceStandard( form );
+		SetRankAttr( hq, (d+1)/2 );
+		types := TypesOfElementsOfIncidenceStructure( AmbientSpace(hq) );
+		SetTypesOfElementsOfIncidenceStructure(hq, types{[1..(d+1)/2]});
+		SetIsCanonicalPolarSpace(hq, true);
+		SetIsHyperbolicQuadric(hq, true);
+		SetPolarSpaceType(hq, "hyperbolic");
+		if RankAttr(hq) = 2 then
+			SetOrder( hq, [q, 1]);
+		fi;
+		max := CanonicalOrbitRepresentativeForSubspaces("hyperbolic", d+1, f)[1];
+  
+    ## Here we take the maximal totally isotropic subspace rep
+    ## max and make representatives for lower dimensional subspaces
+
+		reps := [ max[1] ];
+		Append(reps, List([2..(d+1)/2], j -> max{[1..j]}));  
+
+    ## We would like the representative to be stored as
+    ## compressed matrices. Then they will be more efficient
+    ## to work with.
+  
+		for m in reps do
+			if IsMatrix(m) then
+				ConvertToMatrixRep(m,f);
+			else 
+				ConvertToVectorRep(m,f);
+			fi;
+		od;   
+
+    ## Wrap 'em up
+		reps := List([1..(d+1)/2], j -> Wrap(hq, j, reps[j]) );
+		SetRepresentativesOfElements(hq, reps);
+        SetClassicalGroupInfo( hq, rec( degree := (q^((d+1)/2)-1)/(q-1)*(q^((d+1)/2-1)+1)) );
+		return hq;
+	end );
+
+# CHECKED 21/09/11 jdb
+#############################################################################
+#O  HyperbolicQuadric( <d>, <q> )
+# returns the standard hyperbolic quadric. See HyperbolicQuadric method above.
+##
+InstallMethod(HyperbolicQuadric, 
+	"for a two integers",
+	[ IsPosInt, IsPosInt ],
+	function( d, q ) 
+		return HyperbolicQuadric(d, GF(q));
+	end );
+
+# CHECKED 21/09/11 jdb
+#############################################################################
+#O  HermitianVariety( <d>, <f> )
+# returns the standard hermitian variety. See CanonicalGramMatrix
+# for details on the standard.
+##
+InstallMethod( HermitianVariety, 
+	"for an integer and a field",	
+	[ IsPosInt, IsField ],
+	function( d, f )
+		local h,m,types,max,reps,q;
+		if PrimePowersInt(Size(f))[2] mod 2 <> 0 then
+			Error("field order must be a square");
+			return;
+		fi;
+		q := Sqrt(Size(f));
+		m := CanonicalGramMatrix("hermitian", d+1, f);   
+		h := PolarSpaceStandard( HermitianFormByMatrix(m, f) );
+		if d mod 2 = 0 then  
+			SetRankAttr( h, d/2 );
+		else
+			SetRankAttr( h, (d+1)/2 );    
+		fi;    
+		types := TypesOfElementsOfIncidenceStructure( AmbientSpace(h) );
+		SetTypesOfElementsOfIncidenceStructure(h, types{[1..RankAttr(h)]});
+		SetIsHermitianVariety(h, true);
+		SetIsCanonicalPolarSpace(h, true);
+		SetPolarSpaceType(h, "hermitian");
+		if RankAttr(h) = 2 then
+			if d = 3 then SetOrder( h, [q^2, q]); fi;
+			if d = 4 then SetOrder( h, [q^2, q^3]); fi;
+		fi;
+		max := CanonicalOrbitRepresentativeForSubspaces("hermitian", d+1, f)[1];
+
+    ## Here we take the maximal totally isotropic subspace rep
+    ## max and make representatives for lower dimensional subspaces
+		reps := [ max[1] ];
+		Append(reps, List([2..RankAttr(h)], j -> max{[1..j]}));  
+
+    ## We would like the representative to be stored as
+    ## compressed matrices. Then they will be more efficient
+    ## to work with.
+		for m in reps do
+			if IsMatrix(m) then
+				ConvertToMatrixRep(m,f);
+			else
+				ConvertToVectorRep(m,f);  
+			fi;
+		od;   
+
+    ## Wrap 'em up
+		reps := List([1..RankAttr(h)], j -> Wrap(h, j, reps[j]) );
+		SetRepresentativesOfElements(h, reps);
+		SetClassicalGroupInfo( h, rec(  degree := (q^d-(-1)^d)*(q^(d+1)-(-1)^(d+1))/(q^2-1)) );
+		return h;
+	end );
+
+# CHECKED 21/09/11 jdb
+#############################################################################
+#O  HermitianVariety( <d>, <q> )
+# returns the standard hermitian variety. See HermitianVariety method above.
+##
+InstallMethod(HermitianVariety,
+	"for an two integers",
+	[ IsPosInt, IsPosInt ],
+	function( d, q ) 
+		return HermitianVariety(d, GF(q));
+	end );
 
 #############################################################################
 # methods for some attributes.
@@ -289,8 +913,197 @@ InstallMethod( CompanionAutomorphism,
 	end );
 
 #############################################################################
-## TOT HIER GECHECKT JDB en ML 15/04/11
+# jdb and ml will change ViewObj/PrintObj/Display methods now.
 #############################################################################
+
+InstallMethod( ViewObj, 
+	"for a polar space",
+	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
+	function( p )
+		Print("<polar space over ",p!.basefield,">");
+	end );
+
+InstallMethod( ViewObj,
+	"for an elliptic quadric",
+	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsEllipticQuadric],
+	function( p )
+		Print("Q-(",p!.dimension,", ",Size(p!.basefield),")");
+	end );
+
+InstallMethod( ViewObj,
+	"for a standard elliptic quadric",
+	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsEllipticQuadric and IsStandardPolarSpace],
+	function( p )
+		Print("standard Q-(",p!.dimension,", ",Size(p!.basefield),")");
+	end );
+
+InstallMethod( ViewObj,
+	"for a symplectic space",
+	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsSymplecticSpace],
+    function( p )
+		Print("W(",p!.dimension,", ",Size(p!.basefield),")");
+	end );
+
+InstallMethod( ViewObj,
+	"for a standard symplectic space",
+	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsSymplecticSpace and IsStandardPolarSpace],
+    function( p )
+		Print("standard W(",p!.dimension,", ",Size(p!.basefield),")");
+	end );
+
+InstallMethod( ViewObj,
+	"for a parabolic quadric",
+	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsParabolicQuadric ],
+    function( p )
+		Print("Q(",p!.dimension,", ",Size(p!.basefield),")");
+	end);
+
+InstallMethod( ViewObj,
+	"for a standard parabolic quadric",
+	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsParabolicQuadric and IsStandardPolarSpace ],
+    function( p )
+		Print("standard Q(",p!.dimension,", ",Size(p!.basefield),")");
+	end);
+
+InstallMethod( ViewObj,
+	"for a hyperbolic quadric",
+	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsHyperbolicQuadric ],
+    function( p )
+		Print("Q+(",p!.dimension,", ",Size(p!.basefield),")");
+	end);
+
+InstallMethod( ViewObj,
+	"for a standard hyperbolic quadric",
+	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsHyperbolicQuadric and IsStandardPolarSpace],
+    function( p )
+		Print("standard Q+(",p!.dimension,", ",Size(p!.basefield),")");
+	end);
+
+InstallMethod( ViewObj,
+	"for a hermitian variety",
+	[IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsHermitianVariety ],
+    function( p )
+		Print("H(",p!.dimension,", ",Sqrt(Size(p!.basefield)),"^2)");
+	end);
+
+InstallMethod( ViewObj,
+	"for a standard hermitian variety",
+	[IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsHermitianVariety ],
+    function( p )
+		Print("standard H(",p!.dimension,", ",Sqrt(Size(p!.basefield)),"^2)");
+    end);
+
+InstallMethod( PrintObj, [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
+  function( p )
+    Print("PolarSpace(\n");
+    if HasQuadraticForm(p) then
+       Print(QuadraticForm(p));
+    else
+       Print(SesquilinearForm(p));
+    fi;
+    Print(", ", p!.basefield, " )");
+  end );
+
+InstallMethod( Display, [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
+  function( p )
+    Print("<polar space of rank ",p!.dimension," over ",p!.basefield,">\n");
+    if HasQuadraticForm(p) then
+       Display(QuadraticForm(p));
+    fi;
+    Display(SesquilinearForm(p));
+    if HasDiagramOfGeometry( p ) then
+       Display( DiagramOfGeometry( p ) );
+    fi;
+  end );
+
+InstallMethod( PrintObj,
+  [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsEllipticQuadric ],
+        function( p )
+          Print("EllipticQuadric(",p!.dimension,",",p!.basefield,")");
+        end );
+
+InstallMethod( Display, 
+  [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsEllipticQuadric ],
+  function( p )
+    Print("Q-(",p!.dimension,", ",Size(p!.basefield),")\n");
+    if HasQuadraticForm(p) then
+       Display(QuadraticForm(p));
+    fi;
+    Display(SesquilinearForm(p));
+    if HasDiagramOfGeometry( p ) then
+       Display( DiagramOfGeometry( p ) );
+    fi;
+  end );
+
+InstallMethod( PrintObj,
+  [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsSymplecticSpace ],
+        function( p )
+          Print("SymplecticSpace(",p!.dimension,",",p!.basefield,")");
+  end);
+
+InstallMethod( Display, 
+  [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsSymplecticSpace ],
+  function( p )
+    Print("W(",p!.dimension,", ",Size(p!.basefield),")\n");
+    Display(SesquilinearForm(p));
+    if HasDiagramOfGeometry( p ) then
+       Display( DiagramOfGeometry( p ) );
+    fi;
+  end );
+
+InstallMethod( PrintObj,
+  [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsParabolicQuadric ],
+        function( p )
+          Print("ParabolicQuadric(",p!.dimension,",",p!.basefield,")");
+  end);
+
+InstallMethod( Display, 
+  [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsParabolicQuadric ],
+  function( p )
+    Print("Q(",p!.dimension,", ",Size(p!.basefield),")\n");
+    if HasQuadraticForm(p) then
+       Display(QuadraticForm(p));
+    fi;
+    Display(SesquilinearForm(p));
+    if HasDiagramOfGeometry( p ) then
+       Display( DiagramOfGeometry( p ) );
+    fi;
+  end );
+
+InstallMethod( PrintObj,
+  [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsHyperbolicQuadric ],
+        function( p )
+          Print("HyperbolicQuadric(",p!.dimension,",",p!.basefield,")");
+        end);
+
+InstallMethod( Display, 
+  [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsHyperbolicQuadric ],
+  function( p )
+    Print("Q+(",p!.dimension,", ",Size(p!.basefield),")\n");
+    if HasQuadraticForm(p) then
+       Display(QuadraticForm(p));
+    fi;
+    Display(SesquilinearForm(p));
+    if HasDiagramOfGeometry( p ) then
+       Display( DiagramOfGeometry( p ) );
+    fi;
+  end );
+
+InstallMethod( PrintObj,
+  [IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsHermitianVariety ],
+        function( p )
+          Print("HermitianVariety(",p!.dimension,",",p!.basefield,")");
+        end);
+
+InstallMethod( Display, 
+  [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsHermitianVariety ],
+  function( p )
+    Print("H(",p!.dimension,", ",Size(p!.basefield),")\n");
+    Display(SesquilinearForm(p));
+    if HasDiagramOfGeometry( p ) then
+       Display( DiagramOfGeometry( p ) );
+    fi;
+  end );
 
 #############################################################################
 ## The following methods are needed for "naked" polar spaces; those
@@ -299,64 +1112,80 @@ InstallMethod( CompanionAutomorphism,
 ## "SymplecticSpace" as an example).
 #############################################################################
 
-#bug for Q(5,7). Start from IdentityMat and see what happens. 
+# CHECKED 21/09/11 jdb
+#############################################################################
+#O  IsomorphismCanonicalPolarSpace( <ps> )
+# This method returns a geometry morphism that is in fact the coordinate transformation
+# going FROM the standard polar space TO the given polar space <ps>
+##
+InstallMethod( IsomorphismCanonicalPolarSpace, 
+	"for a polar space",
+	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
+	function( ps )
+		local d, f, type, canonical, iso, info;
+		d := ps!.dimension;
+		f := ps!.basefield;
+		type := PolarSpaceType( ps );
+		if type = "hermitian" then
+			canonical := HermitianVariety(d, f);               
+			SetIsHermitianVariety(ps, true);            
+		elif type = "symplectic" then
+			canonical := SymplecticSpace(d, f);         
+			SetIsSymplecticSpace(ps, true);
+		elif type = "elliptic" then 
+			canonical := EllipticQuadric(d, f);         
+			SetIsEllipticQuadric(ps, true);
+		elif type = "parabolic" then
+			canonical := ParabolicQuadric(d, f);         
+			SetIsParabolicQuadric(ps, true);
+		elif type = "hyperbolic" then
+			canonical := HyperbolicQuadric(d, f);         
+			SetIsHyperbolicQuadric(ps, true);
+		fi;
+		iso := IsomorphismPolarSpacesNC(canonical, ps, false);      ## jb: no longer computes nice monomorphism here
+		info := ClassicalGroupInfo( canonical );
+		SetClassicalGroupInfo( ps, rec( degree := info!.degree ) );
+		return iso;
+	end );
 
-#this method returns a geometry morphism.
-InstallMethod( IsomorphismCanonicalPolarSpace, [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
-  function( ps )
-    local d, f, type, canonical, iso, info;
-    d := ps!.dimension;
-    f := ps!.basefield;
-    type := PolarSpaceType( ps );
-    if type = "hermitian" then
-          canonical := HermitianVariety(d, f);               
-          SetIsHermitianVariety(ps, true);            
-    elif type = "symplectic" then
-          canonical := SymplecticSpace(d, f);         
-          SetIsSymplecticSpace(ps, true);
-    elif type = "elliptic" then 
-          canonical := EllipticQuadric(d, f);         
-          SetIsEllipticQuadric(ps, true);
-    elif type = "parabolic" then
-          canonical := ParabolicQuadric(d, f);         
-          SetIsParabolicQuadric(ps, true);
-    elif type = "hyperbolic" then
-          canonical := HyperbolicQuadric(d, f);         
-          SetIsHyperbolicQuadric(ps, true);
-    fi;
-    iso := IsomorphismPolarSpacesNC(canonical, ps, false);      ## jb: no longer computes nice monomorphism here
-    info := ClassicalGroupInfo( canonical );
-    SetClassicalGroupInfo( ps, rec( degree := info!.degree ) );
-    return iso;
-  end );
+#############################################################################
+#O  IsomorphismCanonicalPolarSpaceWithIntertwiner( <ps> )
+# This method returns a geometry morphism that is in fact the coordinate transformation
+# going FROM the standard polar space TO the given polar space <ps>, with intertwiner
+##
+InstallMethod( IsomorphismCanonicalPolarSpaceWithIntertwiner, 
+	"for a polar space",
+	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
+	function( ps )
+		local d, f, type, canonical, iso, info;
+		d := ps!.dimension;
+		f := ps!.basefield;
+		type := PolarSpaceType( ps );
+		if type = "hermitian" then
+			canonical := HermitianVariety(d, f);               
+			SetIsHermitianVariety(ps, true);            
+		elif type = "symplectic" then
+			canonical := SymplecticSpace(d, f);         
+			SetIsSymplecticSpace(ps, true);
+		elif type = "elliptic" then 
+			canonical := EllipticQuadric(d, f);         
+			SetIsEllipticQuadric(ps, true);
+		elif type = "parabolic" then
+			canonical := ParabolicQuadric(d, f);         
+			SetIsParabolicQuadric(ps, true);
+		elif type = "hyperbolic" then
+			canonical := HyperbolicQuadric(d, f);         
+			SetIsHyperbolicQuadric(ps, true);
+		fi;
+		iso := IsomorphismPolarSpacesNC(canonical, ps, true); 
+		info := ClassicalGroupInfo( canonical );
+		SetClassicalGroupInfo( ps, rec( degree := info!.degree ) );
+		return iso;
+	end );
 
-InstallMethod( IsomorphismCanonicalPolarSpaceWithIntertwiner, [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
-  function( ps )
-    local d, f, type, canonical, iso, info;
-    d := ps!.dimension;
-    f := ps!.basefield;
-    type := PolarSpaceType( ps );
-    if type = "hermitian" then
-          canonical := HermitianVariety(d, f);               
-          SetIsHermitianVariety(ps, true);            
-    elif type = "symplectic" then
-          canonical := SymplecticSpace(d, f);         
-          SetIsSymplecticSpace(ps, true);
-    elif type = "elliptic" then 
-          canonical := EllipticQuadric(d, f);         
-          SetIsEllipticQuadric(ps, true);
-    elif type = "parabolic" then
-          canonical := ParabolicQuadric(d, f);         
-          SetIsParabolicQuadric(ps, true);
-    elif type = "hyperbolic" then
-          canonical := HyperbolicQuadric(d, f);         
-          SetIsHyperbolicQuadric(ps, true);
-    fi;
-    iso := IsomorphismPolarSpacesNC(canonical, ps, true); 
-    info := ClassicalGroupInfo( canonical );
-    SetClassicalGroupInfo( ps, rec( degree := info!.degree ) );
-    return iso;
-  end );
+#############################################################################
+## TOT HIER GECHECKT JDB en ML 15/04/11
+#############################################################################
 
 #############################################################################
 #
@@ -514,7 +1343,6 @@ InstallMethod( CollineationGroup, [ IsClassicalPolarSpace and IsClassicalPolarSp
     return g;
   end );
 
-
 #############################################################################
 
 
@@ -522,400 +1350,131 @@ InstallMethod( CollineationGroup, [ IsClassicalPolarSpace and IsClassicalPolarSp
 #More attributes...
 #############################################################################
 
-InstallMethod( RankAttr, [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
-  function( ps )
-    local iso;
-    iso := IsomorphismCanonicalPolarSpace( ps );
-    return RankAttr(Source(iso)!.geometry);
-  end );
-
-InstallMethod( TypesOfElementsOfIncidenceStructure, [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
-  function( ps )
-    local iso;
-    iso := IsomorphismCanonicalPolarSpace( ps );
-    return TypesOfElementsOfIncidenceStructure(Source(iso)!.geometry);
-  end );
-
-InstallOtherMethod( Order, [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
-  function( ps )
-    if RankAttr(ps) = 2 then
-       return Order(Source(IsomorphismCanonicalPolarSpace(ps) )!.geometry );
-    else
-       Error("Rank is not 2");
-    fi;
-  end );
-  
-InstallMethod( RepresentativesOfElements, [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
-  function( ps )
-    local iso, reps;
-    iso := IsomorphismCanonicalPolarSpace( ps );
-    reps := RepresentativesOfElements( Source( iso )!.geometry );
-    return ImagesSet(iso, reps);
-  end );
-
-
+# CHECKED 21/09/11 jdb
 #############################################################################
-## Constructions of Canonical finite classical Polar Spaces
+#O  RankAttr( <ps> )
+# returns the rank of the polar space <ps>, which is the Witt index of the
+# defining form.
+##
+InstallMethod( RankAttr,
+	"for a polar space",
+	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
+	function( ps )
+		local iso;
+		iso := IsomorphismCanonicalPolarSpace( ps );
+		return RankAttr(Source(iso)!.geometry);
+  end );
+
+# CHECKED 21/09/11 jdb
 #############################################################################
+#O  TypesOfElementsOfIncidenceStructure( <ps> )
+# Well known method that returns a list with the names of the elements of 
+# the polar space <ps>
+##
+InstallMethod( TypesOfElementsOfIncidenceStructure, 
+	"for a polar space",
+	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
+	function( ps )
+		local iso;
+		iso := IsomorphismCanonicalPolarSpace( ps );
+		return TypesOfElementsOfIncidenceStructure(Source(iso)!.geometry);
+	end );
 
-InstallMethod( EllipticQuadric, [ IsPosInt, IsField ],
-  function( d, f )
-    local eq,m,types,max,reps,q,form;
-    q := Size(f);
-    if IsEvenInt(d) then
-        Error("dimension must be odd");
-        return;
-    fi;
-
-    if IsEvenInt(q) then
-      m := CanonicalQuadraticForm("elliptic", d+1, f);
-      form := QuadraticFormByMatrix(m, f);
-    else 
-      m := CanonicalGramMatrix("elliptic", d+1, f);  
-      form := BilinearFormByMatrix(m, f);  
-    fi; 
-    
-    eq := PolarSpace( form );
-
-    SetRankAttr( eq, (d-1)/2 );
-    types := TypesOfElementsOfIncidenceStructure( AmbientSpace(eq) );
-    SetTypesOfElementsOfIncidenceStructure(eq, types{[1..(d-1)/2]});
-    SetIsEllipticQuadric(eq, true);
-    SetIsCanonicalPolarSpace(eq, true);
-    SetPolarSpaceType(eq, "elliptic");
-    if RankAttr(eq) = 2 then
-       SetOrder( eq, [q, q^2]);
-    fi;
-
-    max := CanonicalOrbitRepresentativeForSubspaces("elliptic", d+1, f)[1];
-
-    ## Here we take the maximal totally isotropic subspace rep
-    ## max and make representatives for lower dimensional subspaces
-
-    reps := [ max[1] ];
-    Append(reps, List([2..(d-1)/2], j -> max{[1..j]}));  
-
-    ## We would like the representative to be stored as
-    ## compressed matrices. Then they will be more efficient
-    ## to work with.
+# CHECKED 21/09/11 jdb
+#############################################################################
+#O  Order( <ps> )
+# If <ps> has rank two, then it is a GQ, and we can ask its order.
+##
+InstallOtherMethod( Order, 
+	"for a polar space",
+	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
+	function( ps )
+		if RankAttr(ps) = 2 then
+			return Order(Source(IsomorphismCanonicalPolarSpace(ps) )!.geometry );
+		else
+			Error("Rank is not 2");
+		fi;
+	end );
   
-    for m in reps do
-        if IsMatrix(m) then
-           ConvertToMatrixRep(m,f);
-        else 
-           ConvertToVectorRep(m,f);
-        fi;
-    od;   
-
-    ## Wrap 'em up
-    reps := List([1..(d-1)/2], j -> Wrap(eq, j, reps[j]) );
-    SetRepresentativesOfElements(eq, reps);
-    
-    SetClassicalGroupInfo( eq, rec( degree := (q^((d+1)/2)+1)*(q^((d+1)/2-1)-1)/(q-1) ) );  
-    return eq;
-  end );
-
-InstallMethod( EllipticQuadric, [ IsPosInt, IsPosInt ],
-  function( d, q )  return EllipticQuadric(d,GF(q));
-  end );
-
-InstallMethod( SymplecticSpace, [ IsPosInt, IsField ],
-  function( d, f )
-    local w,frob,m,types,max,reps,q,form;
-
-    if IsEvenInt(d) then
-        Error("dimension must be odd");
-        return;
-    fi;
-
-## put compressed matrices here also
-
-    q := Size(f);
-    m := CanonicalGramMatrix("symplectic", d+1, f);     
-    w := PolarSpace( BilinearFormByMatrix(m, f) );
-   
-    SetRankAttr( w, (d+1)/2 );
-    types := TypesOfElementsOfIncidenceStructure(AmbientSpace(w));
-    if RankAttr(w) = 2 then
-       SetOrder( w, [q, q]);
-    fi;
-    SetTypesOfElementsOfIncidenceStructure(w,types{[1..(d+1)/2]});
-    SetIsSymplecticSpace(w,true);
-    SetIsCanonicalPolarSpace(w, true);
-    SetPolarSpaceType(w, "symplectic");
-    max := CanonicalOrbitRepresentativeForSubspaces("symplectic", 
-                    d+1, w!.basefield)[1];    
-
-    ## Here we take the maximal totally isotropic subspace rep
-    ## max and make representatives for lower dimensional subspaces
-
-    reps := [ max[1] ];
-    Append(reps, List([2..(d+1)/2], j -> max{[1..j]}));  
-
-    ## We would like the representative to be stored as
-    ## compressed matrices. Then they will be more efficient
-    ## to work with.
-  
-    for m in reps do
-        if IsMatrix(m) then
-           ConvertToMatrixRep(m,f);
-        else 
-           ConvertToVectorRep(m,f);
-        fi;
-    od;   
-
-    ## Wrap 'em up
-    reps := List([1..(d+1)/2], j -> Wrap(w, j, reps[j]) );
-    SetRepresentativesOfElements(w, reps);
-    
-    SetClassicalGroupInfo( w, rec(  degree := (q^(d+1)-1)/(q-1) ) );    
-    return w;
-  end );
-
-InstallMethod(SymplecticSpace, [ IsPosInt, IsPosInt ],
-  function( d, q ) return SymplecticSpace(d, GF(q));
-  end );
-
-InstallMethod( ParabolicQuadric, [ IsPosInt, IsField ],
-  function( d, f )
-    local pq,m,types,max,reps,q,form;
-     if IsOddInt(d) then
-        Error("dimension must be even");
-        return;
-    fi;
-
-    q := Size(f);
-    if IsEvenInt(q) then
-      m := CanonicalQuadraticForm("parabolic", d+1, f);
-      form := QuadraticFormByMatrix(m, f);
-    else 
-      m := CanonicalGramMatrix("parabolic", d+1, f); 
-      form := BilinearFormByMatrix(m, f);   
-    fi; 
-    
-    pq := PolarSpace( form );
-
-    SetRankAttr( pq, d/2 );
-    types := TypesOfElementsOfIncidenceStructure( AmbientSpace(pq) );
-    SetTypesOfElementsOfIncidenceStructure(pq, types{[1..d/2]});
-    SetIsParabolicQuadric(pq, true);
-    SetIsCanonicalPolarSpace(pq, true);
-    SetPolarSpaceType(pq, "parabolic");
-    if RankAttr(pq) = 2 then
-       SetOrder( pq, [q, q]);
-    fi;
-
-    max := CanonicalOrbitRepresentativeForSubspaces("parabolic", d+1, f)[1];
-
-    ## Here we take the maximal totally isotropic subspace rep
-    ## max and make representatives for lower dimensional subspaces
-
-    reps := [ max[1] ];
-    Append(reps, List([2..d/2], j -> max{[1..j]}));  
-
-    ## We would like the representative to be stored as
-    ## compressed matrices. Then they will be more efficient
-    ## to work with.
-  
-    for m in reps do
-        if IsMatrix(m) then
-           ConvertToMatrixRep(m,f);
-        else 
-           ConvertToVectorRep(m,f);
-        fi;
-    od;   
-
-    ## Wrap 'em up
-    reps := List([1..d/2], j -> Wrap(pq, j, reps[j]) );
-    SetRepresentativesOfElements(pq, reps);
-    
-    SetClassicalGroupInfo( pq, rec( degree := (q^(d/2)-1)/(q-1)*(q^((d+2)/2-1)+1) ) );   
-    return pq;
-  end );
-
-InstallMethod(ParabolicQuadric, [ IsPosInt, IsPosInt ],
-  function( d, q ) return ParabolicQuadric(d, GF(q));
-  end );
-
-InstallMethod( HyperbolicQuadric, [ IsPosInt, IsField ],
-  function( d, f )
-    local hq,m,types,max,reps,q,form;
-    q := Size(f);
-
-    if IsEvenInt(d) then
-        Error("dimension must be odd");
-        return;
-    fi;
-
-    if IsEvenInt(q) then
-      m := CanonicalQuadraticForm("hyperbolic", d+1, f);
-      form := QuadraticFormByMatrix(m, f);
-    else 
-      m := CanonicalGramMatrix("hyperbolic", d+1, f);    
-      form := BilinearFormByMatrix(m, f);
-    fi; 
-
-    hq := PolarSpace( form );
-
-    SetRankAttr( hq, (d+1)/2 );
-    types := TypesOfElementsOfIncidenceStructure( AmbientSpace(hq) );
-    SetTypesOfElementsOfIncidenceStructure(hq, types{[1..(d+1)/2]});
-    SetIsCanonicalPolarSpace(hq, true);
-    SetIsHyperbolicQuadric(hq, true);
-    SetPolarSpaceType(hq, "hyperbolic");
-    if RankAttr(hq) = 2 then
-       SetOrder( hq, [q, 1]);
-    fi;
-
-    max := CanonicalOrbitRepresentativeForSubspaces("hyperbolic", d+1, f)[1];
-  
-    ## Here we take the maximal totally isotropic subspace rep
-    ## max and make representatives for lower dimensional subspaces
-
-    reps := [ max[1] ];
-    Append(reps, List([2..(d+1)/2], j -> max{[1..j]}));  
-
-    ## We would like the representative to be stored as
-    ## compressed matrices. Then they will be more efficient
-    ## to work with.
-  
-    for m in reps do
-        if IsMatrix(m) then
-           ConvertToMatrixRep(m,f);
-        else 
-           ConvertToVectorRep(m,f);
-        fi;
-    od;   
-
-    ## Wrap 'em up
-    reps := List([1..(d+1)/2], j -> Wrap(hq, j, reps[j]) );
-    SetRepresentativesOfElements(hq, reps);
-    
-    SetClassicalGroupInfo( hq, rec( degree := (q^((d+1)/2)-1)/(q-1)*(q^((d+1)/2-1)+1)) );
-    return hq;
-  end );
-
-InstallMethod(HyperbolicQuadric, [ IsPosInt, IsPosInt ],
-  function( d, q ) return HyperbolicQuadric(d, GF(q));
-  end );
-
-InstallMethod( HermitianVariety, [ IsPosInt, IsField ],
-  function( d, f )
-    local h,m,types,max,reps,q;
-
-    if PrimePowersInt(Size(f))[2] mod 2 <> 0 then
-        Error("field order must be a square");
-        return;
-    fi;
-
-    q := Sqrt(Size(f));
-    m := CanonicalGramMatrix("hermitian", d+1, f);   
-
-    h := PolarSpace( HermitianFormByMatrix(m, f) );
-
-    
-    if d mod 2 = 0 then  
-      SetRankAttr( h, d/2 );
-    else
-      SetRankAttr( h, (d+1)/2 );    
-    fi;    
-    types := TypesOfElementsOfIncidenceStructure( AmbientSpace(h) );
-    SetTypesOfElementsOfIncidenceStructure(h, types{[1..RankAttr(h)]});
-    SetIsHermitianVariety(h, true);
-    SetIsCanonicalPolarSpace(h, true);
-    SetPolarSpaceType(h, "hermitian");
-    if RankAttr(h) = 2 then
-       if d = 3 then SetOrder( h, [q^2, q]); fi;
-       if d = 4 then SetOrder( h, [q^2, q^3]); fi;
-    fi;
-
-    max := CanonicalOrbitRepresentativeForSubspaces("hermitian", d+1, f)[1];
-
-    ## Here we take the maximal totally isotropic subspace rep
-    ## max and make representatives for lower dimensional subspaces
-
-    reps := [ max[1] ];
-    Append(reps, List([2..RankAttr(h)], j -> max{[1..j]}));  
-
-    ## We would like the representative to be stored as
-    ## compressed matrices. Then they will be more efficient
-    ## to work with.
-  
-    for m in reps do
-        if IsMatrix(m) then
-           ConvertToMatrixRep(m,f);
-        else
-           ConvertToVectorRep(m,f);  
-        fi;
-    od;   
-
-    ## Wrap 'em up
-    reps := List([1..RankAttr(h)], j -> Wrap(h, j, reps[j]) );
-    SetRepresentativesOfElements(h, reps);
-    SetClassicalGroupInfo( h, rec(  degree := (q^d-(-1)^d)*(q^(d+1)-(-1)^(d+1))/(q^2-1)) );
-
-    return h;
-  end );
-
-InstallMethod(HermitianVariety, [ IsPosInt, IsPosInt ],
-  function( d, q ) return HermitianVariety(d, GF(q));
-  end );
+# CHECKED 21/09/11 jdb
+#############################################################################
+#O  RepresentativesOfElements( <ps> )
+# If <ps> has rank two, then it is a GQ, and we can ask its order.
+##
+InstallMethod( RepresentativesOfElements, 
+	"for a polar space",
+	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
+	function( ps )
+		local iso, reps;
+		iso := IsomorphismCanonicalPolarSpace( ps );
+		reps := RepresentativesOfElements( Source( iso )!.geometry );
+		return ImagesSet(iso, reps);
+	end );
 
 #############################################################################
 # one more operation...
 #############################################################################
 
-InstallOtherMethod(\QUO,  "quotients for polar spaces",
-   [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep, IsSubspaceOfClassicalPolarSpace],
-  function( ps, v )
-    if not v in ps then 
-       Error( "Subspace does not belong to the polar space" );
-    fi;
-    return Range( NaturalProjectionBySubspace( ps, v ) )!.geometry;
-  end );
+# CHECKED 21/09/11 jdb
+#############################################################################
+#O  \QUO( <ps>, <v> )
+# returns the quotien space of the element <v>, which must be an element of the
+# polar space <ps>
+##
+InstallOtherMethod(\QUO,  
+	"for a polar space and an element of a polar space",
+	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep, IsSubspaceOfClassicalPolarSpace],
+	function( ps, v )
+		if not v in ps then 
+			Error( "Subspace does not belong to the polar space" );
+		fi;
+		return Range( NaturalProjectionBySubspace( ps, v ) )!.geometry;
+	end );
 
 #############################################################################
-# Counting the number of varieties of the polar spaces
+# Counting the number of elements of the polar spaces
 #############################################################################
 
-InstallMethod( Size, [IsSubspacesOfClassicalPolarSpace],
-  function( vs )
-    local geom, q, d, m, ovnum, ordominus, numti, gauss, flavour;
-    geom := vs!.geometry; 
-    q := Size(vs!.geometry!.basefield);
-    d := vs!.geometry!.dimension + 1;
-    m := vs!.type;
-    flavour := PolarSpaceType(geom);
-    
-    if flavour = "symplectic" then
-      return Product(List([0..(m-1)],i->(q^(d-2*i)-1)/(q^(i+1)-1)));
-    fi;
-    
-    if flavour = "elliptic" then
-      gauss:=Product(List([0..(m-1)],i->(q^(d/2-1)-q^i)/(q^m-q^i)));
-      numti:=gauss * Product(List([0..(m-1)],j->q^(d/2-j)+1));
-      return numti;
-    fi;
-
-    if flavour = "hyperbolic" then
-      gauss:=Product(List([0..(m-1)],i->(q^(d/2)-q^i)/(q^m-q^i)));
-      numti:=gauss * Product(List([0..(m-1)],j->q^(d/2-1-j)+1));
-      return numti;
-    fi;
-
-    if flavour = "parabolic" then
-      gauss:=Product(List([0..(m-1)],i->(q^((d-1)/2)-q^i)/(q^m-q^i)));
-      numti:=gauss * Product(List([0..(m-1)],j->q^( (d+1)/2-1-j)+1));
-      return numti;
-    fi;
-    
-    if flavour = "hermitian" then
-      return Product(List([(d+1-2*m)..d],i->(Sqrt(q)^i-(-1)^i)))/
-        Product(List([1..m],j->q^j-1 ));
-    fi;
-    
-    Error("Unknown polar space type!");
-  end );
+# CHECKED 21/09/11 jdb
+#############################################################################
+#O  Size( <vs> )
+# returns the number of elements on <vs>, a collection of elements of a polar
+# space of a given type.
+##
+InstallMethod( Size, 
+	"for a collection of elements of a polar space",
+	[IsSubspacesOfClassicalPolarSpace],
+	function( vs )
+		local geom, q, d, m, ovnum, ordominus, numti, gauss, flavour;
+		geom := vs!.geometry; 
+		q := Size(vs!.geometry!.basefield);
+		d := vs!.geometry!.dimension + 1;
+		m := vs!.type;
+		flavour := PolarSpaceType(geom);
+        if flavour = "symplectic" then
+			return Product(List([0..(m-1)],i->(q^(d-2*i)-1)/(q^(i+1)-1)));
+		fi;
+		if flavour = "elliptic" then
+			gauss:=Product(List([0..(m-1)],i->(q^(d/2-1)-q^i)/(q^m-q^i)));
+			numti:=gauss * Product(List([0..(m-1)],j->q^(d/2-j)+1));
+			return numti;
+		fi;
+		if flavour = "hyperbolic" then
+			gauss:=Product(List([0..(m-1)],i->(q^(d/2)-q^i)/(q^m-q^i)));
+			numti:=gauss * Product(List([0..(m-1)],j->q^(d/2-1-j)+1));
+			return numti;
+		fi;
+		if flavour = "parabolic" then
+			gauss:=Product(List([0..(m-1)],i->(q^((d-1)/2)-q^i)/(q^m-q^i)));
+			numti:=gauss * Product(List([0..(m-1)],j->q^( (d+1)/2-1-j)+1));
+			return numti;
+		fi;
+		if flavour = "hermitian" then
+			return Product(List([(d+1-2*m)..d],i->(Sqrt(q)^i-(-1)^i)))/
+			Product(List([1..m],j->q^j-1 ));
+		fi;
+		Error("Unknown polar space type!");
+	end );
 
 #############################################################################
 # Elements -- Subspaces
@@ -925,155 +1484,214 @@ InstallMethod( Size, [IsSubspacesOfClassicalPolarSpace],
 ## jb 19/02/2009: Just changed the compressed matrix methods
 ##               so that length 1 matrices are allowed.
 
-InstallMethod( VectorSpaceToElement, "for a Plist",
-  [IsClassicalPolarSpace, IsPlistRep],
-  function( geom, v )
-    local  x, n, i;
-      ## when v is empty... 
-      if IsEmpty(v) then
-        return [];
-      fi;
-      x := MutableCopyMat(v);
-      TriangulizeMat(x);
-      ## remove zero rows
-      n := Length(x);
-      i := 0;
-      while i < n and ForAll(x[n-i], IsZero) do
-          i := i+1; 
-      od;
-      if i = n then
-         return [];
-      fi;
-      x := x{[1..n-i]};
-      if Length(x)=ProjectiveDimension(geom)+1 then
-         return geom;
-      fi;
-      
-      ## check here that it is in the polar space. 
-      if HasQuadraticForm(geom) then
-        if not IsTotallySingularSubspace(QuadraticForm(geom),x) then
-	    Error("<x> does not generate an element of <geom>");
-  	  fi;
-      else
-        if not IsTotallyIsotropicSubspace(SesquilinearForm(geom),x) then
-	  Error("<x> does not generate an element of <geom>");
-        fi;
-      fi;
-      if Length(x) = 1 then
-         ConvertToVectorRep(x, geom!.basefield);
-         return Wrap(geom, 1, x[1]);
-      else
-         ConvertToMatrixRep(x, geom!.basefield);
-         return Wrap(geom, Length(x), x);
-      fi;
- end );
+# CHECKED 21/09/11 jdb
+#############################################################################
+#O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
+# by the vectorspace <v>. Several checks are built in. 
+##
+InstallMethod( VectorSpaceToElement, 
+	"for a polar space and a Plist",
+	[IsClassicalPolarSpace, IsPlistRep],
+	function( geom, v )
+		local  x, n, i;
+		## when v is empty... 
+		if IsEmpty(v) then
+			Error("<v> does not represent any element");
+		fi;
+		x := MutableCopyMat(v);
+		TriangulizeMat(x);
+		## dimension should be correct
+		if Length(v[1]) <> geom!.dimension + 1 then
+			Error("Dimensions are incompatible");
+		fi;
+		## Remove zero rows. It is possible the the user
+		## has inputted a matrix which does not have full rank
+        n := Length(x);
+		i := 0;
+		while i < n and ForAll(x[n-i], IsZero) do
+			i := i+1; 
+		od;
+		if i = n then
+			return EmptySubspace(geom);
+		fi;
+		x := x{[1..n-i]};
+		#if we check later on the the subspace is an element of the polar space, then
+		#the user cannot create the whole polar space like this, so I commented out the
+		# next three lines.
+		#if Length(x)=ProjectiveDimension(geom)+1 then
+		#	return geom;
+		#fi;
+        ## check here that it is in the polar space. 
+		if HasQuadraticForm(geom) then
+			if not IsTotallySingularSubspace(QuadraticForm(geom),x) then
+			Error("<x> does not generate an element of <geom>");
+			fi;
+		else
+			if not IsTotallyIsotropicSubspace(SesquilinearForm(geom),x) then
+				Error("<x> does not generate an element of <geom>");
+			fi;
+		fi;
+		if Length(x) = 1 then
+			x := x[1];
+			ConvertToVectorRep(x, geom!.basefield); # the extra basefield is necessary.
+			return Wrap(geom, 1, x[1]);
+		else
+			ConvertToMatrixRep(x, geom!.basefield);
+			return Wrap(geom, Length(x), x);
+		fi;
+	end );
 
-InstallMethod( VectorSpaceToElement, "for a row vector",
-  [IsClassicalPolarSpace, IsRowVector],
-  function( geom, vec )
-    local  c;
-      if IsZero(vec) then
-         return [];
-      fi;
-
-      c := PositionNonZero( vec );
-      if c <= Length( vec )  then
-         vec := Inverse( vec[c] ) * vec;
-      fi;
-      ConvertToVectorRep(vec, geom!.basefield);
-      return Wrap(geom, 1, vec);
-  end );
-
-InstallMethod( VectorSpaceToElement, "for a compressed GF(2)-matrix",
-  [IsClassicalPolarSpace, IsGF2MatrixRep],
-  function( geom, v )
-    local  x, n, i;
-	if IsEmpty(v) then
-        return [];
-      fi;
-      x := MutableCopyMat(v);
-      TriangulizeMat(x);
-      ## remove zero rows
-      n := Length(x);
-      i := 0;
-      while i < n and ForAll(x[n-i], IsZero) do
-          i := i+1; 
-      od;
-      if i = n then
-         return [];
-      fi;
-      x := x{[1..n-i]};
-      if Length(x)=ProjectiveDimension(geom)+1 then
-         return geom;
-      fi;
-      
-      ## check here that it is in the polar space. 
-      if HasQuadraticForm(geom) then
-        if not IsTotallySingularSubspace(QuadraticForm(geom),x) then
-	       Error("<x> does not generate an element of <geom>");
-        fi;
-      else
-        if not IsTotallyIsotropicSubspace(SesquilinearForm(geom),x) then
-	       Error("<x> does not generate an element of <geom>");
-        fi;
-      fi;
-      if Length(x) = 1 then
-         if not IsGF2VectorRep(x[1]) then
-            ConvertToVectorRep(x[1], geom!.basefield);
-         fi;
-         return Wrap(geom, 1, x[1]);
-      else
-         return Wrap(geom, Length(x), ImmutableMatrix(geom!.basefield, x));
-      fi;
-      return Wrap(geom, Length(v), x);
+# CHECKED 21/09/11
+#############################################################################
+#O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
+# by the vectorspace <v>. Several checks are built in. 
+##
+InstallMethod( VectorSpaceToElement,	
+	"for a compressed GF(2)-matrix",
+	[IsClassicalPolarSpace, IsGF2MatrixRep],
+	function( geom, v )
+		local  x, n, i;
+		if IsEmpty(v) then
+			Error("<v> does not represent any element");
+		fi;
+		x := MutableCopyMat(v);
+		TriangulizeMat(x);
+		## remove zero rows
+		n := Length(x);
+		i := 0;
+		while i < n and ForAll(x[n-i], IsZero) do
+			i := i+1; 
+		od;
+		if i = n then
+			return EmptySubspace(geom);
+		fi;
+		x := x{[1..n-i]};
+		x := x{[1..n-i]};
+		#if we check later on the the subspace is an element of the polar space, then
+		#the user cannot create the whole polar space like this, so I commented out the
+		# next three lines.
+		#if Length(x)=ProjectiveDimension(geom)+1 then
+		#	return geom;
+		#fi;
+        ## check here that it is in the polar space. 
+		if HasQuadraticForm(geom) then
+			if not IsTotallySingularSubspace(QuadraticForm(geom),x) then
+				Error("<x> does not generate an element of <geom>");
+			fi;
+		else
+			if not IsTotallyIsotropicSubspace(SesquilinearForm(geom),x) then
+				Error("<x> does not generate an element of <geom>");
+			fi;
+		fi;
+		if Length(x) = 1 then
+			x := x[1];
+			if not IsGF2VectorRep(x) then
+				ConvertToVectorRep(x, geom!.basefield);
+			fi;
+			return Wrap(geom, 1, x);
+		else
+			return Wrap(geom, Length(x), ImmutableMatrix(geom!.basefield, x));
+		fi;
+		#return Wrap(geom, Length(v), x); ??? why was this line? jdb.
   end );
   
-InstallMethod( VectorSpaceToElement, "for a compressed basis of a vector subspace",
-  [IsClassicalPolarSpace, Is8BitMatrixRep],
-  function( geom, v )
-    local  x, n, i; 
-	if IsEmpty(v) then
-        return [];
-      fi;
-      x := MutableCopyMat(v);
-      TriangulizeMat(x);
-      ## remove zero rows
-      n := Length(x);
-      i := 0;
-      while i < n and ForAll(x[n-i], IsZero) do
-          i := i+1; 
-      od;
-      if i = n then
-         return [];
-      fi;
-      x := x{[1..n-i]};
-      if Length(x)=ProjectiveDimension(geom)+1 then
-         return geom;
-      fi;
+# CHECKED 21/09/11
+#############################################################################
+#O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
+# by the vectorspace <v>. Several checks are built in. 
+##
+InstallMethod( VectorSpaceToElement, 
+	"for a compressed basis of a vector subspace",
+	[IsClassicalPolarSpace, Is8BitMatrixRep],
+	function( geom, v )
+		local  x, n, i; 
+		if IsEmpty(v) then
+			Error("<v> does not represent any element");
+		fi;
+		x := MutableCopyMat(v);
+		TriangulizeMat(x);
+	## dimension should be correct
+		if Length(v[1]) <> geom!.dimension + 1 then
+			Error("Dimensions are incompatible");
+		fi;	
+	## remove zero rows
+		n := Length(x);
+		i := 0;
+		while i < n and ForAll(x[n-i], IsZero) do
+			i := i+1; 
+		od;
+		if i = n then
+			return EmptySubspace(geom);
+		fi;
+		x := x{[1..n-i]};
+		#if we check later on the the subspace is an element of the polar space, then
+		#the user cannot create the whole polar space like this, so I commented out the
+		# next three lines.
+		#if Length(x)=ProjectiveDimension(geom)+1 then
+		#	return geom;
+		#fi;
       
-      ## check here that it is in the polar space. 
-      if HasQuadraticForm(geom) then
-        if not IsTotallySingularSubspace(QuadraticForm(geom),x) then
-	       Error("<x> does not generate an element of <geom>");
-        fi;
-      else
-        if not IsTotallyIsotropicSubspace(SesquilinearForm(geom),x) then
-	       Error("<x> does not generate an element of <geom>");
-        fi;
+		## check here that it is in the polar space. 
+		if HasQuadraticForm(geom) then
+			if not IsTotallySingularSubspace(QuadraticForm(geom),x) then
+				Error("<x> does not generate an element of <geom>");
+			fi;
+		else
+			if not IsTotallyIsotropicSubspace(SesquilinearForm(geom),x) then
+				Error("<x> does not generate an element of <geom>");
+			fi;
+		fi;
+		if Length(x) = 1 then
+		x := x[1];
+		if not Is8BitVectorRep(x) then
+            ConvertToVectorRep(x, geom!.basefield);
+		fi;
+		return Wrap(geom, 1, x);
+		else
+			return Wrap(geom, Length(x), ImmutableMatrix(geom!.basefield, x));
       fi;
-       
-      if Length(x) = 1 then
-		 if not Is8BitVectorRep(x[1]) then
-            ConvertToVectorRep(x[1], geom!.basefield);
-         fi;
-         return Wrap(geom, 1, x[1]);
-      else
-		 return Wrap(geom, Length(x), ImmutableMatrix(geom!.basefield, x));
-      fi;
-    return Wrap(geom, Length(v), x);
+    #return Wrap(geom, Length(v), x); ??? why was this line? jdb.
 end );
+
+# CHECKED 21/09/11 jdb
+#############################################################################
+#O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
+# by the rowvector <v>. Several checks are built in.
+##
+InstallMethod( VectorSpaceToElement, 
+	"for a row vector",
+	[IsClassicalPolarSpace, IsRowVector],
+	function( geom, v )
+		local  x;
+		## dimension should be correct
+		if Length(v) <> geom!.dimension + 1 then
+			Error("Dimensions are incompatible");
+		fi;
+		x := ShallowCopy(v);
+		if IsZero(x) then
+			return EmptySubspace(geom);
+		else
+			if HasQuadraticForm(ps) then
+				if not IsIsotropicVector(QuadraticForm(ps),x) then
+					Error("<v> does not generate an element of <geom>");
+				fi;
+			else
+				if not IsIsotropicVector(SesquilinearForm(ps),x) then
+					Error("<v> does not generate an element of <geom>");
+				fi;
+			fi;
+			MultRowVector(x,Inverse( x[PositionNonZero(x)] ));
+			ConvertToVectorRep(x, geom!.basefield);
+			return Wrap(geom, 1, x);
+		fi;
+  end );
   
-InstallMethod( VectorSpaceToElement, "for a 8-bit vector",
+#############################################################################
+#O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
+# by the rowvector <v>. Several checks are built in.
+##
+InstallMethod( VectorSpaceToElement, 
+	"for a polar space and an 8-bit vector",
   [IsClassicalPolarSpace, Is8BitVectorRep],
   function( geom, vec )
     local  c, gf;
@@ -1458,338 +2076,6 @@ InstallMethod( Size, [IsShadowSubspacesOfClassicalPolarSpace and
 # Display methods:
 #############################################################################
 
-InstallMethod( ViewObj, [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
-  function( p )
-    Print("<polar space over ",p!.basefield,">");
-  end );
-
-InstallMethod( PrintObj, [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
-  function( p )
-    Print("PolarSpace(\n");
-    if HasQuadraticForm(p) then
-       Print(QuadraticForm(p));
-    else
-       Print(SesquilinearForm(p));
-    fi;
-    Print(", ", p!.basefield, " )");
-  end );
-
-InstallMethod( Display, [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
-  function( p )
-    Print("<polar space of rank ",p!.dimension," over ",p!.basefield,">\n");
-    if HasQuadraticForm(p) then
-       Display(QuadraticForm(p));
-    fi;
-    Display(SesquilinearForm(p));
-    if HasDiagramOfGeometry( p ) then
-       Display( DiagramOfGeometry( p ) );
-    fi;
-  end );
-
-InstallMethod( ViewObj, 
-  [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsEllipticQuadric],
-  function( p )
-    Print("Q-(",p!.dimension,", ",Size(p!.basefield),")");
-  end );
-
-InstallMethod( PrintObj,
-  [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsEllipticQuadric ],
-        function( p )
-          Print("EllipticQuadric(",p!.dimension,",",p!.basefield,")");
-        end );
-
-InstallMethod( Display, 
-  [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsEllipticQuadric ],
-  function( p )
-    Print("Q-(",p!.dimension,", ",Size(p!.basefield),")\n");
-    if HasQuadraticForm(p) then
-       Display(QuadraticForm(p));
-    fi;
-    Display(SesquilinearForm(p));
-    if HasDiagramOfGeometry( p ) then
-       Display( DiagramOfGeometry( p ) );
-    fi;
-  end );
-
-InstallMethod( ViewObj,
-  [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsSymplecticSpace],
-        function( p )
-          Print("W(",p!.dimension,", ",Size(p!.basefield),")");
-  end );
-
-InstallMethod( PrintObj,
-  [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsSymplecticSpace ],
-        function( p )
-          Print("SymplecticSpace(",p!.dimension,",",p!.basefield,")");
-  end);
-
-InstallMethod( Display, 
-  [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsSymplecticSpace ],
-  function( p )
-    Print("W(",p!.dimension,", ",Size(p!.basefield),")\n");
-    Display(SesquilinearForm(p));
-    if HasDiagramOfGeometry( p ) then
-       Display( DiagramOfGeometry( p ) );
-    fi;
-  end );
-
-InstallMethod( ViewObj,
-  [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsParabolicQuadric ],
-        function( p )
-          Print("Q(",p!.dimension,", ",Size(p!.basefield),")");
-        end);
-
-InstallMethod( PrintObj,
-  [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsParabolicQuadric ],
-        function( p )
-          Print("ParabolicQuadric(",p!.dimension,",",p!.basefield,")");
-  end);
-
-InstallMethod( Display, 
-  [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsParabolicQuadric ],
-  function( p )
-    Print("Q(",p!.dimension,", ",Size(p!.basefield),")\n");
-    if HasQuadraticForm(p) then
-       Display(QuadraticForm(p));
-    fi;
-    Display(SesquilinearForm(p));
-    if HasDiagramOfGeometry( p ) then
-       Display( DiagramOfGeometry( p ) );
-    fi;
-  end );
-
-InstallMethod( ViewObj,
-  [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsHyperbolicQuadric ],
-        function( p )
-          Print("Q+(",p!.dimension,", ",Size(p!.basefield),")");
-  end);
-
-InstallMethod( PrintObj,
-  [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsHyperbolicQuadric ],
-        function( p )
-          Print("HyperbolicQuadric(",p!.dimension,",",p!.basefield,")");
-        end);
-
-InstallMethod( Display, 
-  [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsHyperbolicQuadric ],
-  function( p )
-    Print("Q+(",p!.dimension,", ",Size(p!.basefield),")\n");
-    if HasQuadraticForm(p) then
-       Display(QuadraticForm(p));
-    fi;
-    Display(SesquilinearForm(p));
-    if HasDiagramOfGeometry( p ) then
-       Display( DiagramOfGeometry( p ) );
-    fi;
-  end );
-
-InstallMethod( ViewObj,
-  [IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsHermitianVariety ],
-        function( p )
-          Print("H(",p!.dimension,", ",Sqrt(Size(p!.basefield)),"^2)");
-        end);
-
-InstallMethod( PrintObj,
-  [IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsHermitianVariety ],
-        function( p )
-          Print("HermitianVariety(",p!.dimension,",",p!.basefield,")");
-        end);
-
-InstallMethod( Display, 
-  [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsHermitianVariety ],
-  function( p )
-    Print("H(",p!.dimension,", ",Size(p!.basefield),")\n");
-    Display(SesquilinearForm(p));
-    if HasDiagramOfGeometry( p ) then
-       Display( DiagramOfGeometry( p ) );
-    fi;
-  end );
-
-#############################################################################
-# Methods for Gram matrices and quadratic forms:
-#############################################################################
-
-InstallMethod( CanonicalGramMatrix, [IsString, IsPosInt, IsField],
-
-## Constructs the canonical gram matrix compatible with
-## the corresponding matrix group in FinInG.
-
-  function( type, d, f )
-    local one, q, m, i, t, x, w, p;
-    one := One( f );
-    q := Size(f);
-
-      # Symplectic Gram matrix
-    if type = "symplectic" then    
-      if IsOddInt(d) then
-          Error( "the dimension <d> must be even" );
-      fi;    
-      m := List( 0 * IdentityMat(d, f), ShallowCopy );
-      for i  in [ 1 .. d/2 ]  do
-          m[2*i][2*i-1] := -one;
-          m[2*i-1][2*i] := one;
-      od;
-    
-      # Unitary Gram matrix      
-    elif type = "hermitian" then
-      if IsOddInt(PrimePowersInt(Size(f))[2]) then
-        Error("field order must be a square");
-      fi;
-      m := IdentityMat(d, f);
-        
-      # Orthogonal Gram matrix
-    elif type = "hyperbolic" then
-      m := List( 0*IdentityMat(d, f), ShallowCopy );
-      p := Characteristic(f);
-      if IsOddInt(p) and (p + 1) mod 4 = 0 then
-         w := one * ((p + 1) / 2);
-      else
-         w := one;
-      fi; 
-      for i  in [ 1 .. d/2 ]  do
-          m[2*i-1][2*i] := w;
-          m[2*i][2*i-1] := w;
-      od;
-    elif type = "elliptic" then   
-      m := List( 0*IdentityMat(d, f), ShallowCopy );
-      p := Characteristic(f);
-      ## if q is congruent to 5,7 mod 8, then
-      ## the anisotropic part is the primitive root.
-      if q mod 4 in [1,2] then 
-         t := Z(q);
-      else
-         t := one;
-      fi;
-      m{[1,2]}{[1,2]} := [ [ 1, 0 ], [ 0, t ] ] * one;
-
-      if IsOddInt(p) then
-         w := one * ((p + 1) / 2);
-      else
-         w := one;
-      fi; 
-      for i in [ 2 .. d/2 ]  do
-          m[2*i-1][2*i] := w;
-          m[2*i][2*i-1] := w;
-      od;
-    elif type = "parabolic" then 
-      m := List( 0*IdentityMat(d, f), ShallowCopy );          
-      p := Characteristic(f);
-      if IsOddInt(p) then
-         ## if q is congruent to 5,7 mod 8, then
-         ## the anisotropic part is the primitive root
-         ## of the prime subfield.
-         if q mod 8 in [5,7] then 
-            t := Z(p);
-         else
-            t := one;
-         fi;
-         m[1][1] := t;
-         w := t * ((p + 1) / 2);
-      else
-         w := one;
-      fi; 
-      for i in [ 1 .. (d-1)/2 ]  do
-          m[2*i][2*i+1] := w;
-          m[2*i+1][2*i] := w;
-      od;
-    else Error( "type is unknown or not implemented" );
-    fi;
-
-    ##  We should return a compressed matrix in order that
-    ##  our computations are efficient
-
-    ConvertToMatrixRep( m, f );
-    return m;
-  end );
-
-InstallMethod( CanonicalQuadraticForm, [IsString, IsPosInt, IsField],
-
-## Constructs the canonical quadratic form matrix compatible with
-## the corresponding matrix group in FinInG. This function is
-## only used for q even.
-
-  function( type, d, f )
-    local m, one, q, p, j, x, R;
-
-    one := One( f );
-    
-    if type = "hyperbolic" then
-      m := MutableCopyMat(0 * IdentityMat(d, f));
-      for j in [ 1 .. d/2 ]  do
-          m[ 2*j-1 ][ 2*j ] := one;
-      od;
-    elif type = "elliptic" then
-      m := MutableCopyMat(0 * IdentityMat(d, f));
-      m[1][1] := one;
-      m[2][1] := one; 
-      m[d][d-1] := one;
-
-      for j in [ 2 .. d/2-1 ]  do
-          m[ 2*j-1 ][ 2*j ] := one;
-      od;
-      p := Characteristic(f);
-      q := Size(f);
-      if IsOddInt(Log(q, p)) then
-         m[2][2] := one;
-      else
-         R := PolynomialRing( f, 1 );
-         x := Indeterminate( f );
-         m[2][2] := Z(q)^First( [ 0 .. q-2 ], u -> 
-                            Length( Factors( R, x^2+x+PrimitiveRoot( f )^u ) ) = 1 );         
-      fi;
-    elif type = "parabolic" then
-      m := MutableCopyMat(0 * IdentityMat(d, f));
-      m[1][1] := one;
-      for j in [ 1 .. (d-1)/2 ]  do
-          m[ 2*j+1 ][ 2*j ] := one;
-      od;
-    else Error( "type is unknown or not implemented" );
-    fi;
-
-    ##  We should return a compressed matrix in order that
-    ##  our computations are efficient
-
-    ConvertToMatrixRep( m, f );
-    return m;
-  end );
-
-
-
-InstallMethod( CanonicalOrbitRepresentativeForSubspaces, 
-  [IsString, IsPosInt, IsField],
-
-  ## This function returns representatives for the
-  ## maximal totally isotropic (singular) subspaces
-  ## of the given canonical polar space
-
-  function( type, d, f )
-    local b, i, id, one, w, q, sqrtq;
-
-    q := Size(f);
-    id := IdentityMat(d, f);
-
-    if type = "symplectic" then    
-      b := List([1..d/2], i-> id[2*i-1] + id[2*i]);
-    elif type = "hermitian" then     
-      one := One(f);
-      sqrtq := Sqrt(q);
-      ## find element with norm -1
-      w := First(AsList(f), t -> IsZero( t^(sqrtq+1) + one ) );
-      if IsEvenInt(d) then   
-         b := List([1..d/2], i-> w * id[2*i] + id[2*i-1]);
-      else 
-         b := List([1..(d-1)/2], i-> w * id[2*i] + id[2*i-1]);
-      fi;
-    elif type = "parabolic" then 
-      b := id{List([1..(d-1)/2], i -> 2*i)};
-    elif type = "hyperbolic" then 
-      b := id{List([1..d/2], i -> 2*i-1)};
-    elif type = "elliptic" then 
-      b := id{List([1..(d/2-1)],i -> 2*i+1)};
-    else Error( "type is unknown or not implemented");
-    fi;
-    return [b];
-  end );
 
 
 

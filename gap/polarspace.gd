@@ -67,11 +67,14 @@ DeclareProperty( "IsSymplecticSpace", IsClassicalPolarSpace );
 DeclareProperty( "IsParabolicQuadric", IsClassicalPolarSpace );
 DeclareProperty( "IsHyperbolicQuadric", IsClassicalPolarSpace );
 DeclareProperty( "IsHermitianVariety", IsClassicalPolarSpace );
+DeclareProperty( "IsStandardPolarSpace", IsClassicalPolarSpace );
+
 
 #############################################################################
 # Constructor operations:
 #############################################################################
 
+DeclareOperation( "PolarSpaceStandard", [IsForm] );
 DeclareOperation( "PolarSpace", [IsForm, IsField, IsGroup, IsFunction] );
 DeclareOperation( "PolarSpace", [IsForm] );
 DeclareOperation( "Polarity", [IsClassicalPolarSpace] );

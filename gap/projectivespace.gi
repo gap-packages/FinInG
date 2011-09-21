@@ -430,7 +430,7 @@ InstallMethod( VectorSpaceToElement,
 		local  x, n, i;
 		## when v is empty... 
         if IsEmpty(v) then
-			Error("<v> does not represent any vectorspace");
+			Error("<v> does not represent any element");
 		fi;
 		#x := EchelonMat(v).vectors;
 		x := MutableCopyMat(v);
@@ -482,13 +482,13 @@ InstallMethod( VectorSpaceToElement,
 # by the vectorspace <v>. Several checks are built in. 
 ##
 InstallMethod( VectorSpaceToElement, 
-	"for a compressed GF(2)-matrix",
+	"for a projective space and a compressed GF(2)-matrix",
 	[IsProjectiveSpace, IsGF2MatrixRep],
 	function( geom, v )
 		local  x, n, i;
 		## when v is empty... 
 		if IsEmpty(v) then
-			Error("<v> does not represent any vectorspace");
+			Error("<v> does not represent any element");
 		fi;
 		x := MutableCopyMat(v);
 		TriangulizeMat(x); 
@@ -547,7 +547,7 @@ InstallMethod( VectorSpaceToElement,
 		local  x, n, i;
 		## when v is empty... 
 		if IsEmpty(v) then
-			Error("<v> does not represent any vectorspace");
+			Error("<v> does not represent any element");
 		fi;
 		#x := EchelonMat(v).vectors;
 		
@@ -597,6 +597,7 @@ InstallMethod( VectorSpaceToElement,
   
 # CHECKED 11/04/15 jdb
 # CHANGED 19/9/2011 jdb + ml
+# CHECKED 21/09/2011 jdb
 #############################################################################
 #O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
 # by the rowvector <v>. Several checks are built in.
@@ -605,11 +606,11 @@ InstallMethod( VectorSpaceToElement,
 	"for a row vector",
 	[IsProjectiveSpace, IsRowVector],
 	function( geom, v )
-		local  x, n, i;
-		## when v is empty...
-		if IsEmpty(v) then
-			Error("<v> does not represent any vectorspace");
-		fi;
+		local  x;
+		## when v is empty... does this ever occur for a row vector? No. jdb 21/09/2011
+		#if IsEmpty(v) then
+		#	Error("<v> does not represent any element");
+		#fi;
 		x := ShallowCopy(v);
 		## dimension should be correct
 		if Length(v) <> geom!.dimension + 1 then
@@ -634,7 +635,7 @@ InstallMethod( VectorSpaceToElement,
 # by the rowvector <v>. Several checks are built in.
 ##
 InstallMethod( VectorSpaceToElement, 
-	"for an 8-bit vector",
+	"for a projective space and an 8-bit vector",
 	[IsProjectiveSpace, Is8BitVectorRep],
 	function( geom, v )
 		local  x, n, i;
@@ -1702,7 +1703,8 @@ InstallMethod( Span,
 	fi;
 	end );
 
-# CHECKED 20/09/11 #############################################################################
+# CHECKED 20/09/11 
+#############################################################################
 #O  Span( <l> )
 # returns the span of the projective subspaces in <l>.
 ##

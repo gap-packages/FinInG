@@ -34,5 +34,5 @@ ReadPackage("fining","gap/enumerators.gd");
 ReadPackage("fining","gap/varieties.gd");
 ReadPackage("fining","gap/affinespace.gd");
 ReadPackage("fining","gap/affinegroup.gd");
-ReadPackage("fining","gap/gpolygons.gd");
+#ReadPackage("fining","gap/gpolygons.gd");
 #ReadPackage("fining","gap/emptysubspace.gd"); #changed 7/9/2011, while merging emptysubspace.g* files in projectivespace.g and liegeometry.g* files.
