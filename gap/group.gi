@@ -1814,6 +1814,166 @@ InstallMethod( FindBasePointCandidates,
 # Our classical groups:
 #################################################
 
+
+#############################################################################
+# Part I: methods for canonical gram matrices and canonical quadratic forms.
+# these methods are not intended for the user.
+#############################################################################
+
+# CHECKED 21/09/11 jdb
+#############################################################################
+#O  CanonicalGramMatrix( <type>, <d>, <f> )
+## Constructs the canonical gram matrix compatible with
+## the corresponding matrix group in FinInG.
+##
+InstallMethod( CanonicalGramMatrix, 
+	"for a string, an integer, and a field",
+	[IsString, IsPosInt, IsField],
+	function( type, d, f )
+		local one, q, m, i, t, x, w, p;
+		one := One( f );
+		q := Size(f);
+
+      # Symplectic Gram matrix
+		if type = "symplectic" then    
+			if IsOddInt(d) then
+				Error( "the dimension <d> must be even" );
+			fi;    
+			m := List( 0 * IdentityMat(d, f), ShallowCopy );
+			for i  in [ 1 .. d/2 ]  do
+				m[2*i][2*i-1] := -one;
+				m[2*i-1][2*i] := one;
+			od;
+    
+      # Unitary Gram matrix      
+		elif type = "hermitian" then
+			if IsOddInt(PrimePowersInt(Size(f))[2]) then
+				Error("field order must be a square");
+			fi;
+			m := IdentityMat(d, f);
+        
+      # Orthogonal Gram matrix
+		elif type = "hyperbolic" then
+			m := List( 0*IdentityMat(d, f), ShallowCopy );
+			p := Characteristic(f);
+			if IsOddInt(p) and (p + 1) mod 4 = 0 then
+				w := one * ((p + 1) / 2);
+			else
+				w := one;
+			fi; 
+			for i  in [ 1 .. d/2 ]  do
+				m[2*i-1][2*i] := w;
+				m[2*i][2*i-1] := w;
+			od;
+		elif type = "elliptic" then   
+			m := List( 0*IdentityMat(d, f), ShallowCopy );
+			p := Characteristic(f);
+      ## if q is congruent to 5,7 mod 8, then
+      ## the anisotropic part is the primitive root.
+			if q mod 4 in [1,2] then 
+				t := Z(q);
+			else
+				t := one;
+			fi;
+			m{[1,2]}{[1,2]} := [ [ 1, 0 ], [ 0, t ] ] * one;
+
+			if IsOddInt(p) then
+				w := one * ((p + 1) / 2);
+			else
+				w := one;
+			fi; 
+			for i in [ 2 .. d/2 ]  do
+				m[2*i-1][2*i] := w;
+				m[2*i][2*i-1] := w;
+			od;
+		elif type = "parabolic" then 
+			m := List( 0*IdentityMat(d, f), ShallowCopy );          
+			p := Characteristic(f);
+			if IsOddInt(p) then
+         ## if q is congruent to 5,7 mod 8, then
+         ## the anisotropic part is the primitive root
+         ## of the prime subfield.
+			if q mod 8 in [5,7] then 
+				t := Z(p);
+			else
+				t := one;
+			fi;
+				m[1][1] := t;
+				w := t * ((p + 1) / 2);
+			else
+				w := one;
+			fi; 
+			for i in [ 1 .. (d-1)/2 ]  do
+				m[2*i][2*i+1] := w;
+				m[2*i+1][2*i] := w;
+			od;
+		else Error( "type is unknown or not implemented" );
+		fi;
+
+    ##  We should return a compressed matrix in order that
+    ##  our computations are efficient
+
+		ConvertToMatrixRep( m, f );
+		return m;
+	end );
+
+# CHECKED 21/09/11 jdb
+#############################################################################
+#O  CanonicalGramMatrix( <type>, <d>, <f> )
+## Constructs the canonical quadric form compatible with
+## the corresponding matrix group in FinInG.
+## only used for q even.
+##
+InstallMethod( CanonicalQuadraticForm, 
+	"for a string, an integer and a field",
+	[IsString, IsPosInt, IsField],
+	function( type, d, f )
+		local m, one, q, p, j, x, R;
+		one := One( f );
+        if type = "hyperbolic" then
+			m := MutableCopyMat(0 * IdentityMat(d, f));
+			for j in [ 1 .. d/2 ]  do
+				m[ 2*j-1 ][ 2*j ] := one;
+			od;
+		elif type = "elliptic" then
+			m := MutableCopyMat(0 * IdentityMat(d, f));
+			m[1][1] := one;
+			m[2][1] := one; 
+			m[d][d-1] := one;
+			for j in [ 2 .. d/2-1 ]  do
+				m[ 2*j-1 ][ 2*j ] := one;
+			od;
+			p := Characteristic(f);
+			q := Size(f);
+			if IsOddInt(Log(q, p)) then
+				m[2][2] := one;
+			else
+				R := PolynomialRing( f, 1 );
+				x := Indeterminate( f );
+				m[2][2] := Z(q)^First( [ 0 .. q-2 ], u -> 
+					Length( Factors( R, x^2+x+PrimitiveRoot( f )^u ) ) = 1 );         
+			fi;
+		elif type = "parabolic" then
+			m := MutableCopyMat(0 * IdentityMat(d, f));
+			m[1][1] := one;
+			for j in [ 1 .. (d-1)/2 ]  do
+				m[ 2*j+1 ][ 2*j ] := one;
+			od;
+		else Error( "type is unknown or not implemented" );
+		fi;
+
+    ##  We should return a compressed matrix in order that
+    ##  our computations are efficient
+
+		ConvertToMatrixRep( m, f );
+		return m;
+	end );
+
+
+#############################################################################
+# Part II: constructor methods, for the user of course.
+#############################################################################
+
 ## bug, size IsometryGroup(ParabolicQuadric(6,2)) is wrong
 
 InstallMethod( SOdesargues, [IsInt, IsPosInt, IsField and IsFinite],

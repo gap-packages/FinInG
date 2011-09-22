@@ -17,7 +17,7 @@
 ##                 Colorado State University
 ##                 Vrije Universiteit Brussel
 ##
-##  Declaration stuff for enumerators of varieties of polar spaces
+##  Declaration stuff for enumerators of elements of polar spaces
 ##
 #############################################################################
 

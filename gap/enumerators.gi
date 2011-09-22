@@ -113,7 +113,7 @@ InstallMethod( EnumeratorByOrbit, [ IsSubspacesOfClassicalPolarSpace ],
   function( vs )
 
   ## In this operation, we provide a way to compute the full
-  ## list of varieties by using the transitive action of the isometry
+  ## list of elements by using the transitive action of the isometry
   ## group. Using an enumerator to get a full list is much slower.                              
 
   ## We use the package "orb" by Mueller, Neunhoeffer and Noeske,
@@ -152,7 +152,7 @@ InstallMethod( AsSSortedList, "for subspaces of a polar space", [IsSubspacesOfCl
 InstallMethod( Enumerator, [ IsSubspacesOfClassicalPolarSpace ],
   function( vs )
 
-    ## This method returns the enumerator for the varieties of
+    ## This method returns the enumerator for the elements of
     ## a polar space, of a given type. There are three "helper"
     ## operations involved here: enum_orthogonal, enum_hermitian,
     ## and enum_symplectic. At the moment, we do not have nice methods

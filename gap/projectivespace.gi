@@ -754,13 +754,13 @@ InstallMethod( CoordinatesOfHyperplane,
 	"for a hyperplane of a projective space",
 	[IsSubspaceOfProjectiveSpace],
 	function(hyp)
-		local pg,perp;
+		local pg;
 		pg:=ShallowCopy(hyp!.geo);
 		if not hyp!.type=Dimension(pg) then 
 			Error("The argument is not a hyperplane");
 		else 
-			perp:=StandardDualityOfProjectiveSpace(pg);
-			return Coordinates(hyp^perp);
+			#perp:=StandardDualityOfProjectiveSpace(pg);
+			return Coordinates(VectorSpaceToElement(pg,NullspaceMat(TransposedMat(hyp!.obj))));
 		fi;
 	end );
 

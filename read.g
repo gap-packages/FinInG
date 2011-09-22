@@ -34,7 +34,7 @@ ReadPackage("fining","gap/group.gi");
 ReadPackage("fining","gap/projectivespace.gi");
 ReadPackage("fining","gap/correlations.gi");
 
-ReadPackage("fining","gap/diagram.gi");
+#ReadPackage("fining","gap/diagram.gi");
 
 ReadPackage("fining","gap/polarspace.gi");
 ReadPackage("fining","gap/morphisms.gi");
@@ -43,10 +43,10 @@ ReadPackage("fining","gap/morphisms.gi");
 
 ReadPackage("fining","gap/enumerators.gi");
 ReadPackage("fining","gap/varieties.gi");
-ReadPackage("fining","gap/affinespace.gi");
-ReadPackage("fining","gap/affinegroup.gi");
+#ReadPackage("fining","gap/affinespace.gi");
+#ReadPackage("fining","gap/affinegroup.gi");
 #ReadPackage("fining","gap/gpolygons.gi");
 #ReadPackage("fining","gap/emptysubspace.gi");
 
-ReadPackage("fining","gap/linearalgebra_patch.g");
+#ReadPackage("fining","gap/linearalgebra_patch.g");
 

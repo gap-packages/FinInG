@@ -137,6 +137,11 @@ DeclareGlobalFunction( "NiceMonomorphismByDomain" );
 # Some group constructions:
 ###########################
 
+## helper operations for canonical matrices, for classical groups.
+
+DeclareOperation( "CanonicalGramMatrix", [IsString, IsPosInt, IsField]); 
+DeclareOperation( "CanonicalQuadraticForm", [IsString, IsPosInt, IsField]); 
+
 ## The following are conjugates of the groups in the classical groups
 ## library which are compatible with the canonical forms in FinInG 
 

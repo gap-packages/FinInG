@@ -284,160 +284,11 @@ InstallMethod( PolarSpace,
 #############################################################################
 
 #############################################################################
-# Part I: methods for canonical gram matrices and canonical quadratic forms.
-# these methods are not intended for the user.
-# This part also includes a method to setup the representative of the maximal 
+# Part I: A method to setup the representative of the maximal 
 # subspaces for polar spaces of each type.
+# Recall that the methods for methods for canonical gram matrices and canonical 
+# quadratic forms are found in group.gi. All these methods are not intended for the user.
 #############################################################################
-
-# CHECKED 21/09/11 jdb
-#############################################################################
-#O  CanonicalGramMatrix( <type>, <d>, <f> )
-## Constructs the canonical gram matrix compatible with
-## the corresponding matrix group in FinInG.
-##
-InstallMethod( CanonicalGramMatrix, 
-	"for a string, an integer, and a field",
-	[IsString, IsPosInt, IsField],
-	function( type, d, f )
-		local one, q, m, i, t, x, w, p;
-		one := One( f );
-		q := Size(f);
-
-      # Symplectic Gram matrix
-		if type = "symplectic" then    
-			if IsOddInt(d) then
-				Error( "the dimension <d> must be even" );
-			fi;    
-			m := List( 0 * IdentityMat(d, f), ShallowCopy );
-			for i  in [ 1 .. d/2 ]  do
-				m[2*i][2*i-1] := -one;
-				m[2*i-1][2*i] := one;
-			od;
-    
-      # Unitary Gram matrix      
-		elif type = "hermitian" then
-			if IsOddInt(PrimePowersInt(Size(f))[2]) then
-				Error("field order must be a square");
-			fi;
-			m := IdentityMat(d, f);
-        
-      # Orthogonal Gram matrix
-		elif type = "hyperbolic" then
-			m := List( 0*IdentityMat(d, f), ShallowCopy );
-			p := Characteristic(f);
-			if IsOddInt(p) and (p + 1) mod 4 = 0 then
-				w := one * ((p + 1) / 2);
-			else
-				w := one;
-			fi; 
-			for i  in [ 1 .. d/2 ]  do
-				m[2*i-1][2*i] := w;
-				m[2*i][2*i-1] := w;
-			od;
-		elif type = "elliptic" then   
-			m := List( 0*IdentityMat(d, f), ShallowCopy );
-			p := Characteristic(f);
-      ## if q is congruent to 5,7 mod 8, then
-      ## the anisotropic part is the primitive root.
-			if q mod 4 in [1,2] then 
-				t := Z(q);
-			else
-				t := one;
-			fi;
-			m{[1,2]}{[1,2]} := [ [ 1, 0 ], [ 0, t ] ] * one;
-
-			if IsOddInt(p) then
-				w := one * ((p + 1) / 2);
-			else
-				w := one;
-			fi; 
-			for i in [ 2 .. d/2 ]  do
-				m[2*i-1][2*i] := w;
-				m[2*i][2*i-1] := w;
-			od;
-		elif type = "parabolic" then 
-			m := List( 0*IdentityMat(d, f), ShallowCopy );          
-			p := Characteristic(f);
-			if IsOddInt(p) then
-         ## if q is congruent to 5,7 mod 8, then
-         ## the anisotropic part is the primitive root
-         ## of the prime subfield.
-			if q mod 8 in [5,7] then 
-				t := Z(p);
-			else
-				t := one;
-			fi;
-				m[1][1] := t;
-				w := t * ((p + 1) / 2);
-			else
-				w := one;
-			fi; 
-			for i in [ 1 .. (d-1)/2 ]  do
-				m[2*i][2*i+1] := w;
-				m[2*i+1][2*i] := w;
-			od;
-		else Error( "type is unknown or not implemented" );
-		fi;
-
-    ##  We should return a compressed matrix in order that
-    ##  our computations are efficient
-
-		ConvertToMatrixRep( m, f );
-		return m;
-	end );
-
-# CHECKED 21/09/11 jdb
-#############################################################################
-#O  CanonicalGramMatrix( <type>, <d>, <f> )
-## Constructs the canonical quadric form compatible with
-## the corresponding matrix group in FinInG.
-## only used for q even.
-##
-InstallMethod( CanonicalQuadraticForm, 
-	"for a string, an integer and a field",
-	[IsString, IsPosInt, IsField],
-	function( type, d, f )
-		local m, one, q, p, j, x, R;
-		one := One( f );
-        if type = "hyperbolic" then
-			m := MutableCopyMat(0 * IdentityMat(d, f));
-			for j in [ 1 .. d/2 ]  do
-				m[ 2*j-1 ][ 2*j ] := one;
-			od;
-		elif type = "elliptic" then
-			m := MutableCopyMat(0 * IdentityMat(d, f));
-			m[1][1] := one;
-			m[2][1] := one; 
-			m[d][d-1] := one;
-			for j in [ 2 .. d/2-1 ]  do
-				m[ 2*j-1 ][ 2*j ] := one;
-			od;
-			p := Characteristic(f);
-			q := Size(f);
-			if IsOddInt(Log(q, p)) then
-				m[2][2] := one;
-			else
-				R := PolynomialRing( f, 1 );
-				x := Indeterminate( f );
-				m[2][2] := Z(q)^First( [ 0 .. q-2 ], u -> 
-					Length( Factors( R, x^2+x+PrimitiveRoot( f )^u ) ) = 1 );         
-			fi;
-		elif type = "parabolic" then
-			m := MutableCopyMat(0 * IdentityMat(d, f));
-			m[1][1] := one;
-			for j in [ 1 .. (d-1)/2 ]  do
-				m[ 2*j+1 ][ 2*j ] := one;
-			od;
-		else Error( "type is unknown or not implemented" );
-		fi;
-
-    ##  We should return a compressed matrix in order that
-    ##  our computations are efficient
-
-		ConvertToMatrixRep( m, f );
-		return m;
-	end );
 
 # CHECKED 21/09/11 jdb
 #############################################################################
@@ -1197,165 +1048,6 @@ InstallMethod( IsomorphismCanonicalPolarSpaceWithIntertwiner,
 #############################################################################
 ## TOT HIER GECHECKT JDB en ML 15/04/11
 #############################################################################
-
-#############################################################################
-#
-#  Groups: (special) isometry groups and similarity group of finite classical
-#           polar spaces
-#
-#############################################################################
-
-
-InstallMethod( SpecialIsometryGroup, [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
-  function( ps )
-    local iso, twiner, g, info, coll, d, f, type;
-
-    if HasIsCanonicalPolarSpace(ps) and IsCanonicalPolarSpace(ps) then
-       type := PolarSpaceType( ps );
-       info := ClassicalGroupInfo( ps );
-       coll := CollineationGroup( ps );
-       d := ps!.dimension + 1; 
-       f := ps!.basefield;
-       
-       if type = "symplectic" then
-          g := Spdesargues(d,f);
-       elif type = "elliptic" then
-          g := SOdesargues(-1,d,f);
-       elif type = "hyperbolic" then
-          g := SOdesargues(1,d,f);
-       elif type = "parabolic" then
-          g := SOdesargues(0,d,f);
-       elif type = "hermitian" then
-          g := SUdesargues(d, f);
-       fi;
-      
-       SetParent(g, coll);
-    else
-       iso := IsomorphismCanonicalPolarSpaceWithIntertwiner( ps );
-       twiner := Intertwiner( iso );
-       g := Image(twiner, SpecialIsometryGroup(Source(iso)!.geometry) );
-       SetParent(g, CollineationGroup(ps));
-    fi;
-    return g;
-  end );
-
-InstallMethod( IsometryGroup, [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
-  function( ps )
-    local iso, twiner, g, info, coll, d, f, type;
-
-    if HasIsCanonicalPolarSpace(ps) and IsCanonicalPolarSpace(ps) then
-       type := PolarSpaceType( ps );
-       info := ClassicalGroupInfo( ps );
-       coll := CollineationGroup( ps );
-       d := ps!.dimension + 1; 
-       f := ps!.basefield;
-       
-       if type = "symplectic" then
-          g := Spdesargues(d,f);
-       elif type = "elliptic" then
-          g := GOdesargues(-1,d,f);
-       elif type = "hyperbolic" then
-          g := GOdesargues(1,d,f);
-       elif type = "parabolic" then
-          g := GOdesargues(0,d,f);
-       elif type = "hermitian" then
-          g := GUdesargues(d, f);
-       fi;
-      
-       SetParent(g, coll);
-    else
-       
-       iso := IsomorphismCanonicalPolarSpaceWithIntertwiner( ps );
-
-       twiner := Intertwiner( iso );
-       g := Image(twiner, IsometryGroup(Source(iso)!.geometry) );
-       SetParent(g, CollineationGroup(ps));
-    fi;
-    return g;
-  end );
-
-InstallMethod( SimilarityGroup, [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
-  function( ps )
-    local iso, twiner, g, info, coll, d, f, type;
-    if HasIsCanonicalPolarSpace(ps) and IsCanonicalPolarSpace(ps) then
-       type := PolarSpaceType( ps );
-       info := ClassicalGroupInfo( ps );
-       coll := CollineationGroup( ps );
-       d := ps!.dimension + 1; 
-       f := ps!.basefield;
-       
-       if type = "symplectic" then
-          g := GSpdesargues(d,f);
-       elif type = "elliptic" then
-          g := DeltaOminus(d,f);
-       elif type = "hyperbolic" then
-          g := DeltaOplus(d,f);
-       elif type = "parabolic" then
-          g := GOdesargues(0,d,f);
-       elif type = "hermitian" then
-          g := GUdesargues(d, f);
-       fi;
-      
-       SetParent(g, coll);
-    else
-      iso := IsomorphismCanonicalPolarSpaceWithIntertwiner( ps );
-      twiner := Intertwiner( iso );
-      g := Image(twiner, SimilarityGroup(Source(iso)!.geometry) );
-      SetParent(g, CollineationGroup(ps));
-    fi;
-    return g;
-  end );
-
-InstallMethod( CollineationGroup, [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
-  function( ps )
-    local iso, twiner, g, info, x, points, hom, d, f, coll, type;
-    d := ps!.dimension + 1; 
-    f := ps!.basefield;
-
-    if HasIsCanonicalPolarSpace(ps) and IsCanonicalPolarSpace(ps) then
-       type := PolarSpaceType( ps );
-       info := ClassicalGroupInfo( ps );
-             
-       if type = "symplectic" then
-          g := GammaSp(d,f);
-       elif type = "elliptic" then
-          g := GammaOminus(d,f);  
-       elif type = "hyperbolic" then
-          g := GammaOplus(d,f);
-       elif type = "parabolic" then
-          g := GammaO(d,f);
-       elif type = "hermitian" then
-          g := GammaU(d, f);
-       fi;
-       
-    else    
-       iso := IsomorphismCanonicalPolarSpaceWithIntertwiner( ps );
-       Info(InfoFinInG, 1, "Computing collineation group of canonical polar space...");
-       coll := CollineationGroup( Source(iso)!.geometry );
-       info := ClassicalGroupInfo( ps );
-       twiner := Intertwiner( iso );           
-       g := Image(twiner, coll);
-    fi;
-    
-    ## Setting up the NiceMonomorphism
-
-    Info(InfoFinInG, 1, "Computing nice monomorphism...");
-    x := RepresentativesOfElements( ps )[1];   
-    if DESARGUES.Fast then
-       hom := NiceMonomorphismByOrbit( g, x!.obj, OnProjPointsWithFrob, info!.degree);
-    else 
-       points := Orbit(g, x, OnProjSubspaces);
-       hom := ActionHomomorphism(g, points, OnProjSubspaces, "surjective");    
-       SetIsBijective(hom, true);
-       SetNiceObject(g, Image(hom) );
-    fi;
-    SetNiceMonomorphism(g, hom );
-    
-    return g;
-  end );
-
-#############################################################################
-
 
 #############################################################################
 #More attributes...
@@ -2479,4 +2171,157 @@ InstallMethod( AbsolutePoints,
 #    fi;
 #    return tsingular;
 #  end );
+
+#############################################################################
+#
+#  Groups: (special) isometry groups and similarity group of finite classical
+#           polar spaces
+#
+#############################################################################
+
+InstallMethod( CollineationGroup,
+	"for a polar space",
+	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
+	function( ps )
+		local iso, twiner, g, info, x, points, hom, d, f, coll, type;
+		d := ps!.dimension + 1; 
+		f := ps!.basefield;
+		if HasIsCanonicalPolarSpace(ps) and IsCanonicalPolarSpace(ps) then
+			type := PolarSpaceType( ps );
+			info := ClassicalGroupInfo( ps );
+			if type = "symplectic" then
+				g := GammaSp(d,f);
+			elif type = "elliptic" then
+				g := GammaOminus(d,f);  
+			elif type = "hyperbolic" then
+				g := GammaOplus(d,f);
+			elif type = "parabolic" then
+				g := GammaO(d,f);
+			elif type = "hermitian" then
+				g := GammaU(d, f);
+			fi;
+		else    
+			iso := IsomorphismCanonicalPolarSpaceWithIntertwiner( ps );
+			Info(InfoFinInG, 1, "Computing collineation group of canonical polar space...");
+			coll := CollineationGroup( Source(iso)!.geometry );
+			info := ClassicalGroupInfo( ps );
+			twiner := Intertwiner( iso );           
+			g := Image(twiner, coll);
+		fi;
+        ## Setting up the NiceMonomorphism
+		Info(InfoFinInG, 1, "Computing nice monomorphism...");
+		x := RepresentativesOfElements( ps )[1];   
+		if DESARGUES.Fast then
+			hom := NiceMonomorphismByOrbit( g, x!.obj, OnProjPointsWithFrob, info!.degree);
+		else 
+			points := Orbit(g, x, OnProjSubspaces);
+			hom := ActionHomomorphism(g, points, OnProjSubspaces, "surjective");    
+			SetIsBijective(hom, true);
+			SetNiceObject(g, Image(hom) );
+		fi;
+		SetNiceMonomorphism(g, hom );
+		return g;
+	end );
+
+InstallMethod( SpecialIsometryGroup, [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
+  function( ps )
+    local iso, twiner, g, info, coll, d, f, type;
+
+    if HasIsCanonicalPolarSpace(ps) and IsCanonicalPolarSpace(ps) then
+       type := PolarSpaceType( ps );
+       info := ClassicalGroupInfo( ps );
+       coll := CollineationGroup( ps );
+       d := ps!.dimension + 1; 
+       f := ps!.basefield;
+       
+       if type = "symplectic" then
+          g := Spdesargues(d,f);
+       elif type = "elliptic" then
+          g := SOdesargues(-1,d,f);
+       elif type = "hyperbolic" then
+          g := SOdesargues(1,d,f);
+       elif type = "parabolic" then
+          g := SOdesargues(0,d,f);
+       elif type = "hermitian" then
+          g := SUdesargues(d, f);
+       fi;
+      
+       SetParent(g, coll);
+    else
+       iso := IsomorphismCanonicalPolarSpaceWithIntertwiner( ps );
+       twiner := Intertwiner( iso );
+       g := Image(twiner, SpecialIsometryGroup(Source(iso)!.geometry) );
+       SetParent(g, CollineationGroup(ps));
+    fi;
+    return g;
+  end );
+
+InstallMethod( IsometryGroup, [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
+  function( ps )
+    local iso, twiner, g, info, coll, d, f, type;
+
+    if HasIsCanonicalPolarSpace(ps) and IsCanonicalPolarSpace(ps) then
+       type := PolarSpaceType( ps );
+       info := ClassicalGroupInfo( ps );
+       coll := CollineationGroup( ps );
+       d := ps!.dimension + 1; 
+       f := ps!.basefield;
+       
+       if type = "symplectic" then
+          g := Spdesargues(d,f);
+       elif type = "elliptic" then
+          g := GOdesargues(-1,d,f);
+       elif type = "hyperbolic" then
+          g := GOdesargues(1,d,f);
+       elif type = "parabolic" then
+          g := GOdesargues(0,d,f);
+       elif type = "hermitian" then
+          g := GUdesargues(d, f);
+       fi;
+      
+       SetParent(g, coll);
+    else
+       
+       iso := IsomorphismCanonicalPolarSpaceWithIntertwiner( ps );
+
+       twiner := Intertwiner( iso );
+       g := Image(twiner, IsometryGroup(Source(iso)!.geometry) );
+       SetParent(g, CollineationGroup(ps));
+    fi;
+    return g;
+  end );
+
+InstallMethod( SimilarityGroup, [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
+  function( ps )
+    local iso, twiner, g, info, coll, d, f, type;
+    if HasIsCanonicalPolarSpace(ps) and IsCanonicalPolarSpace(ps) then
+       type := PolarSpaceType( ps );
+       info := ClassicalGroupInfo( ps );
+       coll := CollineationGroup( ps );
+       d := ps!.dimension + 1; 
+       f := ps!.basefield;
+       
+       if type = "symplectic" then
+          g := GSpdesargues(d,f);
+       elif type = "elliptic" then
+          g := DeltaOminus(d,f);
+       elif type = "hyperbolic" then
+          g := DeltaOplus(d,f);
+       elif type = "parabolic" then
+          g := GOdesargues(0,d,f);
+       elif type = "hermitian" then
+          g := GUdesargues(d, f);
+       fi;
+      
+       SetParent(g, coll);
+    else
+      iso := IsomorphismCanonicalPolarSpaceWithIntertwiner( ps );
+      twiner := Intertwiner( iso );
+      g := Image(twiner, SimilarityGroup(Source(iso)!.geometry) );
+      SetParent(g, CollineationGroup(ps));
+    fi;
+    return g;
+  end );
+
+#############################################################################
 
