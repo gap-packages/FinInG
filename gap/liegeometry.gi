@@ -135,7 +135,7 @@ InstallMethod( PrintObj, "for IsElementsOfLieGeometry",
 #O  Points( <ps> )
 # returns ElementsOfIncidenceStructure(ps,1), <ps> a Lie Geometry.
 ## 
-InstallMethod( Points, "for IsLieGeometry",
+InstallMethod( Points, "for a Lie geometry",
 	[IsLieGeometry],
 	function( ps )
 		return ElementsOfIncidenceStructure(ps, 1);
@@ -146,7 +146,7 @@ InstallMethod( Points, "for IsLieGeometry",
 #O  Lines( <ps> )
 # returns ElementsOfIncidenceStructure(ps,2), <ps> a Lie Geometry.
 ## 
-InstallMethod( Lines, "for IsLieGeometry",
+InstallMethod( Lines, "for a Lie geometry",
 	[IsLieGeometry],
 	function( ps )
 		return ElementsOfIncidenceStructure(ps, 2);
@@ -157,7 +157,7 @@ InstallMethod( Lines, "for IsLieGeometry",
 #O  Planes( <ps> )
 # returns ElementsOfIncidenceStructure(ps,3), <ps> a Lie Geometry.
 ## 
-InstallMethod( Planes, "for IsLieGeometry",
+InstallMethod( Planes, "for a Lie geometry",
 	[IsLieGeometry],
 	function( ps )
 		return ElementsOfIncidenceStructure(ps, 3);
@@ -168,7 +168,7 @@ InstallMethod( Planes, "for IsLieGeometry",
 #O  Solids( <ps> )
 # returns ElementsOfIncidenceStructure(ps,4), <ps> a Lie Geometry.
 ## 
-InstallMethod( Solids, "for IsLieGeometry",
+InstallMethod( Solids, "for a Lie geometry",
 	[IsLieGeometry],
 	function( ps )
 		return ElementsOfIncidenceStructure(ps, 4);

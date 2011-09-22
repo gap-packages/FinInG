@@ -159,28 +159,6 @@ InstallMethod(HermitianPolarityOfProjectiveSpace,
   return PolarityOfProjectiveSpaceOp(form);
 end );
 
-#the next method returns the polarity associated to a polar space.
-#recall that polarspaces and associated polarities are equivalent, except
-#when q is even and the polar space is orthogonal, in this case, the associated 
-#symplectic polarity is returned, so usable to compucte tangent hyperplanes etc,
-#but not usable to construct a polarity, because we ask a non-degenerate form.
-#the above condition is, due to definitions in desargues, and the definition of
-#the "associated sesquilinear form of a polar space, equivalent with cheking
-#whether the form returned by SesquilinearForm(ps) is degenerate. If not, we go!
-#all necessary algebraic stuff is in the forms package.
-
-InstallMethod(PolarityOfProjectiveSpace,
-  "for a polar space",
-  [IsClassicalPolarSpace],
-  function(ps)
-  local form;
-  form := SesquilinearForm(ps);
-  if IsDegenerateForm(form) then
-    Error("no polarity of the ambient projective space can be associated to <ps>");
-  else return PolarityOfProjectiveSpace(form);
-  fi;
-end );
-
 #############################################################################
 # operations, attributes and properties
 #############################################################################
@@ -222,19 +200,6 @@ InstallMethod( IsPseudoPolarityOfProjectiveSpace,
   [IsPolarityOfProjectiveSpace and IsPolarityOfProjectiveSpaceRep],
   x -> IsPseudoForm(x!.form) );
 
-InstallMethod( PolarSpace, "from a polarity of a projective space",
-  [ IsPolarityOfProjectiveSpace ],
-  function( polarity )
-    local form, ps;
-    form := SesquilinearForm(polarity);
-    if not IsPseudoForm(form) then
-       ps := PolarSpace( form );
-    else
-       Error("<polarity> is pseudo and does not induce a polar space");
-    fi;
-    return ps;
-  end );
-
 #installs the method for sub^phi with sub a subspace of a projectivespace and
 # phi a polarity of a projective space. To be discussed whether this should be done
 # in general or only for polarities.
@@ -245,32 +210,6 @@ InstallOtherMethod( \^,
   function(sub,phi)
   return OnProjSubspacesReversing(sub,phi);
 end );
-
-InstallMethod( GeometryOfAbsolutePoints, 
-  "for a polarity of a projective space",
-  [ IsPolarityOfProjectiveSpace ],
-  function( polarity )
-    local form, geom, ps, vect, mat, n, sub;
-    form := SesquilinearForm(polarity);
-    if IsPseudoForm(form) then
-       mat := polarity!.mat;
-       n := Length(mat);
-       vect := List([1..n],i->mat[i][i]);
-       sub := NullspaceMat(TransposedMat([vect]));
-       ps := ProjectiveSpace(n-1,polarity!.fld);
-       return VectorSpaceToElement(ps,sub);
-    else
-       return PolarSpace(form);
-    fi;
-    return ps;
-  end );
-
-InstallMethod( AbsolutePoints,
-  "for a polarity of a projective space",
-  [ IsPolarityOfProjectiveSpace ],
-  function( polarity )
-    return Points(GeometryOfAbsolutePoints(polarity));
-  end );
 
 #the following is obsolete now.
 #InstallMethod( IsDegeneratePolarity, "for a polarity of a projective space",

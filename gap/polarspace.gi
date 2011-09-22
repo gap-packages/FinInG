@@ -27,16 +27,27 @@
 #
 # Things To Do:
 #
-# - Polarities as correlations
 # - Documentation
 # - test
 # - make sure matrices are compressed.
+# - more work on the ViewObj/PrintObj/Display methods
 # - think about the IsClassicalGQ filter. At first sight, we can leave everything as
 #   is, since this will not affect correctness of the code.
+# - important: find out when NiceMonomorphism is computed. This is e.g. the case if
+#   a random subspace is asked. OK for me, but it should be documented.
 # - to do: check if in constructors of standard polar spaces, the Wrap should be
 #   replaced by VectorSpaceToElement
+# - check IsCollinear. Is this the best way to do it? Should it just take two points
+#   of a polar space? Think about it
+# - tiny optimalisations: Size/NumberOfTotallySingularSubspaces? (see questions at methods)
+#   \in: should probably not change the element (see remark at method).
+# - Check Iterator.
+# - Check classical groups.
+# - see if commented out material at end of file is really obsolte.
 #
 ########################################
+
+#############################################################################
 # Low level help methods:
 #############################################################################
 
@@ -1372,12 +1383,66 @@ InstallMethod( RankAttr,
 # the polar space <ps>
 ##
 InstallMethod( TypesOfElementsOfIncidenceStructure, 
-	"for a polar space (line 1375)",
+	"for a polar space ",
 	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
 	function( ps )
 		local iso;
 		iso := IsomorphismCanonicalPolarSpace( ps );
 		return TypesOfElementsOfIncidenceStructure(Source(iso)!.geometry);
+	end );
+
+#The next two methods are wrong. THe TypesOfElementsOfIncidenceStructure are determined by the
+#rank of the polar space, not the projective dimenion.
+#InstallMethod( TypesOfElementsOfIncidenceStructure, "for a polar space", 
+#  [IsClassicalPolarSpace],
+#  function( ps )
+#    local d,i,types;
+#    types := ["point"];
+#    d := ProjectiveDimension(ps);
+#    if d >= 2 then Add(types,"line"); fi;
+#    if d >= 3 then Add(types,"plane"); fi;
+#    if d >= 4 then Add(types,"solid"); fi;
+#    for i in [5..d] do
+#        Add(types,Concatenation("proj. subspace of dim. ",String(i-1)));
+#    od;
+#    return types;
+#  end );
+
+#InstallMethod( TypesOfElementsOfIncidenceStructurePlural, "for a polar space",
+#  [IsClassicalPolarSpace],
+#  function( ps )
+#    local d,i,types;
+#    types := ["points"];
+#    d := ProjectiveDimension(ps);
+#    if d >= 2 then Add(types,"lines"); fi;
+#    if d >= 3 then Add(types,"planes"); fi;
+#    if d >= 4 then Add(types,"solids"); fi;
+#    for i in [5..d] do
+#        Add(types,Concatenation("proj. subspaces of dim. ",String(i-1)));
+#    od;
+#    return types;
+#  end );
+
+# CHECKED 22/09/11 jdb
+#############################################################################
+#O  TypesOfElementsOfIncidenceStructurePlural( <ps> )
+# Well known method that returns a list with the names of the elements of 
+# the polar space <ps>
+##
+InstallMethod( TypesOfElementsOfIncidenceStructurePlural, 
+	"for a polar space",  
+	[IsClassicalPolarSpace],
+	function( ps )
+		local d,i,types;
+		types := ["points"];
+		d := Rank(ps);
+		if d >= 2 then Add(types,"lines"); fi;
+		if d >= 3 then Add(types,"planes"); fi;
+		if d >= 4 then Add(types,"solids"); fi;
+		for i in [5..d] do
+			Add(types,Concatenation("proj. subspaces of dim. ",String(i-1)));
+		od;
+		return types;
 	end );
 
 # CHECKED 21/09/11 jdb
@@ -1399,7 +1464,7 @@ InstallOtherMethod( Order,
 # CHECKED 21/09/11 jdb
 #############################################################################
 #O  RepresentativesOfElements( <ps> )
-# If <ps> has rank two, then it is a GQ, and we can ask its order.
+# returns an element of each type of the polar space <ps>
 ##
 InstallMethod( RepresentativesOfElements, 
 	"for a polar space",
@@ -1436,6 +1501,7 @@ InstallOtherMethod(\QUO,
 #############################################################################
 
 # CHECKED 21/09/11 jdb
+# question: can we not use the NumberOfTotallySingularSubspaces for this?
 #############################################################################
 #O  Size( <vs> )
 # returns the number of elements on <vs>, a collection of elements of a polar
@@ -1672,7 +1738,7 @@ InstallMethod( VectorSpaceToElement,
 			return EmptySubspace(geom);
 		else
 			if HasQuadraticForm(geom) then
-				if not IsIsotropicVector(QuadraticForm(geom),x) then
+				if not IsSingularVector(QuadraticForm(geom),x) then
 					Error("<v> does not generate an element of <geom>");
 				fi;
 			else
@@ -1685,92 +1751,303 @@ InstallMethod( VectorSpaceToElement,
 			return Wrap(geom, 1, x);
 		fi;
   end );
-  
+
+# CHECKED 22/09/11 jdb  
 #############################################################################
 #O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
 # by the rowvector <v>. Several checks are built in.
 ##
 InstallMethod( VectorSpaceToElement, 
 	"for a polar space and an 8-bit vector",
-  [IsClassicalPolarSpace, Is8BitVectorRep],
-  function( geom, vec )
-    local  c, gf;
-      if IsZero(vec) then
-         return [];
-      fi;
-      gf := BaseField(vec);
-      c := PositionNonZero( vec );
-      if c <= Length( vec )  then
-         vec := Inverse( vec[c] ) * vec;
-         ConvertToVectorRep( vec, gf );
-      fi;
-      return Wrap(geom, 1, vec);
-  end );
+	[IsClassicalPolarSpace, Is8BitVectorRep],
+	function( geom, v )
+		local  x, n, i;
+		## when v is empty...
+		if IsEmpty(v) then
+			return EmptySubspace(geom);
+		fi;
+		x := ShallowCopy(v);
+		## dimension should be correct
+		if Length(v) <> geom!.dimension + 1 then
+			Error("Dimensions are incompatible");
+		fi;
+		## We must also compress our vector.
+		#ConvertToVectorRep(x, geom!.basefield);
+		## bad characters, such as jdb, checked this with input zero vector...
+		if IsZero(x) then
+			return EmptySubspace(geom);
+		else
+			if HasQuadraticForm(geom) then
+				if not IsSingularVector(QuadraticForm(geom),x) then
+					Error("<v> does not generate an element of <geom>");
+				fi;
+			else
+				if not IsIsotropicVector(SesquilinearForm(geom),x) then
+					Error("<v> does not generate an element of <geom>");
+				fi;
+			fi;			
+			MultRowVector(x,Inverse( x[PositionNonZero(x)] ));
+			ConvertToVectorRep(x, geom!.basefield);
+			return Wrap(geom, 1, x);
+		fi;
+	end );
 
-InstallMethod( TypesOfElementsOfIncidenceStructure, "for a polar space", 
-  [IsClassicalPolarSpace],
-  function( ps )
-    local d,i,types;
-    types := ["point"];
-    d := ProjectiveDimension(ps);
-    if d >= 2 then Add(types,"line"); fi;
-    if d >= 3 then Add(types,"plane"); fi;
-    if d >= 4 then Add(types,"solid"); fi;
-    for i in [5..d] do
-        Add(types,Concatenation("proj. subspace of dim. ",String(i-1)));
-    od;
-    return types;
-  end );
-
-InstallMethod( TypesOfElementsOfIncidenceStructurePlural, "for a polar space",
-  [IsClassicalPolarSpace],
-  function( ps )
-    local d,i,types;
-    types := ["points"];
-    d := ProjectiveDimension(ps);
-    if d >= 2 then Add(types,"lines"); fi;
-    if d >= 3 then Add(types,"planes"); fi;
-    if d >= 4 then Add(types,"solids"); fi;
-    for i in [5..d] do
-        Add(types,Concatenation("proj. subspaces of dim. ",String(i-1)));
-    od;
-    return types;
-  end );
-
-
+# CHECKED 22/09/11 jdb  
+#############################################################################
+#O  \in( <w>, <ps> ) true if the element <w> is contained in <ps>
+# remarks: should we change this? I mean: this method makes a projective subspace
+# suddenly into a polar space subspace, if this thest is true. Can cause weird thing 
+# when displaying objects. 
+##
 #I changed this, I now use the built in functions of forms to perform the test.
 #jdb 6/1/8
-InstallMethod( \in, "for a variety and a polar space",
-  [IsElementOfIncidenceStructure, IsClassicalPolarSpace],
-  function( w, ps )
-    local form, r, ti;
+InstallMethod( \in, 
+	"for an element of a polar space and a polar space",
+	[IsElementOfIncidenceStructure, IsClassicalPolarSpace],
+	function( w, ps )
+		local form, r, ti;
     # if the vector spaces don't agree we can't go any further
-    if w!.geo!.dimension <> ps!.dimension or
-       not IsSubset(ps!.basefield, w!.geo!.basefield) then
-       return false;
-    fi;
-
-    r := w!.obj;
-    if w!.type = 1 then r := [r]; fi;
-
+		if w!.geo!.dimension <> ps!.dimension or
+			not IsSubset(ps!.basefield, w!.geo!.basefield) then
+			return false;
+		fi;
+		r := w!.obj;
+		if w!.type = 1 then r := [r]; fi;
     # check if the subspace is totally isotropic/singular
-
-    if HasQuadraticForm(ps) then
-       form := QuadraticForm(ps);
-       ti := IsTotallySingularSubspace(form,r);
-    else
-       form := SesquilinearForm(ps);
-       ti:= IsTotallyIsotropicSubspace(form,r); 
-    fi;
-    
+		if HasQuadraticForm(ps) then
+			form := QuadraticForm(ps);
+			ti := IsTotallySingularSubspace(form,r);
+		else
+			form := SesquilinearForm(ps);
+			ti:= IsTotallyIsotropicSubspace(form,r); 
+		fi;
     # if yes, make it an element of the polar space.
+		if not IsSubspaceOfClassicalPolarSpace(w) and ti then
+			w!.geo := ps;
+		fi;
+		return ti;
+	end );
+
+#############################################################################
+# Collection of elements (of given type)
+#############################################################################
+
+# CHECKED 22/09/11 jdb
+#############################################################################
+#O  ElementsOfIncidenceStructure( <ps>, <j> )
+# returns the elements of the polar space <ps> of type <j>
+## 
+InstallMethod( ElementsOfIncidenceStructure, 
+	"for a polar space and an integer",
+	[IsClassicalPolarSpace, IsPosInt],
+	function( ps, j )
+		local r;
+		r := Rank(ps);
+		if j > r then
+			Error("<geo> has no elements of type <j>");
+		else
+			return Objectify(
+			NewType( ElementsCollFamily, IsSubspacesOfClassicalPolarSpace and
+                                     IsSubspacesOfClassicalPolarSpaceRep ),
+			rec(
+				geometry := ps,
+				type := j,
+				size := NumberOfTotallySingularSubspaces(ps, j)
+				)
+			);
+		fi;
+	end);
+
+# CHECKED 22/09/11 jdb
+#############################################################################
+#O  ElementsOfIncidenceStructure( <ps> )
+# returns all the elements of the polar space <ps> 
+## 
+InstallMethod( ElementsOfIncidenceStructure, 
+	"for a polar space",
+	[IsClassicalPolarSpace],
+	function( ps )
+		return Objectify(
+			NewType( ElementsCollFamily, IsAllElementsOfIncidenceStructure ),
+			rec( geometry := ps )
+				);
+	end);
+
+#the next four operations are not necessary any more, the generic methods for them
+# in Lie geometry are used.
+
+#InstallMethod( Points, [IsClassicalPolarSpace],
+#  function( ps )
+#    return ElementsOfIncidenceStructure(ps, 1);
+#  end);
+
+#InstallMethod( Lines, [IsClassicalPolarSpace],
+#  function( ps )
+#    return ElementsOfIncidenceStructure(ps, 2);
+#  end);
+
+#InstallMethod( Planes, [IsClassicalPolarSpace],
+#  function( ps )
+#    return ElementsOfIncidenceStructure(ps, 3);
+#  end);
+
+#InstallMethod( Solids, [IsClassicalPolarSpace],
+#  function( ps )
+#    return ElementsOfIncidenceStructure(ps, 4);
+#  end);
+
+
+# CHECKED 22/09/11 jdb
+# question: can we use this function for Size?
+#############################################################################
+#O  NumberOfTotallySingularSubspaces( <ps>, <j> )
+# returns the number of elements of type <j> of the polar space <ps>
+## 
+InstallMethod( NumberOfTotallySingularSubspaces, 
+	"for a polar space and an integer",
+	[IsClassicalPolarSpace, IsPosInt],
+	function(ps, j)
+
+  ## In a classical finite polar space of rank r with parameters (q,q^e), 
+  ## the number of subspaces of algebraic dimension j is given by
+  ## [d, n] Prod_{i=1}^{n} (q^{r+e-i}+1)
+
+		local r, d, type, e, q, qe;
+		r := RankAttr(ps);
+		d := ps!.dimension;
+		type := PolarSpaceType(ps);
+		q := Size(ps!.basefield); 
+		if type = "elliptic" then e := 2; qe := q^e;
+		elif type = "hyperbolic" then e:= 0; qe := q^e;
+		elif type = "parabolic" or type = "symplectic" then e:=1; qe := q^e;
+		elif type = "hermitian" and IsEvenInt(ps!.dimension) then e:=3; 
+			qe := RootInt(q,2)^e;
+		elif type = "hermitian" and IsOddInt(ps!.dimension) then e:=1; 
+			qe := RootInt(q,2)^e;
+		else Error("Polar space doesn't know its type!");
+		fi;
+
+		return Size(Subspaces(GF(q)^r, j)) * Product(List([1..j], i -> q^(r-i) * qe +1));
+	end);
+
+# CHECKED 22/09/11 jdb
+#############################################################################
+#O  TypeOfSubspace( <ps>, <w> )
+# returns the type of the polar space induced by <ps> in the projective subspace
+# <w>
+## 
+InstallMethod( TypeOfSubspace,
+	"for a polar space and a subspace of a projective geometry",
+     [ IsClassicalPolarSpace, IsSubspaceOfProjectiveSpace ],
+	function( ps, w )
+  
+    ## At the moment, this is a helper operation, but perhaps
+    ## it could be used by the user. This operation returns
+    ## "degenerate", "hermitian", "symplectic", "elliptic",
+    ## "hyperbolic", or "parabolic".
     
-    if not IsSubspaceOfClassicalPolarSpace(w) and ti then
-       w!.geo := ps;
-    fi;
-    return ti;
+		local pstype, dim, type, mat, gf, q, form, newform;
+		pstype := PolarSpaceType( ps );
+		gf := ps!.basefield;             
+		q := Size(gf);
+		dim := w!.type;
+
+		if pstype in ["elliptic", "parabolic", "hyperbolic"] and IsEvenInt(q) then
+			form := QuadraticForm( ps );
+			mat := w!.obj * form!.matrix * TransposedMat(w!.obj);
+			newform := QuadraticFormByMatrix( mat, gf );
+
+#  jdb makes a change here. it was 'IsDegenerateForm( newform )' but it is clear that we want to test whether
+#  the quadratic form is *singular*, according to the definition in forms about degenerecy and singularity
+
+			if IsSingularForm( newform ) then
+				return "degenerate";    
+			elif IsOddInt(dim) then
+				return "parabolic";
+			else
+				if IsHyperbolicForm( newform ) then
+					return "hyperbolic";
+				else 
+					return "elliptic";
+				fi;
+			fi;
+		else
+			form := SesquilinearForm( ps );
+			mat := w!.obj * form!.matrix * TransposedMat(w!.obj);
+       
+			if pstype = "symplectic" then
+				newform := BilinearFormByMatrix( mat, gf );
+				if IsDegenerateForm( newform ) then
+					return "degenerate";
+				else
+					return "symplectic";
+				fi;
+			elif pstype = "hermitian" then
+				if IsHermitianMatrix( mat, gf ) then
+					return "hermitian";
+				else
+					return "degenerate";
+				fi;
+			elif pstype in ["elliptic", "parabolic", "hyperbolic"] then
+				newform := BilinearFormByMatrix( mat, gf );
+				if IsDegenerateForm( newform ) then
+					return "degenerate";
+				else
+					if IsEllipticForm(newform) then
+						return "elliptic";
+					elif IsHyperbolicForm(newform) then
+						return "hyperbolic";
+					else
+						return "parabolic";
+					fi;             
+				fi;
+			fi;
+		fi;
+    
+		Print("Polar space does not have a recognisable type\n");
+		return;
+	end );
+
+############################################################################
+## Methods for random stuff
+## Since it is quick to find a pseudo-random element
+## of a group (a random subproduct of the generators),
+## we just find a random collineation and take the image
+## of the associated element representative (see RepresentativesOfElements).
+#############################################################################
+
+# CHECKED 22/09/2011 jdb.
+#############################################################################
+#O  RandomSubspace( <ps>, <d> )
+# returns a random subspace of projective dimension <d> in the polar space <ps>
+##
+InstallMethod( RandomSubspace, 
+	"for a polar space and a projective dimension",
+	[ IsClassicalPolarSpace, IsPosInt ],                                             
+	function( ps, d )
+		local x, rep;
+		x := PseudoRandom( CollineationGroup(ps) );
+		rep := RepresentativesOfElements(ps)[d+1];    
+		return OnProjSubspaces(rep, x);
   end );
 
+
+# CHECKED 22/09/2011 jdb.
+#############################################################################
+#O  Random( <ps>, <d> )
+# returns a random subspace of projective dimension <d> in the polar space <ps>
+##
+InstallMethod( Random, 
+	"for a collection of subspaces of a polar space",
+    [ IsSubspacesOfClassicalPolarSpace ],
+	function( subs )
+		local ps, x, rep;
+		ps := subs!.geometry;
+		x := PseudoRandom( CollineationGroup(ps) );
+		rep := RepresentativesOfElements(ps)[subs!.type];    
+		return OnProjSubspaces(rep, x);
+	end );
+  
 
 InstallMethod(Iterator,  "for subspaces of a polar space",
         [IsSubspacesOfClassicalPolarSpace],
@@ -1828,367 +2105,88 @@ InstallMethod(Iterator,  "for subspaces of a polar space",
           ));
   end);
 
-InstallMethod( NumberOfTotallySingularSubspaces, [IsClassicalPolarSpace, IsPosInt],
-  function(ps, j)
-
-  ## In a classical finit epolar space of rank r with parameters (q,q^e), 
-  ## the number of subspaces of algebraic dimension j is given by
-  ## [d, n] Prod_{i=1}^{n} (q^{r+e-i}+1)
-
-    local r, d, type, e, q, qe;
-    r := RankAttr(ps);
-    d := ps!.dimension;
-    type := PolarSpaceType(ps);
-    q := Size(ps!.basefield); 
-
-    if type = "elliptic" then e := 2; qe := q^e;
-    elif type = "hyperbolic" then e:= 0; qe := q^e;
-    elif type = "parabolic" or type = "symplectic" then e:=1; qe := q^e;
-    elif type = "hermitian" and IsEvenInt(ps!.dimension) then e:=3; 
-         qe := RootInt(q,2)^e;
-    elif type = "hermitian" and IsOddInt(ps!.dimension) then e:=1; 
-         qe := RootInt(q,2)^e;
-    else Error("Polar space doesn't know its type!");
-    fi;
-
-    return Size(Subspaces(GF(q)^r, j)) * Product(List([1..j], i -> q^(r-i) * qe +1));
-  end);
-
-InstallMethod( ElementsOfIncidenceStructure, [IsClassicalPolarSpace, IsPosInt],
-  function( ps, j )
-    local r;
-    r := Rank(ps);
-    if j > r then
-      Error("<geo> has no elements of type <j>");
-    else
-      return Objectify(
-        NewType( ElementsCollFamily, IsSubspacesOfClassicalPolarSpace and
-                                     IsSubspacesOfClassicalPolarSpaceRep ),
-          rec(
-            geometry := ps,
-            type := j,
-            size := NumberOfTotallySingularSubspaces(ps, j)
-          )
-        );
-    fi;
-  end);
-
-InstallMethod( ElementsOfIncidenceStructure, [IsClassicalPolarSpace],
-  function( ps )
-    return Objectify(
-      NewType( ElementsCollFamily, IsAllElementsOfIncidenceStructure ),
-        rec( geometry := ps )
-      );
-  end);
-
-InstallMethod( Points, [IsClassicalPolarSpace],
-  function( ps )
-    return ElementsOfIncidenceStructure(ps, 1);
-  end);
-
-InstallMethod( Lines, [IsClassicalPolarSpace],
-  function( ps )
-    return ElementsOfIncidenceStructure(ps, 2);
-  end);
-
-InstallMethod( Planes, [IsClassicalPolarSpace],
-  function( ps )
-    return ElementsOfIncidenceStructure(ps, 3);
-  end);
-
-InstallMethod( Solids, [IsClassicalPolarSpace],
-  function( ps )
-    return ElementsOfIncidenceStructure(ps, 4);
-  end);
-
-InstallMethod( TypeOfSubspace, 
-     [ IsClassicalPolarSpace, IsSubspaceOfProjectiveSpace ],
-  function( ps, w )
-  
-    ## At the moment, this is a helper operation, but perhaps
-    ## it could be used by the user. This operation returns
-    ## "degenerate", "hermitian", "symplectic", "elliptic",
-    ## "hyperbolic", or "parabolic".
-    
-    local pstype, dim, type, mat, gf, q, form, newform;
-    pstype := PolarSpaceType( ps );
-    gf := ps!.basefield;             
-    q := Size(gf);
-    dim := w!.type;
-
-    if pstype in ["elliptic", "parabolic", "hyperbolic"] and IsEvenInt(q) then
-       form := QuadraticForm( ps );
-       mat := w!.obj * form!.matrix * TransposedMat(w!.obj);
-       newform := QuadraticFormByMatrix( mat, gf );
-
-#  jdb makes a change here. it was 'IsDegenerateForm( newform )' but it is clear that we want to test whether
-#  the quadratic form is *singular*, according to the definition in forms about degenerecy and singularity
-
-       if IsSingularForm( newform ) then
-          return "degenerate";    
-       elif IsOddInt(dim) then
-          return "parabolic";
-       else
-          if IsHyperbolicForm( newform ) then
-             return "hyperbolic";
-          else 
-             return "elliptic";
-          fi;
-       fi;
-    else
-       form := SesquilinearForm( ps );
-       mat := w!.obj * form!.matrix * TransposedMat(w!.obj);
-       
-       if pstype = "symplectic" then
-          newform := BilinearFormByMatrix( mat, gf );
-          if IsDegenerateForm( newform ) then
-             return "degenerate";
-          else
-             return "symplectic";
-          fi;
-       elif pstype = "hermitian" then
-          if IsHermitianMatrix( mat, gf ) then
-             return "hermitian";
-          else
-             return "degenerate";
-          fi;
-       elif pstype in ["elliptic", "parabolic", "hyperbolic"] then
-          newform := BilinearFormByMatrix( mat, gf );
-          if IsDegenerateForm( newform ) then
-             return "degenerate";
-          else
-             if IsEllipticForm(newform) then
-                return "elliptic";
-             elif IsHyperbolicForm(newform) then
-                return "hyperbolic";
-             else
-                return "parabolic";
-             fi;             
-          fi;
-       fi;
-    fi;
-    
-    Print("Polar space does not have a recognisable type\n");
-    return;
-  end );
-
-
-InstallMethod( RandomSubspace, "for a polar space and a dimension",
-                       [ IsClassicalPolarSpace, IsPosInt ],                                             
-  function( ps, d )
-    local x, rep;
-    x := PseudoRandom( CollineationGroup(ps) );
-    rep := RepresentativesOfElements(ps)[d+1];    
-    return OnProjSubspaces(rep, x);
-  end );
-
-
-InstallMethod( Random, "for a collection of subspaces of a polar space",
-                       [ IsSubspacesOfClassicalPolarSpace ],
-                       
-  ## Since it is quick to find a pseudo-random element
-  ## of a group (a random subproduct of the generators),
-  ## we just find a random collineation and take the image
-  ## of the associated element representative (see RepresentativesOfElements).
-                       
-  function( subs )
-    local ps, x, rep;
-    ps := subs!.geometry;
-    x := PseudoRandom( CollineationGroup(ps) );
-    rep := RepresentativesOfElements(ps)[subs!.type];    
-    return OnProjSubspaces(rep, x);
-  end );
-  
-
 #############################################################################
 #
 #   Shadows of elements and flags
 #
 #############################################################################
 
-InstallMethod( ShadowOfElement, [IsClassicalPolarSpace, IsElementOfIncidenceStructure, IsPosInt],
-  function( ps, v, j )
-    local localinner, localouter, localfactorspace,
-          pstype, psdim, f, vdim, sz;
-
-    pstype := PolarSpaceType(ps);
-    psdim := ps!.dimension;
-    f := ps!.basefield;
-    vdim := v!.type;  
-    
-    if j < vdim then
-      localinner := [];
-      localouter := v!.obj;
-      if IsVector(localouter) and not IsMatrix(localouter) then
-         localouter := [localouter]; 
-      fi;
-      ConvertToMatrixRep( localouter, f );
-      localfactorspace := Subspace(ps!.vectorspace, localouter);
-      sz := Size(Subspaces(localfactorspace, j));
-    elif j = vdim then
-      localinner := v!.obj;
-      if IsVector(localinner) and not IsMatrix(localinner) then
-         localinner := [localinner]; 
-      fi;
-      localouter := localinner;
-      localfactorspace := TrivialSubspace(ps!.vectorspace);
-      sz := 1;
-    else  
-      localinner := v!.obj;
-      localouter := Polarity(ps)(v)!.obj;
-      
-      if pstype = "symplectic" then
-         localfactorspace := SymplecticSpace( psdim- 2*vdim, f );
-      elif pstype = "hermitian" then
-         localfactorspace := HermitianVariety( psdim-2*vdim, f );
-      elif pstype = "elliptic" then 
-         localfactorspace := EllipticQuadric( psdim-2*vdim, f );
-      elif pstype = "parabolic" then 
-         localfactorspace := ParabolicQuadric( psdim-2*vdim, f );
-      elif pstype = "hyperbolic" then 
-         localfactorspace := HyperbolicQuadric( psdim-2*vdim, f );
-      fi;    
-      sz := Size(ElementsOfIncidenceStructure(localfactorspace, j - vdim)); 
-    fi;
-    
-    return Objectify(
-      NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
+# CHECKED 22/09/11 jdb
+#############################################################################
+#O ShadowOfElement(<ps>, <v>, <j> ). Recall that for every particular Lie 
+# geometry a method for ShadowOfElement  must be installed. 
+##
+InstallMethod( ShadowOfElement,
+	"for a polar space, an element of a polar space, and an integer",
+	[IsClassicalPolarSpace, IsElementOfIncidenceStructure, IsPosInt],
+	function( ps, v, j )
+		local localinner, localouter, localfactorspace, pstype, psdim, f, vdim, sz;
+		pstype := PolarSpaceType(ps);
+		psdim := ps!.dimension;
+		f := ps!.basefield;
+		vdim := v!.type;  
+        if j < vdim then
+			localinner := [];
+			localouter := v!.obj;
+			if IsVector(localouter) and not IsMatrix(localouter) then
+				localouter := [localouter]; 
+			fi;
+			ConvertToMatrixRep( localouter, f );
+			localfactorspace := Subspace(ps!.vectorspace, localouter);
+			sz := Size(Subspaces(localfactorspace, j));
+		elif j = vdim then
+			localinner := v!.obj;
+			if IsVector(localinner) and not IsMatrix(localinner) then
+				localinner := [localinner]; 
+			fi;
+			localouter := localinner;
+			localfactorspace := TrivialSubspace(ps!.vectorspace);
+			sz := 1;
+		else  
+			localinner := v!.obj;
+			localouter := Polarity(ps)(v)!.obj;
+			if pstype = "symplectic" then
+				localfactorspace := SymplecticSpace( psdim- 2*vdim, f );
+			elif pstype = "hermitian" then
+				localfactorspace := HermitianVariety( psdim-2*vdim, f );
+			elif pstype = "elliptic" then 
+				localfactorspace := EllipticQuadric( psdim-2*vdim, f );
+			elif pstype = "parabolic" then 
+				localfactorspace := ParabolicQuadric( psdim-2*vdim, f );
+			elif pstype = "hyperbolic" then 
+				localfactorspace := HyperbolicQuadric( psdim-2*vdim, f );
+			fi;    
+			sz := Size(ElementsOfIncidenceStructure(localfactorspace, j - vdim)); 
+		fi;
+        return Objectify(
+		NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
                                 IsShadowSubspacesOfClassicalPolarSpace and
                                 IsShadowSubspacesOfClassicalPolarSpaceRep),
-        rec(
-          geometry := ps,
-          type := j,
-          inner := localinner,
-          outer := localouter,
-          factorspace := localfactorspace,
-          size := sz
-        )
-      );
-  end );
+				rec( geometry := ps,
+					type := j,
+					inner := localinner,
+					outer := localouter,
+					factorspace := localfactorspace,
+					size := sz
+					)
+				);
+	end );
 
-InstallMethod( Size, [IsShadowSubspacesOfClassicalPolarSpace and
-  IsShadowSubspacesOfClassicalPolarSpaceRep ],
-  function( vs )
-    return vs!.size;
-  end);
+# CHECKED 22/09/11 jdb
+#############################################################################
+#O Size( <vs> ) returns the number of elements in a shadow collection
+##
+InstallMethod( Size,
+	"for a collection of shadow elements of a polar space",
+	[IsShadowSubspacesOfClassicalPolarSpace and	IsShadowSubspacesOfClassicalPolarSpaceRep ],
+	function( vs )
+		return vs!.size;
+	end);
 
 #############################################################################
-# Display methods:
-#############################################################################
-
-
-
-
-#############################################################################
-# Basic methods:
-#############################################################################
-
-InstallMethod( Polarity,  [IsClassicalPolarSpace],
-  function( ps )
-    local perp, m, ty, f, form, bi;
-
-## If we have only a quadratic form Q, then we must remember
-## to use let the map b(v,w) := Q(v+w)-Q(v)-Q(w) be the polarisation of Q,
-## and consider the polarity induced from this map. This can be computed using AssociatedBilinearForm (from package forms).
-
-    form := SesquilinearForm(ps);
-    m := form!.matrix;
-    f := form!.basefield;
-    ty := form!.type;
-
-    if ty = "hermitian" then
-       perp := function(v)
-         local perpv, uv, rk, aut;
-         aut := CompanionAutomorphism(ps);
-         uv := v!.obj;
-         if v!.type = 1 then uv := [uv]; fi; 
-         perpv := MutableCopyMat(TriangulizedNullspaceMat( m * TransposedMat(uv)^aut )); 
-         rk := Rank(perpv);   
-         if rk = 1 then perpv := perpv[1]; fi;
-         return Wrap(AmbientSpace(ps), rk, perpv);
-       end;
-    else
-       if IsEvenInt(Size(f)) and 
-          (ty = "elliptic" or ty = "hyperbolic" or ty = "parabolic") then
-          ## recover bilinear form from quadratic form
-          bi := m + TransposedMat(m);
-       else 
-          bi := m;
-       fi;
-       
-       perp := function(v)
-         local perpv, uv, rk;
-         uv := v!.obj;
-         if v!.type = 1 then uv := [uv]; fi; 
-         perpv := MutableCopyMat(TriangulizedNullspaceMat( bi * TransposedMat(uv) )); 
-         rk := Rank(perpv);   
-         if rk = 1 then
-            perpv := perpv[1]; 
-            ConvertToVectorRep( perpv, f );
-         else
-            ConvertToMatrixRep( perpv, f );
-         fi;
-         return Wrap(AmbientSpace(ps), rk, perpv);
-       end;
-    fi;
-    return perp; ## should we return a correlation here?
-  end );
-
-InstallMethod( IsTotallySingular, "for a projective variety w.r.t a polarity",  
-              [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep, IsSubspaceOfProjectiveSpace ],
-  function( ps, v )
-    local uv, bi, f, ty, localaut, m, form, 
-          flag, bsum, count1, count2;
-
-## Suppose the polar space is defined by a quadratic form Q. Then
-## a subspace of the ambient projective space is totally singular if
-## it computes zero under Q. If we have only a sesquilinear form b, 
-## then let the map b(v,v) take the role of Q. 
-
-    form := SesquilinearForm(ps);
-    m := form!.matrix;
-    f := form!.basefield;
-    ty := form!.type;
-    uv := v!.obj;
-    if v!.type = 1 then uv := [uv]; fi; 
-    if ty = "hermitian" then 
-       localaut := CompanionAutomorphism(ps);
-       return IsZero( uv * m * (TransposedMat(uv)^localaut) );
-    else
-
-## A subspace with basis B is totally singular w.r.t the quadratic form 
-## Q(v) = vMv^T if for all pairs b_i and b_j in B we have Q(b_i+b_j) = 0.
-
-       # check first that everything in uv is t.s.
-       
-       flag := ForAll(uv, x -> IsZero(x * m * x));
-       if v!.type > 1 and flag then
-
-         ## just a shorter way to go through combinations
-         count1 := 1; count2 := 2;
-         repeat
-           repeat 
-             bsum := uv[count1]+uv[count2];
-             flag := IsZero(bsum * m * bsum);
-             count2 := count2 + 1;
-           until flag or count2 > Length(uv);
-           count1 := count1 + 1;
-           count2 := count1 + 1;
-         until flag or count1 >= Length(uv);
-       fi;
-       return flag;    
-    fi;
-  end );
-
-InstallMethod( IsTotallyIsotropic, "for a projective variety w.r.t a polarity", 
-             [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep, IsSubspaceOfProjectiveSpace ],
-  function( ps, v )
-    local perp, perpv;
-    perp := Polarity(ps);
-    perpv := perp(v);
-    return perpv!.type >= v!.type and v in perp(v);
-  end );
-
+#O IsCollinear( <ps>, <a>, <b> ) returns true if <a> and <b> are collinear in 
+# <ps>
+##
 InstallMethod( IsCollinear, "for points of a polar space", 
               [IsClassicalPolarSpace and IsClassicalPolarSpaceRep, IsElementOfIncidenceStructure, IsElementOfIncidenceStructure],
   function( ps, a, b )
@@ -2198,9 +2196,212 @@ InstallMethod( IsCollinear, "for points of a polar space",
   end);
 
 
+#############################################################################
+# Polarities and polar spaces. 
+#############################################################################
+
+# CHECKED 22/09/11 jdb
+#############################################################################
+#O PolarityOfProjectiveSpace( <ps> )
+#the next method returns the polarity associated to a polar space.
+#recall that polarspaces and associated polarities are equivalent, except
+#when q is even and the polar space is orthogonal, in this case, the associated 
+#symplectic polarity is returned, so usable to compute tangent hyperplanes etc.
+#When q is even and the projective dimension is even, this associated sesquilinear form
+#is degenerate, so not usable to construct a polarity, because we ask a non-degenerate form
+#So, the above condition is, due to definitions in Fining, and the definition of
+#the "associated sesquilinear form of a polar space, equivalent with cheking
+#whether the form returned by SesquilinearForm(ps) is degenerate. If not, we go!
+#all necessary algebraic stuff is in the forms package.
+##
+InstallMethod(PolarityOfProjectiveSpace,
+  "for a polar space",
+  [IsClassicalPolarSpace],
+  function(ps)
+  local form;
+  form := SesquilinearForm(ps);
+  if IsDegenerateForm(form) then
+    Error("no polarity of the ambient projective space can be associated to <ps>");
+  else return PolarityOfProjectiveSpace(form);
+  fi;
+end );
+
+# CHECKED 22/09/11 jdb
+#############################################################################
+#O PolarSpace( <polarity> ) returns the polar space associated to the polarity.
+# returns an error if <polarity> is pseudo. Of course, orthogonal polar spaces
+# in even characteristic cannot be reached with this method.
+##
+InstallMethod( PolarSpace, 
+	"from a polarity of a projective space",
+	[ IsPolarityOfProjectiveSpace ],
+	function( polarity )
+		local form, ps;
+		form := SesquilinearForm(polarity);
+		if not IsPseudoForm(form) then
+			ps := PolarSpace( form );
+		else
+			Error("<polarity> is pseudo and does not induce a polar space");
+		fi;
+		return ps;
+	end );
+
+# CHECKED 22/09/11 jdb
+#############################################################################
+#O GeometryOfAbsolutePoints( <polarity> ) returns the geometry of absolute 
+# points of <polarity>. This is in most cases a polar space, which explains why this
+# method is found here.
+##
+InstallMethod( GeometryOfAbsolutePoints, 
+	"for a polarity of a projective space",
+	[ IsPolarityOfProjectiveSpace ],
+	function( polarity )
+		local form, geom, ps, vect, mat, n, sub;
+		form := SesquilinearForm(polarity);
+		if IsPseudoForm(form) then
+			mat := polarity!.mat;
+			n := Length(mat);
+			vect := List([1..n],i->mat[i][i]);
+			sub := NullspaceMat(TransposedMat([vect]));
+			ps := ProjectiveSpace(n-1,polarity!.fld);
+			return VectorSpaceToElement(ps,sub);
+		else
+			return PolarSpace(form);
+		fi;
+		return ps;
+	end );
+
+# CHECKED 22/09/11 jdb
+#############################################################################
+#O AbsolutePoints( <polarity> ) returns the collection of points of the 
+# geometry of absolute points of <polarity>
+##
+InstallMethod( AbsolutePoints,
+	"for a polarity of a projective space",
+	[ IsPolarityOfProjectiveSpace ],
+	function( polarity )
+		return Points(GeometryOfAbsolutePoints(polarity));
+	end );
 
 
 
+#I think the next method is obsolete. We have a method \in for a subspace of a projective space
+# and a polar space, and this does the job. I leave as is, comment out, and if there are no complains, 
+# it can be deleted.
+
+#InstallMethod( IsTotallySingular, 
+#	"for a elementen variety w.r.t a polarity",  
+#              [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep, IsSubspaceOfProjectiveSpace ],
+#  function( ps, v )
+#    local uv, bi, f, ty, localaut, m, form, 
+#          flag, bsum, count1, count2;
+
+## Suppose the polar space is defined by a quadratic form Q. Then
+## a subspace of the ambient projective space is totally singular if
+## it computes zero under Q. If we have only a sesquilinear form b, 
+## then let the map b(v,v) take the role of Q. 
+#
+#    form := SesquilinearForm(ps);
+#    m := form!.matrix;
+#    f := form!.basefield;
+#    ty := form!.type;
+#    uv := v!.obj;
+#    if v!.type = 1 then uv := [uv]; fi; 
+#    if ty = "hermitian" then 
+#       localaut := CompanionAutomorphism(ps);
+#       return IsZero( uv * m * (TransposedMat(uv)^localaut) );
+#    else
+
+## A subspace with basis B is totally singular w.r.t the quadratic form 
+## Q(v) = vMv^T if for all pairs b_i and b_j in B we have Q(b_i+b_j) = 0.
+
+       # check first that everything in uv is t.s.
+       
+#       flag := ForAll(uv, x -> IsZero(x * m * x));
+#       if v!.type > 1 and flag then
+
+         ## just a shorter way to go through combinations
+#         count1 := 1; count2 := 2;
+#         repeat
+#           repeat 
+#             bsum := uv[count1]+uv[count2];
+#             flag := IsZero(bsum * m * bsum);
+#             count2 := count2 + 1;
+#           until flag or count2 > Length(uv);
+#           count1 := count1 + 1;
+#           count2 := count1 + 1;
+#         until flag or count1 >= Length(uv);
+#       fi;
+#       return flag;    
+#    fi;
+#  end );
+
+#InstallMethod( IsTotallyIsotropic, "for a projective variety w.r.t a polarity", 
+#             [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep, IsSubspaceOfProjectiveSpace ],
+#  function( ps, v )
+#    local perp, perpv;
+#    perp := Polarity(ps);
+#    perpv := perp(v);
+#    return perpv!.type >= v!.type and v in perp(v);
+#  end );
+
+# this is obsolete now, see PolarityOfProjectiveSpace method.
+#############################################################################
+#O Polarity( <ps> ) returns the polarity associated to the polar space <ps>
+# see the documentation for the exact meaning of associated polarity.
+#
+#InstallMethod( Polarity,  
+#	"for a polar space",
+#	[IsClassicalPolarSpace],
+#	function( ps )
+#		local perp, m, ty, f, form, bi;
+
+## If we have only a quadratic form Q, then we must remember
+## to use let the map b(v,w) := Q(v+w)-Q(v)-Q(w) be the polarisation of Q,
+## and consider the polarity induced from this map. This can be computed using AssociatedBilinearForm (from package forms).
+
+#    form := SesquilinearForm(ps);
+#    m := form!.matrix;
+#    f := form!.basefield;
+#    ty := form!.type;
+
+#    if ty = "hermitian" then
+#       perp := function(v)
+#         local perpv, uv, rk, aut;
+#         aut := CompanionAutomorphism(ps);
+#         uv := v!.obj;
+#         if v!.type = 1 then uv := [uv]; fi; 
+#         perpv := MutableCopyMat(TriangulizedNullspaceMat( m * TransposedMat(uv)^aut )); 
+#         rk := Rank(perpv);   
+#         if rk = 1 then perpv := perpv[1]; fi;
+#         return Wrap(AmbientSpace(ps), rk, perpv);
+#       end;
+#    else
+#       if IsEvenInt(Size(f)) and 
+#          (ty = "elliptic" or ty = "hyperbolic" or ty = "parabolic") then
+#          ## recover bilinear form from quadratic form
+#          bi := m + TransposedMat(m);
+#       else 
+#          bi := m;
+#       fi;
+       
+#       perp := function(v)
+#         local perpv, uv, rk;
+ #        uv := v!.obj;
+ #        if v!.type = 1 then uv := [uv]; fi; 
+#         perpv := MutableCopyMat(TriangulizedNullspaceMat( bi * TransposedMat(uv) )); 
+#         rk := Rank(perpv);   
+#         if rk = 1 then
+#            perpv := perpv[1]; 
+#            ConvertToVectorRep( perpv, f );
+#         else
+##            ConvertToMatrixRep( perpv, f );
+#         fi;
+#         return Wrap(AmbientSpace(ps), rk, perpv);
+##       end;
+#    fi;
+#    return perp; ## should we return a correlation here?
+#  end );
 
 #InstallMethod( DefiningPolarity, "for a polar space, if it is defined by a polarity",
 #    [ IsClassicalPolarSpace ],
