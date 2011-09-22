@@ -1372,7 +1372,7 @@ InstallMethod( RankAttr,
 # the polar space <ps>
 ##
 InstallMethod( TypesOfElementsOfIncidenceStructure, 
-	"for a polar space",
+	"for a polar space (line 1375)",
 	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
 	function( ps )
 		local iso;
@@ -1671,12 +1671,12 @@ InstallMethod( VectorSpaceToElement,
 		if IsZero(x) then
 			return EmptySubspace(geom);
 		else
-			if HasQuadraticForm(ps) then
-				if not IsIsotropicVector(QuadraticForm(ps),x) then
+			if HasQuadraticForm(geom) then
+				if not IsIsotropicVector(QuadraticForm(geom),x) then
 					Error("<v> does not generate an element of <geom>");
 				fi;
 			else
-				if not IsIsotropicVector(SesquilinearForm(ps),x) then
+				if not IsIsotropicVector(SesquilinearForm(geom),x) then
 					Error("<v> does not generate an element of <geom>");
 				fi;
 			fi;
