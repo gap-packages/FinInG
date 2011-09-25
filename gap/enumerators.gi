@@ -382,26 +382,30 @@ InstallGlobalFunction( enum_orthogonal,
     if type = "hyperbolic" then
        ps2 := ParabolicQuadric(d-1, f);
        ressize := Size(ElementsOfIncidenceStructure(HyperbolicQuadric(d+2-2*j, f), 1)); 
-       if j <= WittIndex( SesquilinearForm(ps2) ) then #was "SesquilinearForm"
+       #if j <= WittIndex( SesquilinearForm(ps2) ) then 
+       if j <= WittIndex( QuadraticForm(ps2) ) then #was "SesquilinearForm"
            ressize := ressize - Size(ElementsOfIncidenceStructure(ParabolicQuadric(d+1-2*j, f), 1));
        fi;
     elif type = "elliptic" then   
        ps2 := ParabolicQuadric(d-1, f);
        ressize := Size(ElementsOfIncidenceStructure(EllipticQuadric(d+2-2*j, f), 1));
-       if j <= WittIndex( SesquilinearForm(ps2) ) then #was "SesquilinearForm"
+       #if j <= WittIndex( SesquilinearForm(ps2) ) then
+	   if j <= WittIndex( QuadraticForm(ps2) ) then #was "SesquilinearForm"
           ressize := ressize - Size(ElementsOfIncidenceStructure(ParabolicQuadric(d+1-2*j, f), 1));
        fi;
     # type = "parabolic" in what follows
     elif disc = "elliptic" then
        ps2 := EllipticQuadric(d-1, f);
        ressize := Size(ElementsOfIncidenceStructure(ParabolicQuadric(d+2-2*j, f), 1)); 
-       if j <= WittIndex( SesquilinearForm(ps2) ) then #was "SesquilinearForm"
+       #if j <= WittIndex( SesquilinearForm(ps2) ) then
+	   if j <= WittIndex( QuadraticForm(ps2) ) then #was "SesquilinearForm"
           ressize := ressize - Size(ElementsOfIncidenceStructure(EllipticQuadric(d+1-2*j, f), 1));
        fi;
     else 
        ps2 := HyperbolicQuadric(d-1, f);        
        ressize := Size(ElementsOfIncidenceStructure(ParabolicQuadric(d+2-2*j, f), 1));
-       if j <= WittIndex( SesquilinearForm(ps2) ) then #was "SesquilinearForm"
+       #if j <= WittIndex( SesquilinearForm(ps2) ) then
+       if j <= WittIndex( QuadraticForm(ps2) ) then #was "SesquilinearForm"
           ressize := ressize - Size(ElementsOfIncidenceStructure(HyperbolicQuadric(d+1-2*j, f), 1));
        fi;
     fi;
@@ -410,7 +414,9 @@ InstallGlobalFunction( enum_orthogonal,
 
     ## Enumerate last the j-spaces contained in the non-deg hyperplane  
 
-    if j <= WittIndex( SesquilinearForm(ps2) ) then
+    #if j <= WittIndex( SesquilinearForm(ps2) ) then
+    if j <= WittIndex( QuadraticForm(ps2) ) then #was SesquilinearForm
+
        varsps2j := ElementsOfIncidenceStructure( ps2, j );
        enumextra := Enumerator( varsps2j );
     fi;

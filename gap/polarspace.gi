@@ -723,6 +723,31 @@ InstallOtherMethod( Dimension,
 	function(ps)
 		return Dimension(AmbientSpace(ps));
 	end );
+	
+# CHECKED 25/09/11 jdb
+#############################################################################
+#A  QuadraticForm( <ps> )
+# returns the quadratic form of which the polar space <ps> is the geometry.
+# this is usefull since there are generic methods (q odd and even) thinkable 
+# for orthogonal polar spaces. In such a case, we must use the quadratic form
+# in the even case, and we can use it in the odd case. A typical example are 
+# the enumerators. 
+# IMPORTANT: this method will only be used when q is odd (and <ps> is orthogonal
+# of course). In the q even case, the attribute will be set upon creation of the 
+# polar space.
+##
+InstallMethod( QuadraticForm, 
+	"for a polar space",
+	[ IsClassicalPolarSpace ],
+	function(ps)
+		local form;
+		form := SesquilinearForm(ps);
+		if form!.type <> "orthogonal" then
+			Error( "No quadratic form can be associated to this polar space" );
+		fi;
+		return QuadraticFormByBilinearForm(SesquilinearForm(ps));
+	end );
+
 
 # CHECKED 20/09/11 jdb
 #############################################################################
