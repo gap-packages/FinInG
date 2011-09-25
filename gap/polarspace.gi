@@ -1324,7 +1324,7 @@ InstallMethod( VectorSpaceToElement,
 			return EmptySubspace(geom);
 		fi;
 		x := x{[1..n-i]};
-		x := x{[1..n-i]};
+		#x := x{[1..n-i]};
 		#if we check later on the the subspace is an element of the polar space, then
 		#the user cannot create the whole polar space like this, so I commented out the
 		# next three lines.
@@ -1836,7 +1836,8 @@ InstallMethod( ShadowOfElement,
 			sz := 1;
 		else  
 			localinner := v!.obj;
-			localouter := Polarity(ps)(v)!.obj;
+			localouter := Polarity(ps)(v)!.obj; #actually, this is not a polarity when q is even and ps is parabolic.
+			#localouter := ElementToVectorSpace(v^PolarityOfProjectiveSpace(ps));
 			if pstype = "symplectic" then
 				localfactorspace := SymplecticSpace( psdim- 2*vdim, f );
 			elif pstype = "hermitian" then
@@ -2037,63 +2038,63 @@ InstallMethod( AbsolutePoints,
 #    return perpv!.type >= v!.type and v in perp(v);
 #  end );
 
-# this is obsolete now, see PolarityOfProjectiveSpace method.
+# this is obsolete now, but not completely. see also PolarityOfProjectiveSpace method.
 #############################################################################
 #O Polarity( <ps> ) returns the polarity associated to the polar space <ps>
 # see the documentation for the exact meaning of associated polarity.
-#
-#InstallMethod( Polarity,  
-#	"for a polar space",
-#	[IsClassicalPolarSpace],
-#	function( ps )
-#		local perp, m, ty, f, form, bi;
+
+InstallMethod( Polarity,  
+	"for a polar space",
+	[IsClassicalPolarSpace],
+	function( ps )
+		local perp, m, ty, f, form, bi;
 
 ## If we have only a quadratic form Q, then we must remember
 ## to use let the map b(v,w) := Q(v+w)-Q(v)-Q(w) be the polarisation of Q,
 ## and consider the polarity induced from this map. This can be computed using AssociatedBilinearForm (from package forms).
 
-#    form := SesquilinearForm(ps);
-#    m := form!.matrix;
-#    f := form!.basefield;
-#    ty := form!.type;
+    form := SesquilinearForm(ps);
+    m := form!.matrix;
+    f := form!.basefield;
+    ty := form!.type;
 
-#    if ty = "hermitian" then
-#       perp := function(v)
-#         local perpv, uv, rk, aut;
-#         aut := CompanionAutomorphism(ps);
-#         uv := v!.obj;
-#         if v!.type = 1 then uv := [uv]; fi; 
-#         perpv := MutableCopyMat(TriangulizedNullspaceMat( m * TransposedMat(uv)^aut )); 
-#         rk := Rank(perpv);   
-#         if rk = 1 then perpv := perpv[1]; fi;
-#         return Wrap(AmbientSpace(ps), rk, perpv);
-#       end;
-#    else
-#       if IsEvenInt(Size(f)) and 
-#          (ty = "elliptic" or ty = "hyperbolic" or ty = "parabolic") then
-#          ## recover bilinear form from quadratic form
-#          bi := m + TransposedMat(m);
-#       else 
-#          bi := m;
-#       fi;
+    if ty = "hermitian" then
+       perp := function(v)
+         local perpv, uv, rk, aut;
+         aut := CompanionAutomorphism(ps);
+         uv := v!.obj;
+         if v!.type = 1 then uv := [uv]; fi; 
+         perpv := MutableCopyMat(TriangulizedNullspaceMat( m * TransposedMat(uv)^aut )); 
+         rk := Rank(perpv);   
+         if rk = 1 then perpv := perpv[1]; fi;
+         return Wrap(AmbientSpace(ps), rk, perpv);
+       end;
+    else
+       if IsEvenInt(Size(f)) and 
+          (ty = "elliptic" or ty = "hyperbolic" or ty = "parabolic") then
+          ## recover bilinear form from quadratic form
+          bi := m + TransposedMat(m);
+       else 
+          bi := m;
+       fi;
        
-#       perp := function(v)
-#         local perpv, uv, rk;
- #        uv := v!.obj;
- #        if v!.type = 1 then uv := [uv]; fi; 
-#         perpv := MutableCopyMat(TriangulizedNullspaceMat( bi * TransposedMat(uv) )); 
-#         rk := Rank(perpv);   
-#         if rk = 1 then
-#            perpv := perpv[1]; 
-#            ConvertToVectorRep( perpv, f );
-#         else
-##            ConvertToMatrixRep( perpv, f );
-#         fi;
-#         return Wrap(AmbientSpace(ps), rk, perpv);
-##       end;
-#    fi;
-#    return perp; ## should we return a correlation here?
-#  end );
+       perp := function(v)
+         local perpv, uv, rk;
+         uv := v!.obj;
+         if v!.type = 1 then uv := [uv]; fi; 
+         perpv := MutableCopyMat(TriangulizedNullspaceMat( bi * TransposedMat(uv) )); 
+         rk := Rank(perpv);   
+         if rk = 1 then
+            perpv := perpv[1]; 
+            ConvertToVectorRep( perpv, f );
+         else
+		             ConvertToMatrixRep( perpv, f );
+         fi;
+         return Wrap(AmbientSpace(ps), rk, perpv);
+       end;
+    fi;
+    return perp; ## should we return a correlation here?
+  end );
 
 #InstallMethod( DefiningPolarity, "for a polar space, if it is defined by a polarity",
 #    [ IsClassicalPolarSpace ],

@@ -32,6 +32,7 @@
 # - make "specialresidual" more efficient
 #   this function computes the "residual not in a hyperplane"
 # - documentation
+# - change name of ElementNumber and NumberElement in NumberToElement and ElementToNumber
 #
 ########################################
 #now comes a separate section with function to be renamed :-)
