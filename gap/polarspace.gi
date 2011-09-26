@@ -875,7 +875,7 @@ InstallMethod( ViewObj,
 
 InstallMethod( ViewObj,
 	"for a standard hermitian variety",
-	[IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsHermitianVariety ],
+	[IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsHermitianVariety and IsStandardPolarSpace],
     function( p )
 		Print("standard H(",p!.dimension,", ",Sqrt(Size(p!.basefield)),"^2)");
     end);
@@ -1563,6 +1563,7 @@ InstallMethod( ElementsOfIncidenceStructure,
 		if j > r then
 			Error("<geo> has no elements of type <j>");
 		else
+			Print("grapje\n");
 			return Objectify(
 			NewType( ElementsCollFamily, IsSubspacesOfClassicalPolarSpace and
                                      IsSubspacesOfClassicalPolarSpaceRep ),

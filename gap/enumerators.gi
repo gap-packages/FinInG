@@ -496,8 +496,10 @@ InstallGlobalFunction( enum_hermitian,
          ## incident with a j-1 space contained in hyp. 
 
      ps2 := HermitianVariety(d-1, f);
-     ressize := Size(ElementsOfIncidenceStructure(HermitianVariety(d+2-2*j, f), 1)); 
-     if j < WittIndex( SesquilinearForm(ps2) ) then
+     Print(ps2,"\n");
+	 ressize := Size(ElementsOfIncidenceStructure(HermitianVariety(d+2-2*j, f), 1)); 
+     #if j < WittIndex( SesquilinearForm(ps2) ) then
+     if j <= WittIndex( SesquilinearForm(ps2) ) then
         ressize := ressize - Size(ElementsOfIncidenceStructure(HermitianVariety(d+1-2*j, f), 1));
         varsps2j := ElementsOfIncidenceStructure( ps2, j );
         enumextra := Enumerator( varsps2j );
