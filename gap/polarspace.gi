@@ -1563,7 +1563,7 @@ InstallMethod( ElementsOfIncidenceStructure,
 		if j > r then
 			Error("<geo> has no elements of type <j>");
 		else
-			Print("grapje\n");
+			#Print("grapje\n");
 			return Objectify(
 			NewType( ElementsCollFamily, IsSubspacesOfClassicalPolarSpace and
                                      IsSubspacesOfClassicalPolarSpaceRep ),
