@@ -236,7 +236,8 @@ InstallMethod( Enumerator, [ IsSubspacesOfClassicalPolarSpace ],
    end );
 
 
-InstallMethod( Enumerator, [IsShadowSubspacesOfClassicalPolarSpace and
+InstallMethod( Enumerator, "for shadow subspaces of a polar space",
+[IsShadowSubspacesOfClassicalPolarSpace and
                             IsShadowSubspacesOfClassicalPolarSpaceRep ],
   function( res )
     
@@ -496,7 +497,7 @@ InstallGlobalFunction( enum_hermitian,
          ## incident with a j-1 space contained in hyp. 
 
      ps2 := HermitianVariety(d-1, f);
-     Print(ps2,"\n");
+     #Print(ps2,"\n");
 	 ressize := Size(ElementsOfIncidenceStructure(HermitianVariety(d+2-2*j, f), 1)); 
      #if j < WittIndex( SesquilinearForm(ps2) ) then
      if j <= WittIndex( SesquilinearForm(ps2) ) then

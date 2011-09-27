@@ -1441,7 +1441,9 @@ InstallMethod( NaturalProjectionBySubspace,
     else
        m := SesquilinearForm(ps)!.matrix; 
        if pstype = "hermitian" then   
-          newform := HermitianFormByMatrix(a^CompanionAutomorphism(ps) * m * TransposedMat(a), f);
+          #newform := HermitianFormByMatrix(a^CompanionAutomorphism(ps) * m * TransposedMat(a), f); #finally found the bug, jdb gets thirrrrrrsty now.
+		  newform := HermitianFormByMatrix(a * m * TransposedMat(a^CompanionAutomorphism(ps)), f);
+
        else
           newform := BilinearFormByMatrix(a * m * TransposedMat(a), f);
        fi;
@@ -1539,7 +1541,7 @@ InstallMethod( NaturalProjectionBySubspaceNC,
     else
        m := SesquilinearForm(ps)!.matrix; 
        if pstype = "hermitian" then   
-          newform := HermitianFormByMatrix(a^CompanionAutomorphism(ps) * m * TransposedMat(a), f);
+          newform := HermitianFormByMatrix(a * m * TransposedMat(a^CompanionAutomorphism(ps)), f);
        else
           newform := BilinearFormByMatrix(a * m * TransposedMat(a), f);
        fi;
