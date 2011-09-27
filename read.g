@@ -42,7 +42,7 @@ ReadPackage("fining","gap/correlations.gi");
 ReadPackage("fining","gap/polarspace.gi");
 ReadPackage("fining","gap/morphisms.gi");
 
-#ReadPackage("fining","gap/polaritiesps.gi");
+##ReadPackage("fining","gap/polaritiesps.gi");
 
 ReadPackage("fining","gap/enumerators.gi");
 ReadPackage("fining","gap/varieties.gi");

@@ -11,13 +11,15 @@
 ##                                                            Michael Pauley
 ##                                                             Sven Reichard
 ##
-##  Copyright 2008 University of Western Australia, Perth
-##                 Lehrstuhl D fuer Mathematik, RWTH Aachen
-##                 Ghent University
-##                 Colorado State University
-##                 Vrije Universiteit Brussel
+##  Copyright 2011	Colorado State University, Fort Collins
+##					Università degli Studi di Padova
+##					Universeit Gent
+##					University of St. Andrews
+##					University of Western Australia, Perth
+##                  Vrije Universiteit Brussel
+##                 
 ##
-##  Implementation stuff for enumerators of varieties of polar spaces
+##  Implementation stuff for enumerators of elements of polar spaces
 ##
 #############################################################################
 
@@ -32,9 +34,15 @@
 # - make "specialresidual" more efficient
 #   this function computes the "residual not in a hyperplane"
 # - documentation
-# - change name of ElementNumber and NumberElement in NumberToElement and ElementToNumber
 #
 ########################################
+
+#############################################################################
+# Very Low level help functions
+#############################################################################
+
+
+
 #now comes a separate section with function to be renamed :-)
 #don't tell celle now about this disaster programming style :-D
 ## utility functions

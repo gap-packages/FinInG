@@ -43,7 +43,8 @@
 #   \in: should probably not change the element (see remark at method).
 # - Check Iterator.
 # - Check classical groups.
-# - see if commented out material at end of file is really obsolte.
+# - see if commented out material at end of file is really obsolete.
+# - rename Polarity to PolarMap or something like that.
 #
 ########################################
 
