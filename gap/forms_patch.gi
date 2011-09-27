@@ -1,3 +1,5 @@
+Print("patching forms\n");
+
 InstallOtherMethod( \^, "for a pair of FFE vectors and an hermitian form",
   [ IsVectorList and IsFFECollColl, IsHermitianForm ],
   function( pair, f )
