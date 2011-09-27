@@ -2,22 +2,24 @@
 ##
 ##  morphisms.gd              FinInG package
 ##                                                              John Bamberg
-## 								Anton Betten
+##                                                              Anton Betten
 ##                                                              Jan De Beule
 ##                                                             Philippe Cara
-## 							      Michel Lavrauw
+##                                                            Michel Lavrauw
 ##                                                                 Maska Law
 ##                                                           Max Neunhoeffer
 ##                                                            Michael Pauley
 ##                                                             Sven Reichard
 ##
-##  Copyright 2008 University of Western Australia, Perth
-##                 Lehrstuhl D fuer Mathematik, RWTH Aachen
-##                 Ghent University
-##                 Colorado State University
-##                 Vrije Universiteit Brussel
+##  Copyright 2011	Colorado State University, Fort Collins
+##					Università degli Studi di Padova
+##					Universeit Gent
+##					University of St. Andrews
+##					University of Western Australia, Perth
+##                  Vrije Universiteit Brussel
+##                 
 ##
-##  Declaration stuff for incidence geometry morphisms.
+##  Implementation stuff for incidence geometry morphisms
 ##
 #############################################################################
 
@@ -51,6 +53,20 @@ DeclareOperation( "GeometryMorphismByFunction",
     IsFunction ] );
 
 
+#############################################################################
+#
+# Global functions:
+#
+#############################################################################
+
+DeclareGlobalFunction( "LeukBasis" );
+
+DeclareGlobalFunction( "BlownUpProjectiveSpace" );  #change to operation.
+DeclareGlobalFunction( "BlownUpProjectiveSpaceBySubfield"); #operation.
+DeclareGlobalFunction( "BlownUpSubspaceOfProjectiveSpace" ); #change to operation.
+DeclareGlobalFunction( "BlownUpSubspaceOfProjectiveSpaceBySubfield" ); #change to operation.
+DeclareGlobalFunction( "IsDesarguesianSpreadElement" ); #change to operation.
+DeclareGlobalFunction( "IsBlownUpSubspaceOfProjectiveSpace" ); #change to operation.
 
 ## C1 morphisms
 DeclareOperation( "NaturalEmbeddingBySubspace", 
@@ -108,21 +124,4 @@ DeclareOperation( "ShrinkMat", [IsBasis, IsMatrix] );
 
 #DeclareGlobalFunction( "ShrinkMat" ); #change to operation.
 
-
-
-
-#############################################################################
-#
-# Global functions:
-#
-#############################################################################
-
-DeclareGlobalFunction( "LeukBasis" );
-
-DeclareGlobalFunction( "BlownUpProjectiveSpace" );  #change to operation.
-DeclareGlobalFunction( "BlownUpProjectiveSpaceBySubfield"); #operation.
-DeclareGlobalFunction( "BlownUpSubspaceOfProjectiveSpace" ); #change to operation.
-DeclareGlobalFunction( "BlownUpSubspaceOfProjectiveSpaceBySubfield" ); #change to operation.
-DeclareGlobalFunction( "IsDesarguesianSpreadElement" ); #change to operation.
-DeclareGlobalFunction( "IsBlownUpSubspaceOfProjectiveSpace" ); #change to operation.
 

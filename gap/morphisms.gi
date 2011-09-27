@@ -11,11 +11,13 @@
 ##                                                            Michael Pauley
 ##                                                             Sven Reichard
 ##
-##  Copyright 2008 University of Western Australia, Perth
-##                 Lehrstuhl D fuer Mathematik, RWTH Aachen
-##                 Ghent University
-##                 Colorado State University
-##                 Vrije Universiteit Brussel
+##  Copyright 2011	Colorado State University, Fort Collins
+##					Università degli Studi di Padova
+##					Universeit Gent
+##					University of St. Andrews
+##					University of Western Australia, Perth
+##                  Vrije Universiteit Brussel
+##                 
 ##
 ##  Implementation stuff for incidence geometry morphisms
 ##
@@ -32,6 +34,7 @@
 # - SegreMap: source is not domain, what should we do?
 # - intertwiners for GrassmannMap and SegreMap
 # - should there be a type function as an attribute?
+# - maybe make a more userfriendly system to avoid em!.prefun( <arg> )
 #
 # Documentation check list
 # - IsGeometryMorphism: done
@@ -53,50 +56,8 @@
 ########################################
 
 
-
-
 ############################################################
-## 9.1 GENERAL 
-## Here are some methods for the Image* operations
-## for IsGeometryMorphism. 
-##
-############################################################
-
-
-InstallOtherMethod( \^, [IsElementOfIncidenceStructure, IsGeometryMorphism],
-  function(x, em)
-    return ImageElm(em,x);
-  end );
-
-InstallOtherMethod( ImageElm, [IsGeometryMorphism, IsElementOfIncidenceStructure],
-  function(em, x)
-    return em!.fun(x); 
-  end );
-
-InstallOtherMethod( ImagesSet, [IsGeometryMorphism, IsElementOfIncidenceStructureCollection],
-  function(em, x)
-    return List(x, t -> em!.fun(t));
-  end );
-
-InstallOtherMethod( PreImageElm, [IsGeometryMorphism, IsElementOfIncidenceStructure],
-  function(em, x)
-    if IsInjective(em) then
-       return em!.prefun(x); 
-    else
-       Error("Map is not injective");
-    fi;
-  end );
-  
-InstallOtherMethod( PreImagesSet, [IsGeometryMorphism, IsElementOfIncidenceStructureCollection],
-  function(em, x)
-    return List(x, t -> em!.prefun(t)); 
-  end );
-
-
-############################################################
-##
-## Operations
-## 
+## Generic constructor operations, not intended for the user.
 ############################################################
 
 
@@ -105,252 +66,319 @@ InstallOtherMethod( PreImagesSet, [IsGeometryMorphism, IsElementOfIncidenceStruc
 ## way except that we return an IsGeometryMorphism.
 
 
+# CHECKED 27/09/11 jdb
+#############################################################################
+#O  GeometryMorphismByFunction( <els1>, <els2>, <fun>, <bool>, <prefun> )
+##
 InstallMethod( GeometryMorphismByFunction, 
-  [ IsAnyElementsOfIncidenceStructure, IsAnyElementsOfIncidenceStructure,
-    IsFunction, IsBool, IsFunction ],
-  function( els1, els2, fun, bool, prefun )
-    local morphism;
-    morphism := MappingByFunction(els1, els2, fun, bool, prefun );
-    SetFilterObj( morphism, IsGeometryMorphism ); 
-    return morphism;
-  end );  
+	"for two times a collection of elements of any type, a function, a boolean, and a function",
+	[ IsAnyElementsOfIncidenceStructure, IsAnyElementsOfIncidenceStructure,
+	IsFunction, IsBool, IsFunction ],
+	function( els1, els2, fun, bool, prefun )
+		local morphism;
+		morphism := MappingByFunction(els1, els2, fun, bool, prefun );
+		SetFilterObj( morphism, IsGeometryMorphism ); 
+		return morphism;
+	end );  
   
-InstallMethod( GeometryMorphismByFunction, 
-  [ IsAnyElementsOfIncidenceStructure, IsAnyElementsOfIncidenceStructure,
+# CHECKED 27/09/11 jdb
+#############################################################################
+#O  GeometryMorphismByFunction( <els1>, <els2>, <fun>, <prefun> )
+##
+InstallMethod( GeometryMorphismByFunction,
+	"for two times a collection of elements of any type, and two times a function",
+	[ IsAnyElementsOfIncidenceStructure, IsAnyElementsOfIncidenceStructure,
     IsFunction, IsFunction ],
-  function( els1, els2, fun, inv )
-    local morphism;
-    morphism := MappingByFunction(els1, els2, fun, inv );
-    SetFilterObj( morphism, IsGeometryMorphism ); 
-    return morphism;
-  end );  
+	function( els1, els2, fun, inv )
+		local morphism;
+		morphism := MappingByFunction(els1, els2, fun, inv );
+		SetFilterObj( morphism, IsGeometryMorphism ); 
+		return morphism;
+	end );  
 
-InstallMethod( GeometryMorphismByFunction, 
-  [ IsAnyElementsOfIncidenceStructure, IsAnyElementsOfIncidenceStructure,
+# CHECKED 27/09/11 jdb
+#############################################################################
+#O  GeometryMorphismByFunction( <els1>, <els2>, <fun> )
+##
+InstallMethod( GeometryMorphismByFunction,
+	"for two times a collection of elements of any type, and a function",
+	[ IsAnyElementsOfIncidenceStructure, IsAnyElementsOfIncidenceStructure,
     IsFunction ],
-  function( els1, els2, fun )
-    local morphism;
-    morphism := MappingByFunction(els1, els2, fun);
-    SetFilterObj( morphism, IsGeometryMorphism ); 
-    return morphism;
-  end );  
-
+	function( els1, els2, fun )
+		local morphism;
+		morphism := MappingByFunction(els1, els2, fun);
+		SetFilterObj( morphism, IsGeometryMorphism ); 
+		return morphism;
+	end );  
   
-##########################################################
-### 9.2 When to use geometry morphisms in FinInG (see documentation)
-##########################################################
+############################################################
+## Generic methods for the Image* operations for IsGeometryMorphism. 
+############################################################
+
+# CHECKED 27/09/11 jdb
+#############################################################################
+#O  \^( <x>, <em> )
+##
+InstallOtherMethod( \^, 
+	"for an element of an incidence structure and a geometry morphism",
+	[IsElementOfIncidenceStructure, IsGeometryMorphism],
+	function(x, em)
+		return ImageElm(em,x);
+	end );
+
+# CHECKED 27/09/11 jdb
+#############################################################################
+#O  ImageElm( <em>, <x> )
+##
+InstallOtherMethod( ImageElm, 
+	"for a geometry morphism and an element of an incidence structure",
+	[IsGeometryMorphism, IsElementOfIncidenceStructure],
+	function(em, x)
+		return em!.fun(x); 
+	end );
+
+# CHECKED 27/09/11 jdb
+#############################################################################
+#O  ImagesSet( <em>, <x> )
+##
+InstallOtherMethod( ImagesSet,
+	"for a geometry morphism and a collection of elements of an incidence structure",
+	[IsGeometryMorphism, IsElementOfIncidenceStructureCollection],
+	function(em, x)
+		return List(x, t -> em!.fun(t));
+	end );
+
+# CHECKED 27/09/11 jdb
+#############################################################################
+#O  PreImageElm( <em>, <x> )
+##
+InstallOtherMethod( PreImageElm,
+	"for a geometry morphism and an element of an incidence structure",
+	[IsGeometryMorphism, IsElementOfIncidenceStructure],
+	function(em, x)
+		if IsInjective(em) then
+			return em!.prefun(x); 
+		else
+			Error("Map is not injective");
+		fi;
+	end );
   
+# CHECKED 27/09/11 jdb
+#############################################################################
+#O  PreImagesSet( <em>, <x> )
+##
+InstallOtherMethod( PreImagesSet,
+	"for a geometry morphism and an element of an incidence structure",
+	[IsGeometryMorphism, IsElementOfIncidenceStructureCollection],
+	function(em, x)
+		return List(x, t -> em!.prefun(t)); 
+	end );
 
 ##########################################################
-### 9.3 NATURAL GEOMETRY MORPHISMS
+## User methods for the "natural geometry morphisms"
 ##########################################################
 
 ## The specialised operations...
 
-### 9.3-1 NaturalEmbeddingBySubspace
-
+# CHECKED 27/09/11 jdb (and added a check that basefields of <ps1> and <ps2> are equal.)
+#############################################################################
+#O  NaturalEmbeddingBySubspace( <ps1>, <ps2>, <v> ) returns a geometry morphism
+# from the projective space <ps1> into <v>, an element of the projective space
+# <ps2>. <v> must be of the right type, i.e. same projective dimension as <ps1>
+# and <ps1> and <ps2> must be projective spaces over the same field.
+##
 InstallMethod( NaturalEmbeddingBySubspace, 
-      "for a geometry into another, via a specified subspace",  
-      [ IsProjectiveSpace, IsProjectiveSpace, IsSubspaceOfProjectiveSpace ],
-  function( geom1, geom2, v ) 
-    local d1, d2, rk, f, invbasis, basis, 
-          func, pre, map, morphism, bs;
-   
-    rk := v!.type;
-    basis := v!.obj;
-    d1 := geom1!.dimension + 1;
-    d2 := geom2!.dimension + 1;
-    f := geom2!.basefield;
-
-    if not v in geom2 then
-       Error("Subspace is not an element of ", geom2);
-    fi;
-
-    if d2 < d1 or d1 <> rk then
-       Error("Dimensions are incompatible");
-    fi;
-   
+	"for a projective space into another, via a specified subspace",  
+	[ IsProjectiveSpace, IsProjectiveSpace, IsSubspaceOfProjectiveSpace ],
+	function( geom1, geom2, v ) 
+		local d1, d2, rk, f, invbasis, basis, func, pre, map, morphism, bs;
+		rk := v!.type;
+		basis := v!.obj;
+		d1 := geom1!.dimension + 1;
+		d2 := geom2!.dimension + 1;
+		f := geom2!.basefield;
+		if not v in geom2 then
+			Error("Subspace is not an element of ", geom2);
+		fi;
+		if d2 < d1 or d1 <> rk then
+			Error("Dimensions are incompatible");
+		fi;
+		if not f = geom1!.basefield then
+			Error("Basefields must be the same");
+		fi;
     ##    To find the preimage, we first find an invertible matrix C such that
     ##    [a1,..,ad]B = [a1,...,ad,0,...,0]C (where B is our d x e matrix "basis") 
     ##    is our embedding. We simply extend B to a basis for geom2.
-
-    bs := BaseSteinitzVectors(Basis(geom2!.vectorspace), basis);
-    invbasis := Inverse(Concatenation(bs!.subspace, bs!.factorspace));
-    ConvertToMatrixRep(invbasis, f);
-
-    func := x -> VectorSpaceToElement(geom2 , x!.obj * basis);
-    pre := function(y)
-             local newy;
-             if not y in v then
-                Error("Applying preimage to an element which is not in the range");
-             fi;
-             newy:= y!.obj * invbasis;
-             if IsVector(newy) then 
-                newy := newy{[1..d1]}; 
+		bs := BaseSteinitzVectors(Basis(geom2!.vectorspace), basis);
+		invbasis := Inverse(Concatenation(bs!.subspace, bs!.factorspace));
+		ConvertToMatrixRep(invbasis, f);
+		func := x -> VectorSpaceToElement(geom2 , x!.obj * basis);
+		pre := function(y)
+			local newy;
+			if not y in v then
+				Error("Applying preimage to an element which is not in the range");
+			fi;
+			newy:= y!.obj * invbasis;
+			if IsVector(newy) then 
+				newy := newy{[1..d1]}; 
                 ConvertToVectorRepNC(newy, f);
-             else
-                newy := newy{[1..Size(newy)]}{[1..d1]};
-                ConvertToMatrixRepNC(newy, f);
-             fi;
-             return VectorSpaceToElement(geom1, newy);
-           end;   
-    morphism := GeometryMorphismByFunction(ElementsOfIncidenceStructure(geom1), 
+			else
+				newy := newy{[1..Size(newy)]}{[1..d1]};
+				ConvertToMatrixRepNC(newy, f);
+			fi;
+			return VectorSpaceToElement(geom1, newy);
+		end;   
+		morphism := GeometryMorphismByFunction(ElementsOfIncidenceStructure(geom1), 
                                            ElementsOfIncidenceStructure(geom2), 
                                            func, false, pre );
-    SetIsInjective( morphism, true );  
-    return morphism;
-  end );
+		SetIsInjective( morphism, true );  
+		return morphism;
+	end );
 
+# CHECKED 27/09/11 jdb
+#############################################################################
+#O  NaturalEmbeddingBySubspaceNC( <ps1>, <ps2>, <v> ) 
+## This operation is just like its namesake except that it 
+## has No Checks
+##
 InstallMethod( NaturalEmbeddingBySubspaceNC, 
-      "for a geometry into another, via a specified subspace",  
-      [ IsProjectiveSpace, IsProjectiveSpace, IsSubspaceOfProjectiveSpace ],
-      
-      ## This operation is just like its namesake except that it 
-      ## has No Checks
-      
-  function( geom1, geom2, v ) 
-    local d1, f, invbasis, basis, func, pre, map, morphism, bs;
-   
-    basis := v!.obj;
-    d1 := geom1!.dimension + 1;
-    f := geom2!.basefield;
-    bs := BaseSteinitzVectors(Basis(geom2!.vectorspace), basis);
-    invbasis := Inverse(Concatenation(bs!.subspace, bs!.factorspace));
-    ConvertToMatrixRep(invbasis, f);
-
-    func := x -> VectorSpaceToElement(geom2 , x!.obj * basis);
-    pre := function(y)
-             local newy;
-             newy:= y!.obj * invbasis;
-             if IsVector(newy) then 
-                newy := newy{[1..d1]}; 
-                ConvertToVectorRepNC(newy, f);
-             else
-                newy := newy{[1..Size(newy)]}{[1..d1]};
-                ConvertToMatrixRepNC(newy, f);
-             fi;
-             return VectorSpaceToElement(geom1, newy);
-           end;   
-    morphism := GeometryMorphismByFunction(ElementsOfIncidenceStructure(geom1), 
+	"for a projective space into another, via a specified subspace",  
+	[ IsProjectiveSpace, IsProjectiveSpace, IsSubspaceOfProjectiveSpace ],
+	function( geom1, geom2, v ) 
+		local d1, f, invbasis, basis, func, pre, map, morphism, bs;
+		basis := v!.obj;
+		d1 := geom1!.dimension + 1;
+		f := geom2!.basefield;
+		bs := BaseSteinitzVectors(Basis(geom2!.vectorspace), basis);
+		invbasis := Inverse(Concatenation(bs!.subspace, bs!.factorspace));
+		ConvertToMatrixRep(invbasis, f);
+		func := x -> VectorSpaceToElement(geom2 , x!.obj * basis);
+		pre := function(y)
+			local newy;
+			newy:= y!.obj * invbasis;
+			if IsVector(newy) then 
+				newy := newy{[1..d1]}; 
+				ConvertToVectorRepNC(newy, f);
+			else
+				newy := newy{[1..Size(newy)]}{[1..d1]};
+				ConvertToMatrixRepNC(newy, f);
+			fi;
+			return VectorSpaceToElement(geom1, newy);
+		end;   
+		morphism := GeometryMorphismByFunction(ElementsOfIncidenceStructure(geom1), 
                                            ElementsOfIncidenceStructure(geom2), 
                                            func, false, pre );
-    SetIsInjective( morphism, true );  
-    return morphism;
-  end );
+		SetIsInjective( morphism, true );  
+		return morphism;
+	end );
 
-
-
+# CHECKED 27/09/11 jdb
+#############################################################################
+#O  NaturalEmbeddingBySubspace( <ps1>, <ps2>, <v> ) returns a geometry morphism
+# from the polar space <ps1> into <ps2>, a polar space induced as a section of
+# <ps1> and <v>, the latter a subspace of the ambient projective space of <ps1>
+##
 InstallMethod( NaturalEmbeddingBySubspace, 
-      "for a geometry into another, via a specified subspace",  
-      [ IsClassicalPolarSpace, IsClassicalPolarSpace, IsSubspaceOfProjectiveSpace ],
-
-  function( geom1, geom2, v ) 
-    local map, d1, d2, rk, f, i, basis, invbasis, bs,
-          c1, c2, orth, tyv, quad1, quad2,
-          change, perp2, formonv, ses1, ses2, 
-          ty1, ty2, newmat, func, pre, invchange;
-    rk := v!.type;
-    ty1 := PolarSpaceType(geom1); 
-    ty2 := PolarSpaceType(geom2); 
-    f := geom1!.basefield;
-    d1 := geom1!.dimension;
-    d2 := geom2!.dimension;
-    tyv := TypeOfSubspace( geom2, v );
-
+	"for a polar space into another, via a specified subspace",  
+	[ IsClassicalPolarSpace, IsClassicalPolarSpace, IsSubspaceOfProjectiveSpace ],	
+	function( geom1, geom2, v ) 
+	local map, d1, d2, rk, f, i, basis, invbasis, bs, c1, c2, orth, tyv, quad1, quad2,
+		change, perp2, formonv, ses1, ses2, ty1, ty2, newmat, func, pre, invchange;
+		rk := v!.type;
+		ty1	:= PolarSpaceType(geom1); 
+		ty2 := PolarSpaceType(geom2); 
+		f := geom1!.basefield;	
+		d1 := geom1!.dimension;
+		d2 := geom2!.dimension;
+		tyv := TypeOfSubspace( geom2, v );
     ## Check that fields are the same and v is non-degenerate 
-       
-    if geom2!.basefield <> f then
-       Error("fields of both spaces must be the same");
-       return;
-    fi;
-
-    if not (ty2 = "parabolic" and IsEvenInt(Size(f))) then
-      perp2 := Polarity(geom2);
-      if perp2(v) in geom2 then
-         Error("subspace is degenerate"); 
-         return;
-      fi;
-    fi;
-
-    if rk > d2 or d1 > d2 then
-       Error("dimensions are incompatible"); 
-       return;
-    fi;
-
-    if tyv = "degenerate" then
-       Error("subspace is degenerate");
-    elif
-       tyv <> ty1 then 
-       Error("non-degenerate section is not the same type as ", geom1);
-    fi; 
-
-    orth := ["parabolic", "elliptic", "hyperbolic"];
-
-    if ty1 = ty2 or (ty1 in orth and ty2 in orth) then 
+		if geom2!.basefield <> f then
+			Error("fields of both spaces must be the same");
+			#return; #why was this return? 
+		fi;
+    #27/9/2011. jdb was wondering on the next 7 lines. Is this not just tyv = "degenerate"?
+	#if not (ty2 = "parabolic" and IsEvenInt(Size(f))) then
+    #  perp2 := Polarity(geom2);
+    #  if perp2(v) in geom2 then
+    #     Error("subspace is degenerate"); 
+    #     return;
+    #  fi;
+    #fi;
+		if rk > d2 or d1 > d2 then
+			Error("dimensions are incompatible"); 
+			#return;
+		fi;	
+		if tyv = "degenerate" then
+			Error("subspace is degenerate");
+		elif
+			tyv <> ty1 then 
+			Error("non-degenerate section is not the same type as ", geom1);
+		fi;		
+		orth := ["parabolic", "elliptic", "hyperbolic"];
+		if ty1 = ty2 or (ty1 in orth and ty2 in orth) then 
           
           ## Let B be basis of v. Then the form BM(B^T)^sigma (n.b. sigma 
           ## is a field automorphism), where M is the form for geom2,
           ## will be equivalent to the form for geom1.
 
-       basis := v!.obj;
+			basis := v!.obj;
 
           ## As usual we must consider two cases, the quadratic form case
           ## and the sesquilinear form case. We then obtain a base change matrix c1.
 
-       if HasQuadraticForm( geom2 ) and HasQuadraticForm( geom1 ) then
-          quad1 := QuadraticForm(geom1);
-          quad2 := QuadraticForm(geom2);
-          newmat := basis * quad2!.matrix * TransposedMat(basis);
-          formonv := QuadraticFormByMatrix(newmat, f);
-          c1 := BaseChangeToCanonical( quad1 );
-       else
-          ses1 := SesquilinearForm(geom1);
-          ses2 := SesquilinearForm(geom2);
-          if ty1 = "hermitian" then 
-             newmat := basis * ses2!.matrix * (TransposedMat(basis))^CompanionAutomorphism(geom1);
-             formonv := HermitianFormByMatrix(newmat, f);
-          else
-             newmat := basis * ses2!.matrix * TransposedMat(basis);
-             formonv := BilinearFormByMatrix(newmat, f);
-          fi;
-          c1 := BaseChangeToCanonical( ses1 );
-       fi;
+			if HasQuadraticForm( geom2 ) and HasQuadraticForm( geom1 ) then
+				quad1 := QuadraticForm(geom1);
+				quad2 := QuadraticForm(geom2);
+				newmat := basis * quad2!.matrix * TransposedMat(basis);
+				formonv := QuadraticFormByMatrix(newmat, f);
+				c1 := BaseChangeToCanonical( quad1 );
+			else
+				ses1 := SesquilinearForm(geom1);
+				ses2 := SesquilinearForm(geom2);
+				if ty1 = "hermitian" then 
+					newmat := basis * ses2!.matrix * (TransposedMat(basis))^CompanionAutomorphism(geom1);
+					formonv := HermitianFormByMatrix(newmat, f);
+				else
+					newmat := basis * ses2!.matrix * TransposedMat(basis);
+					formonv := BilinearFormByMatrix(newmat, f);
+				fi;
+				c1 := BaseChangeToCanonical( ses1 );
+			fi;
 
        ## Finding isometry from geom1 to polar space defined by formofv:
 
-       c2 := BaseChangeToCanonical( formonv );
-       change := c1^-1 * c2;        
-       ConvertToMatrixRep(change, f);
-       invchange := change^-1;
-       bs := BaseSteinitzVectors(Basis(geom2!.vectorspace), basis);
-       invbasis := Inverse(Concatenation(bs!.subspace, bs!.factorspace));
-       ConvertToMatrixRep(invbasis, f);
-
-       func := x -> VectorSpaceToElement( geom2, x!.obj * change * basis);
-       pre := function(y)
-             local newy;
-             if not y in v then
-                Error("Applying preimage to an element which is not in the range");
-             fi;
-             newy:= y!.obj * invbasis;
-             if IsMatrix(newy) then 
-                newy := newy{[1..Size(newy)]}{[1..rk]};
-                ConvertToMatrixRepNC(newy, f);
-             else
-                newy := newy{[1..rk]}; 
-                ConvertToVectorRepNC(newy, f);
-             fi;
-             return VectorSpaceToElement(geom1, newy * invchange);
-           end; 
-       map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(geom1), 
+			c2 := BaseChangeToCanonical( formonv );
+			change := c1^-1 * c2;        
+			ConvertToMatrixRep(change, f);
+			invchange := change^-1;
+			bs := BaseSteinitzVectors(Basis(geom2!.vectorspace), basis);
+			invbasis := Inverse(Concatenation(bs!.subspace, bs!.factorspace));
+			ConvertToMatrixRep(invbasis, f);
+			func := x -> VectorSpaceToElement( geom2, x!.obj * change * basis);
+			pre := function(y)
+				local newy;
+				if not y in v then
+					Error("Applying preimage to an element which is not in the range");
+				fi;
+				newy:= y!.obj * invbasis;
+				if IsMatrix(newy) then 
+					newy := newy{[1..Size(newy)]}{[1..rk]};
+					ConvertToMatrixRepNC(newy, f);
+				else
+					newy := newy{[1..rk]}; 
+					ConvertToVectorRepNC(newy, f);
+				fi;
+				return VectorSpaceToElement(geom1, newy * invchange);
+			end; 
+			map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(geom1), 
                                          ElementsOfIncidenceStructure(geom2), 
                                          func, false, pre );
-       SetIsInjective( map, true );
-    else 
-       Error("Polar spaces are not compatible"); 
-    fi;
-    return map;
-  end );
+			SetIsInjective( map, true );
+		else 
+			Error("Polar spaces are not compatible"); 
+		fi;
+		return map;
+	end );
   
   
   

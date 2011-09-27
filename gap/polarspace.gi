@@ -45,6 +45,7 @@
 # - Check classical groups.
 # - see if commented out material at end of file is really obsolete.
 # - rename Polarity to PolarMap or something like that.
+# - probably a mistake on line 1705. corrected 27/9/2011 jdb.
 #
 ########################################
 
@@ -1649,7 +1650,7 @@ InstallMethod( NumberOfTotallySingularSubspaces,
 		return Size(Subspaces(GF(q)^r, j)) * Product(List([1..j], i -> q^(r-i) * qe +1));
 	end);
 
-# CHECKED 22/09/11 jdb
+# CHECKED 27/09/11 jdb
 #############################################################################
 #O  TypeOfSubspace( <ps>, <w> )
 # returns the type of the polar space induced by <ps> in the projective subspace
@@ -1692,8 +1693,8 @@ InstallMethod( TypeOfSubspace,
 			fi;
 		else
 			form := SesquilinearForm( ps );
-			mat := w!.obj * form!.matrix * TransposedMat(w!.obj);
-       
+			#mat := w!.obj * form!.matrix * TransposedMat(w!.obj); #I will use something more advanced to include hermitian forms.
+			mat := [w!.obj,w!.obj]^form;
 			if pstype = "symplectic" then
 				newform := BilinearFormByMatrix( mat, gf );
 				if IsDegenerateForm( newform ) then
@@ -1702,10 +1703,12 @@ InstallMethod( TypeOfSubspace,
 					return "symplectic";
 				fi;
 			elif pstype = "hermitian" then
-				if IsHermitianMatrix( mat, gf ) then
-					return "hermitian";
-				else
+				#if IsHermitianMatrix( mat, gf ) then #I think this is a mistake
+				newform := HermitianFormByMatrix(mat,gf);
+				if IsDegenerateForm( newform ) then
 					return "degenerate";
+				else
+					return "hermitian";
 				fi;
 			elif pstype in ["elliptic", "parabolic", "hyperbolic"] then
 				newform := BilinearFormByMatrix( mat, gf );
