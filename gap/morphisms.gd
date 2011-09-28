@@ -54,11 +54,10 @@ DeclareOperation( "GeometryMorphismByFunction",
 
 
 #############################################################################
-#
-# Global functions:
-#
+# helper operations 
 #############################################################################
 
+DeclareOperation( "ShrinkMat", [IsBasis, IsMatrix] );
 DeclareGlobalFunction( "LeukBasis" );
 
 DeclareGlobalFunction( "BlownUpProjectiveSpace" );  #change to operation.
@@ -67,6 +66,17 @@ DeclareGlobalFunction( "BlownUpSubspaceOfProjectiveSpace" ); #change to operatio
 DeclareGlobalFunction( "BlownUpSubspaceOfProjectiveSpaceBySubfield" ); #change to operation.
 DeclareGlobalFunction( "IsDesarguesianSpreadElement" ); #change to operation.
 DeclareGlobalFunction( "IsBlownUpSubspaceOfProjectiveSpace" ); #change to operation.
+
+## isomorphisms
+
+DeclareOperation( "IsomorphismPolarSpaces", 
+                     [ IsClassicalPolarSpace, IsClassicalPolarSpace, IsBool ]);
+DeclareOperation( "IsomorphismPolarSpaces", 
+                     [ IsClassicalPolarSpace, IsClassicalPolarSpace ]);
+DeclareOperation( "IsomorphismPolarSpacesNC", 
+					 [ IsClassicalPolarSpace, IsClassicalPolarSpace, IsBool ]);
+DeclareOperation( "IsomorphismPolarSpacesNC", 
+                     [ IsClassicalPolarSpace, IsClassicalPolarSpace ]);
 
 ## C1 morphisms
 DeclareOperation( "NaturalEmbeddingBySubspace", 
@@ -101,17 +111,7 @@ DeclareOperation( "NaturalEmbeddingBySubfield",
 DeclareOperation( "NaturalEmbeddingBySubfield",
                      [ IsClassicalPolarSpace, IsClassicalPolarSpace ]);
 
-
-
 ## Other
-DeclareOperation( "IsomorphismPolarSpaces", 
-                     [ IsClassicalPolarSpace, IsClassicalPolarSpace, IsBool ]);
-DeclareOperation( "IsomorphismPolarSpaces", 
-                     [ IsClassicalPolarSpace, IsClassicalPolarSpace ]);
-DeclareOperation( "IsomorphismPolarSpacesNC", 
-					 [ IsClassicalPolarSpace, IsClassicalPolarSpace, IsBool ]);
-DeclareOperation( "IsomorphismPolarSpacesNC", 
-                     [ IsClassicalPolarSpace, IsClassicalPolarSpace ]);
 DeclareOperation( "PluckerCoordinates", [ IsSubspaceOfProjectiveSpace ]);
 DeclareOperation( "InversePluckerCoordinates", [ IsSubspaceOfProjectiveSpace ]);
 DeclareOperation( "KleinCorrespondence", [ IsHyperbolicQuadric ]);
@@ -119,8 +119,6 @@ DeclareOperation( "KleinCorrespondence", [ IsHyperbolicQuadric ]);
 DeclareOperation( "NaturalDuality", [ IsSymplecticSpace and IsGeneralisedPolygon ]);
 DeclareOperation( "NaturalDuality", [ IsHermitianVariety and IsGeneralisedPolygon ]);
 DeclareOperation( "ProjectiveCompletion", [ IsAffineSpace ] );
-
-DeclareOperation( "ShrinkMat", [IsBasis, IsMatrix] );
 
 #DeclareGlobalFunction( "ShrinkMat" ); #change to operation.
 

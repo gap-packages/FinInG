@@ -35,6 +35,7 @@
 # - intertwiners for GrassmannMap and SegreMap
 # - should there be a type function as an attribute?
 # - maybe make a more userfriendly system to avoid em!.prefun( <arg> )
+# - DO WE NEED TO USE ConvertToMatrixRepNC in the operation ShrinkMat ?
 #
 # Documentation check list
 # - IsGeometryMorphism: done
@@ -55,16 +56,13 @@
 #
 ########################################
 
-
 ############################################################
 ## Generic constructor operations, not intended for the user.
 ############################################################
 
-
 ## The three methods for GeometryMorphismByFunction are analogous
 ## with the MappingByFunction function. It behaves in exactly the same
 ## way except that we return an IsGeometryMorphism.
-
 
 # CHECKED 27/09/11 jdb
 #############################################################################
@@ -110,7 +108,62 @@ InstallMethod( GeometryMorphismByFunction,
 		SetFilterObj( morphism, IsGeometryMorphism ); 
 		return morphism;
 	end );  
-  
+#############################################################################
+#
+# Display methods:
+#
+#############################################################################
+
+InstallMethod( ViewObj, [ IsGeometryMorphism ],
+  function( f )
+     Print("<geometry morphism from "); 
+     ViewObj(Source(f));
+     Print( " to " );
+     ViewObj(Range(f));
+     Print(">");
+  end );
+
+InstallMethod( PrintObj, [ IsGeometryMorphism ],
+  function( f )
+     Print("Geometry morphism:\n ", f, "\n");
+  end );
+
+InstallMethod( Display, [ IsGeometryMorphism ],
+  function( f )
+     Print("Geometry morphism: ", Source(f), " -> ", Range(f), "\n");
+  end );
+
+
+InstallMethod( ViewObj, [ IsGeometryMorphism and IsMappingByFunctionWithInverseRep ],
+  function( f )
+     Print("<geometry morphism from "); 
+     ViewObj(Source(f));
+     Print( " to " );
+     ViewObj(Range(f));
+     Print(">");
+  end );
+
+
+InstallMethod( ViewObj, [ IsGeometryMorphism and IsMappingByFunctionRep ],
+  function( f )
+     Print("<geometry morphism from "); 
+     ViewObj(Source(f));
+     Print( " to " );
+     ViewObj(Range(f));
+     Print(">");
+  end );
+
+InstallMethod( PrintObj, [ IsGeometryMorphism and IsMappingByFunctionRep ],
+  function( f )
+     Print("Geometry morphism:\n ", f, "\n");
+  end );
+
+InstallMethod( Display, [ IsGeometryMorphism and IsMappingByFunctionRep ],
+  function( f )
+     Print("Geometry morphism: ", Source(f), " -> ", Range(f), "\n");
+  end );
+
+
 ############################################################
 ## Generic methods for the Image* operations for IsGeometryMorphism. 
 ############################################################
@@ -647,15 +700,19 @@ InstallMethod( IsomorphismPolarSpacesNC,
 		return IsomorphismPolarSpacesNC( ps1, ps2, true );
 	end );
 
-
 ###########################################################
-## Field reduction morphisms. Helper operations.
+## Field reduction / subfield morphisms. Helper operations.
 ############################################################
 
-
-InstallMethod( ShrinkMat, "preimage of BlownUpMat",
+# CHECKED 28/09/11 jdb
+#############################################################################
+#O  ShrinkMat( <B>, <mat> ) 
+# returns the preimage of BlownUpMat
+##
+InstallMethod( ShrinkMat, 
+	"for a basis and a matrix",
 	[ IsBasis, IsMatrix ],
-  function( B, mat )
+	function( B, mat )
   
   ## THERE WAS A BUG IN THIS FUNCTION: (lavrauw 15/10/2010)
   ## NOT ALL MATRICES ARE BLOWNUP MATRICES! Here is a new version.
@@ -673,30 +730,32 @@ InstallMethod( ShrinkMat, "preimage of BlownUpMat",
   ## This function is basically the inverse map of
   ## BlownUpMat.
   
-  local d,vecs,m,n,bmat,blocks,bl,submat,i,j,ij,checklist,row,newmat;
-  d:=Size(B);
-  vecs:=BasisVectors(B);
-  m:=DimensionsMat(mat)[1];
-  n:=DimensionsMat(mat)[2];
+	local d,vecs,m,n,bmat,blocks,bl,submat,i,j,ij,checklist,row,newmat;
+	d:=Size(B);
+	vecs:=BasisVectors(B);
+	m:=DimensionsMat(mat)[1];
+	n:=DimensionsMat(mat)[2];
   # First we check if m and n are multiples of d
-  if not (IsInt(m/d) and IsInt(n/d)) then Error("The matrix does not have the right dimensions");
-  fi;
-  blocks:=List(Cartesian([0..m/d-1],[0..n/d-1]),ij->mat{[ij[1]*d+1 .. ij[1]*d+d]}{[ij[2]*d+1 ..ij[2]*d+d]});
-  newmat:=[];
-  for i in [1..m/d] do
-    row:=[]; 
-	for j in [1..n/d] do
-		submat:=blocks[(i-1)*d+j];
-		checklist:=List([1..d],i->(vecs[i]^(-1)*(Sum([1..d],j->submat[i][j]*vecs[j]))));
-		if Size(AsSet(checklist))<>1 then Error("The matrix is not a blown up matrix");
-		fi;
-		Add(row,checklist[1]);
+	if not (IsInt(m/d) and IsInt(n/d)) then 
+		Error("The matrix does not have the right dimensions");
+	fi;
+	blocks:=List(Cartesian([0..m/d-1],[0..n/d-1]),ij->mat{[ij[1]*d+1 .. ij[1]*d+d]}{[ij[2]*d+1 ..ij[2]*d+d]});
+	newmat:=[];
+	for i in [1..m/d] do
+		row:=[]; 
+		for j in [1..n/d] do
+			submat:=blocks[(i-1)*d+j];
+			checklist:=List([1..d],i->(vecs[i]^(-1)*(Sum([1..d],j->submat[i][j]*vecs[j]))));
+			if Size(AsSet(checklist))<>1 then 
+				Error("The matrix is not a blown up matrix");
+			fi;
+			Add(row,checklist[1]);
+		od;
+		Add(newmat,row);
 	od;
-	Add(newmat,row);
-  od;
-  return newmat;
+	return newmat;
   # DO WE NEED TO USE ConvertToMatrixRepNC ?
- end);	
+	end);	
 		
 		
 ## THE OLD ShrinkMat function:		
@@ -833,119 +892,114 @@ InstallGlobalFunction( IsBlownUpSubspaceOfProjectiveSpace,
 	fi;
 	return flag;
  end );	  
-
-### 9.3-2 NaturalEmbeddingByFieldReduction
   
+# CHECKED 28/09/11 jdb
+#############################################################################
+#O  NaturalEmbeddingByFieldReduction( <geom1>, <geom2> ) 
+# <geom2> is a projective space over a field K, <geom1> is a projective space
+# over a field extension L, and considering L as a vector space over K, yields 
+# that <geom1> and <geom2> have the same ambient vectorspace over K, then this
+# operation returns the natural embedding, i.e. with relation to the given basis
+# of L over K.
+##
 InstallMethod( NaturalEmbeddingByFieldReduction, 
-     "for a geometry into another, via field reduction, wrt a basis",
+	"for two projective spaces and a basis",
      [ IsProjectiveSpace, IsProjectiveSpace, IsBasis ],
-  function( geom1, geom2, basis )
+	function( geom1, geom2, basis )
   
-  ##
   ## This morphism contains a func and prefunc with built-in check.
-  ##
-  
-    local map, f1, f2, d1, d2, t, func, prefun, 
-          g1, gens, newgens, g2, twiner, hom, hominv;
-    f1 := geom1!.basefield; 
-    f2 := geom2!.basefield;
-	 
-    d1 := geom1!.dimension + 1;
-    d2 := geom2!.dimension + 1;
-	if not (IsInt(d2/d1)) then 
-		Error("The second geometry is not obtained from the first geometry by field reduction");
-	fi;
-	if not (IsBasis(basis) and f1=GF((basis!.q)^basis!.d) and f2=GF(basis!.q) and d1*(basis!.d)=d2) then
-		Error("The basis is not a basis or is not compatible with the basefields of the geometries");
-	fi;
-	t:=d2/d1;
-	
-	func := function( x ); # This map blows up a subspace of geom1 to a subspace of geom2
-		return BlownUpSubspaceOfProjectiveSpace(basis,x);
-	end; 
-	
-	prefun := function( subspace ) # This map is the inverse of func and returns an error, or a subspace of geom1
-	  local flag,basvecs,mat1,span,x,v,v1,i;
-	  flag:=true;
-	  if not subspace in geom2 then 
-		Error("The input is not in the range fo the field reduction map!");
-	  fi;
-	  if not IsInt((Dimension(subspace)+1)/t) then flag:=false;
-	  else
-		basvecs:=BasisVectors(basis);
-		mat1:=[];
-		span:=[];
-		repeat
-		repeat x:=Random(Points(subspace)); 
-		until not x in span;
-		v:=Coordinates(x);
-		v1:=List([1..d1],i->v{[(i-1)*t+1..i*t]}*basvecs);
-		Add(mat1,v1);
-		span:=VectorSpaceToElement(geom2,BlownUpMat(basis,mat1));
-		until Dimension(span)=Dimension(subspace);
-		if not span = subspace then flag:= false;
+ 
+		local map, f1, f2, d1, d2, t, func, prefun, g1, gens, newgens, g2, twiner, hom, hominv;
+		f1 := geom1!.basefield; 
+		f2 := geom2!.basefield;
+		d1 := geom1!.dimension + 1;
+		d2 := geom2!.dimension + 1;
+		if not (IsInt(d2/d1)) then 
+			Error("The second geometry is not obtained from the first geometry by field reduction");
 		fi;
-	  fi;
-	  if flag= false then Error("The input is not in the range of the field reduction map!");
-	  fi;
-	  return VectorSpaceToElement(geom1,mat1);
-	end;
+		if not (IsBasis(basis) and f1=GF((basis!.q)^basis!.d) and f2=GF(basis!.q) and d1*(basis!.d)=d2) then
+			Error("The basis is not a basis or is not compatible with the basefields of the geometries");
+		fi;
+		t:=d2/d1;
+		func := function( x ); # This map blows up a subspace of geom1 to a subspace of geom2
+			return BlownUpSubspaceOfProjectiveSpace(basis,x);
+		end; 
+		prefun := function( subspace ) # This map is the inverse of func and returns an error, or a subspace of geom1
+			local flag,basvecs,mat1,span,x,v,v1,i;
+			flag:=true;
+			if not subspace in geom2 then 
+				Error("The input is not in the range fo the field reduction map!");
+			fi;
+			if not IsInt((Dimension(subspace)+1)/t) then 
+				flag:=false;
+			else
+				basvecs:=BasisVectors(basis);
+				mat1:=[];
+				span:=[];
+				repeat
+					repeat 
+						x:=Random(Points(subspace)); 
+					until not x in span;
+					v:=Coordinates(x);
+					v1:=List([1..d1],i->v{[(i-1)*t+1..i*t]}*basvecs);
+					Add(mat1,v1);
+					span:=VectorSpaceToElement(geom2,BlownUpMat(basis,mat1));
+				until Dimension(span)=Dimension(subspace);
+				if not span = subspace then 
+					flag:= false;
+				fi;
+			fi;
+			if flag= false then 
+				Error("The input is not in the range of the field reduction map!");
+			fi;
+			return VectorSpaceToElement(geom1,mat1);
+		end;
        
-	map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(geom1),
+		map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(geom1),
                                          ElementsOfIncidenceStructure(geom2),
                                          func, false, prefun);
-               
     ## Now creating intertwiner
+		hom := function( m )
+			local image;      
+			image := BlownUpMat(basis, m!.mat); 
+			ConvertToMatrixRepNC( image, f1 );       
+			return ProjectiveSemilinearMap(image, f1);
+		end;
 
-    hom := function( m )
-      local image;      
-      image := BlownUpMat(basis, m!.mat); 
-      ConvertToMatrixRepNC( image, f1 );       
-      return ProjectiveSemilinearMap(image, f1);
-    end;
+		hominv := function( m )
+			local preimage;      
+			preimage := ShrinkMat(basis, m!.mat); 
+			ConvertToMatrixRepNC( preimage, f1 );       
+			return ProjectiveSemilinearMap(preimage, f1);
+		end;
+		g1 := HomographyGroup( geom1 );
+		gens := GeneratorsOfGroup( g1 );
+		newgens := List(gens, hom);
+		g2 := Group( newgens );
+		SetSize(g2, Size(g1));
+		twiner := GroupHomomorphismByFunction(g1, g2, hom, hominv);
+		SetIntertwiner( map, twiner);
+		return map;
+	end );
 
-    hominv := function( m )
-      local preimage;      
-      preimage := ShrinkMat(basis, m!.mat); 
-      ConvertToMatrixRepNC( preimage, f1 );       
-      return ProjectiveSemilinearMap(preimage, f1);
-    end;
-
-    g1 := HomographyGroup( geom1 );
-    gens := GeneratorsOfGroup( g1 );
-    newgens := List(gens, hom);
-    g2 := Group( newgens );
-    SetSize(g2, Size(g1));
-    twiner := GroupHomomorphismByFunction(g1, g2, hom, hominv);
-
-    SetIntertwiner( map, twiner);
-    return map;
-  end );
-
+# CHECKED 28/09/11 jdb
+#############################################################################
+#O  NaturalEmbeddingByFieldReduction( <geom1>, <geom2> ) 
+# <geom2> is a projective space over a field K, <geom1> is a projective space
+# over a field extension L, and considering L as a vector space over K, yields 
+# that <geom1> and <geom2> have the same ambient vectorspace over K, then this
+# operation returns the natural embedding, i.e. with relation to the standard basis of
+# L over K.
+##
 InstallMethod( NaturalEmbeddingByFieldReduction, 
-     "for a projective space into another, via field reduction",
-     [ IsProjectiveSpace, IsProjectiveSpace ],
-  function( geom1, geom2 )
-	local basis;
-	basis:=Basis(AsVectorSpace(geom2!.basefield,geom1!.basefield));
-	return NaturalEmbeddingByFieldReduction(geom1,geom2,basis);
-  end );
+	"for two projective spaces",
+	[ IsProjectiveSpace, IsProjectiveSpace ],
+	function( geom1, geom2 )
+		local basis;
+		basis:=Basis(AsVectorSpace(geom2!.basefield,geom1!.basefield));
+		return NaturalEmbeddingByFieldReduction(geom1,geom2,basis);
+	end );
 
-#######################
-########################
-######################
-#######################
-########################
-######################
-#######################
-########################
-######################
-#######################
-########################
-######################
-#######################
-########################
-######################
 
 ## need a quicker method for this
 #######################
@@ -974,199 +1028,209 @@ InstallGlobalFunction( LeukBasis,
   end );
 
 
-
-InstallMethod( NaturalEmbeddingByFieldReduction, [ IsClassicalPolarSpace, IsClassicalPolarSpace, IsBool ],
-  function( geom1, geom2, computeintertwiner )
-    local map, pgmap, f1, f2, q1, q2, d1, d2, vec, block, w, i, iter, f,
+# CHECKED 28/09/11 jdb (but not tested rigourously).
+#############################################################################
+#O  NaturalEmbeddingByFieldReduction( <geom1>, <geom2>, <bool> ) 
+# returns a geometry morphism, described below. If <bool> is true, then an intertwiner
+# is computed.
+#
+#  A good reference on field reduction of polar spaces is
+#  "Polar spaces and embeddings of classical groups" by Nick Gill
+#  (New Zealand J. Math). 
+#  There, the conditions on the polarity types can be found.
+#
+#  All possible cases:
+#  W -> W (bug for W(1,q^5) -> W(9,q))
+#  Q+ -> Q+
+#  Q- -> Q-
+#  Q (q = 1 mod 4) -> Q+
+#  Q (q = -1 mod 4) -> Q-
+#  Q (odd field ext.) -> Q
+#  H (odd field ext.) -> H 
+#  H (even dim) -> Q+
+#  H (odd dim) -> Q-
+#  H (even field ext.) -> W
+##
+InstallMethod( NaturalEmbeddingByFieldReduction, 
+	"for two polar spaces and a boolean",
+	[ IsClassicalPolarSpace, IsClassicalPolarSpace, IsBool ],
+	function( geom1, geom2, computeintertwiner )
+		local map, pgmap, f1, f2, q1, q2, d1, d2, vec, block, w, i, iter, f,
           bas, e, type1, type2, iso, gram, newgram, form, ps, func, prefun,
           hom, g1, gens, newgens, g2, twiner, twinerfunc, twinerprefun, hominv;
-    
-    #######################################################################
-    #
-    #  A good reference on field reduction of polar spaces is
-    #  "Polar spaces and embeddings of classical groups" by Nick Gill
-    #  (New Zealand J. Math). 
-    #  There, the conditions on the polarity types can be found.
-    #
-    #  All possible cases:
-    #  W -> W (bug for W(1,q^5) -> W(9,q))
-    #  Q+ -> Q+
-    #  Q- -> Q-
-    #  Q (q = 1 mod 4) -> Q+
-    #  Q (q = -1 mod 4) -> Q-
-    #  Q (odd field ext.) -> Q
-    #  H (odd field ext.) -> H 
-    #  H (even dim) -> Q+
-    #  H (odd dim) -> Q-
-    #  H (even field ext.) -> W
-    #
-    #######################################################################
-
-    f1 := geom1!.basefield; q1 := Size(f1); 
-    f2 := geom2!.basefield; q2 := Size(f2);       
-    d1 := geom1!.dimension + 1;
-    d2 := geom2!.dimension + 1;
-    type1 := PolarSpaceType(geom1);
-    type2 := PolarSpaceType(geom2);
-       
-    if q1^d1 = q2^d2 and IsSubset(f1,f2) and d2 mod d1 = 0 then  
-       e := d2/d1; 
-       vec := AsVectorSpace(f2, f1);
-
-       if [type1, type2] in [["symplectic", "symplectic"], 
-                             ["elliptic", "elliptic"], 
+ 
+		f1 := geom1!.basefield; q1 := Size(f1); 
+		f2 := geom2!.basefield; q2 := Size(f2);       
+		d1 := geom1!.dimension + 1;	
+		d2 := geom2!.dimension + 1;
+		type1 := PolarSpaceType(geom1);
+		type2 := PolarSpaceType(geom2);
+		if q1^d1 = q2^d2 and IsSubset(f1,f2) and d2 mod d1 = 0 then  
+			e := d2/d1; 
+			vec := AsVectorSpace(f2, f1);
+			if [type1, type2] in [["symplectic", "symplectic"], ["elliptic", "elliptic"], 
                              ["hyperbolic", "hyperbolic"]] or
-          ([type1, type2] = ["parabolic", "elliptic"] and q2 mod 4 = 3 and IsEvenInt(e)) or
-          ([type1, type2] = ["parabolic", "hyperbolic"] and q2 mod 4 = 1 and IsEvenInt(e)) or
-          ([type1, type2] = ["parabolic", "parabolic"] and IsOddInt(q2) and IsOddInt(e)) then
+				([type1, type2] = ["parabolic", "elliptic"] and q2 mod 4 = 3 and IsEvenInt(e)) or
+				([type1, type2] = ["parabolic", "hyperbolic"] and q2 mod 4 = 1 and IsEvenInt(e)) or
+				([type1, type2] = ["parabolic", "parabolic"] and IsOddInt(q2) and IsOddInt(e)) then
            
            ## This part has been tested for small examples            
            ## The basis here must have the sum of the b^(q+1) equal to 0 
 
-          bas := Basis(vec, LeukBasis(f1,f2) );        
-          if HasQuadraticForm(geom1) then
-             gram := GramMatrix( QuadraticForm(geom1) );
-             newgram := BlownUpMat( bas, gram );
-             form := QuadraticFormByMatrix(newgram, f2);
-          else
-             gram := GramMatrix( SesquilinearForm(geom1) );
-             newgram := BlownUpMat( bas, gram );
-             form := BilinearFormByMatrix(newgram, f2);
-          fi;        
-                  
-       elif (([type1, type2] = ["hermitian", "hyperbolic"] and IsEvenInt(d1) and IsEvenInt(e))) or
-            (([type1, type2] = ["hermitian", "elliptic"] and IsOddInt(d1) and IsEvenInt(e))) then
+				bas := Basis(vec, LeukBasis(f1,f2) );        
+				if HasQuadraticForm(geom1) then
+					gram := GramMatrix( QuadraticForm(geom1) );
+					newgram := BlownUpMat( bas, gram );
+					form := QuadraticFormByMatrix(newgram, f2);
+				else
+					gram := GramMatrix( SesquilinearForm(geom1) );
+					newgram := BlownUpMat( bas, gram );
+					form := BilinearFormByMatrix(newgram, f2);
+				fi;        
+			elif (([type1, type2] = ["hermitian", "hyperbolic"] and IsEvenInt(d1) and IsEvenInt(e))) or
+				(([type1, type2] = ["hermitian", "elliptic"] and IsOddInt(d1) and IsEvenInt(e))) then
        
           ## This part has been tested for small examples 
           ## THe new form is B'(x,y) = Tr( B(x,y) )
           ## Matrix?        
 
-          bas := Basis(vec, LeukBasis(f1,f2) );
-          w := First(bas, t->not t in f2);
-          block := [[1,w],[w^q2,w^(q2+1)]]*One(f2);
-          newgram := IdentityMat(d2, f2);
-          for i in [1..d2/2] do
-              newgram{[2*i-1,2*i]}{[2*i-1,2*i]} := block;
-          od;
-gram := GramMatrix( SesquilinearForm(geom1) );
-newgram := BlownUpMat( bas, gram );
-      #    form := QuadraticFormByMatrix(newgram, f2);
-
-          form := QuadraticFormByMatrix(newgram, f1);
-
-       elif [type1, type2] = ["hermitian", "hermitian"] and IsOddInt(e) then
+				bas := Basis(vec, LeukBasis(f1,f2) );
+				w := First(bas, t->not t in f2);
+				block := [[1,w],[w^q2,w^(q2+1)]]*One(f2);
+				newgram := IdentityMat(d2, f2);
+				for i in [1..d2/2] do
+					newgram{[2*i-1,2*i]}{[2*i-1,2*i]} := block;
+				od;
+				gram := GramMatrix( SesquilinearForm(geom1) );
+				newgram := BlownUpMat( bas, gram );
+				#form := QuadraticFormByMatrix(newgram, f2);
+				form := QuadraticFormByMatrix(newgram, f1);
+			elif [type1, type2] = ["hermitian", "hermitian"] and IsOddInt(e) then
        
           ## works for H(1,4^3) -> H(5,4)
        
-          bas := Basis(vec, LeukBasis(f1,f2) );        
-          gram := GramMatrix( SesquilinearForm(geom1) );
-          newgram := BlownUpMat( bas, gram );
-          form := HermitianFormByMatrix(newgram, f2);
-                 
-       elif [type1, type2] = ["hermitian", "symplectic"] and e = 2 then  
+				bas := Basis(vec, LeukBasis(f1,f2) );        
+				gram := GramMatrix( SesquilinearForm(geom1) );
+				newgram := BlownUpMat( bas, gram );
+				form := HermitianFormByMatrix(newgram, f2);
+			elif [type1, type2] = ["hermitian", "symplectic"] and e = 2 then  
        
           ## for the moment, we just use the usual copy of H
-          Info(InfoFinInG, 1, "Only works (at the moment) for the canonical Hermitian variety");
-          
-          bas := Basis(vec, LeukBasis(f1,f2) );        
-          newgram := CanonicalGramMatrix("symplectic", d2, f2);
-          form := BilinearFormByMatrix( newgram, f2 );                  
-       else
-          Error("Not implemented for these geometries\n");
-       fi;   
-    else
-         Error("Dimensions and/or field sizes are incompatible"); return;
-    fi;
+				Info(InfoFinInG, 1, "Only works (at the moment) for the canonical Hermitian variety");
+				bas := Basis(vec, LeukBasis(f1,f2) );        
+				newgram := CanonicalGramMatrix("symplectic", d2, f2);
+				form := BilinearFormByMatrix( newgram, f2 );                  
+			else
+				Error("Not implemented for these geometries\n");
+			fi;   
+		else
+			Error("Dimensions and/or field sizes are incompatible"); return;
+		fi;
      
-    ps := PolarSpace(form);
-    iso := IsomorphismPolarSpacesNC(ps, geom2, computeintertwiner);
-
-    pgmap := NaturalEmbeddingByFieldReduction( AmbientSpace(geom1), AmbientSpace(geom2), bas);
-    func := x -> iso!.fun( pgmap!.fun( x ) );
-    prefun := x -> pgmap!.prefun( iso!.prefun( x ) );
-    map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(geom1), 
+		ps := PolarSpace(form);
+		iso := IsomorphismPolarSpacesNC(ps, geom2, computeintertwiner);
+		pgmap := NaturalEmbeddingByFieldReduction( AmbientSpace(geom1), AmbientSpace(geom2), bas);
+		func := x -> iso!.fun( pgmap!.fun( x ) );
+		prefun := x -> pgmap!.prefun( iso!.prefun( x ) );
+		map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(geom1), 
                                       ElementsOfIncidenceStructure(geom2), 
                                       func, false, prefun );
-    SetIsInjective( map, true );
-
-    if HasIntertwiner( iso ) then
-       f := Intertwiner(iso);
-    
-       hom := function( m )
-         local image;      
-         image := BlownUpMat(bas, m!.mat); 
-         ConvertToMatrixRepNC( image, f2 );       
-         return ProjectiveSemilinearMap(image, f2);
-       end;
-    
-       hominv := function( m )
-         local preimage;      
-         preimage := ShrinkMat(bas, m!.mat); 
-         ConvertToMatrixRepNC( preimage, f1 );       
-         return ProjectiveSemilinearMap(preimage, f1);
-       end;
-
-       twinerfunc := x -> ImageElm(f, hom( x ));    
-       twinerprefun := y -> hominv( PreImageElm(f, y) );
-
-       g1 := IsometryGroup( geom1 );
-       gens := GeneratorsOfGroup( g1 );    
-       newgens := List(gens, twinerfunc);   
-       g2 := GroupWithGenerators( newgens );      
-       SetSize(g2, Size(g1));
-       twiner := GroupHomomorphismByFunction(g1, g2, twinerfunc, twinerprefun);
-       SetIntertwiner( map, twiner);
-    fi;
-    return map;
-  end );
+		SetIsInjective( map, true );
+		if HasIntertwiner( iso ) then
+			f := Intertwiner(iso);
+			hom := function( m )
+				local image;      
+				image := BlownUpMat(bas, m!.mat); 
+				ConvertToMatrixRepNC( image, f2 );       
+				return ProjectiveSemilinearMap(image, f2);
+			end;
+			hominv := function( m )
+				local preimage;      
+				preimage := ShrinkMat(bas, m!.mat); 
+				ConvertToMatrixRepNC( preimage, f1 );       
+				return ProjectiveSemilinearMap(preimage, f1);
+			end;
+			twinerfunc := x -> ImageElm(f, hom( x ));    
+			twinerprefun := y -> hominv( PreImageElm(f, y) );
+			g1 := IsometryGroup( geom1 );
+			gens := GeneratorsOfGroup( g1 );    
+			newgens := List(gens, twinerfunc);   
+			g2 := GroupWithGenerators( newgens );      
+			SetSize(g2, Size(g1));
+			twiner := GroupHomomorphismByFunction(g1, g2, twinerfunc, twinerprefun);
+			SetIntertwiner( map, twiner);
+		fi;
+		return map;
+	end );
   
-InstallMethod( NaturalEmbeddingByFieldReduction, [ IsClassicalPolarSpace, IsClassicalPolarSpace ],
-  function( geom1, geom2 )
-    return NaturalEmbeddingByFieldReduction( geom1, geom2, true );
-  end );
+# CHECKED 28/09/11 jdb
+#############################################################################
+#O  NaturalEmbeddingByFieldReduction( <geom1>, <geom2> ) 
+# returns NaturalEmbeddingByFieldReduction(<geom1>, <geom2>, true )
+##
+InstallMethod( NaturalEmbeddingByFieldReduction, 
+	"for two polar spaces",
+	[ IsClassicalPolarSpace, IsClassicalPolarSpace ],
+	function( geom1, geom2 )
+		return NaturalEmbeddingByFieldReduction( geom1, geom2, true );
+	end );
 
-InstallMethod( NaturalEmbeddingBySubfield, [ IsProjectiveSpace, IsProjectiveSpace ],
-  function( geom1, geom2 )
-    local map, f1, f2, func, prefun, g1, g2,
+# CHECKED 28/09/11 jdb
+#############################################################################
+#O  NaturalEmbeddingBySubfield( <geom1>, <geom2> )
+# returns the embedding of <geom1> in <geom2>, two projective spaces of the
+# same dimension, over the fields K and L respectively, where L is an extension
+# of K.
+##
+InstallMethod( NaturalEmbeddingBySubfield, 
+	"for two projective spaces",
+	[ IsProjectiveSpace, IsProjectiveSpace ],
+	function( geom1, geom2 )
+		local map, f1, f2, func, prefun, g1, g2,
           gens1, gens2, hom, twinerfunc, twinerprefun;
-    
-    f1 := geom1!.basefield; 
-    f2 := geom2!.basefield; 
-    if geom1!.dimension  <> geom2!.dimension or not IsSubset(f2,f1) then  
-       Error("Dimensions and/or field sizes are incompatible"); return;
-    fi;
-
-    func :=  x -> VectorSpaceToElement(geom2, ShallowCopy(x!.obj));
-    prefun := function( x )
-                if not ForAll( Flat(x!.obj), i -> i in f1 ) then
-                   Error("Element does not have all of its coordinates in ", f1);
-                fi;
-                return VectorSpaceToElement(geom1, ShallowCopy(x!.obj));
-              end;
-    map := GeometryMorphismByFunction( ElementsOfIncidenceStructure(geom1), 
+		f1 := geom1!.basefield; 
+		f2 := geom2!.basefield; 
+		if geom1!.dimension  <> geom2!.dimension or not IsSubset(f2,f1) then  
+			Error("Dimensions and/or field sizes are incompatible"); return;
+		fi;
+		func :=  x -> VectorSpaceToElement(geom2, ShallowCopy(x!.obj));
+		prefun := function( x )
+			if not ForAll( Flat(x!.obj), i -> i in f1 ) then
+				Error("Element does not have all of its coordinates in ", f1);
+			fi;
+			return VectorSpaceToElement(geom1, ShallowCopy(x!.obj));
+		end;
+		map := GeometryMorphismByFunction( ElementsOfIncidenceStructure(geom1), 
                                        ElementsOfIncidenceStructure(geom2),
                                        func, false, prefun ); 
-    SetIsInjective( map, true );
+		SetIsInjective( map, true );
 
     ## Intertwiner...
     
-    twinerfunc := x -> ProjectiveSemilinearMap( x!.mat, f2 );   
-    twinerprefun := y -> ProjectiveSemilinearMap( y!.mat, f1 );
-    
-    g1 := ProjectivityGroup( geom1 );
-    gens1 := GeneratorsOfGroup( g1 );
-    gens2 := List(gens1, twinerfunc );
-    g2 := Group(gens2);
-    SetSize(g2, Size(g1));
-    hom := GroupHomomorphismByFunction(g1, g2, twinerfunc, twinerprefun);    
-    SetIntertwiner(map, hom);
-    return map;
-  end );
-
+		twinerfunc := x -> ProjectiveSemilinearMap( x!.mat, f2 );   
+		twinerprefun := y -> ProjectiveSemilinearMap( y!.mat, f1 );
+        g1 := ProjectivityGroup( geom1 );
+		gens1 := GeneratorsOfGroup( g1 );
+		gens2 := List(gens1, twinerfunc );
+		g2 := Group(gens2);
+		SetSize(g2, Size(g1));
+		hom := GroupHomomorphismByFunction(g1, g2, twinerfunc, twinerprefun);    
+		SetIntertwiner(map, hom);
+		return map;
+	end );
   
-InstallMethod( NaturalEmbeddingBySubfield, [ IsClassicalPolarSpace, IsClassicalPolarSpace, IsBool ],
-  function( geom1, geom2, computeintertwiner )
-    local map, f1, f2, q1, q2, gamma, func, prefun, g1, g2, gens1, gens2, f,
+# CHECKED 28/09/11 jdb
+#############################################################################
+#O  NaturalEmbeddingBySubfield( <geom1>, <geom2>, <bool> )
+# returns the embedding of <geom1> in <geom2>, two polar spaces of the
+# same dimension, over the fields K and L respectively, where L is an extension
+# of K. An Intertwiner is computed if <bool> is true.
+##
+InstallMethod( NaturalEmbeddingBySubfield, 
+	"for two polar spaces and a boolean",
+	[ IsClassicalPolarSpace, IsClassicalPolarSpace, IsBool ],
+	function( geom1, geom2, computeintertwiner )
+		local map, f1, f2, q1, q2, gamma, func, prefun, g1, g2, gens1, gens2, f,
           r, type1, type2, iso, gram, newgram, form, ps, hom, twinerfunc, twinerprefun;
         
     #
@@ -1181,82 +1245,89 @@ InstallMethod( NaturalEmbeddingBySubfield, [ IsClassicalPolarSpace, IsClassicalP
     #  O^eps -> O^eps' (eps = eps'^r) 
     #
 
-    f1 := geom1!.basefield; q1 := Size(f1); 
-    f2 := geom2!.basefield; q2 := Size(f2);       
-    type1 := PolarSpaceType(geom1);
-    type2 := PolarSpaceType(geom2);
-       
-    if geom1!.dimension = geom2!.dimension and IsSubset(f2, f1) then  
-       r := LogInt(q2, q1);
-       gram := GramMatrix( SesquilinearForm(geom1) );
-
-       if [type1, type2] = ["symplectic", "hermitian" ] and r = 2 then                   
-          gamma := First( f2, t -> not IsZero(t) and IsZero(t^q1+t)); 
-          newgram := gamma * gram;
-          form := HermitianFormByMatrix(newgram, f2);
-       elif [type1, type2] = ["symplectic", "symplectic"] then
-          form := BilinearFormByMatrix(gram, f2);
-       elif [type1, type2] = ["hermitian", "hermitian"] and IsOddInt(r) then
-          form := HermitianFormByMatrix(gram, f2);
-       elif type1 in ["elliptic", "parabolic", "hyperbolic"] and 
-            type2 = "hermitian" and r =2 and IsOddInt(q2) then
-          form := HermitianFormByMatrix(gram, f2);
-       elif (IsOddInt(r) and type2 in ["elliptic", "parabolic", "hyperbolic"] and
-             type1 = type2) or       
-            (IsEvenInt(r) and [type1, type2] in [["elliptic","hyperbolic"], 
-             ["hyperbolic","hyperbolic"], ["parabolic","parabolic"]]) then
-          form := BilinearFormByMatrix(gram, f2);           
-       else
-          Error("Not possible for these geometries\n");
-       fi;   
-    else
-       Error("Dimensions and/or field sizes are incompatible"); return;
-    fi;
-
-    ps := PolarSpace(form);
-    iso := IsomorphismPolarSpacesNC(ps, geom2, computeintertwiner);
-
-    func :=  x -> VectorSpaceToElement(ps, ShallowCopy(x!.obj))^iso;
-    prefun := function( x )
-                local y;            
-                y := iso!.prefun(x);
-                if not ForAll( Flat(y!.obj), i -> i in f1 ) then
-                   Error("Element does not have all of its coordinates in ", f1);
-                fi;
-                return VectorSpaceToElement(geom1, ShallowCopy(y!.obj));
-              end;
-    map := GeometryMorphismByFunction( ElementsOfIncidenceStructure(geom1), 
+		f1 := geom1!.basefield; q1 := Size(f1); 
+		f2 := geom2!.basefield; q2 := Size(f2);       
+		type1 := PolarSpaceType(geom1);
+		type2 := PolarSpaceType(geom2);
+		if geom1!.dimension = geom2!.dimension and IsSubset(f2, f1) then  
+			r := LogInt(q2, q1);
+			gram := GramMatrix( SesquilinearForm(geom1) );
+			if [type1, type2] = ["symplectic", "hermitian" ] and r = 2 then                   
+				gamma := First( f2, t -> not IsZero(t) and IsZero(t^q1+t)); 
+				newgram := gamma * gram;
+				form := HermitianFormByMatrix(newgram, f2);
+			elif [type1, type2] = ["symplectic", "symplectic"] then
+				form := BilinearFormByMatrix(gram, f2);
+			elif [type1, type2] = ["hermitian", "hermitian"] and IsOddInt(r) then
+				form := HermitianFormByMatrix(gram, f2);
+			elif type1 in ["elliptic", "parabolic", "hyperbolic"] and 
+				type2 = "hermitian" and r =2 and IsOddInt(q2) then
+				form := HermitianFormByMatrix(gram, f2);
+			elif (IsOddInt(r) and type2 in ["elliptic", "parabolic", "hyperbolic"] and 
+				type1 = type2) or (IsEvenInt(r) and [type1, type2] in [["elliptic","hyperbolic"], 
+				["hyperbolic","hyperbolic"], ["parabolic","parabolic"]]) then
+				form := BilinearFormByMatrix(gram, f2);           
+			else
+				Error("Not possible for these geometries\n");
+			fi;   
+		else
+			Error("Dimensions and/or field sizes are incompatible"); return;
+		fi;
+		ps := PolarSpace(form);
+		iso := IsomorphismPolarSpacesNC(ps, geom2, computeintertwiner);
+		func :=  x -> VectorSpaceToElement(ps, ShallowCopy(x!.obj))^iso;
+		prefun := function( x )
+			local y;            
+            y := iso!.prefun(x);
+            if not ForAll( Flat(y!.obj), i -> i in f1 ) then
+				Error("Element does not have all of its coordinates in ", f1);
+			fi;
+            return VectorSpaceToElement(geom1, ShallowCopy(y!.obj));
+		end;
+		map := GeometryMorphismByFunction( ElementsOfIncidenceStructure(geom1), 
                                        ElementsOfIncidenceStructure(geom2),
                                        func, false, prefun ); 
-    SetIsInjective( map, true );
+		SetIsInjective( map, true );
     
     ## intertwiner...
 
-    if HasIntertwiner( iso ) then 
-       f := Intertwiner(iso);
-       twinerfunc := x -> ImageElm(f, ProjectiveSemilinearMap( x!.mat, f2 ));   
-       twinerprefun := y -> ProjectiveSemilinearMap( f!.prefun(y)!.mat, f1 );
-    
-       g1 := SimilarityGroup( geom1 );
-       gens1 := GeneratorsOfGroup( g1 );
-       gens2 := List(gens1, twinerfunc );
-       g2 := Group(gens2);
-       SetSize(g2, Size(g1));
-       hom := GroupHomomorphismByFunction(g1, g2, twinerfunc, twinerprefun);    
-       SetIntertwiner(map, hom);
-    fi;
-    return map;
-  end );
+		if HasIntertwiner( iso ) then 
+			f := Intertwiner(iso);
+			twinerfunc := x -> ImageElm(f, ProjectiveSemilinearMap( x!.mat, f2 ));   
+			twinerprefun := y -> ProjectiveSemilinearMap( f!.prefun(y)!.mat, f1 );
+			g1 := SimilarityGroup( geom1 );
+			gens1 := GeneratorsOfGroup( g1 );
+			gens2 := List(gens1, twinerfunc );
+			g2 := Group(gens2);
+			SetSize(g2, Size(g1));
+			hom := GroupHomomorphismByFunction(g1, g2, twinerfunc, twinerprefun);    
+			SetIntertwiner(map, hom);
+		fi;
+		return map;
+	end );
 
-InstallMethod( NaturalEmbeddingBySubfield, [ IsClassicalPolarSpace, IsClassicalPolarSpace ],
-  function( geom1, geom2 )
-    return NaturalEmbeddingBySubfield( geom1, geom2, true );
-  end );
+# CHECKED 28/09/11 jdb
+#############################################################################
+#O  NaturalEmbeddingBySubfield( <geom1>, <geom2> )
+# returns NaturalEmbeddingBySubfield( <geom1>, <geom2>, true )
+##
+InstallMethod( NaturalEmbeddingBySubfield, 
+	"for two polar spaces",
+	[ IsClassicalPolarSpace, IsClassicalPolarSpace ],
+	function( geom1, geom2 )
+		return NaturalEmbeddingBySubfield( geom1, geom2, true );
+	end );
 
+# CHECKED 28/09/11 jdb
+#############################################################################
+#O  NaturalProjectionBySubspace( <ps>, <v> )
+# returns the morphism from the projective space to the quotient space of the 
+# subspace <v>. It is checked if <v> is a subspace of <ps>.
+##
 InstallMethod( NaturalProjectionBySubspace, 
-      "for a projective space and a singular subspace",
-      [ IsProjectiveSpace, IsSubspaceOfProjectiveSpace ], 
-  function(ps, v)
+	"for a projective space and a singular subspace",
+	[ IsProjectiveSpace, IsSubspaceOfProjectiveSpace ], 
+	function(ps, v)
 
   ## map from geometry of elements incident with v
   ## to the projective space of lesser dimension 
@@ -1303,46 +1374,51 @@ InstallMethod( NaturalProjectionBySubspace,
                              BasisVectors( canbas ) );
 
     func := function( x )
-              local y;         
-              if not v in x then
-                 Error("Subspace is not incident with the subspace of projection");
-              fi;
-              y := List(x^_,i-> Coefficients(bas,i))*basimgs;  
-              if not IsEmpty(y) then 
-                  ## Note: TriangulizeMat does not return a matrix of full
-                  ##       rank, whereas SemiEchelonMat does!
-                if x!.type - vdim = 1 then 
-                   y := y[1]; 
-                   ConvertToVectorRep(y, f);
-                else
-                   y := SemiEchelonMat(y)!.vectors;  
-                   ConvertToMatrixRepNC(y, f);
-                fi;
-              fi;
-              if not IsEmpty(y) then  
-                return Wrap(ps2, x!.type - vdim, y);
-              else  
-                return EmptySubspace(ps2);
-              fi;
-           end;
-    pre := function( y )
-              local x;          
-              x := y!.obj; 
-              if y!.type = 1 then x := [x]; fi;
-              x :=  Concatenation(x * compl, b); 
-              ConvertToMatrixRepNC(x, f);
-              return VectorSpaceToElement(ps, x);
-           end;
-
-    map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(ps), 
+		local y;         
+        if not v in x then
+			Error("Subspace is not incident with the subspace of projection");
+		fi;
+        y := List(x^_,i-> Coefficients(bas,i))*basimgs;  
+        if not IsEmpty(y) then 
+           ## Note: TriangulizeMat does not return a matrix of full
+           ##       rank, whereas SemiEchelonMat does!
+			if x!.type - vdim = 1 then 
+				y := y[1]; 
+				ConvertToVectorRep(y, f);
+			else
+				y := SemiEchelonMat(y)!.vectors;  
+				ConvertToMatrixRepNC(y, f);
+			fi;
+        fi;
+		if not IsEmpty(y) then  
+			return Wrap(ps2, x!.type - vdim, y);
+            else  
+				return EmptySubspace(ps2);
+			fi;
+		end;
+		pre := function( y )
+			local x;          
+            x := y!.obj; 
+            if y!.type = 1 then x := [x]; fi;
+            x :=  Concatenation(x * compl, b); 
+            ConvertToMatrixRepNC(x, f);
+            return VectorSpaceToElement(ps, x);
+		end;
+		map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(ps), 
                                       ElementsOfIncidenceStructure(ps2), func, pre );
-    return map;
-  end );
+		return map;
+	end );
 
+# CHECKED 28/09/11 jdb
+#############################################################################
+#O  NaturalProjectionBySubspaceNC( <ps>, <v> )
+## This operation is just like its namesake except that it 
+## has no checks
+##
 InstallMethod( NaturalProjectionBySubspaceNC, 
-      "for a projective space and a singular subspace",
-      [ IsProjectiveSpace, IsSubspaceOfProjectiveSpace ], 
-  function(ps, v)
+	"for a projective space and a singular subspace",
+	[ IsProjectiveSpace, IsSubspaceOfProjectiveSpace ], 
+	function(ps, v)
 
   ## map from geometry of elements incident with v
   ## to the projective space of lesser dimension 
@@ -1412,31 +1488,40 @@ InstallMethod( NaturalProjectionBySubspaceNC,
     return map;
   end );
 
+# CHECKED 28/09/11 jdb
+#############################################################################
+#O  \QUO( <ps>, <v> )
+# returns the quotient space of the subspace <v> of the projective space <ps>
+# it is checked if <v> is a subspace of <ps>
+##
+InstallOtherMethod(\QUO,  
+	"for a projective space and a subspace",
+	[ IsProjectiveSpace and IsProjectiveSpaceRep, IsSubspaceOfProjectiveSpace],
+	function( ps, v )
+		if not v in ps then 
+			Error( "Subspace does not belong to the projective space" );
+		fi;
+		return Range( NaturalProjectionBySubspace( ps, v ) )!.geometry;
+	end );
 
-
-InstallOtherMethod(\QUO,  "quotients for projective spaces",
-   [ IsProjectiveSpace and IsProjectiveSpaceRep, IsSubspaceOfProjectiveSpace],
-  function( ps, v )
-    if not v in ps then 
-       Error( "Subspace does not belong to the projective space" );
-    fi;
-    return Range( NaturalProjectionBySubspace( ps, v ) )!.geometry;
-  end );
-
-
+# CHECKED 28/09/11 jdb
+#############################################################################
+#O  NaturalProjectionBySubspace( <ps>, <v> )
+# returns the morphism from the polar space to the quotient space of the 
+# subspace <v>. It is checked if <v> is a subspace of <ps>.
+##
 InstallMethod( NaturalProjectionBySubspace, 
-      "for a polar space and a singular subspace",
-      [ IsClassicalPolarSpace, IsSubspaceOfClassicalPolarSpace ], 
-  function(ps, v)
+    "for a polar space and a subspace",
+    [ IsClassicalPolarSpace, IsSubspaceOfClassicalPolarSpace ], 
+	function(ps, v)
 
   ## map from geometry of elements incident with v
   ## to the polar space of the same type but of lesser dimension 
-
     local pstype, psdim, b, vdim, vs, func, pre,
           Wvectors, mb, compl, gen, bas, img, canbas, zero, basimgs,
           ps2, map, hom, a, m, newform, f, perp;
     if not v in ps then
-       Error("Subspace is not a member of the polar space");
+		Error("Subspace is not a member of the polar space");
     fi;
     pstype := PolarSpaceType(ps); 
     psdim := ps!.dimension;
@@ -1526,6 +1611,12 @@ InstallMethod( NaturalProjectionBySubspace,
     return map;
   end );
 
+# CHECKED 28/09/11 jdb
+#############################################################################
+#O  NaturalProjectionBySubspaceNC( <ps>, <v> )
+## This operation is just like its namesake except that it 
+## has no checks
+##
 InstallMethod( NaturalProjectionBySubspaceNC, 
       "for a polar space and a singular subspace",
       [ IsClassicalPolarSpace, IsSubspaceOfClassicalPolarSpace ], 
@@ -1611,107 +1702,127 @@ InstallMethod( NaturalProjectionBySubspaceNC,
   end );
 
 
+#############################################################################
+# two helper operations. They can be used by the users, but on the other hand
+# the form of the Klein quadric is fixed, so this is against the philiosphy of
+# FinInG, at least for user functions. Also, there are no checks. So I will not
+# describe these in the documentation.
+#############################################################################
 
 
-
-InstallMethod( PluckerCoordinates, "for a line of PG(3,q)",
+# CHECKED 28/09/11 jdb
+#############################################################################
+#O  PluckerCoordinates( <l> )
+# returns the Plucker coordinates of the line <l>.
+##
+InstallMethod( PluckerCoordinates, 
+	"for a line of PG(3,q)",
     [ IsSubspaceOfProjectiveSpace ],
-  function( l )
-    local pij, lobj, u, v, coords;
-   
-    pij := function(u,v,i,j)
-        return u[i]*v[j] - u[j] * v[i];
-    end;
+	function( l )
+		local pij, lobj, u, v, coords;
+		pij := function(u,v,i,j)
+			return u[i]*v[j] - u[j] * v[i];
+		end;
+		lobj := l!.obj; 
+		u := lobj[1];
+		v := lobj[2];
+		coords := [pij(u,v,1,2),pij(u,v,1,3),pij(u,v,1,4),
+			pij(u,v,2,3),pij(u,v,4,2),pij(u,v,3,4)];
+		return coords;
+	end );
 
-    lobj := l!.obj; 
-    u := lobj[1];
-    v := lobj[2];
-
-    coords := [pij(u,v,1,2),pij(u,v,1,3),pij(u,v,1,4),
-               pij(u,v,2,3),pij(u,v,4,2),pij(u,v,3,4)];
-    return coords;
-  end );
-
-InstallMethod( InversePluckerCoordinates, "for a point of Q+(5,q)",
+# CHECKED 28/09/11 jdb
+#############################################################################
+#O  InversePluckerCoordinates( <var> )
+# returns a list of two vectors spanning the line with Plucker coordinates <var>
+# cuation: this list is not Triangulized!
+##
+InstallMethod( InversePluckerCoordinates, 
+	"for a point of Q+(5,q)",
     [ IsSubspaceOfProjectiveSpace ],
 
    ## The point must satisfy the Pluecker relation x1x6+x2x5+x3x4=0.
+	function( var )
+		local pairs, i, pair, l, f, zero, x;
+		x := var!.obj;
+		pairs := [[1,2],[1,3],[1,4],[2,3],[4,2],[3,4]];
+		i := PositionNonZero(x);
+		pair := pairs[i];
+		f := var!.geo!.basefield;
+		zero := Zero(f);
+        l := [];
+		if 1 in pair then
+			Add(l, [ zero, x[1], x[2], x[3] ]);
+		fi;
+		if 2 in pair then
+			Add(l, [ x[1], zero, -x[4], x[5] ]);
+		fi;
+		if 3 in pair then
+			Add(l, [ x[2], x[4], zero, -x[6] ]);
+		fi;
+		if 4 in pair then
+			Add(l, [ x[3], -x[5], x[6], zero ]);
+		fi;
+		return l;
+	end );
 
-  function( var )
-    local pairs, i, pair, l, f, zero, x;
-    x := var!.obj;
-    pairs := [[1,2],[1,3],[1,4],[2,3],[4,2],[3,4]];
-    i := PositionNonZero(x);
-    pair := pairs[i];
-    f := var!.geo!.basefield;
-    zero := Zero(f);
-    
-    l := [];
-    if 1 in pair then
-       Add(l, [ zero, x[1], x[2], x[3] ]);
-    fi;
-    if 2 in pair then
-       Add(l, [ x[1], zero, -x[4], x[5] ]);
-    fi;
-    if 3 in pair then
-       Add(l, [ x[2], x[4], zero, -x[6] ]);
-    fi;
-    if 4 in pair then
-       Add(l, [ x[3], -x[5], x[6], zero ]);
-    fi;
-   
-    return l;
-  end );
-
-
+# CHECKED 28/09/11 jdb
+#############################################################################
+#O  KleinCorrespondence( <var> )
+# returns the well known morphism from the lines of PG(3,q) to the points
+# of Q+(5,q). Of course, the bilinear form determining the latter, can be chosen
+# by the users.
+##
 InstallMethod( KleinCorrespondence, 
-     "from PG(3,q) to a Klein quadric (of the user's choice)",
+	"for a hyperbolic quadric",
      [ IsHyperbolicQuadric ],
-  function( quadric )
-    local f, i, form, map, pg, mat,
-          pre, plucker, ps, iso, inv, one;
-    f := quadric!.basefield;
-    one := One(f);
+	function( quadric )
+		local f, i, form, map, pg, mat,
+			pre, plucker, ps, iso, inv, one;
+		if ProjectiveDimension(quadric) <> 5 then
+			Error("<ps> is not Klein's quadric");
+		fi;
+		f := quadric!.basefield;
+		one := One(f);
 
     ## The form for the resulting Plucker coordinates is 
     ## x1x6+x2x5+x3x4 = 0
-
-    mat := NullMat(6, 6, f);
-    for i in [1..3] do
-       mat[i][7-i] := one;
-    od;
-
-    if IsEvenInt( Size(f) ) then
-       form := QuadraticFormByMatrix(mat, f);
-    else
-       form := BilinearFormByMatrix(mat + TransposedMat(mat), f);
-    fi;
-    ps := PolarSpace( form );
-    iso := IsomorphismPolarSpacesNC( ps, quadric );
-    pg := ProjectiveSpace(3,f);
-
-    plucker := 
+	
+		mat := NullMat(6, 6, f);
+		for i in [1..3] do
+			mat[i][7-i] := one;
+		od;
+		if IsEvenInt( Size(f) ) then
+			form := QuadraticFormByMatrix(mat, f);
+		else
+			form := BilinearFormByMatrix(mat + TransposedMat(mat), f);
+		fi;
+		ps := PolarSpace( form );
+		iso := IsomorphismPolarSpacesNC( ps, quadric );
+		pg := ProjectiveSpace(3,f);
+		plucker := 
            function( l )
              local pt1, pt2;
              pt1 := PluckerCoordinates( l );
              pt2 := ImageElm( iso, VectorSpaceToElement(ps, pt1) );
              return pt2;
            end;
-   
-    inv := 
+		inv := 
            function( var )
              local x, l;
              x := iso!.prefun(var);
              l := InversePluckerCoordinates( x );
              return VectorSpaceToElement(pg, l);
            end;
-        
-    map := GeometryMorphismByFunction(Lines(pg), Points(quadric), plucker, inv);
-    SetIsBijective(map, true);
-    return map;
+		map := GeometryMorphismByFunction(Lines(pg), Points(quadric), plucker, inv);
+		SetIsBijective(map, true);
+		return map;
 
     ## put intertwiner in PGammaL(4,q)->PGO^+(6,q) 
-  end );
+	end );
+
+
+
 
 InstallMethod( NaturalDuality, "from the lines of W(3,q) to the points of Q(4,q)",
                [IsSymplecticSpace and IsGeneralisedPolygon ],
@@ -2001,61 +2112,5 @@ InstallMethod( GrassmannMap, "given a dimension k and a projective space",
 #    return GrassmannMap( vars!.type-1, vars!.geometry);
 #  end );
 
-
-
-#############################################################################
-#
-# Display methods:
-#
-#############################################################################
-
-InstallMethod( ViewObj, [ IsGeometryMorphism ],
-  function( f )
-     Print("<geometry morphism from "); 
-     ViewObj(Source(f));
-     Print( " to " );
-     ViewObj(Range(f));
-     Print(">");
-  end );
-
-InstallMethod( PrintObj, [ IsGeometryMorphism ],
-  function( f )
-     Print("Geometry morphism:\n ", f, "\n");
-  end );
-
-InstallMethod( Display, [ IsGeometryMorphism ],
-  function( f )
-     Print("Geometry morphism: ", Source(f), " -> ", Range(f), "\n");
-  end );
-
-
-InstallMethod( ViewObj, [ IsGeometryMorphism and IsMappingByFunctionWithInverseRep ],
-  function( f )
-     Print("<geometry morphism from "); 
-     ViewObj(Source(f));
-     Print( " to " );
-     ViewObj(Range(f));
-     Print(">");
-  end );
-
-
-InstallMethod( ViewObj, [ IsGeometryMorphism and IsMappingByFunctionRep ],
-  function( f )
-     Print("<geometry morphism from "); 
-     ViewObj(Source(f));
-     Print( " to " );
-     ViewObj(Range(f));
-     Print(">");
-  end );
-
-InstallMethod( PrintObj, [ IsGeometryMorphism and IsMappingByFunctionRep ],
-  function( f )
-     Print("Geometry morphism:\n ", f, "\n");
-  end );
-
-InstallMethod( Display, [ IsGeometryMorphism and IsMappingByFunctionRep ],
-  function( f )
-     Print("Geometry morphism: ", Source(f), " -> ", Range(f), "\n");
-  end );
 
 
