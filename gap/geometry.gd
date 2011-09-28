@@ -121,7 +121,13 @@ DeclareCategory( "IsGeneralisedOctogon", IsGeneralisedPolygon );
 
 DeclareCategory( "IsElationGQ", IsGeneralisedQuadrangle );
 DeclareCategory( "IsElationGQByKantorFamily", IsElationGQ );
-DeclareCategory( "IsClassicalGQ", IsElationGQ and IsClassicalPolarSpace );
+#DeclareCategory( "IsClassicalGQ", IsElationGQ and IsClassicalPolarSpace ); #I don't see the 
+#point of this, a classical polar space that is a GQ, is a classical GQ. By over specifying 
+#it as a ElationGQ, it might cause trouble for methods that are specifycally meant for ElationGQs, which 
+# will have another representation than polar spaces. So I change it bravely :-) jdb. 28/9/2011.
+
+DeclareCategory( "IsClassicalGQ", IsGeneralisedQuadrangle and IsClassicalPolarSpace ); 
+
 
 # This is what we thought it could be, before realizing that these special GQs
 # where defined. To be discussed furthre. jdb.

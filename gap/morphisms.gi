@@ -1822,18 +1822,22 @@ InstallMethod( KleinCorrespondence,
 	end );
 
 
-
-
-InstallMethod( NaturalDuality, "from the lines of W(3,q) to the points of Q(4,q)",
-               [IsSymplecticSpace and IsGeneralisedPolygon ],
-  function( w )
+# CHECKED 28/09/11 jdb
+#############################################################################
+#O  NaturalDuality( <w> )
+# returns the well known isomorphism between W(3,q) and Q(4,q). The latter 
+# will be the standard one, the former a user defined one.
+##
+InstallMethod( NaturalDuality, 
+	"for a symplectic polar space of rank 2",
+	[IsSymplecticSpace and IsGeneralisedPolygon ],
+	function( w )
     ## First, we define the klein quadric which naturally corresponds
     ## with the canonical symplectic quadrangle. We then
     ## setup a polar space isomorphism for the given symplectic space.
     ## The function of our mapping takes a line of w, maps
     ## it to the canonical quadrangle, and then maps it to the Klein
     ## quadric.
-
     local f, iso, mat, form_quadric, quadric, klein, hyp, pg,
           q4q, emq4q, func, map, one, i, pre;
     f := w!.basefield;
@@ -1856,7 +1860,6 @@ InstallMethod( NaturalDuality, "from the lines of W(3,q) to the points of Q(4,q)
     hyp := VectorSpaceToElement(pg, hyp);
     q4q := ParabolicQuadric(4, f);
     emq4q := NaturalEmbeddingBySubspace(q4q, quadric, hyp);
-    
     if IsCanonicalPolarSpace( w ) then
        func := l -> PreImageElm(emq4q, ImageElm(klein, l));
        pre := p -> Wrap( w, 2, PreImageElm(klein, ImageElm(emq4q, p))!.obj );
@@ -1873,15 +1876,21 @@ InstallMethod( NaturalDuality, "from the lines of W(3,q) to the points of Q(4,q)
               return Wrap( w, 2, PreImageElm(klein, ImageElm(iso, l))!.obj );
             end;
     fi;
-
     map := GeometryMorphismByFunction(Lines(w), Points(q4q), func, pre);
     SetIsBijective( map, true );
     return map;
  end );
 
-InstallMethod( NaturalDuality, "from the lines of H(3,q^2) to the points of Q-(5,q)",
-               [ IsHermitianVariety and IsGeneralisedPolygon ],
-  function( h )
+# CHECKED 28/09/11 jdb
+#############################################################################
+#O  NaturalDuality( <w> )
+# returns the well known isomorphism between H(3,q^2) and Q-(5,q). The latter 
+# will be the standard one, the former a user defined one.
+##
+InstallMethod( NaturalDuality, 
+	"for a hermitian variety of rank 2",
+	[ IsHermitianVariety and IsGeneralisedPolygon ],
+	function( h )
     ## The way this works is that we map the lines of h to the canonical H(3,q^2),
     ## which Klein corresponds to points of Q+(5,q^2) using the usual plucker map.
     ## This subgeometry is then mapped to PG(5,q), where we can associate it to
@@ -1981,6 +1990,10 @@ InstallMethod( NaturalDuality, "from the lines of H(3,q^2) to the points of Q-(5
     SetIsBijective( map, true );
     return map;
  end );
+
+
+
+
 
 InstallMethod( VeroneseMap, "given a projective space PG(n,q)",
     [ IsProjectiveSpace ],
