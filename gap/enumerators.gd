@@ -2,20 +2,22 @@
 ##
 ##  enumerators.gd              FinInG package
 ##                                                              John Bamberg
-## 								                                Anton Betten
+##                                                              Anton Betten
 ##                                                              Jan De Beule
 ##                                                             Philippe Cara
-## 							                                  Michel Lavrauw
+##                                                            Michel Lavrauw
 ##                                                                 Maska Law
 ##                                                           Max Neunhoeffer
 ##                                                            Michael Pauley
 ##                                                             Sven Reichard
 ##
-##  Copyright 2006 University of Western Australia, Perth
-##                 Lehrstuhl D fuer Mathematik, RWTH Aachen
-##                 Ghent University
-##                 Colorado State University
-##                 Vrije Universiteit Brussel
+##  Copyright 2011	Colorado State University, Fort Collins
+##					Università degli Studi di Padova
+##					Universeit Gent
+##					University of St. Andrews
+##					University of Western Australia, Perth
+##                  Vrije Universiteit Brussel
+##                 
 ##
 ##  Declaration stuff for enumerators of elements of polar spaces
 ##
@@ -25,8 +27,29 @@
 # Very Low level help functions
 #############################################################################
 
-#DeclareGlobalFunction( "PositionNonZeroFromRight" );
-#DeclareGlobalFunction( "
+DeclareGlobalFunction( "PositionNonZeroFromRight" );
+DeclareGlobalFunction( "Fining_pos" );
+DeclareGlobalFunction( "Fining_div" );
+DeclareGlobalFunction( "Fining_ffenumber" );
+DeclareGlobalFunction( "Fining_unrank_GFQ" );
+DeclareGlobalFunction( "Fining_rank_GFQ" );
+DeclareGlobalFunction( "Fining_alpha_power" );
+DeclareGlobalFunction( "Fining_log_alpha" );
+DeclareGlobalFunction( "Fining_beta_power" );
+DeclareGlobalFunction( "Fining_log_beta" );
+DeclareGlobalFunction( "Fining_norm_one_element" );
+DeclareGlobalFunction( "Fining_index_of_norm_one_element" );
+
+#############################################################################
+# Low level help operations
+#############################################################################
+
+DeclareOperation( "nb_pts_Nbar", [IsPosInt, IsPosInt]);
+DeclareOperation( "nb_pts_S", [IsPosInt, IsPosInt]);
+DeclareOperation( "nb_pts_N", [IsPosInt, IsPosInt]);
+DeclareOperation( "nb_pts_N1", [IsPosInt, IsPosInt]);
+DeclareOperation( "nb_pts_Sbar", [IsPosInt, IsPosInt]);
+
 
 
 #############################################################################
@@ -44,11 +67,6 @@ DeclareGlobalFunction( "enum_unital" );
 
 DeclareOperation( "EnumeratorByOrbit", [IsSubspacesOfClassicalPolarSpace]);
 DeclareOperation( "AntonEnumerator", [IsSubspacesOfClassicalPolarSpace]);
-DeclareOperation( "nb_pts_Nbar", [IsPosInt, IsPosInt]);
-DeclareOperation( "nb_pts_S", [IsPosInt, IsPosInt]);
-DeclareOperation( "nb_pts_N", [IsPosInt, IsPosInt]);
-DeclareOperation( "nb_pts_N1", [IsPosInt, IsPosInt]);
-DeclareOperation( "nb_pts_Sbar", [IsPosInt, IsPosInt]);
 DeclareOperation( "herm_nb_pts_N", [IsPosInt, IsPosInt]);
 DeclareOperation( "herm_nb_pts_S", [IsPosInt, IsPosInt]);
 DeclareOperation( "herm_nb_pts_N1", [IsPosInt, IsPosInt]);

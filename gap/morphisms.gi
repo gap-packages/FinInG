@@ -35,6 +35,8 @@
 # - intertwiners for GrassmannMap and SegreMap
 # - should there be a type function as an attribute?
 # - maybe make a more userfriendly system to avoid em!.prefun( <arg> )
+# - in the same sense: do we want a NaturalDuality starting from Q(4,q) and Q-(5,q)? 
+#   And the self duality of Q(4,q) and W(3,q), q even.
 # - DO WE NEED TO USE ConvertToMatrixRepNC in the operation ShrinkMat ?
 #
 # Documentation check list
@@ -1993,7 +1995,7 @@ InstallMethod( NaturalDuality,
 
 
 
-
+# the next one will be moved to varieties.gi.
 
 InstallMethod( VeroneseMap, "given a projective space PG(n,q)",
     [ IsProjectiveSpace ],

@@ -39,80 +39,136 @@
 
 #############################################################################
 # Very Low level help functions
+# most of these (short) functions are self explanatory.
 #############################################################################
 
+#############################################################################
+#F  PositionNonZeroFromRight( x )
+# <x> a vector
+##
+InstallGlobalFunction( PositionNonZeroFromRight,
+	function(x)
+	local perm;
+		perm := PermList( List([1..Length(x)],y->Length(x)-y+1) );
+		return Length(x)-PositionNonZero( Permuted(x, perm) )+1;
+	end );
 
+#############################################################################
+#F  Fining_pos( q, x ): inverse function of Fining_ffenumber
+# q: prime power, x element of GF(q).
+##
+InstallGlobalFunction( Fining_pos,
+	function(q, x)
+		return Position(AsList(GF(q)), x) - 1;
+	end );
 
-#now comes a separate section with function to be renamed :-)
-#don't tell celle now about this disaster programming style :-D
-## utility functions
+#############################################################################
+#F  Fining_div(	a, b )
+# a,b: integers
+##
+InstallGlobalFunction( Fining_div,
+	function(a, b)
+		return (a - (a mod b)) / b;
+	end );
 
-# pos is the inverse function of ffenumber:
+#############################################################################
+#F  Fining_ffenumber( a, b )
+# a,b: integers
+##
+InstallGlobalFunction( Fining_ffenumber,
+	function(q, a)       
+		if a = 0 then 
+			return 0 * Z(q);
+		else 
+			return Z(q)^(a-1);
+		fi;
+	end );
 
-PositionNonZeroFromRight := function(x)
-  local perm;
-  perm := PermList( List([1..Length(x)],y->Length(x)-y+1) );
-  return Length(x)-PositionNonZero( Permuted(x, perm) )+1;
-end;
+#the next function seems never used.
+#############################################################################
+#F  Fining_unrank_GFQ( q, rk )
+# q: prme power, rk: natural number
+##
+InstallGlobalFunction( Fining_unrank_GFQ,
+	function(q, rk)
+		#local Q;
+		#Q := q * q;
+		if rk = 0 then
+			return 0*Z(q^2);
+		fi;
+		return Z(q^2)^(rk-1);
+	end );
 
-pos := function(q, x)
-  return Position(AsList(GF(q)), x) - 1;
-end;
+#the next function seems never used.
+#############################################################################
+#F  Fining_rank_GFQ( q, x )
+# q: prme power, x element of GF(q)
+##
+InstallGlobalFunction( Fining_rank_GFQ, 
+	function(q, x)
+		if IsZero(x) then
+			return 0;
+		else
+			return LogFFE(x,Z(q^2))+1;
+		fi;
+	end );
 
-div := function(a, b)
-	return (a - (a mod b)) / b;
-end;
+#############################################################################
+#F  Fining_alpha_power( q, a )
+# q: prime power, a: integer
+##	
+InstallGlobalFunction( Fining_alpha_power,
+	function(q, a)
+		return Z(q^2)^a;
+	end );
 
-ffenumber := function(q, a)       
-  if a = 0 then return 0 * Z(q);
-  else return Z(q)^(a-1);
-  fi;
-end;
+#############################################################################
+#F  Fining_log_alpha( q, x )
+# q: prime power, x element of GF(q^2)
+##
+InstallGlobalFunction( Fining_log_alpha,
+	function(q, x)   
+		return LogFFE(x, Z(q^2));
+	end );
 
-# the next six are brand new.
-unrank_GFQ := function(q, rk)
-  local Q;
-  Q := q * q;
-  if rk = 0 then
-    return 0*Z(Q);
-  fi;
-  return Z(Q)^(rk-1);
-end;
+#the next function seems never used.
+#############################################################################
+#F  Fining_beta_power( q, a )
+# q: prime power, a: integer
+##	
+InstallGlobalFunction( Fining_beta_power,
+	function(q, a)
+		return Z(q^2)^((q + 1) * a);
+	end );
 
-rank_GFQ := function(q, x)
-  if IsZero(x) then
-    return 0;
-  else
-    return LogFFE(x,Z(q^2))+1;
-  fi;
-end;
+#############################################################################
+#F  Fining_log_beta( q, x )
+# q: prime power, x element in GF(q^2)
+##
+InstallGlobalFunction( Fining_log_beta,
+	function(q, x)
+	#local Q;
+	#Q := q * q;
+		return LogFFE(x,Z(q^2)^(q+1));
+	end );
 
-alpha_power := function(q, a)
-  return Z(q^2)^a;
-end;
+#############################################################################
+#F  Fining_norm_one_element( q, a )
+# q: prime power, a an integer
+##
+InstallGlobalFunction( Fining_norm_one_element,
+	function(q, a)
+		return Z(q^2)^((q - 1) * a);
+	end );
 
-log_alpha := function(q, x)   
-	return LogFFE(x, Z(q^2));
-end;
-
-beta_power := function(q, a)
-  return Z(q^2)^((q + 1) * a);
-end;
-
-log_beta := function(q, x)
-  local Q;
-  Q := q * q;
-  return LogFFE(x,Z(Q)^(q+1));
-end;
-
-norm_one_element := function(q, a)
-  return Z(q^2)^((q - 1) * a);
-end;
-
-index_of_norm_one_element := function(q, x)
-  return LogFFE(x,Z(q^2)^(q-1));
-end;
-
+#############################################################################
+#F  Fining_index_of_norm_one_element( q, x )
+# q: prime power, x an element of GF(q^2)
+##
+InstallGlobalFunction( Fining_index_of_norm_one_element,
+	function(q, x)
+		return LogFFE(x,Z(q^2)^(q-1));
+	end );
 
 #############################################################################
 # Constructor operations:
@@ -708,7 +764,7 @@ InstallMethod(N1_unrank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt, IsInt],
   if n = 1 then
      l := q - 1;
      if a < l then
-        alpha := ffenumber(q,a+1);
+        alpha := Fining_ffenumber(q,a+1);
         beta := alpha^-1;
         v[offset + 0] := alpha;
         v[offset + 1] := beta;	
@@ -720,7 +776,7 @@ InstallMethod(N1_unrank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt, IsInt],
   y := nb_pts_N1(n - 1, q);
   l := x * y;
   if a < l then
-     i := div(a, y);    
+     i := Fining_div(a, y);    
      j := a mod y;
      S_unrank(q, v, offset + (n - 1) * 2, 1, i);
      N1_unrank(q, v, offset, n - 1, j);
@@ -732,7 +788,7 @@ InstallMethod(N1_unrank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt, IsInt],
   l := x * y;
 
   if a < l then
-     i := div(a, y);
+     i := Fining_div(a, y);
      j := a mod y;
      N1_unrank(q, v, offset + (n - 1) * 2, 1, i);
      S_unrank(q, v, offset, n - 1, j);
@@ -745,12 +801,12 @@ InstallMethod(N1_unrank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt, IsInt],
   yz := y * z;
   l := x * yz;
   if a < l then
-     i := div(a, yz);
+     i := Fining_div(a, yz);
      j1 := a mod yz;
-     j := div(j1, z);
+     j := Fining_div(j1, z);
      k := j1 mod z;
      N1_unrank(q, v, offset + (n - 1) * 2, 1, i);
-     alpha := ffenumber(q,2+j);  
+     alpha := Fining_ffenumber(q,2+j);  
      v[offset + 2 * (n - 1)] := alpha * v[offset + 2 * (n - 1)];
      N1_unrank(q, v, offset, n - 1, k);
      beta := -alpha;
@@ -771,14 +827,14 @@ InstallMethod(S_unrank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt, IsInt],
 
   if n = 1 then 
      if a < q then 
-        v[offset + 0] := ffenumber(q,a);
+        v[offset + 0] := Fining_ffenumber(q,a);
         v[offset + 1] := zero;		
         return;
      fi;
      a := a - (q - 1);
      if a < q then	
         v[offset + 0] := zero;
-        v[offset + 1] := ffenumber(q,a);
+        v[offset + 1] := Fining_ffenumber(q,a);
         return;
      fi;
      Error("Error in S_unrank");
@@ -787,7 +843,7 @@ InstallMethod(S_unrank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt, IsInt],
   y := nb_pts_S(n - 1, q);
   l := x * y;
   if a < l then 
-     i := div(a, y);
+     i := Fining_div(a, y);
      j := a mod y;
      S_unrank(q, v, offset + (n - 1) * 2, 1, i);
      S_unrank(q, v, offset, n - 1, j);
@@ -798,7 +854,7 @@ InstallMethod(S_unrank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt, IsInt],
   y := nb_pts_N1(n - 1, q);
   l := x * y;
   if a < l then
-     i := div(a, y);
+     i := Fining_div(a, y);
      j := a mod y;
      N_unrank(q, v, offset + (n - 1) * 2, 1, i);
      N1_unrank(q, v, offset, n - 1, j);
@@ -845,7 +901,7 @@ InstallMethod(Sbar_unrank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt, IsInt
   y := nb_pts_S(n - 1, q);
   l := x * y;
   if a < l then
-     i := div(a, y);
+     i := Fining_div(a, y);
      j := a mod y; 
      Sbar_unrank(q, v, offset + (n - 1) * 2, 1, i);
      S_unrank(q, v, offset, n - 1, j);
@@ -856,7 +912,7 @@ InstallMethod(Sbar_unrank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt, IsInt
   y := nb_pts_N1(n - 1, q);
   l := x * y;
   if a < l then
-     i := div(a, y);
+     i := Fining_div(a, y);
      j := a mod y;
      Nbar_unrank(q, v, offset + (n - 1) * 2, 1, i);
      N1_unrank(q, v, offset, n - 1, j);
@@ -874,7 +930,7 @@ InstallMethod(Nbar_unrank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt, IsInt
   function(q, v, offset, n, a)
   if n = 1 then
 	if a < q - 1 then
-		v[offset + 0] := ffenumber(q,a+1);
+		v[offset + 0] := Fining_ffenumber(q,a+1);
 		v[offset + 1] := Z(q)^0;
 		return;
 	fi;
@@ -895,10 +951,10 @@ InstallMethod(N_unrank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt, IsInt],
      y := q - 1;
      l := x * y;
      if a < l then
-        i := div(a, y);
+        i := Fining_div(a, y);
         j := a mod y;
-        v[offset + 0] := ffenumber(q,1+j); 
-        v[offset + 1] := ffenumber(q,1+i);
+        v[offset + 0] := Fining_ffenumber(q,1+j); 
+        v[offset + 1] := Fining_ffenumber(q,1+i);
         return;
      fi;
      Error("Error in N_unrank");
@@ -907,7 +963,7 @@ InstallMethod(N_unrank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt, IsInt],
   y := nb_pts_N(n - 1, q);
   l := x * y;
   if a < l then
-     i := div(a, y);
+     i := Fining_div(a, y);
      j := a mod y;
      S_unrank(q, v, offset + (n - 1) * 2, 1, i);
      N_unrank(q, v, offset, n - 1, j);
@@ -918,7 +974,7 @@ InstallMethod(N_unrank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt, IsInt],
   y := nb_pts_S(n - 1, q);
   l := x * y;
   if a < l then
-     i := div(a, y);
+     i := Fining_div(a, y);
      j := a mod y;
      N_unrank(q, v, offset + 2 * (n - 1), 1, i);
      S_unrank(q, v, offset, n - 1, j);
@@ -931,9 +987,9 @@ InstallMethod(N_unrank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt, IsInt],
   yz := y * z;
   l := x * yz;
   if a < l then
-     i := div(a, yz);
+     i := Fining_div(a, yz);
      j1 := a mod yz;
-     j := div(j1, z);
+     j := Fining_div(j1, z);
      k := j1 mod z;
      N_unrank(q, v, offset + (n - 1) * 2, 1, i);
      N1_unrank(q, v, offset, n - 1, k);
@@ -966,7 +1022,7 @@ InstallMethod(herm_N_unrank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt, IsI
   if n = 1 then
      l := Q - 1;
      if a < l then
-        x := alpha_power(q, a);
+        x := Fining_alpha_power(q, a);
         v[offset + 0] := x;
         return;
      fi;
@@ -977,7 +1033,7 @@ InstallMethod(herm_N_unrank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt, IsI
 
   if a < A * nb then
 	#Print("case 1\n");
-    coset := div(a, nb);
+    coset := Fining_div(a, nb);
 	rk1 := a mod nb;
     herm_N_unrank(q, v, offset, n - 1, rk1);
 
@@ -986,22 +1042,22 @@ InstallMethod(herm_N_unrank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt, IsI
     else
       coset := coset - 1;
       val := evaluate_hermitian_form(q, v, offset, n - 1);
-      coset0 := div(coset, q + 1);
+      coset0 := Fining_div(coset, q + 1);
       rk0 := coset mod (q + 1); # here was coset mod q + 1 (i.e., without parenthesis), which is wrong, Anton 7/15/11
       m_val := - val;
-      log := log_beta(q, m_val);
+      log := Fining_log_beta(q, m_val);
       if coset0 >= log then
         coset0 := coset0 + 1;
       fi;
-      v[offset + n - 1] := alpha_power(q, coset0) * norm_one_element(q, rk0);     
+      v[offset + n - 1] := Fining_alpha_power(q, coset0) * Fining_norm_one_element(q, rk0);     
     fi;
   else
     a := a - A * nb;
 	nb := herm_nb_pts_S(n - 1, q);
     rk1 := a mod nb;
-    coset := div(a, nb);
+    coset := Fining_div(a, nb);
     herm_S_unrank(q, v, offset, n - 1, rk1);
-    v[offset + n - 1] := alpha_power(q, coset);
+    v[offset + n - 1] := Fining_alpha_power(q, coset);
   fi;
 end );
 
@@ -1011,7 +1067,7 @@ InstallMethod(herm_N_rank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt],
   Q := q * q;
   if n = 1 then
      alpha := v[offset + 0];
-     rk := log_alpha(q, alpha);  
+     rk := Fining_log_alpha(q, alpha);  
 	 return rk;
   fi;
   val := evaluate_hermitian_form(q, v, offset, n - 1);
@@ -1022,14 +1078,14 @@ InstallMethod(herm_N_rank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt],
       coset := 0;
     else
       m_val := -val;
-      log := log_beta(q, m_val);
+      log := Fining_log_beta(q, m_val);
       a := v[offset + n - 1]^(q + 1);
-      coset0 := log_beta(q, a); 
-      beta := v[offset + n - 1] * alpha_power(q, coset0)^-1;  
+      coset0 := Fining_log_beta(q, a); 
+      beta := v[offset + n - 1] * Fining_alpha_power(q, coset0)^-1;  
       if coset0 > log then
          coset0 := coset0 - 1;
        fi;
-      rk0 := index_of_norm_one_element(q, beta); 
+      rk0 := Fining_index_of_norm_one_element(q, beta); 
       coset := coset0 * (q + 1) + rk0;
       coset := coset + 1; 
     fi;
@@ -1037,7 +1093,7 @@ InstallMethod(herm_N_rank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt],
   else
     A := Q - q - 1;
     rk := A * nb;
-    coset := log_alpha(q, v[offset + n - 1]);
+    coset := Fining_log_alpha(q, v[offset + n - 1]);
 	rk1 := herm_S_rank(q, v, offset, n - 1);
     rk := rk + coset * herm_nb_pts_S(n - 1, q) + rk1;
   fi;
@@ -1060,13 +1116,13 @@ InstallMethod(herm_S_unrank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt, IsI
   fi;
   nb := herm_nb_pts_N(n - 1, q);
   if rk < (q + 1) * nb then
-    coset := div(rk, nb);
+    coset := Fining_div(rk, nb);
     rk1 := rk mod nb;
     herm_N_unrank(q, v, offset, n - 1, rk1);
     val := evaluate_hermitian_form(q, v, offset, n - 1);
     m_val := - val;
-    log := log_beta(q, m_val);
-    v[offset + n - 1] := alpha_power(q, log) * norm_one_element(q, coset);
+    log := Fining_log_beta(q, m_val);
+    v[offset + n - 1] := Fining_alpha_power(q, log) * Fining_norm_one_element(q, coset);
   else
     rk := rk - (q + 1) * nb;
     herm_S_unrank(q, v, offset, n - 1, rk);
@@ -1085,14 +1141,14 @@ InstallMethod(herm_S_rank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt],
     rk1 := herm_N_rank(q, v, offset, n - 1);
     val := evaluate_hermitian_form(q, v, offset, n - 1);
     m_val := - val;  	
-    log := log_beta(q, m_val);
+    log := Fining_log_beta(q, m_val);
    a := v[offset + n - 1]^(q + 1);
-    log1 := log_beta(q, a);
+    log1 := Fining_log_beta(q, a);
     if log1 <> log then
       Error("Error in hermitian::S_rank fatal: log1 != log");
     fi;
-    a := v[offset + n - 1] * alpha_power(q, log)^-1;
-    coset := index_of_norm_one_element(q, a);
+    a := v[offset + n - 1] * Fining_alpha_power(q, log)^-1;
+    coset := Fining_index_of_norm_one_element(q, a);
     nb := herm_nb_pts_N(n - 1, q);
     rk := coset * nb + rk1;
   else
@@ -1117,7 +1173,7 @@ InstallMethod(herm_N1_unrank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt, Is
   one := Z(Q)^0;
   zero := 0*Z(Q);
   if n = 1 then
-     v[offset + 0] := norm_one_element(q, rk);
+     v[offset + 0] := Fining_norm_one_element(q, rk);
      return;
   fi;
   nb := herm_nb_pts_N1(n - 1, q);
@@ -1130,28 +1186,28 @@ InstallMethod(herm_N1_unrank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt, Is
     A := (q + 1) * (q - 2) * nb;
     if rk < A then
       nb1 := (q - 2) * nb;
-      coset1 := div(rk, nb1);
+      coset1 := Fining_div(rk, nb1);
       rk1 := rk mod nb1;
-      coset2 := div(rk1, nb);
+      coset2 := Fining_div(rk1, nb);
       rk2 := rk1 mod nb;
       herm_N1_unrank(q, v, offset, n - 1, rk2);
       val := evaluate_hermitian_form(q, v, offset, n - 1);
       coset2 := coset2 + 1;
-      a := alpha_power(q, coset2);
+      a := Fining_alpha_power(q, coset2);
       for i in [0 .. n - 2] do
         v[offset + i] := a * v[offset + i];
       od;
       val := evaluate_hermitian_form(q, v, offset, n - 1);
       new_val := one - val;
-      log := log_beta(q, new_val);
-      v[offset + n - 1] := alpha_power(q, log) * norm_one_element(q, coset1);
+      log := Fining_log_beta(q, new_val);
+      v[offset + n - 1] := Fining_alpha_power(q, log) * Fining_norm_one_element(q, coset1);
 	else
       rk := rk - A;
       nb := herm_nb_pts_S(n - 1, q);
-      coset := div(rk, nb);
+      coset := Fining_div(rk, nb);
       rk1 := rk mod nb;
       herm_S_unrank(q, v, offset, n - 1, rk1);
-      v[offset + n - 1] := norm_one_element(q, coset);
+      v[offset + n - 1] := Fining_norm_one_element(q, coset);
     fi;
   fi;
 end );
@@ -1163,7 +1219,7 @@ InstallMethod(herm_N1_rank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt],
   Q := q * q;
   one := Z(Q)^0;
   if n = 1 then
-     return index_of_norm_one_element(q, v[offset + 0]);
+     return Fining_index_of_norm_one_element(q, v[offset + 0]);
   fi;
   rk := 0;
   if IsZero(v[offset + n - 1]) then
@@ -1176,8 +1232,8 @@ InstallMethod(herm_N1_rank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt],
   A := (q + 1) * nb1;
 	val := evaluate_hermitian_form(q, v, offset, n - 1);
 	if not IsZero(val) then
-		coset2 := log_beta(q, val);
-		a := alpha_power(q, coset2);
+		coset2 := Fining_log_beta(q, val);
+		a := Fining_alpha_power(q, coset2);
 		av := a^(-1);
 		for i in [0 .. n - 2] do
 			v[offset + i] := av * v[offset + i];
@@ -1185,18 +1241,18 @@ InstallMethod(herm_N1_rank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt],
 		rk2 := herm_N1_rank(q, v, offset, n - 1);
 		coset2 := coset2 - 1;
 		new_val := one - val; 
-		log := log_beta(q, new_val);
+		log := Fining_log_beta(q, new_val);
 		a := v[offset + n - 1]^(q + 1);
-		log1 := log_beta(q, a);
-		a := alpha_power(q, log)^(-1);
+		log1 := Fining_log_beta(q, a);
+		a := Fining_alpha_power(q, log)^(-1);
 		a := a * v[offset + n - 1];
-		coset1 := index_of_norm_one_element(q, a);
+		coset1 := Fining_index_of_norm_one_element(q, a);
 		rk1 := coset2 * nb + rk2;
 		rk := rk + coset1 * nb1 + rk1;
 	else
 		rk := rk + A;
 		rk1 := herm_S_rank(q, v, offset, n - 1); 
-		coset := index_of_norm_one_element(q, v[offset + n - 1]);
+		coset := Fining_index_of_norm_one_element(q, v[offset + n - 1]);
 		rk := rk + coset * herm_nb_pts_S(n - 1, q) + rk1;  
     fi;
   return rk;
@@ -1227,8 +1283,8 @@ InstallMethod(herm_Sbar_unrank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt, 
 
 		herm_N1_unrank(q, v, offset, n - 1, rk);
 		a := - one;
-		log := log_beta(q, a);
-        b := alpha_power(q, log);
+		log := Fining_log_beta(q, a);
+        b := Fining_alpha_power(q, log);
         for i in [0..n - 2] do
           v[offset + i] := v[offset + i] * b;
         od;
@@ -1257,8 +1313,8 @@ InstallMethod(herm_Sbar_rank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt],
 		if val <> a then
 			Error("herm_Sbar_rank error: val <> -1");
 		fi;
-		log := log_beta(q, a);
-		b := alpha_power(q, log);
+		log := Fining_log_beta(q, a);
+		b := Fining_alpha_power(q, log);
 		bv := b^(-1);
 		for i in [0 .. n - 2] do
 			v[offset + i] := bv * v[offset + i];
@@ -1288,7 +1344,7 @@ InstallGlobalFunction( enum_line,
     local pg, q, x, C;
     pg := A!.geo;
     q := Size( pg!.basefield );
-    x := ffenumber( q, n + 1 );  ## n = 1 -> primitive root
+    x := Fining_ffenumber( q, n + 1 );  ## n = 1 -> primitive root
     C := VectorSpaceToElement( pg, A!.obj + x * B!.obj ); 
     return C;
   end );
@@ -1341,8 +1397,8 @@ InstallGlobalFunction( enum_unital,
     else
        i := (n-1) mod q^2;                 ## an integer in [0..q^2-1]
        j := (n-1-((n-1) mod q^2)) / q^2;   ## an integer in [0..q-1]
-       x := ffenumber( q^2, i );
-       r := ffenumber( q, j );
+       x := Fining_ffenumber( q^2, i );
+       r := Fining_ffenumber( q, j );
        point := [x, beta * x^(q+1)+ r, one];
     fi;
     if IsEvenInt(q) then
@@ -1420,11 +1476,11 @@ InstallMethod(S_rank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt],
   local a, l, i, j, x, y, u, alpha, beta, gamma, delta, epsilon;
   if n = 1 then
      if IsZero(v[offset + 1]) then
-        a := pos(q, v[offset + 0]);
+        a := Fining_pos(q, v[offset + 0]);
         return a;
      fi;
      a := q - 1;
-     a := a + pos(q, v[offset + 1]);
+     a := a + Fining_pos(q, v[offset + 1]);
      return a;
    fi;
    x := nb_pts_S(1, q);
@@ -1461,7 +1517,7 @@ InstallMethod(N_rank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt],
      y := q - 1;
      j := v[offset + 0] - one;
      i := v[offset + 1] - one;
-     a := ffenumber(q, i * y + j); 
+     a := Fining_ffenumber(q, i * y + j); 
      return a;
   fi;
   gamma := v[offset + 2 * (n - 1)] * v[offset + 2 * (n - 1) + 1];
@@ -1516,7 +1572,7 @@ InstallMethod(N1_rank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt],
      alpha := v[offset + 0];
     # beta := v[offset + 1];
     # gamma := alpha^-1;
-     a := pos(q, alpha) - 1;  
+     a := Fining_pos(q, alpha) - 1;  
      return a;
   fi;
   a := 0;
@@ -1548,7 +1604,7 @@ InstallMethod(N1_rank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt],
   yz := y * z;
   l := x * yz;
   alpha := v[offset + 2 * (n - 1)] * v[offset + 2 * (n - 1) + 1];
-  j := pos(q,alpha) - 2;
+  j := Fining_pos(q,alpha) - 2;
   alpha_inv := alpha^-1;
   v[offset + 2 * (n - 1)] := alpha_inv * v[offset + 2 * (n - 1)];
   i := N1_rank(q, v, offset + 2 * (n - 1), 1);
@@ -1609,7 +1665,7 @@ end );
 
 InstallMethod(Nbar_rank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt],
   function(q, v, offset, n)
-    return pos(q,v[offset + 0]) - 1;
+    return Fining_pos(q,v[offset + 0]) - 1;
 end );
 
 InstallMethod(evaluate_hyperbolic_quadratic_form, 
@@ -1751,14 +1807,14 @@ InstallMethod( QminusElementNumber, [IsPosInt, IsPosInt, IsInt],
     fi;
     a2 := a2 - x;
     x := nb_pts_N1(n, q); 
-    b := div(a2, x);
+    b := Fining_div(a2, x);
     c := a2 mod x;
     if IsZero(b) then
        x1 := one;
 	 x2 := zero;
     else
        b := b - 1;
-       x1 := ffenumber(q, b);
+       x1 := Fining_ffenumber(q, b);
        x2 := one;
     fi;
 
@@ -1861,7 +1917,7 @@ InstallMethod( QminusNumberElement, [IsPosInt, IsPosInt, IsSubspaceOfClassicalPo
 	 if not IsOne( x2 ) then
 	    Error("ERROR in Qminus_rank x2 <> 1");
 	 fi;
-	 b := pos(q, x1) + 1;  
+	 b := Fining_pos(q, x1) + 1;  
     fi;
 
     x := nb_pts_N1(wittindex, q);
