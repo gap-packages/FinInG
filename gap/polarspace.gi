@@ -46,6 +46,7 @@
 # - see if commented out material at end of file is really obsolete.
 # - rename Polarity to PolarMap or something like that.
 # - probably a mistake on line 1705. corrected 27/9/2011 jdb.
+# - check if there is a technical problem with the setting of the collineation group of a hermitian vartiety as an attribute.
 #
 ########################################
 

@@ -461,7 +461,7 @@ InstallMethod( NaturalEmbeddingBySubspaceNC,
 		return map;
 	end );
   
-# CHECKED 28/09/11 jdb
+# CHECKED 28/09/11 jdb (and added a check that basefields of <ps1> and <ps2> are equal.)
 #############################################################################
 #O  IsomorphismPolarSpaces( <ps1>, <ps2>, <bool> ) 
 # returns the coordinate transformation from <ps1> to <ps2> (which must be
@@ -469,7 +469,7 @@ InstallMethod( NaturalEmbeddingBySubspaceNC,
 # is computed.
 ##
 InstallMethod( IsomorphismPolarSpaces, 
-    "returns intertwiner for two similar polar spaces",  
+    "for two similar polar spaces and a boolean",  
     [ IsClassicalPolarSpace, IsClassicalPolarSpace, IsBool ],
 	function( ps1, ps2, computeintertwiner )
 		local form1, form2, f, map, c1, c2, change, invchange, hom, ty1, ty2,
@@ -548,98 +548,110 @@ InstallMethod( IsomorphismPolarSpaces,
 		return map;
 	end );
 
+# CHECKED 28/09/11 jdb
+#############################################################################
+#O  IsomorphismPolarSpaces( <ps1>, <ps2> ) 
+# returns IsomorphismPolarSpaces( <ps1>, <ps2>, true );
+##
 InstallMethod( IsomorphismPolarSpaces, 
-      "returns intertwiner for two similar polar spaces",  
-      [ IsClassicalPolarSpace, IsClassicalPolarSpace ],
-  function( ps1, ps2 )
-    return IsomorphismPolarSpaces( ps1, ps2, true );
-  end );
+	"for two similar polar spaces",  
+	[ IsClassicalPolarSpace, IsClassicalPolarSpace ],
+	function( ps1, ps2 )
+		return IsomorphismPolarSpaces( ps1, ps2, true );
+	end );
 
+# CHECKED 28/09/11 jdb
+#############################################################################
+#O  IsomorphismPolarSpacesNC( <ps1>, <ps2>, <bool> ) 
+# This operation is just like its namesake except that it 
+## has no checks
 InstallMethod( IsomorphismPolarSpacesNC, 
-      "returns intertwiner for two similar polar spaces, no-check version",  
-      [ IsClassicalPolarSpace, IsClassicalPolarSpace, IsBool ],
-  function( ps1, ps2, computeintertwiner )
-    local form1, form2, f, map, c1, c2, change, invchange, hom, ty1, ty2, n,
+    "for two similar polar spaces and a boolean",  
+	[ IsClassicalPolarSpace, IsClassicalPolarSpace, IsBool ],
+	function( ps1, ps2, computeintertwiner )
+		local form1, form2, f, map, c1, c2, change, invchange, hom, ty1, ty2, n,
           coll1, coll2, gens1, gens2, func, inv, mono, twinerprefun, twinerfunc;
-    ty1 := PolarSpaceType( ps1 );
-    ty2 := PolarSpaceType( ps2 );
-    f := ps1!.basefield;
-
-    if IsEvenInt(Size(f)) and ty1 in ["parabolic", "elliptic", "hyperbolic"] then
-       form1 := QuadraticForm( ps1 );
-       form2 := QuadraticForm( ps2 );
-    else
-       form1 := SesquilinearForm( ps1 );
-       form2 := SesquilinearForm( ps2 );
-    fi;
-
-    c1 := BaseChangeToCanonical( form1 );
-    c2 := BaseChangeToCanonical( form2 );
-    change := c1^-1 * c2;       
-    ConvertToMatrixRepNC(change, f);
-    invchange := change^-1;     
-     
-    func := function(x)
-             return VectorSpaceToElement(ps2, ShallowCopy(x!.obj) * change);
-            end;
-    inv := function(x)
-             return VectorSpaceToElement(ps1, ShallowCopy(x!.obj) * invchange);
-           end;
-
-    map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(ps1), 
+		ty1 := PolarSpaceType( ps1 );
+		ty2 := PolarSpaceType( ps2 );
+		f := ps1!.basefield;
+		if IsEvenInt(Size(f)) and ty1 in ["parabolic", "elliptic", "hyperbolic"] then
+			form1 := QuadraticForm( ps1 );
+			form2 := QuadraticForm( ps2 );
+		else
+			form1 := SesquilinearForm( ps1 );
+			form2 := SesquilinearForm( ps2 );
+		fi;
+		c1 := BaseChangeToCanonical( form1 );
+		c2 := BaseChangeToCanonical( form2 );
+		change := c1^-1 * c2;       
+		ConvertToMatrixRepNC(change, f);
+		invchange := change^-1;     
+		func := function(x)
+			return VectorSpaceToElement(ps2, ShallowCopy(x!.obj) * change);
+		end;
+		inv := function(x)
+			return VectorSpaceToElement(ps1, ShallowCopy(x!.obj) * invchange);
+		end;
+		map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(ps1), 
                                       ElementsOfIncidenceStructure(ps2),
                                       func, inv);               
     ## Now creating intertwiner...
-    
-    # map from gens2 to gens1
-    twinerprefun := function( x )
-                      local y;
-                      y := MutableCopyMat( x!.mat );
-                      return ProjElWithFrob( change * y * invchange^x!.frob, x!.frob, f );  
-                    end;  
+	# map from gens2 to gens1
+		twinerprefun := function( x )
+			local y;
+			y := MutableCopyMat( x!.mat );
+            return ProjElWithFrob( change * y * invchange^x!.frob, x!.frob, f );  
+		end;  
        
     # map from gens1 to gens2
-    twinerfunc := function( y )
-                    local x;
-                    x := MutableCopyMat( y!.mat );
-                    return ProjElWithFrob( invchange * x * change^y!.frob, y!.frob, f ); 
-                  end;
-
-    if computeintertwiner then
-	   if (HasIsCanonicalPolarSpace( ps1 ) and IsCanonicalPolarSpace( ps1 )) or
-	       HasCollineationGroup( ps1 ) then
-	       coll1 := CollineationGroup(ps1);
-	       gens1 := GeneratorsOfGroup( coll1 );  
-	       gens2 := List(gens1, twinerfunc);  
-	       coll2 := GroupWithGenerators(gens2);  
-	       hom := GroupHomomorphismByFunction(coll1, coll2, twinerfunc, twinerprefun); 
-	       SetIntertwiner( map, hom );
-	       UseIsomorphismRelation(coll1,coll2);                
-	    elif (HasIsCanonicalPolarSpace( ps2 ) and IsCanonicalPolarSpace( ps2 )) or
-	          HasCollineationGroup( ps2 ) then                                 
-		   coll2 := CollineationGroup( ps2 );  
-		   gens2 := GeneratorsOfGroup( coll2 );          
-		   gens1 := List(gens2, twinerprefun ); 
-		   coll1 := GroupWithGenerators(gens1);      
-		   hom := GroupHomomorphismByFunction(coll1, coll2, twinerfunc, twinerprefun); 
-		   SetIntertwiner( map, hom );      
-           UseIsomorphismRelation(coll1,coll2);         
-       else 
-           Info(InfoFinInG, 1, "No intertwiner computed. One of the polar spaces must have a collineation group computed");
-       fi;
-    fi;
-    return map;
-  end );
+		twinerfunc := function( y )
+			local x;
+            x := MutableCopyMat( y!.mat );
+            return ProjElWithFrob( invchange * x * change^y!.frob, y!.frob, f ); 
+		end;
+		if computeintertwiner then
+			if (HasIsCanonicalPolarSpace( ps1 ) and IsCanonicalPolarSpace( ps1 )) or
+				HasCollineationGroup( ps1 ) then
+				coll1 := CollineationGroup(ps1);
+				gens1 := GeneratorsOfGroup( coll1 );  
+				gens2 := List(gens1, twinerfunc);  
+				coll2 := GroupWithGenerators(gens2);  
+				hom := GroupHomomorphismByFunction(coll1, coll2, twinerfunc, twinerprefun); 
+				SetIntertwiner( map, hom );
+				UseIsomorphismRelation(coll1,coll2);                
+			elif (HasIsCanonicalPolarSpace( ps2 ) and IsCanonicalPolarSpace( ps2 )) or
+				HasCollineationGroup( ps2 ) then                                 
+				coll2 := CollineationGroup( ps2 );  
+				gens2 := GeneratorsOfGroup( coll2 );          
+				gens1 := List(gens2, twinerprefun ); 
+				coll1 := GroupWithGenerators(gens1);      
+				hom := GroupHomomorphismByFunction(coll1, coll2, twinerfunc, twinerprefun); 
+				SetIntertwiner( map, hom );      
+				UseIsomorphismRelation(coll1,coll2);         
+			else 
+				Info(InfoFinInG, 1, "No intertwiner computed. One of the polar spaces must have a collineation group computed");
+			fi;
+		fi;
+		return map;
+	end );
   
+# CHECKED 28/09/11 jdb
+#############################################################################
+#O  IsomorphismPolarSpacesNC( <ps1>, <ps2> ) 
+# returns IsomorphismPolarSpacesNC( <ps1>, <ps2>, true );
+##
 InstallMethod( IsomorphismPolarSpacesNC, 
-      "returns intertwiner for two similar polar spaces, no-check version",  
-      [ IsClassicalPolarSpace, IsClassicalPolarSpace ],
-  function( ps1, ps2 )  
-    return IsomorphismPolarSpacesNC( ps1, ps2, true );
-  end );
+	"for two similar polar spaces",  
+	[ IsClassicalPolarSpace, IsClassicalPolarSpace ],
+	function( ps1, ps2 )  
+		return IsomorphismPolarSpacesNC( ps1, ps2, true );
+	end );
 
 
-### 9.3-2 NaturalEmbeddingByFieldReduction
+###########################################################
+## Field reduction morphisms. Helper operations.
+############################################################
+
 
 InstallMethod( ShrinkMat, "preimage of BlownUpMat",
 	[ IsBasis, IsMatrix ],
@@ -705,8 +717,6 @@ InstallMethod( ShrinkMat, "preimage of BlownUpMat",
 #    ConvertToMatrixRepNC( result );
 #    return result;
 #  end );
-
-
 
 InstallGlobalFunction( BlownUpProjectiveSpace,
     "blows up a projective space by field reduction",
@@ -824,7 +834,7 @@ InstallGlobalFunction( IsBlownUpSubspaceOfProjectiveSpace,
 	return flag;
  end );	  
 
-
+### 9.3-2 NaturalEmbeddingByFieldReduction
   
 InstallMethod( NaturalEmbeddingByFieldReduction, 
      "for a geometry into another, via field reduction, wrt a basis",
