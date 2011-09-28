@@ -239,7 +239,7 @@ InstallMethod( NaturalEmbeddingBySubspace,
 #############################################################################
 #O  NaturalEmbeddingBySubspaceNC( <ps1>, <ps2>, <v> ) 
 ## This operation is just like its namesake except that it 
-## has No Checks
+## has no checks
 ##
 InstallMethod( NaturalEmbeddingBySubspaceNC, 
 	"for a projective space into another, via a specified subspace",  
@@ -380,175 +380,173 @@ InstallMethod( NaturalEmbeddingBySubspace,
 		return map;
 	end );
   
-  
-  
-  
-  
+# CHECKED 28/09/11 jdb
+#############################################################################
+#O  NaturalEmbeddingBySubspace( <ps1>, <ps2>, <v> ) 
+## This operation is just like its namesake except that it 
+## has no checks
+##  
 InstallMethod( NaturalEmbeddingBySubspaceNC, 
-      "for a geometry into another, via a specified subspace, no-check version",  
-      [ IsClassicalPolarSpace, IsClassicalPolarSpace, IsSubspaceOfProjectiveSpace ],
-
-  function( geom1, geom2, v ) 
-    local map, rk, f, i, basis, invbasis, bs,
-          c1, c2, orth, tyv, quad1, quad2,
-          change, perp2, formonv, ses1, ses2, 
-          ty1, ty2, newmat, func, pre, invchange;
-    rk := v!.type;
-    ty1 := PolarSpaceType(geom1); 
-    ty2 := PolarSpaceType(geom2); 
-    f := geom1!.basefield;
-    tyv := TypeOfSubspace( geom2, v );
-
-    orth := ["parabolic", "elliptic", "hyperbolic"];
-
-    if ty1 = ty2 or (ty1 in orth and ty2 in orth) then 
+	"for a geometry into another, via a specified subspace, no-check version",  
+	[ IsClassicalPolarSpace, IsClassicalPolarSpace, IsSubspaceOfProjectiveSpace ],
+	function( geom1, geom2, v ) 
+		local map, rk, f, i, basis, invbasis, bs, c1, c2, orth, tyv, quad1, quad2,
+          change, perp2, formonv, ses1, ses2, ty1, ty2, newmat, func, pre, invchange;
+		rk := v!.type;
+		ty1 := PolarSpaceType(geom1); 
+		ty2 := PolarSpaceType(geom2); 
+		f := geom1!.basefield;
+		tyv := TypeOfSubspace( geom2, v );
+		orth := ["parabolic", "elliptic", "hyperbolic"];
+		if ty1 = ty2 or (ty1 in orth and ty2 in orth) then 
           
           ## Let B be basis of v. Then the form BM(B^T)^sigma (n.b. sigma 
           ## is a field automorphism), where M is the form for geom2,
           ## will be equivalent to the form for geom1.
 
-       basis := v!.obj;
+		basis := v!.obj;
 
           ## As usual we must consider two cases, the quadratic form case
           ## and the sesquilinear form case. We then obtain a base change matrix c1.
 
-       if HasQuadraticForm( geom2 ) and HasQuadraticForm( geom1 ) then
-          quad1 := QuadraticForm(geom1);
-          quad2 := QuadraticForm(geom2);
-          newmat := basis * quad2!.matrix * TransposedMat(basis);
-          formonv := QuadraticFormByMatrix(newmat, f);
-          c1 := BaseChangeToCanonical( quad1 );
-       else
-          ses1 := SesquilinearForm(geom1);
-          ses2 := SesquilinearForm(geom2);
-          if ty1 = "hermitian" then 
-             newmat := basis * ses2!.matrix * (TransposedMat(basis))^CompanionAutomorphism(geom1);
-             formonv := HermitianFormByMatrix(newmat, f);
-          else
-             newmat := basis * ses2!.matrix * TransposedMat(basis);
-             formonv := BilinearFormByMatrix(newmat, f);
-          fi;
-          c1 := BaseChangeToCanonical( ses1 );
-       fi;
+		if HasQuadraticForm( geom2 ) and HasQuadraticForm( geom1 ) then
+			quad1 := QuadraticForm(geom1);
+			quad2 := QuadraticForm(geom2);
+			newmat := basis * quad2!.matrix * TransposedMat(basis);
+			formonv := QuadraticFormByMatrix(newmat, f);
+			c1 := BaseChangeToCanonical( quad1 );
+		else
+			ses1 := SesquilinearForm(geom1);
+			ses2 := SesquilinearForm(geom2);
+			if ty1 = "hermitian" then 
+				newmat := basis * ses2!.matrix * (TransposedMat(basis))^CompanionAutomorphism(geom1);
+				formonv := HermitianFormByMatrix(newmat, f);
+			else
+				newmat := basis * ses2!.matrix * TransposedMat(basis);
+				formonv := BilinearFormByMatrix(newmat, f);
+			fi;
+			c1 := BaseChangeToCanonical( ses1 );
+		fi;
 
        ## Finding isometry from geom1 to polar space defined by formofv:
 
-       c2 := BaseChangeToCanonical( formonv );
-       change := c1^-1 * c2;        
-       ConvertToMatrixRepNC(change, f);
-       invchange := change^-1;
-       bs := BaseSteinitzVectors(Basis(geom2!.vectorspace), basis);
-       invbasis := Inverse(Concatenation(bs!.subspace, bs!.factorspace));
-       ConvertToMatrixRepNC(invbasis, f);
+		c2 := BaseChangeToCanonical( formonv );
+		change := c1^-1 * c2;        
+		ConvertToMatrixRepNC(change, f);
+		invchange := change^-1;
+		bs := BaseSteinitzVectors(Basis(geom2!.vectorspace), basis);
+		invbasis := Inverse(Concatenation(bs!.subspace, bs!.factorspace));
+		ConvertToMatrixRepNC(invbasis, f);
 
-       func := x -> VectorSpaceToElement( geom2, x!.obj * change * basis);
-       pre := function(y)
-             local newy;
-             newy:= y!.obj * invbasis;
-             if IsMatrix(newy) then 
-                newy := newy{[1..Size(newy)]}{[1..rk]};
-                ConvertToMatrixRepNC(newy, f);
-             else
-                newy := newy{[1..rk]}; 
-                ConvertToVectorRepNC(newy, f);
-             fi;
-             return VectorSpaceToElement(geom1, newy * invchange);
-           end; 
-       map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(geom1), 
+		func := x -> VectorSpaceToElement( geom2, x!.obj * change * basis);
+		pre := function(y)
+			local newy;
+			newy:= y!.obj * invbasis;
+				if IsMatrix(newy) then 
+					newy := newy{[1..Size(newy)]}{[1..rk]};
+					ConvertToMatrixRepNC(newy, f);
+				else
+					newy := newy{[1..rk]}; 
+					ConvertToVectorRepNC(newy, f);
+				fi;
+				return VectorSpaceToElement(geom1, newy * invchange);
+			end; 
+			map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(geom1), 
                                          ElementsOfIncidenceStructure(geom2), 
                                          func, false, pre );
-       SetIsInjective( map, true );
-    else 
-       Error("Polar spaces are not compatible"); 
-    fi;
-    return map;
-  end );
+		SetIsInjective( map, true );
+		else 
+			Error("Polar spaces are not compatible"); 
+		fi;
+		return map;
+	end );
   
-  
-  
+# CHECKED 28/09/11 jdb
+#############################################################################
+#O  IsomorphismPolarSpaces( <ps1>, <ps2>, <bool> ) 
+# returns the coordinate transformation from <ps1> to <ps2> (which must be
+# polar spaces of the same type of course). If <bool> is true, then an intertwiner 
+# is computed.
+##
 InstallMethod( IsomorphismPolarSpaces, 
-      "returns intertwiner for two similar polar spaces",  
-      [ IsClassicalPolarSpace, IsClassicalPolarSpace, IsBool ],
-  function( ps1, ps2, computeintertwiner )
-    local form1, form2, f, map, c1, c2, change, invchange, hom, ty1, ty2,
+    "returns intertwiner for two similar polar spaces",  
+    [ IsClassicalPolarSpace, IsClassicalPolarSpace, IsBool ],
+	function( ps1, ps2, computeintertwiner )
+		local form1, form2, f, map, c1, c2, change, invchange, hom, ty1, ty2,
           coll1, coll2, gens1, gens2, x, y, func, inv, twinerfunc, twinerprefun;
-    ty1 := PolarSpaceType( ps1 );
-    ty2 := PolarSpaceType( ps2 );
-
-    if ty1 <> ty2 then 
-       Error("Polar spaces are of different type");
-    fi;
-
-    f := ps1!.basefield;
-
-    if IsEvenInt(Size(f)) and ty1 in ["parabolic", "elliptic", "hyperbolic"] then
-       form1 := QuadraticForm( ps1 );
-       form2 := QuadraticForm( ps2 );
-    else
-       form1 := SesquilinearForm( ps1 );
-       form2 := SesquilinearForm( ps2 );
-    fi;
-
-    c1 := BaseChangeToCanonical( form1 );
-    c2 := BaseChangeToCanonical( form2 );
-    change := c1^-1 * c2;       
-    ConvertToMatrixRep(change, f);
-    invchange := change^-1;     
-     
-    if ty1 = "hermitian" then
-       change := change^CompanionAutomorphism(ps2);
-       invchange := invchange^CompanionAutomorphism(ps1);
-    fi; 
-     
-    func := function(x)
-             return VectorSpaceToElement(ps2, ShallowCopy(x!.obj) * change);
-            end;
-    inv := function(x)
-             return VectorSpaceToElement(ps1, ShallowCopy(x!.obj) * invchange);
-           end;
-
-    map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(ps1), 
+		ty1 := PolarSpaceType( ps1 );
+		ty2 := PolarSpaceType( ps2 );
+		if ty1 <> ty2 then 
+			Error("Polar spaces are of different type");
+		fi;
+		f := ps1!.basefield;
+		if f <> ps2!.basefield then
+			Error( "<ps1> and <ps2> must be polar spaces over the same field");
+		fi;
+		if IsEvenInt(Size(f)) and ty1 in ["parabolic", "elliptic", "hyperbolic"] then
+			form1 := QuadraticForm( ps1 );
+			form2 := QuadraticForm( ps2 );
+		else
+			form1 := SesquilinearForm( ps1 );
+			form2 := SesquilinearForm( ps2 );
+		fi;
+		c1 := BaseChangeToCanonical( form1 );
+		c2 := BaseChangeToCanonical( form2 );
+		change := c1^-1 * c2;       
+		ConvertToMatrixRep(change, f);
+		invchange := change^-1;     
+		if ty1 = "hermitian" then
+			change := change^CompanionAutomorphism(ps2);
+			invchange := invchange^CompanionAutomorphism(ps1);
+		fi; 
+		func := function(x)
+			return VectorSpaceToElement(ps2, ShallowCopy(x!.obj) * change);
+		end;
+		inv := function(x)
+			return VectorSpaceToElement(ps1, ShallowCopy(x!.obj) * invchange);
+		end;
+		map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(ps1), 
                                       ElementsOfIncidenceStructure(ps2),
                                       func, inv);               
 
     # map from gens2 to gens1
-    twinerprefun := function( x )
-                      local y;
-                      y := MutableCopyMat( x!.mat );
-                      return ProjElWithFrob( change * y * invchange^x!.frob, x!.frob, f );  
-                    end;  
+		twinerprefun := function( x )
+			local y;
+				y := MutableCopyMat( x!.mat );
+                return ProjElWithFrob( change * y * invchange^x!.frob, x!.frob, f );  
+			end;  
        
     # map from gens1 to gens2
-    twinerfunc := function( y )
-                    local x;
-                    x := MutableCopyMat( y!.mat );
-                    return ProjElWithFrob( invchange * x * change^y!.frob, y!.frob, f ); 
-                  end;
-    if computeintertwiner then
-       if (HasIsCanonicalPolarSpace( ps1 ) and IsCanonicalPolarSpace( ps1 )) or
-          HasCollineationGroup( ps1 ) then
-          coll1 := CollineationGroup(ps1);
-          gens1 := GeneratorsOfGroup( coll1 );  
-          gens2 := List(gens1, twinerfunc);  
-          coll2 := GroupWithGenerators(gens2);  
-          hom := GroupHomomorphismByFunction(coll1, coll2, twinerfunc, twinerprefun); 
-          SetIntertwiner( map, hom );
-          UseIsomorphismRelation(coll1,coll2);                
-       elif (HasIsCanonicalPolarSpace( ps2 ) and IsCanonicalPolarSpace( ps2 )) or
-             HasCollineationGroup( ps2 ) then                                 
-          coll2 := CollineationGroup( ps2 );  
-          gens2 := GeneratorsOfGroup( coll2 );          
-          gens1 := List(gens2, twinerprefun ); 
-          coll1 := GroupWithGenerators(gens1);      
-          hom := GroupHomomorphismByFunction(coll1, coll2, twinerfunc, twinerprefun); 
-          SetIntertwiner( map, hom );      
-          UseIsomorphismRelation(coll1,coll2);         
-       else 
-          Info(InfoFinInG, 1, "No intertwiner computed. One of the polar spaces must have a collineation group computed");
-       fi;
-    fi;
-    return map;
-  end );
+		twinerfunc := function( y )
+			local x;
+				x := MutableCopyMat( y!.mat );
+                return ProjElWithFrob( invchange * x * change^y!.frob, y!.frob, f ); 
+			end;
+		if computeintertwiner then
+			if (HasIsCanonicalPolarSpace( ps1 ) and IsCanonicalPolarSpace( ps1 )) or
+				HasCollineationGroup( ps1 ) then
+				coll1 := CollineationGroup(ps1);
+				gens1 := GeneratorsOfGroup( coll1 );  
+				gens2 := List(gens1, twinerfunc);  
+				coll2 := GroupWithGenerators(gens2);  
+				hom := GroupHomomorphismByFunction(coll1, coll2, twinerfunc, twinerprefun); 
+				SetIntertwiner( map, hom );
+				UseIsomorphismRelation(coll1,coll2);                
+			elif (HasIsCanonicalPolarSpace( ps2 ) and IsCanonicalPolarSpace( ps2 )) or
+				HasCollineationGroup( ps2 ) then                                 
+				coll2 := CollineationGroup( ps2 );  
+				gens2 := GeneratorsOfGroup( coll2 );          
+				gens1 := List(gens2, twinerprefun ); 
+				coll1 := GroupWithGenerators(gens1);      
+				hom := GroupHomomorphismByFunction(coll1, coll2, twinerfunc, twinerprefun); 
+				SetIntertwiner( map, hom );      
+				UseIsomorphismRelation(coll1,coll2);         
+			else 
+				Info(InfoFinInG, 1, "No intertwiner computed. One of the polar spaces must have a collineation group computed");
+			fi;
+		fi;
+		return map;
+	end );
 
 InstallMethod( IsomorphismPolarSpaces, 
       "returns intertwiner for two similar polar spaces",  
