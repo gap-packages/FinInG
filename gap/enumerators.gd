@@ -39,9 +39,11 @@ DeclareGlobalFunction( "Fining_beta_power" );
 DeclareGlobalFunction( "Fining_log_beta" );
 DeclareGlobalFunction( "Fining_norm_one_element" );
 DeclareGlobalFunction( "Fining_index_of_norm_one_element" );
+DeclareGlobalFunction( "PG_element_normalize" );
+
 
 #############################################################################
-# Low level help operations
+# Low level help operations (make it global functions?)
 #############################################################################
 
 DeclareOperation( "nb_pts_Nbar", [IsPosInt, IsPosInt]);
@@ -100,8 +102,8 @@ DeclareOperation( "QplusElementNumber", [IsPosInt, IsPosInt, IsInt]);
 DeclareOperation( "QminusElementNumber", [IsPosInt, IsPosInt, IsInt]);
 DeclareOperation( "HermElementNumber", [IsPosInt, IsPosInt, IsInt]);
 
-DeclareGlobalFunction( "my_PG_element_normalize", 
-                   [IsFFECollection, IsPosInt, IsPosInt]);
+%DeclareGlobalFunction( "my_PG_element_normalize", 
+%                   [IsFFECollection, IsPosInt, IsPosInt]);
 DeclareOperation( "evaluate_hyperbolic_quadratic_form", 
                    [IsPosInt, IsFFECollection, IsPosInt, IsPosInt]);
 DeclareOperation( "evaluate_hermitian_form", 

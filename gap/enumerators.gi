@@ -171,6 +171,32 @@ InstallGlobalFunction( Fining_index_of_norm_one_element,
 	end );
 
 #############################################################################
+#F PG_element_normalize( v, offset, n )
+## This function takes the first nonzero element
+## from the right (!) and normalises the vector v
+## by this element.
+##
+InstallGlobalFunction( PG_element_normalize,
+	function(v, offset, n)
+	local ii, i, a, one;
+		one := One(v[1]);	   
+		for ii in [0..n - 1] do 
+			i := n - 1 - ii;    
+			a := v[offset + i]; 
+			if not IsZero(a) then
+				if IsOne(a) then  
+					return;
+				fi;
+				a := a^-1;
+				v{[offset..i-1+offset]} := a * v{[offset..i-1+offset]};
+				v[offset + i] := one;
+				return;
+			fi;
+		od;
+		Error("zero vector");
+	end );
+
+#############################################################################
 # Constructor operations:
 #############################################################################
 
@@ -1305,7 +1331,8 @@ InstallMethod(herm_Sbar_rank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt],
 	if IsZero(v[offset + n - 1]) then
 		rk := herm_Sbar_rank(q, v, offset, n - 1);
 	else
-        my_PG_element_normalize(v, offset, n);
+        #my_PG_element_normalize(v, offset, n);
+        PG_element_normalize(v, offset, n);
   		nb := herm_nb_pts_Sbar(n - 1, q);
 		rk := nb;
 		val := evaluate_hermitian_form(q, v, offset, n - 1);
@@ -1417,30 +1444,6 @@ InstallGlobalFunction( enum_unital,
 ##############################
 # "NumberElement" functions
 ##############################
-
-PG_element_normalize := function(v, offset, n)
-
-  ## This function takes the first nonzero element
-  ## from the right (!) and normalises the vector v
-  ## by this element.
-
-  local ii, i, a, one;
-  one := One(v[1]);	   
-  for ii in [0..n - 1] do 
-      i := n - 1 - ii;    
-      a := v[offset + i]; 
-      if not IsZero(a) then
-         if IsOne(a) then  
-	     return;
-         fi;
-         a := a^-1;
-         v{[offset..i-1+offset]} := a * v{[offset..i-1+offset]};
-         v[offset + i] := one;
-         return;
-      fi;
-  od;
-  Error("zero vector");
-end;
 
 #merge these two, give it a sensible name, see if one can be thrown away...
 
