@@ -27,11 +27,11 @@
 #
 # Things To Do:
 #
-# - testing
+# - testing: done rigourously
 # - enumerators for symplectic spaces
-#   perhaps we don't bother and just leave as is
+#   perhaps we don't bother and just leave as is; working on it (celle and jan).
 # - remove "iso" from Enumerator for IsShadowSubspacesOfClassicalPolarSpace ?
-# - make "specialresidual" more efficient
+# - make "FG_specialresidual" more efficient
 #   this function computes the "residual not in a hyperplane"
 # - documentation
 #
@@ -1212,8 +1212,10 @@ end );
 # in case an extra debug round would be necessary, this could be useful).
 #############################################################################
 
-
-InstallMethod( QElementNumber, [IsPosInt, IsPosInt, IsInt],
+#############################################################################
+#F  QElementNumber( d, q, a ) returns element number a of Q(d,q), see below.
+##
+InstallGlobalFunction( QElementNumber,
   function(d, q, a)
 
   ## Anton uses the bilinear form (for the 4 dimensional case)
@@ -1258,7 +1260,10 @@ InstallMethod( QElementNumber, [IsPosInt, IsPosInt, IsInt],
     return Permuted(v,cyc);
 end );
 
-InstallMethod( QplusElementNumber, [IsPosInt, IsPosInt, IsInt],
+#############################################################################
+#F  QplusElementNumber( d, q, a ) returns element number a of Q+(d,q), see below.
+##
+InstallGlobalFunction( QplusElementNumber,
   function(d, q, a)
       # The quadratic form here is simply the
       # "sums of hyperbolic pairs" form x1x2 + x3x4 +...
@@ -1274,8 +1279,10 @@ InstallMethod( QplusElementNumber, [IsPosInt, IsPosInt, IsInt],
     return v;
 end );
 
-
-InstallMethod( QminusElementNumber, [IsPosInt, IsPosInt, IsInt],
+#############################################################################
+#F  QminusElementNumber( d, q, a ) returns element number a of Q-(d,q), see below.
+##
+InstallGlobalFunction( QminusElementNumber,
   function(d, q, a)
     local n, x, i, one, zero, v, w, a2, form, c1, c2, c3,
           b, c, minusz, x1, x2, u, vv, wprim, z, perm;
@@ -1352,7 +1359,11 @@ InstallMethod( QminusElementNumber, [IsPosInt, IsPosInt, IsInt],
     return Permuted(v, perm);
 end );
 
-InstallMethod( QNumberElement, [IsPosInt, IsPosInt, IsSubspaceOfClassicalPolarSpace],
+#############################################################################
+#F  QNumberElement( d, q, var ) returns the number of element <var> of Q(d,q)
+# see QElementNumber for specification of form.
+##
+InstallGlobalFunction( QNumberElement,
   function(d, q, var)
     local wittindex, x, a, b, v, i, cyc;
     v := StructuralCopy(var!.obj);
@@ -1375,7 +1386,11 @@ InstallMethod( QNumberElement, [IsPosInt, IsPosInt, IsSubspaceOfClassicalPolarSp
     return a + b + 1; ## adjustment for lists beginning at 1
 end );
 
-InstallMethod( QplusNumberElement, [IsPosInt, IsPosInt, IsSubspaceOfClassicalPolarSpace],
+#############################################################################
+#F  QplusNumberElement( d, q, var ) returns the number of element <var> of Q+(d,q)
+# see QplusNumberElement for specification of form.
+##
+InstallGlobalFunction( QplusNumberElement,
   function(d, q, var)
     local wittindex, a, v;
     v := StructuralCopy(var!.obj);        
@@ -1384,9 +1399,12 @@ InstallMethod( QplusNumberElement, [IsPosInt, IsPosInt, IsSubspaceOfClassicalPol
     return a + 1; ## adjustment for lists beginning at 1
 end );
 
-## still need to fix QminusNumberElement
-
-InstallMethod( QminusNumberElement, [IsPosInt, IsPosInt, IsSubspaceOfClassicalPolarSpace],
+## still need to fix QminusNumberElement. Fixing means optimizing. It is tested and works beautifully. jdb. 30/9
+#############################################################################
+#F  QminusNumberElement( d, q, var ) returns the number of element <var> of Q-(d,q)
+# see QminusNumberElement for specification of form.
+##
+InstallGlobalFunction( QminusNumberElement,
   function(d, q, var)
     local wittindex, a, v, x, x1, x2, c1, c2, c3, perm,
           form, i, u, w, vv, z, minusz, minuszv, c, b;
@@ -1455,339 +1473,50 @@ InstallMethod( QminusNumberElement, [IsPosInt, IsPosInt, IsSubspaceOfClassicalPo
     return a + b * x + c + 1;  ## adjustment for lists beginning at 1
 end );
 
-########
-
-InstallMethod( HermElementNumber, [IsPosInt, IsPosInt, IsInt],
-  function(d, q, a)
-      # The hermitian form here is simply 
-      # x(1) x(2)^q + ... + x(n-1) x(n)^q
-
-    local n, v, i, a2;
-    #zero := 0*Z(q);	
-    a2 := a - 1;
-    v := ListWithIdenticalEntries(d+1,Z(q)^0);
-	n := Int((d+1) / 2);
-	FG_herm_Sbar_unrank(RootInt(q,2),v,1,d+1,a2);
-    return v;
-end );
-
-InstallMethod( HermNumberElement, [IsPosInt, IsPosInt, IsSubspaceOfClassicalPolarSpace],
-  function(d, q, var)
-    local wittindex, a, v,y;
-	v := StructuralCopy(var!.obj);        
-	y := v[PositionNonZeroFromRight(v)];
-	if IsOddInt(q) then
-	  y := y/(Z(q)^((RootInt(q,2)-1)/2)); #Strange Anton normalization...
-	fi;
-	v := v/y;
-    #wittindex := (d+1)/2;
-    a := FG_herm_Sbar_rank(RootInt(q,2), v, 1, d+1);
-    return a + 1; ## adjustment for lists beginning at 1
-end );
-
-#########
-
-#############################################################################
-# Low level enumerators for points of polar spaces.
 #############################################################################
 
-InstallGlobalFunction(specialresidual, 
-  function(ps, v, hyp)
+## New hermitian stuff... These functions look quite interesting, but are never used...
 
-  ## This function returns an enumerator for the j spaces on a 
-  ## given j-1 space v which are not contained in a hyperplane hyp.
-  ## This could be made more efficient.
-
-  local j, enum, res;
-    j := v!.type + 1; 
-    res := Enumerator( ShadowOfElement(ps, v, j) );
-    enum := Filtered(res, x -> not x in hyp); 
-    return enum;
-  end );
-
-InstallGlobalFunction( enum_orthogonal,
- 
-  ## This is a "helper" function which makes the enumerator
-  ## for a set of varieties of a canonical orthogonal space.
-
-  function( ps, j )
-  local hyp, pg, d, f, iter, x, ps2, vs, ressize, 
-        em, varsps2jmin1, varsps2j, enum2, enum, enumextra, 
-        vars, rep, disc, sqs, type, q, zero, one;
-
-  vs := ElementsOfIncidenceStructure(ps, j);
-  if j = 1 then
-    enum := AntonEnumerator( vs );
-  elif j > 1 then
-    pg := AmbientSpace(ps);
-    type := PolarSpaceType(ps);
-    d := ps!.dimension;
-    f := ps!.basefield;
-    q := Size(f);   
-    zero := Zero(f);
-    one := One(f);
-    
-    ## The number of j spaces on a j-1 space is the number of points
-    ## in the quotient polar space (over a j-1 space)
-    
-    x := List([1..d], i -> zero);
-    hyp := ShallowCopy(IdentityMat(d,f));    
-    if type = "parabolic" or type = "elliptic" then       
-       hyp := Concatenation([x], hyp);     
-    else 
-       x[2] := one;
-       x[d] := one;
-       Append(hyp, [x]);
-    fi;
-    hyp := TransposedMat(hyp);
-    hyp := VectorSpaceToElement(pg, hyp);               
-    disc := TypeOfSubspace(ps, hyp); 
-
-         ## Here ps2 is the polar space induced by the hyperplane section.
-         ## ressize is the number of j spaces not contained in hyp 
-         ## incident with a j-1 space contained in hyp. Of course, we
-         ## have a special case when j is the Witt index.
-
-    if type = "hyperbolic" then
-       ps2 := ParabolicQuadric(d-1, f);
-       ressize := Size(ElementsOfIncidenceStructure(HyperbolicQuadric(d+2-2*j, f), 1)); 
-       #if j <= WittIndex( SesquilinearForm(ps2) ) then 
-       if j <= WittIndex( QuadraticForm(ps2) ) then #was "SesquilinearForm"
-           ressize := ressize - Size(ElementsOfIncidenceStructure(ParabolicQuadric(d+1-2*j, f), 1));
-       fi;
-    elif type = "elliptic" then   
-       ps2 := ParabolicQuadric(d-1, f);
-       ressize := Size(ElementsOfIncidenceStructure(EllipticQuadric(d+2-2*j, f), 1));
-       #if j <= WittIndex( SesquilinearForm(ps2) ) then
-	   if j <= WittIndex( QuadraticForm(ps2) ) then #was "SesquilinearForm"
-          ressize := ressize - Size(ElementsOfIncidenceStructure(ParabolicQuadric(d+1-2*j, f), 1));
-       fi;
-    # type = "parabolic" in what follows
-    elif disc = "elliptic" then
-       ps2 := EllipticQuadric(d-1, f);
-       ressize := Size(ElementsOfIncidenceStructure(ParabolicQuadric(d+2-2*j, f), 1)); 
-       #if j <= WittIndex( SesquilinearForm(ps2) ) then
-	   if j <= WittIndex( QuadraticForm(ps2) ) then #was "SesquilinearForm"
-          ressize := ressize - Size(ElementsOfIncidenceStructure(EllipticQuadric(d+1-2*j, f), 1));
-       fi;
-    else 
-       ps2 := HyperbolicQuadric(d-1, f);        
-       ressize := Size(ElementsOfIncidenceStructure(ParabolicQuadric(d+2-2*j, f), 1));
-       #if j <= WittIndex( SesquilinearForm(ps2) ) then
-       if j <= WittIndex( QuadraticForm(ps2) ) then #was "SesquilinearForm"
-          ressize := ressize - Size(ElementsOfIncidenceStructure(HyperbolicQuadric(d+1-2*j, f), 1));
-       fi;
-    fi;
-
-    em := NaturalEmbeddingBySubspace(ps2, ps, hyp);
-
-    ## Enumerate last the j-spaces contained in the non-deg hyperplane  
-
-    #if j <= WittIndex( SesquilinearForm(ps2) ) then
-    if j <= WittIndex( QuadraticForm(ps2) ) then #was SesquilinearForm
-
-       varsps2j := ElementsOfIncidenceStructure( ps2, j );
-       enumextra := Enumerator( varsps2j );
-    fi;
-      
-    varsps2jmin1 := ElementsOfIncidenceStructure( ps2, j-1 );
-    enum2 := enum_orthogonal( ps2, j-1);  
-
-    enum := EnumeratorByFunctions( vs, rec(
-         ElementNumber := function( e, n )
-           local l, k, enumres, t, v;   
-           if n > Size(enum2) * ressize then
-              l := n - Size(enum2) * ressize;
-              return enumextra[l]^em;
-           else
-
-           ## The way this works is that n is the position
-           ## of the l-th j-space incident with the k-th (j-1)-space
-           ## of vars2ps2. So we must first decompose n as n=(k-1)ressize+l.
-
-              l := n mod ressize;
-              if l = 0 then l := ressize; fi;  
-              k := (n-l) / ressize + 1;    
-              v := enum2[k]^em;   
-              enumres := specialresidual(vs!.geometry, v, hyp);  
-              return enumres[l];
-           fi;
-         end,
-         NumberElement := function( e, x )
-
-           ## Here we must first find the unique j-1 space
-           ## incident with x, and then find its place in the ordering.
-
-           local w, prew, k, enumres, l, numinhyp;
-
-             ## first deal with the case that x is in hyp
-
-             if x in hyp then
-                numinhyp := Size(enum2) * ressize;
-                prew := em!.prefun(x);
-                return numinhyp + Position(enumextra, prew);
-             else            
-                w := Meet(hyp, x);        
-                prew := em!.prefun(w);    
-                k := Position(enum2, prew);    
-                enumres := specialresidual(vs!.geometry, w, hyp); 
-                l := Position(enumres, x);
-                return (k-1)*ressize + l;
-             fi;
-         end ) );
-  else 
-     Error("j must be a positive integer");
-  fi;
-  return enum;
-  end );
-
-InstallGlobalFunction( enum_hermitian,
-
-  ## This is a "helper" function which makes the enumerator
-  ## for a set of varieties of an hermitian space.
-
-  function( ps, j )
-  local hyp, pg, d, f, ps2, vs, ressize, em, varsps2jmin1, 
-        varsps2j, enum2, enum, enumextra, vars;
-  vs := ElementsOfIncidenceStructure(ps, j);
-  if j = 1 then
-    enum := AntonEnumerator( vs );
-  elif j > 1 then
-    pg := AmbientSpace(ps);
-    d := ps!.dimension;
-    f := ps!.basefield;
-    hyp := NullMat(d,d+1,f);
-    hyp{[1..d]}{[2..d+1]} := IdentityMat(d, f);    
-    hyp := VectorSpaceToElement(pg, hyp);
-    
-         ## ps2 is the polar space induced by the hyperplane section.
-         ## ressize is the number of j spaces not contained in hyp 
-         ## incident with a j-1 space contained in hyp. 
-
-     ps2 := HermitianVariety(d-1, f);
-     #Print(ps2,"\n");
-	 ressize := Size(ElementsOfIncidenceStructure(HermitianVariety(d+2-2*j, f), 1)); 
-     #if j < WittIndex( SesquilinearForm(ps2) ) then
-     if j <= WittIndex( SesquilinearForm(ps2) ) then
-        ressize := ressize - Size(ElementsOfIncidenceStructure(HermitianVariety(d+1-2*j, f), 1));
-        varsps2j := ElementsOfIncidenceStructure( ps2, j );
-        enumextra := Enumerator( varsps2j );
-     fi;
-     
-     em := NaturalEmbeddingBySubspace(ps2, ps, hyp);        
-     varsps2jmin1 := ElementsOfIncidenceStructure( ps2, j-1 );
-     enum2 := enum_hermitian( ps2, j-1 ); 
-
-     enum := EnumeratorByFunctions( vs, rec(
-         ElementNumber := function( e, n )
-           local l, k, enumres, t, v;  
-           if n > Size(enum2) * ressize then
-              l := n - Size(enum2) * ressize;
-              return enumextra[l]^em;
-           else
-              l := n mod ressize;
-              if l = 0 then l := ressize; fi;  
-              k := (n-l) / ressize + 1;    
-              v := enum2[k]^em;                     
-              enumres := specialresidual(vs!.geometry, v, hyp);  
-              return enumres[l];
-           fi;
-         end,
-         NumberElement := function( e, x )
-           local w, prew, k, enumres, l, numinhyp;
-             if x in hyp then
-                numinhyp := Size(enum2) * ressize;
-                prew := PreImage(em, x);
-                return numinhyp + Position(enumextra, prew);
-             else            
-                w := Meet(hyp, x);
-                prew := PreImage(em, w);
-                k := Position(varsps2jmin1, prew);
-                enumres := specialresidual(vs!.geometry, w, hyp); 
-                l := Position(enumres, x);
-                return (k-1)*ressize + l;
-             fi;
-         end ) );
-  else 
-     Error("j must be a positive integer");
-  fi;
-  return enum;
-end );
-
-InstallGlobalFunction( enum_symplectic,
-
-  ## This is a "helper" function which makes the enumerator
-  ## for a set of varieties of a symplectic space. We would
-  ## like an algorithm for these. Recall that for the orthogonal
-  ## and hermitian cases, we used induction by non-degenerate
-  ## hyperplane sections to calculate the enumerators. We do not
-  ## have non-degenerate hyperplanes in symplectic spaces!
-
-  function( ps, j )
-    local vs, vars, enum;
-    vs := ElementsOfIncidenceStructure(ps, j);
-    vars := EnumeratorByOrbit( vs );
-
-    enum := EnumeratorByFunctions( vs, rec(
-         ElementNumber := function( e, n )
-           return vars[n];
-         end,
-         NumberElement := function( e, x )
-           return Position(vars, x);
-         end ) );
-
-    return enum;
-end );
-
-
-#############################################################################
-# Anton's Enumerator:
-#############################################################################
-
-####################
-
-## New hermitian stuff...
-
-InstallGlobalFunction( enum_line,
-  function( A, B, n )
+#InstallGlobalFunction( enum_line,
+#  function( A, B, n )
   
     ## This function returns the n-th point on the interval
     ## ]A,B[. This routine uses the ordering of a finite field GF(q).
     ## For instance, we know that 0 and 1 are the first two elements of GF(q).
     ## The integer n must be between 1 and q - 1.
    
-    local pg, q, x, C;
-    pg := A!.geo;
-    q := Size( pg!.basefield );
-    x := FG_ffenumber( q, n + 1 );  ## n = 1 -> primitive root
-    C := VectorSpaceToElement( pg, A!.obj + x * B!.obj ); 
-    return C;
-  end );
+#    local pg, q, x, C;
+#    pg := A!.geo;
+#    q := Size( pg!.basefield );
+#    x := FG_ffenumber( q, n + 1 );  ## n = 1 -> primitive root
+#    C := VectorSpaceToElement( pg, A!.obj + x * B!.obj ); 
+#    return C;
+#  end );
 
-InstallGlobalFunction( enum_BaerSubline,
-  function( q, n )
+#InstallGlobalFunction( enum_BaerSubline,
+#  function( q, n )
   
     ## This function returns the n-th point on the canonical Baer subline
     ## X0^(q+1) + X1^(q+1), of PG(1, q^2).
     ## Note: Z(q^2)^(q+1) = Z(q) in GAP.
 
-    local k, x;
+#    local k, x;
     
     ## Our points are (1, Z(q^2)^i) such that Z(q)^i=-1  (i in [1..q^2-1]).
     ## This condition holds iff i = j (q-1) + k with j in [0..q], 
     ## k = (q-1)/2 for q odd, k = q-1 for q even.
     
-    if IsEvenInt(q) then 
-       k := q - 1; 
-    else 
-       k := (q - 1)/2; 
-    fi;
-    x := [ Z(q)^0, Z(q^2)^( (n-1) * (q-1) + k ) ];        
-    return x;    
-  end );
+#    if IsEvenInt(q) then 
+#       k := q - 1; 
+#    else 
+#       k := (q - 1)/2; 
+#    fi;
+#    x := [ Z(q)^0, Z(q^2)^( (n-1) * (q-1) + k ) ];        
+#    return x;    
+#  end );
    
-InstallGlobalFunction( enum_unital,
-  function( q, n )
+#InstallGlobalFunction( enum_unital,
+#  function( q, n )
   
     ## This function returns the n-th point on the canonical unital
     ## X0^(q+1) + X1^(q+1) + X2^(q+1).
@@ -1802,70 +1531,75 @@ InstallGlobalFunction( enum_unital,
     ##    [[beta-beta^q,0,0],[0,0,-1],[0,1,0]] * e where e^q+e=0.
     ## 
         
-    local beta, one, i, j, x, r, point, e, mat, b, binv;
+#    local beta, one, i, j, x, r, point, e, mat, b, binv;
     
-    beta := Z(q^2);
-    one := beta^0;
+#    beta := Z(q^2);
+#    one := beta^0;
     
-    if n = q^3 + 1 then 
-       point := [0,1,0] * one;
-    else
-       i := (n-1) mod q^2;                 ## an integer in [0..q^2-1]
-       j := (n-1-((n-1) mod q^2)) / q^2;   ## an integer in [0..q-1]
-       x := FG_ffenumber( q^2, i );
-       r := FG_ffenumber( q, j );
-       point := [x, beta * x^(q+1)+ r, one];
-    fi;
-    if IsEvenInt(q) then
-       e := Z(q^2)^(q+1);
-    else
-       e := Z(q^2)^((q+1)/2);
-    fi;
-    mat := [[beta-beta^q,0,0],[0,0,-1],[0,1,0]] * e;
-    b := BaseChangeToCanonical( HermitianFormByMatrix(mat, GF(q^2)) );
-    binv := b^-1;
-    return point * binv; 
-  end );
+#    if n = q^3 + 1 then 
+#       point := [0,1,0] * one;
+#    else
+#       i := (n-1) mod q^2;                 ## an integer in [0..q^2-1]
+#       j := (n-1-((n-1) mod q^2)) / q^2;   ## an integer in [0..q-1]
+#       x := FG_ffenumber( q^2, i );
+#       r := FG_ffenumber( q, j );
+#       point := [x, beta * x^(q+1)+ r, one];
+#    fi;
+#    if IsEvenInt(q) then
+#       e := Z(q^2)^(q+1);
+#    else
+#       e := Z(q^2)^((q+1)/2);
+#    fi;
+#    mat := [[beta-beta^q,0,0],[0,0,-1],[0,1,0]] * e;
+#    b := BaseChangeToCanonical( HermitianFormByMatrix(mat, GF(q^2)) );
+#    binv := b^-1;
+#    return point * binv; 
+#  end );
 
+#############################################################################
 
+#############################################################################
+#F  HermElementNumber( d, q, a ) returns element number a of H(d,q^2). see 
+# below for form.
+##
+InstallGlobalFunction( HermElementNumber,
+  function(d, q, a)
+      # The hermitian form here is simply 
+      # x(1) x(2)^q + ... + x(n-1) x(n)^q
 
-##############################
-# "NumberElement" functions
-##############################
+    local n, v, i, a2;
+    #zero := 0*Z(q);	
+    a2 := a - 1;
+    v := ListWithIdenticalEntries(d+1,Z(q)^0);
+	n := Int((d+1) / 2);
+	FG_herm_Sbar_unrank(RootInt(q,2),v,1,d+1,a2);
+    return v;
+end );
 
-#merge these two, give it a sensible name, see if one can be thrown away... done.
+#############################################################################
+#F  HermElementNumber( d, q, var ) returns the number of the element <var>
+# of H(d,q^2), see HermElementNumber for the form.
+##
+InstallGlobalFunction( HermNumberElement,
+  function(d, q, var)
+    local wittindex, a, v,y;
+	v := StructuralCopy(var!.obj);        
+	y := v[PositionNonZeroFromRight(v)];
+	if IsOddInt(q) then
+	  y := y/(Z(q)^((RootInt(q,2)-1)/2)); #Strange Anton normalization...
+	fi;
+	v := v/y;
+    #wittindex := (d+1)/2;
+    a := FG_herm_Sbar_rank(RootInt(q,2), v, 1, d+1);
+    return a + 1; ## adjustment for lists beginning at 1
+end );
 
-#InstallGlobalFunction(my_PG_element_normalize,
-#	[IsFFECollection, IsPosInt, IsPosInt],
-#	function(v, offset, n)
-
-  ## This function takes the first nonzero element
-  ## from the right (!) and normalises the vector v
-  ## by this element.
-
-#  local ii, i, a, one;
-#  one := One(v[1]);	   
-#  for ii in [0..n - 1] do 
-#      i := n - 1 - ii;    
-#      a := v[offset + i]; 
-#      if not IsZero(a) then
-#         if IsOne(a) then  
-#	     return;
-#         fi;
-#         a := a^-1;
-#         v{[offset..i-1+offset]} := a * v{[offset..i-1+offset]};
-#         v[offset + i] := one;
-#         return;
-#      fi;
-#  od;
-#  Error("zero vector");
-#
-#end );
-
-
-
-
-InstallMethod( AntonEnumerator, [IsSubspacesOfClassicalPolarSpace],
+#############################################################################
+# The enumerator for points of a polar space, bundled in one operation.
+#############################################################################
+InstallMethod( AntonEnumerator, 
+  "for a collection of subspaces of a polar space",
+  [IsSubspacesOfClassicalPolarSpace],
 
   ## This operation puts together the Anton's code into
   ## an organised form. It computes an enumerator just
@@ -1966,10 +1700,311 @@ InstallMethod( AntonEnumerator, [IsSubspacesOfClassicalPolarSpace],
   end );
 
 #############################################################################
-# Constructor operations:
+# Low level enumerators
 #############################################################################
 
-InstallMethod( EnumeratorByOrbit, [ IsSubspacesOfClassicalPolarSpace ],
+#############################################################################
+#F FG_specialresidual: our special helper enumerator function that returns
+# an enumerator (actually just a list) of elements of dimension j on a given j-1 
+# space, not in a given hyperplane.
+##
+InstallGlobalFunction(FG_specialresidual, 
+  function(ps, v, hyp)
+
+  ## This function returns an enumerator for the j spaces on a 
+  ## given j-1 space v which are not contained in a hyperplane hyp.
+  ## This could be made more efficient.
+
+  local j, enum, res;
+    j := v!.type + 1; 
+    res := Enumerator( ShadowOfElement(ps, v, j) );
+    enum := Filtered(res, x -> not x in hyp); 
+    return enum;
+  end );
+
+#############################################################################
+#F FG_enum_orthogonal.  This is a "helper" function which makes the enumerator
+# for a set of elements of a canonical orthogonal space.
+##
+InstallGlobalFunction( FG_enum_orthogonal,
+ 
+  function( ps, j )
+  local hyp, pg, d, f, iter, x, ps2, vs, ressize, 
+        em, varsps2jmin1, varsps2j, enum2, enum, enumextra, 
+        vars, rep, disc, sqs, type, q, zero, one;
+
+  vs := ElementsOfIncidenceStructure(ps, j);
+  if j = 1 then
+    enum := AntonEnumerator( vs );
+  elif j > 1 then
+    pg := AmbientSpace(ps);
+    type := PolarSpaceType(ps);
+    d := ps!.dimension;
+    f := ps!.basefield;
+    q := Size(f);   
+    zero := Zero(f);
+    one := One(f);
+    
+    ## The number of j spaces on a j-1 space is the number of points
+    ## in the quotient polar space (over a j-1 space)
+    
+    x := List([1..d], i -> zero);
+    hyp := ShallowCopy(IdentityMat(d,f));    
+    if type = "parabolic" or type = "elliptic" then       
+       hyp := Concatenation([x], hyp);     
+    else 
+       x[2] := one;
+       x[d] := one;
+       Append(hyp, [x]);
+    fi;
+    hyp := TransposedMat(hyp);
+    hyp := VectorSpaceToElement(pg, hyp);               
+    disc := TypeOfSubspace(ps, hyp); 
+
+         ## Here ps2 is the polar space induced by the hyperplane section.
+         ## ressize is the number of j spaces not contained in hyp 
+         ## incident with a j-1 space contained in hyp. Of course, we
+         ## have a special case when j is the Witt index.
+
+    if type = "hyperbolic" then
+       ps2 := ParabolicQuadric(d-1, f);
+       ressize := Size(ElementsOfIncidenceStructure(HyperbolicQuadric(d+2-2*j, f), 1)); 
+       #if j <= WittIndex( SesquilinearForm(ps2) ) then 
+       if j <= WittIndex( QuadraticForm(ps2) ) then #was "SesquilinearForm"
+           ressize := ressize - Size(ElementsOfIncidenceStructure(ParabolicQuadric(d+1-2*j, f), 1));
+       fi;
+    elif type = "elliptic" then   
+       ps2 := ParabolicQuadric(d-1, f);
+       ressize := Size(ElementsOfIncidenceStructure(EllipticQuadric(d+2-2*j, f), 1));
+       #if j <= WittIndex( SesquilinearForm(ps2) ) then
+	   if j <= WittIndex( QuadraticForm(ps2) ) then #was "SesquilinearForm"
+          ressize := ressize - Size(ElementsOfIncidenceStructure(ParabolicQuadric(d+1-2*j, f), 1));
+       fi;
+    # type = "parabolic" in what follows
+    elif disc = "elliptic" then
+       ps2 := EllipticQuadric(d-1, f);
+       ressize := Size(ElementsOfIncidenceStructure(ParabolicQuadric(d+2-2*j, f), 1)); 
+       #if j <= WittIndex( SesquilinearForm(ps2) ) then
+	   if j <= WittIndex( QuadraticForm(ps2) ) then #was "SesquilinearForm"
+          ressize := ressize - Size(ElementsOfIncidenceStructure(EllipticQuadric(d+1-2*j, f), 1));
+       fi;
+    else 
+       ps2 := HyperbolicQuadric(d-1, f);        
+       ressize := Size(ElementsOfIncidenceStructure(ParabolicQuadric(d+2-2*j, f), 1));
+       #if j <= WittIndex( SesquilinearForm(ps2) ) then
+       if j <= WittIndex( QuadraticForm(ps2) ) then #was "SesquilinearForm"
+          ressize := ressize - Size(ElementsOfIncidenceStructure(HyperbolicQuadric(d+1-2*j, f), 1));
+       fi;
+    fi;
+
+    em := NaturalEmbeddingBySubspace(ps2, ps, hyp);
+
+    ## Enumerate last the j-spaces contained in the non-deg hyperplane  
+
+    #if j <= WittIndex( SesquilinearForm(ps2) ) then
+    if j <= WittIndex( QuadraticForm(ps2) ) then #was SesquilinearForm
+
+       varsps2j := ElementsOfIncidenceStructure( ps2, j );
+       enumextra := Enumerator( varsps2j );
+    fi;
+      
+    varsps2jmin1 := ElementsOfIncidenceStructure( ps2, j-1 );
+    enum2 := FG_enum_orthogonal( ps2, j-1);  
+
+    enum := EnumeratorByFunctions( vs, rec(
+         ElementNumber := function( e, n )
+           local l, k, enumres, t, v;   
+           if n > Size(enum2) * ressize then
+              l := n - Size(enum2) * ressize;
+              return enumextra[l]^em;
+           else
+
+           ## The way this works is that n is the position
+           ## of the l-th j-space incident with the k-th (j-1)-space
+           ## of vars2ps2. So we must first decompose n as n=(k-1)ressize+l.
+
+              l := n mod ressize;
+              if l = 0 then l := ressize; fi;  
+              k := (n-l) / ressize + 1;    
+              v := enum2[k]^em;   
+              enumres := FG_specialresidual(vs!.geometry, v, hyp);  
+              return enumres[l];
+           fi;
+         end,
+         NumberElement := function( e, x )
+
+           ## Here we must first find the unique j-1 space
+           ## incident with x, and then find its place in the ordering.
+
+           local w, prew, k, enumres, l, numinhyp;
+
+             ## first deal with the case that x is in hyp
+
+             if x in hyp then
+                numinhyp := Size(enum2) * ressize;
+                prew := em!.prefun(x);
+                return numinhyp + Position(enumextra, prew);
+             else            
+                w := Meet(hyp, x);        
+                prew := em!.prefun(w);    
+                k := Position(enum2, prew);    
+                enumres := FG_specialresidual(vs!.geometry, w, hyp); 
+                l := Position(enumres, x);
+                return (k-1)*ressize + l;
+             fi;
+         end ) );
+  else 
+     Error("j must be a positive integer");
+  fi;
+  return enum;
+  end );
+
+#############################################################################
+#F FG_enum_hermitian.  This is a "helper" function which makes the enumerator
+# for a set of elements of a canonical hermitian space.
+##
+InstallGlobalFunction( FG_enum_hermitian,
+
+  function( ps, j )
+  local hyp, pg, d, f, ps2, vs, ressize, em, varsps2jmin1, 
+        varsps2j, enum2, enum, enumextra, vars;
+  vs := ElementsOfIncidenceStructure(ps, j);
+  if j = 1 then
+    enum := AntonEnumerator( vs );
+  elif j > 1 then
+    pg := AmbientSpace(ps);
+    d := ps!.dimension;
+    f := ps!.basefield;
+    hyp := NullMat(d,d+1,f);
+    hyp{[1..d]}{[2..d+1]} := IdentityMat(d, f);    
+    hyp := VectorSpaceToElement(pg, hyp);
+    
+         ## ps2 is the polar space induced by the hyperplane section.
+         ## ressize is the number of j spaces not contained in hyp 
+         ## incident with a j-1 space contained in hyp. 
+
+     ps2 := HermitianVariety(d-1, f);
+     #Print(ps2,"\n");
+	 ressize := Size(ElementsOfIncidenceStructure(HermitianVariety(d+2-2*j, f), 1)); 
+     #if j < WittIndex( SesquilinearForm(ps2) ) then
+     if j <= WittIndex( SesquilinearForm(ps2) ) then
+        ressize := ressize - Size(ElementsOfIncidenceStructure(HermitianVariety(d+1-2*j, f), 1));
+        varsps2j := ElementsOfIncidenceStructure( ps2, j );
+        enumextra := Enumerator( varsps2j );
+     fi;
+     
+     em := NaturalEmbeddingBySubspace(ps2, ps, hyp);        
+     varsps2jmin1 := ElementsOfIncidenceStructure( ps2, j-1 );
+     enum2 := FG_enum_hermitian( ps2, j-1 ); 
+
+     enum := EnumeratorByFunctions( vs, rec(
+         ElementNumber := function( e, n )
+           local l, k, enumres, t, v;  
+           if n > Size(enum2) * ressize then
+              l := n - Size(enum2) * ressize;
+              return enumextra[l]^em;
+           else
+              l := n mod ressize;
+              if l = 0 then l := ressize; fi;  
+              k := (n-l) / ressize + 1;    
+              v := enum2[k]^em;                     
+              enumres := FG_specialresidual(vs!.geometry, v, hyp);  
+              return enumres[l];
+           fi;
+         end,
+         NumberElement := function( e, x )
+           local w, prew, k, enumres, l, numinhyp;
+             if x in hyp then
+                numinhyp := Size(enum2) * ressize;
+                prew := PreImage(em, x);
+                return numinhyp + Position(enumextra, prew);
+             else            
+                w := Meet(hyp, x);
+                prew := PreImage(em, w);
+                k := Position(varsps2jmin1, prew);
+                enumres := FG_specialresidual(vs!.geometry, w, hyp); 
+                l := Position(enumres, x);
+                return (k-1)*ressize + l;
+             fi;
+         end ) );
+  else 
+     Error("j must be a positive integer");
+  fi;
+  return enum;
+end );
+
+#############################################################################
+#F FG_enum_symplectic.  
+##
+InstallGlobalFunction( FG_enum_symplectic,
+
+  ## This is a "helper" function which makes the enumerator
+  ## for a set of varieties of a symplectic space. We would
+  ## like an algorithm for these. Recall that for the orthogonal
+  ## and hermitian cases, we used induction by non-degenerate
+  ## hyperplane sections to calculate the enumerators. We do not
+  ## have non-degenerate hyperplanes in symplectic spaces!
+
+  function( ps, j )
+    local vs, vars, enum;
+    vs := ElementsOfIncidenceStructure(ps, j);
+    vars := EnumeratorByOrbit( vs );
+
+    enum := EnumeratorByFunctions( vs, rec(
+         ElementNumber := function( e, n )
+           return vars[n];
+         end,
+         NumberElement := function( e, x )
+           return Position(vars, x);
+         end ) );
+
+    return enum;
+end );
+
+#############################################################################
+# Some left over
+#############################################################################
+
+#merge these two, give it a sensible name, see if one can be thrown away... done.
+
+#InstallGlobalFunction(my_PG_element_normalize,
+#	[IsFFECollection, IsPosInt, IsPosInt],
+#	function(v, offset, n)
+
+  ## This function takes the first nonzero element
+  ## from the right (!) and normalises the vector v
+  ## by this element.
+
+#  local ii, i, a, one;
+#  one := One(v[1]);	   
+#  for ii in [0..n - 1] do 
+#      i := n - 1 - ii;    
+#      a := v[offset + i]; 
+#      if not IsZero(a) then
+#         if IsOne(a) then  
+#	     return;
+#         fi;
+#         a := a^-1;
+#         v{[offset..i-1+offset]} := a * v{[offset..i-1+offset]};
+#         v[offset + i] := one;
+#         return;
+#      fi;
+#  od;
+#  Error("zero vector");
+#
+#end );
+
+#############################################################################
+# The enumerator using the orbit. This is the only operation declaration in 
+# this file for a user intended operation. 
+#############################################################################
+
+#############################################################################
+#O EnumeratorByOrbit. returns an enumerator using the orbit.  
+##
+InstallMethod( EnumeratorByOrbit, 
+  "for a collection of subspaces of a polar space",
+  [ IsSubspacesOfClassicalPolarSpace ],
   function( vs )
 
   ## In this operation, we provide a way to compute the full
@@ -1991,28 +2026,51 @@ InstallMethod( EnumeratorByOrbit, [ IsSubspacesOfClassicalPolarSpace ],
      return vars;
    end );
 
-InstallMethod( AsList, "for subspaces of a polar space", [IsSubspacesOfClassicalPolarSpace],
- function( vs )
-   return EnumeratorByOrbit( vs );
- end );
+#############################################################################
+#O AsList. Lists all elements in a collection of subspaces of polar space.  
+##
+InstallMethod( AsList, 
+	"for subspaces of a polar space", 
+	[IsSubspacesOfClassicalPolarSpace],
+	function( vs )
+		return EnumeratorByOrbit( vs );
+	end );
 
-InstallMethod( AsSortedList, "for subspaces of a polar space", [IsSubspacesOfClassicalPolarSpace],
- function( vs )
-   return EnumeratorByOrbit( vs );
- end );
+#############################################################################
+#O AsSortedList. Lists all elements in a collection of subspaces of polar space.  
+##
+InstallMethod( AsSortedList, 
+	"for subspaces of a polar space", 
+	[IsSubspacesOfClassicalPolarSpace],
+	function( vs )
+		return EnumeratorByOrbit( vs );
+	end );
 
-InstallMethod( AsSSortedList, "for subspaces of a polar space", [IsSubspacesOfClassicalPolarSpace],
- function( vs )
-   return EnumeratorByOrbit( vs );
- end );
+#Exactly the same as above?
+#############################################################################
+#O AsSortedList. Lists all elements in a collection of subspaces of polar space.  
+##
+InstallMethod( AsSSortedList, 
+	"for subspaces of a polar space", 
+	[IsSubspacesOfClassicalPolarSpace],
+	function( vs )
+		return EnumeratorByOrbit( vs );
+	end );
 
-InstallMethod( Enumerator, [ IsSubspacesOfClassicalPolarSpace ],
-  function( vs )
+#############################################################################
+#O Enumerator. 
+# This is it! This is the big method that returns an enumertor for a collection
+# of all elements of a given type of the polar space <ps>
+##
+InstallMethod( Enumerator, 
+	"for subspaces of a polar space",
+	[ IsSubspacesOfClassicalPolarSpace ],
+	function( vs )
 
     ## This method returns the enumerator for the elements of
     ## a polar space, of a given type. There are three "helper"
-    ## operations involved here: enum_orthogonal, enum_hermitian,
-    ## and enum_symplectic. At the moment, we do not have nice methods
+    ## operations involved here: FG_enum_orthogonal, FG_enum_hermitian,
+    ## and FG_enum_symplectic. At the moment, we do not have nice methods
     ## for the points of a hermitian space, and for varieties of 
     ## a symplectic space.
 
@@ -2026,11 +2084,11 @@ InstallMethod( Enumerator, [ IsSubspacesOfClassicalPolarSpace ],
 
      if HasIsCanonicalPolarSpace( ps ) and IsCanonicalPolarSpace( ps ) then     
         if type in [ "hyperbolic", "elliptic", "parabolic" ] then
-           e := enum_orthogonal(ps, j);
+           e := FG_enum_orthogonal(ps, j);
         elif type = "hermitian" then
-           e := enum_hermitian(ps, j);
+           e := FG_enum_hermitian(ps, j);
         elif type = "symplectic" then
-           e := enum_symplectic(ps, j);  
+           e := FG_enum_symplectic(ps, j);  
         else
            Error("Unknown polar space type");
         fi;
@@ -2055,11 +2113,11 @@ InstallMethod( Enumerator, [ IsSubspacesOfClassicalPolarSpace ],
         pscanonical := Source(iso)!.geometry;     
 
         if type in [ "hyperbolic", "elliptic", "parabolic" ] then
-           e := enum_orthogonal(pscanonical, j);
+           e := FG_enum_orthogonal(pscanonical, j);
         elif type = "hermitian" then
-           e := enum_hermitian(pscanonical, j);
+           e := FG_enum_hermitian(pscanonical, j);
         elif type = "symplectic" then
-           e := enum_symplectic(pscanonical, j);  
+           e := FG_enum_symplectic(pscanonical, j);  
         else
            Error("Unknown polar space type");
         fi;
@@ -2092,10 +2150,15 @@ InstallMethod( Enumerator, [ IsSubspacesOfClassicalPolarSpace ],
    end );
 
 
-InstallMethod( Enumerator, "for shadow subspaces of a polar space",
-[IsShadowSubspacesOfClassicalPolarSpace and
-                            IsShadowSubspacesOfClassicalPolarSpaceRep ],
-  function( res )
+#############################################################################
+#O Enumerator. 
+# returns an eneumerator for a collection of shadow subspaces of an element of
+# a polar space.
+##
+InstallMethod( Enumerator, 
+	"for shadow subspaces of a polar space",
+	[IsShadowSubspacesOfClassicalPolarSpace and IsShadowSubspacesOfClassicalPolarSpaceRep ],
+	function( res )
     
     # Here we use the quotient geometry over res!.inner to compute
     # the residual.

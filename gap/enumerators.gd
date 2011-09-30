@@ -101,38 +101,40 @@ DeclareGlobalFunction( "FG_herm_Sbar_unrank" );
 DeclareGlobalFunction( "FG_herm_Sbar_rank" ); 
 
 #############################################################################
-# Low level ElementNumber/NumberElement functions (I left these currently as operations
-# in case an extra debug round would be necessary, this could be useful).
+# Low level ElementNumber/NumberElement functions 
 #############################################################################
 
-DeclareOperation( "QElementNumber", [IsPosInt, IsPosInt, IsInt]);
-DeclareOperation( "QplusElementNumber", [IsPosInt, IsPosInt, IsInt]);
-DeclareOperation( "QminusElementNumber", [IsPosInt, IsPosInt, IsInt]);
-DeclareOperation( "HermElementNumber", [IsPosInt, IsPosInt, IsInt]);
+DeclareGlobalFunction( "QElementNumber" );
+DeclareGlobalFunction( "QplusElementNumber" );
+DeclareGlobalFunction( "QminusElementNumber" );
+DeclareGlobalFunction( "HermElementNumber" );
 
-DeclareOperation( "QNumberElement", [IsPosInt, IsPosInt, IsSubspaceOfClassicalPolarSpace]);
-DeclareOperation( "QplusNumberElement", [IsPosInt, IsPosInt, IsSubspaceOfClassicalPolarSpace]);
-DeclareOperation( "QminusNumberElement", [IsPosInt, IsPosInt, IsSubspaceOfClassicalPolarSpace]);
-DeclareOperation( "HermNumberElement", [IsPosInt, IsPosInt, IsSubspaceOfClassicalPolarSpace]);
-
-#############################################################################
-# Low level enumerators for points of polar spaces.
-#############################################################################
-
-DeclareGlobalFunction("specialresidual");
-DeclareGlobalFunction("enumpolarspace");
-DeclareGlobalFunction("enum_orthogonal");
-DeclareGlobalFunction("enum_hermitian");
-DeclareGlobalFunction("enum_symplectic");
-DeclareGlobalFunction( "enum_line" );
-DeclareGlobalFunction( "enum_BaerSubline" );
-DeclareGlobalFunction( "enum_unital" );
+DeclareGlobalFunction( "QNumberElement" );
+DeclareGlobalFunction( "QplusNumberElement" );
+DeclareGlobalFunction( "QminusNumberElement" );
+DeclareGlobalFunction( "HermNumberElement" );
 
 #############################################################################
 # The enumerator for points of a polar space, bundled in one operation.
 #############################################################################
 
 DeclareOperation( "AntonEnumerator", [IsSubspacesOfClassicalPolarSpace]);
+
+#############################################################################
+# Low level enumerators
+#############################################################################
+
+#the next three are never used.
+#DeclareGlobalFunction( "enum_line" );
+#DeclareGlobalFunction( "enum_BaerSubline" );
+#DeclareGlobalFunction( "enum_unital" );
+
+DeclareGlobalFunction("FG_specialresidual");
+DeclareGlobalFunction("FG_enum_orthogonal");
+DeclareGlobalFunction("FG_enum_hermitian");
+DeclareGlobalFunction("FG_enum_symplectic");
+
+#DeclareGlobalFunction("enumpolarspace"); #does not occur
 
 #############################################################################
 # The enumerator using the orbit. This is the only operation declaration in 
