@@ -47,12 +47,12 @@
 # - NaturalEmbeddingByFieldReduction: done
 # - NaturalEmbeddingBySubfield: done
 # - IsomorphismPolarSpaces(NC): done
-# - VeroneseMap: move this to schemes
-# - SegreMap: move this to schemes
+# - VeroneseMap: move this to varieties: done
+# - SegreMap: move this to varieties: done
 # - PluckerCoordinates: not documented
 # - InversePluckerCoordinates: not documented
 # - KleinCorrespondence: done
-# - GrassmannMap: move this to schemes
+# - GrassmannMap: move this to varieties: done
 # - NaturalDuality: done
 # - ProjectiveCompletion: done
 #
@@ -110,61 +110,71 @@ InstallMethod( GeometryMorphismByFunction,
 		SetFilterObj( morphism, IsGeometryMorphism ); 
 		return morphism;
 	end );  
+
 #############################################################################
-#
-# Display methods:
-#
+# Display methods
 #############################################################################
 
-InstallMethod( ViewObj, [ IsGeometryMorphism ],
-  function( f )
-     Print("<geometry morphism from "); 
-     ViewObj(Source(f));
-     Print( " to " );
-     ViewObj(Range(f));
-     Print(">");
-  end );
+InstallMethod( ViewObj, 
+	"for a geometry morphism",
+	[ IsGeometryMorphism ],
+	function( f )
+		Print("<geometry morphism from "); 
+		ViewObj(Source(f));
+		Print( " to " );
+		ViewObj(Range(f));
+		Print(">");
+	end );
 
-InstallMethod( PrintObj, [ IsGeometryMorphism ],
-  function( f )
-     Print("Geometry morphism:\n ", f, "\n");
-  end );
+InstallMethod( PrintObj,
+	"for a geometry morphism",
+	[ IsGeometryMorphism ],
+	function( f )
+		Print("Geometry morphism:\n ", f, "\n");
+	end );
 
-InstallMethod( Display, [ IsGeometryMorphism ],
-  function( f )
-     Print("Geometry morphism: ", Source(f), " -> ", Range(f), "\n");
-  end );
+InstallMethod( Display, 
+	"for a geometry morphism",
+	[ IsGeometryMorphism ],
+	function( f )
+		Print("Geometry morphism: ", Source(f), " -> ", Range(f), "\n");
+	end );
 
+InstallMethod( ViewObj,
+	"for a geometry morphism",
+	[ IsGeometryMorphism and IsMappingByFunctionWithInverseRep ],
+	function( f )
+		Print("<geometry morphism from "); 
+		ViewObj(Source(f));
+		Print( " to " );
+		ViewObj(Range(f));
+		Print(">");
+	end );
 
-InstallMethod( ViewObj, [ IsGeometryMorphism and IsMappingByFunctionWithInverseRep ],
-  function( f )
-     Print("<geometry morphism from "); 
-     ViewObj(Source(f));
-     Print( " to " );
-     ViewObj(Range(f));
-     Print(">");
-  end );
+InstallMethod( ViewObj, 
+	"for a geometry morphism",
+	[ IsGeometryMorphism and IsMappingByFunctionRep ],
+	function( f )
+		Print("<geometry morphism from "); 
+		ViewObj(Source(f));
+		Print( " to " );
+		ViewObj(Range(f));
+		Print(">");
+	end );
 
+InstallMethod( PrintObj, 
+	"for a geometry morphism",
+	[ IsGeometryMorphism and IsMappingByFunctionRep ],
+	function( f )
+		Print("Geometry morphism:\n ", f, "\n");
+	end );
 
-InstallMethod( ViewObj, [ IsGeometryMorphism and IsMappingByFunctionRep ],
-  function( f )
-     Print("<geometry morphism from "); 
-     ViewObj(Source(f));
-     Print( " to " );
-     ViewObj(Range(f));
-     Print(">");
-  end );
-
-InstallMethod( PrintObj, [ IsGeometryMorphism and IsMappingByFunctionRep ],
-  function( f )
-     Print("Geometry morphism:\n ", f, "\n");
-  end );
-
-InstallMethod( Display, [ IsGeometryMorphism and IsMappingByFunctionRep ],
-  function( f )
-     Print("Geometry morphism: ", Source(f), " -> ", Range(f), "\n");
-  end );
-
+InstallMethod( Display,
+	"for a geometry morphism",
+	[ IsGeometryMorphism and IsMappingByFunctionRep ],
+	function( f )
+		Print("Geometry morphism: ", Source(f), " -> ", Range(f), "\n");
+	end );
 
 ############################################################
 ## Generic methods for the Image* operations for IsGeometryMorphism. 
@@ -1029,7 +1039,6 @@ InstallGlobalFunction( LeukBasis,
     return t;
   end );
 
-
 # CHECKED 28/09/11 jdb (but not tested rigourously).
 #############################################################################
 #O  NaturalEmbeddingByFieldReduction( <geom1>, <geom2>, <bool> ) 
@@ -1703,14 +1712,12 @@ InstallMethod( NaturalProjectionBySubspaceNC,
     return map;
   end );
 
-
 #############################################################################
 # two helper operations. They can be used by the users, but on the other hand
 # the form of the Klein quadric is fixed, so this is against the philiosphy of
 # FinInG, at least for user functions. Also, there are no checks. So I will not
 # describe these in the documentation.
 #############################################################################
-
 
 # CHECKED 28/09/11 jdb
 #############################################################################
@@ -1822,7 +1829,6 @@ InstallMethod( KleinCorrespondence,
 
     ## put intertwiner in PGammaL(4,q)->PGO^+(6,q) 
 	end );
-
 
 # CHECKED 28/09/11 jdb
 #############################################################################
@@ -1992,140 +1998,4 @@ InstallMethod( NaturalDuality,
     SetIsBijective( map, true );
     return map;
  end );
-
-
-
-# the next one will be moved to varieties.gi.
-
-InstallMethod( VeroneseMap, "given a projective space PG(n,q)",
-    [ IsProjectiveSpace ],
-  function( pgdomain )
-    local n,F,n2,pgimage,varmap,func,
-          tups,beta,betainv,hom,
-          g1,g2,twiner,gens,newgens;
-    n := pgdomain!.dimension + 1;
-    F := pgdomain!.basefield;
-    n2 := (n-1)*(n+2)/2;
-    pgimage := VeroneseVariety(n2, F);
-
-    func := function( point )
-      local i,j,list;
-      list:=[];
-      for i in [1..n] do
-        for j in [i..n] do
-          Add(list, point!.obj[i]*point!.obj[j] );
-        od;
-      od;
-      ConvertToVectorRepNC( list, F );
-      return Wrap(pgimage, 1, list);
-    end;
-
-    tups := Filtered(Tuples([1..n], 2),i->i[2]>=i[1]);
-
-    beta := function( m )
-      local rows;
-      rows := List([1..n], i -> m[i]{[i..n]});
-      return Concatenation(rows);
-    end;
-
-    betainv := function( v )
-      local matb, i, j, x;
-      matb := ShallowCopy( NullMat(n, n, F) );
-          for i in [1..n] do
-              for j in [i..n] do
-                  x := v[Position(tups,[i,j])];
-                  matb[i][j] := x;
-                  matb[j][i] := x;
-              od;
-          od;
-      return matb;
-    end;
-      
-    hom := function( m )
-      local basis1, basis2, image, mat;
-      mat := m!.mat;
-      basis1 := IdentityMat(n2+1, F);
-      basis2 := List(basis1, betainv);
-      image := List(basis2, b -> beta( TransposedMat(mat) * b * mat ));  
-      ConvertToMatrixRepNC( image, F );       
-      return ProjElWithFrob(image, IdentityMapping(F), F);
-    end;
-   
-    g1 := HomographyGroup( pgdomain );
-    gens := GeneratorsOfGroup( g1 );
-    newgens := List(gens, hom);
-    g2 := Group( newgens );
-    SetSize(g2, Size(g1));
-    twiner := GroupHomomorphismByImagesNC(g1, g2, gens, newgens);
-    SetIsBijective(twiner, true);
-
-    varmap := GeometryMorphismByFunction(Points(pgdomain), Points(pgimage), func);
-    SetIsInjective( varmap, true );
-    SetIntertwiner(varmap, twiner);
-    return varmap;
-  end );
-
-InstallMethod( VeroneseMap, "given a dimension and field",
-    [ IsPosInt, IsField ],
-  function( d, F )
-    return VeroneseMap( ProjectiveSpace(d, F) );
-  end );
-
-InstallMethod( VeroneseMap, "given a dimension and field order",
-    [ IsPosInt, IsPosInt ],
-  function( d, q )
-    return VeroneseMap( ProjectiveSpace(d, q) );
-  end );
-
-InstallMethod( GrassmannMap, "given a dimension k and a projective space",
-    [ IsPosInt, IsProjectiveSpace ],
-
-  ## Warning: this operation is not compatible with
-  ## PluckerCoordinates. To get the same image, you
-  ## need to multiply the fifth coordinate by -1.
-
-  function( k, pgdomain )
-    local n,F,pgimage,varmap,func,dim;
-    n := pgdomain!.dimension;  ## projective dimension
-    F := pgdomain!.basefield;
- 
-    if (k <= 0  or k >= n-1) then 
-         Error("The dimension of the subspace has to be at least 1 and at most ", n-2);
-    fi;
-
-   ## ambient projective space of image has dimension Binomial(n+1,k+1)-1
-    dim := Binomial( n+1, k+1 ) - 1;
-    pgimage := GrassmannVariety(k, n, F); 
-
-    func := function( var )
-      local basis,vector,list;
-      if ProjectiveDimension(var) <> k then 
-         Error("Input must have projective dimension ", k, "\n");
-      fi;
-      basis := var!.obj;
-      list := TransposedMat(basis); 
-      vector := List(Combinations([1..n+1], k+1), i -> DeterminantMat( list{i} ));  
-      ConvertToVectorRepNC( vector, F );
-      return Wrap(pgimage, 1, vector);
-    end;
-
-    varmap := GeometryMorphismByFunction(ElementsOfIncidenceStructure(pgdomain, k+1), 
-                                         Points(pgimage), func);
-    SetIsInjective( varmap, true );
-    return varmap;
-  end );
-
-InstallMethod( GrassmannMap, "given a dimension k and a projective space",
-    [ IsPosInt, IsPosInt, IsPosInt ],
-  function( k, n, q )
-    return GrassmannMap( k, ProjectiveSpace(n, q));
-  end );
-
-#InstallMethod( GrassmannMap, "given collection of varieties of a projectivespace",
-#    [ IsAllSubspacesOfProjectiveSpace ],
-#  function( vars )
-#    return GrassmannMap( vars!.type-1, vars!.geometry);
-#  end );
-
-
 

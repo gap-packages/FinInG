@@ -382,6 +382,7 @@ InstallMethod( PointsOfSegreVariety, "for a Segre variety",
 		
 
 ### 5. Veronese Varieties ###
+# the map in the last section comes from morphism.gi.
 
 InstallMethod( VeroneseMap, "given a projective space",
 				[IsProjectiveSpace],
@@ -457,6 +458,139 @@ InstallMethod( ConicOnFivePoints, "given a set of five points of a projective pl
 
     return ProjectiveVariety( pg, [poly] );
   end ); 
+
+
+### morphism suff.
+
+InstallMethod( VeroneseMap, "given a projective space PG(n,q)",
+    [ IsProjectiveSpace ],
+  function( pgdomain )
+    local n,F,n2,pgimage,varmap,func,
+          tups,beta,betainv,hom,
+          g1,g2,twiner,gens,newgens;
+    n := pgdomain!.dimension + 1;
+    F := pgdomain!.basefield;
+    n2 := (n-1)*(n+2)/2;
+    pgimage := VeroneseVariety(n2, F);
+
+    func := function( point )
+      local i,j,list;
+      list:=[];
+      for i in [1..n] do
+        for j in [i..n] do
+          Add(list, point!.obj[i]*point!.obj[j] );
+        od;
+      od;
+      ConvertToVectorRepNC( list, F );
+      return Wrap(pgimage, 1, list);
+    end;
+
+    tups := Filtered(Tuples([1..n], 2),i->i[2]>=i[1]);
+
+    beta := function( m )
+      local rows;
+      rows := List([1..n], i -> m[i]{[i..n]});
+      return Concatenation(rows);
+    end;
+
+    betainv := function( v )
+      local matb, i, j, x;
+      matb := ShallowCopy( NullMat(n, n, F) );
+          for i in [1..n] do
+              for j in [i..n] do
+                  x := v[Position(tups,[i,j])];
+                  matb[i][j] := x;
+                  matb[j][i] := x;
+              od;
+          od;
+      return matb;
+    end;
+      
+    hom := function( m )
+      local basis1, basis2, image, mat;
+      mat := m!.mat;
+      basis1 := IdentityMat(n2+1, F);
+      basis2 := List(basis1, betainv);
+      image := List(basis2, b -> beta( TransposedMat(mat) * b * mat ));  
+      ConvertToMatrixRepNC( image, F );       
+      return ProjElWithFrob(image, IdentityMapping(F), F);
+    end;
+   
+    g1 := HomographyGroup( pgdomain );
+    gens := GeneratorsOfGroup( g1 );
+    newgens := List(gens, hom);
+    g2 := Group( newgens );
+    SetSize(g2, Size(g1));
+    twiner := GroupHomomorphismByImagesNC(g1, g2, gens, newgens);
+    SetIsBijective(twiner, true);
+
+    varmap := GeometryMorphismByFunction(Points(pgdomain), Points(pgimage), func);
+    SetIsInjective( varmap, true );
+    SetIntertwiner(varmap, twiner);
+    return varmap;
+  end );
+
+InstallMethod( VeroneseMap, "given a dimension and field",
+    [ IsPosInt, IsField ],
+  function( d, F )
+    return VeroneseMap( ProjectiveSpace(d, F) );
+  end );
+
+InstallMethod( VeroneseMap, "given a dimension and field order",
+    [ IsPosInt, IsPosInt ],
+  function( d, q )
+    return VeroneseMap( ProjectiveSpace(d, q) );
+  end );
+
+InstallMethod( GrassmannMap, "given a dimension k and a projective space",
+    [ IsPosInt, IsProjectiveSpace ],
+
+  ## Warning: this operation is not compatible with
+  ## PluckerCoordinates. To get the same image, you
+  ## need to multiply the fifth coordinate by -1.
+
+  function( k, pgdomain )
+    local n,F,pgimage,varmap,func,dim;
+    n := pgdomain!.dimension;  ## projective dimension
+    F := pgdomain!.basefield;
+ 
+    if (k <= 0  or k >= n-1) then 
+         Error("The dimension of the subspace has to be at least 1 and at most ", n-2);
+    fi;
+
+   ## ambient projective space of image has dimension Binomial(n+1,k+1)-1
+    dim := Binomial( n+1, k+1 ) - 1;
+    pgimage := GrassmannVariety(k, n, F); 
+
+    func := function( var )
+      local basis,vector,list;
+      if ProjectiveDimension(var) <> k then 
+         Error("Input must have projective dimension ", k, "\n");
+      fi;
+      basis := var!.obj;
+      list := TransposedMat(basis); 
+      vector := List(Combinations([1..n+1], k+1), i -> DeterminantMat( list{i} ));  
+      ConvertToVectorRepNC( vector, F );
+      return Wrap(pgimage, 1, vector);
+    end;
+
+    varmap := GeometryMorphismByFunction(ElementsOfIncidenceStructure(pgdomain, k+1), 
+                                         Points(pgimage), func);
+    SetIsInjective( varmap, true );
+    return varmap;
+  end );
+
+InstallMethod( GrassmannMap, "given a dimension k and a projective space",
+    [ IsPosInt, IsPosInt, IsPosInt ],
+  function( k, n, q )
+    return GrassmannMap( k, ProjectiveSpace(n, q));
+  end );
+
+#InstallMethod( GrassmannMap, "given collection of varieties of a projectivespace",
+#    [ IsAllSubspacesOfProjectiveSpace ],
+#  function( vars )
+#    return GrassmannMap( vars!.type-1, vars!.geometry);
+#  end );
 
 
 

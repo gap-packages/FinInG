@@ -42,11 +42,12 @@
 # - tiny optimalisations: Size/NumberOfTotallySingularSubspaces? (see questions at methods)
 #   \in: should probably not change the element (see remark at method).
 # - Check Iterator.
-# - Check classical groups.
 # - see if commented out material at end of file is really obsolete.
 # - rename Polarity to PolarMap or something like that.
 # - probably a mistake on line 1705. corrected 27/9/2011 jdb.
 # - check if there is a technical problem with the setting of the collineation group of a hermitian vartiety as an attribute.
+# - check and test the groups part of polar spaces. I do not expect too much problems (or even non anymore), but I did not
+#   check enough yet. 
 #
 ########################################
 
