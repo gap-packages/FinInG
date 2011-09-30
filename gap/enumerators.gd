@@ -102,8 +102,8 @@ DeclareOperation( "QplusElementNumber", [IsPosInt, IsPosInt, IsInt]);
 DeclareOperation( "QminusElementNumber", [IsPosInt, IsPosInt, IsInt]);
 DeclareOperation( "HermElementNumber", [IsPosInt, IsPosInt, IsInt]);
 
-%DeclareGlobalFunction( "my_PG_element_normalize", 
-%                   [IsFFECollection, IsPosInt, IsPosInt]);
+#DeclareGlobalFunction( "my_PG_element_normalize", 
+#                   [IsFFECollection, IsPosInt, IsPosInt]);
 DeclareOperation( "evaluate_hyperbolic_quadratic_form", 
                    [IsPosInt, IsFFECollection, IsPosInt, IsPosInt]);
 DeclareOperation( "evaluate_hermitian_form", 

@@ -72,8 +72,9 @@ InstallGlobalFunction( Fining_div,
 	end );
 
 #############################################################################
-#F  Fining_ffenumber( a, b )
-# a,b: integers
+#F  Fining_ffenumber( q, a )
+# q: prime power, a: integer. Returns element number a, where element 0= Zero(GF(q))
+# element a (<>0) = Z(q)^(a-1)
 ##
 InstallGlobalFunction( Fining_ffenumber,
 	function(q, a)       
@@ -89,29 +90,29 @@ InstallGlobalFunction( Fining_ffenumber,
 #F  Fining_unrank_GFQ( q, rk )
 # q: prme power, rk: natural number
 ##
-InstallGlobalFunction( Fining_unrank_GFQ,
-	function(q, rk)
-		#local Q;
-		#Q := q * q;
-		if rk = 0 then
-			return 0*Z(q^2);
-		fi;
-		return Z(q^2)^(rk-1);
-	end );
+#InstallGlobalFunction( Fining_unrank_GFQ,
+#	function(q, rk)
+#		#local Q;
+#		#Q := q * q;
+#		if rk = 0 then
+#			return 0*Z(q^2);
+#		fi;
+#		return Z(q^2)^(rk-1);
+#	end );
 
 #the next function seems never used.
 #############################################################################
 #F  Fining_rank_GFQ( q, x )
 # q: prme power, x element of GF(q)
 ##
-InstallGlobalFunction( Fining_rank_GFQ, 
-	function(q, x)
-		if IsZero(x) then
-			return 0;
-		else
-			return LogFFE(x,Z(q^2))+1;
-		fi;
-	end );
+#InstallGlobalFunction( Fining_rank_GFQ, 
+#	function(q, x)
+#		if IsZero(x) then
+#			return 0;
+#		else
+#			return LogFFE(x,Z(q^2))+1;
+#		fi;
+#	end );
 
 #############################################################################
 #F  Fining_alpha_power( q, a )
@@ -1445,34 +1446,34 @@ InstallGlobalFunction( enum_unital,
 # "NumberElement" functions
 ##############################
 
-#merge these two, give it a sensible name, see if one can be thrown away...
+#merge these two, give it a sensible name, see if one can be thrown away... done.
 
-InstallGlobalFunction(my_PG_element_normalize,
-	[IsFFECollection, IsPosInt, IsPosInt],
-	function(v, offset, n)
+#InstallGlobalFunction(my_PG_element_normalize,
+#	[IsFFECollection, IsPosInt, IsPosInt],
+#	function(v, offset, n)
 
   ## This function takes the first nonzero element
   ## from the right (!) and normalises the vector v
   ## by this element.
 
-  local ii, i, a, one;
-  one := One(v[1]);	   
-  for ii in [0..n - 1] do 
-      i := n - 1 - ii;    
-      a := v[offset + i]; 
-      if not IsZero(a) then
-         if IsOne(a) then  
-	     return;
-         fi;
-         a := a^-1;
-         v{[offset..i-1+offset]} := a * v{[offset..i-1+offset]};
-         v[offset + i] := one;
-         return;
-      fi;
-  od;
-  Error("zero vector");
-
-end );
+#  local ii, i, a, one;
+#  one := One(v[1]);	   
+#  for ii in [0..n - 1] do 
+#      i := n - 1 - ii;    
+#      a := v[offset + i]; 
+#      if not IsZero(a) then
+#         if IsOne(a) then  
+#	     return;
+#         fi;
+#         a := a^-1;
+#         v{[offset..i-1+offset]} := a * v{[offset..i-1+offset]};
+#         v[offset + i] := one;
+#         return;
+#      fi;
+#  od;
+#  Error("zero vector");
+#
+#end );
 
 InstallMethod(S_rank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt],
   function(q, v, offset, n)
