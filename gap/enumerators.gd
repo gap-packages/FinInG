@@ -24,38 +24,99 @@
 #############################################################################
 
 #############################################################################
+# The enumerator functionality is quite technical. We need many tiny an less 
+# tiny helping functions. We go for a bottom up approach, where we first 
+# declare the helping functions, and then the real user stuff in the end.
+#############################################################################
+
+#############################################################################
 # Very Low level help functions
 #############################################################################
 
 DeclareGlobalFunction( "PositionNonZeroFromRight" );
-DeclareGlobalFunction( "Fining_pos" );
-DeclareGlobalFunction( "Fining_div" );
-DeclareGlobalFunction( "Fining_ffenumber" );
-DeclareGlobalFunction( "Fining_unrank_GFQ" );
-DeclareGlobalFunction( "Fining_rank_GFQ" );
-DeclareGlobalFunction( "Fining_alpha_power" );
-DeclareGlobalFunction( "Fining_log_alpha" );
-DeclareGlobalFunction( "Fining_beta_power" );
-DeclareGlobalFunction( "Fining_log_beta" );
-DeclareGlobalFunction( "Fining_norm_one_element" );
-DeclareGlobalFunction( "Fining_index_of_norm_one_element" );
+DeclareGlobalFunction( "FG_pos" );
+DeclareGlobalFunction( "FG_div" );
+DeclareGlobalFunction( "FG_ffenumber" );
+#DeclareGlobalFunction( "FG_unrank_GFQ" ); #never used
+#DeclareGlobalFunction( "FG_rank_GFQ" ); #never used
+DeclareGlobalFunction( "FG_alpha_power" );
+DeclareGlobalFunction( "FG_log_alpha" );
+DeclareGlobalFunction( "FG_beta_power" );
+DeclareGlobalFunction( "FG_log_beta" );
+DeclareGlobalFunction( "FG_norm_one_element" );
+DeclareGlobalFunction( "FG_index_of_norm_one_element" );
 DeclareGlobalFunction( "PG_element_normalize" );
 
+#DeclareOperation( "evaluate_hyperbolic_quadratic_form", 
+#                   [IsPosInt, IsFFECollection, IsPosInt, IsPosInt]);
+#DeclareOperation( "evaluate_hermitian_form", 
+#                   [IsPosInt, IsFFECollection, IsPosInt, IsInt]);
+
+DeclareGlobalFunction( "FG_evaluate_hyperbolic_quadratic_form" );
+DeclareGlobalFunction( "FG_evaluate_hermitian_form" );
 
 #############################################################################
-# Low level help operations (make it global functions?)
+# Low level help functions
 #############################################################################
 
-DeclareOperation( "nb_pts_Nbar", [IsPosInt, IsPosInt]);
-DeclareOperation( "nb_pts_S", [IsPosInt, IsPosInt]);
-DeclareOperation( "nb_pts_N", [IsPosInt, IsPosInt]);
-DeclareOperation( "nb_pts_N1", [IsPosInt, IsPosInt]);
-DeclareOperation( "nb_pts_Sbar", [IsPosInt, IsPosInt]);
+DeclareGlobalFunction( "FG_nb_pts_Nbar" ); 
+DeclareGlobalFunction( "FG_nb_pts_S" ); 
+DeclareGlobalFunction( "FG_nb_pts_N" ); 
+DeclareGlobalFunction( "FG_nb_pts_N1" ); 
+DeclareGlobalFunction( "FG_nb_pts_Sbar" ); 
 
+DeclareGlobalFunction( "FG_herm_nb_pts_N" ); 
+DeclareGlobalFunction( "FG_herm_nb_pts_S" ); 
+DeclareGlobalFunction( "FG_herm_nb_pts_N1" ); 
+DeclareGlobalFunction( "FG_herm_nb_pts_Sbar" ); 
 
+DeclareGlobalFunction( "FG_N1_unrank" ); 
+DeclareGlobalFunction( "FG_N1_rank" ); 
+
+DeclareGlobalFunction( "FG_N_unrank" ); 
+DeclareGlobalFunction( "FG_N_rank" ); 
+
+DeclareGlobalFunction( "FG_Nbar_unrank" ); 
+DeclareGlobalFunction( "FG_Nbar_rank" ); 
+
+#DeclareGlobalFunction( "S1_unrank" ); #not found in .gi file
+#DeclareGlobalFunction( "S1_rank" ); #not found in .gi file
+
+DeclareGlobalFunction( "FG_S_unrank" );
+DeclareGlobalFunction( "FG_S_rank" ); 
+
+DeclareGlobalFunction( "FG_Sbar_unrank" ); 
+DeclareGlobalFunction( "FG_Sbar_rank" ); 
+
+DeclareGlobalFunction( "FG_herm_N1_unrank" ); 
+DeclareGlobalFunction( "FG_herm_N1_rank" ); 
+
+DeclareGlobalFunction( "FG_herm_N_unrank" ); 
+DeclareGlobalFunction( "FG_herm_N_rank" ); 
+
+DeclareGlobalFunction( "FG_herm_S_unrank" ); 
+DeclareGlobalFunction( "FG_herm_S_rank" ); 
+
+DeclareGlobalFunction( "FG_herm_Sbar_unrank" ); 
+DeclareGlobalFunction( "FG_herm_Sbar_rank" ); 
 
 #############################################################################
-# Constructor operations:
+# Low level ElementNumber/NumberElement functions (I left these currently as operations
+# in case an extra debug round would be necessary, this could be useful).
+#############################################################################
+
+DeclareOperation( "QElementNumber", [IsPosInt, IsPosInt, IsInt]);
+DeclareOperation( "QplusElementNumber", [IsPosInt, IsPosInt, IsInt]);
+DeclareOperation( "QminusElementNumber", [IsPosInt, IsPosInt, IsInt]);
+DeclareOperation( "HermElementNumber", [IsPosInt, IsPosInt, IsInt]);
+
+DeclareOperation( "QNumberElement", [IsPosInt, IsPosInt, IsSubspaceOfClassicalPolarSpace]);
+DeclareOperation( "QplusNumberElement", [IsPosInt, IsPosInt, IsSubspaceOfClassicalPolarSpace]);
+DeclareOperation( "QminusNumberElement", [IsPosInt, IsPosInt, IsSubspaceOfClassicalPolarSpace]);
+DeclareOperation( "HermNumberElement", [IsPosInt, IsPosInt, IsSubspaceOfClassicalPolarSpace]);
+
+#############################################################################
+# Low level enumerators for points of polar spaces.
 #############################################################################
 
 DeclareGlobalFunction("specialresidual");
@@ -67,49 +128,15 @@ DeclareGlobalFunction( "enum_line" );
 DeclareGlobalFunction( "enum_BaerSubline" );
 DeclareGlobalFunction( "enum_unital" );
 
-DeclareOperation( "EnumeratorByOrbit", [IsSubspacesOfClassicalPolarSpace]);
+#############################################################################
+# The enumerator for points of a polar space, bundled in one operation.
+#############################################################################
+
 DeclareOperation( "AntonEnumerator", [IsSubspacesOfClassicalPolarSpace]);
-DeclareOperation( "herm_nb_pts_N", [IsPosInt, IsPosInt]);
-DeclareOperation( "herm_nb_pts_S", [IsPosInt, IsPosInt]);
-DeclareOperation( "herm_nb_pts_N1", [IsPosInt, IsPosInt]);
-DeclareOperation( "herm_nb_pts_Sbar", [IsPosInt, IsPosInt]);
 
-DeclareOperation( "N1_unrank", [IsPosInt, IsFFECollection, IsPosInt, IsPosInt, IsInt]);
-DeclareOperation( "N1_rank", [IsPosInt, IsFFECollection, IsPosInt, IsPosInt]);
-DeclareOperation( "N_unrank", [IsPosInt, IsFFECollection, IsPosInt, IsPosInt, IsInt]);
-DeclareOperation( "N_rank", [IsPosInt, IsFFECollection, IsPosInt, IsPosInt]);
-DeclareOperation( "Nbar_unrank", [IsPosInt, IsFFECollection, IsPosInt, IsPosInt, IsInt]);
-DeclareOperation( "Nbar_rank", [IsPosInt, IsFFECollection, IsPosInt, IsPosInt]);
-DeclareOperation( "S1_unrank", [IsPosInt, IsFFECollection, IsPosInt, IsPosInt, IsInt]);
-DeclareOperation( "S1_rank", [IsPosInt, IsFFECollection, IsPosInt, IsPosInt]);
-DeclareOperation( "S_unrank", [IsPosInt, IsFFECollection, IsPosInt, IsPosInt, IsInt]);
-DeclareOperation( "S_rank", [IsPosInt, IsFFECollection, IsPosInt, IsPosInt]);
-DeclareOperation( "Sbar_unrank", [IsPosInt, IsFFECollection, IsPosInt, IsPosInt, IsInt]);
-DeclareOperation( "Sbar_rank", [IsPosInt, IsFFECollection, IsPosInt, IsPosInt]);
+#############################################################################
+# The enumerator using the orbit. This is the only operation declaration in 
+# this file for a user intended operation. 
+#############################################################################
 
-
-DeclareOperation( "herm_N1_unrank", [IsPosInt, IsFFECollection, IsPosInt, IsPosInt, IsInt]);
-DeclareOperation( "herm_N1_rank", [IsPosInt, IsFFECollection, IsPosInt, IsPosInt]);
-DeclareOperation( "herm_N_unrank", [IsPosInt, IsFFECollection, IsPosInt, IsPosInt, IsInt]);
-DeclareOperation( "herm_N_rank", [IsPosInt, IsFFECollection, IsPosInt, IsPosInt]);
-DeclareOperation( "herm_S_unrank", [IsPosInt, IsFFECollection, IsPosInt, IsPosInt, IsInt]);
-DeclareOperation( "herm_S_rank", [IsPosInt, IsFFECollection, IsPosInt, IsPosInt]);
-DeclareOperation( "herm_Sbar_unrank", [IsPosInt, IsFFECollection, IsPosInt, IsPosInt, IsInt]);
-DeclareOperation( "herm_Sbar_rank", [IsPosInt, IsFFECollection, IsPosInt, IsPosInt]);
-
-DeclareOperation( "QElementNumber", [IsPosInt, IsPosInt, IsInt]);
-DeclareOperation( "QplusElementNumber", [IsPosInt, IsPosInt, IsInt]);
-DeclareOperation( "QminusElementNumber", [IsPosInt, IsPosInt, IsInt]);
-DeclareOperation( "HermElementNumber", [IsPosInt, IsPosInt, IsInt]);
-
-#DeclareGlobalFunction( "my_PG_element_normalize", 
-#                   [IsFFECollection, IsPosInt, IsPosInt]);
-DeclareOperation( "evaluate_hyperbolic_quadratic_form", 
-                   [IsPosInt, IsFFECollection, IsPosInt, IsPosInt]);
-DeclareOperation( "evaluate_hermitian_form", 
-                   [IsPosInt, IsFFECollection, IsPosInt, IsInt]);
-
-DeclareOperation( "QNumberElement", [IsPosInt, IsPosInt, IsSubspaceOfClassicalPolarSpace]);
-DeclareOperation( "QplusNumberElement", [IsPosInt, IsPosInt, IsSubspaceOfClassicalPolarSpace]);
-DeclareOperation( "QminusNumberElement", [IsPosInt, IsPosInt, IsSubspaceOfClassicalPolarSpace]);
-DeclareOperation( "HermNumberElement", [IsPosInt, IsPosInt, IsSubspaceOfClassicalPolarSpace]);
+DeclareOperation( "EnumeratorByOrbit", [IsSubspacesOfClassicalPolarSpace]);
