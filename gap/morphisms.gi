@@ -816,26 +816,40 @@ InstallGlobalFunction( BlownUpProjectiveSpaceBySubfield,
   end );
 
 
+# CHECKED 1/10/11 jdb
+#############################################################################
+#O  BlownUpSubspaceOfProjectiveSpace( <B>, <mat> ) 
+#  blows up a subspace of a projective space by field reduction
+##
 InstallGlobalFunction( BlownUpSubspaceOfProjectiveSpace,
-    "blows up a subspace of a projective space by field reduction",
-  function(basis,subspace)
-  local pg1,q,t,r,pg2,mat1,mat2;
-    pg1:=AmbientGeometry(subspace);
-  	q:=basis!.q;
-	t:=basis!.d;
-	if not pg1!.basefield=GF(q^t) then Error("The basis and the subspace are not compatible!");
-	fi;
-	r:=Dimension(pg1)+1;
-	pg2:=PG(r*t-1,q);
-	mat1:=subspace!.obj;
-	if subspace!.type = 1 then mat1 := [subspace!.obj]; fi; 
-	mat2:=BlownUpMat(basis,mat1);
-	return VectorSpaceToElement(pg2,mat2);
-  end );
+	"for a basis and a subspace of a projective space",
+	[ IsBasis, IsSubspaceOfProjectiveSpace ],
+	function(basis,subspace)
+	local pg1,q,t,r,pg2,mat1,mat2;
+		pg1:=AmbientGeometry(subspace);
+		q:=basis!.q;
+		t:=basis!.d;
+		if not pg1!.basefield=GF(q^t) then 
+			Error("The basis and the subspace are not compatible!");
+		fi;
+		r:=Dimension(pg1)+1;
+		pg2:=PG(r*t-1,q);
+		mat1:=subspace!.obj;
+		if subspace!.type = 1 then 
+			mat1 := [subspace!.obj]; 
+		fi; 
+		mat2:=BlownUpMat(basis,mat1);
+		return VectorSpaceToElement(pg2,mat2);
+	end );
 
-InstallGlobalFunction( BlownUpSubspaceOfProjectiveSpaceBySubfield,
+#############################################################################
+#O  BlownUpSubspaceOfProjectiveSpace( <B>, <mat> ) 
+#	blows up a subspace of projective space by field reduction
 # This is w.r.t. to the canonical basis of the field over the subfield.
-	"blows up a subspace of projective space by field reduction",
+##
+InstallGlobalFunction( BlownUpSubspaceOfProjectiveSpaceBySubfield,
+	"for a field and a subspace of a projective space",
+	[ IsField, IsSubspaceOfProjectiveSpace],
 	function(subfield,subspace)
 	local pg,field,basis;
 		pg:=AmbientGeometry(subspace);

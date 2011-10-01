@@ -62,9 +62,14 @@ DeclareGlobalFunction( "LeukBasis" );
 
 DeclareGlobalFunction( "BlownUpProjectiveSpace" );  #change to operation.
 DeclareGlobalFunction( "BlownUpProjectiveSpaceBySubfield"); #operation.
-DeclareGlobalFunction( "BlownUpSubspaceOfProjectiveSpace" ); #change to operation.
-DeclareGlobalFunction( "BlownUpSubspaceOfProjectiveSpaceBySubfield" ); #change to operation.
-DeclareGlobalFunction( "IsDesarguesianSpreadElement" ); #change to operation.
+DeclareOperation( "BlownUpSubspaceOfProjectiveSpace", [ IsBasis, IsSubspaceOfProjectiveSpace ] );
+DeclareOperation( "BlownUpSubspaceOfProjectiveSpaceBySubfield" ); #change to operation.
+
+
+
+#DeclareGlobalFunction( "BlownUpSubspaceOfProjectiveSpace" ); #change to operation.
+#DeclareGlobalFunction( "BlownUpSubspaceOfProjectiveSpaceBySubfield" ); #change to operation.
+#DeclareGlobalFunction( "IsDesarguesianSpreadElement" ); #change to operation.
 DeclareGlobalFunction( "IsBlownUpSubspaceOfProjectiveSpace" ); #change to operation.
 
 ## isomorphisms
