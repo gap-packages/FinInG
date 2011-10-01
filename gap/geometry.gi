@@ -38,6 +38,8 @@
 # - check and document operation IncidenceStructure (almost bottom of file).
 ########################################
 
+Print("loading: geometry\c");
+
 InstallValue( DESARGUES, rec() ); #name of this variable will remind us for ever that this package was called Desargues in earlier days.
 
 #############################################################################

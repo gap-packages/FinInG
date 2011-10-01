@@ -36,6 +36,8 @@
 #
 ########################################
 
+Print(", correlations\c");
+
 ###################################################################
 # Code for the "standard duality" of a projective space. We want it to 
 # be an involutory mapping. To be used later on in the objects 

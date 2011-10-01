@@ -1,4 +1,4 @@
-Print("patching forms\n");
+Print("patching: forms\c ");
 
 InstallOtherMethod( \^, "for a pair of FFE vectors and an hermitian form",
   [ IsVectorList and IsFFECollColl, IsHermitianForm ],

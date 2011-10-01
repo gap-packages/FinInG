@@ -37,6 +37,8 @@
 #
 ########################################
 
+Print(", enumerators\c");
+
 #############################################################################
 # The enumerator functionality is quite technical. We need many tiny an less 
 # tiny helping functions. We go for a bottom up approach, where we first 

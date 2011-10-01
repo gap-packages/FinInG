@@ -41,6 +41,8 @@
 
 ## helping function. came from projectivespace.gi
 
+Print(", group\c");
+
 # CHECKED 5/09/11 jdb
 #############################################################################
 #F  MakeAllProjectivePoints( f,d )
