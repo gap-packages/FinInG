@@ -60,17 +60,17 @@ DeclareOperation( "GeometryMorphismByFunction",
 DeclareOperation( "ShrinkMat", [IsBasis, IsMatrix] );
 DeclareGlobalFunction( "LeukBasis" );
 
-DeclareGlobalFunction( "BlownUpProjectiveSpace" );  #change to operation.
-DeclareGlobalFunction( "BlownUpProjectiveSpaceBySubfield"); #operation.
-DeclareOperation( "BlownUpSubspaceOfProjectiveSpace", [ IsBasis, IsSubspaceOfProjectiveSpace ] );
-DeclareOperation( "BlownUpSubspaceOfProjectiveSpaceBySubfield" ); #change to operation.
-
-
-
+DeclareGlobalFunction( "BlownUpProjectiveSpace" );  #change to operation. is this one used?
+DeclareGlobalFunction( "BlownUpProjectiveSpaceBySubfield"); #operation. is this one used?
 #DeclareGlobalFunction( "BlownUpSubspaceOfProjectiveSpace" ); #change to operation.
 #DeclareGlobalFunction( "BlownUpSubspaceOfProjectiveSpaceBySubfield" ); #change to operation.
 #DeclareGlobalFunction( "IsDesarguesianSpreadElement" ); #change to operation.
-DeclareGlobalFunction( "IsBlownUpSubspaceOfProjectiveSpace" ); #change to operation.
+#DeclareGlobalFunction( "IsBlownUpSubspaceOfProjectiveSpace" ); #change to operation.
+
+DeclareOperation( "BlownUpSubspaceOfProjectiveSpace", [ IsBasis, IsSubspaceOfProjectiveSpace ] );
+DeclareOperation( "BlownUpSubspaceOfProjectiveSpaceBySubfield", [IsField, IsSubspaceOfProjectiveSpace ] ); #change to operation.
+DeclareOperation( "IsDesarguesianSpreadElement", [ IsBasis, IsSubspaceOfProjectiveSpace ] ); #change to operation. is this one used?
+DeclareOperation( "IsBlownUpSubspaceOfProjectiveSpace", [IsBasis, IsSubspaceOfProjectiveSpace ] ); #change to operation.
 
 ## isomorphisms
 

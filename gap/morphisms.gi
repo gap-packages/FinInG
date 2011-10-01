@@ -38,6 +38,8 @@
 # - in the same sense: do we want a NaturalDuality starting from Q(4,q) and Q-(5,q)? 
 #   And the self duality of Q(4,q) and W(3,q), q even.
 # - DO WE NEED TO USE ConvertToMatrixRepNC in the operation ShrinkMat ?
+# - test operations BlownUpSubspaceOfProjectiveSpace, BlownUpSubspaceOfProjectiveSpaceBySubfield, 
+#   IsDesarguesianSpreadElement and IsBlownUpSubspaceOfProjectiveSpace
 #
 # Documentation check list
 # - IsGeometryMorphism: done
@@ -821,7 +823,7 @@ InstallGlobalFunction( BlownUpProjectiveSpaceBySubfield,
 #O  BlownUpSubspaceOfProjectiveSpace( <B>, <mat> ) 
 #  blows up a subspace of a projective space by field reduction
 ##
-InstallGlobalFunction( BlownUpSubspaceOfProjectiveSpace,
+InstallMethod( BlownUpSubspaceOfProjectiveSpace,
 	"for a basis and a subspace of a projective space",
 	[ IsBasis, IsSubspaceOfProjectiveSpace ],
 	function(basis,subspace)
@@ -847,7 +849,7 @@ InstallGlobalFunction( BlownUpSubspaceOfProjectiveSpace,
 #	blows up a subspace of projective space by field reduction
 # This is w.r.t. to the canonical basis of the field over the subfield.
 ##
-InstallGlobalFunction( BlownUpSubspaceOfProjectiveSpaceBySubfield,
+InstallMethod( BlownUpSubspaceOfProjectiveSpaceBySubfield,
 	"for a field and a subspace of a projective space",
 	[ IsField, IsSubspaceOfProjectiveSpace],
 	function(subfield,subspace)
@@ -861,62 +863,75 @@ InstallGlobalFunction( BlownUpSubspaceOfProjectiveSpaceBySubfield,
 		return BlownUpSubspaceOfProjectiveSpace(basis,subspace);
 	end );
 
-  
-InstallGlobalFunction( IsDesarguesianSpreadElement, 
-    "checks if a subspace is a blown up point using field reduction",
-  function(basis,subspace)
-      local flag,q,t,pg1,pg2,em,basvecs,v,v1,i,mat,rt,r;
-	flag:=true;
-	q:=basis!.q;
-	t:=basis!.d;
-	pg2:=AmbientGeometry(subspace);
-	rt:=Dimension(pg2)+1;
-	if not (Dimension(subspace)+1 = t and IsInt(rt/t)) then flag:=false;
-	else
-	  r:=rt/t;
-	  pg1:=PG(r-1,q^t);
-	  basvecs:=BasisVectors(basis);
-	  v:=Coordinates(Random(Points(subspace)));
-	  v1:=List([1..r],i->v{[(i-1)*t+1..i*t]}*basvecs);
-	  mat:=BlownUpMat(basis,[v1]);
-	  flag:=subspace = VectorSpaceToElement(pg2,mat);
-	fi;
-	return flag;
-  end );
+#############################################################################
+#O  IsDesarguesianSpreadElement( <B>, <mat> ) 
+# checks if a subspace is a blown up point using field reduction, w.r.t. a basis
+##
+InstallMethod( IsDesarguesianSpreadElement, 
+	"for a basis and a subspace of a projective space",
+	[ IsBasis, IsSubspaceOfProjectiveSpace ],
+	function(basis,subspace)
+		local flag,q,t,pg1,pg2,em,basvecs,v,v1,i,mat,rt,r;
+		flag:=true;
+		q:=basis!.q;
+		t:=basis!.d;
+		pg2:=AmbientGeometry(subspace);
+		rt:=Dimension(pg2)+1;
+		if not (Dimension(subspace)+1 = t and IsInt(rt/t)) then 
+			flag:=false;
+		else
+			r:=rt/t;
+			pg1:=PG(r-1,q^t);
+			basvecs:=BasisVectors(basis);
+			v:=Coordinates(Random(Points(subspace)));
+			v1:=List([1..r],i->v{[(i-1)*t+1..i*t]}*basvecs);
+			mat:=BlownUpMat(basis,[v1]);
+			flag:=subspace = VectorSpaceToElement(pg2,mat);
+		fi;
+		return flag;
+	end );
 	  
 	  
-InstallGlobalFunction( IsBlownUpSubspaceOfProjectiveSpace, 
-	"checks if a subspace is blown up using field reduction",
- # It's important that we include a basis in the arguments, 
- # since for every subspace, provided it has the right dimension, there exists some
- # basis with respect to which the subspace is blown up.
-  function(basis,subspace)
-    local flag,q,F,t,K,pg2,rt,r,pg1,basvecs,mat1,span,x,v,v1,i;
-	flag:=true;
-	q:=basis!.q;
-	F:=GF(q);
-	t:=basis!.d;
-	K:=GF(q^t);
-	pg2:=AmbientGeometry(subspace);
-	rt:=Dimension(pg2)+1;
-	if not (IsInt(rt/t) and IsInt((Dimension(subspace)+1)/t)) then flag:=false;
-	else
-	  r:=rt/t;
-	  pg1:=PG(r-1,q^t);
-	  basvecs:=BasisVectors(basis);
-	  mat1:=[];
-	  span:=[];
-	  repeat
-	  repeat x:=Random(Points(subspace)); until not x in span;
-	    v:=Coordinates(x);
-	    v1:=List([1..r],i->v{[(i-1)*t+1..i*t]}*basvecs);
-	    Add(mat1,v1);
-	    span:=VectorSpaceToElement(pg2,BlownUpMat(basis,mat1));
-	  until Dimension(span)=Dimension(subspace);
-	  if not span = subspace then flag:= false;
-	  fi;
-	fi;
-	return flag;
+#############################################################################
+#O  IsBlownUpSubspaceOfProjectiveSpace( <B>, <mat> ) 
+# checks if a subspace is blown up using field reduction, w.r.t. a basis
+##
+
+InstallMethod( IsBlownUpSubspaceOfProjectiveSpace, 
+	"for a basis and a subspace of a projective space",
+	[ IsBasis, IsSubspaceOfProjectiveSpace ],
+	# It's important that we include a basis in the arguments, 
+	# since for every subspace, provided it has the right dimension, there exists some
+	# basis with respect to which the subspace is blown up.
+	function(basis,subspace)
+		local flag,q,F,t,K,pg2,rt,r,pg1,basvecs,mat1,span,x,v,v1,i;
+		flag:=true;
+		q:=basis!.q;
+		F:=GF(q);
+		t:=basis!.d;
+		K:=GF(q^t);
+		pg2:=AmbientGeometry(subspace);
+		rt:=Dimension(pg2)+1;
+		if not (IsInt(rt/t) and IsInt((Dimension(subspace)+1)/t)) then 
+			flag:=false;
+		else
+			r:=rt/t;
+			pg1:=PG(r-1,q^t);
+			basvecs:=BasisVectors(basis);
+			mat1:=[];
+			span:=[];
+			repeat
+				repeat x:=Random(Points(subspace)); until not x in span;
+					v:=Coordinates(x);
+					v1:=List([1..r],i->v{[(i-1)*t+1..i*t]}*basvecs);
+					Add(mat1,v1);
+					span:=VectorSpaceToElement(pg2,BlownUpMat(basis,mat1));
+				until Dimension(span)=Dimension(subspace);
+				if not span = subspace then 
+					flag:= false;
+				fi;
+		fi;
+		return flag;
  end );	  
   
 # CHECKED 28/09/11 jdb
