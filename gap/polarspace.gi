@@ -30,7 +30,7 @@
 # - Documentation
 # - test
 # - make sure matrices are compressed.
-# - more work on the ViewObj/PrintObj/Display methods
+# - more work on the ViewObj/PrintObj/Display methods. done something, 1/10/11. maybe it is sufficient now.
 # - think about the IsClassicalGQ filter. At first sight, we can leave everything as
 #   is, since this will not affect correctness of the code.
 # - important: find out when NiceMonomorphism is computed. This is e.g. the case if
@@ -95,7 +95,7 @@ InstallMethod( PolarSpace,
 	"for a sesquilinear form, a field, a group and an action function",
 	[ IsSesquilinearForm, IsField, IsGroup, IsFunction ],
 	function( m, f, g, act )
-		local geo,ty,gram;
+		local geo, ty, gram, eq, r, i1, i2;
 		if IsDegenerateForm( m ) then 
 			Error("Form is degenerate");
 		elif IsPseudoForm( m ) then
@@ -110,11 +110,21 @@ InstallMethod( PolarSpace,
 		else ty := NewType( GeometriesFamily,
 					IsClassicalPolarSpace and IsClassicalPolarSpaceRep );
 		fi;
+		eq := PolynomialOfForm( m );
+		if IsZero(eq) then
+			i1 := List([1..Length(gram)],i->Concatenation("x_",String(i)));
+			i2 := List([1..Length(gram)],i->Concatenation("y_",String(i)));
+			r := PolynomialRing(f,Concatenation(i1,i2));
+			i1 := IndeterminatesOfPolynomialRing(r){[1..Length(gram)]};
+			i2 := IndeterminatesOfPolynomialRing(r){[Length(gram)+1..2*Length(gram)]};
+			eq := i1*gram*i2;
+		fi;
 		ObjectifyWithAttributes( geo, ty, 
 								SesquilinearForm, m,
 								CollineationGroup, g,
 								CollineationAction, act,
-								AmbientSpace, ProjectiveSpace(geo.dimension, f) );
+								AmbientSpace, ProjectiveSpace(geo.dimension, f),
+								EquationForPolarSpace, eq );
 		return geo;
 	end );
 
@@ -128,7 +138,7 @@ InstallMethod( PolarSpaceStandard,
 	"for a sesquilinear form",
 	[ IsSesquilinearForm ],
 	function( m )
-		local geo, ty, gram, f;
+		local geo, ty, gram, f, eq, r, i1, i2;
 		gram := m!.matrix;
 		f := m!.basefield;
 		geo := rec( basefield := f, dimension := Length(gram)-1,
@@ -139,10 +149,20 @@ InstallMethod( PolarSpaceStandard,
 		else ty := NewType( GeometriesFamily,
                   IsClassicalPolarSpace and IsClassicalPolarSpaceRep );
 		fi;
+		eq := PolynomialOfForm( m );
+		if IsZero(eq) then
+			i1 := List([1..Length(gram)],i->Concatenation("x_",String(i)));
+			i2 := List([1..Length(gram)],i->Concatenation("y_",String(i)));
+			r := PolynomialRing(f,Concatenation(i1,i2));
+			i1 := IndeterminatesOfPolynomialRing(r){[1..Length(gram)]};
+			i2 := IndeterminatesOfPolynomialRing(r){[Length(gram)+1..2*Length(gram)]};
+			eq := i1*gram*i2;
+		fi;
 		ObjectifyWithAttributes( geo, ty, 
                             SesquilinearForm, m,
                             AmbientSpace, ProjectiveSpace(geo.dimension, f),
-							IsStandardPolarSpace, true );
+							IsStandardPolarSpace, true,
+							EquationForPolarSpace, eq );
 		return geo;
 	end );
 
@@ -155,7 +175,7 @@ InstallMethod( PolarSpaceStandard,
 	"for a quadratic form",
 	[ IsQuadraticForm ],
 	function( m )
-		local geo, ty, gram, polar, f, flavour;
+		local geo, ty, gram, polar, f, flavour, eq;
 		f := m!.basefield;
 		gram := m!.matrix;
 		polar := AssociatedBilinearForm( m );
@@ -167,11 +187,13 @@ InstallMethod( PolarSpaceStandard,
 		else ty := NewType( GeometriesFamily,
 					IsClassicalPolarSpace and IsClassicalPolarSpaceRep );
 		fi;
+		eq := PolynomialOfForm( m );
 		ObjectifyWithAttributes( geo, ty, 
 								QuadraticForm, m,
 								SesquilinearForm, polar,
 								AmbientSpace, ProjectiveSpace(geo.dimension, f),
-								IsStandardPolarSpace, true );
+								IsStandardPolarSpace, true,
+								EquationForPolarSpace, eq );
 		return geo;
 	end );
 
@@ -185,7 +207,7 @@ InstallMethod( PolarSpace,
 	"for a sesquilinear form",
 	[ IsSesquilinearForm ],
 	function( m )
-		local geo, ty, gram, f;
+		local geo, ty, gram, f, eq, r, i1, i2;
 		if IsDegenerateForm( m ) then 
 			Error("Form is degenerate");
 		elif IsPseudoForm( m ) then
@@ -201,10 +223,20 @@ InstallMethod( PolarSpace,
 		else ty := NewType( GeometriesFamily,
                   IsClassicalPolarSpace and IsClassicalPolarSpaceRep );
 		fi;
+		eq := PolynomialOfForm( m );
+		if IsZero(eq) then
+			i1 := List([1..Length(gram)],i->Concatenation("x_",String(i)));
+			i2 := List([1..Length(gram)],i->Concatenation("y_",String(i)));
+			r := PolynomialRing(f,Concatenation(i1,i2));
+			i1 := IndeterminatesOfPolynomialRing(r){[1..Length(gram)]};
+			i2 := IndeterminatesOfPolynomialRing(r){[Length(gram)+1..2*Length(gram)]};
+			eq := i1*gram*i2;
+		fi;
 		ObjectifyWithAttributes( geo, ty, 
                             SesquilinearForm, m,
                             AmbientSpace, ProjectiveSpace(geo.dimension, f),
-							IsStandardPolarSpace, false );
+							IsStandardPolarSpace, false,
+							EquationForPolarSpace, eq );
 		return geo;
 	end );
 
@@ -218,7 +250,7 @@ InstallMethod( PolarSpace,
 	"for a quadratic form",
 	[ IsQuadraticForm ],
 	function( m )
-		local geo, ty, gram, polar, f, flavour;
+		local geo, ty, gram, polar, f, flavour, eq;
 		if IsSingularForm( m ) then 
 			Error("Form is singular"); 
 		fi;
@@ -233,11 +265,13 @@ InstallMethod( PolarSpace,
 		else ty := NewType( GeometriesFamily,
 					IsClassicalPolarSpace and IsClassicalPolarSpaceRep );
 		fi;
+		eq := PolynomialOfForm(m);
 		ObjectifyWithAttributes( geo, ty, 
 								QuadraticForm, m,
 								SesquilinearForm, polar,
 								AmbientSpace, ProjectiveSpace(geo.dimension, f),
-								IsStandardPolarSpace, false );
+								IsStandardPolarSpace, false,
+								EquationForPolarSpace, eq );
 		return geo;
 	end );
 
@@ -253,7 +287,7 @@ InstallMethod( PolarSpace,
 	"for a hermitian form",
 	[ IsHermitianForm ],
 	function( m )
-		local geo, ty, gram, f;
+		local geo, ty, gram, f, eq;
 		if IsDegenerateForm( m ) then 
 			Error("Form is degenerate");
 		fi;
@@ -267,10 +301,12 @@ InstallMethod( PolarSpace,
 		else ty := NewType( GeometriesFamily,
                   IsClassicalPolarSpace and IsClassicalPolarSpaceRep );
 		fi;
+		eq := PolynomialOfForm(m);
 		ObjectifyWithAttributes( geo, ty, 
                             SesquilinearForm, m,
                             AmbientSpace, ProjectiveSpace(geo.dimension, f),
-							IsStandardPolarSpace, false );
+							IsStandardPolarSpace, false,
+							EquationForPolarSpace, eq );
 		return geo;
 	end );
 
@@ -811,14 +847,15 @@ InstallMethod( ViewObj,
 	"for a polar space",
 	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
 	function( p )
-		Print("<polar space over ",p!.basefield,">");
+		#Print("<polar space over ",p!.basefield,">");
+		Print("<polar space in ",AmbientSpace(p),": ",EquationForPolarSpace(p),"=0 >");
 	end );
 
 InstallMethod( ViewObj,
 	"for an elliptic quadric",
 	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsEllipticQuadric],
 	function( p )
-		Print("Q-(",p!.dimension,", ",Size(p!.basefield),")");
+		Print("Q-(",p!.dimension,", ",Size(p!.basefield),"): ",EquationForPolarSpace(p),"=0");
 	end );
 
 InstallMethod( ViewObj,
@@ -832,7 +869,7 @@ InstallMethod( ViewObj,
 	"for a symplectic space",
 	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsSymplecticSpace],
     function( p )
-		Print("W(",p!.dimension,", ",Size(p!.basefield),")");
+		Print("W(",p!.dimension,", ",Size(p!.basefield),"): ",EquationForPolarSpace(p),"=0");
 	end );
 
 InstallMethod( ViewObj,
@@ -846,7 +883,7 @@ InstallMethod( ViewObj,
 	"for a parabolic quadric",
 	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsParabolicQuadric ],
     function( p )
-		Print("Q(",p!.dimension,", ",Size(p!.basefield),")");
+		Print("Q(",p!.dimension,", ",Size(p!.basefield),"): ",EquationForPolarSpace(p),"=0");
 	end);
 
 InstallMethod( ViewObj,
@@ -860,7 +897,7 @@ InstallMethod( ViewObj,
 	"for a hyperbolic quadric",
 	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsHyperbolicQuadric ],
     function( p )
-		Print("Q+(",p!.dimension,", ",Size(p!.basefield),")");
+		Print("Q+(",p!.dimension,", ",Size(p!.basefield),"): ",EquationForPolarSpace(p),"=0");
 	end);
 
 InstallMethod( ViewObj,
@@ -874,7 +911,7 @@ InstallMethod( ViewObj,
 	"for a hermitian variety",
 	[IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsHermitianVariety ],
     function( p )
-		Print("H(",p!.dimension,", ",Sqrt(Size(p!.basefield)),"^2)");
+		Print("H(",p!.dimension,", ",Sqrt(Size(p!.basefield)),"^2): ",EquationForPolarSpace(p),"=0");
 	end);
 
 InstallMethod( ViewObj,
@@ -902,15 +939,15 @@ InstallMethod( Display, [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
        Display(QuadraticForm(p));
     fi;
     Display(SesquilinearForm(p));
-    if HasDiagramOfGeometry( p ) then
-       Display( DiagramOfGeometry( p ) );
-    fi;
+    #if HasDiagramOfGeometry( p ) then
+    #   Display( DiagramOfGeometry( p ) );
+    #fi;
   end );
 
 InstallMethod( PrintObj,
   [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsEllipticQuadric ],
         function( p )
-          Print("EllipticQuadric(",p!.dimension,",",p!.basefield,")");
+          Print("EllipticQuadric(",p!.dimension,",",p!.basefield,"): ",EquationForPolarSpace(p),"=0");
         end );
 
 InstallMethod( Display, 
@@ -921,15 +958,15 @@ InstallMethod( Display,
        Display(QuadraticForm(p));
     fi;
     Display(SesquilinearForm(p));
-    if HasDiagramOfGeometry( p ) then
-       Display( DiagramOfGeometry( p ) );
-    fi;
+    #if HasDiagramOfGeometry( p ) then
+    #   Display( DiagramOfGeometry( p ) );
+    #fi;
   end );
 
 InstallMethod( PrintObj,
   [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsSymplecticSpace ],
         function( p )
-          Print("SymplecticSpace(",p!.dimension,",",p!.basefield,")");
+          Print("SymplecticSpace(",p!.dimension,",",p!.basefield,"): ",EquationForPolarSpace(p),"=0");
   end);
 
 InstallMethod( Display, 
@@ -937,15 +974,15 @@ InstallMethod( Display,
   function( p )
     Print("W(",p!.dimension,", ",Size(p!.basefield),")\n");
     Display(SesquilinearForm(p));
-    if HasDiagramOfGeometry( p ) then
-       Display( DiagramOfGeometry( p ) );
-    fi;
+    #if HasDiagramOfGeometry( p ) then
+    #   Display( DiagramOfGeometry( p ) );
+    #fi;
   end );
 
 InstallMethod( PrintObj,
   [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsParabolicQuadric ],
         function( p )
-          Print("ParabolicQuadric(",p!.dimension,",",p!.basefield,")");
+          Print("ParabolicQuadric(",p!.dimension,",",p!.basefield,"): ",EquationForPolarSpace(p),"=0");
   end);
 
 InstallMethod( Display, 
@@ -956,15 +993,15 @@ InstallMethod( Display,
        Display(QuadraticForm(p));
     fi;
     Display(SesquilinearForm(p));
-    if HasDiagramOfGeometry( p ) then
-       Display( DiagramOfGeometry( p ) );
-    fi;
+    #if HasDiagramOfGeometry( p ) then
+    #   Display( DiagramOfGeometry( p ) );
+    #fi;
   end );
 
 InstallMethod( PrintObj,
   [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsHyperbolicQuadric ],
         function( p )
-          Print("HyperbolicQuadric(",p!.dimension,",",p!.basefield,")");
+          Print("HyperbolicQuadric(",p!.dimension,",",p!.basefield,"): ",EquationForPolarSpace(p),"=0");
         end);
 
 InstallMethod( Display, 
@@ -975,15 +1012,15 @@ InstallMethod( Display,
        Display(QuadraticForm(p));
     fi;
     Display(SesquilinearForm(p));
-    if HasDiagramOfGeometry( p ) then
-       Display( DiagramOfGeometry( p ) );
-    fi;
+    #if HasDiagramOfGeometry( p ) then
+    #   Display( DiagramOfGeometry( p ) );
+    #fi;
   end );
 
 InstallMethod( PrintObj,
   [IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsHermitianVariety ],
         function( p )
-          Print("HermitianVariety(",p!.dimension,",",p!.basefield,")");
+          Print("HermitianVariety(",p!.dimension,",",p!.basefield,"): ",EquationForPolarSpace(p),"=0");
         end);
 
 InstallMethod( Display, 
@@ -991,9 +1028,9 @@ InstallMethod( Display,
   function( p )
     Print("H(",p!.dimension,", ",Size(p!.basefield),")\n");
     Display(SesquilinearForm(p));
-    if HasDiagramOfGeometry( p ) then
-       Display( DiagramOfGeometry( p ) );
-    fi;
+    #if HasDiagramOfGeometry( p ) then
+    #   Display( DiagramOfGeometry( p ) );
+    #fi;
   end );
 
 #############################################################################

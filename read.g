@@ -46,14 +46,14 @@ ReadPackage("fining","gap/morphisms.gi");
 
 ReadPackage("fining","gap/enumerators.gi");
 
-ReadPackage("fining","gap/diagram.gi");
+#ReadPackage("fining","gap/diagram.gi");
 
-ReadPackage("fining","gap/varieties.gi");
+#ReadPackage("fining","gap/varieties.gi");
 
-ReadPackage("fining","gap/affinespace.gi");
-ReadPackage("fining","gap/affinegroup.gi");
+#ReadPackage("fining","gap/affinespace.gi");
+#ReadPackage("fining","gap/affinegroup.gi");
 
-ReadPackage("fining","gap/gpolygons.gi");
+#ReadPackage("fining","gap/gpolygons.gi");
 
 
 #ReadPackage("fining","gap/emptysubspace.gi");

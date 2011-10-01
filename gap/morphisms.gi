@@ -791,23 +791,34 @@ InstallMethod( ShrinkMat,
 #    return result;
 #  end );
 
-InstallGlobalFunction( BlownUpProjectiveSpace,
-    "blows up a projective space by field reduction",
-  function(basis,pg1)
-  local q,t,r,pg2,mat1,mat2;
-  	q:=basis!.q;
-	t:=basis!.d;
-	if not pg1!.basefield=GF(q^t) then Error("The basis and the projective space are not compatible!");
-	fi;
-	r:=Dimension(pg1)+1;
-	pg2:=PG(r*t-1,q);
-	return pg2;
-  end );
+#############################################################################
+#O  BlownUpSubspaceOfProjectiveSpace( <B>, <pg1> ) 
+#   blows up a projective space by field reduction.
+##
+InstallMethod( BlownUpProjectiveSpace,
+	"for a basis and a projective space",
+	[ IsBasis, IsProjectiveSpace ],
+	function(basis,pg1)
+	local q,t,r,pg2,mat1,mat2;
+		q:=basis!.q;
+		t:=basis!.d;
+		if not pg1!.basefield=GF(q^t) then 
+			Error("The basis and the projective space are not compatible!");
+		fi;
+		r:=Dimension(pg1)+1;
+		pg2:=PG(r*t-1,q);
+		return pg2;
+	end );
 
-InstallGlobalFunction( BlownUpProjectiveSpaceBySubfield,
-    "blows up a projective space by field reduction w.r.t. the canonical basis",
-  function(subfield,pg)
-  local t,r,field;
+#############################################################################
+#O  BlownUpProjectiveSpaceBySubfield( <subfield>, <pg> ) 
+#   blows up a projective space by field reduction w.r.t. the canonical basis
+##
+InstallMethod( BlownUpProjectiveSpaceBySubfield,
+	"for a field and a projective space",
+	[ IsField, IsProjectiveSpace ],
+	function(subfield,pg)
+	local t,r,field;
         field:=LeftActingDomain(UnderlyingVectorSpace(pg));
         if not subfield in Subfields(field) then
         	Error("The first argument is not a subfield of the basefield of the projective space!");
@@ -891,12 +902,11 @@ InstallMethod( IsDesarguesianSpreadElement,
 		return flag;
 	end );
 	  
-	  
+# To be done: check this method! (but it is currently never used).	  
 #############################################################################
 #O  IsBlownUpSubspaceOfProjectiveSpace( <B>, <mat> ) 
 # checks if a subspace is blown up using field reduction, w.r.t. a basis
 ##
-
 InstallMethod( IsBlownUpSubspaceOfProjectiveSpace, 
 	"for a basis and a subspace of a projective space",
 	[ IsBasis, IsSubspaceOfProjectiveSpace ],
@@ -1048,13 +1058,15 @@ InstallMethod( NaturalEmbeddingByFieldReduction,
 ######################
 ## CHECK if this is necessary ... probably not
 
+# CHECKED 28/09/11 jdb
+#############################################################################
+#F  LeukBasis( <f1>, <f2> ) 
+#  This function finds a basis {b_1,...,b_e}
+#  such that the sum of the (q+1) powers of these
+#  elements is zero.
+##
 InstallGlobalFunction( LeukBasis, 
-  function( f1, f2 )
-  
-    ## This function finds a basis {b_1,...,b_e}
-    ## such that the sum of the (q+1) powers of these
-    ## elements is zero.
-  
+	function( f1, f2 )
     local q2, q1, e, tuples, iter, t, vec;
     vec := AsVectorSpace(f2,f1);
     q1 := Size(f1);

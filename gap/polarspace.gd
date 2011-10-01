@@ -61,6 +61,7 @@ DeclareAttribute( "IsCanonicalPolarSpace", IsClassicalPolarSpace );
 DeclareAttribute( "PolarSpaceType", IsClassicalPolarSpace );
 DeclareAttribute( "CompanionAutomorphism", IsClassicalPolarSpace );
 DeclareAttribute( "ClassicalGroupInfo", IsClassicalPolarSpace );
+DeclareAttribute( "EquationForPolarSpace", IsClassicalPolarSpace );
 
 DeclareProperty( "IsEllipticQuadric", IsClassicalPolarSpace );
 DeclareProperty( "IsSymplecticSpace", IsClassicalPolarSpace );

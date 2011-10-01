@@ -133,9 +133,9 @@ InstallMethod( PrintObj, [ IsProjectiveSpace and IsProjectiveSpaceRep ],
 InstallMethod( Display, [ IsProjectiveSpace and IsProjectiveSpaceRep ],
   function( p )
     Print("ProjectiveSpace(",p!.dimension,",",p!.basefield,")\n");
-    if HasDiagramOfGeometry( p ) then
-       Display( DiagramOfGeometry( p ) );
-    fi;
+    #if HasDiagramOfGeometry( p ) then      
+    #   Display( DiagramOfGeometry( p ) );
+    #fi;
   end );
 
 # CHECKED 6/09/11 jdb
