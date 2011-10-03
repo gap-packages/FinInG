@@ -252,6 +252,7 @@ DeclareOperation( "Unwrap", [IsElementOfIncidenceStructure] );
 DeclareOperation( "\^", [IsElementOfIncidenceStructure, IsUnwrapper ] ); 
 
 
+DeclareGlobalFunction( "HashFuncForElements" );
 # commenting this out had not effect, presumably...
 #DeclareOperation( "ChooseHashFunction", [IsElementOfIncidenceStructure,IsInt] );
 

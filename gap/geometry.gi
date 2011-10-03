@@ -77,47 +77,60 @@ InstallMethod( Unwrap,
 	end );
 
 # CHECKED 17/04/11 jdb
-InstallMethod( \^, [ IsElementOfIncidenceStructure, IsUnwrapper ], 
-  function( x, u ) 
-    return x!.obj;
-  end );
+InstallMethod( \^,
+	"for an element of a incidence structure and an unwrapper",
+	[IsElementOfIncidenceStructure, IsUnwrapper ], 
+	function( x, u ) 
+		return x!.obj;
+	end );
 
 # CHECKED 18/04/11 jdb
 #############################################################################
 #O  AmbientGeometry( <x> )
 # general method that returns the ambient geometry of a particular element.
 ## 
-InstallMethod( AmbientGeometry, [ IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep ], x -> x!.geo );
+InstallMethod( AmbientGeometry, 
+	[ IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep ], 
+	x -> x!.geo );
 
 # CHECKED 18/04/11 jdb
 #############################################################################
 #O  AmbientGeometry( <x> )
-# general method that returns the ambient geometry of a collection of elements of a particular type.
+# general method that returns the ambient geometry of a collection of 
+# elements of a particular type.
 # notice the small difference with the previous method :-)
 ## 
-InstallMethod( AmbientGeometry, [ IsElementsOfIncidenceStructure and IsElementsOfIncidenceStructureRep ], x -> x!.geometry );
+InstallMethod( AmbientGeometry, 
+	[ IsElementsOfIncidenceStructure and IsElementsOfIncidenceStructureRep ], 
+	x -> x!.geometry );
 
 # CHECKED 18/04/11 jdb
 #############################################################################
 #O  AmbientGeometry( <x> )
 # general method that returns the ambient geometry of a collection of elements
 ## 
-InstallMethod( AmbientGeometry, [ IsAllElementsOfIncidenceStructure and IsAllElementsOfIncidenceStructureRep ], x -> x!.geometry );
+InstallMethod( AmbientGeometry, 
+	[ IsAllElementsOfIncidenceStructure and IsAllElementsOfIncidenceStructureRep ],
+	x -> x!.geometry );
 
 # CHECKED 14/4/2011 jdb
 #############################################################################
 #O  Type( <x> )
 # general method that returns the type of a particular element.
 ## 
-InstallMethod( Type, [ IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep ], x -> x!.type );
+InstallMethod( Type, 
+	[ IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep ], 
+	x -> x!.type );
 
 # CHECKED 14/4/2011 jdb
 #############################################################################
 #O  Type( <x> )
 # general method that returns the type of a collection of elements of a particular type.
 ## 
-InstallMethod( Type, "for IsElementsOfIncidenceStructure(Rep)",
-	[IsElementsOfIncidenceStructure and IsElementsOfIncidenceStructureRep], x -> x!.type );
+InstallMethod( Type, 
+	"for IsElementsOfIncidenceStructure(Rep)",
+	[IsElementsOfIncidenceStructure and IsElementsOfIncidenceStructureRep], 
+	x -> x!.type );
 
 # CHECKED 18/4/2011 jdb
 #############################################################################
@@ -125,7 +138,10 @@ InstallMethod( Type, "for IsElementsOfIncidenceStructure(Rep)",
 # generic method that calls RankAttr to return the rank of a particular 
 # incidence structure.
 ## 
-InstallMethod( Rank, "for IsIncidenceStructure", [IsIncidenceStructure], i -> RankAttr(i) );
+InstallMethod( Rank, 
+	"for IsIncidenceStructure", 
+	[IsIncidenceStructure], 
+	i -> RankAttr(i) );
 
 # CHECKED 18/4/2011 jdb
 #############################################################################
@@ -133,7 +149,8 @@ InstallMethod( Rank, "for IsIncidenceStructure", [IsIncidenceStructure], i -> Ra
 # test equality method for elements of an incidence structure
 # relies to testing equality of underlying 'obj' fields of the arguments.
 ## 
-InstallMethod( \=, "for two IsElementOfIncidenceStructure",	
+InstallMethod( \=, 
+	"for two IsElementOfIncidenceStructure",	
 	[IsElementOfIncidenceStructure, IsElementOfIncidenceStructure], 
 	function( a, b ) 
 		return a!.obj = b!.obj; 
@@ -170,11 +187,13 @@ InstallOtherMethod( \*,
 		return IsIncident(b, a);
 	end );
 
-HashFuncForElements := function( v, data )
-  return data.func(v!.obj,data.data);
-end;
+InstallGlobalFunction( HashFuncForElements,
+	function( v, data )
+		return data.func(v!.obj,data.data);
+	end );
 
-InstallMethod( ChooseHashFunction, "for an element and a hash length",
+InstallMethod( ChooseHashFunction, 
+	"for an element and a hash length",
 	[ IsElementOfIncidenceStructure, IsPosInt ],
 	function( v, len )
 		local data;

@@ -31,7 +31,7 @@
     <Version>
       <#Include SYSTEM "../VERSION">
     </Version>
-<Date>March 2009</Date>
+<Date>2011</Date>
 	<Author>John Bamberg, Anton Betten, Philippe Cara, Jan De Beule, Michel Lavrauw, Maska Law, Max Neunhoeffer, Michael Pauley, Sven Reichard
 	</Author>
 <!--
