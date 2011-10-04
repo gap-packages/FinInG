@@ -639,7 +639,7 @@ InstallMethod( ViewObj, [ IsVectorSpaceTransversal and IsVectorSpaceTransversalR
 
 InstallMethod( IsIncident,  [IsSubspaceOfAffineSpace, IsSubspaceOfAffineSpace],
   function( x, y )
-    local ambx, amby, typx, typy, mat,
+    local ambx, amby, typx, typy, mat, flag,
           zero, nrows, ncols, vectors, 
           nvectors, i, j, z, nzheads, row;
     ambx := x!.geo;
@@ -647,7 +647,8 @@ InstallMethod( IsIncident,  [IsSubspaceOfAffineSpace, IsSubspaceOfAffineSpace],
     typx := x!.type;
     typy := y!.type;
     
-    ## x + <y> inc with a + <b> iff a-x in <b> and <y> subset of <b> 
+    ## x + A inc with y + B iff y-x in B and A subset of B
+    # x+a in y+B for all a => (y-x) in B and A subset of B 
 
     if ambx!.vectorspace = amby!.vectorspace then   
 
@@ -662,10 +663,11 @@ InstallMethod( IsIncident,  [IsSubspaceOfAffineSpace, IsSubspaceOfAffineSpace],
        elif typx = 1 and typy = 1 then
           return x = y;
        elif typx >= typy and typy > 1 then
-          return x!.obj[1] - y!.obj[1] in Subspace(ambx!.vectorspace, x!.obj[2]);
+          flag := x!.obj[1] - y!.obj[1] in Subspace(ambx!.vectorspace, x!.obj[2]);
        else 
-          return x!.obj[1] - y!.obj[1] in Subspace(ambx!.vectorspace, y!.obj[2]);
+          flag := x!.obj[1] - y!.obj[1] in Subspace(ambx!.vectorspace, y!.obj[2]);
        fi;
+       if not flag then return false; fi;
 
    ## Second step: checking that the directions are compatible.
    ## Algorithm is the same as for projective spaces.
@@ -675,15 +677,15 @@ InstallMethod( IsIncident,  [IsSubspaceOfAffineSpace, IsSubspaceOfAffineSpace],
           vectors := x!.obj[2];
           nvectors := typx-1;
           mat := MutableCopyMat(y!.obj[2]);
-          nrows := typy;
+          nrows := typy - 1;
        else
           vectors := y!.obj[2];
           nvectors := typy-1;
           mat := MutableCopyMat(x!.obj[2]);
-          nrows := typx;
+          nrows := typx - 1;
        fi;
 
-       ncols:= amby!.dimension + 1;
+       ncols:= amby!.dimension ;
        zero:= Zero( mat[1][1] );
 
    # here we are going to treat "vectors" as a list of basis vectors. first
@@ -708,12 +710,12 @@ InstallMethod( IsIncident,  [IsSubspaceOfAffineSpace, IsSubspaceOfAffineSpace],
          # if the row is now not zero then y is not a subspace of x
          j := PositionNot( row, zero );
          if j <= ncols then
-                return false;
+            flag := false; break;
          fi;
 
       od;
       
-      return true;
+      return flag;
     else
       Error( "type is unknown or not implemented" );
     fi;
