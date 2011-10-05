@@ -1021,23 +1021,38 @@ InstallMethod( Size, [IsShadowSubspacesOfAffineSpace and
 InstallMethod( Iterator, "for a shadow in an affine space",
      [IsShadowSubspacesOfAffineSpace and IsShadowSubspacesOfAffineSpaceRep ],
   function( vs )
-    local as, j, ps, map, iter, list;
+    local as, j, ps, map, iter, list, dim, hyperplane;
     as := vs!.geometry;
     j := vs!.type;
     map := ProjectiveCompletion(as);
     ps := Range(map)!.geometry;
-    list := vs!.list;    
+    list := vs!.list;  
+    dim := ps!.dimension+1;
+    hyperplane := VectorSpaceToElement(ps, IdentityMat(dim,ps!.basefield){[2..dim]});
     
     if Size( list ) = 1 then
-       iter := Iterator( ShadowOfElement( ps, ImageElm(map, list[1]), j) );
+       iter := StructuralCopy(Iterator( ShadowOfElement( ps, ImageElm(map, list[1]), j) ));
+       #
+       #  change IsDoneIterator in iter: 
+       #	iter!.S!.associatedIterator!.choiceiter!.pos <= Binomial(pi!.type-1, pi!.type-vs!.type);
+       #  It took me ages to figure out how this all works!
+       #
+       if vs!.type <= ps!.type then
+          iter!.S!.associatedIterator!.choiceiter!.IsDoneIterator := 
+	         iter -> iter!.pos = Binomial(pi!.type-1, pi!.type-vs!.type);
+	   fi;
     else
+       # still need to truncate the iterator of this one ...
        iter := Iterator( ShadowOfFlag( ps, ImagesSet(map, list), j) );
     fi;
-       
+ 
+	
     return IteratorByFunctions( rec(
       NextIterator := function(iter)
         local x;
-        x := NextIterator(iter!.S);
+        repeat
+          x := NextIterator(iter!.S);
+        until not x in hyperplane;
         return PreImageElm(map, x);
       end,
       IsDoneIterator := iter -> IsDoneIterator(iter!.S),
