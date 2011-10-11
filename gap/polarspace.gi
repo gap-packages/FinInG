@@ -86,7 +86,7 @@ InstallMethod( Wrap,
 # Constructor methods for polar spaces.
 #############################################################################
 
-# CHECKED 20/09/11 jdb
+# CHECKED 11/10/11 jb + jdb
 #############################################################################
 #O  PolarSpace( <m>, <f>, <g>, <act> )
 # This method returns a polar space with a lot of knowledge. most likely not for user.
@@ -112,7 +112,15 @@ InstallMethod( PolarSpace,
 		else ty := NewType( GeometriesFamily,
 					IsClassicalPolarSpace and IsClassicalPolarSpaceRep );
 		fi;
-		eq := PolynomialOfForm( m );
+		# at this stage, we are sure that if m is a bilinear form and the characteristic is even, 
+		# then m will be symplectic and PolynomialOfForm(m) will produce an error.
+		# on the other hand, if m is symplectic and the characteristic is odd, then PolynomialOfForm
+		# will produce a 0*Z(q). 
+		if IsEvenInt(Size(f)) and IsBilinearForm(m) then  
+			eq := Zero(f);
+		else
+			eq := PolynomialOfForm( m );
+		fi;
 		if IsZero(eq) then
 			i1 := List([1..Length(gram)],i->Concatenation("x_",String(i)));
 			i2 := List([1..Length(gram)],i->Concatenation("y_",String(i)));
@@ -130,6 +138,7 @@ InstallMethod( PolarSpace,
 		return geo;
 	end );
 
+# CHECKED 11/10/11 jb + jdb
 #############################################################################
 #O  PolarSpaceStandard( <m> )
 # Method to crete a polar space using sesquilinear form <m>, where we know
@@ -151,7 +160,15 @@ InstallMethod( PolarSpaceStandard,
 		else ty := NewType( GeometriesFamily,
                   IsClassicalPolarSpace and IsClassicalPolarSpaceRep );
 		fi;
-		eq := PolynomialOfForm( m );
+		# at this stage, we are sure that if m is a bilinear form and the characteristic is even, 
+		# then m will be symplectic and PolynomialOfForm(m) will produce an error.
+		# on the other hand, if m is symplectic and the characteristic is odd, then PolynomialOfForm
+		# will produce a 0*Z(q). 
+		if IsEvenInt(Size(f)) and IsBilinearForm(m) then  
+			eq := Zero(f);
+		else
+			eq := PolynomialOfForm( m );
+		fi;
 		if IsZero(eq) then
 			i1 := List([1..Length(gram)],i->Concatenation("x_",String(i)));
 			i2 := List([1..Length(gram)],i->Concatenation("y_",String(i)));
@@ -225,7 +242,15 @@ InstallMethod( PolarSpace,
 		else ty := NewType( GeometriesFamily,
                   IsClassicalPolarSpace and IsClassicalPolarSpaceRep );
 		fi;
-		eq := PolynomialOfForm( m );
+		# at this stage, we are sure that if m is a bilinear form and the characteristic is even, 
+		# then m will be symplectic and PolynomialOfForm(m) will produce an error.
+		# on the other hand, if m is symplectic and the characteristic is odd, then PolynomialOfForm
+		# will produce a 0*Z(q). 
+		if IsEvenInt(Size(f)) and IsBilinearForm(m) then  
+			eq := Zero(f);
+		else
+			eq := PolynomialOfForm( m );
+		fi;
 		if IsZero(eq) then
 			i1 := List([1..Length(gram)],i->Concatenation("x_",String(i)));
 			i2 := List([1..Length(gram)],i->Concatenation("y_",String(i)));
