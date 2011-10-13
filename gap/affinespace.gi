@@ -1034,12 +1034,12 @@ InstallMethod( Iterator, "for a shadow in an affine space",
        iter := StructuralCopy(Iterator( ShadowOfElement( ps, ImageElm(map, list[1]), j) ));
        #
        #  change IsDoneIterator in iter: 
-       #	iter!.S!.associatedIterator!.choiceiter!.pos <= Binomial(pi!.type-1, pi!.type-vs!.type);
+       #	iter!.S!.associatedIterator!.choiceiter!.pos <= Binomial(hyperplane!.type-1, hyperplane!.type-vs!.type);
        #  It took me ages to figure out how this all works!
        #
        if vs!.type <= ps!.type then
           iter!.S!.associatedIterator!.choiceiter!.IsDoneIterator := 
-	         iter -> iter!.pos = Binomial(pi!.type-1, pi!.type-vs!.type);
+	         iter -> iter!.pos = Binomial(hyperplane!.type-1, hyperplane!.type-vs!.type);
 	   fi;
     else
        # still need to truncate the iterator of this one ...
