@@ -429,11 +429,11 @@ InstallMethod( VectorSpaceToElement,
 	"for a projective space and a Plist",
 	[IsProjectiveSpace, IsPlistRep],
 	function( geom, v )
-		local  x, n, i;
+		local  x, n, i; 
 		## when v is empty... 
         if IsEmpty(v) then
 			Error("<v> does not represent any element");
-		fi;
+		fi; 		
 		#x := EchelonMat(v).vectors;
 		x := MutableCopyMat(v);
 		TriangulizeMat(x); 
@@ -552,7 +552,6 @@ InstallMethod( VectorSpaceToElement,
 			Error("<v> does not represent any element");
 		fi;
 		#x := EchelonMat(v).vectors;
-		
 		x := MutableCopyMat(v);
 		TriangulizeMat(x); 
 		

@@ -1340,6 +1340,11 @@ InstallMethod( Size,
 #O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
 # by the vectorspace <v>. Several checks are built in. 
 ##
+# JB: Fixed a strange error in here
+# I had Q+(11,3) (with a different form than usual) and tried to wrap
+# [ [ 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3), Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ] ]
+# It kept on returning 0*Z(3).
+#
 InstallMethod( VectorSpaceToElement, 
 	"for a polar space and a Plist",
 	[IsClassicalPolarSpace, IsPlistRep],
@@ -1349,6 +1354,7 @@ InstallMethod( VectorSpaceToElement,
 		if IsEmpty(v) then
 			Error("<v> does not represent any element");
 		fi;
+
 		x := MutableCopyMat(v);
 		TriangulizeMat(x);
 		## dimension should be correct
@@ -1385,7 +1391,7 @@ InstallMethod( VectorSpaceToElement,
 		if Length(x) = 1 then
 			x := x[1];
 			ConvertToVectorRep(x, geom!.basefield); # the extra basefield is necessary.
-			return Wrap(geom, 1, x[1]);
+			return Wrap(geom, 1, x);  ## JB: woh, big problem found here: changed x[1] to x.
 		else
 			ConvertToMatrixRep(x, geom!.basefield);
 			return Wrap(geom, Length(x), x);
@@ -2125,14 +2131,14 @@ InstallMethod( AbsolutePoints,
 #    fi;
 #  end );
 
-#InstallMethod( IsTotallyIsotropic, "for a projective variety w.r.t a polarity", 
-#             [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep, IsSubspaceOfProjectiveSpace ],
-#  function( ps, v )
-#    local perp, perpv;
-#    perp := Polarity(ps);
-#    perpv := perp(v);
-#    return perpv!.type >= v!.type and v in perp(v);
-#  end );
+InstallMethod( IsTotallyIsotropic, "for a projective variety w.r.t a polarity", 
+             [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep, IsSubspaceOfProjectiveSpace ],
+  function( ps, v )
+    local perp, perpv;
+    perp := Polarity(ps);
+    perpv := perp(v);
+    return perpv!.type >= v!.type and v in perp(v);
+  end );
 
 # this is obsolete now, but not completely. see also PolarityOfProjectiveSpace method.
 #############################################################################
