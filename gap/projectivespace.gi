@@ -1111,13 +1111,11 @@ InstallMethod( AsList,
 	sz := Size(vs);
 	if type = 1 then
 		o := MakeAllProjectivePoints(geo!.basefield, geo!.dimension);
-		Print("efkes1\n");
 		o := List(o, t -> Wrap(geo, type, t));;   
 	else
 		p := NextIterator(Iterator(vs));
 		o := Orb(g, p, OnProjSubspaces, rec( hashlen:=Int(5/4*sz), 
                                           orbsizebound := sz ));
-		Print("efkes2\n");
 		Enumerate(o, sz);
 	fi;
 	return o;
@@ -1706,7 +1704,7 @@ InstallMethod( Span,
 InstallMethod( Span, "for a homogeneous list of subspaces of a projective space",
 	[ IsHomogeneousList and IsSubspaceOfProjectiveSpaceCollection ],
 	function( l )  
-		local unwrapped, r, unr, amb, span, temp, x, F, list;  Print("called this\n");
+		local unwrapped, r, unr, amb, span, temp, x, F, list;  
 		# first we check that all items in the list belong to the same ambient space
 		if Length(l)=0 then 
 			return [];
