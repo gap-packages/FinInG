@@ -441,12 +441,6 @@ InstallMethod( VectorSpaceToElement,
 		if Length(v[1]) <> geom!.dimension + 1 then
 			Error("Dimensions are incompatible");
 		fi;
-		#if Length(x) = 0 then
-		#	return EmptySubspace(geom);
-		#fi;
-		#if Length(x)=ProjectiveDimension(geom)+1 then
-		#	return geom;
-		#fi;
         
 		## Remove zero rows. It is possible the the user
 		## has inputted a matrix which does not have full rank
@@ -1712,7 +1706,7 @@ InstallMethod( Span,
 InstallMethod( Span, "for a homogeneous list of subspaces of a projective space",
 	[ IsHomogeneousList and IsSubspaceOfProjectiveSpaceCollection ],
 	function( l )  
-		local unwrapped, r, unr, amb, span, temp, x, F, list;
+		local unwrapped, r, unr, amb, span, temp, x, F, list;  Print("called this\n");
 		# first we check that all items in the list belong to the same ambient space
 		if Length(l)=0 then 
 			return [];
@@ -1729,10 +1723,11 @@ InstallMethod( Span, "for a homogeneous list of subspaces of a projective space"
 				Append(unwrapped, unr);
 			od;
 			span := MutableCopyMat(unwrapped);
-#			span := MutableCopyMat(EchelonMat(span).vectors); #not necessary anyway, since VectorSpaceToElement is used.
-			if Length(span) = amb!.dimension + 1 then
-				return amb;
-			fi;
+			# span := MutableCopyMat(EchelonMat(span).vectors); #not necessary anyway, since VectorSpaceToElement is used.
+#   JB: Yes it is necessary for the following part!!!
+#			if Length(span) = amb!.dimension + 1 then
+#				return amb;
+#			fi;
 			return VectorSpaceToElement(amb,span);
 		fi;
 	end );
