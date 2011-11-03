@@ -122,9 +122,9 @@ InstallMethod( PolarSpace,
 			eq := PolynomialOfForm( m );
 		fi;
 		if IsZero(eq) then
-			i1 := List([1..Length(gram)],i->Concatenation("x_",String(i)));
-			i2 := List([1..Length(gram)],i->Concatenation("y_",String(i)));
-			r := PolynomialRing(f,Concatenation(i1,i2));
+			i1 := List([1..Length(gram)],i->Concatenation("x",String(i)));
+			i2 := List([1..Length(gram)],i->Concatenation("y",String(i)));
+			r := PolynomialRing(f,Concatenation(i1,i2):old);     ## there was an error here for gap4r5
 			i1 := IndeterminatesOfPolynomialRing(r){[1..Length(gram)]};
 			i2 := IndeterminatesOfPolynomialRing(r){[Length(gram)+1..2*Length(gram)]};
 			eq := i1*gram*i2;
@@ -170,9 +170,9 @@ InstallMethod( PolarSpaceStandard,
 			eq := PolynomialOfForm( m );
 		fi;
 		if IsZero(eq) then
-			i1 := List([1..Length(gram)],i->Concatenation("x_",String(i)));
-			i2 := List([1..Length(gram)],i->Concatenation("y_",String(i)));
-			r := PolynomialRing(f,Concatenation(i1,i2));
+			i1 := List([1..Length(gram)],i->Concatenation("x",String(i)));
+			i2 := List([1..Length(gram)],i->Concatenation("y",String(i)));
+			r := PolynomialRing(f,Concatenation(i1,i2):old);
 			i1 := IndeterminatesOfPolynomialRing(r){[1..Length(gram)]};
 			i2 := IndeterminatesOfPolynomialRing(r){[Length(gram)+1..2*Length(gram)]};
 			eq := i1*gram*i2;
@@ -226,7 +226,7 @@ InstallMethod( PolarSpace,
 	"for a sesquilinear form",
 	[ IsSesquilinearForm ],
 	function( m )
-		local geo, ty, gram, f, eq, r, i1, i2;
+		local geo, ty, gram, f, eq, r, i1, i2;  Print("called this\n");
 		if IsDegenerateForm( m ) then 
 			Error("Form is degenerate");
 		elif IsPseudoForm( m ) then
@@ -252,9 +252,9 @@ InstallMethod( PolarSpace,
 			eq := PolynomialOfForm( m );
 		fi;
 		if IsZero(eq) then
-			i1 := List([1..Length(gram)],i->Concatenation("x_",String(i)));
-			i2 := List([1..Length(gram)],i->Concatenation("y_",String(i)));
-			r := PolynomialRing(f,Concatenation(i1,i2));
+			i1 := List([1..Length(gram)],i->Concatenation("x",String(i)));
+			i2 := List([1..Length(gram)],i->Concatenation("y",String(i)));
+			r := PolynomialRing(f,Concatenation(i1,i2):old);
 			i1 := IndeterminatesOfPolynomialRing(r){[1..Length(gram)]};
 			i2 := IndeterminatesOfPolynomialRing(r){[Length(gram)+1..2*Length(gram)]};
 			eq := i1*gram*i2;
