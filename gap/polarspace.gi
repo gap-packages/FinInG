@@ -226,7 +226,7 @@ InstallMethod( PolarSpace,
 	"for a sesquilinear form",
 	[ IsSesquilinearForm ],
 	function( m )
-		local geo, ty, gram, f, eq, r, i1, i2;  Print("called this\n");
+		local geo, ty, gram, f, eq, r, i1, i2;  
 		if IsDegenerateForm( m ) then 
 			Error("Form is degenerate");
 		elif IsPseudoForm( m ) then

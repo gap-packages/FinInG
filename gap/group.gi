@@ -233,7 +233,7 @@ InstallMethod( ProjElWithFrob,
 	function( m, frob, f )
 		local el, m2;
 		m2 := ShallowCopy(m);
-		ConvertToMatrixRepNC( m2, f );
+		ConvertToMatrixRep( m2, f );
 		el := rec( mat := m2, fld := f, frob := frob );
 		Objectify( ProjElsWithFrobType, el );
 		return el;
