@@ -80,8 +80,8 @@ DeclareOperation( "\^", [IsEmptySubspace, IsUnwrapper] );
 DeclareOperation("RandomSubspace",[IsVectorSpace,IsInt]); #is for vector spaces -> moves to liegeometry.gd
 
 
-DeclareGlobalFunction( "OnProjSubspaces" );
-DeclareGlobalFunction( "OnSetsProjSubspaces" );
+#DeclareGlobalFunction( "OnProjSubspaces" );
+#DeclareGlobalFunction( "OnSetsProjSubspaces" );
 
 #DeclareSynonym( "OnLieVarieties", OnProjSubspaces );
 #DeclareSynonym( "OnSetsLieVarieties", OnSetsProjSubspaces );

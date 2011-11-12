@@ -121,6 +121,9 @@ DeclareSynonym( "IsProjectiveGroupWithFrob", IsGroup and IsProjGrpElWithFrobColl
 
 InstallTrueMethod( IsHandledByNiceMonomorphism, IsProjectiveGroupWithFrob );
 
+DeclareGlobalFunction( "OnProjSubspaces" );
+DeclareGlobalFunction( "OnSetsProjSubspaces" );
+
 DeclareGlobalFunction( "OnProjPointsWithFrob" );
 DeclareGlobalFunction( "OnProjSubspacesWithFrob" );
 
