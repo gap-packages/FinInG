@@ -57,7 +57,7 @@ axiom (ii). We allow the construction of such objects. This explains one of the 
 <ManSection>
 <Filt Name="IsIncidenceStructure" Type="Category"/>
 <Description>
-General Top level category for all objects representing an incidence structure.
+Top level category for all objects representing an incidence structure.
 <F>IsIncidenceStructure</F>. 
 </Description>
 </ManSection>
@@ -83,7 +83,7 @@ in the set <A>typeset</A>.<Example>
 <ManSection>
 <Filt Name="IsIncidenceGeometry" Type="Category"/>
 <Description>
-General category for all objects representing an incidence geometry.
+Category for all objects representing an incidence geometry.
 </Description>
 </ManSection>
 
@@ -101,8 +101,8 @@ generalised polygons have their category, as a subcategory of <C>IsIncidenceGeom
 <Filt Name="IsProjectiveSpace" Type="Category"/>
 <Filt Name="IsClassicalPolarSpace" Type="Category"/>
 <Description>
-Lie geometries bundle projective spaces and classical polar spaces. Both classes of geometries 
-have their category, as a subcategory of <C>IsLieGeometry</C>.
+Lie geometries bundle projective spaces and classical polar spaces. I would like to shortly explain the mathematical reason for this.
+Both classes of geometries have their category, as a subcategory of <C>IsLieGeometry</C>.
 </Description>
 </ManSection>
 
@@ -158,8 +158,8 @@ particular <A>ig</A>. The second variant returs the list of plurals of these nam
 </ManSection>
 
 <ManSection>
-<Oper Name="Rank" Arg="ig"/>
-<Returns>rank of <A>ig</A></Returns>
+<Oper Name="Rank" Arg="inc"/>
+<Returns>rank of the <A>inc</A>, which must belong to the categorie <C>IsIncidenceStructure</C></Returns>
 <Description>
 <Example>
 </Example>
@@ -167,29 +167,22 @@ particular <A>ig</A>. The second variant returs the list of plurals of these nam
 </ManSection>
 
 <ManSection>
-<Oper Name="AmbientGeometry" Arg="ig"/>
-<Returns></Returns>
+<Attr Name="AmbientGeometry" Arg="inc"/>
+<Returns>the ambient geometry of the incidence structure<A>inc</A></Returns>
 <Description>
+This attribute is declared for objects in the category <C>IsIncidenceStructure</C>, but as this might be meaningless 
+for general incidence structures, in which case a no method found error is returned.
 <Example>
 </Example>
 </Description>
 </ManSection>
 
 <ManSection>
-<Oper Name="AmbientSpace" Arg="ig"/>
-<Returns></Returns>
+<Attr Name="AmbientSpace" Arg="ig"/>
+<Returns>the ambient projective space of a Lie geometry <A>ig</A></Returns>
 <Description>
 <Example>
-</Example>
-</Description>
-</ManSection>
-
-
-<ManSection>
-<Oper Name="IsIncident" Arg="ig"/>
-<Returns></Returns>
-<Description>
-<Example>
+<#Include SYSTEM "../examples/include/incgeom_ambientspace.include"> 
 </Example>
 </Description>
 </ManSection>
@@ -328,7 +321,6 @@ This function returns
 </Example>
 </Description>
 </ManSection>
-
 
 </Section>
 
