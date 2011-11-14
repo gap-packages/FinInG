@@ -28,7 +28,7 @@ examplesfiles := ["examples_pg24", "examples_hermitian", "examples_embedW", "exa
 incgeomfiles := ["incgeom_categories1", "incgeom_rank", "incgeom_typesofels", "incgeom_categories2", 
                  "incgeom_elementsj", "incgeom_short",
                  "incgeom_solids", "incgeom_isincident", "incgeom_shadowofelement",
-		 "incgeom_shadowofflag", "incgeom_iterator" ]; 
+		 "incgeom_shadowofflag", "incgeom_iterator", "incgeom_incstruct" ]; 
 
 morphismsfiles := ["morphisms_intertwiners","morphisms_embedding1","morphisms_embedding2","morphisms_typesubspace",
           "morphisms_fieldreduc1", "morphisms_fieldreduc2","morphisms_subfield1","morphisms_subfield2",

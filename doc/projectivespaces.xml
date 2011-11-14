@@ -17,7 +17,7 @@ projective and polar spaces.
 
 -->
 
-<Chapter Label="projectivepolar">
+<Chapter Label="projective_spaces">
 <Heading>Projective Spaces</Heading>
 
 In this chapter we describe how to use <Package>FinInG</Package> to work 

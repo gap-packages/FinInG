@@ -1,0 +1,22 @@
+gap&gt; pg := PG(4,2);
+ProjectiveSpace(4, 2)
+gap&gt; pg2 := PG(9,2);
+ProjectiveSpace(9, 2)
+gap&gt; points := List(Lines(pg),x-&gt;VectorSpaceToElement(pg2,GrassmannCoordinates(x)));;
+gap&gt; flags := Concatenation(List(Points(pg),x-&gt;List(Planes(x),y-&gt;FlagOfIncidenceStructure(pg,[x,y]))));;
+gap&gt; prelines := List(flags,flag-&gt;ShadowOfFlag(pg,flag,2));;
+gap&gt; lines := List(prelines,x-&gt;VectorSpaceToElement(pg2,List(x,y-&gt;GrassmannCoordinates(y))));;
+gap&gt; flags2 := Concatenation(List(Points(pg),x-&gt;List(Solids(x),y-&gt;FlagOfIncidenceStructure(pg,[x,y]))));;
+gap&gt; preplanes := List(flags2,flag-&gt;ShadowOfFlag(pg,flag,2));;
+gap&gt; planes := List(preplanes,x-&gt;VectorSpaceToElement(pg2,List(x,y-&gt;GrassmannCoordinates(y))));;
+gap&gt; maximals1 := List(Planes(pg),x-&gt;VectorSpaceToElement(pg2,List(Lines(x),y-&gt;GrassmannCoordinates(y))));;
+gap&gt; maximals2 := List(Points(pg),x-&gt;VectorSpaceToElement(pg2,List(Lines(x),y-&gt;GrassmannCoordinates(y))));;
+gap&gt; elements := Union(points,lines,planes,maximals1,maximals2);;
+gap&gt; Length(elements);
+1891
+gap&gt; type := x -&gt; ProjectiveDimension(x)+1;
+function( x ) ... end
+gap&gt; inc_rel := \*;
+&lt;Operation "PROD"&gt;
+gap&gt; inc := IncidenceStructure(elements,inc_rel,type,[1,2,3,4]);
+Incidence structure of rank 4

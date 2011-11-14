@@ -542,6 +542,27 @@ InstallMethod( VeroneseMap, "given a dimension and field order",
     return VeroneseMap( ProjectiveSpace(d, q) );
   end );
 
+
+InstallMethod( GrassmannCoordinates, 
+	"for a subspace of a projective space",
+    [ IsSubspaceOfProjectiveSpace ],
+
+  ## Warning: this operation is not compatible with
+  ## PluckerCoordinates. To get the same image, you
+  ## need to multiply the fifth coordinate by -1.
+	function( sub )
+    local basis,k,n,list,vector;
+    k := ProjectiveDimension(sub);
+	n := ProjectiveDimension(sub!.geo);
+	if (k <= 0  or k >= n-1) then 
+         Error("The dimension of the subspace has to be at least 1 and at most ", n-2);
+    fi;
+	basis := sub!.obj;
+    list := TransposedMat(basis); 
+    vector := List(Combinations([1..n+1], k+1), i -> DeterminantMat( list{i} ));  
+    return vector;
+  end );
+
 InstallMethod( GrassmannMap, "given a dimension k and a projective space",
     [ IsPosInt, IsProjectiveSpace ],
 

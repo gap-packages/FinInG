@@ -101,6 +101,7 @@ DeclareOperation( "VeroneseMap", [ IsPosInt, IsField ]);
 DeclareOperation( "VeroneseMap", [ IsPosInt, IsPosInt ]);
 
 ### 6. Grassmann Varieties ###
+DeclareOperation( "GrassmannCoordinates", [ IsSubspaceOfProjectiveSpace ]);
 DeclareOperation( "GrassmannMap", [ IsPosInt,IsProjectiveSpace ] );
 DeclareOperation( "GrassmannMap", [IsPosInt, IsPosInt, IsPosInt]);
 DeclareOperation( "GrassmannVariety", [IsPosInt, IsPosInt, IsField]);

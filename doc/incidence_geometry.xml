@@ -37,26 +37,46 @@ has been included. Throughout, no matter the geometry, we have made the conventi
 an element of type 1 is a ``point'', an element of type 2 is a ``line'', and so forth.
 The examples we use in this section use projective spaces, which have not introduced the 
 reader to yet in this manual. For further information on projective spaces,
-see Chapter <Ref Chap="projectivepolar"/>.<P/>
+see Chapter <Ref Chap="projective_spaces"/>.<P/>
 
-probably more detailed information is needed here. E.g. we start to explain Incidence Geometry, but
-suddenly, we talk about Incidence Structures in the next sections. Not clear at all if we mean
-the same thing or not, and, we have Incidence Geometries *and* Incidence Structures in this
-package. 
-
-Essentially, in this chapter we describe functionality that is <B>declared</B> for 
+In this chapter we describe functionality that is <B>declared</B> for 
 incidence structures, which does not imply that operations described here will work
-for arbitrarily user constructed incidence geometries. 
+for arbitrarily user constructed incidence structures. Its aim is furthermore to allow
+the user to become a bit familiar with the general philiosophy of the package, using examples
+that are in fact self-explanatory. Not all details of the commands used in the examples will
+be explained in this chapter, therefore we refer always to the relevant chapter of the commands,
+easily found using the index.
 
 <Section>
 <Heading>Incidence structures</Heading>
-particular and general examples of incidence structures. Show categorie graph?
+
+Incidence structures can be more general than incidence geometries, e.g. if they do not satisfy 
+axiom (ii). We allow the construction of such objects. This explains one of the top level categories in 
+<Package>FinInG</Package>
 
 <ManSection>
 <Filt Name="IsIncidenceStructure" Type="Category"/>
 <Description>
 General Top level category for all objects representing an incidence structure.
 <F>IsIncidenceStructure</F>. 
+</Description>
+</ManSection>
+
+In the following example we define an incidence structure that is not an incidence geometry. The
+example used is the incidence structure with elements the subspaces contained in the line Grassmannian
+of PG(4,2). This example is not meant to create this incidence structure in an efficient way, but just
+to demonstrate the general philiosophy.
+
+<ManSection>
+<Oper Name="IncidenceStructure" Arg="eles, inc_rel, type, typeset"/>
+<Returns>an incidence structure</Returns>
+<Description>
+<A>eles</A> is a set containing the elements of the incidence structure. <A>inc_rel</A>
+must be a function that determines if two objects in the set <A>eles</A> are incident. 
+<A>type</A> is a function mapping any element to its type, which is a unique element 
+in the set <A>typeset</A>.<Example>
+<#Include SYSTEM "../examples/include/incgeom_incstruct.include"> 
+</Example>
 </Description>
 </ManSection>
 

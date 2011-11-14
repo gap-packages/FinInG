@@ -378,20 +378,6 @@ InstallMethod( Enumerator,
 	return elms;
 	end);
   
-InstallMethod( IncidenceStructure, "for a set, incidence, type function and type set",
-  [ IsList, IsFunction, IsFunction, IsList ],
-  function( eles, inc, typ, typeset )
-    local geo, ty;
-    geo := rec( elements := eles, increl := inc, 
-                typefun := typ, typeset := typeset );
-    ty := NewType( GeometriesFamily,
-                  IsIncidenceStructure and IsIncidenceStructureRep );
-    ObjectifyWithAttributes( geo, ty, RankAttr, Size(typeset));
-    #SetAmbientSpace(geo,geo);
-    #Objectify(ty,geo);
-    return geo;
-  end );
-
 # CHECKED 27/6/2011 jdb and pc
 #############################################################################
 #O  Intersection2( <el1>, <el2> )
@@ -403,3 +389,51 @@ InstallOtherMethod( Intersection2,
 	function( el1, el2 )
 		return Meet(el1,el2);
 	end);
+	
+
+# CHECKED 14/11/2011 jdb
+#############################################################################
+#O  IncidenceStructure( <eles>, <inc>, <typ>, <typeset> )
+# method for IncidenceStructure.
+##
+InstallMethod( IncidenceStructure, 
+	"for a set, incidence, type function and type set",
+	[ IsList, IsFunction, IsFunction, IsList ],
+	function( eles, inc, typ, typeset )
+		local geo, ty;
+		geo := rec( elements := eles, increl := inc, 
+					typefun := typ, typeset := typeset );
+		ty := NewType( GeometriesFamily,
+					IsIncidenceStructure and IsIncidenceStructureRep );
+		ObjectifyWithAttributes( geo, ty, RankAttr, Size(typeset));
+		#SetAmbientSpace(geo,geo);
+		#Objectify(ty,geo);
+		return geo;
+	end );
+
+
+#############################################################################
+# Display methods:
+#############################################################################
+
+InstallMethod( ViewObj,
+	"for an incidence structure",
+	[ IsIncidenceStructure ],
+	function(x)
+		Print("Incidence structure of rank ", RankAttr(x));
+	end );
+
+InstallMethod( PrintObj,
+	"for an incidence structure",
+	[ IsIncidenceStructure ],
+	function(x)
+		Print("Incidence structure of rank ", RankAttr(x)," with elements of type ",x!.typeset);
+	end );
+
+InstallMethod( Display,
+	"for an incidence structure",
+	[ IsIncidenceStructure ],
+	function(x)
+		Print("Incidence structure of rank ", RankAttr(x)," with elements of type ",x!.typeset);
+	end );
+
