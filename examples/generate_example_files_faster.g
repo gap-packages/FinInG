@@ -29,7 +29,7 @@ incgeomfiles := ["incgeom_categories1", "incgeom_rank", "incgeom_typesofels", "i
                  "incgeom_elementsj", "incgeom_short",
                  "incgeom_solids", "incgeom_isincident", "incgeom_shadowofelement",
 		 "incgeom_shadowofflag", "incgeom_iterator", "incgeom_incstruct", 
-		 "incgeom_ambientspace" ]; 
+		 "incgeom_ambientspace", "incgeom_random" ]; 
 
 morphismsfiles := ["morphisms_intertwiners","morphisms_embedding1","morphisms_embedding2","morphisms_typesubspace",
           "morphisms_fieldreduc1", "morphisms_fieldreduc2","morphisms_subfield1","morphisms_subfield2",

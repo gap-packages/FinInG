@@ -1,0 +1,2 @@
+gap&gt; Random(Hyperplanes(PG(5,7)));
+&lt;a proj. 4-space in ProjectiveSpace(5, 7)&gt;

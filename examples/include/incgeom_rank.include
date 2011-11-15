@@ -1,0 +1,6 @@
+gap&gt; Rank(ProjectiveSpace(5,5));
+5
+gap&gt; Rank(AffineSpace(3,5));
+3
+gap&gt; Rank(SymplecticSpace(5,5));
+3

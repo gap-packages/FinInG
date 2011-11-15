@@ -144,13 +144,16 @@ This category lies in <C>IsElationGQ</C> and <C>IsClassicalPolarSpace</C>.
 </ManSection>
 
 <ManSection>
-<Oper Name="TypesOfElementsOfIncidenceStructure" Arg="ig"/>
-<Oper Name="TypesOfElementsOfIncidenceStructurePlural" Arg="ig"/>
+<Attr Name="TypesOfElementsOfIncidenceStructure" Arg="inc"/>
+<Attr Name="TypesOfElementsOfIncidenceStructurePlural" Arg="inc"/>
 <Returns>a list of strings</Returns>
 <Description>
-Any incidence structure contains elements of a set of types. Names can be 
-given to an element of each type, and this operation returns the names for the
-particular <A>ig</A>. The second variant returs the list of plurals of these names.
+Both attributes are declared for objects in the category <C>IsIncidenceStructure</C>, but 
+only methods are installed for the geometries that are built in <Package>FinInG</Package>.
+Any incidence structure contains elements of a set of types. If names are 
+given to an element of each type, this attribute returns the names for the
+particular incidence structure <A>inc</A>. The second variant returs the list of 
+plurals of these names.
 <Example>
 <#Include SYSTEM "../examples/include/incgeom_typesofels.include"> 
 </Example>
@@ -159,9 +162,15 @@ particular <A>ig</A>. The second variant returs the list of plurals of these nam
 
 <ManSection>
 <Oper Name="Rank" Arg="inc"/>
-<Returns>rank of the <A>inc</A>, which must belong to the categorie <C>IsIncidenceStructure</C></Returns>
+<Attr Name="RankAttr" Arg="inc"/>
+<Returns>rank of <A>inc</A>, an object which must belong to the categorie <C>IsIncidenceStructure</C></Returns>
 <Description>
+The operation <F>Rank</F> returns the rank of the incidence structure <C>inc</C>. The highest level method for
+<F>Rank</F>, applicable to objects in <C>IsIncidenceStructure</C> simply refers to the attribute <F>RankAttr</F>.
+In <Package>FinInG</Package>, the rank of an incidence structure is determined upon creation, when also <F>RankAttr</F>
+is set.
 <Example>
+<#Include SYSTEM "../examples/include/incgeom_rank.include"> 
 </Example>
 </Description>
 </ManSection>
@@ -173,6 +182,7 @@ particular <A>ig</A>. The second variant returs the list of plurals of these nam
 This attribute is declared for objects in the category <C>IsIncidenceStructure</C>, but as this might be meaningless 
 for general incidence structures, in which case a no method found error is returned.
 <Example>
+check and give interesting examples.
 </Example>
 </Description>
 </ManSection>
@@ -201,11 +211,10 @@ for general incidence structures, in which case a no method found error is retur
 <Filt Name="IsSubspaceOfProjectiveSpace" Type="Category"/>
 <Filt Name="IsSubspaceOfClassicalPolarSpace" Type="Category"/>
 <Description>
-In <Package>FinInG</Package> a category for the individual elements of an incidence structure
-in a category <C>IsIncStr</C> is declared and named <C>IsElementOfIncStr</C>. The inclusion for
-different categories of geometries is followed for their elements, except for <C>IsSubspaceOfClassicalPolarSpace</C>,
-which is a subcategory of <C>IsSubspaceOfProjectiveSpace</C>, while <C>IsClassicalPolarSpace</C> is not a subcategory of
-<C>IsProjectiveSpace</C>. The reasons for this construction are obvious.
+A category <C>IsElementOfIncStr</C> for the individual elements of an incidence structure in the category <C>IsIncStr</C>, except for 
+projective spaces and classical polar spaces. The inclusion for different categories of geometries is followed for their elements,
+with an exception for <C>IsSubspaceOfClassicalPolarSpace</C>, which is a subcategory of <C>IsSubspaceOfProjectiveSpace</C>, 
+while <C>IsClassicalPolarSpace</C> is not a subcategory of <C>IsProjectiveSpace</C>. 
 <Example>
 <#Include SYSTEM "../examples/include/incgeom_categories2.include"> 
 </Example>
@@ -221,13 +230,11 @@ which is a subcategory of <C>IsSubspaceOfProjectiveSpace</C>, while <C>IsClassic
 <Filt Name="IsSubspacesOfProjectiveSpace" Type="Category"/>
 <Filt Name="IsSubspacesOfClassicalPolarSpace" Type="Category"/>
 <Description>
-In <Package>FinInG</Package> for an incidence structure <A>ig</A> in the category <C>IsIncStr</C>, a category
-<C>IsElementsOfIncStr</C> is declared for objects representing a set of elements of <A>ig</A>, 
-all of the same type. E.g. the set of all elements of a given type of <A>ig</A> will be constructed in
-<C>IsElementsOfIncStr</C>. The chain of inclusions for <C>IsElementsOfIncStr</C> follows the chain of inclusions
-of <C>IsElementOfIncStr</C>.
-<Example>
-</Example>
+A category <C>IsElementsOfIncStr</C> for objects representing a set of elements of an incidence structure in 
+the category <C>IsIncStr</C>, is declared, with an exception for projective spaces and polar spaces. The inclusion for 
+different categories of geometries is followed for their collection of elements,
+except for <C>IsSubspaceOfClassicalPolarSpace</C>, which is a subcategory of <C>IsSubspaceOfProjectiveSpace</C>, 
+while <C>IsClassicalPolarSpace</C> is not a subcategory of <C>IsProjectiveSpace</C>. 
 </Description>
 </ManSection>
 
@@ -235,20 +242,22 @@ The object representing the set of elements of a given type can be computed usin
 the general operation <F>ElementsOfIncidenceStructure</F>, of course assuming that
 a method is installed for the particular incidence structure.
 
-
 <ManSection>
-<Oper Name="ElementsOfIncidenceStructure" Arg="ig"/>
-<Oper Name="ElementsOfIncidenceStructure" Arg="ig, j"/>
-<Oper Name="ElementsOfIncidenceStructure" Arg="ig, str"/>
+<Oper Name="ElementsOfIncidenceStructure" Arg="inc"/>
+<Oper Name="ElementsOfIncidenceStructure" Arg="inc, j"/>
+<Oper Name="ElementsOfIncidenceStructure" Arg="inc, str"/>
 <Returns>a list of elements</Returns>
-<Description><A>ig</A> must be an incidence geometry. <A>j</A> must be
-a type of element of <A>ig</A>. This function returns a list of all elements
-of <A>ig</A> of type <A>j</A>, and an error is displayed if <A>ig</A> has no 
-elements of type <A>j</A>. In an alternative form of this function
+<Description><A>inc</A> must be an incidence structure, <A>j</A> must be
+a type of element of <A>inc</A>. This function returns all elements
+of <A>inc</A> of type <A>j</A>, and an error is displayed if <A>inc</A> has no 
+elements of type <A>j</A>. Calling the elements (of a given type) of <A>inc</A>
+yields an object in the category <C>IsElementsOfIncStr</C> (or the appropriate category
+for projective spaces and classical polar spaces), which does not imply that
+all elements are computed and stored. In an alternative form of this function
 <A>str</A> can be one of ``points", ``lines", ``planes" or ``solids" and the
 function returns the elements of type 1, 2, 3 or 4 respectively, of course
-if <A>ig</A> has elements of the deduced type. When no type is
-specified one gets all elements of all type of <A>ig</A>.
+if <A>inc</A> has elements of the deduced type. When no type is
+specified all elements of <A>inc</A> are returned.
 <Example>
 <#Include SYSTEM "../examples/include/incgeom_elementsj.include"> 
 </Example>
@@ -257,11 +266,15 @@ specified one gets all elements of all type of <A>ig</A>.
 
 <ManSection>
 <Heading>Short names for ElementsOfIncidenceStructure</Heading>
-<Oper Name="Points" Arg="ps"/>
-<Oper Name="Lines" Arg="ps"/>
-<Oper Name="Planes" Arg="ps"/>
-<Returns>The elements of <A>ps</A> of respective type 1,2, and 3.</Returns>
+<Oper Name="Points" Arg="inc"/>
+<Oper Name="Lines" Arg="inc"/>
+<Oper Name="Planes" Arg="inc"/>
+<Oper Name="Solids" Arg="inc"/>
+<Returns>The elements of <A>inc</A> of respective type 1,2,3, and 4.</Returns>
 <Description>
+It is possible that <A>inc</A> is an incidence structure where the elements of type 1,2,3, and 4 
+respectively are not called "points", "lines", "planes", and "solids" respectively. The methods don't
+check if names are given, and are just shortcuts to the operation <F>ElementsOfIncidenceStructure</F>.
 <Example>
 <#Include SYSTEM "../examples/include/incgeom_short.include"> 
 </Example>
@@ -289,10 +302,11 @@ an arbitrary incidence geometry.
 
 <ManSection>
 <Oper Name="IsIncident" Arg="u,v"/>
-<Returns>Boolean</Returns>
+<Returns>true or false</Returns>
 <Description>
 <A>u</A> and <A>v</A> must be elements of an incidence structure.
-This function returns 
+This function returns true if and only if <A>u</A> is incidence with <A>v</A>. Recall that 
+incidence is a symmetric relation.
 <Example>
 <#Include SYSTEM "../examples/include/incgeom_isincident.include"> 
 </Example>
@@ -300,24 +314,14 @@ This function returns
 </ManSection>
 
 <ManSection>
-<Oper Name="Random" Arg="u,v"/>
-<Returns>Boolean</Returns>
+<Oper Name="Random" Arg="C"/>
+<Returns>an element in the collection <A>C</A></Returns>
 <Description>
-<A>u</A> and <A>v</A> must be elements of an incidence structure.
-This function returns 
+<A>C</A> is a collection of elements of an incidence structure, i.e. an object in the
+category <C>IsElementsOfIncidenceStructure</C>. <F>Random(C)</F> will return a random element
+in <A>C</A> provided there is a method installed.
 <Example>
-</Example>
-</Description>
-</ManSection>
-
-
-<ManSection>
-<Oper Name="Size" Arg="u,v"/>
-<Returns>Boolean</Returns>
-<Description>
-<A>u</A> and <A>v</A> must be elements of an incidence structure.
-This function returns 
-<Example>
+<#Include SYSTEM "../examples/include/incgeom_random.include"> 
 </Example>
 </Description>
 </ManSection>
@@ -345,23 +349,6 @@ can perform a similar operation with <C>Lines</C>, <C>Planes</C> and
 </Description>
 </ManSection>
 
-<ManSection>
-<Oper Name="ShadowOfFlag" Arg="geom, v, j"/>
-<Returns> a collection of elements </Returns>
-<Description>
-<A>geom</A> must be aan incidence geometry. <A>v</A> must be a
-list of elements of <A>geom</A>.
-This function returns
-a list of all elements of <A>geom</A> of type <A>j</A> which are incident
-with every element of the list. The function assumes that the list <A>v</A>
-is a flag; that is, every element of <A>v</A> is incident with every other
-element of <A>v</A>. If <A>v</A> is not a flag then the return value
-is unspecified. This operation may not be installed for all incidence geometries.
-<Example>
-<#Include SYSTEM "../examples/include/incgeom_shadowofflag.include"> 
-</Example>
-</Description>
-</ManSection>
 </Section>
 
 <Section>
