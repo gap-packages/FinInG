@@ -1,0 +1,6 @@
+gap&gt; line := Random(Lines(AG(5,4)));
+&lt;a line in AG(5, 4)&gt;
+gap&gt; Points(line);
+&lt;shadow points in AG(5, 4)&gt;
+gap&gt; Planes(line);
+&lt;shadow planes in AG(5, 4)&gt;

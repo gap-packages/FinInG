@@ -1,0 +1,9 @@
+gap&gt; plane := Random(Planes(HyperbolicQuadric(5,2)));
+#I  Computing nice monomorphism...
+&lt;a plane in standard Q+(5, 2)&gt;
+gap&gt; AmbientGeometry(plane);
+standard Q+(5, 2)
+gap&gt; l := Random(Lines(SplitCayleyHexagon(3)));
+&lt;a line in standard Q(6, 3)&gt;
+gap&gt; AmbientGeometry(l);
+standard Q(6, 3)

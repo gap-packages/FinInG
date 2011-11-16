@@ -1,0 +1,10 @@
+gap&gt; enum := Enumerator(Lines(ParabolicQuadric(6,2)));
+EnumeratorOfSubspacesOfClassicalPolarSpace( &lt;lines of standard Q(6, 2)&gt; )
+gap&gt; s := Size(enum);
+315
+gap&gt; n := Random([1..s]);
+35
+gap&gt; l := enum!.ElementNumber(s,n);
+&lt;a line in standard Q(6, 2)&gt;
+gap&gt; enum!.NumberElement(s,l);
+35

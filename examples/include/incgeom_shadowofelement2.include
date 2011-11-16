@@ -1,0 +1,10 @@
+gap&gt; p := Random(Points(PG(3,3)));
+&lt;a point in ProjectiveSpace(3, 3)&gt;
+gap&gt; lines1 := ShadowOfElement(SymplecticSpace(3,3),p,2);
+&lt;shadow lines in W(3, 3)&gt;
+gap&gt; Size(lines1);
+4
+gap&gt; lines2 := ShadowOfElement(PG(3,3),p,2); 
+&lt;shadow lines in ProjectiveSpace(3, 3)&gt;
+gap&gt; Size(lines2);
+13

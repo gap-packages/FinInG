@@ -1,0 +1,5 @@
+gap&gt; l := Random(Lines(PG(4,3)));
+&lt;a line in ProjectiveSpace(4, 3)&gt;
+gap&gt; ElementToVectorSpace(l);
+[ [ Z(3)^0, 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3) ], 
+  [ 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3), Z(3) ] ]

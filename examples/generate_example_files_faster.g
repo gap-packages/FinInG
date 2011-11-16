@@ -29,7 +29,9 @@ incgeomfiles := ["incgeom_categories1", "incgeom_rank", "incgeom_typesofels", "i
                  "incgeom_elementsj", "incgeom_short",
                  "incgeom_solids", "incgeom_isincident", "incgeom_shadowofelement",
 		 "incgeom_shadowofflag", "incgeom_iterator", "incgeom_incstruct", 
-		 "incgeom_ambientspace", "incgeom_random" ]; 
+		 "incgeom_ambientspace", "incgeom_random", "incgeom_shadowofelement2", "incgeom_el_ambient",
+		 "incgeom_shadowshort", "incgeom_enum", "incgeom_lie_uvs", "incgeom_lie_projdimension", 
+		 "incgeom_lie_vectorspacetoelement", "incgeom_lie_elementtovectorspace", "incgeom_lie_in" ]; 
 
 morphismsfiles := ["morphisms_intertwiners","morphisms_embedding1","morphisms_embedding2","morphisms_typesubspace",
           "morphisms_fieldreduc1", "morphisms_fieldreduc2","morphisms_subfield1","morphisms_subfield2",

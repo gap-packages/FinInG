@@ -1,0 +1,26 @@
+gap&gt; v := [1,1,1,0,0,0]*Z(7)^0;
+[ Z(7)^0, Z(7)^0, Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7) ]
+gap&gt; w := [0,0,0,1,1,1]*Z(7)^0;
+[ 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^0, Z(7)^0, Z(7)^0 ]
+gap&gt; VectorSpaceToElement(PG(5,7),v);
+&lt;a point in ProjectiveSpace(5, 7)&gt;
+gap&gt; VectorSpaceToElement(PG(5,7),[v,w]);
+&lt;a line in ProjectiveSpace(5, 7)&gt;
+gap&gt; VectorSpaceToElement(SymplecticSpace(5,7),v);
+&lt;a point in standard W(5, 7)&gt;
+gap&gt; VectorSpaceToElement(SymplecticSpace(5,7),[v,w]);
+Error, &lt;x&gt; does not generate an element of &lt;geom&gt; called from
+&lt;function&gt;( &lt;arguments&gt; ) called from read-eval-loop
+Entering break read-eval-print loop ...
+you can 'quit;' to quit to outer loop, or
+you can 'return;' to continue
+brk&gt; quit;
+gap&gt; VectorSpaceToElement(HyperbolicQuadric(5,7),v);
+Error, &lt;v&gt; does not generate an element of &lt;geom&gt; called from
+&lt;function&gt;( &lt;arguments&gt; ) called from read-eval-loop
+Entering break read-eval-print loop ...
+you can 'quit;' to quit to outer loop, or
+you can 'return;' to continue
+brk&gt; quit;
+gap&gt; VectorSpaceToElement(HyperbolicQuadric(5,7),0*v);
+&lt; trivial subspace &gt;

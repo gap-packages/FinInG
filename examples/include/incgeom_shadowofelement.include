@@ -1,8 +1,8 @@
-gap> ps := ProjectiveSpace(3,3);
-PG(3, 3)
-gap> pi := Random(Planes(ps));
-&lt;a plane in PG(3, 3)>
-gap> lines := ShadowOfElement(ps,pi,2);
-&lt;shadow lines in PG(3, 3)>
-gap> Size(lines);
+gap&gt; ps := ProjectiveSpace(3,3);
+ProjectiveSpace(3, 3)
+gap&gt; pi := Random(Planes(ps));
+&lt;a plane in ProjectiveSpace(3, 3)&gt;
+gap&gt; lines := ShadowOfElement(ps,pi,"lines");
+&lt;shadow lines in ProjectiveSpace(3, 3)&gt;
+gap&gt; Size(lines);
 13

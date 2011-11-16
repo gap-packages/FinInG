@@ -1,0 +1,12 @@
+gap&gt; p := VectorSpaceToElement(PG(3,3),[1,0,0,0]*Z(3)^0);
+&lt;a point in ProjectiveSpace(3, 3)&gt;
+gap&gt; l := VectorSpaceToElement(PG(3,3),[[1,0,0,0],[0,1,0,0]]*Z(3)^0);
+&lt;a line in ProjectiveSpace(3, 3)&gt;
+gap&gt; p in l;
+true
+gap&gt; p in p;
+true
+gap&gt; l in p;
+false
+gap&gt; l in PG(3,3);
+true

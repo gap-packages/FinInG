@@ -282,31 +282,14 @@ check if names are given, and are just shortcuts to the operation <F>ElementsOfI
 </ManSection>
 
 <ManSection>
-<Oper Name="Hyperplanes" Arg="ps"/>
-<Returns>a list of hyerplanes</Returns>
-<Description>This function returns a list of all elements
-of <A>ps</A> of the maximum type.
-<A>ps</A> must be an incidence geometry, but
-only methods for projective and affine spaces are installed, since
-a ``hyperplane'' has either no, either a completely different meaning
-in other geometires than projective and affine spaces.
- This operation is
-perhaps more synonomous and better suited when using projective
-and affine spaces, however one can also use it for
-an arbitrary incidence geometry. 
-<Example>
-<#Include SYSTEM "../examples/include/incgeom_hyperplanes.include"> 
-</Example>
-</Description>
-</ManSection>
-
-<ManSection>
 <Oper Name="IsIncident" Arg="u,v"/>
+<Oper Name="\*" Arg="u,v"/>
 <Returns>true or false</Returns>
 <Description>
 <A>u</A> and <A>v</A> must be elements of an incidence structure.
 This function returns true if and only if <A>u</A> is incidence with <A>v</A>. Recall that 
-incidence is a symmetric relation.
+incidence is a symmetric relation. A method for the operation <F>\*</F> is intalled, applicable
+to objects in <C>IsElementOfIncidenceStructure</C>, and is just calling <F>IsIncident</F>.
 <Example>
 <#Include SYSTEM "../examples/include/incgeom_isincident.include"> 
 </Example>
@@ -326,25 +309,77 @@ in <A>C</A> provided there is a method installed.
 </Description>
 </ManSection>
 
+<ManSection>
+<Oper Name="AmbientGeometry" Arg="v"/>
+<Returns>the ambient geometry of the element <A>v</A></Returns>
+<Description>
+If <A>v</A> is an element of one of the incidence geometries currently implemented
+in <Package>FinInG</Package>, then this operation returns the ambient geometry of <A>v</A>, 
+i.e. the geometry in which <A>v</A> was created. If incidence structures are created with 
+elements that are a subset of elements of another incidence structure, the ambient geometry
+might stay unchanged, as the following example shows.
+<Example>
+<#Include SYSTEM "../examples/include/incgeom_el_ambient.include"> 
+</Example>
+</Description>
+</ManSection>
+
 </Section>
 
 <Section>
 <Heading>Shadows of elements</Heading>
 
 <ManSection>
-<Oper Name="ShadowOfElement" Arg="geom, v, j"/>
-<Returns> a collection of elements </Returns>
+<Oper Name="ShadowOfElement" Arg="inc, v, str"/>
+<Oper Name="ShadowOfElement" Arg="inc, v, j"/>
+<Returns> The collection of elements of type <A>str</A> or type <A>j</A> incident with <A>v</A></Returns>
 <Description>
-<A>geom</A> is an incidence geometry. <A>v</A> must be an element of <A>geom</A>. This function returns a list of all elements of 
-<A>geom</A> of type <A>j</A> which are incident with <A>v</A>.
-This operation may not be installed for all incidence geometries.
-In some case, such as when we are working with objects of
-projective or polar spaces, we can just type <C>Points(v)</C> for the
-set of points of the ambient geometry incident with <A>v</A>. We
-can perform a similar operation with <C>Lines</C>, <C>Planes</C> and
-<C>Solids</C>.
+<A>inc</A> is an incidence structure, <A>v</A> must be an element of <A>inc</A>, <A>str</A> must
+be a string which is the plural of the name of one of the types of the elements of <A>inc</A>. For the 
+second variant, <A>j</A> is an integer representing one of the types of the elements of <A>inc</A>.
+This first variant relies on <F>TypesOfElementsOfIncidenceStructurePlural</F> and on a particular 
+method installed for the second variant for particular incidence structures.
+The use of the argument <A>inc</A> makes it flexible, i.e. if the element
+<A>v</A> can belong to different incidence structure, its shadow can be different, as the second example shows.
 <Example>
-<#Include SYSTEM "../examples/include/incgeom_shadowofelement.include"> 
+<#Include SYSTEM "../examples/include/incgeom_shadowofelement.include">
+<#Include SYSTEM "../examples/include/incgeom_shadowofelement2.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="ElementsIncidentWithElementOfIncidenceStructure" Arg="v, j"/>
+<Returns> The collection of elements of type <A>j</A> incident with <A>v</A></Returns>
+<Description>
+This operation is declared for objects <A>v></A> belonging to <C>IsElementOfIncidenceStructure</C>, 
+but relies to particular methods installed for particular incidence structures, and refers alwyas to
+<F>ShadowOfElement</F>, where the ambient geometry is derived from the element <A>v</A>, and using the
+integer <A>j</A>
+</Description>
+</ManSection>
+
+<ManSection>
+<Heading>Short names for ElementsIncidentWithElementOfIncidenceStructure</Heading>
+<Oper Name="Points" Arg="inc, v"/>
+<Oper Name="Lines" Arg="inc, v"/>
+<Oper Name="Planes" Arg="inc, v"/>
+<Oper Name="Solids" Arg="inc, v"/>
+<Oper Name="Points" Arg="v"/>
+<Oper Name="Lines" Arg="v"/>
+<Oper Name="Planes" Arg="v"/>
+<Oper Name="Solids" Arg="v"/>
+<Returns>The collections of elements of <A>inc</A> of respective type 1,2,3, and 4, 
+that are incident with <A>v</A></Returns>
+<Description>
+It is possible that <A>inc</A> is an incidence structure where the elements of type 1,2,3, and 4 
+respectively are not called "points", "lines", "planes", and "solids" respectively. The methods don't
+check if names are given, and are just shortcuts to the operation <F>ShadowOfElement</F>. The second variant
+derives the incidence structure to be used as the ambient geometry of <A>v</A>. Please keep in mind 
+that these methods are shortcuts to <F>ShadowOfElement</F>, which implies that asking e.g. <F>Lines(v)</F>
+with <A>v</A> a point, will indeed return the lines incident with a point.
+<Example>
+<#Include SYSTEM "../examples/include/incgeom_shadowshort.include"> 
 </Example>
 </Description>
 </ManSection>
@@ -357,8 +392,9 @@ In several situations, it can be usful to compute a complete list of objects sta
 To list all elements of a given type of an incidence structure, is a typical example. <Package>FinInG</Package> 
 provides functionality that is common in GAP for this purpose. 
 
-For collections of elements, <Package>FinInG</Package> provides methods to compute iterators. An iterator is a GAP object
-that gives a user friendly way to loop over all elements without repetition. Only three operations are applicable on an iterator:
+For a collection of elements of a given type of certain incidence structures, <Package>FinInG</Package> provides 
+methods to compute iterators. An iterator is a GAP object that gives a user friendly way to loop over all 
+elements without repetition. Only three operations are applicable on an iterator:
 <F>NextIterator</F>, <F>IsDoneIterator</F>, and <F>ShallowCopy</F>.
 
 <ManSection>
@@ -371,7 +407,122 @@ that gives a user friendly way to loop over all elements without repetition. Onl
 </Example>
 </Description>
 </ManSection>
-More to be written on the concept enumerator (seems not to be the same for all incidence geometries).
+
+For a collection of elements of a given type of certain incidence structures, <Package>FinInG</Package> also provides
+methods to compute an enumerator. In its simpliest form, an enumerator is just a list containing all the elements of the
+collection. Given any object in the lit, it is possible to retrieve its number in the list (which is then just its position). 
+Also, given any number between 1 and the length of the list, it is possible to get the corresponding element. For some
+collections of elements of particular incidence structures, a more advanced version of enumerators are implemented. Such
+an advanced version is an object containing two the two functions <F>ElementNumber</F> and <F>NumberElement</F>. Such functions
+typically are able to compute directly, without listing all elements, the element with a given number, or, conversely, compute
+directly the number of a given element. Clearly, using an enumerator, it is possible to obtain a list containing all elements
+of a collection.
+
+<ManSection>
+<Oper Name="Enumerator" Arg="C"/>
+<Returns> an enumerator for the collection <A>C</A></Returns>
+<Description>
+<A>C</A> is a collection of elements of an incidence structure. An enumerator is returned.
+<Example>
+<#Include SYSTEM "../examples/include/incgeom_enum.include"> 
+</Example>
+</Description>
+</ManSection>
+
+</Section>
+
+<Section>
+<Heading>Lie geometries</Heading>
+
+The category <C>IsLieGeometry</C> contains the categories <C>IsProjectiveSpace</C> and <C>IsClassicalPolarSpace</C>, and 
+is bundling projective spaces and classical polar spaces. One common fact of these geometries is that their elements
+are represented by subspaces of a vector spaces. In these geometries, incidence is symmetrized set-theoretic containment. In this
+section we describe methods that are declared in a generic way for (elements) of Lie geometries. Again, having a declaration, does
+not imply that methods are installed for all particular Lie geometries.
+
+<ManSection>
+<Oper Name="UnderlyingVectorSpace" Arg="ig"/>
+<Returns>the underlying vectorspace of the Lie geometry <A>ig</A></Returns>
+<Description>
+<Example>
+<#Include SYSTEM "../examples/include/incgeom_lie_uvs.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="ProjectiveDimension" Arg="ig"/>
+<Returns>the projective dimension of the ambient projective space of <A>ig</A></Returns>
+<Description>
+<Example>
+<#Include SYSTEM "../examples/include/incgeom_lie_projdimension.include"> 
+</Example>
+</Description>
+</ManSection>
+
+Mathematically, it makes sense to implement an object representing the empty subspace, since this is typically obtained as
+a result of a Meet operation, which computes the intersection of two or more elements. On the other hand, we do not consider
+the empty subspace as an element of the incidence geometry. Hence, using the empty subspace as an argument of <F>IsIncident</F> (and
+consequently of <F>\*</F>, will result in a no method found error.
+
+<ManSection>
+<Filt Name="IsEmptySubspace" Type="Category"/>
+<Description>
+Category for objects representing the empty subspace of a particular Lie geometry. Empty subspaces of different geometries will
+be different objects, and have a different ambient geometry.
+</Description>
+</ManSection>
+
+</Section>
+
+<Section>
+<Heading>Elements of Lie geometries</Heading>
+
+Elements of a Lie geometry are constructed using a list of vectors. The methods installed for the particular
+Lie geometries check whether the subspace of the vector space represents an element of the Lie geometry.
+
+<ManSection>
+<Oper Name="VectorSpaceToElement" Arg="ig, v"/>
+<Oper Name="VectorSpaceToElement" Arg="ig, l"/>
+<Returns>the element of <A>ig</A>, represented by the subspace spanned by <A>v</A> or <A>l</A></Returns>
+<Description>
+The first variant of this operation takes as second argument a vector of the underlying vector space of <A>ig</A>.
+Such a vector represents possible a point of <A>ig</A>. The second variant takes as second argument a list
+of vectors in the underlying vector space of <A>ig</A>. Such a list represents a subspace of the vector space, of vector dimension
+the length of <A>l</A>, which represents possible an element of type the length of <A>l</A>. If the dimension of the subspace of 
+the underlying vector space is larger than zero and strictly less than the dimension of the vector space, it is checked if the subspace
+represents an element of <A>ig</A>, except when <A>ig</A> is a projective space. If <A>l</A> is a list of vectors generating the whole vector space,
+then <A>ig</A> is returned if and only if <A>ig</A> is a projective space, otherwise an error is produced. An empty list is not allowed as second
+argument.
+<Example>
+<#Include SYSTEM "../examples/include/incgeom_lie_vectorspacetoelement.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="ElementToVectorSpace" Arg="v"/>
+<Returns>the vector or list of vectors representing the element <A>v</A></Returns>
+<Description>
+The argument <A>v</A> must be an element, so it is not allowed that <A>v</A> is the empty subspace, or just a projective space.
+<Example>
+<#Include SYSTEM "../examples/include/incgeom_lie_elementtovectorspace.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="\in" Arg="u,v"/>
+<Returns>true if and only if the element <A>u</A> is set-theoretically contained int the element <A>w</A></Returns>
+<Description>
+Both arguments must be elements of the same Lie geometry. The empty subspace and a Lie geometry are allowed also 
+as arguments. This relation is not symmetric, and the methods for <F>IsIncident</F>
+use this method to test incidence between elements. 
+<Example>
+<#Include SYSTEM "../examples/include/incgeom_lie_in.include"> 
+</Example>
+</Description>
+</ManSection>
 
 </Section>
 </Chapter>
