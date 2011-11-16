@@ -37,10 +37,11 @@ to the user.
 <Section>
 <Heading>Geometry morphisms in FinInG</Heading>
 
-A <E>geometry morphism</E> from <A>P</A> to <A>P'</A> is defined to be a map
-from the elements of <A>P</A> to the elements of <A>P'</A> which preserves
-incidence and induces a function from the type set of <A>P</A> to the
-type set of <A>P'</A>. For instance, a correlation and a collineation are
+Suppose that <M>S</M> and <M>S'</M> are two incidence geometries. 
+A <E>geometry morphism</E> from <M>S</M> to <M>S'</M> is defined to be a map
+from the elements of <M>S</M> to the elements of <M>S'</M> which preserves
+incidence and induces a function from the type set of <M>S</M> to the
+type set of <M>S'</M>. For instance, a correlation and a collineation are
 examples of geometry morphisms, but they have been dealt with in more specific
 ways in <Package>FinInG</Package>.  We will mainly be concerned with geometry
 morphisms where the source and range are different. Hence, the natural embedding
@@ -70,16 +71,15 @@ a &GAP; function, we advise the user to not use this for geometry morphisms.
 </Description>
 </ManSection>
 
-
-
 For some geometry morphisms, there is also an accompanying intertwiner for
 the automorphism groups of the source range. Given a geometry morphism
-<M>f</M> from <A>P</A> to <A>P'</A>, an intertwiner <M>\phi</M> is a map
-from the automorphism group of <A>P</A> to the automorphism group of 
-<A>P'</A>, such that for every element <M>p</M> of <A>P</A> and every
-automorphism <M>g</M> of <A>P</A>, we have
- <Display> f(p^g) = f(p)^{\phi(g)} .</Display> 
-
+<M>f</M> from <M>S</M> to <M>S'</M>, an intertwiner <Alt Not="HTML"><M>\phi</M></Alt>
+<Alt Only="HTML">&#966;</Alt> is a map
+from the automorphism group of <M>S</M> to the automorphism group of 
+<M>S'</M>, such that for every element <M>p</M> of <M>S</M> and every
+automorphism <M>g</M> of <M>S</M>, we have
+<Alt Not="HTML"><Display> f(p^g) = f(p)^{\phi(g)} .</Display></Alt>
+<Alt Only="HTML"><Display>f(p&lt;sup>g&lt;/sup>)=f(p)&lt;sup>&#966;(g)&lt;/sup>.</Display></Alt>
 
 <ManSection>
 <Attr Name = "Intertwiner" Arg = "f"/>
@@ -124,12 +124,7 @@ Both functions also have a "no check" version.
 </Description>
 <Oper Name="IsomorphismPolarSpacesNC" Arg="ps1, ps2"/>
 <Oper Name="IsomorphismPolarSpacesNC" Arg="ps1, ps2, boolean"/>
-<Returns>a geometry morphism</Returns>
-
-
 </ManSection>
-
-
 
 </Section>
 
