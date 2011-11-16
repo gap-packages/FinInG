@@ -68,6 +68,8 @@ DeclareOperation( "ProjectiveVariety", [IsProjectiveSpace, IsList] );
 #DeclareAttribute( "AmbientGeometry", [IsProjectiveVariety] );
 #DeclareOperation( "PointsOfProjectiveVariety", [IsProjectiveVariety] );
 #DeclareOperation( "Points", [IsProjectiveVariety] );
+DeclareOperation( "DualCoordinatesOfHyperplane", [IsSubspaceOfProjectiveSpace] );
+DeclareOperation( "HyperplaneByDualCoordinates", [IsProjectiveSpace,IsList] );
 
 ### 2. Affine Varieties ###
 
