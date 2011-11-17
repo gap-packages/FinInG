@@ -176,10 +176,6 @@ Another example, this time with polar spaces:
 </Description>
 </ManSection>
 
-
-
-
-
 <ManSection>
 <Oper Name="NaturalEmbeddingByFieldReduction" Arg="geom1, geom2"/>
 <Oper Name="NaturalEmbeddingByFieldReduction" Arg="geom1, geom2, B"/>
@@ -189,8 +185,9 @@ Another example, this time with polar spaces:
 The arguments <A>geom1</A> and <A>geom2</A> are projective or polar spaces.
 This function returns a geometry morphism representing the natural embedding
 of <A>geom1</A> into <A>geom2</A> via field reduction. By <E>natural</E> for projective spaces,
-we mean that the embedding is induced by considering the field <M>F_1</M>
-of <A>geom1</A> as a vector space over the field <M>F_2</M> of <A>geom2</A>, perhaps with
+we mean that the embedding is induced by considering the field <Alt Not="HTML"><M>F_1</M></Alt><Alt Only="HTML">
+F&lt;sub>1&lt;/sub></Alt> of <A>geom1</A> as a vector space over the field <Alt Not="HTML"><M>F_2</M></Alt><Alt Only="HTML">
+F&lt;sub>2&lt;/sub></Alt> of <A>geom2</A>, perhaps with
 a choice of basis <A>B</A> in the case we have projective spaces.
 If <A>geom1</A> and <A>geom2</A> are polar spaces, then the only such possible embeddings are
 listed in the table below (see <Cite Key="Gill"/>):
@@ -203,34 +200,53 @@ listed in the table below (see <Cite Key="Gill"/>):
  <HorLine/>
  <HorLine/>
   <Row>
-   <Item><M>W(2n-1,q^a)</M></Item><Item><M>W(2na-1,q)</M></Item><Item>--</Item>
+   <Item><Alt Not="HTML"><M>W(2n-1,q^a)</M></Alt><Alt Only="HTML">W(2n-1,q&lt;sup>a&lt;/sup>)</Alt></Item>
+   <Item><M>W(2na-1,q)</M></Item><Item>--</Item>
   </Row>
  <Row>
-   <Item><M>Q^+(2n-1,q^a)</M></Item><Item><M>Q^+(2na-1,q)</M></Item><Item>--</Item>
+   <Item><Alt Not="HTML"><M>Q^+(2n-1,q^a)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>(2n-1,q&lt;sup>a&lt;/sup>)</Alt></Item>
+   <Item><Alt Not="HTML"><M>Q^+(2na-1,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>(2na-1,q)</Alt></Item>
+   <Item>--</Item>
   </Row>
  <Row>
-   <Item><M>Q^-(2n-1,q^a)</M></Item><Item><M>Q^-(2na-1,q)</M></Item><Item>--</Item>
+   <Item><Alt Not="HTML"><M>Q^-(2n-1,q^a)</M></Alt><Alt Only="HTML">Q&lt;sup>-&lt;/sup>(2n-1,q&lt;sup>a&lt;/sup>)</Alt></Item>
+   <Item><Alt Not="HTML"><M>Q^-(2na-1,q)</M></Alt><Alt Only="HTML">Q&lt;sup>-&lt;/sup>(2na-1,q)</Alt></Item>
+   <Item>--</Item>
   </Row>
  <Row>
-   <Item><M>Q(2n,q^{2a})</M></Item><Item><M>Q^+(2(2n+1)a-1,q)</M></Item><Item>q=1 mod 4</Item>
+   <Item><Alt Not="HTML"><M>Q(2n,q^{2a})</M></Alt><Alt Only="HTML">Q(2n,q&lt;sup>2a&lt;/sup>)</Alt></Item>
+   <Item><Alt Not="HTML"><M>Q^+(2a(2n+1)-1,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>(2a(2n+1)-1,q)</Alt></Item>
+   <Item>q=1 mod 4</Item>
  </Row>
  <Row>
-   <Item><M>Q(2n,q^{2a})</M></Item><Item><M>Q^-(2(2n+1)a-1,q)</M></Item><Item>q=3 mod 4</Item>
+  <Item><Alt Not="HTML"><M>Q(2n,q^{2a})</M></Alt><Alt Only="HTML">Q(2n,q&lt;sup>2a&lt;/sup>)</Alt></Item>
+  <Item><Alt Not="HTML"><M>Q^-(2a(2n+1)-1,q)</M></Alt><Alt Only="HTML">Q&lt;sup>-&lt;/sup>(2a(2n+1)-1,q)</Alt></Item>
+  <Item>q=3 mod 4</Item>
  </Row>
  <Row>
-   <Item><M>Q(2n,q^{2a+1})</M></Item><Item><M>Q((2a+1)(2n+1)-1,q)</M></Item><Item>q odd</Item>
+   <Item><Alt Not="HTML"><M>Q(2n,q^{2a+1})</M></Alt><Alt Only="HTML">Q(2n,q&lt;sup>2a+1&lt;/sup>)</Alt></Item>
+   <Item><M>Q((2a+1)(2n+1)-1,q)</M></Item>
+   <Item>q odd</Item>
  </Row>
 <Row>
-   <Item><M>H(n,q^{2a+1})</M></Item><Item><M>H((2a+1)(n+1)-1,q)</M></Item><Item>q square</Item>
+   <Item><Alt Not="HTML"><M>H(2n,q^{2a+1})</M></Alt><Alt Only="HTML">H(2n,q&lt;sup>2a+1&lt;/sup>)</Alt></Item>
+   <Item><M>H((2a+1)(n+1)-1,q)</M></Item>
+   <Item>q square</Item>
  </Row>
 <Row>
-   <Item><M>H(2n,q^{2a})</M></Item><Item><M>Q^+(2a(2n+1)-1,q)</M></Item><Item>q odd square</Item>
+   <Item><Alt Not="HTML"><M>H(2n,q^{2a})</M></Alt><Alt Only="HTML">H(2n,q&lt;sup>2a&lt;/sup>)</Alt></Item>
+   <Item><Alt Not="HTML"><M>Q^+(2a(2n+1)-1,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>(2a(2n+1)-1,q)</Alt></Item>
+   <Item>q odd square</Item>
  </Row>
 <Row>
-   <Item><M>H(2n-1,q^{2a})</M></Item><Item><M>Q^-(4an-1,q)</M></Item><Item>q odd square</Item>
+   <Item><Alt Not="HTML"><M>H(2n-1,q^{2a})</M></Alt><Alt Only="HTML">H(2n-1,q&lt;sup>2a&lt;/sup>)</Alt></Item>
+   <Item><Alt Not="HTML"><M>Q^-(4an-1,q)</M></Alt><Alt Only="HTML">Q&lt;sup>-&lt;/sup>(4an-1,q)</Alt></Item>
+   <Item>q odd square</Item>
  </Row>
 <Row>
-   <Item><M>H(n,q^{2a})</M></Item><Item><M>W(2n-1,q)</M></Item><Item>--</Item>
+   <Item><Alt Not="HTML"><M>H(n,q^{2a})</M></Alt><Alt Only="HTML">H(n,q&lt;sup>2a&lt;/sup>)</Alt></Item>
+   <Item><M>W(2n-1,q)</M></Item>
+   <Item>--</Item>
  </Row>
 </Table>
 
@@ -248,21 +264,52 @@ of <M>PG(2,9)</M> and maps them to the lines of <M>PG(5,3)</M>.
 <#Include SYSTEM "../examples/include/morphisms_fieldreduc1.include"> 
 </Example>
 
-Suppose we have field reduction from a polar space <M>P_1</M> to a polar space <M>P_2</M>, and suppose
-that they are both defined by sesquilinear forms. Let <M>M</M> be the Gram matrix for the sesquilinear form
-defining <M>P_1</M> and let <M>\{b_1,..,b_m\}</M> be a basis for the larger defining field of <M>F</M> <M>P_1</M> over
-the smaller defining field <M>K</M> of <M>P_2</M>. Now the <C>BlownUpMat</C> command takes as input a matrix <A>mat</A>
-over <M>F</M> and returns the matrix of the linear transformation on the row space <M>K^{mn}</M> with respect to
-the <M>K</M>-basis whose vectors are <M>\{b_1 v_1, ... b_m v_1, ..., b_mv_n\}</M>, where
-<M>\{v_1,...,v_n\}</M> is a basis for <M>F^n</M>. Hence if we have a singular vector <M>x=(x_1,...,x_n)</M>
-of <M>P_1</M>, then the blow-up of <M>x</M> will be singular if and only if
-for all <M>i,j \in \{1,...,m\}</M>, we have
-<Display>\sum_{k=1}^n Coeff(x_kb_i)\cdot Coeff(M_k\cdot x b_j)=0</Display>
+Suppose we have field reduction from a polar space <Alt Not="HTML"><M>P_1</M></Alt><Alt Only="HTML">
+P&lt;sub>1&lt;/sub></Alt> to a polar space <Alt Not="HTML"><M>P_2</M></Alt><Alt Only="HTML">
+P&lt;sub>2&lt;/sub></Alt>, and suppose that they are both defined by sesquilinear forms. 
+Let <M>M</M> be the Gram matrix for the sesquilinear form
+defining <Alt Not="HTML"><M>P_1</M></Alt><Alt Only="HTML">
+P&lt;sub>1&lt;/sub></Alt> and let <Alt Not="HTML"><M>\{b_1,..,b_m\}</M></Alt><Alt Only="HTML">
+{b&lt;sub>1&lt;/sub>,...,b&lt;sub>m&lt;/sub>}</Alt>
+be a basis for the larger defining field <M>F</M> of <Alt Not="HTML"><M>P_1</M></Alt><Alt Only="HTML">
+P&lt;sub>1&lt;/sub></Alt> over the smaller defining field <M>K</M> of <Alt Not="HTML"><M>P_2</M></Alt><Alt Only="HTML">
+P&lt;sub>2&lt;/sub></Alt>. Now the <C>BlownUpMat</C> command takes as input a matrix <A>mat</A>
+over <M>F</M> and returns the matrix of the linear transformation on the row space 
+<Alt Not="HTML"><M>K^{mn}</M></Alt><Alt Only="HTML">K&lt;sup>mn&lt;/sup></Alt> with respect to
+the <M>K</M>-basis whose vectors are <Alt Not="HTML"><M>\{b_1 v_1, ... b_m v_1, ..., b_mv_n\}</M></Alt>
+<Alt Only="HTML">{b&lt;sub>1&lt;/sub>v&lt;sub>1&lt;/sub>,...,
+b&lt;sub>m&lt;/sub>v&lt;sub>1&lt;/sub>,...,b&lt;sub>m&lt;/sub>v&lt;sub>m&lt;/sub>}</Alt>, where
+<Alt Not="HTML"><M>\{v_1,..,v_n\}</M></Alt><Alt Only="HTML">
+{v&lt;sub>1&lt;/sub>,...,v&lt;sub>n&lt;/sub>}</Alt> is a basis for 
+<Alt Not="HTML"><M>F^n</M></Alt><Alt Only="HTML">
+F&lt;sup>n&lt;/sup></Alt>. Hence if we have a totally isotropic vector 
+vector <Alt Not="HTML"><M>(x_1,..,x_n)</M></Alt><Alt Only="HTML">
+(x&lt;sub>1&lt;/sub>,...,x&lt;sub>n&lt;/sub>)</Alt> with relation to the form defining 
+<Alt Not="HTML"><M>P_1</M></Alt><Alt Only="HTML">P&lt;sub>1&lt;/sub></Alt>
+then the blow-up of <M>x</M> will be totally isotropic with relation to the form defining 
+<Alt Not="HTML"><M>P_2</M></Alt><Alt Only="HTML">
+P&lt;sub>2&lt;/sub></Alt> if and only if
+for all 
+<Alt Not="HTML"><M>i,j \in \{1,...,m\}</M></Alt><Alt Only="HTML">i,j &#8712; {1,...,m}</Alt>, we have
+<Alt Only="HTML">
+&lt;table cellspacing=0 class="first">
+&lt;tr align="center">
+	&lt;td>&lt;small>&nbsp; n &nbsp;&lt;/small>&lt;br>
+		&lt;big>&lt;big>&#8721;&lt;/big>&lt;/big>&lt;br>
+		&lt;small> k &lt;small>&nbsp;&lt;/small>=&lt;small>&nbsp;&lt;/small> 1 &lt;/small>&lt;/td>
+	&lt;td> Coeff(x&lt;sub>k&lt;/sub>b&lt;sub>i&lt;/sub>)&#183;Coeff(M&lt;sub>k&lt;/sub> &#183; xb&lt;sub>j&lt;/sub>)=0  &lt;/td>
+&lt;/tr>
+&lt;/table>
+</Alt><Alt Not="HTML">
+<Display>\sum_{k=1}^n Coeff(x_kb_i)\cdot Coeff(M_k\cdot x b_j)=0</Display></Alt>
 where <M>Coeff</M> is the map which takes the coefficients of an element of <M>F</M> with respect to
-<M>\{b_1,..,b_m\}</M>, and <M>M_k</M> is the k-th row of <M>M</M>.
+<Alt Not="HTML"><M>\{b_1,..,b_m\}</M></Alt><Alt Only="HTML">
+{b&lt;sub>1&lt;/sub>,...,b&lt;sub>m&lt;/sub>}</Alt>, and <Alt Not="HTML"><M>M_k</M></Alt><Alt Only="HTML">
+M&lt;sub>k&lt;/sub></Alt> is the k-th row of <M>M</M>.
 
 <Par></Par>
-In this example, we consider the image of the Hermitian variety <M>H(2,25)</M> in <M>Q^-(5,5)</M>.
+In this example, we consider the image of the Hermitian variety <M>H(2,25)</M> in <Alt Not="HTML"><M>Q^-(5,5)</M></Alt><Alt Only="HTML">
+Q&lt;sup>-&lt;/sup>(5,5)</Alt>.
 <Example>
 <#Include SYSTEM "../examples/include/morphisms_fieldreduc2.include"> 
 </Example>
@@ -273,7 +320,12 @@ In this example, we consider the image of the Hermitian variety <M>H(2,25)</M> i
 <Oper Name="BlownUpProjectiveSpace" Arg="basis, pg1"/>
 <Returns>a projective space</Returns>
 <Description>
-Blows up the projective space <A>pg1</A> with respect to the <A>basis</A> using field reduction. If the argument <A>pg1</A> is has projective dimension r-1 over the finite field GF(q^t), and <A>basis</A> is a basis of GF(q^t) over GF(q), then this functions returns a projective space of dimension rt-1 over GF(q).
+Blows up the projective space <A>pg1</A> with respect to the <A>basis</A> using field reduction. 
+If the argument <A>pg1</A> is has projective dimension <M>r-1</M> over the finite field 
+<Alt Not="HTML"><M>GF(q^t)</M></Alt><Alt Only="HTML">
+GF(q&lt;sup>t&lt;/sup>)</Alt>, and <A>basis</A> is a basis of <Alt Not="HTML"><M>GF(q^t)</M></Alt><Alt Only="HTML">
+GF(q&lt;sup>t&lt;/sup>)</Alt> over <M>GF(q)</M>, 
+then this functions returns a projective space of dimension <M>rt-1</M> over GF(q).
 </Description>
 </ManSection>
 
@@ -313,21 +365,6 @@ Checks wether the <A>subspace</A> is a subspace which is obtained from a blowing
 </Description>
 </ManSection>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <ManSection>
 <Oper Name="NaturalEmbeddingBySubField" Arg="geom1, geom2"/>
 <Oper Name="NaturalEmbeddingBySubField" Arg="geom1, geom2, boolean"/>
@@ -348,19 +385,29 @@ listed in the table below (see <Cite Key="KleidmanLiebeck"/>):
  <HorLine/>
  <HorLine/>
   <Row>
-   <Item><M>W(2n-1,q)</M></Item><Item><M>W(2n-1,q^a)</M></Item><Item>--</Item>
+   <Item><M>W(2n-1,q)</M></Item>
+   <Item><Alt Not="HTML"><M>W(2n-1,q^a)</M></Alt><Alt Only="HTML">W(2n-1,q&lt;sup>a&lt;/sup>)</Alt></Item>
+   <Item>--</Item>
   </Row> 
   <Row>
-   <Item><M>W(2n-1,q)</M></Item><Item><M>H(2n-1,q^2)</M></Item><Item>--</Item>
+   <Item><M>W(2n-1,q)</M></Item>
+   <Item><Alt Not="HTML"><M>H(2n-1,q^2)</M></Alt><Alt Only="HTML">H(2n-1,q&lt;sup>2&lt;/sup>)</Alt></Item>
+   <Item>--</Item>
   </Row>  
   <Row>
-   <Item><M>H(d,q^2)</M></Item><Item><M>H(d,q^{2r})</M></Item><Item>r odd</Item>
+   <Item><Alt Not="HTML"><M>H(d,q^2)</M></Alt><Alt Only="HTML">H(d,q&lt;sup>2&lt;/sup>)</Alt></Item>
+   <Item><Alt Not="HTML"><M>H(d,q^{2r})</M></Alt><Alt Only="HTML">H(d,q&lt;sup>2r&lt;/sup>)</Alt></Item>
+   <Item>r odd</Item>
   </Row>
   <Row>
-   <Item><M>O^\epsilon(d,q)</M></Item><Item><M>H(d,q^2)</M></Item><Item>q odd</Item>
+   <Item><Alt Not="HTML"><M>O^\epsilon(d,q)</M></Alt><Alt Only="HTML">O&lt;sup>&#949;&lt;/sup>(d,q)</Alt></Item>
+   <Item><Alt Not="HTML"><M>H(d,q^2)</M></Alt><Alt Only="HTML">H(d,q&lt;sup>2&lt;/sup>)</Alt></Item>
+   <Item>q odd</Item>
   </Row>
   <Row>
-   <Item><M>O^\epsilon(d,q)</M></Item><Item><M>O^{\epsilon'}(d,q^r)</M></Item><Item><M>\epsilon=(\epsilon')^r</M></Item>
+   <Item><Alt Not="HTML"><M>O^\epsilon(d,q)</M></Alt><Alt Only="HTML">O&lt;sup>&#949;&lt;/sup>(d,q)</Alt></Item>
+   <Item><Alt Not="HTML"><M>O^{\epsilon'}(d,q^r)</M></Alt><Alt Only="HTML">O&lt;sup>&#949;'&lt;/sup>(d,q&lt;sup>r&lt;/sup>)</Alt></Item>
+   <Item><Alt Not="HTML"><M>\epsilon=(\epsilon')^r</M></Alt><Alt Only="HTML">&#949;=(&#949;')&lt;sup>r&lt;/sup></Alt></Item>
   </Row>
 </Table>
 
@@ -376,7 +423,8 @@ of <M>PG(2,3)</M> and embeds them into <M>PG(2,9)</M>.
 <Example>
 <#Include SYSTEM "../examples/include/morphisms_subfield1.include"> 
 </Example>
-In this example, we embed <M>W(5,3)</M> in <M>H(5,3^2)</M>.
+In this example, we embed <M>W(5,3)</M> in <Alt Not="HTML"><M>H(5,3^2)</M></Alt>
+<Alt Only="HTML">H(5,3&lt;sup>2&lt;/sup>)</Alt>.
 <Example>
 <#Include SYSTEM "../examples/include/morphisms_subfield2.include"> 
 </Example>
