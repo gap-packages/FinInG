@@ -50,18 +50,18 @@ shows instructive examples for the usage of this package.
 
 <Section Label="philosophy">
 <Heading>The Development Team</Heading>
-<Alt Only="HTML">This is the development team, from left to right: Philippe
-Cara, Michel Lavrauw, Max Neunh&#246;ffer, Jan De Beule, and John
-Bamberg,</Alt><Alt Only="LaTeX">This is the development team, from left to
+<Alt Only="HTML">This is the development team (without Anton), 
+from left to right: Philippe Cara, Michel Lavrauw, Max Neunh&#246;ffer, Jan De Beule, and John
+Bamberg,</Alt><Alt Only="LaTeX">This is the development team (without Anton), from left to
 right: Philippe Cara, Michel Lavrauw, Max Neunh\"offer, Jan De Beule and John
 Bamberg,</Alt> meeting in St. Andrews in september 2008.<P/>
 <Alt Only="HTML">&lt;img src="devteamstasep08.jpg">&lt;/img></Alt>
-<Alt Only="LaTeX">\includegraphics{devteamstasep08.jpg}</Alt><P/>
-The development team meetingg again (without Max), now
+<Alt Only="LaTeX">\includegraphics[scale=0.5]{devteamstasep08.jpg}</Alt><P/>
+The development team meeting again (without Anton and Max), now
 in Vicenza in april 2011. from left to right: Michel Lavrauw, John Bamberg, Philippe
 Cara, Jan De Beule.<P/>
 <Alt Only="HTML">&lt;img src="devteamvicapr11.jpg">&lt;/img></Alt>
-<Alt Only="LaTeX">\includegraphics{devteamvicapr11.jpg}</Alt><P/>
+<Alt Only="LaTeX">\includegraphics[scale=0.5]{devteamvicapr11.jpg}</Alt><P/>
 </Section>
 
 

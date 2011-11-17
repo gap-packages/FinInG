@@ -54,8 +54,8 @@
 # - IsomorphismPolarSpaces(NC): done
 # - VeroneseMap: move this to varieties: done
 # - SegreMap: move this to varieties: done
-# - PluckerCoordinates: not documented
-# - InversePluckerCoordinates: not documented
+# - PluckerCoordinates: not documented, but there is a good reason for, see the comments at the code
+# - InversePluckerCoordinates: not documented, see one line above this.
 # - KleinCorrespondence: done
 # - GrassmannMap: move this to varieties: done
 # - NaturalDuality: done
