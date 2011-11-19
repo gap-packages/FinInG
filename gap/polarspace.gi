@@ -97,7 +97,7 @@ InstallMethod( PolarSpace,
 	"for a sesquilinear form, a field, a group and an action function",
 	[ IsSesquilinearForm, IsField, IsGroup, IsFunction ],
 	function( m, f, g, act )
-		local geo, ty, gram, eq, r, i1, i2;
+		local geo, ty, gram, eq, r, i1, i2, r2, fam, j;
 		if IsDegenerateForm( m ) then 
 			Error("Form is degenerate");
 		elif IsPseudoForm( m ) then
@@ -125,9 +125,20 @@ InstallMethod( PolarSpace,
 			Print("eq is zero\n");
 			i1 := List([1..Length(gram)],i->Concatenation("x",String(i)));
 			i2 := List([1..Length(gram)],i->Concatenation("y",String(i)));
-			r := PolynomialRing(f,Concatenation(i1,i2):old);     ## there was an error here for gap4r5
+			#r := PolynomialRing(f,Concatenation(i1,i2):old);     ## there was an error here for gap4r5
+			#i2 := IndeterminatesOfPolynomialRing(r){[Length(gram)+1..2*Length(gram)]};
+			#there was a proble with the above lines. If say x_4 existed already, and i1 just ran until 3, than
+			# x_4 got changed by y_1, which caused all polynomials in r to change also, which caused funny printing behaviour.
+			# the 10000 is completely arbitrary, I guess nobody will use the first 10000 variables in forms, since nobody
+			# will work in a 10000-dimensional vector space (I guess...).
+			r := PolynomialRing(f,i1:old);     ## there was an error here for gap4r5
 			i1 := IndeterminatesOfPolynomialRing(r){[1..Length(gram)]};
-			i2 := IndeterminatesOfPolynomialRing(r){[Length(gram)+1..2*Length(gram)]};
+			r2 := PolynomialRing(f,[10001..10000+Length(gram)]:old);
+			fam := FamilyObj(r2.1);
+			for j in [1..Length(gram)] do
+				SetIndeterminateName(fam,10000+j,i2[j]);
+			od;
+			i2 := IndeterminatesOfPolynomialRing(r2);
 			eq := i1*gram*i2;
 		fi;
 		ObjectifyWithAttributes( geo, ty, 
@@ -150,7 +161,7 @@ InstallMethod( PolarSpaceStandard,
 	"for a sesquilinear form",
 	[ IsSesquilinearForm ],
 	function( m )
-		local geo, ty, gram, f, eq, r, i1, i2;
+		local geo, ty, gram, f, eq, r, i1, i2, r2, fam, j;
 		gram := m!.matrix;
 		f := m!.basefield;
 		geo := rec( basefield := f, dimension := Length(gram)-1,
@@ -174,9 +185,20 @@ InstallMethod( PolarSpaceStandard,
 			Print("eq is zero\n");
 			i1 := List([1..Length(gram)],i->Concatenation("x",String(i)));
 			i2 := List([1..Length(gram)],i->Concatenation("y",String(i)));
-			r := PolynomialRing(f,Concatenation(i1,i2):old);
+			#r := PolynomialRing(f,Concatenation(i1,i2):old);     ## there was an error here for gap4r5
+			#i2 := IndeterminatesOfPolynomialRing(r){[Length(gram)+1..2*Length(gram)]};
+			#there was a proble with the above lines. If say x_4 existed already, and i1 just ran until 3, than
+			# x_4 got changed by y_1, which caused all polynomials in r to change also, which caused funny printing behaviour.
+			# the 10000 is completely arbitrary, I guess nobody will use the first 10000 variables in forms, since nobody
+			# will work in a 10000-dimensional vector space (I guess...).
+			r := PolynomialRing(f,i1:old);     ## there was an error here for gap4r5
 			i1 := IndeterminatesOfPolynomialRing(r){[1..Length(gram)]};
-			i2 := IndeterminatesOfPolynomialRing(r){[Length(gram)+1..2*Length(gram)]};
+			r2 := PolynomialRing(f,[10001..10000+Length(gram)]:old);
+			fam := FamilyObj(r2.1);
+			for j in [1..Length(gram)] do
+				SetIndeterminateName(fam,10000+j,i2[j]);
+			od;
+			i2 := IndeterminatesOfPolynomialRing(r2);
 			eq := i1*gram*i2;
 		fi;
 		ObjectifyWithAttributes( geo, ty, 
@@ -228,7 +250,7 @@ InstallMethod( PolarSpace,
 	"for a sesquilinear form",
 	[ IsSesquilinearForm ],
 	function( m )
-		local geo, ty, gram, f, eq, r, i1, i2;  
+		local geo, ty, gram, f, eq, r, i1, i2, r2, fam, j;  
 		if IsDegenerateForm( m ) then 
 			Error("Form is degenerate");
 		elif IsPseudoForm( m ) then
@@ -257,9 +279,20 @@ InstallMethod( PolarSpace,
 			Print("eq is zero\n");
 			i1 := List([1..Length(gram)],i->Concatenation("x",String(i)));
 			i2 := List([1..Length(gram)],i->Concatenation("y",String(i)));
-			r := PolynomialRing(f,Concatenation(i1,i2):old);
+			#r := PolynomialRing(f,Concatenation(i1,i2):old);     ## there was an error here for gap4r5
+			#i2 := IndeterminatesOfPolynomialRing(r){[Length(gram)+1..2*Length(gram)]};
+			#there was a proble with the above lines. If say x_4 existed already, and i1 just ran until 3, than
+			# x_4 got changed by y_1, which caused all polynomials in r to change also, which caused funny printing behaviour.
+			# the 10000 is completely arbitrary, I guess nobody will use the first 10000 variables in forms, since nobody
+			# will work in a 10000-dimensional vector space (I guess...).
+			r := PolynomialRing(f,i1:old);     ## there was an error here for gap4r5
 			i1 := IndeterminatesOfPolynomialRing(r){[1..Length(gram)]};
-			i2 := IndeterminatesOfPolynomialRing(r){[Length(gram)+1..2*Length(gram)]};
+			r2 := PolynomialRing(f,[10001..10000+Length(gram)]:old);
+			fam := FamilyObj(r2.1);
+			for j in [1..Length(gram)] do
+				SetIndeterminateName(fam,10000+j,i2[j]);
+			od;
+			i2 := IndeterminatesOfPolynomialRing(r2);
 			eq := i1*gram*i2;
 		fi;
 		ObjectifyWithAttributes( geo, ty, 
