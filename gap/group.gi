@@ -1976,7 +1976,21 @@ InstallMethod( CanonicalQuadraticForm,
 # Part II: constructor methods, for the user of course.
 #############################################################################
 
-## bug, size IsometryGroup(ParabolicQuadric(6,2)) is wrong
+###################################################################################
+#
+#  JB 20/11/2011:  
+#  I've done some rigorous testing, and the following work very well:
+#    all groups of SymplecticSpace
+#    all groups of HyperbolicQuadric
+#    all groups of HermitianVariety (hard to check though, things get big fast)
+#    all groups of EllipticQuadric (I've recently fixed a bug)
+#    all groups of ParabolicQuadric (I've recently fixed a bug)
+#
+# I guess we could run more tests for higher dimensions and field orders, but I'm
+# reasonably confident that it all works well. For example, I tested groups
+# of the parabolic quadric up to q^d = 8^6 (d is the projective dimension here).
+#    
+###################################################################################
 
 InstallMethod( SOdesargues, [IsInt, IsPosInt, IsField and IsFinite],
   function(i, d, f)
@@ -2098,10 +2112,6 @@ InstallMethod( Spdesargues, [IsPosInt, IsField and IsFinite],
 #################################################
 # Semi-similarity and similarity groups:
 #################################################
-
-## to be done....
-##    GammaOminus
-
 
 ###### Symplectic groups ######
 
@@ -2259,6 +2269,7 @@ InstallMethod( GammaOminus, [IsPosInt, IsField and IsFinite],
   ##    .  .  .  .  l  .
   ## where a = l * alpha^((1-p)/2) and b = l * beta^((1-p)/2), and 
   ## the first block of our Gram matrix is diag(alpha, beta).
+  ##  JB 20/11/2011: Fixed the bug for q even. Simply changed the change of basis matrix.
 
   q := Size(f);
   p := Characteristic( f );
@@ -2283,17 +2294,17 @@ InstallMethod( GammaOminus, [IsPosInt, IsField and IsFinite],
      ## We must find a semisimilarity for the first (2x2) block. Then
      ## simply extend it naturally to fit with the canonical form.
 
-## bug: (d,q) = (4,16)
-## No problem for q = 32.
-
      gram := CanonicalQuadraticForm("elliptic", d, f);
      block :=Forms_RESET( MutableCopyMat( gram{[1,2]}{[1,2]} ), 2, q);
 	 frob := FrobeniusAutomorphism( f );
-     mat := First( GL(2,f), t -> Forms_RESET(t * block^frob *TransposedMat(t), 2, q) = block);
-     mat2 := IdentityMat(d,f);  #NullMat(d,d,f);
-    # for i in [1..d/2-1] do
-    #     mat2{[2*i+1,2*i+2]}{[2*i+1,2*i+2]} := [[0,1],[1,0]] * One(f);
-    # od;
+	 mat := BaseChangeOrthogonalQuadratic(block^(frob^-1), f)[1];
+	
+ 	 ## JB is a little bit unsure if this will work all the time. So a test is needed:
+	 if not Forms_RESET(mat * block^(frob^-1) *TransposedMat(mat), 2, q) = block then
+	    Error("Inappropriate matrix for change of basis");
+	 fi;
+	
+     mat2 := IdentityMat(d,f);  
      mat2{[1,2]}{[1,2]} := mat;
 	 a := ProjElWithFrob( mat2, frob, f);
 	 gens := ShallowCopy( GeneratorsOfGroup(go) );
@@ -2340,8 +2351,9 @@ InstallMethod( GammaO, [IsPosInt, IsField and IsFinite],
     Add(gens, [lambda * IdentityMat(d, f), frob] );
     gens := ProjElsWithFrob( gens, f );
     g := GroupWithGenerators( gens );
-    SetName( g, Concatenation("PGammaO(",String(d),",",String(q),")") );
-    SetSize( g, Order(frob) * Size(go) / 2 );
+    SetName( g, Concatenation("PGammaO(",String(d),",",String(q),")") );  
+    SetSize( g, Order(frob) * Size(go) / GCD_INT(2,q-1) );    
+       ## Careful to read  Kleidman and Liebeck correctly. For q even, we take the symplectic group.
     return g;
   end );
 
