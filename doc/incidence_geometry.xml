@@ -327,7 +327,42 @@ might stay unchanged, as the following example shows.
 </Section>
 
 <Section>
-<Heading>Shadows of elements</Heading>
+<Heading>Flags of incidence structures</Heading>
+
+A flag of an incidence structure <M>S</M> is a set <M>F</M> of elements of <M>S</M> that are two by two incident. 
+This implies that all elements in <M>F</M> have a different type. A flag is maximal if it cannot be extended with more elements.
+<Package>FinInG</Package> provides a basic 
+category <C>IsFlagOfIncidenceStructure</C>. For different types of incidence structures, methods to create a flag
+can be installed. A chamber is a flag of length <M>n</M>, where <M>n</M> is the number of types. Recall that an incidence
+structure is an incidence geometry if every maximal flag is a chamber. 
+
+<ManSection>
+<Oper Name="FlagOfIcidenceStructure" Arg="inc, l"/>
+<Returns>the flag of the elements of <A>inc</A> in the list <A>l</A></Returns>
+<Description>
+It is checked if all elements in <A>l</A> are incident and belong to the same incidence structure. An empty list is allowed.
+<Example>
+<#Include SYSTEM "../examples/include/incgeom_flag.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="IsChamberOfIncidenceStructure" Arg="flag"/>
+<Returns>true if and only if <A>flag</A> is a chamber</Returns>
+<Description>
+The incidence structure is determined by the elements.
+<Example>
+<#Include SYSTEM "../examples/include/incgeom_flag_chamber.include"> 
+</Example>
+</Description>
+</ManSection>
+
+
+</Section>
+
+<Section>
+<Heading>Shadow of elements</Heading>
 
 <ManSection>
 <Oper Name="ShadowOfElement" Arg="inc, v, str"/>
@@ -344,6 +379,23 @@ The use of the argument <A>inc</A> makes it flexible, i.e. if the element
 <Example>
 <#Include SYSTEM "../examples/include/incgeom_shadowofelement.include">
 <#Include SYSTEM "../examples/include/incgeom_shadowofelement2.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="ShadowOfFlag" Arg="inc, flag, str"/>
+<Oper Name="ShadowOfFlag" Arg="inc, list, str"/>
+<Oper Name="ShadowOfFlag" Arg="inc, flag, j"/>
+<Oper Name="ShadowOfFlag" Arg="inc, list, j"/>
+<Returns>The collection of elements of type <A>str</A> or type <A>j</A> incident with the elements of <A>flag</A>,
+or with the elements of <A>list</A></Returns>
+<Description>
+Variant 2 and 4 convert <A>list</A> to a flag of <A>inc</A>, using <F>FlagOfIcidenceStructure</F>, which performs
+the necessary checks. Variant 1 and 2 rely on variant 3 and 4 respectively, for which a method must be installed
+for the particular incidence structure <A>inc</A>.
+<Example>
+<#Include SYSTEM "../examples/include/incgeom_shadowofflag.include">
 </Example>
 </Description>
 </ManSection>

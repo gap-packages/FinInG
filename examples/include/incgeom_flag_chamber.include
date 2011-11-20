@@ -1,0 +1,16 @@
+gap&gt; ps := PG(3,7);
+ProjectiveSpace(3, 7)
+gap&gt; point := VectorSpaceToElement(ps,[1,2,0,0]*Z(7)^0);
+&lt;a point in ProjectiveSpace(3, 7)&gt;
+gap&gt; line := VectorSpaceToElement(ps,[[1,0,0,0],[0,1,0,0]]*Z(7)^0);
+&lt;a line in ProjectiveSpace(3, 7)&gt;
+gap&gt; plane := VectorSpaceToElement(ps,[[1,0,0,0],[0,1,0,0],[0,0,0,1]]*Z(7)^0);
+&lt;a plane in ProjectiveSpace(3, 7)&gt;
+gap&gt; flag1 := FlagOfIncidenceStructure(ps,[point,plane]);
+&lt;a flag of ProjectiveSpace(3, 7)&gt;
+gap&gt; IsChamberOfIncidenceStructure(flag1);
+false
+gap&gt; flag2 := FlagOfIncidenceStructure(ps,[point,line,plane]);
+&lt;a flag of ProjectiveSpace(3, 7)&gt;
+gap&gt; IsChamberOfIncidenceStructure(flag2);
+true

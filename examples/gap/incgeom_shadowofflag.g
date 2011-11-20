@@ -1,9 +1,8 @@
 #shadow of flag
-ps := ProjectiveSpace(3,3);
-pi := Random(Planes(ps));
-x := Random( ShadowOfElement(ps, pi, 1) );
-IsIncident(x,pi);
-lines := ShadowOfElement(ps,pi,2);
-Size(lines);
+ps := PG(3,7);
+point := VectorSpaceToElement(ps,[1,2,0,0]*Z(7)^0);
+plane := VectorSpaceToElement(ps,[[1,0,0,0],[0,1,0,0],[0,0,0,1]]*Z(7)^0);
+flag := FlagOfIncidenceStructure(ps,[point,plane]);
+lines := ShadowOfFlag(ps,flag,"lines");
 quit;
 
