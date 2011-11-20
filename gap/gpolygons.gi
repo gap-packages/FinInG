@@ -1337,20 +1337,20 @@ InstallMethod( BlockDesignOfGeneralisedPolygon,
 	   elations := ElationGroup(gp);
           Info(InfoFinInG, 1, "Computing orbits on lines of gen. polygon...");
 	   orbs := List( Orbits(elations, lines, CollineationAction(elations)), Representative);
-	   orbs := List(orbs, l -> Filtered([1..Size(points)], i -> points[i] in l));
+	   orbs := List(orbs, l -> Filtered([1..Size(points)], i -> points[i] * l));
 	   gg := Action(elations, points, CollineationAction( elations ) );
           Info(InfoFinInG, 1, "Computing block design of generalised polygon...");    
 	   des := BlockDesign(Size(points), orbs, gg ); 
 	elif HasCollineationGroup(gp) then
 	   gg := CollineationGroup(gp);
 	   orbs := List( Orbits(gg, lines, CollineationAction(gg)), Representative);
-	   orbs := List(orbs, l -> Filtered([1..Size(points)], i -> points[i] in l));
+	   orbs := List(orbs, l -> Filtered([1..Size(points)], i -> points[i] * l));
 	   gg := Action(gg, points, CollineationAction( elations ) );
 	   des := BlockDesign(Size(points), orbs, gg );
 	else
   	   blocks := [];
        for l in lines do
-          b := Filtered([1..Size(points)], i -> points[i] in l);
+          b := Filtered([1..Size(points)], i -> points[i] * l);
           Add(blocks, b);
        od;   
        des := BlockDesign(Size(points), Set(blocks));
@@ -1378,9 +1378,9 @@ InstallMethod( IncidenceGraphOfGeneralisedPolygon,
     sz := Size(points);
     adj := function(i,j)
              if i <= sz and j > sz then
-                return points[i] in lines[j-sz];
+                return points[i] * lines[j-sz];
              elif j <= sz and i > sz then
-                return points[j] in lines[i-sz];
+                return points[j] * lines[i-sz];
              else
                 return false;
              fi;
@@ -1419,9 +1419,9 @@ InstallMethod( IncidenceGraphOfGeneralisedPolygon,
     sz := Size(points);
     adj := function(i,j)
              if i <= sz and j > sz then
-                return points[i] in lines[j-sz];
+                return points[i] * lines[j-sz];
              elif j <= sz and i > sz then
-                return points[j] in lines[i-sz];
+                return points[j] * lines[i-sz];
              else
                 return false;
              fi;
