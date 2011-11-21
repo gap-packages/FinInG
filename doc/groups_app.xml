@@ -387,7 +387,8 @@ If <A>type</A> equals "elliptic", the gram matrix returned will result in the qu
 ...+ x&lt;sub>d-1&lt;/sub>x&lt;sub>d&lt;/sub></Alt><Alt Not="HTML"><M>x_1^2+x_1x_2+\nu x_2^2 + x_3x_4+\ldots+ x_{d-1}x_d</M></Alt>with 
 <Alt Only="HTML">&#957;=&#945;&lt;sup>i&lt;/sup></Alt><Alt Not="HTML"><M>\nu=\alpha^i</M></Alt>, with <Alt Only="HTML">&#945;</Alt>
 <Alt Not="HTML">\alpha</Alt> the primitive element of the multiplicative group of <M>GF(q)</M>, which is in GAP <F>Z(q)</F>, and <M>i</M>
-the first number in <M>[0,1,...,q-2]</M> for which <Alt Only="HTML">x&lt;sup>2&lt;/sup>+x+&#957;</Alt> is irreducible over <M>GF(q)</M>.
+the first number in <M>[0,1,...,q-2]</M> for which <Alt Only="HTML">x&lt;sup>2&lt;/sup>+x+&#957;</Alt><Alt Not="HTML"><M>x^2+x+\nu</M>
+</Alt> is irreducible over <M>GF(q)</M>.
 <P/>
 If <A>type</A> equals "parabolic", the gram matrix returned will result in the quadratic form
 <Alt Only="HTML">x&lt;sub>1&lt;/sub>&lt;sup>2&lt;/sup>+x&lt;sub>2&lt;/sub>x&lt;sub>3&lt;/sub>+...

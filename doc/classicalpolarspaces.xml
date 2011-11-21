@@ -145,51 +145,78 @@ together with the canonical forms that are chosen in
 <Table Align="|l|l|l|l|">
  <Caption>finite classical polar spaces</Caption>
  <HorLine/>
-  <Row><Item>polar space</Item><Item>canonical form</Item><Item>characteristic</Item>
+  <Row><Item>polar space</Item><Item>canonical form</Item><Item>characteristic <M>p</M></Item>
   <Item>projective dimension</Item></Row>
  <HorLine/>
    <Row><Item>hermitian variety</Item>
-   <Item><Alt Not="HTML"><M>X_0^{q+1} + X_1^{q+1} + \ldots + X_{n}^{q+1}=0</M></Alt>
+   <Item><Alt Not="HTML"><M>X_0^{q+1} + X_1^{q+1} + \ldots + X_{n}^{q+1}</M></Alt>
          <Alt Only="HTML">X&lt;sub>0&lt;/sub>&lt;sup>q+1&lt;/sup> +
 	 X&lt;sub>1&lt;/sub>&lt;sup>q+1&lt;/sup> ... +
-	 X&lt;sub>n&lt;/sub>&lt;sup>q+1&lt;/sup> = 0</Alt> 
+	 X&lt;sub>n&lt;/sub>&lt;sup>q+1&lt;/sup></Alt> 
    </Item><Item>odd and even</Item><Item>odd and even</Item></Row>
    <Row><Item>symplectic space</Item>
-   <Item><Alt Not="HTML"><M> X_0 Y_1 - Y_0X_1+ \ldots + X_{n-1}Y_n - Y_{n-1}X_n = 0
+   <Item><Alt Not="HTML"><M> X_0 Y_1 - Y_0X_1+ \ldots + X_{n-1}Y_n - Y_{n-1}X_n 
          </M></Alt><Alt Only="HTML">X&lt;sub>0&lt;/sub> Y&lt;sub>1&lt;/sub> -
 	 X&lt;sub>1&lt;/sub>Y&lt;sub>0&lt;/sub> + ... +
 	 X&lt;sub>n-1&lt;/sub>Y&lt;sub>n&lt;/sub> -
-	 X&lt;sub>n&lt;/sub>Y&lt;sub>n-1&lt;/sub> = 0</Alt>
+	 X&lt;sub>n&lt;/sub>Y&lt;sub>n-1&lt;/sub></Alt>
    </Item><Item>odd and even</Item><Item>odd</Item></Row>
+   
    <Row><Item>hyperbolic quadric</Item>
-   <Item><Alt Not="HTML"><M> X_0 X_1 + \ldots + X_{n-1}X_n = 0
+   <Item><Alt Not="HTML"><M> X_0 X_1 + \ldots + X_{n-1}X_n
          </M></Alt><Alt Only="HTML">X&lt;sub>0&lt;/sub> X&lt;sub>1&lt;/sub> + ... +
-	 X&lt;sub>n-1&lt;/sub>X&lt;sub>n-1&lt;/sub> = 0</Alt>
-   </Item><Item>odd and even</Item><Item>odd</Item></Row>
+	 X&lt;sub>n-1&lt;/sub>X&lt;sub>n-1&lt;/sub></Alt>
+   </Item><Item><Alt Only="HTML">p &#8801; 3 mod 4</Alt><Alt Not="HTML"><M>p \equiv 3\,\mathrm{mod}\,4</M></Alt> and p even</Item><Item>odd</Item></Row>
+
+   <Row><Item>hyperbolic quadric</Item>
+   <Item><Alt Not="HTML"><M> 2(X_0 X_1 + \ldots + X_{n-1}X_n)
+         </M></Alt><Alt Only="HTML">2(X&lt;sub>0&lt;/sub> X&lt;sub>1&lt;/sub> + ... +
+	 X&lt;sub>n-1&lt;/sub>X&lt;sub>n-1&lt;/sub> )</Alt>
+   </Item><Item><Alt Only="HTML">p &#8801; 1 mod 4</Alt><Alt Not="HTML"><M>p \equiv 1\,\mathrm{mod}\,4</M></Alt></Item><Item>odd</Item></Row>
+   
    <Row><Item>parabolic quadric</Item>
-   <Item><Alt Not="HTML"><M> X_0^2 + X_1X_2 + \ldots + X_{n-1}X_n = 0
+   <Item><Alt Not="HTML"><M> X_0^2 + X_1X_2 + \ldots + X_{n-1}X_n
          </M></Alt><Alt Only="HTML">X&lt;sub>0&lt;/sub>&lt;sup>2&lt;/sup> +
 	 X&lt;sub>1&lt;/sub> X&lt;sub>2&lt;/sub> + ... +
-	 X&lt;sub>n-1&lt;/sub>X&lt;sub>n-1&lt;/sub> = 0</Alt>
-   </Item><Item>odd and even</Item><Item>even</Item></Row>
+	 X&lt;sub>n-1&lt;/sub>X&lt;sub>n-1&lt;/sub></Alt>
+   </Item><Item><Alt Only="HTML">p &#8801; 1,3 mod 8</Alt><Alt Not="HTML"><M>p \equiv 1,3\,\mathrm{mod}\,8</M></Alt> and p even</Item><Item>even</Item></Row>
+   
+   <Row><Item>parabolic quadric</Item>
+   <Item><Alt Not="HTML"><M> t(X_0^2 + X_1X_2 + \ldots + X_{n-1}X_n),\,
+         </M> <M>t</M> a primitive element of <M>GF(p)</M></Alt><Alt Only="HTML">t(X&lt;sub>0&lt;/sub>&lt;sup>2&lt;/sup> +
+	 X&lt;sub>1&lt;/sub> X&lt;sub>2&lt;/sub> + ... +
+	 X&lt;sub>n-1&lt;/sub>X&lt;sub>n-1&lt;/sub>), <M>t</M> a primitive element of <M>GF(p)</M></Alt>
+   </Item><Item><Alt Only="HTML">p &#8801; 5,7 mod 8</Alt><Alt Not="HTML"><M>p \equiv 5,7\,\mathrm{mod}\,8</M></Alt></Item><Item>even</Item></Row>
+   
    <Row><Item>elliptic quadric</Item>
-   <Item><Alt Not="HTML"><M>\nu X_0^2 + X_1^2 + X_2X_3 + \ldots + X_{n-1}X_n = 0
-         </M>, <M>\nu</M> a non-square</Alt><Alt Only="HTML">&#957; X&lt;sub>0&lt;/sub>&lt;sup>2&lt;/sup> +
+   <Item><Alt Not="HTML"><M>X_0^2 + X_1^2 + X_2X_3 + \ldots + X_{n-1}X_n
+         </M></Alt><Alt Only="HTML">X&lt;sub>0&lt;/sub>&lt;sup>2&lt;/sup> +
 	 X&lt;sub>1&lt;/sub>&lt;sup>2&lt;/sup> +  X&lt;sub>2&lt;/sub>
-	 X&lt;sub>3&lt;/sub> + ... + X&lt;sub>n-1&lt;/sub>X&lt;sub>n-1&lt;/sub>
-	 = 0, &#957; a non-square</Alt>
-   </Item><Item>odd</Item><Item>odd</Item></Row>
+	 X&lt;sub>3&lt;/sub> + ... + X&lt;sub>n-1&lt;/sub>X&lt;sub>n-1&lt;/sub></Alt>
+   </Item><Item><Alt Only="HTML">p &#8801; 3 mod 4</Alt><Alt Not="HTML"><M>p \equiv 3\,\mathrm{mod}\,4</M></Alt></Item><Item>odd</Item></Row>
+
    <Row><Item>elliptic quadric</Item>
-   <Item><Alt Not="HTML"><M>d X_0^2 + X_0X_1 + X_1^2 + X_2X_3 + \ldots + X_{n-1}X_n = 0
+   <Item><Alt Not="HTML"><M>X_0^2 + tX_1^2 + X_2X_3 + \ldots + X_{n-1}X_n
+         </M>, <M>t</M> a primitive element of <M>GF(p)</M></Alt><Alt Only="HTML">X&lt;sub>0&lt;/sub>&lt;sup>2&lt;/sup> +
+	 tX&lt;sub>1&lt;/sub>&lt;sup>2&lt;/sup> +  X&lt;sub>2&lt;/sub>
+	 X&lt;sub>3&lt;/sub> + ... + X&lt;sub>n-1&lt;/sub>X&lt;sub>n-1&lt;/sub>
+	 , <M>t</M> a primitive element of <M>GF(p)</M></Alt>
+   </Item><Item>odd</Item><Item>odd</Item></Row>
+ 
+   <Row><Item>elliptic quadric</Item>
+   <Item><Alt Not="HTML"><M>d X_0^2 + X_0X_1 + X_1^2 + X_2X_3 + \ldots + X_{n-1}X_n 
          </M>, <M>Tr(d)=1</M></Alt><Alt Only="HTML">d X&lt;sub>0&lt;/sub>&lt;sup>2&lt;/sup> +
 	 X&lt;sub>0&lt;/sub>X&lt;sub>1&lt;/sub> +
 	 X&lt;sub>1&lt;/sub>&lt;sup>2&lt;/sup> +  X&lt;sub>2&lt;/sub> 
 	 X&lt;sub>3&lt;/sub> + ... + X&lt;sub>n-1&lt;/sub>X&lt;sub>n-1&lt;/sub>
-	 = 0, Tr(d) = 1</Alt>
+	 , Tr(d) = 1</Alt>
    </Item><Item>even</Item><Item>odd</Item></Row>
 <HorLine/>
 </Table>
-
+We remark that as primitive element of <M>GF(q)</M>, always <F>Z(q)</F> is chosen. The element <M>\nu</M> is always
+computed in the same way, as the first power of <M>\alpha</M> that makes the polynomial blah irreducible. We refer to Appendix blabla
+for the information on the operations that are used to obtain these canonical forms in <Package>FinInG</Package>, however, the latter
+functions are not intended for the user.
 <ManSection>
 <Oper Name="SymplecticSpace" Arg="d,F"/>
 <Oper Name="SymplecticSpace" Arg="d,q"/>
