@@ -131,6 +131,9 @@ The University of Western Australia, Australia
 <#Include SYSTEM "diagramgeometries.xml">
 </Body>
 
+<#Include SYSTEM "groups_app.xml">
+
+
 <Bibliography Databases="fining"/>
 
 <!--  And finally an index as well   -->

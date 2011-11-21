@@ -1870,7 +1870,7 @@ InstallMethod( CanonicalGramMatrix,
 		elif type = "elliptic" then   
 			m := List( 0*IdentityMat(d, f), ShallowCopy );
 			p := Characteristic(f);
-      ## if q is congruent to 5,7 mod 8, then
+      ## if q is congruent to 5,7 mod 8, then #wrong comment?
       ## the anisotropic part is the primitive root.
 			if q mod 4 in [1,2] then 
 				t := Z(q);
@@ -1921,7 +1921,7 @@ InstallMethod( CanonicalGramMatrix,
 
 # CHECKED 21/09/11 jdb
 #############################################################################
-#O  CanonicalGramMatrix( <type>, <d>, <f> )
+#O  CanonicalQuadraticForm( <type>, <d>, <f> )
 ## Constructs the canonical quadric form compatible with
 ## the corresponding matrix group in FinInG.
 ## only used for q even.
