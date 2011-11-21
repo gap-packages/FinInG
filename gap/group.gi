@@ -1992,8 +1992,14 @@ InstallMethod( CanonicalQuadraticForm,
 #    
 ###################################################################################
 
-InstallMethod( SOdesargues, [IsInt, IsPosInt, IsField and IsFinite],
-  function(i, d, f)
+#############################################################################
+#O  SOdesargues( <type>, <d>, <f> )
+## return the special orthogonal group, as a projective semilinear group.
+##
+InstallMethod( SOdesargues, 
+  "for an integer, a positive integer, and a finite field",
+  [IsInt, IsPosInt, IsField and IsFinite],
+    function(i, d, f)
     local s, m, frob, b, gens, g, q;
     if i = -1 then s := "elliptic";
     elif i = 0 then s := "parabolic";
