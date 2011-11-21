@@ -132,6 +132,7 @@ The University of Western Australia, Australia
 </Body>
 
 <#Include SYSTEM "groups_app.xml">
+<#Include SYSTEM "filters.xml">
 
 
 <Bibliography Databases="fining"/>

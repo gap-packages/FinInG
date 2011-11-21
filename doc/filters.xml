@@ -1,0 +1,27 @@
+<!-- 
+
+  groups_app.xml    FinInG package documentation
+                                                                   John Bamberg
+                                                                   Anton Betten
+                                                                   Jan De Beule
+                                                                  Philippe Cara
+                                                                 Michel Lavrauw
+                                                                  and Maska Law
+                                                             and Michael Pauley
+                                                            and Max Neunhoeffer
+                                                              and Sven Reichard
+
+  Copyright (C) 2009, University of Western Australia
+                      Colorado State University
+                      Lehrstuhl D fuer Mathematik
+                      Ghent University
+                      Vrije Universiteit Brussel
+
+This appendix gives more (technical) information on the filter graph of Fining.
+
+-->
+
+<Appendix Label="groups_app">
+<Heading>The filter graphs of <Package>FinInG</Package> </Heading>
+
+</Appendix>
