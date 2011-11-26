@@ -262,6 +262,45 @@ To be completed.
 
 
 
+<ManSection>
+<Oper Name="SimilarityGroup" Arg="geom"/>
+<Returns>a group of collineations of geom</Returns>
+<Description><A>geom</A> must be a polar space.
+This operation returns the full group of similarities of <A>geom</A>
+(those collineations which preserve the form up to a scalar).
+<Example>
+<#Include SYSTEM "../examples/include/projgroups_simgroup.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="IsometryGroup" Arg="geom"/>
+<Returns>a group of collineations of geom</Returns>
+<Description><A>geom</A> must be a polar space.
+This operation returns the full group of isometries of <A>geom</A>
+(those collineations which preserve the form).
+<Example>
+<#Include SYSTEM "../examples/include/projgroups_isomgroup.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="SpecialIsometryGroup" Arg="geom"/>
+<Returns>a group of collineations of geom</Returns>
+<Description><A>geom</A> must be a polar space.
+This operation returns those isometries of <A>geom</A>
+which have unit determinant.
+<Example>
+<#Include SYSTEM "../examples/include/projgroups_specialisomgroup.include"> 
+</Example>
+</Description>
+</ManSection>
+
+
+
+
 
 </Section>
 

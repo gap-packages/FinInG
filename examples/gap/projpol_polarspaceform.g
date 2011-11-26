@@ -6,4 +6,7 @@ r := PolynomialRing(GF(32),4);
 poly := r.3*r.2+r.1*r.4;
 form := QuadraticFormByPolynomial(poly,r);
 ps := PolarSpace(form);
+mat := IdentityMat(5,GF(7));
+phi := PolarityOfProjectiveSpace(mat,GF(7));
+ps := PolarSpace(phi);
 quit;

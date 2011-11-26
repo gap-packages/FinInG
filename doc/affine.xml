@@ -207,7 +207,7 @@ with is that which <A>v</A> contains as a component.
 <Heading>Iterators and enumerators</Heading>
 
 Recall from ``All the subspaces or just one at a time'' from
-Chapter <Ref Chap="projectivepolar"/>, that an iterator allows us to 
+Chapter <Ref Chap="projective_spaces"/>, that an iterator allows us to 
 obtain elements from a collection one at a time in sequence, whereas
 an enumerator for a collection give us a way of picking out the i-th element.
 In <Package>FinInG</Package> we have enumerators and iterators for

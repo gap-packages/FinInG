@@ -54,6 +54,8 @@ projpolfiles1 := ["projpol_projectivespace", "projpol_projdimension",
 projpolfiles1 := ["projpol_projectivespace", "projpol_polarspaceform",
                  "projpol_symplectic", "projpol_hermitian", "projpol_elliptic",
 		 "projpol_parabolic", "projpol_hyperbolic", "projpol_element1", "projpol_in"];
+		 
+classicalpolfiles := ["projpol_specialisometry", "projpol_isometry", "projpol_similarity"];
 
 projgroupsfiles := ["projgroups_basefield",
 	  "projgroups_collineation", "projgroups_collineationgroup",
@@ -63,7 +65,7 @@ projgroupsfiles := ["projgroups_basefield",
 	  "projgroups_onprojsubspacesreversing", "projgroups_simgroup", 
 	  "projgroups_isomgroup", "projgroups_specialisomgroup", 
 	  "projgroups_mult", "projgroups_embedding", "projgroups_representative",
-	  "projgroups_order"];;
+	  "projgroups_order", "projgroups_projectivitygroup","projgroups_specialprojectivitygroup"];;
 
 polaritiespsfiles := ["polarities_construct1", "polarities_construct2",
           "polarities_fromform", "polarities_toform", "polarities_basefield", 
@@ -79,6 +81,9 @@ gpolygonfiles := ["gpolygons_projplanes1", "gpolygons_projplanes2", "gpolygons_E
 diagramfiles := ["diagram_cosetgeom"];
 
 websitefiles := ["web_hyperoval24", "web_inumbersherm", "web_embedding", "web_spreads", "web_ovoidq63"];
+
+groups_appfiles := ["groups_app_sodesargues", "groups_app_godesargues", "groups_app_sudesargues", "groups_app_gudesargues",
+					"groups_app_spdesargues", "groups_app_gspdesargues", "groups_app_generalsymplectic"];
 
 files := [ "projgroups_order" ];
 

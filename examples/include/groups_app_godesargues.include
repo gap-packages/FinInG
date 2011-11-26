@@ -1,0 +1,6 @@
+gap&gt; GOdesargues(-1,6,GF(9));
+PGO(-1,6,9)
+gap&gt; GOdesargues(0,7,GF(11));
+PGO(0,7,11)
+gap&gt; GOdesargues(1,8,GF(16));
+PGO(1,8,16)

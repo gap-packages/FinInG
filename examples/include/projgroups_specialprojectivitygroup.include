@@ -1,0 +1,24 @@
+gap&gt; ps := ProjectiveSpace(3,16);
+ProjectiveSpace(3, 16)
+gap&gt; SpecialProjectivityGroup(ps);
+PSL(4,16)
+gap&gt; SpecialHomographyGroup(ps);
+PSL(4,16)
+gap&gt; ps := ProjectiveSpace(4,81);
+ProjectiveSpace(4, 81)
+gap&gt; SpecialProjectivityGroup(ps);
+PSL(5,81)
+gap&gt; SpecialHomographyGroup(ps);
+PSL(5,81)
+gap&gt; ps := ProjectiveSpace(5,3);
+ProjectiveSpace(5, 3)
+gap&gt; SpecialProjectivityGroup(ps);
+PSL(6,3)
+gap&gt; SpecialHomographyGroup(ps);
+PSL(6,3)
+gap&gt; ps := ProjectiveSpace(2,2);
+ProjectiveSpace(2, 2)
+gap&gt; SpecialProjectivityGroup(ps);
+PSL(3,2)
+gap&gt; SpecialHomographyGroup(ps);
+PSL(3,2)

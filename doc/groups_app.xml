@@ -400,6 +400,109 @@ For this reason, <F>CanonicalQuadraticForm</F> is not an operation designed for 
 
 </Section>
 
+<Section Label="groups_app_forms">
+<Heading>Direct commands to construct the projective classical groups in <Package>FinInG</Package></Heading>
 
+As explained in Chapter <Ref Chap="classicalpolarspaces"/>, Section <Ref Sect="polar:classicalgroups"/>, we have assumed that
+the user asks for the projective classical groups in an indirect way, i.e. as a (subgroup) of the collineation group of 
+a classical polar space. However, shortcuts to these groups exist. More information on the notations can be found in
+Section <Ref Sect="polar:classicalgroups"/>.
+
+<ManSection>
+<Oper Name="SOdesargues" Arg="e, d, f"/>
+<Returns>the special isometry group of a canonical orthogonal polar space</Returns>
+<Description>
+The argument <A>e</A> determines the type of the othogonal polar space, i.e. -1,0,1 for
+an elliptic, hyperbolic, parabolic orthogonal space, respectively. The argument <A>d</A> is
+the dimension of the underlying vector space, <A>f</A> is the finite field. The method relies
+on <F>SO</F>, a GAP command returning the appropriate matrix group. Internally, the invariant form
+is asked, and the base chage to our canonical form is obtained using the package <Package>form</Package>
+<Example>
+<#Include SYSTEM "../examples/include/groups_app_sodesargues.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="GOdesargues" Arg="e, d, f"/>
+<Returns>the isometry group of a canonical orthogonal polar space</Returns>
+<Description>
+The argument <A>e</A> determines the type of the othogonal polar space, i.e. -1,0,1 for
+an elliptic, hyperbolic, parabolic orthogonal space, respectively. The argument <A>d</A> is
+the dimension of the underlying vector space, <A>f</A> is the finite field. The method relies
+on <F>GO</F>, a GAP command returning the appropriate matrix group. Internally, the invariant form
+is asked, and the base chage to our canonical form is obtained using the package <Package>form</Package>
+<Example>
+<#Include SYSTEM "../examples/include/groups_app_godesargues.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="SUdesargues" Arg="d, f"/>
+<Returns>the special isometry group of a canonical hermitian polar space</Returns>
+<Description>
+The argument <A>d</A> is the dimension of the underlying vector space, <A>f</A> is the finite field. 
+The method relies on <F>SU</F>, a GAP command returning the appropriate matrix group. Internally, the invariant form
+is asked, and the base chage to our canonical form is obtained using the package <Package>form</Package>
+<Example>
+<#Include SYSTEM "../examples/include/groups_app_sudesargues.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="GUdesargues" Arg="d, f"/>
+<Returns>the isometry/similarity group of a canonical hermitian polar space</Returns>
+<Description>
+The argument <A>d</A> is the dimension of the underlying vector space, <A>f</A> is the finite field. 
+The method relies on <F>GU</F>, a GAP command returning the appropriate matrix group. Internally, the invariant form
+is asked, and the base chage to our canonical form is obtained using the package <Package>form</Package>
+<Example>
+<#Include SYSTEM "../examples/include/groups_app_gudesargues.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="Spdesargues" Arg="d, f"/>
+<Returns>the (special) isometry group of a canonical symplectic polar space</Returns>
+<Description>
+The argument <A>d</A> is the dimension of the underlying vector space, <A>f</A> is the finite field. 
+The method relies on <F>Sp</F>, a GAP command returning the appropriate matrix group. Internally, the invariant form
+is asked, and the base chage to our canonical form is obtained using the package <Package>form</Package>
+<Example>
+<#Include SYSTEM "../examples/include/groups_app_spdesargues.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="GeneralSymplecticGroup" Arg="d, f"/>
+<Returns>the isometry group of a canonical symplectic form</Returns>
+<Description>
+The argument <A>d</A> is the dimension of the underlying vector space, <A>f</A> is the finite field. Internally, the invariant form
+is asked, and the base chage to our canonical form is obtained using the package <Package>form</Package>
+<Example>
+<#Include SYSTEM "../examples/include/groups_app_generalsymplectic.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="GSpdesargues" Arg="d, f"/>
+<Returns>the similarity group of a canonical symplectic polar space</Returns>
+<Description>
+The argument <A>d</A> is the dimension of the underlying vector space, <A>f</A> is the finite field. 
+The method relies on <F>Sp</F>, a GAP command returning the appropriate matrix group. Internally, the invariant form
+is asked, and the base chage to our canonical form is obtained using the package <Package>form</Package>
+<Example>
+<#Include SYSTEM "../examples/include/groups_app_gspdesargues.include"> 
+</Example>
+</Description>
+</ManSection>
+
+
+</Section>
 </Appendix>
 

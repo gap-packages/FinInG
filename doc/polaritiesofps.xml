@@ -252,7 +252,7 @@ diagonal are zero and the characteristic of the field is even.
 </Section>
 
 <Section>
-<Heading>Polarities, absolute points, totally isotropic elements and polar
+<Heading>Polarities, absolute points, totally isotropic elements and finite classical polar
 spaces</Heading>
 
 We already mentioned the equivalence between polarities of <M>PG(n,q)</M> and
@@ -271,11 +271,13 @@ point, is also called an <E>absolute point</E> or an <E>isotropic point</E>. It
 is clear that an element of <M>PG(n,q)</M> is absolute if and only if the
 underlying vectorspace is totally isotropic with relation to the sesquilinear
 form equivalent to <Alt Not="HTML"><M>\phi</M></Alt><Alt
-Only="HTML">&#966;</Alt>. Hence the absolute elements induce a polar space, the
+Only="HTML">&#966;</Alt>. Hence the absolute elements induce a <E>finite classical polar space</E>, the
 same that is induced by the equivalent sesquilinear form. When <Alt
 Not="HTML"><M>\phi</M></Alt><Alt Only="HTML">&#966;</Alt> is a speudo polarity,
 the set of absolute elements are the elements of a hyperplane of <M>PG(n,q)</M>.
-
+<P/>
+We restrict our introduction to finite classical polar spaces in this section to the following examples.
+Many aspects of these geometries are extensively described in Chapter <Ref Chap="classicalpolarspaces"/>.
 <ManSection>
 <Oper Name="GeometryOfAbsolutePoints" Arg="f"/>
 <Returns>a polar space or a hyperplane</Returns>
@@ -324,6 +326,3 @@ but can be mapped onto its unique representative in the collineation group. We p
 </Example>
 </Section>
 </Chapter>
-
-<Alt Not="HTML"><M>A^T = -A</M></Alt><Alt Only="HTML">A &lt; sup>T &lt; /sup>=-A</Alt>.
-<Alt Not="HTML"><M>A^{\theta}=A^T</M></Alt><Alt Only="HTML">A &lt; sup> &#952; &lt; /sup> = A &lt; sup>T &lt; /sup></Alt>.

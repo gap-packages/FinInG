@@ -1,18 +1,16 @@
-gap> p1 := ProjectiveSpace(3,3);
-PG(3, 3)
-gap> CollineationGroup(p1);
-PGL(4,3)
-gap> p2 := ProjectiveSpace(4,81);
-PG(4, 81)
-gap> CollineationGroup(p2);
+gap&gt; ps := ProjectiveSpace(3,16);
+ProjectiveSpace(3, 16)
+gap&gt; CollineationGroup(ps);
+PGammaL(4,16)
+gap&gt; ps := ProjectiveSpace(4,81);
+ProjectiveSpace(4, 81)
+gap&gt; CollineationGroup(ps);
 PGammaL(5,81)
-gap> p3 := EllipticQuadric(3,16);
-Q-(3, 16)
-gap> CollineationGroup(p3);
-#I  Computing nice monomorphism...
-PGammaO-(4,16)
-gap> p4 := SymplecticSpace(3,9);
-W(3, 9)
-gap> CollineationGroup(p4);
-#I  Computing nice monomorphism...
-PGammaSp(4,9)
+gap&gt; ps := ProjectiveSpace(5,3);
+ProjectiveSpace(5, 3)
+gap&gt; CollineationGroup(ps);
+PGL(6,3)
+gap&gt; ps := ProjectiveSpace(2,2);
+ProjectiveSpace(2, 2)
+gap&gt; CollineationGroup(ps);
+PGL(3,2)

@@ -1,0 +1,2 @@
+gap&gt; GeneralSymplecticGroup(6,GF(7));
+GSp(6,7)

@@ -100,7 +100,7 @@ to 0 or 1 according to whether the i-th line is incident or not incident with th
 
 
 The classical generalised quadrangles were treated in the chapter
-on polar spaces (Chapter  <Ref Chap="projectivepolar"/>), and here we
+on polar spaces (Chapter  <Ref Chap="classicalpolarspaces"/>), and here we
 provide operations which create elation generalised quadrangles arising
 from Kantor families. Suppose we have a generalised quadrangle of order <M>(s,t)</M> for which
 there exists a point <M>P</M> and a group of collineations <M>G</M> fixing 

@@ -17,7 +17,7 @@ projective and polar spaces.
 
 -->
 
-<Chapter Label="projectivepolar">
+<Chapter Label="classicalpolarspaces">
 <Heading>Classical Polar Spaces</Heading>
 
 In this chapter we describe how to use <Package>FinInG</Package> to work 
@@ -63,9 +63,14 @@ underlying quadratic form in even characteristic also <E>orthogonal</E> polar sp
 
 <ManSection>
 <Oper Name="PolarSpace" Arg="form"/>
+<Oper Name="PolarSpace" Arg="pol"/>
 <Returns>a classical polar space</Returns>
-<Description><A>form</A> must be a bilinear, quadratic, or hermitian form
-created by use of the GAP package <Package>forms</Package>.
+<Description><A>form</A> must be a sesquilinear or quadratic form
+created by use of the GAP package <Package>forms</Package>. In the second variant,
+the argument <A>pol</A> must be a polarity of a projective space. An error message
+will be displayed if <A>pol</A> is a pseudo polarity. We refer to 
+Chapter <Ref Chap="polaritiesofps"/> for more information on polarities of 
+projective spaces.
 <Example>
 <#Include SYSTEM "../examples/include/projpol_polarspaceform.include"> 
 </Example>
@@ -536,6 +541,152 @@ with the type of subspace: <Q>degenerate</Q>, <Q>symplectic</Q>, <Q>hermitian</Q
 </Description>
 </ManSection>
 
+
+</Section>
+
+
+<Section Label="polar:classicalgroups">
+<Heading>Projective Orthogonal/Unitary/Symplectic groups in <Package>FinInG</Package></Heading>
+
+The classical groups (apart from the general lines group), are the matrix groups that <E>respect</E>, in a certain
+way, a sesquilinear or quadratic form. We formally recall the definitions used in <Package>FinInG</Package>. These
+definitions are exactly the same as in <Package>forms</Package>.<P/>
+
+Let <M>(V,f)</M> and <M>(W,g)</M> be two formed vector spaces over the same
+field <M>F</M>, where both <M>f</M> and <M>g</M> are sesquilinear forms. Suppose
+that <Alt Not="HTML"><M>\phi</M></Alt><Alt Only="HTML">&#966;</Alt> is a linear
+map from <M>V</M> to <M>W</M>. 
+
+The map <Alt Not="HTML"><M>\phi</M></Alt><Alt Only="HTML">&#966;</Alt> is an <E>isometry</E><Index>Isometry</Index> from the formed
+space <M>(V,f)</M> to the formed space 
+<M>(W,g)</M> if for all <M>v,w</M> in <M>V</M> we have
+<Display>
+<Alt Not="HTML">f(v,w) = f'(\phi(v), \phi(w)).</Alt>
+<Alt Only="HTML">f(v,w) = f'(&#966;(v),&#966;(w))</Alt></Display>
+The map <Alt Not="HTML"><M>\phi</M></Alt><Alt Only="HTML">&#966;</Alt> is a <E>similarity</E><Index>Similarity</Index> from the
+formed space <M>(V,f)</M> to the formed space <M>(W,g)</M> if for all <M>v,w</M>
+in <M>V</M> we have 
+<Display>
+<Alt Not="HTML">f(v,w) = \lambda f'(\phi(v), \phi(w)).</Alt>
+<Alt Only="HTML">f(v,w) = &#955; (f'(&#966;(v),&#966;(w)))</Alt>
+</Display>
+for some non-zero <Alt Only="HTML">&#955; in <M>F</M></Alt><Alt
+Not="HTML"><M>\lambda \in F</M></Alt>. Finally, the map <Alt Only="HTML">&#966;</Alt><Alt
+Not="HTML"><M>\phi</M></Alt>. is a
+<E>semi-similarity</E><Index>Semi-similarity</Index> from the formed space  
+<M>(V,f)</M> to the formed space <M>(W,g)</M> if for all <M>v,w</M> in <M>V</M>
+we have
+<Alt Not="HTML"><Display>f(v,w) = \lambda f'(\phi(v), \phi(w))^\alpha</Display></Alt>
+<Alt Only="HTML"><Display>f(v,w) = &#955; f'(&#966;(v),&#966;(w))&lt;SUP>&#945;&lt;/SUP></Display></Alt>
+for some non-zero <Alt Only="HTML">&#955; in <M>F</M></Alt><Alt
+Not="HTML"><M>\lambda \in F</M></Alt> and a field automorphism <Alt
+Only="HTML">&#945;</Alt><Alt Not="HTML"><M>\alpha</M></Alt> of <M>F</M>.<P/>
+
+Let <M>(V,f)</M> and <M>(W,g)</M> be two formed vector spaces over the same
+field <M>F</M>, where both <M>f</M> and <M>g</M> are quadratic forms. Suppose
+that <Alt Not="HTML"><M>\phi</M></Alt><Alt Only="HTML">&#966;</Alt> is a linear
+map from <M>V</M> to <M>W</M>. The map <Alt
+Not="HTML"><M>\phi</M></Alt><Alt Only="HTML">&#966;</Alt> is an
+<E>isometry</E><Index>Isometry</Index> from the formed space <M>(V,f)</M> to the
+formed space <M>(W,g)</M> if for all <M>v,w</M> in <M>V</M> we have
+<Display>
+<Alt Not="HTML">f(v) = f'(\phi(v)).</Alt>
+<Alt Only="HTML">f(v) = f'(&#966;(v)).</Alt></Display>
+The map <Alt Not="HTML"><M>\phi</M></Alt><Alt Only="HTML">&#966;</Alt> is a
+<E>similarity</E><Index>Similarity</Index> from the formed space <M>(V,f)</M> to
+a formed space <M>(W,g)</M> if for all <M>v,w</M> 
+in <M>V</M> we have 
+<Display>
+<Alt Not="HTML">f(v) = \lambda f'(\phi(v)).</Alt>
+<Alt Only="HTML">f(v) = &#955; (f'(&#966;(v)))</Alt>
+</Display>
+for some non-zero <Alt Only="HTML">&#955; in <M>F</M></Alt><Alt
+Not="HTML"><M>\lambda \in F</M></Alt>. Finally, the map <Alt Only="HTML">&#966;</Alt><Alt
+Not="HTML"><M>\phi</M></Alt>. is a
+<E>semi-similarity</E><Index>Semi-similarity</Index> from the formed space  
+<M>(V,f)</M> to the formed space <M>(W,g)</M> if for all <M>v,w</M> in <M>V</M>
+we have
+<Display><Alt Not="HTML">
+f(v)=\lambda f'(\phi(v))^\alpha</Alt>
+<Alt Only="HTML">f(v) = &#955; f'(&#966;(v))&lt;SUP>&#945;&lt;/SUP></Alt>
+</Display>
+for some non-zero <Alt Only="HTML">&#955; in <M>F</M></Alt><Alt
+Not="HTML"><M>\lambda \in F</M></Alt> and a field automorphism <Alt
+Only="HTML">&#945;</Alt><Alt Not="HTML"><M>\alpha</M></Alt> of <M>F</M>.
+<P/>
+
+Collineations of classical polar spaces are induced by semi-similarities of the underlying
+formed vector space, and vice versa, analoguously by factoring out scalar matrices.
+In <Package>FinInG</Package>, also the subgroups corresponding with similarities and isomtries 
+are implemented, including a <E>special</E> variant, corresponding with the matrices having determinant
+one. We use a consistent terminology, where isometries, similarities, respectively, of the polar
+space, correspond with isometries, similarities, respectively, of the underlying formed vector space.
+special ismometries of a polar space are induced by isometries of the formed vector space that have a matrix
+with determinant one. If <M>P</M> is a polar space with special isometry group, isometry group, similarity group, 
+collineation group, respectively, <M>SI</M>, <M>I</M>, <M>G</M>, <Alt Not="HTML"><M>\Gamma</M></Alt><Alt Only="HTML">&#915;</Alt>,
+respectively, then clearly <Alt Not="HTML"><M>SI \leqslant I \leqslant G \leqslant \Gamma</M></Alt>
+<Alt Only="HTML">SI &#8804; I &#8804; G &#8804; &#915;</Alt>. Equalities can occur in certain cases, and will, as we will see in the following
+overview.
+
+<Table Align="|l|l|l|l|l|l|">
+ <Caption>projective finite classical groups</Caption>
+ <HorLine/>
+  <Row><Item>(sub)group</Item><Item>symplectic</Item><Item>hyperbolic</Item><Item>elliptic</Item><Item>parabolic</Item><Item>hermitian</Item></Row>
+  <Row><Item>special isometry</Item><Item><M>PSp(d,q)</M></Item><Item><M>PSO(1,d,q)</M></Item><Item><M>PSO(-1,d,q)</M></Item>
+	   <Item><M>PSO(0,d,q)</M></Item><Item><Alt Not="HTML"><M>PSU(d,q^2)</M></Alt><Alt Only="HTML">PSU(d,q&lt;sup>2&lt;/sup>)</Alt></Item></Row>
+  <Row><Item>isometry</Item><Item><M>PSp(d,q)</M></Item><Item><M>PGO(1,d,q)</M></Item><Item><M>PGO(-1,d,q)</M></Item>
+	   <Item><M>PGO(0,d,q)</M></Item><Item><Alt Not="HTML"><M>PGU(d,q^2)</M></Alt><Alt Only="HTML">PGU(d,q&lt;sup>2&lt;/sup>)</Alt></Item></Row>
+  <Row><Item>similarity</Item><Item><M>PGSp(d,q)</M></Item><Item><Alt Not="HTML"><M>P\Delta{}O^+(d,q)</M></Alt>
+             <Alt Only="HTML">P&#916;O&lt;sup>+&lt;/sup>(d,q)</Alt></Item><Item><Alt Not="HTML"><M>P\Delta{}O^-(d,q)</M></Alt>
+             <Alt Only="HTML">P&#916;O&lt;sup>-&lt;/sup>(d,q)</Alt></Item><Item><M>PGO(0,d,q)</M></Item>
+			 <Item><Alt Not="HTML"><M>PGU(d,q^2)</M></Alt><Alt Only="HTML">PGU(d,q&lt;sup>2&lt;/sup>)</Alt></Item></Row>
+  <Row><Item>collineation</Item><Item><Alt Only="HTML">P&#915;Sp(d,q)</Alt><Alt Not="HTML"><M>P\Gamma{}Sp(d,q)</M></Alt></Item>
+		<Item><Alt Only="HTML">P&#915;O&lt;sup>+&lt;/sup>(d,q)</Alt><Alt Not="HTML"><M>P\Gamma{}O^+(d,q)</M></Alt></Item>
+		<Item><Alt Only="HTML">P&#915;O&lt;sup>-&lt;/sup>(d,q)</Alt><Alt Not="HTML"><M>P\Gamma{}O^-(d,q)</M></Alt></Item>
+		<Item><Alt Only="HTML">P&#915;O(d,q)</Alt><Alt Not="HTML"><M>P\Gamma{}O(d,q)</M></Alt></Item>
+		<Item><Alt Only="HTML">P&#915;U(d,q&lt;sup>2&lt;/sup>)</Alt><Alt Not="HTML"><M>P\Gamma{}U(d,q^2)</M></Alt></Item></Row>   
+ <HorLine/>
+</Table>
+
+<ManSection>
+<Oper Name="SpecialIsometryGroup" Arg="ps"/>
+<Returns>the special isometry group of the polar space <A>ps</A></Returns>
+<Description>
+<Example>
+<#Include SYSTEM "../examples/include/projpol_specialisometry.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="IsometryGroup" Arg="ps"/>
+<Returns>the isometry group of the polar space <A>ps</A></Returns>
+<Description>
+<Example>
+<#Include SYSTEM "../examples/include/projpol_isometry.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="SimilarityGroup" Arg="ps"/>
+<Returns>the similarity group of the polar space <A>ps</A></Returns>
+<Description>
+<Example>
+<#Include SYSTEM "../examples/include/projpol_similarity.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="CollineationGroup" Arg="ps"/>
+<Returns>the collineation group of the polar space <A>ps</A></Returns>
+<Description>
+<Example>
+<#Include SYSTEM "../examples/include/projpol_collineation.include"> 
+</Example>
+</Description>
+</ManSection>
 
 </Section>
 

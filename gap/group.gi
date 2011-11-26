@@ -2102,7 +2102,7 @@ InstallMethod( SUdesargues, [IsPosInt, IsField and IsFinite],
   end );
 
 #############################################################################
-#O  SUdesargues( <type>, <d>, <f> )
+#O  GUdesargues( <type>, <d>, <f> )
 ## returns the projective general unitary group, as a projective semilinear group.
 ## The generators of the group are the projective semilinear elements that are 
 ## represented by the matrices that generate GU(type,d,q). The latter is available in GAP
@@ -2185,7 +2185,7 @@ InstallMethod( GeneralSymplecticGroup, [IsPosInt, IsField and IsFinite],
   end );
 
 #############################################################################
-#O  Spdesargues( <d>, <f> )
+#O  GSpdesargues( <d>, <f> )
 ## returns the projective general symplectic group, as a projective semilinear group.
 ## The generators of the group are the projective semilinear elements that are 
 ## represented by the matrices that generate GSp(d,q). The latter is made possible now (see above method).
