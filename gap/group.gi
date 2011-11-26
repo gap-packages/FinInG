@@ -28,14 +28,13 @@
 # Things To Do:
 #
 # - Order for a projective semilinear element: done?
-# - GammaOminus (q even)
-# - Optimise the action operations/functions
+# - GammaOminus (q even). Done.
+# - Optimise the action operations/functions. Future work.
 # - Have ProjEl, ProjElWithFrob, and ProjElWithFrobWithVSIsom
 #   all compatible (can multiply them etc)
-# - homography groups need only have ProjEl, it will make them quicker
-# - testing
-# - make tiny changes in agreement with John to the names of the classical groups. jdb 09/2011
-# - probably move classical groups to a separate file, to better organise the dependencies.
+# - homography groups need only have ProjEl, it will make them quicker. Future work?
+# - testing. Done rigourously. More is always nice.
+# - make tiny changes in agreement with John to the names of the classical groups. jdb 09/2011. Future work
 #
 ########################################
 
@@ -1825,8 +1824,9 @@ InstallMethod( FindBasePointCandidates,
 # CHECKED 21/09/11 jdb
 #############################################################################
 #O  CanonicalGramMatrix( <type>, <d>, <f> )
-## Constructs the canonical gram matrix compatible with
-## the corresponding matrix group in FinInG.
+## Constructs the canonical gram matrix to construct the canonical 
+## forms used in FinInG. See Appendix for exact information on these forms
+## and there matrices.
 ##
 InstallMethod( CanonicalGramMatrix, 
 	"for a string, an integer, and a field",
@@ -1922,10 +1922,10 @@ InstallMethod( CanonicalGramMatrix,
 # CHECKED 21/09/11 jdb
 #############################################################################
 #O  CanonicalQuadraticForm( <type>, <d>, <f> )
-## Constructs the canonical quadric form compatible with
-## the corresponding matrix group in FinInG.
-## only used for q even.
-##
+## Constructs the canonical gram matrix to construct the canonical quadratic
+## forms used in FinInG. See Appendix for exact information on these forms
+## and there matrices.
+####
 InstallMethod( CanonicalQuadraticForm, 
 	"for a string, an integer and a field",
 	[IsString, IsPosInt, IsField],
@@ -1973,7 +1973,7 @@ InstallMethod( CanonicalQuadraticForm,
 
 
 #############################################################################
-# Part II: constructor methods, for the user of course.
+# Part II: constructor methods.
 #############################################################################
 
 ###################################################################################
@@ -1992,9 +1992,17 @@ InstallMethod( CanonicalQuadraticForm,
 #    
 ###################################################################################
 
+#####################################################################
+# Isometry groups. In this order: PSO, PGO, PSU, PGU, PSp, and PGSp
+#####################################################################
+
+###### Orthogonal groups ######
+
 #############################################################################
 #O  SOdesargues( <type>, <d>, <f> )
-## return the special orthogonal group, as a projective semilinear group.
+## returns the projective special orthogonal group, as a projective semilinear group.
+## The generators of the group are the projective semilinear elements that are 
+## represented by the matrices that generate SO(type,d,q). The latter is available in GAP
 ##
 InstallMethod( SOdesargues, 
   "for an integer, a positive integer, and a finite field",
@@ -2032,6 +2040,12 @@ InstallMethod( SOdesargues,
     return g;
   end );
 
+#############################################################################
+#O  GOdesargues( <type>, <d>, <f> )
+## returns the projective general orthogonal group, as a projective semilinear group.
+## The generators of the group are the projective semilinear elements that are 
+## represented by the matrices that generate GO(type,d,q). The latter is available in GAP
+##
 InstallMethod( GOdesargues, [IsInt, IsPosInt, IsField and IsFinite],
   function(i, d, f)
     local m, frob, b, gens, s, g, q;
@@ -2061,6 +2075,14 @@ InstallMethod( GOdesargues, [IsInt, IsPosInt, IsField and IsFinite],
     return g;
   end );
 
+###### Unitary groups ######
+
+#############################################################################
+#O  SUdesargues( <type>, <d>, <f> )
+## returns the projective special unitary group, as a projective semilinear group.
+## The generators of the group are the projective semilinear elements that are 
+## represented by the matrices that generate SU(type,d,q). The latter is available in GAP
+##
 InstallMethod( SUdesargues, [IsPosInt, IsField and IsFinite],
   function(d, f)
     local m, frob, b, gens, g, sqrtq;
@@ -2079,6 +2101,12 @@ InstallMethod( SUdesargues, [IsPosInt, IsField and IsFinite],
     return g;
   end );
 
+#############################################################################
+#O  SUdesargues( <type>, <d>, <f> )
+## returns the projective general unitary group, as a projective semilinear group.
+## The generators of the group are the projective semilinear elements that are 
+## represented by the matrices that generate GU(type,d,q). The latter is available in GAP
+##
 InstallMethod( GUdesargues, [IsPosInt, IsField and IsFinite],
   function(d, f)
     local m, frob, b, gens, g, sqrtq;
@@ -2096,6 +2124,14 @@ InstallMethod( GUdesargues, [IsPosInt, IsField and IsFinite],
     return g;
   end );
 
+###### Symplectic groups ######
+
+#############################################################################
+#O  Spdesargues( <d>, <f> )
+## returns the projective special symplectic group, as a projective semilinear group.
+## The generators of the group are the projective semilinear elements that are 
+## represented by the matrices that generate Sp(d,q). The latter is available in GAP
+##
 InstallMethod( Spdesargues, [IsPosInt, IsField and IsFinite],
   function(d, f)
     local m, frob, b, gens, g, q, sp;
@@ -2114,13 +2150,11 @@ InstallMethod( Spdesargues, [IsPosInt, IsField and IsFinite],
     return g;
   end );
 
-
-#################################################
-# Semi-similarity and similarity groups:
-#################################################
-
-###### Symplectic groups ######
-
+#############################################################################
+#O  GeneralSymplecticGroup( <d>, <f> )
+## returns the general symplectic group. See the internal comment here why
+## we add this function.
+##
 InstallMethod( GeneralSymplecticGroup, [IsPosInt, IsField and IsFinite],
   function(d, f)
 
@@ -2150,6 +2184,12 @@ InstallMethod( GeneralSymplecticGroup, [IsPosInt, IsField and IsFinite],
   return g;
   end );
 
+#############################################################################
+#O  Spdesargues( <d>, <f> )
+## returns the projective general symplectic group, as a projective semilinear group.
+## The generators of the group are the projective semilinear elements that are 
+## represented by the matrices that generate GSp(d,q). The latter is made possible now (see above method).
+##
 InstallMethod( GSpdesargues, [IsPosInt, IsField and IsFinite],
   function(d, f)
     local m, frob, b, gens, g, q, gsp;
@@ -2168,6 +2208,17 @@ InstallMethod( GSpdesargues, [IsPosInt, IsField and IsFinite],
     return g;
   end );
 
+#################################################
+# Similarity and semi-similarity groups: In this order: PGammaSp, DeltaO (+,-,parabolic), 
+#################################################
+
+###### Symplectic group ######
+
+#############################################################################
+#O  GammaSp( <d>, <f> )
+## returns the projective semi-linear symplectic group.
+## We rely on GSp(d,q), and the frobenius automorphism.
+##
 InstallMethod( GammaSp, [IsPosInt, IsField and IsFinite],
   function(d, f)
     local m, frob, b, gens, g, q, gsp;
@@ -2190,6 +2241,11 @@ InstallMethod( GammaSp, [IsPosInt, IsField and IsFinite],
 
 ###### Orthogonal (elliptic) groups ######
 
+#############################################################################
+#O  DeltaOminus( <d>, <f> )
+## returns the projective similarity group of an elliptic orthogonal form
+## We rely on GOdesargues.
+##
 InstallMethod( DeltaOminus, [IsPosInt, IsField and IsFinite],
   function(d, f)
     local go, gens, g, q, one, mat, i, combs, two, a, b, 
@@ -2255,6 +2311,12 @@ InstallMethod( DeltaOminus, [IsPosInt, IsField and IsFinite],
     return g;
   end );	
 
+
+#############################################################################
+#O  GammaOminus( <d>, <f> )
+## returns the projective semi-similarity group of an elliptic orthogonal form
+## We rely on DeltaOminus and the Frobenius automorphism.
+##
 InstallMethod( GammaOminus, [IsPosInt, IsField and IsFinite],
   function(d, f)
   local q, gram, mat, p, a, go, gens, coll, frob, block, mat2, i; 
@@ -2325,6 +2387,11 @@ InstallMethod( GammaOminus, [IsPosInt, IsField and IsFinite],
 
 ###### Orthogonal (parabolic) groups ######
 
+#############################################################################
+#O  GammaO( <d>, <f> )
+## returns the projective semi-similarity group of a parabolic orthogonal form
+## We rely on GO (available in GAP).
+##
 InstallMethod( GammaO, [IsPosInt, IsField and IsFinite],
   function(d, f)
     local q, p, go, gens, frob, m, b, lambda, g, w, one;
@@ -2366,6 +2433,11 @@ InstallMethod( GammaO, [IsPosInt, IsField and IsFinite],
 
 ###### Orthogonal (hyperbolic) groups ######
 
+#############################################################################
+#O  DeltaOplus( <d>, <f> )
+## returns the projective similarity group of an hyperbolic orthogonal form
+## We rely on GO (available in GAP).
+##
 InstallMethod( DeltaOplus, [IsPosInt, IsField and IsFinite],
   function(d, f)
     local q, go, m, w, mu, i, gens, g, b;  
@@ -2402,6 +2474,11 @@ InstallMethod( DeltaOplus, [IsPosInt, IsField and IsFinite],
     return g;
   end );
 
+#############################################################################
+#O  GammaOplus( <d>, <f> )
+## returns the projective semi-similarity group of an hyperbolic orthogonal form
+## We rely on DeltaOplus and the Frobenius automorphism.
+##
 InstallMethod( GammaOplus, [IsPosInt, IsField and IsFinite],
   function(d, f)
     local q, deltao, gens, frob, lambda, g;
@@ -2418,6 +2495,11 @@ InstallMethod( GammaOplus, [IsPosInt, IsField and IsFinite],
 
 ###### Hermitian groups ######
 
+#############################################################################
+#O  GammaOplus( <d>, <f> )
+## returns the projective semi-similarity group of hermitian form
+## We rely on GU and the Frobenius automorphism.
+##
 InstallMethod( GammaU, [IsPosInt, IsField and IsFinite],
   function(d, f)
     local m, frob, b, gens, g, q, sqrtq, gu;
