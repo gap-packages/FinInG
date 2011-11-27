@@ -20,7 +20,7 @@ This is the chapter of the documentation describing the polar spaces.
 <Heading>Finite Classical Polar Spaces</Heading>
 
 <Section>
-<Heading>Creating Finite Classical Polar Spaces</Heading>
+<Heading>Finite Classical Polar Spaces</Heading>
 
 <ManSection>
 <Oper Name="ProjectiveSpace" Arg="d, F"/>

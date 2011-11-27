@@ -18,13 +18,13 @@ projective and polar spaces.
 -->
 
 <Chapter Label="classicalpolarspaces">
-<Heading>Classical Polar Spaces</Heading>
+<Heading>Finite Classical Polar Spaces</Heading>
 
 In this chapter we describe how to use <Package>FinInG</Package> to work 
 with finite classical polar spaces. 
 
 <Section>
-<Heading>Creating Polar Spaces</Heading>
+<Heading>Finite Classical Polar Spaces</Heading>
 
 A <E>polar space</E> is a point-line incidence geometry, also satisfying few well
 known axioms. Well known examples of <E>finite</E> polar spaces are the
@@ -209,19 +209,17 @@ together with the canonical forms that are chosen in
    </Item><Item>odd</Item><Item>odd</Item></Row>
  
    <Row><Item>elliptic quadric</Item>
-   <Item><Alt Not="HTML"><M>d X_0^2 + X_0X_1 + X_1^2 + X_2X_3 + \ldots + X_{n-1}X_n 
-         </M>, <M>Tr(d)=1</M></Alt><Alt Only="HTML">d X&lt;sub>0&lt;/sub>&lt;sup>2&lt;/sup> +
+   <Item><Alt Not="HTML"><M>X_0^2 + X_0X_1 + dX_1^2 + X_2X_3 + \ldots + X_{n-1}X_n 
+         </M>, <M>Tr(d)=1</M></Alt><Alt Only="HTML">X&lt;sub>0&lt;/sub>&lt;sup>2&lt;/sup> +
 	 X&lt;sub>0&lt;/sub>X&lt;sub>1&lt;/sub> +
-	 X&lt;sub>1&lt;/sub>&lt;sup>2&lt;/sup> +  X&lt;sub>2&lt;/sub> 
+	 d X&lt;sub>1&lt;/sub>&lt;sup>2&lt;/sup> +  X&lt;sub>2&lt;/sub> 
 	 X&lt;sub>3&lt;/sub> + ... + X&lt;sub>n-1&lt;/sub>X&lt;sub>n-1&lt;/sub>
 	 , Tr(d) = 1</Alt>
    </Item><Item>even</Item><Item>odd</Item></Row>
 <HorLine/>
 </Table>
-We remark that as primitive element of <M>GF(q)</M>, always <F>Z(q)</F> is chosen. The element <M>\nu</M> is always
-computed in the same way, as the first power of <M>\alpha</M> that makes the polynomial blah irreducible. We refer to Appendix blabla
-for the information on the operations that are used to obtain these canonical forms in <Package>FinInG</Package>, however, the latter
-functions are not intended for the user.
+We refer to Appendix <Ref Chap="groups_app"/> for information on the operations that construct canonical gram matrices.
+
 <ManSection>
 <Oper Name="SymplecticSpace" Arg="d,F"/>
 <Oper Name="SymplecticSpace" Arg="d,q"/>
@@ -303,14 +301,16 @@ the classical polar space with underlying form <A>form</A>
 </Section>
 
 <Section>
-<Heading>Basic operations finite classical polar spaces</Heading>
+<Heading>Basic operations for finite classical polar spaces</Heading>
 
 <ManSection>
 <Oper Name="UnderlyingVectorSpace" Arg="ps"/>
 
 <Returns>a vector space</Returns>
-<Description>
+<Description>The polar space <A>ps</A> is the geometry associated with a sesquilinear or quadratic form <M>f</M>.
+The vector space on which <M>f</M> is acting is returned.
 <Example>
+<#Include SYSTEM "../examples/include/projpol_elliptic.include"> 
 </Example>
 </Description>
 </ManSection>

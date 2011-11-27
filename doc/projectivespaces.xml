@@ -24,7 +24,7 @@ In this chapter we describe how to use <Package>FinInG</Package> to work
 with finite projective spaces. 
 
 <Section>
-<Heading>Creating Projective Spaces and basic operations</Heading>
+<Heading>Projective Spaces and basic operations</Heading>
 
 A <E>projective space</E> is a point-line
 incidence geometry, satisfying few well known axioms. In
