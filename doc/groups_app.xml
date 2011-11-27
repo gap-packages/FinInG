@@ -502,6 +502,94 @@ is asked, and the base chage to our canonical form is obtained using the package
 </Description>
 </ManSection>
 
+<ManSection>
+<Oper Name="GammaSp" Arg="d, f"/>
+<Returns>the collineation group of a canonical symplectic polar space</Returns>
+<Description>
+The argument <A>d</A> is the dimension of the underlying vector space, <A>f</A> is the finite field. 
+The method relies on <F>GeneralSymplecticGroup</F>, and adds the frobenius automorphism.
+<Example>
+<#Include SYSTEM "../examples/include/groups_app_gammasp.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="DeltaOminus" Arg="d, f"/>
+<Returns>the similarity group of a canonical elliptic orthogonal polar space</Returns>
+<Description>
+The argument <A>d</A> is the dimension of the underlying vector space, <A>f</A> is the finite field. 
+The method relies on <F>GOdesargues</F>, and computes the generators to be added.
+<Example>
+<#Include SYSTEM "../examples/include/groups_app_deltaominus.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="DeltaOplus" Arg="d, f"/>
+<Returns>the similarity group of a canonical hyperbolic orthogonal polar space</Returns>
+<Description>
+The argument <A>d</A> is the dimension of the underlying vector space, <A>f</A> is the finite field. 
+The method relies on <F>GOdesargues</F>, and computes the generators to be added.
+<Example>
+<#Include SYSTEM "../examples/include/groups_app_deltaoplus.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="GammaOminus" Arg="d, f"/>
+<Returns>the collineation group of a canonical elliptic orthogonal polar space</Returns>
+<Description>
+The argument <A>d</A> is the dimension of the underlying vector space, <A>f</A> is the finite field. 
+The method relies on <F>DeltaOminus</F>, and computes the generators to be added.
+<Example>
+<#Include SYSTEM "../examples/include/groups_app_gammaominus.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="GammaO" Arg="d, f"/>
+<Returns>the collineation group of a canonical parabolic orthogonal polar space</Returns>
+<Description>
+The argument <A>d</A> is the dimension of the underlying vector space, <A>f</A> is the finite field. 
+The method relies on <F>GO</F>, a GAP command returning the appropriate matrix group. Internally, the invariant form
+is asked, and the base chage to our canonical form is obtained using the package <Package>form</Package>. Furthermore,
+the generators to be added are computed.
+<Example>
+<#Include SYSTEM "../examples/include/groups_app_gammao.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="GammaOplus" Arg="d, f"/>
+<Returns>the collineation group of a canonical hyperbolic orthogonal polar space</Returns>
+<Description>
+The argument <A>d</A> is the dimension of the underlying vector space, <A>f</A> is the finite field. 
+The method relies on <F>DeltaOplus</F>, and computes the generators to be added.
+<Example>
+<#Include SYSTEM "../examples/include/groups_app_gammaoplus.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="GammaU" Arg="d, f"/>
+<Returns>the collineation group of a canonical hermitian variety</Returns>
+<Description>
+The argument <A>d</A> is the dimension of the underlying vector space, <A>f</A> is the finite field. 
+The method relies on <F>GU</F>, a GAP command returning the appropriate matrix group. Internally, the invariant form
+is asked, and the base chage to our canonical form is obtained using the package <Package>form</Package>. Furthermore,
+the generators to be added are computed.
+<Example>
+<#Include SYSTEM "../examples/include/groups_app_gammau.include"> 
+</Example>
+</Description>
+</ManSection>
+
 
 </Section>
 </Appendix>

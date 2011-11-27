@@ -1,0 +1,2 @@
+gap&gt; GammaU(4,GF(81));
+PGammaU(4,9^2)

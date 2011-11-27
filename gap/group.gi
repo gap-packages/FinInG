@@ -2496,7 +2496,7 @@ InstallMethod( GammaOplus, [IsPosInt, IsField and IsFinite],
 ###### Hermitian groups ######
 
 #############################################################################
-#O  GammaOplus( <d>, <f> )
+#O  GammaU( <d>, <f> )
 ## returns the projective semi-similarity group of hermitian form
 ## We rely on GU and the Frobenius automorphism.
 ##

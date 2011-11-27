@@ -1,0 +1,2 @@
+gap&gt; GammaO(5,GF(49));
+PGammaO(5,49)

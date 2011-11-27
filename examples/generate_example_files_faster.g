@@ -83,7 +83,9 @@ diagramfiles := ["diagram_cosetgeom"];
 websitefiles := ["web_hyperoval24", "web_inumbersherm", "web_embedding", "web_spreads", "web_ovoidq63"];
 
 groups_appfiles := ["groups_app_sodesargues", "groups_app_godesargues", "groups_app_sudesargues", "groups_app_gudesargues",
-					"groups_app_spdesargues", "groups_app_gspdesargues", "groups_app_generalsymplectic"];
+					"groups_app_spdesargues", "groups_app_gspdesargues", "groups_app_generalsymplectic", "groups_app_gammasp",
+					"groups_app_deltaominus", "groups_app_deltaoplus", "groups_app_gammaoplus", "groups_app_gammaominus",
+					"groups_app_gammao", "groups_app_gammau" ];
 
 files := [ "projgroups_order" ];
 
