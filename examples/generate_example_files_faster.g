@@ -34,10 +34,29 @@ incgeomfiles := ["incgeom_categories1", "incgeom_rank", "incgeom_typesofels", "i
 		 "incgeom_lie_vectorspacetoelement", "incgeom_lie_elementtovectorspace", "incgeom_lie_in",
 		 "incgeom_flag" ]; 
 
-morphismsfiles := ["morphisms_intertwiners","morphisms_embedding1","morphisms_embedding2","morphisms_typesubspace",
-          "morphisms_fieldreduc1", "morphisms_fieldreduc2","morphisms_subfield1","morphisms_subfield2",
-          "morphisms_isopolar","morphisms_projection","morphisms_completion","morphisms_klein","morphisms_duality"];;
+projspacefiles := ["projpol_projectivespace", "projpol_projdimension", "projpol_basefieldps", "projpol_underlyingvs",
+                   "projpol_element1", "projpol_emptysubspace", "projpol_projdimension_element", "projpol_standardframe",
+				   "projpol_coordinates", "projpol_eqhyperplane", "projpol_ambientspaceelps", "projpol_basefieldelps",
+				   "projpol_randomeltps", "projpol_randomeltsps", "projpol_span", "projpol_meet", "projpol_in",
+				   "projpol_flag", "projpol_chamber", "projpol_shadowofelement", "projpol_shadowofflag", "projpol_elsel"];
 
+projgroupsfiles := ["projgroups_basefield",
+	  "projgroups_collineation", "projgroups_collineationgroup",
+	  "projgroups_correlation", "projgroups_fieldautomorphism",
+	  "projgroups_projectivity", "projgroups_psisomorphism",
+	  "projgroups_stduality", "projgroups_underlyingmatrix", "projgroups_onprojsubspaces",
+	  "projgroups_onprojsubspacesreversing", "projgroups_simgroup", 
+	  "projgroups_isomgroup", "projgroups_specialisomgroup", 
+	  "projgroups_mult", "projgroups_embedding", "projgroups_representative",
+	  "projgroups_order", "projgroups_projectivitygroup","projgroups_specialprojectivitygroup"];;
+
+polaritiespsfiles := ["polarities_construct1", "polarities_construct2",
+          "polarities_fromform", "polarities_toform", "polarities_basefield", 
+	  "polarities_automorphism", "polarities_grammatrix", "polarities_ishermitian", 
+	  "polarities_issymplectic", "polarities_ispseudo", "polarities_isorthogonal", 
+	  "polarities_geometryofabsolutepoints", "polarities_absolutepoints", 
+	  "polarities_polarspace", "polarities_frompolarspace", 
+	  "polarities_commuting"];
 
 projpolfiles1 := ["projpol_projectivespace", "projpol_projdimension",
                  "projpol_underlyingvs", "projpol_element1", "projpol_emptysubspace",
@@ -57,23 +76,11 @@ projpolfiles1 := ["projpol_projectivespace", "projpol_polarspaceform",
 		 
 classicalpolfiles := ["projpol_specialisometry", "projpol_isometry", "projpol_similarity"];
 
-projgroupsfiles := ["projgroups_basefield",
-	  "projgroups_collineation", "projgroups_collineationgroup",
-	  "projgroups_correlation", "projgroups_fieldautomorphism",
-	  "projgroups_projectivity", "projgroups_psisomorphism",
-	  "projgroups_stduality", "projgroups_underlyingmatrix", "projgroups_onprojsubspaces",
-	  "projgroups_onprojsubspacesreversing", "projgroups_simgroup", 
-	  "projgroups_isomgroup", "projgroups_specialisomgroup", 
-	  "projgroups_mult", "projgroups_embedding", "projgroups_representative",
-	  "projgroups_order", "projgroups_projectivitygroup","projgroups_specialprojectivitygroup"];;
 
-polaritiespsfiles := ["polarities_construct1", "polarities_construct2",
-          "polarities_fromform", "polarities_toform", "polarities_basefield", 
-	  "polarities_automorphism", "polarities_grammatrix", "polarities_ishermitian", 
-	  "polarities_issymplectic", "polarities_ispseudo", "polarities_isorthogonal", 
-	  "polarities_geometryofabsolutepoints", "polarities_absolutepoints", 
-	  "polarities_polarspace", "polarities_frompolarspace", 
-	  "polarities_commuting"];
+morphismsfiles := ["morphisms_intertwiners","morphisms_embedding1","morphisms_embedding2","morphisms_typesubspace",
+          "morphisms_fieldreduc1", "morphisms_fieldreduc2","morphisms_subfield1","morphisms_subfield2",
+          "morphisms_isopolar","morphisms_projection","morphisms_completion","morphisms_klein","morphisms_duality"];;
+
 
 gpolygonfiles := ["gpolygons_projplanes1", "gpolygons_projplanes2", "gpolygons_EGQByKantorFamily", 
                   "gpolygons_EGQByqClan", "gpolygons_EGQByBLTSet", "gpolygons_collineations", "gpolygons_SplitCayleyHexagon"];
