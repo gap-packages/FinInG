@@ -762,3 +762,49 @@ InstallMethod( RandomSubspace,
         return W;
 	end );  
 
+#############################################################################
+# Converting element methods (added 28/11/11)
+#############################################################################
+
+# Added 28/11/2011 jdb.
+#############################################################################
+#O  ElementToElement( <geo>, <el> )
+# returns the element VectorSpaceToElement(<geo>,ElementToVectorSpace(<el>))
+##
+InstallMethod( ElementToElement,
+	"for a Lie geometry and an element of a Lie geometry",
+	[IsLieGeometry, IsElementOfLieGeometry],
+	function(ps,el)
+		return VectorSpaceToElement(ps,ElementToVectorSpace(el));
+	end );
+
+# Added 28/11/2011 jdb.
+#############################################################################
+#O  ConvertElement( <geo>, <el> )
+# chages the element <el> to VectorSpaceToElement(<geo>,ElementToVectorSpace(<el>))
+# with a check whether this is possible.
+##
+InstallMethod( ConvertElement,
+	"for a Lie geometry and an element of a Lie geometry",
+	[IsLieGeometry, IsElementOfLieGeometry],
+	function(ps,el)
+		if el in ps then
+			el!.geo := ps;
+		else
+			Error( "<el> cannot be converted to an element of <ps>");
+		fi;
+	end );
+
+# Added 28/11/2011 jdb.
+#############################################################################
+#O  ConvertElementNC( <geo>, <el> )
+# chages the element <el> to VectorSpaceToElement(<geo>,ElementToVectorSpace(<el>))
+# *without* checks. Please use with extreme care. Belgium might get a government if you use
+# this function when you shouldn't.
+##
+InstallMethod( ConvertElementNC,
+	"for a Lie geometry and an element of a Lie geometry",
+	[IsLieGeometry, IsElementOfLieGeometry],
+	function(ps,el)
+		el!.geo := ps;
+	end );

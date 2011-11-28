@@ -32,7 +32,7 @@ incgeomfiles := ["incgeom_categories1", "incgeom_rank", "incgeom_typesofels", "i
 		 "incgeom_ambientspace", "incgeom_random", "incgeom_shadowofelement2", "incgeom_el_ambient",
 		 "incgeom_shadowshort", "incgeom_enum", "incgeom_lie_uvs", "incgeom_lie_projdimension", 
 		 "incgeom_lie_vectorspacetoelement", "incgeom_lie_elementtovectorspace", "incgeom_lie_in",
-		 "incgeom_flag" ]; 
+		 "incgeom_flag", "incgeom_lie_elementtoelement" ]; 
 
 projspacefiles := ["projpol_projectivespace", "projpol_projdimension", "projpol_basefieldps", "projpol_underlyingvs",
                    "projpol_element1", "projpol_emptysubspace", "projpol_projdimension_element", "projpol_standardframe",

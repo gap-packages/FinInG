@@ -583,4 +583,52 @@ use this method to test incidence between elements.
 </ManSection>
 
 </Section>
+
+<Section>
+<Heading>Hard wired embeddings and converting elements</Heading>
+
+A Lie geometry, i.e. an object in the category <C>IsLieGeometry</C>, is naturally embedded 
+in a projective space. This is of course in a mathematical sense. In <Package>FinInG</Package>, certain
+embeddings are implemented by providing a mapping between geometries. The Lie geometries are 
+<E>hard wired</E> embeded, just simply because a category containing elements of a Lie geometry, is
+always a subcategory of <C>IsSubspaceOfProjectiveSpace</C>. As a consequence, operations applicable
+to objects in the category <C>IsSubspaceOfProjectiveSpace</C> are by default applicable to objects
+in any subcategory, so on elements of any Lie geometry. When dealing with elements of e.g. different polar
+spaces in the samen projective space, this yields a natural way of working with them, and investigating 
+relations between them, without bothering about all necessary mappings. On the other hand, in some situations,
+it is impossible to decide in which geometry an element has to be considered. An easy example is the followin.
+Consider two different quadrics in the same projective space. The intersection of two elements, one of each
+quadric, is clearly an element of the ambient projective space. But also of both quadrics. Without extra input
+of the user, the system cannot decide in which geometry to construct the intersection. To avoid complicated methods
+with many arguents, in such situations, the resulting element will be constructed in the common ambient projective space.
+Only in clear situations, where the ambient geometry of all elements is the same, and equal to the geometry of the 
+resulting element, the resulting element will be constructed in this common geometry. We provide however conversion
+operations for elements of Lie gometries.
+
+<ManSection>
+<Oper Name="ElementToElement" Arg="ps, el"/>
+<Returns><A>el</A> as an element of <A>ps</A></Returns>
+<Description>
+Let <A>ps</A> be any Lie geometry. This method return <F>VectorSpaceToElement(ps,ElementToVectorSpace(el))</F>,
+if the conversion is possible.<Example>
+<#Include SYSTEM "../examples/include/incgeom_lie_elementtoelement.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="ConvertElement" Arg="ps, el"/>
+<Description>
+Let <A>ps</A> be any Lie geometry. This method converts <A>el</A> to an element of
+<A>ps</A>, if possible. The <F>NC</F> version does not perform the checks. Use with 
+extreme care.
+<Example>
+<#Include SYSTEM "../examples/include/incgeom_lie_convert.include"> 
+</Example>
+</Description>
+</ManSection>
+
+
+
+</Section>
 </Chapter>
