@@ -1,0 +1,21 @@
+gap&gt; ps := SymplecticSpace(3,4);
+W(3, 4)
+gap&gt; v := [1,0,1,0]*Z(4)^0;
+[ Z(2)^0, 0*Z(2), Z(2)^0, 0*Z(2) ]
+gap&gt; p := VectorSpaceToElement(ps,v);
+&lt;a point in W(3, 4)&gt;
+gap&gt; mat := [[1,1,0,1],[0,0,1,0]]*Z(4)^0;
+[ [ Z(2)^0, Z(2)^0, 0*Z(2), Z(2)^0 ], [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2) ] ]
+gap&gt; line := VectorSpaceToElement(ps,mat);
+Error, &lt;x&gt; does not generate an element of &lt;geom&gt; called from
+&lt;function&gt;( &lt;arguments&gt; ) called from read-eval-loop
+Entering break read-eval-print loop ...
+you can 'quit;' to quit to outer loop, or
+you can 'return;' to continue
+brk&gt; quit;
+gap&gt; mat := [[1,1,0,0],[0,0,1,0]]*Z(4)^0;
+[ [ Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2) ], [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2) ] ]
+gap&gt; line := VectorSpaceToElement(ps,mat);
+&lt;a line in W(3, 4)&gt;
+gap&gt; p := VectorSpaceToElement(ps,[0,0,0,0]*Z(4)^0);
+&lt; trivial subspace &gt;

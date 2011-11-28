@@ -88,17 +88,6 @@ vector space over the field of order <M>q</M>.
 </Description>
 </ManSection>
 
-<ManSection>
-<Oper Name="StandardFrame" Arg="ps"/>
-<Returns>the standard frame of the projective space <A>ps</A></Returns>
-<Description>If <A>ps</A> is a projective space of dimension <M>n</M> over the field of order
-<M>q</M>, then this operation simply returns the underlying vector space, i.e. the <M>n+1</M> dimensional
-vector space over the field of order <M>q</M>.
-<Example>
-</Example>
-</Description>
-</ManSection>
-
 </Section>
 
 <Section>
@@ -132,21 +121,22 @@ returned.
 <Returns>the trivial subspace in the projective <A>ps</A></Returns>
 <Description>
 The object returned by this operation is contained in
-every projective subspace of the projective space <A>ps</A>
+every projective subspace of the projective space <A>ps</A>, but is not an element of <A>ps</A>. Hence, testing
+incidence results in an error message.
 <Example>
-<#Include SYSTEM "../examples/include/projpol_emptysubspace.include"> 
+<#Include SYSTEM "../examples/include/projsp_emptysubspace.include"> 
 </Example>
 </Description>
 </ManSection>
 
 <ManSection>
 <Oper Name="ProjectiveDimension" Arg="sub"/>
-<Oper Name="Dimension" Arg="sub"/>
-<Returns>the projective dimension of a subspace of a projective space. This operation is also applicable on the EmptySubspace
+<Returns>the projective dimension of a subspace of a projective space. The operation <F>ProjectiveDimension</F>
+is also applicable on the EmptySubspace
 </Returns>
 <Description>
 <Example>
-<#Include SYSTEM "../examples/include/projpol_projdimension_element.include"> 
+<#Include SYSTEM "../examples/include/projsp_projdimension_element.include"> 
 </Example>
 </Description>
 </ManSection>
@@ -164,10 +154,10 @@ this operation returns the collection of <M>j-1</M> dimenaional subspaces.  <Exa
 
 <ManSection>
 <Oper Name="StandardFrame" Arg="ps"/>
-<Returns>returns the standard frame in the projective space <A>ps</A></Returns>
+<Returns>the standard frame of the projetive space <A>ps</A></Returns>
 <Description>
 <Example>
-<#Include SYSTEM "../examples/include/projpol_standardframe.include"> 
+<#Include SYSTEM "../examples/include/projsp_standardframe.include"> 
 </Example>
 </Description>
 </ManSection>

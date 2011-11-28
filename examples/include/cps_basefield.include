@@ -1,0 +1,8 @@
+gap&gt; ps := HyperbolicQuadric(5,7);
+standard Q+(5, 7)
+gap&gt; BaseField(ps);
+GF(7)
+gap&gt; ps := HermitianVariety(2,256);
+standard H(2, 16^2)
+gap&gt; BaseField(ps);
+GF(2^8)

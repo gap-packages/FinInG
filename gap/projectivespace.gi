@@ -198,12 +198,16 @@ InstallMethod( Rank,
 
 # CHECKED 8/09/11 jdb
 #############################################################################
-#O  Rank( <ps> )
-# returns the projective dimension of <ps>
+#O  BaseField( <ps> )
+# returns the basefield of <ps>
 ##
 InstallMethod( BaseField, "for a projective space", [IsProjectiveSpace],
   pg -> pg!.basefield );
 
+#############################################################################
+#O  BaseField( <sub> )
+# returns the basefield of an element of a projective space
+##
 InstallMethod( BaseField, "for an element of a projective space", [IsSubspaceOfProjectiveSpace],
   sub -> AmbientSpace(sub)!.basefield );
 

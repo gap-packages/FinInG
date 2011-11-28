@@ -351,14 +351,84 @@ the Witt index of the defining sesquilinear or quadratic form.
 </ManSection>
 
 <ManSection>
-<Oper Name="StandardFrame" Arg="ps"/>
-
-<Returns></Returns>
+<Oper Name="BaseField" Arg="ps"/>
+<Returns>the base field of the polar space <A>ps</A></Returns>
 <Description>
 <Example>
+<#Include SYSTEM "../examples/include/cps_basefield.include"> 
 </Example>
 </Description>
 </ManSection>
+
+</Section>
+
+<Section>
+<Heading>Subspaces of finite classical polar spaces</Heading>
+
+The elements of a finite classical polar space <M>P</M> are the subspaces of the ambient projective space
+that are totally isotropic with relation to the sequilinear or quadratic form that defines <M>P</M>. Constructing
+subspaces of finite classical polar spaces is done as in the projective space case, except that additional 
+checks are implemented in the methods to check that the subspace of the vector space is totally isotropic.
+The empty subspace, also called the trivial subspace, has dimenion -1, corresponds with the zero dimensional 
+vector space of the underlying vector space of the ambient projective space of <M>P</M>, and is of course 
+totally isotropic. As such, is is considered as a subspace of a finite classical polar space in the mathematical 
+sense, but not as an element of the incidence geometry, and hence do in <Package>FinInG</Package>
+not belong to the category <C>IsSubspaceOfClassicalPolarSpace</C>.
+
+<ManSection>
+<Oper Name="VectorSpaceToElement" Arg="ps, v"/>
+<Returns>an element of the polar space <A>geo</A></Returns>
+<Description>
+Let <A>ps</A> be a polar space, and <A>v</A> is either a row vector (for points) or an <M>m x
+n</M> matrix (for an <M>(m-1)</M>-subspace of a polar space with an <M>(n-1)</M>-dimensional ambient projective space.
+In the case that <A>v</A> is a matrix, the rows represent basis vectors for the subspace. An
+exceptional case is when <A>v</A> is a zero-vector, whereby the trivial subspace is
+returned. It is checked that the subspace defined by <M>v</M> is totally isotropic with relation to the form
+defining <A>ps</A>
+<Example>
+<#Include SYSTEM "../examples/include/cps_element1.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name = "EmptySubspace" Arg="ps"/>
+<Returns>the trivial subspace in the projective <A>ps</A></Returns>
+<Description>
+The object returned by this operation is contained in
+every projective subspace of the projective space <A>ps</A>, but is not an element of <A>ps</A>. Hence, testing
+incidence results in an error message.
+<Example>
+<#Include SYSTEM "../examples/include/cps_emptysubspace.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="ProjectiveDimension" Arg="sub"/>
+<Oper Name="Dimension" Arg="sub"/>
+<Returns>the projective dimension of a subspace of a polar space. The operation <F>ProjectiveDimension</F> 
+is also applicable on the EmptySubspace
+</Returns>
+<Description>
+<Example>
+<#Include SYSTEM "../examples/include/cps_projdimension_element.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="ElmentsOfIncidenceStructure" Arg="ps, j"/>
+<Returns>the collection of elements of the projective space <A>ps</A> of type <A>j</A></Returns>
+<Description>
+For the projective space <A>ps</A> of dimension <M>d</M> and the type <A>j</A>, <M>1 \leq j \leq d</M>
+this operation returns the collection of <M>j-1</M> dimenaional subspaces.  <Example>
+<#Include SYSTEM "../examples/include/projpol_element1.include"> 
+</Example>
+</Description>
+</ManSection>
+
+
 
 <ManSection>
 <Oper Name="Coordinates" Arg="v"/>
@@ -373,16 +443,6 @@ the Witt index of the defining sesquilinear or quadratic form.
 
 <ManSection>
 <Oper Name="EquationOfHyperplane" Arg="ps"/>
-
-<Returns></Returns>
-<Description>
-<Example>
-</Example>
-</Description>
-</ManSection>
-
-<ManSection>
-<Oper Name="BaseField" Arg="ps"/>
 
 <Returns></Returns>
 <Description>
@@ -450,7 +510,6 @@ element <A>geo</A>.
 trivial subspace of a projective or polar space, and is contained in
 every projective space.
 <Example>
-<#Include SYSTEM "../examples/include/projpol_emptysubspace.include"> 
 </Example>
 </Description>
 </ManSection>

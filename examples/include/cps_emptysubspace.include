@@ -1,0 +1,16 @@
+gap&gt; ps := HermitianVariety(10,49);
+standard H(10, 7^2)
+gap&gt; e := EmptySubspace(ps);
+&lt; trivial subspace &gt;
+gap&gt; p := VectorSpaceToElement(ps,[1,1,1,0,1,1,1,0,1,0,0]*Z(7)^0);
+&lt;a point in standard H(10, 7^2)&gt;
+gap&gt; e*p;
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `PROD' on 2 arguments called from
+&lt;function&gt;( &lt;arguments&gt; ) called from read-eval-loop
+Entering break read-eval-print loop ...
+you can 'quit;' to quit to outer loop, or
+you can 'return;' to continue
+brk&gt; quit;
+gap&gt; e in p;
+true

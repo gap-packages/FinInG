@@ -38,7 +38,8 @@ projspacefiles := ["projpol_projectivespace", "projpol_projdimension", "projpol_
                    "projpol_element1", "projpol_emptysubspace", "projpol_projdimension_element", "projpol_standardframe",
 				   "projpol_coordinates", "projpol_eqhyperplane", "projpol_ambientspaceelps", "projpol_basefieldelps",
 				   "projpol_randomeltps", "projpol_randomeltsps", "projpol_span", "projpol_meet", "projpol_in",
-				   "projpol_flag", "projpol_chamber", "projpol_shadowofelement", "projpol_shadowofflag", "projpol_elsel"];
+				   "projpol_flag", "projpol_chamber", "projpol_shadowofelement", "projpol_shadowofflag", "projpol_elsel",
+				   "projsp_standardframe"];
 
 projgroupsfiles := ["projgroups_basefield",
 	  "projgroups_collineation", "projgroups_collineationgroup",
@@ -60,7 +61,7 @@ polaritiespsfiles := ["polarities_construct1", "polarities_construct2",
 
 projpolfiles1 := ["projpol_projectivespace", "projpol_projdimension",
                  "projpol_underlyingvs", "projpol_element1", "projpol_emptysubspace",
-		 "projpol_projdimension_element", "projpol_standardframe", "projpol_coordinates",
+		 "projpol_projdimension_element", "projpol_coordinates",
 		  "projpol_eqhyperplane", "projpol_basefieldps", "projpol_ambientspaceelps", 
 		  "projpol_basefieldelps", "projpol_randomeltsps", "projpol_randomelps",
 		  "projpol_span", "projpol_meet", "projpol_shadowofelement", "projpol_flag",
@@ -70,12 +71,14 @@ projpolfiles1 := ["projpol_projectivespace", "projpol_projdimension",
 		 "projpol_hermitian", "projpol_elliptic",
 		 "projpol_parabolic", "projpol_hyperbolic", "projpol_element1", "projpol_in"];
 
+projspfiles := ["projsp_standardframe", "projsp_emptysubspace", "projsp_projdimension_element ];
+
 projpolfiles1 := ["projpol_projectivespace", "projpol_polarspaceform",
                  "projpol_symplectic", "projpol_hermitian", "projpol_elliptic",
 		 "projpol_parabolic", "projpol_hyperbolic", "projpol_element1", "projpol_in"];
 		 
 classicalpolfiles := ["projpol_specialisometry", "projpol_isometry", "projpol_similarity", "cps_underlyingvs", "cps_ambientspace",
-                      "cps_projectivedimension", "cps_rank", "cps_basefield"];
+                      "cps_projectivedimension", "cps_rank", "cps_basefield", "cps_element1", "cps_projdimension_element"];
 
 
 morphismsfiles := ["morphisms_intertwiners","morphisms_embedding1","morphisms_embedding2","morphisms_typesubspace",

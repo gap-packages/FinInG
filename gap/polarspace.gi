@@ -788,6 +788,13 @@ InstallMethod(HermitianVariety,
 # methods for some attributes.
 #############################################################################
 
+#############################################################################
+#O  BaseField( <ps> )
+# returns the basefield of <ps>
+##
+InstallMethod( BaseField, "for a polar space", [IsClassicalPolarSpace],
+  ps -> ps!.basefield );
+
 # CHECKED 20/09/11 jdb
 #############################################################################
 #O  UnderlyingVectorSpace( <ps> )
