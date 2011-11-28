@@ -271,7 +271,7 @@ InstallMethod( IsFlagTransitiveGeometry, "for coset geometries",
     rank := Size(parabolics);
 
     ## Note that |G1( G2 \cap...\cap Gn)| = |( G2 \cap...\cap Gn) : (G1\cap G2 \cap...\cap Gn)|.
-    ## So to efficiently compute the right hand sides, we do the "shortest one" first
+    ## So to efficiently compute the right hand side, we do the "shortest one" first
     ## and iterate. To compute the left hand sides is much more difficult.
     ## For the first case, we need to compute the intersections of the orbits
     ## of G2, G3, ..., Gn on the trivial coset G1 in the action of G on
@@ -301,7 +301,6 @@ InstallMethod( IsFlagTransitiveGeometry, "for coset geometries",
         fi;
         int := newint;
     od;
-
     return true;
 end );
 

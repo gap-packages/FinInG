@@ -6,3 +6,17 @@ gap&gt; g2:=Stabilizer(g,[1,2,3],OnSets);
 Group([ (4,5), (2,3), (1,2,3) ])
 gap&gt; cg:=CosetGeometry(g,[g1,g2]);
 CosetGeometry( SymmetricGroup( [ 1 .. 5 ] ) )
+gap&gt; p:=Random(ElementsOfIncidenceStructure(cg,1));
+&lt;element of type 1 of CosetGeometry( SymmetricGroup( [ 1 .. 5 ] ) )&gt;
+gap&gt; q:=Random(ElementsOfIncidenceStructure(cg,2));
+&lt;element of type 2 of CosetGeometry( SymmetricGroup( [ 1 .. 5 ] ) )&gt;
+gap&gt; IsIncident(p,q);
+false
+gap&gt; IsIncident(p,p);
+true
+gap&gt; ParabolicSubgroups(cg);
+[ Group([ (4,5), (3,5), (1,2)(4,5) ]), Group([ (4,5), (2,3), (1,2,3) ]) ]
+gap&gt; Rank(cg) = Size(last);
+true
+gap&gt; BorelSubgroup(cg);
+Group([ (1,2), (4,5) ])

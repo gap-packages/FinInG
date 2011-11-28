@@ -52,7 +52,7 @@ empty.
 
 <ManSection>
 <Oper Name="CosetGeometry" Arg="G,l"/>
-<Returns>Returns the coset geometry defined by the list <A>l</A> of subgroups of the group <A>G</A></Returns>
+<Returns>the coset geometry defined by the list <A>l</A> of subgroups of the group <A>G</A></Returns>
 <Description> 
 <A>G</A> must be a group and <A>l</A> is a list of subgroups
 of <A>G</A>. The subgroups in <A>l</A> will be the <E>parabolic subgroups</E>
@@ -67,13 +67,13 @@ of the <E>coset geometry</E> whose rank equals the length of <A>l</A>.
 <Oper Name="IsIncident" Arg="ele1,ele2"/>
 <Returns>true if ans only if <A>ele1</A> and <A>ele2</A> are incident</Returns>
 <Description> 
-<A>ele1</A> and <A>ele2</A> must be two elements in thes same coset geometry.
+<A>ele1</A> and <A>ele2</A> must be two elements in the same coset geometry.
 </Description>
 </ManSection>
 
 <ManSection>
 <Oper Name="ParabolicSubgroups" Arg="cg"/>
-<Returns>List of parabolic subgroups defining the coset geometry <A>cg</A> </Returns>
+<Returns>list of parabolic subgroups defining the coset geometry <A>cg</A> </Returns>
 <Description> 
 </Description>
 </ManSection>
@@ -88,7 +88,7 @@ of the <E>coset geometry</E> whose rank equals the length of <A>l</A>.
 
 <ManSection>
 <Oper Name="DiagramOfGeometry" Arg="Gamma"/>
-<Returns>The diagram of the geometry <A>Gamma</A></Returns>
+<Returns>the diagram of the geometry <A>Gamma</A></Returns>
 <Description> 
 <A>Gamma</A> must be a coset geometry.
 </Description>
@@ -96,7 +96,7 @@ of the <E>coset geometry</E> whose rank equals the length of <A>l</A>.
 
 <ManSection>
 <Oper Name="DrawDiagram" Arg="Diag,filename"/>
-<Returns>Does not return anything but wirtes a file <A>filename</A>.ps</Returns>
+<Returns>does not return anything but wirtes a file <A>filename</A>.ps</Returns>
 <Description> 
 <A>Diag</A> must be a diagram. Writes a file <A>filename</A>.ps in the current directory with a pictorial version of the diagram. This command uses the <Package>graphviz</Package> package which is available from http://www.graphviz.org. 
 </Description>
@@ -105,7 +105,7 @@ of the <E>coset geometry</E> whose rank equals the length of <A>l</A>.
 
 <ManSection>
 <Oper Name="Borelsubgroup" Arg="cg"/>
-<Returns>The Borel subgroup of de geometry <A>cg</A></Returns>
+<Returns>the Borel subgroup of de geometry <A>cg</A></Returns>
 <Description> 
 The Borel subgroup is equal to the stabilizer of a chamber. It corresponds to the untersection of all parabolic subgrops.
 </Description>
@@ -145,7 +145,7 @@ A geometry is residually connected the incidence graphs of all its residues of r
 
 <ManSection>
 <Oper Name="StandardFlagOfCosetGeometry" Arg="cg"/>
-<Returns>Standard chamber of <A>cg</A></Returns>
+<Returns>standard chamber of <A>cg</A></Returns>
 <Description> 
 The standard chamber just consists of all parabolic subgroups (i.e. the trivial cosets of these subgroups). <A>cg</A> must be a coset geometry. Maybe this function should be called StandardChamberOfCosetGeometry.
 </Description>
@@ -169,7 +169,7 @@ The standard chamber just consists of all parabolic subgroups (i.e. the trivial 
 
 <ManSection>
 <Oper Name="ResidueOfFlag" Arg="cg,fl"/>
-<Returns>The residue of <A>fl</A> in <A>cg</A>.</Returns>
+<Returns>the residue of <A>fl</A> in <A>cg</A>.</Returns>
 <Description> 
 CHECK the back-mapping.
 </Description>
