@@ -181,7 +181,7 @@ InstallMethod( PolarSpaceStandard,
 			eq := PolynomialOfForm( m );
 		fi;
 		if IsZero(eq) then
-			Print("eq is zero\n");
+			#Print("eq is zero\n");
 			i1 := List([1..Length(gram)],i->Concatenation("x",String(i)));
 			i2 := List([1..Length(gram)],i->Concatenation("y",String(i)));
 			#r := PolynomialRing(f,Concatenation(i1,i2):old);     ## there was an error here for gap4r5
@@ -275,7 +275,7 @@ InstallMethod( PolarSpace,
 			eq := PolynomialOfForm( m );
 		fi;
 		if IsZero(eq) then
-			Print("eq is zero\n");
+			#Print("eq is zero\n");
 			i1 := List([1..Length(gram)],i->Concatenation("x",String(i)));
 			i2 := List([1..Length(gram)],i->Concatenation("y",String(i)));
 			#r := PolynomialRing(f,Concatenation(i1,i2):old);     ## there was an error here for gap4r5

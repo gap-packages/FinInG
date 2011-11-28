@@ -74,7 +74,8 @@ projpolfiles1 := ["projpol_projectivespace", "projpol_polarspaceform",
                  "projpol_symplectic", "projpol_hermitian", "projpol_elliptic",
 		 "projpol_parabolic", "projpol_hyperbolic", "projpol_element1", "projpol_in"];
 		 
-classicalpolfiles := ["projpol_specialisometry", "projpol_isometry", "projpol_similarity"];
+classicalpolfiles := ["projpol_specialisometry", "projpol_isometry", "projpol_similarity", "cps_underlyingvs", "cps_ambientspace",
+                      "cps_projectivedimension", "cps_rank", "cps_basefield"];
 
 
 morphismsfiles := ["morphisms_intertwiners","morphisms_embedding1","morphisms_embedding2","morphisms_typesubspace",

@@ -1,0 +1,8 @@
+gap&gt; ps := EllipticQuadric(5,4);
+Q-(5, 4)
+gap&gt; ProjectiveDimension(ps);
+5
+gap&gt; ps := SymplecticSpace(3,81);
+W(3, 81)
+gap&gt; ProjectiveDimension(ps);
+3

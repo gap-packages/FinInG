@@ -305,28 +305,47 @@ the classical polar space with underlying form <A>form</A>
 
 <ManSection>
 <Oper Name="UnderlyingVectorSpace" Arg="ps"/>
-
 <Returns>a vector space</Returns>
 <Description>The polar space <A>ps</A> is the geometry associated with a sesquilinear or quadratic form <M>f</M>.
 The vector space on which <M>f</M> is acting is returned.
 <Example>
-<#Include SYSTEM "../examples/include/projpol_elliptic.include"> 
+<#Include SYSTEM "../examples/include/cps_underlyingvs.include"> 
 </Example>
 </Description>
 </ManSection>
 
-Equality of projective spaces?
-Projective dimension of a projective space and of an element
-
+<ManSection>
+<Oper Name="AmbientSpace" Arg="ps"/>
+<Returns>a projective space</Returns>
+<Description>
+When <A>ps</A> is a polar space, this operation returns the ambient projective space, i.e. the
+underlying projective space of the sequilinear or quadratic form that defines <A>ps</A>.
+<Example>
+<#Include SYSTEM "../examples/include/cps_ambientspace.include"> 
+</Example>
+</Description>
+</ManSection>
 
 <ManSection>
 <Oper Name="ProjectiveDimension" Arg="ps"/>
 <Oper Name="Dimension" Arg="ps"/>
-<Oper Name="Rank" Arg="ps"/>
-
-<Returns></Returns>
-<Description>
+<Returns>the dimension of the ambient projective space of <A>ps</A></Returns>
+<Description>When <A>ps</A> is a polar space, an ambient projective space <M>P</M>is 
+uniquely defined and can be asked using <F>AmbientSpace</F>. This operation and
+its synomym <F>Dimension</F> returns the dimension of <M>P</M>.
 <Example>
+<#Include SYSTEM "../examples/include/cps_projectivedimension.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="Rank" Arg="ps"/>
+<Returns>the rank of <A>ps</A></Returns>
+<Description>When <A>ps</A> is a polar space, its rank, i.e. the number of different types, equals 
+the Witt index of the defining sesquilinear or quadratic form.
+<Example>
+<#Include SYSTEM "../examples/include/cps_rank.include"> 
 </Example>
 </Description>
 </ManSection>
@@ -543,7 +562,6 @@ with the type of subspace: <Q>degenerate</Q>, <Q>symplectic</Q>, <Q>hermitian</Q
 
 
 </Section>
-
 
 <Section Label="polar:classicalgroups">
 <Heading>Projective Orthogonal/Unitary/Symplectic groups in <Package>FinInG</Package></Heading>

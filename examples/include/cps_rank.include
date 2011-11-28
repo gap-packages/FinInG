@@ -1,0 +1,12 @@
+gap&gt; ps := EllipticQuadric(5,4);
+Q-(5, 4)
+gap&gt; Rank(ps);
+2
+gap&gt; ps := HyperbolicQuadric(5,4);
+standard Q+(5, 4)
+gap&gt; Rank(ps);
+3
+gap&gt; ps := SymplecticSpace(7,81);
+standard W(7, 81)
+gap&gt; Rank(ps);
+4
