@@ -71,14 +71,16 @@ projpolfiles1 := ["projpol_projectivespace", "projpol_projdimension",
 		 "projpol_hermitian", "projpol_elliptic",
 		 "projpol_parabolic", "projpol_hyperbolic", "projpol_element1", "projpol_in"];
 
-projspfiles := ["projsp_standardframe", "projsp_emptysubspace", "projsp_projdimension_element ];
+projspfiles := ["projsp_standardframe", "projsp_emptysubspace", "projsp_projdimension_element", "projsp_coordinates",
+                "projsp_eqhyperplane", "projsp_coordinates", "projsp_ambientspaceelps" ];
 
 projpolfiles1 := ["projpol_projectivespace", "projpol_polarspaceform",
                  "projpol_symplectic", "projpol_hermitian", "projpol_elliptic",
 		 "projpol_parabolic", "projpol_hyperbolic", "projpol_element1", "projpol_in"];
 		 
 classicalpolfiles := ["projpol_specialisometry", "projpol_isometry", "projpol_similarity", "cps_underlyingvs", "cps_ambientspace",
-                      "cps_projectivedimension", "cps_rank", "cps_basefield", "cps_element1", "cps_projdimension_element"];
+                      "cps_projectivedimension", "cps_rank", "cps_basefield", "cps_element1", "cps_projdimension_element",
+					  "cps_coordinates", "cps_ambientspaceelps"];
 
 
 morphismsfiles := ["morphisms_intertwiners","morphisms_embedding1","morphisms_embedding2","morphisms_typesubspace",

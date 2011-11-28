@@ -1,0 +1,4 @@
+gap&gt; p := Random(Points(PG(5,16)));
+&lt;a point in ProjectiveSpace(5, 16)&gt;
+gap&gt; Coordinates(p);
+[ Z(2)^0, Z(2^4)^13, Z(2^4)^9, Z(2^4), Z(2^2)^2, Z(2^4)^8 ]

@@ -423,12 +423,22 @@ is also applicable on the EmptySubspace
 <Description>
 For the projective space <A>ps</A> of dimension <M>d</M> and the type <A>j</A>, <M>1 \leq j \leq d</M>
 this operation returns the collection of <M>j-1</M> dimenaional subspaces.  <Example>
-<#Include SYSTEM "../examples/include/projpol_element1.include"> 
+<#Include SYSTEM "../examples/include/projsp_elements.include"> 
 </Example>
 </Description>
 </ManSection>
 
-
+<ManSection>
+<Oper Name="AmbientSpace" Arg="el"/>
+<Returns>returns the ambient space of an element <A>el</A> of a polar space</Returns>
+<Description>
+This operation is also applicable on the trivial subspace. For a Lie geometry, the ambient space of
+an element is defined as the ambient space of the Lie geometry, i.e. a projective space.
+<Example>
+<#Include SYSTEM "../examples/include/cps_ambientspaceelps.include"> 
+</Example>
+</Description>
+</ManSection>
 
 <ManSection>
 <Oper Name="Coordinates" Arg="v"/>
