@@ -88,6 +88,14 @@ vector space over the field of order <M>q</M>.
 </Description>
 </ManSection>
 
+<ManSection>
+<Oper Name="AmbientSpace" Arg="ps"/>
+<Returns>a projective space</Returns>
+<Description>The ambient space of a projective space <A>ps</A> is the projective space itself.
+Hence, simple <A>ps</A> will be returned.
+</Description>
+</ManSection>
+
 </Section>
 
 <Section>
@@ -153,6 +161,38 @@ this operation returns the collection of <M>j-1</M> dimenaional subspaces.  <Exa
 </ManSection>
 
 <ManSection>
+<Heading>Short names for ElementsOfIncidenceStructure</Heading>
+<Oper Name="Points" Arg="ps"/>
+<Oper Name="Lines" Arg="ps"/>
+<Oper Name="Planes" Arg="ps"/>
+<Oper Name="Solids" Arg="ps"/>
+<Oper Name="Hyperplanes" Arg="inc"/>
+<Returns>The elements of <A>ps</A> of respective type 1,2,3,4, and the hyperplanes</Returns>
+<Description>
+An error message is produced when the projective space <A>ps</A> has no elements of a required type.
+<Example>
+<#Include SYSTEM "../examples/include/projsp_short.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Heading>Incidence and containment</Heading>
+<Oper Name="IsIncident" Arg="el1, el2"/>
+<Oper Name="\*" Arg="el1, el2"/>
+<Oper Name="\in" Arg="el1, el2"/>
+<Returns>true or false</Returns>
+<Description>
+Recall that for projective spaces, incidence is symmetrized containment, where the empty subspace and the 
+whole projective space are excluded as arguments for this operation, since they are not considered as elements
+of the geometry, but both the empty subspace and the whole projective space are allowed as arguments for <F>\in</F>.
+<Example>
+<#Include SYSTEM "../examples/include/projsp_incident.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
 <Oper Name="StandardFrame" Arg="ps"/>
 <Returns>the standard frame of the projetive space <A>ps</A></Returns>
 <Description>
@@ -205,16 +245,6 @@ This operation is also applicable on the trivial subspace.
 </Description>
 </ManSection>
 
-<ManSection>
-<Oper Name="AsList" Arg="subspaces"/>
-<Returns>an Orb object or list</Returns>
-<Description>
-<Example>
-John's example works, but it is not clear whether it fits in this part of the manual. I'll ask John to explain
-the difference between using orb and not using orb to list e.g. all lines of PG(3,4), is in the example projpol_Aslist.g
-</Example>
-</Description>
-</ManSection>
 
 <ManSection>
 <Oper Name="Random" Arg="elements"/>
@@ -277,20 +307,6 @@ argument for this operation, also as member of the argument of the second
 variant of this operation.
 <Example>
 <#Include SYSTEM "../examples/include/projpol_meet.include"> 
-</Example>
-</Description>
-</ManSection>
-
-<ManSection>
-<Oper Name="IsIncident" Arg="v, geo"/>
-<Oper Name="\*" Arg="v, geo"/>
-<Oper Name="\in" Arg="v, geo"/>
-<Returns>true or false</Returns>
-<Description>
-Implentation to be reconsidered. Incidence is only applicable on elements of an Incidence structure.
-in must be applicable on subspaces, hence also trivial one.
-<Example>
-<#Include SYSTEM "../examples/include/projpol_in.include"> 
 </Example>
 </Description>
 </ManSection>
@@ -376,4 +392,21 @@ also performs the checking.
 </ManSection>
 
 </Section>
+
+<Section>
+<Heading>Enumerating subspaces of a projective spaces</Heading>
+
+<ManSection>
+<Oper Name="AsList" Arg="subspaces"/>
+<Returns>an Orb object or list</Returns>
+<Description>
+<Example>
+John's example works, but it is not clear whether it fits in this part of the manual. I'll ask John to explain
+the difference between using orb and not using orb to list e.g. all lines of PG(3,4), is in the example projpol_Aslist.g
+</Example>
+</Description>
+</ManSection>
+
+</Section>
+
 </Chapter>

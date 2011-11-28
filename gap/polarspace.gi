@@ -1626,11 +1626,12 @@ InstallMethod( VectorSpaceToElement,
 	end );
 
 # CHECKED 22/09/11 jdb  
+# Changed 28/11/11 jdb + pc, according to remark in tiny optimalisations.
 #############################################################################
 #O  \in( <w>, <ps> ) true if the element <w> is contained in <ps>
 # remarks: should we change this? I mean: this method makes a projective subspace
 # suddenly into a polar space subspace, if this thest is true. Can cause weird thing 
-# when displaying objects. 
+# when displaying objects. We changed it, see commented out stuff below.
 ##
 #I changed this, I now use the built in functions of forms to perform the test.
 #jdb 6/1/8
@@ -1655,9 +1656,9 @@ InstallMethod( \in,
 			ti:= IsTotallyIsotropicSubspace(form,r); 
 		fi;
     # if yes, make it an element of the polar space.
-		if not IsSubspaceOfClassicalPolarSpace(w) and ti then
-			w!.geo := ps;
-		fi;
+	#	if not IsSubspaceOfClassicalPolarSpace(w) and ti then
+	#		w!.geo := ps;
+	#	fi;
 		return ti;
 	end );
 

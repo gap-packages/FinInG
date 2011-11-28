@@ -441,98 +441,28 @@ an element is defined as the ambient space of the Lie geometry, i.e. a projectiv
 </ManSection>
 
 <ManSection>
-<Oper Name="Coordinates" Arg="v"/>
-
-<Returns></Returns>
+<Oper Name="Coordinates" Arg="p"/>
+<Returns>the homogeneous coordinates of the point <A>p</A>
+</Returns>
 <Description>
 <Example>
-</Example>
-</Description>
-</ManSection>
-
-
-<ManSection>
-<Oper Name="EquationOfHyperplane" Arg="ps"/>
-
-<Returns></Returns>
-<Description>
-<Example>
+<#Include SYSTEM "../examples/include/cps_coordinates.include"> 
 </Example>
 </Description>
 </ManSection>
 
 <ManSection>
-<Oper Name="AsList" Arg="subspaces"/>
-
-<Returns>an Orb object or list</Returns>
-<Description>
-<Example>
-<#Include SYSTEM "../examples/include/projpol_aslist.include"> 
-</Example>
-</Description>
-</ManSection>
-
-
-<ManSection>
-<Oper Name="Random" Arg="subspaces"/>
-
-<Returns></Returns>
-<Description>
-<Example>
-</Example>
-</Description>
-</ManSection>
-
-<ManSection>
-<Oper Name="RandomSubspace" Arg="pg, i"/>
-
-<Returns></Returns>
-<Description>
-<Example>
-</Example>
-</Description>
-</ManSection>
-
-<ManSection>
-<Oper Name="VectorSpaceToElement" Arg="geo, v"/>
-<Returns>an element</Returns>
-<Description>
-<A>geo</A> is a projective space or a polar space, such as <C>ProjectiveSpace(3,3)</C> or
-<C>EllipticQuadric(7,5)</C>, and <A>v</A> is either a row vector (for points) or an <M>m x
-n</M> matrix (for an <M>(m-1)</M>-subspace of a geometry of projective dimension <M>n-1</M>).
-In the case that <A>v</A> is a matrix, the rows represent basis vectors for the subspace. An
-exceptional case is when <A>v</A> is a zero-vector, whereby the trivial subspace <C>[]</C> is
-returned (note: by convention, the empty set is the unique subspace of projective dimension
--1). When <A>geo</A> is a polar space, it is checked whether <A>v</A> determines a point or an
-element <A>geo</A>.
-<Example>
-<#Include SYSTEM "../examples/include/projpol_element1.include"> 
-</Example>
-</Description>
-</ManSection>
-
-
-<ManSection>
-<Var Name = "EmptySubspace" />
-<Returns>a GAP object</Returns>
-<Description>
-<A>EmptySubspace</A> is a GAP object which represents the ubiquitous 
-trivial subspace of a projective or polar space, and is contained in
-every projective space.
-<Example>
-</Example>
-</Description>
-</ManSection>
-
-
-<ManSection>
-<Oper Name="\in" Arg="v, geo"/>
+<Heading>Incidence and containment</Heading>
+<Oper Name="IsIncident" Arg="el1, el2"/>
+<Oper Name="\*" Arg="el1, el2"/>
+<Oper Name="\in" Arg="el1, el2"/>
 <Returns>true or false</Returns>
 <Description>
-<A>v</A> is an element of an incidence structure. It is checked whether <A>v</A>
-is a subspace of the polar space <A>geo</A>.
+Recall that for projective spaces, incidence is symmetrized containment, where the empty subspace and the 
+whole projective space are excluded as arguments for this operation, since they are not considered as elements
+of the geometry, but both the empty subspace and the whole projective space are allowed as arguments for <F>\in</F>.
 <Example>
-<#Include SYSTEM "../examples/include/projpol_in.include"> 
+<#Include SYSTEM "../examples/include/cps_incident.include"> 
 </Example>
 </Description>
 </ManSection>
@@ -895,6 +825,16 @@ gap> Display( x );
  . 1 . . . . 1
 gap> IsDoneIterator( iter );
 false
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="AsList" Arg="subspaces"/>
+<Returns>an Orb object or list</Returns>
+<Description>
+<Example>
+<#Include SYSTEM "../examples/include/projpol_aslist.include"> 
 </Example>
 </Description>
 </ManSection>

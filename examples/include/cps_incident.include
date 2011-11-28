@@ -1,0 +1,30 @@
+gap&gt; ps := HyperbolicQuadric(7,7);
+standard Q+(7, 7)
+gap&gt; p := VectorSpaceToElement(ps,[1,0,1,0,0,0,0,0]*Z(7)^0);
+&lt;a point in standard Q+(7, 7)&gt;
+gap&gt; l := VectorSpaceToElement(ps,[[1,0,1,0,0,0,0,0],[0,-1,0,1,0,0,0,0]]*Z(7)^0);
+&lt;a line in standard Q+(7, 7)&gt;
+gap&gt; p * l;
+true
+gap&gt; l * p;
+true
+gap&gt; IsIncident(p,l);
+true
+gap&gt; p in l;
+true
+gap&gt; l in p;
+false
+gap&gt; e := EmptySubspace(ps);
+&lt; trivial subspace &gt;
+gap&gt; e * l;
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `PROD' on 2 arguments called from
+&lt;function&gt;( &lt;arguments&gt; ) called from read-eval-loop
+Entering break read-eval-print loop ...
+you can 'quit;' to quit to outer loop, or
+you can 'return;' to continue
+brk&gt; quit;
+gap&gt; e in l;
+true
+gap&gt; l in ps;
+true
