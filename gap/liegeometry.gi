@@ -68,6 +68,18 @@ InstallMethod( ElementToVectorSpace,
 		return Unwrap(x);
 	end );
 
+# ADDED 28/11/11 jdb + pc
+#############################################################################
+#O  AmbientSpace( <subspace> ) returns the ambient space of <subspace>, an
+# element of a Lie geometry.
+##
+InstallMethod( AmbientSpace, 
+	"for an element of a Lie geometry",
+	[IsElementOfLieGeometry],
+	function(subspace)
+		return AmbientSpace(subspace!.geo);
+	end );
+
 #############################################################################
 # containment for Lie geometries:
 #############################################################################
@@ -210,6 +222,7 @@ InstallMethod( Solids, "for a Lie geometry",
 #end );
 
 # CHECKED 7/09/2011 jdb
+# Changed 28/11/11 jdb+pc
 #############################################################################
 #O  EmptySubspace( <g> )
 # returns the empty subspace in the Lie geometry <g>
@@ -223,7 +236,8 @@ InstallMethod( EmptySubspace,
 		x := ShallowCopy(Zero(vs));
 		w := rec( geo := g, obj := x );
 		ty:= NewType( NewFamily("EmptySubspaceFamily"), IsEmptySubspace and IsEmptySubspaceRep );
-		ObjectifyWithAttributes( w, ty, AmbientSpace, g, ProjectiveDimension, -1);
+		#ObjectifyWithAttributes( w, ty, AmbientSpace, g, ProjectiveDimension, -1);
+		ObjectifyWithAttributes( w, ty, AmbientSpace, AmbientSpace(g), ProjectiveDimension, -1);
 		return w;
 	end );
 

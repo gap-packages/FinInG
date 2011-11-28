@@ -781,13 +781,14 @@ InstallMethod( EquationOfHyperplane,
 	end );
 	
 # CHECKED 11/09/11 jdb
+# Commented out 28/11/11 jdb + pc, according to new regulations
 #############################################################################
 #O  AmbientSpace( <subspace> ) returns the ambient space of <subspace>
 ##
-InstallMethod( AmbientSpace, [IsSubspaceOfProjectiveSpace],
-	function(subspace)
-		return subspace!.geo;
-	end );
+#InstallMethod( AmbientSpace, [IsSubspaceOfProjectiveSpace],
+#	function(subspace)
+#		return subspace!.geo;
+#	end );
 
 #############################################################################
 #  Span/Meet for trivial subspaces
