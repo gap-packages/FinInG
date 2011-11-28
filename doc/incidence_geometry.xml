@@ -23,7 +23,8 @@ in general.
 The term geometry, or incidence geometry, is interpreted broadly in this package.
 The basis for the construction of the objects in this package is an abstract
 incidence geometry consisting of elements, types, and an incidence relation. 
-To be more specific, an <E>incidence geometry</E> consists of a set of elements
+To be more specific, an <E>incidence geometry</E> consists of a set of
+elements, 
 a symmetric relation on the elements and a type function from the set of
 elements to an index set (i.e., every element has a ``type''). There are two axioms: 
 (i) no two elements of the same type are incident; (ii) every maximal flag contains
@@ -35,8 +36,9 @@ commonly studied incidence geometries of rank more than 2: projective spaces,
 polar spaces, and affine spaces. However, some facility with generalised polygons
 has been included. Throughout, no matter the geometry, we have made the convention that
 an element of type 1 is a ``point'', an element of type 2 is a ``line'', and so forth.
-The examples we use in this section use projective spaces, which have not introduced the 
-reader to yet in this manual. For further information on projective spaces,
+The examples we use in this section use projective spaces, which have
+not yet been introduced to the 
+reader in this manual. For further information on projective spaces,
 see Chapter <Ref Chap="projective_spaces"/>.<P/>
 
 In this chapter we describe functionality that is <B>declared</B> for 
@@ -101,8 +103,11 @@ generalised polygons have their category, as a subcategory of <C>IsIncidenceGeom
 <Filt Name="IsProjectiveSpace" Type="Category"/>
 <Filt Name="IsClassicalPolarSpace" Type="Category"/>
 <Description>
-Lie geometries bundle projective spaces and classical polar spaces. I would like to shortly explain the mathematical reason for this.
-Both classes of geometries have their category, as a subcategory of <C>IsLieGeometry</C>.
+Lie geometries bundle projective spaces and classical polar spaces. In
+the future, more subcategories could be added since the term ``Lie
+geometry'' refers to a geometry whose automorphism group lies in some
+group of Lie type. Both classes of geometries have their category, as
+a subcategory of <C>IsLieGeometry</C>. 
 </Description>
 </ManSection>
 
@@ -150,8 +155,9 @@ This category lies in <C>IsElationGQ</C> and <C>IsClassicalPolarSpace</C>.
 <Description>
 Both attributes are declared for objects in the category <C>IsIncidenceStructure</C>, but 
 only methods are installed for the geometries that are built in <Package>FinInG</Package>.
-Any incidence structure contains elements of a set of types. If names are 
-given to an element of each type, this attribute returns the names for the
+Any incidence structure contains a set of types. This set is usually
+just the list <C>[1 .. n]</C>. If specific names are 
+given to each type, this attribute returns the names for the
 particular incidence structure <A>inc</A>. The second variant returs the list of 
 plurals of these names.
 <Example>
@@ -177,7 +183,7 @@ is set.
 
 <ManSection>
 <Attr Name="AmbientGeometry" Arg="inc"/>
-<Returns>the ambient geometry of the incidence structure<A>inc</A></Returns>
+<Returns>the ambient geometry of the incidence structure <A>inc</A></Returns>
 <Description>
 This attribute is declared for objects in the category <C>IsIncidenceStructure</C>, but as this might be meaningless 
 for general incidence structures, in which case a no method found error is returned.

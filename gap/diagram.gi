@@ -214,12 +214,28 @@ end );
 ##
 ###################################################
 
+# CHECKED 28/11/11 PhC
+#############################################################################
+#O  ParabolicSubgroups ( <cg> )
+# for a coset geometry <cg> returns the defining parabolic subgroups.
+##
 InstallMethod( ParabolicSubgroups, "for coset geometries",
                [ IsCosetGeometry ],  cg -> cg!.parabolics );
 
+# CHECKED 28/11/11 PhC
+#############################################################################
+#O  AmbientGroup ( <cg> )
+# for a coset geometry <cg> returns the defining group.
+##
 InstallMethod( AmbientGroup, "for coset geometries",
                [ IsCosetGeometry ],  cg -> cg!.group );
 
+# CHECKED 28/11/11 PhC
+#############################################################################
+#O  BorelSubgroup ( <cg> )
+# for a coset geometry <cg> returns the Borel subgroup. This is the 
+# intersection of the parabolic subgroups.
+##
 InstallMethod( BorelSubgroup, "for coset geometries",
                [ IsCosetGeometry ],  cg -> Intersection(cg!.parabolics) );
 
@@ -229,6 +245,12 @@ InstallMethod( BorelSubgroup, "for coset geometries",
 ##
 ##############################################################
 
+# 
+#############################################################################
+#
+#  
+# 
+##
 InstallMethod( IsFlagTransitiveGeometry, "for coset geometries",
                [ IsCosetGeometry ],
   function( cg )
@@ -283,6 +305,12 @@ InstallMethod( IsFlagTransitiveGeometry, "for coset geometries",
     return true;
 end );
 
+# 
+#############################################################################
+# IsFirmGeometry
+#  
+# 
+##
 InstallMethod( IsFirmGeometry, "for coset geometries",
                [ IsCosetGeometry ],
   function( cg )
@@ -334,6 +362,12 @@ InstallMethod( IsConnected,
 end );
 
 #############!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# 
+#############################################################################
+# IsResiduallyConnected
+#  
+# 
+##
 InstallMethod( IsResiduallyConnected, "for coset geometries",
                [ IsCosetGeometry ],
   function( cg )
@@ -346,6 +380,12 @@ InstallMethod( IsResiduallyConnected, "for coset geometries",
 end );
 ###############!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
+# 
+#############################################################################
+# StandardFlagOfCosetGeometry
+#  
+# 
+##
 InstallMethod( StandardFlagOfCosetGeometry, "for coset geometries",
 	       [ IsCosetGeometry ],
   function(cg)
@@ -356,6 +396,12 @@ InstallMethod( StandardFlagOfCosetGeometry, "for coset geometries",
   return flag;
 end );
 
+# 
+#############################################################################
+# FlagToStandardFlag
+#  
+# 
+##
 InstallMethod( FlagToStandardFlag, "for coset geometries",
                 [ IsCosetGeometry, IsHomogeneousList ],
   function( cg, flag )
@@ -391,7 +437,12 @@ InstallMethod( FlagToStandardFlag, "for coset geometries",
     return g;
   end );
 
-
+# 
+#############################################################################
+# CanonicalResidueOfFlag
+#  
+# 
+##
 InstallMethod( CanonicalResidueOfFlag, "for coset geometries",
                [ IsCosetGeometry, IsHomogeneousList ],
 
@@ -427,7 +478,12 @@ InstallMethod( CanonicalResidueOfFlag, "for coset geometries",
      return CosetGeometry( resg, respabs ); 
   end );
 
-
+# 
+#############################################################################
+# ResidueOfFlag
+#  
+# 
+##
 InstallMethod( ResidueOfFlag, "for coset geometries",
                [ IsCosetGeometry, IsHomogeneousList ],
 
@@ -472,6 +528,12 @@ InstallMethod( ResidueOfFlag, "for coset geometries",
      return CosetGeometry( resg, respabs ); 
   end );
 
+# 
+#############################################################################
+# IncidenceGraph
+#  
+# 
+##
 InstallMethod( IncidenceGraph, [ IsCosetGeometry and IsHandledByNiceMonomorphism ],
   function( geo )
   
@@ -498,6 +560,12 @@ InstallMethod( IncidenceGraph, [ IsCosetGeometry and IsHandledByNiceMonomorphism
     return gamma;
   end );
 
+# 
+#############################################################################
+# IncidenceGraph
+#  
+# 
+##
 InstallMethod( IncidenceGraph, [ IsCosetGeometry ],
   function( geo )
   
@@ -544,83 +612,87 @@ InstallMethod( IncidenceGraph, [ IsCosetGeometry ],
   end );
 
 #############################################################################
-# View methods:
+# View/Print methods
 #############################################################################
 
-InstallMethod( ViewObj, [ IsDiagram and IsDiagramRep ],
+InstallMethod( ViewObj, "for diagrams", 
+  [ IsDiagram and IsDiagramRep ],
   function( diag )
     Print("< Diagram >");
   end );
 
-InstallMethod( ViewObj, [ IsDiagram and IsDiagramRep and HasGeometryOfDiagram],
+InstallMethod( ViewObj, "for diagram with geometry", 
+  [ IsDiagram and IsDiagramRep and HasGeometryOfDiagram],
   function( diag )
     local geo;
     geo := GeometryOfDiagram( diag );
     Print("< Diagram of ", geo ," >");
   end );
 
-InstallMethod( ViewObj, [ IsCosetGeometry and IsCosetGeometryRep ],
+InstallMethod( ViewObj, "for coset geometry",
+  [ IsCosetGeometry and IsCosetGeometryRep ],
   function( geo )
     Print("CosetGeometry( ", geo!.group, " )");
   end );
 
-InstallMethod( PrintObj, [ IsCosetGeometry and IsCosetGeometryRep ],
+InstallMethod( PrintObj, "for coset geometry", 
+  [ IsCosetGeometry and IsCosetGeometryRep ],
   function( geo )
     Print("CosetGeometry( ", geo!.group, " , ", geo!.parabolics , " )");
   end );
 
-InstallMethod( ViewObj, [ IsElementsOfCosetGeometry and
-  			IsElementsOfCosetGeometryRep ],
+InstallMethod( ViewObj, "for all elements of coset geometry", 
+  [ IsElementsOfCosetGeometry and IsElementsOfCosetGeometryRep ],
   function( vs )
     Print("<elements of type ", vs!.type," of ");
     ViewObj(vs!.geometry);
     Print(">");
   end );
 
-InstallMethod( PrintObj, [ IsElementsOfCosetGeometry and
+InstallMethod( PrintObj, "for coset geometry", [ IsElementsOfCosetGeometry and
   			IsElementsOfCosetGeometryRep ],
   function( vs )
     Print("ElementsOfIncidenceStructure( ",vs!.geometry," , ",vs!.type,")");
   end );
 
-InstallMethod( ViewObj, [ IsElementOfCosetGeometry ],
+InstallMethod( ViewObj, "for coset geometry", [ IsElementOfCosetGeometry ],
   function( v )
     Print("<element of type ", v!.type," of ");
     ViewObj(v!.geo);
     Print(">");
   end );
 
-InstallMethod( PrintObj, [ IsElementOfCosetGeometry ],
+InstallMethod( PrintObj, "for element of coset geometry", [ IsElementOfCosetGeometry ],
   function( v )
     Print(v!.obj);
   end );
 
-InstallMethod( ViewObj, [ IsVertexOfDiagram and IsVertexOfDiagramRep ],
+InstallMethod( ViewObj, "for vertex of diagram", [ IsVertexOfDiagram and IsVertexOfDiagramRep ],
   function( v )
     Print("Diagram vertex(",v!.type,")");
   end );
 
-InstallMethod( PrintObj, [ IsVertexOfDiagram and IsVertexOfDiagramRep ],
+InstallMethod( PrintObj, "for vertex of diagram", [ IsVertexOfDiagram and IsVertexOfDiagramRep ],
   function( v )
     Print("Vertex(",v!.type,")");
   end );
 
-InstallMethod( ViewObj, [ IsEdgeOfDiagram and IsEdgeOfDiagramRep ],
+InstallMethod( ViewObj, "for edge of diagram", [ IsEdgeOfDiagram and IsEdgeOfDiagramRep ],
   function( e )
     Print("Diagram edge(",e!.edge,")");
   end );
 
-InstallMethod( PrintObj, [ IsEdgeOfDiagram and IsEdgeOfDiagramRep ],
+InstallMethod( PrintObj, "for edge of diagram", [ IsEdgeOfDiagram and IsEdgeOfDiagramRep ],
   function( e )
     Print("Edge(",e!.edge,")");
   end );
 
-InstallMethod( ViewObj, [ IsRank2Residue and IsRank2ResidueRep ],
+InstallMethod( ViewObj, "for rank 2 residue", [ IsRank2Residue and IsRank2ResidueRep ],
   function( e )
     Print("Rank 2 residue of type ",e!.edge," of ", e!.geo);
   end );
 
-InstallMethod( PrintObj, [ IsRank2Residue and IsRank2ResidueRep  ],
+InstallMethod( PrintObj, "for rank 2 residue", [ IsRank2Residue and IsRank2ResidueRep  ],
   function( e )
     Print("Rank2Residue(",e!.edge,") of ", e!.geo);
   end );
@@ -629,19 +701,38 @@ InstallMethod( PrintObj, [ IsRank2Residue and IsRank2ResidueRep  ],
 # Methods for diagrams of geometries.
 #############################################################################
 
+# 
+#############################################################################
+#O \= ( < vertex1 >, <vertex2 > )
+# Returns true if <vertex1> and <vertex2> represent the same type in a 
+# diagram.
+# 
+##
 InstallMethod( \=, [ IsVertexOfDiagram and IsVertexOfDiagramRep, 
                      IsVertexOfDiagram and IsVertexOfDiagramRep ],
   function( u, v )
     return u!.type = v!.type;
   end );
 
+# 
+#############################################################################
+#O \= ( < edge1 >, < edge 2 > )
+# Equality of edges in a diagram.
+# 
+##
 InstallMethod( \=, [ IsEdgeOfDiagram and IsEdgeOfDiagramRep, 
                      IsEdgeOfDiagram and IsEdgeOfDiagramRep ],
   function( u, v )
     return u!.edge = v!.edge;
   end );
 
-InstallMethod( DiagramOfGeometry, [IsCosetGeometry],
+# 
+#############################################################################
+#F DiagramOfGeometry
+# 
+# 
+##
+InstallMethod( DiagramOfGeometry, "for coset geometry", [IsCosetGeometry],
   function( cg )
     local rank2residues, vertices, types, x, v, edges, parameters, e, diagram, parabolics;
     rank2residues := Rank2Residues( cg );
@@ -690,6 +781,12 @@ InstallMethod( DiagramOfGeometry, [IsCosetGeometry],
     return diagram;
   end );
 
+# 
+#############################################################################
+#O DrawDiagram
+# 
+# 
+##
 InstallGlobalFunction( DrawDiagram, 
   function( arg )
     local diagram, filename, vertices, edges, longstring, v, e, vertexverbosity, edgeverbosity, arglen;
@@ -764,6 +861,12 @@ InstallGlobalFunction( DrawDiagram,
 ##
 ###################################
 
+# 
+#############################################################################
+#F Drawing_Diagram
+# 
+# 
+##
 InstallGlobalFunction( Drawing_Diagram,
   function( verts, edges, way )
     local mat, v, e, v1, v2, c1, c2, posvertices,
@@ -907,14 +1010,18 @@ InstallMethod( Display, [ IsDiagram and IsDiagramRep ],
   end );
 
 ####################################################
-## Viewing and printing
+## Special diagrams
 ##
 ##
 ####################################################
 
-
-
-InstallMethod( DiagramOfGeometry, [ IsProjectiveSpace ],
+# 
+#############################################################################
+#F DiagramOfGeometry ( < projsp > )
+# 
+# 
+##
+InstallMethod( DiagramOfGeometry, "for a projective space", [ IsProjectiveSpace ],
   function( geo )
     local vertices, types, x, v, edges, newedges, e, way, diagram, q;
 
@@ -952,6 +1059,12 @@ InstallMethod( DiagramOfGeometry, [ IsProjectiveSpace ],
     return diagram;
   end );
 
+# 
+#############################################################################
+#F Rk2GeoDiamater ( < cg > )
+# Computes the point (type 1) or line (type 2) diamater of a rank 2 coset 
+# geometry.
+##
 InstallMethod( Rk2GeoDiameter, "for a coset geometry", [IsCosetGeometry,
 IsPosInt],
   function( cg, type ) # type in {1,2}
@@ -967,24 +1080,35 @@ IsPosInt],
     return d;
    end );
 
-
-InstallMethod( GeometryOfRank2Residue, [IsRank2Residue],
+# 
+#############################################################################
+#O GeometryOfRank2Residue ( < rk2res > )
+# Returns the geometry component of a rank 2 residue.
+# 
+##
+InstallMethod( GeometryOfRank2Residue, "for a rank 2 residue", [IsRank2Residue],
   function( residue )
     return residue!.residuegeometry;
   end );
 
-InstallMethod( Rank2Parameters, "for a coset geometry of rank 2", [IsCosetGeometry], 
-  function(geo)
-
-# Computes all parameters of the rank 2 geometry geo
+# 
+#############################################################################
+#F Rank2Parameters ( <geo> )
+# 
+# Computes all parameters of the rank 2 geometry <geo>
 # Returns a list of length 3 with
 # - [g, dp, dl] as first entry. That is a list with (half) the girth,
 # the point- and the line diameter of the geometry.
 # - [sp, np] as second entry. That is the point order and the number of points
 # - [sl, nl] as third entry. That is the line order and number of lines.
 #
-# For the moment this only works for a coset geometry geo because IncidenceGraph is only inplemented for that kind of geometries and we also compute the number of elements as indices of parabolic subgroups.
-#
+# For the moment this only works for a coset geometry geo because 
+# IncidenceGraph is only inplemented for that kind of geometries and we also 
+# compute the number of elements as indices of parabolic subgroups. 
+# 
+##
+InstallMethod( Rank2Parameters, "for a coset geometry of rank 2", [IsCosetGeometry], 
+  function(geo)
 
 #  ***** Check that the input is kosher ******
 
@@ -1023,8 +1147,15 @@ InstallOtherMethod( \<,
   fi;
 end );
 
+# 
+#############################################################################
+#F DiagramOfGeometry ( < classpolsp > )
+# produces the diagram of a classical polar space.
+# 
+##
 #method to compute the diagram of a cps. Maybe move to another file to make this
 #file shorter?
+
 InstallMethod( DiagramOfGeometry, [ IsClassicalPolarSpace ],
   function( geo )
     local types, v, e, way, diagram, s, t, vertices, 
