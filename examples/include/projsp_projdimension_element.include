@@ -1,0 +1,18 @@
+gap&gt; ps := PG(2,5);
+ProjectiveSpace(2, 5)
+gap&gt; v := [[1,1,0],[0,3,2]]*Z(5)^0;
+[ [ Z(5)^0, Z(5)^0, 0*Z(5) ], [ 0*Z(5), Z(5)^3, Z(5) ] ]
+gap&gt; line := VectorSpaceToElement(ps,v);
+&lt;a line in ProjectiveSpace(2, 5)&gt;
+gap&gt; ProjectiveDimension(line);
+1
+gap&gt; Dimension(line);
+1
+gap&gt; p := VectorSpaceToElement(ps,[1,2,3]*Z(5)^0);
+&lt;a point in ProjectiveSpace(2, 5)&gt;
+gap&gt; ProjectiveDimension(p);
+0
+gap&gt; Dimension(p);
+0
+gap&gt; ProjectiveDimension(EmptySubspace(ps));
+-1

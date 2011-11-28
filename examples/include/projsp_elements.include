@@ -1,0 +1,13 @@
+gap&gt; ps := PG(5,9);
+ProjectiveSpace(5, 9)
+gap&gt; pts := ElementsOfIncidenceStructure(ps,1);
+&lt;points of ProjectiveSpace(5, 9)&gt;
+gap&gt; lines := ElementsOfIncidenceStructure(ps,2);
+&lt;lines of ProjectiveSpace(5, 9)&gt;
+gap&gt; ElementsOfIncidenceStructure(ps,7);
+Error, &lt;geo&gt; has no elements of type &lt;j&gt; called from
+&lt;function&gt;( &lt;arguments&gt; ) called from read-eval-loop
+Entering break read-eval-print loop ...
+you can 'quit;' to quit to outer loop, or
+you can 'return;' to continue
+brk&gt; quit;
