@@ -1,0 +1,16 @@
+gap&gt; ps := PG(6,13);
+ProjectiveSpace(6, 13)
+gap&gt; Points(ps);
+&lt;points of ProjectiveSpace(6, 13)&gt;
+gap&gt; Lines(ps);
+&lt;lines of ProjectiveSpace(6, 13)&gt;
+gap&gt; Planes(ps);
+&lt;planes of ProjectiveSpace(6, 13)&gt;
+gap&gt; Solids(ps);
+&lt;solids of ProjectiveSpace(6, 13)&gt;
+gap&gt; Hyperplanes(ps);
+&lt;proj. 5-subspaces of ProjectiveSpace(6, 13)&gt;
+gap&gt; ps := PG(2,2);
+ProjectiveSpace(2, 2)
+gap&gt; Hyperplanes(ps);
+&lt;lines of ProjectiveSpace(2, 2)&gt;
