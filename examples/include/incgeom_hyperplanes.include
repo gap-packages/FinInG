@@ -1,4 +1,0 @@
-gap ps := ProjectiveSpace(5,5);
-PG(5, 5)
-gap> Hyperplanes(ps);
-&lt;proj. 4-subspaces of PG(5, 5)>

@@ -9,11 +9,11 @@ gap&gt; CategoriesOfObject(AffineSpace(3,3));
 gap&gt; CategoriesOfObject(SymplecticSpace(3,11));
 [ "IsIncidenceStructure", "IsIncidenceGeometry", "IsLieGeometry", 
   "IsClassicalPolarSpace", "IsGeneralisedPolygon", "IsGeneralisedQuadrangle", 
-  "IsElationGQ", "IsClassicalGQ" ]
+  "IsClassicalGQ" ]
 gap&gt; CategoriesOfObject(SplitCayleyHexagon(9));
 [ "IsIncidenceStructure", "IsIncidenceGeometry", "IsGeneralisedPolygon", 
   "IsGeneralisedHexagon" ]
 gap&gt; CategoriesOfObject(ParabolicQuadric(4,16));
 [ "IsIncidenceStructure", "IsIncidenceGeometry", "IsLieGeometry", 
   "IsClassicalPolarSpace", "IsGeneralisedPolygon", "IsGeneralisedQuadrangle", 
-  "IsElationGQ", "IsClassicalGQ" ]
+  "IsClassicalGQ" ]

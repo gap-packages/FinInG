@@ -3,4 +3,4 @@ ProjectiveSpace(3, 4)
 gap&gt; AmbientSpace(ParabolicQuadric(4,4));
 ProjectiveSpace(4, 4)
 gap&gt; AmbientSpace(SplitCayleyHexagon(3));
-Q(6, 3)
+standard Q(6, 3)

@@ -1,23 +1,23 @@
-gap> ps := ProjectiveSpace(4,7);
-PG(4, 7)
-gap> p := VectorSpaceToElement(ps,[1,0,1,0,1]*Z(7)^0);
-&lt;a point in PG(4, 7)>
-gap> l := VectorSpaceToElement(ps,[[0,0,1,0,0],[1,0,0,0,1]]*Z(7)^0);
-&lt;a line in PG(4, 7)>
-gap> pl := VectorSpaceToElement(ps,[[1,1,1,0,0],[0,1,0,0,0],
-                                 [0,-1,0,0,1]]*Z(7)^0);
-&lt;a plane in PG(4, 7)>
-gap> p in l;
+gap&gt; ps := ProjectiveSpace(4,7);
+ProjectiveSpace(4, 7)
+gap&gt; p := VectorSpaceToElement(ps,[1,0,1,0,1]*Z(7)^0);
+&lt;a point in ProjectiveSpace(4, 7)&gt;
+gap&gt; l := VectorSpaceToElement(ps,[[0,0,1,0,0],[1,0,0,0,1]]*Z(7)^0);
+&lt;a line in ProjectiveSpace(4, 7)&gt;
+gap&gt; pl := VectorSpaceToElement(ps,[[1,1,1,0,0],[0,1,0,0,0],
+&gt;                                [0,-1,0,0,1]]*Z(7)^0);
+&lt;a plane in ProjectiveSpace(4, 7)&gt;
+gap&gt; p in l;
 true
-gap> l in pl;
+gap&gt; l in pl;
 false
-gap> p in pl;
+gap&gt; p in pl;
 true
-gap> IsIncident(p,l);
+gap&gt; IsIncident(p,l);
 true
-gap> IsIncident(l,p);
+gap&gt; IsIncident(l,p);
 true
-gap> IsIncident(pl,p);
+gap&gt; IsIncident(pl,p);
 true
-gap> pl in p;
-true
+gap&gt; pl in p;
+false

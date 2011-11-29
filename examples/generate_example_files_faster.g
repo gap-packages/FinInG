@@ -25,14 +25,16 @@ affinefiles := ["affine_parallel", "affine_shadow1", "affine_shadow2", "affine_b
 examplesfiles := ["examples_pg24", "examples_hermitian", "examples_embedW", "examples_spreads", 
                   "examples_qclan", "examples_KantorKnuth","examples_PSL211"];;
 
-incgeomfiles := ["incgeom_categories1", "incgeom_rank", "incgeom_typesofels", "incgeom_categories2", 
-                 "incgeom_elementsj", "incgeom_short",
-                 "incgeom_solids", "incgeom_isincident", "incgeom_shadowofelement",
-		 "incgeom_shadowofflag", "incgeom_iterator", "incgeom_incstruct", 
-		 "incgeom_ambientspace", "incgeom_random", "incgeom_shadowofelement2", "incgeom_el_ambient",
-		 "incgeom_shadowshort", "incgeom_enum", "incgeom_lie_uvs", "incgeom_lie_projdimension", 
-		 "incgeom_lie_vectorspacetoelement", "incgeom_lie_elementtovectorspace", "incgeom_lie_in",
-		 "incgeom_flag", "incgeom_lie_elementtoelement" ]; 
+incgeomfiles := ["incgeom_incstruct", "incgeom_categories1", "incgeom_typesofels", "incgeom_rank", "incgeom_ambientspace", 
+				 "incgeom_categories2", "incgeom_elementsj", "incgeom_short", "incgeom_isincident", "incgeom_random",
+				 "incgeom_el_ambient", "incgeom_flag", "incgeom_flag_chamber", "incgeom_shadowofelement", "incgeom_shadowofelement2", 
+                 "incgeom_shadowofflag", "incgeom_shadowshort", "incgeom_iterator", "incgeom_enum", "incgeom_lie_uvs", 
+				 "incgeom_lie_projdimension", "incgeom_lie_elementtovectorspace", "incgeom_lie_vectorspacetoelement", "incgeom_lie_in",
+				 "incgeom_lie_elementtoelement", "incgeom_lie_convert" ];
+
+projspfiles := ["projsp_standardframe", "projsp_emptysubspace", "projsp_projdimension_element", "projsp_coordinates",
+                "projsp_eqhyperplane", "projsp_coordinates", "projsp_ambientspaceelps", "projsp_short" ];
+
 
 projspacefiles := ["projpol_projectivespace", "projpol_projdimension", "projpol_basefieldps", "projpol_underlyingvs",
                    "projpol_element1", "projpol_emptysubspace", "projpol_projdimension_element", "projpol_standardframe",
@@ -70,9 +72,6 @@ projpolfiles1 := ["projpol_projectivespace", "projpol_projdimension",
 		 
 		 "projpol_hermitian", "projpol_elliptic",
 		 "projpol_parabolic", "projpol_hyperbolic", "projpol_element1", "projpol_in"];
-
-projspfiles := ["projsp_standardframe", "projsp_emptysubspace", "projsp_projdimension_element", "projsp_coordinates",
-                "projsp_eqhyperplane", "projsp_coordinates", "projsp_ambientspaceelps", "projsp_short" ];
 
 projpolfiles1 := ["projpol_projectivespace", "projpol_polarspaceform",
                  "projpol_symplectic", "projpol_hermitian", "projpol_elliptic",

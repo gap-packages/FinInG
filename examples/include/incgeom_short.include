@@ -1,6 +1,6 @@
 gap&gt; Points(HermitianVariety(2,64));
-&lt;points of H(2, 8^2)&gt;
+&lt;points of standard H(2, 8^2)&gt;
 gap&gt; Lines(EllipticQuadric(5,2));
 &lt;lines of Q-(5, 2)&gt;
 gap&gt; Planes(SymplecticSpace(7,3));
-&lt;planes of W(7, 3)&gt;
+&lt;planes of standard W(7, 3)&gt;
