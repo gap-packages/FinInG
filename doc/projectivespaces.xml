@@ -47,7 +47,7 @@ space of dimension <A>d</A> over <A>F</A>. In the second form, <A>q</A> is
 a prime power specifying the size of the field. The user may also use an alias,
 namely, the common abbreviation <C>PG(d, q)</C>.
 <Example>
-<#Include SYSTEM "../examples/include/projpol_projectivespace.include"> 
+<#Include SYSTEM "../examples/include/projsp_projectivespace.include"> 
 </Example>
 </Description>
 </ManSection>
@@ -59,7 +59,7 @@ namely, the common abbreviation <C>PG(d, q)</C>.
 <Returns>the projective dimension of the projective space <A>ps</A></Returns>
 <Description>
 <Example>
-<#Include SYSTEM "../examples/include/projpol_projdimension.include"> 
+<#Include SYSTEM "../examples/include/projsp_projdimension.include"> 
 </Example>
 </Description>
 </ManSection>
@@ -70,7 +70,7 @@ namely, the common abbreviation <C>PG(d, q)</C>.
 </Returns>
 <Description>
 <Example>
-<#Include SYSTEM "../examples/include/projpol_basefieldps.include"> 
+<#Include SYSTEM "../examples/include/projsp_basefieldps.include"> 
 </Example>
 </Description>
 </ManSection>
@@ -83,7 +83,7 @@ namely, the common abbreviation <C>PG(d, q)</C>.
 <M>q</M>, then this operation simply returns the underlying vector space, i.e. the <M>n+1</M> dimensional
 vector space over the field of order <M>q</M>.
 <Example>
-<#Include SYSTEM "../examples/include/projpol_underlyingvs.include"> 
+<#Include SYSTEM "../examples/include/projsp_underlyingvs.include"> 
 </Example>
 </Description>
 </ManSection>
@@ -119,7 +119,7 @@ In the case that <A>v</A> is a matrix, the rows represent basis vectors for the 
 exceptional case is when <A>v</A> is a zero-vector, whereby the trivial subspace is
 returned.
 <Example>
-<#Include SYSTEM "../examples/include/projpol_element1.include"> 
+<#Include SYSTEM "../examples/include/projsp_element1.include"> 
 </Example>
 </Description>
 </ManSection>
@@ -154,7 +154,8 @@ is also applicable on the EmptySubspace
 <Returns>the collection of elements of the projective space <A>ps</A> of type <A>j</A></Returns>
 <Description>
 For the projective space <A>ps</A> of dimension <M>d</M> and the type <A>j</A>, <M>1 \leq j \leq d</M>
-this operation returns the collection of <M>j-1</M> dimenaional subspaces.  <Example>
+this operation returns the collection of <M>j-1</M> dimenaional subspaces. 
+An error message is produced when the projective space <A>ps</A> has no elements of a required type.<Example>
 <#Include SYSTEM "../examples/include/projsp_elements.include"> 
 </Example>
 </Description>
@@ -240,7 +241,7 @@ This operation is also applicable on the trivial subspace.
 <Description>
 This operation is also applicable on the trivial subspace.
 <Example>
-<#Include SYSTEM "../examples/include/projpol_basefieldelps.include"> 
+<#Include SYSTEM "../examples/include/projsp_basefieldelps.include"> 
 </Example>
 </Description>
 </ManSection>
@@ -254,7 +255,7 @@ The collection <A>elements</A> is an object in the category <C>IsElementsOfIncid
 i.e. an object representing the set of elements of a certain incidence structure of a given type. The 
 latter information can be derived e.g. using <C>AmbientSpace</C> and <C>Type</C>.
 <Example>
-<#Include SYSTEM "../examples/include/projpol_randomeltps.include"> 
+<#Include SYSTEM "../examples/include/projsp_randomeltps.include"> 
 </Example>
 </Description>
 </ManSection>
@@ -267,7 +268,7 @@ The second variant returns a random element of a random type of the projective s
 </Returns>
 <Description>
 <Example>
-<#Include SYSTEM "../examples/include/projpol_randomeltsps.include"> 
+<#Include SYSTEM "../examples/include/projsp_randomeltsps.include"> 
 </Example>
 </Description>
 </ManSection>
@@ -287,7 +288,7 @@ the category <C>IsSubspaceOfProjectiveSpace</C>, they are allowed as
 argument for this operation, also as member of the argument of the second
 variant of this operation.
 <Example>
-<#Include SYSTEM "../examples/include/projpol_span.include"> 
+<#Include SYSTEM "../examples/include/projsp_span.include"> 
 </Example>
 </Description>
 </ManSection>
@@ -306,7 +307,7 @@ the category <C>IsSubspaceOfProjectiveSpace</C>, they are allowed as
 argument for this operation, also as member of the argument of the second
 variant of this operation.
 <Example>
-<#Include SYSTEM "../examples/include/projpol_meet.include"> 
+<#Include SYSTEM "../examples/include/projsp_meet.include"> 
 </Example>
 </Description>
 </ManSection>
@@ -318,7 +319,7 @@ the subspaces of <A>ps</A> in the list <A>els</A>. When <A>els</A> is empty,
 the empty flag is returned.</Returns>
 <Description>
 <Example>
-<#Include SYSTEM "../examples/include/projpol_flag.include"> 
+<#Include SYSTEM "../examples/include/projsp_flag.include"> 
 </Example>
 </Description>
 </ManSection>
@@ -335,7 +336,7 @@ the empty flag is returned.</Returns>
 <Returns>true if <A>flag</A> is a chamber flag</Returns>
 <Description>
 <Example>
-<#Include SYSTEM "../examples/include/projpol_chamber.include"> 
+<#Include SYSTEM "../examples/include/projsp_chamber.include"> 
 </Example>
 </Description>
 </ManSection>
@@ -357,7 +358,7 @@ Given the element <A>el</A> in the projective space <A>ps</A>, this
 operation returns the elements of <A>ps</A> of type <A>i</A> incident
 with <A>el</A>.
 <Example>
-<#Include SYSTEM "../examples/include/projpol_shadowofelement.include"> 
+<#Include SYSTEM "../examples/include/projsp_shadowofelement.include"> 
 </Example>
 </Description>
 </ManSection>
@@ -372,7 +373,7 @@ returned by <F>TypesOfElementsOfIncidenceStructurePlural</F>
 </Returns>
 <Description>
 <Example>
-<#Include SYSTEM "../examples/include/projpol_shadowofflag.include"> 
+<#Include SYSTEM "../examples/include/projsp_shadowofflag.include"> 
 </Example>
 </Description>
 </ManSection>
@@ -386,7 +387,7 @@ the shadow of the elements of type i of the element <A>el</A>
 Internally, the function <F>FlagOfIncidenceStructure</F> is used to create a flag from <A>list</A>. This function
 also performs the checking.
 <Example>
-<#Include SYSTEM "../examples/include/projpol_elsel.include"> 
+<#Include SYSTEM "../examples/include/projsp_elsel.include"> 
 </Example>
 </Description>
 </ManSection>
@@ -402,7 +403,7 @@ also performs the checking.
 <Description>
 <Example>
 John's example works, but it is not clear whether it fits in this part of the manual. I'll ask John to explain
-the difference between using orb and not using orb to list e.g. all lines of PG(3,4), is in the example projpol_Aslist.g
+the difference between using orb and not using orb to list e.g. all lines of PG(3,4), is in the example projsp_Aslist.g
 </Example>
 </Description>
 </ManSection>

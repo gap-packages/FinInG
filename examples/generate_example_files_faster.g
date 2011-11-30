@@ -32,9 +32,11 @@ incgeomfiles := ["incgeom_incstruct", "incgeom_categories1", "incgeom_typesofels
 				 "incgeom_lie_projdimension", "incgeom_lie_elementtovectorspace", "incgeom_lie_vectorspacetoelement", "incgeom_lie_in",
 				 "incgeom_lie_elementtoelement", "incgeom_lie_convert" ];
 
-projspfiles := ["projsp_standardframe", "projsp_emptysubspace", "projsp_projdimension_element", "projsp_coordinates",
-                "projsp_eqhyperplane", "projsp_coordinates", "projsp_ambientspaceelps", "projsp_short" ];
-
+projspfiles := ["projsp_projectivespace", "projsp_projdimension", "projsp_basefieldps", "projsp_underlyingvs", "projsp_element1",
+				"projsp_emptysubspace", "projsp_projdimension_element", "projsp_elements", "projsp_short", "projsp_incident", 
+				"projsp_standardframe", "projsp_coordinates", "projsp_eqhyperplane", "projsp_ambientspaceelps", "projsp_basefieldelps",
+				"projsp_randomeltps", "projsp_randomeltsps", "projsp_span", "projsp_meet", "projsp_flag", "projsp_chamber",
+				"projsp_shadowofelement", "projsp_shadowofflag", "projsp_elsel" ];
 
 projspacefiles := ["projpol_projectivespace", "projpol_projdimension", "projpol_basefieldps", "projpol_underlyingvs",
                    "projpol_element1", "projpol_emptysubspace", "projpol_projdimension_element", "projpol_standardframe",
