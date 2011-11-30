@@ -1895,11 +1895,11 @@ InstallMethod( CanonicalGramMatrix,
          ## if q is congruent to 5,7 mod 8, then
          ## the anisotropic part is the primitive root
          ## of the prime subfield.
-			if q mod 8 in [5,7] then 
-				t := Z(p);
-			else
-				t := one;
-			fi;
+				if q mod 8 in [5,7] then 
+					t := Z(p);
+				else
+					t := one;
+				fi;
 				m[1][1] := t;
 				w := t * ((p + 1) / 2);
 			else
