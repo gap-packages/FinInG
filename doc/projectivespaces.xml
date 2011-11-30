@@ -1,6 +1,6 @@
 <!-- 
 
-  Projective_and_polar.xml    FinInG package documentation
+  projectivespaces.xml    FinInG package documentation
                                                                    John Bamberg
                                                                and Jan De Beule
                                                                   and Maska Law
@@ -28,7 +28,7 @@ with finite projective spaces.
 
 A <E>projective space</E> is a point-line
 incidence geometry, satisfying few well known axioms. In
-<Package>FinInG</Package>, we deal with finite Desarguesion projective
+<Package>FinInG</Package>, we deal with finite Desarguesian projective
 spaces. It is well known that these geometries can be described completely using
 vector spaces over finite fields. Hence, the underlying vector space and matrix
 group are to our advantage. We refer the reader to
@@ -92,7 +92,7 @@ vector space over the field of order <M>q</M>.
 <Oper Name="AmbientSpace" Arg="ps"/>
 <Returns>a projective space</Returns>
 <Description>The ambient space of a projective space <A>ps</A> is the projective space itself.
-Hence, simple <A>ps</A> will be returned.
+Hence, simply <A>ps</A> will be returned.
 </Description>
 </ManSection>
 

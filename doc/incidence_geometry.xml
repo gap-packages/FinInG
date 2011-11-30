@@ -111,7 +111,6 @@ a subcategory of <C>IsLieGeometry</C>.
 </Description>
 </ManSection>
 
-
 The following categories for geometries are not considered as main categories.
 <ManSection>
 <Heading>Categories in <C>IsGeneralisedPolygon</C></Heading>
@@ -189,16 +188,6 @@ This attribute is declared for objects in the category <C>IsIncidenceStructure</
 for general incidence structures, in which case a no method found error is returned.
 <Example>
 check and give interesting examples.
-</Example>
-</Description>
-</ManSection>
-
-<ManSection>
-<Attr Name="AmbientSpace" Arg="ig"/>
-<Returns>the ambient projective space of a Lie geometry <A>ig</A></Returns>
-<Description>
-<Example>
-<#Include SYSTEM "../examples/include/incgeom_ambientspace.include"> 
 </Example>
 </Description>
 </ManSection>
@@ -364,7 +353,6 @@ The incidence structure is determined by the elements.
 </Description>
 </ManSection>
 
-
 </Section>
 
 <Section>
@@ -514,6 +502,16 @@ not imply that methods are installed for all particular Lie geometries.
 <Description>
 <Example>
 <#Include SYSTEM "../examples/include/incgeom_lie_projdimension.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Attr Name="AmbientSpace" Arg="ig"/>
+<Returns>the ambient projective space of a Lie geometry <A>ig</A></Returns>
+<Description>
+<Example>
+<#Include SYSTEM "../examples/include/incgeom_ambientspace.include"> 
 </Example>
 </Description>
 </ManSection>

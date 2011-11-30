@@ -1627,11 +1627,16 @@ InstallMethod( VectorSpaceToElement,
 
 # CHECKED 22/09/11 jdb  
 # Changed 28/11/11 jdb + pc, according to remark in tiny optimalisations.
+# added a comment 30/11/11
 #############################################################################
 #O  \in( <w>, <ps> ) true if the element <w> is contained in <ps>
 # remarks: should we change this? I mean: this method makes a projective subspace
 # suddenly into a polar space subspace, if this thest is true. Can cause weird thing 
 # when displaying objects. We changed it, see commented out stuff below.
+# 30/11/11: caveat: just doing w!.geo := ps; changes the ambient geometry of x,
+# but it does not change the categories of x. So maybe x belongs to the polar space then
+# but not to the category IsSubspaceOfClassicalPolarSpace. So some operations might stay
+# unapplicable anyway. So changing w!.geo has no advantages. 
 ##
 #I changed this, I now use the built in functions of forms to perform the test.
 #jdb 6/1/8
