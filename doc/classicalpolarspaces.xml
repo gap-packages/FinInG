@@ -554,7 +554,7 @@ the ambient projective space. The operation returns a string in accordance
 with the type of subspace: <Q>degenerate</Q>, <Q>symplectic</Q>, <Q>hermitian</Q>,
 <Q>elliptic</Q>, <Q>hyperbolic</Q> or <Q>parabolic</Q>. 
 <Example>
-<#Include SYSTEM "../examples/include/morphisms_typesubspace.include"> 
+<#Include SYSTEM "../examples/include/cps_typesubspace.include"> 
 </Example>
 </Description>
 </ManSection>
