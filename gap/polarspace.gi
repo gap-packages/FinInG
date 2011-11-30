@@ -1663,6 +1663,118 @@ InstallMethod( \in,
 		return ti;
 	end );
 
+#ADDED 30/11/2011 jdb.
+#############################################################################
+#O  Span( <x>, <y> )
+# returns <x,y>, <x> and <y> two subspaces of a polar space.
+##
+InstallMethod( Span, 
+	"for two subspaces of a polar space",
+	[IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace, IsBool],
+	function( x, y, b )
+	## This method is quicker than the old one
+	local ux, uy, typx, typy, span, vec, spanel;
+	if not b then
+	  return Span(x,y);
+	fi;
+	typx := x!.type;
+	typy := y!.type;
+	vec := x!.geo!.vectorspace;
+	if vec = y!.geo!.vectorspace then
+		ux := Unwrap(x);
+		uy := Unwrap(y);
+		if typx = 1 then ux := [ux]; fi;
+		if typy = 1 then uy := [uy]; fi;
+		span := SumIntersectionMat(ux, uy)[1];	
+		if Length(span) < vec!.DimensionOfVectors then
+			spanel := VectorSpaceToElement( AmbientSpace(x!.geo), span);
+			if IsIdenticalObj(x!.geo,y!.geo) then
+				if spanel in x!.geo then
+				  return VectorSpaceToElement( x!.geo, span);
+				else
+				  return spanel;
+				fi;
+			else
+				return spanel;
+			fi;
+		else
+			return AmbientSpace(x!.geo);
+		fi;
+	else
+		Error("Subspaces belong to different ambient spaces");
+	fi;
+	end );
+	
+#ADDED 30/11/2011 jdb.
+#############################################################################
+#O  Span( <l> )
+# returns the span of the projective subspaces in <l>.
+##
+InstallMethod( Span, 
+	"for a homogeneous list of subspaces of a polar space",
+	[ IsHomogeneousList and IsSubspaceOfClassicalPolarSpaceCollection, IsBool ],
+	function( l, b )  
+		local unwrapped, r, unr, amb, span, temp, x, F, list;  
+		# first we check that all items in the list belong to the same ambient space
+		if Length(l)=0 then 
+			return [];
+		elif not Size(AsDuplicateFreeList(List(l,x->AmbientSpace(x))))=1 then 
+			Error("The elements in the list do not have a common ambient space");
+		else
+			x := l[1];
+			amb := AmbientSpace(x!.geo);
+			F := amb!.basefield;
+			unwrapped := [];
+			for r in l do
+				unr := r!.obj;
+				if r!.type = 1 then unr := [unr]; fi;
+				Append(unwrapped, unr);
+			od;
+			span := MutableCopyMat(unwrapped);
+			# span := MutableCopyMat(EchelonMat(span).vectors); #not necessary anyway, since VectorSpaceToElement is used.
+#   JB: Yes it is necessary for the following part!!!
+#			if Length(span) = amb!.dimension + 1 then
+#				return amb;
+#			fi;
+			return VectorSpaceToElement(amb,span);
+		fi;
+	end );
+
+
+#ADDED 30/11/2011 jdb.
+#############################################################################
+#O  Meet( <x>, <y> )
+# returns the intersection of <x> and <y>, two subspaces of a polar space.
+##
+InstallMethod( Meet,
+	"for two subspaces of a polar space",
+	[IsSubspaceOfClassicalPolarSpace, IsSubspaceOfClassicalPolarSpace],
+	function( x, y )
+		local ux, uy, typx, typy, int, f, rk;
+		typx := x!.type;
+		typy := y!.type;
+		if x!.geo!.vectorspace = y!.geo!.vectorspace then 
+			ux := Unwrap(x); 
+			uy := Unwrap(y);
+			if typx = 1 then ux := [ux]; fi;
+			if typy = 1 then uy := [uy]; fi;
+			f := x!.geo!.basefield; 
+			int := SumIntersectionMat(ux, uy)[2];
+			if not int=[] then 
+				if IsIdenticalObj(x!.geo,y!.geo) then
+					return VectorSpaceToElement(x!.geo,int);
+				else
+					return VectorSpaceToElement( AmbientSpace(x), int);
+				fi;
+			else 
+				return EmptySubspace(AmbientSpace(x));
+			fi;
+		else
+			Error("Subspaces belong to different ambient spaces");
+		fi;
+    #return; #why is this return;?
+  end );
+
 #############################################################################
 # Collection of elements (of given type)
 #############################################################################

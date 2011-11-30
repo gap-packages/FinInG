@@ -131,6 +131,8 @@ DeclareOperation("RandomSubspace",[IsProjectiveSpace]);
 
 DeclareOperation("Span",[IsProjectiveSpace, IsSubspaceOfProjectiveSpace]);
 DeclareOperation("Span",[IsSubspaceOfProjectiveSpace, IsProjectiveSpace]);
+DeclareOperation("Span",[IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace, IsBool]);
+
 #DeclareOperation("Span",[IsHomogeneousList and IsSubspaceOfProjectiveSpaceCollection ]);
 DeclareOperation("Span",[IsList]);
 

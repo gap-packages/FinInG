@@ -1701,6 +1701,18 @@ InstallMethod( Span,
 	fi;
 	end );
 
+# ADDED 30/11/2011 jdb
+#############################################################################
+#O  Span( <x>, <y> )
+# returns <x,y>, <x> and <y> two subspaces of a projective space.
+##
+InstallMethod( Span, 
+	"for two subspaces of a projective space and a boolean",
+	[IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace, IsBool],
+	function( x, y, b )
+		return Span(x,y);
+	end );
+
 # CHECKED 20/09/11 
 #############################################################################
 #O  Span( <l> )

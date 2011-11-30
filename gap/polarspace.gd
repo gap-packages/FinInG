@@ -36,6 +36,7 @@ DeclareRepresentation( "IsAllSubspacesOfClassicalPolarSpaceRep", IsAllSubspacesO
 DeclareCategory( "IsShadowSubspacesOfClassicalPolarSpace", IsShadowElementsOfLieGeometry );
 DeclareRepresentation( "IsShadowSubspacesOfClassicalPolarSpaceRep", IsShadowElementsOfLieGeometryRep, [ "geometry", "type", "inner", "outer", "factorspace" ]);
 
+DeclareCategoryCollections("IsSubspaceOfClassicalPolarSpace");
 
 #############################################################################
 # Categories and Representations:
@@ -103,4 +104,6 @@ DeclareOperation( "HermitianVariety", [IsPosInt, IsPosInt] );
 
 #DeclareAttribute( "DefiningPolarity", IsClassicalPolarSpace );
 
+DeclareOperation( "Span", [IsSubspaceOfClassicalPolarSpace, IsSubspaceOfClassicalPolarSpace, IsBool] );
+DeclareOperation( "Span", [IsList, IsBool]);
 
