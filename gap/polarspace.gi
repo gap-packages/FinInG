@@ -1181,10 +1181,6 @@ InstallMethod( IsomorphismCanonicalPolarSpaceWithIntertwiner,
 	end );
 
 #############################################################################
-## TOT HIER GECHECKT JDB en ML 15/04/11
-#############################################################################
-
-#############################################################################
 #More attributes...
 #############################################################################
 
@@ -2330,6 +2326,9 @@ InstallMethod( Polarity,
 #
 #############################################################################
 
+#############################################################################
+#O CollineationGroup( <ps> ) returns collineation group of <ps>
+##
 InstallMethod( CollineationGroup,
 	"for a polar space",
 	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
@@ -2374,6 +2373,9 @@ InstallMethod( CollineationGroup,
 		return g;
 	end );
 
+#############################################################################
+#O SpecialIsometryGroup( <ps> ) returns the special isometry group of <ps>
+##
 InstallMethod( SpecialIsometryGroup, [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
   function( ps )
     local iso, twiner, g, info, coll, d, f, type;
@@ -2407,6 +2409,9 @@ InstallMethod( SpecialIsometryGroup, [ IsClassicalPolarSpace and IsClassicalPola
     return g;
   end );
 
+#############################################################################
+#O IsometryGroup( <ps> ) returns the isometry group of <ps>
+##
 InstallMethod( IsometryGroup, [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
   function( ps )
     local iso, twiner, g, info, coll, d, f, type;
@@ -2442,6 +2447,9 @@ InstallMethod( IsometryGroup, [ IsClassicalPolarSpace and IsClassicalPolarSpaceR
     return g;
   end );
 
+#############################################################################
+#O SimilarityGroup( <ps> ) returns the similarity group of <ps>
+##
 InstallMethod( SimilarityGroup, [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
   function( ps )
     local iso, twiner, g, info, coll, d, f, type;

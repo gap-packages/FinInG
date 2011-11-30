@@ -1795,6 +1795,11 @@ InstallMethod( Meet,
 end );
 
 # CHECKED 14/09/2011 jdb.
+# CHANGED 30/11/2011 jdb. it is not possible to compare e.g. two quadrics, or
+# just any two lie geometries using \=. So if <x> and <y> belong to two different
+# Lie geometries with the same ambient projective space, it is not possible to decide
+# if the two geometries equal. So it makes no sense to construct the result in any other
+# space then the ambient space.
 #############################################################################
 #O  Meet( <x>, <y> )
 # returns the intersection of <x> and <y>, two subspaces of a projective space.
@@ -1814,15 +1819,7 @@ InstallMethod( Meet,
 			f := x!.geo!.basefield; 
 			int := SumIntersectionMat(ux, uy)[2];
 			if not int=[] then 
-			# if one of our varieties is in a polar space, we
-			# can say that the meet is in the polar space.
-				if IsClassicalPolarSpace(x!.geo) then
-					return VectorSpaceToElement( x!.geo, int);
-				elif IsClassicalPolarSpace(y!.geo) then
-					return VectorSpaceToElement( y!.geo, int);
-				else
-					return VectorSpaceToElement( AmbientSpace(x), int);
-				fi;
+				return VectorSpaceToElement( AmbientSpace(x), int);
 			else 
 				return EmptySubspace(AmbientSpace(x));
 			fi;

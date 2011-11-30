@@ -778,6 +778,10 @@ InstallMethod( ElementToElement,
 		return VectorSpaceToElement(ps,ElementToVectorSpace(el));
 	end );
 
+#############################################################################
+# the two methods below are not yet finished.
+#############################################################################
+
 # Added 28/11/2011 jdb.
 #############################################################################
 #O  ConvertElement( <geo>, <el> )
@@ -786,13 +790,14 @@ InstallMethod( ElementToElement,
 ##
 InstallMethod( ConvertElement,
 	"for a Lie geometry and an element of a Lie geometry",
-	[IsLieGeometry, IsElementOfLieGeometry],
+	[IsProjectiveSpace, IsElementOfLieGeometry],
 	function(ps,el)
 		if el in ps then
 			el!.geo := ps;
 		else
 			Error( "<el> cannot be converted to an element of <ps>");
 		fi;
+		
 	end );
 
 # Added 28/11/2011 jdb.
