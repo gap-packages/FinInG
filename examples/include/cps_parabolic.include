@@ -1,0 +1,31 @@
+gap&gt; ps := ParabolicQuadric(2,9);
+standard Q(2, 9)
+gap&gt; Display(ps);
+Q(2, 9)
+Parabolic bilinear form
+Gram Matrix:
+ 1 . .
+ . . 2
+ . 2 .
+Polynomial: x_1^2+x_2*x_3
+Witt Index: 1
+gap&gt; ps := ParabolicQuadric(4,16);
+Q(4, 16)
+gap&gt; Display(ps);
+Q(4, 16)
+Parabolic quadratic form
+Gram Matrix:
+ 1 . . . .
+ . . 1 . .
+ . . . . .
+ . . . . 1
+ . . . . .
+Polynomial: x_1^2+x_2*x_3+x_4*x_5
+Witt Index: 2
+Bilinear form
+Gram Matrix:
+ . . . . .
+ . . 1 . .
+ . 1 . . .
+ . . . . 1
+ . . . 1 .

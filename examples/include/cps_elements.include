@@ -1,10 +1,10 @@
-gap&gt; ps := HermitianVariety(8,13^2);
-standard H(8, 13^2)
-gap&gt; planes := ElementsOfIncidenceStructure(ps,3);
-&lt;planes of standard H(8, 13^2)&gt;
-gap&gt; solids := ElementsOfIncidenceStructure(ps,4);
-&lt;solids of standard H(8, 13^2)&gt;
-gap&gt; ElementsOfIncidenceStructure(ps,5);
+gap&gt; ps := HermitianVariety(4,4);
+H(4, 2^2)
+gap&gt; ElementsOfIncidenceStructure(ps,1);
+&lt;points of H(4, 2^2)&gt;
+gap&gt; ElementsOfIncidenceStructure(ps,2);
+&lt;lines of H(4, 2^2)&gt;
+gap&gt; ElementsOfIncidenceStructure(ps,3);
 Error, &lt;geo&gt; has no elements of type &lt;j&gt; called from
 &lt;function&gt;( &lt;arguments&gt; ) called from read-eval-loop
 Entering break read-eval-print loop ...

@@ -1,0 +1,15 @@
+gap&gt; ps := HyperbolicQuadric(5,2);
+standard Q+(5, 2)
+gap&gt; p := Random(Planes(ps));
+#I  Computing nice monomorphism...
+&lt;a plane in standard Q+(5, 2)&gt;
+gap&gt; q := Random(Planes(ps));
+&lt;a plane in standard Q+(5, 2)&gt;
+gap&gt; s := Span(p,q);
+ProjectiveSpace(5, 2)
+gap&gt; s = Span([p,q]);
+true
+gap&gt; t := Span(EmptySubspace(ps),p);
+&lt;a plane in standard Q+(5, 2)&gt;
+gap&gt; t = p;
+true

@@ -4,4 +4,4 @@ gap&gt; line := VectorSpaceToElement(ps,[[Z(7)^0,0*Z(7),Z(7^2)^34,Z(7^2)^44],
 &gt; [0*Z(7),Z(7)^0,Z(7^2)^2,Z(7^2)^4]]);
 &lt;a line in H(3, 7^2)&gt;
 gap&gt; AmbientSpace(line);
-H(3, 7^2)
+ProjectiveSpace(3, 49)

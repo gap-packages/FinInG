@@ -1,4 +1,4 @@
-#span in projective spaces
+#span of elements of polar spaces
 ps := ProjectiveSpace(3,3);
 p := Random(Planes(ps));
 q := Random(Planes(ps));

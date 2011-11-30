@@ -1,0 +1,11 @@
+gap&gt; ps := SymplecticSpace(3,4);
+W(3, 4)
+gap&gt; Display(ps);
+W(3, 4)
+Symplectic form
+Gram Matrix:
+ . 1 . .
+ 1 . . .
+ . . . 1
+ . . 1 .
+Witt Index: 2

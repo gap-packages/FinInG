@@ -1,0 +1,11 @@
+gap&gt; ps := HermitianVariety(2,25);
+standard H(2, 5^2)
+gap&gt; Display(ps);
+H(2, 25)
+Hermitian form
+Gram Matrix:
+ 1 . .
+ . 1 .
+ . . 1
+Polynomial: x_1^6+x_2^6+x_3^6
+Witt Index: 1

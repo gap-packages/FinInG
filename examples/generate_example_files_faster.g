@@ -38,13 +38,6 @@ projspfiles := ["projsp_projectivespace", "projsp_projdimension", "projsp_basefi
 				"projsp_randomeltps", "projsp_randomeltsps", "projsp_span", "projsp_meet", "projsp_flag", "projsp_chamber",
 				"projsp_shadowofelement", "projsp_shadowofflag", "projsp_elsel" ];
 
-projspacefiles := ["projpol_projectivespace", "projpol_projdimension", "projpol_basefieldps", "projpol_underlyingvs",
-                   "projpol_element1", "projpol_emptysubspace", "projpol_projdimension_element", "projpol_standardframe",
-				   "projpol_coordinates", "projpol_eqhyperplane", "projpol_ambientspaceelps", "projpol_basefieldelps",
-				   "projpol_randomeltps", "projpol_randomeltsps", "projpol_span", "projpol_meet", "projpol_in",
-				   "projpol_flag", "projpol_chamber", "projpol_shadowofelement", "projpol_shadowofflag", "projpol_elsel",
-				   "projsp_standardframe"];
-
 projgroupsfiles := ["projgroups_basefield",
 	  "projgroups_collineation", "projgroups_collineationgroup",
 	  "projgroups_correlation", "projgroups_fieldautomorphism",
@@ -63,6 +56,18 @@ polaritiespsfiles := ["polarities_construct1", "polarities_construct2",
 	  "polarities_polarspace", "polarities_frompolarspace", 
 	  "polarities_commuting"];
 
+classicalpolfiles :=   ["cps_polarspaceform", "cps_symplectic", "cps_hermitian", "cps_parabolic", "cps_hyperbolic",
+						"cps_elliptic", "cps_underlyingvs", "cps_ambientspace", "cps_projectivedimension", "cps_rank",
+						"cps_basefield", "cps_element1", "cps_emptysubspace", "cps_projdimension_element", "cps_elements", 
+						"cps_ambientspaceelps", "cps_coordinates", "cps_incident", "cps_span", "morphisms_typesubspace", 
+						"cps_specialisometry", "cps_isometry", "cps_similarity", "cps_collineation", "cps_aslist" ];
+
+
+"projpol_specialisometry", "projpol_isometry", "projpol_similarity", "cps_underlyingvs", "cps_ambientspace",
+                      "cps_projectivedimension", "cps_rank", "cps_basefield", "cps_element1", "cps_projdimension_element",
+					  "cps_coordinates", "cps_ambientspaceelps", "cps_incident"];
+
+
 projpolfiles1 := ["projpol_projectivespace", "projpol_projdimension",
                  "projpol_underlyingvs", "projpol_element1", "projpol_emptysubspace",
 		 "projpol_projdimension_element", "projpol_coordinates",
@@ -75,14 +80,19 @@ projpolfiles1 := ["projpol_projectivespace", "projpol_projdimension",
 		 "projpol_hermitian", "projpol_elliptic",
 		 "projpol_parabolic", "projpol_hyperbolic", "projpol_element1", "projpol_in"];
 
+projspacefiles := ["projpol_projectivespace", "projpol_projdimension", "projpol_basefieldps", "projpol_underlyingvs",
+                   "projpol_element1", "projpol_emptysubspace", "projpol_projdimension_element", "projpol_standardframe",
+				   "projpol_coordinates", "projpol_eqhyperplane", "projpol_ambientspaceelps", "projpol_basefieldelps",
+				   "projpol_randomeltps", "projpol_randomeltsps", "projpol_span", "projpol_meet", "projpol_in",
+				   "projpol_flag", "projpol_chamber", "projpol_shadowofelement", "projpol_shadowofflag", "projpol_elsel",
+				   "projsp_standardframe"];
+
+
+
 projpolfiles1 := ["projpol_projectivespace", "projpol_polarspaceform",
                  "projpol_symplectic", "projpol_hermitian", "projpol_elliptic",
 		 "projpol_parabolic", "projpol_hyperbolic", "projpol_element1", "projpol_in"];
 		 
-classicalpolfiles := ["projpol_specialisometry", "projpol_isometry", "projpol_similarity", "cps_underlyingvs", "cps_ambientspace",
-                      "cps_projectivedimension", "cps_rank", "cps_basefield", "cps_element1", "cps_projdimension_element",
-					  "cps_coordinates", "cps_ambientspaceelps", "cps_incident"];
-
 
 morphismsfiles := ["morphisms_intertwiners","morphisms_embedding1","morphisms_embedding2","morphisms_typesubspace",
           "morphisms_fieldreduc1", "morphisms_fieldreduc2","morphisms_subfield1","morphisms_subfield2",
@@ -157,6 +167,7 @@ od;
 SizeScreen([256,24]);
 includedir := DirectoriesPackageLibrary("fining","examples/include")[1];
 for filename in files do
+  Print("Now converting file: ", filename, "\n");
   i := Filename(outputdir,Concatenation(filename,".out"));
   o := Filename(includedir,Concatenation(filename,".include"));
   PrintTo(o,"");

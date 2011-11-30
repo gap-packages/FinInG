@@ -1,8 +1,8 @@
-gap> ps := HyperbolicQuadric(5,3);
+gap&gt; ps := HyperbolicQuadric(5,3);
+standard Q+(5, 3)
+gap&gt; Display(ps);
 Q+(5, 3)
-gap> Display(ps);
-Q+(5, 3)
-Non-degenerate hyperbolic bilinear form
+Hyperbolic bilinear form
 Gram Matrix:
  . 2 . . . .
  2 . . . . .
@@ -10,17 +10,19 @@ Gram Matrix:
  . . 2 . . .
  . . . . . 2
  . . . . 2 .
+Polynomial: x_1*x_2+x_3*x_4+x_5*x_6
 Witt Index: 3
-gap> ps := HyperbolicQuadric(3,4);
+gap&gt; ps := HyperbolicQuadric(3,4);
 Q+(3, 4)
-gap> Display(ps);
+gap&gt; Display(ps);
 Q+(3, 4)
-Non-singular hyperbolic quadratic form
+Hyperbolic quadratic form
 Gram Matrix:
  . 1 . .
  . . . .
  . . . 1
  . . . .
+Polynomial: x_1*x_2+x_3*x_4
 Witt Index: 2
 Bilinear form
 Gram Matrix:

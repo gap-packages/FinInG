@@ -1,19 +1,20 @@
-gap> ps := EllipticQuadric(3,27);
+gap&gt; ps := EllipticQuadric(3,27);
+standard Q-(3, 27)
+gap&gt; Display(ps);
 Q-(3, 27)
-gap> Display(ps);
-Q-(3, 27)
-Non-degenerate elliptic bilinear form
+Elliptic bilinear form
 Gram Matrix:
  1 . . .
  . 1 . .
  . . . 2
  . . 2 .
+Polynomial: x_1^2+x_2^2+x_3*x_4
 Witt Index: 1
-gap> ps := EllipticQuadric(5,8);
+gap&gt; ps := EllipticQuadric(5,8);
 Q-(5, 8)
-gap> Display(ps);
+gap&gt; Display(ps);
 Q-(5, 8)
-Non-singular elliptic quadratic form
+Elliptic quadratic form
 Gram Matrix:
  1 1 . . . .
  . 1 . . . .
@@ -21,6 +22,7 @@ Gram Matrix:
  . . . . . .
  . . . . . 1
  . . . . . .
+Polynomial: x_1^2+x_1*x_2+x_2^2+x_3*x_4+x_5*x_6
 Witt Index: 2
 Bilinear form
 Gram Matrix:
