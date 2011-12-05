@@ -1,0 +1,16 @@
+gap&gt; ps := ProjectiveSpace(3,3);
+ProjectiveSpace(3, 3)
+gap&gt; p := Random(Planes(ps));
+&lt;a plane in ProjectiveSpace(3, 3)&gt;
+gap&gt; q := Random(Planes(ps));
+&lt;a plane in ProjectiveSpace(3, 3)&gt;
+gap&gt; s := Span(p,q);
+ProjectiveSpace(3, 3)
+gap&gt; s = Span([p,q]);
+true
+gap&gt; t := Span(EmptySubspace(ps),p);
+&lt;a plane in ProjectiveSpace(3, 3)&gt;
+gap&gt; t = p;
+true
+gap&gt; Span(ps,p);
+ProjectiveSpace(3, 3)

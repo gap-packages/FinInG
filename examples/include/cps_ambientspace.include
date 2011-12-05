@@ -1,0 +1,8 @@
+gap&gt; ps := EllipticQuadric(5,4);
+Q-(5, 4)
+gap&gt; AmbientSpace(ps);
+ProjectiveSpace(5, 4)
+gap&gt; ps := SymplecticSpace(3,81);
+W(3, 81)
+gap&gt; AmbientSpace(ps);
+ProjectiveSpace(3, 81)

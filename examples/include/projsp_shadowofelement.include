@@ -1,0 +1,24 @@
+gap&gt; ps := PG(4,3);
+ProjectiveSpace(4, 3)
+gap&gt; plane := Random(Planes(ps));
+&lt;a plane in ProjectiveSpace(4, 3)&gt;
+gap&gt; shadowpoints := ShadowOfElement(ps,plane,1);
+&lt;shadow points in ProjectiveSpace(4, 3)&gt;
+gap&gt; List(shadowpoints);
+[ &lt;a point in ProjectiveSpace(4, 3)&gt;, &lt;a point in ProjectiveSpace(4, 3)&gt;, 
+  &lt;a point in ProjectiveSpace(4, 3)&gt;, &lt;a point in ProjectiveSpace(4, 3)&gt;, 
+  &lt;a point in ProjectiveSpace(4, 3)&gt;, &lt;a point in ProjectiveSpace(4, 3)&gt;, 
+  &lt;a point in ProjectiveSpace(4, 3)&gt;, &lt;a point in ProjectiveSpace(4, 3)&gt;, 
+  &lt;a point in ProjectiveSpace(4, 3)&gt;, &lt;a point in ProjectiveSpace(4, 3)&gt;, 
+  &lt;a point in ProjectiveSpace(4, 3)&gt;, &lt;a point in ProjectiveSpace(4, 3)&gt;, 
+  &lt;a point in ProjectiveSpace(4, 3)&gt; ]
+gap&gt; shadowlines := ShadowOfElement(ps,plane,2);
+&lt;shadow lines in ProjectiveSpace(4, 3)&gt;
+gap&gt; List(shadowlines);
+[ &lt;a line in ProjectiveSpace(4, 3)&gt;, &lt;a line in ProjectiveSpace(4, 3)&gt;, 
+  &lt;a line in ProjectiveSpace(4, 3)&gt;, &lt;a line in ProjectiveSpace(4, 3)&gt;, 
+  &lt;a line in ProjectiveSpace(4, 3)&gt;, &lt;a line in ProjectiveSpace(4, 3)&gt;, 
+  &lt;a line in ProjectiveSpace(4, 3)&gt;, &lt;a line in ProjectiveSpace(4, 3)&gt;, 
+  &lt;a line in ProjectiveSpace(4, 3)&gt;, &lt;a line in ProjectiveSpace(4, 3)&gt;, 
+  &lt;a line in ProjectiveSpace(4, 3)&gt;, &lt;a line in ProjectiveSpace(4, 3)&gt;, 
+  &lt;a line in ProjectiveSpace(4, 3)&gt; ]
