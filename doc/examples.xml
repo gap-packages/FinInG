@@ -41,7 +41,7 @@ Now we may assume that our hyperoval contains the fundamental frame.
 <#Include SYSTEM "../examples/include/web_hyperoval24.include"> 
 </Example>
 
-There are six secant lines to this frame ("four choose two"). So we 
+There are six secant lines to this frame (``four choose two''). So we 
 put together these secant lines from the pairs of points of this frame.
 
 <Example>
@@ -52,7 +52,7 @@ gap> pairs := Combinations( frame, 2 );
   [ &lt;a point in PG(2, 4)&gt;, &lt;a point in PG(2, 4)&gt; ], 
   [ &lt;a point in PG(2, 4)&gt;, &lt;a point in PG(2, 4)&gt; ], 
   [ &lt;a point in PG(2, 4)&gt;, &lt;a point in PG(2, 4)&gt; ] ]
-gap> secants := List( pairs, p -> Join(p[1], p[2]) );
+gap> secants := List( pairs, p -> Span(p[1], p[2]) );
 [ &lt;a line in PG(2, 4)&gt;, &lt;a line in PG(2, 4)&gt;, &lt;a line in PG(2, 4)&gt;, 
   &lt;a line in PG(2, 4)&gt;, &lt;a line in PG(2, 4)&gt;, &lt;a line in PG(2, 4)&gt; ]
 </Example>
@@ -74,7 +74,7 @@ This hyperoval has <Math>S_6</Math> as its stabiliser, which can easily be calcu
 gap> g := CollineationGroup(pg);
 PGammaL(3,4)
 gap> stab := Stabilizer(g, Set(hyperoval), OnSetsProjSubspaces);
-&lt;projective group with Frobenius of size 720&gt;
+&lt;projective semilinear group of size 720&gt;
 gap> StructureDescription( stab );
 "S6"
 </Example>
@@ -125,7 +125,7 @@ In this example, we construct the unique ovoid
 of the parabolic quadric Q(6,3), first discovered by Patterson, but for
 which was given a nice construction by E. E. Shult.
 
-We begin with the "sums of squares" quadratic
+We begin with the ``sums of squares'' quadratic
 form over GF(3).
 
 <Example>

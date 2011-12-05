@@ -206,7 +206,7 @@ check and give interesting examples.
 <Filt Name="IsSubspaceOfProjectiveSpace" Type="Category"/>
 <Filt Name="IsSubspaceOfClassicalPolarSpace" Type="Category"/>
 <Description>
-A category <C>IsElementOfIncStr</C> for the individual elements of an incidence structure in the category <C>IsIncStr</C>, except for 
+A category <C>IsElementOfIncidenceStructure</C> for the individual elements of an incidence structure in the category <C>IsIncStr</C>, except for 
 projective spaces and classical polar spaces. The inclusion for different categories of geometries is followed for their elements,
 with an exception for <C>IsSubspaceOfClassicalPolarSpace</C>, which is a subcategory of <C>IsSubspaceOfProjectiveSpace</C>, 
 while <C>IsClassicalPolarSpace</C> is not a subcategory of <C>IsProjectiveSpace</C>. 
@@ -225,7 +225,7 @@ while <C>IsClassicalPolarSpace</C> is not a subcategory of <C>IsProjectiveSpace<
 <Filt Name="IsSubspacesOfProjectiveSpace" Type="Category"/>
 <Filt Name="IsSubspacesOfClassicalPolarSpace" Type="Category"/>
 <Description>
-A category <C>IsElementsOfIncStr</C> for objects representing a set of elements of an incidence structure in 
+A category <C>IsElementsOfIncidenceStructure</C> for objects representing a set of elements of an incidence structure in 
 the category <C>IsIncStr</C>, is declared, with an exception for projective spaces and polar spaces. The inclusion for 
 different categories of geometries is followed for their collection of elements,
 except for <C>IsSubspaceOfClassicalPolarSpace</C>, which is a subcategory of <C>IsSubspaceOfProjectiveSpace</C>, 
@@ -246,7 +246,7 @@ a method is installed for the particular incidence structure.
 a type of element of <A>inc</A>. This function returns all elements
 of <A>inc</A> of type <A>j</A>, and an error is displayed if <A>inc</A> has no 
 elements of type <A>j</A>. Calling the elements (of a given type) of <A>inc</A>
-yields an object in the category <C>IsElementsOfIncStr</C> (or the appropriate category
+yields an object in the category <C>IsElementsOfIncidenceStructure</C> (or the appropriate category
 for projective spaces and classical polar spaces), which does not imply that
 all elements are computed and stored. In an alternative form of this function
 <A>str</A> can be one of ``points", ``lines", ``planes" or ``solids" and the
@@ -324,11 +324,11 @@ might stay unchanged, as the following example shows.
 <Section>
 <Heading>Flags of incidence structures</Heading>
 
-A flag of an incidence structure <M>S</M> is a set <M>F</M> of elements of <M>S</M> that are two by two incident. 
+A <E>flag</E> of an incidence structure <M>S</M> is a set <M>F</M> of elements of <M>S</M> that are two by two incident. 
 This implies that all elements in <M>F</M> have a different type. A flag is maximal if it cannot be extended with more elements.
 <Package>FinInG</Package> provides a basic 
 category <C>IsFlagOfIncidenceStructure</C>. For different types of incidence structures, methods to create a flag
-can be installed. A chamber is a flag of length <M>n</M>, where <M>n</M> is the number of types. Recall that an incidence
+can be installed. A <E>chamber</E> is a flag of size <M>n</M>, where <M>n</M> is the number of types. Recall that an incidence
 structure is an incidence geometry if every maximal flag is a chamber. 
 
 <ManSection>
@@ -398,7 +398,7 @@ for the particular incidence structure <A>inc</A>.
 <Oper Name="ElementsIncidentWithElementOfIncidenceStructure" Arg="v, j"/>
 <Returns> The collection of elements of type <A>j</A> incident with <A>v</A></Returns>
 <Description>
-This operation is declared for objects <A>v></A> belonging to <C>IsElementOfIncidenceStructure</C>, 
+This operation is declared for objects <A>v</A> belonging to <C>IsElementOfIncidenceStructure</C>, 
 but relies to particular methods installed for particular incidence structures, and refers alwyas to
 <F>ShadowOfElement</F>, where the ambient geometry is derived from the element <A>v</A>, and using the
 integer <A>j</A>

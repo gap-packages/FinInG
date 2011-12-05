@@ -23,8 +23,12 @@ This is the chapter of the documentation describing the projective groups.
 
 <Chapter Label="diagramgeometries">
 <Heading>Coset Geometries and Diagrams</Heading>
+
+This part of <Package>FinInG</Package> depends
+on <Package>GRAPE</Package>. 
+
 <Section>
-<Heading>Preliminary version of the manual</Heading>
+<Heading>Coset Geometries</Heading>
 
 Suppose we have a flag-transitive incidence
 geometry <M>\Gamma</M>. This means that a group <M>G</M> of
@@ -48,7 +52,9 @@ subgroups <M>G_{1},G_{2},... ,G_{n}</M>. The type set
 is <M>\{1,2,...,n\}</M>. By definition the elements of
 type <M>i</M> are the (right) cosets of the subgroup <M>G_{i}</M>. Two
 cosets are incident if and only if their intersection is not
-empty.
+empty. This is an incidence structure which is not necessarily a
+geometry (see Section REF!!! for definitions).
+
 
 <ManSection>
 <Oper Name="CosetGeometry" Arg="G,l"/>
@@ -80,28 +86,11 @@ of the <E>coset geometry</E> whose rank equals the length of <A>l</A>.
 
 <ManSection>
 <Oper Name="AmbientGroup" Arg="cg"/>
-<Returns>the group of the coset geometry <A>cg</A></Returns>
+<Returns>the group used to define the coset geometry <A>cg</A></Returns>
 <Description> 
 <A>cg</A> must be a coset geometry.
 </Description>
 </ManSection>
-
-<ManSection>
-<Oper Name="DiagramOfGeometry" Arg="Gamma"/>
-<Returns>the diagram of the geometry <A>Gamma</A></Returns>
-<Description> 
-<A>Gamma</A> must be a coset geometry.
-</Description>
-</ManSection>
-
-<ManSection>
-<Oper Name="DrawDiagram" Arg="Diag,filename"/>
-<Returns>does not return anything but wirtes a file <A>filename</A>.ps</Returns>
-<Description> 
-<A>Diag</A> must be a diagram. Writes a file <A>filename</A>.ps in the current directory with a pictorial version of the diagram. This command uses the <Package>graphviz</Package> package which is available from http://www.graphviz.org. 
-</Description>
-</ManSection>
-
 
 <ManSection>
 <Oper Name="Borelsubgroup" Arg="cg"/>
@@ -113,7 +102,8 @@ The Borel subgroup is equal to the stabilizer of a chamber. It corresponds to th
 
 <ManSection>
 <Oper Name="IsFlagTransitiveGeometry" Arg="cg"/>
-<Returns>true if and only if the group <A>G</A> defining <A>cg</A> acts flag-transitively.</Returns> 
+<Returns>true if and only if the group <A>G</A> defining <A>cg</A>
+  acts flag-transitively.</Returns>  
 <Description> 
 <A>cg</A> must be a coset geometry.
 </Description>
@@ -191,6 +181,53 @@ CHECK the back-mapping.
 </Description>
 </ManSection>
 
+<ManSection>
+<Oper Name="Rk2GeoDiameter" Arg="cg,type"/>
+<Returns>the point (or line) diameter.</Returns>
+<Description> 
+<A>cg</A> must be a coset geometry of rank 2. <A>type</A> must be
+either <C>1</C> or <C>2</C>. This function computes
+the point diameter of <A>cg</A> when <A>type</A> is <C>1</C> and the
+line diameter when <A>type</A> is <C>2</C>.
+</Description>
+</ManSection>
+</Section>
+<Section>
+<Heading>Diagrams</Heading>
 
+The <E>diagram</E> of a flag-transitive incidence geometry is a
+schematic description of the structure of the geometry. It is based on
+the collection of rank 2 residues of the geometry.
+
+Since the geometry is flag-transitive, all chambers are
+equivalent. Let's fix a chamber <M>C=\{c_{1}, c_{2},...,c_{n}\}</M>,
+with <M>c_{i}</M> of type <M>i</M>. For each subset <M>{i,j}</M> of
+size two in <M>I=\{1,2,...,n\}</M> we take the residue of the
+flag <M>C\setminus \{c_{i},c_{j}\}</M>. Flag transitivity ensures
+that <E>all</E> residues of type <M>I\setminus\{i,j\}</M> are
+isomorphic to each other. For each such residue, the structure is
+described by some parameters: the gonality and the point and line
+diameters. For each type <M>i</M>, we also define the <M>i</M>-order
+to be the elements of type <M>i</M> in the residue of a(ny) flag of
+type <M>I\setminus\{i\}</M>. All this information is depicted in
+a <E>diagram</E> which is bascically a graph with vertex set <M>I</M>
+and edges whenever the point diamater, the line diameter and the
+gonality are all greater than <M>2</M>.
+
+<ManSection>
+<Oper Name="DiagramOfGeometry" Arg="Gamma"/>
+<Returns>the diagram of the geometry <A>Gamma</A></Returns>
+<Description> 
+<A>Gamma</A> must be a coset geometry.
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="DrawDiagram" Arg="Diag,filename"/>
+<Returns>does not return anything but writes a file <A>filename</A>.ps</Returns>
+<Description> 
+<A>Diag</A> must be a diagram. Writes a file <A>filename</A>.ps in the current directory with a pictorial version of the diagram. This command uses the <Package>graphviz</Package> package which is available from http://www.graphviz.org. 
+</Description>
+</ManSection>
 </Section>
 </Chapter>

@@ -54,6 +54,13 @@ Print(", diagram\c");
 ##
 #############################################################################
 
+#
+#############################################################################
+#O CosetGeometry
+# 
+# 
+##
+
 InstallMethod( CosetGeometry, "for groups and list of subgroups",[ IsGroup , IsHomogeneousList ],
   function( g, l )
 
@@ -75,6 +82,12 @@ InstallMethod( CosetGeometry, "for groups and list of subgroups",[ IsGroup , IsH
     return geo;
   end );
 
+#
+#########################################################################
+#O Rank2Residues
+# 
+# 
+## 
 InstallMethod( Rank2Residues, [ IsIncidenceGeometry ],
   function( geo )
     
@@ -92,6 +105,12 @@ InstallMethod( Rank2Residues, [ IsIncidenceGeometry ],
     return residues;
   end );
 
+#
+##########################################################################
+#O MakeRank2Residue
+# 
+# 
+##
 InstallMethod( MakeRank2Residue, [ IsRank2Residue ],
   function( res )
 
@@ -115,6 +134,12 @@ InstallGlobalFunction( OnCosetGeometryElement,
     return Wrap(c!.geo, c!.type, OnRight(c!.obj, t));
 end ); 
 
+#
+##########################################################################
+#  ElementsOfIncidenceStructure
+#
+#
+##
 InstallMethod( ElementsOfIncidenceStructure, [IsCosetGeometry, IsPosInt],
   function( cg, j )
 
@@ -128,6 +153,12 @@ InstallMethod( ElementsOfIncidenceStructure, [IsCosetGeometry, IsPosInt],
     return vars;
 end );
 
+#
+###########################################################################
+# Size
+#
+#
+##
 InstallMethod(Size, [IsElementsOfCosetGeometry],
   function( vs )
 
@@ -136,6 +167,12 @@ InstallMethod(Size, [IsElementsOfCosetGeometry],
     return IndexNC(cg!.group, cg!.parabolics[vs!.type]);
   end );
 
+#
+###########################################################################
+# Wrap
+#
+#
+##
 InstallMethod( Wrap, "for a coset geometry and an object (coset)",
   [IsCosetGeometry, IsPosInt, IsObject],
   function( geo, type, o )
@@ -147,7 +184,12 @@ InstallMethod( Wrap, "for a coset geometry and an object (coset)",
     return w;
 end );
 
-
+#
+##########################################################################
+# Iterator
+#
+#
+##
 InstallMethod(Iterator, "for elements of a coset geometry",
         [IsElementsOfCosetGeometry],
   function( vs )
@@ -1060,7 +1102,7 @@ InstallMethod( DiagramOfGeometry, "for a projective space", [ IsProjectiveSpace 
 
 # 
 #############################################################################
-#F Rk2GeoDiamater ( < cg > )
+#F Rk2GeoDiamater ( < cg > , < type >)
 # Computes the point (type 1) or line (type 2) diamater of a rank 2 coset 
 # geometry.
 ##
