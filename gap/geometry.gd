@@ -55,7 +55,8 @@ DeclareCategory( "IsIncidenceStructure", IsComponentObjectRep and IsAttributeSto
 
 # categories for elements of incidence structures.
 
-DeclareCategory( "IsElementOfIncidenceStructure", IsComponentObjectRep and IsAttributeStoringRep and CanEasilyCompareElements and CanEasilySortElements );
+DeclareCategory( "IsElementOfIncidenceStructure", IsComponentObjectRep and IsAttributeStoringRep
+											and CanEasilyCompareElements and CanEasilySortElements );
 DeclareCategoryCollections("IsElementOfIncidenceStructure");
 
 #DeclareCategory( "IsElementsOfIncidenceStructure", IsDomain and IsCollection and IsComponentObjectRep );

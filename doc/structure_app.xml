@@ -23,5 +23,32 @@ This appendix gives more (technical) information on the filter graph of Fining.
 
 <Appendix Label="groups_app">
 <Heading>The structure of <Package>FinInG</Package> </Heading>
-
+<Section>
+<Heading>The different components</Heading>
+Loading <Package>FinInG</Package> shows the following message:
+<Example>
+---------------------------------------------------------------------
+loading: geometry, liegeometry, group, projectivespace, correlations, 
+polarspace/morphisms, enumerators, diagram, varieties, affinespace/affinegroup, 
+gpolygons
+</Example>
+The different components are liested an refer to the corresponding filenames. So 
+<E>component</E> refers to <E>component.gd</E> and <E>component.gi</E>. When
+When <E>component1/component2</E> is displayed, Both <E>component1.gi</E> and 
+<E>component2.gi</E> depend on the declarations in both <E>component1.gd</E> and 
+<E>component2.gd</E>. In other cases, <E>component_n</E> is only dependent on its
+own declarations and the ones before. 
+</Section>
+<Section>
+<Heading>The complete inventory</Heading>
+<Example>
+<#Include SYSTEM "operations_inventory.txt"> 
+</Example>
+<Example>
+<#Include SYSTEM "attributes_inventory.txt"> 
+</Example>
+<Example>
+<#Include SYSTEM "properties_inventory.txt"> 
+</Example>
+</Section>
 </Appendix>
