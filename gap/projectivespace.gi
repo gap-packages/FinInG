@@ -1780,6 +1780,22 @@ InstallMethod( Span,
 		fi;
 	end );
 
+# ADDED 30/11/2011 jdb
+# this is a "helper" operation. We do not expect the user to use this variant
+# when he knows that list is a list of projective subspaces. In this case, we will
+# not document it. When dealing with a list of subspaces polar spaces, the user
+# could get into this without realising. The result is of course then just Span(l).
+#############################################################################
+#O  Span( <x>, <y> )
+# returns <x,y>, <x> and <y> two subspaces of a projective space.
+##
+InstallMethod( Span, 
+	"for a list and a boolean",
+	[IsList, IsBool],
+	function( l, b )
+		return Span(l);
+	end );
+
 # CHECKED 14/09/11 jdb
 #############################################################################
 #O  Meet( <x>, <y> )

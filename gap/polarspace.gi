@@ -1665,8 +1665,8 @@ InstallMethod( \in,
 
 #ADDED 30/11/2011 jdb.
 #############################################################################
-#O  Span( <x>, <y> )
-# returns <x,y>, <x> and <y> two subspaces of a polar space.
+#O  Span( <x>, <y>, <b> )
+# returns <x,y>, <x> and <y> two subspaces of a polar space and a boolean
 ##
 InstallMethod( Span, 
 	"for two subspaces of a polar space",
@@ -1705,40 +1705,6 @@ InstallMethod( Span,
 	fi;
 	end );
 	
-#ADDED 30/11/2011 jdb.
-#############################################################################
-#O  Span( <l> )
-# returns the span of the projective subspaces in <l>.
-##
-InstallMethod( Span, 
-	"for a homogeneous list of subspaces of a polar space",
-	[ IsHomogeneousList and IsSubspaceOfClassicalPolarSpaceCollection, IsBool ],
-	function( l, b )  
-		local unwrapped, r, unr, amb, span, temp, x, F, list;  
-		# first we check that all items in the list belong to the same ambient space
-		if Length(l)=0 then 
-			return [];
-		elif not Size(AsDuplicateFreeList(List(l,x->AmbientSpace(x))))=1 then 
-			Error("The elements in the list do not have a common ambient space");
-		else
-			x := l[1];
-			amb := AmbientSpace(x!.geo);
-			F := amb!.basefield;
-			unwrapped := [];
-			for r in l do
-				unr := r!.obj;
-				if r!.type = 1 then unr := [unr]; fi;
-				Append(unwrapped, unr);
-			od;
-			span := MutableCopyMat(unwrapped);
-			# span := MutableCopyMat(EchelonMat(span).vectors); #not necessary anyway, since VectorSpaceToElement is used.
-#   JB: Yes it is necessary for the following part!!!
-#			if Length(span) = amb!.dimension + 1 then
-#				return amb;
-#			fi;
-			return VectorSpaceToElement(amb,span);
-		fi;
-	end );
 
 
 #ADDED 30/11/2011 jdb.
