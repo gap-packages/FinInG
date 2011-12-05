@@ -51,4 +51,8 @@ own declarations and the ones before.
 <#Include SYSTEM "properties_inventory.txt"> 
 </Example>
 </Section>
+<Section>
+<Heading>The filter graph(s)</Heading>
+
+</Section>
 </Appendix>

@@ -230,7 +230,7 @@ listed in the table below (see <Cite Key="Gill"/>):
  </Row>
 <Row>
    <Item><Alt Not="HTML"><M>H(2n,q^{2a+1})</M></Alt><Alt Only="HTML">H(2n,q&lt;sup>2a+1&lt;/sup>)</Alt></Item>
-   <Item><M>H((2a+1)(n+1)-1,q)</M></Item>
+   <Item><M>H((2a+1)(2n+1)-1,q)</M></Item>
    <Item>q square</Item>
  </Row>
 <Row>
