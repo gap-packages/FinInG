@@ -31,29 +31,34 @@ on <Package>GRAPE</Package>.
 <Heading>Coset Geometries</Heading>
 
 Suppose we have a flag-transitive incidence
-geometry <M>\Gamma</M>. This means that a group <M>G</M> of
-automorphisms of <M>\Gamma</M> is also given such that <M>G</M> is
+geometry <Alt Not="HTML"><M>\Gamma</M></Alt><Alt Only="HTML">&#915;</Alt>. This means that a group <M>G</M> of
+automorphisms of <Alt Not="HTML"><M>\Gamma</M></Alt><Alt Only="HTML">&#915;</Alt> is also given such that <M>G</M> is
 transitive on the set of chambers of <M>\Gamma</M>. This implies
 that <M>G</M> is also transitive on the set of all elements of any
-chosen type <M>i</M>. If we consider a chamber <M>c_{1},c_{2},... ,c_{n}</M>
-such that <M>c_{i}</M> is of type <M>i</M>, we can look at the
-stabilizer <M>G_{i}</M> of <M>c_{i}</M> in <M>G</M>. The
-subgroups <M>G_{i}</M> are 
-called <E>parabolic subgroups</E> of <M>\Gamma</M>. For a
+chosen type <M>i</M>. If we consider a chamber <Alt Not="HTML"><M>c_{1},c_{2},... ,c_{n}</M></Alt>
+<Alt Only="HTML">c&lt;sub>1&lt;/sub>,c&lt;sub>2&lt;/sub>,...,c&lt;sub>n&lt;/sub></Alt>
+such that <Alt Not="HTML"><M>c_{i}</M></Alt><Alt Only="HTML">c&lt;sub>i&lt;/sub></Alt> is of type <M>i</M>, 
+we can look at the stabilizer <Alt Not="HTML"><M>G_{i}</M></Alt><Alt Only="HTML">G&lt;sub>i&lt;/sub></Alt>
+of <Alt Not="HTML"><M>c_{i}</M></Alt><Alt Only="HTML">c&lt;sub>i&lt;/sub></Alt> in <M>G</M>. The
+subgroups  <Alt Not="HTML"><M>G_{i}</M></Alt><Alt Only="HTML">G&lt;sub>i&lt;/sub></Alt> are 
+called <E>parabolic subgroups</E> of <Alt Not="HTML"><M>\Gamma</M></Alt><Alt Only="HTML">&#915;</Alt>. For a
 type <M>i</M>, transitivity of <M>G</M> on the elements of
 type <M>i</M> gives a correspondence between the cosets of the
-stabilizer <M>G_{i}</M> and the elements of type <M>i</M>
-in <M>\Gamma</M>. Two elements of <M>\Gamma</M> are incident if and only
+stabilizer <Alt Not="HTML"><M>G_{i}</M></Alt><Alt Only="HTML">G&lt;sub>i&lt;/sub></Alt> and the elements of type <M>i</M>
+in <Alt Not="HTML"><M>\Gamma</M></Alt><Alt Only="HTML">&#915;</Alt>. Two elements of 
+<Alt Not="HTML"><M>\Gamma</M></Alt><Alt Only="HTML">&#915;</Alt> are incident if and only
 if the corresponding cosets have a nonempty intersection.
 
 We now use the above oservation to define an incidence structure from
 a group <M>G</M> together with a set of
-subgroups <M>G_{1},G_{2},... ,G_{n}</M>. The type set
-is <M>\{1,2,...,n\}</M>. By definition the elements of
-type <M>i</M> are the (right) cosets of the subgroup <M>G_{i}</M>. Two
+subgroups <Alt Not="HTML"><M>G_{1},G_{2},...,G_{n}</M></Alt>
+<Alt Only="HTML">G&lt;sub>1&lt;/sub>,G&lt;sub>2&lt;/sub>,...,G&lt;sub>n&lt;/sub></Alt>.
+The type set is <Alt Not="HTML"><M>\{1,2,...,n\}</M></Alt><Alt Only="HTML">&#123;1,2,...,n&#125;</Alt>. 
+By definition the elements of type <M>i</M> are the (right) cosets of the subgroup 
+<Alt Not="HTML"><M>G_{i}</M></Alt><Alt Only="HTML">G&lt;sub>i&lt;/sub></Alt>. Two
 cosets are incident if and only if their intersection is not
 empty. This is an incidence structure which is not necessarily a
-geometry (see Section REF!!! for definitions).
+geometry (see Chapter <Ref Chap="incidencegeometry"/> for definitions).
 
 
 <ManSection>
