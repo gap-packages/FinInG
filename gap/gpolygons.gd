@@ -1,21 +1,23 @@
 #############################################################################
 ##
-##  gpolyons.gd              FinInG package
+##  gpolygons.gd              FinInG package
 ##                                                              John Bamberg
-## 						                Anton Betten
+##                                                              Anton Betten
 ##                                                              Jan De Beule
 ##                                                             Philippe Cara
-## 							      Michel Lavrauw
+##                                                            Michel Lavrauw
 ##                                                                 Maska Law
 ##                                                           Max Neunhoeffer
 ##                                                            Michael Pauley
 ##                                                             Sven Reichard
 ##
-##  Copyright 2008 University of Western Australia, Perth
-##                 Lehrstuhl D fuer Mathematik, RWTH Aachen
-##                 Ghent University
-##                 Colorado State University
-##                 Vrije Universiteit Brussel
+##  Copyright 2011	Colorado State University, Fort Collins
+##					Università degli Studi di Padova
+##					Universeit Gent
+##					University of St. Andrews
+##					University of Western Australia, Perth
+##                  Vrije Universiteit Brussel
+##                 
 ##
 ##  Declaration stuff for generalised polygons.
 ##
@@ -23,6 +25,8 @@
 
 #############################################################################
 # Collections, families
+# Recall that we declared some categories in geometry.gd that are relevant 
+# for gpolygons.
 #############################################################################
 
 DeclareRepresentation( "IsGeneralisedPolygonRep", IsGeneralisedPolygon, [ "incidence", "points", "lines" ]);

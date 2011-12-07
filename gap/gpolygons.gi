@@ -3,19 +3,21 @@
 ##  gpolygons.gi              FinInG package
 ##                                                              John Bamberg
 ##                                                              Anton Betten
-##                                                             Philippe Cara
 ##                                                              Jan De Beule
+##                                                             Philippe Cara
 ##                                                            Michel Lavrauw
 ##                                                                 Maska Law
 ##                                                           Max Neunhoeffer
 ##                                                            Michael Pauley
 ##                                                             Sven Reichard
 ##
-##  Copyright 2008 University of Western Australia, Perth
-##                 Lehrstuhl D fuer Mathematik, RWTH Aachen
-##                 Ghent University
-##                 Colorado State University
-##                 Vrije Universiteit Brussel
+##  Copyright 2011	Colorado State University, Fort Collins
+##					Università degli Studi di Padova
+##					Universeit Gent
+##					University of St. Andrews
+##					University of Western Australia, Perth
+##                  Vrije Universiteit Brussel
+##                 
 ##
 ##  Implementation stuff for generalised polygons.
 ##
@@ -51,105 +53,116 @@ Print(", gpolygons\c");
 #
 #############################################################################
 
-InstallMethod( ElementsOfIncidenceStructure, [IsGeneralisedPolygon, IsPosInt],
-  function( gp, j )
-    local s, t, sz;
-    if j in [1,2] then 
-       s := Order(gp)[j]; t := Order(gp)[3-j];
-    else 
-       Error("Incorrect type value");
-    fi;
-    if IsProjectivePlane(gp) then
-       sz := s^2 + s + 1;
-    elif IsGeneralisedQuadrangle(gp) then 
-       sz := (1+s)*(1+s*t);
-    elif IsGeneralisedOctogon(gp) then
-       sz := (1+s)*(1+s*t+s^2*t^2+s^3*t^3);
-    fi;        
-
-    return Objectify(
-      NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
+InstallMethod( ElementsOfIncidenceStructure, 
+	"for a generalised polygon and a positive integer",
+	[IsGeneralisedPolygon, IsPosInt],
+	function( gp, j )
+		local s, t, sz;
+		if j in [1,2] then 
+			s := Order(gp)[j]; t := Order(gp)[3-j];
+		else 
+			Error("Incorrect type value");
+		fi;
+		if IsProjectivePlane(gp) then
+			sz := s^2 + s + 1;
+		elif IsGeneralisedQuadrangle(gp) then 
+			sz := (1+s)*(1+s*t);
+		elif IsGeneralisedOctogon(gp) then
+			sz := (1+s)*(1+s*t+s^2*t^2+s^3*t^3);
+		fi;        
+		return Objectify( NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
                                 IsAllElementsOfGeneralisedPolygon and
                                 IsAllElementsOfGeneralisedPolygonRep),
         rec( geometry := gp, type := j, size := sz )
-      );
-  end );
+						);
+	end );
 
-InstallMethod( ElementsOfIncidenceStructure, [IsElationGQByKantorFamily, IsPosInt],
-  function( gp, j )
-    local s, t;
-    if j in [1,2] then 
-       s := Order(gp)[j]; t := Order(gp)[3-j];
-    else 
-       Error("Incorrect type value");
-    fi;
-    return Objectify(
-      NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
+InstallMethod( ElementsOfIncidenceStructure, 
+	"for a an EGB by Kantor Family and a positive integer",
+	[IsElationGQByKantorFamily, IsPosInt],
+	function( gp, j )
+		local s, t;
+		if j in [1,2] then 
+			s := Order(gp)[j]; t := Order(gp)[3-j];
+		else 
+			Error("Incorrect type value");
+		fi;
+		return Objectify( NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
                                 IsAllElementsOfKantorFamily and
                                 IsAllElementsOfGeneralisedPolygonRep),
-        rec( geometry := gp, type := j, size := (1+s)*(1+s*t) )
-      );
-  end );
+				rec( geometry := gp, type := j, size := (1+s)*(1+s*t) )
+						);
+	end );
 
-InstallMethod( ElementsOfIncidenceStructure, [IsGeneralisedHexagon, IsPosInt],
-  function( gp, j )
-    local s, t, sz;
-    if j in [1,2] then 
-       s := Order(gp)[j]; t := Order(gp)[3-j];
-    else 
-       Error("Incorrect type value");
-    fi;
-    return Objectify(
-      NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
+InstallMethod( ElementsOfIncidenceStructure, 
+	"for a generalised hexagon and a positive integer",
+	[IsGeneralisedHexagon, IsPosInt],
+	function( gp, j )	
+		local s, t, sz;
+		if j in [1,2] then 
+			s := Order(gp)[j]; t := Order(gp)[3-j];
+		else 
+			Error("Incorrect type value");
+		fi;
+		return Objectify( NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
                                 IsAllElementsOfGeneralisedHexagon and
                                 IsAllElementsOfGeneralisedPolygonRep),
-        rec( geometry := gp, type := j, size := (1+s)*(1+s*t+s^2*t^2) )
-      );
-  end );
+			rec( geometry := gp, type := j, size := (1+s)*(1+s*t+s^2*t^2) )
+						);
+	end );
 
-InstallMethod( Points, [IsGeneralisedPolygon],
-  function( gp )
-    return ElementsOfIncidenceStructure(gp, 1);
-  end);
+InstallMethod( Points, 
+	"for a generalised polygon",
+	[IsGeneralisedPolygon],
+	function( gp )
+		return ElementsOfIncidenceStructure(gp, 1);
+	end);
 
-InstallMethod( Lines, [IsGeneralisedPolygon],
-  function( gp )
-    return ElementsOfIncidenceStructure(gp, 2);
-  end);
+InstallMethod( Lines, 
+	"for a generalised polygon",
+	[IsGeneralisedPolygon],
+	function( gp )
+		return ElementsOfIncidenceStructure(gp, 2);
+	end);
 
-InstallMethod(Size, "for elements of a generalised polygon",
-        [IsAllElementsOfGeneralisedPolygon], vs -> vs!.size );
+InstallMethod(Size, 
+	"for elements of a generalised polygon",
+	[IsAllElementsOfGeneralisedPolygon], 
+	vs -> vs!.size );
 
-InstallMethod(Iterator, "for elements of a generalised polygon",
-        [IsAllElementsOfGeneralisedPolygon],
-  function( vs )
-    local ps, j, vars;
-    ps := vs!.geometry;
-    j := vs!.type;
-    if j = 1 then 
-       vars := List(ps!.points, x -> Wrap(ps, 1, x));
-       return IteratorList( vars );
-    elif j = 2 then 
-       vars := List(ps!.lines, x -> Wrap(ps, 2, x));
-       return IteratorList( vars );
-    else Error("Element type does not exist"); return;
-    fi;
-  end );
+InstallMethod(Iterator, 
+	"for elements of a generalised polygon",
+	[IsAllElementsOfGeneralisedPolygon],
+	function( vs )
+		local ps, j, vars;
+		ps := vs!.geometry;
+		j := vs!.type;
+		if j = 1 then 
+			vars := List(ps!.points, x -> Wrap(ps, 1, x));
+			return IteratorList( vars );
+		elif j = 2 then 
+			vars := List(ps!.lines, x -> Wrap(ps, 2, x));
+			return IteratorList( vars );
+		else Error("Element type does not exist"); return;
+		fi;
+	end );
 
-InstallMethod(Iterator, "for elements of a generalised hexagon",
-        [IsAllElementsOfGeneralisedHexagon],
-  function( vs )
-    local ps, j, vars, coll, reps;
-    ps := vs!.geometry;
-    j := vs!.type;
-    coll := CollineationGroup( ps );
-    reps := RepresentativesOfElements( ps );
-    vars := Enumerate(Orb(coll, reps[j], OnProjSubspaces));
-    return IteratorList( vars );
-  end );
+InstallMethod(Iterator, 
+	"for elements of a generalised hexagon",
+    [IsAllElementsOfGeneralisedHexagon],
+	function( vs )
+		local ps, j, vars, coll, reps;
+		ps := vs!.geometry;
+		j := vs!.type;
+		coll := CollineationGroup( ps );
+		reps := RepresentativesOfElements( ps );
+		vars := Enumerate(Orb(coll, reps[j], OnProjSubspaces));
+		return IteratorList( vars );
+	end );
 
-InstallMethod(Iterator, "for elements of an EGQ defined by a Kantor family",
-        [IsAllElementsOfKantorFamily],
+InstallMethod(Iterator, 
+	"for elements of an EGQ defined by a Kantor family",
+	[IsAllElementsOfKantorFamily],
 
 ##  We can do much better here.
 ##  Perhaps we need to think about implementing enumerators/iterators
@@ -341,7 +354,7 @@ InstallMethod( SplitCayleyHexagon, "input is a finite field",
     inc := function(x, y) return x!.obj in y!.obj; end;
     geo := rec( points := [], lines := [], incidence:= inc);
     ty := NewType( GeometriesFamily,
-             IsGeneralisedHexagon and IsGeneralisedPolygonRep );
+             IsGeneralisedHexagon and IsGeneralisedPolygonRep and IsLieGeometry ); #change by jdb 7/12/11
     Objectify( ty, geo );
     SetAmbientSpace(geo, ps);
     SetOrder(geo, [Size(f), Size(f)]);
@@ -349,7 +362,8 @@ InstallMethod( SplitCayleyHexagon, "input is a finite field",
     SetCollineationGroup(geo, coll);
     SetTypesOfElementsOfIncidenceStructure(geo, ["point","line"]);
     SetRepresentativesOfElements(geo, [reppoint, repline]);
-    return geo;
+    SetName(geo,Concatenation("Split Cayley Hexagon of order ", String(Size(f))));
+	return geo;
   end );
 
 InstallMethod( SplitCayleyHexagon, "input is a prime power", [ IsPosInt ],
@@ -1503,155 +1517,175 @@ InstallMethod( PrintObj, [ IsGeneralisedQuadrangle and HasOrder ],
      ", consisting of ", Size(p!.points), " points and ", Size(p!.lines)," lines");
   end );
 
+#the next series of methods below I commented out, since classical GQs are mainly treated as
+#classical polar spaces, and hence displayed like them.
+#InstallMethod( ViewObj, 
+#  [ IsClassicalGQ and HasOrder and IsEllipticQuadric],
+#  function( p )
+#    Print("Q-(5, ",Size(p!.basefield),")");
+#  end );
+#
+#InstallMethod( PrintObj,
+#  [ IsClassicalGQ and HasOrder and IsEllipticQuadric ],
+#        function( p )
+#          Print("EllipticQuadric(5, ",p!.basefield,")");
+#        end );
+#
+#InstallMethod( Display, 
+#  [ IsClassicalGQ and HasOrder and IsEllipticQuadric ],
+#  function( p )
+#    Print("Q-(5, ",Size(p!.basefield),")\n");
+#    if HasQuadraticForm(p) then
+#       Display(QuadraticForm(p));
+#    fi;
+#    Display(SesquilinearForm(p));
+#  end );
+#
+#InstallMethod( ViewObj,
+#  [ IsClassicalGQ and HasOrder and IsSymplecticSpace],
+#        function( p )
+#          Print("W(3, ",Size(p!.basefield),")");
+#  end );
+#
+#InstallMethod( PrintObj,
+#  [ IsClassicalGQ and HasOrder and IsSymplecticSpace ],
+#        function( p )
+#          Print("SymplecticSpace(3, ",p!.basefield,")");
+#  end);
+#
+#InstallMethod( ViewObj,
+#  [ IsClassicalGQ and HasOrder and IsParabolicQuadric ],
+#        function( p )
+#          Print("Q(4, ",Size(p!.basefield),")");
+#        end);
+#
+#InstallMethod( PrintObj,
+#  [ IsClassicalGQ and HasOrder and IsParabolicQuadric ],
+#        function( p )
+#          Print("ParabolicQuadric(4, ",p!.basefield,")");
+#  end);
+#
+#InstallMethod( ViewObj,
+#  [ IsClassicalGQ and HasOrder and IsHyperbolicQuadric ],
+#        function( p )
+#          Print("Q+(", p!.dimension,", ",Size(p!.basefield),")");
+#  end);
+#
+#InstallMethod( PrintObj,
+#  [ IsClassicalGQ and HasOrder and IsHyperbolicQuadric ],
+#        function( p )
+#          Print("HyperbolicQuadric(", p!.dimension,", ",p!.basefield,")");
+#        end);
+#
+#InstallMethod( ViewObj,
+#  [ IsClassicalGQ and HasOrder and IsHermitianVariety ],
+#        function( p )
+#          Print("H(",p!.dimension,", ",Sqrt(Size(p!.basefield)),"^2)");
+#        end);
+#
+#InstallMethod( PrintObj,
+#  [ IsClassicalGQ and HasOrder and IsHermitianVariety ],
+#        function( p )
+#          Print("HermitianVariety(",p!.dimension,",",p!.basefield,")");
+#        end);
+#
+#InstallMethod( ViewObj, [ IsClassicalGQ and HasOrder],
+#  function( p )
+#    Print("<classical ", SesquilinearForm(p)!.type, 
+#       " generalised quadrangle of order ",Order(p),">");
+#  end );
+#
+#InstallMethod( PrintObj, [ IsClassicalGQ and HasOrder],
+#  function( p )
+#    Print("<classical ", SesquilinearForm(p)!.type, 
+#       " generalised quadrangle of order ",Order(p),">"); 
+#  end );
+#
 InstallMethod( ViewObj, 
-  [ IsClassicalGQ and HasOrder and IsEllipticQuadric],
-  function( p )
-    Print("Q-(5, ",Size(p!.basefield),")");
-  end );
+	"for a generalised hexagon with an order",	
+	[ IsGeneralisedHexagon and HasOrder ],
+	function( p )
+		Print("<generalised hexagon of order ",Order(p), ">");
+	end );
 
-InstallMethod( PrintObj,
-  [ IsClassicalGQ and HasOrder and IsEllipticQuadric ],
-        function( p )
-          Print("EllipticQuadric(5, ",p!.basefield,")");
-        end );
+InstallMethod( PrintObj, 
+	"for a generalised hexagon with an order",	
+	[ IsGeneralisedHexagon and HasOrder ],
+	function( p )
+		Print("Generalised hexagon of order ",Order(p),
+			", consisting of ", Size(p!.points), " points and ", Size(p!.lines)," lines");
+	end );
 
-InstallMethod( Display, 
-  [ IsClassicalGQ and HasOrder and IsEllipticQuadric ],
-  function( p )
-    Print("Q-(5, ",Size(p!.basefield),")\n");
-    if HasQuadraticForm(p) then
-       Display(QuadraticForm(p));
-    fi;
-    Display(SesquilinearForm(p));
-  end );
+InstallMethod( ViewObj, 
+	"for a generalised hexagon with an order",	
+	[ IsGeneralisedOctogon and HasOrder ],
+	function( p )
+		Print("<generalised octogon of order ",Order(p), ">");
+	end );
 
-InstallMethod( ViewObj,
-  [ IsClassicalGQ and HasOrder and IsSymplecticSpace],
-        function( p )
-          Print("W(3, ",Size(p!.basefield),")");
-  end );
-
-InstallMethod( PrintObj,
-  [ IsClassicalGQ and HasOrder and IsSymplecticSpace ],
-        function( p )
-          Print("SymplecticSpace(3, ",p!.basefield,")");
-  end);
-
-InstallMethod( ViewObj,
-  [ IsClassicalGQ and HasOrder and IsParabolicQuadric ],
-        function( p )
-          Print("Q(4, ",Size(p!.basefield),")");
-        end);
-
-InstallMethod( PrintObj,
-  [ IsClassicalGQ and HasOrder and IsParabolicQuadric ],
-        function( p )
-          Print("ParabolicQuadric(4, ",p!.basefield,")");
-  end);
-
-InstallMethod( ViewObj,
-  [ IsClassicalGQ and HasOrder and IsHyperbolicQuadric ],
-        function( p )
-          Print("Q+(", p!.dimension,", ",Size(p!.basefield),")");
-  end);
-
-InstallMethod( PrintObj,
-  [ IsClassicalGQ and HasOrder and IsHyperbolicQuadric ],
-        function( p )
-          Print("HyperbolicQuadric(", p!.dimension,", ",p!.basefield,")");
-        end);
-
-InstallMethod( ViewObj,
-  [ IsClassicalGQ and HasOrder and IsHermitianVariety ],
-        function( p )
-          Print("H(",p!.dimension,", ",Sqrt(Size(p!.basefield)),"^2)");
-        end);
-
-InstallMethod( PrintObj,
-  [ IsClassicalGQ and HasOrder and IsHermitianVariety ],
-        function( p )
-          Print("HermitianVariety(",p!.dimension,",",p!.basefield,")");
-        end);
-
-InstallMethod( ViewObj, [ IsClassicalGQ and HasOrder],
-  function( p )
-    Print("<classical ", SesquilinearForm(p)!.type, 
-       " generalised quadrangle of order ",Order(p),">");
-  end );
-
-InstallMethod( PrintObj, [ IsClassicalGQ and HasOrder],
-  function( p )
-    Print("<classical ", SesquilinearForm(p)!.type, 
-       " generalised quadrangle of order ",Order(p),">"); 
-  end );
-
-InstallMethod( ViewObj, [ IsGeneralisedHexagon and HasOrder ],
-  function( p )
-    Print("<generalised hexagon of order ",Order(p), ">");
-  end );
-
-InstallMethod( PrintObj, [ IsGeneralisedHexagon and HasOrder ],
-  function( p )
-    Print("Generalised hexagon of order ",Order(p),
-     ", consisting of ", Size(p!.points), " points and ", Size(p!.lines)," lines");
-  end );
-
-InstallMethod( ViewObj, [ IsGeneralisedOctogon and HasOrder ],
-  function( p )
-    Print("<generalised octogon of order ",Order(p), ">");
-  end );
-
-InstallMethod( PrintObj, [ IsGeneralisedOctogon and HasOrder ],
-  function( p )
-    Print("Generalised ",p!.gonality,"-gon of order ",Order(p),
-     ", consisting of ", Size(p!.points), " points and ", Size(p!.lines)," lines");
-  end );
+InstallMethod( PrintObj, 
+	"for a generalised hexagon with an order",
+	[ IsGeneralisedOctogon and HasOrder ],
+	function( p )
+		Print("Generalised ",p!.gonality,"-gon of order ",Order(p),
+			", consisting of ", Size(p!.points), " points and ", Size(p!.lines)," lines");
+	end );
 
 #############################################################################
 # Display methods: Element collections
 #############################################################################
 
-InstallMethod( ViewObj, [ IsAllElementsOfGeneralisedPolygon and
-                          IsAllElementsOfGeneralisedPolygonRep ],
-  function( vs )
-    local l;
-    l := ["points","lines"];
-    Print("<", l[vs!.type]," of ");
-    ViewObj(vs!.geometry);
-    Print(">");
-  end );
+InstallMethod( ViewObj,
+	"for elements of a generalised polygon",
+	[ IsAllElementsOfGeneralisedPolygon and IsAllElementsOfGeneralisedPolygonRep ],
+	function( vs )
+		local l;
+		l := ["points","lines"];
+		Print("<", l[vs!.type]," of ");
+		ViewObj(vs!.geometry);
+		Print(">");
+	end );
 
-InstallMethod( PrintObj, [ IsAllElementsOfGeneralisedPolygon and
-                          IsAllElementsOfGeneralisedPolygonRep ],
-  function( vs )
-    Print("ElementsOfIncidenceStructure( ",vs!.geometry," , ",vs!.type,")");
-  end );
+InstallMethod( PrintObj, 
+	"for elements of a generalised polygon",
+	[ IsAllElementsOfGeneralisedPolygon and IsAllElementsOfGeneralisedPolygonRep ],
+	function( vs )
+		Print("ElementsOfIncidenceStructure( ",vs!.geometry," , ",vs!.type,")");
+	end );
 
 #############################################################################
 # Display methods: Elements
 #############################################################################
 
-InstallMethod( ViewObj, [ IsElementOfKantorFamily ],
-  function( v )
-    if v!.type = 1 then Print("<a point of a Kantor family>");
-    else Print("<a line of a Kantor family>");
-    fi;
-  end );
+InstallMethod( ViewObj, 
+	"for an element of a Kantor family",
+	[ IsElementOfKantorFamily ],
+	function( v )
+		if v!.type = 1 then Print("<a point of a Kantor family>");
+		else Print("<a line of a Kantor family>");
+		fi;
+	end );
 
-InstallMethod( PrintObj, [ IsElementOfKantorFamily ],
-  function( v )
-    Print(v!.obj);
-  end );
+InstallMethod( PrintObj, 
+	"for an element of a Kantor family",
+	[ IsElementOfKantorFamily ],
+	function( v )
+		Print(v!.obj);
+	end );
 
-InstallMethod( ViewObj, [ IsElementOfGeneralisedPolygon ],
-  function( v )
-    Print("<a ",TypesOfElementsOfIncidenceStructure(v!.geo)[v!.type]," of ");
-    ViewObj(v!.geo);
-    Print(">");
-  end );
+InstallMethod( ViewObj, 
+	"for an element of a generalised polygon",
+	[ IsElementOfGeneralisedPolygon ],
+	function( v )
+		Print("<a ",TypesOfElementsOfIncidenceStructure(v!.geo)[v!.type]," of ");
+		ViewObj(v!.geo);
+		Print(">");
+	end );
 
-InstallMethod( PrintObj, [ IsElementOfGeneralisedPolygon ],
-  function( v )
-    Print(v!.obj);
-  end );  
+InstallMethod( PrintObj,
+	"for an element of a generalised polygon",
+	[ IsElementOfGeneralisedPolygon ],
+	function( v )
+		Print(v!.obj);
+	end );  
 
