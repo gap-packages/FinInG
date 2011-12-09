@@ -2415,6 +2415,7 @@ InstallMethod( CollineationGroup,
 		d := ps!.dimension + 1; 
 		f := ps!.basefield;
 		if HasIsCanonicalPolarSpace(ps) and IsCanonicalPolarSpace(ps) then
+			#Print("yes2!");
 			type := PolarSpaceType( ps );
 			info := ClassicalGroupInfo( ps );
 			if type = "symplectic" then
@@ -2454,8 +2455,10 @@ InstallMethod( CollineationGroup,
 #############################################################################
 #O SpecialIsometryGroup( <ps> ) returns the special isometry group of <ps>
 ##
-InstallMethod( SpecialIsometryGroup, [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
-  function( ps )
+InstallMethod( SpecialIsometryGroup,
+	"for a classical polar space",
+	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
+	function( ps )
     local iso, twiner, g, info, coll, d, f, type;
 
     if HasIsCanonicalPolarSpace(ps) and IsCanonicalPolarSpace(ps) then
@@ -2490,12 +2493,15 @@ InstallMethod( SpecialIsometryGroup, [ IsClassicalPolarSpace and IsClassicalPola
 #############################################################################
 #O IsometryGroup( <ps> ) returns the isometry group of <ps>
 ##
-InstallMethod( IsometryGroup, [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
+InstallMethod( IsometryGroup, 
+	"for a classical polar space",
+	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
   function( ps )
     local iso, twiner, g, info, coll, d, f, type;
 
     if HasIsCanonicalPolarSpace(ps) and IsCanonicalPolarSpace(ps) then
-       type := PolarSpaceType( ps );
+       #Print("yes!");
+	   type := PolarSpaceType( ps );
        info := ClassicalGroupInfo( ps );
        coll := CollineationGroup( ps );
        d := ps!.dimension + 1; 

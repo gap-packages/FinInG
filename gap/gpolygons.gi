@@ -1467,8 +1467,11 @@ InstallMethod( IncidenceMatrixOfGeneralisedPolygon,
 # Display methods: Generalised Polygons
 #############################################################################
 
-InstallMethod( ViewObj, [ IsGeneralisedPolygon and IsGeneralisedPolygonRep and HasOrder],
-  function( p )
+InstallMethod( ViewObj,
+	"for a generalised polygon",
+	[ IsGeneralisedPolygon and IsGeneralisedPolygonRep and HasOrder],
+	2000,
+	function( p )
     Print("<generalised polygon of order ",Order(p),">");
   end );
 
