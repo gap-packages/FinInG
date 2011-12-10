@@ -1520,90 +1520,89 @@ InstallMethod( PrintObj, [ IsGeneralisedQuadrangle and HasOrder ],
      ", consisting of ", Size(p!.points), " points and ", Size(p!.lines)," lines");
   end );
 
-#the next series of methods below I commented out, since classical GQs are mainly treated as
-#classical polar spaces, and hence displayed like them.
-#InstallMethod( ViewObj, 
-#  [ IsClassicalGQ and HasOrder and IsEllipticQuadric],
-#  function( p )
-#    Print("Q-(5, ",Size(p!.basefield),")");
-#  end );
-#
-#InstallMethod( PrintObj,
-#  [ IsClassicalGQ and HasOrder and IsEllipticQuadric ],
-#        function( p )
-#          Print("EllipticQuadric(5, ",p!.basefield,")");
-#        end );
-#
-#InstallMethod( Display, 
-#  [ IsClassicalGQ and HasOrder and IsEllipticQuadric ],
-#  function( p )
-#    Print("Q-(5, ",Size(p!.basefield),")\n");
-#    if HasQuadraticForm(p) then
-#       Display(QuadraticForm(p));
-#    fi;
-#    Display(SesquilinearForm(p));
-#  end );
-#
-#InstallMethod( ViewObj,
-#  [ IsClassicalGQ and HasOrder and IsSymplecticSpace],
-#        function( p )
-#          Print("W(3, ",Size(p!.basefield),")");
-#  end );
-#
-#InstallMethod( PrintObj,
-#  [ IsClassicalGQ and HasOrder and IsSymplecticSpace ],
-#        function( p )
-#          Print("SymplecticSpace(3, ",p!.basefield,")");
-#  end);
-#
-#InstallMethod( ViewObj,
-#  [ IsClassicalGQ and HasOrder and IsParabolicQuadric ],
-#        function( p )
-#          Print("Q(4, ",Size(p!.basefield),")");
-#        end);
-#
-#InstallMethod( PrintObj,
-#  [ IsClassicalGQ and HasOrder and IsParabolicQuadric ],
-#        function( p )
-#          Print("ParabolicQuadric(4, ",p!.basefield,")");
-#  end);
-#
-#InstallMethod( ViewObj,
-#  [ IsClassicalGQ and HasOrder and IsHyperbolicQuadric ],
-#        function( p )
-#          Print("Q+(", p!.dimension,", ",Size(p!.basefield),")");
-#  end);
-#
-#InstallMethod( PrintObj,
-#  [ IsClassicalGQ and HasOrder and IsHyperbolicQuadric ],
-#        function( p )
-#          Print("HyperbolicQuadric(", p!.dimension,", ",p!.basefield,")");
-#        end);
-#
-#InstallMethod( ViewObj,
-#  [ IsClassicalGQ and HasOrder and IsHermitianVariety ],
-#        function( p )
-#          Print("H(",p!.dimension,", ",Sqrt(Size(p!.basefield)),"^2)");
-#        end);
-#
-#InstallMethod( PrintObj,
-#  [ IsClassicalGQ and HasOrder and IsHermitianVariety ],
-#        function( p )
-#          Print("HermitianVariety(",p!.dimension,",",p!.basefield,")");
-#        end);
-#
-#InstallMethod( ViewObj, [ IsClassicalGQ and HasOrder],
-#  function( p )
-#    Print("<classical ", SesquilinearForm(p)!.type, 
-#       " generalised quadrangle of order ",Order(p),">");
-#  end );
-#
-#InstallMethod( PrintObj, [ IsClassicalGQ and HasOrder],
-#  function( p )
-#    Print("<classical ", SesquilinearForm(p)!.type, 
-#       " generalised quadrangle of order ",Order(p),">"); 
-#  end );
-#
+
+InstallMethod( ViewObj, 
+  [ IsClassicalGQ and HasOrder and IsEllipticQuadric],
+  function( p )
+    Print("Q-(5, ",Size(p!.basefield),")");
+  end );
+
+InstallMethod( PrintObj,
+  [ IsClassicalGQ and HasOrder and IsEllipticQuadric ],
+        function( p )
+          Print("EllipticQuadric(5, ",p!.basefield,")");
+        end );
+
+InstallMethod( Display, 
+  [ IsClassicalGQ and HasOrder and IsEllipticQuadric ],
+  function( p )
+    Print("Q-(5, ",Size(p!.basefield),")\n");
+    if HasQuadraticForm(p) then
+       Display(QuadraticForm(p));
+    fi;
+    Display(SesquilinearForm(p));
+  end );
+
+InstallMethod( ViewObj,
+  [ IsClassicalGQ and HasOrder and IsSymplecticSpace],
+        function( p )
+          Print("W(3, ",Size(p!.basefield),")");
+  end );
+
+InstallMethod( PrintObj,
+  [ IsClassicalGQ and HasOrder and IsSymplecticSpace ],
+        function( p )
+          Print("SymplecticSpace(3, ",p!.basefield,")");
+  end);
+
+InstallMethod( ViewObj,
+  [ IsClassicalGQ and HasOrder and IsParabolicQuadric ],
+        function( p )
+          Print("Q(4, ",Size(p!.basefield),")");
+        end);
+
+InstallMethod( PrintObj,
+  [ IsClassicalGQ and HasOrder and IsParabolicQuadric ],
+        function( p )
+          Print("ParabolicQuadric(4, ",p!.basefield,")");
+  end);
+
+InstallMethod( ViewObj,
+  [ IsClassicalGQ and HasOrder and IsHyperbolicQuadric ],
+        function( p )
+          Print("Q+(", p!.dimension,", ",Size(p!.basefield),")");
+  end);
+
+InstallMethod( PrintObj,
+  [ IsClassicalGQ and HasOrder and IsHyperbolicQuadric ],
+        function( p )
+          Print("HyperbolicQuadric(", p!.dimension,", ",p!.basefield,")");
+        end);
+
+InstallMethod( ViewObj,
+  [ IsClassicalGQ and HasOrder and IsHermitianVariety ],
+        function( p )
+          Print("H(",p!.dimension,", ",Sqrt(Size(p!.basefield)),"^2)");
+        end);
+
+InstallMethod( PrintObj,
+  [ IsClassicalGQ and HasOrder and IsHermitianVariety ],
+        function( p )
+          Print("HermitianVariety(",p!.dimension,",",p!.basefield,")");
+        end);
+		
+InstallMethod( ViewObj, [ IsClassicalGQ and HasOrder],
+  function( p )
+    Print("<classical ", SesquilinearForm(p)!.type, 
+       " generalised quadrangle of order ",Order(p),">");
+  end );
+
+InstallMethod( PrintObj, [ IsClassicalGQ and HasOrder],
+  function( p )
+    Print("<classical ", SesquilinearForm(p)!.type, 
+       " generalised quadrangle of order ",Order(p),">"); 
+  end );
+
 InstallMethod( ViewObj, 
 	"for a generalised hexagon with an order",	
 	[ IsGeneralisedHexagon and HasOrder ],
@@ -1627,7 +1626,7 @@ InstallMethod( ViewObj,
 	end );
 
 InstallMethod( PrintObj, 
-	"for a generalised hexagon with an order",
+	"for a generalised octogon with an order",
 	[ IsGeneralisedOctogon and HasOrder ],
 	function( p )
 		Print("Generalised ",p!.gonality,"-gon of order ",Order(p),

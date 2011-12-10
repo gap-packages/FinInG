@@ -1578,8 +1578,9 @@ InstallGlobalFunction( NiceMonomorphismByOrbit,
     # op an operation suitable for x and g
     # It is guaranteed that g acts faithfully on the orbit.
     local cand,h,iso,nr,orb,pgens;
-    if orblen <> false then
-        orb := Orb(g,x,op,rec(orbsizelimit := orblen, hashlen := 2*orblen,
+	if orblen <> false then
+        #Print("I am here!");
+		orb := Orb(g,x,op,rec(orbsizelimit := orblen, hashlen := 2*orblen,
                               storenumbers := true));
         Enumerate(orb);
     else
