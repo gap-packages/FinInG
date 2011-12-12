@@ -90,10 +90,17 @@ DeclareAttribute( "DefiningListOfPolynomials", IsAlgebraicVariety );
 DeclareOperation( "PointsOfAlgebraicVariety", [IsAlgebraicVariety] );
 DeclareOperation( "Points", [IsAlgebraicVariety] );
 
+DeclareAttribute( "AmbientSpace", IsAlgebraicVariety );
+
 ### 4. Segre Varieties ###
 DeclareOperation( "SegreMap", [ IsHomogeneousList ] ); # list of projective spaces
 DeclareOperation( "SegreVariety", [ IsHomogeneousList ]);  
 DeclareOperation( "SegreVariety", [ IsHomogeneousList, IsField ]);  
+## Just two projective spaces
+DeclareOperation( "SegreVariety", [ IsProjectiveSpace, IsProjectiveSpace ]);  
+DeclareOperation( "SegreVariety", [ IsPosInt, IsPosInt, IsField ]);
+
+DeclareOperation( "SegreVariety", [ IsPosInt, IsPosInt, IsPosInt ]);
 
 DeclareOperation("PointsOfSegreVariety", [IsSegreVariety] );
 
@@ -127,6 +134,3 @@ DeclareOperation( "VeroneseVariety", [IsPosInt, IsPosInt]);
 
 ## List of dimensions and field
 
-## Just two projective spaces
-DeclareOperation( "SegreVariety", [ IsProjectiveSpace, IsProjectiveSpace ]);  
-DeclareOperation( "SegreVariety", [ IsPosInt, IsPosInt, IsField ]);  

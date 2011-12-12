@@ -264,7 +264,12 @@ InstallMethod( Iterator, "for points of an algebraic variety",
 		return IteratorList(Filtered(Points(pts!.geometry), x->x in pts!.variety));
 	end );
 
-
+InstallMethod( AmbientSpace, "for an algebraic variety",
+	[IsAlgebraicVariety],
+	function(av)
+		return ShallowCopy(av!.geometry);
+	end );
+	
 ### 4. Segre Varieties ###
 
 InstallMethod( SegreMap, "given a list of projective spaces",
@@ -389,6 +394,56 @@ InstallMethod( PrintObj, [ IsSegreVariety and
     Print("Segre Variety in ");
 	ViewObj(var!.geometry);
   end );
+  
+
+InstallMethod( SegreVariety, "given two projective spaces",
+		[IsProjectiveSpace, IsProjectiveSpace ],
+	function(pg1,pg2)
+			
+	local listofpgs;
+	
+	listofpgs:=[pg1,pg2];
+	return SegreVariety(listofpgs);
+end );
+
+InstallMethod( SegreVariety, "given two pos integers and a field",
+	# Note that the given integers are the projective dimensions!
+		[ IsPosInt, IsPosInt, IsField ],
+	function(d1,d2,field)
+			
+	local listofpgs;
+	
+	listofpgs:=[PG(d1,field),PG(d2,field)];
+	return SegreVariety(listofpgs);
+end );
+
+
+InstallMethod( SegreVariety, "given two pos integers and a prime power",
+	# Note that the given integers are the projective dimensions!
+		[ IsPosInt, IsPosInt, IsPosInt ],
+	function(d1,d2,q)
+			
+	local listofpgs;
+	
+	listofpgs:=[PG(d1,GF(q)),PG(d2,GF(q))];
+	return SegreVariety(listofpgs);
+end );
+
+
+InstallMethod( ViewObj, [ IsSegreVariety and 
+                           IsSegreVarietyRep ],
+  function( var )
+    Print("Segre Variety in ");
+	ViewObj(var!.geometry);
+  end );
+
+InstallMethod( PrintObj, [ IsSegreVariety and 
+                           IsSegreVarietyRep ],
+  function( var )
+    Print("Segre Variety in ");
+	ViewObj(var!.geometry);
+  end );
+
 
 
 InstallMethod( PointsOfSegreVariety, "for a Segre variety",
