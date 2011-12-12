@@ -360,6 +360,36 @@ the Witt index of the defining sesquilinear or quadratic form.
 </Description>
 </ManSection>
 
+<ManSection>
+<Prop Name="IsHyperbolicQuadric" Arg="ps"/>
+<Returns>true or false</Returns>
+<Description>returns true if and only if <A>ps</A> is a hyperbolic quadric.
+<Example>
+<#Include SYSTEM "../examples/include/cps_ishyperbolicquadric.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Prop Name="IsEllipticQuadric" Arg="ps"/>
+<Returns>true or false</Returns>
+<Description>returns true if and only if <A>ps</A> is an elliptic quadric.
+<Example>
+<#Include SYSTEM "../examples/include/cps_isellipticquadric.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Prop Name="IsParabolicQuadric" Arg="ps"/>
+<Returns>true or false</Returns>
+<Description>returns true if and only if <A>ps</A> is a parabolic quadric.
+<Example>
+<#Include SYSTEM "../examples/include/cps_isparabolicquadric.include"> 
+</Example>
+</Description>
+</ManSection>
+
 </Section>
 
 <Section>

@@ -122,7 +122,7 @@ DeclareOperation( "NaturalEmbeddingBySubfield",
 
 DeclareOperation( "PluckerCoordinates", [ IsSubspaceOfProjectiveSpace ]);
 DeclareOperation( "InversePluckerCoordinates", [ IsSubspaceOfProjectiveSpace ]);
-DeclareOperation( "KleinCorrespondence", [ IsHyperbolicQuadric ]);
+DeclareOperation( "KleinCorrespondence", [ IsClassicalPolarSpace ]);
 
 DeclareOperation( "NaturalDuality", [ IsSymplecticSpace and IsGeneralisedPolygon ]);
 DeclareOperation( "NaturalDuality", [ IsHermitianVariety and IsGeneralisedPolygon ]);

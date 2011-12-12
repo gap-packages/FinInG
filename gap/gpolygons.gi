@@ -1470,7 +1470,6 @@ InstallMethod( IncidenceMatrixOfGeneralisedPolygon,
 InstallMethod( ViewObj,
 	"for a generalised polygon",
 	[ IsGeneralisedPolygon and IsGeneralisedPolygonRep and HasOrder],
-	2000,
 	function( p )
     Print("<generalised polygon of order ",Order(p),">");
   end );
@@ -1498,10 +1497,12 @@ InstallMethod( PrintObj, [ IsElationGQ and HasOrder],
      ", consisting of ", Size(p!.points), " points and ", Size(p!.lines)," lines");
   end );
 
-InstallMethod( ViewObj, [ IsProjectivePlane and HasOrder],
-  function( p )
-    Print("<projective plane of order ",Order(p)[1],">");
-  end );
+InstallMethod( ViewObj, 
+	"for a projective plane that has an order",
+	[ IsProjectivePlane and HasOrder],
+	function( p )
+		Print("<projective plane of order ",Order(p)[1],">");
+	end );
 
 InstallMethod( PrintObj, [ IsProjectivePlane and HasOrder ],
   function( p )

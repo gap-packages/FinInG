@@ -2567,4 +2567,86 @@ InstallMethod( SimilarityGroup, [ IsClassicalPolarSpace and IsClassicalPolarSpac
   end );
 
 #############################################################################
+		
+#############################################################################
+#P  IsParabolicQuadric( <ps> )
+# returns all the elements of the polar space <ps> 
+## 
+InstallMethod( IsParabolicQuadric, 
+	"for a polar space having HasQuadraticForm",
+	[IsClassicalPolarSpace],
+	1,
+	function( ps )
+		if HasQuadraticForm(ps) then
+			return IsParabolicForm(QuadraticForm(ps));
+		else
+			TryNextMethod();
+		fi;
+	end);
+	
+#############################################################################
+#P  IsParabolicQuadric( <ps> )
+# returns all the elements of the polar space <ps> 
+## 
+InstallMethod( IsParabolicQuadric, 
+	"for a polar space",
+	[IsClassicalPolarSpace],
+	function( ps )
+		return IsParabolicForm(SesquilinearForm(ps));
+	end);
+
+#############################################################################
+#P  IsHyperbolicQuadric( <ps> )
+# returns all the elements of the polar space <ps> 
+## 
+InstallMethod( IsHyperbolicQuadric, 
+	"for a polar space having HasQuadraticForm",
+	[IsClassicalPolarSpace],
+	1,
+	function( ps )
+		if HasQuadraticForm(ps) then
+			return IsHyperbolicForm(QuadraticForm(ps));
+		else
+			TryNextMethod();
+		fi;
+	end);
+	
+#############################################################################
+#P  IsHyperbolicQuadric( <ps> )
+# returns all the elements of the polar space <ps> 
+## 
+InstallMethod( IsHyperbolicQuadric, 
+	"for a polar space",
+	[IsClassicalPolarSpace],
+	function( ps )
+		return IsHyperbolicForm(SesquilinearForm(ps));
+	end);
+
+
+#############################################################################
+#P  IsEllipticQuadric( <ps> )
+# returns all the elements of the polar space <ps> 
+## 
+InstallMethod( IsEllipticQuadric, 
+	"for a polar space having HasQuadraticForm",
+	[IsClassicalPolarSpace],
+	1,
+	function( ps )
+		if HasQuadraticForm(ps) then
+			return IsEllipticForm(QuadraticForm(ps));
+		else
+			TryNextMethod();
+		fi;
+	end);
+	
+#############################################################################
+#P  IsEllipticQuadric( <ps> )
+# returns all the elements of the polar space <ps> 
+## 
+InstallMethod( IsEllipticQuadric, 
+	"for a polar space",
+	[IsClassicalPolarSpace],
+	function( ps )
+		return IsEllipticForm(SesquilinearForm(ps));
+	end);
 

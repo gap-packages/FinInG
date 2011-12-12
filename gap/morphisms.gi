@@ -1828,12 +1828,15 @@ InstallMethod( InversePluckerCoordinates,
 ##
 InstallMethod( KleinCorrespondence, 
 	"for a hyperbolic quadric",
-     [ IsHyperbolicQuadric ],
+     [ IsClassicalPolarSpace ],
 	function( quadric )
 		local f, i, form, map, pg, mat,
 			pre, plucker, ps, iso, inv, one;
 		if ProjectiveDimension(quadric) <> 5 then
 			Error("<ps> is not Klein's quadric");
+		fi;
+		if not IsHyperbolicQuadric(quadric) then
+   			Error("<ps> is not Klein's quadric");
 		fi;
 		f := quadric!.basefield;
 		one := One(f);

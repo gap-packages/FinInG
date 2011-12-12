@@ -1,0 +1,24 @@
+gap&gt; mat := IdentityMat(5,GF(9));
+[ [ Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ], 
+  [ 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3) ], 
+  [ 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3) ], 
+  [ 0*Z(3), 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3) ], 
+  [ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), Z(3)^0 ] ]
+gap&gt; form := BilinearFormByMatrix(mat,GF(9));
+&lt; bilinear form &gt;
+gap&gt; ps := PolarSpace(form);
+&lt;polar space in ProjectiveSpace(4,GF(3^2)): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2=0 &gt;
+gap&gt; IsParabolicQuadric(ps);
+true
+gap&gt; mat := [[1,0,0,0,0],[0,0,1,0,0],[0,0,0,0,0],[0,0,0,0,1],[0,0,0,0,0]]*Z(2)^0;
+[ [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ], 
+  [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ], 
+  [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ], 
+  [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ], 
+  [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ] ]
+gap&gt; form := QuadraticFormByMatrix(mat,GF(8));
+&lt; quadratic form &gt;
+gap&gt; ps := PolarSpace(form);
+&lt;polar space in ProjectiveSpace(4,GF(2^3)): x_1^2+x_2*x_3+x_4*x_5=0 &gt;
+gap&gt; IsParabolicQuadric(ps);
+true
