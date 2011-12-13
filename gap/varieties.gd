@@ -63,6 +63,8 @@ DeclareRepresentation( "IsAllPointsOfSegreVarietyRep", IsAllPointsOfSegreVariety
 DeclareCategory("IsVeroneseVariety", IsProjectiveVariety );
 DeclareRepresentation("IsVeroneseVarietyRep", IsVeroneseVariety, 
 				["geometry","listofpols","inverseimage","veronesemap", "polring"]);
+DeclareCategory( "IsAllPointsOfVeroneseVariety", IsAllPointsOfAlgebraicVariety );
+DeclareRepresentation( "IsAllPointsOfVeroneseVarietyRep", IsAllPointsOfVeroneseVariety, ["variety"]);
 
 
 #############################################################################

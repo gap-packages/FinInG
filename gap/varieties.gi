@@ -669,28 +669,57 @@ InstallMethod( VeroneseMap, "given a Veronese variety",
 	function(vv)
 	  return ShallowCopy(vv!.veronesemap);
 	end );
-	
+
 InstallMethod( PointsOfVeroneseVariety, "for a Veronese variety",
-			[IsVeroneseVariety],
-		# returns a list of the points of a Veronese variety using the Veronese map
-	function(vv)
-		local vm,cart,listofpgs,pg,pts;
-		vm:=vv!.veronesemap;
-		pg:=vv!.inverseimage;
-		pts:=List(Points(pg),vm);
-		return pts;
+	[IsVeroneseVariety],
+	function(var)
+		local pts;
+		pts:=rec( 
+				geometry:=var!.geometry,
+				type:=1,
+				variety:=var
+				);
+		return Objectify(
+			NewType( ElementsCollFamily,IsAllPointsOfVeroneseVariety and
+										IsAllPointsOfVeroneseVarietyRep),
+			pts
+			);
 	end );
 
+InstallMethod( ViewObj, [ IsAllPointsOfVeroneseVariety and 
+                           IsAllPointsOfVeroneseVarietyRep ],
+  function( pts )
+    Print("<points of ",pts!.variety,">");
+  end );
+	 
 InstallMethod( Points, "for a Veronese variety",
-			[IsVeroneseVariety],
-		# returns a list of the points of a Veronese variety using the Veronese map
-	function(vv)
-		local vm,cart,listofpgs,pg,pts;
+	[IsSegreVariety],
+	function(var)
+		return PointsOfVeroneseVariety(var);
+	end );
+
+InstallMethod( Iterator, "for points of an Veronese variety", 
+	[IsAllPointsOfVeroneseVariety],
+	function(pts)
+		local vv,vm,pg,ptlist;
+		vv:=pts!.variety;
 		vm:=vv!.veronesemap;
 		pg:=vv!.inverseimage;
-		pts:=List(Points(pg),vm);
-		return pts;
-	end );
+		ptlist:=List(Points(pg),vm);
+		return IteratorList(ptlist);
+	end );		
+
+InstallMethod( Enumerator,
+	"generic method for IsAllPointsOfVeroneseVariety",
+	[IsAllPointsOfVeroneseVariety],
+	function ( pts )
+		local vv,vm,pg,ptlist;
+		vv:=pts!.variety;
+		vm:=vv!.veronesemap;
+		pg:=vv!.inverseimage;
+		ptlist:=List(Points(pg),vm);
+		return ptlist;
+	end);
 
 
 ### 6. Miscellaneous ###
