@@ -19,7 +19,7 @@
 ##                  Vrije Universiteit Brussel
 ##                 
 ##
-##  Declaration stuff for projective algebraic varieties
+##  Declarations for algebraic varieties
 ##
 #############################################################################
 
@@ -30,6 +30,7 @@
 ##
 #############################################################################
 
+### 1. Algbraic Varieties ###
 
 DeclareCategory( "IsAlgebraicVariety", IsAttributeStoringRep );
 DeclareRepresentation("IsAlgebraicVarietyRep", IsAlgebraicVariety, ["geometry","polring", "listofpols"] );
@@ -37,18 +38,17 @@ DeclareCategory( "IsAllPointsOfAlgebraicVariety", IsDomain and IsCollection and 
 DeclareRepresentation( "IsAllPointsOfAlgebraicVarietyRep", IsAllPointsOfAlgebraicVariety, ["variety"]);
 
 
-### 1. Projective Varieties ###
+### 2. Projective Varieties ###
 
 DeclareCategory( "IsProjectiveVariety", IsAlgebraicVariety );
 DeclareRepresentation( "IsProjectiveVarietyRep", IsProjectiveVariety, ["geometry","polring","listofpols"]);
 
 
-### 2. Affine Varieties ###
+### 3. Affine Varieties ###
 
 DeclareCategory( "IsAffineVariety", IsAlgebraicVariety );
 DeclareRepresentation( "IsAffineVarietyRep", IsAffineVariety, ["geometry","polring","listofpols"]);
 
-### 3. Algbraic Varieties ###
 
 ### 4. Segre Varieties ###
 
@@ -69,40 +69,37 @@ DeclareRepresentation("IsVeroneseVarietyRep", IsVeroneseVariety,
 ##
 #############################################################################
 
-### 1. Projective Varieties ###
-
-DeclareOperation( "ProjectiveVariety", [IsProjectiveSpace, IsPolynomialRing, IsList] );
-DeclareOperation( "ProjectiveVariety", [IsProjectiveSpace, IsList] );
-#DeclareAttribute( "AmbientGeometry", [IsProjectiveVariety] );
-#DeclareOperation( "PointsOfProjectiveVariety", [IsProjectiveVariety] );
-#DeclareOperation( "Points", [IsProjectiveVariety] );
-DeclareOperation( "DualCoordinatesOfHyperplane", [IsSubspaceOfProjectiveSpace] );
-DeclareOperation( "HyperplaneByDualCoordinates", [IsProjectiveSpace,IsList] );
-
-### 2. Affine Varieties ###
-
-DeclareOperation( "AffineVariety", [IsAffineSpace, IsPolynomialRing, IsList] );
-DeclareOperation( "AffineVariety", [IsAffineSpace, IsList] );
-#DeclareAttribute( "AmbientGeometry", [IsAffineVariety] );
-#DeclareAttribute( "DefiningListOfPolynomials", [IsAffineVariety] );
-#DeclareOperation( "PointsOfAffineVariety", [IsAffineVariety] );
-#DeclareOperation( "Points", [IsAffineVariety] );
-
-### 3. Algebraic Varieties ###
-#DeclareAttribute( "AmbientGeometry", [IsAlgebraicVariety] );
+### 1. Algebraic Varieties ###
 DeclareOperation( "AlgebraicVariety", [IsProjectiveSpace, IsList] );
 DeclareOperation( "AlgebraicVariety", [IsAffineSpace, IsList] );
 DeclareAttribute( "DefiningListOfPolynomials", IsAlgebraicVariety );
 DeclareOperation( "PointsOfAlgebraicVariety", [IsAlgebraicVariety] );
 DeclareOperation( "Points", [IsAlgebraicVariety] );
-
 DeclareAttribute( "AmbientSpace", IsAlgebraicVariety );
+
+### 2. Projective Varieties ###
+
+DeclareOperation( "ProjectiveVariety", [IsProjectiveSpace, IsPolynomialRing, IsList] );
+DeclareOperation( "ProjectiveVariety", [IsProjectiveSpace, IsList] );
+DeclareOperation( "DualCoordinatesOfHyperplane", [IsSubspaceOfProjectiveSpace] );
+DeclareOperation( "HyperplaneByDualCoordinates", [IsProjectiveSpace,IsList] );
+
+### 3. Affine Varieties ###
+
+DeclareOperation( "AffineVariety", [IsAffineSpace, IsPolynomialRing, IsList] );
+DeclareOperation( "AffineVariety", [IsAffineSpace, IsList] );
 
 ### 4. Segre Varieties ###
 DeclareOperation( "SegreMap", [ IsHomogeneousList ] ); # list of projective spaces
+DeclareOperation( "SegreMap", [ IsHomogeneousList, IsField ] ); # list of dimensions
 DeclareOperation( "SegreVariety", [ IsHomogeneousList ]);  
 DeclareOperation( "SegreVariety", [ IsHomogeneousList, IsField ]); 
+
 # Some extra functionality for two factors 
+DeclareOperation( "SegreMap", [ IsProjectiveSpace, IsProjectiveSpace ]);  
+DeclareOperation( "SegreMap", [ IsPosInt, IsPosInt, IsField ]);
+DeclareOperation( "SegreMap", [ IsPosInt, IsPosInt, IsPosInt ]);
+
 DeclareOperation( "SegreVariety", [ IsProjectiveSpace, IsProjectiveSpace ]);  
 DeclareOperation( "SegreVariety", [ IsPosInt, IsPosInt, IsField ]);
 DeclareOperation( "SegreVariety", [ IsPosInt, IsPosInt, IsPosInt ]);

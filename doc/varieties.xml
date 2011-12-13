@@ -26,25 +26,17 @@ This is the chapter of the documentation describing the algebraic varieties.
 In <Package>FinInG</Package> we provide some basic functionality for algebraic varieties defined over finite fields. The algebraic varieties in <Package>FinInG</Package> are defined by a list of multivariate polynomials over a finite field, and an ambient geometry. This ambient geometry is either a projective space, and then the algebraic variety is called a <E>projective variety</E>, or an affine geometry, and then the algebraic variety is called an <E>affine variety</E>. In this chapter we give a brief overview of the features of <Package>FinInG</Package> concerning these two types of algebraic varieties.
 
 
-<!--SECTION PROJECTIVE VARIETIES -->
-<Section Label="projectivevarieties">
-<Heading>Projective Varieties</Heading>
-A <E>projective variety</E> in <Package>FinInG</Package> is an algebraic variety in a projective space defined by a list of homogeneous polynomials over a finite field.
-
+<!--SECTION ALGEBRAIC VARIETIES -->
+<Section Label="algebraicvarieties">
+<Heading>Algebraic Varieties</Heading>
+An <E>algebraic variety</E> in <Package>FinInG</Package> is an algebraic variety in a projective space or affine space, defined by a list of polynomials over a finite field.
 <ManSection>
-    <Oper Name="ProjectiveVariety" Arg="pg, pring, pollist"/>
-    <Oper Name="ProjectiveVariety" Arg="pg, pollist"/>
-    <Oper Name="AlgebraicVariety" Arg="pg, pring, pollist"/>
-    <Oper Name="AlgebraicVariety" Arg="pg, pollist"/>
-    <Returns>a projective algebraic variety</Returns>
+    <Oper Name="AlgebraicVariety" Arg="space, pring, pollist"/>
+    <Oper Name="AlgebraicVariety" Arg="space, pollist"/>
+    <Returns>an algebraic variety</Returns>
     <Description>
-        The argument <A>pg</A> is a projective space over a finite field <A>F</A>, the
-        argument <A>pring</A> is a multivariate polynomial ring defined over 
-        (a subfield of) <A>F</A>, and <A>pollist</A> is a list of homogeneous 
-        polynomials in <A>pring</A>.
-        <Example>
-<#Include SYSTEM "../examples/include/varieties_general.include"> 
-        </Example>
+        The argument <A>space</A> is an affine or projective space over a finite field <A>F</A>, the argument <A>pring</A> is a multivariate polynomial ring defined over 
+        (a subfield of) <A>F</A>, and <A>pollist</A> is a list of polynomials in <A>pring</A>. If the <A>space</A> is a projective space, then <A>pollist</A> needs to be a list of homogeneous polynomials. In <Package>FinInG</Package> there are two types of projective varieties: projective varieties and affine varieties. The following operations apply to both types.
     </Description>
 </ManSection>
 <ManSection>
@@ -56,16 +48,59 @@ A <E>projective variety</E> in <Package>FinInG</Package> is an algebraic variety
 </ManSection>
 <ManSection>
     <Attr Name="AmbientSpace" Arg="var"/>
-    <Returns>a projective space</Returns>
+    <Returns>an affine or projective space</Returns>
     <Description>
-        The argument <A>var</A> is an algebraic variety. This attribute returns the projective space in which the variety <A>var</A> was defined.
+        The argument <A>var</A> is an algebraic variety. This attribute returns the affine or projective space in which the variety <A>var</A> was defined.
     </Description>
 </ManSection>
 <ManSection>
     <Oper Name="PointsOfAlgebraicVariety" Arg="var"/>
+    <Oper Name="Points" Arg="var" />
     <Returns>a list of points</Returns>
     <Description>
-        The argument <A>var</A> is an algebraic variety. This operation returns the list of points of the <Ref Oper="AmbientSpace" /> of the algebraic variety <A>var</A> whose coordinates satify the <Ref Attr="DefiningListOfPolynomials"/> of the algebraic variety <A>var</A>.
+        The argument <A>var</A> is an algebraic variety. This operation returns the list of points of the <Ref Attr="AmbientSpace" /> of the algebraic variety <A>var</A> whose coordinates satify the <Ref Attr="DefiningListOfPolynomials"/> of the algebraic variety <A>var</A>.
+    </Description>
+</ManSection>
+<ManSection>
+    <Oper Name="Iterator" Arg="pts"/>
+    <Returns>an iterator</Returns>
+    <Description>
+        The argument <A>pts</A> is the set of <Ref Oper="PointsOfAlgebraicVariety" /> of an algebraic variety <A>var</A>. This operation returns an iterator for the points of an algebraic variety.
+    </Description>
+</ManSection>
+
+</Section>
+
+<!--SECTION PROJECTIVE VARIETIES -->
+<Section Label="projectivevarieties">
+<Heading>Projective Varieties</Heading>
+A <E>projective variety</E> in <Package>FinInG</Package> is an algebraic variety in a projective space defined by a list of homogeneous polynomials over a finite field.
+<ManSection>
+    <Oper Name="ProjectiveVariety" Arg="pg, pring, pollist"/>
+    <Oper Name="ProjectiveVariety" Arg="pg, pollist"/>
+    <Oper Name="AlgebraicVariety" Arg="pg, pring, pollist"/>
+    <Oper Name="AlgebraicVariety" Arg="pg, pollist"/>
+    <Returns>a projective algebraic variety</Returns>
+    <Description>
+            <Example>
+<#Include SYSTEM "../examples/include/varieties_general.include"> 
+        </Example>
+    </Description>
+</ManSection>
+
+<ManSection>
+    <Oper Name="DualCoordinatesOfHyperplane" Arg="hyp"/>
+    <Returns>a list</Returns>
+    <Description>
+        The argument <A>hyp</A> is a hyperplane of a projective space. This operation returns the dual coordinates of the hyperplane <A>hyp</A>, i.e. the list with the coefficients of the equation defining the hyperplane <A>hyp</A> as an algebraic variety.
+    </Description>
+</ManSection>
+
+<ManSection>
+    <Oper Name="HyperplaneByDualCoordinates" Arg="pg,list"/>
+    <Returns>a hyperplane of a projective space</Returns>
+    <Description>
+        The argument <A>pg</A> is a projective space, and <A>list</A> is the coordinate vector of a point of <A>pg</A>. This operation returns the hyperplane that has <A>list</A> as the list of coefficients of the equation defining the hyperplane as an algebraic variety.
     </Description>
 </ManSection>
 
@@ -89,12 +124,61 @@ An <E>affine variety</E> in <Package>FinInG</Package> is an algebraic variety in
         argument <A>pring</A> is a multivariate polynomial ring defined over 
         (a subfield of) <A>F</A>, and <A>pollist</A> is a list of 
         polynomials in <A>pring</A>.
-        <Example>
+   </Description>
+</ManSection>
+</Section> 
 
-        </Example>
+<!--SECTION SEGRE VARIETIES -->
+<Section Label="segrevarieties">
+<Heading>Segre Varieties</Heading>
+A <E>Segre variety</E> in <Package>FinInG</Package> is a projective algebraic variety in a projective space over a finite field. The set of points that lie on this variety is the image of the <E>Segre map</E>.
+
+<ManSection>
+    <Oper Name="SegreVariety" Arg="listofpgs"/>
+    <Oper Name="SegreVariety" Arg="listofdims,field"/>
+    <Oper Name="SegreVariety" Arg="pg1,pg2"/>
+    <Oper Name="SegreVariety" Arg="d1,d2,field"/>
+    <Oper Name="SegreVariety" Arg="d1,d2,q"/>
+    <Returns>a Segre variety</Returns>
+    <Description>
+        The argument <A>listofpgs</A> is a list of projective spaces defined over the same finite field, say <Alt Not="HTML"><M>[PG(n_1-1,q)</M></Alt> <Alt Only="HTML">[PG(n&lt;sub>1 &lt;/sub>-1,q)</Alt>, <Alt Not="HTML"><M>PG(n_2-1,q)</M></Alt> <Alt Only="HTML">PG(n&lt;sub>2 &lt;/sub>-1,q)</Alt>, ..., <Alt Not="HTML"><M>PG(n_k-1,q)]</M></Alt> <Alt Only="HTML">PG(n&lt;sub>k &lt;/sub>-1,q)]</Alt>. The operation also takes as input the list of dimensions (<A>listofdims</A>) and a finite field <A>field</A> (e.g. 
+        <Alt Not="HTML"><M>[n_1,n_2,\ldots,n_k,GF(q)]</M></Alt>
+        <Alt Only="HTML">[n&lt;sub>1&lt;/sub>, n&lt;sub>2&lt;/sub>, ..., n&lt;sub>k&lt;/sub>,GF(q)]</Alt>). A Segre variety with only two factors (<M>k=2</M>), can also be constructed using the operation with two projective spaces <A>pg1</A> and <A>pg2</A> as arguments, or with two dimensions <A>d1</A>, <A>d2</A>, and a finite field <A>field</A>(or a prime power <A>q</A>).
+        The operation returns a projective algebraic variety in the projective space of dimension <Alt Not="HTML"><M>n_1n_2\ldots n_k-1</M></Alt>
+        <Alt Only="HTML">n&lt;sub>1&lt;/sub> n&lt;sub>2&lt;/sub> ... n&lt;sub>k&lt;/sub>-1</Alt>.
+    </Description>
+</ManSection>
+<ManSection>
+    <Oper Name="PointsOfSegreVariety" Arg="sv"/>
+    <Oper Name="Points" Arg="sv"/>
+    <Returns>the points of a Segre variety</Returns>
+    <Description>
+        The argument <A>sv</A> is a Segre variety. This operation returns a set of points of the <Ref Attr="AmbientSpace" /> of the Segre variety. This set of points corresponds to the image of the <Ref Oper="SegreMap"/>.
+    </Description>
+</ManSection>
+<ManSection>
+    <Oper Name="SegreMap" Arg="listofpgs"/>
+    <Oper Name="SegreMap" Arg="listofdims,field"/>
+    <Oper Name="SegreMap" Arg="pg1,pg2"/>
+    <Oper Name="SegreMap" Arg="d1,d2,field"/>
+    <Oper Name="SegreMap" Arg="d1,d2,q"/>
+    <Returns>a function</Returns>
+    <Description>
+        The argument <A>listofpgs</A> is a list of projective spaces defined over the same finite field, say <Alt Not="HTML"><M>[PG(n_1-1,q)</M></Alt> <Alt Only="HTML">[PG(n&lt;sub>1 &lt;/sub>-1,q)</Alt>, <Alt Not="HTML"><M>PG(n_2-1,q)</M></Alt> <Alt Only="HTML">PG(n&lt;sub>2 &lt;/sub>-1,q)</Alt>, ..., <Alt Not="HTML"><M>PG(n_k-1,q)]</M></Alt> <Alt Only="HTML">PG(n&lt;sub>k &lt;/sub>-1,q)]</Alt>. The operation also takes as input the list of dimensions (<A>listofdims</A>) and a finite field <A>field</A> (e.g. 
+        <Alt Not="HTML"><M>[n_1,n_2,\ldots,n_k,GF(q)]</M></Alt>
+        <Alt Only="HTML">[n&lt;sub>1&lt;/sub>, n&lt;sub>2&lt;/sub>, ..., n&lt;sub>k&lt;/sub>,GF(q)]</Alt>). A Segre map with only two factors (<M>k=2</M>), can also be constructed using the operation with two projective spaces <A>pg1</A> and <A>pg2</A> as arguments, or with two dimensions <A>d1</A>, <A>d2</A>, and a finite field <A>field</A>(or a prime power <A>q</A>).
+        The operation returns a function with domain the product of the point sets of projective spaces in the list <Alt Not="HTML"><M>[PG(n_1-1,q)</M></Alt> <Alt Only="HTML">[PG(n&lt;sub>1 &lt;/sub>-1,q)</Alt>, <Alt Not="HTML"><M>PG(n_2-1,q)</M></Alt> <Alt Only="HTML">PG(n&lt;sub>2 &lt;/sub>-1,q)</Alt>, ..., <Alt Not="HTML"><M>PG(n_k-1,q)]</M></Alt> <Alt Only="HTML">PG(n&lt;sub>k &lt;/sub>-1,q)]</Alt> and image the set of points of the Segre variety (<Ref Oper="PointsOfSegreVariety"/>) in the projective space of dimension <Alt Not="HTML"><M>n_1n_2\ldots n_k-1</M></Alt>
+        <Alt Only="HTML">n&lt;sub>1&lt;/sub> n&lt;sub>2&lt;/sub> ... n&lt;sub>k&lt;/sub>-1</Alt>.
     </Description>
 </ManSection>
 
-</Section> 
+</Section>
 
+<!--SECTION VERONESE VARIETIES -->
+<Section Label="veronesevarieties">
+<Heading>Veronese Varieties</Heading>
+A <E>Veronese variety</E> in <Package>FinInG</Package> is a projective algebraic variety in a projective space over a finite field. The set of points that lie on this variety is the image of the <E>Veronese map</E>.
+
+
+</Section>
 </Chapter>

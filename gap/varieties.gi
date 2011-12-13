@@ -313,6 +313,15 @@ InstallMethod( SegreMap, "given a list of projective spaces",
 	return func;
 end );
 
+InstallMethod( SegreMap, "given a list of projective spaces",
+		[IsHomogeneousList, IsField ],
+	function(dimlist,field)
+			
+	local listofpgs,d;
+	
+	listofpgs:=List(dimlist,d->PG(d,field));
+	return SegreMap(listofpgs);
+end );
 
 
 InstallMethod( SegreVariety, "given a list of projective spaces", [IsHomogeneousList],
@@ -429,6 +438,37 @@ InstallMethod( SegreVariety, "given two pos integers and a prime power",
 	return SegreVariety(listofpgs);
 end );
 
+InstallMethod( SegreMap, "given two projective spaces",
+		[IsProjectiveSpace, IsProjectiveSpace ],
+	function(pg1,pg2)
+			
+	local listofpgs;
+	
+	listofpgs:=[pg1,pg2];
+	return SegreMap(listofpgs);
+end );
+
+InstallMethod( SegreMap, "given two pos integers and a field",
+	# Note that the given integers are the projective dimensions!
+		[ IsPosInt, IsPosInt, IsField ],
+	function(d1,d2,field)
+			
+	local listofpgs;
+	
+	listofpgs:=[PG(d1,field),PG(d2,field)];
+	return SegreMap(listofpgs);
+end );
+
+InstallMethod( SegreMap, "given two pos integers and a prime power",
+	# Note that the given integers are the projective dimensions!
+		[ IsPosInt, IsPosInt, IsPosInt ],
+	function(d1,d2,q)
+			
+	local listofpgs;
+	
+	listofpgs:=[PG(d1,GF(q)),PG(d2,GF(q))];
+	return SegreMap(listofpgs);
+end );
 
 InstallMethod( ViewObj, [ IsSegreVariety and 
                            IsSegreVarietyRep ],
