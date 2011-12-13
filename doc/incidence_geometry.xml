@@ -89,7 +89,7 @@ Category for all objects representing an incidence geometry.
 </Description>
 </ManSection>
 
-Lie Geometries, i.e. geometries with a projective space as ambient geometry, affine spaces and 
+Lie Geometries, i.e. geometries with a projective space as ambient space, affine spaces and 
 generalised polygons have their category, as a subcategory of <C>IsIncidenceGeometry</C>.
 <ManSection>
 <Heading>Main categories in <C>IsIncidenceGeometry</C></Heading>
@@ -176,18 +176,6 @@ In <Package>FinInG</Package>, the rank of an incidence structure is determined u
 is set.
 <Example>
 <#Include SYSTEM "../examples/include/incgeom_rank.include"> 
-</Example>
-</Description>
-</ManSection>
-
-<ManSection>
-<Attr Name="AmbientGeometry" Arg="inc"/>
-<Returns>the ambient geometry of the incidence structure <A>inc</A></Returns>
-<Description>
-This attribute is declared for objects in the category <C>IsIncidenceStructure</C>, but as this might be meaningless 
-for general incidence structures, in which case a no method found error is returned.
-<Example>
-check and give interesting examples.
 </Example>
 </Description>
 </ManSection>
@@ -308,11 +296,11 @@ in <A>C</A> provided there is a method installed.
 <Oper Name="AmbientGeometry" Arg="v"/>
 <Returns>the ambient geometry of the element <A>v</A></Returns>
 <Description>
-If <A>v</A> is an element of one of the incidence geometries currently implemented
+If <A>v</A> is an element of an incidence geometry currently implemented
 in <Package>FinInG</Package>, then this operation returns the ambient geometry of <A>v</A>, 
-i.e. the geometry in which <A>v</A> was created. If incidence structures are created with 
+i.e. in general the geometry in which <A>v</A> was created. If incidence structures was created with 
 elements that are a subset of elements of another incidence structure, the ambient geometry
-might stay unchanged, as the following example shows.
+might stay unchanged.
 <Example>
 <#Include SYSTEM "../examples/include/incgeom_el_ambient.include"> 
 </Example>
@@ -614,20 +602,6 @@ if the conversion is possible. <F>Embed</F> is declared as a synonym of <F>Eleme
 </Example>
 </Description>
 </ManSection>
-
-<ManSection>
-<Oper Name="ConvertElement" Arg="ps, el"/>
-<Description>
-Let <A>ps</A> be any Lie geometry. This method converts <A>el</A> to an element of
-<A>ps</A>, if possible. The <F>NC</F> version does not perform the checks. Use with 
-extreme care.
-<Example>
-<#Include SYSTEM "../examples/include/incgeom_lie_convert.include"> 
-</Example>
-</Description>
-</ManSection>
-
-
 
 </Section>
 </Chapter>

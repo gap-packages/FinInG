@@ -4,6 +4,21 @@ gap&gt; plane := Random(Planes(HyperbolicQuadric(5,2)));
 gap&gt; AmbientGeometry(plane);
 standard Q+(5, 2)
 gap&gt; l := Random(Lines(SplitCayleyHexagon(3)));
-&lt;a line in standard Q(6, 3)&gt;
+&lt;a line of Split Cayley Hexagon of order 3&gt;
 gap&gt; AmbientGeometry(l);
-standard Q(6, 3)
+Split Cayley Hexagon of order 3
+gap&gt; p := Random(Points(EGQByBLTSet(BLTSetByqClan(LinearqClan(3)))));
+#I  No intertwiner computed. One of the polar spaces must have a collineation 
+group computed
+#I  Computing nice monomorphism...
+#I  Now embedding dual BLT-set into W(5,q)...
+#I  Computing points(1) of Knarr construction...
+#I  Computing lines(1) of Knarr construction...
+#I  Computing points(2) of Knarr construction...
+#I  Computing lines(2) of Knarr construction...please wait
+#I  Computing elation group...
+&lt;a point of &lt;EGQ of order [ 9, 3 ] and basepoint 
+[ Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ]&gt;&gt;
+gap&gt; AmbientGeometry(p);
+&lt;EGQ of order [ 9, 3 ] and basepoint [ Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3),
+  0*Z(3) ]&gt;

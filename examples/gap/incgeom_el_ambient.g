@@ -3,4 +3,6 @@ plane := Random(Planes(HyperbolicQuadric(5,2)));
 AmbientGeometry(plane);
 l := Random(Lines(SplitCayleyHexagon(3)));
 AmbientGeometry(l);
+p := Random(Points(EGQByBLTSet(BLTSetByqClan(LinearqClan(3)))));
+AmbientGeometry(p);
 quit;
