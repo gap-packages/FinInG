@@ -55,6 +55,8 @@ DeclareRepresentation( "IsAffineVarietyRep", IsAffineVariety, ["geometry","polri
 DeclareCategory("IsSegreVariety", IsProjectiveVariety );
 DeclareRepresentation("IsSegreVarietyRep", IsSegreVariety, 
 				["geometry","listofpols","inverseimage","segremap", "polring"]);
+DeclareCategory( "IsAllPointsOfSegreVariety", IsAllPointsOfAlgebraicVariety );
+DeclareRepresentation( "IsAllPointsOfSegreVarietyRep", IsAllPointsOfSegreVariety, ["variety"]);
 
 
 ### 5. Veronese Varities ###

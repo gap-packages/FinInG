@@ -264,6 +264,26 @@ InstallMethod( Iterator, "for points of an algebraic variety",
 		return IteratorList(Filtered(Points(pts!.geometry), x->x in pts!.variety));
 	end );
 
+
+#O  Enumerator( <D> )
+# generic method that enumerates D, using an Iterator for D
+# assuming D belongs to IsElementsOfIncidenceStructure
+##
+InstallMethod( Enumerator,
+	"generic method for IsAllPointsOfAlgebraicVariety",
+	[IsAllPointsOfAlgebraicVariety],
+	function ( pts )
+	local  iter, elms;
+	iter := Iterator( pts );
+	elms := [  ];
+	while not IsDoneIterator( iter )  do
+		Add( elms, NextIterator( iter ) );
+	od;
+	return elms;
+	end);
+
+
+
 InstallMethod( AmbientSpace, "for an algebraic variety",
 	[IsAlgebraicVariety],
 	function(av)
@@ -491,21 +511,59 @@ InstallMethod( SegreMap, "given a Segre variety",
 	end );
 
 
+
 InstallMethod( PointsOfSegreVariety, "for a Segre variety",
-			[IsSegreVariety],
-		# returns a list of the points of a Segre variety using the Segre map
-	function(sv)
-		local sm,cart,listofpgs,pg,pts;
+	[IsSegreVariety],
+	function(var)
+		local pts;
+		pts:=rec( 
+				geometry:=var!.geometry,
+				type:=1,
+				variety:=var
+				);
+		return Objectify(
+			NewType( ElementsCollFamily,IsAllPointsOfSegreVariety and
+										IsAllPointsOfSegreVarietyRep),
+			pts
+			);
+	end );
+
+InstallMethod( ViewObj, [ IsAllPointsOfSegreVariety and 
+                           IsAllPointsOfSegreVarietyRep ],
+  function( pts )
+    Print("<points of ",pts!.variety,">");
+  end );
+	 
+InstallMethod( Points, "for a Segre variety",
+	[IsSegreVariety],
+	function(var)
+		return PointsOfSegreVariety(var);
+	end );
+
+InstallMethod( Iterator, "for points of an Segre variety", 
+	[IsAllPointsOfSegreVariety],
+	function(pts)
+		local x,sv,sm,cart,listofpgs,pg,ptlist;
+		sv:=pts!.variety;
 		sm:=sv!.segremap;
 		listofpgs:=sv!.inverseimage;
 		cart:=Cartesian(List(listofpgs,pg->Points(pg)));
-		pts:=List(cart,sm);
-		return pts;
-	end );
+		ptlist:=List(cart,sm);
+		return IteratorList(ptlist);
+	end );		
 
-# IteratorOfPointsOfSegreVariety
-# FamiliesOfMaximalSubspacesOfSegreVariety
-		
+InstallMethod( Enumerator,
+	"generic method for IsAllPointsOfSegreVariety",
+	[IsAllPointsOfSegreVariety],
+	function ( pts )
+		local x,sv,sm,cart,listofpgs,pg,ptlist;
+		sv:=pts!.variety;
+		sm:=sv!.segremap;
+		listofpgs:=sv!.inverseimage;
+		cart:=Cartesian(List(listofpgs,pg->Points(pg)));
+		ptlist:=List(cart,sm);
+		return ptlist;
+	end);
 
 ### 5. Veronese Varieties ###
 # the map in the last section comes from morphism.gi.
