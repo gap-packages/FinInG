@@ -43,19 +43,29 @@ A <E>projective variety</E> in <Package>FinInG</Package> is an algebraic variety
         (a subfield of) <A>F</A>, and <A>pollist</A> is a list of homogeneous 
         polynomials in <A>pring</A>.
         <Example>
-gap> F:=GF(9);
-GF(3^2)
-gap> r:=PolynomialRing(F,4);
-GF(3^2)[x_1,x_2,x_3,x_4]
-gap> pg:=PG(3,9);
-PG(3, 9)
-gap> f1:=r.1*r.3-r.2^2;
-x_1*x_3-x_2^2
-gap> f2:=r.4*r.1^2-r.4^3;
-x_1^2*x_4-x_4^3
-gap> var:=AlgebraicVariety(pg,[f1,f2]); 
-Algebraic Variety V( [ x_1*x_3-x_2^2, x_1^2*x_4-x_4^3 ] ) in PG(3, 9)
+<#Include SYSTEM "../examples/include/varieties_general.include"> 
         </Example>
+    </Description>
+</ManSection>
+<ManSection>
+    <Attr Name="DefiningListOfPolynomials" Arg="var"/>
+    <Returns>a list of polynomials</Returns>
+    <Description>
+        The argument <A>var</A> is an algebraic variety. This attribute returns the list of polynomials that was used to define the variety <A>var</A>.
+    </Description>
+</ManSection>
+<ManSection>
+    <Attr Name="AmbientSpace" Arg="var"/>
+    <Returns>a projective space</Returns>
+    <Description>
+        The argument <A>var</A> is an algebraic variety. This attribute returns the projective space in which the variety <A>var</A> was defined.
+    </Description>
+</ManSection>
+<ManSection>
+    <Oper Name="PointsOfAlgebraicVariety" Arg="var"/>
+    <Returns>a list of points</Returns>
+    <Description>
+        The argument <A>var</A> is an algebraic variety. This operation returns the list of points of the <Ref Oper="AmbientSpace" /> of the algebraic variety <A>var</A> whose coordinates satify the <Ref Attr="DefiningListOfPolynomials"/> of the algebraic variety <A>var</A>.
     </Description>
 </ManSection>
 
