@@ -162,6 +162,7 @@ A <E>Segre variety</E> in <Package>FinInG</Package> is a projective algebraic va
     <Oper Name="SegreMap" Arg="pg1,pg2"/>
     <Oper Name="SegreMap" Arg="d1,d2,field"/>
     <Oper Name="SegreMap" Arg="d1,d2,q"/>
+    <Oper Name="SegreMap" Arg="sv"/>
     <Returns>a function</Returns>
     <Description>
         The argument <A>listofpgs</A> is a list of projective spaces defined over the same finite field, say <Alt Not="HTML"><M>[PG(n_1-1,q)</M></Alt> <Alt Only="HTML">[PG(n&lt;sub>1 &lt;/sub>-1,q)</Alt>, <Alt Not="HTML"><M>PG(n_2-1,q)</M></Alt> <Alt Only="HTML">PG(n&lt;sub>2 &lt;/sub>-1,q)</Alt>, ..., <Alt Not="HTML"><M>PG(n_k-1,q)]</M></Alt> <Alt Only="HTML">PG(n&lt;sub>k &lt;/sub>-1,q)]</Alt>. The operation also takes as input the list of dimensions (<A>listofdims</A>) and a finite field <A>field</A> (e.g. 
@@ -169,6 +170,7 @@ A <E>Segre variety</E> in <Package>FinInG</Package> is a projective algebraic va
         <Alt Only="HTML">[n&lt;sub>1&lt;/sub>, n&lt;sub>2&lt;/sub>, ..., n&lt;sub>k&lt;/sub>,GF(q)]</Alt>). A Segre map with only two factors (<M>k=2</M>), can also be constructed using the operation with two projective spaces <A>pg1</A> and <A>pg2</A> as arguments, or with two dimensions <A>d1</A>, <A>d2</A>, and a finite field <A>field</A>(or a prime power <A>q</A>).
         The operation returns a function with domain the product of the point sets of projective spaces in the list <Alt Not="HTML"><M>[PG(n_1-1,q)</M></Alt> <Alt Only="HTML">[PG(n&lt;sub>1 &lt;/sub>-1,q)</Alt>, <Alt Not="HTML"><M>PG(n_2-1,q)</M></Alt> <Alt Only="HTML">PG(n&lt;sub>2 &lt;/sub>-1,q)</Alt>, ..., <Alt Not="HTML"><M>PG(n_k-1,q)]</M></Alt> <Alt Only="HTML">PG(n&lt;sub>k &lt;/sub>-1,q)]</Alt> and image the set of points of the Segre variety (<Ref Oper="PointsOfSegreVariety"/>) in the projective space of dimension <Alt Not="HTML"><M>n_1n_2\ldots n_k-1</M></Alt>
         <Alt Only="HTML">n&lt;sub>1&lt;/sub> n&lt;sub>2&lt;/sub> ... n&lt;sub>k&lt;/sub>-1</Alt>.
+        When a Segre variety <A>sv</A> is given as input, the operation returns the associated Segre map.
     </Description>
 </ManSection>
 
@@ -178,6 +180,37 @@ A <E>Segre variety</E> in <Package>FinInG</Package> is a projective algebraic va
 <Section Label="veronesevarieties">
 <Heading>Veronese Varieties</Heading>
 A <E>Veronese variety</E> in <Package>FinInG</Package> is a projective algebraic variety in a projective space over a finite field. The set of points that lie on this variety is the image of the <E>Veronese map</E>.
+
+<ManSection>
+    <Oper Name="VeroneseVariety" Arg="pg"/>
+    <Oper Name="VeroneseVariety" Arg="n-1,field"/>
+    <Oper Name="VeroneseVariety" Arg="n-1,q"/>
+    <Returns>a Veronese variety</Returns>
+    <Description>
+        The argument <A>pg</A> is a projective space defined over a finite field, say <M>PG(n-1,q)</M>. The operation also takes as input the dimension and a finite field <A>field</A> (e.g. <M>[n-1,q]</M>).
+        The operation returns a projective algebraic variety in the projective space of dimension <M>(n^2+n)/2-1</M>, known as the Veronese variety.
+    </Description>
+</ManSection>
+<ManSection>
+    <Oper Name="PointsOfVeroneseVariety" Arg="vv"/>
+    <Oper Name="Points" Arg="vv"/>
+    <Returns>the points of a Veronese variety</Returns>
+    <Description>
+        The argument <A>sv</A> is a Veronese variety. This operation returns a set of points of the <Ref Attr="AmbientSpace" /> of the Veronese variety. This set of points corresponds to the image of the <Ref Oper="VeroneseMap"/>.
+    </Description>
+</ManSection>
+<ManSection>
+    <Oper Name="VeroneseMap" Arg="pg"/>
+    <Oper Name="VeroneseMap" Arg="n-1,field"/>
+    <Oper Name="VeroneseMap" Arg="n-1,q"/>
+    <Oper Name="VeroneseMap" Arg="vv"/>
+    <Returns>a function</Returns>
+    <Description>
+    The argument <A>pg</A> is a projective space defined over a finite field, say <M>PG(n-1,q)</M>. The operation also takes as input the dimension and a finite field <A>field</A> (e.g. <M>[n-1,q]</M>).
+        The operation returns a function with domain the product of the point set of the projective space <M>PG(n-1,q)</M> and image the set of points of the Veronese variety (<Ref Oper="PointsOfVeroneseVariety"/>) in the projective space of dimension <M>(n^2+n)/2-1</M>.
+        When a Veronese variety <A>vv</A> is given as input, the operation returns the associated Veronese map.
+    </Description>
+</ManSection>
 
 
 </Section>

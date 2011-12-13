@@ -614,7 +614,18 @@ InstallMethod( VeroneseMap, "given a Veronese variety",
 	
 InstallMethod( PointsOfVeroneseVariety, "for a Veronese variety",
 			[IsVeroneseVariety],
-		# returns a list of the points of a Segre variety using the Segre map
+		# returns a list of the points of a Veronese variety using the Veronese map
+	function(vv)
+		local vm,cart,listofpgs,pg,pts;
+		vm:=vv!.veronesemap;
+		pg:=vv!.inverseimage;
+		pts:=List(Points(pg),vm);
+		return pts;
+	end );
+
+InstallMethod( Points, "for a Veronese variety",
+			[IsVeroneseVariety],
+		# returns a list of the points of a Veronese variety using the Veronese map
 	function(vv)
 		local vm,cart,listofpgs,pg,pts;
 		vm:=vv!.veronesemap;
