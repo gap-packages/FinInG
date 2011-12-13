@@ -693,12 +693,12 @@ InstallMethod( ViewObj, [ IsAllPointsOfVeroneseVariety and
   end );
 	 
 InstallMethod( Points, "for a Veronese variety",
-	[IsSegreVariety],
+	[IsVeroneseVariety],
 	function(var)
 		return PointsOfVeroneseVariety(var);
 	end );
 
-InstallMethod( Iterator, "for points of an Veronese variety", 
+InstallMethod( Iterator, "for points of a Veronese variety", 
 	[IsAllPointsOfVeroneseVariety],
 	function(pts)
 		local vv,vm,pg,ptlist;
@@ -710,7 +710,7 @@ InstallMethod( Iterator, "for points of an Veronese variety",
 	end );		
 
 InstallMethod( Enumerator,
-	"generic method for IsAllPointsOfVeroneseVariety",
+	"method for IsAllPointsOfVeroneseVariety",
 	[IsAllPointsOfVeroneseVariety],
 	function ( pts )
 		local vv,vm,pg,ptlist;

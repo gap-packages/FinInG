@@ -98,6 +98,9 @@ DeclareOperation( "SegreMap", [ IsHomogeneousList ] ); # list of projective spac
 DeclareOperation( "SegreMap", [ IsHomogeneousList, IsField ] ); # list of dimensions
 DeclareOperation( "SegreVariety", [ IsHomogeneousList ]);  
 DeclareOperation( "SegreVariety", [ IsHomogeneousList, IsField ]); 
+DeclareOperation("PointsOfSegreVariety", [IsSegreVariety] );
+DeclareOperation("Points", [IsSegreVariety] );
+DeclareOperation("SegreMap", [IsSegreVariety]);
 
 # Some extra functionality for two factors 
 DeclareOperation( "SegreMap", [ IsProjectiveSpace, IsProjectiveSpace ]);  
@@ -108,10 +111,6 @@ DeclareOperation( "SegreVariety", [ IsProjectiveSpace, IsProjectiveSpace ]);
 DeclareOperation( "SegreVariety", [ IsPosInt, IsPosInt, IsField ]);
 DeclareOperation( "SegreVariety", [ IsPosInt, IsPosInt, IsPosInt ]);
 
-DeclareOperation("PointsOfSegreVariety", [IsSegreVariety] );
-DeclareOperation("Points", [IsSegreVariety] );
-
-DeclareOperation("SegreMap", [IsSegreVariety]);
 
 
 ### 5. Veronese Varities ###
