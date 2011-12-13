@@ -1,0 +1,13 @@
+gap&gt; g := ElementaryAbelianGroup(27);
+&lt;pc group of size 27 with 3 generators&gt;
+gap&gt; flist1 := [ Group(g.1), Group(g.2), Group(g.3), Group(g.1*g.2*g.3) ];
+[ &lt;pc group with 1 generators&gt;, &lt;pc group with 1 generators&gt;, 
+  &lt;pc group with 1 generators&gt;, &lt;pc group with 1 generators&gt; ]
+gap&gt; flist2 := [ Group([g.1, g.2^2*g.3]), Group([g.2, g.1^2*g.3 ]), 
+&gt;             Group([g.3, g.1^2*g.2]), Group([g.1^2*g.2, g.1^2*g.3 ]) ];
+[ &lt;pc group with 2 generators&gt;, &lt;pc group with 2 generators&gt;, 
+  &lt;pc group with 2 generators&gt;, &lt;pc group with 2 generators&gt; ]
+gap&gt; IsKantorFamily( g, flist1, flist2 );
+#I  Checking tangency condition...
+#I  Checking triple condition...
+true

@@ -1,0 +1,6 @@
+gap&gt; f := GF(3);
+GF(3)
+gap&gt; id := IdentityMat(2, f);;
+gap&gt; clan := List( f, t -&gt; t * id );;
+gap&gt; IsqClan( clan, f );
+true

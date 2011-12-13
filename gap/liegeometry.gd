@@ -146,6 +146,7 @@ DeclareOperation( "Meet", [IsEmptySubspace, IsEmptySubspace]);
 
 #something new after a Brussels day...
 DeclareOperation( "ElementToElement", [IsLieGeometry, IsElementOfLieGeometry]);
+DeclareSynonym( "Embed", ElementToElement );
 DeclareOperation( "ConvertElement", [IsLieGeometry, IsElementOfLieGeometry]);
 DeclareOperation( "ConvertElementNC", [IsLieGeometry, IsElementOfLieGeometry]);
 

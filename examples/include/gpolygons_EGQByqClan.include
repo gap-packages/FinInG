@@ -1,8 +1,20 @@
-gap> f := GF(3);
+gap&gt; f := GF(3);
 GF(3)
-gap> id := IdentityMat(2, f);;
-gap> clan := List( f, t -> t * id );;
-gap> IsqClan( clan, f );
-true
-gap> egq := EGQByqClan( clan, f );
-&lt;EGQ of order [ 9, 3 ] and basepoint 0>
+gap&gt; id := IdentityMat(2, f);;
+gap&gt; list := List( f, t -&gt; t * id );;
+gap&gt; clan := qClan(list,f);
+&lt;q-clan over GF(3)&gt;
+gap&gt; egq := EGQByqClan(clan);
+#I  Computed Kantor family. Now computing EGQ...
+#I  Computing points from Kantor family...
+#I  Computing lines from Kantor family...
+&lt;EGQ of order [ 9, 3 ] and basepoint 0&gt;
+gap&gt; incgraph := IncidenceGraphOfGeneralisedPolygon(egq);;
+#I  Computing incidence graph of generalised polygon...
+gap&gt; group := AutomorphismGroup(incgraph);
+&lt;permutation group with 6 generators&gt;
+gap&gt; Order(group);
+26127360
+gap&gt; Order(CollineationGroup(HermitianVariety(3,9)));
+#I  Computing nice monomorphism...
+26127360

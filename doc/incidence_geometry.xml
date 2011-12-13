@@ -594,7 +594,7 @@ to objects in the category <C>IsSubspaceOfProjectiveSpace</C> are by default app
 in any subcategory, so on elements of any Lie geometry. When dealing with elements of e.g. different polar
 spaces in the samen projective space, this yields a natural way of working with them, and investigating 
 relations between them, without bothering about all necessary mappings. On the other hand, in some situations,
-it is impossible to decide in which geometry an element has to be considered. An easy example is the followin.
+it is impossible to decide in which geometry an element has to be considered. An easy example is the following.
 Consider two different quadrics in the same projective space. The intersection of two elements, one of each
 quadric, is clearly an element of the ambient projective space. But also of both quadrics. Without extra input
 of the user, the system cannot decide in which geometry to construct the intersection. To avoid complicated methods
@@ -605,10 +605,11 @@ operations for elements of Lie gometries.
 
 <ManSection>
 <Oper Name="ElementToElement" Arg="ps, el"/>
+<Oper Name="Embed" Arg="ps, el"/>
 <Returns><A>el</A> as an element of <A>ps</A></Returns>
 <Description>
 Let <A>ps</A> be any Lie geometry. This method return <F>VectorSpaceToElement(ps,ElementToVectorSpace(el))</F>,
-if the conversion is possible.<Example>
+if the conversion is possible. <F>Embed</F> is declared as a synonym of <F>ElementToElement</F>.<Example>
 <#Include SYSTEM "../examples/include/incgeom_lie_elementtoelement.include"> 
 </Example>
 </Description>

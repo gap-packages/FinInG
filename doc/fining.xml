@@ -2,6 +2,8 @@
 
 <!DOCTYPE Book SYSTEM "gapdoc.dtd">
 <?LaTeX ExtraPreamble="\usepackage{graphicx}"?>
+<?LaTeX ExtraPreamble="\usepackage{amsfonts}"?>
+
 
 <!--
 

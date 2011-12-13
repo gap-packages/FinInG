@@ -100,8 +100,13 @@ morphismsfiles := ["morphisms_intertwiners","morphisms_embedding1","morphisms_em
           "morphisms_isopolar","morphisms_projection","morphisms_completion","morphisms_klein","morphisms_duality"];;
 
 
-gpolygonfiles := ["gpolygons_projplanes1", "gpolygons_projplanes2", "gpolygons_EGQByKantorFamily", 
-                  "gpolygons_EGQByqClan", "gpolygons_EGQByBLTSet", "gpolygons_collineations", "gpolygons_SplitCayleyHexagon"];
+gpolygonfiles := [ "gpolygons_projplanes1", "gpolygons_projplanes2", "gpolygons_iskantorfamily", "gpolygons_isqclan",
+				   "gpolygons_qclan", "gpolygons_EGQByqClan", "gpolygons_kantorfamilybyqclan",
+				   "gpolygons_EGQByKantorFamily", "gpolygons_particularqclans"
+				   
+				   
+				   "gpolygons_EGQByBLTSet", 
+				   "gpolygons_collineations", "gpolygons_SplitCayleyHexagon"];
 
 diagramfiles := ["diagram_cosetgeom"];
 
@@ -112,7 +117,7 @@ groups_appfiles := ["groups_app_sodesargues", "groups_app_godesargues", "groups_
 					"groups_app_deltaominus", "groups_app_deltaoplus", "groups_app_gammaoplus", "groups_app_gammaominus",
 					"groups_app_gammao", "groups_app_gammau" ];
 
-files := [ "projgroups_order" ];
+files := [ "gpolygons_EGQByqClan" ];
 
 #initialize directorynames
 #exampledir = dir where .g files are located : ".../pkg/fining/examples/gap"

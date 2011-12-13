@@ -1,0 +1,24 @@
+gap&gt; LinearqClan(4);
+Error, Couldn't find nonsquare called from
+&lt;function&gt;( &lt;arguments&gt; ) called from read-eval-loop
+Entering break read-eval-print loop ...
+you can 'quit;' to quit to outer loop, or
+you can 'return;' to continue
+brk&gt; quit;
+gap&gt; LinearqClan(5);
+&lt;q-clan over GF(5)&gt;
+gap&gt; FisherThasWalkerKantorBettenqClan(9);
+Error, q must be congruent to 2 mod (3) called from
+&lt;function&gt;( &lt;arguments&gt; ) called from read-eval-loop
+Entering break read-eval-print loop ...
+you can 'quit;' to quit to outer loop, or
+you can 'return;' to continue
+brk&gt; quit;
+gap&gt; FisherThasWalkerKantorBettenqClan(11);
+&lt;q-clan over GF(11)&gt;
+gap&gt; KantorMonomialqClan(17);
+&lt;q-clan over GF(17)&gt;
+gap&gt; KantorKnuthqClan(25);
+&lt;q-clan over GF(5^2)&gt;
+gap&gt; FisherqClan(23);
+&lt;q-clan over GF(23)&gt;

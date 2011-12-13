@@ -1,0 +1,6 @@
+gap&gt; f := GF(7);
+GF(7)
+gap&gt; id := IdentityMat(2, f);;
+gap&gt; clan := List( f, t -&gt; t * id );;
+gap&gt; clan := qClan( clan, f );
+&lt;q-clan over GF(7)&gt;

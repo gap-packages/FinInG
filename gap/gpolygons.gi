@@ -32,6 +32,8 @@
 # - iterators for generalised hexagons?
 #   at the moment we just take the full set, could be difficult!
 # - join and meet operations
+# - shadow of elements for models of GHs.
+# - VectorSpaceToElement for models of GHs.
 #
 # Documentation check-list
 # - SplitCayleyHexagon
@@ -49,10 +51,16 @@ Print(", gpolygons\c");
 
 #############################################################################
 #
-#   Basic methods and iterators
+# Basic methods and iterators
+# This section is generic, i.e. if someone constructs a GP and obeys the representation,
+# these methods will work.
 #
 #############################################################################
 
+#############################################################################
+#O  ElementsOfIncidenceStructure( <gp>, <j> )
+# returns the elements of <gp> of type <j>
+##
 InstallMethod( ElementsOfIncidenceStructure, 
 	"for a generalised polygon and a positive integer",
 	[IsGeneralisedPolygon, IsPosInt],
@@ -77,6 +85,10 @@ InstallMethod( ElementsOfIncidenceStructure,
 						);
 	end );
 
+#############################################################################
+#O  ElementsOfIncidenceStructure( <gp>, <j> )
+# returns the elements of <gp> of type <j>. <gp> is an EGQ by Kanto Family
+##
 InstallMethod( ElementsOfIncidenceStructure, 
 	"for a an EGB by Kantor Family and a positive integer",
 	[IsElationGQByKantorFamily, IsPosInt],
@@ -94,6 +106,10 @@ InstallMethod( ElementsOfIncidenceStructure,
 						);
 	end );
 
+#############################################################################
+#O  ElementsOfIncidenceStructure( <gp>, <j> )
+# returns the elements of <gp> of type <j>. <gp> is an generalised hexagon.
+##
 InstallMethod( ElementsOfIncidenceStructure, 
 	"for a generalised hexagon and a positive integer",
 	[IsGeneralisedHexagon, IsPosInt],
@@ -111,6 +127,10 @@ InstallMethod( ElementsOfIncidenceStructure,
 						);
 	end );
 
+#############################################################################
+#O  Points( <gp>  )
+# returns the points of <gp>.
+##
 InstallMethod( Points, 
 	"for a generalised polygon",
 	[IsGeneralisedPolygon],
@@ -118,6 +138,10 @@ InstallMethod( Points,
 		return ElementsOfIncidenceStructure(gp, 1);
 	end);
 
+#############################################################################
+#O  Lines( <gp>  )
+# returns the lines of <gp>.
+##
 InstallMethod( Lines, 
 	"for a generalised polygon",
 	[IsGeneralisedPolygon],
@@ -125,11 +149,19 @@ InstallMethod( Lines,
 		return ElementsOfIncidenceStructure(gp, 2);
 	end);
 
+#############################################################################
+#O  Size( <gp>  )
+# returns the size of a collection of elements of a <gp>
+##
 InstallMethod(Size, 
 	"for elements of a generalised polygon",
 	[IsAllElementsOfGeneralisedPolygon], 
 	vs -> vs!.size );
 
+#############################################################################
+#O  Iterator( <vs>  )
+# returns an iterator for the elements of a gp
+##
 InstallMethod(Iterator, 
 	"for elements of a generalised polygon",
 	[IsAllElementsOfGeneralisedPolygon],
@@ -147,89 +179,61 @@ InstallMethod(Iterator,
 		fi;
 	end );
 
-InstallMethod(Iterator, 
-	"for elements of a generalised hexagon",
-    [IsAllElementsOfGeneralisedHexagon],
-	function( vs )
-		local ps, j, vars, coll, reps;
-		ps := vs!.geometry;
-		j := vs!.type;
-		coll := CollineationGroup( ps );
-		reps := RepresentativesOfElements( ps );
-		vars := Enumerate(Orb(coll, reps[j], OnProjSubspaces));
-		return IteratorList( vars );
+#############################################################################
+#O  IsIncident( <vs>  )
+# simply uses the incidence relation that is built in in the gp.
+##
+InstallMethod( IsIncident, 
+	"for elements of a generalised polygon", 
+    [IsElementOfGeneralisedPolygon, IsElementOfGeneralisedPolygon],
+	function( x, y )
+		local inc;
+		inc := x!.geo!.incidence;
+		return inc(x!.obj, y!.obj);
 	end );
 
-InstallMethod(Iterator, 
-	"for elements of an EGQ defined by a Kantor family",
-	[IsAllElementsOfKantorFamily],
-
-##  We can do much better here.
-##  Perhaps we need to think about implementing enumerators/iterators
-##  for Kantor families. One day there might be enumerators for cosets?
-
-  function( vs )
-    local ps, j, vars;
-    ps := vs!.geometry;
-    j := vs!.type;
-    if j = 1 then 
-       vars := ps!.points;
-       return IteratorList( vars );
-    elif j = 2 then 
-       vars := ps!.lines;
-       return IteratorList( vars );
-    else Error("Element type does not exist"); return;
-    fi;
-  end );
-
-InstallMethod( IsIncident, "for elements of a generalised polygon", 
-              [IsElementOfGeneralisedPolygon, IsElementOfGeneralisedPolygon],
-  function( x, y )
-    local inc;
-    inc := x!.geo!.incidence;
-    return inc(x!.obj, y!.obj);
-  end );
-
-InstallMethod( IsIncident, "for elements of a Kantor family",
-              [IsElementOfKantorFamily, IsElementOfKantorFamily],
-  function( x, y )
-    local inc;
-    inc := x!.geo!.incidence;
-    return inc(x, y);
-  end );
-
-InstallMethod( Wrap, "for a generalised polygon and an object",
-  [IsGeneralisedPolygon, IsPosInt, IsObject],
-  function( geo, type, o )
-    local w;
-    w := rec( geo := geo, type := type, obj := o );
-    Objectify( NewType( ElementsOfIncidenceStructureFamily,   # ElementsFamily,
-          IsElementOfIncidenceStructureRep and IsElementOfGeneralisedPolygon ), w );
-    return w;
-  end );
-
-InstallMethod( Wrap, "for an EGQ (Kantor family), and an object",
-  [IsElationGQByKantorFamily, IsPosInt, IsPosInt, IsObject],
-  function( geo, type, class, o )
-    local w;
-    w := rec( geo := geo, type := type, class := class, obj := o );
-    Objectify( NewType( ElementsOfIncidenceStructureFamily,   #ElementsFamily,
-      IsElementOfKantorFamilyRep and IsElementOfKantorFamily ), w );
-    return w;
+#############################################################################
+#O  Wrap( <geo>, <type>, <o>  )
+# returns the element of <geo> represented by <o>.
+# this method is generic, but of course not fool proof.
+##
+InstallMethod( Wrap, 
+	"for a generalised polygon and an object",
+	[IsGeneralisedPolygon, IsPosInt, IsObject],
+	function( geo, type, o )
+		local w;
+		w := rec( geo := geo, type := type, obj := o );
+		Objectify( NewType( ElementsOfIncidenceStructureFamily,   # ElementsFamily,
+			IsElementOfIncidenceStructureRep and IsElementOfGeneralisedPolygon ), w );
+		return w;
   end );
 
 #############################################################################
 #
 #  Generalised Hexagons
+#  This section implements H(q) and T(q,q^3). In FinInG, these geometries 
+#  are nicely constructed inside polar spaces, but are also constructed
+#  formally as generalised polygons, which make typical operations available
+#  Both are also Lie geometries, and are hard wired embedded inside the corresponding
+#  polar space. See chapter 4 of the documentation.
+#
+#  For both models we (have to) install methods for Wrap etc. This makes other 
+#  operations, like OnProjSubspaces (action function) generic. As such, we can fully
+#  exploit the fact that these geometries are also Lie geometries.
 #
 #############################################################################
 
-InstallMethod( SplitCayleyHexagon, "input is a finite field", 
-               [ IsField and IsFinite ],
-  function( f )
+#############################################################################
+#O  SplitCayleyHexagon( <f> )
+# returns the split cayley hexagon over <f>
+##
+InstallMethod( SplitCayleyHexagon, 
+	"for a finite field", 
+	[ IsField and IsFinite ],
+	function( f )
     local m, mp, ml, gens, frob, newgens, geo, ty, inc,
-          coll, repline, reppoint, hq, hvm, ps,
-          hvmc, c, change, hvmform, form, nonzerof, x;
+          coll, repline, reppointvect, reppoint, replinevect,
+		  hq, hvm, ps, hvmc, c, change, hvmform, form, nonzerof, x, w;
     # The generators of Ree(q) were taken from Hendrik 
     # van Maldeghem's book: "Generalized Polygons".
     # Lines with ** are where there are mistake's in
@@ -268,8 +272,8 @@ InstallMethod( SplitCayleyHexagon, "input is a finite field",
        ## now we transfer elements and automorphisms
        ## to the parabolic quadric given by FinInG 
        ps := ParabolicQuadric(6, f);
-
-       ## this is Hendrik's form
+	   
+	   ## this is Hendrik's form
        hvm := List([1..7], i -> [0,0,0,0,0,0,0]*One(f));
        hvm{[1..3]}{[5..7]} := IdentityMat(3, f);
        hvm{[5..7]}{[1..3]} := IdentityMat(3, f);
@@ -290,12 +294,13 @@ InstallMethod( SplitCayleyHexagon, "input is a finite field",
           Add(newgens, ProjectiveSemilinearMap( IdentityMat(7,f), frob, f )); 
        fi;  ## this is OK, I think
        coll := GroupWithGenerators(newgens);
-       reppoint := RepresentativesOfElements(ps)[1];
+       reppointvect := ElementToVectorSpace(RepresentativesOfElements(ps)[1]);
 
        ## Hendrik's canonical line is <(1,0,0,0,0,0,0), (0,0,0,0,0,0,1)>
-       repline := [[1,0,0,0,0,0,0], [0,0,0,0,0,0,1]] * One(f) * change;
-       ConvertToMatrixRep(repline, f);
-       repline := VectorSpaceToElement(ps, repline);
+       replinevect := [[1,0,0,0,0,0,0], [0,0,0,0,0,0,1]] * One(f) * change;
+       TriangulizeMat(replinevect);
+	   ConvertToMatrixRep(replinevect, f);
+       #repline := VectorSpaceToElement(ps, repline); #to be changed
     else
        ## Here we embed the hexagon in W(5,q)
        m:=[[ 0, 0, 0, 0, 1, 0],
@@ -337,12 +342,13 @@ InstallMethod( SplitCayleyHexagon, "input is a finite field",
           Add(newgens, ProjectiveSemilinearMap( IdentityMat(6,f), frob, f )); 
        fi;
        coll := GroupWithGenerators(newgens);
-       reppoint := RepresentativesOfElements(ps)[1];
+       reppointvect := ElementToVectorSpace(RepresentativesOfElements(ps)[1]); #to be changed
 
        ## Hendrik's canonical line is <(1,0,0,0,0,0), (0,0,0,0,0,1)>
-       repline := [[1,0,0,0,0,0], [0,0,0,0,0,1]] * One(f) * change;
-       ConvertToMatrixRep(repline, f);
-       repline := VectorSpaceToElement(ps, repline);
+       replinevect := [[1,0,0,0,0,0], [0,0,0,0,0,1]] * One(f) * change; 
+       TriangulizeMat(replinevect);
+	   ConvertToMatrixRep(replinevect, f);
+       #repline := VectorSpaceToElement(ps, repline); #to be changed
     fi; 
 
     if IsPrime(Size(f)) then
@@ -351,39 +357,64 @@ InstallMethod( SplitCayleyHexagon, "input is a finite field",
        SetName(coll, Concatenation("G_2(",String(Size(f)),").", String(Order(frob))) );
     fi;
 
-    inc := function(x, y) return x!.obj in y!.obj; end;
-    geo := rec( points := [], lines := [], incidence:= inc);
+    #inc := function(x, y) return x!.obj in y!.obj; end;
+    inc := \*;           #this looks nice now :-)
+	
+	#in the next line, we set the data fields for the geometry. We have to take into account that H(q) will also be
+	#a Lie geometry, so it needs more data fields than a GP. But we can derive this information from ps.
+	geo := rec( points := [], lines := [], incidence:= inc, basefield := BaseField(ps), 
+		dimension := Dimension(ps), vectorspace := UnderlyingVectorSpace(ps), polarspace := ps );
     ty := NewType( GeometriesFamily,
              IsGeneralisedHexagon and IsGeneralisedPolygonRep and IsLieGeometry ); #change by jdb 7/12/11
     Objectify( ty, geo );
-    SetAmbientSpace(geo, ps);
+    SetAmbientSpace(geo, AmbientSpace(ps));
     SetOrder(geo, [Size(f), Size(f)]);
     SetCollineationAction(coll, OnProjSubspaces);
     SetCollineationGroup(geo, coll);
     SetTypesOfElementsOfIncidenceStructure(geo, ["point","line"]);
+    
+	#now we are ready to pack the representatives of the elements, which are also elements of a polar space.
+	#recall that reppointvect and replinevect are triangulized.
+	w := rec(geo := geo, type := 1, obj := reppointvect);
+	reppoint := Objectify( NewType( SoPSFamily, IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep and
+												IsElementOfGeneralisedPolygon and IsSubspaceOfClassicalPolarSpace ), w );
+	w := rec(geo := geo, type := 2, obj := replinevect);
+	repline := Objectify( NewType( SoPSFamily, IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep and
+												IsElementOfGeneralisedPolygon and IsSubspaceOfClassicalPolarSpace ), w );
     SetRepresentativesOfElements(geo, [reppoint, repline]);
     SetName(geo,Concatenation("Split Cayley Hexagon of order ", String(Size(f))));
 	return geo;
   end );
 
-InstallMethod( SplitCayleyHexagon, "input is a prime power", [ IsPosInt ],
-  function( q )
-    return SplitCayleyHexagon(GF(q));
-  end );
+#############################################################################
+#O  SplitCayleyHexagon( <q> )
+# shortcut to previous method.
+##
+InstallMethod( SplitCayleyHexagon, 
+	"input is a prime power", 
+	[ IsPosInt ],
+	function( q )
+		return SplitCayleyHexagon(GF(q));
+	end );
 
-InstallMethod( TwistedTrialityHexagon, "input is a finite field", 
-                [ IsField and IsFinite ],
-  function( f )
+#############################################################################
+#O  TwistedTrialityHexagon( <f> )
+# returns the twisted triality hexagon over <f>
+##
+InstallMethod( TwistedTrialityHexagon, 
+	"input is a finite field", 
+    [ IsField and IsFinite ],
+	function( f )
     local m, mp, ml, gens, frob, newgens, geo, ty, inc, x,
           coll, points, lines, repline, hq, hvm, ps,
           hvmc, c, change, hvmform, form, nonzerof, q, pps, sigma,
-          reppoint;
+          reppoint, reppointvect, replinevect, w;
     # The generators of 3D4(q) were taken from Hendrik 
     # van Maldeghem's book: "Generalized Polygons".
 
     ## field must be GF(q^3);
     q := RootInt(Size(f), 3);
-    if not IsInt(q) then
+	if not q^3 = Size(f) then
        Error("Field order must be a cube of a prime power");
     fi;
     pps := PrimePowersInt( Size(f) );
@@ -437,37 +468,94 @@ InstallMethod( TwistedTrialityHexagon, "input is a finite field",
     newgens := List(gens, x -> ProjectiveSemilinearMap(x,f));
     coll := GroupWithGenerators(newgens);
 
-       ## Hendrik's canonical point is <(1,0,0,0,0,0,0,0)>
+	## Hendrik's canonical point is <(1,0,0,0,0,0,0,0)>
     ps := HyperbolicQuadric(7, f);
-    reppoint := ([1,0,0,0,0,0,0,0] * One(f)) * change;
-    ConvertToVectorRep(reppoint, f);
-    reppoint := VectorSpaceToElement(ps, reppoint);
+    reppointvect := ([1,0,0,0,0,0,0,0] * One(f)) * change;
+    MultRowVector(reppointvect,Inverse( reppointvect[PositionNonZero(reppointvect)] ));
+	ConvertToVectorRep(reppointvect, f);
+    
+	#reppoint := VectorSpaceToElement(ps, reppoint);
 
-       ## Hendrik's canonical line is <(1,0,0,0,0,0,0,0), (0,0,0,0,0,0,1,0)>
-    repline := ([[1,0,0,0,0,0,0,0], [0,0,0,0,0,0,1,0]] * One(f)) * change;
-    ConvertToMatrixRep(repline, f);
-    repline := VectorSpaceToElement(ps, repline);
+	## Hendrik's canonical line is <(1,0,0,0,0,0,0,0), (0,0,0,0,0,0,1,0)>
+    replinevect := ([[1,0,0,0,0,0,0,0], [0,0,0,0,0,0,1,0]] * One(f)) * change;
+    TriangulizeMat(replinevect);
+	ConvertToMatrixRep(replinevect, f);
+    
+	#repline := VectorSpaceToElement(ps, repline);
   
     SetName(coll, Concatenation("4D_3(",String(q),")") );
     
-    inc := function(x, y) return x!.obj in y!.obj; end;
-    geo := rec( points := [], lines := [], incidence:= inc);
+    #inc := function(x, y) return x!.obj in y!.obj; end;
+    inc := \*;  #looks nice now :-)
+	
+	geo := rec( points := [], lines := [], incidence:= inc, basefield := BaseField(ps), 
+		dimension := Dimension(ps), vectorspace := UnderlyingVectorSpace(ps), polarspace := ps );
     ty := NewType( GeometriesFamily,
-             IsGeneralisedHexagon and IsGeneralisedPolygonRep );
+             IsGeneralisedHexagon and IsGeneralisedPolygonRep and IsLieGeometry ); #change by jdb 7/12/11
     Objectify( ty, geo );
-    SetAmbientSpace(geo, ps);
+    SetAmbientSpace(geo, AmbientSpace(ps));
+
+	#now we are ready to pack the representatives of the elements, which are also elements of a polar space.
+	#recall that reppointvect and replinevect are triangulized.
+	w := rec(geo := geo, type := 1, obj := reppointvect);
+	reppoint := Objectify( NewType( SoPSFamily, IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep and
+												IsElementOfGeneralisedPolygon and IsSubspaceOfClassicalPolarSpace ), w );
+	w := rec(geo := geo, type := 2, obj := replinevect);
+	repline := Objectify( NewType( SoPSFamily, IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep and
+												IsElementOfGeneralisedPolygon and IsSubspaceOfClassicalPolarSpace ), w );
+    
     SetOrder(geo, [q^3, q]);
     SetCollineationAction(coll, OnProjSubspaces);
     SetCollineationGroup(geo, coll);
     SetTypesOfElementsOfIncidenceStructure(geo, ["point","line"]);
     SetRepresentativesOfElements(geo, [reppoint, repline]);
+    SetName(geo,Concatenation("Twisted Triality Hexagon of order ", String([q^3, q])));
     return geo;
   end );
 
-InstallMethod( TwistedTrialityHexagon, "input is a prime power", [ IsPosInt ],
-  function( q )
-    return TwistedTrialityHexagon(GF(q));
+#############################################################################
+#O  TwistedTrialityHexagon( <q> )
+# shortcut to previous method.
+##
+InstallMethod( TwistedTrialityHexagon, 
+	"input is a prime power", 
+	[ IsPosInt ],
+	function( q )
+		return TwistedTrialityHexagon(GF(q));
+	end );
+
+#############################################################################
+#O  Wrap( <geo>, <type>, <o>  )
+# returns the element of <geo> represented by <o>
+##
+InstallMethod( Wrap, 
+	"for a generalised polygon and an object",
+	[IsGeneralisedHexagon and IsLieGeometry, IsPosInt, IsObject],
+	function( geo, type, o )
+		local w;
+		w := rec( geo := geo, type := type, obj := o );
+		Objectify( NewType( SoPSFamily, IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep and
+												IsElementOfGeneralisedPolygon and IsSubspaceOfClassicalPolarSpace ), w );
+		return w;
   end );
+
+#############################################################################
+#O  Iterator( <vs>  )
+# returns an iterator for the elements of a generalised hexagon.
+##
+InstallMethod(Iterator, 
+	"for elements of a generalised hexagon",
+    [IsAllElementsOfGeneralisedHexagon],
+	function( vs )
+		local ps, j, vars, coll, reps;
+		ps := vs!.geometry;
+		j := vs!.type;
+		coll := CollineationGroup( ps );
+		reps := RepresentativesOfElements( ps );
+		vars := Enumerate(Orb(coll, reps[j], OnProjSubspaces));
+		return IteratorList( vars );
+	end );
+
 
 #############################################################################
 #
@@ -475,21 +563,87 @@ InstallMethod( TwistedTrialityHexagon, "input is a prime power", [ IsPosInt ],
 #
 #############################################################################
 
-InstallMethod( \=, [IsElementOfKantorFamily, IsElementOfKantorFamily], 
-  function( a, b ) 
-    return a!.obj = b!.obj; 
-  end );
+#############################################################################
+#O  \=( <a>, <b>  )
+# for thwo elements of a Kantor family.
+##
+InstallMethod( \=,
+	"for two elements of a Kantor family",
+	[IsElementOfKantorFamily, IsElementOfKantorFamily], 
+	function( a, b ) 
+		return a!.obj = b!.obj; 
+	end );
 
-InstallMethod( \<, [IsElementOfKantorFamily, IsElementOfKantorFamily], 
-  function( a, b ) 
-    if a!.type <> b!.type then return a!.type < b!.type;
-    else
-       if a!.class <> b!.class then return a!.class < b!.class;
-       else return a!.obj < b!.obj; 
-       fi;
-    fi;
-  end );
+#############################################################################
+#O  \<( <a>, <b>  )
+# for thwo elements of a Kantor family.
+##
+InstallMethod( \<, 
+	"for two elements of a Kantor family",
+	[IsElementOfKantorFamily, IsElementOfKantorFamily], 
+	function( a, b ) 
+		if a!.type <> b!.type then return a!.type < b!.type;
+		else
+			if a!.class <> b!.class then return a!.class < b!.class;
+			else return a!.obj < b!.obj; 
+			fi;
+		fi;
+	end );
 
+#############################################################################
+#O  \<( <a>, <b>  )
+# for a group and two lists.
+##
+InstallMethod( IsKantorFamily,
+	"for a group and two lists of subgroups",
+	[IsGroup, IsList, IsList],
+	function( g, f, fstar)
+		local flag, a, b, c, ab, astar, tplus1;
+		tplus1 := Size(f);
+		flag := true;
+		if not ForAll([1..Size(fstar)], x -> IsSubgroup(fstar[x], f[x])) then
+			Error( "second and third arguments are incompatile");
+		fi;
+		if not ForAll(fstar, x -> IsSubgroup(g, x)) then
+			Error( "elements of second argument are not subgroups of first argument" );
+		fi;
+
+		Info(InfoFinInG, 1, "Checking tangency condition...");
+    
+		## K2 tangency condition
+		for a in [1..tplus1-1] do
+			for astar in [a+1..tplus1] do
+				flag := IsTrivial(Intersection(fstar[astar], f[a]));
+				if not flag then 
+					Print("Failed tangency condition\n");
+					Print(a,"  ",astar,"\n"); 
+					return flag;
+				fi;
+			od;
+		od;
+
+		Info(InfoFinInG, 1, "Checking triple condition...");
+
+		## K1 triple condition
+		for a in [1..tplus1-2] do
+			for b in [a+1..tplus1-1] do
+				for c in [b+1..tplus1] do
+					ab := DoubleCoset(f[a], One(g), f[b]);
+					flag := IsTrivial(Intersection(ab, f[c]));
+					if not flag then
+						Print("Failed triple condition\n"); 
+						Print(a,"  ",b,"  ",c,"\n"); 
+						return flag;
+					fi;
+				od;
+			od;
+		od;
+		return flag;
+	end );
+
+#############################################################################
+#F  OnKantorFamily
+##
 InstallGlobalFunction( OnKantorFamily,
   function( v, el )
     local geo, type, class, new; 
@@ -506,8 +660,14 @@ InstallGlobalFunction( OnKantorFamily,
     return Wrap(geo, type, class, new); 
   end );
 
-InstallMethod( EGQByKantorFamily, [IsGroup, IsList, IsList],
-  function( g, f, fstar)
+#############################################################################
+#O  \<( <a>, <b>  )
+# for a group and two lists.
+##
+InstallMethod( EGQByKantorFamily, 
+	"for a group, a list and a list",
+	[IsGroup, IsList, IsList],
+	function( g, f, fstar)
     local pts1, pts2, pts3, ls1, ls2, inc, 
           x, y, geo, ty, points, lines, pointreps, linereps;
     ## Some checks first.
@@ -581,52 +741,69 @@ InstallMethod( EGQByKantorFamily, [IsGroup, IsList, IsList],
     return geo;
   end );
 
-InstallMethod( IsKantorFamily, [IsGroup, IsList, IsList],
-  function( g, f, fstar)
-    local flag, a, b, c, ab, astar, tplus1;
-    tplus1 := Size(f);
-    flag := true;
-    if not ForAll([1..Size(fstar)], x -> IsSubgroup(fstar[x], f[x])) then
-       Error( "second and third arguments are incompatile");
-       return;
+
+
+
+
+
+
+
+#############################################################################
+#O  Iterator( <vs>  )
+# returns an iterator for the elements of an EGQ defined by a Kantor family.
+##
+InstallMethod(Iterator, 
+	"for elements of an EGQ defined by a Kantor family",
+	[IsAllElementsOfKantorFamily],
+
+##  We can do much better here.
+##  Perhaps we need to think about implementing enumerators/iterators
+##  for Kantor families. One day there might be enumerators for cosets?
+
+  function( vs )
+    local ps, j, vars;
+    ps := vs!.geometry;
+    j := vs!.type;
+    if j = 1 then 
+       vars := ps!.points;
+       return IteratorList( vars );
+    elif j = 2 then 
+       vars := ps!.lines;
+       return IteratorList( vars );
+    else Error("Element type does not exist"); return;
     fi;
-    if not ForAll(fstar, x -> IsSubgroup(g, x)) then
-       Error( "elements of second argument are not subgroups of first argument" );
-       return;
-    fi;
-
-    Info(InfoFinInG, 1, "Checking tangency condition...");
-    
-    ## K2 tangency condition
-    for a in [1..tplus1-1] do
-      for astar in [a+1..tplus1] do
-        flag := IsTrivial(Intersection(fstar[astar], f[a]));
-        if not flag then 
-           Print("Failed tangency condition\n");
-           Print(a,"  ",astar,"\n"); 
-           return flag;
-        fi;
-      od;
-    od;
-
-    Info(InfoFinInG, 1, "Checking triple condition...");
-
-    ## K1 triple condition
-    for a in [1..tplus1-2] do
-      for b in [a+1..tplus1-1] do
-        for c in [b+1..tplus1] do
-          ab := DoubleCoset(f[a], One(g), f[b]);
-          flag := IsTrivial(Intersection(ab, f[c]));
-          if not flag then
-             Print("Failed triple condition\n"); 
-             Print(a,"  ",b,"  ",c,"\n"); 
-             return flag;
-          fi;
-        od;
-      od;
-    od;
-    return flag;
   end );
+
+#############################################################################
+#O  IsIncident( <vs>  )
+# simply uses the incidence relation that is built in in the gp.
+##
+InstallMethod( IsIncident, 
+	"for elements of a Kantor family",
+    [IsElementOfKantorFamily, IsElementOfKantorFamily],
+	function( x, y )
+		local inc;
+		inc := x!.geo!.incidence;
+		return inc(x, y);
+	end );
+
+
+#############################################################################
+#O  Wrap( <geo>, <type>, <o>  )
+# returns the element of <geo> represented by <o>
+##
+InstallMethod( Wrap, 
+	"for an EGQ (Kantor family), and an object",
+	[IsElationGQByKantorFamily, IsPosInt, IsPosInt, IsObject],
+	function( geo, type, class, o )
+		local w;
+		w := rec( geo := geo, type := type, class := class, obj := o );
+		Objectify( NewType( ElementsOfIncidenceStructureFamily,   #ElementsFamily,
+			IsElementOfKantorFamilyRep and IsElementOfKantorFamily ), w );
+		return w;
+	end );
+
+
 
 #############################################################################
 #
@@ -634,140 +811,214 @@ InstallMethod( IsKantorFamily, [IsGroup, IsList, IsList],
 #
 #############################################################################
 
-InstallMethod( IsAnisotropic, [IsFFECollColl,  IsField and IsFinite],
-  function( m, f )
-    local pairs, o;
-    o := Zero(f);
-    pairs := Difference(AsList(f^2),[[o,o]]);
-    return ForAll(pairs, x -> x * m * x <> o);
-  end );
 
-InstallMethod( IsqClan, "input are 2x2 matrices", 
-              [ IsFFECollCollColl,  IsField and IsFinite],
-  function( clan, f )
-    return ForAll(Combinations(clan,2), x -> IsAnisotropic(x[1]-x[2], f));
-  end );
+#############################################################################
+#O  IsAnisotropic( <m>, <f> )
+# simply checks if a matrix is anisotropic.
+##
+InstallMethod( IsAnisotropic, 
+	"for a matrix and a finite field",
+	[IsFFECollColl,  IsField and IsFinite],
+	function( m, f )
+		local pairs, o;
+		o := Zero(f);
+		pairs := Difference(AsList(f^2),[[o,o]]);
+		return ForAll(pairs, x -> x * m * x <> o);
+	end );
 
-InstallMethod( qClan, [ IsFFECollCollColl, IsField ],
-  function( m, f ) 
-    local qclan;
-    ## test to see if it is a qClan
-    if not ForAll(Combinations(m, 2), x -> IsAnisotropic(x[1]-x[2], f)) then
-       Error("These matrices do not form a q-clan");
-    fi;
-	qclan := rec( matrices := m, basefield := f );
-    Objectify( NewType( qClanFamily, IsqClanObj and IsqClanRep ), qclan );
-    return qclan;
-  end );
+#############################################################################
+#O  IsAnisotropic( <clan>, <f> )
+# simply checks if all differences of elements in a set of 2 x 2 matrices is are
+# anisotropic.
+##
+InstallMethod( IsqClan, 
+	"input are 2x2 matrices", 
+    [ IsFFECollCollColl,  IsField and IsFinite],
+	function( clan, f )
+		return ForAll(Combinations(clan,2), x -> IsAnisotropic(x[1]-x[2], f));
+	end );
 
-InstallMethod( ViewObj, [ IsqClanObj and IsqClanRep ],
-  function( x )
-    Print("<q-clan over ",x!.basefield,">");
-  end );
+#############################################################################
+#O  qClan( <clan>, <f> )
+# returns a qClan object from a suitable list of matrices.
+##
+InstallMethod( qClan, 
+	"for a list of 2x2 matrices",
+	[ IsFFECollCollColl, IsField ],
+	function( m, f ) 
+		local qclan;
+		## test to see if it is a qClan
+		if not ForAll(Combinations(m, 2), x -> IsAnisotropic(x[1]-x[2], f)) then
+			Error("These matrices do not form a q-clan");
+		fi;
+		qclan := rec( matrices := m, basefield := f );
+		Objectify( NewType( qClanFamily, IsqClanObj and IsqClanRep ), qclan );
+		return qclan;
+	end );
 
-InstallMethod( PrintObj, [ IsqClanObj and IsqClanRep ],
-  function( x )
-    Print("qClan( ", x!.matrices, ", ", x!.basefield , ")");
-  end );
+InstallMethod( ViewObj, 
+	"for a qClan",
+	[ IsqClanObj and IsqClanRep ],
+	function( x )
+		Print("<q-clan over ",x!.basefield,">");
+	end );
 
-InstallOtherMethod( AsList, [IsqClanObj and IsqClanRep],
-  function( qclan )
-    return qclan!.matrices;
-  end );
+InstallMethod( PrintObj, 
+	"for a qClan",
+	[ IsqClanObj and IsqClanRep ],
+	function( x )
+		Print("qClan( ", x!.matrices, ", ", x!.basefield , ")");
+	end );
 
-InstallOtherMethod( AsSet, [IsqClanObj and IsqClanRep],
-  function( qclan )
-    return Set(qclan!.matrices);
-  end );
+#############################################################################
+#O  AsList( <clan> )
+# returns the matrices defining a qClan
+##
+InstallOtherMethod( AsList,
+	"for a qClan",
+	[IsqClanObj and IsqClanRep],
+	function( qclan )
+		return qclan!.matrices;
+	end );
 
-InstallMethod( BaseField, [IsqClanObj and IsqClanRep],
-  function( qclan )
-    return qclan!.basefield;
-  end );
+#############################################################################
+#O  AsList( <clan> )
+# returns the matrices defining a qClan
+##
+InstallOtherMethod( AsSet, 
+	"for a qClan",
+	[IsqClanObj and IsqClanRep],
+	function( qclan )
+		return Set(qclan!.matrices);
+	end );
 
-InstallMethod( IsLinearqClan, [ IsqClanObj ],
-  function( qclan )
-    local blt;
-    blt := BLTSetByqClan( qclan ); 
-    return ProjectiveDimension(Span(blt)) = 2;
-  end );
+#############################################################################
+#O  BaseField( <clan> )
+# returns the BaseField of the qClan
+##
+InstallMethod( BaseField, 
+	"for a qClan",
+	[IsqClanObj and IsqClanRep],
+	function( qclan )
+		return qclan!.basefield;
+	end );
 
+#############################################################################
+#O  BaseField( <clan> )
+# checks if the qClan is linear.
+##
+InstallMethod( IsLinearqClan, 
+	"for a qClan",
+	[ IsqClanObj ],
+	function( qclan )
+		local blt;
+		blt := BLTSetByqClan( qclan ); 
+		return ProjectiveDimension(Span(blt)) = 2;
+	end );
 
-InstallMethod( LinearqClan, [ IsPosInt ],
-  function(q)
-    local f, g, clan, n;
-    if not IsPrimePowerInt(q) then
-       Error("Argument must be a prime power");
-    fi;
-    n := First(GF(q), t -> not IsZero(t) and LogFFE(t, Z(q)^2) = fail);
-    if n = fail then
-       Error("Couldn't find nonsquare");
-    fi;
-    f := t -> 0 * Z(q)^0;
-    g := t -> -n * t;
-    clan := List(GF(q), t -> [[t, f(t)], [f(t), g(t)]]);
-    clan := qClan(clan, GF(q));
-    SetIsLinearqClan(clan, true);
-    return clan;
+#############################################################################
+#O  LinearqClan( <clan> )
+# returns a linear qClan.
+##
+InstallMethod( LinearqClan,
+	"for a prime power",
+	[ IsPosInt ],
+	function(q)
+		local f, g, clan, n;
+		if not IsPrimePowerInt(q) then
+			Error("Argument must be a prime power");
+		fi;
+		n := First(GF(q), t -> not IsZero(t) and LogFFE(t, Z(q)^2) = fail);
+		if n = fail then
+			Error("Couldn't find nonsquare");
+		fi;
+		f := t -> 0 * Z(q)^0;
+		g := t -> -n * t;
+		clan := List(GF(q), t -> [[t, f(t)], [f(t), g(t)]]);
+		clan := qClan(clan, GF(q));
+		SetIsLinearqClan(clan, true);
+		return clan;
+	end );
+
+#############################################################################
+#O  FisherThasWalkerKantorBettenqClan( <q> )
+# returns the Fisher Thas Walker Kantor Betten qClan
+##
+InstallMethod( FisherThasWalkerKantorBettenqClan, 
+	"for a prime power",
+	[ IsPosInt ],
+	function(q)
+		local f, g, clan;
+		if not IsPrimePowerInt(q) then
+			Error("Argument must be a prime power");
+		fi;
+		if q mod 3 <> 2 then
+			Error("q must be congruent to 2 mod (3)");
+		fi;
+		f := t -> 3/2 * t^2;
+		g := t -> 3 * t^3;
+		clan := List(GF(q), t -> [[t, f(t)], [f(t), g(t)]]);
+		return qClan(clan, GF(q));
+	end );
+
+#############################################################################
+#O  KantorMonomialqClan( <q> )
+# returns the Kantor Monomial qClan
+##
+InstallMethod( KantorMonomialqClan, 
+	"for a prime power",
+	[ IsPosInt ],
+	function(q)
+		local f, g, clan;
+		if not IsPrimePowerInt(q) then
+			Error("Argument must be a prime power");
+		fi;
+		if not q mod 5 in [2, 3] then
+			Error("q must be congruent to 2 mod (3)");
+		fi;
+		f := t -> 5/2 * t^3;
+		g := t -> 5 * t^5;
+		clan := List(GF(q), t -> [[t, f(t)], [f(t), g(t)]]);
+	return qClan(clan, GF(q));
 end );
 
-InstallMethod( FisherThasWalkerKantorBettenqClan, [ IsPosInt ],
-  function(q)
-    local f, g, clan;
-    if not IsPrimePowerInt(q) then
-       Error("Argument must be a prime power");
-    fi;
-    if q mod 3 <> 2 then
-       Error("q must be congruent to 2 mod (3)");
-    fi;
-    f := t -> 3/2 * t^2;
-    g := t -> 3 * t^3;
-    clan := List(GF(q), t -> [[t, f(t)], [f(t), g(t)]]);
-  return qClan(clan, GF(q));
-end );
+#############################################################################
+#O  KantorKnuthqClan( <q> )
+# returns the Kantor Knuth qClan
+##
+InstallMethod( KantorKnuthqClan, 
+	"for a prime power",
+	[ IsPosInt ],
+	function(q)
+		local f, g, clan, n, sigma;
+		if not IsPrimePowerInt(q) then
+			Error("Argument must be a prime power");
+		fi;
+		if IsPrime(q) then
+			Error("q is a prime");
+		fi;
+		sigma := FrobeniusAutomorphism(GF(q));
+		n := First(GF(q), t -> not IsZero(t) and LogFFE(t, Z(q)^2) = fail);
+		if n = fail then
+			Error("Couldn't find nonsquare");
+		fi;
+		f := t -> 0 * Z(q)^0;
+		g := t -> -n * t^sigma;
+		clan := List(GF(q), t -> [[t, f(t)], [f(t), g(t)]]);
+		return qClan(clan, GF(q));
+	end );
 
-InstallMethod( KantorMonomialqClan, [ IsPosInt ],
-  function(q)
-    local f, g, clan;
-    if not IsPrimePowerInt(q) then
-       Error("Argument must be a prime power");
-    fi;
-	if not q mod 5 in [2, 3] then
-       Error("q must be congruent to 2 mod (3)");
-    fi;
-    f := t -> 5/2 * t^3;
-    g := t -> 5 * t^5;
-    clan := List(GF(q), t -> [[t, f(t)], [f(t), g(t)]]);
-  return qClan(clan, GF(q));
-end );
-
-InstallMethod( KantorKnuthqClan, [ IsPosInt ],
-  function(q)
-    local f, g, clan, n, sigma;
-    if not IsPrimePowerInt(q) then
-       Error("Argument must be a prime power");
-    fi;
-    if IsPrime(q) then
-       Error("q is a prime");
-    fi;
-    sigma := FrobeniusAutomorphism(GF(q));
-    n := First(GF(q), t -> not IsZero(t) and LogFFE(t, Z(q)^2) = fail);
-    if n = fail then
-       Error("Couldn't find nonsquare");
-    fi;
-
-    f := t -> 0 * Z(q)^0;
-    g := t -> -n * t^sigma;
-    clan := List(GF(q), t -> [[t, f(t)], [f(t), g(t)]]);
-  return qClan(clan, GF(q));
-end );
-
-
-InstallMethod( FisherqClan, [ IsPosInt ],
-  function(q)
-    local f, g, clan, n, zeta, omega, squares, nonsquares, i, z, a, t, j;
-    if not IsPrimePowerInt(q) or IsEvenInt(q) then
-       Error("Argument must be an odd prime power");
+#############################################################################
+#O  FisherqClan( <q> )
+# returns the Fisher qClan
+##
+InstallMethod( FisherqClan,
+	"for a prime power",
+	[ IsPosInt ],
+	function(q)
+		local f, g, clan, n, zeta, omega, squares, nonsquares, i, z, a, t, j;
+		if not IsPrimePowerInt(q) or IsEvenInt(q) then
+			Error("Argument must be an odd prime power");
     fi;
 	squares := ShallowCopy(AsList(Group(Z(q)^2)));; Add(squares, 0*Z(q));
 	nonsquares := Difference(AsList(GF(q)),squares);;
