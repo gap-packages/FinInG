@@ -803,14 +803,11 @@ InstallMethod( Wrap,
 		return w;
 	end );
 
-
-
 #############################################################################
 #
 #   q-Clans and EGQ's made from them
 #
 #############################################################################
-
 
 #############################################################################
 #O  IsAnisotropic( <m>, <f> )
@@ -1044,8 +1041,173 @@ InstallMethod( FisherqClan,
   return qClan(clan, GF(q));
 end );
 
+#############################################################################
+#O  KantorFamilyByqClan( <clan> )
+# returns the Kantor familyt corresponding with the q-Clan <clan>
+##
+InstallMethod( KantorFamilyByqClan, 
+	"for a q-Clan",
+    [ IsqClanObj and IsqClanRep ],
+	function( clan )
+    local g, q, f, i, omega, mat, at, ainf, ainfstar, clanmats,
+          ainfgens, centregens, as, astars, k;
+    f := clan!.basefield;
+    clanmats := clan!.matrices;
+    q := Size(f);
+    i := One(f); 
+    omega := PrimitiveElement(f);
+    mat := function(a1,a2,c,b1,b2) 
+             return i * [[1, a1, a2,  c], [0,  1,  0, b1],
+                         [0,  0,  1, b2], [0,  0,  0,  1]];
+           end;
+    centregens := [mat(0,0,1,0,0), mat(0,0,omega,0,0)];
+    ainfgens := [mat(0,0,0,1,0),mat(0,0,0,0,1),mat(0,0,0,omega,0),mat(0,0,0,0,omega)];
+    ainf := Group(ainfgens); 
+    ainfstar := Group(Union(ainfgens,centregens));
 
+    at := function( m )
+       ## returns generators for Kantor family element defined by q-Clan element m
+       local a1, a2, k, gens, bas, zero;
+       gens := [];
+       bas := AsList(Basis(f));
+       zero := Zero(f);
+       for a1 in bas do
+           k := [a1,zero] * (m+TransposedMat(m));
+           Add(gens, mat(a1,zero,[a1,zero]*m*[a1,zero],k[1],k[2]) );
+       od;
 
+       for a2 in bas do
+           k := [zero,a2] * (m+TransposedMat(m));
+           Add(gens, mat(zero,a2,[zero,a2]*m*[zero,a2],k[1],k[2]) );
+       od;    
+       return gens;
+    end;
+
+    g := Group(Union( ainfgens, centregens, at(clanmats[1]) ));
+    as := List(clanmats, m -> Group( at(m) ));
+    Add(as, ainf);
+    astars := List(clanmats, m -> Group(Union(at(m), centregens)));
+    Add(astars, ainfstar);
+    return [g, as, astars];
+  end );
+
+#############################################################################
+#O  EGQByqClan( <clan> )
+# returns the EGQ constructed from the q-Clan, using the corresponding Kantor family.
+##
+InstallMethod( EGQByqClan, 
+	"for a q-Clan",
+	[ IsqClanObj and IsqClanRep ],
+	function( clan )
+		local kantor;
+		kantor := KantorFamilyByqClan( clan );
+    
+		Info(InfoFinInG, 1, "Computed Kantor family. Now computing EGQ...");
+			return EGQByKantorFamily(kantor[1], kantor[2], kantor[3]);
+  end );
+
+#############################################################################
+#
+#	BLT sets and q-Clans.
+#
+#############################################################################
+
+#############################################################################
+#O  BLTSetByqClan( <clan> )
+# returns the BLT set corresponding with the q-Clan <clan>
+##
+InstallMethod( BLTSetByqClan, 
+	"for a q-Clan",
+	[ IsqClanObj and IsqClanRep ],
+	function( clan )
+    ##
+    ## The q-clan must consist only of symmetric matrices
+    ##
+    local q, i, f,  blt, m, sesq, c1, c2, change, w, ps;
+    f := clan!.basefield;
+    q := Size(f);
+    i := One(f); 
+    blt := List(clan!.matrices, t -> [i, t[2][2], -t[1][2], t[1][1],  t[1][2]^2 -t[1][1]*t[2][2]]);
+    Add(blt, [0,0,0,0,1]*i);  ## last point is distinguished point.
+      
+    ## This BLT-set is in Q(4,q) defined by Gram matrix
+    w := PrimitiveRoot(f);
+    m := [[0,0,0,0,1],[0,0,0,1,0],[0,0,w^((q+1)/2),0,0],[0,1,0,0,0],[1,0,0,0,0]]*i;
+    sesq := BilinearFormByMatrix(m, f);
+    ps := PolarSpace( sesq );    
+    return List(blt, x -> VectorSpaceToElement(ps, x)); 
+end );
+
+#############################################################################
+#O  EGQByBLTSet( <clan> )
+##
+InstallMethod( EGQByBLTSet, 
+     "constructs an EGQ from a BLT-set of points of Q(4,q) via the Knarr construction",
+     [ IsList ], 
+  function( blt )   
+   local q4q, f, w3q, duality, w5q, p, pg5, solid, 
+         q4qcanonical, iso, bltdual, geo, bas, 
+         mat, elations, a, gens, zero, action, b;
+   q4q := AmbientGeometry( blt[1] );
+   f := q4q!.basefield;
+   w3q := SymplecticSpace(3, f);
+   duality := NaturalDuality( w3q );
+   w5q := SymplecticSpace(5, f);
+   p := VectorSpaceToElement(w5q, [1,0,0,0,0,0] * One(f));
+   pg5 := AmbientSpace( w5q );
+   solid := VectorSpaceToElement(pg5, [[1,0,0,0,0,1],[0,0,1,0,0,0],
+                                       [0,0,0,1,0,0],[0,0,0,0,1,0]]*One(f));
+   q4qcanonical := Range(duality)!.geometry;                 
+   iso := IsomorphismPolarSpaces(q4q, q4qcanonical);
+   bltdual := PreImagesSet(duality, ImagesSet(iso, blt));
+
+   Info(InfoFinInG, 1, "Now embedding dual BLT-set into W(5,q)...");
+
+   geo := EGQByBLTSet( bltdual, p, solid);
+
+   ## Now we construct the elation group. See Maska Law's Thesis for details 
+   ## (we have a different form though, so we need to apply a base change).
+
+   Info(InfoFinInG, 1, "Computing elation group...");
+
+   mat := function(a,b,c,d,e)
+            local m;
+            m := IdentityMat(6, f);
+            m[6]{[1..5]} := [e,d,c,-b,-a];
+            m[2][1] := a; m[3][1] := b; m[4][1] := c; m[5][1] := d;
+            return m;
+          end;
+   bas := AsList(Basis(f));
+   gens := [];
+   zero := Zero(f);
+   for a in bas do
+       Add(gens, mat(a,zero,zero,zero,zero) );
+       Add(gens, mat(zero,a,zero,zero,zero) );
+       Add(gens, mat(zero,zero,a,zero,zero) );
+       Add(gens, mat(zero,zero,zero,a,zero) );
+       Add(gens, mat(zero,zero,zero,zero,a) );
+   od;
+   ## base change 
+   b := [ [ 1, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 1 ], 
+          [ 0, 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 1, 0 ], 
+          [ 0, 0, 1, 0, 0, 0 ], [ 0, 0, 0, 1, 0, 0 ] ];
+   gens := List(gens, t-> b*t*b^-1);
+   gens := List(gens, t -> ProjectiveSemilinearMap(t,f));
+   elations := Group( gens ); 
+   SetElationGroup( geo, elations );
+
+   action := function(el, x)
+               return Wrap( geo, el!.type, OnProjSubspaces(el!.obj, x));
+             end;
+   SetCollineationAction( elations, action );
+   return geo;
+ end );
+
+#############################################################################
+#O  FlockGQByqClan( <clan> )
+# returns the BLT set corresponding with the q-Clan <clan>
+# not documented yet.
+##
 InstallMethod( FlockGQByqClan, [ IsqClanObj ],
  function( qclan )
   local f, q, mat, form, w5, p, blt, x, perp, pperp, pg5, a, bas, gens, zero, elations, action,
@@ -1168,91 +1330,10 @@ InstallMethod( FlockGQByqClan, [ IsqClanObj ],
   return geo;
 end );
 
-
-InstallMethod( BLTSetByqClan, "input is a q-Clan", 
-              [ IsqClanObj and IsqClanRep ],
-  function( clan )
-    ##
-    ## The q-clan must consist only of symmetric matrices
-    ##
-    local q, i, f,  blt, m, sesq, c1, c2, change, w, ps;
-    f := clan!.basefield;
-    q := Size(f);
-    i := One(f); 
-    blt := List(clan!.matrices, t -> [i, t[2][2], -t[1][2], t[1][1],  t[1][2]^2 -t[1][1]*t[2][2]]);
-    Add(blt, [0,0,0,0,1]*i);  ## last point is distinguished point.
-      
-    ## This BLT-set is in Q(4,q) defined by Gram matrix
-    w := PrimitiveRoot(f);
-    m := [[0,0,0,0,1],[0,0,0,1,0],[0,0,w^((q+1)/2),0,0],[0,1,0,0,0],[1,0,0,0,0]]*i;
-    sesq := BilinearFormByMatrix(m, f);
-    ps := PolarSpace( sesq );    
-    return List(blt, x -> VectorSpaceToElement(ps, x)); 
-end );
-
-
-InstallMethod( KantorFamilyByqClan, "input is a q-Clan", 
-              [ IsqClanObj and IsqClanRep ],
-  function( clan )
-    local g, q, f, i, omega, mat, at, ainf, ainfstar, clanmats,
-          ainfgens, centregens, as, astars, k;
-    f := clan!.basefield;
-    clanmats := clan!.matrices;
-    q := Size(f);
-    i := One(f); 
-    omega := PrimitiveElement(f);
-    mat := function(a1,a2,c,b1,b2) 
-             return i * [[1, a1, a2,  c], [0,  1,  0, b1],
-                         [0,  0,  1, b2], [0,  0,  0,  1]];
-           end;
-    centregens := [mat(0,0,1,0,0), mat(0,0,omega,0,0)];
-    ainfgens := [mat(0,0,0,1,0),mat(0,0,0,0,1),mat(0,0,0,omega,0),mat(0,0,0,0,omega)];
-    ainf := Group(ainfgens); 
-    ainfstar := Group(Union(ainfgens,centregens));
-
-    at := function( m )
-       ## returns generators for Kantor family element defined by q-Clan element m
-       local a1, a2, k, gens, bas, zero;
-       gens := [];
-       bas := AsList(Basis(f));
-       zero := Zero(f);
-       for a1 in bas do
-           k := [a1,zero] * (m+TransposedMat(m));
-           Add(gens, mat(a1,zero,[a1,zero]*m*[a1,zero],k[1],k[2]) );
-       od;
-
-       for a2 in bas do
-           k := [zero,a2] * (m+TransposedMat(m));
-           Add(gens, mat(zero,a2,[zero,a2]*m*[zero,a2],k[1],k[2]) );
-       od;    
-       return gens;
-    end;
-
-    g := Group(Union( ainfgens, centregens, at(clanmats[1]) ));
-    as := List(clanmats, m -> Group( at(m) ));
-    Add(as, ainf);
-    astars := List(clanmats, m -> Group(Union(at(m), centregens)));
-    Add(astars, ainfstar);
-    return [g, as, astars];
-  end );
-
-
-InstallMethod( EGQByqClan, "input is a q-Clan", 
-              [ IsqClanObj and IsqClanRep ],
-  function( clan )
-    local kantor;
-    kantor := KantorFamilyByqClan( clan );
-    
-    Info(InfoFinInG, 1, "Computed Kantor family. Now computing EGQ...");
-    return EGQByKantorFamily(kantor[1], kantor[2], kantor[3]);
-  end );
-
-
-
-
-
-
-
+#############################################################################
+#O  EGQByBLTSet( <clan> )
+# not documented yet.
+##
 InstallMethod( EGQByBLTSet, 
          "constructs an EGQ from a BLT-set of lines of W(3,q) via the Knarr construction",
      [IsList, IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
@@ -1332,68 +1413,6 @@ InstallMethod( EGQByBLTSet,
    SetAmbientSpace(geo, geo);
    SetOrder(geo, [q^2, q]);
    SetTypesOfElementsOfIncidenceStructure(geo, ["point","line"]);
-   return geo;
- end );
-
-InstallMethod( EGQByBLTSet, 
-     "constructs an EGQ from a BLT-set of points of Q(4,q) via the Knarr construction",
-     [ IsList ], 
-  function( blt )   
-   local q4q, f, w3q, duality, w5q, p, pg5, solid, 
-         q4qcanonical, iso, bltdual, geo, bas, 
-         mat, elations, a, gens, zero, action, b;
-   q4q := AmbientGeometry( blt[1] );
-   f := q4q!.basefield;
-   w3q := SymplecticSpace(3, f);
-   duality := NaturalDuality( w3q );
-   w5q := SymplecticSpace(5, f);
-   p := VectorSpaceToElement(w5q, [1,0,0,0,0,0] * One(f));
-   pg5 := AmbientSpace( w5q );
-   solid := VectorSpaceToElement(pg5, [[1,0,0,0,0,1],[0,0,1,0,0,0],
-                                       [0,0,0,1,0,0],[0,0,0,0,1,0]]*One(f));
-   q4qcanonical := Range(duality)!.geometry;                 
-   iso := IsomorphismPolarSpaces(q4q, q4qcanonical);
-   bltdual := PreImagesSet(duality, ImagesSet(iso, blt));
-
-   Info(InfoFinInG, 1, "Now embedding dual BLT-set into W(5,q)...");
-
-   geo := EGQByBLTSet( bltdual, p, solid);
-
-   ## Now we construct the elation group. See Maska Law's Thesis for details 
-   ## (we have a different form though, so we need to apply a base change).
-
-   Info(InfoFinInG, 1, "Computing elation group...");
-
-   mat := function(a,b,c,d,e)
-            local m;
-            m := IdentityMat(6, f);
-            m[6]{[1..5]} := [e,d,c,-b,-a];
-            m[2][1] := a; m[3][1] := b; m[4][1] := c; m[5][1] := d;
-            return m;
-          end;
-   bas := AsList(Basis(f));
-   gens := [];
-   zero := Zero(f);
-   for a in bas do
-       Add(gens, mat(a,zero,zero,zero,zero) );
-       Add(gens, mat(zero,a,zero,zero,zero) );
-       Add(gens, mat(zero,zero,a,zero,zero) );
-       Add(gens, mat(zero,zero,zero,a,zero) );
-       Add(gens, mat(zero,zero,zero,zero,a) );
-   od;
-   ## base change 
-   b := [ [ 1, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 1 ], 
-          [ 0, 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 1, 0 ], 
-          [ 0, 0, 1, 0, 0, 0 ], [ 0, 0, 0, 1, 0, 0 ] ];
-   gens := List(gens, t-> b*t*b^-1);
-   gens := List(gens, t -> ProjectiveSemilinearMap(t,f));
-   elations := Group( gens ); 
-   SetElationGroup( geo, elations );
-
-   action := function(el, x)
-               return Wrap( geo, el!.type, OnProjSubspaces(el!.obj, x));
-             end;
-   SetCollineationAction( elations, action );
    return geo;
  end );
 

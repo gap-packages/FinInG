@@ -102,10 +102,8 @@ morphismsfiles := ["morphisms_intertwiners","morphisms_embedding1","morphisms_em
 
 gpolygonfiles := [ "gpolygons_projplanes1", "gpolygons_projplanes2", "gpolygons_iskantorfamily", "gpolygons_isqclan",
 				   "gpolygons_qclan", "gpolygons_EGQByqClan", "gpolygons_kantorfamilybyqclan",
-				   "gpolygons_EGQByKantorFamily", "gpolygons_particularqclans"
-				   
-				   
-				   "gpolygons_EGQByBLTSet", 
+				   "gpolygons_EGQByKantorFamily", "gpolygons_particularqclans", "gpolygons_bltsetbyqclan",
+				   "gpolygons_EGQByBLTSet", "gpolygons_elationgroup", "gpolygons_basepointofegq",
 				   "gpolygons_collineations", "gpolygons_SplitCayleyHexagon"];
 
 diagramfiles := ["diagram_cosetgeom"];
@@ -131,7 +129,7 @@ preambledir := DirectoriesPackageLibrary("fining","examples/")[1];
 outputdir := DirectoriesPackageLibrary("fining","examples/output")[1];
 gap := Filename(Directory("/usr/bin/"),"gap4r4");  
 paths := JoinStringsWithSeparator(GAP_ROOT_PATHS,";");
-args := JoinStringsWithSeparator(["-l ",paths," -L fining.ws"]," ");
+args := JoinStringsWithSeparator(["-l ",paths,"-o 1G"," -L fining.ws"]," ");
 
 #create .out files using the saved workspace
 #IMPORTANT: here we suppose that the script to start up our favorite version of

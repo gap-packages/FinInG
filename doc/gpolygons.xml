@@ -233,11 +233,11 @@ here?
 </Description>
 </ManSection>
 
-
-A <E>BLT-set</E> is a set <M>S</M> of points of the parabolic quadric <M>Q(4, q)</M>
-such that for any three points of <M>S</M>, there is no point of 
-<M>Q(4, q)</M> collinear (in a line of <M>Q(4, q)</M>) with all three of the points.
-BLT-sets, which were introduced by Bader, Lunardon and Thas <Cite Key="BLT"/>, give rise to q-clans and hence flock quadrangles. 
+A <E>BLT-set</E> is a set <M>S</M> of points of the parabolic quadric <M>Q(4,q)</M>,
+which is a classial generalised quadrangle, such that for any three points of <M>S</M>, 
+there is no point of <M>Q(4,q)</M> collinear with all three of the points.
+BLT-sets, which were introduced by Bader, Lunardon and Thas <Cite Key="BLT"/>, 
+give rise to q-clans, and hence to flock generalised quadrangles. 
 
 <ManSection>
 <Oper Name="BLTSetByqClan" Arg="qclan, f"/>
@@ -302,9 +302,9 @@ with Gram matrix
 </M>
 </Alt>
 where <M>w</M> is a primitive root of <M>GF(q)</M>. 
-See
-<Ref Oper="EGQByBLTSet"/> for an example of how
-to use this operation.
+<Example>
+<#Include SYSTEM "../examples/include/gpolygons_bltsetbyqclan.include"> 
+</Example>
 </Description>
 </ManSection>
 
@@ -314,7 +314,7 @@ to use this operation.
 <Returns>an elation generalised quadrangle</Returns>
 <Description>
 The argument <A>list</A> is a list of points of a
-BLT-set of <C>ParabolicQuadric(4,q)</C>, where <A>q</A> is odd. The user may enter the point and solid as extra arguments 
+BLT-set of <M>Q(4,q)</M>, where <A>q</A> is odd. The user may enter the point and solid as extra arguments 
 which are used in the Knarr construction of the elation generalised
 quadrangle from the BLT-set. Otherwise, we take the <M>W(5,q)</M> in the Knarr
 construction to be defined by the canonical form used in <Package>FinInG</Package>,
@@ -333,9 +333,14 @@ from a conic of <M>Q(4,3)</M>.
 <Attr Name="ElationGroup" Arg="egq"/>
 <Returns>a group</Returns>
 <Description>
-This method returns the elation group of order <M>s^2t</M> of
+This method returns the elation group of order <Alt Not="HTML"><M>s^2t</M></Alt>
+<Alt Only="HTML">s&lt;sup>2t&lt;/sup></Alt> of
 the elation generalised quadrangle <A>egq</A>, which has order
-<M>(s,t)</M>. This is the stored as an attribute of <A>egq</A>.
+<M>(s,t)</M>. This is the stored as an attribute of <A>egq</A>. Note that the type of the
+group is of course dependent on the model from which <A>egq</A> was constructed. 
+<Example>
+<#Include SYSTEM "../examples/include/gpolygons_elationgroup.include"> 
+</Example>
 </Description>
 </ManSection>
 
@@ -346,18 +351,15 @@ the elation generalised quadrangle <A>egq</A>, which has order
 This method returns the base point for the elation generalised quadrangle
 <A>egq</A>, that is, a point for which the elation group of <A>egq</A>
 fixes every line through it. This is the stored as an attribute of <A>egq</A>.
-(Note, some elation generalised quadrangles are known to have more than choice of base point;
-so we are assuming that <A>egq</A> has a particular choice for its base point.)
+<Example>
+<#Include SYSTEM "../examples/include/gpolygons_basepointofegq.include"> 
+</Example>
 </Description>
 </ManSection>
-
-
-
 </Section>
 
-
 <Section>
-<Heading>Generalised hexagons and octagons</Heading>
+<Heading>Generalised hexagons</Heading>
 
 Due to the sheer sizes of generalised octagons, they have not yet been included
 into <Package>FinInG</Package>, and there is (at the moment) limited functionality with

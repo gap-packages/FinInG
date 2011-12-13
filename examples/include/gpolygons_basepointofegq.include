@@ -1,24 +1,16 @@
 gap&gt; clan := LinearqClan(3);
 &lt;q-clan over GF(3)&gt;
-gap&gt; bltset := BLTSetByqClan( clan);
+gap&gt; egq := EGQByqClan(clan);
+#I  Computed Kantor family. Now computing EGQ...
+#I  Computing points from Kantor family...
+#I  Computing lines from Kantor family...
+&lt;EGQ of order [ 9, 3 ] and basepoint 0&gt;
+gap&gt; blt := BLTSetByqClan(clan);
 [ &lt;a point in Q(4, 3): -x_1*x_5-x_2*x_4+x_3^2=0&gt;, 
   &lt;a point in Q(4, 3): -x_1*x_5-x_2*x_4+x_3^2=0&gt;, 
   &lt;a point in Q(4, 3): -x_1*x_5-x_2*x_4+x_3^2=0&gt;, 
   &lt;a point in Q(4, 3): -x_1*x_5-x_2*x_4+x_3^2=0&gt; ]
-gap&gt; geo := AmbientGeometry( bltset[1] );
-Q(4, 3): -x_1*x_5-x_2*x_4+x_3^2=0
-gap&gt; Display( geo );
-Q(4, 3)
-Non-degenerate parabolic bilinear form
-Gram Matrix:
- . . . . 1
- . . . 1 .
- . . 1 . .
- . 1 . . .
- 1 . . . .
-Polynomial: -x_1*x_5-x_2*x_4+x_3^2
-Witt Index: 2
-gap&gt; egq := EGQByBLTSet( bltset );
+gap&gt; egq2 := EGQByBLTSet(blt);
 #I  No intertwiner computed. One of the polar spaces must have a collineation 
 group computed
 #I  Computing nice monomorphism...
@@ -30,3 +22,12 @@ group computed
 #I  Computing elation group...
 &lt;EGQ of order [ 9, 3 ] and basepoint [ Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3),
   0*Z(3) ]&gt;
+gap&gt; BasePointOfEGQ(egq);
+&lt;a point of a Kantor family&gt;
+gap&gt; Display(last);
+0
+gap&gt; BasePointOfEGQ(egq2);
+&lt;a point of &lt;EGQ of order [ 9, 3 ] and basepoint 
+[ Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ]&gt;&gt;
+gap&gt; Display(last);
+[ Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ]

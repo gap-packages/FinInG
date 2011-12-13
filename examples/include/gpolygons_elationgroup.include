@@ -1,0 +1,9 @@
+gap&gt; clan := FisherThasWalkerKantorBettenqClan(11);
+&lt;q-clan over GF(11)&gt;
+gap&gt; egq := EGQByqClan(clan);
+#I  Computed Kantor family. Now computing EGQ...
+#I  Computing points from Kantor family...
+#I  Computing lines from Kantor family...
+&lt;EGQ of order [ 121, 11 ] and basepoint 0&gt;
+gap&gt; group := ElationGroup(egq);
+&lt;matrix group of size 161051 with 8 generators&gt;

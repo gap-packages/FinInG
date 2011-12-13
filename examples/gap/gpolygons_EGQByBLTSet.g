@@ -1,8 +1,6 @@
-## gpolygons_EGQByBLTSet.g
-f := GF(3);
-id := IdentityMat(2, f);;
-clan := List( f, t -> t * id );;
-bltset := BLTSetByqClan( clan, f );
+## EGQ from blt set
+clan := LinearqClan(3);
+bltset := BLTSetByqClan( clan);
 geo := AmbientGeometry( bltset[1] );
 Display( geo );
 egq := EGQByBLTSet( bltset );
