@@ -57,6 +57,12 @@ DeclareRepresentation("IsSegreVarietyRep", IsSegreVariety,
 				["geometry","listofpols","inverseimage","segremap", "polring"]);
 
 
+### 5. Veronese Varities ###
+DeclareCategory("IsVeroneseVariety", IsProjectiveVariety );
+DeclareRepresentation("IsVeroneseVarietyRep", IsVeroneseVariety, 
+				["geometry","listofpols","inverseimage","veronesemap", "polring"]);
+
+
 #############################################################################
 ##
 ##  Operations and Attributes
@@ -95,21 +101,31 @@ DeclareAttribute( "AmbientSpace", IsAlgebraicVariety );
 ### 4. Segre Varieties ###
 DeclareOperation( "SegreMap", [ IsHomogeneousList ] ); # list of projective spaces
 DeclareOperation( "SegreVariety", [ IsHomogeneousList ]);  
-DeclareOperation( "SegreVariety", [ IsHomogeneousList, IsField ]);  
-## Just two projective spaces
+DeclareOperation( "SegreVariety", [ IsHomogeneousList, IsField ]); 
+# Some extra functionality for two factors 
 DeclareOperation( "SegreVariety", [ IsProjectiveSpace, IsProjectiveSpace ]);  
 DeclareOperation( "SegreVariety", [ IsPosInt, IsPosInt, IsField ]);
-
 DeclareOperation( "SegreVariety", [ IsPosInt, IsPosInt, IsPosInt ]);
 
 DeclareOperation("PointsOfSegreVariety", [IsSegreVariety] );
+DeclareOperation("Points", [IsSegreVariety] );
 
+DeclareOperation("SegreMap", [IsSegreVariety]);
 
 
 ### 5. Veronese Varities ###
 DeclareOperation( "VeroneseMap", [ IsProjectiveSpace ]);
 DeclareOperation( "VeroneseMap", [ IsPosInt, IsField ]);
 DeclareOperation( "VeroneseMap", [ IsPosInt, IsPosInt ]);
+
+DeclareOperation( "VeroneseVariety", [IsProjectiveSpace ]);
+DeclareOperation( "VeroneseVariety", [IsPosInt, IsField ]);
+DeclareOperation( "VeroneseVariety", [IsPosInt, IsPosInt]);
+
+DeclareOperation( "PointsOfVeroneseVariety", [IsVeroneseVariety]);
+DeclareOperation( "Points", [IsVeroneseVariety]);
+
+DeclareOperation( "VeroneseMap", [IsVeroneseVariety]);
 
 ### 6. Grassmann Varieties ###
 DeclareOperation( "GrassmannCoordinates", [ IsSubspaceOfProjectiveSpace ]);
@@ -128,8 +144,6 @@ DeclareOperation( "ConicOnFivePoints",  [ IsHomogeneousList and
 #############################################################################
 
 
-DeclareOperation( "VeroneseVariety", [IsPosInt, IsField ]);
-DeclareOperation( "VeroneseVariety", [IsPosInt, IsPosInt]);
 
 
 ## List of dimensions and field

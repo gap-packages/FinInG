@@ -338,7 +338,7 @@ InstallMethod( SegreVariety, "given a list of projective spaces", [IsHomogeneous
 	r:=PolynomialRing(field,dim);
 	indets:=IndeterminatesOfPolynomialRing(r);
 	cartcart:=Cartesian([cart,cart]);
-	list1:=List(cartcart,ij->indets[eta(ij[1])]*indets[eta(ij[2])]);
+	#list1:=List(cartcart,ij->indets[eta(ij[1])]*indets[eta(ij[2])]);
 	pollist:=[];
 	for ij in cartcart do
 		for s in [1..k] do
@@ -444,6 +444,11 @@ InstallMethod( PrintObj, [ IsSegreVariety and
 	ViewObj(var!.geometry);
   end );
 
+InstallMethod( SegreMap, "given a Segre variety",
+	[IsSegreVariety],
+	function(sv)
+	  return ShallowCopy(sv!.segremap);
+	end );
 
 
 InstallMethod( PointsOfSegreVariety, "for a Segre variety",
@@ -487,11 +492,96 @@ InstallMethod( VeroneseMap, "given a projective space",
 	return func;
 end );
 
-#InstallMethod ( VeroneseVariety, "given a projective space",
-#				[IsProjectiveSpace],
-#	function(pg)
-#	  local vv, var, ty, 
+InstallMethod ( VeroneseVariety, "given a projective space",
+				[IsProjectiveSpace],
+	function(pg)
+	  local field,r,n2,indets,list,i,j,k,s,vv,var,ty,n;
 
+	field:=pg!.basefield;
+	n:=Dimension(pg)+1;
+	n2:=Int(n*(n+1)/2);
+	r:=PolynomialRing(field,n2);
+	indets:=IndeterminatesOfPolynomialRing(r);
+	list:=[];
+	for i in [1..n-1] do 
+		for j in [i+1..n] do
+			Add(list,indets[(i-1)*n-Int((i^2-i)/2)+j]^2
+			-indets[(i-1)*n-Int((i^2-i)/2)+i]*indets[(j-1)*n-Int((j^2-j)/2)+j]);
+		od;
+	od;
+	for i in [1..n-2] do 
+		for j in [i+1..n-1] do 
+			for k in [j+1..n] do
+				Add(list,indets[(i-1)*n-Int((i^2-i)/2)+i]*indets[(j-1)*n-Int((j^2-j)/2)+k]
+				-indets[(i-1)*n-Int((i^2-i)/2)+j]*indets[(i-1)*n-Int((i^2-i)/2)+k]);
+			od;
+		od;
+	od;
+	vv:=ProjectiveVariety(PG(n2-1,field),r,list);
+	var:=rec( geometry:=PG(n2-1,field), polring:=r, listofpols:=list, 
+								inverseimage:=pg, veronesemap:=VeroneseMap(pg));
+	ty:=NewType( NewFamily("VeroneseVarietiesFamily"), IsVeroneseVariety and 
+								IsVeroneseVarietyRep );
+	ObjectifyWithAttributes(var,ty,
+			#AmbientGeometry, ag, 
+			#PolynomialRing, pring,
+			DefiningListOfPolynomials, list);
+	return var;
+end );
+
+InstallMethod( VeroneseVariety, "given a positive integer and a field",
+	# Note that the given integer is the projective dimension
+		[ IsPosInt, IsField ],
+	function(d1,field)
+			
+	local pg;
+	
+	pg:=PG(d1,field);
+	return VeroneseVariety(pg);
+end );
+
+
+InstallMethod( VeroneseVariety, "given a positive integer and a prime power",
+	# Note that the given integers are the projective dimensions!
+		[ IsPosInt, IsPosInt ],
+	function(d1,q)
+			
+	local pg;
+	
+	pg:=PG(d1,GF(q));
+	return VeroneseVariety(pg);
+end );
+
+InstallMethod( ViewObj, [ IsVeroneseVariety and 
+                           IsVeroneseVarietyRep ],
+  function( var )
+    Print("Veronese Variety in ");
+	ViewObj(var!.geometry);
+  end );
+
+InstallMethod( PrintObj, [ IsVeroneseVariety and 
+                           IsVeroneseVarietyRep ],
+  function( var )
+    Print("Veronese Variety in ");
+	ViewObj(var!.geometry);
+  end );
+
+InstallMethod( VeroneseMap, "given a Veronese variety",
+	[IsVeroneseVariety],
+	function(vv)
+	  return ShallowCopy(vv!.veronesemap);
+	end );
+	
+InstallMethod( PointsOfVeroneseVariety, "for a Veronese variety",
+			[IsVeroneseVariety],
+		# returns a list of the points of a Segre variety using the Segre map
+	function(vv)
+		local vm,cart,listofpgs,pg,pts;
+		vm:=vv!.veronesemap;
+		pg:=vv!.inverseimage;
+		pts:=List(Points(pg),vm);
+		return pts;
+	end );
 
 
 ### 6. Miscellaneous ###
@@ -543,85 +633,84 @@ InstallMethod( ConicOnFivePoints, "given a set of five points of a projective pl
 
 ### morphism suff.
 
-InstallMethod( VeroneseMap, "given a projective space PG(n,q)",
-    [ IsProjectiveSpace ],
-  function( pgdomain )
-    local n,F,n2,pgimage,varmap,func,
-          tups,beta,betainv,hom,
-          g1,g2,twiner,gens,newgens;
-    n := pgdomain!.dimension + 1;
-    F := pgdomain!.basefield;
-    n2 := (n-1)*(n+2)/2;
-    pgimage := VeroneseVariety(n2, F);
+#InstallMethod( VeroneseMap, "given a projective space PG(n,q)",
+#    [ IsProjectiveSpace ],
+#  function( pgdomain )
+#    local n,F,n2,pgimage,varmap,func,
+#          tups,beta,betainv,hom,
+#          g1,g2,twiner,gens,newgens;
+#    n := pgdomain!.dimension + 1;
+#    F := pgdomain!.basefield;
+#    n2 := (n-1)*(n+2)/2;
+#    pgimage := VeroneseVariety(n2, F);##
 
-    func := function( point )
-      local i,j,list;
-      list:=[];
-      for i in [1..n] do
-        for j in [i..n] do
-          Add(list, point!.obj[i]*point!.obj[j] );
-        od;
-      od;
-      ConvertToVectorRepNC( list, F );
-      return Wrap(pgimage, 1, list);
-    end;
+#    func := function( point )
+#      local i,j,list;
+#      list:=[];
+#      for i in [1..n] do
+#        for j in [i..n] do
+#          Add(list, point!.obj[i]*point!.obj[j] );
+#        od;
+#      od;
+#      ConvertToVectorRepNC( list, F );
+#      return Wrap(pgimage, 1, list);
+#    end;#
 
-    tups := Filtered(Tuples([1..n], 2),i->i[2]>=i[1]);
+#    tups := Filtered(Tuples([1..n], 2),i->i[2]>=i[1]);#
 
-    beta := function( m )
-      local rows;
-      rows := List([1..n], i -> m[i]{[i..n]});
-      return Concatenation(rows);
-    end;
+#    beta := function( m )
+#      local rows;
+#      rows := List([1..n], i -> m[i]{[i..n]});
+#      return Concatenation(rows);
+#    end;
 
-    betainv := function( v )
-      local matb, i, j, x;
-      matb := ShallowCopy( NullMat(n, n, F) );
-          for i in [1..n] do
-              for j in [i..n] do
-                  x := v[Position(tups,[i,j])];
-                  matb[i][j] := x;
-                  matb[j][i] := x;
-              od;
-          od;
-      return matb;
-    end;
+#    betainv := function( v )
+#      local matb, i, j, x;
+#      matb := ShallowCopy( NullMat(n, n, F) );
+#          for i in [1..n] do
+#              for j in [i..n] do
+#                  x := v[Position(tups,[i,j])];
+#                  matb[i][j] := x;
+#                  matb[j][i] := x;
+#              od;
+#          od;
+#      return matb;
+#    end;
       
-    hom := function( m )
-      local basis1, basis2, image, mat;
-      mat := m!.mat;
-      basis1 := IdentityMat(n2+1, F);
-      basis2 := List(basis1, betainv);
-      image := List(basis2, b -> beta( TransposedMat(mat) * b * mat ));  
-      ConvertToMatrixRepNC( image, F );       
-      return ProjElWithFrob(image, IdentityMapping(F), F);
-    end;
-   
-    g1 := HomographyGroup( pgdomain );
-    gens := GeneratorsOfGroup( g1 );
-    newgens := List(gens, hom);
-    g2 := Group( newgens );
-    SetSize(g2, Size(g1));
-    twiner := GroupHomomorphismByImagesNC(g1, g2, gens, newgens);
-    SetIsBijective(twiner, true);
+#    hom := function( m )
+#      local basis1, basis2, image, mat;
+#      mat := m!.mat;
+#      basis1 := IdentityMat(n2+1, F);
+#      basis2 := List(basis1, betainv);
+#      image := List(basis2, b -> beta( TransposedMat(mat) * b * mat ));  
+#      ConvertToMatrixRepNC( image, F );       
+#      return ProjElWithFrob(image, IdentityMapping(F), F);
+#    end;
+#   
+#    g1 := HomographyGroup( pgdomain );
+#    gens := GeneratorsOfGroup( g1 );
+#    newgens := List(gens, hom);
+#    g2 := Group( newgens );
+#   SetSize(g2, Size(g1));
+#    twiner := GroupHomomorphismByImagesNC(g1, g2, gens, newgens);
+#   SetIsBijective(twiner, true);#
+#    varmap := GeometryMorphismByFunction(Points(pgdomain), Points(pgimage), func);
+#    SetIsInjective( varmap, true );
+#    SetIntertwiner(varmap, twiner);
+#    return varmap;
+#  end );
 
-    varmap := GeometryMorphismByFunction(Points(pgdomain), Points(pgimage), func);
-    SetIsInjective( varmap, true );
-    SetIntertwiner(varmap, twiner);
-    return varmap;
-  end );
+#InstallMethod( VeroneseMap, "given a dimension and field",
+#    [ IsPosInt, IsField ],
+#  function( d, F )
+#    return VeroneseMap( ProjectiveSpace(d, F) );
+#  end );
 
-InstallMethod( VeroneseMap, "given a dimension and field",
-    [ IsPosInt, IsField ],
-  function( d, F )
-    return VeroneseMap( ProjectiveSpace(d, F) );
-  end );
-
-InstallMethod( VeroneseMap, "given a dimension and field order",
-    [ IsPosInt, IsPosInt ],
-  function( d, q )
-    return VeroneseMap( ProjectiveSpace(d, q) );
-  end );
+#InstallMethod( VeroneseMap, "given a dimension and field order",
+#    [ IsPosInt, IsPosInt ],
+#  function( d, q )
+#    return VeroneseMap( ProjectiveSpace(d, q) );
+#  end );
 
 
 InstallMethod( GrassmannCoordinates, 
