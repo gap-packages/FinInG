@@ -187,17 +187,6 @@ InstallMethod( Display,
 
 # CHECKED 27/09/11 jdb
 #############################################################################
-#O  \^( <x>, <em> )
-##
-InstallOtherMethod( \^, 
-	"for an element of an incidence structure and a geometry morphism",
-	[IsElementOfIncidenceStructure, IsGeometryMorphism],
-	function(x, em)
-		return ImageElm(em,x);
-	end );
-
-# CHECKED 27/09/11 jdb
-#############################################################################
 #O  ImageElm( <em>, <x> )
 ##
 InstallOtherMethod( ImageElm, 
@@ -209,6 +198,18 @@ InstallOtherMethod( ImageElm,
 
 # CHECKED 27/09/11 jdb
 #############################################################################
+#O  \^( <x>, <em> )
+##
+InstallOtherMethod( \^, 
+	"for an element of an incidence structure and a geometry morphism",
+	[IsElementOfIncidenceStructure, IsGeometryMorphism],
+	function(x, em)
+		return ImageElm(em,x);
+	end );
+
+
+# CHECKED 27/09/11 jdb
+#############################################################################
 #O  ImagesSet( <em>, <x> )
 ##
 InstallOtherMethod( ImagesSet,
@@ -217,6 +218,7 @@ InstallOtherMethod( ImagesSet,
 	function(em, x)
 		return List(x, t -> em!.fun(t));
 	end );
+
 
 # CHECKED 27/09/11 jdb
 #############################################################################
@@ -289,7 +291,7 @@ InstallMethod( NaturalEmbeddingBySubspace,
 				Error("Applying preimage to an element which is not in the range");
 			fi;
 			newy:= y!.obj * invbasis;
-			if IsVector(newy) then 
+			if not IsMatrix(newy) then 
 				newy := newy{[1..d1]}; 
                 ConvertToVectorRepNC(newy, f);
 			else
