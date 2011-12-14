@@ -98,6 +98,7 @@ A: GeometryOfDiagram: IsDiagram
 varieties.gd: attributes
 
 A: DefiningListOfPolynomials: IsAlgebraicVariety
+A: AmbientSpace: IsAlgebraicVariety
 
 affinespace.gd: attributes
 

@@ -41,6 +41,10 @@ own declarations and the ones before.
 </Section>
 <Section>
 <Heading>The complete inventory</Heading>
+
+<ManSection>
+<Heading>Declarations</Heading>
+<Description>
 <Example>
 <#Include SYSTEM "operations_inventory.txt"> 
 </Example>
@@ -50,6 +54,22 @@ own declarations and the ones before.
 <Example>
 <#Include SYSTEM "properties_inventory.txt"> 
 </Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Heading>Functions/Methods</Heading>
+<Description>
+<Example>
+<#Include SYSTEM "functions_inventory.txt"> 
+</Example>
+<Example>
+<#Include SYSTEM "methods_inventory.txt"> 
+</Example>
+
+</Description>
+</ManSection>
+
 </Section>
 <Section>
 <Heading>The filter graph(s)</Heading>

@@ -1845,11 +1845,13 @@ InstallGlobalFunction( FG_enum_orthogonal,
              if x in hyp then
                 numinhyp := Size(enum2) * ressize;
                 prew := em!.prefun(x);
+				#Print("if \c");
                 return numinhyp + Position(enumextra, prew);
              else            
                 w := Meet(hyp, x);        
                 prew := em!.prefun(w);    
-                k := Position(enum2, prew);    
+				k := Position(enum2, prew);   
+				#Print(k," \c"); 
                 enumres := FG_specialresidual(vs!.geometry, w, hyp); 
                 l := Position(enumres, x);
                 return (k-1)*ressize + l;
@@ -1864,6 +1866,7 @@ InstallGlobalFunction( FG_enum_orthogonal,
 #############################################################################
 #F FG_enum_hermitian.  This is a "helper" function which makes the enumerator
 # for a set of elements of a canonical hermitian space.
+# bug repaired in NumberElement function. Bug found by Frédéric Vanhove. 
 ##
 InstallGlobalFunction( FG_enum_hermitian,
 
@@ -1918,12 +1921,15 @@ InstallGlobalFunction( FG_enum_hermitian,
            local w, prew, k, enumres, l, numinhyp;
              if x in hyp then
                 numinhyp := Size(enum2) * ressize;
-                prew := PreImage(em, x);
-                return numinhyp + Position(enumextra, prew);
+                #prew := PreImage(em, x); #this was bug 1
+                prew := em!.prefun(x);
+				return numinhyp + Position(enumextra, prew);
              else            
                 w := Meet(hyp, x);
-                prew := PreImage(em, w);
-                k := Position(varsps2jmin1, prew);
+                #prew := PreImage(em, w); #this was bug 2
+                prew := em!.prefun(w);
+				#k := Position(varsps2jmin1, prew); this was bug 3
+				k := Position(enum2, prew);
                 enumres := FG_specialresidual(vs!.geometry, w, hyp); 
                 l := Position(enumres, x);
                 return (k-1)*ressize + l;

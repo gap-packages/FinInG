@@ -23,6 +23,9 @@ SizeScreen([256,24]);
 outputfile_functions := Filename(outputdir,"functions_inventory.txt");
 outputfile_methods := Filename(outputdir,"methods_inventory.txt");
 
+PrintTo(outputfile_methods,"Methods\n\n");
+PrintTo(outputfile_functions,"Functions\n\n");
+
 for file in files do
 	AppendTo(outputfile_functions,file,": global functions\n\n");
 	AppendTo(outputfile_methods,file,": methods\n\n");
@@ -46,12 +49,14 @@ for file in files do
 				tmp := Concatenation(tmp," ",r);
 			od;
 			tmp := NormalizedWhitespace(tmp);
-			AppendTo(outputfile_methods,tmp,"\n");
+			AppendTo(outputfile_methods,ReplacedString(ReplacedString(tmp,"<","&lt;"),">","&gt;"),"\n");
+			#AppendTo(outputfile_methods,tmp,"\n");
 		elif IsSubset(r,i_f) and r{[1..7]}="Install" then
 			RemoveCharacters(r," \n");
 			name := SplitString(r,"(,")[2];
 			tmp := Concatenation("F: ",name);
-			AppendTo(outputfile_functions,tmp,"\n");
+			AppendTo(outputfile_functions,ReplacedString(ReplacedString(tmp,"<","&lt;"),">","&gt;"),"\n");
+			#AppendTo(outputfile_functions,tmp,"\n");
 		fi;
 	r := ReadLine(stream);
 	od;
@@ -102,7 +107,8 @@ for file in files do
 			RemoveCharacters(oper,"\"");
 			filters := JoinStringsWithSeparator(split{[3..Length(split)-1]},", ");
 			tmp := Concatenation("O: ",oper,": ",filters);
-			AppendTo(outputfile_operations,tmp,"\n");
+			AppendTo(outputfile_operations,ReplacedString(ReplacedString(tmp,"<","&lt;"),">","&gt;"),"\n");
+			#AppendTo(outputfile_operations,tmp,"\n");
 		elif Length(r) >= 17 and r{[1..17]} = d_a then
 			RemoveCharacters(r," \n");
 			split := SplitString(r,"(,)");
@@ -110,7 +116,8 @@ for file in files do
 			RemoveCharacters(attr,"\"");
 			filter := split[3];
 			tmp := Concatenation("A: ",attr,": ",filter);
-			AppendTo(outputfile_attributes,tmp,"\n");
+			AppendTo(outputfile_attributes,ReplacedString(ReplacedString(tmp,"<","&lt;"),">","&gt;"),"\n");
+			#AppendTo(outputfile_attributes,tmp,"\n");
 		elif Length(r) >= 16 and r{[1..16]} = d_p then
 			RemoveCharacters(r," \n");
 			split := SplitString(r,"(,)");
@@ -118,7 +125,8 @@ for file in files do
 			RemoveCharacters(attr,"\"");
 			filter := split[3];
 			tmp := Concatenation("P: ",attr,": ",filter);
-			AppendTo(outputfile_properties,tmp,"\n");
+			AppendTo(outputfile_properties,ReplacedString(ReplacedString(tmp,"<","&lt;"),">","&gt;"),"\n");
+			#AppendTo(outputfile_properties,tmp,"\n");
 		fi;
 	r := ReadLine(stream);
 	od;
