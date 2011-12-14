@@ -252,7 +252,7 @@ InstallOtherMethod( PreImagesSet,
 
 ## The specialised operations...
 
-# CHECKED 27/09/11 jdb (and added a check that basefields of <ps1> and <ps2> are equal.)
+# CHECKED 14/12/11 jdb + ml (and added a check that basefields of <ps1> and <ps2> are equal.)
 #############################################################################
 #O  NaturalEmbeddingBySubspace( <ps1>, <ps2>, <v> ) returns a geometry morphism
 # from the projective space <ps1> into <v>, an element of the projective space
@@ -328,7 +328,7 @@ InstallMethod( NaturalEmbeddingBySubspaceNC,
 		pre := function(y)
 			local newy;
 			newy:= y!.obj * invbasis;
-			if IsVector(newy) then 
+			if not IsMatrix(newy) then 
 				newy := newy{[1..d1]}; 
 				ConvertToVectorRepNC(newy, f);
 			else
@@ -861,7 +861,7 @@ InstallMethod( BlownUpSubspaceOfProjectiveSpace,
 	end );
 
 #############################################################################
-#O  BlownUpSubspaceOfProjectiveSpace( <B>, <mat> ) 
+#O  BlownUpSubspaceOfProjectiveSpaceBySubfield( <B>, <mat> ) 
 #	blows up a subspace of projective space by field reduction
 # This is w.r.t. to the canonical basis of the field over the subfield.
 ##
@@ -1014,12 +1014,14 @@ InstallMethod( NaturalEmbeddingByFieldReduction,
 		map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(geom1),
                                          ElementsOfIncidenceStructure(geom2),
                                          func, false, prefun);
+		
+		SetIsInjective( map, true );
     ## Now creating intertwiner
 		hom := function( m )
 			local image;      
 			image := BlownUpMat(basis, m!.mat); 
-			ConvertToMatrixRepNC( image, f1 );       
-			return ProjectiveSemilinearMap(image, f1);
+			ConvertToMatrixRepNC( image, f2 );       
+			return ProjectiveSemilinearMap(image, f2);
 		end;
 
 		hominv := function( m )
