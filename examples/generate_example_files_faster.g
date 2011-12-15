@@ -98,6 +98,8 @@ projpolfiles1 := ["projpol_projectivespace", "projpol_polarspaceform",
 morphismsfiles := ["morphisms_intertwiners","morphisms_embedding1","morphisms_embedding2","morphisms_typesubspace",
           "morphisms_fieldreduc1", "morphisms_fieldreduc2","morphisms_subfield1","morphisms_subfield2",
           "morphisms_isopolar","morphisms_projection","morphisms_completion","morphisms_klein","morphisms_duality"];;
+		  
+varieties_files := ["varieties_general", "varieties_polarspace" ];
 
 
 gpolygonfiles := [ "gpolygons_projplanes1", "gpolygons_projplanes2", "gpolygons_iskantorfamily", "gpolygons_isqclan",

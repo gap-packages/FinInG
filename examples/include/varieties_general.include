@@ -10,3 +10,7 @@ gap&gt; f2:=r.4*r.1^2-r.4^3;
 x_1^2*x_4-x_4^3
 gap&gt; var:=AlgebraicVariety(pg,[f1,f2]);
 Projective Variety in ProjectiveSpace(3, 9)
+gap&gt; DefiningListOfPolynomials(var);
+[ x_1*x_3-x_2^2, x_1^2*x_4-x_4^3 ]
+gap&gt; AmbientSpace(var);
+ProjectiveSpace(3, 9)

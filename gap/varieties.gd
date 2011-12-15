@@ -41,19 +41,19 @@ DeclareRepresentation( "IsPointsOfAlgebraicVarietyRep", IsPointsOfAlgebraicVarie
 ### 2. Projective Varieties ###
 
 DeclareCategory( "IsProjectiveVariety", IsAlgebraicVariety );
-DeclareRepresentation( "IsProjectiveVarietyRep", IsProjectiveVariety, ["geometry","polring","listofpols"]);
+DeclareRepresentation( "IsProjectiveVarietyRep", IsProjectiveVariety and IsAlgebraicVarietyRep, ["geometry","polring","listofpols"]);
 
 
 ### 3. Affine Varieties ###
 
 DeclareCategory( "IsAffineVariety", IsAlgebraicVariety );
-DeclareRepresentation( "IsAffineVarietyRep", IsAffineVariety, ["geometry","polring","listofpols"]);
+DeclareRepresentation( "IsAffineVarietyRep", IsAffineVariety and IsAlgebraicVarietyRep, ["geometry","polring","listofpols"]);
 
 
 ### 4. Segre Varieties ###
 
 DeclareCategory("IsSegreVariety", IsProjectiveVariety );
-DeclareRepresentation("IsSegreVarietyRep", IsSegreVariety, 
+DeclareRepresentation("IsSegreVarietyRep", IsSegreVariety and IsProjectiveVarietyRep, 
 				["geometry","listofpols","inverseimage","segremap", "polring"]);
 DeclareCategory( "IsPointsOfSegreVariety", IsPointsOfAlgebraicVariety );
 DeclareRepresentation( "IsPointsOfSegreVarietyRep", IsPointsOfSegreVariety, ["variety"]);
@@ -61,7 +61,7 @@ DeclareRepresentation( "IsPointsOfSegreVarietyRep", IsPointsOfSegreVariety, ["va
 
 ### 5. Veronese Varities ###
 DeclareCategory("IsVeroneseVariety", IsProjectiveVariety );
-DeclareRepresentation("IsVeroneseVarietyRep", IsVeroneseVariety, 
+DeclareRepresentation("IsVeroneseVarietyRep", IsVeroneseVariety and IsProjectiveVarietyRep, 
 				["geometry","listofpols","inverseimage","veronesemap", "polring"]);
 DeclareCategory( "IsPointsOfVeroneseVariety", IsPointsOfAlgebraicVariety );
 DeclareRepresentation( "IsPointsOfVeroneseVarietyRep", IsPointsOfVeroneseVariety, ["variety"]);
@@ -137,6 +137,7 @@ DeclareOperation( "GrassmannVariety", [IsPosInt, IsPosInt, IsPosInt]);
 ### 7. Miscellaneous ###
 DeclareOperation( "ConicOnFivePoints",  [ IsHomogeneousList and
                               IsSubspaceOfProjectiveSpaceCollection ] );
+DeclareOperation( "PolarSpace", [IsProjectiveVariety] );
 
 
 #############################################################################

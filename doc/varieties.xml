@@ -211,7 +211,27 @@ A <E>Veronese variety</E> in <Package>FinInG</Package> is a projective algebraic
         When a Veronese variety <A>vv</A> is given as input, the operation returns the associated Veronese map.
     </Description>
 </ManSection>
+</Section>
+<!--SECTION QUADRICS AND HERMITIAN VARIETIES -->
+<Section Label="quadricshermitian">
+<Heading>Quadrics and Hermitian varieties</Heading>
+Quadrics and Hermitian varieties are objects by default considered as a classical polar space. But they belong also to the category
+<C>IsProjectiveVariety</C> (but not to the Representation <C>IsProjectiveVarietyRep</C>). This implies that in principle, operations 
+applicable to objects in <C>IsProjectiveVariety</C> are applicable to quadrics and Hermitian varieties too. Furthermore, we provide 
+a method for <F>PolarSpace</F> taking as an argument a projective algebraic variety. The appropriate form is constructed, when possible 
+of course, using the <Package>Forms</Package> functions <F>QuadraticFormByPolynomial</F> and <F>HermitianFormByPolynomial</F>.
 
-
+<ManSection>
+<Oper Name="PolarSpace" Arg="var"/>
+<Description>
+the argument <A>var</A> is a projective algebraic variety. When its list of definining polynomial contains exactaly one polynomial,
+depending on its degree, the operation <F>QuadraticFormByPolynomial</F> or <F>HermitianFormByPolynomial</F> is used to compute
+a quadratic form or a hermitian form. These operations check whether this is possible, and produce an error message if not. If the
+conversion is possible, then the appropriate polar space is returned.
+<Example>
+<#Include SYSTEM "../examples/include/varieties_polarspace.include"> 
+</Example>
+</Description>
+</ManSection>
 </Section>
 </Chapter>

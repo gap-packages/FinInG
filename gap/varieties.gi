@@ -702,8 +702,13 @@ InstallMethod( Enumerator,
 ### 5. Veronese Varieties ###
 # the map in the last section comes from morphism.gi.
 
-InstallMethod( VeroneseMap, "given a projective space",
-				[IsProjectiveSpace],
+#############################################################################
+#O  VeroneseMap( <pg> ), returns a function that is the Veronese Map from
+#<pg>
+##
+InstallMethod( VeroneseMap, 
+	"for a projective space",
+	[IsProjectiveSpace],
 	function(pg)
 	  local F, dim, func;
 	  F:=pg!.basefield;
@@ -724,8 +729,12 @@ InstallMethod( VeroneseMap, "given a projective space",
 	return func;
 end );
 
-InstallMethod ( VeroneseVariety, "given a projective space",
-				[IsProjectiveSpace],
+#############################################################################
+#O  VeroneseVariety( <pg> ), returns the Veronese variety from <pg>
+##
+InstallMethod ( VeroneseVariety, 
+	"for a projective space",
+	[IsProjectiveSpace],
 	function(pg)
 	  local field,r,n2,indets,list,i,j,k,s,vv,var,ty,n;
 
@@ -761,50 +770,66 @@ InstallMethod ( VeroneseVariety, "given a projective space",
 	return var;
 end );
 
-InstallMethod( VeroneseVariety, "given a positive integer and a field",
+#############################################################################
+#O  VeroneseVariety( <n>, <field> ), returns the Veronese variety from 
+# PG(<n>,<field>).
+##
+InstallMethod( VeroneseVariety, 
+	"for a positive integer and a field",
 	# Note that the given integer is the projective dimension
-		[ IsPosInt, IsField ],
+	[ IsPosInt, IsField ],
 	function(d1,field)
-			
-	local pg;
-	
-	pg:=PG(d1,field);
-	return VeroneseVariety(pg);
+	return VeroneseVariety(PG(d1,field));
 end );
 
-
-InstallMethod( VeroneseVariety, "given a positive integer and a prime power",
+#############################################################################
+#O  VeroneseVariety( <n>, <q> ), returns the Veronese variety from 
+# PG(<n>,<q>).
+##
+InstallMethod( VeroneseVariety, 
+	"for a positive integer and a prime power",
 	# Note that the given integers are the projective dimensions!
-		[ IsPosInt, IsPosInt ],
+	[ IsPosInt, IsPosInt ],
 	function(d1,q)
-			
-	local pg;
+	return VeroneseVariety(PG(d1,q));		
+end);
+
+#############################################################################
+# view print operations for VeroneseVarieties.
+##
+InstallMethod( ViewObj, 
+	"for a Veronese variety",
+	[ IsVeroneseVariety and IsVeroneseVarietyRep ],
+	function( var )
+		Print("Veronese Variety in ");
+		ViewObj(var!.geometry);
+	end );
+
+InstallMethod( PrintObj, 
+	"for a Veronese variety",
+	[ IsVeroneseVariety and IsVeroneseVarietyRep ],
+	function( var )
+		Print("Veronese Variety in ");
+		ViewObj(var!.geometry);
+  end );
 	
-	pg:=PG(d1,GF(q));
-	return VeroneseVariety(pg);
-end );
-
-InstallMethod( ViewObj, [ IsVeroneseVariety and 
-                           IsVeroneseVarietyRep ],
-  function( var )
-    Print("Veronese Variety in ");
-	ViewObj(var!.geometry);
-  end );
-
-InstallMethod( PrintObj, [ IsVeroneseVariety and 
-                           IsVeroneseVarietyRep ],
-  function( var )
-    Print("Veronese Variety in ");
-	ViewObj(var!.geometry);
-  end );
-
-InstallMethod( VeroneseMap, "given a Veronese variety",
+#############################################################################
+#O  VeroneseMap( <vv> ), returns a function the is the Veronese Map from
+# the Veronese variety <vv>
+##
+InstallMethod( VeroneseMap, 
+	"for a Veronese variety",
 	[IsVeroneseVariety],
 	function(vv)
 	  return ShallowCopy(vv!.veronesemap);
 	end );
 
-InstallMethod( PointsOfVeroneseVariety, "for a Veronese variety",
+#############################################################################
+#O  PointsOfVeroneseVariety ( <var> )
+# returns a object representing all points of a Veronese variety.
+##
+InstallMethod( PointsOfVeroneseVariety, 
+	"for a Veronese variety",
 	[IsVeroneseVariety and IsVeroneseVarietyRep],
 	function(var)
 		local pts;
@@ -820,19 +845,33 @@ InstallMethod( PointsOfVeroneseVariety, "for a Veronese variety",
 			);
 	end );
 
-InstallMethod( ViewObj, [ IsPointsOfVeroneseVariety and 
-                           IsPointsOfVeroneseVarietyRep ],
-  function( pts )
-    Print("<points of ",pts!.variety,">");
-  end );
+#############################################################################
+#O  ViewObj method for points of Veronese variety
+##
+InstallMethod( ViewObj, 
+	"for points of Veronese variety",
+	[ IsPointsOfVeroneseVariety and IsPointsOfVeroneseVarietyRep ],
+	function( pts )
+		Print("<points of ",pts!.variety,">");
+	end );
 	 
-InstallMethod( Points, "for a Veronese variety",
+#############################################################################
+#O  Points ( <var> )
+# shortcut to PointsOfVeroneseVariety
+##
+InstallMethod( Points,
+	"for a Veronese variety",
 	[IsVeroneseVariety and IsVeroneseVarietyRep],
 	function(var)
 		return PointsOfVeroneseVariety(var);
 	end );
 
-InstallMethod( Iterator, "for points of a Veronese variety", 
+#############################################################################
+#O  Iterator ( <ptsr> )
+# Iterator for points of a Veronese variety.
+##
+InstallMethod( Iterator, 
+	"for points of a Veronese variety", 
 	[IsPointsOfVeroneseVariety],
 	function(pts)
 		local vv,vm,pg,ptlist;
@@ -843,8 +882,12 @@ InstallMethod( Iterator, "for points of a Veronese variety",
 		return IteratorList(ptlist);
 	end );		
 
+#############################################################################
+#O  Enumerator ( <ptsr> )
+# Enumerator for points of a Veronese variety.
+##
 InstallMethod( Enumerator,
-	"method for IsPointsOfVeroneseVariety",
+	"for points of a Veronese variety", 
 	[IsPointsOfVeroneseVariety],
 	function ( pts )
 		local vv,vm,pg,ptlist;
@@ -858,8 +901,12 @@ InstallMethod( Enumerator,
 
 ### 6. Miscellaneous ###
 
-
-InstallMethod( ConicOnFivePoints, "given a set of five points of a projective plane",
+#############################################################################
+#O  ConicOnFivePoints ( <pts> )
+# returns the conic through five given points <pts>, as a projective variety.
+##
+InstallMethod( ConicOnFivePoints, 
+	"for a set of five points of a projective plane",
    [ IsHomogeneousList and IsSubspaceOfProjectiveSpaceCollection ],
  
   function( pts )
@@ -985,6 +1032,10 @@ InstallMethod( ConicOnFivePoints, "given a set of five points of a projective pl
 #  end );
 
 
+#############################################################################
+#O  GrassmannCoordinates ( <sub> )
+# returns the Grassmann coordinates of the projective subspace <sub>
+##
 InstallMethod( GrassmannCoordinates, 
 	"for a subspace of a projective space",
     [ IsSubspaceOfProjectiveSpace ],
@@ -1005,7 +1056,12 @@ InstallMethod( GrassmannCoordinates,
     return vector;
   end );
 
-InstallMethod( GrassmannMap, "given a dimension k and a projective space",
+#############################################################################
+#O  GrassmannMap ( <k>, <pgdomain> )
+# returns the map that maps k-subspaces of <pgdomain> to a point with GrassmannCoordinates  
+##
+InstallMethod( GrassmannMap, 
+	"for an integer and a projective space",
     [ IsPosInt, IsProjectiveSpace ],
 
   ## Warning: this operation is not compatible with
@@ -1043,7 +1099,12 @@ InstallMethod( GrassmannMap, "given a dimension k and a projective space",
     return varmap;
   end );
 
-InstallMethod( GrassmannMap, "given a dimension k and a projective space",
+#############################################################################
+#O  GrassmannMap ( <k>, <n>, <q> )
+# shortcut to GrassmannMap(<k>,PG(<n>,<q>))
+##
+InstallMethod( GrassmannMap, 
+	"for three positive integers",
     [ IsPosInt, IsPosInt, IsPosInt ],
   function( k, n, q )
     return GrassmannMap( k, ProjectiveSpace(n, q));
@@ -1055,6 +1116,37 @@ InstallMethod( GrassmannMap, "given a dimension k and a projective space",
 #    return GrassmannMap( vars!.type-1, vars!.geometry);
 #  end );
 
-
-
-
+#############################################################################
+#O  PolarSpace ( <var> )
+# returns the polar space defined by the equation in the list of polynomials
+# of <var>. It is of course checked that this list contains only one equation.
+# it is then decided if we try to convert the polynomial to a quadric form or to 
+# a hermitian form.
+##
+InstallMethod( PolarSpace,
+	"for a projective algebraic variety",
+	[IsProjectiveVariety and IsProjectiveVarietyRep],	
+	function(var)
+		local list,form,f,eq,r,degree,lm,l;
+		list := DefiningListOfPolynomials(var);
+		if Length(list) <> 1 then
+			Error("<var> does not define a polar space");
+		else
+			f := BaseField(AmbientSpace(var));
+			r := var!.polring;
+			eq := list[1];
+			lm := LeadingMonomial(eq);
+			l := Length(lm)/2;
+			degree := Sum(List([1..l],x->lm[2*x]));
+			if degree = 2 then
+				form := QuadraticFormByPolynomial(eq,r);
+			else
+				form := HermitianFormByPolynomial(eq,r);
+			fi;
+			return PolarSpace(form);
+		fi;
+	end);
+	
+	
+	
+	
