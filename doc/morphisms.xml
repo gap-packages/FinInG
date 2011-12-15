@@ -278,7 +278,7 @@ over <M>F</M> and returns the matrix of the linear transformation on the row spa
 <Alt Not="HTML"><M>K^{mn}</M></Alt><Alt Only="HTML">K&lt;sup>mn&lt;/sup></Alt> with respect to
 the <M>K</M>-basis whose vectors are <Alt Not="HTML"><M>\{b_1 v_1, ... b_m v_1, ..., b_mv_n\}</M></Alt>
 <Alt Only="HTML">{b&lt;sub>1&lt;/sub>v&lt;sub>1&lt;/sub>,...,
-b&lt;sub>m&lt;/sub>v&lt;sub>1&lt;/sub>,...,b&lt;sub>m&lt;/sub>v&lt;sub>m&lt;/sub>}</Alt>, where
+b&lt;sub>m&lt;/sub>v&lt;sub>1&lt;/sub>,...,b&lt;sub>m&lt;/sub>v&lt;sub>n&lt;/sub>}</Alt>, where
 <Alt Not="HTML"><M>\{v_1,..,v_n\}</M></Alt><Alt Only="HTML">
 {v&lt;sub>1&lt;/sub>,...,v&lt;sub>n&lt;/sub>}</Alt> is a basis for 
 <Alt Not="HTML"><M>F^n</M></Alt><Alt Only="HTML">
