@@ -179,10 +179,24 @@ Another example, this time with polar spaces:
 <ManSection>
 <Oper Name="NaturalEmbeddingByFieldReduction" Arg="geom1, geom2"/>
 <Oper Name="NaturalEmbeddingByFieldReduction" Arg="geom1, geom2, B"/>
+<Returns>a geometry morphism</Returns>
+<Description>
+The arguments <A>geom1</A> and <A>geom2</A> are projective spaces
+<Alt Not="HTML"><M>PG(r-1,q^t)</M></Alt><Alt Only="HTML">PG(r-1,q&lt;sup>t&lt;/sup>)</Alt> and
+<Alt Not="HTML"><M>PG(rt-1,q)</M></Alt><Alt Only="HTML">PG(rt-1,q)</Alt> respectively. The optional
+argument <A>B</A> is a basis for <Alt Not="HTML"><M>GF(q^t)</M></Alt><Alt Only="HTML">GF(q&lt;sup>t&lt;/sup>)</Alt>
+over <M>GF(q)</M>.
+</Description>
+</ManSection>
+
+
+<ManSection>
+<Oper Name="NaturalEmbeddingByFieldReduction" Arg="geom1, geom2"/>
+<Oper Name="NaturalEmbeddingByFieldReduction" Arg="geom1, geom2, B"/>
 <Oper Name="NaturalEmbeddingByFieldReduction" Arg="geom1, geom2, boolean"/>
 <Returns>a geometry morphism</Returns>
 <Description>
-The arguments <A>geom1</A> and <A>geom2</A> are projective or polar spaces.
+The arguments <A>geom1</A> and <A>geom2</A> are polar spaces.
 This function returns a geometry morphism representing the natural embedding
 of <A>geom1</A> into <A>geom2</A> via field reduction. By <E>natural</E> for projective spaces,
 we mean that the embedding is induced by considering the field <Alt Not="HTML"><M>F_1</M></Alt><Alt Only="HTML">

@@ -2074,28 +2074,34 @@ InstallMethod( Random,
 # ProjectivityByTwoFrames(frame1,frame2)
 #############################################################################
 
-InstallMethod( BaerSublineOnThreePoints, [IsSubspaceOfProjectiveSpace,
-                IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
-# UNCHECKED
- function( x, y, z )
+InstallMethod( BaerSublineOnThreePoints,
+	"for three points of a projective space",
+	[IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
+	# UNCHECKED
+	function( x, y, z )
   # returns the Baersubline determined by three collinear points x,y,z
-  local geo, gfq2, gfq, t, subline;
-  
-  geo := AmbientSpace(x);
-  gfq2 := geo!.basefield;
-  gfq := GF(Sqrt(Size(gfq2)));
+	local geo, gfq2, gfq, t, subline;
+	if Length(DuplicateFreeList(List([x,y,z],t->AmbientSpace(t)))) <> 1 then
+		Error( "<x>, <y>, <z> must be points of the same projective space" );
+	fi;
+	geo := AmbientSpace(x);
+	gfq2 := geo!.basefield;
+	if RootInt(Size(gfq2),2)^2 <> Size(gfq2) then
+		Error( "the order of the basefield must be a square" );
+	fi;
+	gfq := GF(Sqrt(Size(gfq2)));
 
-  ## Write z as x + ty
+	## Write z as x + ty
   
-  t := First(gfq2, u -> Rank([z!.obj, x!.obj + u * y!.obj]) = 1); 
+	t := First(gfq2, u -> Rank([z!.obj, x!.obj + u * y!.obj]) = 1); 
 
-  ## Then the subline is just the set of points
-  ## of the form x + w (ty), w in GF(q) (together
-  ## with x and y of course).
-  
-  subline := List(gfq, w -> VectorSpaceToElement(geo, x!.obj + w * t * y!.obj));
-  Add( subline, y );
-  return subline;
+	## Then the subline is just the set of points
+	## of the form x + w (ty), w in GF(q) (together
+	## with x and y of course).
+	
+	subline := List(gfq, w -> VectorSpaceToElement(geo, x!.obj + w * t * y!.obj));
+	Add( subline, y );
+	return subline;
 end);
 
 InstallMethod( BaerSubplaneOnQuadrangle, [IsSubspaceOfProjectiveSpace, 

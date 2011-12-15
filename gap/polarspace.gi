@@ -470,24 +470,30 @@ InstallMethod( EllipticQuadric,
 
 	## Here we take the maximal totally isotropic subspace rep
 	## max and make representatives for lower dimensional subspaces
-		reps := [ max[1] ];
-		Append(reps, List([2..(d-1)/2], j -> max{[1..j]}));  
+	## it could be that max is empty, not Max of course, but the variable max.	
 
+		if not IsEmpty(max) then
+			reps := [ max[1] ];
+			Append(reps, List([2..(d-1)/2], j -> max{[1..j]}));  
+		
 	## We would like the representative to be stored as
 	## compressed matrices. Then they will be more efficient
 	## to work with.
   
-		for m in reps do
-			if IsMatrix(m) then
-				ConvertToMatrixRep(m,f);
-			else 
-				ConvertToVectorRep(m,f);
-			fi;
-		od;   
+			for m in reps do
+				if IsMatrix(m) then
+					ConvertToMatrixRep(m,f);
+				else 
+					ConvertToVectorRep(m,f);
+				fi;
+			od;   
 
     ## Wrap 'em up
-		reps := List([1..(d-1)/2], j -> Wrap(eq, j, reps[j]) );
-		SetRepresentativesOfElements(eq, reps);
+			reps := List([1..(d-1)/2], j -> Wrap(eq, j, reps[j]) );
+			SetRepresentativesOfElements(eq, reps);
+		else;
+			SetRepresentativesOfElements(eq, []);
+		fi;
 		SetClassicalGroupInfo( eq, rec( degree := (q^((d+1)/2)+1)*(q^((d+1)/2-1)-1)/(q-1) ) );  
 		return eq;
 	end );
@@ -2439,16 +2445,21 @@ InstallMethod( CollineationGroup,
 		fi;
         ## Setting up the NiceMonomorphism
 		Info(InfoFinInG, 1, "Computing nice monomorphism...");
-		x := RepresentativesOfElements( ps )[1];   
-		if DESARGUES.Fast then
-			hom := NiceMonomorphismByOrbit( g, x!.obj, OnProjPointsWithFrob, info!.degree);
-		else 
-			points := Orbit(g, x, OnProjSubspaces);
-			hom := ActionHomomorphism(g, points, OnProjSubspaces, "surjective");    
-			SetIsBijective(hom, true);
-			SetNiceObject(g, Image(hom) );
+		x := RepresentativesOfElements( ps );   		
+		if not IsEmpty(x) then
+			x := x[1];
+			if DESARGUES.Fast then
+				hom := NiceMonomorphismByOrbit( g, x!.obj, OnProjPointsWithFrob, info!.degree);
+			else 
+				points := Orbit(g, x, OnProjSubspaces);
+				hom := ActionHomomorphism(g, points, OnProjSubspaces, "surjective");    
+				SetIsBijective(hom, true);
+				SetNiceObject(g, Image(hom) );
+			fi;
+			SetNiceMonomorphism(g, hom );
+		else
+			Info(InfoFinInG, 1, "Polar space contains no elements. No nice monomorphism computed.");
 		fi;
-		SetNiceMonomorphism(g, hom );
 		return g;
 	end );
 
