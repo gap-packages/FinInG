@@ -106,11 +106,20 @@ InstallMethod( PolarSpace,
 		gram := m!.matrix;
 		geo := rec( basefield := f, dimension := Length(gram)-1,
 					vectorspace := FullRowSpace(f,Length(gram)) );
-		if WittIndex(m) = 2 then
-			ty := NewType( GeometriesFamily,
-					IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsClassicalGQ);
-		else ty := NewType( GeometriesFamily,
-					IsClassicalPolarSpace and IsClassicalPolarSpaceRep );
+		if not IsAlternatingForm(m) then
+			if WittIndex(m) = 2 then
+				ty := NewType( GeometriesFamily,
+						IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsClassicalGQ and IsProjectiveVariety);
+				else ty := NewType( GeometriesFamily,
+							IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsProjectiveVariety);
+			fi;
+		else
+			if WittIndex(m) = 2 then
+				ty := NewType( GeometriesFamily,
+						IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsClassicalGQ);
+				else ty := NewType( GeometriesFamily,
+							IsClassicalPolarSpace and IsClassicalPolarSpaceRep);
+			fi;
 		fi;
 		# at this stage, we are sure that if m is a bilinear form and the characteristic is even, 
 		# then m will be symplectic and PolynomialOfForm(m) will produce an error.
@@ -165,11 +174,20 @@ InstallMethod( PolarSpaceStandard,
 		f := m!.basefield;
 		geo := rec( basefield := f, dimension := Length(gram)-1,
 				vectorspace := FullRowSpace(f,Length(gram)) );
-		if WittIndex(m) = 2 then
-			ty := NewType( GeometriesFamily,
-                  IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsClassicalGQ);
-		else ty := NewType( GeometriesFamily,
-                  IsClassicalPolarSpace and IsClassicalPolarSpaceRep );
+		if not IsAlternatingForm(m) then
+			if WittIndex(m) = 2 then
+				ty := NewType( GeometriesFamily,
+						IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsClassicalGQ and IsProjectiveVariety);
+				else ty := NewType( GeometriesFamily,
+							IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsProjectiveVariety);
+			fi;
+		else
+			if WittIndex(m) = 2 then
+				ty := NewType( GeometriesFamily,
+						IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsClassicalGQ);
+				else ty := NewType( GeometriesFamily,
+							IsClassicalPolarSpace and IsClassicalPolarSpaceRep);
+			fi;
 		fi;
 		# at this stage, we are sure that if m is a bilinear form and the characteristic is even, 
 		# then m will be symplectic and PolynomialOfForm(m) will produce an error.
@@ -225,9 +243,9 @@ InstallMethod( PolarSpaceStandard,
 					vectorspace := FullRowSpace(f,Length(gram)) );
 		if WittIndex(m) = 2 then
 			ty := NewType( GeometriesFamily,
-					IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsClassicalGQ);
+					IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsClassicalGQ and IsProjectiveVariety);
 		else ty := NewType( GeometriesFamily,
-					IsClassicalPolarSpace and IsClassicalPolarSpaceRep );
+					IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsProjectiveVariety);
 		fi;
 		eq := PolynomialOfForm( m );
 		ObjectifyWithAttributes( geo, ty, 
@@ -259,11 +277,20 @@ InstallMethod( PolarSpace,
 		f := m!.basefield;
 		geo := rec( basefield := f, dimension := Length(gram)-1,
 				vectorspace := FullRowSpace(f,Length(gram)) );
-		if WittIndex(m) = 2 then
-			ty := NewType( GeometriesFamily,
-                  IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsClassicalGQ);
-		else ty := NewType( GeometriesFamily,
-                  IsClassicalPolarSpace and IsClassicalPolarSpaceRep );
+		if not IsAlternatingForm(m) then
+			if WittIndex(m) = 2 then
+				ty := NewType( GeometriesFamily,
+						IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsClassicalGQ and IsProjectiveVariety);
+				else ty := NewType( GeometriesFamily,
+							IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsProjectiveVariety);
+			fi;
+		else
+			if WittIndex(m) = 2 then
+				ty := NewType( GeometriesFamily,
+						IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsClassicalGQ);
+				else ty := NewType( GeometriesFamily,
+							IsClassicalPolarSpace and IsClassicalPolarSpaceRep);
+			fi;
 		fi;
 		# at this stage, we are sure that if m is a bilinear form and the characteristic is even, 
 		# then m will be symplectic and PolynomialOfForm(m) will produce an error.
@@ -359,9 +386,9 @@ InstallMethod( PolarSpace,
 					vectorspace := FullRowSpace(f,Length(gram)) );
 		if WittIndex(m) = 2 then
 			ty := NewType( GeometriesFamily,
-                  IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsClassicalGQ);
+                  IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsClassicalGQ and IsProjectiveVariety);
 		else ty := NewType( GeometriesFamily,
-                  IsClassicalPolarSpace and IsClassicalPolarSpaceRep );
+                  IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsProjectiveVariety);
 		fi;
 		eq := PolynomialOfForm(m);
 		ObjectifyWithAttributes( geo, ty, 
@@ -1758,7 +1785,7 @@ InstallMethod( Meet,
 ## 
 InstallMethod( ElementsOfIncidenceStructure, 
 	"for a polar space and an integer",
-	[IsClassicalPolarSpace, IsPosInt],
+	[IsClassicalPolarSpace and IsClassicalPolarSpaceRep, IsPosInt],
 	function( ps, j )
 		local r;
 		r := Rank(ps);
@@ -1785,7 +1812,7 @@ InstallMethod( ElementsOfIncidenceStructure,
 ## 
 InstallMethod( ElementsOfIncidenceStructure, 
 	"for a polar space",
-	[IsClassicalPolarSpace],
+	[IsClassicalPolarSpace and IsClassicalPolarSpaceRep],
 	function( ps )
 		return Objectify(
 			NewType( ElementsCollFamily, IsAllElementsOfIncidenceStructure ),
@@ -2661,3 +2688,19 @@ InstallMethod( IsEllipticQuadric,
 		return IsEllipticForm(SesquilinearForm(ps));
 	end);
 
+#############################################################################
+# A litte extra since we put some quadrics and hermitian varieties in 
+# IsProjectiveVariety.
+#############################################################################
+
+
+#############################################################################
+#P  DefiningListOfPolynomials( <ps> )
+# returns all the elements of the polar space <ps> 
+## 
+InstallMethod( DefiningListOfPolynomials, 
+	"for a polar space",
+	[IsProjectiveVariety and IsClassicalPolarSpace and IsClassicalPolarSpaceRep],
+	function( ps )
+		return [EquationForPolarSpace(ps)];
+	end);

@@ -34,8 +34,8 @@
 
 DeclareCategory( "IsAlgebraicVariety", IsAttributeStoringRep );
 DeclareRepresentation("IsAlgebraicVarietyRep", IsAlgebraicVariety, ["geometry","polring", "listofpols"] );
-DeclareCategory( "IsAllPointsOfAlgebraicVariety", IsDomain and IsCollection and IsComponentObjectRep );
-DeclareRepresentation( "IsAllPointsOfAlgebraicVarietyRep", IsAllPointsOfAlgebraicVariety, ["variety"]);
+DeclareCategory( "IsPointsOfAlgebraicVariety", IsDomain and IsCollection and IsComponentObjectRep );
+DeclareRepresentation( "IsPointsOfAlgebraicVarietyRep", IsPointsOfAlgebraicVariety, ["variety"]);
 
 
 ### 2. Projective Varieties ###
@@ -55,16 +55,16 @@ DeclareRepresentation( "IsAffineVarietyRep", IsAffineVariety, ["geometry","polri
 DeclareCategory("IsSegreVariety", IsProjectiveVariety );
 DeclareRepresentation("IsSegreVarietyRep", IsSegreVariety, 
 				["geometry","listofpols","inverseimage","segremap", "polring"]);
-DeclareCategory( "IsAllPointsOfSegreVariety", IsAllPointsOfAlgebraicVariety );
-DeclareRepresentation( "IsAllPointsOfSegreVarietyRep", IsAllPointsOfSegreVariety, ["variety"]);
+DeclareCategory( "IsPointsOfSegreVariety", IsPointsOfAlgebraicVariety );
+DeclareRepresentation( "IsPointsOfSegreVarietyRep", IsPointsOfSegreVariety, ["variety"]);
 
 
 ### 5. Veronese Varities ###
 DeclareCategory("IsVeroneseVariety", IsProjectiveVariety );
 DeclareRepresentation("IsVeroneseVarietyRep", IsVeroneseVariety, 
 				["geometry","listofpols","inverseimage","veronesemap", "polring"]);
-DeclareCategory( "IsAllPointsOfVeroneseVariety", IsAllPointsOfAlgebraicVariety );
-DeclareRepresentation( "IsAllPointsOfVeroneseVarietyRep", IsAllPointsOfVeroneseVariety, ["variety"]);
+DeclareCategory( "IsPointsOfVeroneseVariety", IsPointsOfAlgebraicVariety );
+DeclareRepresentation( "IsPointsOfVeroneseVarietyRep", IsPointsOfVeroneseVariety, ["variety"]);
 
 
 #############################################################################
@@ -99,7 +99,7 @@ DeclareOperation( "SegreMap", [ IsHomogeneousList, IsField ] ); # list of dimens
 DeclareOperation( "SegreVariety", [ IsHomogeneousList ]);  
 DeclareOperation( "SegreVariety", [ IsHomogeneousList, IsField ]); 
 DeclareOperation("PointsOfSegreVariety", [IsSegreVariety] );
-DeclareOperation("Points", [IsSegreVariety] );
+#DeclareOperation("Points", [IsSegreVariety] );
 DeclareOperation("SegreMap", [IsSegreVariety]);
 
 # Some extra functionality for two factors 
@@ -123,7 +123,7 @@ DeclareOperation( "VeroneseVariety", [IsPosInt, IsField ]);
 DeclareOperation( "VeroneseVariety", [IsPosInt, IsPosInt]);
 
 DeclareOperation( "PointsOfVeroneseVariety", [IsVeroneseVariety]);
-DeclareOperation( "Points", [IsVeroneseVariety]);
+#DeclareOperation( "Points", [IsVeroneseVariety]);
 
 DeclareOperation( "VeroneseMap", [IsVeroneseVariety]);
 

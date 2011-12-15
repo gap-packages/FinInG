@@ -45,89 +45,121 @@ Print(", varieties\c");
 
 ### 1. Projective Varieties ###
 
+#############################################################################
+#O  ProjectiveVariety( <pg>, <pring>, <list> )
+# constructs a projective variety in a projective space <pg>, with polynomials
+# in <list>, all polynomials are in <pring>
+##
 InstallMethod( ProjectiveVariety, 
 	"for a projective space, a polynomial ring and a list of homogeneous polynomials",
-		[ IsProjectiveSpace, IsPolynomialRing, IsList ],
-  function( pg, pring, list )
-    local f, extrep, t, x, i, j, var, ty, degrees;
+	[ IsProjectiveSpace, IsPolynomialRing, IsList ],
+	function( pg, pring, list )
+		local f, extrep, t, x, i, j, var, ty, degrees;
 	# The list of polynomials should be non-empty
-	if Length(list) < 1 then
-		Error("The list of polynomials should be non-empty");
-	fi;
+		if Length(list) < 1 then
+			Error("The list of polynomials should be non-empty");
+		fi;
 	# We check that the number of indeterminates of the polynomial ring is less
 	# than the 1 + the dimension of the projective space
-	if not Size(IndeterminatesOfPolynomialRing(pring)) = 1+pg!.dimension then
-		Error("The dimension of the projective space should be 1 less than the number of indeterminates of the polynomial ring");
-	fi;
+		if not Size(IndeterminatesOfPolynomialRing(pring)) = 1+pg!.dimension then
+			Error("The dimension of the projective space should be 1 less than the number of indeterminates of the polynomial ring");
+		fi;
 	# Next we check if the polynomial is homogenious
-	for f in list do
-		if not f in pring then
-			Error("The second argument should be a list of elements of the polynomial ring");
-		fi;
-		extrep:=ExtRepPolynomialRatFun(f);
-		t:=List(Filtered([1..Length(extrep)],i->IsOddInt(i)),j->extrep[j]); 
-		degrees:=List(t,x->Sum(List(Filtered([1..Length(x)],i->IsEvenInt(i)),j->x[j])));  
-		if not Size(AsSet(degrees)) = 1 then
-			Error("The second argument should be a list of homogeneous polynomials");
-		fi;
-	od;
-	var:=rec( geometry:=pg, polring:=pring, listofpols:=list);
-	ty:=NewType( NewFamily("ProjectiveVarietiesFamily"), IsProjectiveVariety and 
-								IsProjectiveVarietyRep );
-	ObjectifyWithAttributes(var,ty,
+		for f in list do
+			if not f in pring then
+				Error("The second argument should be a list of elements of the polynomial ring");
+			fi;
+			extrep:=ExtRepPolynomialRatFun(f);
+			t:=List(Filtered([1..Length(extrep)],i->IsOddInt(i)),j->extrep[j]); 
+			degrees:=List(t,x->Sum(List(Filtered([1..Length(x)],i->IsEvenInt(i)),j->x[j])));  
+			if not Size(AsSet(degrees)) = 1 then
+				Error("The second argument should be a list of homogeneous polynomials");
+			fi;
+		od;
+		var:=rec( geometry:=pg, polring:=pring, listofpols:=list);
+		ty:=NewType( NewFamily("ProjectiveVarietiesFamily"), IsProjectiveVariety and 
+									IsProjectiveVarietyRep );
+		ObjectifyWithAttributes(var,ty,
 			#AmbientGeometry, pg, 
 			#PolynomialRing, pring,
-			DefiningListOfPolynomials, list);
-	return var;
-end );
+				DefiningListOfPolynomials, list);
+		return var;
+	end );
 
+
+#############################################################################
+#O  ProjectiveVariety( <pg>, <pring>, <list> )
+# constructs a projective variety in a projective space <pg>, with polynomials
+# in <list>
+##
 InstallMethod( ProjectiveVariety,
 	"for a projective space and a list of polynomials",
-		[ IsProjectiveSpace, IsList ],
+	[ IsProjectiveSpace, IsList ],
 	function( pg, list )
 		local pring;
 		pring:=PolynomialRing(pg!.basefield,pg!.dimension + 1);
 		return ProjectiveVariety(pg,pring,list);
 	end );
 	
+#############################################################################
+#O  ProjectiveVariety( <pg>, <pring>, <list> )
+# constructs a projective variety in a projective space <pg>, with polynomials
+# in <list>
+##
 InstallMethod( AlgebraicVariety,
 	"for a projective space and a list of polynomials",
-		[ IsProjectiveSpace, IsList ],
+	[ IsProjectiveSpace, IsList ],
 	function( pg, list )
 		local pring;
 		pring:=PolynomialRing(pg!.basefield,pg!.dimension + 1);
 		return ProjectiveVariety(pg,pring,list);
 	end );
 
-InstallMethod( ViewObj, [ IsProjectiveVariety and 
-                           IsProjectiveVarietyRep ],
-  function( var )
-    Print("Projective Variety in ");
-	ViewObj(var!.geometry);
-  end );
+#############################################################################
+# View, print methods for projective varieties.
+##
 
-InstallMethod( PrintObj, [ IsProjectiveVariety and 
-                           IsProjectiveVarietyRep ],
-  function( var )
-    Print("Projective Variety in ");
-	ViewObj(var!.geometry);
-  end );
+InstallMethod( ViewObj, 
+	"for a projective algebraic variety",
+	[ IsProjectiveVariety and IsProjectiveVarietyRep ],
+	function( var )
+		Print("Projective Variety in ");
+		ViewObj(var!.geometry);
+	end );
 
-InstallMethod( DualCoordinatesOfHyperplane, 
+InstallMethod( PrintObj, 
+	"for a projective algebraic variety",
+	[ IsProjectiveVariety and IsProjectiveVarietyRep ],
+	function( var )
+		Print("Projective Variety in ");
+		ViewObj(var!.geometry);
+	end );
+
+#############################################################################
+#O  DualCoordinatesOfHyperplane( <hyp> )
+# returns the dual coordinate of a hyperplane in a projective space.
+##
+InstallMethod( DualCoordinatesOfHyperplane,
+	"for a subspace of a projective space",
 		[IsSubspaceOfProjectiveSpace],
-	function(hyp)
-		local mat,a;
-		if not Dimension(hyp)=Dimension(hyp!.geo)-1 then
-			Error("The argument is not a hyperplane");
-		else
-			mat:=hyp!.obj;
-			a:=NullspaceMat(TransposedMat(mat));
-		return a[1];
-		fi;
+		function(hyp)
+			local mat,a;
+			if not Dimension(hyp)=Dimension(hyp!.geo)-1 then
+				Error("The argument is not a hyperplane");
+			else
+				mat:=hyp!.obj;
+				a:=NullspaceMat(TransposedMat(mat));
+			return a[1];
+			fi;
 	end );
 	
+#############################################################################
+#O  DualCoordinatesOfHyperplane( <hyp> )
+# returns the hyperplanes by given dual coordinates.
+##
 InstallMethod( HyperplaneByDualCoordinates,
-		[IsProjectiveSpace,IsList],
+	"for a projective space and a list with coordinates",
+	[IsProjectiveSpace,IsList],
 	function(pg,a)
 		local mat,list;
 		if not Size(a)=Dimension(pg)+1 then
@@ -139,70 +171,94 @@ InstallMethod( HyperplaneByDualCoordinates,
 		fi;
 	end );
 
+
 ### 2. Affine Varieties ###
 
+#############################################################################
+#O  AffineVariety( <ag>, <pring>, <list> )
+# constructs a projective variety in an affine space <ag>, with polynomials
+# in <list>, all polynomials are in <pring>
+##
 InstallMethod( AffineVariety, 
 	"for a Affine space, a polynomial ring and a list of homogeneous polynomials",
-		[ IsAffineSpace, IsPolynomialRing, IsList ],
-  function( ag, pring, list )
-    local f, extrep, t, x, i, j, var, ty, degrees;
+	[ IsAffineSpace, IsPolynomialRing, IsList ],
+	function( ag, pring, list )
+		local f, extrep, t, x, i, j, var, ty, degrees;
 	# The list of polynomials should be non-empty
-	if Length(list) < 1 then
-		Error("The list of polynomials should not be empty");
-	fi;
+		if Length(list) < 1 then
+			Error("The list of polynomials should not be empty");
+		fi;
 	# We check that the number of indeterminates of the polynomial ring is less
 	# than the 1 + the dimension of the Affine space
-	if not Size(IndeterminatesOfPolynomialRing(pring)) = ag!.dimension then
-		Error("The dimension of the Affine space should be equal to the number of indeterminates of the polynomial ring");
-	fi;
-	var:=rec( geometry:=ag, polring:=pring, listofpols:=list);
-	ty:=NewType( NewFamily("AffineVarietiesFamily"), IsAffineVariety and 
-								IsAffineVarietyRep );
-	ObjectifyWithAttributes(var,ty,
+		if not Size(IndeterminatesOfPolynomialRing(pring)) = ag!.dimension then
+			Error("The dimension of the Affine space should be equal to the number of indeterminates of the polynomial ring");
+		fi;
+		var:=rec( geometry:=ag, polring:=pring, listofpols:=list);
+		ty:=NewType( NewFamily("AffineVarietiesFamily"), IsAffineVariety and 
+									IsAffineVarietyRep );
+		ObjectifyWithAttributes(var,ty,
 			#AmbientGeometry, ag, 
 			#PolynomialRing, pring,
 			DefiningListOfPolynomials, list);
-	return var;
-end );
+		return var;
+	end );
 
+#############################################################################
+#O  AffineVariety( <ag>, <list> )
+# constructs a projective variety in an affine space <ag>, with polynomials
+# in <list>.
+##
 InstallMethod( AffineVariety,
 	"for a Affine space and a list of polynomials",
-		[ IsAffineSpace, IsList ],
+	[ IsAffineSpace, IsList ],
 	function( ag, list )
 		local pring;
 		pring:=PolynomialRing(ag!.basefield,ag!.dimension);
 		return AffineVariety(ag,pring,list);
 	end );
 	
+#############################################################################
+#O  AffineVariety( <ag>, <list> )
+# constructs a projective variety in an affine space <ag>, with polynomials
+# in <list>.
+##
 InstallMethod( AlgebraicVariety,
 	"for a Affine space and a list of polynomials",
-		[ IsAffineSpace, IsList ],
+	[ IsAffineSpace, IsList ],
 	function( ag, list )
 		local pring;
 		pring:=PolynomialRing(ag!.basefield,ag!.dimension);
 		return AffineVariety(ag,pring,list);
 	end );
 
-InstallMethod( ViewObj, [ IsAffineVariety and 
-                           IsAffineVarietyRep ],
-  function( var )
-    Print("Affine Variety in ");
-	ViewObj(var!.geometry);
-  end );
+#############################################################################
+# View, print methods for projective varieties.
+##
 
-InstallMethod( PrintObj, [ IsAffineVariety and 
-                           IsAffineVarietyRep ],
-  function( var )
-    Print("Affine Variety in ");
-	ViewObj(var!.geometry);
-  end );
+InstallMethod( ViewObj, 
+	"for an affine variety",
+	[ IsAffineVariety and IsAffineVarietyRep ],
+	function( var )
+		Print("Affine Variety in ");
+		ViewObj(var!.geometry);
+	end );
 
-
+InstallMethod( PrintObj, 
+	"for an affine variety",
+	[ IsAffineVariety and IsAffineVarietyRep ],
+	function( var )
+		Print("Affine Variety in ");
+		ViewObj(var!.geometry);
+	end );
 
 ### 3. Algebraic Varieties ###
 
-
-InstallMethod( \in, "for a point and an algebraic variety", 
+#############################################################################
+#O  \in ( <point>, <var> )
+# checks if <point> lies on <var>
+##
+InstallMethod( \in,	
+	"for an element of an incidence structure and an algebraic variety", 
 	[IsElementOfIncidenceStructure, IsAlgebraicVariety],
 	function(point,var)
 		local w, pollist, i, n, test, f, nrindets, pring;
@@ -229,8 +285,13 @@ InstallMethod( \in, "for a point and an algebraic variety",
 		return test;
 	end );
 
-InstallMethod( PointsOfAlgebraicVariety, "for an algebraic variety",
-	[IsAlgebraicVariety],
+#############################################################################
+#O  PointsOfAlgebraicVariety ( <var> )
+# returns a object representing all points of an algebraic variety.
+##
+InstallMethod( PointsOfAlgebraicVariety, 
+	"for an algebraic variety",
+	[IsAlgebraicVariety and IsAlgebraicVarietyRep],
 	function(var)
 		local pts;
 		pts:=rec( 
@@ -239,39 +300,54 @@ InstallMethod( PointsOfAlgebraicVariety, "for an algebraic variety",
 				variety:=var
 				);
 		return Objectify(
-			NewType( ElementsCollFamily,IsAllPointsOfAlgebraicVariety and
-										IsAllPointsOfAlgebraicVarietyRep),
+			NewType( ElementsCollFamily,IsPointsOfAlgebraicVariety and
+										IsPointsOfAlgebraicVarietyRep),
 			pts
 			);
 	end );
 
-InstallMethod( ViewObj, [ IsAllPointsOfAlgebraicVariety and 
-                           IsAllPointsOfAlgebraicVarietyRep ],
-  function( pts )
-    Print("<points of ",pts!.variety,">");
-  end );
+#############################################################################
+#O  ViewObj ( <var> )
+##
+InstallMethod( ViewObj,
+	"for a collections of points of an algebraic variety",
+	[ IsPointsOfAlgebraicVariety and IsPointsOfAlgebraicVarietyRep ],
+	function( pts )
+		Print("<points of ",pts!.variety,">");
+	end );
 	 
-InstallMethod( Points, "for an algebraic variety",
-	[IsAlgebraicVariety],
+
+#############################################################################
+#O  Points ( <var> )
+# shortcut to PointsOfAlgebraicVariety
+##
+InstallMethod( Points, 
+	"for an algebraic variety",
+	[IsAlgebraicVariety and IsAlgebraicVarietyRep],
 	function(var)
 		return PointsOfAlgebraicVariety(var);
 	end );
 
-InstallMethod( Iterator, "for points of an algebraic variety", 
-	[IsAllPointsOfAlgebraicVariety],
+#############################################################################
+#O  Iterator ( <var> )
+# iterator for the points of an algebraic variety.
+##
+InstallMethod( Iterator, 
+	"for points of an algebraic variety", 
+	[IsPointsOfAlgebraicVariety],
 	function(pts)
 		local x;
 		return IteratorList(Filtered(Points(pts!.geometry), x->x in pts!.variety));
 	end );
 
-
+#############################################################################
 #O  Enumerator( <D> )
 # generic method that enumerates D, using an Iterator for D
 # assuming D belongs to IsElementsOfIncidenceStructure
 ##
 InstallMethod( Enumerator,
-	"generic method for IsAllPointsOfAlgebraicVariety",
-	[IsAllPointsOfAlgebraicVariety],
+	"generic method for IsPointsOfAlgebraicVariety",
+	[IsPointsOfAlgebraicVariety],
 	function ( pts )
 	local  iter, elms;
 	iter := Iterator( pts );
@@ -282,19 +358,27 @@ InstallMethod( Enumerator,
 	return elms;
 	end);
 
-
-
-InstallMethod( AmbientSpace, "for an algebraic variety",
-	[IsAlgebraicVariety],
+#############################################################################
+#O  AmbientSpace( <av> )
+# returns the AmbientSpace of <av>
+##
+InstallMethod( AmbientSpace, 
+	"for an algebraic variety",
+	[IsAlgebraicVariety and IsAlgebraicVarietyRep],
 	function(av)
 		return ShallowCopy(av!.geometry);
 	end );
 	
 ### 4. Segre Varieties ###
 
-InstallMethod( SegreMap, "given a list of projective spaces",
-                         [ IsHomogeneousList ],
-  function( listofspaces )
+#############################################################################
+#O  SegreMap( <listofspaces> ), returns a function the is the Segre Map from 
+# a list of projective spaces over the same field in <listofspaces>
+##
+InstallMethod( SegreMap,
+	"for a list of projective spaces",
+	[ IsHomogeneousList ],
+	function( listofspaces )
     local F, listofdims, l, dim, func;
     F := listofspaces[1]!.basefield;
     listofdims := List(listofspaces, i -> ProjectiveDimension(i) + 1);
@@ -333,18 +417,60 @@ InstallMethod( SegreMap, "given a list of projective spaces",
 	return func;
 end );
 
-InstallMethod( SegreMap, "given a list of projective spaces",
-		[IsHomogeneousList, IsField ],
+#############################################################################
+#O  SegreMap( <listofspaces> ), returns a function the is the Segre Map from 
+# a list of integers representing projective dimensions of projective spaces over
+# the field <field>
+##
+InstallMethod( SegreMap, 
+	"for a list of projective spaces and a field",
+	[IsHomogeneousList, IsField ],
 	function(dimlist,field)
-			
-	local listofpgs,d;
-	
-	listofpgs:=List(dimlist,d->PG(d,field));
-	return SegreMap(listofpgs);
+	return SegreMap(List(dimlist,n->PG(n,field)));
 end );
 
+#############################################################################
+#O  SegreMap( <pg1>, <pg2> ), returns the Segre map  from
+# two projective spaces over the same field.
+##
+InstallMethod( SegreMap, 
+	"for two projective spaces",
+	[IsProjectiveSpace, IsProjectiveSpace ],
+	function(pg1,pg2)
+	return SegreMap([pg1,pg2]);
+end );
 
-InstallMethod( SegreVariety, "given a list of projective spaces", [IsHomogeneousList],
+#############################################################################
+#O  SegreMap( <d1>, <d2>, <field> ), returns the Segre map  from
+# two projective spaces of dimension d1 and d2 over the field <field>
+##
+InstallMethod( SegreMap, 
+	"for two positive integers and a field",
+	# Note that the given integers are the projective dimensions!
+	[ IsPosInt, IsPosInt, IsField ],
+	function(d1,d2,field)
+	return SegreMap([PG(d1,field),PG(d2,field)]);
+end );
+
+#############################################################################
+#O  SegreMap( <d1>, <d2>, <field> ), returns the Segre map  from
+# two projective spaces of dimension d1 and d2 over the field GF(q)
+##
+InstallMethod( SegreMap, 
+	"given two positive integers and a prime power",
+	# Note that the given integers are the projective dimensions!
+	[ IsPosInt, IsPosInt, IsPosInt ],
+	function(d1,d2,q)
+	return SegreMap([PG(d1,GF(q)),PG(d2,GF(q))]);
+end );
+
+#############################################################################
+#O  SegreVariety( <listofspaces> )
+# returns the Segre variety from a list of projective spaces over the same field
+##
+InstallMethod( SegreVariety, 
+	"for a list of projective spaces", 
+	[IsHomogeneousList],
 	function(listofpgs)
 	
 	local sv, var, ty, k, F, l, i, listofdims, cart, eta, dim, d, field, r, indets, cartcart, list1, 
@@ -400,120 +526,110 @@ InstallMethod( SegreVariety, "given a list of projective spaces", [IsHomogeneous
 	
 end );
 
-InstallMethod( SegreVariety, "given a list of projective dimensions and a field",
-		[IsHomogeneousList, IsField ],
+#############################################################################
+#O  SegreVariety( <dimlist> ), returns the Segre variety  from
+# a list of integers representing projective dimensions of projective spaces over
+# the field <field>
+##
+InstallMethod( SegreVariety, 
+	"given a list of projective dimensions and a field",
+	[IsHomogeneousList, IsField ],
 	function(dimlist,field)
-			
-	local listofpgs,d;
-	
-	listofpgs:=List(dimlist,d->PG(d,field));
-	return SegreVariety(listofpgs);
+	return SegreVariety(List(dimlist,n->PG(n,field)));
 end );
 
-InstallMethod( ViewObj, [ IsSegreVariety and 
-                           IsSegreVarietyRep ],
-  function( var )
-    Print("Segre Variety in ");
-	ViewObj(var!.geometry);
-  end );
+#############################################################################
+# View, print methods for segre varieties.
+##
+InstallMethod( ViewObj, 
+	"for a Segre variety",
+	[ IsSegreVariety and IsSegreVarietyRep ],
+	function( var )
+		Print("Segre Variety in ");
+		ViewObj(var!.geometry);
+	end );
 
-InstallMethod( PrintObj, [ IsSegreVariety and 
-                           IsSegreVarietyRep ],
-  function( var )
-    Print("Segre Variety in ");
-	ViewObj(var!.geometry);
-  end );
+InstallMethod( PrintObj, 
+	"for a Segre variety",
+	[ IsSegreVariety and IsSegreVarietyRep ],
+	function( var )
+		Print("Segre Variety in ");
+		ViewObj(var!.geometry);
+	end );
   
-
-InstallMethod( SegreVariety, "given two projective spaces",
-		[IsProjectiveSpace, IsProjectiveSpace ],
+#############################################################################
+#O  SegreVariety( <pg1>, <pg2> ), returns the Segre variety  from
+# two projective spaces over the same field.
+##
+InstallMethod( SegreVariety, 
+	"for two projective spaces",
+	[IsProjectiveSpace, IsProjectiveSpace ],
 	function(pg1,pg2)
-			
-	local listofpgs;
-	
-	listofpgs:=[pg1,pg2];
-	return SegreVariety(listofpgs);
+	return SegreVariety([pg1,pg2]);
 end );
 
-InstallMethod( SegreVariety, "given two pos integers and a field",
+
+#############################################################################
+#O  SegreVariety( <d1>, <d2> ), returns the Segre variety  from
+# two projective spaces of dimension d1 and d2 over the field <field>
+##
+InstallMethod( SegreVariety, 
+	"for two positive integers and a field",
 	# Note that the given integers are the projective dimensions!
-		[ IsPosInt, IsPosInt, IsField ],
+	[ IsPosInt, IsPosInt, IsField ],
 	function(d1,d2,field)
-			
-	local listofpgs;
-	
-	listofpgs:=[PG(d1,field),PG(d2,field)];
-	return SegreVariety(listofpgs);
+	return SegreVariety([PG(d1,field),PG(d2,field)]);
 end );
 
-
-InstallMethod( SegreVariety, "given two pos integers and a prime power",
+#############################################################################
+#O  SegreVariety( <d1>, <d2> ), returns the Segre variety  from
+# two projective spaces of dimension d1 and d2 over the field GF(<q>
+##
+InstallMethod( SegreVariety, 
+	"for two positive integers and a prime power",
 	# Note that the given integers are the projective dimensions!
-		[ IsPosInt, IsPosInt, IsPosInt ],
+	[ IsPosInt, IsPosInt, IsPosInt ],
 	function(d1,d2,q)
-			
-	local listofpgs;
-	
-	listofpgs:=[PG(d1,GF(q)),PG(d2,GF(q))];
-	return SegreVariety(listofpgs);
+	return SegreVariety([PG(d1,q),PG(d2,q)]);
 end );
 
-InstallMethod( SegreMap, "given two projective spaces",
-		[IsProjectiveSpace, IsProjectiveSpace ],
-	function(pg1,pg2)
-			
-	local listofpgs;
-	
-	listofpgs:=[pg1,pg2];
-	return SegreMap(listofpgs);
-end );
+#############################################################################
+# View, print methods for segre varieties.
+##
+InstallMethod( ViewObj, 
+	"for a Segre variety",
+	[ IsSegreVariety and IsSegreVarietyRep ],
+	function( var )
+		Print("Segre Variety in ");
+		ViewObj(var!.geometry);
+	end );
 
-InstallMethod( SegreMap, "given two pos integers and a field",
-	# Note that the given integers are the projective dimensions!
-		[ IsPosInt, IsPosInt, IsField ],
-	function(d1,d2,field)
-			
-	local listofpgs;
-	
-	listofpgs:=[PG(d1,field),PG(d2,field)];
-	return SegreMap(listofpgs);
-end );
+InstallMethod( PrintObj, 
+	"for a Segre variety",
+	[ IsSegreVariety and IsSegreVarietyRep ],
+	function( var )
+		Print("Segre Variety in ");
+		ViewObj(var!.geometry);
+	end );
 
-InstallMethod( SegreMap, "given two pos integers and a prime power",
-	# Note that the given integers are the projective dimensions!
-		[ IsPosInt, IsPosInt, IsPosInt ],
-	function(d1,d2,q)
-			
-	local listofpgs;
-	
-	listofpgs:=[PG(d1,GF(q)),PG(d2,GF(q))];
-	return SegreMap(listofpgs);
-end );
-
-InstallMethod( ViewObj, [ IsSegreVariety and 
-                           IsSegreVarietyRep ],
-  function( var )
-    Print("Segre Variety in ");
-	ViewObj(var!.geometry);
-  end );
-
-InstallMethod( PrintObj, [ IsSegreVariety and 
-                           IsSegreVarietyRep ],
-  function( var )
-    Print("Segre Variety in ");
-	ViewObj(var!.geometry);
-  end );
-
-InstallMethod( SegreMap, "given a Segre variety",
+#############################################################################
+#O  SegreMap( <sv> ), returns the Segre map corresponding with <sv>
+##
+InstallMethod( SegreMap, 
+	"for a Segre variety",
 	[IsSegreVariety],
 	function(sv)
 	  return ShallowCopy(sv!.segremap);
 	end );
 
 
-
-InstallMethod( PointsOfSegreVariety, "for a Segre variety",
-	[IsSegreVariety],
+#############################################################################
+#O  PointsOfSegreVariety ( <var> )
+# returns a object representing all points of a segre variety.
+##
+InstallMethod( PointsOfSegreVariety, 
+	"for a Segre variety",
+	[IsSegreVariety and IsSegreVarietyRep],
 	function(var)
 		local pts;
 		pts:=rec( 
@@ -522,26 +638,40 @@ InstallMethod( PointsOfSegreVariety, "for a Segre variety",
 				variety:=var
 				);
 		return Objectify(
-			NewType( ElementsCollFamily,IsAllPointsOfSegreVariety and
-										IsAllPointsOfSegreVarietyRep),
+			NewType( ElementsCollFamily,IsPointsOfSegreVariety and
+										IsPointsOfSegreVarietyRep),
 			pts
 			);
 	end );
 
-InstallMethod( ViewObj, [ IsAllPointsOfSegreVariety and 
-                           IsAllPointsOfSegreVarietyRep ],
-  function( pts )
-    Print("<points of ",pts!.variety,">");
+#############################################################################
+#O  ViewObj ( <var> )
+##
+InstallMethod( ViewObj, 
+	"for a collection representing the points of a Segre variety",
+	[ IsPointsOfSegreVariety and IsPointsOfSegreVarietyRep ],
+	function( pts )
+		Print("<points of ",pts!.variety,">");
   end );
 	 
-InstallMethod( Points, "for a Segre variety",
-	[IsSegreVariety],
+#############################################################################
+#O  Points ( <var> )
+# shortcut to PointsOfSegreVariety
+##
+InstallMethod( Points, 
+	"for a Segre variety",
+	[IsSegreVariety and IsSegreVarietyRep],
 	function(var)
 		return PointsOfSegreVariety(var);
 	end );
 
-InstallMethod( Iterator, "for points of an Segre variety", 
-	[IsAllPointsOfSegreVariety],
+#############################################################################
+#O  Iterator ( <var> )
+# iterator for the points of a segre variety.
+##
+InstallMethod( Iterator, 
+	"for points of an Segre variety", 
+	[IsPointsOfSegreVariety],
 	function(pts)
 		local x,sv,sm,cart,listofpgs,pg,ptlist;
 		sv:=pts!.variety;
@@ -552,9 +682,13 @@ InstallMethod( Iterator, "for points of an Segre variety",
 		return IteratorList(ptlist);
 	end );		
 
+#############################################################################
+#O  Enumerator ( <var> )
+# Enumerator for the points of a segre variety.
+##
 InstallMethod( Enumerator,
-	"generic method for IsAllPointsOfSegreVariety",
-	[IsAllPointsOfSegreVariety],
+	"generic method for IsPointsOfSegreVariety",
+	[IsPointsOfSegreVariety],
 	function ( pts )
 		local x,sv,sm,cart,listofpgs,pg,ptlist;
 		sv:=pts!.variety;
@@ -671,7 +805,7 @@ InstallMethod( VeroneseMap, "given a Veronese variety",
 	end );
 
 InstallMethod( PointsOfVeroneseVariety, "for a Veronese variety",
-	[IsVeroneseVariety],
+	[IsVeroneseVariety and IsVeroneseVarietyRep],
 	function(var)
 		local pts;
 		pts:=rec( 
@@ -680,26 +814,26 @@ InstallMethod( PointsOfVeroneseVariety, "for a Veronese variety",
 				variety:=var
 				);
 		return Objectify(
-			NewType( ElementsCollFamily,IsAllPointsOfVeroneseVariety and
-										IsAllPointsOfVeroneseVarietyRep),
+			NewType( ElementsCollFamily,IsPointsOfVeroneseVariety and
+										IsPointsOfVeroneseVarietyRep),
 			pts
 			);
 	end );
 
-InstallMethod( ViewObj, [ IsAllPointsOfVeroneseVariety and 
-                           IsAllPointsOfVeroneseVarietyRep ],
+InstallMethod( ViewObj, [ IsPointsOfVeroneseVariety and 
+                           IsPointsOfVeroneseVarietyRep ],
   function( pts )
     Print("<points of ",pts!.variety,">");
   end );
 	 
 InstallMethod( Points, "for a Veronese variety",
-	[IsVeroneseVariety],
+	[IsVeroneseVariety and IsVeroneseVarietyRep],
 	function(var)
 		return PointsOfVeroneseVariety(var);
 	end );
 
 InstallMethod( Iterator, "for points of a Veronese variety", 
-	[IsAllPointsOfVeroneseVariety],
+	[IsPointsOfVeroneseVariety],
 	function(pts)
 		local vv,vm,pg,ptlist;
 		vv:=pts!.variety;
@@ -710,8 +844,8 @@ InstallMethod( Iterator, "for points of a Veronese variety",
 	end );		
 
 InstallMethod( Enumerator,
-	"method for IsAllPointsOfVeroneseVariety",
-	[IsAllPointsOfVeroneseVariety],
+	"method for IsPointsOfVeroneseVariety",
+	[IsPointsOfVeroneseVariety],
 	function ( pts )
 		local vv,vm,pg,ptlist;
 		vv:=pts!.variety;

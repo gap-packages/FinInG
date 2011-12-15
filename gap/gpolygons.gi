@@ -63,7 +63,7 @@ Print(", gpolygons\c");
 ##
 InstallMethod( ElementsOfIncidenceStructure, 
 	"for a generalised polygon and a positive integer",
-	[IsGeneralisedPolygon, IsPosInt],
+	[IsGeneralisedPolygon and IsGeneralisedPolygonRep, IsPosInt],
 	function( gp, j )
 		local s, t, sz;
 		if j in [1,2] then 
@@ -112,7 +112,7 @@ InstallMethod( ElementsOfIncidenceStructure,
 ##
 InstallMethod( ElementsOfIncidenceStructure, 
 	"for a generalised hexagon and a positive integer",
-	[IsGeneralisedHexagon, IsPosInt],
+	[IsGeneralisedHexagon and IsGeneralisedPolygonRep, IsPosInt],
 	function( gp, j )	
 		local s, t, sz;
 		if j in [1,2] then 
@@ -133,7 +133,7 @@ InstallMethod( ElementsOfIncidenceStructure,
 ##
 InstallMethod( Points, 
 	"for a generalised polygon",
-	[IsGeneralisedPolygon],
+	[IsGeneralisedPolygon and IsGeneralisedPolygonRep],
 	function( gp )
 		return ElementsOfIncidenceStructure(gp, 1);
 	end);
@@ -144,7 +144,7 @@ InstallMethod( Points,
 ##
 InstallMethod( Lines, 
 	"for a generalised polygon",
-	[IsGeneralisedPolygon],
+	[IsGeneralisedPolygon and IsGeneralisedPolygonRep],
 	function( gp )
 		return ElementsOfIncidenceStructure(gp, 2);
 	end);
