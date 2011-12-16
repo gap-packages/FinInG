@@ -2000,58 +2000,17 @@ InstallMethod( Random,
 # CHECKED 16/12/2011 jdb + ml CHECKED and CORRECTED 
 #############################################################################
 #O
+
+# MAYBE just return IteratorList(Enumerator(vs));
+
 InstallMethod(Iterator,  "for subspaces of a polar space",
         [IsSubspacesOfClassicalPolarSpace],
         function( vs )
-          local ps, j, d, F, ty, v, ispolar, form, x;    
-          ps := vs!.geometry;
-          j := vs!.type;
-          d := ps!.dimension;
-          F := ps!.basefield;
-          ty := PolarSpaceType(ps);
-     
-          if IsEvenInt(Size(F)) and 
-             (ty = "elliptic" or ty = "parabolic" or ty = "hyperbolic") then
-			 form:=QuadraticForm(ps);
-             ispolar := x -> IsTotallySingularSubspace(form, x);
-          else
-			 form:=SesquilinearForm(ps);
-             ispolar := x -> IsTotallyIsotropicSubspace(form, x);
-          fi;
+		
+		return IteratorList(Enumerator(vs));
+		
+end );
 
-          return IteratorByFunctions( rec(
-            NextIterator := function(iter)
-              local mat;
-
-              iter!.returnednumber := iter!.returnednumber + 1;
-
-              # use the subspace iterator to find the next
-              # totally isotropic/singular subspace.
-              repeat
-                x := BasisVectors(Basis(NextIterator(iter!.S)));
-			  until ispolar(x);
-              return VectorSpaceToElement(ps,x);
-            end,
-            IsDoneIterator := function(iter)
-              return iter!.returnednumber = iter!.totalnumber;
-            end,
-            ShallowCopy := function(iter)
-              return rec(
-                S := ShallowCopy(iter!.S),
-                geometry := iter!.geometry,
-                form := iter!.form,
-                # aut := iter!.aut,
-                totalnumber := iter!.totalnumber,
-                returnednumber := iter!.returnednumber
-                );
-            end,
-            S := Iterator(Subspaces(ps!.vectorspace,j)),
-            geometry := ps,
-            form := form,
-            totalnumber := Size(vs),
-            returnednumber := 0
-          ));
-  end);
 
 #############################################################################
 #
