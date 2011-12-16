@@ -1205,7 +1205,7 @@ end );
 # The embeddings for polar spaces
 # 
 #############################################################################
-#O  NaturalEmbeddingByFieldReduction( <geom1>, <geom2>, <bool> ) 
+#O  NaturalEmbeddingByFieldReduction( <ps1>, <f2>, <bool> ) 
 # returns a geometry morphism, described below. If <bool> is true, then an intertwiner
 # is computed.
 #
@@ -1213,18 +1213,17 @@ end );
 #  "Polar spaces and embeddings of classical groups" by Nick Gill
 #  (New Zealand J. Math). 
 ##
-
 InstallMethod (NaturalEmbeddingByFieldReduction,
-	"for a polar space and a field",
-	[IsClassicalPolarSpace, IsField],
-	function(ps1,f2)
+	"for a polar space, a field, and a boolean",
+	[IsClassicalPolarSpace, IsField, IsBool],
+	function(ps1,f2,computeintertwiner)
 	# f2 must be a subfield of the basefield of the classical polar space
 	local type1,qf1,qf2,ps2,bil1,bil2,hf1,hf2,em,fun,prefun,basis,f1,
 					map,hom,hominv,g1,gens,newgens,g2,twiner;
 	type1 := PolarSpaceType(ps1);
 	
 	# 1. the polar space is of orthogonal type
-	if type1 in ["hyperbolic","elliptic"] then
+	if type1 in ["hyperbolic","elliptic","parabolic"] then
 		qf1:=QuadraticForm(ps1);
 		qf2:=QuadraticFormFieldReduction(qf1,f2);
 		if IsSingularForm(qf2) then 
@@ -1268,148 +1267,41 @@ InstallMethod (NaturalEmbeddingByFieldReduction,
 	
 	## Now creating intertwiner
 	
-	hom := function( m )
-		local image;      
-		image := BlownUpMat(basis, m!.mat); 
-		ConvertToMatrixRepNC( image, f2 );       
-		return ProjectiveSemilinearMap(image, f2);
-	end;
-	hominv := function( m )
-		local preimage;      
-		preimage := ShrinkMat(basis, m!.mat); 
-		ConvertToMatrixRepNC( preimage, f1 );       
-		return ProjectiveSemilinearMap(preimage, f1);
-	end;
-	g1 := SimilarityGroup( ps1 );
-	gens := GeneratorsOfGroup( g1 );
-	newgens := List(gens, hom);
-	g2 := Group( newgens );
-	SetSize(g2, Size(g1));
-	twiner := GroupHomomorphismByFunction(g1, g2, hom, hominv);
-	SetIntertwiner( map, twiner);
+	if computeintertwiner then
+		hom := function( m )
+			local image;      
+			image := BlownUpMat(basis, m!.mat); 
+			ConvertToMatrixRepNC( image, f2 );       
+			return ProjectiveSemilinearMap(image, f2);
+		end;
+		hominv := function( m )
+			local preimage;      
+			preimage := ShrinkMat(basis, m!.mat); 
+			ConvertToMatrixRepNC( preimage, f1 );       
+			return ProjectiveSemilinearMap(preimage, f1);
+		end;
+		g1 := SimilarityGroup( ps1 );
+		gens := GeneratorsOfGroup( g1 );
+		newgens := List(gens, hom);
+		g2 := Group( newgens );
+		SetSize(g2, Size(g1));
+		twiner := GroupHomomorphismByFunction(g1, g2, hom, hominv);
+		SetIntertwiner( map, twiner);
+	fi;
 	return map;
-end );
-
-	
-	
-	
-	
-	
-	
-	
-
-InstallMethod( NaturalEmbeddingByFieldReduction, 
-	"for two polar spaces and a boolean",
-	[ IsClassicalPolarSpace, IsClassicalPolarSpace, IsBool ],
-	function( geom1, geom2, computeintertwiner )
-		local map, pgmap, f1, f2, q1, q2, d1, d2, vec, block, w, i, iter, f,
-          bas, e, type1, type2, iso, gram, newgram, form, ps, func, prefun,
-          hom, g1, gens, newgens, g2, twiner, twinerfunc, twinerprefun, hominv;
- 
-		f1 := geom1!.basefield; q1 := Size(f1); 
-		f2 := geom2!.basefield; q2 := Size(f2);       
-		d1 := geom1!.dimension + 1;	
-		d2 := geom2!.dimension + 1;
-		type1 := PolarSpaceType(geom1);
-		type2 := PolarSpaceType(geom2);
-		if q1^d1 = q2^d2 and IsSubset(f1,f2) and d2 mod d1 = 0 then  
-			e := d2/d1; 
-			vec := AsVectorSpace(f2, f1);
-			if [type1, type2] in [["symplectic", "symplectic"], ["elliptic", "elliptic"], 
-                             ["hyperbolic", "hyperbolic"]] or
-				([type1, type2] = ["parabolic", "elliptic"] and q2 mod 4 = 3 and IsEvenInt(e)) or
-				([type1, type2] = ["parabolic", "hyperbolic"] and q2 mod 4 = 1 and IsEvenInt(e)) or
-				([type1, type2] = ["parabolic", "parabolic"] and IsOddInt(q2) and IsOddInt(e)) then
-           
-           ## This part has been tested for small examples            
-           ## The basis here must have the sum of the b^(q+1) equal to 0 
-
-				bas := Basis(vec, LeukBasis(f1,f2) );        
-				if HasQuadraticForm(geom1) then
-					gram := GramMatrix( QuadraticForm(geom1) );
-					newgram := BlownUpMat( bas, gram );
-					form := QuadraticFormByMatrix(newgram, f2);
-				else
-					gram := GramMatrix( SesquilinearForm(geom1) );
-					newgram := BlownUpMat( bas, gram );
-					form := BilinearFormByMatrix(newgram, f2);
-				fi;        
-			elif (([type1, type2] = ["hermitian", "hyperbolic"] and IsEvenInt(d1) and IsEvenInt(e))) or
-				(([type1, type2] = ["hermitian", "elliptic"] and IsOddInt(d1) and IsEvenInt(e))) then
-       
-          ## This part has been tested for small examples 
-          ## THe new form is B'(x,y) = Tr( B(x,y) )
-          ## Matrix?        
-
-				bas := Basis(vec, LeukBasis(f1,f2) );
-				w := First(bas, t->not t in f2);
-				block := [[1,w],[w^q2,w^(q2+1)]]*One(f2);
-				newgram := IdentityMat(d2, f2);
-				for i in [1..d2/2] do
-					newgram{[2*i-1,2*i]}{[2*i-1,2*i]} := block;
-				od;
-				gram := GramMatrix( SesquilinearForm(geom1) );
-				newgram := BlownUpMat( bas, gram );
-				#form := QuadraticFormByMatrix(newgram, f2);
-				form := QuadraticFormByMatrix(newgram, f1);
-			elif [type1, type2] = ["hermitian", "hermitian"] and IsOddInt(e) then
-       
-          ## works for H(1,4^3) -> H(5,4)
-       
-				bas := Basis(vec, LeukBasis(f1,f2) );        
-				gram := GramMatrix( SesquilinearForm(geom1) );
-				newgram := BlownUpMat( bas, gram );
-				form := HermitianFormByMatrix(newgram, f2);
-			elif [type1, type2] = ["hermitian", "symplectic"] and e = 2 then  
-       
-          ## for the moment, we just use the usual copy of H
-				Info(InfoFinInG, 1, "Only works (at the moment) for the canonical Hermitian variety");
-				bas := Basis(vec, LeukBasis(f1,f2) );        
-				newgram := CanonicalGramMatrix("symplectic", d2, f2);
-				form := BilinearFormByMatrix( newgram, f2 );                  
-			else
-				Error("Not implemented for these geometries\n");
-			fi;   
-		else
-			Error("Dimensions and/or field sizes are incompatible"); return;
-		fi;
-     
-		ps := PolarSpace(form);
-		iso := IsomorphismPolarSpacesNC(ps, geom2, computeintertwiner);
-		pgmap := NaturalEmbeddingByFieldReduction( AmbientSpace(geom1), AmbientSpace(geom2), bas);
-		func := x -> iso!.fun( pgmap!.fun( x ) );
-		prefun := x -> pgmap!.prefun( iso!.prefun( x ) );
-		map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(geom1), 
-                                      ElementsOfIncidenceStructure(geom2), 
-                                      func, false, prefun );
-		SetIsInjective( map, true );
-		if HasIntertwiner( iso ) then
-			f := Intertwiner(iso);
-			hom := function( m )
-				local image;      
-				image := BlownUpMat(bas, m!.mat); 
-				ConvertToMatrixRepNC( image, f2 );       
-				return ProjectiveSemilinearMap(image, f2);
-			end;
-			hominv := function( m )
-				local preimage;      
-				preimage := ShrinkMat(bas, m!.mat); 
-				ConvertToMatrixRepNC( preimage, f1 );       
-				return ProjectiveSemilinearMap(preimage, f1);
-			end;
-			twinerfunc := x -> ImageElm(f, hom( x ));    
-			twinerprefun := y -> hominv( PreImageElm(f, y) );
-			g1 := IsometryGroup( geom1 );
-			gens := GeneratorsOfGroup( g1 );    
-			newgens := List(gens, twinerfunc);   
-			g2 := GroupWithGenerators( newgens );      
-			SetSize(g2, Size(g1));
-			twiner := GroupHomomorphismByFunction(g1, g2, twinerfunc, twinerprefun);
-			SetIntertwiner( map, twiner);
-		fi;
-		return map;
 	end );
-  
+
+#############################################################################
+#O  NaturalEmbeddingByFieldReduction( <geom1>, <f2>, true ) 
+# returns NaturalEmbeddingByFieldReduction( <geom1>, <f2>, true )
+#
+InstallMethod (NaturalEmbeddingByFieldReduction,
+	"for a polar space and a field",
+	[IsClassicalPolarSpace, IsField],
+	function(ps1,f2)
+		return NaturalEmbeddingByFieldReduction(ps1,f2,true);
+	end );
+
 # CHECKED 28/09/11 jdb
 #############################################################################
 #O  NaturalEmbeddingByFieldReduction( <geom1>, <geom2> ) 

@@ -116,6 +116,9 @@ DeclareOperation( "HermitianFormFieldReduction",
 
 DeclareOperation ( "NaturalEmbeddingByFieldReduction",
 				[ IsClassicalPolarSpace, IsField ]);
+				
+DeclareOperation ( "NaturalEmbeddingByFieldReduction",
+				[ IsClassicalPolarSpace, IsField, IsBool ]);
 
 DeclareOperation( "NaturalEmbeddingByFieldReduction",
                      [ IsClassicalPolarSpace, IsClassicalPolarSpace, IsBool ]);
