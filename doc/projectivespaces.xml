@@ -398,16 +398,46 @@ also performs the checking.
 <Heading>Enumerating subspaces of a projective spaces</Heading>
 
 <ManSection>
-<Oper Name="AsList" Arg="subspaces"/>
-<Returns>an Orb object or list</Returns>
+<Oper Name="Iterator" Arg="subspaces"/>
+<Returns>an iterator for the collection <A>subspaces</A></Returns>
 <Description>
+We refer to <Ref Oper="Iterator"/> for the definition of an iterator.
 <Example>
-John's example works, but it is not clear whether it fits in this part of the manual. I'll ask John to explain
-the difference between using orb and not using orb to list e.g. all lines of PG(3,4), is in the example projsp_Aslist.g
+<#Include SYSTEM "../examples/include/projsp_iterator.include"> 
 </Example>
 </Description>
 </ManSection>
 
-</Section>
 
+<ManSection>
+<Oper Name="Enumerator" Arg="subspaces"/>
+<Returns>an enumerator for the collection <A>subspaces</A></Returns>
+<Description>
+For complete collections of subspaces of a given type of a projective space, currently, no non-trivial enumerator is installed, 
+i.e. this operation just returns a list containing all elements of the collection <A>subspaces</A>. Such a list can, of course, 
+be used as an enumerator, but this might be time consuming.
+<Example>
+<#Include SYSTEM "../examples/include/projsp_enumerator.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="List" Arg="subspaces"/>
+<Oper Name="AsList" Arg="subspaces"/>
+<Returns>the complete list of elements in the collection <A>subspaces</A></Returns>
+<Description>
+The operation <F>List</F> will return a complete list, the operation <F>AsList</F> will return an <Package>orb</Package> object,
+representing a complete orbit, i.e. representing in this case a complete list. To obtain the elements explicitely, one has
+to issue the <F>List</F> operation with as argument the <Package>orb</Package> object again. Applying <F>List</F> directly
+to a collection of subspaces, refers to the enumerator for the collection, while using <F>AsList</F> uses the <Package>orb</Package>
+to compute all subspaces as an orbit.
+<Example>
+<#Include SYSTEM "../examples/include/projsp_list.include"> 
+</Example>
+</Description>
+</ManSection>
+
+
+</Section>
 </Chapter>

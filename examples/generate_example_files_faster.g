@@ -36,7 +36,7 @@ projspfiles := ["projsp_projectivespace", "projsp_projdimension", "projsp_basefi
 				"projsp_emptysubspace", "projsp_projdimension_element", "projsp_elements", "projsp_short", "projsp_incident", 
 				"projsp_standardframe", "projsp_coordinates", "projsp_eqhyperplane", "projsp_ambientspaceelps", "projsp_basefieldelps",
 				"projsp_randomeltps", "projsp_randomeltsps", "projsp_span", "projsp_meet", "projsp_flag", "projsp_chamber",
-				"projsp_shadowofelement", "projsp_shadowofflag", "projsp_elsel" ];
+				"projsp_shadowofelement", "projsp_shadowofflag", "projsp_elsel", "projsp_enumerator", "projsp_iterator", "projsp_list" ];
 
 projgroupsfiles := ["projgroups_basefield",
 	  "projgroups_collineation", "projgroups_collineationgroup",

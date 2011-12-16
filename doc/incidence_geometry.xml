@@ -285,7 +285,10 @@ to objects in <C>IsElementOfIncidenceStructure</C>, and is just calling <F>IsInc
 <Description>
 <A>C</A> is a collection of elements of an incidence structure, i.e. an object in the
 category <C>IsElementsOfIncidenceStructure</C>. <F>Random(C)</F> will return a random element
-in <A>C</A> provided there is a method installed.
+in <A>C</A> provided there is a method installed. Our methods may refer to methods for random
+selection of e.g. subspaces of the underlying vector space, as in the example here, or refer
+to the use of a psuedo random element of an appropriate group, as is e.g. the case for subsapces
+of classical polar spaces.
 <Example>
 <#Include SYSTEM "../examples/include/incgeom_random.include"> 
 </Example>

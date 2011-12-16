@@ -1,0 +1,7 @@
+gap&gt; pg := PG(3,4);
+ProjectiveSpace(3, 4)
+gap&gt; lines := Lines(pg);
+&lt;lines of ProjectiveSpace(3, 4)&gt;
+gap&gt; enum := Enumerator(lines);;
+gap&gt; Length(enum);
+357
