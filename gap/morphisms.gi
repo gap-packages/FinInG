@@ -1251,13 +1251,13 @@ InstallMethod (NaturalEmbeddingByFieldReduction,
 	fun:=function(x)
 		local projfun;
 		projfun:=em!.fun;
-		return VectorSpaceToElement(ps2,projfun(x));
+		return VectorSpaceToElement(ps2,projfun(x)!.obj);
 	end;
 		
 	prefun:=function(x)
 		local projprefun;
 		projprefun:=em!.prefun;
-		return VectorSpaceToElement(ps1,projprefun(x));
+		return VectorSpaceToElement(ps1,projprefun(x)!.obj);
 	end;
 	
 	map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(ps1),
