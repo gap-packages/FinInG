@@ -100,10 +100,23 @@ DeclareOperation( "BlownUpSubspaceOfProjectiveSpaceBySubfield", [IsField, IsSubs
 DeclareOperation( "IsDesarguesianSpreadElement", [ IsBasis, IsSubspaceOfProjectiveSpace ] ); 
 DeclareOperation( "IsBlownUpSubspaceOfProjectiveSpace", [IsBasis, IsSubspaceOfProjectiveSpace ] ); 
 
+
+
 DeclareOperation( "NaturalEmbeddingByFieldReduction",
                      [ IsProjectiveSpace, IsProjectiveSpace ]);
 DeclareOperation( "NaturalEmbeddingByFieldReduction", 
                      [ IsProjectiveSpace, IsProjectiveSpace, IsBasis ]);
+
+DeclareOperation( "BilinearFormFieldReduction",
+					[ IsBilinearForm, IsField ]);
+DeclareOperation( "QuadraticFormFieldReduction",
+					[ IsQuadraticForm, IsField ]);
+DeclareOperation( "HermitianFormFieldReduction",
+					[ IsHermitianForm, IsField ]);
+
+DeclareOperation ( "NaturalEmbeddingByFieldReduction",
+				[ IsClassicalPolarSpace, IsField ]);
+
 DeclareOperation( "NaturalEmbeddingByFieldReduction",
                      [ IsClassicalPolarSpace, IsClassicalPolarSpace, IsBool ]);
 DeclareOperation( "NaturalEmbeddingByFieldReduction",

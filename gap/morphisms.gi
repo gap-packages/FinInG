@@ -982,6 +982,9 @@ InstallMethod( IsBlownUpSubspaceOfProjectiveSpace,
   
 # CHECKED 15/12/11 jdb
 #############################################################################
+
+#		PROJECTIVE SPACES
+
 #O  NaturalEmbeddingByFieldReduction( <geom1>, <geom2> ) 
 # <geom2> is a projective space over a field K, <geom1> is a projective space
 # over a field extension L, and considering L as a vector space over K, yields 
@@ -992,15 +995,15 @@ InstallMethod( IsBlownUpSubspaceOfProjectiveSpace,
 InstallMethod( NaturalEmbeddingByFieldReduction, 
 	"for two projective spaces and a basis",
      [ IsProjectiveSpace, IsProjectiveSpace, IsBasis ],
-	function( geom1, geom2, basis )
+	function( pg1, pg2, basis )
   
   ## This morphism contains a func and prefunc with built-in check.
  
-		local map, f1, f2, d1, d2, t, func, prefun, g1, gens, newgens, g2, twiner, hom, hominv;
-		f1 := geom1!.basefield; 
-		f2 := geom2!.basefield;
-		d1 := geom1!.dimension + 1;
-		d2 := geom2!.dimension + 1;
+		local map, f1, f2, d1, d2, t, fun, prefun, g1, gens, newgens, g2, twiner, hom, hominv;
+		f1 := pg1!.basefield; 
+		f2 := pg2!.basefield;
+		d1 := pg1!.dimension + 1;
+		d2 := pg2!.dimension + 1;
 		if not (IsInt(d2/d1)) then 
 			Error("The second geometry is not obtained from the first geometry by field reduction");
 		fi;
@@ -1008,13 +1011,13 @@ InstallMethod( NaturalEmbeddingByFieldReduction,
 			Error("The basis is not a basis or is not compatible with the basefields of the geometries");
 		fi;
 		t:=d2/d1;
-		func := function( x ); # This map blows up a subspace of geom1 to a subspace of geom2
+		fun := function( x ); # This map blows up a subspace of geom1 to a subspace of geom2
 			return BlownUpSubspaceOfProjectiveSpace(basis,x);
 		end; 
 		prefun := function( subspace ) # This map is the inverse of func and returns an error, or a subspace of geom1
 			local flag,basvecs,mat1,span,x,v,v1,i;
 			flag:=true;
-			if not subspace in geom2 then 
+			if not subspace in pg2 then 
 				Error("The input is not in the range fo the field reduction map!");
 			fi;
 			if not IsInt((Dimension(subspace)+1)/t) then 
@@ -1030,7 +1033,7 @@ InstallMethod( NaturalEmbeddingByFieldReduction,
 					v:=Coordinates(x);
 					v1:=List([1..d1],i->v{[(i-1)*t+1..i*t]}*basvecs);
 					Add(mat1,v1);
-					span:=VectorSpaceToElement(geom2,BlownUpMat(basis,mat1));
+					span:=VectorSpaceToElement(pg2,BlownUpMat(basis,mat1));
 				until Dimension(span)=Dimension(subspace);
 				if not span = subspace then 
 					flag:= false;
@@ -1039,12 +1042,12 @@ InstallMethod( NaturalEmbeddingByFieldReduction,
 			if flag= false then 
 				Error("The input is not in the range of the field reduction map!");
 			fi;
-			return VectorSpaceToElement(geom1,mat1);
+			return VectorSpaceToElement(pg1,mat1);
 		end;
        
-		map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(geom1),
-                                         ElementsOfIncidenceStructure(geom2),
-                                         func, false, prefun);
+		map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(pg1),
+                                         ElementsOfIncidenceStructure(pg2),
+                                         fun, false, prefun);
 		
 		SetIsInjective( map, true );
     ## Now creating intertwiner
@@ -1061,7 +1064,7 @@ InstallMethod( NaturalEmbeddingByFieldReduction,
 			ConvertToMatrixRepNC( preimage, f1 );       
 			return ProjectiveSemilinearMap(preimage, f1);
 		end;
-		g1 := HomographyGroup( geom1 );
+		g1 := HomographyGroup( pg1 );
 		gens := GeneratorsOfGroup( g1 );
 		newgens := List(gens, hom);
 		g2 := Group( newgens );
@@ -1083,42 +1086,124 @@ InstallMethod( NaturalEmbeddingByFieldReduction,
 InstallMethod( NaturalEmbeddingByFieldReduction, 
 	"for two projective spaces",
 	[ IsProjectiveSpace, IsProjectiveSpace ],
-	function( geom1, geom2 )
+	function( pg1, pg2 )
 		local basis;
-		basis:=Basis(AsVectorSpace(geom2!.basefield,geom1!.basefield));
-		return NaturalEmbeddingByFieldReduction(geom1,geom2,basis);
+		basis:=Basis(AsVectorSpace(pg2!.basefield,pg1!.basefield));
+		return NaturalEmbeddingByFieldReduction(pg1,pg2,basis);
 	end );
 
 
-## need a quicker method for this
-#######################
-########################
-######################
-## CHECK if this is necessary ... probably not
 
-# CHECKED 28/09/11 jdb
-#############################################################################
-#F  LeukBasis( <f1>, <f2> ) 
-#  This function finds a basis {b_1,...,b_e}
-#  such that the sum of the (q+1) powers of these
-#  elements is zero.
+############################################################################
+#
+#		POLAR SPACES
+#
+#
+##############################################################################
+
+####
+#
+# First some operations that we will need
+#
+#####
+
+InstallMethod( BilinearFormFieldReduction,
+	"for a bilinear form and a field",
+	[ IsBilinearForm, IsField ],
+	function(bil1,f2)
+	# f2 is a subfield of the basefield of the bilinear form bil1
+	local mat1,f1,basis,basvecs,d1,t,d2,V2,V1,phi,b2,b2vecs,mat2,i,row,j,bil2;
+	mat1:=bil1!.matrix;
+	f1:=bil1!.basefield;
+	basis:=Basis(AsVectorSpace(f2,f1));
+	basvecs:=BasisVectors(basis);
+	d1:=Size(mat1);
+	t:=Dimension(AsVectorSpace(f2,f1));
+	d2:=d1*t;
+	V2:=f2^d2;
+	V1:=f1^d1;
+	b2:=Basis(V2);
+	b2vecs:=BasisVectors(b2);
+	mat2:=[];
+	for i in [1..d2] do 
+		row:=[];
+		for j in [1..d2] do
+			Add(row,Trace(f1,f2,ShrinkVec(f1,f2,b2vecs[i])*mat1*ShrinkVec(f1,f2,b2vecs[j])));
+		od;
+		Add(mat2,row);
+	od;
+	bil2:=BilinearFormByMatrix(mat2,f2);
+	return bil2;
+end );
+
+InstallMethod( QuadraticFormFieldReduction,
+	"for a quadratic form and a field",
+	[ IsQuadraticForm, IsField ],
+	function(qf1,f2)
+	# f2 is a subfield of the basefield for the quadratic form q1
+	local f1,basis,basvecs,d1,t,d2,V2,V1,phi,b2,b2vecs,mat2,i,bil1,j,qf2;
+	f1:=qf1!.basefield;
+	basis:=Basis(AsVectorSpace(f2,f1));
+	basvecs:=BasisVectors(basis);
+	d1:=Size(qf1!.matrix);
+	t:=Dimension(AsVectorSpace(f2,f1));
+	d2:=d1*t;
+	V2:=f2^d2;
+	V1:=f1^d1;
+	b2:=Basis(V2);
+	b2vecs:=BasisVectors(b2);
+	mat2:=IdentityMat(d2,f2);
+	for i in [1..d2] do
+		mat2[i][i]:=Trace(f1,f2,(ShrinkVec(f1,f2,b2vecs[i]))^qf1);
+	od;
+	for i in [1..d2-1] do
+		for j in [i+1..d2] do
+			mat2[i][j]:=Trace(f1,f2,(ShrinkVec(f1,f2,b2vecs[i]+b2vecs[j]))^qf1
+							-(ShrinkVec(f1,f2,b2vecs[i]))^qf1-(ShrinkVec(f1,f2,b2vecs[j]))^qf1);
+			#mat2[j][i]:=mat2[i][j]; THESE entries need to be zero
+		od;
+	od;
+	qf2:=QuadraticFormByMatrix(mat2,f2);
+	return qf2;
+end );
+
+InstallMethod( HermitianFormFieldReduction,
+	"for a hermitian form and a field",
+	[ IsHermitianForm, IsField ],
+	function(hf1,f2)
+	# f2 is a subfield of the basefield for the hermitian form hf1
+	# here the basefield is always a square
+	local f1,basis,basvecs,d1,t,d2,V2,V1,phi,b2,b2vecs,mat2,i,row,j,hf2;
+	f1:=hf1!.basefield;
+	basis:=Basis(AsVectorSpace(f2,f1));
+	basvecs:=BasisVectors(basis);
+	d1:=Size(hf1!.matrix);
+	t:=Dimension(AsVectorSpace(f2,f1));
+	d2:=d1*t;
+	V2:=f2^d2;
+	V1:=f1^d1;
+	b2:=Basis(V2);
+	b2vecs:=BasisVectors(b2);
+	mat2:=[];
+	for i in [1..d2] do 
+		row:=[];
+		for j in [1..d2] do
+			Add(row,Trace(f1,f2,([ShrinkVec(f1,f2,b2vecs[i]),ShrinkVec(f1,f2,b2vecs[j])]^hf1)));
+		od;
+		Add(mat2,row);
+	od;
+	if IsOddInt(t) then 
+		hf2:=HermitianFormByMatrix(mat2,f2);
+	else
+		hf2:=BilinearFormByMatrix(mat2,f2);
+	fi;
+	return hf2;
+end );
+
 ##
-InstallGlobalFunction( LeukBasis, 
-	function( f1, f2 )
-    local q2, q1, e, tuples, iter, t, vec;
-    vec := AsVectorSpace(f2,f1);
-    q1 := Size(f1);
-    q2 := Size(f2);
-    e := Log(q1,q2);
-    tuples := EnumeratorOfTuples(f1, e);;
-    iter := Iterator( tuples );
-    repeat
-      t := NextIterator(iter);
-    until not IsZero(Product(t)) and IsZero(Sum(List(t,i->i^(q2+1)))) and Basis(vec,t) <> fail;
-    return t;
-  end );
-
-# CHECKED 28/09/11 jdb (but not tested rigourously).
+#
+# The embeddings for polar spaces
+# 
 #############################################################################
 #O  NaturalEmbeddingByFieldReduction( <geom1>, <geom2>, <bool> ) 
 # returns a geometry morphism, described below. If <bool> is true, then an intertwiner
@@ -1127,20 +1212,82 @@ InstallGlobalFunction( LeukBasis,
 #  A good reference on field reduction of polar spaces is
 #  "Polar spaces and embeddings of classical groups" by Nick Gill
 #  (New Zealand J. Math). 
-#  There, the conditions on the polarity types can be found.
-#
-#  All possible cases:
-#  W -> W (bug for W(1,q^5) -> W(9,q))
-#  Q+ -> Q+
-#  Q- -> Q-
-#  Q (q = 1 mod 4) -> Q+
-#  Q (q = -1 mod 4) -> Q-
-#  Q (odd field ext.) -> Q
-#  H (odd field ext.) -> H 
-#  H (even dim) -> Q+
-#  H (odd dim) -> Q-
-#  H (even field ext.) -> W
 ##
+
+InstallMethod (NaturalEmbeddingByFieldReduction,
+	"for a polar space and a field",
+	[IsClassicalPolarSpace, IsField],
+	function(ps1,f2)
+	# f2 must be a subfield of the basefield of the classical polar space
+	local type1,qf1,qf2,ps2,bil1,bil2,hf1,hf2,em,fun,prefun,basis,f1,
+					map,hom,hominv,g1,gens,newgens,g2,twiner;
+	type1 := PolarSpaceType(ps1);
+	
+	# 1. the polar space is of orthogonal type
+	if type1 in ["hyperbolic","elliptic"] then
+		qf1:=QuadraticForm(ps1);
+		qf2:=QuadraticFormFieldReduction(qf1,f2);
+		if IsDegenerateForm(qf2) then 
+			Error("The field reduction does not yield a natural embedding");
+		else ps2:=PolarSpace(qf2);
+		fi;
+	# 2. the polar space is of symplectic type
+	elif type1 in ["symplectic"] then
+		bil1:=SesquilinearForm(ps1);
+		bil2:=BilinearFormFieldReduction(bil1,f2);
+		ps2:=PolarSpace(bil2);
+	# 1. the polar space is of hermitian type	
+	elif type1 in ["hermitian"] then
+		hf1:=SesquilinearForm(ps1);
+		hf2:=HermitianFormFieldReduction(hf1,f2);
+		ps2:=PolarSpace(hf2);
+	fi;
+	em:=NaturalEmbeddingByFieldReduction(AmbientSpace(ps1),AmbientSpace(ps2));
+	
+	fun:=em!.fun;
+	prefun:=em!.prefun;
+	
+	map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(ps1),
+                                         ElementsOfIncidenceStructure(ps2),
+                                         fun, false, prefun);
+		
+	SetIsInjective( map, true );
+	
+	## Now creating intertwiner
+	
+	f1:=ps1!.basefield;
+	basis:=Basis(AsVectorSpace(f2,f1));
+	
+	hom := function( m )
+		local image;      
+		image := BlownUpMat(basis, m!.mat); 
+		ConvertToMatrixRepNC( image, f2 );       
+		return ProjectiveSemilinearMap(image, f2);
+	end;
+	hominv := function( m )
+		local preimage;      
+		preimage := ShrinkMat(basis, m!.mat); 
+		ConvertToMatrixRepNC( preimage, f1 );       
+		return ProjectiveSemilinearMap(preimage, f1);
+	end;
+	g1 := SimilarityGroup( ps1 );
+	gens := GeneratorsOfGroup( g1 );
+	newgens := List(gens, hom);
+	g2 := Group( newgens );
+	SetSize(g2, Size(g1));
+	twiner := GroupHomomorphismByFunction(g1, g2, hom, hominv);
+	SetIntertwiner( map, twiner);
+	return map;
+end );
+
+	
+	
+	
+	
+	
+	
+	
+
 InstallMethod( NaturalEmbeddingByFieldReduction, 
 	"for two polar spaces and a boolean",
 	[ IsClassicalPolarSpace, IsClassicalPolarSpace, IsBool ],
