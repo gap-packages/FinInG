@@ -1981,7 +1981,7 @@ InstallMethod( RandomSubspace,
   end );
 
 
-# CHECKED 22/09/2011 jdb.
+# CHECKED 22/09/2011 jdb 
 #############################################################################
 #O  Random( <ps>, <d> )
 # returns a random subspace of projective dimension <d> in the polar space <ps>
@@ -1997,22 +1997,26 @@ InstallMethod( Random,
 		return OnProjSubspaces(rep, x);
 	end );
   
-
+# CHECKED 16/12/2011 jdb + ml CHECKED and CORRECTED 
+#############################################################################
+#O
 InstallMethod(Iterator,  "for subspaces of a polar space",
         [IsSubspacesOfClassicalPolarSpace],
         function( vs )
-          local ps, j, d, F, ty, v, ispolar;    
+          local ps, j, d, F, ty, v, ispolar, form, x;    
           ps := vs!.geometry;
           j := vs!.type;
           d := ps!.dimension;
           F := ps!.basefield;
-          ty := SesquilinearForm(ps)!.type;
+          ty := PolarSpaceType(ps);
      
           if IsEvenInt(Size(F)) and 
              (ty = "elliptic" or ty = "parabolic" or ty = "hyperbolic") then
-             ispolar := x -> IsTotallySingular(ps, x);
+			 form:=QuadraticForm(ps);
+             ispolar := x -> IsTotallySingularSubspace(form, x);
           else
-             ispolar := x -> IsTotallyIsotropic(ps, x);
+			 form:=SesquilinearForm(ps);
+             ispolar := x -> IsTotallyIsotropicSubspace(form, x);
           fi;
 
           return IteratorByFunctions( rec(
@@ -2024,14 +2028,9 @@ InstallMethod(Iterator,  "for subspaces of a polar space",
               # use the subspace iterator to find the next
               # totally isotropic/singular subspace.
               repeat
-                mat := BasisVectors(Basis(NextIterator(iter!.S)));
-                if j = 1 then
-                  v := Wrap(ps, j, mat[1]);
-                else
-                  v := Wrap(ps, j, mat);
-                fi;
-              until ispolar(v);    
-              return v;
+                x := BasisVectors(Basis(NextIterator(iter!.S)));
+			  until ispolar(x);
+              return VectorSpaceToElement(ps,x);
             end,
             IsDoneIterator := function(iter)
               return iter!.returnednumber = iter!.totalnumber;
@@ -2048,7 +2047,7 @@ InstallMethod(Iterator,  "for subspaces of a polar space",
             end,
             S := Iterator(Subspaces(ps!.vectorspace,j)),
             geometry := ps,
-            form := SesquilinearForm(ps)!.matrix,
+            form := form,
             totalnumber := Size(vs),
             returnednumber := 0
           ));

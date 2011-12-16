@@ -1200,7 +1200,7 @@ InstallMethod( HermitianFormFieldReduction,
 	return hf2;
 end );
 
-##
+##########################################################
 #
 # The embeddings for polar spaces
 # 
@@ -1242,10 +1242,23 @@ InstallMethod (NaturalEmbeddingByFieldReduction,
 		hf2:=HermitianFormFieldReduction(hf1,f2);
 		ps2:=PolarSpace(hf2);
 	fi;
+	
 	em:=NaturalEmbeddingByFieldReduction(AmbientSpace(ps1),AmbientSpace(ps2));
 	
-	fun:=em!.fun;
-	prefun:=em!.prefun;
+	f1:=ps1!.basefield;
+	basis:=Basis(AsVectorSpace(f2,f1));
+	
+	fun:=function(x)
+		local projfun;
+		projfun:=em!.fun;
+		return VectorSpaceToElement(ps2,projfun(x));
+	end;
+		
+	prefun:=function(x)
+		local projprefun;
+		projprefun:=em!.prefun;
+		return VectorSpaceToElement(ps1,projprefun(x));
+	end;
 	
 	map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(ps1),
                                          ElementsOfIncidenceStructure(ps2),
@@ -1254,9 +1267,6 @@ InstallMethod (NaturalEmbeddingByFieldReduction,
 	SetIsInjective( map, true );
 	
 	## Now creating intertwiner
-	
-	f1:=ps1!.basefield;
-	basis:=Basis(AsVectorSpace(f2,f1));
 	
 	hom := function( m )
 		local image;      
