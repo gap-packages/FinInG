@@ -235,7 +235,7 @@ DeclareOperation( "Meet", [IsElementOfIncidenceStructure, IsElementOfIncidenceSt
 #DeclareOperation( "Meet", [IsHomogeneousList]);
 DeclareAttribute( "AmbientGeometry", IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep  );
 DeclareAttribute( "AmbientGeometry", IsElementsOfIncidenceStructure and IsElementsOfIncidenceStructureRep );
-DeclareAttribute( "AmbientGeometry", IsAllElementsOfIncidenceStructure and IsAllElementsOfIncidenceStructureRep );
+DeclareAttribute( "AmbientGeometry", IsAllElementsOfIncidenceStructure );
 
 DeclareOperation( "RandomFlag", [IsIncidenceStructure]);
 DeclareOperation( "RandomChamber", [IsIncidenceStructure]);

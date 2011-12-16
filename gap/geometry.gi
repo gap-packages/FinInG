@@ -110,7 +110,7 @@ InstallMethod( AmbientGeometry,
 # general method that returns the ambient geometry of a collection of elements
 ## 
 InstallMethod( AmbientGeometry, 
-	[ IsAllElementsOfIncidenceStructure and IsAllElementsOfIncidenceStructureRep ],
+	[ IsAllElementsOfIncidenceStructure ],
 	x -> x!.geometry );
 
 # CHECKED 14/4/2011 jdb
