@@ -307,7 +307,7 @@ InstallMethod( NaturalEmbeddingBySubspace,
 		return morphism;
 	end );
 
-# CHECKED 27/09/11 jdb
+# CHECKED 27/09/11 jdb + ml
 #############################################################################
 #O  NaturalEmbeddingBySubspaceNC( <ps1>, <ps2>, <v> ) 
 ## This operation is just like its namesake except that it 
@@ -344,7 +344,7 @@ InstallMethod( NaturalEmbeddingBySubspaceNC,
 		return morphism;
 	end );
 
-# CHECKED 27/09/11 jdb
+# CHECKED 27/09/11 jdb + ml
 #############################################################################
 #O  NaturalEmbeddingBySubspace( <ps1>, <ps2>, <v> ) returns a geometry morphism
 # from the polar space <ps1> into <ps2>, a polar space induced as a section of
@@ -1227,7 +1227,7 @@ InstallMethod (NaturalEmbeddingByFieldReduction,
 	if type1 in ["hyperbolic","elliptic"] then
 		qf1:=QuadraticForm(ps1);
 		qf2:=QuadraticFormFieldReduction(qf1,f2);
-		if IsDegenerateForm(qf2) then 
+		if IsSingularForm(qf2) then 
 			Error("The field reduction does not yield a natural embedding");
 		else ps2:=PolarSpace(qf2);
 		fi;
