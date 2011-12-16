@@ -489,7 +489,42 @@ subspace of the same dimension if <A>el</A> is a collineation.
 
 <Section Label="nice_mono">
 <Heading>Nice Monomorphisms</Heading>
-This section needs some technical explanation on the DESARGUES.Fast stuff etc. To be done.
+A <E>nice monomorphism</E> of a group <M>G</M> is roughly just a permutation representation of 
+<M>G</M> on a suitable action domain. An easy example is the permutation action of the full collineation 
+group of a projective space on its points. <Package>FinInG</Package> provides (automotic) functionality to
+compute nice monomorphisms. Typically, for a geometry <M>S</M> with <M>G</M> a (subgroup of the) collineation
+group of <M>S</M>, a nice monomorphism for <M>G</M> is a homomorphism from <M>G</M> to the permutation action
+of <M>S</M> on a collection of elements of <M>S</M>. Thus, to obtain such a homomorphism, one has to enumerate 
+the collection of elements. As nice monomorphisms for projective semilinear groups are often computed as a
+byproduct of some operations, suddenly, these operations get time consuming (when executed for the first time). 
+<Package>FinInG</Package> contains a switch to influence this behaviour. 
+
+<ManSection>
+<Oper Name="NiceMonomorphism" Arg="g"/>
+<Returns>an action, i.e. a group homomorphism</Returns>
+<Description>
+<A>g</A> is a projective semilinear group. If <A>g</A> was constructed as a group stabilizing a geometry, 
+the action of <A>g</A> on the points of the geometry is returned. 
+<Example>
+<#Include SYSTEM "../examples/include/projgroups_nicem.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="NiceObject" Arg="g"/>
+<Returns>a permutation group</Returns>
+<Description>
+<A>g</A> is a projective semilinear group. If <A>g</A> was constructed as a group stabilizing a geometry, 
+the permutation representation of <A>g</A> acting on the points of the geometry is returned. This is actually
+equivalent with <F>Image(NiceMonomorphism(g))</F>.
+<Example>
+<#Include SYSTEM "../examples/include/projgroups_niceo.include"> 
+</Example>
+</Description>
+</ManSection>
+
+
 <ManSection>
 <Oper Name="CanComputeActionOnPoints" Arg="g"/>
 <Returns>true or false</Returns>
@@ -501,16 +536,10 @@ trying to compute the action.
 
 This function actually checks if the number of points of the corresponding
 projective space is less than the constant
-<C>DESARGUES.LimitForCanComputeActionOnPoints</C>.
-
+<C>DESARGUES.LimitForCanComputeActionOnPoints</C>, which is by default set to <M>1000000</M>.
+The next example requires about 500M of memory.
 <Example>
-gap> NiceMonomorphism(CollineationGroup(ProjectiveSpace(6,7)));
-Error, action on projective points not feasible to calculate
- ...
-gap> DESARGUES.LimitForCanComputeActionOnPoints := 500000;
-500000
-gap> NiceMonomorphism(CollineationGroup(ProjectiveSpace(6,7)));
-&lt;action isomorphism&gt;
+<#Include SYSTEM "../examples/include/projgroups_cancompute.include"> 
 </Example>
 </Description>
 </ManSection>

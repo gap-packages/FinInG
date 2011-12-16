@@ -1,0 +1,11 @@
+gap&gt; NiceMonomorphism(CollineationGroup(ProjectiveSpace(7,8)));
+Error, action on projective points not feasible to calculate called from
+&lt;function&gt;( &lt;arguments&gt; ) called from read-eval-loop
+Entering break read-eval-print loop ...
+you can 'quit;' to quit to outer loop, or
+you can 'return;' to continue
+brk&gt; quit;
+gap&gt; DESARGUES.LimitForCanComputeActionOnPoints := 3*10^6;
+3000000
+gap&gt; NiceMonomorphism(CollineationGroup(ProjectiveSpace(7,8)));
+&lt;action isomorphism&gt;

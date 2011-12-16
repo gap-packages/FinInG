@@ -46,7 +46,8 @@ projgroupsfiles := ["projgroups_basefield",
 	  "projgroups_onprojsubspacesreversing", "projgroups_simgroup", 
 	  "projgroups_isomgroup", "projgroups_specialisomgroup", 
 	  "projgroups_mult", "projgroups_embedding", "projgroups_representative",
-	  "projgroups_order", "projgroups_projectivitygroup","projgroups_specialprojectivitygroup"];;
+	  "projgroups_order", "projgroups_projectivitygroup","projgroups_specialprojectivitygroup",
+	  "projgroups_nicem", "projgroups_niceo", "projgroups_cancompute"];;
 
 polaritiespsfiles := ["polarities_construct1", "polarities_construct2",
           "polarities_fromform", "polarities_toform", "polarities_basefield", 
