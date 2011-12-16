@@ -58,7 +58,7 @@ DeclareRepresentation("IsSegreVarietyRep", IsSegreVariety and IsProjectiveVariet
 DeclareCategory( "IsPointsOfSegreVariety", IsPointsOfAlgebraicVariety );
 DeclareRepresentation( "IsPointsOfSegreVarietyRep", IsPointsOfSegreVariety, ["variety"]);
 
-DeclareCategory( "IsGeometryMap", IsFunction );
+DeclareCategory( "IsGeometryMap", IsAttributeStoringRep );
 DeclareRepresentation ( "IsGeometryMapRep", IsGeometryMap, ["source","range","function"] );
 
 DeclareCategory( "IsSegreMap", IsGeometryMap );
@@ -67,10 +67,13 @@ DeclareRepresentation( "IsSegreMapRep", IsSegreMap, ["source", "range", "segrema
 ### 5. Veronese Varities ###
 DeclareCategory("IsVeroneseVariety", IsProjectiveVariety );
 DeclareRepresentation("IsVeroneseVarietyRep", IsVeroneseVariety and IsProjectiveVarietyRep, 
-				["geometry","listofpols","inverseimage","veronesemap", "polring"]);
+				["geometry","listofpols","inverseimage", "polring"]);
+				
 DeclareCategory( "IsPointsOfVeroneseVariety", IsPointsOfAlgebraicVariety );
 DeclareRepresentation( "IsPointsOfVeroneseVarietyRep", IsPointsOfVeroneseVariety, ["variety"]);
 
+DeclareCategory( "IsVeroneseMap", IsGeometryMap );
+DeclareRepresentation( "IsVeroneseMapRep", IsVeroneseMap, ["source", "range", "veronesemap"] );
 
 #############################################################################
 ##

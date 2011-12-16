@@ -416,7 +416,7 @@ InstallMethod( SegreMap,
 	end;
 	
 	source:=List(listofspaces,x->Points(x));
-	range:=Points(SegreVariety(1,1,3));
+	range:=Points(SegreVariety(listofspaces));
 	
 	map:=rec( source:=source, range:=range, segremap:=segremap );
 	ty:=NewType( NewFamily("SegreMapsFamily"), IsSegreMap and 
@@ -472,6 +472,25 @@ InstallMethod( SegreMap,
 	function(d1,d2,q)
 	return SegreMap([PG(d1,GF(q)),PG(d2,GF(q))]);
 end );
+
+#############################################################################
+# View, print methods for Segre maps.
+##
+InstallMethod( ViewObj, 
+	"for a Segre map",
+	[ IsSegreMap and IsSegreMapRep ],
+	function( segremap )
+		Print("Segre Map of ");
+		ViewObj(segremap!.source);
+	end );
+
+InstallMethod( PrintObj, 
+	"for a Segre map",
+	[ IsSegreMap and IsSegreMapRep ],
+	function( segremap )
+		Print("Segre Map of ");
+		ViewObj(segremap!.source);
+	end );
 
 #############################################################################
 #O  SegreVariety( <listofspaces> )
@@ -545,24 +564,6 @@ InstallMethod( SegreVariety,
 	return SegreVariety(List(dimlist,n->PG(n,field)));
 end );
 
-#############################################################################
-# View, print methods for segre varieties.
-##
-InstallMethod( ViewObj, 
-	"for a Segre variety",
-	[ IsSegreVariety and IsSegreVarietyRep ],
-	function( var )
-		Print("Segre Variety in ");
-		ViewObj(var!.geometry);
-	end );
-
-InstallMethod( PrintObj, 
-	"for a Segre variety",
-	[ IsSegreVariety and IsSegreVarietyRep ],
-	function( var )
-		Print("Segre Variety in ");
-		ViewObj(var!.geometry);
-	end );
   
 #############################################################################
 #O  SegreVariety( <pg1>, <pg2> ), returns the Segre variety  from
@@ -682,7 +683,7 @@ InstallMethod( Iterator,
 	function(pts)
 		local x,sv,sm,cart,listofpgs,pg,ptlist;
 		sv:=pts!.variety;
-		sm:=sv!.segremap;
+		sm:=SegreMap(sv!.inverseimage)!.segremap;
 		listofpgs:=sv!.inverseimage;
 		cart:=Cartesian(List(listofpgs,pg->Points(pg)));
 		ptlist:=List(cart,sm);
@@ -699,7 +700,7 @@ InstallMethod( Enumerator,
 	function ( pts )
 		local x,sv,sm,cart,listofpgs,pg,ptlist;
 		sv:=pts!.variety;
-		sm:=sv!.segremap;
+		sm:=SegreMap(sv!.inverseimage)!.segremap;
 		listofpgs:=sv!.inverseimage;
 		cart:=Cartesian(List(listofpgs,pg->Points(pg)));
 		ptlist:=List(cart,sm);
@@ -717,7 +718,7 @@ InstallMethod( VeroneseMap,
 	"for a projective space",
 	[IsProjectiveSpace],
 	function(pg)
-	  local F, dim, func;
+	  local F, dim, func,source,range,map,ty,veronesemap;
 	  F:=pg!.basefield;
 	  dim:=pg!.dimension;
 	  func:=function(point)
@@ -733,8 +734,36 @@ InstallMethod( VeroneseMap,
         od;
         return VectorSpaceToElement(ProjectiveSpace((n-1)*(n+2)/2,F),list);
       end;
-	return func;
+	
+	source:=Points(pg);
+	range:=Points(VeroneseVariety(pg));
+	
+	map:=rec( source:=source, range:=range, veronesemap:=func );
+	ty:=NewType( NewFamily("VeroneseMapsFamily"), IsVeroneseMap and 
+								IsVeroneseMapRep );
+	Objectify(ty, map);
+	return map;
+
 end );
+
+#############################################################################
+# View, print methods for Veronese maps.
+##
+InstallMethod( ViewObj, 
+	"for a Veronese map",
+	[ IsVeroneseMap and IsVeroneseMapRep ],
+	function( veronesemap )
+		Print("Veronese Map of ");
+		ViewObj(veronesemap!.source);
+	end );
+
+InstallMethod( PrintObj, 
+	"for a Veronese map",
+	[ IsVeroneseMap and IsVeroneseMapRep ],
+	function( veronesemap )
+		Print("Veronese Map of ");
+		ViewObj(veronesemap!.source);
+	end );
 
 #############################################################################
 #O  VeroneseVariety( <pg> ), returns the Veronese variety from <pg>
@@ -767,7 +796,7 @@ InstallMethod ( VeroneseVariety,
 	od;
 	vv:=ProjectiveVariety(PG(n2-1,field),r,list);
 	var:=rec( geometry:=PG(n2-1,field), polring:=r, listofpols:=list, 
-								inverseimage:=pg, veronesemap:=VeroneseMap(pg));
+								inverseimage:=pg );
 	ty:=NewType( NewFamily("VeroneseVarietiesFamily"), IsVeroneseVariety and 
 								IsVeroneseVarietyRep );
 	ObjectifyWithAttributes(var,ty,
@@ -883,7 +912,7 @@ InstallMethod( Iterator,
 	function(pts)
 		local vv,vm,pg,ptlist;
 		vv:=pts!.variety;
-		vm:=vv!.veronesemap;
+		vm:=VeroneseMap(vv!.inverseimage)!.veronesemap;
 		pg:=vv!.inverseimage;
 		ptlist:=List(Points(pg),vm);
 		return IteratorList(ptlist);
@@ -899,7 +928,7 @@ InstallMethod( Enumerator,
 	function ( pts )
 		local vv,vm,pg,ptlist;
 		vv:=pts!.variety;
-		vm:=vv!.veronesemap;
+		vm:=VeroneseMap(vv!.inverseimage)!.veronesemap;
 		pg:=vv!.inverseimage;
 		ptlist:=List(Points(pg),vm);
 		return ptlist;
