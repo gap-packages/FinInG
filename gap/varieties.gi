@@ -379,7 +379,7 @@ InstallMethod( SegreMap,
 	"for a list of projective spaces",
 	[ IsHomogeneousList ],
 	function( listofspaces )
-    local F, listofdims, l, dim, func;
+    local F, listofdims, l, dim, segremap,map, source, range, ty;
     F := listofspaces[1]!.basefield;
     listofdims := List(listofspaces, i -> ProjectiveDimension(i) + 1);
     for l in listofspaces do
@@ -390,7 +390,7 @@ InstallMethod( SegreMap,
   
     dim := Product( listofdims );
 
-	func:=function(listofpoints)
+	segremap:=function(listofpoints)
 	#Takes k points of k projective spaces defined over the same basefield
 	#to a point of a projective space of dimension (n_1+1)...(n_k+1), 
 	#where n_i is the dimension of the i-th projective space
@@ -414,7 +414,16 @@ InstallMethod( SegreMap,
 		return  VectorSpaceToElement(ProjectiveSpace(dim-1,F),vector);
 	fi;
 	end;
-	return func;
+	
+	source:=List(listofspaces,x->Points(x));
+	range:=Points(SegreVariety(1,1,3));
+	
+	map:=rec( source:=source, range:=range, segremap:=segremap );
+	ty:=NewType( NewFamily("SegreMapsFamily"), IsSegreMap and 
+								IsSegreMapRep );
+	Objectify(ty, map);
+	return map;
+
 end );
 
 #############################################################################
@@ -515,12 +524,10 @@ InstallMethod( SegreVariety,
 
 	sv:=ProjectiveVariety(PG(dim-1,field),r,newpollist);
 	var:=rec( geometry:=PG(dim-1,field), polring:=r, listofpols:=newpollist, 
-								inverseimage:=listofpgs, segremap:=SegreMap(listofpgs));
+								inverseimage:=listofpgs );
 	ty:=NewType( NewFamily("SegreVarietiesFamily"), IsSegreVariety and 
 								IsSegreVarietyRep );
 	ObjectifyWithAttributes(var,ty,
-			#AmbientGeometry, ag, 
-			#PolynomialRing, pring,
 			DefiningListOfPolynomials, newpollist);
 	return var;
 	
