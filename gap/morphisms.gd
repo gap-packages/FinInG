@@ -88,6 +88,10 @@ DeclareOperation( "NaturalProjectionBySubspaceNC",
 #############################################################################
 
 DeclareOperation( "ShrinkMat", [IsBasis, IsMatrix] );
+DeclareOperation( "ShrinkMat", [IsField,IsField,IsVector]);
+
+DeclareOperation( "ShrinkVec", [IsField,IsField,IsVector]);
+
 DeclareGlobalFunction( "LeukBasis" );
 DeclareOperation( "BlownUpProjectiveSpace", [IsBasis, IsProjectiveSpace ] );  
 DeclareOperation( "BlownUpProjectiveSpaceBySubfield", [ IsField, IsProjectiveSpace ] ); 

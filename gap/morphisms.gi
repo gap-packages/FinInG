@@ -796,6 +796,37 @@ InstallMethod( ShrinkMat,
 #    return result;
 #  end );
 
+InstallMethod( ShrinkMat, 
+	"for a field, a subfield and a vector",
+	[ IsField,IsField, IsMatrix ],
+	function( f1,f2,mat )
+	# This gives the same result as ShrinkMat(B,mat) with B the natural basis returned by
+	# Basis(AsVectorSpace(f2,f1));
+	local B;
+	B:=Basis(AsVectorSpace(f2,f1));
+	return ShrinkMat(f1,f2,mat);
+end );
+	
+InstallMethod( ShrinkVec, 
+	"for a field, a subfield and a vector",
+	[ IsField,IsField, IsVector ],
+	function( f1,f2,v )
+	# f2 is a subfield of f1 and v is vector in a vectorspace V2 over f2
+	# return the vector of length d2/t, where d2=dim(V2), and t=[f1:f2]
+	# using the natural basis Basis(AsVectorSpace(f2,f1))
+	local t,d1,d2,basvecs;
+	t:=Dimension(AsVectorSpace(f2,f1));
+	d1:=Length(v)/t;
+	if IsInt(d1) then
+		basvecs:=BasisVectors(Basis(AsVectorSpace(f2,f1)));
+		return List([1..d1],i->v{[(i-1)*t+1..i*t]}*basvecs);
+	else
+		Error("The length of v is not divisible by the degree of the field extension");
+	fi;
+end );
+
+
+
 #############################################################################
 #O  BlownUpSubspaceOfProjectiveSpace( <B>, <pg1> ) 
 #   blows up a projective space by field reduction.
@@ -949,7 +980,7 @@ InstallMethod( IsBlownUpSubspaceOfProjectiveSpace,
 		return flag;
  end );	  
   
-# CHECKED 28/09/11 jdb
+# CHECKED 15/12/11 jdb
 #############################################################################
 #O  NaturalEmbeddingByFieldReduction( <geom1>, <geom2> ) 
 # <geom2> is a projective space over a field K, <geom1> is a projective space
