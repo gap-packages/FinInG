@@ -988,7 +988,7 @@ InstallMethod( IsBlownUpSubspaceOfProjectiveSpace,
 #############################################################################
 
 #############################################################################
-#O  NaturalEmbeddingByFieldReduction( <geom1>, <geom2> ) 
+#O  NaturalEmbeddingByFieldReduction( <geom1>, <field> ) 
 # <geom2> is a projective space over a field K, <geom1> is a projective space
 # over a field extension L, and considering L as a vector space over K, yields 
 # that <geom1> and <geom2> have the same ambient vectorspace over K, then this
@@ -997,23 +997,31 @@ InstallMethod( IsBlownUpSubspaceOfProjectiveSpace,
 ##
 InstallMethod( NaturalEmbeddingByFieldReduction, 
 	"for two projective spaces and a basis",
-     [ IsProjectiveSpace, IsProjectiveSpace, IsBasis ],
-	function( pg1, pg2, basis )
+     [ IsProjectiveSpace, IsField, IsBasis ],
+	function( pg1, f2, basis )
   
   ## This morphism contains a func and prefunc with built-in check.
  
-		local map, f1, f2, d1, d2, t, fun, prefun, g1, gens, newgens, g2, twiner, hom, hominv;
+		local map, f1, d1, d2, t, fun, prefun, g1, gens, newgens, g2, twiner, hom, hominv, q1, q2, pg2;
 		f1 := pg1!.basefield; 
-		f2 := pg2!.basefield;
-		d1 := pg1!.dimension + 1;
-		d2 := pg2!.dimension + 1;
-		if not (IsInt(d2/d1)) then 
-			Error("The second geometry is not obtained from the first geometry by field reduction");
+		q1 := Size(f1);
+		q2 := Size(f2);
+		t := LogInt(q1,q2);
+		if not q2^t = q1 then
+			Error( "<f2> is not a subfield of the base field of <pg1> ");
 		fi;
+		#f2 := pg2!.basefield;
+		d1 := pg1!.dimension + 1;
+		d2 := d1*t;
+		pg2 := ProjectiveSpace(d2-1,q2);
+		#d2 := pg2!.dimension + 1;
+		#if not (IsInt(d2/d1)) then 
+		#	Error("The second geometry is not obtained from the first geometry by field reduction");
+		#fi;
 		if not (IsBasis(basis) and f1=GF((basis!.q)^basis!.d) and f2=GF(basis!.q) and d1*(basis!.d)=d2) then
 			Error("The basis is not a basis or is not compatible with the basefields of the geometries");
 		fi;
-		t:=d2/d1;
+		#t:=d2/d1;
 		fun := function( x ); # This map blows up a subspace of geom1 to a subspace of geom2
 			return BlownUpSubspaceOfProjectiveSpace(basis,x);
 		end; 
@@ -1077,6 +1085,38 @@ InstallMethod( NaturalEmbeddingByFieldReduction,
 		return map;
 	end );
 
+#############################################################################
+#O  NaturalEmbeddingByFieldReduction( <geom1>, <field> ) 
+# <field> is a field K, <geom1> is a projective space
+# over a field extension L, and considering L as a vector space over K, yields 
+# that a projective space geom2 that has the same ambient vectorspace over K. This
+# operation returns the natural embedding, i.e. with relation to the standard basis of
+# L over K.
+##
+InstallMethod( NaturalEmbeddingByFieldReduction, 
+	"for a projective space and a field",
+	[ IsProjectiveSpace, IsField ],
+	function( pg1, f2 )
+		local basis;
+		basis:=Basis(AsVectorSpace(f2,pg1!.basefield));
+		return NaturalEmbeddingByFieldReduction(pg1,f2,basis);
+	end );
+
+#############################################################################
+#O  NaturalEmbeddingByFieldReduction( <geom1>, <geom2> ) 
+# <geom2> is a projective space over a field K, <geom1> is a projective space
+# over a field extension L, and considering L as a vector space over K, yields 
+# that <geom1> and <geom2> have the same ambient vectorspace over K, then this
+# operation returns the natural embedding, i.e. with relation to the given basis
+# of L over K.
+##
+InstallMethod( NaturalEmbeddingByFieldReduction, 
+	"for two projective spaces and a basis",
+	[ IsProjectiveSpace, IsProjectiveSpace, IsBasis ],
+	function( pg1, pg2, basis )
+		return NaturalEmbeddingByFieldReduction(pg1,pg2!.basefield,basis);
+	end);
+
 # CHECKED 28/09/11 jdb
 #############################################################################
 #O  NaturalEmbeddingByFieldReduction( <geom1>, <geom2> ) 
@@ -1092,10 +1132,8 @@ InstallMethod( NaturalEmbeddingByFieldReduction,
 	function( pg1, pg2 )
 		local basis;
 		basis:=Basis(AsVectorSpace(pg2!.basefield,pg1!.basefield));
-		return NaturalEmbeddingByFieldReduction(pg1,pg2,basis);
+		return NaturalEmbeddingByFieldReduction(pg1,pg2!.basefield,basis);
 	end );
-
-
 
 ############################################################################
 #		POLAR SPACES

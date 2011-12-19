@@ -101,6 +101,10 @@ DeclareOperation( "IsDesarguesianSpreadElement", [ IsBasis, IsSubspaceOfProjecti
 DeclareOperation( "IsBlownUpSubspaceOfProjectiveSpace", [IsBasis, IsSubspaceOfProjectiveSpace ] ); 
 
 
+DeclareOperation( "NaturalEmbeddingByFieldReduction", 
+                     [ IsProjectiveSpace, IsField, IsBasis ]);
+DeclareOperation( "NaturalEmbeddingByFieldReduction", 
+                     [ IsProjectiveSpace, IsField ]);
 
 DeclareOperation( "NaturalEmbeddingByFieldReduction",
                      [ IsProjectiveSpace, IsProjectiveSpace ]);

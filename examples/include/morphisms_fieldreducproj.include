@@ -1,0 +1,17 @@
+gap&gt; pg1 := ProjectiveSpace(2,81);
+ProjectiveSpace(2, 81)
+gap&gt; f2 := GF(9);
+GF(3^2)
+gap&gt; em := NaturalEmbeddingByFieldReduction(pg1,f2);
+&lt;geometry morphism from &lt;All elements of ProjectiveSpace(2, 
+81)&gt; to &lt;All elements of ProjectiveSpace(5, 9)&gt;&gt;
+gap&gt; f2 := GF(3);
+GF(3)
+gap&gt; em := NaturalEmbeddingByFieldReduction(pg1,f2);
+&lt;geometry morphism from &lt;All elements of ProjectiveSpace(2, 
+81)&gt; to &lt;All elements of ProjectiveSpace(11, 3)&gt;&gt;
+gap&gt; pg2 := ProjectiveSpace(11,3);
+ProjectiveSpace(11, 3)
+gap&gt; em := NaturalEmbeddingByFieldReduction(pg1,pg2);
+&lt;geometry morphism from &lt;All elements of ProjectiveSpace(2, 
+81)&gt; to &lt;All elements of ProjectiveSpace(11, 3)&gt;&gt;

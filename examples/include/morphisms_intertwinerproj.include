@@ -1,0 +1,25 @@
+gap&gt; pg1 := PG(1,9);
+ProjectiveSpace(1, 9)
+gap&gt; em := NaturalEmbeddingByFieldReduction(pg1,GF(3));
+&lt;geometry morphism from &lt;All elements of ProjectiveSpace(1, 
+9)&gt; to &lt;All elements of ProjectiveSpace(3, 3)&gt;&gt;
+gap&gt; i := Intertwiner(em);
+MappingByFunction( PGL(2,9), &lt;projective semilinear group of size 720 with 
+2 generators&gt;, function( m ) ... end, function( m ) ... end )
+gap&gt; spread := List(Points(pg1),x-&gt;x^em);
+[ &lt;a line in ProjectiveSpace(3, 3)&gt;, &lt;a line in ProjectiveSpace(3, 3)&gt;, 
+  &lt;a line in ProjectiveSpace(3, 3)&gt;, &lt;a line in ProjectiveSpace(3, 3)&gt;, 
+  &lt;a line in ProjectiveSpace(3, 3)&gt;, &lt;a line in ProjectiveSpace(3, 3)&gt;, 
+  &lt;a line in ProjectiveSpace(3, 3)&gt;, &lt;a line in ProjectiveSpace(3, 3)&gt;, 
+  &lt;a line in ProjectiveSpace(3, 3)&gt;, &lt;a line in ProjectiveSpace(3, 3)&gt; ]
+gap&gt; stab := Stabilizer(CollineationGroup(PG(3,3)),Set(spread),OnSets);
+&lt;projective semilinear group of size 5760&gt;
+gap&gt; hom := HomographyGroup(pg1);
+PGL(2,9)
+gap&gt; gens := GeneratorsOfGroup(hom);;
+gap&gt; group := Group(List(gens,x-&gt;x^i));
+&lt;projective semilinear group with 2 generators&gt;
+gap&gt; Order(group);
+2880
+gap&gt; IsSubgroup(stab,group);
+true

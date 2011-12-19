@@ -86,11 +86,12 @@ automorphism <M>g</M> of <M>S</M>, we have
 <Returns>a group homomorphism</Returns>
 <Description>
 The arguments <A>f</A> is a geometry morphism. If <A>f</A> comes equipped with
-a natural intertwiner from the the automorphism group of the source of <A>f</A> to
+a natural intertwiner from an automorphism group of the source of <A>f</A> to
 the automorphism group to the image of <A>f</A>, then the user may be able
 to obtain the intertwiner by calling this operation (see the individual geometry
 morphism constructions). Here is a simple example of the intertwiner for the isomorphism
-of two polar spaces (see <Ref Oper="IsomorphismPolarSpaces" Style="Text"/>).
+of two polar spaces (see <Ref Oper="IsomorphismPolarSpaces" Style="Text"/>). The source of the 
+homomorphism is dependent on the geometry.
 <Example>
 <#Include SYSTEM "../examples/include/morphisms_intertwiners.include"> 
 </Example>
@@ -177,18 +178,45 @@ Another example, this time with polar spaces:
 </ManSection>
 
 <ManSection>
+<Oper Name="NaturalEmbeddingByFieldReduction" Arg="geom1, f2, B"/>
+<Oper Name="NaturalEmbeddingByFieldReduction" Arg="geom1, f2"/>
 <Oper Name="NaturalEmbeddingByFieldReduction" Arg="geom1, geom2"/>
 <Oper Name="NaturalEmbeddingByFieldReduction" Arg="geom1, geom2, B"/>
 <Returns>a geometry morphism</Returns>
 <Description>
-The arguments <A>geom1</A> and <A>geom2</A> are projective spaces
+This operation comes in four flavours. For the first flavour, the argument <A>geom1</A> is a projective 
+space over a field <Alt Not="HTML"><M>L=GF(q^t)</M></Alt><Alt Only="HTML">GF(q&lt;sup>t&lt;/sup>)</Alt>.
+The argument <A>f2</A> is a subfield <M>K=GF(q)</M> of <M>L</M>. The argument <M>B</M>
+is a basis for <M>L</M> as a <M>K</M>-vectorspace. When this argument is not given, a basis for <M>L</M> over <M>K</M>
+is computed using <F>Basis(AsVectorSpace(K,L)</F>. It is checked whether <A>f2</A> is a subfield of the basefield of
+<A>geom1</A>. The third and fourth flavour are comparable, where now <M>K</M> is found as the basefield of <A>geom2</A>.
+In fact the arguments <A>geom1</A> and <A>geom2</A> are the projective spaces
 <Alt Not="HTML"><M>PG(r-1,q^t)</M></Alt><Alt Only="HTML">PG(r-1,q&lt;sup>t&lt;/sup>)</Alt> and
-<Alt Not="HTML"><M>PG(rt-1,q)</M></Alt><Alt Only="HTML">PG(rt-1,q)</Alt> respectively. The optional
-argument <A>B</A> is a basis for <Alt Not="HTML"><M>GF(q^t)</M></Alt><Alt Only="HTML">GF(q&lt;sup>t&lt;/sup>)</Alt>
-over <M>GF(q)</M>.
+<Alt Not="HTML"><M>PG(rt-1,q)</M></Alt><Alt Only="HTML">PG(rt-1,q)</Alt> respectively. As in the previous flavours, the 
+argument <A>B</A> is optional.
+<Example>
+<#Include SYSTEM "../examples/include/morphisms_fieldreducproj.include"> 
+</Example>
 </Description>
 </ManSection>
 
+<ManSection>
+<Oper Name="Intertwiner" Arg="em"/>
+<Returns>an intertwiner for a geometry morphism</Returns>
+<Description>
+The argument <A>em</A> is a geometry morphism constructed from <Alt Not="HTML"><M>PG(r-1,q^t)</M></Alt>
+<Alt Only="HTML">PG(r-1,q&lt;sup>t&lt;/sup>)</Alt> into <Alt Not="HTML"><M>PG(rt-1,q)</M></Alt>
+<Alt Only="HTML">PG(rt-1,q)</Alt>. The intertwiner of <A>em</A> will return a homomorphisms from the <E>homography</E>
+group of <Alt Not="HTML"><M>PG(r-1,q^t)</M></Alt><Alt Only="HTML">PG(r-1,q&lt;sup>t&lt;/sup>)</Alt> into the
+collineation group of <Alt Not="HTML"><M>PG(rt-1,q)</M></Alt><Alt Only="HTML">PG(rt-1,q)</Alt>. Notice in the example 
+below the difference of a factor 2 in the orders of the group, which comes of course from restricing the homomorphism to 
+the homography group, which differes a factor 2 from the collineation group of the projective line, that has an extra 
+automorphism of order two, corresponding with the Frobenius automorphism.
+<Example>
+<#Include SYSTEM "../examples/include/morphisms_intertwinerproj.include"> 
+</Example>
+</Description>
+</ManSection>
 
 <ManSection>
 <Oper Name="NaturalEmbeddingByFieldReduction" Arg="geom1, geom2"/>
