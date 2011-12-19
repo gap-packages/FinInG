@@ -88,7 +88,35 @@ InstallMethod( ProjectiveVariety,
 
 
 #############################################################################
-#O  ProjectiveVariety( <pg>, <pring>, <list> )
+#O  AlgebraicVariety( <pg>, <pring>, <list> )
+# constructs a projective variety in a projective space <pg>, with polynomials
+# in <list>
+##
+
+InstallMethod( AlgebraicVariety,
+	"for a projective space, a polynomial ring and a list of polynomials",
+	[ IsProjectiveSpace, IsPolynomialRing, IsList ],
+	function( pg, pring, list )
+		return ProjectiveVariety(pg,pring,list);
+	end );
+
+#############################################################################
+#O  AlgebraicVariety( <pg>, <list> )
+# constructs a projective variety in a projective space <pg>, with polynomials
+# in <list>
+##
+
+InstallMethod( AlgebraicVariety,
+	"for a projective space and a list of polynomials",
+	[ IsProjectiveSpace, IsList ],
+	function( pg, list )
+		local pring;
+		pring:=PolynomialRing(pg!.basefield,pg!.dimension + 1);
+		return ProjectiveVariety(pg,pring,list);
+	end );
+
+#############################################################################
+#O  ProjectiveVariety( <pg>, <list> )
 # constructs a projective variety in a projective space <pg>, with polynomials
 # in <list>
 ##
@@ -101,19 +129,6 @@ InstallMethod( ProjectiveVariety,
 		return ProjectiveVariety(pg,pring,list);
 	end );
 	
-#############################################################################
-#O  ProjectiveVariety( <pg>, <pring>, <list> )
-# constructs a projective variety in a projective space <pg>, with polynomials
-# in <list>
-##
-InstallMethod( AlgebraicVariety,
-	"for a projective space and a list of polynomials",
-	[ IsProjectiveSpace, IsList ],
-	function( pg, list )
-		local pring;
-		pring:=PolynomialRing(pg!.basefield,pg!.dimension + 1);
-		return ProjectiveVariety(pg,pring,list);
-	end );
 
 #############################################################################
 # View, print methods for projective varieties.
@@ -418,7 +433,7 @@ InstallMethod( SegreMap,
 	source:=List(listofspaces,x->Points(x));
 	range:=Points(SegreVariety(listofspaces));
 	
-	map:=rec( source:=source, range:=range, segremap:=segremap );
+	map:=rec( source:=source, range:=range, map:=segremap );
 	ty:=NewType( NewFamily("SegreMapsFamily"), IsSegreMap and 
 								IsSegreMapRep );
 	Objectify(ty, map);
@@ -627,8 +642,9 @@ InstallMethod( SegreMap,
 	"for a Segre variety",
 	[IsSegreVariety],
 	function(sv)
-	  return ShallowCopy(sv!.segremap);
+	  return SegreMap(sv!.inverseimage);
 	end );
+
 
 
 #############################################################################
@@ -683,7 +699,7 @@ InstallMethod( Iterator,
 	function(pts)
 		local x,sv,sm,cart,listofpgs,pg,ptlist;
 		sv:=pts!.variety;
-		sm:=SegreMap(sv!.inverseimage)!.segremap;
+		sm:=SegreMap(sv!.inverseimage)!.map;
 		listofpgs:=sv!.inverseimage;
 		cart:=Cartesian(List(listofpgs,pg->Points(pg)));
 		ptlist:=List(cart,sm);
@@ -700,12 +716,79 @@ InstallMethod( Enumerator,
 	function ( pts )
 		local x,sv,sm,cart,listofpgs,pg,ptlist;
 		sv:=pts!.variety;
-		sm:=SegreMap(sv!.inverseimage)!.segremap;
+		sm:=SegreMap(sv!.inverseimage)!.map;
 		listofpgs:=sv!.inverseimage;
 		cart:=Cartesian(List(listofpgs,pg->Points(pg)));
 		ptlist:=List(cart,sm);
 		return ptlist;
 	end);
+
+#############################################################################
+#O  Size ( <var> )
+# number of points on a Segre variety
+##
+InstallMethod( Size, 
+	"for the set of points of a Segre variety",
+	[IsPointsOfSegreVariety],
+	function(pts)
+		local listofpgs,sv,x;
+		sv:=pts!.variety;
+		listofpgs:=sv!.inverseimage;
+		return Product(List(listofpgs,x->Size(Points(x))));
+	end );
+
+
+
+####################
+#O  ImageElm( <sm>, <x> )
+##
+InstallOtherMethod( ImageElm, 
+	"for a  SegreMap and an element of its source",
+	[IsSegreMap, IsList],
+	function(sm, x)
+		return sm!.map(x); 
+	end );
+
+# 
+#############################################################################
+#O  \^( <x>, <sm> )
+##
+InstallOtherMethod( \^, 
+	"for a  SegreMap and an element of its source",
+	[IsList, IsSegreMap],
+	function(x, sm)
+		return ImageElm(sm,x);
+	end );
+
+
+# 
+#############################################################################
+#O  ImagesSet( <sm>, <x> )
+##
+InstallOtherMethod( ImagesSet,
+	"for a SegreMap and subset of its source",
+	[IsSegreMap, IsElementOfIncidenceStructureCollection],
+	function(sm, x)
+		return List(x, t -> t^sm);
+	end );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ### 5. Veronese Varieties ###
 # the map in the last section comes from morphism.gi.
@@ -738,7 +821,7 @@ InstallMethod( VeroneseMap,
 	source:=Points(pg);
 	range:=Points(VeroneseVariety(pg));
 	
-	map:=rec( source:=source, range:=range, veronesemap:=func );
+	map:=rec( source:=source, range:=range, map:=func );
 	ty:=NewType( NewFamily("VeroneseMapsFamily"), IsVeroneseMap and 
 								IsVeroneseMapRep );
 	Objectify(ty, map);
@@ -857,7 +940,7 @@ InstallMethod( VeroneseMap,
 	"for a Veronese variety",
 	[IsVeroneseVariety],
 	function(vv)
-	  return ShallowCopy(vv!.veronesemap);
+	  return VeroneseMap(vv!.inverseimage);
 	end );
 
 #############################################################################
@@ -912,7 +995,7 @@ InstallMethod( Iterator,
 	function(pts)
 		local vv,vm,pg,ptlist;
 		vv:=pts!.variety;
-		vm:=VeroneseMap(vv!.inverseimage)!.veronesemap;
+		vm:=VeroneseMap(vv!.inverseimage)!.map;
 		pg:=vv!.inverseimage;
 		ptlist:=List(Points(pg),vm);
 		return IteratorList(ptlist);
@@ -928,13 +1011,102 @@ InstallMethod( Enumerator,
 	function ( pts )
 		local vv,vm,pg,ptlist;
 		vv:=pts!.variety;
-		vm:=VeroneseMap(vv!.inverseimage)!.veronesemap;
+		vm:=VeroneseMap(vv!.inverseimage)!.map;
 		pg:=vv!.inverseimage;
 		ptlist:=List(Points(pg),vm);
 		return ptlist;
 	end);
 
+#############################################################################
+#O  Size ( <var> )
+# number of points on a Veronese variety
+##
+InstallMethod( Size, 
+	"for the set of points of a Segre variety",
+	[IsPointsOfVeroneseVariety],
+	function(pts)
+		local vv;
+		vv:=pts!.variety;
+		return Size(Points(vv!.inverseimage));
+	end );
 
+
+####################
+#O  ImageElm( <gm>, <x> )
+##
+InstallOtherMethod( ImageElm, 
+	"for a  GeometryMap and an element of its source",
+	[IsGeometryMap, IsElementOfIncidenceStructure],
+	function(gm, x)
+		return gm!.map(x); 
+	end );
+
+
+# 
+#############################################################################
+#O  \^( <x>, <gm> )
+##
+InstallOtherMethod( \^, 
+	"for a  GeometryMap and an element of its source",
+	[IsElementOfIncidenceStructure, IsGeometryMap],
+	function(x, gm)
+		return ImageElm(gm,x);
+	end );
+
+
+# 
+#############################################################################
+#O  ImagesSet( <gm>, <x> )
+##
+InstallOtherMethod( ImagesSet,
+	"for a GeometryMap and subset of its source",
+	[IsGeometryMap, IsElementOfIncidenceStructureCollection],
+	function(gm, x)
+		return List(x, t -> t^gm);
+	end );
+
+#############################################################################
+#O  PolarSpace ( <var> )
+# returns the polar space defined by the equation in the list of polynomials
+# of <var>. It is of course checked that this list contains only one equation.
+# it is then decided if we try to convert the polynomial to a quadric form or to 
+# a hermitian form.
+##
+InstallMethod( PolarSpace,
+	"for a projective algebraic variety",
+	[IsProjectiveVariety and IsProjectiveVarietyRep],	
+	function(var)
+		local list,form,f,eq,r,degree,lm,l;
+		list := DefiningListOfPolynomials(var);
+		if Length(list) <> 1 then
+			Error("<var> does not define a polar space");
+		else
+			f := BaseField(AmbientSpace(var));
+			r := var!.polring;
+			eq := list[1];
+			lm := LeadingMonomial(eq);
+			l := Length(lm)/2;
+			degree := Sum(List([1..l],x->lm[2*x]));
+			if degree = 2 then
+				form := QuadraticFormByPolynomial(eq,r);
+			else
+				form := HermitianFormByPolynomial(eq,r);
+			fi;
+			return PolarSpace(form);
+		fi;
+	end);
+	
+
+
+##########################################
+##########################################
+##########################################
+#
+# The part below still has to be changed (ml 19/12/2011)
+#
+##########################################
+##########################################
+##########################################
 ### 6. Miscellaneous ###
 
 #############################################################################
@@ -1152,37 +1324,6 @@ InstallMethod( GrassmannMap,
 #    return GrassmannMap( vars!.type-1, vars!.geometry);
 #  end );
 
-#############################################################################
-#O  PolarSpace ( <var> )
-# returns the polar space defined by the equation in the list of polynomials
-# of <var>. It is of course checked that this list contains only one equation.
-# it is then decided if we try to convert the polynomial to a quadric form or to 
-# a hermitian form.
-##
-InstallMethod( PolarSpace,
-	"for a projective algebraic variety",
-	[IsProjectiveVariety and IsProjectiveVarietyRep],	
-	function(var)
-		local list,form,f,eq,r,degree,lm,l;
-		list := DefiningListOfPolynomials(var);
-		if Length(list) <> 1 then
-			Error("<var> does not define a polar space");
-		else
-			f := BaseField(AmbientSpace(var));
-			r := var!.polring;
-			eq := list[1];
-			lm := LeadingMonomial(eq);
-			l := Length(lm)/2;
-			degree := Sum(List([1..l],x->lm[2*x]));
-			if degree = 2 then
-				form := QuadraticFormByPolynomial(eq,r);
-			else
-				form := HermitianFormByPolynomial(eq,r);
-			fi;
-			return PolarSpace(form);
-		fi;
-	end);
-	
 	
 	
 	

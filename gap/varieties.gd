@@ -62,7 +62,7 @@ DeclareCategory( "IsGeometryMap", IsAttributeStoringRep );
 DeclareRepresentation ( "IsGeometryMapRep", IsGeometryMap, ["source","range","function"] );
 
 DeclareCategory( "IsSegreMap", IsGeometryMap );
-DeclareRepresentation( "IsSegreMapRep", IsSegreMap, ["source", "range", "segremap"] );
+DeclareRepresentation( "IsSegreMapRep", IsSegreMap, ["source", "range", "map"] );
 
 ### 5. Veronese Varities ###
 DeclareCategory("IsVeroneseVariety", IsProjectiveVariety );
@@ -73,7 +73,7 @@ DeclareCategory( "IsPointsOfVeroneseVariety", IsPointsOfAlgebraicVariety );
 DeclareRepresentation( "IsPointsOfVeroneseVarietyRep", IsPointsOfVeroneseVariety, ["variety"]);
 
 DeclareCategory( "IsVeroneseMap", IsGeometryMap );
-DeclareRepresentation( "IsVeroneseMapRep", IsVeroneseMap, ["source", "range", "veronesemap"] );
+DeclareRepresentation( "IsVeroneseMapRep", IsVeroneseMap, ["source", "range", "map"] );
 
 #############################################################################
 ##
@@ -84,6 +84,8 @@ DeclareRepresentation( "IsVeroneseMapRep", IsVeroneseMap, ["source", "range", "v
 ### 1. Algebraic Varieties ###
 DeclareOperation( "AlgebraicVariety", [IsProjectiveSpace, IsList] );
 DeclareOperation( "AlgebraicVariety", [IsAffineSpace, IsList] );
+DeclareOperation( "AlgebraicVariety", [IsProjectiveSpace, IsPolynomialRing, IsList] );
+DeclareOperation( "AlgebraicVariety", [IsAffineSpace, IsPolynomialRing, IsList] );
 DeclareAttribute( "DefiningListOfPolynomials", IsAlgebraicVariety );
 DeclareOperation( "PointsOfAlgebraicVariety", [IsAlgebraicVariety] );
 DeclareOperation( "Points", [IsAlgebraicVariety] );
@@ -108,8 +110,8 @@ DeclareOperation( "SegreMap", [ IsHomogeneousList, IsField ] ); # list of dimens
 DeclareOperation( "SegreVariety", [ IsHomogeneousList ]);  
 DeclareOperation( "SegreVariety", [ IsHomogeneousList, IsField ]); 
 DeclareOperation("PointsOfSegreVariety", [IsSegreVariety] );
-#DeclareOperation("Points", [IsSegreVariety] );
 DeclareOperation("SegreMap", [IsSegreVariety]);
+
 
 # Some extra functionality for two factors 
 DeclareOperation( "SegreMap", [ IsProjectiveSpace, IsProjectiveSpace ]);  
