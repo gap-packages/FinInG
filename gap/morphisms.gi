@@ -807,13 +807,17 @@ InstallMethod( ShrinkMat,
 	return ShrinkMat(f1,f2,mat);
 end );
 	
+
+#############################################################################
+#O  ShrinkVec( <f1>, <f2>, <v> ) 
+# f2 is a subfield of f1 and v is vector in a vectorspace V2 over f2
+# return the vector of length d2/t, where d2=dim(V2), and t=[f1:f2]
+# using the natural basis Basis(AsVectorSpace(f2,f1))
+##
 InstallMethod( ShrinkVec, 
 	"for a field, a subfield and a vector",
-	[ IsField,IsField, IsVector ],
+	[ IsField, IsField, IsVector ],
 	function( f1,f2,v )
-	# f2 is a subfield of f1 and v is vector in a vectorspace V2 over f2
-	# return the vector of length d2/t, where d2=dim(V2), and t=[f1:f2]
-	# using the natural basis Basis(AsVectorSpace(f2,f1))
 	local t,d1,d2,basvecs;
 	t:=Dimension(AsVectorSpace(f2,f1));
 	d1:=Length(v)/t;
@@ -863,7 +867,6 @@ InstallMethod( BlownUpProjectiveSpaceBySubfield,
         r:=Dimension(pg)+1;
         return PG(r*t-1,Size(subfield));
   end );
-
 
 # CHECKED 1/10/11 jdb
 #############################################################################
@@ -980,11 +983,11 @@ InstallMethod( IsBlownUpSubspaceOfProjectiveSpace,
 		return flag;
  end );	  
   
-# CHECKED 15/12/11 jdb
+#############################################################################
+#		PROJECTIVE SPACES
 #############################################################################
 
-#		PROJECTIVE SPACES
-
+#############################################################################
 #O  NaturalEmbeddingByFieldReduction( <geom1>, <geom2> ) 
 # <geom2> is a projective space over a field K, <geom1> is a projective space
 # over a field extension L, and considering L as a vector space over K, yields 
@@ -1095,10 +1098,7 @@ InstallMethod( NaturalEmbeddingByFieldReduction,
 
 
 ############################################################################
-#
 #		POLAR SPACES
-#
-#
 ##############################################################################
 
 ####
@@ -1107,6 +1107,11 @@ InstallMethod( NaturalEmbeddingByFieldReduction,
 #
 #####
 
+#############################################################################
+#O  BilinearFormFieldReduction( <bil1>, <f2> ) 
+# <bil1> is a bilinear form over <f1>, <f2> is a subfield of <f1>. This operation
+# returns the bilinear form T(bil1(.,.)), T the trace from <f1> to <f2>.
+##
 InstallMethod( BilinearFormFieldReduction,
 	"for a bilinear form and a field",
 	[ IsBilinearForm, IsField ],
@@ -1136,6 +1141,11 @@ InstallMethod( BilinearFormFieldReduction,
 	return bil2;
 end );
 
+#############################################################################
+#O  QuadraticFormFieldReduction( <qf1>, <f2> ) 
+# <bil1> is a bilinear form over <f1>, <f2> is a subfield of <f1>. This operation
+# returns the bilinear form T(qf1(.,.)), T the trace from <f1> to <f2>.
+##
 InstallMethod( QuadraticFormFieldReduction,
 	"for a quadratic form and a field",
 	[ IsQuadraticForm, IsField ],
@@ -1167,6 +1177,12 @@ InstallMethod( QuadraticFormFieldReduction,
 	return qf2;
 end );
 
+#############################################################################
+#O  QuadraticFormFieldReduction( <qf1>, <f2> ) 
+# <bil1> is a hermitian form over <f1>, <f2> is a subfield of <f1>. This operation
+# returns the form T(qf1(.,.)). Depending on the degree of the field extension, this
+# yields either a bilinear form or a hermitian form.
+##
 InstallMethod( HermitianFormFieldReduction,
 	"for a hermitian form and a field",
 	[ IsHermitianForm, IsField ],
