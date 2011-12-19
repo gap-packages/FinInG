@@ -488,6 +488,19 @@ InstallMethod( SegreMap,
 	return SegreMap([PG(d1,GF(q)),PG(d2,GF(q))]);
 end );
 
+
+############################################################################
+#A Source(<sm>), returns the source of the Segre map
+##
+InstallMethod( Source,
+	"given a Segre map",
+	# Note that this can take very long, as it grows very fast. In order to avoid this, 
+	# we should install a new Category consisting of tuples of projective points
+	[ IsSegreMap ],
+	function(sm)
+	return Cartesian(sm!.source);
+end );
+	
 #############################################################################
 # View, print methods for Segre maps.
 ##
@@ -942,6 +955,15 @@ InstallMethod( VeroneseMap,
 	function(vv)
 	  return VeroneseMap(vv!.inverseimage);
 	end );
+############################################################################
+#A Source(<vm>), returns the source of the Veronese map
+##
+InstallMethod( Source,
+	"given a Veronese map",
+	[ IsVeroneseMap ],
+	function(vm)
+	return vm!.source;
+end );
 
 #############################################################################
 #O  PointsOfVeroneseVariety ( <var> )

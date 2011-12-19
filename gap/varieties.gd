@@ -112,6 +112,7 @@ DeclareOperation( "SegreVariety", [ IsHomogeneousList, IsField ]);
 DeclareOperation("PointsOfSegreVariety", [IsSegreVariety] );
 DeclareOperation("SegreMap", [IsSegreVariety]);
 
+DeclareAttribute("Source", IsSegreMap);
 
 # Some extra functionality for two factors 
 DeclareOperation( "SegreMap", [ IsProjectiveSpace, IsProjectiveSpace ]);  
@@ -137,6 +138,8 @@ DeclareOperation( "PointsOfVeroneseVariety", [IsVeroneseVariety]);
 #DeclareOperation( "Points", [IsVeroneseVariety]);
 
 DeclareOperation( "VeroneseMap", [IsVeroneseVariety]);
+
+DeclareAttribute("Source", IsVeroneseMap);
 
 ### 6. Grassmann Varieties ###
 DeclareOperation( "GrassmannCoordinates", [ IsSubspaceOfProjectiveSpace ]);
