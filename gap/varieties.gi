@@ -767,7 +767,7 @@ InstallOtherMethod( \^,
 ##
 InstallOtherMethod( ImagesSet,
 	"for a SegreMap and subset of its source",
-	[IsSegreMap, IsElementOfIncidenceStructureCollection],
+	[IsSegreMap, IsList],
 	function(sm, x)
 		return List(x, t -> t^sm);
 	end );
