@@ -80,8 +80,7 @@ St Andrews, United Kingdom.
 -->    
 
 <Copyright>
-  &copyright; 2009 by the authors<P/>
-
+  &copyright; 2011 by the authors<P/>
   This package may be distributed under the terms and conditions of the
   GNU Public License Version 2 or higher.
 </Copyright>
@@ -92,11 +91,10 @@ The development phase of <Package>FinInG</Package> started rougly in 2005. The i
 projective geometry in GAP was known before, and resulted in <Package>pg</Package>, a relic that still
 can be found in the undeposited packages section of the GAP website. To create a tighter connection between
 finite geometry and the group theoretical functions present in GAP was one of the main objectives for the new package
-to develop, since <Package>gp</Package> lacks this point of view. 
+to develop, since <Package>pg</Package> lacks this point of view. 
 <P/>
-Some ideas came from other people that the autors, especially in the early stage, Michal Pauley, Maska Law and Sven Reichard 
-contributed in this way to <Package>FinInG</Package>. Therefore we want to
-
+Some ideas came from other people than the autors, especially in the early stage, Michal Pauley, Maska Law and Sven Reichard 
+contributed in this way to <Package>FinInG</Package>.
 </Acknowledgements>
 
 
