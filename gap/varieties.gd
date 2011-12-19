@@ -75,6 +75,10 @@ DeclareRepresentation( "IsPointsOfVeroneseVarietyRep", IsPointsOfVeroneseVariety
 DeclareCategory( "IsVeroneseMap", IsGeometryMap );
 DeclareRepresentation( "IsVeroneseMapRep", IsVeroneseMap, ["source", "range", "map"] );
 
+### 5. Grassmann Map ###
+DeclareCategory( "IsGrassmannMap", IsGeometryMap );
+DeclareRepresentation( "IsGrassmannMapRep", IsGrassmannMap, ["source", "range", "map"] );
+
 #############################################################################
 ##
 ##  Operations and Attributes
@@ -112,8 +116,6 @@ DeclareOperation( "SegreVariety", [ IsHomogeneousList, IsField ]);
 DeclareOperation("PointsOfSegreVariety", [IsSegreVariety] );
 DeclareOperation("SegreMap", [IsSegreVariety]);
 
-DeclareAttribute("Source", IsSegreMap);
-
 # Some extra functionality for two factors 
 DeclareOperation( "SegreMap", [ IsProjectiveSpace, IsProjectiveSpace ]);  
 DeclareOperation( "SegreMap", [ IsPosInt, IsPosInt, IsField ]);
@@ -139,16 +141,21 @@ DeclareOperation( "PointsOfVeroneseVariety", [IsVeroneseVariety]);
 
 DeclareOperation( "VeroneseMap", [IsVeroneseVariety]);
 
-DeclareAttribute("Source", IsVeroneseMap);
+### 6. GeometryMaps
+DeclareAttribute("Source", IsGeometryMap);
+DeclareAttribute("Range", IsGeometryMap);
 
-### 6. Grassmann Varieties ###
+### 7. Grassmann Varieties ###
 DeclareOperation( "GrassmannCoordinates", [ IsSubspaceOfProjectiveSpace ]);
 DeclareOperation( "GrassmannMap", [ IsPosInt,IsProjectiveSpace ] );
-DeclareOperation( "GrassmannMap", [IsPosInt, IsPosInt, IsPosInt]);
+DeclareOperation( "GrassmannMap", [ IsPosInt, IsPosInt, IsPosInt ]);
+DeclareOperation( "GrassmannMap", [ IsSubspacesOfProjectiveSpace ]);
+
+
 DeclareOperation( "GrassmannVariety", [IsPosInt, IsPosInt, IsField]);
 DeclareOperation( "GrassmannVariety", [IsPosInt, IsPosInt, IsPosInt]);
 
-### 7. Miscellaneous ###
+### 8. Miscellaneous ###
 DeclareOperation( "ConicOnFivePoints",  [ IsHomogeneousList and
                               IsSubspaceOfProjectiveSpaceCollection ] );
 DeclareOperation( "PolarSpace", [IsProjectiveVariety] );

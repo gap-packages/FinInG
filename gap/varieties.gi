@@ -43,7 +43,23 @@ Print(", varieties\c");
 # Constructor methods:
 #############################################################################
 
+
+
+
+
+
+
+
+
+
+#############################################################################
+#############################################################################
+#############################################################################
 ### 1. Projective Varieties ###
+#############################################################################
+#############################################################################
+#############################################################################
+
 
 #############################################################################
 #O  ProjectiveVariety( <pg>, <pring>, <list> )
@@ -187,7 +203,21 @@ InstallMethod( HyperplaneByDualCoordinates,
 	end );
 
 
+
+
+
+
+
+
+
+
+#############################################################################
+#############################################################################
+#############################################################################
 ### 2. Affine Varieties ###
+#############################################################################
+#############################################################################
+#############################################################################
 
 #############################################################################
 #O  AffineVariety( <ag>, <pring>, <list> )
@@ -266,7 +296,28 @@ InstallMethod( PrintObj,
 		ViewObj(var!.geometry);
 	end );
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#############################################################################
+#############################################################################
+#############################################################################
 ### 3. Algebraic Varieties ###
+#############################################################################
+#############################################################################
+#############################################################################
 
 #############################################################################
 #O  \in ( <point>, <var> )
@@ -384,7 +435,56 @@ InstallMethod( AmbientSpace,
 		return ShallowCopy(av!.geometry);
 	end );
 	
+
+
+#############################################################################
+#O  PolarSpace ( <var> )
+# returns the polar space defined by the equation in the list of polynomials
+# of <var>. It is of course checked that this list contains only one equation.
+# it is then decided if we try to convert the polynomial to a quadric form or to 
+# a hermitian form.
+##
+InstallMethod( PolarSpace,
+	"for a projective algebraic variety",
+	[IsProjectiveVariety and IsProjectiveVarietyRep],	
+	function(var)
+		local list,form,f,eq,r,degree,lm,l;
+		list := DefiningListOfPolynomials(var);
+		if Length(list) <> 1 then
+			Error("<var> does not define a polar space");
+		else
+			f := BaseField(AmbientSpace(var));
+			r := var!.polring;
+			eq := list[1];
+			lm := LeadingMonomial(eq);
+			l := Length(lm)/2;
+			degree := Sum(List([1..l],x->lm[2*x]));
+			if degree = 2 then
+				form := QuadraticFormByPolynomial(eq,r);
+			else
+				form := HermitianFormByPolynomial(eq,r);
+			fi;
+			return PolarSpace(form);
+		fi;
+	end);
+
+
+
+
+
+
+
+
+
+
+
+#############################################################################
+#############################################################################
+#############################################################################
 ### 4. Segre Varieties ###
+#############################################################################
+#############################################################################
+#############################################################################
 
 #############################################################################
 #O  SegreMap( <listofspaces> ), returns a function the is the Segre Map from 
@@ -500,6 +600,7 @@ InstallMethod( Source,
 	function(sm)
 	return Cartesian(sm!.source);
 end );
+
 	
 #############################################################################
 # View, print methods for Segre maps.
@@ -801,12 +902,14 @@ InstallOtherMethod( ImagesSet,
 
 
 
-
-
-### 5. Veronese Varieties ###
-# the map in the last section comes from morphism.gi.
-
 #############################################################################
+#############################################################################
+#############################################################################
+### 5. Veronese Varieties ###
+#############################################################################
+#############################################################################
+#############################################################################
+
 #O  VeroneseMap( <pg> ), returns a function that is the Veronese Map from
 #<pg>
 ##
@@ -955,15 +1058,6 @@ InstallMethod( VeroneseMap,
 	function(vv)
 	  return VeroneseMap(vv!.inverseimage);
 	end );
-############################################################################
-#A Source(<vm>), returns the source of the Veronese map
-##
-InstallMethod( Source,
-	"given a Veronese map",
-	[ IsVeroneseMap ],
-	function(vm)
-	return vm!.source;
-end );
 
 #############################################################################
 #O  PointsOfVeroneseVariety ( <var> )
@@ -1053,7 +1147,14 @@ InstallMethod( Size,
 	end );
 
 
-####################
+
+#############################################################################
+#############################################################################
+#############################################################################
+### 6. Methods for geometry maps (IsGeometryMap) ###
+#############################################################################
+#############################################################################
+#############################################################################
 #O  ImageElm( <gm>, <x> )
 ##
 InstallOtherMethod( ImageElm, 
@@ -1087,36 +1188,156 @@ InstallOtherMethod( ImagesSet,
 		return List(x, t -> t^gm);
 	end );
 
-#############################################################################
-#O  PolarSpace ( <var> )
-# returns the polar space defined by the equation in the list of polynomials
-# of <var>. It is of course checked that this list contains only one equation.
-# it is then decided if we try to convert the polynomial to a quadric form or to 
-# a hermitian form.
+
+
+
+############################################################################
+#A Source(<gm>), returns the source of the geometry map
 ##
-InstallMethod( PolarSpace,
-	"for a projective algebraic variety",
-	[IsProjectiveVariety and IsProjectiveVarietyRep],	
-	function(var)
-		local list,form,f,eq,r,degree,lm,l;
-		list := DefiningListOfPolynomials(var);
-		if Length(list) <> 1 then
-			Error("<var> does not define a polar space");
-		else
-			f := BaseField(AmbientSpace(var));
-			r := var!.polring;
-			eq := list[1];
-			lm := LeadingMonomial(eq);
-			l := Length(lm)/2;
-			degree := Sum(List([1..l],x->lm[2*x]));
-			if degree = 2 then
-				form := QuadraticFormByPolynomial(eq,r);
-			else
-				form := HermitianFormByPolynomial(eq,r);
-			fi;
-			return PolarSpace(form);
-		fi;
-	end);
+InstallMethod( Source,
+	"given a geometry map",
+	[ IsGeometryMap ],
+	function(gm)
+	return gm!.source;
+end );
+
+
+
+############################################################################
+#A Range(<gm>), returns the range of the geometry map
+##
+InstallMethod( Range,
+	"given a geometry map",
+	[ IsGeometryMap ],
+	function(gm)
+	return gm!.range;
+end );
+
+
+
+
+
+
+#############################################################################
+#############################################################################
+#############################################################################
+### 7. Grassmann Varieties ###
+#############################################################################
+#############################################################################
+#############################################################################
+
+	
+#############################################################################
+#O  GrassmannCoordinates ( <sub> )
+# returns the Grassmann coordinates of the projective subspace <sub>
+##
+InstallMethod( GrassmannCoordinates, 
+	"for a subspace of a projective space",
+    [ IsSubspaceOfProjectiveSpace ],
+
+  ## Warning: this operation is not compatible with
+  ## PluckerCoordinates. To get the same image, you
+  ## need to multiply the fifth coordinate by -1.
+	function( sub )
+    local basis,k,n,list,vector;
+    k := ProjectiveDimension(sub);
+	n := ProjectiveDimension(sub!.geo);
+	if (k <= 0  or k >= n-1) then 
+         Error("The dimension of the subspace has to be at least 1 and at most ", n-2);
+    fi;
+	basis := sub!.obj;
+    list := TransposedMat(basis); 
+    vector := List(Combinations([1..n+1], k+1), i -> DeterminantMat( list{i} ));  
+    return vector;
+  end );
+
+#############################################################################
+#O  GrassmannMap ( <k>, <pgdomain> )
+# returns the map that maps k-subspaces of <pgdomain> to a point with GrassmannCoordinates  
+##
+InstallMethod( GrassmannMap, 
+	"for an integer and a projective space",
+    [ IsPosInt, IsProjectiveSpace ],
+
+  ## Warning: this operation is not compatible with
+  ## PluckerCoordinates. To get the same image, you
+  ## need to multiply the fifth coordinate by -1.
+
+  function( k, pgdomain )
+    local n,F,pgimage,varmap,func,dim,source,range,map,ty;
+    n := pgdomain!.dimension;  ## projective dimension
+    F := pgdomain!.basefield;
+ 
+    if (k <= 0  or k >= n-1) then 
+         Error("The dimension of the subspace has to be at least 1 and at most ", n-2);
+    fi;
+
+   ## ambient projective space of image has dimension Binomial(n+1,k+1)-1
+    dim := Binomial( n+1, k+1 ) - 1;
+    pgimage := PG(dim,F); 
+
+    func := function( var )
+      local basis,vector,list;
+      if ProjectiveDimension(var) <> k then 
+         Error("Input must have projective dimension ", k, "\n");
+      fi;
+      basis := var!.obj;
+      list := TransposedMat(basis); 
+      vector := List(Combinations([1..n+1], k+1), i -> DeterminantMat( list{i} ));  
+      #ConvertToVectorRepNC( vector, F );
+      return VectorSpaceToElement(pgimage,vector);
+    end;
+	
+	source:=ElementsOfIncidenceStructure(pgdomain,k+1);
+	range:=Points(pgimage); # this still needs to be changed to the set of points on the Grassmann variety!!!
+	
+	map:=rec( source:=source, range:=range, map:=func );
+	ty:=NewType( NewFamily("GrassmannMapsFamily"), IsGrassmannMap and 
+								IsGrassmannMapRep );
+	Objectify(ty, map);
+	return map;
+
+end );
+
+#############################################################################
+#O  GrassmannMap ( <k>, <n>, <q> )
+# shortcut to GrassmannMap(<k>,PG(<n>,<q>))
+##
+InstallMethod( GrassmannMap, 
+	"for three positive integers",
+    [ IsPosInt, IsPosInt, IsPosInt ],
+  function( k, n, q )
+    return GrassmannMap( k, ProjectiveSpace(n, q));
+  end );
+
+#############################################################################
+#O  GrassmannMap ( <subs> )
+# for subspaces of a projective space
+##
+InstallMethod( GrassmannMap, "given collection of varieties of a projectivespace",
+    [ IsSubspacesOfProjectiveSpace ],
+  function( subspaces )
+    return GrassmannMap( subspaces!.type-1, subspaces!.geometry);
+  end );
+
+#############################################################################
+# View, print methods for Veronese maps.
+##
+InstallMethod( ViewObj, 
+	"for a Grassmann map",
+	[ IsGrassmannMap and IsGrassmannMapRep ],
+	function( map )
+		Print("Grassmann Map of ");
+		ViewObj(map!.source);
+	end );
+
+InstallMethod( PrintObj, 
+	"for a Grassmann map",
+	[ IsGrassmannMap and IsGrassmannMapRep ],
+	function( map )
+		Print("Grassmann Map of ");
+		ViewObj(map!.source);
+	end );
 	
 
 
@@ -1129,7 +1350,8 @@ InstallMethod( PolarSpace,
 ##########################################
 ##########################################
 ##########################################
-### 6. Miscellaneous ###
+
+### 8. Miscellaneous ###
 
 #############################################################################
 #O  ConicOnFivePoints ( <pts> )
@@ -1262,90 +1484,5 @@ InstallMethod( ConicOnFivePoints,
 #  end );
 
 
-#############################################################################
-#O  GrassmannCoordinates ( <sub> )
-# returns the Grassmann coordinates of the projective subspace <sub>
-##
-InstallMethod( GrassmannCoordinates, 
-	"for a subspace of a projective space",
-    [ IsSubspaceOfProjectiveSpace ],
-
-  ## Warning: this operation is not compatible with
-  ## PluckerCoordinates. To get the same image, you
-  ## need to multiply the fifth coordinate by -1.
-	function( sub )
-    local basis,k,n,list,vector;
-    k := ProjectiveDimension(sub);
-	n := ProjectiveDimension(sub!.geo);
-	if (k <= 0  or k >= n-1) then 
-         Error("The dimension of the subspace has to be at least 1 and at most ", n-2);
-    fi;
-	basis := sub!.obj;
-    list := TransposedMat(basis); 
-    vector := List(Combinations([1..n+1], k+1), i -> DeterminantMat( list{i} ));  
-    return vector;
-  end );
-
-#############################################################################
-#O  GrassmannMap ( <k>, <pgdomain> )
-# returns the map that maps k-subspaces of <pgdomain> to a point with GrassmannCoordinates  
-##
-InstallMethod( GrassmannMap, 
-	"for an integer and a projective space",
-    [ IsPosInt, IsProjectiveSpace ],
-
-  ## Warning: this operation is not compatible with
-  ## PluckerCoordinates. To get the same image, you
-  ## need to multiply the fifth coordinate by -1.
-
-  function( k, pgdomain )
-    local n,F,pgimage,varmap,func,dim;
-    n := pgdomain!.dimension;  ## projective dimension
-    F := pgdomain!.basefield;
- 
-    if (k <= 0  or k >= n-1) then 
-         Error("The dimension of the subspace has to be at least 1 and at most ", n-2);
-    fi;
-
-   ## ambient projective space of image has dimension Binomial(n+1,k+1)-1
-    dim := Binomial( n+1, k+1 ) - 1;
-    pgimage := GrassmannVariety(k, n, F); 
-
-    func := function( var )
-      local basis,vector,list;
-      if ProjectiveDimension(var) <> k then 
-         Error("Input must have projective dimension ", k, "\n");
-      fi;
-      basis := var!.obj;
-      list := TransposedMat(basis); 
-      vector := List(Combinations([1..n+1], k+1), i -> DeterminantMat( list{i} ));  
-      ConvertToVectorRepNC( vector, F );
-      return Wrap(pgimage, 1, vector);
-    end;
-
-    varmap := GeometryMorphismByFunction(ElementsOfIncidenceStructure(pgdomain, k+1), 
-                                         Points(pgimage), func);
-    SetIsInjective( varmap, true );
-    return varmap;
-  end );
-
-#############################################################################
-#O  GrassmannMap ( <k>, <n>, <q> )
-# shortcut to GrassmannMap(<k>,PG(<n>,<q>))
-##
-InstallMethod( GrassmannMap, 
-	"for three positive integers",
-    [ IsPosInt, IsPosInt, IsPosInt ],
-  function( k, n, q )
-    return GrassmannMap( k, ProjectiveSpace(n, q));
-  end );
-
-#InstallMethod( GrassmannMap, "given collection of varieties of a projectivespace",
-#    [ IsAllSubspacesOfProjectiveSpace ],
-#  function( vars )
-#    return GrassmannMap( vars!.type-1, vars!.geometry);
-#  end );
-
-	
 	
 	
