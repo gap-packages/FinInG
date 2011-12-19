@@ -1,0 +1,20 @@
+gap&gt; pg:=PG(2,5);
+ProjectiveSpace(2, 5)
+gap&gt; vv:=VeroneseVariety(pg);
+Veronese Variety in ProjectiveSpace(5, 5)
+gap&gt; Size(Points(vv))=Size(Points(pg));
+true
+gap&gt; vm:=VeroneseMap(vv);
+Veronese Map of &lt;points of ProjectiveSpace(2, 5)&gt;
+gap&gt; r:=PolynomialRing(GF(5),3);
+GF(5)[x_1,x_2,x_3]
+gap&gt; f:=r.1^2-r.2*r.3;
+x_1^2-x_2*x_3
+gap&gt; c:=AlgebraicVariety(pg,r,[f]);
+Projective Variety in ProjectiveSpace(2, 5)
+gap&gt; pts:=List(Points(c));
+[ &lt;a point in ProjectiveSpace(2, 5)&gt;, &lt;a point in ProjectiveSpace(2, 5)&gt;, 
+  &lt;a point in ProjectiveSpace(2, 5)&gt;, &lt;a point in ProjectiveSpace(2, 5)&gt;, 
+  &lt;a point in ProjectiveSpace(2, 5)&gt;, &lt;a point in ProjectiveSpace(2, 5)&gt; ]
+gap&gt; Dimension(Span(ImagesSet(vm,pts)));
+4

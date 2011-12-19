@@ -1,0 +1,23 @@
+gap&gt; sv:=SegreVariety(2,2,9);
+Segre Variety in ProjectiveSpace(8, 9)
+gap&gt; sm:=SegreMap(sv);
+Segre Map of [ &lt;points of ProjectiveSpace(2, 9)&gt;, 
+  &lt;points of ProjectiveSpace(2, 9)&gt; ]
+gap&gt; cart1:=Cartesian(Points(PG(2,9)),Points(PG(2,9)));;
+gap&gt; im1:=ImagesSet(sm,cart1);;
+gap&gt; Span(im1);
+ProjectiveSpace(8, 9)
+gap&gt; l:=Random(Lines(PG(2,9)));
+&lt;a line in ProjectiveSpace(2, 9)&gt;
+gap&gt; cart2:=Cartesian(Points(l),Points(PG(2,9)));;
+gap&gt; im2:=ImagesSet(sm,cart2);;
+gap&gt; Span(im2);
+&lt;a proj. 5-space in ProjectiveSpace(8, 9)&gt;
+gap&gt; x:=Random(Points(PG(2,9)));
+&lt;a point in ProjectiveSpace(2, 9)&gt;
+gap&gt; cart3:=Cartesian(Points(PG(2,9)),Points(x));;
+gap&gt; im3:=ImagesSet(sm,cart3);;
+gap&gt; pi:=Span(im3);
+&lt;a plane in ProjectiveSpace(8, 9)&gt;
+gap&gt; AsSet(List(Points(pi),y-&gt;y in sv));
+[ true ]

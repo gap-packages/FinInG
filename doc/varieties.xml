@@ -171,6 +171,9 @@ A <E>Segre variety</E> in <Package>FinInG</Package> is a projective algebraic va
         The operation returns a function with domain the product of the point sets of projective spaces in the list <Alt Not="HTML"><M>[PG(n_1-1,q)</M></Alt> <Alt Only="HTML">[PG(n&lt;sub>1 &lt;/sub>-1,q)</Alt>, <Alt Not="HTML"><M>PG(n_2-1,q)</M></Alt> <Alt Only="HTML">PG(n&lt;sub>2 &lt;/sub>-1,q)</Alt>, ..., <Alt Not="HTML"><M>PG(n_k-1,q)]</M></Alt> <Alt Only="HTML">PG(n&lt;sub>k &lt;/sub>-1,q)]</Alt> and image the set of points of the Segre variety (<Ref Oper="PointsOfSegreVariety"/>) in the projective space of dimension <Alt Not="HTML"><M>n_1n_2\ldots n_k-1</M></Alt>
         <Alt Only="HTML">n&lt;sub>1&lt;/sub> n&lt;sub>2&lt;/sub> ... n&lt;sub>k&lt;/sub>-1</Alt>.
         When a Segre variety <A>sv</A> is given as input, the operation returns the associated Segre map.
+<Example>
+<#Include SYSTEM "../examples/include/varieties_segre.include">
+</Example>
     </Description>
 </ManSection>
 
@@ -209,7 +212,10 @@ A <E>Veronese variety</E> in <Package>FinInG</Package> is a projective algebraic
     The argument <A>pg</A> is a projective space defined over a finite field, say <M>PG(n-1,q)</M>. The operation also takes as input the dimension and a finite field <A>field</A> (e.g. <M>[n-1,q]</M>).
         The operation returns a function with domain the product of the point set of the projective space <M>PG(n-1,q)</M> and image the set of points of the Veronese variety (<Ref Oper="PointsOfVeroneseVariety"/>) in the projective space of dimension <M>(n^2+n)/2-1</M>.
         When a Veronese variety <A>vv</A> is given as input, the operation returns the associated Veronese map.
-    </Description>
+    <Example>
+<#Include SYSTEM "../examples/include/varieties_veronese.include"> 
+	</Example>
+	</Description>
 </ManSection>
 </Section>
 <!--SECTION QUADRICS AND HERMITIAN VARIETIES -->

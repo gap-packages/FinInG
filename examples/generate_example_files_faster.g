@@ -100,7 +100,7 @@ morphismsfiles := ["morphisms_intertwiners","morphisms_embedding1","morphisms_em
           "morphisms_fieldreduc1", "morphisms_fieldreduc2","morphisms_subfield1","morphisms_subfield2",
           "morphisms_isopolar","morphisms_projection","morphisms_completion","morphisms_klein","morphisms_duality"];;
 		  
-varieties_files := ["varieties_general", "varieties_polarspace" ];
+varieties_files := ["varieties_general", "varieties_polarspace", "varieties_veronese", "varieties_segre" ];
 
 
 gpolygonfiles := [ "gpolygons_projplanes1", "gpolygons_projplanes2", "gpolygons_iskantorfamily", "gpolygons_isqclan",
