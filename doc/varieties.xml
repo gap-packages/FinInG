@@ -177,6 +177,14 @@ A <E>Segre variety</E> in <Package>FinInG</Package> is a projective algebraic va
     </Description>
 </ManSection>
 
+<ManSection>
+    <Oper Name="Source" Arg="sm"/>
+     <Returns>the source of a Segre map</Returns>
+    <Description>
+        The argument <A>sm</A> is a <Ref Oper="SegreMap"/>. This operation returns the cartesian product of the list consisting of the pointsets of the projective spaces that were used to construct the <Ref Oper="SegreMap"/>.
+   </Description>
+</ManSection>
+
 </Section>
 
 <!--SECTION VERONESE VARIETIES -->
@@ -217,6 +225,16 @@ A <E>Veronese variety</E> in <Package>FinInG</Package> is a projective algebraic
 	</Example>
 	</Description>
 </ManSection>
+
+
+<ManSection>
+    <Oper Name="Source" Arg="vm"/>
+     <Returns>the source of a Veronese map</Returns>
+    <Description>
+        The argument <A>vm</A> is a <Ref Oper="VeroneseMap"/>. This operation returns the pointset of the projective space that was used to construct the <Ref Oper="VeroneseMap"/>.
+   </Description>
+</ManSection>
+
 </Section>
 <!--SECTION QUADRICS AND HERMITIAN VARIETIES -->
 <Section Label="quadricshermitian">
