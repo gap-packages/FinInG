@@ -239,7 +239,8 @@ A <E>Veronese variety</E> in <Package>FinInG</Package> is a projective algebraic
 
 <!--SECTION GRASSMANN VARIETIES -->
 <Section Label="grassmannvarieties">
-
+<Heading>Grassmann Varieties</Heading>
+A <E>Grassmann variety</E> in <Package>FinInG</Package> is a projective algebraic variety in a projective space over a finite field. The set of points that lie on this variety is the image of the <E>Grassmann map</E>.
 </Section>
 
 <!--SECTION QUADRICS AND HERMITIAN VARIETIES -->
