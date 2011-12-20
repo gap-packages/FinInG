@@ -89,9 +89,15 @@ The arguments <A>f</A> is a geometry morphism. If <A>f</A> comes equipped with
 a natural intertwiner from an automorphism group of the source of <A>f</A> to
 the automorphism group to the image of <A>f</A>, then the user may be able
 to obtain the intertwiner by calling this operation (see the individual geometry
-morphism constructions). Here is a simple example of the intertwiner for the isomorphism
-of two polar spaces (see <Ref Oper="IsomorphismPolarSpaces" Style="Text"/>). The source of the 
-homomorphism is dependent on the geometry.
+morphism constructions). There is no method to compute an intertwiner for a given
+geometry morphism, the attribute is or is not set during the construction of the geometry
+morphism, depending whether the Source and Range of the morphism have the appropriate
+automorphism group known as an attribute. When this condition is not satisfied, the 
+user is expected to call the appropriate automorphism groups, so that they are computed, 
+and to recompute the geometry morphism (which will not cost a lot of computation time then),
+such that the attribute <F>Intertwiner</F> becomes available. Here is a simple example of the 
+intertwiner for the isomorphism of two polar spaces (see <Ref Oper="IsomorphismPolarSpaces" Style="Text"/>). 
+The source of the homomorphism is dependent on the geometry.
 <Example>
 <#Include SYSTEM "../examples/include/morphisms_intertwiners.include"> 
 </Example>

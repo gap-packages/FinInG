@@ -1,11 +1,13 @@
 #morphisms_isopolar.g
-id := IdentityMat(6, GF(5));;
-form := BilinearFormByMatrix( id, GF(5) );
-ps := PolarSpace( form );
-PolarSpaceType( ps );
-quadric := HyperbolicQuadric( 5, 5 );
-iso := IsomorphismPolarSpaces( ps, quadric );
-HasCollineationGroup( ps );
-hom := Intertwiner( iso );;
-ImagesSet(hom, SpecialIsometryGroup( ps ));
+mat1 := IdentityMat(6,GF(5));
+form1 := BilinearFormByMatrix(mat1,GF(5));
+ps1 := PolarSpace(form1);
+mat2 := [[0,0,0,0,0,1],[0,0,0,0,1,0],[0,0,0,1,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]]*Z(5)^0;
+form2 := QuadraticFormByMatrix(mat2,GF(5));
+ps2 := PolarSpace(form2);
+iso := IsomorphismPolarSpaces(ps1,ps2,true);
+CollineationGroup(ps1);
+CollineationGroup(ps2);
+iso := IsomorphismPolarSpaces(ps1,ps2,true);
+hom := Intertwiner( iso );
 quit;

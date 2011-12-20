@@ -132,7 +132,7 @@ preambledir := DirectoriesPackageLibrary("fining","examples/")[1];
 outputdir := DirectoriesPackageLibrary("fining","examples/output")[1];
 gap := Filename(Directory("/usr/bin/"),"gap4r4");  
 paths := JoinStringsWithSeparator(GAP_ROOT_PATHS,";");
-args := JoinStringsWithSeparator(["-l ",paths,"-o 1G"," -L fining.ws"]," ");
+args := JoinStringsWithSeparator(["-l ",paths," -L fining.ws"]," ");
 
 #create .out files using the saved workspace
 #IMPORTANT: here we suppose that the script to start up our favorite version of
@@ -161,7 +161,8 @@ for filename in files do
   input_stream := InputTextFile(inputfile);
   cmd := ReadLine(input_stream);
   while cmd <> fail do
-    WriteAll(stream,cmd);
+    #Print(cmd);
+	WriteAll(stream,cmd);
     cmd := ReadLine(input_stream);
     ReadAll(stream);
   od;

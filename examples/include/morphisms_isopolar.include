@@ -1,17 +1,44 @@
-gap> id := IdentityMat(6, GF(5));;
-gap> form := BilinearFormByMatrix( id, GF(5) );
-&lt; bilinear form >
-gap> ps := PolarSpace( form );
-&lt;polar space of rank 5 over GF(5)>
-gap> PolarSpaceType( ps );
-"hyperbolic"
-gap> quadric := HyperbolicQuadric( 5, 5 );
-Q+(5, 5)
-gap> iso := IsomorphismPolarSpaces( ps, quadric );
-&lt;geometry morphism from &lt;Elements of &lt;polar space of rank 5 over GF(
-5)>> to &lt;Elements of Q+(5, 5)>>
-gap> HasCollineationGroup( ps );
-true
-gap> hom := Intertwiner( iso );;
-gap> ImagesSet(hom, SpecialIsometryGroup( ps ));
-&lt;projective group with Frobenius of size 14508000000 with 3 generators>
+gap&gt; mat1 := IdentityMat(6,GF(5));
+[ [ Z(5)^0, 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5) ], 
+  [ 0*Z(5), Z(5)^0, 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5) ], 
+  [ 0*Z(5), 0*Z(5), Z(5)^0, 0*Z(5), 0*Z(5), 0*Z(5) ], 
+  [ 0*Z(5), 0*Z(5), 0*Z(5), Z(5)^0, 0*Z(5), 0*Z(5) ], 
+  [ 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), Z(5)^0, 0*Z(5) ], 
+  [ 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), Z(5)^0 ] ]
+gap&gt; form1 := BilinearFormByMatrix(mat1,GF(5));
+&lt; bilinear form &gt;
+gap&gt; ps1 := PolarSpace(form1);
+&lt;polar space in ProjectiveSpace(5,GF(
+5)): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2=0 &gt;
+gap&gt; mat2 := [[0,0,0,0,0,1],[0,0,0,0,1,0],[0,0,0,1,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]]*Z(5)^0;
+[ [ 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), Z(5)^0 ], 
+  [ 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), Z(5)^0, 0*Z(5) ], 
+  [ 0*Z(5), 0*Z(5), 0*Z(5), Z(5)^0, 0*Z(5), 0*Z(5) ], 
+  [ 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5) ], 
+  [ 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5) ], 
+  [ 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5) ] ]
+gap&gt; form2 := QuadraticFormByMatrix(mat2,GF(5));
+&lt; quadratic form &gt;
+gap&gt; ps2 := PolarSpace(form2);
+&lt;polar space in ProjectiveSpace(5,GF(5)): x_1*x_6+x_2*x_5+x_3*x_4=0 &gt;
+gap&gt; iso := IsomorphismPolarSpaces(ps1,ps2,true);
+#I  No intertwiner computed. One of the polar spaces must have a collineation 
+group computed
+&lt;geometry morphism from &lt;Elements of &lt;polar space in ProjectiveSpace(5,GF(
+5)): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2=0 &gt;&gt; to &lt;Elements of &lt;polar space in 
+ProjectiveSpace(5,GF(5)): x_1*x_6+x_2*x_5+x_3*x_4=0 &gt;&gt;&gt;
+gap&gt; CollineationGroup(ps1);
+#I  Computing nice monomorphism...
+#I  Computing collineation group of canonical polar space...
+#I  Computing nice monomorphism...
+&lt;projective semilinear group of size 58032000000 with 4 generators&gt;
+gap&gt; CollineationGroup(ps2);
+#I  Computing nice monomorphism...
+#I  Computing collineation group of canonical polar space...
+#I  Computing nice monomorphism...
+&lt;projective semilinear group of size 58032000000 with 4 generators&gt;
+gap&gt; iso := IsomorphismPolarSpaces(ps1,ps2,true);
+&lt;geometry morphism from &lt;Elements of Q+(5, 
+5): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2=0&gt; to &lt;Elements of Q+(5, 
+5): x_1*x_6+x_2*x_5+x_3*x_4=0&gt;&gt;
+gap&gt; 
