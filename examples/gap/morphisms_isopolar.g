@@ -2,7 +2,8 @@
 mat1 := IdentityMat(6,GF(5));
 form1 := BilinearFormByMatrix(mat1,GF(5));
 ps1 := PolarSpace(form1);
-mat2 := [[0,0,0,0,0,1],[0,0,0,0,1,0],[0,0,0,1,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]]*Z(5)^0;
+mat2 := [[0,0,0,0,0,1],[0,0,0,0,1,0],[0,0,0,1,0,0],
+[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]]*Z(5)^0;
 form2 := QuadraticFormByMatrix(mat2,GF(5));
 ps2 := PolarSpace(form2);
 iso := IsomorphismPolarSpaces(ps1,ps2,true);

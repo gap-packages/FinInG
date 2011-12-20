@@ -103,6 +103,13 @@ The source of the homomorphism is dependent on the geometry.
 </Example>
 </Description>
 </ManSection>
+</Section>
+
+<Section>
+<Heading>Isomorphisms between polar spaces</Heading>
+
+An important class of geometry morphisms in <Package>FinInG</Package> are the isomorphisms between
+polar spaces of the same kind that are induced by coordinate transformations. 
 
 <ManSection>
 <Oper Name="IsomorphismPolarSpaces" Arg="ps1, ps2"/>
@@ -127,7 +134,8 @@ group of <A>ps2</A> (see also <Ref Attr="Intertwiner" Style="Text"/>).
 </Description>
 
 <Description>
-Both functions also have a "no check" version.
+Both functions also have a "no check" version, which does not check whether <A>ps1</A> and <A>ps2</A>
+are polar spaces of the same type.
 </Description>
 <Oper Name="IsomorphismPolarSpacesNC" Arg="ps1, ps2"/>
 <Oper Name="IsomorphismPolarSpacesNC" Arg="ps1, ps2, boolean"/>
@@ -225,19 +233,26 @@ automorphism of order two, corresponding with the Frobenius automorphism.
 </ManSection>
 
 <ManSection>
-<Oper Name="NaturalEmbeddingByFieldReduction" Arg="geom1, geom2"/>
-<Oper Name="NaturalEmbeddingByFieldReduction" Arg="geom1, geom2, B"/>
-<Oper Name="NaturalEmbeddingByFieldReduction" Arg="geom1, geom2, boolean"/>
+<Oper Name="NaturalEmbeddingByFieldReduction" Arg="geom1, f2"/>
+<Oper Name="NaturalEmbeddingByFieldReduction" Arg="geom1, f2, B"/>
+<Oper Name="NaturalEmbeddingByFieldReduction" Arg="geom1, f2, boolean"/>
 <Returns>a geometry morphism</Returns>
 <Description>
-The arguments <A>geom1</A> and <A>geom2</A> are polar spaces.
-This function returns a geometry morphism representing the natural embedding
-of <A>geom1</A> into <A>geom2</A> via field reduction. By <E>natural</E> for projective spaces,
-we mean that the embedding is induced by considering the field <Alt Not="HTML"><M>F_1</M></Alt><Alt Only="HTML">
-F&lt;sub>1&lt;/sub></Alt> of <A>geom1</A> as a vector space over the field <Alt Not="HTML"><M>F_2</M></Alt><Alt Only="HTML">
-F&lt;sub>2&lt;/sub></Alt> of <A>geom2</A>, perhaps with
-a choice of basis <A>B</A> in the case we have projective spaces.
-If <A>geom1</A> and <A>geom2</A> are polar spaces, then the only such possible embeddings are
+The arguments <A>geom1</A> and <A>geom2</A> are polar spaces over the finite fields <Alt Not="HTML"><M>L=GF(q^t)</M></Alt>
+<Alt Only="HTML">GF(q&lt;sup>t&lt;/sup>)</Alt> and <M>GF(q)</M> respectively. This function returns a geometry morphism 
+representing the natural embedding of <A>geom1</A> into <A>geom2</A> via field reduction, based on the following principle.
+Consider the trace map <M>T:</M><Alt Not="HTML"><M>L=GF(q^t) \rightarrow GF(q):</M></Alt>
+<Alt Only="HTML">GF(q&lt;sup>t&lt;/sup>) &#8594; GF(q):</Alt><Alt Not="HTML"><M>x \mapsto x^{q^t}+ x^{q^{t-1}} +\ldots x</M></Alt>
+<Alt Only="HTML">x &#8594; x&lt;sup>q&lt;sup>t&lt;/sup>&lt;/sup> + x&lt;sup>q&lt;sup>t-1&lt;/sup>&lt;/sup> + &#8230; x</Alt>. 
+The polar space <A>geom1</A> is the geometry associated to a quadratic or sequilinear form <M>f</M>, acting on an <M>r</M>-dimensional 
+vector space <M>V1</M> over the finite field <Alt Not="HTML"><M>GF(q^t)</M></Alt><Alt Only="HTML">GF(q&lt;sup>t&lt;/sup>)</Alt>.
+We first consider the <M>rt</M>-dimensional vector space <M>V2</M> over the finite field <M>GF(q)</M>. There is a bijective map 
+<Alt Not="HTML"><M>\Phi</M></Alt><Alt Only="HTML">&#934;</Alt> from <M>V1</M> to <M>V2</M>. Now it is easy to see that 
+<Alt Only="HTML">T &#8226; f &#8226; &#934; &lt;sup>-1&lt;/sup></Alt><Alt Not="HTML">T \circ f \circ \Phi^{-1}</Alt> will be a
+quadratic or sesquilinear form (depending on <M>f</M> being quadratic or sesquilinear) acting on <M>V2</M>, and hence, if not 
+singular or degenerate, induce a polar space over the finite field <M>GF(q)</M>. An element of <A>geom1</A> is mapped to an element
+of the induced polar space over <M>GF(q)</M> using the same principle as for the natural embedding by field reduction for projective
+spaces, of course now restricted to the elements of <A>geom1</A>. The only such possible embeddings are
 listed in the table below (see <Cite Key="Gill"/>):
 
 <Table Align="l|l|l">
@@ -248,53 +263,58 @@ listed in the table below (see <Cite Key="Gill"/>):
  <HorLine/>
  <HorLine/>
   <Row>
-   <Item><Alt Not="HTML"><M>W(2n-1,q^a)</M></Alt><Alt Only="HTML">W(2n-1,q&lt;sup>a&lt;/sup>)</Alt></Item>
+   <Item><Alt Not="HTML"><M>W(2n-1,q^t)</M></Alt><Alt Only="HTML">W(2n-1,q&lt;sup>t&lt;/sup>)</Alt></Item>
    <Item><M>W(2na-1,q)</M></Item><Item>--</Item>
   </Row>
  <Row>
-   <Item><Alt Not="HTML"><M>Q^+(2n-1,q^a)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>(2n-1,q&lt;sup>a&lt;/sup>)</Alt></Item>
-   <Item><Alt Not="HTML"><M>Q^+(2na-1,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>(2na-1,q)</Alt></Item>
+   <Item><Alt Not="HTML"><M>Q^+(2n-1,q^t)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>(2n-1,q&lt;sup>t&lt;/sup>)</Alt></Item>
+   <Item><Alt Not="HTML"><M>Q^+(2nt-1,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>(2nt-1,q)</Alt></Item>
    <Item>--</Item>
   </Row>
  <Row>
-   <Item><Alt Not="HTML"><M>Q^-(2n-1,q^a)</M></Alt><Alt Only="HTML">Q&lt;sup>-&lt;/sup>(2n-1,q&lt;sup>a&lt;/sup>)</Alt></Item>
-   <Item><Alt Not="HTML"><M>Q^-(2na-1,q)</M></Alt><Alt Only="HTML">Q&lt;sup>-&lt;/sup>(2na-1,q)</Alt></Item>
+   <Item><Alt Not="HTML"><M>Q^-(2n-1,q^t)</M></Alt><Alt Only="HTML">Q&lt;sup>-&lt;/sup>(2n-1,q&lt;sup>t&lt;/sup>)</Alt></Item>
+   <Item><Alt Not="HTML"><M>Q^-(2nt-1,q)</M></Alt><Alt Only="HTML">Q&lt;sup>-&lt;/sup>(2nt-1,q)</Alt></Item>
    <Item>--</Item>
   </Row>
+ <Row>
+   <Item><Alt Not="HTML"><M>Q(2n,q^{2a+1})</M></Alt><Alt Only="HTML">Q(2n,q&lt;sup>2a+1&lt;/sup>)</Alt></Item>
+   <Item><Alt Not="HTML"><M>Q((2a+1)(2n+1)-1,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>((2a+1)(2n+1)-1,q)</Alt></Item>
+   <Item>q odd</Item>
+ </Row>
  <Row>
    <Item><Alt Not="HTML"><M>Q(2n,q^{2a})</M></Alt><Alt Only="HTML">Q(2n,q&lt;sup>2a&lt;/sup>)</Alt></Item>
-   <Item><Alt Not="HTML"><M>Q^+(2a(2n+1)-1,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>(2a(2n+1)-1,q)</Alt></Item>
+   <Item><Alt Not="HTML"><M>Q^-(2a(2n+1)-1,q)</M></Alt><Alt Only="HTML">Q&lt;sup>-&lt;/sup>(2a(2n+1)-1,q)</Alt></Item>
    <Item>q=1 mod 4</Item>
  </Row>
  <Row>
-  <Item><Alt Not="HTML"><M>Q(2n,q^{2a})</M></Alt><Alt Only="HTML">Q(2n,q&lt;sup>2a&lt;/sup>)</Alt></Item>
-  <Item><Alt Not="HTML"><M>Q^-(2a(2n+1)-1,q)</M></Alt><Alt Only="HTML">Q&lt;sup>-&lt;/sup>(2a(2n+1)-1,q)</Alt></Item>
-  <Item>q=3 mod 4</Item>
+   <Item><Alt Not="HTML"><M>Q(2n,q^{4a+2})</M></Alt><Alt Only="HTML">Q(2n,q&lt;sup>4a+2&lt;/sup>)</Alt></Item>
+   <Item><Alt Not="HTML"><M>Q^+((4a+2)(2n+1)-1,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>((4a+2)(2n+1)-1,q)</Alt></Item>
+   <Item>q=3 mod 4</Item>
  </Row>
  <Row>
-   <Item><Alt Not="HTML"><M>Q(2n,q^{2a+1})</M></Alt><Alt Only="HTML">Q(2n,q&lt;sup>2a+1&lt;/sup>)</Alt></Item>
-   <Item><M>Q((2a+1)(2n+1)-1,q)</M></Item>
-   <Item>q odd</Item>
+  <Item><Alt Not="HTML"><M>Q(2n,q^{4a})</M></Alt><Alt Only="HTML">Q(2n,q&lt;sup>4a&lt;/sup>)</Alt></Item>
+  <Item><Alt Not="HTML"><M>Q^-(4a(2n+1)-1,q)</M></Alt><Alt Only="HTML">Q&lt;sup>-&lt;/sup>(4a(2n+1)-1,q)</Alt></Item>
+  <Item>q=3 mod 4</Item>
  </Row>
 <Row>
-   <Item><Alt Not="HTML"><M>H(2n,q^{2a+1})</M></Alt><Alt Only="HTML">H(2n,q&lt;sup>2a+1&lt;/sup>)</Alt></Item>
-   <Item><M>H((2a+1)(2n+1)-1,q)</M></Item>
+   <Item><Alt Not="HTML"><M>H(n,q^{2a+1})</M></Alt><Alt Only="HTML">H(n,q&lt;sup>2a+1&lt;/sup>)</Alt></Item>
+   <Item><M>H((n+1)(2a+1)-1,q)</M></Item>
    <Item>q square</Item>
+ </Row>
+ <Row>
+   <Item><Alt Not="HTML"><M>H(n,q^{2a})</M></Alt><Alt Only="HTML">H(n,q&lt;sup>2a&lt;/sup>)</Alt></Item>
+   <Item><M>W(2a(n+1)-t,q)</M></Item>
+   <Item>q even square</Item>
  </Row>
 <Row>
    <Item><Alt Not="HTML"><M>H(2n,q^{2a})</M></Alt><Alt Only="HTML">H(2n,q&lt;sup>2a&lt;/sup>)</Alt></Item>
-   <Item><Alt Not="HTML"><M>Q^+(2a(2n+1)-1,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>(2a(2n+1)-1,q)</Alt></Item>
+   <Item><Alt Not="HTML"><M>Q^-(2a(2n+1)-1,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>(2a(2n+1)-1,q)</Alt></Item>
    <Item>q odd square</Item>
  </Row>
 <Row>
-   <Item><Alt Not="HTML"><M>H(2n-1,q^{2a})</M></Alt><Alt Only="HTML">H(2n-1,q&lt;sup>2a&lt;/sup>)</Alt></Item>
-   <Item><Alt Not="HTML"><M>Q^-(4an-1,q)</M></Alt><Alt Only="HTML">Q&lt;sup>-&lt;/sup>(4an-1,q)</Alt></Item>
+   <Item><Alt Not="HTML"><M>H(2n+1,q^{2a+1})</M></Alt><Alt Only="HTML">H(2n+1,q&lt;sup>2a+1&lt;/sup>)</Alt></Item>
+   <Item><Alt Not="HTML"><M>Q^+((2n+2)(2a+1)-1,q)</M></Alt><Alt Only="HTML">Q&lt;sup>-&lt;/sup>((2n+2)(2a+1)-1,q)</Alt></Item>
    <Item>q odd square</Item>
- </Row>
-<Row>
-   <Item><Alt Not="HTML"><M>H(n,q^{2a})</M></Alt><Alt Only="HTML">H(n,q&lt;sup>2a&lt;/sup>)</Alt></Item>
-   <Item><M>W(2n-1,q)</M></Item>
-   <Item>--</Item>
  </Row>
 </Table>
 
