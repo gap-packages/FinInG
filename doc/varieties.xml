@@ -236,6 +236,12 @@ A <E>Veronese variety</E> in <Package>FinInG</Package> is a projective algebraic
 </ManSection>
 
 </Section>
+
+<!--SECTION GRASSMANN VARIETIES -->
+<Section Label="grassmannvarieties">
+
+</Section>
+
 <!--SECTION QUADRICS AND HERMITIAN VARIETIES -->
 <Section Label="quadricshermitian">
 <Heading>Quadrics and Hermitian varieties</Heading>
