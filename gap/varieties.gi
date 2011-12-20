@@ -1148,6 +1148,16 @@ InstallMethod( Size,
 
 
 
+
+
+
+
+
+
+
+
+
+
 #############################################################################
 #############################################################################
 #############################################################################
@@ -1218,6 +1228,13 @@ end );
 
 
 
+
+
+
+
+
+
+
 #############################################################################
 #############################################################################
 #############################################################################
@@ -1267,6 +1284,10 @@ InstallMethod( GrassmannMap,
     local n,F,pgimage,varmap,func,dim,source,range,map,ty;
     n := pgdomain!.dimension;  ## projective dimension
     F := pgdomain!.basefield;
+	
+	if n<=2 then
+		Error("The dimension of the projective space must be at least 3");
+	fi;
  
     if (k <= 0  or k >= n-1) then 
          Error("The dimension of the subspace has to be at least 1 and at most ", n-2);
@@ -1321,7 +1342,7 @@ InstallMethod( GrassmannMap, "given collection of varieties of a projectivespace
   end );
 
 #############################################################################
-# View, print methods for Veronese maps.
+# View, print methods for Grassmann maps.
 ##
 InstallMethod( ViewObj, 
 	"for a Grassmann map",
@@ -1339,6 +1360,207 @@ InstallMethod( PrintObj,
 		ViewObj(map!.source);
 	end );
 	
+
+#############################################################################
+#O  GrassmannVariety( <k>,<pg> )
+# returns the Grassmann variety from an integer and a projective space
+##
+InstallMethod( GrassmannVariety, 
+	"for an integer and a projective space", 
+	[ IsPosInt, IsProjectiveSpace ],
+
+  function( k, pgdomain )
+    local n,F,dim,pgimage,r,x,comb,eta,t,pollist,i,j,list,s,icopy,jcopy,js,i1,
+			mi,mj,m,si,sj,polset,newpollist,f,gv,var,ty;
+    n := pgdomain!.dimension;  ## projective dimension
+    F := pgdomain!.basefield;
+	
+	if n<=2 then
+		Error("The dimension of the projective space must be at least 3");
+	fi;
+ 
+    if (k <= 0  or k >= n-1) then 
+         Error("The dimension of the subspace has to be at least 1 and at most ", n-2);
+    fi;
+
+   ## ambient projective space of image has dimension Binomial(n+1,k+1)-1
+    dim := Binomial( n+1, k+1 ) - 1;
+    pgimage := PG(dim,F);
+	r:=PolynomialRing(F,Dimension(pgimage)+1);
+	x:=IndeterminatesOfPolynomialRing(r);
+	comb:=Combinations([1..n+1],k+1);
+	eta:=t->Position(comb,t);
+	pollist:=[];
+	for i in comb do
+		for j in comb do
+			list:=[];
+			for	s in [1..k+1] do
+				icopy:=StructuralCopy(i);
+				jcopy:=StructuralCopy(j);
+				js:=jcopy[s];
+				i1:=icopy[1];
+				icopy[1]:=js;
+				jcopy[s]:=i1;
+				if Size(AsSet(icopy))=k+1 and Size(AsSet(jcopy))=k+1 then
+					mi:=Filtered(comb,m->AsSet(m)=AsSet(icopy))[1];
+					mj:=Filtered(comb,m->AsSet(m)=AsSet(jcopy))[1];
+					si:=SignPerm(MappingPermListList(mi,icopy));
+					sj:=SignPerm(MappingPermListList(mj,jcopy));
+					Add(list,si*sj*x[eta(mi)]*x[eta(mj)]);
+				fi;
+			od;
+			Add(pollist,x[eta(i)]*x[eta(j)]-Sum(list));
+		od;
+	od;
+	polset:=AsSet(Filtered(pollist,x-> not x = Zero(r)));
+	newpollist:=[];
+	for f in polset do
+		if not -f in newpollist then
+			Add(newpollist,f);
+		fi;
+	od;
+
+	gv:=ProjectiveVariety(pgimage,r,newpollist);
+	var:=rec( geometry:=pgimage, polring:=r, listofpols:=newpollist, 
+		inverseimage:=ElementsOfIncidenceStructure(PG(n,F),k+1) );
+	ty:=NewType( NewFamily("GrassmannVarietiesFamily"), IsGrassmannVariety and 
+								IsGrassmannVarietyRep );
+	ObjectifyWithAttributes(var,ty,
+			DefiningListOfPolynomials, newpollist);
+	return var;
+	
+end );
+
+#############################################################################
+
+#############################################################################
+# View, print methods for Grassmann varieties.
+##
+InstallMethod( ViewObj, 
+	"for a Grassmann variety",
+	[ IsGrassmannVariety and IsGrassmannVarietyRep ],
+	function( gv )
+		Print("Grassmann Variety in ");
+		ViewObj(gv!.geometry);
+	end );
+
+InstallMethod( PrintObj, 
+	"for a Grassmann variety",
+	[ IsGrassmannVariety and IsGrassmannVarietyRep ],
+	function( gv )
+		Print("Grassmann Variety in ");
+		ViewObj(gv!.geometry);
+	end );
+
+
+
+#############################################################################
+#O  GrassmannMap( <vv> ), returns a function the is the Grassmann Map from
+# the Grassmann variety <vv>
+##
+InstallMethod( GrassmannMap, 
+	"for a Grassmann variety",
+	[IsGrassmannVariety],
+	function(gv)
+	  return GrassmannMap(gv!.inverseimage);
+	end );
+
+
+
+
+#############################################################################
+#O  PointsOfGrassmannVariety ( <var> )
+# returns a object representing all points of a Grassmann variety.
+##
+InstallMethod( PointsOfGrassmannVariety, 
+	"for a Grassmann variety",
+	[IsGrassmannVariety and IsGrassmannVarietyRep],
+	function(var)
+		local pts;
+		pts:=rec( 
+				geometry:=var!.geometry,
+				type:=1,
+				variety:=var
+				);
+		return Objectify(
+			NewType( ElementsCollFamily,IsPointsOfGrassmannVariety and
+										IsPointsOfGrassmannVarietyRep),
+			pts
+			);
+	end );
+
+
+#############################################################################
+#O  ViewObj method for points of Grassmann variety
+##
+InstallMethod( ViewObj, 
+	"for points of Grassmann variety",
+	[ IsPointsOfGrassmannVariety and IsPointsOfGrassmannVarietyRep ],
+	function( pts )
+		Print("<points of ",pts!.variety,">");
+	end );
+	 
+#############################################################################
+#O  Points ( <var> )
+# shortcut to PointsOfGrassmannVariety
+##
+InstallMethod( Points,
+	"for a Grassmann variety",
+	[IsGrassmannVariety and IsGrassmannVarietyRep],
+	function(var)
+		return PointsOfGrassmannVariety(var);
+	end );
+
+#############################################################################
+#O  Iterator ( <ptsr> )
+# Iterator for points of a Grassmann variety.
+##
+InstallMethod( Iterator, 
+	"for points of a Grassmann variety", 
+	[IsPointsOfGrassmannVariety],
+	function(pts)
+		local gv,gm,subs,ptlist;
+		gv:=pts!.variety;
+		gm:=GrassmannMap(gv!.inverseimage)!.map;
+		subs:=gv!.inverseimage;
+		ptlist:=List(subs,gm);
+		return IteratorList(ptlist);
+	end );		
+
+#############################################################################
+#O  Enumerator ( <ptsr> )
+# Enumerator for points of a Grassmann variety.
+##
+InstallMethod( Enumerator,
+	"for points of a Grassmann variety", 
+	[IsPointsOfGrassmannVariety],
+	function ( pts )
+		local gv,gm,subs,ptlist;
+		gv:=pts!.variety;
+		gm:=GrassmannMap(gv!.inverseimage)!.map;
+		subs:=gv!.inverseimage;
+		ptlist:=List(subs,gm);
+		return ptlist;
+	end);
+
+#############################################################################
+#O  Size ( <var> )
+# number of points on a Grassmann variety
+##
+InstallMethod( Size, 
+	"for the set of points of a Grassmann variety",
+	[IsPointsOfGrassmannVariety],
+	function(pts)
+		local gv;
+		gv:=pts!.variety;
+		return Size(gv!.inverseimage);
+	end );
+
+
+
+
+
+
 
 
 ##########################################

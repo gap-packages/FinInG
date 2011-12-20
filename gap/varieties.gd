@@ -75,7 +75,14 @@ DeclareRepresentation( "IsPointsOfVeroneseVarietyRep", IsPointsOfVeroneseVariety
 DeclareCategory( "IsVeroneseMap", IsGeometryMap );
 DeclareRepresentation( "IsVeroneseMapRep", IsVeroneseMap, ["source", "range", "map"] );
 
-### 5. Grassmann Map ###
+### 5. Grassmann Varieties ###
+DeclareCategory("IsGrassmannVariety", IsProjectiveVariety );
+DeclareRepresentation("IsGrassmannVarietyRep", IsGrassmannVariety and IsProjectiveVarietyRep, 
+				["geometry","listofpols","inverseimage", "polring"]);
+
+DeclareCategory( "IsPointsOfGrassmannVariety", IsPointsOfAlgebraicVariety );
+DeclareRepresentation( "IsPointsOfGrassmannVarietyRep", IsPointsOfGrassmannVariety, ["variety"]);
+
 DeclareCategory( "IsGrassmannMap", IsGeometryMap );
 DeclareRepresentation( "IsGrassmannMapRep", IsGrassmannMap, ["source", "range", "map"] );
 
@@ -137,7 +144,6 @@ DeclareOperation( "VeroneseVariety", [IsPosInt, IsField ]);
 DeclareOperation( "VeroneseVariety", [IsPosInt, IsPosInt]);
 
 DeclareOperation( "PointsOfVeroneseVariety", [IsVeroneseVariety]);
-#DeclareOperation( "Points", [IsVeroneseVariety]);
 
 DeclareOperation( "VeroneseMap", [IsVeroneseVariety]);
 
@@ -147,13 +153,19 @@ DeclareAttribute("Range", IsGeometryMap);
 
 ### 7. Grassmann Varieties ###
 DeclareOperation( "GrassmannCoordinates", [ IsSubspaceOfProjectiveSpace ]);
+
 DeclareOperation( "GrassmannMap", [ IsPosInt,IsProjectiveSpace ] );
 DeclareOperation( "GrassmannMap", [ IsPosInt, IsPosInt, IsPosInt ]);
 DeclareOperation( "GrassmannMap", [ IsSubspacesOfProjectiveSpace ]);
+DeclareOperation( "GrassmannMap", [ IsGrassmannVariety ] );
 
 
+DeclareOperation( "GrassmannVariety", [ IsPosInt,IsProjectiveSpace ] );
 DeclareOperation( "GrassmannVariety", [IsPosInt, IsPosInt, IsField]);
 DeclareOperation( "GrassmannVariety", [IsPosInt, IsPosInt, IsPosInt]);
+
+DeclareOperation( "PointsOfGrassmannVariety", [IsGrassmannVariety] );
+
 
 ### 8. Miscellaneous ###
 DeclareOperation( "ConicOnFivePoints",  [ IsHomogeneousList and
