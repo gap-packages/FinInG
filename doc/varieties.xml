@@ -128,6 +128,35 @@ An <E>affine variety</E> in <Package>FinInG</Package> is an algebraic variety in
 </ManSection>
 </Section> 
 
+
+<!--SECTION GEOMETRY MAPS -->
+<Section Label="geometrymaps">
+<Heading>Geometry maps</Heading>
+A <A>geometry map</A> is a map from a set of elements of a geometry to a set of elements of another geometry, which is not necessarily a geometry morphism. Examples are the <Ref Oper="SegreMap"/>, the <Ref Oper="VeroneseMap"/>, and the <Ref Oper="GrassmannMap"/>.
+<ManSection>
+<Oper Name="Source" Arg="gm"/>
+    <Returns>the source of a geometry map</Returns>
+    <Description>
+        The argument <A>gm</A> is a geometry map.
+   </Description>
+</ManSection>
+<ManSection>
+<Oper Name="Range" Arg="gm"/>
+    <Returns>the range of a geometry map</Returns>
+    <Description>
+        The argument <A>gm</A> is a geometry map.
+   </Description>
+</ManSection>
+<ManSection>
+<Oper Name="ImageElm" Arg="gm,x"/>
+    <Returns>the image of an element under a geometry map</Returns>
+    <Description>
+        The argument <A>gm</A> is a geometry map, the element <A>x</A> is an element of the <Ref Oper="Source"/> of the geometry map <A>gm</A>.
+   </Description>
+</ManSection>
+</Section>
+
+
 <!--SECTION SEGRE VARIETIES -->
 <Section Label="segrevarieties">
 <Heading>Segre Varieties</Heading>
@@ -207,7 +236,7 @@ A <E>Veronese variety</E> in <Package>FinInG</Package> is a projective algebraic
     <Oper Name="Points" Arg="vv"/>
     <Returns>the points of a Veronese variety</Returns>
     <Description>
-        The argument <A>sv</A> is a Veronese variety. This operation returns a set of points of the <Ref Attr="AmbientSpace" /> of the Veronese variety. This set of points corresponds to the image of the <Ref Oper="VeroneseMap"/>.
+        The argument <A>vv</A> is a Veronese variety. This operation returns a set of points of the <Ref Attr="AmbientSpace" /> of the Veronese variety. This set of points corresponds to the image of the <Ref Oper="VeroneseMap"/>.
     </Description>
 </ManSection>
 <ManSection>
@@ -241,6 +270,47 @@ A <E>Veronese variety</E> in <Package>FinInG</Package> is a projective algebraic
 <Section Label="grassmannvarieties">
 <Heading>Grassmann Varieties</Heading>
 A <E>Grassmann variety</E> in <Package>FinInG</Package> is a projective algebraic variety in a projective space over a finite field. The set of points that lie on this variety is the image of the <E>Grassmann map</E>.
+<ManSection>
+    <Oper Name="GrassmannVariety" Arg="k,pg"/>
+    <Oper Name="GrassmannVariety" Arg="subspaces"/>
+    <Oper Name="GrassmannVariety" Arg="k,n,q"/>
+    <Returns>a Grassmann variety</Returns>
+    <Description>
+        The argument <A>pg</A> is a projective space defined over a finite field, say <M>PG(n,q)</M>, and argument <A>k</A> is an integer (<M>k</M> at least <M>1</M> and at most <M>n-2</M>) and denotes the projective dimension determining the Grassmann Variety. The operation also takes as input the set <A>subspaces</A> of subspaces of a projective space, or the dimension <A>k</A>, the dimension <A>n</A> and the size <A>q</A> of the finite field (<M>k</M> at least <M>1</M> and at most <M>n-2</M>).
+        The operation returns a projective algebraic variety known as the Grassmann variety.
+    </Description>
+</ManSection>
+<ManSection>
+    <Oper Name="PointsOfGrassmannVariety" Arg="gv"/>
+    <Oper Name="Points" Arg="gv"/>
+    <Returns>the points of a Grassmann variety</Returns>
+    <Description>
+        The argument <A>gv</A> is a Grassmann variety. This operation returns a set of points of the <Ref Attr="AmbientSpace" /> of the Grassmann variety. This set of points corresponds to the image of the <Ref Oper="GrassmannMap"/>.
+    </Description>
+</ManSection>
+<ManSection>
+    <Oper Name="GrassmannMap" Arg="k,pg"/>
+    <Oper Name="GrassmannMap" Arg="subspaces"/>
+    <Oper Name="GrassmannMap" Arg="k,n,q"/>
+    <Oper Name="GrassmannMap" Arg="gv"/>
+    <Returns>a function</Returns>
+    <Description>
+        The argument <A>pg</A> is a projective space defined over a finite field, say <M>PG(n,q)</M>, and argument <A>k</A> is an integer (<M>k</M> at least <M>1</M> and at most <M>n-2</M>), and denotes the projective dimension determining the Grassmann Variety. The operation also takes as input the set <A>subspaces</A> of subspaces of a projective space, or the dimension <A>k</A>, the dimension <A>n</A> and the size <A>q</A> of the finite field (<M>k</M> at least <M>1</M> and at most <M>n-2</M>).
+       The operation returns a function with domain the set of subspaces of dimension <M>k</M> in the <M>n</M>-dimensional projective space over <M>GF(q)</M>, and image the set of points of the Grassmann variety (<Ref Oper="PointsOfGrassmannVariety"/>).
+       When a Grassmann variety <A>gv</A> is given as input, the operation returns the associated Grassmann map.
+	</Description>
+</ManSection>
+
+
+<ManSection>
+    <Oper Name="Source" Arg="gm"/>
+     <Returns>the source of a Grassmann map</Returns>
+    <Description>
+        The argument <A>gm</A> is a <Ref Oper="GrassmannMap"/>. This operation returns the set of subspaces of the projective space that was used to construct the <Ref Oper="GrassmannMap"/>.
+   </Description>
+</ManSection>
+
+
 </Section>
 
 <!--SECTION QUADRICS AND HERMITIAN VARIETIES -->

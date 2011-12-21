@@ -1310,8 +1310,7 @@ InstallMethod( GrassmannMap,
     end;
 	
 	source:=ElementsOfIncidenceStructure(pgdomain,k+1);
-	range:=Points(pgimage); # this still needs to be changed to the set of points on the Grassmann variety!!!
-	
+	range:=Points(GrassmannVariety(k,pgdomain)); 
 	map:=rec( source:=source, range:=range, map:=func );
 	ty:=NewType( NewFamily("GrassmannMapsFamily"), IsGrassmannMap and 
 								IsGrassmannMapRep );
