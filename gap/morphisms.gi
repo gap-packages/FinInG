@@ -804,7 +804,7 @@ InstallMethod( ShrinkMat,
 	# Basis(AsVectorSpace(f2,f1));
 	local B;
 	B:=Basis(AsVectorSpace(f2,f1));
-	return ShrinkMat(f1,f2,mat);
+	return ShrinkMat(B,mat);
 end );
 	
 
@@ -1380,8 +1380,9 @@ InstallMethod (CanonicalEmbeddingByFieldReduction,
 	[IsClassicalPolarSpace, IsField, IsBool],
 	function(ps1,f2,computeintertwiner)
 	# f2 must be a subfield of the basefield of the classical polar space
-	local type1,qf1,qf2,ps2,bil1,bil2,hf1,hf2,em,fun,prefun,basis,f1,d,iso,form2,
-					map,hom,hominv,g1,gens,newgens,g2,twiner,canonicalform,canonical;
+	local type1,qf1,qf2,ps2,bil1,bil2,hf1,hf2,em,fun,prefun,basis,f1,d,iso,form2,type2,
+					map,hom,hominv,g1,gens,newgens,g2,twiner,canonicalform,canonical,
+					c1,c2,change,invchange;
 	type1 := PolarSpaceType(ps1);
 	
 	# 1. the polar space is of orthogonal type
@@ -1390,79 +1391,72 @@ InstallMethod (CanonicalEmbeddingByFieldReduction,
 		form2:=QuadraticFormFieldReduction(qf1,f2);
 		if IsSingularForm(qf2) then 
 			Error("The field reduction does not yield a natural embedding");
-		#else ps2:=PolarSpace(qf2);
+		else ps2:=PolarSpace(qf2);
 		fi;
 	# 2. the polar space is of symplectic type
 	elif type1 in ["symplectic"] then
 		bil1:=SesquilinearForm(ps1);
 		form2:=BilinearFormFieldReduction(bil1,f2);
-		if IsOddInt(Size(f2)) then
-			form2 := BilinearFormByQuadraticForm(form2);
-		fi;	
-		#ps2:=PolarSpace(bil2);
+		ps2:=PolarSpace(form2);
 	# 1. the polar space is of hermitian type	
 	elif type1 in ["hermitian"] then
 		hf1:=SesquilinearForm(ps1);
 		form2:=HermitianFormFieldReduction(hf1,f2); #could be another form than a hermitian form
-		#ps2:=PolarSpace(hf2);
+		ps2:=PolarSpace(form2);
 	fi;
-	#type2 := PolarSpaceType(ps2);
-	#d := ProjectiveDimension(ps2);
-	#if type2 = "hermitian" then
-	#	canonical := HermitianVariety(d, f2);               
-	#elif type2 = "symplectic" then
-	#	canonical := SymplecticSpace(d, f2);         
-	#elif type2 = "elliptic" then 
-	#	canonical := EllipticQuadric(d, f2);         
-	#elif type2 = "parabolic" then
-	#	canonical := ParabolicQuadric(d, f2);         
-	#elif type2 = "hyperbolic" then
-	#	canonical := HyperbolicQuadric(d, f2);         
-	#fi;
-	d := Length(GramMatrix(form2));
-	if IsSesquilinearForm(form2) then
-		if IsHermitianForm(form2) then
-			canonicalform := HermitianFormByMatrix(CanonicalGramMatrix("hermitian", d, f2),f2);
-		elif IsSymplecticForm(form2) then
-			canonicalform := BilinearFormByMatrix(CanonicalGramMatrix("symplectic", d, f2),f2);
-		elif IsEllipticForm(form2) then
-			canonicalform := BilinearFormByMatrix(CanonicalGramMatrix("elliptic", d, f2),f2);
-		elif IsHyperbolicForm(form2) then
-			canonicalform := BilinearFormByMatrix(CanonicalGramMatrix("hyperbolic", d, f2),f2);
-		elif IsParabolicForm(form2) then
-			canonicalform := BilinearFormByMatrix(CanonicalGramMatrix("parabolic", d, f2),f2);
-		fi;
-	elif IsQuadraticForm(form2) then
-		if IsEllipticForm(form2) then
-			canonicalform := BilinearFormByMatrix(CanonicalQuadraticForm("elliptic", d, f2),f2);
-		elif IsHyperbolicForm(form2) then
-			canonicalform := BilinearFormByMatrix(CanonicalQuadraticForm("hyperbolic", d, f2),f2);
-		elif IsParabolicForm(form2) then
-			canonicalform := BilinearFormByMatrix(CanonicalQuadraticForm("parabolic", d, f2),f2);
-		fi;
-	fi;	
-	canonical := PolarSpace(canonicalform);
+	type2 := PolarSpaceType(ps2);
+	d := ProjectiveDimension(ps2);
+	if type2 = "hermitian" then
+		canonical := HermitianVariety(d, f2);  
+		canonicalform := SesquilinearForm(canonical);             
+	elif type2 = "symplectic" then
+		canonical := SymplecticSpace(d, f2);  
+		canonicalform := SesquilinearForm(canonical);              
+	elif type2 = "elliptic" then 
+		canonical := EllipticQuadric(d, f2); 
+		canonicalform := QuadraticForm(canonical);        
+	elif type2 = "parabolic" then
+		canonical := ParabolicQuadric(d, f2);
+		canonicalform := QuadraticForm(canonical);        
+	elif type2 = "hyperbolic" then
+		canonical := HyperbolicQuadric(d, f2);
+		canonicalform := QuadraticForm(canonical);        
+	fi;
+	c1 := BaseChangeToCanonical( form2 );
+	c2 := BaseChangeToCanonical( canonicalform );
+	change := c1^-1 * c2;       
+	ConvertToMatrixRepNC(change, f2);
+	invchange := change^-1;     
+		
+	#iso := IsomorphismPolarSpacesNC(ps2, canonical, false);
 	
-	iso := IsomorphismPolarSpacesNC(ps2, canonical, false);
-	
-	em:=NaturalEmbeddingByFieldReduction(AmbientSpace(ps1),AmbientSpace(ps2));
+	#em:=NaturalEmbeddingByFieldReduction(AmbientSpace(ps1),AmbientSpace(ps2));
 	
 	f1:=ps1!.basefield;
 	basis:=Basis(AsVectorSpace(f2,f1));
-	
 	fun:=function(x)
-		local projfun,isofun;
-		projfun:=em!.fun;
-		isofun := iso!.fun;
-		#return VectorSpaceToElement(canonical,isofun(projfun(x)!.obj)!.obj);
-		return isofun(VectorSpaceToElement(ps2,projfun(x)!.obj));
+		local mat;
+		mat := x!.obj;
+		if x!.type = 1 then
+			mat := [mat];
+		fi;
+		#projfun:=em!.fun;
+		#isofun := iso!.fun;
+		return VectorSpaceToElement(canonical,(BlownUpMat(basis,mat)*change));
+		#return isofun(VectorSpaceToElement(ps2,projfun(x)!.obj));
 	end;
-		
+	
 	prefun:=function(x)
-		local projprefun,isoprefun;
-		projprefun:=em!.prefun;
-		isoprefun := iso!.prefun;
-		return VectorSpaceToElement(ps1,projprefun(isoprefun(x))!.obj);
+		local mat; #projprefun,isoprefun;
+		mat := x!.obj;
+		if x!.type = 1 then
+			mat := [mat];
+		fi;
+		mat := mat*invchange;
+		#projprefun:=em!.prefun;
+		#isoprefun := iso!.prefun;
+		#return VectorSpaceToElement(ps1,projprefun(isoprefun(x))!.obj);
+		return VectorSpaceToElement(ps1,ShrinkMat(basis,mat));
 	end;
 	
 	map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(ps1),
