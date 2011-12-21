@@ -72,6 +72,8 @@ DeclareAttribute( "BasePointOfEGQ", IsElationGQ);
 DeclareAttribute( "IncidenceMatrixOfGeneralisedPolygon", IsGeneralisedPolygon);
 DeclareAttribute( "IsLinearqClan", IsqClanObj );
 
+DeclareAttribute( "AmbientPolarSpace", IsGeneralisedHexagon);
+
 
 #############################################################################
 # Operations and functions 

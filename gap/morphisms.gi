@@ -1427,14 +1427,15 @@ InstallMethod (CanonicalEmbeddingByFieldReduction,
 		local projfun,isofun;
 		projfun:=em!.fun;
 		isofun := iso!.fun;
-		return VectorSpaceToElement(canonical,isofun(projfun(x)!.obj)!.obj);
+		#return VectorSpaceToElement(canonical,isofun(projfun(x)!.obj)!.obj);
+		return isofun(VectorSpaceToElement(ps2,projfun(x)!.obj));
 	end;
 		
 	prefun:=function(x)
 		local projprefun,isoprefun;
 		projprefun:=em!.prefun;
 		isoprefun := iso!.prefun;
-		return VectorSpaceToElement(ps1,projprefun(isoprefun(x)!.obj)!.obj);
+		return VectorSpaceToElement(ps1,projprefun(isoprefun(x))!.obj);
 	end;
 	
 	map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(ps1),

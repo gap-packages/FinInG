@@ -368,6 +368,7 @@ InstallMethod( SplitCayleyHexagon,
              IsGeneralisedHexagon and IsGeneralisedPolygonRep and IsLieGeometry ); #change by jdb 7/12/11
     Objectify( ty, geo );
     SetAmbientSpace(geo, AmbientSpace(ps));
+	SetAmbientPolarSpace(geo,ps);
     SetOrder(geo, [Size(f), Size(f)]);
     SetCollineationAction(coll, OnProjSubspaces);
     SetCollineationGroup(geo, coll);
@@ -494,7 +495,7 @@ InstallMethod( TwistedTrialityHexagon,
              IsGeneralisedHexagon and IsGeneralisedPolygonRep and IsLieGeometry ); #change by jdb 7/12/11
     Objectify( ty, geo );
     SetAmbientSpace(geo, AmbientSpace(ps));
-
+	SetAmbientPolarSpace(geo,ps);
 	#now we are ready to pack the representatives of the elements, which are also elements of a polar space.
 	#recall that reppointvect and replinevect are triangulized.
 	w := rec(geo := geo, type := 1, obj := reppointvect);
