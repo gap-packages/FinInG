@@ -10,4 +10,5 @@ IsIncident(p,p);
 ParabolicSubgroups(cg);
 Rank(cg) = Size(last);
 BorelSubgroup(cg);
+AmbientGroup(cg);
 quit;
