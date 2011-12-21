@@ -1055,6 +1055,10 @@ InstallMethod( NaturalEmbeddingByFieldReduction,
 			fi;
 			return VectorSpaceToElement(pg1,mat1);
 		end;
+ 
+   		#prefun := function( x ) #I want to find out why this is not correct...
+		#	return VectorSpaceToElement(pg1,ShrinkMat(basis,x!.obj));
+		#end;
        
 		map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(pg1),
                                          ElementsOfIncidenceStructure(pg2),
