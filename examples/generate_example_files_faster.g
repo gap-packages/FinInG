@@ -107,7 +107,7 @@ gpolygonfiles := [ "gpolygons_projplanes1", "gpolygons_projplanes2", "gpolygons_
 				   "gpolygons_qclan", "gpolygons_EGQByqClan", "gpolygons_kantorfamilybyqclan",
 				   "gpolygons_EGQByKantorFamily", "gpolygons_particularqclans", "gpolygons_bltsetbyqclan",
 				   "gpolygons_EGQByBLTSet", "gpolygons_elationgroup", "gpolygons_basepointofegq",
-				   "gpolygons_collineations", "gpolygons_SplitCayleyHexagon"];
+				   "gpolygons_collineations", "gpolygons_SplitCayleyHexagon", "gpolygons_ambientpolarspace"];
 
 diagramfiles := ["diagram_cosetgeom"];
 

@@ -398,6 +398,22 @@ Twisted Triality hexagon has 2457 points and 819 lines.
 </Description>
 </ManSection>
 
+<ManSection>
+<Heading>AmbientSpace and AmbientPolarSpace</Heading>
+<Attr Name="AmbientSpace" Arg="geo"/>
+<Attr Name="AmbientPolarSpace" Arg="geo"/>
+<Returns>a projective space, a classical polar space respectively</Returns>
+<Description>
+All generalised hexagons in <Package>FinInG</Package> are Lie geometries, constructed inside a classical polar space. 
+As for all Lie geometries, the first attribute will return the ambient projective space. The second attribute
+returns the polar space in which <A>geo</A> is constructed.
+<Example>
+<#Include SYSTEM "../examples/include/gpolygons_ambientpolarspace.include"> 
+</Example>
+</Description>
+</ManSection>
+
+
 
 </Section>
 
