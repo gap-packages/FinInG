@@ -988,7 +988,7 @@ InstallMethod( IsBlownUpSubspaceOfProjectiveSpace,
 #############################################################################
 
 #############################################################################
-#O  NaturalEmbeddingByFieldReduction( <geom1>, <field> ) 
+#O  NaturalEmbeddingByFieldReduction( <geom1>, <field>, <basis> ) 
 # <geom2> is a projective space over a field K, <geom1> is a projective space
 # over a field extension L, and considering L as a vector space over K, yields 
 # that <geom1> and <geom2> have the same ambient vectorspace over K, then this
@@ -1103,7 +1103,7 @@ InstallMethod( NaturalEmbeddingByFieldReduction,
 	end );
 
 #############################################################################
-#O  NaturalEmbeddingByFieldReduction( <geom1>, <geom2> ) 
+#O  NaturalEmbeddingByFieldReduction( <geom1>, <geom2>, <basis> ) 
 # <geom2> is a projective space over a field K, <geom1> is a projective space
 # over a field extension L, and considering L as a vector space over K, yields 
 # that <geom1> and <geom2> have the same ambient vectorspace over K, then this
@@ -1216,7 +1216,7 @@ InstallMethod( QuadraticFormFieldReduction,
 end );
 
 #############################################################################
-#O  QuadraticFormFieldReduction( <qf1>, <f2> ) 
+#O  HermitianFormFieldReduction( <qf1>, <f2> ) 
 # <bil1> is a hermitian form over <f1>, <f2> is a subfield of <f1>. This operation
 # returns the form T(qf1(.,.)). Depending on the degree of the field extension, this
 # yields either a bilinear form or a hermitian form.
@@ -1346,7 +1346,7 @@ InstallMethod (NaturalEmbeddingByFieldReduction,
 	end );
 
 #############################################################################
-#O  NaturalEmbeddingByFieldReduction( <geom1>, <f2>, true ) 
+#O  NaturalEmbeddingByFieldReduction( <geom1>, <f2> ) 
 # returns NaturalEmbeddingByFieldReduction( <geom1>, <f2>, true )
 #
 InstallMethod (NaturalEmbeddingByFieldReduction,
@@ -1359,7 +1359,7 @@ InstallMethod (NaturalEmbeddingByFieldReduction,
 # CHECKED 28/09/11 jdb
 #############################################################################
 #O  NaturalEmbeddingByFieldReduction( <geom1>, <geom2> ) 
-# returns NaturalEmbeddingByFieldReduction(<geom1>, <geom2>, true )
+# returns NaturalEmbeddingByFieldReduction(<geom1>, <geom2> )
 ##
 InstallMethod( NaturalEmbeddingByFieldReduction, 
 	"for two polar spaces",
@@ -1367,6 +1367,110 @@ InstallMethod( NaturalEmbeddingByFieldReduction,
 	function( geom1, geom2 )
 		return NaturalEmbeddingByFieldReduction( geom1, geom2, true );
 	end );
+
+#the method below is UNFINISHED. I just put the framework here (jdb 21/12/2011).
+#############################################################################
+#O  CanonicalEmbeddingByFieldReduction( <ps1>, <f2>, <bool> ) 
+# returns a geometry morphism, described below. If <bool> is true, then an intertwiner
+# is computed. We embed into a canonical polar space. The function is 
+# strongly based on its non-canonical variant.
+##
+InstallMethod (CanonicalEmbeddingByFieldReduction,
+	"for a polar space, a field, and a boolean",
+	[IsClassicalPolarSpace, IsField, IsBool],
+	function(ps1,f2,computeintertwiner)
+	# f2 must be a subfield of the basefield of the classical polar space
+	local type1,qf1,qf2,ps2,bil1,bil2,hf1,hf2,em,fun,prefun,basis,f1,d,iso,
+					map,hom,hominv,g1,gens,newgens,g2,twiner,canonical,type2;
+	type1 := PolarSpaceType(ps1);
+	
+	# 1. the polar space is of orthogonal type
+	if type1 in ["hyperbolic","elliptic","parabolic"] then
+		qf1:=QuadraticForm(ps1);
+		qf2:=QuadraticFormFieldReduction(qf1,f2);
+		if IsSingularForm(qf2) then 
+			Error("The field reduction does not yield a natural embedding");
+		else ps2:=PolarSpace(qf2);
+		fi;
+	# 2. the polar space is of symplectic type
+	elif type1 in ["symplectic"] then
+		bil1:=SesquilinearForm(ps1);
+		bil2:=BilinearFormFieldReduction(bil1,f2);
+		ps2:=PolarSpace(bil2);
+	# 1. the polar space is of hermitian type	
+	elif type1 in ["hermitian"] then
+		hf1:=SesquilinearForm(ps1);
+		hf2:=HermitianFormFieldReduction(hf1,f2); #could be another form than a hermitian form
+		ps2:=PolarSpace(hf2);
+	fi;
+	type2 := PolarSpaceType(ps2);
+	d := ProjectiveDimension(ps2);
+	if type2 = "hermitian" then
+		canonical := HermitianVariety(d, f2);               
+	elif type2 = "symplectic" then
+		canonical := SymplecticSpace(d, f2);         
+	elif type2 = "elliptic" then 
+		canonical := EllipticQuadric(d, f2);         
+	elif type2 = "parabolic" then
+		canonical := ParabolicQuadric(d, f2);         
+	elif type2 = "hyperbolic" then
+		canonical := HyperbolicQuadric(d, f2);         
+	fi;
+	iso := IsomorphismPolarSpacesNC(ps2, canonical, false);
+	
+	em:=NaturalEmbeddingByFieldReduction(AmbientSpace(ps1),AmbientSpace(ps2));
+	
+	f1:=ps1!.basefield;
+	basis:=Basis(AsVectorSpace(f2,f1));
+	
+	fun:=function(x)
+		local projfun,isofun;
+		projfun:=em!.fun;
+		isofun := iso!.fun;
+		return VectorSpaceToElement(canonical,isofun(projfun(x)!.obj)!.obj);
+	end;
+		
+	prefun:=function(x)
+		local projprefun,isoprefun;
+		projprefun:=em!.prefun;
+		isoprefun := iso!.prefun;
+		return VectorSpaceToElement(ps1,projprefun(isoprefun(x)!.obj)!.obj);
+	end;
+	
+	map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(ps1),
+                                         ElementsOfIncidenceStructure(canonical),
+                                         fun, false, prefun);
+		
+	SetIsInjective( map, true );
+	
+	## Now creating intertwiner
+	
+	if computeintertwiner then
+		hom := function( m )
+			local image;      
+			image := BlownUpMat(basis, m!.mat); 
+			ConvertToMatrixRepNC( image, f2 );       
+			return ProjectiveSemilinearMap(image, f2);
+		end;
+		hominv := function( m )
+			local preimage;      
+			preimage := ShrinkMat(basis, m!.mat); 
+			ConvertToMatrixRepNC( preimage, f1 );       
+			return ProjectiveSemilinearMap(preimage, f1);
+		end;
+		g1 := SimilarityGroup( ps1 );
+		gens := GeneratorsOfGroup( g1 );
+		newgens := List(gens, hom);
+		g2 := Group( newgens );
+		SetSize(g2, Size(g1));
+		twiner := GroupHomomorphismByFunction(g1, g2, hom, hominv);
+		SetIntertwiner( map, twiner);
+	fi;
+	return map;
+	end );
+
+
+
 
 # CHECKED 28/09/11 jdb
 #############################################################################
