@@ -1,0 +1,18 @@
+gap&gt; hexagon := SplitCayleyHexagon( 3 );
+Split Cayley Hexagon of order 3
+gap&gt; AmbientSpace(hexagon);
+ProjectiveSpace(6, 3)
+gap&gt; AmbientPolarSpace(hexagon);
+standard Q(6, 3)
+gap&gt; hexagon := SplitCayleyHexagon( 4 );
+Split Cayley Hexagon of order 4
+gap&gt; AmbientSpace(hexagon);
+ProjectiveSpace(5, 4)
+gap&gt; AmbientPolarSpace(hexagon);
+standard W(5, 4)
+gap&gt; hexagon := TwistedTrialityHexagon( 5^3 );
+Twisted Triality Hexagon of order [ 125, 5 ]
+gap&gt; AmbientSpace(hexagon);
+ProjectiveSpace(7, 125)
+gap&gt; AmbientPolarSpace(hexagon);
+standard Q+(7, 125)

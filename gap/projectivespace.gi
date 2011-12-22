@@ -26,7 +26,6 @@
 ## To do
 #  - Use compressed matrices
 #  - Order functions in this file, and write more comments. (almost done, jdb).
-#  - Create a HyperplanesOf function? can be done in liegeometry.gi (jdb)
 #  think about generic methods for dimension, projective dimension, basefield, underlying vector space
 #  for Lie geometries and their elements, to be placed in liegeometry.gi of course.
 #  - Reconsider the function OnProjSubspaces. using this function for elements of a polar space e.g. and
@@ -936,7 +935,7 @@ InstallMethod( Hyperplanes,
 
 # CHECKED 7/09/2011 jdb
 #############################################################################
-#O  Hyperplanes( <el> )
+#O  Hyperplanes( <geo>, <el> )
 # returns the hyperplanes incident with <el>, relying on ShadowOfElement 
 # for particular <el>.
 ##

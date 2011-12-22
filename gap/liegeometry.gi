@@ -601,6 +601,19 @@ InstallMethod( Solids, "for IsElementOfLieGeometry",
 		return ShadowOfElement(geo, var, 4);
 	end );
 
+# ADDED 22/12/2011 jdb
+#############################################################################
+#O  HyperplanesOf( <el> )
+# returns the hyperplanes contained in <el>, relying on ShadowOfElement 
+# for particular <el>.
+##
+InstallMethod( HyperplanesOf, 
+	"for elements of a Lie geometry",
+	[ IsElementOfLieGeometry ],
+	function( var )
+		return ShadowOfElement( var!.geo, var, var!.type - 1 );
+  end );
+
 #############################################################################
 # Finally a generic ViewObj method for shadow elements.
 #############################################################################
@@ -779,7 +792,7 @@ InstallMethod( ElementToElement,
 	end );
 
 #############################################################################
-# the two methods below are not yet finished.
+# the two methods below are not yet finished, and commented out
 #############################################################################
 
 # Added 28/11/2011 jdb.
@@ -788,17 +801,17 @@ InstallMethod( ElementToElement,
 # chages the element <el> to VectorSpaceToElement(<geo>,ElementToVectorSpace(<el>))
 # with a check whether this is possible.
 ##
-InstallMethod( ConvertElement,
-	"for a Lie geometry and an element of a Lie geometry",
-	[IsProjectiveSpace, IsElementOfLieGeometry],
-	function(ps,el)
-		if el in ps then
-			el!.geo := ps;
-		else
-			Error( "<el> cannot be converted to an element of <ps>");
-		fi;
-		
-	end );
+#InstallMethod( ConvertElement,
+#	"for a Lie geometry and an element of a Lie geometry",
+#	[IsProjectiveSpace, IsElementOfLieGeometry],
+#	function(ps,el)
+#		if el in ps then
+#			el!.geo := ps;
+#		else
+#			Error( "<el> cannot be converted to an element of <ps>");
+#		fi;
+#		
+#	end );
 
 # Added 28/11/2011 jdb.
 #############################################################################
@@ -807,9 +820,9 @@ InstallMethod( ConvertElement,
 # *without* checks. Please use with extreme care. Belgium might get a government if you use
 # this function when you shouldn't.
 ##
-InstallMethod( ConvertElementNC,
-	"for a Lie geometry and an element of a Lie geometry",
-	[IsLieGeometry, IsElementOfLieGeometry],
-	function(ps,el)
-		el!.geo := ps;
-	end );
+#InstallMethod( ConvertElementNC,
+#	"for a Lie geometry and an element of a Lie geometry",
+#	[IsLieGeometry, IsElementOfLieGeometry],
+#	function(ps,el)
+#		el!.geo := ps;
+#	end );

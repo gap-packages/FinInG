@@ -414,7 +414,7 @@ respectively are not called "points", "lines", "planes", and "solids" respective
 check if names are given, and are just shortcuts to the operation <F>ShadowOfElement</F>. The second variant
 derives the incidence structure to be used as the ambient geometry of <A>v</A>. Please keep in mind 
 that these methods are shortcuts to <F>ShadowOfElement</F>, which implies that asking e.g. <F>Lines(v)</F>
-with <A>v</A> a point, will indeed return the lines incident with a point.
+with <A>v</A> a point, will indeed return the lines incident with a point.  
 <Example>
 <#Include SYSTEM "../examples/include/incgeom_shadowshort.include"> 
 </Example>
@@ -567,6 +567,19 @@ as arguments. This relation is not symmetric, and the methods for <F>IsIncident<
 use this method to test incidence between elements. 
 <Example>
 <#Include SYSTEM "../examples/include/incgeom_lie_in.include"> 
+</Example>
+</Description>
+</ManSection>
+
+
+<ManSection>
+<Oper Name="HyperplanesOf" Arg="v"/>
+<Returns>the elements of type <M>j-1</M> incident with <A>v</A>, which is an element of type <M>j</M></Returns>
+<Description>
+This operation is a shortcut to the operation <F>ShadowOfElement</F>, where the geometry is taken from <A>v</A>, and where 
+the elements of type one less that the type of <A>v</A> are asked.
+<Example>
+<#Include SYSTEM "../examples/include/incgeom_lie_hyperplanesof.include"> 
 </Example>
 </Description>
 </ManSection>
