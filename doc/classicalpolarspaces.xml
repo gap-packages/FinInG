@@ -83,21 +83,7 @@ form, and we refer to the documention for <Package>forms</Package> for informati
 on how one can create and use forms. Here we just display a worked example.
 
 <Example>
-gap> id := IdentityMat(7, GF(3));;
-gap> form := QuadraticFormByMatrix(id, GF(3));
-&lt; quadratic form &gt;
-gap> ps := PolarSpace( form );
-&lt;polar space of dimension 6 over GF(3)&gt;
-gap> ## The construction of the ovoid: ##
-gap> psl32 := PSL(3,2);
-Group([ (4,6)(5,7), (1,2,4)(3,6,5) ])
-gap> reps:=[[1,1,1,0,0,0,0], [-1,1,1,0,0,0,0],
-[1,-1,1,0,0,0,0], [1,1,-1,0,0,0,0]]*Z(3)^0;;
-gap> ovoid := Union( List(reps, x-> Orbit(psl32, x, Permuted)) );;
-gap> ovoid := List(ovoid, x -> VectorSpaceToElement(ps, x));;
-gap> planes := AsList( Planes( ps ) );;
-gap> ForAll(planes, p -> Number(ovoid, x -> x in p) = 1);
-true
+<#Include SYSTEM "../examples/include/cps_example.include"> 
 </Example>
 
 </Section>
