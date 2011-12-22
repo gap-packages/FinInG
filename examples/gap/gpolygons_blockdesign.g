@@ -2,7 +2,8 @@
 f := GF(3);
 id := IdentityMat(2, f);;
 clan := List( f, t -> t*id );;
-egq := EGQByqClan( clan, f );
+clan := qClan(clan,f);
+egq := EGQByqClan( clan );
 HasElationGroup( egq );
 design := BlockDesignOfGeneralisedPolygon( egq );;
 aut := AutGroupBlockDesign( design );
