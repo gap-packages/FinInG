@@ -395,6 +395,18 @@ InstallMethod( Points,
 	end );
 
 #############################################################################
+#O  \in ( <point>, <ptsonvariety> )
+# checks if <point> lies on the variety corresponding to <ptsonvariety>
+##
+InstallMethod( \in,	
+	"for an element of an incidence structure and a the pointsofalgebraicvariety",
+	# 1*SUM_FLAGS+3 increases the ranking for this method
+	[IsElementOfIncidenceStructure, IsPointsOfAlgebraicVariety], 1*SUM_FLAGS+3,
+	function(point,pts)
+		return point in pts!.variety;
+	end );
+
+#############################################################################
 #O  Iterator ( <var> )
 # iterator for the points of an algebraic variety.
 ##
