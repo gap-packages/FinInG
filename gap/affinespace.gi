@@ -478,7 +478,8 @@ InstallMethod( Enumerator, [ IsVectorSpaceTransversal ],
               return VectorSpaceTransversalElement(space, subspace, v);
             end,
             NumberElement := enumcomp!.NumberElement,
-            Length := e -> enumcomp!.Length ));   
+           # Length := e -> enumcomp!.Length ));   # silly enumerator of v.spaces doesn't always have "Length"
+            Length := e -> Size(complement) ));
     return enum;
   end );
 
@@ -1021,7 +1022,7 @@ InstallMethod( Size, [IsShadowSubspacesOfAffineSpace and
 InstallMethod( Iterator, "for a shadow in an affine space",
      [IsShadowSubspacesOfAffineSpace and IsShadowSubspacesOfAffineSpaceRep ],
   function( vs )
-    local as, j, ps, map, iter, list, dim, hyperplane, x;
+    local as, i, j, ps, map, iter, list, dim, hyperplane, x, newfinish, assoc;
     as := vs!.geometry;
     j := vs!.type;
     map := ProjectiveCompletion(as);
@@ -1032,17 +1033,19 @@ InstallMethod( Iterator, "for a shadow in an affine space",
     
     if Size( list ) = 1 then
        x := list[1];
+       i := x!.type;
        iter := StructuralCopy(Iterator( ShadowOfElement( ps, ImageElm(map, x), j) ));
        #
        #  change IsDoneIterator in iter: 
-       #	iter!.S!.associatedIterator!.choiceiter!.pos <= Binomial(hyperplane!.type-1, hyperplane!.type-vs!.type);
+       #	iter!.S!.associatedIterator!.choiceiter!.pos <= 
+       #     Binomial(hyperplane!.type-1, hyperplane!.type-vs!.type);
        #  It took me ages to figure out how this all works!
-       #
-          # The following is for subspaces contained in a space
-       if j <= hyperplane!.type and j < x!.type then
-          iter!.S!.associatedIterator!.choiceiter!.IsDoneIterator := 
-	         iter -> iter!.pos = Binomial(hyperplane!.type-1, hyperplane!.type-vs!.type);
-	 fi;
+       # 
+       newfinish := Maximum( 
+              [ Binomial(i-1,j-1), Binomial(dim-i,j-i) ]   );   ##JB: Happy that this works!
+       assoc := iter!.S!.associatedIterator;
+       assoc!.choiceiter!.IsDoneIterator := 
+	         iter -> iter!.pos = newfinish and IsDoneIterator(assoc!.spaceiter);
     else
        # still need to truncate the iterator of this one ...
        iter := Iterator( ShadowOfFlag( ps, ImagesSet(map, list), j) );
