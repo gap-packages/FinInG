@@ -27,19 +27,15 @@
 #
 # Things To Do:
 #
-# - Better method for LeukBasis
-# - Grassmann map
-#   slightly different to Klein correpondence, is this a problem? I don't think this is a problem. 
 # - Preimages for GrassmannMap, VeroneseMap, and SegreMap.
-# - SegreMap: source is not domain, what should we do?
 # - intertwiners for GrassmannMap and SegreMap
 # - should there be a type function as an attribute?
 # - maybe make a more userfriendly system to avoid em!.prefun( <arg> )
 # - in the same sense: do we want a NaturalDuality starting from Q(4,q) and Q-(5,q)? 
 #   And the self duality of Q(4,q) and W(3,q), q even.
-# - DO WE NEED TO USE ConvertToMatrixRepNC in the operation ShrinkMat ?
+
 # - test operations BlownUpSubspaceOfProjectiveSpace, BlownUpSubspaceOfProjectiveSpaceBySubfield, 
-#   IsDesarguesianSpreadElement and IsBlownUpSubspaceOfProjectiveSpace
+
 # - an optimalization is possible: each time VectorSpaceToElement is used, this might be replaced
 #   by Wrap. VectorSpaceToElement is of course useful for testing purposes. Currently, we left it on
 #   to find bugs quicker. But it looks already quite well.
