@@ -1036,13 +1036,10 @@ InstallMethod( Iterator, "for a shadow in an affine space",
        i := x!.type;
        iter := StructuralCopy(Iterator( ShadowOfElement( ps, ImageElm(map, x), j) ));
        #
-       #  change IsDoneIterator in iter: 
-       #	iter!.S!.associatedIterator!.choiceiter!.pos <= 
-       #     Binomial(hyperplane!.type-1, hyperplane!.type-vs!.type);
+       #  We simple change the IsDoneIterator in iter.
        #  It took me ages to figure out how this all works!
        # 
-       newfinish := Maximum( 
-              [ Binomial(i-1,j-1), Binomial(dim-i,j-i) ]   );   ##JB: Happy that this works!
+       newfinish := Maximum(  [ Binomial(i-1,j-1), Binomial(dim-i,j-i) ] );   ##JB: Happy that this works!
        assoc := iter!.S!.associatedIterator;
        assoc!.choiceiter!.IsDoneIterator := 
 	         iter -> iter!.pos = newfinish and IsDoneIterator(assoc!.spaceiter);
