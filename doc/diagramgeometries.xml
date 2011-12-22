@@ -206,10 +206,13 @@ schematic description of the structure of the geometry. It is based on
 the collection of rank 2 residues of the geometry.
 
 Since the geometry is flag-transitive, all chambers are
-equivalent. Let's fix a chamber <M>C=\{c_{1}, c_{2},...,c_{n}\}</M>,
-with <M>c_{i}</M> of type <M>i</M>. For each subset <M>{i,j}</M> of
-size two in <M>I=\{1,2,...,n\}</M> we take the residue of the
-flag <M>C\setminus \{c_{i},c_{j}\}</M>. Flag transitivity ensures
+equivalent. Let's fix a chamber <Alt Not="HTML"><M>C=\{c_{1}, c_{2},\ldots,c_{n}\}</M></Alt>
+<Alt Only="HTML">C = &#123; c&lt;sub>1&lt;/sub>,c&lt;sub>2&lt;/sub>,...,c&lt;sub>n&lt;/sub>&#125;</Alt>,
+with <Alt Not="HTML"><M>c_{i}</M></Alt><Alt Only="HTML">c&lt;sub>i&lt;/sub></Alt> of type <M>i</M>. For each subset 
+<Alt Not="HTML"><M>{i,j}</M></Alt><Alt Only="HTML">&#123;i,j&#125;</Alt> of
+size two in <Alt Not="HTML"><M>I={1,2,\ldots,n}</M></Alt><Alt Only="HTML">&#123;1,2,...n&#125;</Alt> we take the residue of the
+flag <Alt Not="HTML"><M>C\setminus \{c_{i},c_{j}\}</M></Alt>
+<Alt Only="HTML">C \ &#123; c&lt;sub>i&lt;/sub>, c&lt;sub>j&lt;/sub>&#125;</Alt>. Flag transitivity ensures
 that <E>all</E> residues of type <M>I\setminus\{i,j\}</M> are
 isomorphic to each other. For each such residue, the structure is
 described by some parameters: the gonality and the point and line
@@ -235,16 +238,17 @@ gonality are all greater than <M>2</M>.
 <A>Diag</A> must be a diagram. Writes a file <A>filename</A>.ps in the current directory with a pictorial version of the diagram. This command uses the <Package>graphviz</Package> package which is available from http://www.graphviz.org. 
 </Description>
 </ManSection>
-We illustrate the diagram feature with
-Neumaier's <M>A_8</M>-geometry. 
 
-The affine space of dimension~3 over the field with two elements is
-denoted by <M>AG(3,2)</M>. If we fix a plane <M>\Pi</M> in <M>PG(3,2)</M>, the
-structure induced on the 8 points not in <M>\Pi</M> by the lines and planes
+We illustrate the diagram feature with
+Neumaier's <Alt Not="HTML"><M>A_8</M></Alt><Alt Only="HTML">A&lt;sub>8&lt;/sub></Alt>-geometry. 
+
+The affine space of dimension 3 over the field with two elements is
+denoted by <M>AG(3,2)</M>. If we fix a plane <Alt Not="HTML"><M>\Pi</M></Alt><Alt Only="HTML">&#928;</Alt> in <M>PG(3,2)</M>, the
+structure induced on the 8 points not in <Alt Not="HTML"><M>\Pi</M></Alt><Alt Only="HTML">&#928;</Alt> by the lines and planes
 of <M>PG(3,2)</M> is isomorphic to <M>AG(3,2)</M>. Since every two points of
 <M>AG(3,2)</M> define a line, the collinearity graph of <M>AG(3,2)</M> (that is the graph
 whose vertices are the points of <M>AG(3,2)</M> and in which two vertices
-are adjacent whenever they are collinear) is the complete graph <M>K_8</M>
+are adjacent whenever they are collinear) is the complete graph <Alt Not="HTML"><M>K_8</M></Alt><Alt Only="HTML">K&lt;sub>8&lt;/sub></Alt>
 on 8 vertices. Given two copies of the complete graph on 8 vertices,
 one can label the vertices of each of them with the numbers from 1 to
 8. These labelings are always equivalent when the two copies are seen as
@@ -253,29 +257,35 @@ space. The reason is that an affine space has parallel lines and to be
 affinely equivalent, the labelings must be such that edges which were
 parallel in the first labeling remain parallel in the second
 labeling. In fact there are 15 affinely nonequivalent ways to label the
-vertices of <M>K_8</M>. The affine space has 14 planes of 4 points and
-there are 70 subsets of 4 elements in the vertex set of <M>K_8</M>. Each
-time we label <M>K_8</M>, there are 14 of the 70 sets of 4 elements which
+vertices of <Alt Not="HTML"><M>K_8</M></Alt><Alt Only="HTML">K&lt;sub>8&lt;/sub></Alt>. The affine space has 14 planes of 4 points and
+there are 70 subsets of 4 elements in the vertex set of <Alt Not="HTML"><M>K_8</M></Alt><Alt Only="HTML">K&lt;sub>8&lt;/sub></Alt>. Each
+time we label <Alt Not="HTML"><M>K_8</M></Alt><Alt Only="HTML">K&lt;sub>8&lt;/sub></Alt>, there are 14 of the 70 sets of 4 elements which
 become planes of <M>AG(3,2)</M>. The remaining 4-subsets will be called 
 <E>nonplanes</E> for that labeling.
 
 A well-known rank 4 geometry discovered by Neumaier
 in 1984 can be described using these concepts. This geometry is quite
 important since its residue of cotype 0 is the famous 
-<M>A_7</M>-geometry which is known to be the only flag-transitive locally
+<Alt Not="HTML"><M>A_7</M></Alt><Alt Only="HTML">A&lt;sub>7&lt;/sub></Alt>-geometry which is known to be the only flag-transitive locally
 classical <M>C_3</M>-geometry which is not a polar space (see Aschbacher1984
 for details).
 
 The Neumaier geometry can be constructed as follows. The elements of
-types 1 and 2 are the vertices and edges of the complete graph <M>K_8</M>,
+types 1 and 2 are the vertices and edges of the complete graph <Alt Not="HTML"><M>K_8</M></Alt><Alt Only="HTML">K&lt;sub>8&lt;/sub></Alt>,
 the elements of type 2 are the 4-subsets of the vertex set 
-of <M>K_8</M> and the elements of type 3 are the 15 nonequivalent labelings
-of <M>K_8</M>. Incidences are mostly the natural ones. A 4-subset
-is incident with a labeling of <M>K_8</M> if it is the set of points of a
+of <Alt Not="HTML"><M>K_8</M></Alt><Alt Only="HTML">K&lt;sub>8&lt;/sub></Alt> and the elements of type 3 are the 15 nonequivalent labelings
+of <Alt Not="HTML"><M>K_8</M></Alt><Alt Only="HTML">K&lt;sub>8&lt;/sub></Alt>. Incidences are mostly the natural ones. A 4-subset
+is incident with a labeling of <Alt Not="HTML"><M>K_8</M></Alt><Alt Only="HTML">K&lt;sub>8&lt;/sub></Alt> if it is the set of points of a
 nonplane in the model of <M>AG(3,2)</M> defined by the labeling.
-
 <Example>
 <#Include SYSTEM "../examples/include/diagram_neumaier.include"> 
 </Example>
+The produced diagrams are included here: Neumaier's <Alt Not="HTML"><M>A_8</M></Alt><Alt Only="HTML">A&lt;sub>8&lt;/sub></Alt><P/>
+<Alt Only="HTML">&lt;img src="neuma8.jpg">&lt;/img></Alt><Alt Only="LaTeX">\includegraphics{neuma8.pdf}</Alt><P/><P/>
+The <Alt Not="HTML"><M>A_7</M></Alt><Alt Only="HTML">A&lt;sub>7&lt;/sub></Alt> geometry:<P/>
+<Alt Only="HTML">&lt;img src="a7geo.jpg">&lt;/img></Alt><Alt Only="LaTeX">\includegraphics[scale=0.5]{a7geo.pdf}</Alt><P/><P/>
+
+
+
 </Section>
 </Chapter>
