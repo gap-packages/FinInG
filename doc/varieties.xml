@@ -24,7 +24,7 @@ This is the chapter of the documentation describing the algebraic varieties.
 <Chapter Label="varieties">
 <Heading>Algebraic Varieties</Heading>
 In <Package>FinInG</Package> we provide some basic functionality for algebraic varieties defined over finite fields. The algebraic varieties in <Package>FinInG</Package> are defined by a list of multivariate polynomials over a finite field, and an ambient geometry. This ambient geometry is either a projective space, and then the algebraic variety is called a <E>projective variety</E>, or an affine geometry, and then the algebraic variety is called an <E>affine variety</E>. In this chapter we give a brief overview of the features of <Package>FinInG</Package> concerning these two types of algebraic varieties.
-
+The package <Package>FinInG</Package> also contains the Veronese varieties, the Segre varieties and the Grassmann varieties; three classical projective varieties.
 
 <!--SECTION ALGEBRAIC VARIETIES -->
 <Section Label="algebraicvarieties">
@@ -87,23 +87,6 @@ A <E>projective variety</E> in <Package>FinInG</Package> is an algebraic variety
         </Example>
     </Description>
 </ManSection>
-
-<ManSection>
-    <Oper Name="DualCoordinatesOfHyperplane" Arg="hyp"/>
-    <Returns>a list</Returns>
-    <Description>
-        The argument <A>hyp</A> is a hyperplane of a projective space. This operation returns the dual coordinates of the hyperplane <A>hyp</A>, i.e. the list with the coefficients of the equation defining the hyperplane <A>hyp</A> as an algebraic variety.
-    </Description>
-</ManSection>
-
-<ManSection>
-    <Oper Name="HyperplaneByDualCoordinates" Arg="pg,list"/>
-    <Returns>a hyperplane of a projective space</Returns>
-    <Description>
-        The argument <A>pg</A> is a projective space, and <A>list</A> is the coordinate vector of a point of <A>pg</A>. This operation returns the hyperplane that has <A>list</A> as the list of coefficients of the equation defining the hyperplane as an algebraic variety.
-    </Description>
-</ManSection>
-
 
 </Section>
 
