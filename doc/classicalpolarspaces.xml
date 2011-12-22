@@ -724,123 +724,40 @@ overview.
 </Section>
 
 <Section>
-<Heading>All the elements or just one at a time</Heading>
-
-In <Package>FinInG</Package>, we can either use
-<F>AsList</F> to get all of the elements of a projective/polar
-space efficiently, or we can ask for an iterator or enumerator
-of a collection of elements. The word collection is important here.
-Subspaces of a vector space are not calculated on calling <F>Subspaces</F>,
-rather primitive information is stored in an <F>IsComponentObjectRep</F>.
-So for example
-
-<Example>
-gap> v:=GF(31)^5;
-( GF(31)^5 )
-gap> subs:=Subspaces(v,1);
-Subspaces( ( GF(31)^5 ), 1 )
-</Example>
-
-takes almost no time at all. But if you want a random element from this set,
-you could be waiting a while. Instead, the user is better off using an iterator
-or an enumerator to access elements of this collection. So too do we have
-such a facility for the elements of a projective or polar space. At the moment,
-we have made available iterators for projective spaces, and enumerators for polar spaces.
+<Heading>Enumerating subspaces of polar spaces</Heading>
 
 <Subsection>
 <Heading>Enumerators for polar spaces</Heading>
 
-If you are not familiar with ``enumerators'' in GAP, it
-is worthy to explain a little bit about them in this section.
-An <F>enumerator</F> is a particular object in GAP which allows
-the user to compute the i-th entry in a collection. Mathematically
-speaking, it is a bijection from the positive integers to the given collection.
-So for example, the rationals are totally ordered and there is an enumerator in
-GAP so that the user can access rational numbers one at a time:
-
-<Example>
-gap> enum:=Enumerator(Rationals);
-&lt;enumerator of Rationals&gt;
-gap> enum[10];
-3/2
-</Example>
-
-For more on enumerators, see the relevant section in the GAP manual.
+An enumerator a collection of subspaces of a given type of a polar space is provided in <Package>FinInG</Package>. If <A>C</A> is
+such a collection, the <F>List(C)</F> will use the enumerator to compute a list with all the elements of <A>C</A>.
 </Subsection>
 
 
 <ManSection>
-<Oper Name="Enumerator" Arg="elements"/>
-<Returns> an enumerator </Returns>
+<Oper Name="Enumerator" Arg="C"/>
+<Oper Name="List" Arg="C"/>
+<Returns> an enumerator for the collection <A>C</A>, a list with all elements of <A>C</A>, respectively</Returns>
 <Description>
-<A>elements</A> is a collection of elements, such as
-<F>Points( ParabolicQuadric( 4, 3 ))</F>.
-This function returns an enumerator for <A>elements</A>.
-
+<A>C</A> is a collection of subspaces of a polar space.
 <Example>
-gap> lines := Lines( ParabolicQuadric(6, 3) );
-&lt;lines of Q(6, 3)&gt;
-gap> enum := Enumerator( lines );
-EnumeratorOfSubspacesOfClassicalPolarSpace( &lt;lines of Q(6, 3)&gt; )
-gap> enum[10];
-&lt;a line in Q(6, 3)&gt;
+<#Include SYSTEM "../examples/include/cps_enumerator.include"> 
 </Example>
 </Description>
 </ManSection>
 
 <Subsection>
-<Heading>Iterators for projective spaces</Heading>
-
-An <F>iterator</F> is a particular object in GAP which allows
-the user to compute the <B>next</B> entry in a collection. 
-So iterators are a way to loop over the elements of a (countable) 
-collection or a list, without repetition. The most important operations
-for the user are <F>NextIterator</F> and <F>IsDoneIterator</F>. We
-show an example of how this works with the rationals.
-
-<Example>
-gap> iter := Iterator( Rationals );                                   
-&lt;iterator&gt;
-gap> x := NextIterator( iter );
-0
-gap> x := NextIterator( iter );
-1
-gap> x := NextIterator( iter );
--1
-gap> x := NextIterator( iter );
-1/2
-gap> x := NextIterator( iter );
-2
-gap> IsDoneIterator( iter );
-false
-</Example>
-
-For more on iterators, see the relevant section in the GAP manual.
-
+<Heading>Iterators for polar spaces</Heading>
+For all polar spaces an iterator is constructed using <F>IteratorList(enum)</F>, where <A>enum</A> is an appropriate enumerator.
 </Subsection>
 
 <ManSection>
 <Oper Name="Iterator" Arg="elements"/>
 <Returns> an iterator </Returns>
 <Description>
-<A>elements</A> is a collection of elements, such as
-<F>Points( ProjectiveSpace( 4, 3 ))</F>.
-This function returns an iterator for <A>elements</A>.
-
+<A>C</A> is a collection of subspaces of a polar space.
 <Example>
-gap> lines := Lines( ProjectiveSpace(6, 3) );
-&lt;lines of PG(6, 3)&gt;
-gap> iter := Iterator(lines);
-&lt;iterator&gt;
-gap> x := NextIterator( iter );
-&lt;a line in PG(6, 3)&gt;
-gap> x := NextIterator( iter );
-&lt;a line in PG(6, 3)&gt;
-gap> Display( x );
- 1 . . . . . .
- . 1 . . . . 1
-gap> IsDoneIterator( iter );
-false
+<#Include SYSTEM "../examples/include/cps_iterator.include"> 
 </Example>
 </Description>
 </ManSection>

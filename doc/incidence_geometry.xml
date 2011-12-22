@@ -429,8 +429,30 @@ In several situations, it can be usful to compute a complete list of objects sta
 To list all elements of a given type of an incidence structure, is a typical example. <Package>FinInG</Package> 
 provides functionality that is common in GAP for this purpose. 
 
-For a collection of elements of a given type of certain incidence structures, <Package>FinInG</Package> provides 
-methods to compute iterators. An iterator is a GAP object that gives a user friendly way to loop over all 
+We can either use <F>AsList</F> to get all of the elements of a projective/polar
+space efficiently, or we can ask for an iterator or enumerator
+of a collection of elements. The word collection is important here.
+Subspaces of a vector space are not calculated on calling <F>Subspaces</F>,
+rather primitive information is stored in an <F>IsComponentObjectRep</F>.
+So for example
+
+<Example>
+gap> v:=GF(31)^5;
+( GF(31)^5 )
+gap> subs:=Subspaces(v,1);
+Subspaces( ( GF(31)^5 ), 1 )
+</Example>
+
+takes almost no time at all. But if you want a random element from this set,
+you could be waiting a while. Instead, the user is better off using an iterator
+or an enumerator to access elements of this collection. So too do we have
+such a facility for the elements of a projective or polar space. At the moment,
+we have made available iterators for projective spaces, and enumerators for polar spaces. 
+We give basic examples of enumerators and iterators here. For <F>AsList</F>, we refer to 
+the appropriate sections in the chapters on the particular geometries, since methods for
+<F>AsList</F> refer always to the group, and make use of the package <Package>orb</Package>.
+
+An iterator is a GAP object that gives a user friendly way to loop over all 
 elements without repetition. Only three operations are applicable on an iterator:
 <F>NextIterator</F>, <F>IsDoneIterator</F>, and <F>ShallowCopy</F>.
 

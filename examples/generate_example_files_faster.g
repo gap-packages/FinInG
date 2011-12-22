@@ -62,7 +62,8 @@ classicalpolfiles :=   ["cps_polarspaceform", "cps_example", "cps_symplectic", "
 						"cps_basefield", "cps_element1", "cps_emptysubspace", "cps_projdimension_element", "cps_elements", 
 						"cps_ambientspaceelps", "cps_coordinates", "cps_incident", "cps_span", "cps_typesubspace", 
 						"cps_specialisometry", "cps_isometry", "cps_similarity", "cps_collineation", "cps_aslist",
-						"cps_ishyperbolicquadric", "cps_isellipticquadric", "cps_isparabolicquadric" ];
+						"cps_ishyperbolicquadric", "cps_isellipticquadric", "cps_isparabolicquadric", "cps_enumerator",
+						"cps_iterator" ];
 
 
 "projpol_specialisometry", "projpol_isometry", "projpol_similarity", "cps_underlyingvs", "cps_ambientspace",

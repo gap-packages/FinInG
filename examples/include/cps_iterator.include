@@ -1,0 +1,12 @@
+gap&gt; iter := Iterator(Lines(ParabolicQuadric(4,2)));
+&lt;iterator&gt;
+gap&gt; NextIterator(iter);
+&lt;a line in Q(4, 2)&gt;
+gap&gt; NextIterator(iter);
+&lt;a line in Q(4, 2)&gt;
+gap&gt; NextIterator(iter);
+&lt;a line in Q(4, 2)&gt;
+gap&gt; NextIterator(iter);
+&lt;a line in Q(4, 2)&gt;
+gap&gt; NextIterator(iter);
+&lt;a line in Q(4, 2)&gt;
