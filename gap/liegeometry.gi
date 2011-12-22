@@ -607,7 +607,7 @@ InstallMethod( Solids, "for IsElementOfLieGeometry",
 # returns the hyperplanes contained in <el>, relying on ShadowOfElement 
 # for particular <el>.
 ##
-InstallMethod( HyperplanesOf, 
+InstallMethod( Hyperplanes, 
 	"for elements of a Lie geometry",
 	[ IsElementOfLieGeometry ],
 	function( var )

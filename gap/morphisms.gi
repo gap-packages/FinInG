@@ -1848,7 +1848,7 @@ InstallMethod( NaturalProjectionBySubspace,
     b := v!.obj;
     vdim := v!.type;  
     if vdim = 1 then b:=[b]; fi; 
-    perp := Polarity(ps);
+    perp := PolarMap(ps);
     vs := VectorSpace(f, perp(v)!.obj);
 
     ## if v has dimension j, then the new geometry 
@@ -1954,7 +1954,7 @@ InstallMethod( NaturalProjectionBySubspaceNC,
     b := v!.obj;
     vdim := v!.type;  
     if vdim = 1 then b:=[b]; fi; 
-    perp := Polarity(ps);
+    perp := PolarMap(ps);
     vs := VectorSpace(f, perp(v)!.obj);
 
     ## if v has dimension j, then the new geometry 

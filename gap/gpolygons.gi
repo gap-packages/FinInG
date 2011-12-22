@@ -1233,7 +1233,7 @@ InstallMethod( FlockGQByqClan, [ IsqClanObj ],
   od;
     Info(InfoFinInG, 1, "Making flock GQ...");
 
-  perp := Polarity(w5);;
+  perp := PolarMap(w5);;
   pperp := perp(p);
   pg5 := AmbientSpace( w5 );;
   projpoints := Points(pg5);;
@@ -1352,7 +1352,7 @@ InstallMethod( EGQByBLTSet,
    f := w3q!.basefield;
    q := Size(f);
    w5q := SymplecticSpace(5, f);
-   perp := Polarity(w5q);
+   perp := PolarMap(w5q);
    pperp := perp(p);
    
    ## check everything is kosher

@@ -43,7 +43,7 @@
 #   \in: should probably not change the element (see remark at method).
 # - Check Iterator.
 # - see if commented out material at end of file is really obsolete.
-# - rename Polarity to PolarMap or something like that.
+# - rename Polarity to PolarMap or something like that. Done.
 # - probably a mistake on line 1705. corrected 27/9/2011 jdb.
 # - check if there is a technical problem with the setting of the collineation group of a hermitian vartiety as an attribute.
 # - check and test the groups part of polar spaces. I do not expect too much problems (or even non anymore), but I did not
@@ -2051,7 +2051,7 @@ InstallMethod( ShadowOfElement,
 			sz := 1;
 		else  
 			localinner := v!.obj;
-			localouter := Polarity(ps)(v)!.obj; #actually, this is not a polarity when q is even and ps is parabolic.
+			localouter := PolarMap(ps)(v)!.obj; #actually, this is not a polarity when q is even and ps is parabolic.
 			#localouter := ElementToVectorSpace(v^PolarityOfProjectiveSpace(ps));
 			if pstype = "symplectic" then
 				localfactorspace := SymplecticSpace( psdim- 2*vdim, f );
@@ -2191,8 +2191,6 @@ InstallMethod( AbsolutePoints,
 		return Points(GeometryOfAbsolutePoints(polarity));
 	end );
 
-
-
 #I think the next method is obsolete. We have a method \in for a subspace of a projective space
 # and a polar space, and this does the job. I leave as is, comment out, and if there are no complains, 
 # it can be deleted.
@@ -2244,21 +2242,22 @@ InstallMethod( AbsolutePoints,
 #    fi;
 #  end );
 
-InstallMethod( IsTotallyIsotropic, "for a projective variety w.r.t a polarity", 
-             [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep, IsSubspaceOfProjectiveSpace ],
-  function( ps, v )
-    local perp, perpv;
-    perp := Polarity(ps);
-    perpv := perp(v);
-    return perpv!.type >= v!.type and v in perp(v);
-  end );
+# this is obsolete now
+#InstallMethod( IsTotallyIsotropic, "for a projective variety w.r.t a polarity", 
+#             [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep, IsSubspaceOfProjectiveSpace ],
+#  function( ps, v )
+#    local perp, perpv;
+#    perp := Polarity(ps);
+#    perpv := perp(v);
+#    return perpv!.type >= v!.type and v in perp(v);
+#  end );
 
 # this is obsolete now, but not completely. see also PolarityOfProjectiveSpace method.
 #############################################################################
-#O Polarity( <ps> ) returns the polarity associated to the polar space <ps>
-# see the documentation for the exact meaning of associated polarity.
-
-InstallMethod( Polarity,  
+#O PolarMap( <ps> ) returns the polar map associated to the polar space <ps>.
+# in most cases this polar map is just the polarity. Actually, this operation is
+# only for internal use.
+InstallMethod( PolarMap,  
 	"for a polar space",
 	[IsClassicalPolarSpace],
 	function( ps )

@@ -82,12 +82,14 @@ DeclareProperty( "IsStandardPolarSpace", IsClassicalPolarSpace );
 DeclareOperation( "PolarSpaceStandard", [IsForm] );
 DeclareOperation( "PolarSpace", [IsForm, IsField, IsGroup, IsFunction] );
 DeclareOperation( "PolarSpace", [IsForm] );
-DeclareOperation( "Polarity", [IsClassicalPolarSpace] );
+DeclareOperation( "PolarMap", [IsClassicalPolarSpace] );
+
 #DeclareOperation( "Polarisation", [IsQuadraticForm] ); #We can use now AssociatedBilinearForm
-DeclareOperation( "IsTotallySingular", [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep,
-                                         IsSubspaceOfProjectiveSpace ] );
-DeclareOperation( "IsTotallyIsotropic", [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep,
-                                         IsSubspaceOfProjectiveSpace ] );
+#DeclareOperation( "IsTotallySingular", [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep,
+#                                         IsSubspaceOfProjectiveSpace ] );
+#DeclareOperation( "IsTotallyIsotropic", [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep,
+#                                         IsSubspaceOfProjectiveSpace ] );
+
 DeclareOperation( "TypeOfSubspace", [ IsClassicalPolarSpace, IsSubspaceOfProjectiveSpace ]);
 DeclareOperation( "CanonicalOrbitRepresentativeForSubspaces", [IsString, IsPosInt, IsField]);
 DeclareOperation( "RandomSubspace", [IsClassicalPolarSpace, IsPosInt]);

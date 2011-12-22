@@ -167,7 +167,7 @@ An error message is produced when the projective space <A>ps</A> has no elements
 <Oper Name="Lines" Arg="ps"/>
 <Oper Name="Planes" Arg="ps"/>
 <Oper Name="Solids" Arg="ps"/>
-<Oper Name="Hyperplanes" Arg="inc"/>
+<Oper Name="Hyperplanes" Arg="ps"/>
 <Returns>The elements of <A>ps</A> of respective type 1,2,3,4, and the hyperplanes</Returns>
 <Description>
 An error message is produced when the projective space <A>ps</A> has no elements of a required type.
@@ -405,6 +405,31 @@ Internally, the function <F>FlagOfIncidenceStructure</F> is used to create a fla
 also performs the checking.
 <Example>
 <#Include SYSTEM "../examples/include/projsp_elsel.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Heading>Short names for <F>ElementsIncidentWithElementOfIncidenceStructure</F></Heading>
+<Oper Name="Points" Arg="ps, v"/>
+<Oper Name="Lines" Arg="ps, v"/>
+<Oper Name="Planes" Arg="ps, v"/>
+<Oper Name="Solids" Arg="ps, v"/>
+<Oper Name="Hyperplanes" Arg="inc, v"/>
+<Oper Name="Points" Arg="v"/>
+<Oper Name="Lines" Arg="v"/>
+<Oper Name="Planes" Arg="v"/>
+<Oper Name="Solids" Arg="v"/>
+<Oper Name="Hyperplanes" Arg="v"/>
+<Returns>the elements of type <M>1,2,3</M>, and <M>4</M> incident with, and the hyperplanes <E>contained in</E>, respectively,
+of the projective space <A>ps</A>, incident with teh element <A>el</A>, in other words,
+the shadow of the elements of type i of the element <A>el</A>, and in the case of the hyperplanes, the shodow of the elements
+of type j-1 if j is the type of the element <A>v</A>. If <A>ps</A> is not given as an argument, it is deduced from <A>v</A> as its
+ambient geometry.
+</Returns>
+<Description>
+<Example>
+<#Include SYSTEM "../examples/include/projsp_short2.include"> 
 </Example>
 </Description>
 </ManSection>

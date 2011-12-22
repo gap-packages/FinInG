@@ -2,14 +2,14 @@ gap&gt; pg := PG(3,7);
 ProjectiveSpace(3, 7)
 gap&gt; hyp := Random(Hyperplanes(pg));
 &lt;a plane in ProjectiveSpace(3, 7)&gt;
-gap&gt; h1 := Random(HyperplanesOf(hyp));
+gap&gt; h1 := Random(Hyperplanes(hyp));
 &lt;a line in ProjectiveSpace(3, 7)&gt;
-gap&gt; h2 := Random(HyperplanesOf(h1));
+gap&gt; h2 := Random(Hyperplanes(h1));
 &lt;a point in ProjectiveSpace(3, 7)&gt;
 gap&gt; ps := SymplecticSpace(7,3);
 standard W(7, 3)
 gap&gt; solid := Random(Solids(ps));
 #I  Computing nice monomorphism...
 &lt;a solid in standard W(7, 3)&gt;
-gap&gt; plane := Random(HyperplanesOf(solid));
+gap&gt; plane := Random(Hyperplanes(solid));
 &lt;a plane in standard W(7, 3)&gt;

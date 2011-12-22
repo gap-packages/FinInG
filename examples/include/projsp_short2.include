@@ -1,0 +1,14 @@
+gap&gt; ps := PG(6,13);
+ProjectiveSpace(6, 13)
+gap&gt; plane := Random(Planes(ps));
+&lt;a plane in ProjectiveSpace(6, 13)&gt;
+gap&gt; Points(plane);
+&lt;shadow points in ProjectiveSpace(6, 13)&gt;
+gap&gt; Lines(plane);
+&lt;shadow lines in ProjectiveSpace(6, 13)&gt;
+gap&gt; Solids(plane);
+&lt;shadow solids in ProjectiveSpace(6, 13)&gt;
+gap&gt; Hyperplanes(plane);
+&lt;shadow lines in ProjectiveSpace(6, 13)&gt;
+gap&gt; ElementsIncidentWithElementOfIncidenceStructure(plane,6);
+&lt;shadow proj. 5-subspaces in ProjectiveSpace(6, 13)&gt;
