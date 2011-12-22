@@ -1,4 +1,5 @@
 # gpolygons_blockdesign.g
+LoadPackage("design");
 f := GF(3);
 id := IdentityMat(2, f);;
 clan := List( f, t -> t*id );;

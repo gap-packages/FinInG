@@ -1,19 +1,33 @@
-gap> f := GF(3);
-GF(3)
-gap> id := IdentityMat(2, f);;
-gap> clan := List( f, t -> t*id );;
-gap> egq := EGQByqClan( clan, f );
-&lt;EGQ of order [ 9, 3 ] and basepoint 0>
-gap> HasElationGroup( egq );
+gap&gt; LoadPackage("design");
+-----------------------------------------------------------------------------
+Loading  DESIGN 1.4 (The Design Package for GAP)
+by Leonard H. Soicher (http://www.maths.qmul.ac.uk/~leonard/).
+-----------------------------------------------------------------------------
+#W BIND_GLOBAL: variable `BlockDesign' already has a value
 true
-gap> design := BlockDesignOfGeneralisedPolygon( egq );;
-gap> aut := AutGroupBlockDesign( design );
-&lt;permutation group with 5 generators>
-gap> NrBlockDesignPoints( design );
+gap&gt; f := GF(3);
+GF(3)
+gap&gt; id := IdentityMat(2, f);;
+gap&gt; clan := List( f, t -&gt; t*id );;
+gap&gt; clan := qClan(clan,f);
+&lt;q-clan over GF(3)&gt;
+gap&gt; egq := EGQByqClan( clan );
+#I  Computed Kantor family. Now computing EGQ...
+#I  Computing points from Kantor family...
+#I  Computing lines from Kantor family...
+&lt;EGQ of order [ 9, 3 ] and basepoint 0&gt;
+gap&gt; HasElationGroup( egq );
+true
+gap&gt; design := BlockDesignOfGeneralisedPolygon( egq );;
+#I  Computing orbits on lines of gen. polygon...
+#I  Computing block design of generalised polygon...
+gap&gt; aut := AutGroupBlockDesign( design );
+&lt;permutation group with 5 generators&gt;
+gap&gt; NrBlockDesignPoints( design );
 280
-gap> NrBlockDesignBlocks( design );
+gap&gt; NrBlockDesignBlocks( design );
 112
-gap> DisplayCompositionSeries(aut);
+gap&gt; DisplayCompositionSeries(aut);
 G (5 gens, size 26127360)
  | Z(2)
 S (4 gens, size 13063680)
@@ -23,4 +37,3 @@ S (4 gens, size 6531840)
 S (3 gens, size 3265920)
  | 2A(3,3) = U(4,3) ~ 2D(3,3) = O-(6,3)
 1 (0 gens, size 1)
-
