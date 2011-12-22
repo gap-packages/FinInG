@@ -57,8 +57,8 @@ Print(", polarspace/morphisms\c");
 # Low level help methods:
 #############################################################################
 
-DESARGUES.LimitForCanComputeActionOnPoints := 1000000;
-DESARGUES.Fast := true;
+FINING.LimitForCanComputeActionOnPoints := 1000000;
+FINING.Fast := true;
 
 #############################################################################
 # Constructor method (not for users)!:
@@ -2432,7 +2432,7 @@ InstallMethod( CollineationGroup,
 		x := RepresentativesOfElements( ps );   		
 		if not IsEmpty(x) then
 			x := x[1];
-			if DESARGUES.Fast then
+			if FINING.Fast then
 				hom := NiceMonomorphismByOrbit( g, x!.obj, OnProjPointsWithFrob, info!.degree);
 			else 
 				points := Orbit(g, x, OnProjSubspaces);

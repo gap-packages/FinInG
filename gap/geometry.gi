@@ -40,7 +40,7 @@
 
 Print("loading: geometry\c");
 
-InstallValue( DESARGUES, rec() ); #name of this variable will remind us for ever that this package was called Desargues in earlier days.
+InstallValue( FINING, rec() );
 
 #############################################################################
 # General methods.

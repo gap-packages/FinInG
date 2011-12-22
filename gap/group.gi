@@ -1381,7 +1381,7 @@ InstallMethod( CanComputeActionOnPoints,
 		local d,q;
 		d := Dimension( g );
 		q := Size( BaseField( g ) );
-		if (q^d - 1)/(q-1) > DESARGUES.LimitForCanComputeActionOnPoints then
+		if (q^d - 1)/(q-1) > FINING.LimitForCanComputeActionOnPoints then
 			return false;
 		else
 			return true;
@@ -1401,7 +1401,7 @@ InstallMethod( CanComputeActionOnPoints,
 		local d,q;
 		d := Dimension( g );
 		q := Size( BaseField( g ) );
-		if (q^d - 1)/(q-1) > DESARGUES.LimitForCanComputeActionOnPoints then
+		if (q^d - 1)/(q-1) > FINING.LimitForCanComputeActionOnPoints then
 			return false;
 		else
 			return true;
@@ -1664,7 +1664,7 @@ InstallMethod( NiceMonomorphism,
 	function( pg )
 	local hom, dom;
     dom := MakeAllProjectivePoints( BaseField(pg), Dimension(pg) - 1);
-    if DESARGUES.Fast then
+    if FINING.Fast then
        hom := NiceMonomorphismByDomain( pg, dom, OnProjPointsWithFrob );
     else 
        hom := ActionHomomorphism(pg, dom, OnProjPointsWithFrob, "surjective");    
@@ -1689,7 +1689,7 @@ InstallMethod( NiceMonomorphism,
 			Error("action on projective points not feasible to calculate");
 		else
 			dom := MakeAllProjectivePoints( BaseField(pg), Dimension(pg) - 1 );
-			if DESARGUES.Fast then
+			if FINING.Fast then
 				hom := NiceMonomorphismByDomain( pg, dom, OnProjPointsWithFrob );
 			else 
 				hom := ActionHomomorphism(pg, dom, OnProjPointsWithFrob, "surjective");    

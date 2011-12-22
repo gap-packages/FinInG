@@ -76,7 +76,7 @@ InstallMethod( CosetGeometry, "for groups and list of subgroups",[ IsGroup , IsH
 	   RankAttr, Size(l),
            RepresentativesOfElements, l );
     ## To speed up IncidenceGraph (and hence also DiagramOfGeometry)
-    if HasIsHandledByNiceMonomorphism(g) and IsHandledByNiceMonomorphism(g) and DESARGUES.Fast then
+    if HasIsHandledByNiceMonomorphism(g) and IsHandledByNiceMonomorphism(g) and FINING.Fast then
        SetIsHandledByNiceMonomorphism(geo, true);
     fi;
     return geo;
@@ -589,7 +589,7 @@ InstallMethod( IncidenceGraph, [ IsCosetGeometry and IsHandledByNiceMonomorphism
        Error("You must load the Grape package\n");
     fi;
 
-    if DESARGUES.Fast then
+    if FINING.Fast then
       Print("#I Using NiceMonomorphism...\n");   
       hom := NiceMonomorphism(geo!.group);
       fastgeo:=CosetGeometry(NiceObject(geo!.group), List(geo!.parabolics, h -> Image(hom, h)));
