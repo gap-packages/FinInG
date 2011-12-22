@@ -921,17 +921,17 @@ InstallMethod( Size,
 # returns the hyperplanes incident with <el>, relying on ShadowOfElement 
 # for particular <el>.
 ##
-InstallMethod( Hyperplanes, 
-	"for elements of a Lie geometry",
-	[ IsSubspaceOfProjectiveSpace ],
-	function( var )
-		local geo, d, f;
-		geo := var!.geo;
-		#d := geo!.dimension;
-		#f := geo!.basefield;
-		# return ShadowOfElement( ProjectiveSpace(d, f), var, var!.type - 1 ); changed this into
-	    return ShadowOfElement( geo, var, geo!.dimension );
-  end );
+#InstallMethod( Hyperplanes, 
+#	"for elements of a Lie geometry",
+#	[ IsSubspaceOfProjectiveSpace ],
+#	function( var )
+#		local geo, d, f;
+#		geo := var!.geo;
+#		#d := geo!.dimension;
+#		#f := geo!.basefield;
+#		# return ShadowOfElement( ProjectiveSpace(d, f), var, var!.type - 1 ); changed this into
+#	    return ShadowOfElement( geo, var, geo!.dimension );
+# end );
 
 # CHECKED 7/09/2011 jdb
 #############################################################################
@@ -939,15 +939,15 @@ InstallMethod( Hyperplanes,
 # returns the hyperplanes incident with <el>, relying on ShadowOfElement 
 # for particular <el>.
 ##
-InstallMethod( Hyperplanes, 
-	"for a Lie geometry and elements of a Lie geometry",
-	[ IsProjectiveSpace, IsSubspaceOfProjectiveSpace ],
-	function( geo, var )
-		local d, f;
-		d := geo!.dimension;
-		f := geo!.basefield;
-		return ShadowOfElement( geo, var, geo!.dimension );
-  end );
+#InstallMethod( Hyperplanes, 
+#	"for a Lie geometry and elements of a Lie geometry",
+#	[ IsProjectiveSpace, IsSubspaceOfProjectiveSpace ],
+#	function( geo, var )
+#		local d, f;
+#		d := geo!.dimension;
+#		f := geo!.basefield;
+#		return ShadowOfElement( geo, var, geo!.dimension );
+#end );
 
 #############################################################################
 # Constructors for groups of projective spaces.

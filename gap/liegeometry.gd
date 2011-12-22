@@ -79,9 +79,6 @@ DeclareOperation( "\^", [IsEmptySubspace, IsUnwrapper] );
 
 DeclareOperation("RandomSubspace",[IsVectorSpace,IsInt]); #is for vector spaces -> moves to liegeometry.gd
 
-# one shadow shortcut, specifically for Lie geometries. Maybe we should restrict "hyperplanes" also to Lie geometries, however, this is a detail.
-
-DeclareOperation( "HyperplanesOf", [ IsElementOfLieGeometry ] );
 
 #DeclareGlobalFunction( "OnProjSubspaces" );
 #DeclareGlobalFunction( "OnSetsProjSubspaces" );

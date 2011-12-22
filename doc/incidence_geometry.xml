@@ -573,7 +573,9 @@ use this method to test incidence between elements.
 
 
 <ManSection>
-<Oper Name="HyperplanesOf" Arg="v"/>
+<Heading>Hyperplanes of an element of a Lie geometry</Heading>
+<Oper Name="Hyperplanes" Arg="v"/>
+<Oper Name="Hyperplanes" Arg="inc, v"/>
 <Returns>the elements of type <M>j-1</M> incident with <A>v</A>, which is an element of type <M>j</M></Returns>
 <Description>
 This operation is a shortcut to the operation <F>ShadowOfElement</F>, where the geometry is taken from <A>v</A>, and where 

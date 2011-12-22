@@ -603,7 +603,7 @@ InstallMethod( Solids, "for IsElementOfLieGeometry",
 
 # ADDED 22/12/2011 jdb
 #############################################################################
-#O  HyperplanesOf( <el> )
+#O  Hyperplanes( <el> )
 # returns the hyperplanes contained in <el>, relying on ShadowOfElement 
 # for particular <el>.
 ##
@@ -613,6 +613,19 @@ InstallMethod( HyperplanesOf,
 	function( var )
 		return ShadowOfElement( var!.geo, var, var!.type - 1 );
   end );
+
+# ADDED 22/12/2011 jdb
+#############################################################################
+#O  Hyperplanes( <geo>, <el> )
+# returns the hyperplanes incident with <el>, relying on ShadowOfElement 
+# for particular <el>.
+##
+InstallMethod( Hyperplanes, 
+	"for a Lie geometry and elements of a Lie geometry",
+	[ IsLieGeometry, IsElementOfLieGeometry ],
+	function( geo, var )
+		return ShadowOfElement( geo, var, geo!.dimension );
+end );
 
 #############################################################################
 # Finally a generic ViewObj method for shadow elements.
