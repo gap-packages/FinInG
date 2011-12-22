@@ -55,8 +55,6 @@ generalised quadrangles (<M>n=4</M>), generalised hexagons (<M>n=6</M>) and
 generalised octagons (<M>n=8</M>). 
 
 
-
-
 <Section>
 <Heading>Projective planes</Heading>
 
@@ -417,14 +415,8 @@ returns the polar space in which <A>geo</A> is constructed.
 
 </Section>
 
-
-
-
-
-
 <Section>
-<Heading>General attributes and operations of generalised polygons</Heading>
-
+<Heading>General attributes and operations for generalised polygons</Heading>
 
 <ManSection>
 <Attr Name="Order" Arg="gp"/>
@@ -532,10 +524,11 @@ This method returns the incidence matrix of the generalised polygon via
 the operation <C>CollapsedAdjacencyMat</C> in the <Package>GRAPE</Package>
 package (so you need to load this package first). The rows of the matrix
 correspond to the points of <A>gp</A>, and the columns correspond to the lines.
+<Example>
+<#Include SYSTEM "../examples/include/gpolygons_incmatrix.include"> 
+</Example>
 </Description>
 </ManSection>
-
-
 </Section>
 
 </Chapter>
