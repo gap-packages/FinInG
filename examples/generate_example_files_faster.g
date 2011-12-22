@@ -109,7 +109,7 @@ gpolygonfiles := [ "gpolygons_projplanes1", "gpolygons_projplanes2", "gpolygons_
 				   "gpolygons_EGQByBLTSet", "gpolygons_elationgroup", "gpolygons_basepointofegq",
 				   "gpolygons_collineations", "gpolygons_SplitCayleyHexagon", "gpolygons_ambientpolarspace"];
 
-diagramfiles := ["diagram_cosetgeom"];
+diagramfiles := ["diagram_cosetgeom", "diagram_neumaier"];
 
 websitefiles := ["web_hyperoval24", "web_inumbersherm", "web_embedding", "web_spreads", "web_ovoidq63"];
 

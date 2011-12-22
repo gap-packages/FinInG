@@ -1,0 +1,36 @@
+Alt( [ 1 .. 8 ] )
+gap&gt; pabs:= [
+&gt;   Group([ (2,4,6), (1,3,2)(4,8)(6,7) ]), 
+&gt;   Group([ (1,6,7,8,4), (2,5)(3,4) ]),
+&gt;   Group([ (3,6)(7,8), (2,4,5), (1,5)(2,4), (2,4)(6,7), (6,8,7), 
+&gt; (1,2)(4,5), (3,7)(6,8) ]),
+&gt;   Group([ (1,7,8,4)(2,5,3,6), (1,3)(2,6)(4,8)(5,7), (1,5)(2,4)(3,7)(6,8),
+&gt;       (1,8)(2,7)(3,4)(5,6), (1,3)(2,6)(4,7)(5,8) ]) ];
+[ Group([ (2,4,6), (1,3,2)(4,8)(6,7) ]), Group([ (1,6,7,8,4), (2,5)(3,4) ]), 
+  Group([ (3,6)(7,8), (2,4,5), (1,5)(2,4), (2,4)(6,7), (6,8,7), (1,2)(4,5), 
+      (3,7)(6,8) ]), 
+  Group([ (1,7,8,4)(2,5,3,6), (1,3)(2,6)(4,8)(5,7), (1,5)(2,4)(3,7)(6,8), 
+      (1,8)(2,7)(3,4)(5,6), (1,3)(2,6)(4,7)(5,8) ]) ]
+gap&gt; cg:=CosetGeometry(g,pabs);
+CosetGeometry( AlternatingGroup( [ 1 .. 8 ] ) )
+gap&gt; diag:=DiagramOfGeometry(cg);
+&lt; Diagram of CosetGeometry( AlternatingGroup( [ 1 .. 8 ] ) , 
+[ Group( [ (2,4,6), (1,3,2)(4,8)(6,7) ] ), 
+  Group( [ (1,6,7,8,4), (2,5)(3,4) ] ), 
+  Group( [ (3,6)(7,8), (2,4,5), (1,5)(2,4), (2,4)(6,7), (6,8,7), (1,2)(4,5), 
+      (3,7)(6,8) ] ), 
+  Group( [ (1,7,8,4)(2,5,3,6), (1,3)(2,6)(4,8)(5,7), (1,5)(2,4)(3,7)(6,8), 
+      (1,8)(2,7)(3,4)(5,6), (1,3)(2,6)(4,7)(5,8) ] ) ] ) &gt;
+gap&gt; DrawDiagram(diag, "neuma8");
+gap&gt; #Exec("gv neuma8.ps");
+gap&gt; point:=Random(ElementsOfIncidenceStructure(cg,1));
+&lt;element of type 1 of CosetGeometry( AlternatingGroup( [ 1 .. 8 ] ) )&gt;
+gap&gt; residue:=ResidueOfFlag(cg,[point]);
+CosetGeometry( Group( [ (1,3,5), (1,7,2)(3,8)(5,6) ] ) )
+gap&gt; diagc3:=DiagramOfGeometry(residue);
+&lt; Diagram of CosetGeometry( Group( [ (1,3,5), (1,7,2)(3,8)(5,6) ] ) , 
+[ Group( [ (2,3,8), (2,3,6), (5,8,6), (2,7,5,6,8) ] ), 
+  Group( [ (2,5)(6,8), (1,7,3), (1,7)(5,6), (5,8,6), (2,6)(5,8) ] ), 
+  Group( [ (1,6,3,2)(5,8), (2,7)(3,8) ] ) ] ) &gt;
+gap&gt; DrawDiagram(diagc3, "a7geo");
+gap&gt; #Exec("gv a7geo.ps");

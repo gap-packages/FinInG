@@ -9,10 +9,10 @@ pabs:= [
 cg:=CosetGeometry(g,pabs);
 diag:=DiagramOfGeometry(cg);
 DrawDiagram(diag, "neuma8");
-Exec("gv neuma8.ps");
+#Exec("gv neuma8.ps");
 point:=Random(ElementsOfIncidenceStructure(cg,1));
 residue:=ResidueOfFlag(cg,[point]);
 diagc3:=DiagramOfGeometry(residue);
 DrawDiagram(diagc3, "a7geo");
-Exec("gv a7geo.ps");
+#Exec("gv a7geo.ps");
 quit;
