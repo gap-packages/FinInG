@@ -1079,6 +1079,18 @@ InstallOtherMethod( \^,
 	function(x, em)
 		return OnProjSubspaces(x,em);
 	end );
+	
+#############################################################################
+#O  /^( <x>, <em> )
+# computes <var>^<el>, where <var> is an element of a incidence structure, and 
+# <em> a projective semilinear with projective space isomorhpism element.
+##
+InstallOtherMethod( \^, 
+	"for an element of an incidence structure and a projective semilinear element",
+	[IsElementOfIncidenceStructure, IsProjGrpElWithFrobWithPSIsom],
+	function(x, em)
+		return OnProjSubspacesReversing(x,em);
+	end );
 
 # CHECKED 11/09/11 jdb
 #############################################################################
