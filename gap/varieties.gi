@@ -211,11 +211,18 @@ InstallMethod( HermitianVariety,
 	"for a positive integer and a field",
 	[IsPosInt, IsField],
 	function(n,fld)
-		local pg, pring, list;
+		local pg, pring, list, hf, var, ty;
 		pg:=PG(n,fld);
 		pring:=PolynomialRing(fld,n+1);
 		list:=[EquationForPolarSpace(HermitianPolarSpace(n,fld))];
-		return ProjectiveVariety(pg,pring,list);
+		hf:=SesquilinearForm(HermitianPolarSpace(n,fld));
+		
+		var:=rec( geometry:=pg, polring:=pring, listofpols:=list);
+		ty:=NewType( NewFamily("HermitianVarietiesFamily"), IsHermitianVariety and 
+									IsHermitianVarietyRep );
+		ObjectifyWithAttributes(var,ty,
+				DefiningListOfPolynomials, list, SesquilinearForm, hf);
+		return var;
 	end );
 
 #############################################################################
@@ -231,14 +238,29 @@ InstallMethod( HermitianVariety,
 	end );
 
 #############################################################################
-#O HermitianVarietyNC( <pg>,<pring>,<pol>);
-# returns a nondegenerate hermitian variety in PG(n,fld)
-#InstallMethod( HermitianVariety,
-#	"for a projective space, a polynomial ring and a list polynomial",
+#O HermitianVariety( <pg>,<pring>,<pol>);
+# returns a hermitian variety in pg
+InstallMethod( HermitianVariety,
+	"for a projective space, a polynomial ring and a list polynomial",
+	[IsProjectiveSpace,IsPolynomialRing, IsPolynomial],
+	function(pg,pring,pol)
+		local list,hf;
+		hf:=HermitianFormByPolynomial(pol,pring);
+		list:=[pol];		
+	end );
+
+
+
+#######################################################################
+#O QuadraticVariety( <pg>,<pring>,<pol>);
+# returns a quadratic variety in pg
+#InstallMethod( QuadraticVariety,
+#	"for a projective space, a polynomial ring and a polynomial",
 #	[IsProjectiveSpace,IsPolynomialRing, IsPolynomial],
 #	function(pg,pring,pol)
-#		local 
-#		CHECK IF THE FORM IS HERMITIAN
+#		local
+		# Check if the polynomial is a quadratic form
+		
 #	end );
 
 

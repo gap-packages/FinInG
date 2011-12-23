@@ -116,6 +116,10 @@ DeclareOperation( "HyperplaneByDualCoordinates", [IsProjectiveSpace,IsList] );
 
 DeclareOperation( "HermitianVariety", [IsPosInt,IsField] );
 DeclareOperation( "HermitianVariety", [IsPosInt,IsPosInt] );
+DeclareOperation( "HermitianVariety", [IsProjectiveSpace, IsPolynomialRing, IsPolynomial ] );
+
+DeclareAttribute( "SesquilinearForm", IsHermitianVariety );
+
 
 DeclareOperation( "PolarSpace", [IsProjectiveVariety] );
 
