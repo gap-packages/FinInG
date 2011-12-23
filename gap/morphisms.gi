@@ -27,7 +27,7 @@
 #
 # Things To Do:
 #
-# - Preimages for GrassmannMap, VeroneseMap, and SegreMap.
+# - Preimages for GrassmannMap, VeroneseMap, and SegreMap.HermitianPolarSpace
 # - intertwiners for GrassmannMap and SegreMap
 # - should there be a type function as an attribute?
 # - maybe make a more userfriendly system to avoid em!.prefun( <arg> )
@@ -1407,7 +1407,7 @@ InstallMethod (CanonicalEmbeddingByFieldReduction,
 	type2 := PolarSpaceType(ps2);
 	d := ProjectiveDimension(ps2);
 	if type2 = "hermitian" then
-		canonical := HermitianVariety(d, f2);  
+		canonical := HermitianPolarSpace(d, f2);  
 		canonicalform := SesquilinearForm(canonical);             
 	elif type2 = "symplectic" then
 		canonical := SymplecticSpace(d, f2);  
@@ -2208,7 +2208,7 @@ InstallMethod( NaturalDuality,
 ##
 InstallMethod( NaturalDuality, 
 	"for a hermitian variety of rank 2",
-	[ IsHermitianVariety and IsGeneralisedPolygon ],
+	[ IsHermitianPolarSpace and IsGeneralisedPolygon ],
 	function( h )
     ## The way this works is that we map the lines of h to the canonical H(3,q^2),
     ## which Klein corresponds to points of Q+(5,q^2) using the usual plucker map.

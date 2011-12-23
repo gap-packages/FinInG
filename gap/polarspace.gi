@@ -750,11 +750,11 @@ InstallMethod(HyperbolicQuadric,
 
 # CHECKED 21/09/11 jdb
 #############################################################################
-#O  HermitianVariety( <d>, <f> )
+#O  HermitianPolarSpace( <d>, <f> )
 # returns the standard hermitian variety. See CanonicalGramMatrix
 # for details on the standard.
 ##
-InstallMethod( HermitianVariety, 
+InstallMethod( HermitianPolarSpace, 
 	"for an integer and a field",	
 	[ IsPosInt, IsField ],
 	function( d, f )
@@ -773,7 +773,7 @@ InstallMethod( HermitianVariety,
 		fi;    
 		types := TypesOfElementsOfIncidenceStructure( AmbientSpace(h) );
 		SetTypesOfElementsOfIncidenceStructure(h, types{[1..RankAttr(h)]});
-		SetIsHermitianVariety(h, true);
+		SetIsHermitianPolarSpace(h, true);
 		SetIsCanonicalPolarSpace(h, true);
 		SetPolarSpaceType(h, "hermitian");
 		if RankAttr(h) = 2 then
@@ -807,14 +807,14 @@ InstallMethod( HermitianVariety,
 
 # CHECKED 21/09/11 jdb
 #############################################################################
-#O  HermitianVariety( <d>, <q> )
-# returns the standard hermitian variety. See HermitianVariety method above.
+#O  HermitianPolarSpace( <d>, <q> )
+# returns the standard hermitian polar space. See HermitianPolarSpace method above.
 ##
-InstallMethod(HermitianVariety,
+InstallMethod(HermitianPolarSpace,
 	"for an two integers",
 	[ IsPosInt, IsPosInt ],
 	function( d, q ) 
-		return HermitianVariety(d, GF(q));
+		return HermitianPolarSpace(d, GF(q));
 	end );
 
 #############################################################################
@@ -1011,14 +1011,14 @@ InstallMethod( ViewObj,
 
 InstallMethod( ViewObj,
 	"for a hermitian variety",
-	[IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsHermitianVariety ],
+	[IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsHermitianPolarSpace ],
     function( p )
 		Print("H(",p!.dimension,", ",Sqrt(Size(p!.basefield)),"^2): ",EquationForPolarSpace(p),"=0");
 	end);
 
 InstallMethod( ViewObj,
 	"for a standard hermitian variety",
-	[IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsHermitianVariety and IsStandardPolarSpace],
+	[IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsHermitianPolarSpace and IsStandardPolarSpace],
     function( p )
 		Print("standard H(",p!.dimension,", ",Sqrt(Size(p!.basefield)),"^2)");
     end);
@@ -1120,13 +1120,13 @@ InstallMethod( Display,
   end );
 
 InstallMethod( PrintObj,
-  [IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsHermitianVariety ],
+  [IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsHermitianPolarSpace ],
         function( p )
-          Print("HermitianVariety(",p!.dimension,",",p!.basefield,"): ",EquationForPolarSpace(p),"=0");
+          Print("HermitianPolarSpace(",p!.dimension,",",p!.basefield,"): ",EquationForPolarSpace(p),"=0");
         end);
 
 InstallMethod( Display, 
-  [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsHermitianVariety ],
+  [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsHermitianPolarSpace ],
   function( p )
     Print("H(",p!.dimension,", ",Size(p!.basefield),")\n");
     Display(SesquilinearForm(p));
@@ -1157,8 +1157,8 @@ InstallMethod( IsomorphismCanonicalPolarSpace,
 		f := ps!.basefield;
 		type := PolarSpaceType( ps );
 		if type = "hermitian" then
-			canonical := HermitianVariety(d, f);               
-			SetIsHermitianVariety(ps, true);            
+			canonical := HermitianPolarSpace(d, f);               
+			SetIsHermitianPolarSpace(ps, true);            
 		elif type = "symplectic" then
 			canonical := SymplecticSpace(d, f);         
 			SetIsSymplecticSpace(ps, true);
@@ -1192,8 +1192,8 @@ InstallMethod( IsomorphismCanonicalPolarSpaceWithIntertwiner,
 		f := ps!.basefield;
 		type := PolarSpaceType( ps );
 		if type = "hermitian" then
-			canonical := HermitianVariety(d, f);               
-			SetIsHermitianVariety(ps, true);            
+			canonical := HermitianPolarSpace(d, f);               
+			SetIsHermitianPolarSpace(ps, true);            
 		elif type = "symplectic" then
 			canonical := SymplecticSpace(d, f);         
 			SetIsSymplecticSpace(ps, true);
@@ -2056,7 +2056,7 @@ InstallMethod( ShadowOfElement,
 			if pstype = "symplectic" then
 				localfactorspace := SymplecticSpace( psdim- 2*vdim, f );
 			elif pstype = "hermitian" then
-				localfactorspace := HermitianVariety( psdim-2*vdim, f );
+				localfactorspace := HermitianPolarSpace( psdim-2*vdim, f );
 			elif pstype = "elliptic" then 
 				localfactorspace := EllipticQuadric( psdim-2*vdim, f );
 			elif pstype = "parabolic" then 

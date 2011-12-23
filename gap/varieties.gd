@@ -43,6 +43,11 @@ DeclareRepresentation( "IsPointsOfAlgebraicVarietyRep", IsPointsOfAlgebraicVarie
 DeclareCategory( "IsProjectiveVariety", IsAlgebraicVariety );
 DeclareRepresentation( "IsProjectiveVarietyRep", IsProjectiveVariety and IsAlgebraicVarietyRep, ["geometry","polring","listofpols"]);
 
+DeclareCategory( "IsHermitianVariety", IsProjectiveVariety );
+DeclareRepresentation( "IsHermitianVarietyRep", IsHermitianVariety and IsProjectiveVarietyRep, ["geometry","polring","listofpols"]);
+
+DeclareCategory( "IsQuadraticVariety", IsProjetiveVariety );
+DeclareRepresentation( "IsQuadraticVarietyRep", IsQuadraticVariety and IsProjectiveVarietyRep, ["geometry","polring","listofpols"]);
 
 ### 3. Affine Varieties ###
 
@@ -109,6 +114,11 @@ DeclareOperation( "ProjectiveVariety", [IsProjectiveSpace, IsList] );
 DeclareOperation( "DualCoordinatesOfHyperplane", [IsSubspaceOfProjectiveSpace] );
 DeclareOperation( "HyperplaneByDualCoordinates", [IsProjectiveSpace,IsList] );
 
+DeclareOperation( "HermitianVariety", [IsPosInt,IsField] );
+DeclareOperation( "HermitianVariety", [IsPosInt,IsPosInt] );
+
+DeclareOperation( "PolarSpace", [IsProjectiveVariety] );
+
 ### 3. Affine Varieties ###
 
 DeclareOperation( "AffineVariety", [IsAffineSpace, IsPolynomialRing, IsList] );
@@ -170,7 +180,6 @@ DeclareOperation( "PointsOfGrassmannVariety", [IsGrassmannVariety] );
 ### 8. Miscellaneous ###
 DeclareOperation( "ConicOnFivePoints",  [ IsHomogeneousList and
                               IsSubspaceOfProjectiveSpaceCollection ] );
-DeclareOperation( "PolarSpace", [IsProjectiveVariety] );
 
 
 #############################################################################

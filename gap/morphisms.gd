@@ -152,7 +152,7 @@ DeclareOperation( "InversePluckerCoordinates", [ IsSubspaceOfProjectiveSpace ]);
 DeclareOperation( "KleinCorrespondence", [ IsClassicalPolarSpace ]);
 
 DeclareOperation( "NaturalDuality", [ IsSymplecticSpace and IsGeneralisedPolygon ]);
-DeclareOperation( "NaturalDuality", [ IsHermitianVariety and IsGeneralisedPolygon ]);
+DeclareOperation( "NaturalDuality", [ IsHermitianPolarSpace and IsGeneralisedPolygon ]);
 DeclareOperation( "ProjectiveCompletion", [ IsAffineSpace ] );
 
 

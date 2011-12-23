@@ -71,7 +71,7 @@ DeclareProperty( "IsEllipticQuadric", IsClassicalPolarSpace );
 DeclareProperty( "IsSymplecticSpace", IsClassicalPolarSpace );
 DeclareProperty( "IsParabolicQuadric", IsClassicalPolarSpace );
 DeclareProperty( "IsHyperbolicQuadric", IsClassicalPolarSpace );
-DeclareProperty( "IsHermitianVariety", IsClassicalPolarSpace );
+DeclareProperty( "IsHermitianPolarSpace", IsClassicalPolarSpace );
 DeclareProperty( "IsStandardPolarSpace", IsClassicalPolarSpace );
 
 
@@ -104,8 +104,8 @@ DeclareOperation( "ParabolicQuadric", [IsPosInt, IsField] );
 DeclareOperation( "ParabolicQuadric", [IsPosInt, IsPosInt] );
 DeclareOperation( "HyperbolicQuadric", [IsPosInt, IsField] );
 DeclareOperation( "HyperbolicQuadric", [IsPosInt, IsPosInt] );
-DeclareOperation( "HermitianVariety", [IsPosInt, IsField] );
-DeclareOperation( "HermitianVariety", [IsPosInt, IsPosInt] );
+DeclareOperation( "HermitianPolarSpace", [IsPosInt, IsField] );
+DeclareOperation( "HermitianPolarSpace", [IsPosInt, IsPosInt] );
 
 #DeclareAttribute( "DefiningPolarity", IsClassicalPolarSpace );
 

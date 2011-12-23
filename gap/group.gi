@@ -1983,7 +1983,7 @@ InstallMethod( CanonicalQuadraticForm,
 #  I've done some rigorous testing, and the following work very well:
 #    all groups of SymplecticSpace
 #    all groups of HyperbolicQuadric
-#    all groups of HermitianVariety (hard to check though, things get big fast)
+#    all groups of HermitianPolarSpace (hard to check though, things get big fast)
 #    all groups of EllipticQuadric (I've recently fixed a bug)
 #    all groups of ParabolicQuadric (I've recently fixed a bug)
 #

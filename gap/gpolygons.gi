@@ -1852,15 +1852,15 @@ InstallMethod( PrintObj,
         end);
 
 InstallMethod( ViewObj,
-  [ IsClassicalGQ and HasOrder and IsHermitianVariety ],
+  [ IsClassicalGQ and HasOrder and IsHermitianPolarSpace ],
         function( p )
           Print("H(",p!.dimension,", ",Sqrt(Size(p!.basefield)),"^2)");
         end);
 
 InstallMethod( PrintObj,
-  [ IsClassicalGQ and HasOrder and IsHermitianVariety ],
+  [ IsClassicalGQ and HasOrder and IsHermitianPolarSpace ],
         function( p )
-          Print("HermitianVariety(",p!.dimension,",",p!.basefield,")");
+          Print("HermitianPolarSpace(",p!.dimension,",",p!.basefield,")");
         end);
 		
 InstallMethod( ViewObj, [ IsClassicalGQ and HasOrder],

@@ -1,4 +1,4 @@
-############################################################################
+HermitianPolarSpace############################################################################
 ##
 ##  schemes.gi              FinInG package
 ##                                                              John Bamberg
@@ -28,7 +28,7 @@
 # - operations for GrassmannVariety, SegreVariety, VeroneseVariety
 #   what does the user need? make example code?
 # - groups for GrassmannVariety, SegreVariety
-# - put in John's code for "QuadricDefinedByPoints" and "HermitianVarietyDefinedByPoints"
+# - put in John's code for "QuadricDefinedByPoints" and "HermitianPolarSpaceDefinedByPoints"
 #   perhaps this should be generalised?
 # - what are things go in here?
 # - testing, documentation

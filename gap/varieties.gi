@@ -30,7 +30,7 @@
 # - operations for GrassmannVariety, SegreVariety, VeroneseVariety
 #   what does the user need? make example code?
 # - groups for GrassmannVariety, SegreVariety
-# - put in John's code for "QuadricDefinedByPoints" and "HermitianVarietyDefinedByPoints"
+# - put in John's code for "QuadricDefinedByPoints" and "HermitianPolarSpaceDefinedByPoints"
 #   perhaps this should be generalised?
 # - what are things go in here?
 # - testing, documentation
@@ -204,6 +204,74 @@ InstallMethod( HyperplaneByDualCoordinates,
 
 
 
+#############################################################################
+#O HermitianVariety( <n>, <fld>);
+# returns a nondegenerate hermitian variety in PG(n,fld)
+InstallMethod( HermitianVariety,
+	"for a positive integer and a field",
+	[IsPosInt, IsField],
+	function(n,fld)
+		local pg, pring, list;
+		pg:=PG(n,fld);
+		pring:=PolynomialRing(fld,n+1);
+		list:=[EquationForPolarSpace(HermitianPolarSpace(n,fld))];
+		return ProjectiveVariety(pg,pring,list);
+	end );
+
+#############################################################################
+#O HermitianVariety( <n>, <q>);
+# returns a nondegenerate hermitian variety in PG(n,q)
+InstallMethod( HermitianVariety,
+	"for a positive integer and a prime power",
+	[IsPosInt, IsPosInt],
+	function(n,q)
+		local fld;
+		fld:=GF(q);
+		return HermitianVariety(n,fld);
+	end );
+
+#############################################################################
+#O HermitianVarietyNC( <pg>,<pring>,<pol>);
+# returns a nondegenerate hermitian variety in PG(n,fld)
+#InstallMethod( HermitianVariety,
+#	"for a projective space, a polynomial ring and a list polynomial",
+#	[IsProjectiveSpace,IsPolynomialRing, IsPolynomial],
+#	function(pg,pring,pol)
+#		local 
+#		CHECK IF THE FORM IS HERMITIAN
+#	end );
+
+
+#############################################################################
+#O  PolarSpace ( <var> )
+# returns the polar space defined by the equation in the list of polynomials
+# of <var>. It is of course checked that this list contains only one equation.
+# it is then decided if we try to convert the polynomial to a quadric form or to 
+# a hermitian form.
+##
+InstallMethod( PolarSpace,
+	"for a projective algebraic variety",
+	[IsProjectiveVariety and IsProjectiveVarietyRep],	
+	function(var)
+		local list,form,f,eq,r,degree,lm,l;
+		list := DefiningListOfPolynomials(var);
+		if Length(list) <> 1 then
+			Error("<var> does not define a polar space");
+		else
+			f := BaseField(AmbientSpace(var));
+			r := var!.polring;
+			eq := list[1];
+			lm := LeadingMonomial(eq);
+			l := Length(lm)/2;
+			degree := Sum(List([1..l],x->lm[2*x]));
+			if degree = 2 then
+				form := QuadraticFormByPolynomial(eq,r);
+			else
+				form := HermitianFormByPolynomial(eq,r);
+			fi;
+			return PolarSpace(form);
+		fi;
+	end);
 
 
 
@@ -277,7 +345,7 @@ InstallMethod( AlgebraicVariety,
 	end );
 
 #############################################################################
-# View, print methods for projective varieties.
+# View, print methods for affine varieties.
 ##
 
 InstallMethod( ViewObj, 
@@ -447,40 +515,6 @@ InstallMethod( AmbientSpace,
 		return ShallowCopy(av!.geometry);
 	end );
 	
-
-
-#############################################################################
-#O  PolarSpace ( <var> )
-# returns the polar space defined by the equation in the list of polynomials
-# of <var>. It is of course checked that this list contains only one equation.
-# it is then decided if we try to convert the polynomial to a quadric form or to 
-# a hermitian form.
-##
-InstallMethod( PolarSpace,
-	"for a projective algebraic variety",
-	[IsProjectiveVariety and IsProjectiveVarietyRep],	
-	function(var)
-		local list,form,f,eq,r,degree,lm,l;
-		list := DefiningListOfPolynomials(var);
-		if Length(list) <> 1 then
-			Error("<var> does not define a polar space");
-		else
-			f := BaseField(AmbientSpace(var));
-			r := var!.polring;
-			eq := list[1];
-			lm := LeadingMonomial(eq);
-			l := Length(lm)/2;
-			degree := Sum(List([1..l],x->lm[2*x]));
-			if degree = 2 then
-				form := QuadraticFormByPolynomial(eq,r);
-			else
-				form := HermitianFormByPolynomial(eq,r);
-			fi;
-			return PolarSpace(form);
-		fi;
-	end);
-
-
 
 
 
