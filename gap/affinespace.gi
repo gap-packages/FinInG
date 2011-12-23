@@ -27,6 +27,7 @@
 #
 # - testing
 # - ProjectiveCompletion (choice of hyperplane?)
+# - Perhaps we should disable the iterator of a shadow of a flag?
 #
 ########################################
 
@@ -487,7 +488,7 @@ InstallMethod( Enumerator, [ IsVectorSpaceTransversal ],
 InstallMethod(Iterator, "for subspaces of an affine space",
         [IsAllSubspacesOfAffineSpace],  
   function( vs )
-  ## An affine variety will be represented by a pair (vector,direction).
+  ## An affine subspace will be represented by a pair (vector,direction).
   ## So for example, an affine plane x+<W> will be represented by
   ## (x', proj. line)  (where x' is the transversal rep corresponding to x).
     local ps, j, vars, vec, subs, f;
@@ -517,7 +518,7 @@ InstallMethod(Iterator, "for subspaces of an affine space",
 InstallMethod( Enumerator, "for subspaces of an affine space",
         [ IsAllSubspacesOfAffineSpace ],  
   function( vs )
-  ## An affine variety will be represented by a pair (vector,direction).
+  ## An affine subspace will be represented by a pair (vector,direction).
   ## So for example, an affine plane x+<W> will be represented by
   ## (x', proj. line)  (where x' is the transversal rep corresponding to x).
   
@@ -1045,6 +1046,7 @@ InstallMethod( Iterator, "for a shadow in an affine space",
 	         iter -> iter!.pos = newfinish and IsDoneIterator(assoc!.spaceiter);
     else
        # still need to truncate the iterator of this one ...
+       Print("Iterators of shadows of flags in affine spaces are not complete in this version\n");
        iter := Iterator( ShadowOfFlag( ps, ImagesSet(map, list), j) );
     fi;
  
