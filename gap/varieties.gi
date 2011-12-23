@@ -1591,6 +1591,18 @@ InstallMethod( GrassmannVariety,
 end );
 
 #############################################################################
+#############################################################################
+#O  GrassmannVariety( <subspaces> )
+# returns the Grassmann variety from a collection of subspaces of a projective space
+##
+InstallMethod( GrassmannVariety, 
+	"for a collection of subspaces of a projective space", 
+	[ IsSubspacesOfProjectiveSpace ],
+	function( subspaces )
+    return GrassmannVariety( subspaces!.type-1, subspaces!.geometry);
+end );
+
+#############################################################################
 
 #############################################################################
 # View, print methods for Grassmann varieties.

@@ -184,6 +184,7 @@ DeclareOperation( "GrassmannMap", [ IsGrassmannVariety ] );
 DeclareOperation( "GrassmannVariety", [ IsPosInt,IsProjectiveSpace ] );
 DeclareOperation( "GrassmannVariety", [IsPosInt, IsPosInt, IsField]);
 DeclareOperation( "GrassmannVariety", [IsPosInt, IsPosInt, IsPosInt]);
+DeclareOperation( "GrassmannVariety", [ IsSubspacesOfProjectiveSpace ]);
 
 DeclareOperation( "PointsOfGrassmannVariety", [IsGrassmannVariety] );
 
