@@ -1,12 +1,12 @@
-gap> h:=HermitianVariety(2, 7^2);
-H(2, 7^2)
-gap> pg := AmbientSpace( h );
-PG(2, 49)
-gap> lines := Lines( pg );
-&lt;lines of PG(2, 49)>
-gap> curve := AsList( Points( h ) );;
+gap&gt; h:=HermitianPolarSpace(2, 7^2);
+standard H(2, 7^2)
+gap&gt; pg := AmbientSpace( h );
+ProjectiveSpace(2, 49)
+gap&gt; lines := Lines( pg );
+&lt;lines of ProjectiveSpace(2, 49)&gt;
+gap&gt; curve := AsList( Points( h ) );;
 #I  Computing nice monomorphism...
-gap> Size(curve);
+gap&gt; Size(curve);
 344
-gap> Collected( List(lines, t -> Number(curve, c-> c in t)));
+gap&gt; Collected( List(lines, t -&gt; Number(curve, c-&gt; c in t)));
 [ [ 1, 344 ], [ 8, 2107 ] ]

@@ -1,5 +1,5 @@
 # examples_hermitian.g
-h:=HermitianVariety(2, 7^2);
+h:=HermitianPolarSpace(2, 7^2);
 pg := AmbientSpace( h );
 lines := Lines( pg );
 curve := AsList( Points( h ) );;

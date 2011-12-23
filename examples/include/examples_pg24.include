@@ -1,14 +1,18 @@
-gap> pg := ProjectiveSpace(2, 4);
-PG(2, 4)
-gap> points := Points( pg );
-&lt;points of PG(2, 4)>
-gap> pointslist := AsList( points );
-[ &lt;a point in PG(2, 4)>, &lt;a point in PG(2, 4)>, &lt;a point in PG(2, 4)>, 
-  &lt;a point in PG(2, 4)>, &lt;a point in PG(2, 4)>, &lt;a point in PG(2, 4)>, 
-  &lt;a point in PG(2, 4)>, &lt;a point in PG(2, 4)>, &lt;a point in PG(2, 4)>, 
-  &lt;a point in PG(2, 4)>, &lt;a point in PG(2, 4)>, &lt;a point in PG(2, 4)>, 
-  &lt;a point in PG(2, 4)>, &lt;a point in PG(2, 4)>, &lt;a point in PG(2, 4)>, 
-  &lt;a point in PG(2, 4)>, &lt;a point in PG(2, 4)>, &lt;a point in PG(2, 4)>, 
-  &lt;a point in PG(2, 4)>, &lt;a point in PG(2, 4)>, &lt;a point in PG(2, 4)> ]
-gap> Display( pointslist[1] );
+gap&gt; pg := ProjectiveSpace(2, 4);
+ProjectiveSpace(2, 4)
+gap&gt; points := Points( pg );
+&lt;points of ProjectiveSpace(2, 4)&gt;
+gap&gt; pointslist := AsList( points );
+[ &lt;a point in ProjectiveSpace(2, 4)&gt;, &lt;a point in ProjectiveSpace(2, 4)&gt;, 
+  &lt;a point in ProjectiveSpace(2, 4)&gt;, &lt;a point in ProjectiveSpace(2, 4)&gt;, 
+  &lt;a point in ProjectiveSpace(2, 4)&gt;, &lt;a point in ProjectiveSpace(2, 4)&gt;, 
+  &lt;a point in ProjectiveSpace(2, 4)&gt;, &lt;a point in ProjectiveSpace(2, 4)&gt;, 
+  &lt;a point in ProjectiveSpace(2, 4)&gt;, &lt;a point in ProjectiveSpace(2, 4)&gt;, 
+  &lt;a point in ProjectiveSpace(2, 4)&gt;, &lt;a point in ProjectiveSpace(2, 4)&gt;, 
+  &lt;a point in ProjectiveSpace(2, 4)&gt;, &lt;a point in ProjectiveSpace(2, 4)&gt;, 
+  &lt;a point in ProjectiveSpace(2, 4)&gt;, &lt;a point in ProjectiveSpace(2, 4)&gt;, 
+  &lt;a point in ProjectiveSpace(2, 4)&gt;, &lt;a point in ProjectiveSpace(2, 4)&gt;, 
+  &lt;a point in ProjectiveSpace(2, 4)&gt;, &lt;a point in ProjectiveSpace(2, 4)&gt;, 
+  &lt;a point in ProjectiveSpace(2, 4)&gt; ]
+gap&gt; Display( pointslist[1] );
 [ 0*Z(2), 0*Z(2), Z(2)^0 ]

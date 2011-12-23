@@ -1,17 +1,16 @@
-gap> SetInfoLevel( InfoDesargues, 0 );
-gap> q := 9;
+gap&gt; q := 9;
 9
-gap> f := GF(q);
+gap&gt; f := GF(q);
 GF(3^2)
-gap> squares := AsList(Group(Z(q)^2));
+gap&gt; squares := AsList(Group(Z(q)^2));
 [ Z(3)^0, Z(3), Z(3^2)^2, Z(3^2)^6 ]
-gap> n := First(GF(q), x -> not IsZero(x) and not x in squares);
+gap&gt; n := First(GF(q), x -&gt; not IsZero(x) and not x in squares);
 Z(3^2)
-gap> sigma := FrobeniusAutomorphism( f );
+gap&gt; sigma := FrobeniusAutomorphism( f );
 FrobeniusAutomorphism( GF(3^2) )
-gap> zero := Zero(f);
+gap&gt; zero := Zero(f);
 0*Z(3)
-gap> qclan := List(GF(q), t -> [[t, zero], [zero,-n * t^sigma]] );
+gap&gt; qclan := List(GF(q), t -&gt; [[t, zero], [zero,-n * t^sigma]] );
 [ [ [ 0*Z(3), 0*Z(3) ], [ 0*Z(3), 0*Z(3) ] ], 
   [ [ Z(3^2), 0*Z(3) ], [ 0*Z(3), Z(3)^0 ] ], 
   [ [ Z(3^2)^5, 0*Z(3) ], [ 0*Z(3), Z(3) ] ], 
@@ -21,15 +20,35 @@ gap> qclan := List(GF(q), t -> [[t, zero], [zero,-n * t^sigma]] );
   [ [ Z(3), 0*Z(3) ], [ 0*Z(3), Z(3^2) ] ], 
   [ [ Z(3^2)^7, 0*Z(3) ], [ 0*Z(3), Z(3^2)^2 ] ], 
   [ [ Z(3^2)^6, 0*Z(3) ], [ 0*Z(3), Z(3^2)^7 ] ] ]
-gap> IsqClan( qclan, f );
+gap&gt; IsqClan( qclan, f );
 true
-gap> egq1 := EGQByqClan( qclan, f );  
-&lt;EGQ of order [ 81, 9 ] and basepoint 0>
-gap> blt := BLTSetByqClan( qclan, f );
-[ &lt;a point in Q(4, 9)>, &lt;a point in Q(4, 9)>, &lt;a point in Q(4, 9)>, 
-  &lt;a point in Q(4, 9)>, &lt;a point in Q(4, 9)>, &lt;a point in Q(4, 9)>, 
-  &lt;a point in Q(4, 9)>, &lt;a point in Q(4, 9)>, &lt;a point in Q(4, 9)>, 
-  &lt;a point in Q(4, 9)> ]
-gap> egq2 := EGQByBLTSet( blt );
+gap&gt; qclan := qClan(qclan , f);
+&lt;q-clan over GF(3^2)&gt;
+gap&gt; egq1 := EGQByqClan( qclan);  
+#I  Computed Kantor family. Now computing EGQ...
+#I  Computing points from Kantor family...
+#I  Computing lines from Kantor family...
+&lt;EGQ of order [ 81, 9 ] and basepoint 0&gt;
+gap&gt; blt := BLTSetByqClan( qclan );
+[ &lt;a point in Q(4, 9): -x_1*x_5-x_2*x_4+Z(3^2)^5*x_3^2=0&gt;, 
+  &lt;a point in Q(4, 9): -x_1*x_5-x_2*x_4+Z(3^2)^5*x_3^2=0&gt;, 
+  &lt;a point in Q(4, 9): -x_1*x_5-x_2*x_4+Z(3^2)^5*x_3^2=0&gt;, 
+  &lt;a point in Q(4, 9): -x_1*x_5-x_2*x_4+Z(3^2)^5*x_3^2=0&gt;, 
+  &lt;a point in Q(4, 9): -x_1*x_5-x_2*x_4+Z(3^2)^5*x_3^2=0&gt;, 
+  &lt;a point in Q(4, 9): -x_1*x_5-x_2*x_4+Z(3^2)^5*x_3^2=0&gt;, 
+  &lt;a point in Q(4, 9): -x_1*x_5-x_2*x_4+Z(3^2)^5*x_3^2=0&gt;, 
+  &lt;a point in Q(4, 9): -x_1*x_5-x_2*x_4+Z(3^2)^5*x_3^2=0&gt;, 
+  &lt;a point in Q(4, 9): -x_1*x_5-x_2*x_4+Z(3^2)^5*x_3^2=0&gt;, 
+  &lt;a point in Q(4, 9): -x_1*x_5-x_2*x_4+Z(3^2)^5*x_3^2=0&gt; ]
+gap&gt; egq2 := EGQByBLTSet( blt );
+#I  No intertwiner computed. One of the polar spaces must have a collineation 
+group computed
+#I  Computing nice monomorphism...
+#I  Now embedding dual BLT-set into W(5,q)...
+#I  Computing points(1) of Knarr construction...
+#I  Computing lines(1) of Knarr construction...
+#I  Computing points(2) of Knarr construction...
+#I  Computing lines(2) of Knarr construction...please wait
+#I  Computing elation group...
 &lt;EGQ of order [ 81, 9 ] and basepoint [ Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3),
-   0*Z(3), 0*Z(3) ]>
+   0*Z(3), 0*Z(3) ]&gt;

@@ -1,25 +1,25 @@
-gap> w3 := SymplecticSpace(3, 3);
+gap&gt; w3 := SymplecticSpace(3, 3);
 W(3, 3)
-gap> w5 := SymplecticSpace(5, 3);
-W(5, 3)
-gap> pg := AmbientSpace( w5 );
-PG(5, 3)
-gap> solids := ElementsOfIncidenceStructure(pg, 4);
-&lt;solids of PG(5, 3)>
-gap> iter := Iterator( solids );
-&lt;iterator>
-gap> perp := PolarityOfProjectiveSpace( w5 );
-&lt;polarity of PG(5, GF(3)), &lt; immutable compressed matrix 6x6 over GF(
-3) >, F^0 >
-gap> solid := NextIterator( iter );
-&lt;a solid in PG(5, 3)>
-gap> solid^perp;
-&lt;a line in PG(5, 3)>
-gap> em := NaturalEmbeddingBySubspace( w3, w5, solid );
-&lt;geometry morphism from &lt;Elements of W(3, 3)> to &lt;Elements of W(5, 3)>>
-gap> points := Points( w3 );
-&lt;points of W(3, 3)>
-gap> points2 := ImagesSet(em, AsSet(points));;
+gap&gt; w5 := SymplecticSpace(5, 3);
+standard W(5, 3)
+gap&gt; pg := AmbientSpace( w5 );
+ProjectiveSpace(5, 3)
+gap&gt; solids := ElementsOfIncidenceStructure(pg, 4);
+&lt;solids of ProjectiveSpace(5, 3)&gt;
+gap&gt; iter := Iterator( solids );
+&lt;iterator&gt;
+gap&gt; perp := PolarityOfProjectiveSpace( w5 );
+&lt;polarity of PG(5, GF(3)) &gt;
+gap&gt; solid := NextIterator( iter );
+&lt;a solid in ProjectiveSpace(5, 3)&gt;
+gap&gt; solid^perp;
+&lt;a line in ProjectiveSpace(5, 3)&gt;
+gap&gt; em := NaturalEmbeddingBySubspace( w3, w5, solid );
+&lt;geometry morphism from &lt;Elements of W(3, 3)&gt; to &lt;Elements of standard W(5, 
+3)&gt;&gt;
+gap&gt; points := Points( w3 );
+&lt;points of W(3, 3)&gt;
+gap&gt; points2 := ImagesSet(em, AsSet(points));;
 #I  Computing nice monomorphism...
-gap> ForAll(points2, x -> x in solid);
+gap&gt; ForAll(points2, x -&gt; x in solid);
 true

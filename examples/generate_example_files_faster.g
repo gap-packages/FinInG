@@ -133,7 +133,7 @@ preambledir := DirectoriesPackageLibrary("fining","examples/")[1];
 outputdir := DirectoriesPackageLibrary("fining","examples/output")[1];
 gap := Filename(Directory("/usr/bin/"),"gap4r4");  
 paths := JoinStringsWithSeparator(GAP_ROOT_PATHS,";");
-args := JoinStringsWithSeparator(["-l ",paths," -L fining.ws"]," ");
+args := JoinStringsWithSeparator(["-l ",paths," -L fining.ws"," -o 4G"]," ");
 
 #create .out files using the saved workspace
 #IMPORTANT: here we suppose that the script to start up our favorite version of
