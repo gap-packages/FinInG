@@ -275,6 +275,27 @@ InstallMethod( HermitianVariety,
 	end );
 
 
+#############################################################################
+# View, print methods for hermitian varieties.
+##
+
+InstallMethod( ViewObj, 
+	"for a hermitian variety",
+	[ IsHermitianVariety and IsHermitianVarietyRep ],
+	function( var )
+		Print("Hermitian Variety in ");
+		ViewObj(var!.geometry);
+	end );
+
+InstallMethod( PrintObj, 
+	"for a hermitian algebraic variety",
+	[ IsHermitianVariety and IsHermitianVarietyRep ],
+	function( var )
+		Print("Hermitian Variety in ");
+		ViewObj(var!.geometry);
+	end );
+
+
 #######################################################################
 #O QuadraticVariety( <pg>,<pring>,<pol>);
 # returns a quadratic variety in pg
@@ -293,6 +314,44 @@ InstallMethod( QuadraticVariety,
 		return var;
 	end );
 
+#######################################################################
+#O QuadraticVariety( <pg>,<pol>);
+# returns a quadratic variety in pg
+InstallMethod( QuadraticVariety,
+	"for a projective space, a polynomial ring and a polynomial",
+	[IsProjectiveSpace, IsPolynomial],
+	function(pg,pol)
+		local qf,pring,list,var,ty;
+		pring:=PolynomialRing(pg!.basefield, pg!.dimension +1);
+		qf:=QuadraticFormByPolynomial(pol,pring);
+		list:=[pol];
+		var:=rec( geometry:=pg, polring:=pring, listofpols:=list);
+		ty:=NewType( NewFamily("QuadraticVarietiesFamily"), IsQuadraticVariety and 
+									IsQuadraticVarietyRep );
+		ObjectifyWithAttributes(var,ty,
+				DefiningListOfPolynomials, list, QuadraticForm, qf);
+		return var;
+	end );
+
+#############################################################################
+# View, print methods for quadratic varieties.
+##
+
+InstallMethod( ViewObj, 
+	"for a quadratic variety",
+	[ IsQuadraticVariety and IsQuadraticVarietyRep ],
+	function( var )
+		Print("Quadratic Variety in ");
+		ViewObj(var!.geometry);
+	end );
+
+InstallMethod( PrintObj, 
+	"for a quadratic algebraic variety",
+	[ IsQuadraticVariety and IsQuadraticVarietyRep ],
+	function( var )
+		Print("Quadratic Variety in ");
+		ViewObj(var!.geometry);
+	end );
 
 #############################################################################
 #O  PolarSpace ( <var> )

@@ -172,7 +172,7 @@ together with the canonical forms that are chosen in
   <Row><Item>polar space</Item><Item>canonical form</Item><Item>characteristic <M>p</M></Item>
   <Item>projective dimension</Item></Row>
  <HorLine/>
-   <Row><Item>hermitian variety</Item>
+   <Row><Item>hermitian polar space</Item>
    <Item><Alt Not="HTML"><M>X_0^{q+1} + X_1^{q+1} + \ldots + X_{n}^{q+1}</M></Alt>
          <Alt Only="HTML">X&lt;sub>0&lt;/sub>&lt;sup>q+1&lt;/sup> +
 	 X&lt;sub>1&lt;/sub>&lt;sup>q+1&lt;/sup> ... +
@@ -254,11 +254,11 @@ over <A>F</A> for a field <A>F</A> or over GF(<A>q</A>) for a prime power
 </ManSection>
 
 <ManSection>
-<Oper Name="HermitianVariety" Arg="d,F"/>
-<Oper Name="HermitianVariety" Arg="d,q"/>
-<Returns>a Hermitian variety</Returns>
+<Oper Name="HermitianPolarSpace" Arg="d,F"/>
+<Oper Name="HermitianPolarSpace" Arg="d,q"/>
+<Returns>a Hermitian polar space</Returns>
 <Description>
-This function returns the Hermitian variety of dimension <A>d</A>
+This function returns the Hermitian polar space of dimension <A>d</A>
 over <A>F</A> for a field <A>F</A> or over GF(<A>q</A>) for a prime power
 <A>q</A>.
 <Example>
