@@ -26,12 +26,30 @@ with finite projective spaces.
 <Section>
 <Heading>Projective Spaces and basic operations</Heading>
 
-A <E>projective space</E> is a point-line
-incidence geometry, satisfying few well known axioms. In
-<Package>FinInG</Package>, we deal with finite Desarguesian projective
-spaces. It is well known that these geometries can be described completely using
-vector spaces over finite fields. Hence, the underlying vector space and matrix
-group are to our advantage. We refer the reader to
+A <E>projective space</E> is a point-line incidence geometry, satisfying few well known axioms. 
+An axiomatic treatment can e.g. be found in <Cite Key="VY65a"/> and <Cite Key="VY65b"/>. 
+Polar spaces are axiomatically, point-line geometries, but
+may contain higher dimensional projective subspaces too. The dimension of the maximal subspaces
+determines the rank of the projective space as an incidence geometry.<P/>
+
+In <Package>FinInG</Package>, we deal with <E>finite Desarguesian projective
+spaces</E>. It is well known that these geometries can be described completely using
+vector spaces over finite fields. The elements of the projective space are all subspaces of the vector space.
+So the projective points correspond with the vectorlines, the projective lines correspond with the vectorplanes, etc.
+From the axiomatic point of view, a projective space is a point-line geometry, 
+and has rank at least 2. But a projective line is obtained if we start with a two dimensional vector space. Starting with a
+one dimensional vector space yields a single projective point. Both examples are not a projective space in the axiomatic point of 
+view, but are in <Package>FinInG</Package> considered as projective spaces. This abuses the terminology a bit, if one asks that projective
+spaces have rank at least 2.
+
+<ManSection>
+<Filt Name="IsProjectiveSpace" Type="Category"/>
+<Description>
+This category is a subcategory of <C>IsLieGeometry</C>, and contains all finite Desarguesian projective spaces.
+</Description>
+</ManSection>
+
+The underlying vector space and matrix group will be to our advantage. We refer the reader to
 <Cite Key="HirschfeldThas"/> for the necessary background theory (if it is not
 otherwise provided).<P/> 
 
