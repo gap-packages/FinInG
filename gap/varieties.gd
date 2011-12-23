@@ -125,6 +125,7 @@ DeclareOperation( "QuadraticVariety", [IsProjectiveSpace, IsPolynomial ] );
 DeclareAttribute( "SesquilinearForm", IsHermitianVariety );
 DeclareAttribute( "QuadraticForm", IsQuadraticVariety );
 
+DeclareProperty( "IsStandardHermitianVariety", IsHermitianVariety );
 
 DeclareOperation( "PolarSpace", [IsProjectiveVariety] );
 

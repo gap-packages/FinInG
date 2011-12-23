@@ -221,7 +221,7 @@ InstallMethod( HermitianVariety,
 		ty:=NewType( NewFamily("HermitianVarietiesFamily"), IsHermitianVariety and 
 									IsHermitianVarietyRep );
 		ObjectifyWithAttributes(var,ty,
-				DefiningListOfPolynomials, list, SesquilinearForm, hf);
+				DefiningListOfPolynomials, list, SesquilinearForm, hf, IsStandardHermitianVariety, true);
 		return var;
 	end );
 
@@ -251,7 +251,7 @@ InstallMethod( HermitianVariety,
 		ty:=NewType( NewFamily("HermitianVarietiesFamily"), IsHermitianVariety and 
 									IsHermitianVarietyRep );
 		ObjectifyWithAttributes(var,ty,
-				DefiningListOfPolynomials, list, SesquilinearForm, hf);
+				DefiningListOfPolynomials, list, SesquilinearForm, hf, IsStandardHermitianVariety, false);
 		return var;
 	end );
 
@@ -270,7 +270,7 @@ InstallMethod( HermitianVariety,
 		ty:=NewType( NewFamily("HermitianVarietiesFamily"), IsHermitianVariety and 
 									IsHermitianVarietyRep );
 		ObjectifyWithAttributes(var,ty,
-				DefiningListOfPolynomials, list, SesquilinearForm, hf);
+				DefiningListOfPolynomials, list, SesquilinearForm, hf, IsStandardHermitianVariety, false);
 		return var;
 	end );
 
@@ -319,6 +319,9 @@ InstallMethod( PolarSpace,
 			if degree = 2 then
 				form := QuadraticFormByPolynomial(eq,r);
 			else
+				if IsStandardHermitianVariety( var ) then
+					return HermitianPolarSpace( ProjectiveDimension(AmbientSpace(var)), f);
+				fi;
 				form := HermitianFormByPolynomial(eq,r);
 			fi;
 			return PolarSpace(form);

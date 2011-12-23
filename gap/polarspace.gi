@@ -97,7 +97,7 @@ InstallMethod( PolarSpace,
 	"for a sesquilinear form, a field, a group and an action function",
 	[ IsSesquilinearForm, IsField, IsGroup, IsFunction ],
 	function( m, f, g, act )
-		local geo, ty, gram, eq, r, i1, i2, r2, fam, j;
+		local geo, ty, gram, eq, r, i1, i2, r2, fam, j, flag;
 		if IsDegenerateForm( m ) then 
 			Error("Form is degenerate");
 		elif IsPseudoForm( m ) then
@@ -106,12 +106,17 @@ InstallMethod( PolarSpace,
 		gram := m!.matrix;
 		geo := rec( basefield := f, dimension := Length(gram)-1,
 					vectorspace := FullRowSpace(f,Length(gram)) );
+		if IsHermitianForm(m) then
+			flag := IsHermitianVariety;
+		else
+			flag := IsQuadraticVariety;
+		fi;
 		if not IsAlternatingForm(m) then
 			if WittIndex(m) = 2 then
 				ty := NewType( GeometriesFamily,
-						IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsClassicalGQ and IsProjectiveVariety);
+						IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsClassicalGQ and flag);
 				else ty := NewType( GeometriesFamily,
-							IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsProjectiveVariety);
+							IsClassicalPolarSpace and IsClassicalPolarSpaceRep and flag);
 			fi;
 		else
 			if WittIndex(m) = 2 then
@@ -169,17 +174,22 @@ InstallMethod( PolarSpaceStandard,
 	"for a sesquilinear form",
 	[ IsSesquilinearForm ],
 	function( m )
-		local geo, ty, gram, f, eq, r, i1, i2, r2, fam, j;
+		local geo, ty, gram, f, eq, r, i1, i2, r2, fam, j, flag;
 		gram := m!.matrix;
 		f := m!.basefield;
 		geo := rec( basefield := f, dimension := Length(gram)-1,
 				vectorspace := FullRowSpace(f,Length(gram)) );
+		if IsHermitianForm(m) then
+			flag := IsHermitianVariety;
+		else
+			flag := IsQuadraticVariety;
+		fi;
 		if not IsAlternatingForm(m) then
 			if WittIndex(m) = 2 then
 				ty := NewType( GeometriesFamily,
-						IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsClassicalGQ and IsProjectiveVariety);
+						IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsClassicalGQ and flag);
 				else ty := NewType( GeometriesFamily,
-							IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsProjectiveVariety);
+							IsClassicalPolarSpace and IsClassicalPolarSpaceRep and flag);
 			fi;
 		else
 			if WittIndex(m) = 2 then
@@ -235,7 +245,7 @@ InstallMethod( PolarSpaceStandard,
 	"for a quadratic form",
 	[ IsQuadraticForm ],
 	function( m )
-		local geo, ty, gram, polar, f, flavour, eq;
+		local geo, ty, gram, polar, f, flavour, eq, flag;
 		f := m!.basefield;
 		gram := m!.matrix;
 		polar := AssociatedBilinearForm( m );
@@ -267,7 +277,7 @@ InstallMethod( PolarSpace,
 	"for a sesquilinear form",
 	[ IsSesquilinearForm ],
 	function( m )
-		local geo, ty, gram, f, eq, r, i1, i2, r2, fam, j;  
+		local geo, ty, gram, f, eq, r, i1, i2, r2, fam, j, flag;  
 		if IsDegenerateForm( m ) then 
 			Error("Form is degenerate");
 		elif IsPseudoForm( m ) then
@@ -277,12 +287,17 @@ InstallMethod( PolarSpace,
 		f := m!.basefield;
 		geo := rec( basefield := f, dimension := Length(gram)-1,
 				vectorspace := FullRowSpace(f,Length(gram)) );
+		if IsHermitianForm(m) then
+			flag := IsHermitianVariety;
+		else
+			flag := IsQuadraticVariety;
+		fi;
 		if not IsAlternatingForm(m) then
 			if WittIndex(m) = 2 then
 				ty := NewType( GeometriesFamily,
-						IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsClassicalGQ and IsProjectiveVariety);
+						IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsClassicalGQ and flag);
 				else ty := NewType( GeometriesFamily,
-							IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsProjectiveVariety);
+							IsClassicalPolarSpace and IsClassicalPolarSpaceRep and flag);
 			fi;
 		else
 			if WittIndex(m) = 2 then
@@ -350,9 +365,9 @@ InstallMethod( PolarSpace,
 					vectorspace := FullRowSpace(f,Length(gram)) );
 		if WittIndex(m) = 2 then
 			ty := NewType( GeometriesFamily,
-					IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsClassicalGQ);
+					IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsClassicalGQ and IsQuadraticVariety);
 		else ty := NewType( GeometriesFamily,
-					IsClassicalPolarSpace and IsClassicalPolarSpaceRep );
+					IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsQuadraticVariety);
 		fi;
 		eq := PolynomialOfForm(m);
 		ObjectifyWithAttributes( geo, ty, 
@@ -386,9 +401,9 @@ InstallMethod( PolarSpace,
 					vectorspace := FullRowSpace(f,Length(gram)) );
 		if WittIndex(m) = 2 then
 			ty := NewType( GeometriesFamily,
-                  IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsClassicalGQ and IsProjectiveVariety);
+                  IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsClassicalGQ and IsHermitianVariety);
 		else ty := NewType( GeometriesFamily,
-                  IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsProjectiveVariety);
+                  IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsHermitianVariety);
 		fi;
 		eq := PolynomialOfForm(m);
 		ObjectifyWithAttributes( geo, ty, 
