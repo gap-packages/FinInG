@@ -68,6 +68,14 @@ An <E>algebraic variety</E> in <Package>FinInG</Package> is an algebraic variety
         The argument <A>pts</A> is the set of <Ref Oper="PointsOfAlgebraicVariety" /> of an algebraic variety <A>var</A>. This operation returns an iterator for the points of an algebraic variety.
     </Description>
 </ManSection>
+<ManSection>
+    <Oper Name="\in" Arg="x,var"/>
+    <Oper Name="\in" Arg="x,pts"/>
+    <Returns>true or false</Returns>
+    <Description>
+        The argument <A>x</A> is a point of the <Ref Attr="AmbientSpace" /> of an algebraic variety <Ref Oper="AlgebraicVariety" />. This operation also works for a point <A>x</A> and the collection <A>pts</A> returned by <Ref Oper="PointsOfAlgebraicVariety"/>.
+        </Description>
+</ManSection>
 
 </Section>
 
@@ -90,6 +98,32 @@ A <E>projective variety</E> in <Package>FinInG</Package> is an algebraic variety
 
 </Section>
 
+<!--SECTION QUADRICS AND HERMITIAN VARIETIES -->
+<Section Label="quadricshermitian">
+<Heading>Quadrics and Hermitian varieties</Heading>
+Quadrics and Hermitian varieties are objects by default considered as 
+!!!!!!!!!!!!!!!!!!!
+CHANGE THIS
+!!!!!!!!!!!!!!!!!!!!!
+a classical polar space. But they belong also to the category
+<C>IsProjectiveVariety</C> (but not to the Representation <C>IsProjectiveVarietyRep</C>). This implies that in principle, operations 
+applicable to objects in <C>IsProjectiveVariety</C> are applicable to quadrics and Hermitian varieties too. Furthermore, we provide 
+a method for <F>PolarSpace</F> taking as an argument a projective algebraic variety. The appropriate form is constructed, when possible 
+of course, using the <Package>Forms</Package> functions <F>QuadraticFormByPolynomial</F> and <F>HermitianFormByPolynomial</F>.
+
+<ManSection>
+<Oper Name="PolarSpace" Arg="var"/>
+<Description>
+the argument <A>var</A> is a projective algebraic variety. When its list of definining polynomial contains exactaly one polynomial,
+depending on its degree, the operation <F>QuadraticFormByPolynomial</F> or <F>HermitianFormByPolynomial</F> is used to compute
+a quadratic form or a hermitian form. These operations check whether this is possible, and produce an error message if not. If the
+conversion is possible, then the appropriate polar space is returned.
+<Example>
+<#Include SYSTEM "../examples/include/varieties_polarspace.include"> 
+</Example>
+</Description>
+</ManSection>
+</Section>
 
 <!--SECTION AFFINE VARIETIES -->
 <Section Label="affinevarieties">
@@ -137,6 +171,21 @@ A <A>geometry map</A> is a map from a set of elements of a geometry to a set of 
         The argument <A>gm</A> is a geometry map, the element <A>x</A> is an element of the <Ref Oper="Source"/> of the geometry map <A>gm</A>.
    </Description>
 </ManSection>
+<ManSection>
+<Oper Name="ImagesSet" Arg="gm,elms"/>
+    <Returns>the image of a subset of the source under a geometry map</Returns>
+    <Description>
+        The argument <A>gm</A> is a geometry map, the elements <A>elms</A> is a subset of the <Ref Oper="Source"/> of the geometry map <A>gm</A>.
+   </Description>
+</ManSection>
+<ManSection>
+    <Oper Name="\^" Arg="x,gm"/>
+    <Returns>the image of an element of the source under a geometry map</Returns>
+    <Description>
+        The argument <A>gm</A> is a geometry map, the element <A>x</A> is an element of the <Ref Oper="Source"/> of the geometry map <A>gm</A>.
+   </Description>
+</ManSection>
+
 </Section>
 
 
@@ -296,26 +345,5 @@ A <E>Grassmann variety</E> in <Package>FinInG</Package> is a projective algebrai
 
 </Section>
 
-<!--SECTION QUADRICS AND HERMITIAN VARIETIES -->
-<Section Label="quadricshermitian">
-<Heading>Quadrics and Hermitian varieties</Heading>
-Quadrics and Hermitian varieties are objects by default considered as a classical polar space. But they belong also to the category
-<C>IsProjectiveVariety</C> (but not to the Representation <C>IsProjectiveVarietyRep</C>). This implies that in principle, operations 
-applicable to objects in <C>IsProjectiveVariety</C> are applicable to quadrics and Hermitian varieties too. Furthermore, we provide 
-a method for <F>PolarSpace</F> taking as an argument a projective algebraic variety. The appropriate form is constructed, when possible 
-of course, using the <Package>Forms</Package> functions <F>QuadraticFormByPolynomial</F> and <F>HermitianFormByPolynomial</F>.
-
-<ManSection>
-<Oper Name="PolarSpace" Arg="var"/>
-<Description>
-the argument <A>var</A> is a projective algebraic variety. When its list of definining polynomial contains exactaly one polynomial,
-depending on its degree, the operation <F>QuadraticFormByPolynomial</F> or <F>HermitianFormByPolynomial</F> is used to compute
-a quadratic form or a hermitian form. These operations check whether this is possible, and produce an error message if not. If the
-conversion is possible, then the appropriate polar space is returned.
-<Example>
-<#Include SYSTEM "../examples/include/varieties_polarspace.include"> 
-</Example>
-</Description>
-</ManSection>
-</Section>
 </Chapter>
+

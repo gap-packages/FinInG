@@ -399,7 +399,7 @@ InstallMethod( Points,
 # checks if <point> lies on the variety corresponding to <ptsonvariety>
 ##
 InstallMethod( \in,	
-	"for an element of an incidence structure and a the pointsofalgebraicvariety",
+	"for an element of an incidence structure and the pointsofalgebraicvariety",
 	# 1*SUM_FLAGS+3 increases the ranking for this method
 	[IsElementOfIncidenceStructure, IsPointsOfAlgebraicVariety], 1*SUM_FLAGS+3,
 	function(point,pts)

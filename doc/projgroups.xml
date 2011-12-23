@@ -417,11 +417,20 @@ same underlying projective space is possible.
 </ManSection>
 
 </Section>
-
+<Section>
+<Heading>Basis action of projective group element</Heading>
+<ManSection>
+    <Oper Name="\^" Arg="x,g"/>
+ <Returns>a subspace of a projective space</Returns>
+<Description>
+This is an operation which returns the image of <A>x</A>, a subspace of a projective space, under <A>g</A>, an element of the projective group, the collineation group, or the correlation group.
+ </Description>
+</ManSection>
+</Section>
 
 <Section Label="projgroup_actions">
 <Heading>Projective group actions</Heading>
-
+In this section we give more detailed about the actions that are used in <Package>FinInG</Package> for projective groups.
 Consider the projective space <M>PG(n,q)</M>. As described in Chapter <Ref
 Chap="projective_spaces"/>, a point of <M>PG(n,q)</M> is represented by a row
 vector and a <M>k</M>-dimensional subspace of <M>PG(n,q)</M> is represented by a
@@ -451,15 +460,15 @@ dimension completely.
 
 <ManSection>
 <Func Name="OnProjSubspaces" Arg="subspace, el"/>
+<Returns>a subspace of a projective space</Returns>
 <Description>
-<A>subspace</A> is a subspace of a projective or polar space. <A>el</A> must be
-a projective semilinear map. This function return the image of <A>subspace</A>
-under <A>el</A>, which is a subspace of the same dimension.
+This is a global function that returns the action of an element <A>g</A> of the collineation group on a subspace <A>subspace</A> of a projective space.
 <Example>
 <#Include SYSTEM "../examples/include/projgroups_onprojsubspaces.include"> 
 </Example>
 </Description>
 </ManSection>
+
 
 <ManSection>
 <Func Name="ActionOnAllProjPoints" Arg="g"/>
@@ -473,11 +482,13 @@ for the action to be easy to calculate.
 
 <ManSection>
 <Func Name="OnProjSubspacesReversing" Arg="subspace, el"/>
+<Returns>a subspace of a projective space</Returns>
 <Description>
-<A>subspace</A> is a subspace of a projective or polar space. <A>el</A> must be
+This should be used for the action of elements in the category <C>IsProjGrpElWithFrobWithPSIsom</C> (including the representation of collineations as correlations with third argument the identity, see <Ref Oper="CorrelationOfProjectiveSpace"/>), where
+<A>subspace</A> is a subspace of a projective or polar space and <A>el</A> is
 an element of the correlation group of the ambient geometry of <A>subspace</A>.
-This function return the image of <A>subspace</A> under <A>el</A>, which is a
-subspace of the same dimension if <A>el</A> is a collineation.
+This function returns the image of <A>subspace</A> under <A>el</A>, which is a
+subspace of the same dimension as <A>subspace</A> if <A>el</A> is a collineation and an element of codimension equal to the dimension of <A>subspace</A> if <A>el</A> is a correlation.
 <Example>
 <#Include SYSTEM "../examples/include/projgroups_onprojsubspacesreversing.include"> 
 </Example>
