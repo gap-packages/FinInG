@@ -224,7 +224,7 @@ A <E>Segre variety</E> in <Package>FinInG</Package> is a projective algebraic va
     <Oper Name="SegreMap" Arg="d1,d2,field"/>
     <Oper Name="SegreMap" Arg="d1,d2,q"/>
     <Oper Name="SegreMap" Arg="sv"/>
-    <Returns>a function</Returns>
+    <Returns>a geometry map</Returns>
     <Description>
         The argument <A>listofpgs</A> is a list of projective spaces defined over the same finite field, say <Alt Not="HTML"><M>[PG(n_1-1,q)</M></Alt> <Alt Only="HTML">[PG(n&lt;sub>1 &lt;/sub>-1,q)</Alt>, <Alt Not="HTML"><M>PG(n_2-1,q)</M></Alt> <Alt Only="HTML">PG(n&lt;sub>2 &lt;/sub>-1,q)</Alt>, ..., <Alt Not="HTML"><M>PG(n_k-1,q)]</M></Alt> <Alt Only="HTML">PG(n&lt;sub>k &lt;/sub>-1,q)]</Alt>. The operation also takes as input the list of dimensions (<A>listofdims</A>) and a finite field <A>field</A> (e.g. 
         <Alt Not="HTML"><M>[n_1,n_2,\ldots,n_k,GF(q)]</M></Alt>
@@ -276,7 +276,7 @@ A <E>Veronese variety</E> in <Package>FinInG</Package> is a projective algebraic
     <Oper Name="VeroneseMap" Arg="n-1,field"/>
     <Oper Name="VeroneseMap" Arg="n-1,q"/>
     <Oper Name="VeroneseMap" Arg="vv"/>
-    <Returns>a function</Returns>
+    <Returns>a geometry map</Returns>
     <Description>
     The argument <A>pg</A> is a projective space defined over a finite field, say <M>PG(n-1,q)</M>. The operation also takes as input the dimension and a finite field <A>field</A> (e.g. <M>[n-1,q]</M>).
         The operation returns a function with domain the product of the point set of the projective space <M>PG(n-1,q)</M> and image the set of points of the Veronese variety (<Ref Oper="PointsOfVeroneseVariety"/>) in the projective space of dimension <M>(n^2+n)/2-1</M>.
@@ -325,7 +325,7 @@ A <E>Grassmann variety</E> in <Package>FinInG</Package> is a projective algebrai
     <Oper Name="GrassmannMap" Arg="subspaces"/>
     <Oper Name="GrassmannMap" Arg="k,n,q"/>
     <Oper Name="GrassmannMap" Arg="gv"/>
-    <Returns>a function</Returns>
+    <Returns>a geometry map</Returns>
     <Description>
         The argument <A>pg</A> is a projective space defined over a finite field, say <M>PG(n,q)</M>, and argument <A>k</A> is an integer (<M>k</M> at least <M>1</M> and at most <M>n-2</M>), and denotes the projective dimension determining the Grassmann Variety. The operation also takes as input the set <A>subspaces</A> of subspaces of a projective space, or the dimension <A>k</A>, the dimension <A>n</A> and the size <A>q</A> of the finite field (<M>k</M> at least <M>1</M> and at most <M>n-2</M>).
        The operation returns a function with domain the set of subspaces of dimension <M>k</M> in the <M>n</M>-dimensional projective space over <M>GF(q)</M>, and image the set of points of the Grassmann variety (<Ref Oper="PointsOfGrassmannVariety"/>).
