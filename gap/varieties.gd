@@ -117,11 +117,17 @@ DeclareOperation( "HyperplaneByDualCoordinates", [IsProjectiveSpace,IsList] );
 DeclareOperation( "HermitianVariety", [IsPosInt,IsField] );
 DeclareOperation( "HermitianVariety", [IsPosInt,IsPosInt] );
 DeclareOperation( "HermitianVariety", [IsProjectiveSpace, IsPolynomialRing, IsPolynomial ] );
+DeclareOperation( "HermitianVariety", [IsProjectiveSpace, IsPolynomial ] );
+
+DeclareOperation( "QuadraticVariety", [IsProjectiveSpace, IsPolynomialRing, IsPolynomial ] );
+DeclareOperation( "QuadraticVariety", [IsProjectiveSpace, IsPolynomial ] );
 
 DeclareAttribute( "SesquilinearForm", IsHermitianVariety );
+DeclareAttribute( "QuadraticForm", IsQuadraticVariety );
 
 
 DeclareOperation( "PolarSpace", [IsProjectiveVariety] );
+
 
 ### 3. Affine Varieties ###
 

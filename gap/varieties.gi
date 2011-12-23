@@ -241,27 +241,57 @@ InstallMethod( HermitianVariety,
 #O HermitianVariety( <pg>,<pring>,<pol>);
 # returns a hermitian variety in pg
 InstallMethod( HermitianVariety,
-	"for a projective space, a polynomial ring and a list polynomial",
+	"for a projective space, a polynomial ring and a polynomial",
 	[IsProjectiveSpace,IsPolynomialRing, IsPolynomial],
 	function(pg,pring,pol)
-		local list,hf;
+		local list,hf,var,ty;
 		hf:=HermitianFormByPolynomial(pol,pring);
-		list:=[pol];		
+		list:=[pol];
+		var:=rec( geometry:=pg, polring:=pring, listofpols:=list);
+		ty:=NewType( NewFamily("HermitianVarietiesFamily"), IsHermitianVariety and 
+									IsHermitianVarietyRep );
+		ObjectifyWithAttributes(var,ty,
+				DefiningListOfPolynomials, list, SesquilinearForm, hf);
+		return var;
 	end );
 
+#############################################################################
+#O HermitianVariety( <pg>,<pol>);
+# returns a hermitian variety in pg
+InstallMethod( HermitianVariety,
+	"for a projective space and a polynomial",
+	[IsProjectiveSpace, IsPolynomial],
+	function(pg, pol)
+		local list,pring,hf,var,ty;
+		pring:=PolynomialRing(pg!.basefield, pg!.dimension +1);
+		hf:=HermitianFormByPolynomial(pol,pring);
+		list:=[pol];
+		var:=rec( geometry:=pg, polring:=pring, listofpols:=list);
+		ty:=NewType( NewFamily("HermitianVarietiesFamily"), IsHermitianVariety and 
+									IsHermitianVarietyRep );
+		ObjectifyWithAttributes(var,ty,
+				DefiningListOfPolynomials, list, SesquilinearForm, hf);
+		return var;
+	end );
 
 
 #######################################################################
 #O QuadraticVariety( <pg>,<pring>,<pol>);
 # returns a quadratic variety in pg
-#InstallMethod( QuadraticVariety,
-#	"for a projective space, a polynomial ring and a polynomial",
-#	[IsProjectiveSpace,IsPolynomialRing, IsPolynomial],
-#	function(pg,pring,pol)
-#		local
-		# Check if the polynomial is a quadratic form
-		
-#	end );
+InstallMethod( QuadraticVariety,
+	"for a projective space, a polynomial ring and a polynomial",
+	[IsProjectiveSpace,IsPolynomialRing, IsPolynomial],
+	function(pg,pring,pol)
+		local qf,list,var,ty;
+		qf:=QuadraticFormByPolynomial(pol,pring);
+		list:=[pol];
+		var:=rec( geometry:=pg, polring:=pring, listofpols:=list);
+		ty:=NewType( NewFamily("QuadraticVarietiesFamily"), IsQuadraticVariety and 
+									IsQuadraticVarietyRep );
+		ObjectifyWithAttributes(var,ty,
+				DefiningListOfPolynomials, list, QuadraticForm, qf);
+		return var;
+	end );
 
 
 #############################################################################
