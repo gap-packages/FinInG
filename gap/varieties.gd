@@ -46,7 +46,7 @@ DeclareRepresentation( "IsProjectiveVarietyRep", IsProjectiveVariety and IsAlgeb
 DeclareCategory( "IsHermitianVariety", IsProjectiveVariety );
 DeclareRepresentation( "IsHermitianVarietyRep", IsHermitianVariety and IsProjectiveVarietyRep, ["geometry","polring","listofpols"]);
 
-DeclareCategory( "IsQuadraticVariety", IsProjetiveVariety );
+DeclareCategory( "IsQuadraticVariety", IsProjectiveVariety );
 DeclareRepresentation( "IsQuadraticVarietyRep", IsQuadraticVariety and IsProjectiveVarietyRep, ["geometry","polring","listofpols"]);
 
 ### 3. Affine Varieties ###
