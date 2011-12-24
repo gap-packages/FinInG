@@ -68,7 +68,7 @@ gap> hyperoval := Union( frame, leftover );
   &lt;a point in PG(2, 4)&gt;, &lt;a point in PG(2, 4)&gt;, &lt;a point in PG(2, 4)&gt; ]
 </Example>
 
-This hyperoval has <Math>S_6</Math> as its stabiliser, which can easily be calculated:
+This hyperoval has the symmetric group on six symbols as its stabiliser, which can easily be calculated:
 
 <Example>
 gap> g := CollineationGroup(pg);
