@@ -28,7 +28,7 @@ behind the package.
 <Heading>Philosophy</Heading>
 
 <Package>FinInG</Package> is a package for computation in 
-finite geometry. It provides users with the basic tools to 
+Finite Incidence Geometry. It provides users with the basic tools to 
 work in various areas of finite geometry from the realms of 
 projective spaces to the flat lands of generalised polygons. 
 The algebraic power of GAP is employed, particularly in its 
@@ -40,27 +40,19 @@ facility with matrix and permutation groups.
 <Heading>Overview over this manual</Heading>
 
 Chapter <Ref Chap="install"/> describes the installation of this package. Chapter <Ref
-Chap="examples"/> contains some extended examples, ot introduce the user a bit to the basic
-philosophy. Chapter <Ref Chap="incidencegeometry"/> contains a rigourous discription of basic
-structures. This chapter can be omitted at first reading, since the consequent chapters are also
-self contained. Chapters <Ref Chap="projective_spaces"/>, <Ref Chap="projgroup"/> and <Ref Chap="polaritiesofps"/>
-deal with projective spaces, projective semilinear groups, and polarities of projective spaces respectively.
-Chapter <Ref Chap="classicalpolarspaces"/> deals extensively with classical polar spaces. Chapter <Ref Chap="affine"/>
-deails with affine spaces and their groups. <E>Geometry morhpisms</E> between various geometries that are 
-treated in the first nine chapters, are introduced and discussed in Chapter <Ref Chap="morphisms"/>. The final three
-chapters, <Ref Chap="varieties"/>, <Ref Chap="gpolygons"/>, and <Ref Chap="diagramgeometries"/> deals with
-algebraic varieties, which are constructed inside projective or affine spaces, generalised polygons, of which several
-models can be constructed in <Package>FinInG</Package>, and finally coset geometries and diagrams, respectively.
-
+Chap="examples"/> contains some extended examples, to introduce the user to the basic functionality and philosophy to get started. Chapter <Ref Chap="incidencegeometry"/> contains a rigourous discription of the basic structures. This chapter can be omitted at first reading, since the set of consequent chapters is also self contained. Chapters <Ref Chap="projective_spaces"/>, <Ref Chap="projgroup"/> and <Ref Chap="polaritiesofps"/>
+deal with projective spaces, projective semilinear groups, and polarities of projective spaces, respectively.
+In Chapter <Ref Chap="classicalpolarspaces"/> the functionality for classical polar spaces is treated and in Chapter <Ref Chap="affine"/> affine spaces and their groups are considered. <E>Geometry morhpisms</E> between various geometries that are 
+available in the package, are introduced and discussed in Chapter <Ref Chap="morphisms"/>. The final three chapters, <Ref Chap="varieties"/>, <Ref Chap="gpolygons"/>, and <Ref Chap="diagramgeometries"/> explain the basic functionality which is provided for algebraic varieties (in projective or affine spaces), generalised polygons, of which several models can be constructed, and finally coset geometries and diagrams.
 </Section>
 
 <Section>
 <Heading>The Development Team</Heading>
-<Alt Only="HTML">This is the development team (without Anton), 
-from left to right: Philippe Cara, Michel Lavrauw, Max Neunh&#246;ffer, Jan De Beule, and John
-Bamberg,</Alt><Alt Only="LaTeX">This is the development team (without Anton), from left to
+<Alt Only="HTML">This is the development team (without Anton),  meeting in St. Andrews in september 2008, 
+from left to right: Philippe Cara, Michel Lavrauw, Max Neunh&#246;ffer, Jan De Beule, and John Bamberg,</Alt>
+<Alt Only="LaTeX">This is the development team (without Anton)  meeting in St. Andrews in september 2008, from left to
 right: Philippe Cara, Michel Lavrauw, Max Neunh\"offer, Jan De Beule and John
-Bamberg,</Alt> meeting in St. Andrews in september 2008.<P/>
+Bamberg,</Alt>.<P/>
 <Alt Only="HTML">&lt;img src="devteamstasep08.jpg">&lt;/img></Alt>
 <Alt Only="LaTeX">\includegraphics[scale=0.5]{devteamstasep08.jpg}</Alt><P/>
 The development team meeting again (without Anton and Max), now

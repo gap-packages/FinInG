@@ -94,8 +94,7 @@ can be found in the undeposited packages section of the GAP website. To create a
 finite geometry and the group theoretical functions present in GAP was one of the main objectives for the new package
 to develop, since <Package>pg</Package> lacks this point of view. 
 <P/>
-Some ideas came from other people than the autors, especially in the early stage, Michal Pauley, Maska Law and Sven Reichard 
-contributed in this way to <Package>FinInG</Package>.
+The authors thank Michael Pauley, Maska Law and Sven Reichard, for their contributions during the early days of the project.
 </Acknowledgements>
 
 

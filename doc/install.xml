@@ -25,10 +25,10 @@ This is the chapter of the documentation describing the installation.
 <Index><Package>FinInG</Package></Index>
 
 This package requires the GAP packages <Package>GAPDoc</Package>, version 0.99 or higher,
-<Package>Forms</Package>, version 1.2 or higer, <Package>Orb</Package>, version 2.0 or higer,
-<Package>GenSS</Package>, version 0.9 or higer, and <Package>GRAPE</Package>, version 4.3 or higer.
+<Package>Forms</Package>, version 1.2 or higher, <Package>Orb</Package>, version 2.0 or higer,
+<Package>GenSS</Package>, version 0.9 or higher, and <Package>GRAPE</Package>, version 4.3 or higher.
 Currently, one function will use the <Package>Design</Package>, but this package is not required to
-load <Package>FinInG</Package>. The pakcage <Package>GenSS</Package> requires the <Package>IO</Package>.
+load <Package>FinInG</Package>. The package <Package>GenSS</Package> requires the <Package>IO</Package>.
 
 Currently, the packages <Package>GAPDoc</Package>, <Package>GRAPE</Package>, <Package>Forms</Package> and <Package>Design</Package> 
 are accepted GAP packages, the packages <Package>orb</Package>, <Package>GenSS</Package> and <Package>IO</Package>
@@ -47,23 +47,27 @@ MacOSX. You only need a terminal application, and you need acces to the standard
 for <Package>FinInG</Package>, a standard GAP package, does <E>not</E> require compilation. Each GAP installation has a 
 pkg directory, containing supplemental GAP packages. If you have acces to this filesystem, you can locate it, e.g. 
 <Display>/usr/local/gap4r4/pkg/</Display>
-Download the <Package>FinInG</Package> archive fining-...-tar.gz to this location, and unpack the archive. This can be done by issuing
-<Display>gunzip fining-...-tar.gz</Display>, which yields a file fining-...-tar, in the pkg directory, after which issuing 
-the command <Display>tar -xf finin-...-tar</Display> unpacks the archive in a subdirectory fining.
+Download the <Package>FinInG</Package> archive "fining-...-tar.gz" to this location, and unpack the archive. This can be done by issuing
+<Display>gunzip fining-...-tar.gz</Display> 
+which yields a file "fining-...-tar", in the pkg directory, after which issuing the command 
+<Display>tar -xf finin-...-tar</Display>
+unpacks the archive in a subdirectory fining.
 
 After successfully unpacking the archive, you can locate the directoy 
-<Display>/usr/local/gap4r4/pkg/fining/</Display> This directory contains a subdirectory
-./doc, containin an html and pdf version of the manual. The html version is accesible by opening the file chap0.html in your favorite browser. 
-The pdf version of the manual can be found in the file manual.pdf.
+<Display>/usr/local/gap4r4/pkg/fining/.</Display> 
+This directory contains a subdirectory "./doc", containin an html and pdf version of the manual. The html version is accessible by opening the file "chap0.html" in your favorite browser. 
+The pdf version of the manual can be found in the file "manual.pdf".
 
-Please notice that you can unpack your archive in your favorite local ./pkg directory, e.g. /home/yourself/pkg/, in case you are using
+Please notice that you can unpack your archive in your favorite local "./pkg" directory, e.g. "/home/yourself/pkg/", in case you are using
 GAP on a server on which you have only a restricted access.
 
-If you installed fining in the central GAP pkg directory, you can sartup gap using the usual command. We supopse this is gap4r4. If
-you installed <Package>FinInG</Package> in your local pkg directory, e.g. /home/yourself/pkg/, then move to /home/yourself, and issue 
+If you installed <Package>FinInG</Package> in the central GAP pkg directory, you can startup gap using the usual command. We suppose this is gap4r4. If
+you installed <Package>FinInG</Package> in your local pkg directory, 
+e.g. "/home/yourself/pkg/", then move to "/home/yourself", and issue 
 the command 
-<Display>gap4r4 -l "/usr/local/gap4r4;./"</Display> This will cause gap to startup and use as pkg directory both its own central pkg directory, i.e.
-/usr/loca/gap4r4/pkg and your local pkg directoy, i.e. /home/yourself/pkg/. You should in any case, see the something like the following
+<Display>gap4r4 -l "/usr/local/gap4r4;./"</Display> 
+This will cause gap to startup and use as pkg directory both its own central pkg directory, i.e.
+"/usr/loca/gap4r4/pkg" and your local pkg directoy, i.e. "/home/yourself/pkg/". You should in any case, see something like the following
 output. Notice that the packages <Package>GAPDoc</Package> and <Package>IO</Package> are loaded by default. This is not 
 necessarily the case, but loading fining will force to load required packages anyway. 
 
@@ -98,9 +102,13 @@ Components:  small 2.1, small2 2.0, small3 2.0, small4 1.0, small5 1.0,
 Packages:    GAPDoc 1.3, IO 3.3, TomLib 1.1.4  loaded.
 gap> 
 </Example>
-To load <Package>FinInG</Package>, issue LoadPackage("fining");. If this fails, in most cases, the reason is that either GAP does not 
-find the directory in which fining is installed, or one of the required packages for fining is not installed. The easiest way to find out
-is to load each requierd package before issuing the load command to load fining. The example below shows this situation, the packages
+To load <Package>FinInG</Package>, issue 
+<Display>
+LoadPackage("fining");
+</Display>
+If this fails, in most cases, the reason is that either GAP does not 
+find the directory in which <Package>FinInG</Package> is installed, or one of the required packages for <Package>FinInG</Package> is not installed. The easiest way to find out
+is to load each required package before issuing the LoadPackage command to load <Package>FinInG</Package>. The example below shows this situation, the packages
 <Package>Forms</Package> and <Package>FinInG</Package> itself are installed in a local pkg directory, the other packages are installed
 centrally. Starting up gap not pointing to the local pkg directory, causes the locally installed packages to be unloadable.
 <Example>
@@ -240,7 +248,8 @@ The packages <Package>orb</Package> and <Package>IO</Package> requires compilati
 some binaries to the gap kernel. On some UNIX like system, dynamical linking seems to be impossible. In 
 such a case, the binaries must be statically linked to the GAP kernel. We describe the procedure here, assuming that
 we have to link the binaries of both packages to the gap-kernel. We assume that gap is installed in the directory 
-<Display>/usr/local/gap4r4/</Display> and that we use the central ./pkg/ directory for the packages <Package>IO</Package> and
+<Display>/usr/local/gap4r4/</Display> 
+and that we use the central ./pkg/ directory for the packages <Package>IO</Package> and
 <Package>orb</Package>
 <Table Align="l">
 <Row><Item>1. Move to your gap directory, which is in this example /usr/loca/gap4r4/. Move further to the /bin directory, and locate 
