@@ -1,29 +1,29 @@
-gap> LoadPackage("Grape");
+gap&gt; LoadPackage("grape");
 true
-gap> Print("Collineations of projective planes...\n");
+gap&gt; Print("Collineations of projective planes...\n");
 Collineations of projective planes...
-gap> blocks := [ 
->    [ 1, 2, 3, 4, 5 ], [ 1, 6, 7, 8, 9 ], [ 1, 10, 11, 12, 13 ],
->    [ 1, 14, 15, 16, 17 ], [ 1, 18, 19, 20, 21 ], [ 2, 6, 10, 14, 18 ], 
->    [ 2, 7, 11, 15, 19 ], [ 2, 8, 12, 16, 20 ], [ 2, 9, 13, 17, 21 ], 
->    [ 3, 6, 11, 16, 21 ], [ 3, 7, 10, 17, 20 ], [ 3, 8, 13, 14, 19 ], 
->    [ 3, 9, 12, 15, 18 ], [ 4, 6, 12, 17, 19 ], [ 4, 7, 13, 16, 18 ], 
->    [ 4, 8, 10, 15, 21 ], [ 4, 9, 11, 14, 20 ], [ 5, 6, 13, 15, 20 ], 
->    [ 5, 7, 12, 14, 21 ], [ 5, 8, 11, 17, 18 ], [ 5, 9, 10, 16, 19 ] ];;
-gap> pp := ProjectivePlaneByBlocks( blocks );
-&lt;projective plane of order 4>
-gap> coll := CollineationGroup( pp );
+gap&gt; blocks := [ 
+&gt;    [ 1, 2, 3, 4, 5 ], [ 1, 6, 7, 8, 9 ], [ 1, 10, 11, 12, 13 ],
+&gt;    [ 1, 14, 15, 16, 17 ], [ 1, 18, 19, 20, 21 ], [ 2, 6, 10, 14, 18 ], 
+&gt;    [ 2, 7, 11, 15, 19 ], [ 2, 8, 12, 16, 20 ], [ 2, 9, 13, 17, 21 ], 
+&gt;    [ 3, 6, 11, 16, 21 ], [ 3, 7, 10, 17, 20 ], [ 3, 8, 13, 14, 19 ], 
+&gt;    [ 3, 9, 12, 15, 18 ], [ 4, 6, 12, 17, 19 ], [ 4, 7, 13, 16, 18 ], 
+&gt;    [ 4, 8, 10, 15, 21 ], [ 4, 9, 11, 14, 20 ], [ 5, 6, 13, 15, 20 ], 
+&gt;    [ 5, 7, 12, 14, 21 ], [ 5, 8, 11, 17, 18 ], [ 5, 9, 10, 16, 19 ] ];;
+gap&gt; pp := ProjectivePlaneByBlocks( blocks );
+&lt;projective plane of order 4&gt;
+gap&gt; coll := CollineationGroup( pp );
 #I  Computing incidence graph of projective plane...
-&lt;permutation group with 8 generators>
-gap> DisplayCompositionSeries( coll );
+&lt;permutation group with 8 generators&gt;
+gap&gt; DisplayCompositionSeries( coll );
 G (8 gens, size 120960)
  | Z(2)
-S (3 gens, size 60480)
+S (4 gens, size 60480)
  | Z(3)
-S (2 gens, size 20160)
+S (3 gens, size 20160)
  | A(2,4) = L(3,4)
 1 (0 gens, size 1)
-gap> Display( CollineationAction(coll) );
+gap&gt; Display( CollineationAction(coll) );
 function ( x, g )
     if x!.type = 1  then
         return Wrap( plane, 1, OnPoints( x!.obj, g ) );
@@ -32,27 +32,29 @@ function ( x, g )
     fi;
     return;
 end
-gap> Print("Collineations of generalised hexagons...\n");
+gap&gt; 
+gap&gt; Print("Collineations of generalised hexagons...\n");
 Collineations of generalised hexagons...
-gap> hex := SplitCayleyHexagon( 5 );
-&lt;generalised hexagon of order [ 5, 5 ]>
-gap> coll := CollineationGroup( hex );
+gap&gt; hex := SplitCayleyHexagon( 5 );
+Split Cayley Hexagon of order 5
+gap&gt; coll := CollineationGroup( hex );
 G_2(5)
-gap> CollineationAction(coll) = OnProjSubspaces;
+gap&gt; CollineationAction(coll) = OnProjSubspaces;
 true
-gap> Print("Collineations of elation generalised quadrangles...\n");
+gap&gt; Print("Collineations of elation generalised quadrangles...\n");
 Collineations of elation generalised quadrangles...
-gap> g := ElementaryAbelianGroup(27);
-&lt;pc group of size 27 with 3 generators>
-gap> flist1 := [ Group(g.1), Group(g.2), Group(g.3), Group(g.1*g.2*g.3) ];;
-gap> flist2 := [ Group([g.1, g.2^2*g.3]), Group([g.2, g.1^2*g.3 ]), 
->             Group([g.3, g.1^2*g.2]), Group([g.1^2*g.2, g.1^2*g.3 ]) ];; 
-gap> egq := EGQByKantorFamily(g, flist1, flist2);
-&lt;EGQ of order [ 3, 3 ] and basepoint 0>
-gap> elations := ElationGroup( egq );
-&lt;pc group of size 27 with 3 generators>
-gap> CollineationAction( elations ) = OnKantorFamily;
+gap&gt; g := ElementaryAbelianGroup(27);
+&lt;pc group of size 27 with 3 generators&gt;
+gap&gt; flist1 := [ Group(g.1), Group(g.2), Group(g.3), Group(g.1*g.2*g.3) ];;
+gap&gt; flist2 := [ Group([g.1, g.2^2*g.3]), Group([g.2, g.1^2*g.3 ]), 
+&gt;             Group([g.3, g.1^2*g.2]), Group([g.1^2*g.2, g.1^2*g.3 ]) ];; 
+gap&gt; egq := EGQByKantorFamily(g, flist1, flist2);
+#I  Computing points from Kantor family...
+#I  Computing lines from Kantor family...
+&lt;EGQ of order [ 3, 3 ] and basepoint 0&gt;
+gap&gt; elations := ElationGroup( egq );
+&lt;pc group of size 27 with 3 generators&gt;
+gap&gt; CollineationAction(elations) = OnKantorFamily;
 true
-gap> HasCollineationGroup( egq );
+gap&gt; HasCollineationGroup( egq );
 false
-

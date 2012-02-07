@@ -15,6 +15,6 @@ gap&gt; group := AutomorphismGroup(incgraph);
 &lt;permutation group with 6 generators&gt;
 gap&gt; Order(group);
 26127360
-gap&gt; Order(CollineationGroup(HermitianVariety(3,9)));
+gap&gt; Order(CollineationGroup(HermitianPolarSpace(3,9)));
 #I  Computing nice monomorphism...
 26127360
