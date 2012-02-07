@@ -30,10 +30,12 @@ on <Package>GRAPE</Package>.
 <Section>
 <Heading>Coset Geometries</Heading>
 
-Suppose we have a flag-transitive incidence
-geometry <Alt Not="HTML"><M>\Gamma</M></Alt><Alt Only="HTML">&#915;</Alt>. This means that a group <M>G</M> of
-automorphisms of <Alt Not="HTML"><M>\Gamma</M></Alt><Alt Only="HTML">&#915;</Alt> is also given such that <M>G</M> is
-transitive on the set of chambers of <M>\Gamma</M>. This implies
+Suppose we have an <E>incidence
+geometry</E> <Alt Not="HTML"><M>\Gamma</M></Alt><Alt Only="HTML">&#915;</Alt>
+(as defined in chapter <Ref Chap="incidencegeometry"/>), together with
+a group <M>G</M> of automorphisms of <Alt Not="HTML"><M>\Gamma</M></Alt><Alt Only="HTML">&#915;</Alt> is also given such that <M>G</M> is
+transitive on the set of <E>chambers</E> of <M>\Gamma</M> (also
+defined in chapter <Ref Chap="incidencegeometry"/>). This implies
 that <M>G</M> is also transitive on the set of all elements of any
 chosen type <M>i</M>. If we consider a chamber <Alt Not="HTML"><M>c_{1},c_{2},... ,c_{n}</M></Alt>
 <Alt Only="HTML">c&lt;sub>1&lt;/sub>,c&lt;sub>2&lt;/sub>,...,c&lt;sub>n&lt;/sub></Alt>
@@ -59,7 +61,6 @@ By definition the elements of type <M>i</M> are the (right) cosets of the subgro
 cosets are incident if and only if their intersection is not
 empty. This is an incidence structure which is not necessarily a
 geometry (see Chapter <Ref Chap="incidencegeometry"/> for definitions).
-
 
 <ManSection>
 <Oper Name="CosetGeometry" Arg="G,l"/>
