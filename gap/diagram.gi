@@ -27,12 +27,9 @@
 #
 # - testing
 # - Lots of attributes (in general, but at least for coset geometries), such as
-#     - "IsFlagTransitiveGeometry"
-#     - "IsResiduallyConnected"
 #     - "IsFirmGeometry"
 #     - "IsThinGeometry"
 #     - "IsThickGeometry"
-#     - "IncidenceGraph"
 # - documentation
 # - Priorities
 #   1. Residues
@@ -58,7 +55,7 @@ Print(", diagram\c");
 #############################################################################
 #O CosetGeometry
 # 
-# 
+# Constructs a Coset geometry from a group and a list of subgroups
 ##
 
 InstallMethod( CosetGeometry, "for groups and list of subgroups",[ IsGroup , IsHomogeneousList ],
@@ -86,7 +83,7 @@ InstallMethod( CosetGeometry, "for groups and list of subgroups",[ IsGroup , IsH
 #########################################################################
 #O Rank2Residues
 # 
-# 
+# Adds all rank 2 residues to an incidence geometry
 ## 
 InstallMethod( Rank2Residues, [ IsIncidenceGeometry ],
   function( geo )
@@ -109,7 +106,7 @@ InstallMethod( Rank2Residues, [ IsIncidenceGeometry ],
 ##########################################################################
 #O MakeRank2Residue
 # 
-# 
+# Actually computes the given rank 2 residue of given type <edge>
 ##
 InstallMethod( MakeRank2Residue, [ IsRank2Residue ],
   function( res )
@@ -136,9 +133,9 @@ end );
 
 #
 ##########################################################################
-#  ElementsOfIncidenceStructure
+#O ElementsOfIncidenceStructure
 #
-#
+# Gives elements of type <j> in coset geometry <cg>
 ##
 InstallMethod( ElementsOfIncidenceStructure, [IsCosetGeometry, IsPosInt],
   function( cg, j )
@@ -155,9 +152,9 @@ end );
 
 #
 ###########################################################################
-# Size
+#O Size
 #
-#
+# Returns the number of elements in the object <vs>
 ##
 InstallMethod(Size, [IsElementsOfCosetGeometry],
   function( vs )
@@ -169,9 +166,9 @@ InstallMethod(Size, [IsElementsOfCosetGeometry],
 
 #
 ###########################################################################
-# Wrap
+#O Wrap
 #
-#
+# Make an oject from an element of a coset geometry
 ##
 InstallMethod( Wrap, "for a coset geometry and an object (coset)",
   [IsCosetGeometry, IsPosInt, IsObject],
@@ -186,9 +183,9 @@ end );
 
 #
 ##########################################################################
+#O Iterator
+#
 # Iterator
-#
-#
 ##
 InstallMethod(Iterator, "for elements of a coset geometry",
         [IsElementsOfCosetGeometry],
@@ -221,6 +218,7 @@ end );
 # CHECKED 06/09/11 PhC
 #############################################################################
 #O  IsIncident( <ele1>, <ele2> )
+#
 # for elements ele1 and ele2 from the same coset geometry. Checks nonempty 
 # intersection unless types are the same, then only EQUAL elements can be 
 # incident.
@@ -289,9 +287,9 @@ InstallMethod( BorelSubgroup, "for coset geometries",
 
 # 
 #############################################################################
-#
+#O IsFlagTransitiveGeometry
 #  
-# 
+# Checks whether a Coset incidence structure is flag transitive
 ##
 InstallMethod( IsFlagTransitiveGeometry, "for coset geometries",
                [ IsCosetGeometry ],
@@ -348,9 +346,9 @@ end );
 
 # 
 #############################################################################
-# IsFirmGeometry
+#O IsFirmGeometry
 #  
-# 
+# Checks whether a coset geometry is firm
 ##
 InstallMethod( IsFirmGeometry, "for coset geometries",
                [ IsCosetGeometry ],
@@ -402,22 +400,41 @@ InstallMethod( IsConnected,
     return Group( gens ) = g;
 end );
 
-#############!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-# 
+# CHECKED 07/02/12 PhC 
 #############################################################################
-# IsResiduallyConnected
+#O IsResiduallyConnected
 #  
-# 
+# Returns ture iff the coset geometry is residually connected
 ##
 InstallMethod( IsResiduallyConnected, "for coset geometries",
                [ IsCosetGeometry ],
   function( cg )
     ## A coset geometry is residually connected if and only
     ## if for every subset J of the types I with |I-J|>1, we have
-    ## \cap{Hj: j in J} = < \cap{Hi: i in J-{j}} : j in I-J >
-
+    ## \cap{Hj: j in J} = < \cap{Hi: i in J\cup {j}} : j in I-J >
+  local rank, typeset, typesubsets, k, lhs, rhs, subset, test, int, iter;
+    rank:=Rank(cg);
+    typesubsets:=[];
+    typeset:=TypesOfElementsOfIncidenceStructure(cg);
+    for k in [1..rank-2] do
+      Append(typesubsets, Combinations(typeset, k));
+    od;
+    iter := Iterator(typesubsets);
+    test:=true;
+    while not IsDoneIterator(iter) and test do
+      subset:=NextIterator(iter);
+      lhs := Size(Intersection(ParabolicSubgroups(cg){subset}));
+      rhs := [];
+      int:=Intersection(ParabolicSubgroups(cg){subset});
+      for k in Difference(typeset,subset) do
+        Add(rhs, Intersection(int,ParabolicSubgroups(cg)[k]));
+      od;
+      rhs:=Size(SubgroupNC(cg!.group,Union(rhs)));
+      if lhs<>rhs then test:=false; fi;
+    od;
+    return test;
     # to be completed!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    return true;
+    # return true;
 end );
 ###############!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 

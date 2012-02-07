@@ -134,7 +134,11 @@ A geometry is connected if and only if its incidence graph is connected. <A>cg</
 <Oper Name="IsResiduallyConnected" Arg="cg"/>
 <Returns>true if and only if <A>cg</A> is residually connected.</Returns>
 <Description> 
-A geometry is residually connected the incidence graphs of all its residues of rank at least 2 are connected. <A>cg</A> must be a coset geometry.
+A geometry is residually connected the incidence graphs of all its
+residues of rank at least 2 are connected. <A>cg</A> must be a coset
+geometry. This test is quite time consuming. You can bind the
+Attribute IsResiduallyConnected if you are sure the coset geometry is
+indeed residually connected.
 </Description>
 </ManSection>
 
