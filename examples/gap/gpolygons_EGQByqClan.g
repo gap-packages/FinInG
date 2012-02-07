@@ -7,5 +7,5 @@ egq := EGQByqClan(clan);
 incgraph := IncidenceGraphOfGeneralisedPolygon(egq);;
 group := AutomorphismGroup(incgraph);
 Order(group);
-Order(CollineationGroup(HermitianVariety(3,9)));
+Order(CollineationGroup(HermitianPolarSpace(3,9)));
 quit;

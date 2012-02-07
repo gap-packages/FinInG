@@ -1,5 +1,5 @@
 # gpolygons_collineations.g
-LoadPackage("Grape");
+LoadPackage("grape");
 Print("Collineations of projective planes...\n");
 blocks := [ 
    [ 1, 2, 3, 4, 5 ], [ 1, 6, 7, 8, 9 ], [ 1, 10, 11, 12, 13 ],
@@ -18,7 +18,6 @@ Print("Collineations of generalised hexagons...\n");
 hex := SplitCayleyHexagon( 5 );
 coll := CollineationGroup( hex );
 CollineationAction(coll) = OnProjSubspaces;
-
 Print("Collineations of elation generalised quadrangles...\n");
 g := ElementaryAbelianGroup(27);
 flist1 := [ Group(g.1), Group(g.2), Group(g.3), Group(g.1*g.2*g.3) ];;
@@ -28,3 +27,4 @@ egq := EGQByKantorFamily(g, flist1, flist2);
 elations := ElationGroup( egq );
 CollineationAction(elations) = OnKantorFamily;
 HasCollineationGroup( egq );
+quit;
