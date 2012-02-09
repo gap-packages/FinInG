@@ -1,4 +1,4 @@
-How to install FinInF on any unix like system..
+How to install FinInF on any unix like system.
 
 I. General instructions.
 
@@ -7,15 +7,15 @@ accepted/deposited packages.
 
 2. Install GAP the way you like it.  At the end you should have a working GAP
 distribution. You will now have to install seperate packages for GAP. This can
-be done in two ways: using the central 'pkg' directory in the /gap4r4/ tree, ore
-using a 'pkg' directory in your homedirectory, or even using both.  Only don't
-forget that when you use not the central directory, you have to either change or
+be done in two ways: using the central 'pkg' directory in the /gap4r4/ tree, or
+using a 'pkg' directory in your homedirectory, or even using both.  Don't
+forget that when you don't use the central directory, you have to either change or
 create a gaprc file or start gap in such a way that it also looks for packages
-in your local 'pkg' dir, e.g.: gap4r4 -l "/Users/jdebeule/pkg/;/opt/gap4r4".
-This is an example: here the local pkg directory is just a directory in my home
-directory, which is /Users/jdebeule, and I upacked the GAP-tarball in the
+in your local 'pkg' dir, e.g.: gap4r4 -l "/Users/alice/pkg/;/opt/gap4r4".
+This is an example: here the local pkg directory is just a directory in 
+/Users/alice, and the GAP-tarball is unpacked in the
 directory /opt/. The 'gap4r4' command is just a small shell script that was
-place in my /usr/bin directory. These things are also clearly explained in the
+placed in /usr/bin directory. These things are also clearly explained in the
 GAP documentation.
 
 3. Get necessary packages:
@@ -27,8 +27,7 @@ GAP documentation.
    f. cvec
 
 The package cvec is not necessary for this version of FinInG, but will become
-necessary with high probability in near future. So you can ignore it for this
-version.
+necessary (with high probability) in the near future. 
    
 4. Install packages a-b-c-d as usual. For PC/linux and Intel/Mac, this also
 applies to e-f. For PowerPC/Mac, read part II: 'compiling io and cvec'
@@ -36,7 +35,7 @@ statically in the GAP-kernel, to install these packages.
 
 5. Get the forms 1.1 package at cage.ugent.be/geometry/software, and install it. 
 
-6. Get and install desargues. 
+6. Get and install fining. 
 
 7. The orb 2.0 needs a patch. You can find it in the directory 'pkg/fining/patch/'. The file hash.gi
 replaces the file 'hash.gi' in the orb package. You have to manually do this, so
@@ -97,33 +96,33 @@ a central exec directory, e.g. '/usr/bin/'. So we start GAP by issuing 'gap4r4'.
 
 3. GAP packages can be installed in the central gap/pkg directorty or under a
 local pkg directory of a user. We assume here the latter. In this example we
-install packages in '/Users/jdebeule/pkg/'
+install packages in '/Users/alice/pkg/'
 
 4. Dowload and unpack the 'orb' package. Test the installation.
 
 5. Dowload and unpack the 'io' package.
 
-6. Dowload and upack the 'cvec' package.
+6. Dowload and unpack the 'cvec' package.
 
 7. We will have to compile io and cvec statically in the GAP kernel. Therefore,
 go to the '/opt/gap4r4/bin/powerpc-apple-darwin8.8.0-gcc/' directory, and issue
 the following command:
 
 './gac -o gap-static -p "-DIOSTATIC -DCVECSTATIC" 
-/Users/jdebeule/pkg/io/src/io.c /Users/jdebeule/pkg/cvec/src/cvec.c'
+/Users/alice/pkg/io/src/io.c /Users/alice/pkg/cvec/src/cvec.c'
 
 This command compiles 'io.c' and 'cvec.c', and links afterwards all '.o' files,
 including the 'io.o' and 'cvec.o' to the GAP kernel. 
 
-8. If the above command is succesful, there must a an executable called
+8. If the above command is successful, there must be a an executable called
 'gap-static' in the directory '/opt/gap4r4/bin/powerpc-apple-darwin8.8.0-gcc/'. 
 
-9. Go into the '/opt/gap4r4/bin' directory and copy the file 'gap.sh' into a
+9. Go to the '/opt/gap4r4/bin' directory and copy the file 'gap.sh' into a
 central directory like '/usr/bin' (where the other GAP startup script is
 located). If you want, give it an appropriate name, e.g. 'gap4r4static'.
 
-10. Open the file '/usr/bin/gap4r4static' and edit nearly at the end of the
-file, edit  
+10. Open the file '/usr/bin/gap4r4static' and nearly at the end of the
+file, change
 
 if [ "x$GAP_PRG" = "x" ];  then
 GAP_PRG=powerpc-apple-darwin8.8.0-gcc/gap
@@ -138,4 +137,4 @@ fi
 11. Issuing the command 'gap4r4static' with your usual options, should startup
 GAP, with 'IO' loaded.
 
-12. 'LoadPackage("cvec"); should load now the orb package and the cvec package.
+12. 'LoadPackage("cvec"); should load the orb package and the cvec package.

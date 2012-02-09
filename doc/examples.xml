@@ -86,7 +86,9 @@ gap> StructureDescription( stab );
 <Subsection>
 <Heading>Lines meeting a hermitian curve</Heading>
 
-Here we see how the lines of a projective plane <Math>PG(2,q^2)</Math>
+Here we see how the lines of a projective plane 
+<Alt Not="HTML"><M>PG(2,q^2)</M></Alt> 
+<Alt Only="HTML">PG(2,q&lt;sup>2 &lt;/sup>)</Alt>
 meet a hermitian curve. It is well known that every line meets in either
 1 or q+1 points.
   
