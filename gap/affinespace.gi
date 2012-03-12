@@ -1,21 +1,20 @@
-############################################################################
+#############################################################################
 ##
 ##  affinespace.gi              FinInG package
 ##                                                              John Bamberg
-## 							                                    Anton Betten
-##                                                             Philippe Cara
+##                                                              Anton Betten
 ##                                                              Jan De Beule
-## 							                                  Michel Lavrauw
-##                                                                 Maska Law
+##                                                             Philippe Cara
+##                                                            Michel Lavrauw
 ##                                                           Max Neunhoeffer
-##                                                            Michael Pauley
-##                                                             Sven Reichard
 ##
-##  Copyright 2008 University of Western Australia, Perth
-##                 Lehrstuhl D fuer Mathematik, RWTH Aachen
-##                 Ghent University
-##                 Colorado State University
-##                 Vrije Universiteit Brussel
+##  Copyright 2011	Colorado State University, Fort Collins
+##					Università degli Studi di Padova
+##					Universeit Gent
+##					University of St. Andrews
+##					University of Western Australia, Perth
+##                  Vrije Universiteit Brussel
+##                 
 ##
 ##  Implementation stuff for affine spaces
 ##
@@ -33,31 +32,42 @@
 
 Print(", affinespace/affinegroup\c");
 
-
 #############################################################################
 #
 # Construction of affine spaces
 #
 #############################################################################
 
-InstallMethod( AffineSpace, [ IsPosInt, IsField ],
-  function( d, f )
-    local geo;
-    geo := rec( dimension := d, basefield := f, 
+# CHECKED 12/03/12 jdb
+#############################################################################
+#O  AffineSpace( <d>, <f> )
+# returns AG( <d>, <f> )
+##
+InstallMethod( AffineSpace, 
+	"for a dimension and a field",
+ 	[ IsPosInt, IsField ],
+	function( d, f )
+		local geo;
+		geo := rec( dimension := d, basefield := f, 
                 vectorspace := FullRowSpace(f, d) );
-    Objectify( NewType( GeometriesFamily,
+		Objectify( NewType( GeometriesFamily,
                         IsAffineSpace and IsAffineSpaceRep ), geo );
-    SetAmbientSpace(geo,geo);
-    return geo;
-  end );
+		SetAmbientSpace(geo,geo);
+		SetRankAttr(geo,d); #this makes Rank applicable without adding more code in this file
+		return geo;
+	end );
 
-InstallMethod( AffineSpace, "for a dimension and a prime power",
-  [ IsPosInt, IsPosInt ],
-  function( d, q )
-          return AffineSpace(d, GF(q));
-  end );
-
-
+# CHECKED 12/03/12 jdb
+#############################################################################
+#O  AffineSpace( <d>, <q> )
+# returns AG( <d>, GF(<q>) )
+##
+InstallMethod( AffineSpace, 
+	"for a dimension and a prime power",
+	[ IsPosInt, IsPosInt ],
+	function( d, q )
+		return AffineSpace(d, GF(q));
+	end );
 
 #############################################################################
 #
@@ -65,41 +75,58 @@ InstallMethod( AffineSpace, "for a dimension and a prime power",
 #
 #############################################################################
 
-InstallMethod( RankAttr, "for an affine space",
-  [ IsAffineSpace and IsAffineSpaceRep ],
-  function( as )
-    return as!.dimension;
-  end );
+# is obsolete now due to the little change in AffineSpace
+#InstallMethod( RankAttr, "for an affine space",
+#  [ IsAffineSpace and IsAffineSpaceRep ],
+#  function( as )
+#    return as!.dimension;
+#  end );
 
-InstallMethod( TypesOfElementsOfIncidenceStructure, "for an affine space", [IsAffineSpace],
-  function( ps )
-    local d,i,types;
-    types := ["point"];
-    d := ps!.dimension;
-    if d >= 2 then Add(types,"line"); fi;
-    if d >= 3 then Add(types,"plane"); fi;
-    if d >= 4 then Add(types,"solid"); fi;
-    for i in [5..d] do
-        Add(types,Concatenation("affine subspace of dim. ",String(i)));
-    od;
-    return types;
-  end );
+# CHECKED 12/03/12 jdb
+#############################################################################
+#O  TypesOfElementsOfIncidenceStructure( <ps> )
+# returns the names of the types of the elements of the projective space <ps>
+# the is a helper operation.
+##
+InstallMethod( TypesOfElementsOfIncidenceStructure, 
+	"for an affine space", 
+	[IsAffineSpace],
+	function( ps )
+		local d,i,types;
+		types := ["point"];
+		d := Rank(ps); #this line replaces next line, since next line assumes IsAffineSpaceRep
+	#d := ps!.dimension;
+		if d >= 2 then Add(types,"line"); fi;
+		if d >= 3 then Add(types,"plane"); fi;
+		if d >= 4 then Add(types,"solid"); fi;
+		for i in [5..d] do
+			Add(types,Concatenation("affine subspace of dim. ",String(i)));
+		od;
+		return types;
+	end );
 
-InstallMethod( TypesOfElementsOfIncidenceStructurePlural, "for an affine space",
-  [IsAffineSpace],
-  function( ps )
-    local d,i,types;
-    types := ["points"];
-    d := ps!.dimension;
-    if d >= 2 then Add(types,"lines"); fi;
-    if d >= 3 then Add(types,"planes"); fi;
-    if d >= 4 then Add(types,"solids"); fi;
-    for i in [5..d] do
-        Add(types,Concatenation("affine. subspaces of dim. ",String(i)));
-    od;
-    return types;
-  end );
-
+# CHECKED 12/03/12 jdb
+#############################################################################
+#O  TypesOfElementsOfIncidenceStructurePlural( <ps> )
+# returns the plural of the names of the types of the elements of the projective space <ps>
+# the is a helper operation.
+##
+InstallMethod( TypesOfElementsOfIncidenceStructurePlural, 
+	"for an affine space",
+	[IsAffineSpace],
+	function( ps )
+		local d,i,types;
+		types := ["points"];
+    		d := Rank(ps); #this line replaces next line, since next line assumes IsAffineSpaceRep
+	#d := ps!.dimension;
+		if d >= 2 then Add(types,"lines"); fi;
+		if d >= 3 then Add(types,"planes"); fi;
+		if d >= 4 then Add(types,"solids"); fi;
+		for i in [5..d] do
+			Add(types,Concatenation("affine. subspaces of dim. ",String(i)));
+		od;
+		return types;
+	end );
 
 #############################################################################
 #
@@ -118,142 +145,171 @@ InstallMethod( TypesOfElementsOfIncidenceStructurePlural, "for an affine space",
 # [ IsAffineSpace, IsRowVector, Is8BitMatrixRep ]
 # [ IsAffineSpace, IsRowVector, IsGF2MatrixRep ]
 #
+# The treatment of the matrix representing the subspace at infinity, is similar to 
+# the treatment in the methods for VectorSpaceToElement in projectivespace.gi
+#
 #############################################################################
 
+# CHECKED 12/03/12 jdb
+# But I am unhappy with this code. It seems obsolete if you compare this with
+# the method installed in geometry.gi for Wrap.
+#############################################################################
+#O  Wrap( <geo>, <type>, <o> )
+# This is an internal subroutine which is not expected to be used by the user;
+# they would be using AffineSubspace. Recall that Wrap is declared in 
+# geometry.gd. 
+##
+InstallMethod( Wrap, 
+	"for an affine space and an object",
+	[IsAffineSpace, IsPosInt, IsObject],
+	function( geo, type, o )
+		local w;
+		w := rec( geo := geo, type := type, obj := o );
+		Objectify( NewType( ElementsOfIncidenceStructureFamily, IsElementOfIncidenceStructure and
+			IsElementOfIncidenceStructureRep and IsSubspaceOfAffineSpace ), w );
+		return w;
+	end );
 
-InstallMethod( Wrap, "for an affine space and an object",
-  [IsAffineSpace, IsPosInt, IsObject],
-  function( geo, type, o )
-    local w;
-    w := rec( geo := geo, type := type, obj := o );
-    Objectify( NewType( ElementsOfIncidenceStructureFamily, IsElementOfIncidenceStructure and
-      IsElementOfIncidenceStructureRep and IsSubspaceOfAffineSpace ), w );
-    return w;
-  end );
-
-InstallMethod( AffineSubspace, "for a row vector and Plist",
+# CHECKED 12/03/12 jdb
+# but I am unhappy with the fact that an empty v just returns [].
+#############################################################################
+#O  AffineSubspace( <geom>, <v>, <m> )
+# returns the subspace of <geom>, with representative <v> and subspace at infinity
+# determined by <m>. 
+##
+InstallMethod( AffineSubspace, 
+	"for a row vector and Plist",
     [IsAffineSpace, IsRowVector, IsPlistRep],
-  function( geom, v, m )
-    local  x, n, i, gf, v2;
-      ## when v is empty... 
-      
-      gf := geom!.basefield;
-      
-      if IsEmpty(v) then
-        return [];
-      fi;
-      x := MutableCopyMat(m);
-      TriangulizeMat(x);
-      
-      ## dimension should be correct
-      
-      if Length(v) <> geom!.dimension or Length(v) <> Length(x[1]) then
-         Error("Dimensions are incompatible");
-      fi;
-      
-      ## Remove zero rows. It is possible the the user
-      ## has inputted a matrix which does not have full rank
-      
-      n := Length(x);
-      i := 0;
-      while i < n and ForAll(x[n-i], IsZero) do
-          i := i+1; 
-      od;
-      if i = n then
-         return [];
-      fi;
-      x := x{[1..n-i]};
-      if Length(x) = geom!.dimension then
-         return geom;
-      fi;   
-      
-      ## It is possible that (a) the user has entered a
-      ## matrix with one row, or that (b) the user has
-      ## entered a matrix with rank 1 (thus at this stage
-      ## we will have a matrix with one row).
-      
-      ## We must also compress our vector/matrix.
-      
-      if IsZero(x) then
-         ## return an affine point
-         v2 := ShallowCopy(v);
-         ConvertToVectorRep(v2, gf);
-         return Wrap(geom, 1, v2);
-      else
-         ## find transversal element
-         v2 := VectorSpaceTransversalElement( geom!.vectorspace, x, v );
-         ConvertToVectorRep(x, gf);
-         ConvertToMatrixRep(x, gf);
-         return Wrap(geom, Length(x)+1, [v2,x]);
-      fi;
- end );
+	function( geom, v, m )
+		local  x, n, i, gf, v2;
+		gf := geom!.basefield;
+		## when v is empty... 
+		if IsEmpty(v) then
+			return [];
+		fi;
+		x := MutableCopyMat(m);
+		TriangulizeMat(x);
+        ## dimension should be correct
+        if Length(v) <> geom!.dimension or Length(v) <> Length(x[1]) then
+			Error("Dimensions are incompatible");
+		fi;
+		## Remove zero rows. It is possible the the user
+		## has inputted a matrix which does not have full rank
+        n := Length(x);
+		i := 0;
+		while i < n and ForAll(x[n-i], IsZero) do
+			i := i+1; 
+		od;
+		if i = n then
+			return [];
+		fi;
+		x := x{[1..n-i]};
+		if Length(x) = geom!.dimension then
+			return geom;
+		fi;   
+        ## It is possible that (a) the user has entered a
+		## matrix with one row, or that (b) the user has
+		## entered a matrix with rank 1 (thus at this stage
+		## we will have a matrix with one row).
+        ## We must also compress our vector/matrix.
+        if IsZero(x) then
+        ## return an affine point
+			v2 := ShallowCopy(v);
+			ConvertToVectorRep(v2, gf);
+			return Wrap(geom, 1, v2);
+		else
+		## find transversal element
+			v2 := VectorSpaceTransversalElement( geom!.vectorspace, x, v );
+			ConvertToVectorRep(x, gf);
+			ConvertToMatrixRep(x, gf);
+			return Wrap(geom, Length(x)+1, [v2,x]);
+		fi;
+	end );
 
-
-InstallMethod( AffineSubspace, "for a row vector",
+# CHECKED 12/03/12 jdb
+#############################################################################
+#O  AffineSubspace( <geom>, <v>  )
+# returns the point in the affine space <geom> determined by <v> 
+##
+InstallMethod( AffineSubspace, 
+	"for a row vector",
     [IsAffineSpace, IsRowVector],
-  function( geom, v )
-    local gf, v2;
-    gf := geom!.basefield;
+	function( geom, v )
+		local gf, v2;
+		gf := geom!.basefield;
+		# I found the next lines a bit infelicious, so I replaced it by an error message.
+		## when v is empty...  
+		if IsEmpty(v) then
+		#return [];
+			Error( "<v> should not be empty" );
+		fi;
+        ## dimension should be correct (another argument to change the above).
+        if Length(v) <> geom!.dimension then
+			Error("Dimensions are incompatible");
+		fi;
+		v2 := ShallowCopy( v );
+		ConvertToVectorRep(v, gf);
+		return Wrap(geom, 1, v2);
+	end );
 
-      ## when v is empty...  
-    if IsEmpty(v) then
-      return [];
-    fi;
-      
-      ## dimension should be correct
-      
-    if Length(v) <> geom!.dimension then
-       Error("Dimensions are incompatible");
-    fi;
-    v2 := ShallowCopy( v );
-    ConvertToVectorRep(v, gf);
-    return Wrap(geom, 1, v2);
- end );
-
-InstallMethod( AffineSubspace, "for a row vector and 8-bit matrix",
+# CHECKED 12/03/12 jdb
+# but I am unhappy with the fact that an empty v just returns [].
+#############################################################################
+#O  AffineSubspace( <geom>, <v>, <m> )
+# returns the subspace of <geom>, with representative <v> and subspace at infinity
+# determined by <m>. 
+##
+InstallMethod( AffineSubspace, 
+	"for a row vector and 8-bit matrix",
     [IsAffineSpace, IsRowVector, Is8BitMatrixRep],
-  function( geom, v, m )
-  
+	function( geom, v, m )
   ## We have simply copied the code that was for IsPlistRep
+	local  x, n, i, gf, v2;
+		gf := geom!.basefield;     
+		if IsEmpty(v) then
+			return [];
+		fi;
+		x := MutableCopyMat(m);
+		TriangulizeMat(x);
+		if Length(v) <> geom!.dimension or Length(v) <> Length(x[1]) then
+			Error("Dimensions are incompatible");
+		fi;
+		n := Length(x);
+		i := 0;
+		while i < n and ForAll(x[n-i], IsZero) do
+			i := i+1; 
+		od;
+		if i = n then
+			return [];
+		fi;
+		x := x{[1..n-i]};
+		if Length(x) = geom!.dimension then
+			return geom;
+		fi;   
+		if IsZero(x) then
+			v2 := ShallowCopy(v);
+			ConvertToVectorRep(v2, gf);
+			return Wrap(geom, 1, v2);
+		else
+			v2 := VectorSpaceTransversalElement( geom!.vectorspace, x, v );
+			ConvertToVectorRep(x, gf);
+			ConvertToMatrixRep(x, gf);
+			return Wrap(geom, Length(x), [v2,x]);
+		fi;
+	end ); 
   
-    local  x, n, i, gf, v2;
-    gf := geom!.basefield;     
-    if IsEmpty(v) then
-       return [];
-    fi;
-    x := MutableCopyMat(m);
-    TriangulizeMat(x);
-    if Length(v) <> geom!.dimension or Length(v) <> Length(x[1]) then
-       Error("Dimensions are incompatible");
-    fi;
-    n := Length(x);
-    i := 0;
-    while i < n and ForAll(x[n-i], IsZero) do
-          i := i+1; 
-    od;
-    if i = n then
-       return [];
-    fi;
-    x := x{[1..n-i]};
-    if Length(x) = geom!.dimension then
-       return geom;
-    fi;   
-    if IsZero(x) then
-       v2 := ShallowCopy(v);
-       ConvertToVectorRep(v2, gf);
-       return Wrap(geom, 1, v2);
-    else
-       v2 := VectorSpaceTransversalElement( geom!.vectorspace, x, v );
-       ConvertToVectorRep(x, gf);
-       ConvertToMatrixRep(x, gf);
-       return Wrap(geom, Length(x), [v2,x]);
-    fi;
-  end ); 
   
-  
-InstallMethod( AffineSubspace, "for a row vector and 8-bit matrix",
+# CHECKED 12/03/12 jdb
+# but I am unhappy with the fact that an empty v just returns [].
+#############################################################################
+#O  AffineSubspace( <geom>, <v>, <m> )
+# returns the subspace of <geom>, with representative <v> and subspace at infinity
+# determined by <m>. 
+##
+InstallMethod( AffineSubspace, 
+	"for a row vector and 8-bit matrix",
     [IsAffineSpace, IsRowVector, IsGF2MatrixRep],
-  function( geom, v, m )
+	function( geom, v, m )
   
   ## We have simply copied the code that was for IsPlistRep
   

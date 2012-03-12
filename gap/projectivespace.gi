@@ -265,7 +265,7 @@ InstallMethod( Hyperplanes,
 # CHECKED 11/09/11 jdb
 #############################################################################
 #A  TypesOfElementsOfIncidenceStructure( <ps> )
-# retunrs the names of the types of the elements of the projective space <ps>
+# returns the names of the types of the elements of the projective space <ps>
 # the is a helper operation.
 ## 
 InstallMethod( TypesOfElementsOfIncidenceStructure, 

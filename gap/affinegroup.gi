@@ -113,6 +113,9 @@ InstallGlobalFunction( OnAffinePoints,
     return Wrap(geo, y!.type, new);
   end );
 
+# CHANGED 12/03/12 jdb
+# new directions at infinity should be normalized, otherwise you get the orbits q-1 times.
+##
 InstallGlobalFunction( OnAffineNotPoints,
   function( subspace, el )
      local dir, v, vec, newv, ag, mat, newdir, d, frob;
@@ -124,7 +127,8 @@ InstallGlobalFunction( OnAffineNotPoints,
      mat := el!.mat;
      frob := el!.frob;
      newdir := dir * mat{[1..d]}{[1..d]};
-     newdir := newdir^frob;   
+     newdir := newdir^frob;
+	 TriangulizeMat(newdir);   
      newv := Concatenation(v, [ One(ag!.basefield) ]);
      newv := newv * mat;
      newv := newv^frob;
