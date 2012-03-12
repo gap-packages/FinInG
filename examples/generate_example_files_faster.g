@@ -127,6 +127,8 @@ files := [ "gpolygons_EGQByqClan" ];
 #outputdir = directory to write '.out' files: ".../pkg/fining/examples/output"
 #name of script to start gap version. The user has to fill this in!
 
+files := ["examples_test"];
+
 homedir := DirectoryCurrent();
 exampledir := DirectoriesPackageLibrary("fining","examples/gap")[1]; 
 preambledir := DirectoriesPackageLibrary("fining","examples/")[1]; 
@@ -157,6 +159,7 @@ for filename in files do
   WriteLine(stream,cmds);
   repeat
     str := ReadLine(stream);
+	#Print(str);
   until str = "true\n";
   inputfile := Filename(exampledir,Concatenation(filename,".g"));
   input_stream := InputTextFile(inputfile);
@@ -165,7 +168,7 @@ for filename in files do
     #Print(cmd);
 	WriteAll(stream,cmd);
     cmd := ReadLine(input_stream);
-    ReadAll(stream);
+    #ReadAll(stream);
   od;
   #ReadAll(stream);
 od;
@@ -185,7 +188,7 @@ for filename in files do
   ReadLine(input_stream);
   ReadLine(input_stream);
   line := ReadLine(input_stream);
-  while line <> "gap> quit;\n" do
+  while line <> "gap> quit;\n" or line <> "gap> \n" do
     if line <> "\n" then
       line := ReplacedString(line,"\\\n","\n");
       AppendTo(o,ReplacedString(ReplacedString(line,"<","&lt;"),">","&gt;"));
