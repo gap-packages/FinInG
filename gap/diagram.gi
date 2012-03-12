@@ -43,6 +43,27 @@ Print(", diagram\c");
 
 
 
+#################################################################
+# Technicalities: Availability test for GRAPE and GraphViz/dotty
+#################################################################
+
+Whereisdot :=  function()
+local str, outputtext;
+    if not ARCH_IS_UNIX() then
+       Info(InfoFinInG, 1, "Package `FinInG': non-Unix architecture! Don't know how to make diagram drawings in that case.");
+       return false;
+    else # See whether 'dot' is installed
+    	 str:=""; outputtext:=OutputTextString(str, true);
+	 Process(DirectoryCurrent(), Filename(DirectoriesSystemPrograms(), "which"),  InputTextNone(), outputtext, ["dot"]);  
+	 if str = "" 
+        then
+      Info(InfoFinInG, 1, "Package `FinInG': dot not installed on your system. Please install GraphViz on your system.");
+      Info(InfoFinInG, 1, "Package `FinInG': or find a friend who can compile your dot-files.");
+      	return false;
+      	fi;
+    fi;
+    return true;
+end;
 
 
 #############################################################################
@@ -404,7 +425,7 @@ end );
 #############################################################################
 #O IsResiduallyConnected
 #  
-# Returns ture iff the coset geometry is residually connected
+# Returns true iff the coset geometry is residually connected
 ##
 InstallMethod( IsResiduallyConnected, "for coset geometries",
                [ IsCosetGeometry ],
@@ -433,10 +454,7 @@ InstallMethod( IsResiduallyConnected, "for coset geometries",
       if lhs<>rhs then test:=false; fi;
     od;
     return test;
-    # to be completed!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    # return true;
 end );
-###############!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 # 
 #############################################################################
@@ -603,7 +621,7 @@ InstallMethod( IncidenceGraph, [ IsCosetGeometry and IsHandledByNiceMonomorphism
     local fastgeo, gamma, hom;
 
     if not "grape" in RecNames(GAPInfo.PackagesLoaded) then
-       Error("You must load the Grape package\n");
+       Error("You must load the Grape package in order to use IncidenceGraph\n");
     fi;
 
     if FINING.Fast then
@@ -909,7 +927,12 @@ InstallGlobalFunction( DrawDiagram,
 
     longstring:=Concatenation(longstring, "}\n");    
     PrintTo( Concatenation(filename, ".dot") , longstring );
-    Exec( Concatenation("dot -Tps ", filename, ".dot -o ", filename, ".ps") );
+    ######## Checking the availability of GraphViz dot in path...
+    if Whereisdot() then
+        Exec( Concatenation("dot -Tps ", filename, ".dot -o ", filename, ".ps") );
+    else
+        Info(InfoWarning, 1, "Package `FinInG': Only .dot file written for diagram.");
+    fi;	
     return;
   end );
 
@@ -1267,5 +1290,6 @@ InstallMethod( DiagramOfGeometry, [ IsClassicalPolarSpace ],
     SetGeometryOfDiagram( diagram, geo );
     return diagram;
   end );
+
 
 

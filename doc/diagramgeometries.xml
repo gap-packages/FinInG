@@ -85,7 +85,7 @@ of the <E>coset geometry</E> whose rank equals the length of <A>l</A>.
 
 <ManSection>
 <Oper Name="ParabolicSubgroups" Arg="cg"/>
-<Returns>list of parabolic subgroups defining the coset geometry <A>cg</A> </Returns>
+<Returns>the list of parabolic subgroups defining the coset geometry <A>cg</A> </Returns>
 <Description> 
 </Description>
 </ManSection>
@@ -102,7 +102,7 @@ of the <E>coset geometry</E> whose rank equals the length of <A>l</A>.
 <Oper Name="Borelsubgroup" Arg="cg"/>
 <Returns>the Borel subgroup of de geometry <A>cg</A></Returns>
 <Description> 
-The Borel subgroup is equal to the stabilizer of a chamber. It corresponds to the untersection of all parabolic subgrops.
+The Borel subgroup is equal to the stabilizer of a chamber. It corresponds to the intersection of all parabolic subgrops.
 </Description>
 </ManSection>
 
@@ -171,8 +171,8 @@ The standard chamber just consists of all parabolic subgroups (i.e. the trivial 
 <Oper Name="ResidueOfFlag" Arg="cg,fl"/>
 <Returns>the residue of <A>fl</A> in <A>cg</A>.</Returns>
 <Description> 
-CHECK the back-mapping. Still not quite right. I'll have another look
-tomorrow (111222).
+<A>cg</A> must be a coset geometry. 
+CHECK the back-mapping. Still not quite right. I'll have another look.
 </Description>
 </ManSection>
 
@@ -180,7 +180,18 @@ tomorrow (111222).
 <Oper Name="IncidenceGraph" Arg="cg"/>
 <Returns>incidence graph of <A>cg</A>.</Returns>
 <Description> 
-<A>cg</A> must be a coset geometry. The graph returned is a <Package>GRAPE</Package> object. Be sure the <Package>GRAPE</Package> is loaded!
+<A>cg</A> must be a coset geometry. The graph returned is
+a <Package>GRAPE</Package> object. Be sure
+the <Package>GRAPE</Package> is loaded! All <Package>GRAPE</Package>
+functionality can now be used to analyse <A>cg</A> via its incidence graph.
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="Rk2GeoGonality" Arg="cg"/>
+<Returns>the gonality (i.e. half the girth) of the incidence graph of <A>cg</A>.</Returns>
+<Description> 
+<A>cg</A> must be a coset geometry of rank 2.
 </Description>
 </ManSection>
 
@@ -188,7 +199,13 @@ tomorrow (111222).
 <Oper Name="Rank2Parameters" Arg="cg"/>
 <Returns>a list of length 3.</Returns>
 <Description> 
-<A>cg</A> must be a coset geometry of rank 2. This function computes the gonality, point and line diameter of <A>cg</A>. These appear as a list in the first entry of the returned list. The second entry contains a list of length 2 with the point order and the total number of points (i.e. elements of type 1) in the geometry. The last entry contains the line order and the number of lines.
+<A>cg</A> must be a coset geometry of rank 2. This function computes
+the gonality, point and line diameter of <A>cg</A>. These appear as a
+list in the first entry of the returned list. The second entry
+contains a list of length 2 with the point order and the total number
+of points (i.e. elements of type 1) in the geometry. The last entry
+contains the line order and the number of lines (i.e. elements of type
+2).
 </Description>
 </ManSection>
 
