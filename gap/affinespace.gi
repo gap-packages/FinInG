@@ -346,49 +346,63 @@ InstallMethod( AffineSubspace,
        return Wrap(geom, Length(x), [v2,x]);
     fi;
   end ); 
-  
-InstallMethod( RandomSubspace, "for an affine space and a dimension",
-                        [ IsAffineSpace, IsInt ],
-  function(as, d)
-    local vspace, w, sub;
-        
-    if d > RankAttr(as) then
-       Error("The dimension of the subspace is larger than that of the affine space");
-    fi;
-	if IsNegInt(d) then
-	   Error("The dimension of the subspace must be at least 0!");
-    fi;
 
-    vspace := as!.vectorspace;
-    w := Random(vspace);
 
-    if d = 1 then
-	   return AffineSubspace( as, w );
-	else
-	   sub := BasisVectors(  Basis( RandomSubspace( vspace, d-1 ) ) );
-	   return AffineSubspace( as, w, sub );
-    fi;
-end );  
+# CHECKED 13/03/12 jdb
+#############################################################################
+#O  RandomSubspace( <as>, <d> )
+# returns an affine subspace of dimension <d> in the affine space <as>
+##
+InstallMethod( RandomSubspace, 
+	"for an affine space and a dimension",
+    [ IsAffineSpace, IsInt ],
+	function(as, d)
+		local vspace, w, sub;
+        if d > RankAttr(as) then
+			Error("The dimension of the subspace is larger than that of the affine space");
+		fi;
+		if IsNegInt(d) then
+			Error("The dimension of the subspace must be at least 0!");
+		fi;
+		vspace := as!.vectorspace;
+		w := Random(vspace);
+		if d = 1 then
+			return AffineSubspace( as, w );
+		else
+			sub := BasisVectors(  Basis( RandomSubspace( vspace, d-1 ) ) );
+			return AffineSubspace( as, w, sub );
+		fi;
+	end );  
 		
-InstallMethod( Random, "for a collection of subspaces of an affine space",
-                       [ IsAllSubspacesOfAffineSpace ],
-        # chooses a random element out of the collection of subspaces of given
-        # dimension of an affine space
-  function( subs )
-    local x;
-    x := RandomSubspace( subs!.geometry, subs!.type );
-    return x;
-  end );
+# CHECKED 13/03/12 jdb
+#############################################################################
+#O  Random( <subs> )
+# returns a random element in the collection <subs>
+##
+InstallMethod( Random, 
+	"for a collection of subspaces of an affine space",
+    [ IsSubspacesOfAffineSpace ],
+    # chooses a random element out of the collection of subspaces of given
+    # dimension of an affine space
+	function( subs )
+		local x;
+		x := RandomSubspace( subs!.geometry, subs!.type );
+		return x;
+	end );
 
-InstallMethod( \in, "for a subspace and an affine space",
-  [IsSubspaceOfAffineSpace, IsAffineSpace],
-  function( x, as )
-   local s;
-    s := x!.geo;
-    return s!.dimension = as!.dimension and 
-           s!.basefield = as!.basefield;
-  end );
-
+# CHECKED 13/03/12 jdb
+#############################################################################
+#O  \in( <x>, <as> )
+# returns true if <x> is an element of the affine space <as>
+##
+InstallMethod( \in, 
+	"for an element of an affine space and an affine space",
+	[IsSubspaceOfAffineSpace, IsAffineSpace],
+	function( x, as )
+		local s;
+		s := x!.geo;
+		return s!.dimension = as!.dimension and s!.basefield = as!.basefield;
+	end );
 
 #############################################################################
 #
@@ -397,49 +411,99 @@ InstallMethod( \in, "for a subspace and an affine space",
 #############################################################################
 
 
-InstallMethod( ElementsOfIncidenceStructure, [IsAffineSpace],
-  function( as )
-    return Objectify(
-      NewType( ElementsCollFamily, IsAllElementsOfIncidenceStructure ),
-        rec( geometry := as )
-      );
-  end);
+# CHECKED 13/03/12 jdb
+#############################################################################
+#O  ElementsOfIncidenceStructure( <as> )
+# returns the collection of all the elements of the affine space <as> 
+## 
+InstallMethod( ElementsOfIncidenceStructure, 
+	"for an affine space",
+	[IsAffineSpace],
+	function( as )
+		return Objectify( NewType( ElementsCollFamily, IsAllElementsOfIncidenceStructure ),
+			rec( geometry := as ) );
+	end );
 
-InstallMethod( ElementsOfIncidenceStructure, [IsAffineSpace, IsPosInt],
-  function( ps, j )
-    return Objectify(
-      NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
-                                IsAllSubspacesOfAffineSpace and
-                                IsAllSubspacesOfAffineSpaceRep),
-        rec( geometry := ps, type := j,
-          size := Size(Subspaces(ps!.vectorspace, j-1)) * 
+# CHECKED 13/03/12 jdb
+#############################################################################
+#O  ElementsOfIncidenceStructure( <as>, <j> )
+# returns the collection of all the elements of type <j> of the affine space <as> 
+## 
+InstallMethod( ElementsOfIncidenceStructure, 
+	"for an affine space and an integer",
+	[ IsAffineSpace, IsPosInt],
+	function( ps, j )
+		return Objectify( NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
+                                IsSubspaceOfAffineSpace and IsSubspaceOfAffineSpaceRep ),
+								#IsAllSubspacesOfAffineSpace and IsAllSubspacesOfAffineSpaceRep),
+			rec( geometry := ps, type := j, size := Size(Subspaces(ps!.vectorspace, j-1)) * 
                   Size(ps!.basefield)^(ps!.dimension - j + 1) ) );
-  end );
+	end );
 
-InstallMethod( Points, [IsAffineSpace],
-  function( as )
-    return ElementsOfIncidenceStructure(as, 1);
-  end);
+#############################################################################
+# User friendly named operations for points, lines, planes, solids
+# for affine spaces. These operations are not checking if the affine space
+# really contains the elements of the asked type. If not, an error will be
+# produced by ElementsOfIncidenceStructure. 
+#############################################################################
 
-InstallMethod( Lines, [IsAffineSpace],
-  function( as )
-    return ElementsOfIncidenceStructure(as, 2);
-  end);
 
-InstallMethod( Planes, [IsAffineSpace],
-  function( as )
-    return ElementsOfIncidenceStructure(as, 3);
-  end);
+# CHECKED 13/03/12 jdb
+#############################################################################
+#O  Points( <as> )
+# returns ElementsOfIncidenceStructure(ps,1), <as> a an affine space
+## 
+InstallMethod( Points, "for an affine space",
+	[IsAffineSpace],
+	function( as )
+		return ElementsOfIncidenceStructure(as, 1);
+	end);
 
-InstallMethod( Solids, [IsAffineSpace],
-  function( as )
-    return ElementsOfIncidenceStructure(as, 4);
-  end);
+# CHECKED 13/03/12 jdb
+#############################################################################
+#O  Lines( <as> )
+# returns ElementsOfIncidenceStructure(ps,2), <as> a an affine space
+## 
+InstallMethod( Lines, "for an affine space",
+	[IsAffineSpace],
+	function( as )
+		return ElementsOfIncidenceStructure(as, 2);
+	end);
 
-InstallMethod(Size, "for subspaces of an affine space",
-      [IsAllSubspacesOfAffineSpace],
-  function( vs ) return vs!.size; end);
-  
+# CHECKED 13/03/12 jdb
+#############################################################################
+#O  Planes( <as> )
+# returns ElementsOfIncidenceStructure(ps,1), <as> a an affine space
+## 
+InstallMethod( Planes, "for an affine space",
+	[IsAffineSpace],
+	function( as )
+		return ElementsOfIncidenceStructure(as, 3);
+	end);
+
+# CHECKED 13/03/12 jdb
+#############################################################################
+#O  Solids( <as> )
+# returns ElementsOfIncidenceStructure(ps,1), <as> a an affine space
+## 
+InstallMethod( Solids, "for an affine space",
+	[IsAffineSpace],
+	function( as )
+		return ElementsOfIncidenceStructure(as, 4);
+	end);
+
+# CHECKED 13/03/12 jdb
+#############################################################################
+#O  Size( <vs> )
+# returns the number of elements in the collection <vs>
+## 
+InstallMethod(Size, 
+	"for a collection of subspaces of an affine space",
+    [IsSubspacesOfAffineSpace],
+	function( vs ) 
+		return vs!.size; 
+	end );
+
   
 InstallMethod( ComplementSpace, [IsVectorSpace, IsFFECollColl],
   function( space, mat )
@@ -542,7 +606,7 @@ InstallMethod( Enumerator, [ IsVectorSpaceTransversal ],
 
 
 InstallMethod(Iterator, "for subspaces of an affine space",
-        [IsAllSubspacesOfAffineSpace],  
+        [IsSubspacesOfAffineSpace],  
   function( vs )
   ## An affine subspace will be represented by a pair (vector,direction).
   ## So for example, an affine plane x+<W> will be represented by
@@ -572,7 +636,7 @@ InstallMethod(Iterator, "for subspaces of an affine space",
   
   
 InstallMethod( Enumerator, "for subspaces of an affine space",
-        [ IsAllSubspacesOfAffineSpace ],  
+        [ IsSubspacesOfAffineSpace ],  
   function( vs )
   ## An affine subspace will be represented by a pair (vector,direction).
   ## So for example, an affine plane x+<W> will be represented by
@@ -650,15 +714,15 @@ InstallMethod( PrintObj, [ IsAffineSpace and IsAffineSpaceRep ],
     Print("AffineSpace(",p!.dimension,",",p!.basefield,")");
   end );  
 
-InstallMethod( ViewObj, [ IsAllSubspacesOfAffineSpace and
-  IsAllSubspacesOfAffineSpaceRep ],
+InstallMethod( ViewObj, [ IsSubspacesOfAffineSpace and
+  IsSubspacesOfAffineSpaceRep ],
   function( vs )
     Print("<",TypesOfElementsOfIncidenceStructurePlural(vs!.geometry)[vs!.type]," of ");
     ViewObj(vs!.geometry);
     Print(">");
   end );
 
-InstallMethod( PrintObj, [ IsAllSubspacesOfAffineSpace and
+InstallMethod( PrintObj, [ IsSubspacesOfAffineSpace and
   IsAllSubspacesOfProjectiveSpaceRep ],
   function( vs )
     Print("Elements( ",vs!.geometry," , ",vs!.type,")");
