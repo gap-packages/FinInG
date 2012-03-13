@@ -26,7 +26,7 @@ spaces in <Package>FinInG</Package>.
 
 
 <Section>
-<Heading>Overview</Heading>
+<Heading>Affine spaces</Heading>
 
 An affine space can be
 loosely described as the ``geometry you get'' when you remove a
@@ -46,6 +46,15 @@ we represent a variety of rank at least 2 by a pair
 <Display>[v, mat]</Display>
 where <A>v</A> is a row vector and <A>mat</A> is a matrix (representing a basis of the
 associated projective variety). For affine points, we simply use vectors.
+
+
+<ManSection>
+<Filt Name="IsAffineSpace" Type="Category"/>
+<Description>
+This category is a subcategory of <C>IsIncidenceGeometry</C>, and contains all finite Desarguesian affine spaces.
+</Description>
+</ManSection>
+
 
 Here is a basic example of how we can work with affine spaces in <Package>FinInG</Package>.
 

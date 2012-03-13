@@ -28,9 +28,8 @@ with finite projective spaces.
 
 A <E>projective space</E> is a point-line incidence geometry, satisfying few well known axioms. 
 An axiomatic treatment can e.g. be found in <Cite Key="VY65a"/> and <Cite Key="VY65b"/>. 
-Polar spaces are axiomatically, point-line geometries, but
-may contain higher dimensional projective subspaces too. The dimension of the maximal subspaces
-determines the rank of the projective space as an incidence geometry.<P/>
+Projective spaces are axiomatically, point-line geometries, but
+may contain higher dimensional projective subspaces too. <P/>
 
 In <Package>FinInG</Package>, we deal with <E>finite Desarguesian projective
 spaces</E>. It is well known that these geometries can be described completely using

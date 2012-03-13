@@ -449,7 +449,7 @@ InstallMethod( ElementsOfIncidenceStructure,
 	[ IsAffineSpace, IsPosInt],
 	function( ps, j )
 		return Objectify( NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
-                                IsSubspaceOfAffineSpace and IsSubspaceOfAffineSpaceRep ),
+                                IsSubspacesOfAffineSpace and IsSubspacesOfAffineSpaceRep ),
 								#IsAllSubspacesOfAffineSpace and IsAllSubspacesOfAffineSpaceRep),
 			rec( geometry := ps, type := j, size := Size(Subspaces(ps!.vectorspace, j-1)) * 
                   Size(ps!.basefield)^(ps!.dimension - j + 1) ) );
