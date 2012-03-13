@@ -347,7 +347,6 @@ InstallMethod( AffineSubspace,
     fi;
   end ); 
 
-
 # CHECKED 13/03/12 jdb
 #############################################################################
 #O  RandomSubspace( <as>, <d> )
@@ -373,6 +372,22 @@ InstallMethod( RandomSubspace,
 			return AffineSubspace( as, w, sub );
 		fi;
 	end );  
+		
+# CHECKED 13/03/12 jdb
+#############################################################################
+#O  Random( <subs> )
+# returns a random element in the collection <subs>
+##
+InstallMethod( Random, 
+	"for a collection of subspaces of an affine space",
+    [ IsSubspacesOfAffineSpace ],
+    # chooses a random element out of the collection of subspaces of given
+    # dimension of an affine space
+	function( subs )
+		local x;
+		x := RandomSubspace( subs!.geometry, subs!.type );
+		return x;
+	end );
 		
 # CHECKED 13/03/12 jdb
 #############################################################################
