@@ -1,0 +1,16 @@
+gap&gt; as := AG(5,4);
+AG(5, 4)
+gap&gt; Points(as);
+&lt;points of AG(5, 4)&gt;
+gap&gt; Lines(as);
+&lt;lines of AG(5, 4)&gt;
+gap&gt; Planes(as);
+&lt;planes of AG(5, 4)&gt;
+gap&gt; Solids(as);
+&lt;solids of AG(5, 4)&gt;
+gap&gt; Hyperplanes(as);
+&lt;affine. subspaces of dim. 4 of AG(5, 4)&gt;
+gap&gt; as := AG(2,8);
+AG(2, 8)
+gap&gt; Hyperplanes(as);
+&lt;lines of AG(2, 8)&gt;

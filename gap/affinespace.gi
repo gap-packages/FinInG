@@ -82,6 +82,57 @@ InstallMethod( AffineSpace,
 #    return as!.dimension;
 #  end );
 
+# CHECKED 20/03/11 jdb
+#############################################################################
+#A  Dimension( <as> )
+# returns the projective dimension of <ps>
+##
+InstallMethod( Dimension, 
+	"for an affine space",
+	[ IsAffineSpace and IsAffineSpaceRep ],
+	as -> as!.dimension
+	);
+
+# CHECKED 20/03/12 jdb
+#############################################################################
+#O  UnderlyingVectorSpace( <as> )
+#returns the projective dimension of <ps>
+##
+InstallMethod( UnderlyingVectorSpace, 
+	"for an affine space",
+	[ IsAffineSpace and IsAffineSpaceRep ],
+	as -> as!.vectorspace
+	);
+	
+#############################################################################
+#O  AmbientSpace( <subspace> ) returns the ambient space of <subspace>
+##
+InstallMethod( AmbientSpace,
+	"for a subspace of an affine space",
+	[IsSubspaceOfAffineSpace],
+	function(subspace)
+		return subspace!.geo;
+	end );
+
+# CHECKED 20/03/12 jdb
+#############################################################################
+#O  BaseField( <as> )
+# returns the basefield of <as>
+##
+InstallMethod( BaseField, 
+	"for an affine space", 
+	[IsAffineSpace and IsAffineSpaceRep],
+	ag -> ag!.basefield );
+
+#############################################################################
+#O  BaseField( <sub> )
+# returns the basefield of an element of a projective space
+##
+InstallMethod( BaseField, 
+	"for an element of a projective space", 
+	[IsSubspaceOfAffineSpace],
+	sub -> AmbientSpace(sub)!.basefield );
+
 # CHECKED 12/03/12 jdb
 #############################################################################
 #O  TypesOfElementsOfIncidenceStructure( <ps> )
@@ -91,16 +142,16 @@ InstallMethod( AffineSpace,
 InstallMethod( TypesOfElementsOfIncidenceStructure, 
 	"for an affine space", 
 	[IsAffineSpace],
-	function( ps )
+	function( as )
 		local d,i,types;
 		types := ["point"];
-		d := Rank(ps); #this line replaces next line, since next line assumes IsAffineSpaceRep
+		d := Rank(as); #this line replaces next line, since next line assumes IsAffineSpaceRep
 	#d := ps!.dimension;
 		if d >= 2 then Add(types,"line"); fi;
 		if d >= 3 then Add(types,"plane"); fi;
 		if d >= 4 then Add(types,"solid"); fi;
 		for i in [5..d] do
-			Add(types,Concatenation("affine subspace of dim. ",String(i)));
+			Add(types,Concatenation("affine subspace of dim. ",String(i-1)));
 		od;
 		return types;
 	end );
@@ -114,16 +165,16 @@ InstallMethod( TypesOfElementsOfIncidenceStructure,
 InstallMethod( TypesOfElementsOfIncidenceStructurePlural, 
 	"for an affine space",
 	[IsAffineSpace],
-	function( ps )
+	function( as )
 		local d,i,types;
 		types := ["points"];
-    		d := Rank(ps); #this line replaces next line, since next line assumes IsAffineSpaceRep
+    		d := Rank(as); #this line replaces next line, since next line assumes IsAffineSpaceRep
 	#d := ps!.dimension;
 		if d >= 2 then Add(types,"lines"); fi;
 		if d >= 3 then Add(types,"planes"); fi;
 		if d >= 4 then Add(types,"solids"); fi;
 		for i in [5..d] do
-			Add(types,Concatenation("affine. subspaces of dim. ",String(i)));
+			Add(types,Concatenation("affine. subspaces of dim. ",String(i-1)));
 		od;
 		return types;
 	end );
@@ -165,7 +216,7 @@ InstallMethod( Wrap,
 	function( geo, type, o )
 		local w;
 		w := rec( geo := geo, type := type, obj := o );
-		Objectify( NewType( ElementsOfIncidenceStructureFamily, IsElementOfIncidenceStructure and
+		Objectify( NewType( SoASFamily, IsElementOfIncidenceStructure and
 			IsElementOfIncidenceStructureRep and IsSubspaceOfAffineSpace ), w );
 		return w;
 	end );
@@ -405,20 +456,6 @@ InstallMethod( Random,
 		return x;
 	end );
 
-# CHECKED 13/03/12 jdb
-#############################################################################
-#O  \in( <x>, <as> )
-# returns true if <x> is an element of the affine space <as>
-##
-InstallMethod( \in, 
-	"for an element of an affine space and an affine space",
-	[IsSubspaceOfAffineSpace, IsAffineSpace],
-	function( x, as )
-		local s;
-		s := x!.geo;
-		return s!.dimension = as!.dimension and s!.basefield = as!.basefield;
-	end );
-
 #############################################################################
 #
 #  ElementsOfIncidenceStructure, enumerators, iterators
@@ -439,7 +476,7 @@ InstallMethod( ElementsOfIncidenceStructure,
 			rec( geometry := as ) );
 	end );
 
-# CHECKED 13/03/12 jdb
+# CHECKED 20/03/12 jdb
 #############################################################################
 #O  ElementsOfIncidenceStructure( <as>, <j> )
 # returns the collection of all the elements of type <j> of the affine space <as> 
@@ -447,12 +484,18 @@ InstallMethod( ElementsOfIncidenceStructure,
 InstallMethod( ElementsOfIncidenceStructure, 
 	"for an affine space and an integer",
 	[ IsAffineSpace, IsPosInt],
-	function( ps, j )
-		return Objectify( NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
+	function( as, j )
+		local r;
+		r := Rank(as);
+		if j > r then
+			Error("<as> has no elements of type <j>");
+		else
+			return Objectify( NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
                                 IsSubspacesOfAffineSpace and IsSubspacesOfAffineSpaceRep ),
 								#IsAllSubspacesOfAffineSpace and IsAllSubspacesOfAffineSpaceRep),
-			rec( geometry := ps, type := j, size := Size(Subspaces(ps!.vectorspace, j-1)) * 
-                  Size(ps!.basefield)^(ps!.dimension - j + 1) ) );
+			rec( geometry := as, type := j, size := Size(Subspaces(as!.vectorspace, j-1)) * 
+                  Size(as!.basefield)^(as!.dimension - j + 1) ) );
+		fi;
 	end );
 
 #############################################################################
@@ -466,9 +509,10 @@ InstallMethod( ElementsOfIncidenceStructure,
 # CHECKED 13/03/12 jdb
 #############################################################################
 #O  Points( <as> )
-# returns ElementsOfIncidenceStructure(ps,1), <as> a an affine space
+# returns ElementsOfIncidenceStructure(as,1), <as> a an affine space
 ## 
-InstallMethod( Points, "for an affine space",
+InstallMethod( Points, 
+	"for an affine space",
 	[IsAffineSpace],
 	function( as )
 		return ElementsOfIncidenceStructure(as, 1);
@@ -477,9 +521,10 @@ InstallMethod( Points, "for an affine space",
 # CHECKED 13/03/12 jdb
 #############################################################################
 #O  Lines( <as> )
-# returns ElementsOfIncidenceStructure(ps,2), <as> a an affine space
+# returns ElementsOfIncidenceStructure(as,2), <as> a an affine space
 ## 
-InstallMethod( Lines, "for an affine space",
+InstallMethod( Lines, 
+	"for an affine space",
 	[IsAffineSpace],
 	function( as )
 		return ElementsOfIncidenceStructure(as, 2);
@@ -488,9 +533,10 @@ InstallMethod( Lines, "for an affine space",
 # CHECKED 13/03/12 jdb
 #############################################################################
 #O  Planes( <as> )
-# returns ElementsOfIncidenceStructure(ps,1), <as> a an affine space
+# returns ElementsOfIncidenceStructure(as,3), <as> a an affine space
 ## 
-InstallMethod( Planes, "for an affine space",
+InstallMethod( Planes, 
+	"for an affine space",
 	[IsAffineSpace],
 	function( as )
 		return ElementsOfIncidenceStructure(as, 3);
@@ -499,12 +545,25 @@ InstallMethod( Planes, "for an affine space",
 # CHECKED 13/03/12 jdb
 #############################################################################
 #O  Solids( <as> )
-# returns ElementsOfIncidenceStructure(ps,1), <as> a an affine space
+# returns ElementsOfIncidenceStructure(as,4), <as> a an affine space
 ## 
-InstallMethod( Solids, "for an affine space",
+InstallMethod( Solids, 
+	"for an affine space",
 	[IsAffineSpace],
 	function( as )
 		return ElementsOfIncidenceStructure(as, 4);
+	end);
+
+# CHECKED 20/03/12 jdb
+#############################################################################
+#O  Solids( <as> )
+# returns ElementsOfIncidenceStructure(as,1), <as> a an affine space
+## 
+InstallMethod( Hyperplanes, 
+	"for an affine space",
+	[IsAffineSpace],
+	function( as )
+		return ElementsOfIncidenceStructure(as, as!.dimension);
 	end);
 
 # CHECKED 13/03/12 jdb
@@ -596,6 +655,83 @@ InstallMethod( VectorSpaceTransversal, [IsVectorSpace, IsFFECollColl],
   end );
   
   
+#############################################################################
+# Methods to create flags.
+#############################################################################
+
+#############################################################################
+#O  FlagOfIncidenceStructure( <as>, <els> )
+# returns the flag of the projective space <ps> with elements in <els>.
+# the method checks whether the input really determines a flag.
+##
+InstallMethod( FlagOfIncidenceStructure,
+	"for an affine space and list of subspaces of the affine space",
+	[ IsAffineSpace, IsSubspaceOfAffineSpaceCollection ],
+	function(as,els)
+		local list,i,test,type,flag;
+		list := Set(ShallowCopy(els));
+		if Length(list) > Rank(as) then
+		  Error("A flag must contain at least two elements and at most Rank(<as>) elements");
+		fi;
+		test := Set(List([1..Length(list)-1],i -> IsIncident(list[i],list[i+1])));
+		if (test <> [ true ] and test <> []) then
+		  Error("<els> does not determine a flag>");
+		fi;
+		flag := rec(geo := as, types := List(list,x->x!.type), els := list);
+		ObjectifyWithAttributes(flag, IsFlagOfASType, IsEmptyFlag, false);
+		return flag;
+	end);
+
+#############################################################################
+#O  FlagOfIncidenceStructure( <as>, <els> )
+# returns the empty flag of the projective space <ps>.
+##
+InstallMethod( FlagOfIncidenceStructure,
+	"for an affine space and an empty list",
+	[ IsAffineSpace, IsList and IsEmpty ],
+	function(as,els)
+		local flag;
+		flag := rec(geo := as, types := [], els := []);
+		ObjectifyWithAttributes(flag, IsFlagOfASType, IsEmptyFlag, true);
+		return flag;
+	end);
+
+#############################################################################
+# View/Print/Display methods for flags
+#############################################################################
+
+InstallMethod( ViewObj, 
+	"for a flag of an affine space",
+	[ IsFlagOfAffineSpace and IsFlagOfIncidenceStructureRep ],
+	function( flag )
+		Print("<a flag of AffineSpace(",flag!.geo!.dimension,", ",Size(flag!.geo!.basefield),")>");
+	end );
+
+InstallMethod( PrintObj,
+	"for a flag of an affine space",
+	[ IsFlagOfAffineSpace and IsFlagOfIncidenceStructureRep ],
+	function( flag )
+		PrintObj(flag!.els);
+	end );
+
+InstallMethod( Display, 
+	"for a flag of an affine space",
+	[ IsFlagOfAffineSpace and IsFlagOfIncidenceStructureRep ],
+	function( flag )
+		if IsEmptyFlag(flag) then
+			Print("<empty flag of AffineSpace(",flag!.geo!.dimension,", ",Size(flag!.geo!.basefield),")>\n");
+		else
+			Print("<a flag of AffineSpace(",flag!.geo!.dimension,", ",Size(flag!.geo!.basefield),")> with elements of types ",flag!.types,"\n");
+			Print("respectively spanned by\n");
+			Display(flag!.els);
+		fi;
+	end );
+
+
+
+
+
+
 InstallMethod( Enumerator, [ IsVectorSpaceTransversal ],
   function( trans )  
     
@@ -770,94 +906,135 @@ InstallMethod( ViewObj, [ IsVectorSpaceTransversal and IsVectorSpaceTransversalR
 
 #############################################################################
 #
-# Basic methods: IsIncident, Span, Meet, IsParallel, ProjectiveCompletion
+# Basic methods: \in (set theoretic containment for elements), 
+# IsIncident, Span, Meet, IsParallel, ProjectiveCompletion
 #
 #############################################################################
 
-InstallMethod( IsIncident,  [IsSubspaceOfAffineSpace, IsSubspaceOfAffineSpace],
-  function( x, y )
-    local ambx, amby, typx, typy, mat, flag,
+# CHECKED 13/03/12 jdb
+#############################################################################
+#O  \in( <x>, <as> )
+# returns true if <x> is an element of the affine space <as>
+##
+InstallMethod( \in, 
+	"for an element of an affine space and an affine space",
+	[IsSubspaceOfAffineSpace, IsAffineSpace],
+	function( x, as )
+		local s;
+		s := x!.geo;
+		return s!.dimension = as!.dimension and s!.basefield = as!.basefield;
+	end );
+
+#############################################################################
+#O  \in( <x>, <y> )
+# set theoretic containment for an affine space and a subspace. 
+##
+InstallOtherMethod( \in, 
+	"for an affine space and an element of an affine space",
+	[ IsAffineSpace, IsSubspaceOfAffineSpace ],
+	function( x, y )
+		if x = y!.geo then
+			return false;
+		else
+			Error( "<x> is different from the ambient space of <y>" );
+		fi;
+	end );
+
+# CREATED 20/3/2012 jdb
+#############################################################################
+#O  \in( <x>, <y> )
+# returns true if <x> is contained in <y>, from the set theoretic point of view.
+##
+InstallMethod( \in,  
+	"for two subspaces of an affine space",
+	[IsSubspaceOfAffineSpace, IsSubspaceOfAffineSpace],
+	function( x, y )
+		local ambx, amby, typx, typy, mat, flag,
           zero, nrows, ncols, vectors, 
           nvectors, i, j, z, nzheads, row;
-    ambx := x!.geo;
-    amby := y!.geo;
-    typx := x!.type;
-    typy := y!.type;
-    
-    ## x + A inc with y + B iff y-x in B and A subset of B
-    # x+a in y+B for all a => (y-x) in B and A subset of B 
+		ambx := x!.geo;
+		amby := y!.geo;
+		typx := x!.type;
+		typy := y!.type;
+		#set theoretic containment makes only sense if the dimension of x is at most the dimension of y.
+		if typx > typy then
+			return false;
+		elif typx = typy then
+			return x=y;
+		fi;
+			
+		## x + A in y + B iff y-x in B and A subset of B
+		# x+a in y+B for all a => (y-x) in B and A subset of B 
 
-    if ambx!.vectorspace = amby!.vectorspace then   
+		if ambx!.vectorspace = amby!.vectorspace then   
 
-    ## First step: check that the translations are compatible,
-    ## that is, that x!.obj[1] - y!.obj[1] is in the subspace
-    ## spanned by "vectors"
+		## First step: check that the translations are compatible,
+		## that is, that x!.obj[1] - y!.obj[1] is in the subspace
+		## spanned by "vectors"
 
-       if typx = 1 and typy > 1 then
-          return x!.obj - y!.obj[1] in Subspace(ambx!.vectorspace, y!.obj[2]);
-       elif typy = 1 and typx > 1 then
-          return y!.obj - x!.obj[1] in Subspace(ambx!.vectorspace, x!.obj[2]);
-       elif typx = 1 and typy = 1 then
-          return x = y;
-       elif typx >= typy and typy > 1 then
-          flag := x!.obj[1] - y!.obj[1] in Subspace(ambx!.vectorspace, x!.obj[2]);
-       else 
-          flag := x!.obj[1] - y!.obj[1] in Subspace(ambx!.vectorspace, y!.obj[2]);
-       fi;
-       if not flag then return false; fi;
+			if typx = 1 and typy > 1 then
+				return x!.obj - y!.obj[1] in Subspace(ambx!.vectorspace, y!.obj[2]);
+			else 
+				flag := x!.obj[1] - y!.obj[1] in Subspace(ambx!.vectorspace, y!.obj[2]);
+			fi;
+			if not flag then return false; fi;
 
-   ## Second step: checking that the directions are compatible.
-   ## Algorithm is the same as for projective spaces.
-   ## Note that here we will have typx, typy > 1.
+		## Second step: checking that the directions are compatible.
+		## Algorithm is the same as for projective spaces.
+		## Note that here we will have typx, typy > 1.
 
-       if typx >= typy then
-          vectors := x!.obj[2];
-          nvectors := typx-1;
-          mat := MutableCopyMat(y!.obj[2]);
-          nrows := typy - 1;
-       else
-          vectors := y!.obj[2];
-          nvectors := typy-1;
-          mat := MutableCopyMat(x!.obj[2]);
-          nrows := typx - 1;
-       fi;
+			vectors := y!.obj[2];
+			nvectors := typy-1;
+			mat := MutableCopyMat(x!.obj[2]);
+			nrows := typx - 1;
 
-       ncols:= amby!.dimension ;
-       zero:= Zero( mat[1][1] );
+			ncols:= amby!.dimension ;
+			zero:= Zero( mat[1][1] );
 
-   # here we are going to treat "vectors" as a list of basis vectors. first
-   # figure out which column is the first nonzero column for each row
-       nzheads := [];
-       for i in [ 1 .. nvectors ] do
-         row := vectors[i];
-         j := PositionNot( row, zero );
-         Add(nzheads,j);
-       od;
+		# here we are going to treat "vectors" as a list of basis vectors. first
+		# figure out which column is the first nonzero column for each row
+			nzheads := [];
+			for i in [ 1 .. nvectors ] do
+				row := vectors[i];
+				j := PositionNot( row, zero );
+				Add(nzheads,j);
+			od;
 
-       # now try to reduce each row of "mat" with the basis vectors
-       for i in [ 1 .. nrows ] do
-         row := mat[i];
-         for j in [ 1 .. Length(nzheads) ] do
-             z := row[nzheads[j]];
-             if z <> zero then
-               AddRowVector( row, vectors[ j ], - z );
-             fi;
-         od;
+		# now try to reduce each row of "mat" with the basis vectors
+			for i in [ 1 .. nrows ] do
+				row := mat[i];
+				for j in [ 1 .. Length(nzheads) ] do
+					z := row[nzheads[j]];
+					if z <> zero then
+						AddRowVector( row, vectors[ j ], - z );
+					fi;
+				od;
 
-         # if the row is now not zero then y is not a subspace of x
-         j := PositionNot( row, zero );
-         if j <= ncols then
-            flag := false; break;
-         fi;
-
-      od;
+		# if the row is now not zero then y is not a subspace of x
+				j := PositionNot( row, zero );
+				if j <= ncols then
+					flag := false; break;
+				fi;
+			od;
       
-      return flag;
-    else
-      Error( "type is unknown or not implemented" );
-    fi;
-    return false;
+			return flag;
+		else
+			Error( "type is unknown or not implemented" );
+		fi;
+		return false;
   end );
+
+# CREATED 20/3/2012 jdb
+#############################################################################
+#O  IsIncident( <x>, <y> )
+# returns true if and only if <x> is incident with <y>. Relies on set theoretic
+# containment.
+##
+InstallMethod( IsIncident,  
+		[IsSubspaceOfAffineSpace, IsSubspaceOfAffineSpace],
+        function(x,y)
+                return x in y or y in x;
+        end );
 
 
 ## An affine space is a complete lattice 

@@ -1,0 +1,2 @@
+gap&gt; UnderlyingVectorSpace(AG(4,5));
+( GF(5)^4 )

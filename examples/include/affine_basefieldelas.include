@@ -1,0 +1,7 @@
+gap&gt; as := AG(5,11);
+AG(5, 11)
+gap&gt; sub := AffineSubspace(as,[1,4,3,1,0]*Z(11)^5,[[1,0,0,0,0],[0,1,1,1,0],
+&gt; [0,0,0,0,1]]*Z(11)^0);
+&lt;a solid in AG(5, 11)&gt;
+gap&gt; BaseField(sub);
+GF(11)

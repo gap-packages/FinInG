@@ -19,34 +19,44 @@ This is the chapter of the documentation describing affine spaces.
 -->
 
 <Chapter Label="affine">
-<Heading>Affine Geometry</Heading>
+<Heading>Affine Spaces</Heading>
 
 In this chapter we show how one can work with finite affine
 spaces in <Package>FinInG</Package>. 
 
 
 <Section>
-<Heading>Affine spaces</Heading>
+<Heading>Affine spaces and basic operations</Heading>
 
-An affine space can be
-loosely described as the ``geometry you get'' when you remove a
-hyperplane from a projective space. Lines which were concurrent
-in a point of the subtracted hyperplane, are now <E>parallel</E>.
-Conversely, one can ``complete''
-an affine space naturally to produce a projective space, by
-adding a <E>hyperplane at infinity</E>. 
+An <E>affine space</E> is a point-line incidence geometry, satisfying few well known axioms. 
+An axiomatic treatment can e.g. be found in <Cite Key="VY65a"/> and <Cite Key="VY65b"/>. As 
+is the case with projective spaces, affine spaces are axiomatically point-line geometries,
+but may contain higher dimensional affine subspaces too. An affine space can also described 
+as the ``geometry you get'' when you remove a hyperplane from a projective space. Conversely,
+adding to an affine spaces its hyperplane at infinity, yields a projective space. In 
+<Package>FinInG</Package>, we deal with <E>finite Desarguesian affine spaces</E>, i.e.
+an affine space, such that its projective completion is Desarguesian. Other concepts can
+be easily defined using this projective completion. E.g. lines of the projective space
+which are concurrent in a point of the hyperplane at infinity, become now <E>parallel</E> in
+the affine space.
 
 In order to implement (Desarguesian) affine spaces in <Package>FinInG</Package>,
-we have to represent the subspaces in a standard fashion. The common representation
-is that of a coset of a vector subspace
+we have to represent the elements of the affine space (the affine subspaces),
+in a standard fashion. By definition, the points (i.e. the elements of type 1)
+of the <M>n</M>-dimensional affine space <M>AG(n,q)</M> are the vectors of the 
+underlying <M>n</M>-dimensional vector space
+over the finite field <M>GF(q)</M>. The <M>i</M>-dimensional subspaces of <M>AG(n,q)</M> 
+(i.e. the elements of type <M>i-1</M>) are defined as the cosets of the <M>i</M>-dimensional 
+subspaces of the underlying vector space. Hence, the common representation of such a subspace is
 <Display>v+S.</Display>
-Hence one can think of an affine variety as consisting of: (i) a projective
-variety, and (ii) a ``direction''. Thus in <Package>FinInG</Package>,
-we represent a variety of rank at least 2 by a pair 
+
+Hence one can think of a subspace of an affine space as consisting of: (i) an affine point,
+representing the coset, and and (ii) a ``direction'', which is an element of an <M>n-1</M>-dimensional
+projective space, representing the hyperplane at infinity. Thus in <Package>FinInG</Package>,
+we represent an <M>i</M>-dimensional subspace, <M>1 &#8804; i &#8804; n-1</M> as
 <Display>[v, mat]</Display>
 where <A>v</A> is a row vector and <A>mat</A> is a matrix (representing a basis of the
-associated projective variety). For affine points, we simply use vectors.
-
+projective element representing the direction at infinity). For affine points, we simply use vectors.
 
 <ManSection>
 <Filt Name="IsAffineSpace" Type="Category"/>
@@ -55,36 +65,71 @@ This category is a subcategory of <C>IsIncidenceGeometry</C>, and contains all f
 </Description>
 </ManSection>
 
-
-Here is a basic example of how we can work with affine spaces in <Package>FinInG</Package>.
-
-<Example>
-<#Include SYSTEM "../examples/include/affine_basic.include"> 
-</Example>
-</Section>
-
-<Section>
-<Heading>Construction of affine spaces and subspaces</Heading>
-
 <ManSection>
 <Oper Name="AffineSpace" Arg="d, F"/>
 <Oper Name="AffineSpace" Arg="d, q"/>    
-<Oper Name="AG" Arg="d, F"/>
+<Oper Name="AG" Arg="d, F"/>   
 <Oper Name="AG" Arg="d, q"/>    
 <Returns>an affine space</Returns>
 <Description><A>d</A> must be a positive integer. 
-In the first form, <A>F</A> is a field and the function returns the (Desarguesian)
-affine space of dimension <A>d</A> over <A>F</A>. In the second form, <A>q</A> is
-a prime power specifying the size of the field. We have also installed the
-synonym <C>AG</C>, as this is the customary shorthand notation for an affine space.
+In the first form, <A>F</A> is a field and the function returns the affine
+space of dimension <A>d</A> over <A>F</A>. In the second form, <A>q</A> is
+a prime power specifying the size of the field. The user may also use an alias,
+namely, the common abbreviation <C>AG(d, q)</C>.
 <Example>
-gap> AffineSpace(3,GF(3));
-AG(3, 3)
-gap> AffineSpace(3,3);
-AG(3, 3)
+<#Include SYSTEM "../examples/include/affine_affinespace.include"> 
 </Example>
 </Description>
 </ManSection>
+
+<ManSection>
+<Attr Name="Dimension" Arg="as"/>
+<Attr Name="Rank" Arg="as"/>
+<Returns>the dimension of the affine space <A>as</A> (which is equal to its rank)</Returns>
+<Description>
+<Example>
+<#Include SYSTEM "../examples/include/affine_dimension.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="BaseField" Arg="as"/>
+<Returns>returns the base field for the affine space <A>as</A>
+</Returns>
+<Description>
+<Example>
+<#Include SYSTEM "../examples/include/affine_basefield.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="UnderlyingVectorSpace" Arg="as"/>
+<Returns>a vector space</Returns>
+<Description>
+The underlying vectorspace of <M>AG(n,q)</M> is simply <M>V(n,q)</M>.
+<Example>
+<#Include SYSTEM "../examples/include/affine_underlyingvs.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Attr Name="AmbientSpace" Arg="as"/>
+<Returns>an affine space</Returns>
+<Description>The ambient space of an affine space <A>as</A> is the affine space itself.
+Hence, simply <A>as</A> will be returned.
+<Example>
+<#Include SYSTEM "../examples/include/affine_ambientspace.include"> 
+</Example>
+</Description>
+</ManSection>
+
+</Section>
+
+<Section>
+<Heading>Subspaces of affine spaces</Heading>
 
 <ManSection>
 <Oper Name="AffineSubspace" Arg="geo, v"/>
@@ -111,18 +156,79 @@ user is constructing an affine point.
 </Example>
 </Description>
 </ManSection>
-</Section>
 
-<Section>
-<Heading>Basic operations</Heading>
+<ManSection>
+<Oper Name="ElmentsOfIncidenceStructure" Arg="as, j"/>
+<Returns>the collection of elements of the affine space <A>as</A> of type <A>j</A></Returns>
+<Description>
+For the affine space <A>as</A> of dimension <M>d</M> and the type <A>j</A>, <M>1 \leq j \leq d</M>
+this operation returns the collection of <M>j-1</M> dimenaional subspaces. 
+An error message is produced when the projective space <A>ps</A> has no elements of a required type.<Example>
+<#Include SYSTEM "../examples/include/affine_elements.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Heading>Short names for ElementsOfIncidenceStructure</Heading>
+<Oper Name="Points" Arg="ps"/>
+<Oper Name="Lines" Arg="ps"/>
+<Oper Name="Planes" Arg="ps"/>
+<Oper Name="Solids" Arg="ps"/>
+<Oper Name="Hyperplanes" Arg="ps"/>
+<Returns>The elements of <A>ps</A> of respective type 1,2,3,4, and the hyperplanes</Returns>
+<Description>
+An error message is produced when the projective space <A>ps</A> has no elements of a required type.
+<Example>
+<#Include SYSTEM "../examples/include/affine_short.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Heading>Incidence and containment</Heading>
+<Oper Name="IsIncident" Arg="el1, el2"/>
+<Oper Name="\*" Arg="el1, el2"/>
+<Oper Name="\in" Arg="el1, el2"/>
+<Returns>true or false</Returns>
+<Description>
+Recall that for affine spaces, incidence is symmetrized containment, where the whole affine space is
+excluded as one of the arguments for the operation <F>IsIncident</F>, since they it is not considered 
+as an element of the geometry, but the whole affine space is allowed as one of the arguments
+for <F>\in</F>. The method for <F>\*</F> is using <F>IsIncident</F>.
+<Example>
+<#Include SYSTEM "../examples/include/affine_incident.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="AmbientSpace" Arg="el"/>
+<Returns>returns the ambient space of an element <A>el</A> of an affine space</Returns>
+<Description>
+<Example>
+<#Include SYSTEM "../examples/include/affine_ambientspaceelas.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="BaseField" Arg="el"/>
+<Returns>returns the base field of an element <A>el</A> of an affine space</Returns>
+<Description>
+<Example>
+<#Include SYSTEM "../examples/include/affine_basefieldelas.include"> 
+</Example>
+</Description>
+</ManSection>
+
 
 <ManSection>
 <Oper Name="Span" Arg="u, v"/>
 <Returns> a subspace </Returns>
 <Description>
 <A>u</A> and <A>v</A> are subspaces of an affine space.
-This function returns the join of the two subspaces, that is, the span
-of the two subspaces. 
+This function returns the span of the two subspaces. 
 <Example>
 <#Include SYSTEM "../examples/include/affine_span.include"> 
 </Example>
@@ -131,16 +237,54 @@ of the two subspaces.
 
 <ManSection>
 <Oper Name="Meet" Arg="u, v"/>
-<Returns> a subspace </Returns>
+<Returns> a affine subspace or the empty list</Returns>
 <Description>
 <A>u</A> and <A>v</A> are subspaces of an affine space.
 This function returns the meet of the two subspaces. If the two
-subspaces are disjoint, then Meet returns [ ].
+subspaces are disjoint, then Meet returns the empty list.
 <Example>
 <#Include SYSTEM "../examples/include/affine_meet.include"> 
 </Example>
 </Description>
 </ManSection>
+
+<ManSection>
+<Oper Name="IsParallel" Arg="u, v"/>
+<Returns> true or false
+</Returns>
+<Description>
+The arguments <A>u</A> and <A>v</A> must be affine subspaces of a common affine space,
+of the same dimension. These two subspaces are parallel if and only if they
+are cosets of the same vector subspace, i.e. if the have the same subspace at infinity. 
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="ParallelClass" Arg="as, v"/>
+<Oper Name="ParallelClass" Arg="v"/>
+<Returns> a collection of affine subspaces
+</Returns>
+<Description>
+The argument <A>v</A> is an affine subspace of <A>as</A>. This operation
+returns a collection for which an iterator is installed for it.
+The collection represents the set of elements of <A>as</A> of the same
+type as <A>v</A> which are parallel to <A>v</A>; they have the same
+direction. If <A>v</A> is a point, then this operation returns the
+collection of all points of <A>as</A>. If one argument is given,
+then it is assumed that the affine space which we are working
+with is that which <A>v</A> contains as a component.
+<Example>
+<#Include SYSTEM "../examples/include/affine_parallel.include"> 
+</Example>
+</Description>
+</ManSection>
+
+
+</Section>
+
+<Section>
+
+<Heading>Shadows of Affine Subspaces</Heading>
 
 <ManSection>
 <Oper Name="ShadowOfElement" Arg="as, v, type"/>
@@ -177,38 +321,6 @@ the collection).
 </Description>
 </ManSection>
 
-
-<ManSection>
-<Oper Name="IsParallel" Arg="u, v"/>
-<Returns> true or false
-</Returns>
-<Description>
-The arguments <A>u</A> and <A>v</A> must be affine subspaces of a common affine space,
-of the same dimension. These two subspaces are parallel if and only if they
-are cosets of the same vector subspace. 
-</Description>
-</ManSection>
-
-
-<ManSection>
-<Oper Name="ParallelClass" Arg="as, v"/>
-<Oper Name="ParallelClass" Arg="v"/>
-<Returns> a collection of affine subspaces
-</Returns>
-<Description>
-The argument <A>v</A> is an affine subspace of <A>as</A>. This operation
-returns a collection for which an iterator is installed for it.
-The collection represents the set of elements of <A>as</A> of the same
-type as <A>v</A> which are parallel to <A>v</A>; they have the same
-direction. If <A>v</A> is a point, then this operation returns the
-collection of all points of <A>as</A>. If one argument is given,
-then it is assumed that the affine space which we are working
-with is that which <A>v</A> contains as a component.
-<Example>
-<#Include SYSTEM "../examples/include/affine_parallel.include"> 
-</Example>
-</Description>
-</ManSection>
 </Section>
 
 

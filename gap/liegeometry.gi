@@ -652,7 +652,7 @@ InstallMethod( ViewObj,
 #O  \in( <x>, <y> )
 # returns true if <x> is contained in <y>, from the set theoretic point of view.
 ##
-InstallMethod(\in,
+InstallMethod( \in,
 	"for two elements of a Lie geometry",
 	[IsElementOfLieGeometry,   IsElementOfLieGeometry],
 ## some of this function is based on the

@@ -1,8 +1,21 @@
-gap> ag := AffineSpace(3, 3);
-AG(3, 3)
-gap> x := [[1,1,0]]*Z(3)^0;
-[ [ Z(3)^0, Z(3)^0, 0*Z(3) ] ]
-gap> v := [0,-1,1] * Z(3)^0;
-[ 0*Z(3), Z(3), Z(3)^0 ]
-gap> line := AffineSubspace(ag, v, x);
-&lt;a line in AG(3, 3)>
+gap&gt; ag := AffineSpace(9, 64);
+AG(9, 64)
+gap&gt; ElementsOfIncidenceStructure(ag,1);
+&lt;points of AG(9, 64)&gt;
+gap&gt; ElementsOfIncidenceStructure(ag,2);
+&lt;lines of AG(9, 64)&gt;
+gap&gt; ElementsOfIncidenceStructure(ag,3);
+&lt;planes of AG(9, 64)&gt;
+gap&gt; ElementsOfIncidenceStructure(ag,4);
+&lt;solids of AG(9, 64)&gt;
+gap&gt; ElementsOfIncidenceStructure(ag,6);
+&lt;affine. subspaces of dim. 5 of AG(9, 64)&gt;
+gap&gt; ElementsOfIncidenceStructure(ag,9);
+&lt;affine. subspaces of dim. 8 of AG(9, 64)&gt;
+gap&gt; ElementsOfIncidenceStructure(ag,10);
+Error, &lt;as&gt; has no elements of type &lt;j&gt; called from
+&lt;function&gt;( &lt;arguments&gt; ) called from read-eval-loop
+Entering break read-eval-print loop ...
+you can 'quit;' to quit to outer loop, or
+you can 'return;' to continue
+brk&gt; quit;

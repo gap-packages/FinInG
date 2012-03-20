@@ -1,0 +1,40 @@
+gap&gt; as := AG(3,16);
+AG(3, 16)
+gap&gt; p := AffineSubspace(as,[1,0,0]*Z(16)^0);
+&lt;a point in AG(3, 16)&gt;
+gap&gt; l := AffineSubspace(as,[1,0,0]*Z(16),[[0,1,1]]*Z(16)^0);
+&lt;a line in AG(3, 16)&gt;
+gap&gt; plane := AffineSubspace(as,[1,0,0]*Z(16)^0,[[1,0,0],[0,1,1]]*Z(16)^0);
+&lt;a plane in AG(3, 16)&gt;
+gap&gt; p in p;
+true
+gap&gt; p in l;
+false
+gap&gt; l in p;
+false
+gap&gt; l in plane;
+true
+gap&gt; plane in l;
+false
+gap&gt; p in plane;
+true
+gap&gt; p in as;
+true
+gap&gt; l in as;
+true
+gap&gt; plane in as;
+true
+gap&gt; as in p;
+false
+gap&gt; IsIncident(p,l);
+false
+gap&gt; IsIncident(l,p);
+false
+gap&gt; IsIncident(l,plane);
+true
+gap&gt; IsIncident(plane,l);
+true
+gap&gt; IsIncident(p,plane);
+true
+gap&gt; IsIncident(plane,p);
+true

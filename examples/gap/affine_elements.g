@@ -1,6 +1,11 @@
 ## affine_elements.g
-ag := AffineSpace(3, 3);
-x := [[1,1,0]]*Z(3)^0;
-v := [0,-1,1] * Z(3)^0;
-line := AffineSubspace(ag, v, x);
+ag := AffineSpace(9, 64);
+ElementsOfIncidenceStructure(ag,1);
+ElementsOfIncidenceStructure(ag,2);
+ElementsOfIncidenceStructure(ag,3);
+ElementsOfIncidenceStructure(ag,4);
+ElementsOfIncidenceStructure(ag,6);
+ElementsOfIncidenceStructure(ag,9);
+ElementsOfIncidenceStructure(ag,10);
+quit;
 quit;

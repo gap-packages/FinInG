@@ -1,0 +1,22 @@
+#incidence and containment in affine spaces
+as := AG(3,16);
+p := AffineSubspace(as,[1,0,0]*Z(16)^0);
+l := AffineSubspace(as,[1,0,0]*Z(16),[[0,1,1]]*Z(16)^0);
+plane := AffineSubspace(as,[1,0,0]*Z(16)^0,[[1,0,0],[0,1,1]]*Z(16)^0);
+p in p;
+p in l;
+l in p;
+l in plane;
+plane in l;
+p in plane;
+p in as;
+l in as;
+plane in as;
+as in p;
+IsIncident(p,l);
+IsIncident(l,p);
+IsIncident(l,plane);
+IsIncident(plane,l);
+IsIncident(p,plane);
+IsIncident(plane,p);
+quit;

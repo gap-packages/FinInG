@@ -1,0 +1,4 @@
+gap&gt; Dimension(AG(5,7));
+5
+gap&gt; Rank(AG(5,7));
+5

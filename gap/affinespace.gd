@@ -42,6 +42,7 @@ DeclareRepresentation( "IsShadowSubspacesOfAffineSpaceRep", IsElementsOfIncidenc
 DeclareRepresentation( "IsParallelClassOfAffineSpaceRep", IsElementsOfIncidenceGeometry, [ "geometry", "element" ]);
 
 DeclareCategoryCollections("IsSubspaceOfAffineSpace");
+
 BindGlobal( "SoASFamily", 
   NewFamily( "SoASFamily", IsSubspaceOfAffineSpace, IsSubspaceOfAffineSpace));
 BindGlobal( "SoASCollFamily", CollectionsFamily(SoASFamily) );
@@ -59,7 +60,15 @@ DeclareOperation( "VectorSpaceTransversal", [IsVectorSpace, IsFFECollColl]);
 DeclareOperation( "VectorSpaceTransversalElement", [IsVectorSpace, IsFFECollColl, IsVector]);
 DeclareOperation( "ComplementSpace", [IsVectorSpace, IsFFECollColl]);
 
+#############################################################################
+# Flags of affine spaces 
+#############################################################################
+DeclareCategory( "IsFlagOfAffineSpace", IsFlagOfIncidenceGeometry );
 
+BindGlobal( "FlagsOfAS", NewFamily( "FlagsOfASFamily", IsObject ));  
+
+BindGlobal( "IsFlagOfASType", NewType( FlagsOfAS,
+                                    IsFlagOfAffineSpace and IsFlagOfIncidenceStructureRep) );
 
 #############################################################################
 #
@@ -70,6 +79,8 @@ DeclareOperation( "ComplementSpace", [IsVectorSpace, IsFFECollColl]);
 DeclareOperation( "AffineSpace", [IsPosInt, IsField] );
 DeclareOperation( "AffineSpace", [IsPosInt, IsPosInt] );
 DeclareSynonym( "AG", AffineSpace ); 
+DeclareOperation( "Hyperplanes", [IsAffineSpace] );
+
 
 DeclareOperation( "AffineSubspace", [ IsAffineSpace, IsRowVector] );
 DeclareOperation( "AffineSubspace", [ IsAffineSpace, IsRowVector, IsPlistRep ] );
@@ -78,7 +89,11 @@ DeclareOperation( "AffineSubspace", [ IsAffineSpace, IsRowVector, IsGF2MatrixRep
 DeclareOperation( "RandomSubspace", [ IsAffineSpace, IsInt]);
 DeclareOperation( "IsParallel", [ IsSubspaceOfAffineSpace, IsSubspaceOfAffineSpace ] );
 
+DeclareOperation( "UnderlyingVectorSpace", [IsAffineSpace] );
+DeclareAttribute( "Dimension", IsAffineSpace );
+
 DeclareAttribute( "AmbientSpace", IsAffineSpace );
+DeclareAttribute( "AmbientSpace", IsSubspaceOfAffineSpace );
 
 DeclareOperation( "ParallelClass", [IsAffineSpace, IsSubspaceOfAffineSpace] );
 DeclareOperation( "ParallelClass", [IsSubspaceOfAffineSpace] );

@@ -200,15 +200,19 @@ InstallMethod( Rank,
 #O  BaseField( <ps> )
 # returns the basefield of <ps>
 ##
-InstallMethod( BaseField, "for a projective space", [IsProjectiveSpace],
-  pg -> pg!.basefield );
+InstallMethod( BaseField, 
+	"for a projective space", 
+	[IsProjectiveSpace],
+	pg -> pg!.basefield );
 
 #############################################################################
 #O  BaseField( <sub> )
 # returns the basefield of an element of a projective space
 ##
-InstallMethod( BaseField, "for an element of a projective space", [IsSubspaceOfProjectiveSpace],
-  sub -> AmbientSpace(sub)!.basefield );
+InstallMethod( BaseField, 
+	"for an element of a projective space", 
+	[IsSubspaceOfProjectiveSpace],
+	sub -> AmbientSpace(sub)!.basefield );
 
 # CHECKED 6/09/11 jdb
 #############################################################################
@@ -317,7 +321,7 @@ InstallMethod( ElementsOfIncidenceStructure,
 		local r;
 		r := Rank(ps);
 		if j > r then
-			Error("<geo> has no elements of type <j>");
+			Error("<ps> has no elements of type <j>");
 		else
 			return Objectify(
 			NewType( ElementsCollFamily, IsSubspacesOfProjectiveSpace and IsSubspacesOfProjectiveSpaceRep ),

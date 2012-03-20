@@ -1,0 +1,6 @@
+gap&gt; as := AG(5,7);
+AG(5, 7)
+gap&gt; solid := AffineSubspace(as,[1,0,0,1,0]*Z(7)^3,[[1,0,0,0,0],[0,1,1,1,0]]*Z(7)^0);
+&lt;a plane in AG(5, 7)&gt;
+gap&gt; AmbientSpace(solid);
+AG(5, 7)

@@ -70,9 +70,9 @@ namely, the common abbreviation <C>PG(d, q)</C>.
 </ManSection>
 
 <ManSection>
-<Oper Name="ProjectiveDimension" Arg="ps"/>
-<Oper Name="Dimension" Arg="ps"/>
-<Oper Name="Rank" Arg="ps"/>
+<Attr Name="ProjectiveDimension" Arg="ps"/>
+<Attr Name="Dimension" Arg="ps"/>
+<Attr Name="Rank" Arg="ps"/>
 <Returns>the projective dimension of the projective space <A>ps</A></Returns>
 <Description>
 <Example>
@@ -106,7 +106,7 @@ vector space over the field of order <M>q</M>.
 </ManSection>
 
 <ManSection>
-<Oper Name="AmbientSpace" Arg="ps"/>
+<Attr Name="AmbientSpace" Arg="ps"/>
 <Returns>a projective space</Returns>
 <Description>The ambient space of a projective space <A>ps</A> is the projective space itself.
 Hence, simply <A>ps</A> will be returned.
@@ -170,26 +170,26 @@ is also applicable on the EmptySubspace
 <Oper Name="ElmentsOfIncidenceStructure" Arg="ps, j"/>
 <Returns>the collection of elements of the projective space <A>ps</A> of type <A>j</A></Returns>
 <Description>
-For the projective space <A>ps</A> of dimension <M>d</M> and the type <A>j</A>, <M>1 \leq j \leq d</M>
+For the projective space <A>ps</A> of dimension <M>d</M> and the type <A>j</A>, <M>1 &#8804; j &#8804; d</M>
 this operation returns the collection of <M>j-1</M> dimenaional subspaces. 
-An error message is produced when the projective space <A>ps</A> has no elements of a required type.<Example>
-<#Include SYSTEM "../examples/include/projsp_elements.include"> 
+An error message is produced when the affine space <A>as</A> has no elements of a required type.<Example>
+<#Include SYSTEM "../examples/include/affine_elements.include"> 
 </Example>
 </Description>
 </ManSection>
 
 <ManSection>
 <Heading>Short names for ElementsOfIncidenceStructure</Heading>
-<Oper Name="Points" Arg="ps"/>
-<Oper Name="Lines" Arg="ps"/>
-<Oper Name="Planes" Arg="ps"/>
-<Oper Name="Solids" Arg="ps"/>
-<Oper Name="Hyperplanes" Arg="ps"/>
-<Returns>The elements of <A>ps</A> of respective type 1,2,3,4, and the hyperplanes</Returns>
+<Oper Name="Points" Arg="as"/>
+<Oper Name="Lines" Arg="as"/>
+<Oper Name="Planes" Arg="as"/>
+<Oper Name="Solids" Arg="as"/>
+<Oper Name="Hyperplanes" Arg="as"/>
+<Returns>The elements of <A>as</A> of respective type 1,2,3,4, and the hyperplanes</Returns>
 <Description>
 An error message is produced when the projective space <A>ps</A> has no elements of a required type.
 <Example>
-<#Include SYSTEM "../examples/include/projsp_short.include"> 
+<#Include SYSTEM "../examples/include/affine_short.include"> 
 </Example>
 </Description>
 </ManSection>
