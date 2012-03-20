@@ -440,21 +440,22 @@ InstallMethod( Random,
 		return x;
 	end );
 		
+#twice the same?
 # CHECKED 13/03/12 jdb
 #############################################################################
 #O  Random( <subs> )
 # returns a random element in the collection <subs>
 ##
-InstallMethod( Random, 
-	"for a collection of subspaces of an affine space",
-    [ IsSubspacesOfAffineSpace ],
+#InstallMethod( Random, 
+#	"for a collection of subspaces of an affine space",
+#    [ IsSubspacesOfAffineSpace ],
     # chooses a random element out of the collection of subspaces of given
     # dimension of an affine space
-	function( subs )
-		local x;
-		x := RandomSubspace( subs!.geometry, subs!.type );
-		return x;
-	end );
+#	function( subs )
+#		local x;
+#		x := RandomSubspace( subs!.geometry, subs!.type );
+#		return x;
+#	end );
 
 #############################################################################
 #
@@ -1154,9 +1155,15 @@ InstallMethod( Meet, [IsSubspaceOfAffineSpace, IsSubspaceOfAffineSpace],
   end );
 
 
-InstallMethod( IsParallel, "for two affine subspaces of the same dimension",
-           [ IsSubspaceOfAffineSpace, IsSubspaceOfAffineSpace ],
-  function( a, b );
+# CHECKED 20/3/2012 jdb
+#############################################################################
+#O  IsParallel( <x>, <y> )
+# returns true if and only if <x> is parallel with <y>. 
+##
+InstallMethod( IsParallel, 
+	"for two affine subspaces",
+	[ IsSubspaceOfAffineSpace, IsSubspaceOfAffineSpace ],
+	function( a, b );
     if a!.type <> a!.type then
        Error("Subspaces must be of the same dimension");
     fi;

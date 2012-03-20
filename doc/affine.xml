@@ -222,7 +222,6 @@ for <F>\in</F>. The method for <F>\*</F> is using <F>IsIncident</F>.
 </Description>
 </ManSection>
 
-
 <ManSection>
 <Oper Name="Span" Arg="u, v"/>
 <Returns> a subspace </Returns>
@@ -256,6 +255,9 @@ subspaces are disjoint, then Meet returns the empty list.
 The arguments <A>u</A> and <A>v</A> must be affine subspaces of a common affine space,
 of the same dimension. These two subspaces are parallel if and only if they
 are cosets of the same vector subspace, i.e. if the have the same subspace at infinity. 
+<Example>
+<#Include SYSTEM "../examples/include/affine_isparallel.include"> 
+</Example>
 </Description>
 </ManSection>
 

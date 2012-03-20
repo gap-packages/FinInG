@@ -21,7 +21,7 @@ quit;
 
 affinefiles := ["affine_affinespace", "affine_dimension", "affine_underlyingvs", "affine_basefield",
 				"affine_ambientspace", "affine_short", "affine_elements", "affine_incident", 
-				"affine_ambientspaceelas", "affine_basefieldelas",
+				"affine_ambientspaceelas", "affine_basefieldelas", "affine_isparallel",
 				"affine_parallel", "affine_shadow1", "affine_shadow2", "affine_basic", "affine_elements", 
 				"affine_iterator", "affine_enumerator", "affine_join", "affine_meet"];;
 

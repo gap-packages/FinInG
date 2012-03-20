@@ -1,0 +1,14 @@
+gap&gt; as := AffineSpace(3, 3);
+AG(3, 3)
+gap&gt; l := AffineSubspace(as,[0,0,0]*Z(3)^0,[[1,0,0]]*Z(3)^0);
+&lt;a line in AG(3, 3)&gt;
+gap&gt; m := AffineSubspace(as,[1,0,0]*Z(3)^0,[[1,0,0]]*Z(3)^0);
+&lt;a line in AG(3, 3)&gt;
+gap&gt; n := AffineSubspace(as,[1,0,0]*Z(3)^0,[[0,1,0]]*Z(3)^0);
+&lt;a line in AG(3, 3)&gt;
+gap&gt; IsParallel(l,m);
+true
+gap&gt; IsParallel(m,n);
+false
+gap&gt; IsParallel(l,n);
+false
