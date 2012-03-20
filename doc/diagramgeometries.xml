@@ -49,9 +49,9 @@ type <M>i</M> gives a correspondence between the cosets of the
 stabilizer <Alt Not="HTML"><M>G_{i}</M></Alt><Alt Only="HTML">G&lt;sub>i&lt;/sub></Alt> and the elements of type <M>i</M>
 in <Alt Not="HTML"><M>\Gamma</M></Alt><Alt Only="HTML">&#915;</Alt>. Two elements of 
 <Alt Not="HTML"><M>\Gamma</M></Alt><Alt Only="HTML">&#915;</Alt> are incident if and only
-if the corresponding cosets have a nonempty intersection.
+if the corresponding cosets have a nonempty intersection.<P/>
 
-We now use the above oservation to define an incidence structure from
+We now use the above observation to define an incidence structure from
 a group <M>G</M> together with a set of
 subgroups <Alt Not="HTML"><M>G_{1},G_{2},...,G_{n}</M></Alt>
 <Alt Only="HTML">G&lt;sub>1&lt;/sub>,G&lt;sub>2&lt;/sub>,...,G&lt;sub>n&lt;/sub></Alt>.
@@ -64,11 +64,12 @@ geometry (see Chapter <Ref Chap="incidencegeometry"/> for definitions).
 
 <ManSection>
 <Oper Name="CosetGeometry" Arg="G,l"/>
-<Returns>the coset geometry defined by the list <A>l</A> of subgroups of the group <A>G</A></Returns>
+<Returns>the coset incidence structure defined by the list <A>l</A> of subgroups of the group <A>G</A></Returns>
 <Description> 
 <A>G</A> must be a group and <A>l</A> is a list of subgroups
 of <A>G</A>. The subgroups in <A>l</A> will be the <E>parabolic subgroups</E>
-of the <E>coset geometry</E> whose rank equals the length of <A>l</A>.
+of the <E>coset incidence structure</E> whose rank equals the length
+of <A>l</A>. 
 <Example>
 <#Include SYSTEM "../examples/include/diagram_cosetgeom.include"> 
 </Example>
@@ -111,7 +112,15 @@ The Borel subgroup is equal to the stabilizer of a chamber. It corresponds to th
 <Returns>true if and only if the group <A>G</A> defining <A>cg</A>
   acts flag-transitively.</Returns>  
 <Description> 
-<A>cg</A> must be a coset geometry.
+<A>cg</A> must be a coset geometry.<P/>
+
+The group <M>G</M> used to define <A>cg</A> acts naturally on the
+elements of <A>cg</A> by right translation: a coset <M>G_ig</M> is
+mapped to <M>G_i(gx)</M> by an element <M>x\in G</M>.
+
+This test is quite time consuming. You can bind the
+attribute <C>IsFlagTransitiveGeometry</C> if you are sure the coset geometry is
+indeed flag-transitive.
 </Description>
 </ManSection>
 
@@ -119,7 +128,7 @@ The Borel subgroup is equal to the stabilizer of a chamber. It corresponds to th
 <Oper Name="IsFirmGeometry" Arg="cg"/>
 <Returns>true if and only if <A>cg</A> is firm.</Returns>
 <Description> 
-An incidence geometry is said to be firm if every nonmaximal flag is contained in at least two chambers. <A>cg</A> must be a coset geometry. 
+An incidence geometry is said to be <E>firm</E> if every nonmaximal flag is contained in at least two chambers. <A>cg</A> must be a coset geometry. 
 </Description>
 </ManSection>
 
@@ -127,7 +136,7 @@ An incidence geometry is said to be firm if every nonmaximal flag is contained i
 <Oper Name="IsConnected" Arg="cg"/>
 <Returns>true if and only if <A>cg</A> is connected.</Returns>
 <Description> 
-A geometry is connected if and only if its incidence graph is connected. <A>cg</A> must be a coset geometry.
+A geometry is <E>connected</E> if and only if its incidence graph is connected. <A>cg</A> must be a coset geometry.
 </Description>
 </ManSection>
 
@@ -135,10 +144,12 @@ A geometry is connected if and only if its incidence graph is connected. <A>cg</
 <Oper Name="IsResiduallyConnected" Arg="cg"/>
 <Returns>true if and only if <A>cg</A> is residually connected.</Returns>
 <Description> 
-A geometry is residually connected the incidence graphs of all its
+A geometry is <E>residually connected</E> if the incidence graphs of all its
 residues of rank at least 2 are connected. <A>cg</A> must be a coset
-geometry. This test is quite time consuming. You can bind the
-Attribute IsResiduallyConnected if you are sure the coset geometry is
+geometry.<P/> 
+
+This test is quite time consuming. You can bind the
+attribute <C>IsResiduallyConnected</C> if you are sure the coset geometry is
 indeed residually connected.
 </Description>
 </ManSection>
@@ -147,7 +158,10 @@ indeed residually connected.
 <Oper Name="StandardFlagOfCosetGeometry" Arg="cg"/>
 <Returns>standard chamber of <A>cg</A></Returns>
 <Description> 
-The standard chamber just consists of all parabolic subgroups (i.e. the trivial cosets of these subgroups). <A>cg</A> must be a coset geometry. Maybe this function should be called StandardChamberOfCosetGeometry.
+The standard chamber just consists of all parabolic subgroups
+(i.e. the trivial cosets of these subgroups). <A>cg</A> must be a
+coset geometry. 
+<!--Maybe this function should be called StandardChamberOfCosetGeometry.-->
 </Description>
 </ManSection>
 
@@ -155,7 +169,7 @@ The standard chamber just consists of all parabolic subgroups (i.e. the trivial 
 <Oper Name="FlagToStandardFlag" Arg="cg,fl"/>
 <Returns>element of the defining group of <A>cg</A> which maps <A>fl</A> to the standard chamber of <A>cg</A>.</Returns>
 <Description> 
-<A>fl</A> must be a chamber given as a list of cosets of the parabolic subgroups of <A>cg</A>. The order of the elements of the chamber should be the same as the order of the parabolics defining <A>cg</A>.
+<A>fl</A> must be a chamber given as a list of cosets of the parabolic subgroups of <A>cg</A>.
 </Description>
 </ManSection>
 
@@ -163,7 +177,13 @@ The standard chamber just consists of all parabolic subgroups (i.e. the trivial 
 <Oper Name="CanonicalResidueOfFlag" Arg="cg,fl"/>
 <Returns>coset geometry isomorphic to residue of <A>fl</A> in <A>cg</A></Returns>
 <Description> 
-<A>cg</A> must be a coset geometry and <A>fl</A> must be a flag in that geometry. The returned coset geometry for a flag {giGi} is ...
+<A>cg</A> must be a coset incidence structure and <A>fl</A> must be a flag in
+that incidence structure. The returned coset incidence structure for a
+flag <M>\{G_{i_1}g_{i_1},G_{i_2}g_{i_2},\ldots , G_{i_k}g_{i_k}\}</M>
+is the coset incidence structure defined by the
+group <M>H:=\cap_{j=1}^{k}G_{i_j}</M> and parabolic
+subgroups <M>G_{j}\cap H</M> for <M>j</M> not in the type
+set <M>\{i_1,i_2,\ldots ,i_k\}</M> of <A>fl</A>.
 </Description>
 </ManSection>
 
@@ -249,7 +269,11 @@ gonality are all greater than <M>2</M>.
 <Oper Name="DiagramOfGeometry" Arg="Gamma"/>
 <Returns>the diagram of the geometry <A>Gamma</A></Returns>
 <Description> 
-<A>Gamma</A> must be a coset geometry.
+<A>Gamma</A> must be a flag-transitive coset geometry.<P/> 
+
+The flag-transitivity is not tested by this operation because such test is
+time consuming. The command <C>IsFlagTransitiveGeometry</C> can be
+used to check flag-transitivity if needed.
 </Description>
 </ManSection>
 
@@ -257,7 +281,15 @@ gonality are all greater than <M>2</M>.
 <Oper Name="DrawDiagram" Arg="Diag,filename"/>
 <Returns>does not return anything but writes a file <A>filename</A>.ps</Returns>
 <Description> 
-<A>Diag</A> must be a diagram. Writes a file <A>filename</A>.ps in the current directory with a pictorial version of the diagram. This command uses the <Package>graphviz</Package> package which is available from http://www.graphviz.org. 
+<A>Diag</A> must be a diagram. Writes a file <A>filename</A>.ps in the
+current directory with a pictorial version of the diagram. This
+command uses the <Package>graphviz</Package> package which is
+available from http://www.graphviz.org. <P/>
+
+In case <Package>graphviz</Package> is not available on your system,
+you will get an friendly error message and a file <A>filename</A>.dot
+will be written. You can then compile this file later or ask a friend
+to help you.
 </Description>
 </ManSection>
 

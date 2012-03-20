@@ -808,9 +808,16 @@ InstallMethod( \=, [ IsEdgeOfDiagram and IsEdgeOfDiagramRep,
 # 
 # 
 ##
-InstallMethod( DiagramOfGeometry, "for coset geometry", [IsCosetGeometry],
+InstallMethod( DiagramOfGeometry, "for flag-transitive coset geometry", [IsCosetGeometry],
   function( cg )
     local rank2residues, vertices, types, x, v, edges, parameters, e, diagram, parabolics;
+
+##########Removed on 20/03/2012 by PhC because FT test is time-consuming.
+# The documentation mentions this
+#
+#    if not IsFlagTransitiveGeometry(cg) then
+#            Error("usage DiagramOfGeometry: only works for flag-transitive geometries.\n");
+#    fi;
     rank2residues := Rank2Residues( cg );
     Perform(rank2residues, MakeRank2Residue);
 

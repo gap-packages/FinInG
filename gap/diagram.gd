@@ -112,7 +112,6 @@ DeclareRepresentation( "IsAllElementsOfCosetGeometryRep", IsAllElementsOfInciden
 DeclareGlobalFunction( "Drawing_Diagram" );
 DeclareGlobalFunction( "OnCosetGeometryElement" );
 
-
 DeclareAttribute( "DiagramOfGeometry", IsIncidenceGeometry ); 
 DeclareAttribute( "IsFlagTransitiveGeometry", IsIncidenceGeometry );
 DeclareAttribute( "IsResiduallyConnected", IsIncidenceGeometry );
