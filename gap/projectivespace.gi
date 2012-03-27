@@ -1331,7 +1331,8 @@ InstallMethod( Display, "for a flag of a projective space",
 # the type j of the elements (type), the flag (parentflag), and some extra information
 # useful to compute with the shadows, e.g. iterator
 ##
-InstallMethod( ShadowOfFlag, "for a projective space, a flag and an integer",
+InstallMethod( ShadowOfFlag, 
+	"for a projective space, a flag and an integer",
 	[IsProjectiveSpace, IsFlagOfProjectiveSpace, IsPosInt],
 	function( ps, flag, j )
     local localinner, localouter, localfactorspace, v, smallertypes, biggertypes, ceiling, floor;

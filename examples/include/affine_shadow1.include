@@ -1,9 +1,9 @@
-gap> as := AffineSpace(3, 3);
+gap&gt; as := AffineSpace(3, 3);
 AG(3, 3)
-gap> l := Random( Lines( as ) );
-&lt;a line in AG(3, 3)>
-gap> planesonl := Planes(l);
-&lt;shadow planes in AG(3, 3)>
-gap> AsList(planesonl);
-[ &lt;a plane in AG(3, 3)>, &lt;a plane in AG(3, 3)>, &lt;a plane in AG(3, 3)>, 
-  &lt;a plane in AG(3, 3)> ]
+gap&gt; l := Random( Lines( as ) );
+&lt;a line in AG(3, 3)&gt;
+gap&gt; planesonl := Planes(l);
+&lt;shadow planes in AG(3, 3)&gt;
+gap&gt; AsList(planesonl);
+[ &lt;a plane in AG(3, 3)&gt;, &lt;a plane in AG(3, 3)&gt;, &lt;a plane in AG(3, 3)&gt;, 
+  &lt;a plane in AG(3, 3)&gt; ]

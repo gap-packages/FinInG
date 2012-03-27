@@ -1,6 +1,6 @@
 #categories for incidence structures.
 CategoriesOfObject(ProjectiveSpace(5,7));
-CategoriesOfObject(HermitianVariety(5,9));
+CategoriesOfObject(HermitianPolarSpace(5,9));
 CategoriesOfObject(AffineSpace(3,3));
 CategoriesOfObject(SymplecticSpace(3,11));
 CategoriesOfObject(SplitCayleyHexagon(9));

@@ -1,0 +1,13 @@
+gap&gt; G := CollineationGroup(AG(3,27));
+AGammaL(3,27)
+gap&gt; H := CollineationGroup(PG(3,27));
+PGammaL(4,27)
+gap&gt; g := Random(G);
+&lt;projective semilinear element: [ [ Z(3^3)^24, Z(3^3)^12, Z(3^3), 0*Z(3) ], 
+  [ Z(3^3)^8, Z(3^3)^10, 0*Z(3), 0*Z(3) ], 
+  [ Z(3^3)^17, Z(3^3)^5, Z(3^3)^3, 0*Z(3) ], 
+  [ Z(3^3), Z(3^3)^11, Z(3)^0, Z(3)^0 ] ], F^9&gt;
+gap&gt; g in H;
+true
+gap&gt; IsSubgroup(H,G);
+true

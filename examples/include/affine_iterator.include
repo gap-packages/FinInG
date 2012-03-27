@@ -1,8 +1,8 @@
-gap> ag := AffineSpace(3, 3);
+gap&gt; ag := AffineSpace(3, 3);
 AG(3, 3)
-gap> lines := Lines( ag );
-&lt;lines of AG(3, 3)>
-gap> iter := Iterator( lines );
-&lt;iterator>
-gap> l := NextIterator( iter );
-&lt;a line in AG(3, 3)>
+gap&gt; lines := Lines( ag );
+&lt;lines of AG(3, 3)&gt;
+gap&gt; iter := Iterator( lines );
+&lt;iterator&gt;
+gap&gt; l := NextIterator( iter );
+&lt;a line in AG(3, 3)&gt;

@@ -1,0 +1,12 @@
+gap&gt; ag := AffineSpace(3,3);
+AG(3, 3)
+gap&gt; g := AffineGroup(ag);
+AGL(3,3)
+gap&gt; x:=Random(g);;
+gap&gt; Display(x);
+&lt;projective semilinear element, underlying matrix:
+ 2 1 . .
+ 2 2 2 .
+ 1 1 2 .
+ 1 . . 1
+, F^0&gt;

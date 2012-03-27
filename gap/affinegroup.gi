@@ -6,18 +6,17 @@
 ##                                                              Jan De Beule
 ##                                                             Philippe Cara
 ##                                                            Michel Lavrauw
-##                                                                 Maska Law
 ##                                                           Max Neunhoeffer
-##                                                            Michael Pauley
-##                                                             Sven Reichard
 ##
-##  Copyright 2008 University of Western Australia, Perth
-##                 Lehrstuhl D fuer Mathematik, RWTH Aachen
-##                 Ghent University
-##                 Colorado State University
-##                 Vrije Universiteit Brussel
+##  Copyright 2012	Colorado State University, Fort Collins
+##					Università degli Studi di Padova
+##					Universeit Gent
+##					University of St. Andrews
+##					University of Western Australia, Perth
+##                  Vrije Universiteit Brussel
+##                 
 ##
-##  Implementation stuff for some new group representations
+##  Implementation stuff for affine groups
 ##
 #############################################################################
 
@@ -43,11 +42,15 @@
 # with 0's and a 1 in the last spot. We can then just use ProjElWithFrob
 # wrapping in order to incoorporate the Frobenius map.
 
-
-
-
-InstallMethod( AffineGroup, [ IsAffineSpace ],
-  function( as )
+# CHECKED 27/3/2012 jdb
+#############################################################################
+#O  AffineGroup( <as> )
+# returns AGL(d,q)  
+##
+InstallMethod( AffineGroup, 
+	"for an affine space",
+	[ IsAffineSpace ],
+	function( as )
   
   ## This operation returns the group commonly known as AGL(d,F)
   
@@ -67,9 +70,15 @@ InstallMethod( AffineGroup, [ IsAffineSpace ],
     return agl;
   end );
 
-
-InstallMethod( CollineationGroup, [ IsAffineSpace ],
-  function( as )
+# CHECKED 27/3/2012 jdb
+#############################################################################
+#O  CollineationGroup( <as> )
+# returns AGammaL(d,q)  
+##
+InstallMethod( CollineationGroup, 
+	"for an affine space",
+	[ IsAffineSpace ],
+	function( as )
   
     ## This operation returns the group commonly known as AGammaL(d,F)
   
@@ -94,7 +103,11 @@ InstallMethod( CollineationGroup, [ IsAffineSpace ],
     return coll;
   end );
 
-
+# CHECKED 27/3/2012 jdb
+#############################################################################
+#F  OnAffinePoints( <y>, <el> )
+# implements action of projective semilinear elements on affine points.
+##
 InstallGlobalFunction( OnAffinePoints, 
   function( y, el )
        # Note that 
@@ -113,6 +126,12 @@ InstallGlobalFunction( OnAffinePoints,
     return Wrap(geo, y!.type, new);
   end );
 
+# CHECKED 27/3/2012 jdb
+#############################################################################
+#F  OnAffineNotPoints( <subspace>, <el> )
+# implements action of projective semilinear elements on affine subspaces different
+# from points.
+##
 # CHANGED 12/03/12 jdb
 # new directions at infinity should be normalized, otherwise you get the orbits q-1 times.
 ##
@@ -137,12 +156,14 @@ InstallGlobalFunction( OnAffineNotPoints,
      return Wrap(ag, subspace!.type, [newv, newdir]);
   end );
 
+# CHECKED 27/3/2012 jdb
+#############################################################################
+#F  OnAffineSubspaces( <y>, <el> )
+# This is the group action of an affine group on affine subspaces that 
+# the user should use.
+##
 InstallGlobalFunction( OnAffineSubspaces,
   function( v, el )
-  
-  ## This is the group action of an affine group on affine subspaces that 
-  ## the user should use.
-  
     if v!.type = 1 then
         return OnAffinePoints(v, el);
     else
@@ -150,8 +171,15 @@ InstallGlobalFunction( OnAffineSubspaces,
     fi;
   end );
 
-InstallOtherMethod( \^, [IsSubspaceOfAffineSpace, IsProjGrpElWithFrob],
-  function(x, em)
-    return OnAffineSubspaces(x,em);
-  end );
+# CHECKED 27/3/2012 jdb
+#############################################################################
+#F  \^( <x>, <em> )
+# shorcut to OnAffineSubspaces.
+##
+InstallOtherMethod( \^,
+	"for a subspace of an affine space and a projective element with frob",
+	[IsSubspaceOfAffineSpace, IsProjGrpElWithFrob],
+	function(x, em)
+		return OnAffineSubspaces(x,em);
+	end );
 

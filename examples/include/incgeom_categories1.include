@@ -1,8 +1,10 @@
 gap&gt; CategoriesOfObject(ProjectiveSpace(5,7));
 [ "IsIncidenceStructure", "IsIncidenceGeometry", "IsLieGeometry", 
   "IsProjectiveSpace" ]
-gap&gt; CategoriesOfObject(HermitianVariety(5,9));
-[ "IsAlgebraicVariety", "IsProjectiveVariety", "IsHermitianVariety" ]
+gap&gt; CategoriesOfObject(HermitianPolarSpace(5,9));
+[ "IsIncidenceStructure", "IsIncidenceGeometry", "IsLieGeometry", 
+  "IsClassicalPolarSpace", "IsAlgebraicVariety", "IsProjectiveVariety", 
+  "IsHermitianVariety" ]
 gap&gt; CategoriesOfObject(AffineSpace(3,3));
 [ "IsIncidenceStructure", "IsIncidenceGeometry", "IsAffineSpace" ]
 gap&gt; CategoriesOfObject(SymplecticSpace(3,11));
@@ -14,3 +16,5 @@ gap&gt; CategoriesOfObject(SplitCayleyHexagon(9));
   "IsGeneralisedPolygon", "IsGeneralisedHexagon" ]
 gap&gt; CategoriesOfObject(ParabolicQuadric(4,16));
 [ "IsIncidenceStructure", "IsIncidenceGeometry", "IsLieGeometry", 
+  "IsClassicalPolarSpace", "IsGeneralisedPolygon", "IsGeneralisedQuadrangle", 
+  "IsClassicalGQ", "IsAlgebraicVariety", "IsProjectiveVariety" ]

@@ -1269,7 +1269,7 @@ InstallMethod( ShadowOfElement, [IsAffineSpace, IsSubspaceOfAffineSpace, IsPosIn
 InstallMethod( ShadowOfFlag, [IsAffineSpace, IsFlagOfIncidenceStructure, IsPosInt],
   function( as, flag, j )
         #   empty flag - return all subspaces of the right type
-    if IsEmpty(flag) then
+    if IsEmptyFlag(flag) then
       return ElementsOfIncidenceStructure(as, j);
     fi;
 
@@ -1277,7 +1277,7 @@ InstallMethod( ShadowOfFlag, [IsAffineSpace, IsFlagOfIncidenceStructure, IsPosIn
       NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
                                    IsShadowSubspacesOfAffineSpace and
                                    IsShadowSubspacesOfAffineSpaceRep),
-        rec( geometry := as, type := j, list := flag )
+        rec( geometry := as, type := j, list := flag!.els ) #JDB: added !.els here (flags used to be lists, are objects now).
       );
   end);
   
@@ -1333,7 +1333,7 @@ InstallMethod( Size, [IsShadowSubspacesOfAffineSpace and
     if Size( list ) = 1 then
        shad := ShadowOfElement( ps, ImageElm(map, list[1]), j);
     else
-       shad := ShadowOfFlag( ps, ImagesSet(map, list), j);
+	   shad := ShadowOfFlag( ps, ImagesSet(map, list), j);
     fi;
     return Size( shad );
   end);

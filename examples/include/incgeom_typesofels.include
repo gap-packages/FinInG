@@ -1,5 +1,5 @@
 gap&gt; TypesOfElementsOfIncidenceStructure(ProjectiveSpace(5,4));
 [ "point", "line", "plane", "solid", "proj. 4-space" ]
 gap&gt; TypesOfElementsOfIncidenceStructurePlural(AffineSpace(7,4));
-[ "points", "lines", "planes", "solids", "affine. subspaces of dim. 5", 
-  "affine. subspaces of dim. 6", "affine. subspaces of dim. 7" ]
+[ "points", "lines", "planes", "solids", "affine. subspaces of dim. 4", 
+  "affine. subspaces of dim. 5", "affine. subspaces of dim. 6" ]

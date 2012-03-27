@@ -1,0 +1,19 @@
+gap&gt; as := AG(3,27);
+AG(3, 27)
+gap&gt; p := Random(Points(as));
+&lt;a point in AG(3, 27)&gt;
+gap&gt; g := Random(CollineationGroup(as));
+&lt;projective semilinear element: [ [ Z(3^3)^24, Z(3^3)^12, Z(3^3), 0*Z(3) ], 
+  [ Z(3^3)^8, Z(3^3)^10, 0*Z(3), 0*Z(3) ], 
+  [ Z(3^3)^17, Z(3^3)^5, Z(3^3)^3, 0*Z(3) ], 
+  [ Z(3^3), Z(3^3)^11, Z(3)^0, Z(3)^0 ] ], F^9&gt;
+gap&gt; OnAffineSubspaces(p,g);
+&lt;a point in AG(3, 27)&gt;
+gap&gt; p^g;
+&lt;a point in AG(3, 27)&gt;
+gap&gt; l := Random(Lines(as));
+&lt;a line in AG(3, 27)&gt;
+gap&gt; OnAffineSubspaces(l,g);
+&lt;a line in AG(3, 27)&gt;
+gap&gt; l^g;
+&lt;a line in AG(3, 27)&gt;

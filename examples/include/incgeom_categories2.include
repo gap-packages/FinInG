@@ -1,9 +1,9 @@
 gap&gt; Random(Lines(SplitCayleyHexagon(3)));
-&lt;a line in standard Q(6, 3)&gt;
+&lt;a line of Split Cayley Hexagon of order 3&gt;
 gap&gt; CategoriesOfObject(last);
 [ "IsElementOfIncidenceStructure", "IsElementOfIncidenceGeometry", 
   "IsElementOfLieGeometry", "IsSubspaceOfProjectiveSpace", 
-  "IsSubspaceOfClassicalPolarSpace" ]
+  "IsSubspaceOfClassicalPolarSpace", "IsElementOfGeneralisedPolygon" ]
 gap&gt; Random(Solids(AffineSpace(7,17)));
 &lt;a solid in AG(7, 17)&gt;
 gap&gt; CategoriesOfObject(last);

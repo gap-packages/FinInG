@@ -453,7 +453,7 @@ ambient geometry.
 
 </Section>
 
-<Section>
+<Section Label="proj_enum">
 <Heading>Enumerating subspaces of a projective spaces</Heading>
 
 <ManSection>

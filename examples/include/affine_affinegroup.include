@@ -1,0 +1,8 @@
+gap&gt; as := AffineSpace(4,7);
+AG(4, 7)
+gap&gt; g := AffineGroup(as);
+AGL(4,7)
+gap&gt; as := AffineSpace(4,8);
+AG(4, 8)
+gap&gt; g := AffineGroup(as);
+AGL(4,8)

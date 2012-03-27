@@ -19,19 +19,25 @@ quit;
 
 #initialize filenames
 
-affinefiles := ["affine_affinespace", "affine_dimension", "affine_underlyingvs", "affine_basefield",
-				"affine_ambientspace", "affine_short", "affine_elements", "affine_incident", 
-				"affine_ambientspaceelas", "affine_basefieldelas", "affine_isparallel",
-				"affine_parallel", "affine_shadow1", "affine_shadow2", "affine_basic", "affine_elements", 
-				"affine_iterator", "affine_enumerator", "affine_join", "affine_meet"];;
+incgeomfiles := [ "incgeom_incstruct", "incgeom_categories1", "incgeom_typesofels", "incgeom_rank", 
+				"incgeom_categories2", "incgeom_elementsj", "incgeom_short", "incgeom_isincident",
+				"incgeom_random", "incgeom_el_ambient", "incgeom_flag", "incgeom_flag_chamber",
+				"incgeom_shadowofelement", "incgeom_shadowofelement2", "incgeom_shadowofflag",
+				"incgeom_shadowshort", "incgeom_iterator", "incgeom_enum", "incgeom_lie_uvs",
+				"incgeom_lie_projdimension", "incgeom_ambientspace", "incgeom_lie_vectorspacetoelement",
+				"incgeom_lie_elementtovectorspace", "incgeom_lie_in", "incgeom_lie_hyperplanesof",
+				"incgeom_lie_elementtoelement"];
+				
+affinefiles := ["affine_affinespace", "affine_dimension", "affine_basefield", "affine_underlyingvs",
+				"affine_ambientspace", "affine_subspaces", "affine_elements", "affine_short", 
+				"affine_incident", "affine_ambientspaceelas", "affine_basefieldelas", "affine_span", 
+				"affine_meet", "affine_isparallel", "affine_parallel", "affine_shadow1", "affine_shadow2", 
+				"affine_iterator", "affine_enumerator", "affine_affinegroupexample", "affine_affinegroupexample2",
+				"affine_affinegroup", "affine_collineationgroup", "affine_actions"];;
 
 examplesfiles := ["examples_pg24", "examples_hermitian", "examples_embedW", "examples_spreads", 
                   "examples_qclan", "examples_KantorKnuth","examples_PSL211"];;
 
-incgeomfiles := ["incgeom_categories1", "incgeom_rank", "incgeom_typesofels", "incgeom_categories2", 
-                 "incgeom_elementsj", "incgeom_short",
-                 "incgeom_solids", "incgeom_isincident", "incgeom_shadowofelement",
-		 "incgeom_shadowofflag" ]; 
 
 morphismsfiles := ["morphisms_intertwiners","morphisms_embedding1","morphisms_embedding2",
 			"morphisms_fieldreducproj", "morphisms_intertwinerproj", "morphisms_fieldreducpolar1", "morphisms_fieldreducpolar2",

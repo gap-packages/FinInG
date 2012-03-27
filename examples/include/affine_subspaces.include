@@ -1,0 +1,8 @@
+gap&gt; ag := AffineSpace(3, 3);
+AG(3, 3)
+gap&gt; x := [[1,1,0]]*Z(3)^0;
+[ [ Z(3)^0, Z(3)^0, 0*Z(3) ] ]
+gap&gt; v := [0,-1,1] * Z(3)^0;
+[ 0*Z(3), Z(3), Z(3)^0 ]
+gap&gt; line := AffineSubspace(ag, v, x);
+&lt;a line in AG(3, 3)&gt;
