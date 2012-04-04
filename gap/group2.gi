@@ -19,7 +19,7 @@
 ##                  Vrije Universiteit Brussel
 ##                 
 ##
-##  Implementation stuff for correlation groups
+##  Implementation stuff for projective groups (correlation groups, elation groups etc.)
 ##
 #############################################################################
 

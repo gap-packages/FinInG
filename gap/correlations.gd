@@ -136,3 +136,12 @@ DeclareOperation( "IsAbsoluteElement", [ IsElementOfIncidenceStructure, IsPolari
 DeclareOperation( "GeometryOfAbsolutePoints", [ IsPolarityOfProjectiveSpace ] );
 DeclareOperation( "AbsolutePoints", [ IsPolarityOfProjectiveSpace ] );
 DeclareOperation( "PolarSpace", [ IsPolarityOfProjectiveSpace ] );
+
+#############################################################################
+# Elations/Homologies of projective spaces
+#############################################################################
+
+DeclareOperation( "ElationOfProjectiveSpace", [ IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace ] );
+DeclareOperation( "ProjectiveElationGroup", [ IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace ] );
+
+

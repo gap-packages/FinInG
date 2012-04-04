@@ -17,7 +17,7 @@
 ##                 Colorado State University
 ##                 Vrije Universiteit Brussel
 ##
-##  Declaration stuff for correlation groups
+##  Declaration stuff for projective groups (correlation groups, elation groups etc.)
 ##
 #############################################################################
 

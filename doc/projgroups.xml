@@ -418,7 +418,7 @@ same underlying projective space is possible.
 
 </Section>
 <Section>
-<Heading>Basis action of projective group element</Heading>
+<Heading>Basic action of projective group element</Heading>
 <ManSection>
     <Oper Name="\^" Arg="x,g"/>
  <Returns>a subspace of a projective space</Returns>
@@ -496,6 +496,19 @@ subspace of the same dimension as <A>subspace</A> if <A>el</A> is a collineation
 </ManSection>
 
 
+</Section>
+
+<Section>
+<Heading>Special subgroups of the projectivity group</Heading>
+Elations, homologies and Singer cycles seems to be asked by our test users!
+
+<ManSection>
+    <Oper Name="ElationOfProjectiveSpace" Arg="sub,point1,point2"/>
+ <Returns>the elation</Returns>
+<Description>
+Explain
+ </Description>
+</ManSection>
 </Section>
 
 <Section Label="nice_mono">
