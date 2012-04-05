@@ -500,6 +500,58 @@ subspace of the same dimension as <A>subspace</A> if <A>el</A> is a collineation
 
 <Section>
 <Heading>Special subgroups of the projectivity group</Heading>
+A <E>transvection</E> of the vector space <M>V=V(n+1,F)</M> is a linear map <Alt Only="HTML">&#964;</Alt><Alt Not="HTML"><M>\tau</M></Alt>
+from <M>V</M> to <M>V</M> with matrix <M>M</M> such that <M>rk(M-I)=1</M> and <Alt Only="HTML">(M-I)&lt;sup>2&lt;/sup>=0</Alt>
+<Alt Not="HTML"><M>(M-I)^2=0</M></Alt>. Different equivalent definitions 
+are found in the literature, here we followed <Cite Key="Cameron2"/>. From the definition it follows that
+<M>M</M> is the identity matrix or all eigenvalues of <M>M</M> equal one and <Alt Only="HTML">&#964;</Alt><Alt Not="HTML"><M>\tau</M></Alt>
+fixes all vectors in a vector hyperplane of <M>V(n+1,F)</M>. We can choose the base of <M>V</M> such that <Alt Not="HTML"><M>e_1,\ldots,e_{n-1}</M></Alt>
+<Alt Only="HTML">e&lt;sub>1&lt;/sub>...e&lt;sub>n-1&lt;/sub></Alt> belongs to <Alt Only="HTML">Ker(&#694;)</Alt><Alt Not="HTML"><M>Ker(\tau)</M></Alt>,
+implying 
+<Alt Only="LaTeX"><Display>\left( \begin{array}{ccccc}
+1 &amp; 0 &amp; \ldots &amp; 0 &amp; 0 \\ 
+0 &amp; 1 &amp; \ldots &amp; 0 &amp; 0 \\ 
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots \\
+x_1 &amp; x_2 &amp; \ldots &amp; x_{n-1} &amp; 1 \\ 
+\end{array} \right).</Display>
+</Alt>
+<Alt Only="HTML">
+&lt;table style="color:#000">&lt;tr>
+&lt;td>&lt;table border=0 cellpadding=0 cellspacing=0px style="border-left:1px solid #000; border-right:1px solid #000; color:#000">&lt;tr>
+&lt;td style ="border-top:1px solid #000; border-bottom:1px solid #000;">&nbsp;&lt;/td>&lt;td>&lt;table border=0 cellpadding=0 cellspacing=0 style="color:#000;">
+&lt;tr>
+&lt;td align="center" valign="center" width=30>1&lt;/td>
+&lt;td align="center" valign="center" width=30>0&lt;/td>
+&lt;td align="center" valign="center" width=30>2&lt;/td>
+&lt;td align="center" valign="center" width=30>0&lt;/td>
+&lt;td align="center" valign="center" width=30>0&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td align="center" valign="center" width=30>0&lt;/td>
+&lt;td align="center" valign="center" width=30>1&lt;/td>
+&lt;td align="center" valign="center" width=30>2&lt;/td>
+&lt;td align="center" valign="center" width=30>0&lt;/td>
+&lt;td align="center" valign="center" width=30>0&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td align="center" valign="center" width=30>3&lt;/td>
+&lt;td align="center" valign="center" width=30>3&lt;/td>
+&lt;td align="center" valign="center" width=30>4&lt;/td>
+&lt;td align="center" valign="center" width=30>3&lt;/td>
+&lt;td align="center" valign="center" width=30>3&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td align="center" valign="center" width=30>1&lt;/td>
+&lt;td align="center" valign="center" width=30>2&lt;/td>
+&lt;td align="center" valign="center" width=30>2&lt;/td>
+&lt;td align="center" valign="center" width=30>6&lt;/td>
+&lt;td align="center" valign="center" width=30>1&lt;/td>
+&lt;/tr>
+&lt;/table>&lt;/td>&lt;td style ="border-top:1px solid #000; border-bottom:1px solid #000;">&nbsp;&lt;/td>&lt;/tr>&lt;/table>&lt;/td>
+&lt;/tr>&lt;/table>
+</Alt>
+
+
 Elations, homologies and Singer cycles seems to be asked by our test users!
 
 <ManSection>
