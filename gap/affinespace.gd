@@ -58,7 +58,6 @@ DeclareRepresentation( "IsVectorSpaceTransversalRep", IsVectorSpaceTransversal, 
 
 DeclareOperation( "VectorSpaceTransversal", [IsVectorSpace, IsFFECollColl]);
 DeclareOperation( "VectorSpaceTransversalElement", [IsVectorSpace, IsFFECollColl, IsVector]);
-DeclareOperation( "ComplementSpace", [IsVectorSpace, IsFFECollColl]);
 
 #############################################################################
 # Flags of affine spaces 

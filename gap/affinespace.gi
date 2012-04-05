@@ -579,60 +579,6 @@ InstallMethod(Size,
 		return vs!.size; 
 	end );
 
-  
-InstallMethod( ComplementSpace, [IsVectorSpace, IsFFECollColl],
-  function( space, mat )
-  
-  #  Taken from the code for BaseSteinitzVectors.
-  #  This operation computes a list of vectors of <space>,
-  #  in a deterministic way, such that they form a complement
-  #  in <space> of the subspace spanned by <mat>.
-    	
-    local  z, l, b, i, j, k, stop, v, dim, bas;
-    bas := MutableCopyMat( BasisVectors( Basis(space) ));
-    z := Zero( bas[1][1] );
-    if Length( mat ) > 0  then
-        mat := MutableCopyMat( mat );
-        TriangulizeMat( mat );
-    fi;
-    dim := Length( bas[1] );
-    l := Length( bas ) - Length( mat );
-    b := [  ];
-    i := 1;
-    j := 1;
-    while Length( b ) < l  do
-        stop := false;
-        repeat
-            if j <= dim and (Length( mat ) < i or mat[i][j] = z)  then
-                v := PositionProperty( bas, k -> k[j] <> z );
-                if v <> fail  then
-                    v := bas[v];
-                    v := 1 / v[j] * v;
-                    Add( b, v );
-                fi;
-            else
-                stop := true;
-                if i <= Length( mat )  then
-                    v := mat[i];
-                    v := 1 / v[j] * v;
-                else
-                    v := fail;
-                fi;
-            fi;
-            if v <> fail  then
-                for k  in [ 1 .. Length( bas ) ]  do
-                    bas[k] := bas[k] - bas[k][j] / v[j] * v;
-                od;
-                v := Zero( v );
-                bas := Filtered( bas, k -> k <> v );
-            fi;
-            j := j + 1;
-        until stop;
-        i := i + 1;
-    od;
-    return SubspaceNC( space, b );
-  end );
-
 InstallMethod( VectorSpaceTransversalElement, [IsVectorSpace, IsFFECollColl, IsVector],
   function(space, subspace, v)
   

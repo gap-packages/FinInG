@@ -115,7 +115,6 @@ DeclareOperation( "Hyperplanes", [IsProjectiveSpace] );
 #
 #############################################################################
 
-
 DeclareOperation( "BaerSublineOnThreePoints", 
   [ IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace] );
 DeclareOperation( "BaerSubplaneOnQuadrangle", 
@@ -127,7 +126,6 @@ DeclareOperation("RandomSubspace",[IsProjectiveSpace,IsInt]);
 DeclareOperation("RandomSubspace",[IsSubspaceOfProjectiveSpace,IsInt]);
 
 DeclareOperation("RandomSubspace",[IsProjectiveSpace]);
-
 
 DeclareOperation("Span",[IsProjectiveSpace, IsSubspaceOfProjectiveSpace]);
 DeclareOperation("Span",[IsSubspaceOfProjectiveSpace, IsProjectiveSpace]);
@@ -141,3 +139,16 @@ DeclareOperation("Span",[IsList, IsBool]);
 DeclareOperation( "Meet", [IsSubspaceOfProjectiveSpace, IsProjectiveSpace] );
 DeclareOperation( "Meet", [IsProjectiveSpace, IsSubspaceOfProjectiveSpace] );
 DeclareOperation( "Meet", [IsList]);
+
+#############################################################################
+# A useful non-user operation.
+#############################################################################
+
+DeclareOperation( "ComplementSpace", [IsVectorSpace, IsFFECollColl]);
+
+#############################################################################
+# Elations/Homologies of projective spaces
+#############################################################################
+
+DeclareOperation( "ElationOfProjectiveSpace", [ IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace ] );
+DeclareOperation( "ProjectiveElationGroup", [ IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace ] );

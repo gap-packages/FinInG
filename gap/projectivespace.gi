@@ -2147,3 +2147,139 @@ InstallMethod( BaerSubplaneOnQuadrangle, [IsSubspaceOfProjectiveSpace,
   od;
   return subplane;
 end);
+
+#############################################################################
+# The useful non-user operation. This code comes from John and was found 
+# affinespace.gi. As I can use it already here, I put it here not to violate 
+# the modularity of Fining. 
+#############################################################################
+
+#############################################################################
+#O  ComplementSpace( <space>, <mat> )
+#  Taken from the code for BaseSteinitzVectors.
+#  This operation computes a list of vectors of <space>,
+#  in a deterministic way, such that they form a complement
+#  in <space> of the subspace spanned by <mat>.
+##
+InstallMethod( ComplementSpace, 
+	"for a vector space and a maxtrix",	
+	[IsVectorSpace, IsFFECollColl],
+	function( space, mat )
+    	
+    local  z, l, b, i, j, k, stop, v, dim, bas;
+    bas := MutableCopyMat( BasisVectors( Basis(space) ));
+    z := Zero( bas[1][1] );
+    if Length( mat ) > 0  then
+        mat := MutableCopyMat( mat );
+        TriangulizeMat( mat );
+    fi;
+    dim := Length( bas[1] );
+    l := Length( bas ) - Length( mat );
+    b := [  ];
+    i := 1;
+    j := 1;
+    while Length( b ) < l  do
+        stop := false;
+        repeat
+            if j <= dim and (Length( mat ) < i or mat[i][j] = z)  then
+                v := PositionProperty( bas, k -> k[j] <> z );
+                if v <> fail  then
+                    v := bas[v];
+                    v := 1 / v[j] * v;
+                    Add( b, v );
+                fi;
+            else
+                stop := true;
+                if i <= Length( mat )  then
+                    v := mat[i];
+                    v := 1 / v[j] * v;
+                else
+                    v := fail;
+                fi;
+            fi;
+            if v <> fail  then
+                for k  in [ 1 .. Length( bas ) ]  do
+                    bas[k] := bas[k] - bas[k][j] / v[j] * v;
+                od;
+                v := Zero( v );
+                bas := Filtered( bas, k -> k <> v );
+            fi;
+            j := j + 1;
+        until stop;
+        i := i + 1;
+    od;
+    return SubspaceNC( space, b );
+  end );
+  
+#############################################################################
+# Interesting subgroups of projectivities.
+#############################################################################
+
+#############################################################################
+# Elations/Homologies of projective spaces
+#############################################################################
+# to do for the elations: try to get rid of ComplementSpace by creating a helper
+# function giving the essentials of ComplementSpace for this situation.
+
+InstallMethod( ElationOfProjectiveSpace,
+	"for a hyperplane and two points of the same projective space",
+	[ IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace ],
+	function(sub,point1,point2)
+	local en,e0,ei,mat,vssub,n,f,c,M,el,centre,p2vect,ps;
+	ps := AmbientSpace(sub);
+	n := Dimension(ps);
+	if not Size(AsDuplicateFreeList([AmbientSpace(sub),AmbientSpace(point1),AmbientSpace(point2)]))=1 then 
+		Error("The elements <sub>, <point1>, and <point2> do not have a common ambient space");
+	elif Dimension(sub) <> n-1 or Dimension(point1) <> 0 or Dimension(point2) <> 0 then
+		Error("<sub> must be a hyperplane, <point1> and <point2> must be points");
+	elif point1 in sub or point2 in sub then
+		Error("The points <point1> and <point2> must not be incident with <sub>");
+	fi;
+	centre := Meet(sub,Span(point1,point2));
+	mat := ElementToVectorSpace(sub);
+	f := BaseField(sub);
+	vssub := VectorSpace(f,mat);
+	e0 := ElementToVectorSpace(centre);
+	ei := BasisVectors(Basis(ComplementSpace(vssub,[e0])));
+	en := ElementToVectorSpace(point1);
+	M := Concatenation([e0],ei,[en]);
+	el := ShallowCopy(IdentityMat(n+1,f));
+	p2vect := ElementToVectorSpace(point2)*M^-1;
+	el[n+1][1] := p2vect[1]/p2vect[n+1];
+	el := M^(-1)*el*M;
+	return CollineationOfProjectiveSpace(el,f);
+end );
+
+InstallMethod( ProjectiveElationGroup,
+	"for a hyperplane and two points of the same projective space",
+	[ IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace ],
+	function(sub,centre)
+	local en,e0,ei,mat,vssub,n,f,c,M,el,ps,gens,fbas,x,group;
+	ps := AmbientSpace(sub);
+	n := Dimension(ps);
+	if not (ps=AmbientSpace(centre)) then 
+		Error("The elements <sub> and <centre> do not have a common ambient space");
+	elif (Dimension(sub) <> n-1) or (Dimension(centre) <> 0) then
+		Error("<sub> must be a hyperplane, <centre> must be a point");
+	elif not centre in sub then
+		Error("The point <centre> and <sub> must be incident");
+	fi;
+	mat := ElementToVectorSpace(sub);
+	f := BaseField(sub);
+	vssub := VectorSpace(f,mat);
+	e0 := ElementToVectorSpace(centre);
+	ei := BasisVectors(Basis(ComplementSpace(vssub,[e0])));
+	en := BasisVectors(Basis(ComplementSpace(f^(n+1),mat)))[1];
+	M := Concatenation([e0],ei,[en]);
+	el := ShallowCopy(IdentityMat(n+1,f));
+	gens := [];
+	fbas := BasisVectors(Basis(f));
+	for x in fbas do
+		el[n+1][1] := x;
+		Add(gens,ShallowCopy(M^(-1)*el*M));
+	od;
+	#group := SubgroupNC(ProjectivityGroup(ps),List(gens,x->CollineationOfProjectiveSpace(x,f)));
+	group := Group(List(gens,x->CollineationOfProjectiveSpace(x,f)));
+	SetOrder(group,Size(f));
+	return group;
+end );
