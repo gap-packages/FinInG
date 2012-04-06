@@ -606,24 +606,37 @@ with given axis <A>axis</A>.
 </Example>
 </Description>
 </ManSection>
-</Section>
 
-A <E>homology<E> of the projective space <M>PG(n,q)</M> is a collineation fixing a hyperplane <M>H</M> pointwise
-and fixing one more point <Alt Only="HTML">p &#8713; H</Alt><Alt Not="HTML"><M>p \not \in H<M></Alt>. It is easily seen
+A <E>homology</E> of the projective space <M>PG(n,q)</M> is a collineation fixing a hyperplane <M>H</M> pointwise
+and fixing one more point <Alt Only="HTML">p &#8713; H</Alt><Alt Not="HTML"><M>p \not \in H</M></Alt>. It is easily seen
 that after a suitable choice of a basis for the space, the matrix of a homology is a diagonal matrix with all its diagonal entries
-except one equal to 1. We call the hyperplane the <E>axis</E> and the point the <E>centre</E> of the homology. 
+except one equal to 1. We call the hyperplane the <E>axis</E> and the point the <E>centre</E> of the homology. Homologies with a 
+common axis and centre are a group isomorphic to the multiplicative group of the field <M>GF(q)</M>.
 
 <ManSection>
-<Oper Name="HomologyOfProjectiveSpace" Arg="sub,point1,point2"/>
-<Returns>the unique homology with axis <A>sub</A> and centre <A>point1</A> on <A>point2</A></Returns>
+<Oper Name="HomologyOfProjectiveSpace" Arg="sub,centre,point1,point2"/>
+<Returns>the unique homology with axis <A>sub</A> and centre <A>centre</A> that maps <A>point1</A> on <A>point2</A></Returns>
 <Description>
-It is checked whether the two points do not belong to <A>sub</A>. If <A>point1</A> equals <A>point2</A>, the
+It is checked whether the three points do not belong to <A>sub</A> and whether they are collinear. If <A>point1</A> equals <A>point2</A>, the
 identity mapping is returned.
 <Example>
-<#Include SYSTEM "../examples/include/projgroups_elation1.include"> 
+<#Include SYSTEM "../examples/include/projgroups_homology1.include"> 
 </Example>
 </Description>
 </ManSection>
+
+<ManSection>
+<Oper Name="ProjectiveHomologyGroup" Arg="axis,centre"/>
+<Returns>the group of homologies with with given axis <A>axis</A> and centre <A>centre</A>.</Returns>
+<Description>
+It is checked whether <A>centre</A> does not belong to <A>axis</A>. 
+<Example>
+<#Include SYSTEM "../examples/include/projgroups_homology2.include"> 
+</Example>
+</Description>
+</ManSection>
+</Section>
+
 
 <Section Label="nice_mono">
 <Heading>Nice Monomorphisms</Heading>

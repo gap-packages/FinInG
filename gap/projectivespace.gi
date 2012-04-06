@@ -2221,6 +2221,10 @@ InstallMethod( ComplementSpace,
 # to do for the elations: try to get rid of ComplementSpace by creating a helper
 # function giving the essentials of ComplementSpace for this situation.
 
+#############################################################################
+#O  ElationOfProjectiveSpace( <sub>, <point1>, <point2> )
+#  return the uniquely defined elation with axis sub, mapping point1 on point2
+##
 InstallMethod( ElationOfProjectiveSpace,
 	"for a hyperplane and two points of the same projective space",
 	[ IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace ],
@@ -2250,6 +2254,10 @@ InstallMethod( ElationOfProjectiveSpace,
 	return CollineationOfProjectiveSpace(el,f);
 end );
 
+#############################################################################
+#O  ProjectiveElationGroup( <sub>, <centre> )
+#  returns group of elations with axis sub and centre centre
+##
 InstallMethod( ProjectiveElationGroup,
 	"for a hyperplane and a point of a projective space",
 	[ IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace ],
@@ -2284,6 +2292,10 @@ InstallMethod( ProjectiveElationGroup,
 	return group;
 end );
 
+#############################################################################
+#O  ProjectiveElationGroup( <sub> )
+#  returns group of elations with axis sub 
+##
 InstallMethod( ProjectiveElationGroup,
 	"for a hyperplane of a projective space",
 	[ IsSubspaceOfProjectiveSpace ],
@@ -2316,6 +2328,10 @@ InstallMethod( ProjectiveElationGroup,
 	return group;
 end );
 
+#############################################################################
+#O  HomologyOfProjectiveSpace( <sub>, <centre>, <point1>, <point2> )
+#  return the uniquely defined homology with axis sub and centre centre, mapping point1 on point2
+##
 InstallMethod( HomologyOfProjectiveSpace,
 	"for a hyperplane and three points of the same projective space",
 	[ IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace ],
@@ -2349,6 +2365,10 @@ InstallMethod( HomologyOfProjectiveSpace,
 	return CollineationOfProjectiveSpace(el,f);
 end );
 
+#############################################################################
+#O  ProjectiveElationGroup( <sub>, <centre> )
+#  returns group of homologies with axis sub and centre centre
+##
 InstallMethod( ProjectiveHomologyGroup,
 	"for a hyperplane and a point of a projective space",
 	[ IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace ],
@@ -2368,5 +2388,5 @@ InstallMethod( ProjectiveHomologyGroup,
 	q := Size(f);
 	el := ShallowCopy(IdentityMat(n+1,f));
 	el[n+1][n+1] := Z(q);
-	return group := Group(CollineationOfProjectiveSpace(M^(-1)*el*M,f));
+	return Group(CollineationOfProjectiveSpace(M^(-1)*el*M,f));
 end );

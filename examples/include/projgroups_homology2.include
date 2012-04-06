@@ -1,0 +1,12 @@
+gap&gt; ps := PG(2,27);
+ProjectiveSpace(2, 27)
+gap&gt; sub := VectorSpaceToElement(ps,[[1,0,1,],[0,1,0]]*Z(3)^0);
+&lt;a line in ProjectiveSpace(2, 27)&gt;
+gap&gt; p := VectorSpaceToElement(ps,[1,0,2]*Z(3)^0);
+&lt;a point in ProjectiveSpace(2, 27)&gt;
+gap&gt; g := ProjectiveHomologyGroup(sub,p);
+&lt;projective semilinear group with 1 generators&gt;
+gap&gt; Order(g);
+26
+gap&gt; StructureDescription(g);
+"C26"

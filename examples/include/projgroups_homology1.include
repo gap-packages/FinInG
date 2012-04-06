@@ -1,0 +1,15 @@
+gap&gt; ps := PG(3,81);
+ProjectiveSpace(3, 81)
+gap&gt; sub := VectorSpaceToElement(ps,[[1,0,1,0],[0,1,0,1],[1,2,3,0]]*Z(3)^0);
+&lt;a plane in ProjectiveSpace(3, 81)&gt;
+gap&gt; centre := VectorSpaceToElement(ps,[0*Z(3),Z(3)^0,Z(3^4)^36,0*Z(3)]);
+&lt;a point in ProjectiveSpace(3, 81)&gt;
+gap&gt; p1 := VectorSpaceToElement(ps,[0*Z(3),Z(3)^0,Z(3^4)^51,0*Z(3)]);
+&lt;a point in ProjectiveSpace(3, 81)&gt;
+gap&gt; p2 := VectorSpaceToElement(ps,[0*Z(3),Z(3)^0,Z(3^4)^44,0*Z(3)]);
+&lt;a point in ProjectiveSpace(3, 81)&gt;
+gap&gt; phi := HomologyOfProjectiveSpace(sub,centre,p1,p2);
+&lt;projective semilinear element: [ [ Z(3)^0, Z(3^4)^59, Z(3^4)^15, 0*Z(3) ], 
+  [ 0*Z(3), Z(3^4)^5, Z(3^4)^15, 0*Z(3) ], 
+  [ 0*Z(3), Z(3^4)^19, Z(3^4)^57, 0*Z(3) ], 
+  [ 0*Z(3), Z(3^4)^19, Z(3^4)^55, Z(3)^0 ] ], F^0&gt;
