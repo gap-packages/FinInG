@@ -1,0 +1,24 @@
+gap&gt; ps := PG(2,27);
+ProjectiveSpace(2, 27)
+gap&gt; sub := VectorSpaceToElement(ps,[[1,0,1,],[0,1,0]]*Z(3)^0);
+&lt;a line in ProjectiveSpace(2, 27)&gt;
+gap&gt; p := VectorSpaceToElement(ps,[1,1,1]*Z(3)^0);
+&lt;a point in ProjectiveSpace(2, 27)&gt;
+gap&gt; g := ProjectiveElationGroup(sub,p);
+&lt;projective semilinear group with 3 generators&gt;
+gap&gt; Order(g);
+27
+gap&gt; StructureDescription(g);
+"C3 x C3 x C3"
+gap&gt; ps := PG(3,4);
+ProjectiveSpace(3, 4)
+gap&gt; sub := Random(Hyperplanes(ps));
+&lt;a plane in ProjectiveSpace(3, 4)&gt;
+gap&gt; g := ProjectiveElationGroup(sub);
+&lt;projective semilinear group with 6 generators&gt;
+gap&gt; Order(g);
+64
+gap&gt; Transitivity(g,Difference(Points(ps),Points(sub)),OnProjSubspaces);
+1
+gap&gt; StructureDescription(g);
+"C2 x C2 x C2 x C2 x C2 x C2"

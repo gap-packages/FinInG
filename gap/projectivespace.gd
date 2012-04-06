@@ -152,3 +152,5 @@ DeclareOperation( "ComplementSpace", [IsVectorSpace, IsFFECollColl]);
 
 DeclareOperation( "ElationOfProjectiveSpace", [ IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace ] );
 DeclareOperation( "ProjectiveElationGroup", [ IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace ] );
+DeclareOperation( "ProjectiveElationGroup", [ IsSubspaceOfProjectiveSpace ] );
+

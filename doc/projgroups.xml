@@ -506,12 +506,13 @@ from <M>V</M> to <M>V</M> with matrix <M>M</M> such that <M>rk(M-I)=1</M> and <A
 are found in the literature, here we followed <Cite Key="Cameron2"/>. From the definition it follows that
 <M>M</M> is the identity matrix or all eigenvalues of <M>M</M> equal one and <Alt Only="HTML">&#964;</Alt><Alt Not="HTML"><M>\tau</M></Alt>
 fixes all vectors in a vector hyperplane of <M>V(n+1,F)</M>. We can choose the base of <M>V</M> such that <Alt Not="HTML"><M>e_1,\ldots,e_{n-1}</M></Alt>
-<Alt Only="HTML">e&lt;sub>1&lt;/sub>...e&lt;sub>n-1&lt;/sub></Alt> belongs to <Alt Only="HTML">Ker(&#694;)</Alt><Alt Not="HTML"><M>Ker(\tau)</M></Alt>,
-implying 
+<Alt Only="HTML">e&lt;sub>1&lt;/sub>...e&lt;sub>n-1&lt;/sub></Alt> belongs to <Alt Only="HTML">Ker(&#964;)</Alt><Alt Not="HTML"><M>Ker(\tau)</M></Alt>,
+implying that <M>M</M> equals
 <Alt Only="LaTeX"><Display>\left( \begin{array}{ccccc}
 1 &amp; 0 &amp; \ldots &amp; 0 &amp; 0 \\ 
 0 &amp; 1 &amp; \ldots &amp; 0 &amp; 0 \\ 
 \vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots \\
+0 &amp; 0 &amp; \ldots &amp; 1 &amp; 0 \\ 
 x_1 &amp; x_2 &amp; \ldots &amp; x_{n-1} &amp; 1 \\ 
 \end{array} \right).</Display>
 </Alt>
@@ -522,44 +523,88 @@ x_1 &amp; x_2 &amp; \ldots &amp; x_{n-1} &amp; 1 \\
 &lt;tr>
 &lt;td align="center" valign="center" width=30>1&lt;/td>
 &lt;td align="center" valign="center" width=30>0&lt;/td>
-&lt;td align="center" valign="center" width=30>2&lt;/td>
+&lt;td align="center" valign="center" width=30>...&lt;/td>
 &lt;td align="center" valign="center" width=30>0&lt;/td>
 &lt;td align="center" valign="center" width=30>0&lt;/td>
 &lt;/tr>
 &lt;tr>
 &lt;td align="center" valign="center" width=30>0&lt;/td>
 &lt;td align="center" valign="center" width=30>1&lt;/td>
-&lt;td align="center" valign="center" width=30>2&lt;/td>
+&lt;td align="center" valign="center" width=30>...&lt;/td>
 &lt;td align="center" valign="center" width=30>0&lt;/td>
 &lt;td align="center" valign="center" width=30>0&lt;/td>
 &lt;/tr>
 &lt;tr>
-&lt;td align="center" valign="center" width=30>3&lt;/td>
-&lt;td align="center" valign="center" width=30>3&lt;/td>
-&lt;td align="center" valign="center" width=30>4&lt;/td>
-&lt;td align="center" valign="center" width=30>3&lt;/td>
-&lt;td align="center" valign="center" width=30>3&lt;/td>
+&lt;td align="center" valign="center" width=30>:&lt;/td>
+&lt;td align="center" valign="center" width=30>:&lt;/td>
+&lt;td align="center" valign="center" width=30>&lt;sup>&lt;big>&#183;&lt;/big>&lt;/sup>&#183;&lt;sub>&lt;big>&#183;&lt;/big>&lt;/sub>&lt;/td>
+&lt;td align="center" valign="center" width=30>:&lt;/td>
+&lt;td align="center" valign="center" width=30>:&lt;/td>
 &lt;/tr>
 &lt;tr>
+&lt;td align="center" valign="center" width=30>0&lt;/td>
+&lt;td align="center" valign="center" width=30>0&lt;/td>
+&lt;td align="center" valign="center" width=30>...&lt;/td>
 &lt;td align="center" valign="center" width=30>1&lt;/td>
-&lt;td align="center" valign="center" width=30>2&lt;/td>
-&lt;td align="center" valign="center" width=30>2&lt;/td>
-&lt;td align="center" valign="center" width=30>6&lt;/td>
+&lt;td align="center" valign="center" width=30>0&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td align="center" valign="center" width=30>x&lt;sub>1&lt;/sub>&lt;/td>
+&lt;td align="center" valign="center" width=30>x&lt;sub>2&lt;/sub>&lt;/td>
+&lt;td align="center" valign="center" width=30>...&lt;/td>
+&lt;td align="center" valign="center" width=30>x&lt;sub>n&lt;/sub>&lt;/td>
 &lt;td align="center" valign="center" width=30>1&lt;/td>
 &lt;/tr>
 &lt;/table>&lt;/td>&lt;td style ="border-top:1px solid #000; border-bottom:1px solid #000;">&nbsp;&lt;/td>&lt;/tr>&lt;/table>&lt;/td>
 &lt;/tr>&lt;/table>
 </Alt>
+It follows easily that the vector hyperplanes that are fixed by <Alt Only="HTML">&#964;</Alt><Alt Not="HTML"><M>\tau</M></Alt> are the 
+hyperplanes containing the vector <Alt Only="HTML">v=(x&lt;sub>1&lt;/sub>,...,x&lt;sub>n&lt;/sub>,0)</Alt>
+<Alt Not="HTML"><M>v=(x_1,\ldots,x_n,0)</M></Alt>, a vetor contained in 
+<Alt Only="HTML">Ker(&#964;)</Alt><Alt Not="HTML"><M>Ker(\tau)</M></Alt>. It is easily seen now that the group of transvections that fix 
+all vectors of a given vector hyperplane, form an abelian group, of order <Alt Only="HTML">q&lt;sup>2&lt;/sup></Alt>
+<Alt Not="HTML"><M>q^n</M></Alt> for <M>F=GF(q)</M>, and that each transvection has order <M>p</M>, the characteristic of <M>GF(q)</M>.
+Choosing <Alt Only="HTML">v=e&lt;sub>1&lt;/sub></Alt><Alt Not="HTML"><M>v=e_1</M></Alt> implies 
+<Alt Only="HTML">x&lt;sub>2&lt;/sub>=...=x&lt;sub>n&lt;/sub>=0</Alt>
+<Alt Not="HTML"><M>x_2=\ldots=x_n=0)</M></Alt> and <Alt Only="HTML">x&lt;sub>1&lt;/sub>=1</Alt>
+<Alt Not="HTML"><M>x_1=1</M></Alt>. It is also a well known fact that all transvections generate the group <M>SL(n+1,F)</M>.
 
-
-Elations, homologies and Singer cycles seems to be asked by our test users!
+A transvection gives rise to a projectivity of <M>PG(n,F)</M>, we call such an element an <E>elation</E>, 
+and it is a projectivity <Alt Not="HTML"><M>\phi</M></Alt><Alt Only="HTML">&#966;</Alt> fixing a hyperplane <M>H</M> pointwise, 
+and such that there exists exactly one point <Alt Only="HTML">p &#8712; H</Alt><Alt Not="HTML"><M>p \in H</M></Alt> such 
+that all hyperplanes through <M>p</M> are stabilized. The hyperplane <M>H</M> is called the <E>axis</E> of 
+<Alt Not="HTML"><M>\phi</M></Alt><Alt Only="HTML">&#966;</Alt>, and the point <M>p</M> is called the <E>centre</E> of 
+<Alt Not="HTML"><M>\phi</M></Alt><Alt Only="HTML">&#966;</Alt>. As a transvection is an element of <M>SL(n,F)</M>, 
+an elation is an element of <M>PSL(n,F)</M>. An elation is completely determind by its axis and the image of one point (not contained
+in the axis). The group of elations with a given axis and centre, is isomorphic with the additive group of <M>F</M>. Finally, the group
+of all elations with a given axis <M>H</M>, acts regularly on the points of <Alt Only="HTML">PG(n,F) &#92; H</Alt>
+<Alt Not="HTML"><M>PG(n,F) \setminus H</M></Alt>, and is isomorphic with the additive
+group of the vectorspace <M>V(n,F)</M>. 
 
 <ManSection>
-    <Oper Name="ElationOfProjectiveSpace" Arg="sub,point1,point2"/>
- <Returns>the elation</Returns>
+<Oper Name="ElationOfProjectiveSpace" Arg="sub,point1,point2"/>
+<Returns>the unique elation with axis <A>sub</A> mapping <A>point1</A> on <A>point2</A></Returns>
 <Description>
-Explain
- </Description>
+It is checked whether the two points do not belong to <A>sub</A>. If <A>point1</A> equals <A>point2</A>, the
+identity mapping is returned.
+<Example>
+<#Include SYSTEM "../examples/include/projgroups_elation1.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="ProjectiveElationGroup" Arg="axis,centre"/>
+<Oper Name="ProjectiveElationGroup" Arg="axis"/>
+<Returns>A group of elations</Returns>
+<Description>
+The first version returns the group of elations with with given axis <A>axis</A> and centre <A>centre</A>. 
+It is checked whether <A>centre</A> belongs to <A>axis</A>. The second version returns the group of elations 
+with given axis <A>axis</A>. 
+<Example>
+<#Include SYSTEM "../examples/include/projgroups_elation2.include"> 
+</Example>
+</Description>
 </ManSection>
 </Section>
 

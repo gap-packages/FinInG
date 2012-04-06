@@ -1,0 +1,12 @@
+gap&gt; ps := PG(3,9);
+ProjectiveSpace(3, 9)
+gap&gt; sub := VectorSpaceToElement(ps,[[1,0,1,0],[0,1,0,1],[1,2,3,0]]*Z(3)^0);
+&lt;a plane in ProjectiveSpace(3, 9)&gt;
+gap&gt; p1 := VectorSpaceToElement(ps,[1,0,1,2]*Z(3)^0);
+&lt;a point in ProjectiveSpace(3, 9)&gt;
+gap&gt; p2 := VectorSpaceToElement(ps,[1,2,0,2]*Z(3)^0);
+&lt;a point in ProjectiveSpace(3, 9)&gt;
+gap&gt; phi := ElationOfProjectiveSpace(sub,p1,p2);
+&lt;projective semilinear element: [ [ Z(3)^0, Z(3), Z(3), 0*Z(3) ], 
+  [ 0*Z(3), 0*Z(3), Z(3), 0*Z(3) ], [ 0*Z(3), Z(3)^0, Z(3), 0*Z(3) ], 
+  [ 0*Z(3), Z(3)^0, Z(3)^0, Z(3)^0 ] ], F^0&gt;

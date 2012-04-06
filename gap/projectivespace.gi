@@ -2251,7 +2251,7 @@ InstallMethod( ElationOfProjectiveSpace,
 end );
 
 InstallMethod( ProjectiveElationGroup,
-	"for a hyperplane and two points of the same projective space",
+	"for a hyperplane and a point of a projective space",
 	[ IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace ],
 	function(sub,centre)
 	local en,e0,ei,mat,vssub,n,f,c,M,el,ps,gens,fbas,x,group;
@@ -2283,3 +2283,36 @@ InstallMethod( ProjectiveElationGroup,
 	SetOrder(group,Size(f));
 	return group;
 end );
+
+InstallMethod( ProjectiveElationGroup,
+	"for a hyperplane of a projective space",
+	[ IsSubspaceOfProjectiveSpace ],
+	function(sub)
+	local en,mat,vssub,n,f,c,M,el,ps,gens,fbas,x,group,i;
+	ps := AmbientSpace(sub);
+	n := Dimension(ps);
+	if (Dimension(sub) <> n-1) then
+		Error("<sub> must be a hyperplane");
+	fi;	
+	mat := ElementToVectorSpace(sub);
+	f := BaseField(sub);
+	vssub := VectorSpace(f,mat);
+	#e0 := ElementToVectorSpace(centre);
+	#ei := BasisVectors(Basis(ComplementSpace(vssub,[e0])));
+	en := BasisVectors(Basis(ComplementSpace(f^(n+1),mat)))[1];
+	M := Concatenation(mat,[en]);
+	el := ShallowCopy(IdentityMat(n+1,f));
+	gens := [];
+	fbas := BasisVectors(Basis(f));
+	for x in fbas do
+		for i in [1..n] do
+		el[n+1][i] := x;
+			Add(gens,ShallowCopy(M^(-1)*el*M));
+		od;
+	od;
+	#group := SubgroupNC(ProjectivityGroup(ps),List(gens,x->CollineationOfProjectiveSpace(x,f)));
+	group := Group(List(gens,x->CollineationOfProjectiveSpace(x,f)));
+	SetOrder(group,Size(f)^n);
+	return group;
+end );
+
