@@ -2316,3 +2316,57 @@ InstallMethod( ProjectiveElationGroup,
 	return group;
 end );
 
+InstallMethod( HomologyOfProjectiveSpace,
+	"for a hyperplane and three points of the same projective space",
+	[ IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace ],
+	function(sub,centre,point1,point2)
+	local en,e0,ei,mat,vssub,n,f,c,M,el,p1vect,p2vect,ps;
+	ps := AmbientSpace(sub);
+	n := Dimension(ps);
+	if not Size(AsDuplicateFreeList([AmbientSpace(sub),AmbientSpace(centre),AmbientSpace(point1),AmbientSpace(point2)]))=1 then 
+		Error("The elements <sub>, <centre>, <point1>, and <point2> do not have a common ambient space");
+	elif Dimension(sub) <> n-1 or Dimension(centre) <> 0 or Dimension(point1) <> 0 or Dimension(point2) <> 0 then
+		Error("<sub> must be a hyperplane, <centre>, <point1> and <point2> must be points");
+	elif centre in sub or point1 in sub or point2 in sub then
+		Error("The points <centre>, <point1> and <point2> must not be incident with <sub>");
+	elif centre=point1 or centre=point2 then
+		Error("<centre> is fixed and must be different from <point1> and <point2>");
+	elif Dimension(Span([centre,point1,point2])) <> 1 then
+		Error("<centre>, <point1>, and <point2> must span a line");
+	fi;
+	mat := ElementToVectorSpace(sub);
+	f := BaseField(sub);
+	vssub := VectorSpace(f,mat);
+	e0 := ElementToVectorSpace(Meet(Span(centre,point1),sub));
+	ei := BasisVectors(Basis(ComplementSpace(vssub,[e0])));
+	en := ElementToVectorSpace(centre);
+	M := Concatenation([e0],ei,[en]);
+	el := ShallowCopy(IdentityMat(n+1,f));
+	p1vect := ElementToVectorSpace(point1)*M^-1;
+	p2vect := ElementToVectorSpace(point2)*M^-1;
+	el[n+1][n+1] := (p2vect[n+1]*p1vect[1])/(p2vect[1]*p1vect[n+1]);
+	el := M^(-1)*el*M;
+	return CollineationOfProjectiveSpace(el,f);
+end );
+
+InstallMethod( ProjectiveHomologyGroup,
+	"for a hyperplane and a point of a projective space",
+	[ IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace ],
+	function(sub,centre)
+	local n,M,el,ps,x,group,f,q;
+	ps := AmbientSpace(sub);
+	n := Dimension(ps);
+	if not (ps=AmbientSpace(centre)) then 
+		Error("The elements <sub> and <centre> do not have a common ambient space");
+	elif (Dimension(sub) <> n-1) or (Dimension(centre) <> 0) then
+		Error("<sub> must be a hyperplane, <centre> must be a point");
+	elif centre in sub then
+		Error("The point <centre> and <sub> must not be incident");
+	fi;
+	M := Concatenation(ElementToVectorSpace(sub),[ElementToVectorSpace(centre)]);
+	f := BaseField(sub);
+	q := Size(f);
+	el := ShallowCopy(IdentityMat(n+1,f));
+	el[n+1][n+1] := Z(q);
+	return group := Group(CollineationOfProjectiveSpace(M^(-1)*el*M,f));
+end );

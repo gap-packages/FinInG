@@ -608,6 +608,23 @@ with given axis <A>axis</A>.
 </ManSection>
 </Section>
 
+A <E>homology<E> of the projective space <M>PG(n,q)</M> is a collineation fixing a hyperplane <M>H</M> pointwise
+and fixing one more point <Alt Only="HTML">p &#8713; H</Alt><Alt Not="HTML"><M>p \not \in H<M></Alt>. It is easily seen
+that after a suitable choice of a basis for the space, the matrix of a homology is a diagonal matrix with all its diagonal entries
+except one equal to 1. We call the hyperplane the <E>axis</E> and the point the <E>centre</E> of the homology. 
+
+<ManSection>
+<Oper Name="HomologyOfProjectiveSpace" Arg="sub,point1,point2"/>
+<Returns>the unique homology with axis <A>sub</A> and centre <A>point1</A> on <A>point2</A></Returns>
+<Description>
+It is checked whether the two points do not belong to <A>sub</A>. If <A>point1</A> equals <A>point2</A>, the
+identity mapping is returned.
+<Example>
+<#Include SYSTEM "../examples/include/projgroups_elation1.include"> 
+</Example>
+</Description>
+</ManSection>
+
 <Section Label="nice_mono">
 <Heading>Nice Monomorphisms</Heading>
 A <E>nice monomorphism</E> of a group <M>G</M> is roughly just a permutation representation of 
