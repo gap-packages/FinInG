@@ -1,31 +1,33 @@
-gap> ps := ProjectiveSpace(3,27);
-PG(3, 27)
-gap> mat := IdentityMat(4,GF(27));
+gap&gt; ps := ProjectiveSpace(3,27);
+ProjectiveSpace(3, 27)
+gap&gt; mat := IdentityMat(4,GF(27));
 [ [ Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3) ], [ 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3) ], 
   [ 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3) ], [ 0*Z(3), 0*Z(3), 0*Z(3), Z(3)^0 ] ]
-gap> delta := StandardDualityOfProjectiveSpace(ps);
-StandardDuality( Elements( ProjectiveSpace(3,GF(3^3)) ) )
-gap> frob := FrobeniusAutomorphism(GF(27));
+gap&gt; delta := StandardDualityOfProjectiveSpace(ps);
+StandardDuality( AllElementsOfIncidenceStructure( ProjectiveSpace(3,GF(3^
+3)) ) )
+gap&gt; frob := FrobeniusAutomorphism(GF(27));
 FrobeniusAutomorphism( GF(3^3) )
-gap> phi := CorrelationOfProjectiveSpace(mat,frob,GF(27),delta);
+gap&gt; phi := CorrelationOfProjectiveSpace(mat,frob,GF(27),delta);
 &lt;projective element with Frobenius with projectivespace isomorphism
 [ [ Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3) ], [ 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3) ], 
   [ 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3) ], [ 0*Z(3), 0*Z(3), 0*Z(3), Z(3)^0 ] ], F^
-3, StandardDuality( Elements( ProjectiveSpace(3,GF(3^3)) ) ) >
-gap> p := Random(Points(ps));
-&lt;a point in PG(3, 27)>
-gap> OnProjSubspacesReversing(p,phi);
-&lt;a plane in PG(3, 27)>
-gap> l := Random(Lines(ps));
-&lt;a line in PG(3, 27)>
-gap> OnProjSubspacesReversing(p,phi);
-&lt;a plane in PG(3, 27)>
-gap> psi := CorrelationOfProjectiveSpace(mat,frob^2,GF(27));
+3, StandardDuality( AllElementsOfIncidenceStructure( ProjectiveSpace(3,GF(3^
+3)) ) ) &gt;
+gap&gt; p := Random(Points(ps));
+&lt;a point in ProjectiveSpace(3, 27)&gt;
+gap&gt; OnProjSubspacesReversing(p,phi);
+&lt;a plane in ProjectiveSpace(3, 27)&gt;
+gap&gt; l := Random(Lines(ps));
+&lt;a line in ProjectiveSpace(3, 27)&gt;
+gap&gt; OnProjSubspacesReversing(p,phi);
+&lt;a plane in ProjectiveSpace(3, 27)&gt;
+gap&gt; psi := CorrelationOfProjectiveSpace(mat,frob^2,GF(27));
 &lt;projective element with Frobenius with projectivespace isomorphism
 [ [ Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3) ], [ 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3) ], 
   [ 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3) ], [ 0*Z(3), 0*Z(3), 0*Z(3), Z(3)^0 ] ], F^
-9, IdentityMapping( &lt;Elements of PG(4, 27)> ) >
-gap> OnProjSubspacesReversing(p,psi);
-&lt;a point in PG(3, 27)>
-gap> OnProjSubspacesReversing(l,psi);
-&lt;a line in PG(3, 27)>
+9, IdentityMapping( &lt;All elements of ProjectiveSpace(3, 27)&gt; ) &gt;
+gap&gt; OnProjSubspacesReversing(p,psi);
+&lt;a point in ProjectiveSpace(3, 27)&gt;
+gap&gt; OnProjSubspacesReversing(l,psi);
+&lt;a line in ProjectiveSpace(3, 27)&gt;

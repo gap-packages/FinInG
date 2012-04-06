@@ -19,6 +19,9 @@ quit;
 
 #initialize filenames
 
+examplesfiles := ["examples_pg24", "examples_hermitian", "examples_embedW", "examples_spreads", 
+                  "examples_qclan", "examples_KantorKnuth","examples_PSL211"];;
+
 incgeomfiles := [ "incgeom_incstruct", "incgeom_categories1", "incgeom_typesofels", "incgeom_rank", 
 				"incgeom_categories2", "incgeom_elementsj", "incgeom_short", "incgeom_isincident",
 				"incgeom_random", "incgeom_el_ambient", "incgeom_flag", "incgeom_flag_chamber",
@@ -28,6 +31,21 @@ incgeomfiles := [ "incgeom_incstruct", "incgeom_categories1", "incgeom_typesofel
 				"incgeom_lie_elementtovectorspace", "incgeom_lie_in", "incgeom_lie_hyperplanesof",
 				"incgeom_lie_elementtoelement"];
 				
+projspfiles := ["projsp_projectivespace", "projsp_projdimension", "projsp_basefieldps", "projsp_underlyingvs", "projsp_element1",
+				"projsp_emptysubspace", "projsp_projdimension_element", "projsp_elements", "projsp_short", "projsp_incident", 
+				"projsp_standardframe", "projsp_coordinates", "projsp_eqhyperplane", "projsp_ambientspaceelps", "projsp_basefieldelps",
+				"projsp_randomeltps", "projsp_randomeltsps", "projsp_span", "projsp_meet", "projsp_flag", "projsp_chamber",
+				"projsp_shadowofelement", "projsp_shadowofflag", "projsp_elsel", "projsp_enumerator", "projsp_short2",
+				"projsp_iterator", "projsp_list" ];
+
+projgroupsfiles := [ "projgroups_projectivity", "projgroups_collineation", "projgroups_stduality", "projgroups_correlation",
+					 "projgroups_underlyingmatrix", "projgroups_basefield", "projgroups_fieldautomorphism", "projgroups_psisomorphism",
+					 "projgroups_representative", "projgroups_order", "projgroups_collineationgroup", "projgroups_projectivitygroup",
+					 "projgroups_specialprojectivitygroup", "projgroups_mult", "projgroups_embedding", "projgroups_onprojsubspaces",
+					 "projgroups_onprojsubspacesreversing", "projgroups_elation1", "projgroups_elation2", "projgroups_homology1",
+					 "projgroups_homology2", "projgroups_nicem", "projgroups_niceo", "projgroups_cancompute" ];
+
+
 affinefiles := ["affine_affinespace", "affine_dimension", "affine_basefield", "affine_underlyingvs",
 				"affine_ambientspace", "affine_subspaces", "affine_elements", "affine_short", 
 				"affine_incident", "affine_ambientspaceelas", "affine_basefieldelas", "affine_span", 
@@ -35,8 +53,6 @@ affinefiles := ["affine_affinespace", "affine_dimension", "affine_basefield", "a
 				"affine_iterator", "affine_enumerator", "affine_affinegroupexample", "affine_affinegroupexample2",
 				"affine_affinegroup", "affine_collineationgroup", "affine_actions"];;
 
-examplesfiles := ["examples_pg24", "examples_hermitian", "examples_embedW", "examples_spreads", 
-                  "examples_qclan", "examples_KantorKnuth","examples_PSL211"];;
 
 
 morphismsfiles := ["morphisms_intertwiners","morphisms_embedding1","morphisms_embedding2",
@@ -103,7 +119,7 @@ preambledir := DirectoriesPackageLibrary("fining","examples/")[1];
 outputdir := DirectoriesPackageLibrary("fining","examples/output")[1];
 gap := Filename(Directory("/usr/bin/"),"gap4r4");  
 paths := JoinStringsWithSeparator(GAP_ROOT_PATHS,";");
-args := JoinStringsWithSeparator(["-l ",paths," -L fining.ws"]," ");
+args := JoinStringsWithSeparator(["-l ",paths," -L fining.ws","-o 1G"]," ");
 
 #create .out files using the saved workspace
 #IMPORTANT: here we suppose that the script to start up our favorite version of

@@ -172,8 +172,8 @@ is also applicable on the EmptySubspace
 <Description>
 For the projective space <A>ps</A> of dimension <M>d</M> and the type <A>j</A>, <M>1 &#8804; j &#8804; d</M>
 this operation returns the collection of <M>j-1</M> dimenaional subspaces. 
-An error message is produced when the affine space <A>as</A> has no elements of a required type.<Example>
-<#Include SYSTEM "../examples/include/affine_elements.include"> 
+An error message is produced when the projective space <A>as</A> has no elements of a required type.<Example>
+<#Include SYSTEM "../examples/include/projsp_elements.include"> 
 </Example>
 </Description>
 </ManSection>
@@ -189,7 +189,7 @@ An error message is produced when the affine space <A>as</A> has no elements of 
 <Description>
 An error message is produced when the projective space <A>ps</A> has no elements of a required type.
 <Example>
-<#Include SYSTEM "../examples/include/affine_short.include"> 
+<#Include SYSTEM "../examples/include/projsp_short.include"> 
 </Example>
 </Description>
 </ManSection>

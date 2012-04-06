@@ -1,9 +1,6 @@
 gap&gt; coll := CollineationGroup(PG(4,8));
 PGammaL(5,8)
 gap&gt; corr := CorrelationGroup(PG(4,8));
-&lt;projective group with Frobenius with proj. space isomorphism of size 
-27829356044946065326080 with 4 generators&gt;
+PGammaL(5,8) : 2
 gap&gt; phi := Embedding(coll,corr);
-MappingByFunction( PGammaL(5,8), &lt;projective group with Frobenius with proj. s
-pace isomorphism of size 27829356044946065326080 with 
-4 generators&gt;, function( y ) ... end )
+MappingByFunction( PGammaL(5,8), PGammaL(5,8) : 2, function( y ) ... end )

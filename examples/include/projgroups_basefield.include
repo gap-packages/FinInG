@@ -1,8 +1,8 @@
-gap> mat := [[0,1,0],[1,0,0],[0,0,2]]*Z(3)^0;
+gap&gt; mat := [[0,1,0],[1,0,0],[0,0,2]]*Z(3)^0;
 [ [ 0*Z(3), Z(3)^0, 0*Z(3) ], [ Z(3)^0, 0*Z(3), 0*Z(3) ], 
   [ 0*Z(3), 0*Z(3), Z(3) ] ]
-gap> g := Projectivity(mat,GF(3^6));
+gap&gt; g := Projectivity(mat,GF(3^6));
 &lt;projective element [ [ 0*Z(3), Z(3)^0, 0*Z(3) ], [ Z(3)^0, 0*Z(3), 0*Z(3) ], 
-  [ 0*Z(3), 0*Z(3), Z(3) ] ]>
-gap> BaseField(g);
+  [ 0*Z(3), 0*Z(3), Z(3) ] ]&gt;
+gap&gt; BaseField(g);
 GF(3^6)

@@ -13,7 +13,7 @@ gap&gt; ElementsOfIncidenceStructure(ps,5);
 gap&gt; ElementsOfIncidenceStructure(ps,6);
 &lt;proj. 5-subspaces of ProjectiveSpace(6, 7)&gt;
 gap&gt; ElementsOfIncidenceStructure(ps,7);
-Error, &lt;geo&gt; has no elements of type &lt;j&gt; called from
+Error, &lt;ps&gt; has no elements of type &lt;j&gt; called from
 &lt;function&gt;( &lt;arguments&gt; ) called from read-eval-loop
 Entering break read-eval-print loop ...
 you can 'quit;' to quit to outer loop, or

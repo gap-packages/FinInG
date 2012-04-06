@@ -1,40 +1,40 @@
-gap> ps := ProjectiveSpace(4,27);
-PG(4, 27)
-gap> p := VectorSpaceToElement(ps,[ Z(3^3)^22,Z(3^3)^10,Z(3^3),Z(3^3)^3,Z(3^3)^3]);
-&lt;a point in PG(4, 27)>
-gap> Display(p);
+gap&gt; ps := ProjectiveSpace(4,27);
+ProjectiveSpace(4, 27)
+gap&gt; p := VectorSpaceToElement(ps,[ Z(3^3)^22,Z(3^3)^10,Z(3^3),Z(3^3)^3,Z(3^3)^3]);
+&lt;a point in ProjectiveSpace(4, 27)&gt;
+gap&gt; Display(p);
 [ Z(3)^0, Z(3^3)^14, Z(3^3)^5, Z(3^3)^7, Z(3^3)^7 ]
-gap> mat := [[ Z(3^3)^25,Z(3^3)^6,Z(3^3)^7,Z(3^3)^15], 
->   [Z(3^3)^9,Z(3)^0,Z(3^3)^10,Z(3^3)^18], 
->   [Z(3^3)^19,0*Z(3),Z(3),Z(3^3)^12], 
->   [Z(3^3)^4,Z(3^3),Z(3^3),Z(3^3)^22]];
+gap&gt; mat := [[ Z(3^3)^25,Z(3^3)^6,Z(3^3)^7,Z(3^3)^15], 
+&gt;   [Z(3^3)^9,Z(3)^0,Z(3^3)^10,Z(3^3)^18], 
+&gt;   [Z(3^3)^19,0*Z(3),Z(3),Z(3^3)^12], 
+&gt;   [Z(3^3)^4,Z(3^3),Z(3^3),Z(3^3)^22]];
 [ [ Z(3^3)^25, Z(3^3)^6, Z(3^3)^7, Z(3^3)^15 ], 
   [ Z(3^3)^9, Z(3)^0, Z(3^3)^10, Z(3^3)^18 ], 
   [ Z(3^3)^19, 0*Z(3), Z(3), Z(3^3)^12 ], 
   [ Z(3^3)^4, Z(3^3), Z(3^3), Z(3^3)^22 ] ]
-gap> theta := FrobeniusAutomorphism(GF(27));
+gap&gt; theta := FrobeniusAutomorphism(GF(27));
 FrobeniusAutomorphism( GF(3^3) )
-gap> phi := CollineationOfProjectiveSpace(mat,theta,GF(27));
-&lt;projective element with Frobenius: 
+gap&gt; phi := CollineationOfProjectiveSpace(mat,theta,GF(27));
+&lt;projective semilinear element: 
 [ [ Z(3^3)^25, Z(3^3)^6, Z(3^3)^7, Z(3^3)^15 ], 
   [ Z(3^3)^9, Z(3)^0, Z(3^3)^10, Z(3^3)^18 ], 
   [ Z(3^3)^19, 0*Z(3), Z(3), Z(3^3)^12 ], 
-  [ Z(3^3)^4, Z(3^3), Z(3^3), Z(3^3)^22 ] ], F^3>
-gap> r := OnProjSubspaces(p,phi);
-&lt;a point in PG(4, 27)>
-gap> Display(r);
+  [ Z(3^3)^4, Z(3^3), Z(3^3), Z(3^3)^22 ] ], F^3&gt;
+gap&gt; r := OnProjSubspaces(p,phi);
+&lt;a point in ProjectiveSpace(4, 27)&gt;
+gap&gt; Display(r);
 [ Z(3)^0, 0*Z(3), 0*Z(3), Z(3^3)^17 ]
-gap> vect := [[Z(3^3)^9,Z(3^3)^5,Z(3^3)^19,Z(3^3)^21,Z(3^3)^17],
->   [Z(3^3)^22,Z(3^3)^22,Z(3^3)^4,Z(3^3)^16,Z(3^3)^17],
->   [Z(3^3)^8,0*Z(3),Z(3^3)^24,Z(3),Z(3^3)^21]];
+gap&gt; vect := [[Z(3^3)^9,Z(3^3)^5,Z(3^3)^19,Z(3^3)^21,Z(3^3)^17],
+&gt;   [Z(3^3)^22,Z(3^3)^22,Z(3^3)^4,Z(3^3)^16,Z(3^3)^17],
+&gt;   [Z(3^3)^8,0*Z(3),Z(3^3)^24,Z(3),Z(3^3)^21]];
 [ [ Z(3^3)^9, Z(3^3)^5, Z(3^3)^19, Z(3^3)^21, Z(3^3)^17 ], 
   [ Z(3^3)^22, Z(3^3)^22, Z(3^3)^4, Z(3^3)^16, Z(3^3)^17 ], 
   [ Z(3^3)^8, 0*Z(3), Z(3^3)^24, Z(3), Z(3^3)^21 ] ]
-gap> s := VectorSpaceToElement(ps,vect);
-&lt;a plane in PG(4, 27)>
-gap> r := OnProjSubspaces(s,phi);
-&lt;a plane in PG(4, 27)>
-gap> Display(r);
+gap&gt; s := VectorSpaceToElement(ps,vect);
+&lt;a plane in ProjectiveSpace(4, 27)&gt;
+gap&gt; r := OnProjSubspaces(s,phi);
+&lt;a plane in ProjectiveSpace(4, 27)&gt;
+gap&gt; Display(r);
 z = Z(27)
     1    .    .  z^3
     .    1    . z^22

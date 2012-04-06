@@ -1,14 +1,14 @@
-gap> ps := ProjectiveSpace(4,5);
-PG(4, 5)
-gap> delta := StandardDualityOfProjectiveSpace(ps);
-StandardDuality( Elements( ProjectiveSpace(4,GF(5)) ) )
-gap> delta^2;
-IdentityMapping( &lt;Elements of PG(4, 5)> )
-gap> p := VectorSpaceToElement(ps,[1,2,3,0,1]*Z(5)^0);
-&lt;a point in PG(4, 5)>
-gap> h := p^delta;
-&lt;a solid in PG(4, 5)>
-gap> ElementToVectorSpace(h);
+gap&gt; ps := ProjectiveSpace(4,5);
+ProjectiveSpace(4, 5)
+gap&gt; delta := StandardDualityOfProjectiveSpace(ps);
+StandardDuality( AllElementsOfIncidenceStructure( ProjectiveSpace(4,GF(5)) ) )
+gap&gt; delta^2;
+IdentityMapping( &lt;All elements of ProjectiveSpace(4, 5)&gt; )
+gap&gt; p := VectorSpaceToElement(ps,[1,2,3,0,1]*Z(5)^0);
+&lt;a point in ProjectiveSpace(4, 5)&gt;
+gap&gt; h := p^delta;
+&lt;a solid in ProjectiveSpace(4, 5)&gt;
+gap&gt; ElementToVectorSpace(h);
 [ [ Z(5)^0, 0*Z(5), 0*Z(5), 0*Z(5), Z(5)^2 ], 
   [ 0*Z(5), Z(5)^0, 0*Z(5), 0*Z(5), Z(5)^3 ], 
   [ 0*Z(5), 0*Z(5), Z(5)^0, 0*Z(5), Z(5) ], 
