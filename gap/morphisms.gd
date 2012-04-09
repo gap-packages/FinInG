@@ -111,26 +111,44 @@ DeclareOperation( "NaturalEmbeddingByFieldReduction",
 DeclareOperation( "NaturalEmbeddingByFieldReduction", 
                      [ IsProjectiveSpace, IsProjectiveSpace, IsBasis ]);
 
-DeclareOperation( "BilinearFormFieldReduction",
-					[ IsBilinearForm, IsField ]);
-DeclareOperation( "QuadraticFormFieldReduction",
-					[ IsQuadraticForm, IsField ]);
-DeclareOperation( "HermitianFormFieldReduction",
-					[ IsHermitianForm, IsField ]);
+DeclareOperation( "BilinearFormFieldReduction",	[ IsBilinearForm, IsField, IsFFE, IsBasis ]);
+DeclareOperation( "QuadraticFormFieldReduction", [ IsQuadraticForm, IsField, IsFFE, IsBasis ]);
+DeclareOperation( "HermitianFormFieldReduction", [ IsHermitianForm, IsField, IsFFE, IsBasis ]);
 
-DeclareOperation ( "NaturalEmbeddingByFieldReduction",
+
+# master version for the user: handle all parameters.
+DeclareOperation( "NaturalEmbeddingByFieldReduction", 
+					[ IsClassicalPolarSpace, IsField, IsFFE, IsBasis, IsBool ] );
+
+# first particular version: user agrees with everything
+
+DeclareOperation( "NaturalEmbeddingByFieldReduction",
 				[ IsClassicalPolarSpace, IsField ]);
-				
-DeclareOperation ( "NaturalEmbeddingByFieldReduction",
+
+# second particular version: user agrees but wants to control intertwiner
+
+DeclareOperation( "NaturalEmbeddingByFieldReduction",
 				[ IsClassicalPolarSpace, IsField, IsBool ]);
+
+#third particular version: user wants a particular alpha, agrees with base and bool.
+
+DeclareOperation( "NaturalEmbeddingByFieldReduction",
+				[ IsClassicalPolarSpace, IsField, IsFFE ]);
+
+#fourth version: user wants a particular alpha, and base, agrees with bool.
+DeclareOperation( "NaturalEmbeddingByFieldReduction",
+				[ IsClassicalPolarSpace, IsField, IsFFE, IsBasis ]);
+
 
 DeclareOperation( "NaturalEmbeddingByFieldReduction",
                      [ IsClassicalPolarSpace, IsClassicalPolarSpace, IsBool ]);
+
 DeclareOperation( "NaturalEmbeddingByFieldReduction",
 					 [ IsClassicalPolarSpace, IsClassicalPolarSpace]);
-					 
-DeclareOperation( "CanonicalEmbeddingByFieldReduction",
-                     [ IsClassicalPolarSpace, IsField, IsBool ]);					 
+
+
+DeclareOperation( "CanonicalEmbeddingByFieldReduction", 
+					[ IsClassicalPolarSpace, IsField, IsBool ]);
 
 #############################################################################
 ## C5 morphisms
@@ -154,5 +172,4 @@ DeclareOperation( "KleinCorrespondence", [ IsClassicalPolarSpace ]);
 DeclareOperation( "NaturalDuality", [ IsSymplecticSpace and IsGeneralisedPolygon ]);
 DeclareOperation( "NaturalDuality", [ IsHermitianPolarSpace and IsGeneralisedPolygon ]);
 DeclareOperation( "ProjectiveCompletion", [ IsAffineSpace ] );
-
 

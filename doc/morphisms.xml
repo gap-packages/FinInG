@@ -279,7 +279,7 @@ listed in the table below (see <Cite Key="Gill"/>):
   </Row>
  <Row>
    <Item><Alt Not="HTML"><M>Q(2n,q^{2a+1})</M></Alt><Alt Only="HTML">Q(2n,q&lt;sup>2a+1&lt;/sup>)</Alt></Item>
-   <Item><Alt Not="HTML"><M>Q((2a+1)(2n+1)-1,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>((2a+1)(2n+1)-1,q)</Alt></Item>
+   <Item><Alt Not="HTML"><M>Q((2a+1)(2n+1)-1,q)</M></Alt><Alt Only="HTML">Q((2a+1)(2n+1)-1,q)</Alt></Item>
    <Item>q odd</Item>
  </Row>
  <Row>
@@ -305,17 +305,17 @@ listed in the table below (see <Cite Key="Gill"/>):
  <Row>
    <Item><Alt Not="HTML"><M>H(n,q^{2a})</M></Alt><Alt Only="HTML">H(n,q&lt;sup>2a&lt;/sup>)</Alt></Item>
    <Item><M>W(2a(n+1)-1,q)</M></Item>
-   <Item>q even square</Item>
+   <Item>q even</Item>
  </Row>
 <Row>
    <Item><Alt Not="HTML"><M>H(2n,q^{2a})</M></Alt><Alt Only="HTML">H(2n,q&lt;sup>2a&lt;/sup>)</Alt></Item>
    <Item><Alt Not="HTML"><M>Q^-(2a(2n+1)-1,q)</M></Alt><Alt Only="HTML">Q&lt;sup>-&lt;/sup>(2a(2n+1)-1,q)</Alt></Item>
-   <Item>q odd square</Item>
+   <Item>q odd</Item>
  </Row>
 <Row>
    <Item><Alt Not="HTML"><M>H(2n+1,q^{2a})</M></Alt><Alt Only="HTML">H(2n+1,q&lt;sup>2a&lt;/sup>)</Alt></Item>
-   <Item><Alt Not="HTML"><M>Q^+(2a(2n+2)-1,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>((2a+1)(2n+2)-1,q)</Alt></Item>
-   <Item>q odd square</Item>
+   <Item><Alt Not="HTML"><M>Q^+(2a(2n+2)-1,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>(2a(2n+2)-1,q)</Alt></Item>
+   <Item>q odd</Item>
  </Row>
 </Table>
 

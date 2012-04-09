@@ -1152,13 +1152,13 @@ InstallMethod( NaturalEmbeddingByFieldReduction,
 ##
 InstallMethod( BilinearFormFieldReduction,
 	"for a bilinear form and a field",
-	[ IsBilinearForm, IsField ],
-	function(bil1,f2)
+	[ IsBilinearForm, IsField, IsFFE, IsBasis ],
+	function(bil1,f2,alpha,basis)
 	# f2 is a subfield of the basefield of the bilinear form bil1
-	local mat1,f1,basis,basvecs,d1,t,d2,V2,V1,phi,b2,b2vecs,mat2,i,row,j,bil2;
+	local mat1,f1,basvecs,d1,t,d2,V2,V1,phi,b2,b2vecs,mat2,i,row,j,bil2;
 	mat1:=bil1!.matrix;
 	f1:=bil1!.basefield;
-	basis:=Basis(AsVectorSpace(f2,f1));
+	#basis:=Basis(AsVectorSpace(f2,f1));
 	basvecs:=BasisVectors(basis);
 	d1:=Size(mat1);
 	t:=Dimension(AsVectorSpace(f2,f1));
@@ -1171,7 +1171,7 @@ InstallMethod( BilinearFormFieldReduction,
 	for i in [1..d2] do 
 		row:=[];
 		for j in [1..d2] do
-			Add(row,Trace(f1,f2,ShrinkVec(f1,f2,b2vecs[i])*mat1*ShrinkVec(f1,f2,b2vecs[j])));
+			Add(row,Trace(f1,f2,alpha*(ShrinkVec(f1,f2,b2vecs[i])*mat1*ShrinkVec(f1,f2,b2vecs[j]))));
 		od;
 		Add(mat2,row);
 	od;
@@ -1186,12 +1186,12 @@ end );
 ##
 InstallMethod( QuadraticFormFieldReduction,
 	"for a quadratic form and a field",
-	[ IsQuadraticForm, IsField ],
-	function(qf1,f2)
+	[ IsQuadraticForm, IsField, IsFFE, IsBasis ],
+	function(qf1,f2,alpha,basis)
 	# f2 is a subfield of the basefield for the quadratic form q1
-	local f1,basis,basvecs,d1,t,d2,V2,V1,phi,b2,b2vecs,mat2,i,bil1,j,qf2;
+	local f1,basvecs,d1,t,d2,V2,V1,phi,b2,b2vecs,mat2,i,bil1,j,qf2;
 	f1:=qf1!.basefield;
-	basis:=Basis(AsVectorSpace(f2,f1));
+	#basis:=Basis(AsVectorSpace(f2,f1));
 	basvecs:=BasisVectors(basis);
 	d1:=Size(qf1!.matrix);
 	t:=Dimension(AsVectorSpace(f2,f1));
@@ -1206,7 +1206,7 @@ InstallMethod( QuadraticFormFieldReduction,
 	od;
 	for i in [1..d2-1] do
 		for j in [i+1..d2] do
-			mat2[i][j]:=Trace(f1,f2,(ShrinkVec(f1,f2,b2vecs[i]+b2vecs[j]))^qf1
+			mat2[i][j]:=Trace(f1,f2,alpha*(ShrinkVec(f1,f2,b2vecs[i]+b2vecs[j]))^qf1
 							-(ShrinkVec(f1,f2,b2vecs[i]))^qf1-(ShrinkVec(f1,f2,b2vecs[j]))^qf1);
 			#mat2[j][i]:=mat2[i][j]; THESE entries need to be zero
 		od;
@@ -1215,6 +1215,11 @@ InstallMethod( QuadraticFormFieldReduction,
 	return qf2;
 end );
 
+# CHANGED jdb 9/4/12: added arguments basis and alpha.
+# one more remark. Some values of alpha will cause HermitianFormByMatrix (so odd t) 
+# to produce an error message. This is normal, see overview in N. Gill's paper
+# but as we don't check this in the inputs, this function is not meant for the
+# user.
 #############################################################################
 #O  HermitianFormFieldReduction( <qf1>, <f2> ) 
 # <bil1> is a hermitian form over <f1>, <f2> is a subfield of <f1>. This operation
@@ -1223,13 +1228,13 @@ end );
 ##
 InstallMethod( HermitianFormFieldReduction,
 	"for a hermitian form and a field",
-	[ IsHermitianForm, IsField ],
-	function(hf1,f2)
+	[ IsHermitianForm, IsField, IsFFE, IsBasis ],
+	function(hf1,f2,alpha,basis)
 	# f2 is a subfield of the basefield for the hermitian form hf1
 	# here the basefield is always a square
-	local f1,basis,basvecs,d1,t,d2,V2,V1,phi,b2,b2vecs,mat2,i,row,j,hf2;
+	local f1,basvecs,d1,t,d2,V2,V1,phi,b2,b2vecs,mat2,i,row,j,hf2;
 	f1:=hf1!.basefield;
-	basis:=Basis(AsVectorSpace(f2,f1));
+	#basis:=Basis(AsVectorSpace(f2,f1));
 	basvecs:=BasisVectors(basis);
 	d1:=Size(hf1!.matrix);
 	t:=Dimension(AsVectorSpace(f2,f1));
@@ -1242,10 +1247,11 @@ InstallMethod( HermitianFormFieldReduction,
 	for i in [1..d2] do 
 		row:=[];
 		for j in [1..d2] do
-			Add(row,Trace(f1,f2,([ShrinkVec(f1,f2,b2vecs[i]),ShrinkVec(f1,f2,b2vecs[j])]^hf1)));
+			Add(row,Trace(f1,f2,alpha*([ShrinkVec(f1,f2,b2vecs[i]),ShrinkVec(f1,f2,b2vecs[j])]^hf1)));
 		od;
 		Add(mat2,row);
 	od;
+	# checking parity of t is indeed sufficient to decide, see table in manual.
 	if IsOddInt(t) then 
 		hf2:=HermitianFormByMatrix(mat2,f2);
 	else
@@ -1259,7 +1265,10 @@ end );
 # The embeddings for polar spaces
 # 
 #############################################################################
-#O  NaturalEmbeddingByFieldReduction( <ps1>, <f2>, <bool> ) 
+
+# master version for the user: handle all parameters.
+#############################################################################
+#O  NaturalEmbeddingByFieldReduction( <ps1>, <f2>, <alpha>, <basis>, <bool> ) 
 # returns a geometry morphism, described below. If <bool> is true, then an intertwiner
 # is computed.
 #
@@ -1268,18 +1277,19 @@ end );
 #  (New Zealand J. Math). 
 ##
 InstallMethod (NaturalEmbeddingByFieldReduction,
-	"for a polar space, a field, and a boolean",
-	[IsClassicalPolarSpace, IsField, IsBool],
-	function(ps1,f2,computeintertwiner)
+	"for a polar space, a field, a basis, a finite field element, and a boolean",
+	[IsClassicalPolarSpace, IsField, IsFFE, IsBasis, IsBool],
+	function(ps1,f2,alpha,basis,computeintertwiner)
 	# f2 must be a subfield of the basefield of the classical polar space
-	local type1,qf1,qf2,ps2,bil1,bil2,hf1,hf2,em,fun,prefun,basis,f1,
+	local type1,qf1,qf2,ps2,bil1,bil2,hf1,hf2,em,fun,prefun,f1,
 					map,hom,hominv,g1,gens,newgens,g2,twiner;
 	type1 := PolarSpaceType(ps1);
-	
+	f1:=ps1!.basefield;
+	#basis:=Basis(AsVectorSpace(f2,f1));
 	# 1. the polar space is of orthogonal type
 	if type1 in ["hyperbolic","elliptic","parabolic"] then
 		qf1:=QuadraticForm(ps1);
-		qf2:=QuadraticFormFieldReduction(qf1,f2);
+		qf2:=QuadraticFormFieldReduction(qf1,f2,alpha,basis);
 		if IsSingularForm(qf2) then 
 			Error("The field reduction does not yield a natural embedding");
 		else ps2:=PolarSpace(qf2);
@@ -1287,19 +1297,16 @@ InstallMethod (NaturalEmbeddingByFieldReduction,
 	# 2. the polar space is of symplectic type
 	elif type1 in ["symplectic"] then
 		bil1:=SesquilinearForm(ps1);
-		bil2:=BilinearFormFieldReduction(bil1,f2);
+		bil2:=BilinearFormFieldReduction(bil1,f2,alpha,basis);
 		ps2:=PolarSpace(bil2);
 	# 1. the polar space is of hermitian type	
 	elif type1 in ["hermitian"] then
 		hf1:=SesquilinearForm(ps1);
-		hf2:=HermitianFormFieldReduction(hf1,f2);
+		hf2:=HermitianFormFieldReduction(hf1,f2,alpha,basis);
 		ps2:=PolarSpace(hf2);
 	fi;
 	
 	em:=NaturalEmbeddingByFieldReduction(AmbientSpace(ps1),AmbientSpace(ps2));
-	
-	f1:=ps1!.basefield;
-	basis:=Basis(AsVectorSpace(f2,f1));
 	
 	fun:=function(x)
 		local projfun;
@@ -1345,16 +1352,59 @@ InstallMethod (NaturalEmbeddingByFieldReduction,
 	return map;
 	end );
 
+# first particular version: user agrees with everything
 #############################################################################
 #O  NaturalEmbeddingByFieldReduction( <geom1>, <f2> ) 
-# returns NaturalEmbeddingByFieldReduction( <geom1>, <f2>, true )
-#
+# returns NaturalEmbeddingByFieldReduction( <geom1>, <f2>, <alpha>, <basis>, true )
+# where <basis> is the canonical basis of BaseField(geom1) over <f2>, and
+# <alpha> is One(f2).
 InstallMethod (NaturalEmbeddingByFieldReduction,
 	"for a polar space and a field",
 	[IsClassicalPolarSpace, IsField],
 	function(ps1,f2)
-		return NaturalEmbeddingByFieldReduction(ps1,f2,true);
+		return NaturalEmbeddingByFieldReduction(ps1,f2,One(f2),Basis(AsVectorSpace(f2,BaseField(ps1))),true);
 	end );
+	
+# second particular version: user agrees but wants to control intertwiner
+#############################################################################
+#O  NaturalEmbeddingByFieldReduction( <geom1>, <f2>, <bool> ) 
+# returns NaturalEmbeddingByFieldReduction( <geom1>, <f2>, <one>, <basis>, <bool> )
+# where <basis> is the canonical basis of BaseField(geom1) over <f2>, and
+# <one> is One(BaseField(geom1)). This might be usefull if you agree with the defaults, but doesn't 
+# want the intertwiner.
+#
+InstallMethod (NaturalEmbeddingByFieldReduction,
+	"for a polar space and a field",
+	[IsClassicalPolarSpace, IsField, IsBool],
+	function(ps1,f2,bool)
+		return NaturalEmbeddingByFieldReduction(ps1,f2,One(f2),Basis(AsVectorSpace(f2,BaseField(ps1))),bool);
+	end );
+
+#third particular version: user wants a particular alpha, agrees with base and bool.
+#############################################################################
+#O  NaturalEmbeddingByFieldReduction( <geom1>, <f2>, <bool> ) 
+# returns NaturalEmbeddingByFieldReduction( <geom1>, <f2>, <alpha>, <basis>, true )
+# where <basis> is the canonical basis of BaseField(geom1) over <f2>.
+#
+InstallMethod (NaturalEmbeddingByFieldReduction,
+	"for a polar space and a field",
+	[IsClassicalPolarSpace, IsField, IsFFE],
+	function(ps1,f2,alpha)
+		return NaturalEmbeddingByFieldReduction(ps1,f2,alpha,Basis(AsVectorSpace(f2,BaseField(ps1))),true);
+	end );
+
+#fourth version: user wants a particular alpha, and basis, agrees with bool.
+#############################################################################
+#O  NaturalEmbeddingByFieldReduction( <geom1>, <f2>, <bool> ) 
+# returns NaturalEmbeddingByFieldReduction( <geom1>, <f2>, <alpha>, <basis>, true )
+#
+InstallMethod (NaturalEmbeddingByFieldReduction,
+	"for a polar space and a field",
+	[IsClassicalPolarSpace, IsField, IsFFE, IsBasis],
+	function(ps1,f2,alpha,basis)
+		return NaturalEmbeddingByFieldReduction(ps1,f2,alpha,basis,true);
+	end );
+
 
 # CHECKED 28/09/11 jdb
 #############################################################################
