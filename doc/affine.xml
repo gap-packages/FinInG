@@ -32,7 +32,7 @@ An <E>affine space</E> is a point-line incidence geometry, satisfying few well k
 An axiomatic treatment can e.g. be found in <Cite Key="VY65a"/> and <Cite Key="VY65b"/>. As 
 is the case with projective spaces, affine spaces are axiomatically point-line geometries,
 but may contain higher dimensional affine subspaces too. An affine space can also described 
-as the ``geometry you get'' when you remove a hyperplane from a projective space. Conversely,
+as the <Q>geometry you get</Q> when you remove a hyperplane from a projective space. Conversely,
 adding to an affine spaces its hyperplane at infinity, yields a projective space. In 
 <Package>FinInG</Package>, we deal with <E>finite Desarguesian affine spaces</E>, i.e.
 an affine space, such that its projective completion is Desarguesian. Other concepts can
@@ -51,7 +51,7 @@ subspaces of the underlying vector space. Hence, the common representation of su
 <Display>v+S.</Display>s
 
 Hence one can think of a subspace of an affine space as consisting of: (i) an affine point,
-representing the coset, and and (ii) a ``direction'', which is an element of an <M>n-1</M>-dimensional
+representing the coset, and and (ii) a <Q>direction</Q>, which is an element of an <M>n-1</M>-dimensional
 projective space, representing the hyperplane at infinity. Thus in <Package>FinInG</Package>,
 we represent an <M>i</M>-dimensional subspace, <M>1 &#8804; i &#8804; n-1</M> as
 <Display>[v, mat]</Display>
@@ -147,7 +147,7 @@ For the former, the underlying object is
 just a vector, whereas the second is a pair <M>[v, M]</M> where
 <M>v</M> is a vector and <M>M</M> is a matrix representing the basis
 of <M>S</M>. Now there is a canonical representative for the coset
-<M>v+ S</M>, and the matrix <M>M</M> is in semi-echelon form , therefore
+<M>v+ S</M>, and the matrix <M>M</M> is in semi-echelon form, therefore
 we can easily compare two affine subspaces. 
 If no matrix is given in the arguments, then it is assumed that the
 user is constructing an affine point.
@@ -158,7 +158,7 @@ user is constructing an affine point.
 </ManSection>
 
 <ManSection>
-<Oper Name="ElmentsOfIncidenceStructure" Arg="as, j"/>
+<Oper Name="ElementsOfIncidenceStructure" Arg="as, j"/>
 <Returns>the collection of elements of the affine space <A>as</A> of type <A>j</A></Returns>
 <Description>
 For the affine space <A>as</A> of dimension <M>d</M> and the type <A>j</A>, <M>1 \leq j \leq d</M>
@@ -329,8 +329,8 @@ the collection).
 <Section>
 <Heading>Iterators and enumerators</Heading>
 
-Recall from Section <Ref Sect="proj_enum"/>``Enumerating subspaces of a projective space'' 
-(Chapter <Ref Chap="projective_spaces"/>), that an iterator allows us to 
+Recall from Section <Ref Sect="proj_enum"/>(<Q>Enumerating subspaces of a projective space</Q>,
+ Chapter <Ref Chap="projective_spaces"/>), that an iterator allows us to 
 obtain elements from a collection one at a time in sequence, whereas
 an enumerator for a collection give us a way of picking out the i-th element.
 In <Package>FinInG</Package> we have enumerators and iterators for
