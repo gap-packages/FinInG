@@ -36,7 +36,7 @@
 #    with the polar space section. jdb 11/9/11
 #  - check wheter output of RepresentativesOfElements can be changed using the Flag stuff. 11/09/11 jdb.
 #  - make some tiny changes at Meet for lists, such that, when possible, the empty subspace is returned and not []. (this is a
-#    detail). 14/9/2011 jdb.
+#    detail). 14/9/2011 jdb. (When a list with one element is given, it should return that element 26/05/12 ml)
 #  - think whether it makes sense that Span and Meet return [] when they receive []. (recall that [] used to represent the 
 #    trivial subspace in earlier days. 14/9/2011 jdb.
 #  - improve Random method for shadow elements. see comment there.
