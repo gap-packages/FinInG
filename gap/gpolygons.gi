@@ -223,6 +223,9 @@ InstallMethod( Wrap,
 #
 #############################################################################
 
+# JB: A big change here. I've separated the CollineationGroup out to an
+# attribute, just like we do for polar spaces and the like. 19/06/2012
+
 #############################################################################
 #O  SplitCayleyHexagon( <f> )
 # returns the split cayley hexagon over <f>
@@ -231,160 +234,68 @@ InstallMethod( SplitCayleyHexagon,
 	"for a finite field", 
 	[ IsField and IsFinite ],
 	function( f )
-    local m, mp, ml, gens, frob, newgens, geo, ty, inc,
-          coll, repline, reppointvect, reppoint, replinevect,
-		  hq, hvm, ps, hvmc, c, change, hvmform, form, nonzerof, x, w;
-    # The generators of Ree(q) were taken from Hendrik 
-    # van Maldeghem's book: "Generalized Polygons".
-    # Lines with ** are where there are mistake's in
-    # Hendrik's book (see Alan Offer's thesis).
-
-    if IsOddInt(Size(f)) then
-       m:=[[ 0, 0, 0, 0, 0, 1, 0],
-           [ 0, 0, 0, 0, 0, 0, 1],
-           [ 0, 0, 0, 0, 1, 0, 0],
-           [ 0, 0, 0, -1, 0, 0, 0],               ## **
-           [ 0, 1, 0, 0, 0, 0, 0],
-           [ 0, 0, 1, 0, 0, 0, 0],
-           [ 1, 0, 0, 0, 0, 0, 0]]*One(f);  
-       ConvertToMatrixRep(m, f);
-       mp:=d->[[1,  0,  0,  0,  0,  d,  0],  
-           [0,  1,  0,  0, -d,  0,  0],  
-           [0,  0,  1,  0,  0,  0,  0],  
-           [0,  0,  2*d,  1,  0,  0,  0],         ## **
-           [0,  0,  0,  0,  1,  0,  0],  
-           [0,  0,  0,  0,  0,  1,  0],  
-           [0,  0,d^2,  d,  0,  0,  1]]*One(f);   ## **
-       ml:=d->[[1, -d,  0,  0,  0,  0,  0],  
-           [0,  1,  0,  0,  0,  0,  0],  
-           [0,  0,  1,  0,  0,  0,  0],  
-           [0,  0,  0,  1,  0,  0,  0],  
-           [0,  0,  0,  0,  1,  0,  0],  
-           [0,  0,  0,  0,  d,  1,  0],  
-           [0,  0,  0,  0,  0,  0,  1]]*One(f);
-    
+    local geo, ty, repline, reppointvect, reppoint, replinevect,
+	    hvm, ps, hvmform, form, nonzerof, x, w;
+    if IsOddInt(Size(f)) then    
        ## the corresponding sesquilinear form here for 
        ## q odd is the matrix 
        ## [[0,0,0,0,1,0,0],[0,0,0,0,0,1,0],
        ## [0,0,0,0,0,0,1],[0,0,0,-2,0,0,0],
        ## [1,0,0,0,0,0,0],[0,1,0,0,0,0,0],[0,0,1,0,0,0,0]];
 
-       ## now we transfer elements and automorphisms
-       ## to the parabolic quadric given by FinInG 
-       ps := ParabolicQuadric(6, f);
-	   
 	   ## this is Hendrik's form
        hvm := List([1..7], i -> [0,0,0,0,0,0,0]*One(f));
        hvm{[1..3]}{[5..7]} := IdentityMat(3, f);
        hvm{[5..7]}{[1..3]} := IdentityMat(3, f);
        hvm[4][4] := -2*One(f);
-       hvmform := FormByMatrix(hvm, f, "orthogonal");
-   
-       hvmc := BaseChangeToCanonical( hvmform );;    
-       change := hvmc^-1;;
-       nonzerof := AsList(f){[2..Size(f)]};
-       gens := Union([m], List(nonzerof, mp), List(nonzerof, ml));
-       gens := List(gens, t -> change^-1 * t * change);;
-       for x in gens do
-          ConvertToMatrixRep(x, f);
-       od;
-       frob := FrobeniusAutomorphism(f); 
-       newgens := List(gens, x -> ProjectiveSemilinearMap(x, f));  
-       if not IsPrimeInt(Size(f)) then 
-          Add(newgens, ProjectiveSemilinearMap( IdentityMat(7,f), frob, f )); 
-       fi;  ## this is OK, I think
-       coll := GroupWithGenerators(newgens);
+       hvmform := BilinearFormByMatrix(hvm, f);
+       ps := PolarSpace(hvmform);
+
        reppointvect := ElementToVectorSpace(RepresentativesOfElements(ps)[1]);
 
        ## Hendrik's canonical line is <(1,0,0,0,0,0,0), (0,0,0,0,0,0,1)>
-       replinevect := [[1,0,0,0,0,0,0], [0,0,0,0,0,0,1]] * One(f) * change;
+       replinevect := [[1,0,0,0,0,0,0], [0,0,0,0,0,0,1]] * One(f);
        TriangulizeMat(replinevect);
-	   ConvertToMatrixRep(replinevect, f);
-       #repline := VectorSpaceToElement(ps, repline); #to be changed
+	 ConvertToMatrixRep(replinevect, f);
     else
        ## Here we embed the hexagon in W(5,q)
-       m:=[[ 0, 0, 0, 0, 1, 0],
-           [ 0, 0, 0, 0, 0, 1],
-           [ 0, 0, 0, 1, 0, 0],
-           [ 0, 1, 0, 0, 0, 0],
-           [ 0, 0, 1, 0, 0, 0],
-           [ 1, 0, 0, 0, 0, 0]]*One(f);  
-       ConvertToMatrixRep( m );
-       mp:=d->[[1,  0,  0,  0,  d,  0],  
-           [0,  1,  0,  d,  0,  0],  
-           [0,  0,  1,  0,  0,  0],  
-           [0,  0,  0,  1,  0,  0],  
-           [0,  0,  0,  0,  1,  0],  
-           [0,  0,d^2,  0,  0,  1]]*One(f);  
-       ml:=d->[[1,  d,  0,  0,  0,  0],  
-           [0,  1,  0,  0,  0,  0],  
-           [0,  0,  1,  0,  0,  0],  
-           [0,  0,  0,  1,  0,  0],  
-           [0,  0,  0,  d,  1,  0],  
-           [0,  0,  0,  0,  0,  1]]*One(f);
-       ## this is Hendrik's form
+       ## Hendrik's form
        hvm := List([1..6], i -> [0,0,0,0,0,0]*One(f));
        hvm{[1..3]}{[4..6]} := IdentityMat(3, f);
        hvm{[4..6]}{[1..3]} := IdentityMat(3, f);       
-       hvmform := FormByMatrix(hvm, f, "symplectic");   
-       hvmc := BaseChangeToCanonical( hvmform );;    
-       ps := SymplecticSpace(5, f);
-       change := hvmc^-1;;
-       nonzerof := AsList(f){[2..Size(f)]};
-       gens := Union([m], List(nonzerof,mp), List(nonzerof,ml));
-       gens := List(gens, t -> change^-1 * t * change);
-       for x in gens do
-          ConvertToMatrixRep(x,f);
-       od;
-       frob := FrobeniusAutomorphism(f); 
-       newgens := List(gens, x -> ProjectiveSemilinearMap(x, f));  
-       if not IsPrimeInt(Size(f)) then 
-          Add(newgens, ProjectiveSemilinearMap( IdentityMat(6,f), frob, f )); 
-       fi;
-       coll := GroupWithGenerators(newgens);
+       hvmform := BilinearFormByMatrix(hvm, f);   
+       ps := PolarSpace(hvmform);
        reppointvect := ElementToVectorSpace(RepresentativesOfElements(ps)[1]); #to be changed
 
        ## Hendrik's canonical line is <(1,0,0,0,0,0), (0,0,0,0,0,1)>
-       replinevect := [[1,0,0,0,0,0], [0,0,0,0,0,1]] * One(f) * change; 
+       replinevect := [[1,0,0,0,0,0], [0,0,0,0,0,1]] * One(f);
        TriangulizeMat(replinevect);
-	   ConvertToMatrixRep(replinevect, f);
-       #repline := VectorSpaceToElement(ps, repline); #to be changed
+       ConvertToMatrixRep(replinevect, f);
     fi; 
 
-    if IsPrime(Size(f)) then
-       SetName(coll, Concatenation("G_2(",String(Size(f)),")") );
-    else
-       SetName(coll, Concatenation("G_2(",String(Size(f)),").", String(Order(frob))) );
-    fi;
-
-    #inc := function(x, y) return x!.obj in y!.obj; end;
-    inc := \*;           #this looks nice now :-)
-	
 	#in the next line, we set the data fields for the geometry. We have to take into account that H(q) will also be
 	#a Lie geometry, so it needs more data fields than a GP. But we can derive this information from ps.
-	geo := rec( points := [], lines := [], incidence:= inc, basefield := BaseField(ps), 
+	geo := rec( points := [], lines := [], incidence:= \*, basefield := BaseField(ps), 
 		dimension := Dimension(ps), vectorspace := UnderlyingVectorSpace(ps), polarspace := ps );
     ty := NewType( GeometriesFamily,
              IsGeneralisedHexagon and IsGeneralisedPolygonRep and IsLieGeometry ); #change by jdb 7/12/11
     Objectify( ty, geo );
     SetAmbientSpace(geo, AmbientSpace(ps));
-	SetAmbientPolarSpace(geo,ps);
+    SetAmbientPolarSpace(geo,ps);
     SetOrder(geo, [Size(f), Size(f)]);
-    SetCollineationAction(coll, OnProjSubspaces);
-    SetCollineationGroup(geo, coll);
     SetTypesOfElementsOfIncidenceStructure(geo, ["point","line"]);
-    
-	#now we are ready to pack the representatives of the elements, which are also elements of a polar space.
-	#recall that reppointvect and replinevect are triangulized.
-	w := rec(geo := geo, type := 1, obj := reppointvect);
-	reppoint := Objectify( NewType( SoPSFamily, IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep and
-												IsElementOfGeneralisedPolygon and IsSubspaceOfClassicalPolarSpace ), w );
-	w := rec(geo := geo, type := 2, obj := replinevect);
-	repline := Objectify( NewType( SoPSFamily, IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep and
-												IsElementOfGeneralisedPolygon and IsSubspaceOfClassicalPolarSpace ), w );
+
+    #now we are ready to pack the representatives of the elements, which are also elements of a polar space.
+    #recall that reppointvect and replinevect are triangulized.
+    w := rec(geo := geo, type := 1, obj := reppointvect);
+    reppoint := Objectify( NewType( SoPSFamily, IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep and
+					            	IsElementOfGeneralisedPolygon and IsSubspaceOfClassicalPolarSpace ), w );
+    w := rec(geo := geo, type := 2, obj := replinevect);
+    repline := Objectify( NewType( SoPSFamily, IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep and
+	       					     IsElementOfGeneralisedPolygon and IsSubspaceOfClassicalPolarSpace ), w );
     SetRepresentativesOfElements(geo, [reppoint, repline]);
     SetName(geo,Concatenation("Split Cayley Hexagon of order ", String(Size(f))));
-	return geo;
+    return geo;
   end );
 
 #############################################################################
@@ -406,108 +317,48 @@ InstallMethod( TwistedTrialityHexagon,
 	"input is a finite field", 
     [ IsField and IsFinite ],
 	function( f )
-    local m, mp, ml, gens, frob, newgens, geo, ty, inc, x,
-          coll, points, lines, repline, hq, hvm, ps,
-          hvmc, c, change, hvmform, form, nonzerof, q, pps, sigma,
-          reppoint, reppointvect, replinevect, w;
-    # The generators of 3D4(q) were taken from Hendrik 
-    # van Maldeghem's book: "Generalized Polygons".
-
-    ## field must be GF(q^3);
+    local geo, ty, points, lines, repline, hvm, ps, orblen, hvmc, c, 
+          hvmform, form, q, pps, reppoint, reppointvect, replinevect, w;
+       ## Field must be GF(q^3);
     q := RootInt(Size(f), 3);
 	if not q^3 = Size(f) then
        Error("Field order must be a cube of a prime power");
     fi;
     pps := PrimePowersInt( Size(f) );
-    frob := FrobeniusAutomorphism(f);
-    sigma := frob^LogInt(q,pps[1]);    ## automorphism of order 3
 
-    m:=[[ 0, 0, 0, 0, 0, 1, 0, 0],
-        [ 0, 0, 0, 0, 0, 0, 1, 0],
-        [ 0, 0, 0, 0, 1, 0, 0, 0],
-        [ 0, 0, 0, 0, 0, 0, 0, 1],   
-        [ 0, 1, 0, 0, 0, 0, 0, 0],
-        [ 0, 0, 1, 0, 0, 0, 0, 0],
-        [ 1, 0, 0, 0, 0, 0, 0, 0],
-        [ 0, 0, 0, 1, 0, 0, 0, 0]]*One(f);  
-    ConvertToMatrixRep(m, f);
-    mp:=d->[[1,  0,  0,  0,  0,  d,  0,  0],  
-            [0,  1,  0,  0, -d,  0,  0,  0],  
-            [0,  0,  1,  0,  0,  0,  0,  0],  
-            [0,  0,  -d^sigma,  1,  0,  0,  0,  0],
-            [0,  0,  0,  0,  1,  0,  0,  0],  
-            [0,  0,  0,  0,  0,  1,  0,  0],  
-            [0,0,d^sigma*d^(sigma^2),-d^(sigma^2),0,0,1,d^sigma],
-            [0,0,d^(sigma^2),0,0,0,0,1]]*One(f);
-    ml:=d->[[1, -d,  0,  0,  0,  0,  0,  0],  
-            [0,  1,  0,  0,  0,  0,  0,  0],  
-            [0,  0,  1,  0,  0,  0,  0,  0],  
-            [0,  0,  0,  1,  0,  0,  0,  0],  
-            [0,  0,  0,  0,  1,  0,  0,  0],  
-            [0,  0,  0,  0,  d,  1,  0,  0],  
-            [0,  0,  0,  0,  0,  0,  1,  0],
-            [0,  0,  0,  0,  0,  0,  0,  1]]*One(f);
-
-       ## now we transfer elements and automorphisms
-       ## to the hyperbolic quadric given by FinInG 
-    ps := HyperbolicQuadric(7, f);
-
-       ## this is Hendrik's form
-
+       ## Hendrik's form
     hvm := List([1..8], i -> [0,0,0,0,0,0,0,0]*One(f));
     hvm{[1..4]}{[5..8]} := IdentityMat(4, f);
     hvmform := QuadraticFormByMatrix(hvm, f);
-    hvmc := BaseChangeToCanonical( hvmform );;    
-    change := hvmc^-1;;
+    ps := PolarSpace( hvmform );
 
-    nonzerof := AsList(f){[2..Size(f)]};
-    gens := Union([m], List(nonzerof, mp), List(nonzerof, ml));
-    gens := List(gens, t -> change^-1 * t * change);;
-    for x in gens do
-        ConvertToMatrixRep(x, f);
-    od;
-    newgens := List(gens, x -> ProjectiveSemilinearMap(x,f));
-    coll := GroupWithGenerators(newgens);
-
-	## Hendrik's canonical point is <(1,0,0,0,0,0,0,0)>
-    ps := HyperbolicQuadric(7, f);
-    reppointvect := ([1,0,0,0,0,0,0,0] * One(f)) * change;
+	## Hendrik's canonical point is <(1,0,0,0,0,0,0,0)>	
+    reppointvect := ([1,0,0,0,0,0,0,0] * One(f));
     MultRowVector(reppointvect,Inverse( reppointvect[PositionNonZero(reppointvect)] ));
 	ConvertToVectorRep(reppointvect, f);
-    
-	#reppoint := VectorSpaceToElement(ps, reppoint);
 
 	## Hendrik's canonical line is <(1,0,0,0,0,0,0,0), (0,0,0,0,0,0,1,0)>
-    replinevect := ([[1,0,0,0,0,0,0,0], [0,0,0,0,0,0,1,0]] * One(f)) * change;
-    TriangulizeMat(replinevect);
+    replinevect := ([[1,0,0,0,0,0,0,0], [0,0,0,0,0,0,1,0]] * One(f));
 	ConvertToMatrixRep(replinevect, f);
-    
-	#repline := VectorSpaceToElement(ps, repline);
-  
-    SetName(coll, Concatenation("4D_3(",String(q),")") );
-    
-    #inc := function(x, y) return x!.obj in y!.obj; end;
-    inc := \*;  #looks nice now :-)
-	
-	geo := rec( points := [], lines := [], incidence:= inc, basefield := BaseField(ps), 
+
+    geo := rec( points := [], lines := [], incidence:= \*, basefield := BaseField(ps), 
 		dimension := Dimension(ps), vectorspace := UnderlyingVectorSpace(ps), polarspace := ps );
     ty := NewType( GeometriesFamily,
              IsGeneralisedHexagon and IsGeneralisedPolygonRep and IsLieGeometry ); #change by jdb 7/12/11
     Objectify( ty, geo );
     SetAmbientSpace(geo, AmbientSpace(ps));
-	SetAmbientPolarSpace(geo,ps);
+    SetAmbientPolarSpace(geo,ps);
+
 	#now we are ready to pack the representatives of the elements, which are also elements of a polar space.
 	#recall that reppointvect and replinevect are triangulized.
-	w := rec(geo := geo, type := 1, obj := reppointvect);
-	reppoint := Objectify( NewType( SoPSFamily, IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep and
-												IsElementOfGeneralisedPolygon and IsSubspaceOfClassicalPolarSpace ), w );
-	w := rec(geo := geo, type := 2, obj := replinevect);
-	repline := Objectify( NewType( SoPSFamily, IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep and
-												IsElementOfGeneralisedPolygon and IsSubspaceOfClassicalPolarSpace ), w );
-    
+    w := rec(geo := geo, type := 1, obj := reppointvect);
+    reppoint := Objectify( NewType( SoPSFamily, IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep and
+							IsElementOfGeneralisedPolygon and IsSubspaceOfClassicalPolarSpace ), w );
+    w := rec(geo := geo, type := 2, obj := replinevect);
+    repline := Objectify( NewType( SoPSFamily, IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep and
+	 						IsElementOfGeneralisedPolygon and IsSubspaceOfClassicalPolarSpace ), w );
+
     SetOrder(geo, [q^3, q]);
-    SetCollineationAction(coll, OnProjSubspaces);
-    SetCollineationGroup(geo, coll);
     SetTypesOfElementsOfIncidenceStructure(geo, ["point","line"]);
     SetRepresentativesOfElements(geo, [reppoint, repline]);
     SetName(geo,Concatenation("Twisted Triality Hexagon of order ", String([q^3, q])));
@@ -524,6 +375,188 @@ InstallMethod( TwistedTrialityHexagon,
 	function( q )
 		return TwistedTrialityHexagon(GF(q));
 	end );
+
+#############################################################################
+#A  CollineationGroup( <hexagon> )
+# computes the collineation group of a (classical) generalised hexagon
+##
+
+InstallMethod( CollineationGroup,
+	"for a generalised hexagon",
+	[ IsGeneralisedHexagon ],
+  function( hexagon )
+    local f, q, pps, frob, sigma, m, mp, ml, nonzerof, nonzeroq, w, 
+          gens, newgens, x, coll, orblen, hom, domain, rep;
+
+    if Size(Set(Order(hexagon))) > 1 then
+       Info(InfoFinInG, 1, "for Twisted Triality Hexagon");
+       f := hexagon!.basefield;
+       ## field must be GF(q^3);
+       q := RootInt(Size(f), 3);
+	 if not q^3 = Size(f) then
+         Error("Field order must be a cube of a prime power");
+       fi;
+       pps := Characteristic(f);
+       frob := FrobeniusAutomorphism(f);
+       sigma := frob^LogInt(q,pps);    ## automorphism of order 3
+
+	 # The generators of 3D4(q) were taken from Hendrik 
+    	 # Van Maldeghem's book: "Generalized Polygons".
+
+
+       m:=[[ 0, 0, 0, 0, 0, 1, 0, 0],
+           [ 0, 0, 0, 0, 0, 0, 1, 0],
+           [ 0, 0, 0, 0, 1, 0, 0, 0],
+           [ 0, 0, 0, 0, 0, 0, 0, 1],   
+           [ 0, 1, 0, 0, 0, 0, 0, 0],
+           [ 0, 0, 1, 0, 0, 0, 0, 0],
+           [ 1, 0, 0, 0, 0, 0, 0, 0],
+           [ 0, 0, 0, 1, 0, 0, 0, 0]]*One(f);  
+       ConvertToMatrixRep(m, f);
+       mp:=d->[[1,  0,  0,  0,  0,  d,  0,  0],  
+               [0,  1,  0,  0, -d,  0,  0,  0],  
+               [0,  0,  1,  0,  0,  0,  0,  0],  
+               [0,  0,  -d^sigma,  1,  0,  0,  0,  0],
+               [0,  0,  0,  0,  1,  0,  0,  0],  
+               [0,  0,  0,  0,  0,  1,  0,  0],  
+               [0,0,d^sigma*d^(sigma^2),-d^(sigma^2),0,0,1,d^sigma],
+               [0,0,d^(sigma^2),0,0,0,0,1]]*One(f);   
+       ml:=d->[[1, -d,  0,  0,  0,  0,  0,  0],  
+               [0,  1,  0,  0,  0,  0,  0,  0],  
+               [0,  0,  1,  0,  0,  0,  0,  0],  
+               [0,  0,  0,  1,  0,  0,  0,  0],  
+               [0,  0,  0,  0,  1,  0,  0,  0],  
+               [0,  0,  0,  0,  d,  1,  0,  0],  
+               [0,  0,  0,  0,  0,  0,  1,  0],
+               [0,  0,  0,  0,  0,  0,  0,  1]]*One(f);
+
+       nonzerof := AsList(f){[2..Size(f)]};
+       nonzeroq := AsList(GF(q)){[2..q]};
+
+       gens := Union([m], List(nonzerof, mp), List(nonzeroq, ml));
+       for x in gens do
+           ConvertToMatrixRep(x, f);
+       od;
+       newgens := List(gens, x -> ProjectiveSemilinearMap(x,f));
+       coll := GroupWithGenerators(newgens);
+
+       Info(InfoFinInG, 1, "Computing nice monomorphism...");
+       orblen := (q+1)*(q^8+q^4+1);
+       rep := RepresentativesOfElements(hexagon)[2];
+	 domain := Orb(coll, rep, OnProjSubspaces, 
+                    rec(orbsizelimit := orblen, hashlen := 2*orblen, storenumbers := true));
+       Enumerate(domain);
+       Info(InfoFinInG, 1, "Found permutation domain…");
+	 hom := OrbActionHomomorphism(coll, domain);    
+ 	 SetIsBijective(hom, true);
+	 SetNiceObject(coll, Image(hom) );
+       SetNiceMonomorphism(coll, hom );
+       SetCollineationAction(coll, OnProjSubspaces);
+       SetName(coll, Concatenation("4D_3(",String(q),")") );
+   else 
+       Info(InfoFinInG, 1, "for Split Cayley Hexagon");
+
+      # The generators of G2(q) were taken from Hendrik 
+      # van Maldeghem's book: "Generalized Polygons".
+      # Lines with ** are where there are mistake's in
+      # Hendrik's book (see Alan Offer's thesis).
+      
+      f := hexagon!.basefield;
+      q := Size(f);
+      if IsOddInt(Size(f)) then
+         m:=[[ 0, 0, 0, 0, 0, 1, 0],
+             [ 0, 0, 0, 0, 0, 0, 1],
+             [ 0, 0, 0, 0, 1, 0, 0],
+             [ 0, 0, 0, -1, 0, 0, 0],               ## **
+             [ 0, 1, 0, 0, 0, 0, 0],
+             [ 0, 0, 1, 0, 0, 0, 0],
+             [ 1, 0, 0, 0, 0, 0, 0]]*One(f);  
+         ConvertToMatrixRep(m, f);
+         mp:=d->[[1,  0,  0,  0,  0,  d,  0],  
+             [0,  1,  0,  0, -d,  0,  0],  
+             [0,  0,  1,  0,  0,  0,  0],  
+             [0,  0,  2*d,  1,  0,  0,  0],         ## **
+             [0,  0,  0,  0,  1,  0,  0],  
+             [0,  0,  0,  0,  0,  1,  0],  
+             [0,  0,d^2,  d,  0,  0,  1]]*One(f);   ## **
+         ml:=d->[[1, -d,  0,  0,  0,  0,  0],  
+             [0,  1,  0,  0,  0,  0,  0],  
+             [0,  0,  1,  0,  0,  0,  0],  
+             [0,  0,  0,  1,  0,  0,  0],  
+             [0,  0,  0,  0,  1,  0,  0],  
+             [0,  0,  0,  0,  d,  1,  0],  
+             [0,  0,  0,  0,  0,  0,  1]]*One(f);
+  
+         nonzerof := AsList(f){[2..Size(f)]};
+         gens := Union([m], List(nonzerof, mp), List(nonzerof, ml));
+         for x in gens do
+            ConvertToMatrixRep(x, f);
+         od;
+         frob := FrobeniusAutomorphism(f); 
+         newgens := List(gens, x -> ProjectiveSemilinearMap(x, f));  
+         if not IsPrimeInt(Size(f)) then 
+            Add(newgens, ProjectiveSemilinearMap( IdentityMat(7,f), frob, f )); 
+         fi; 
+         coll := GroupWithGenerators(newgens);
+       else
+          ## Here we embed the hexagon in W(5,q)
+          m:=[[ 0, 0, 0, 0, 1, 0],
+              [ 0, 0, 0, 0, 0, 1],
+              [ 0, 0, 0, 1, 0, 0],
+              [ 0, 1, 0, 0, 0, 0],
+              [ 0, 0, 1, 0, 0, 0],
+              [ 1, 0, 0, 0, 0, 0]]*One(f);  
+            ConvertToMatrixRep( m );
+          mp:=d->[[1,  0,  0,  0,  d,  0],  
+              [0,  1,  0,  d,  0,  0],  
+              [0,  0,  1,  0,  0,  0],  
+              [0,  0,  0,  1,  0,  0],  
+              [0,  0,  0,  0,  1,  0],  
+              [0,  0,d^2,  0,  0,  1]]*One(f);  
+          ml:=d->[[1,  d,  0,  0,  0,  0],  
+              [0,  1,  0,  0,  0,  0],  
+              [0,  0,  1,  0,  0,  0],  
+              [0,  0,  0,  1,  0,  0],  
+              [0,  0,  0,  d,  1,  0],  
+              [0,  0,  0,  0,  0,  1]]*One(f);
+          nonzerof := AsList(f){[2..Size(f)]};
+          gens := Union([m], List(nonzerof,mp), List(nonzerof,ml));
+
+          for x in gens do
+             ConvertToMatrixRep(x,f);
+          od;
+          frob := FrobeniusAutomorphism(f); 
+          newgens := List(gens, x -> ProjectiveSemilinearMap(x, f));  
+          if not IsPrimeInt(Size(f)) then 
+             Add(newgens, ProjectiveSemilinearMap( IdentityMat(6,f), frob, f )); 
+          fi;
+          coll := GroupWithGenerators(newgens);
+
+       fi; 
+
+       Info(InfoFinInG, 1, "Computing nice monomorphism...");
+       orblen := (q+1)*(q^4+q^2+1);
+       rep := RepresentativesOfElements(hexagon)[1];
+       domain := Orb(coll, rep, OnProjSubspaces, 
+                  rec(orbsizelimit := orblen, hashlen := 2*orblen, storenumbers := true));
+       Enumerate(domain);
+       Info(InfoFinInG, 1, "Found permutation domain…");
+	 hom := OrbActionHomomorphism(coll, domain);    
+ 	 SetIsBijective(hom, true);
+	 SetNiceObject(coll, Image(hom) );
+       SetNiceMonomorphism(coll, hom );
+
+       SetCollineationAction(coll, OnProjSubspaces);
+       if IsPrime(Size(f)) then
+          SetName(coll, Concatenation("G_2(",String(Size(f)),")") );
+       else
+          SetName(coll, Concatenation("G_2(",String(Size(f)),").", String(Order(frob))) );
+       fi;
+
+   fi;
+   return coll;
+  end );
+
 
 #############################################################################
 #O  Wrap( <geo>, <type>, <o>  )

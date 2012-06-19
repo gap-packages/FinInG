@@ -360,9 +360,8 @@ fixes every line through it. This is the stored as an attribute of <A>egq</A>.
 <Heading>Generalised hexagons</Heading>
 
 Due to the sheer sizes of generalised octagons, they have not yet been included
-into <Package>FinInG</Package>, and there is (at the moment) limited functionality with
-the twisted triality hexagons. The only other known family of generalised hexagons
-(up to duality) are the Split Cayley hexagons.
+into <Package>FinInG</Package>. The only other known families of generalised hexagons
+(up to duality) are the Split Cayley hexagons and the Twisted Triality hexagons.
 
 <ManSection>
 <Oper Name="SplitCayleyHexagon" Arg="f"/>
@@ -374,7 +373,9 @@ via the absolute points and lines of a triality of the 7-dimensional
 hyperbolic quadric. The input is either a finite field <A>f</A> or
 a prime power <A>q</A>, and a generalised hexagon is returned
 consisting of points and lines of <C>Q(6, q)</C> if <A>q</A> is odd,
-or of <C>W(5,q)</C> if <A>q</A> is even.
+or of <C>W(5,q)</C> if <A>q</A> is even. The forms for these polar
+spaces are, respectively, <A>Q(x):= x_1x_5+x_2x_6+x_3x_7-x_4^2</A>
+and <A>B(x,y):=x_1y_4+x_2y_5+x_3y_6+x_4y_1+x_5y_2+x_6y_3</A>.
 <Example>
 <#Include SYSTEM "../examples/include/gpolygons_SplitCayleyHexagon.include"> 
 </Example>
@@ -391,7 +392,8 @@ the Twisted Triality hexagons arise as absolute points and lines of
 a triality. The input is either a finite field <A>f</A> or
 a prime power <A>q</A>, where the order of the field is a cube, 
 and a generalised hexagon is returned
-consisting of points and lines of <C>Q^+(7, q)</C>. The smallest
+consisting of points and lines of <C>Q^+(7, q)</C>, defined by the
+form <A>Q(x):= x_1x_5+x_2x_6+x_3x_7+x_4x_8</A>. The smallest
 Twisted Triality hexagon has 2457 points and 819 lines.
 </Description>
 </ManSection>
