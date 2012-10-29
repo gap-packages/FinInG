@@ -193,7 +193,7 @@ InstallMethod( HyperplaneByDualCoordinates,
 	[IsProjectiveSpace,IsList],
 	function(pg,a)
 		local mat,list;
-		if not Size(a)=Dimension(pg)+1 then
+		if not Size(a)=Dimension(pg)+1 or not ForAll(a,x->x in pg!.basefield) then
 			Error("The dual coordinates are not compatible with the projective space");
 		else
 			mat:=[a];
