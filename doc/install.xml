@@ -25,19 +25,18 @@ This is the chapter of the documentation describing the installation.
 <Index><Package>FinInG</Package></Index>
 
 This package requires the GAP packages <Package>GAPDoc</Package>, version 0.99 or higher,
-<Package>Forms</Package>, version 1.2 or higher, <Package>Orb</Package>, version 2.0 or higer,
+<Package>Forms</Package>, version 1.2 or higher, <Package>Orb</Package>, version 2.0 or higher,
 <Package>GenSS</Package>, version 0.9 or higher, and <Package>GRAPE</Package>, version 4.3 or higher.
-Currently, one function will use the <Package>Design</Package>, but this package is not required to
-load <Package>FinInG</Package>. The package <Package>GenSS</Package> requires the <Package>IO</Package>.
+Currently, one function will use the <Package>Design</Package> package, but this package is not required to
+load <Package>FinInG</Package>. The package <Package>GenSS</Package> requires the package <Package>IO</Package>.
 
 Currently, the packages <Package>GAPDoc</Package>, <Package>GRAPE</Package>, <Package>Forms</Package> and <Package>Design</Package> 
 are accepted GAP packages, the packages <Package>orb</Package>, <Package>GenSS</Package> and <Package>IO</Package>
 are deposited. All can be found through the GAP website.
 
-The recent development stage of <Package>FinInG</Package> has been done using GAP4r4p12. We have done testing using the beta
+The recent development stage of <Package>FinInG</Package> is based on GAP4r4p12. We have done testing using the beta
 release of GAP4r5, and no installation differences occured. In this section, we describe in detail the installation procedure 
-for <Package>FinInG</Package>, assuming the use of GAP4r4, but having tested the procedure without changes, successfully, 
-with GAP4r5 beta.
+for <Package>FinInG</Package>, assuming the use of GAP4r4. We have also (succesfully) tested this procedure with GAP4r5 beta.
 
 <Section>
 <Heading>Installing <Package>FinInG</Package> under UNIX like systems</Heading>
@@ -55,7 +54,7 @@ unpacks the archive in a subdirectory fining.
 
 After successfully unpacking the archive, you can locate the directoy 
 <Display>/usr/local/gap4r4/pkg/fining/.</Display> 
-This directory contains a subdirectory "./doc", containin an html and pdf version of the manual. The html version is accessible by opening the file "chap0.html" in your favorite browser. 
+This directory contains a subdirectory "./doc", containing an html and pdf version of the manual. The html version is accessible by opening the file "chap0.html" in your favorite browser. 
 The pdf version of the manual can be found in the file "manual.pdf".
 
 Please notice that you can unpack your archive in your favorite local "./pkg" directory, e.g. "/home/yourself/pkg/", in case you are using
@@ -67,7 +66,7 @@ e.g. "/home/yourself/pkg/", then move to "/home/yourself", and issue
 the command 
 <Display>gap4r4 -l "/usr/local/gap4r4;./"</Display> 
 This will cause gap to startup and use as pkg directory both its own central pkg directory, i.e.
-"/usr/loca/gap4r4/pkg" and your local pkg directoy, i.e. "/home/yourself/pkg/". You should in any case, see something like the following
+"/usr/loca/gap4r4/pkg", as well as your local pkg directory, i.e. "/home/yourself/pkg/". You should see something like the following
 output. Notice that the packages <Package>GAPDoc</Package> and <Package>IO</Package> are loaded by default. This is not 
 necessarily the case, but loading fining will force to load required packages anyway. 
 
@@ -244,7 +243,7 @@ gap>
 <Section>
 <Heading>Installing other required packages</Heading>
 
-The packages <Package>orb</Package> and <Package>IO</Package> requires compilation and the linking of 
+The packages <Package>orb</Package> and <Package>IO</Package> require compilation and the linking of 
 some binaries to the gap kernel. On some UNIX like system, dynamical linking seems to be impossible. In 
 such a case, the binaries must be statically linked to the GAP kernel. We describe the procedure here, assuming that
 we have to link the binaries of both packages to the gap-kernel. We assume that gap is installed in the directory 

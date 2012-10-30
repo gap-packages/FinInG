@@ -30,7 +30,7 @@ In this chapter we provide some simple examples of the use of
 <Heading>A simple example to get you started</Heading>
 
 In this example, we consider a hyperoval of the projective
-plane PG(2,4), that is, six points no three collinear.
+plane <M>PG(2,4)</M>, that is, six points no three collinear.
 <Example>
 <#Include SYSTEM "../examples/include/examples_pg24.include"> 
 </Example>
@@ -57,7 +57,7 @@ gap> secants := List( pairs, p -> Span(p[1], p[2]) );
   &lt;a line in PG(2, 4)&gt;, &lt;a line in PG(2, 4)&gt;, &lt;a line in PG(2, 4)&gt; ]
 </Example>
 
-By a counting argument, it is known that the frame of PG(2,4)
+By a counting argument, it is known that the frame of <M>PG(2,4)</M>
 completes uniquely to a hyperoval.
 
 <Example>
@@ -90,7 +90,7 @@ Here we see how the lines of a projective plane
 <Alt Not="HTML"><M>PG(2,q^2)</M></Alt> 
 <Alt Only="HTML">PG(2,q&lt;sup>2 &lt;/sup>)</Alt>
 meet a hermitian curve. It is well known that every line meets in either
-1 or q+1 points.
+1 or <M>q+1</M> points.
   
 <Example>
 <#Include SYSTEM "../examples/include/examples_hermitian.include"> 
@@ -99,9 +99,9 @@ meet a hermitian curve. It is well known that every line meets in either
 
 
 <Subsection>
-<Heading>W(3,3) inside W(5,3)</Heading>
+<Heading><M>W(3,3)</M> inside <M>W(5,3)</M></Heading>
 
-In this example, we embed W(3,3) in W(5,3).
+In this example, we embed <M>W(3,3)</M> in <M>W(5,3)</M>.
   
 <Example>
 <#Include SYSTEM "../examples/include/examples_embedW.include"> 
@@ -110,10 +110,10 @@ In this example, we embed W(3,3) in W(5,3).
 
 
 <Subsection>
-<Heading>Spreads of W(5,3)</Heading>
-A spread of W(5,q) is a set of <Math>q^3+1</Math> planes which
-partition the points of W(5,q). Here we enumerate all spreads of
-W(5,3) which have a set-wise stabiliser of order a multiple of 13.
+<Heading>Spreads of <M>W(5,3)</M></Heading>
+A spread of <M>W(5,q)</M> is a set of <Math>q^3+1</Math> planes which
+partition the points of <M>W(5,q)</M>. Here we enumerate all spreads of
+<M>W(5,3)</M> which have a set-wise stabiliser of order a multiple of 13.
   
 <Example>
 <#Include SYSTEM "../examples/include/examples_spreads.include"> 
@@ -124,11 +124,11 @@ W(5,3) which have a set-wise stabiliser of order a multiple of 13.
 <Heading>The Patterson ovoid</Heading>
   
 In this example, we construct the unique ovoid
-of the parabolic quadric Q(6,3), first discovered by Patterson, but for
+of the parabolic quadric <M>Q(6,3)</M>, first discovered by Patterson, but for
 which was given a nice construction by E. E. Shult.
 
 We begin with the ``sums of squares'' quadratic
-form over GF(3).
+form over <M>GF(3)</M>.
 
 <Example>
 gap> id := IdentityMat(7, GF(3));;
@@ -162,7 +162,7 @@ true
 </Example>
 
 The stabiliser is interesting since it yields the embedding of
-Sp(6,2) in PO(7,3). To efficiently compute the set-wise stabiliser,
+<M>Sp(6,2)</M> in <M>PO(7,3)</M>. To efficiently compute the set-wise stabiliser,
 we refer to the induced permutation representation.
 
 <Example>
@@ -237,7 +237,7 @@ t &amp; 0 \\
 </M>
 </Alt>
 
-where t runs over the elements of GF(q), <M>q</M> is odd and not prime, <M>n</M> is a fixed nonsquare 
+where t runs over the elements of <M>GF(q)</M>, <M>q</M> is odd and not prime, <M>n</M> is a fixed nonsquare 
 and <Alt Not="HTML">\phi </Alt><Alt Only="HTML">&#966;</Alt> is a nontrivial automorphism of <M>GF(q)</M>.
 
 <Example>
@@ -266,8 +266,7 @@ a dotty viewer (such as GraphViz).
 </Example>
 
 The output of this example uses <C>dotty</C> which is a sophisticated graph
-drawing program. We could have also used <C>neato</C> to make a diagram
-with straight lines, which we may offer in a later version of our package.
+drawing program. In a later version of our package, we might use <C>neato</C> to make a diagram with straight lines.
 Here is what the output looks like:
 
 <Alt Only="HTML">&lt;img src="PSL211.jpg">&lt;/img></Alt>
