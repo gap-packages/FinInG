@@ -2046,9 +2046,11 @@ InstallMethod( Random,
 	    return RandomSubspace(subs!.geometry);
 	end );
 
-# CHECKED 14/09/2011 jdb.
+# CHECKED 14/09/2011 jdb. 
 # but I am unhappy with this method, since it is not possible to select e.g. 
 # a random line through a point now.
+#
+# This should be ok now. The method Random was wrong for shadows. Fixed 30/10/2012 ml.
 #############################################################################
 #O  Random( <subs> )
 # returns a random element out of the collection of subspaces of given
@@ -2059,19 +2061,28 @@ InstallMethod( Random,
 	[ IsShadowSubspacesOfProjectiveSpace ],
     # chooses a random element out of the collection of subspaces of given
     # dimension of a subspace of a projective space
-	function( subs )
-		local d, pg, subspace, vspace, W, w;
+	function( shad )
+		local d, pg, x, vspace, W;
 		## the underlying projective space
-		pg := subs!.geometry;
-		subspace:=subs!.parentflag;
-		vspace:=UnderlyingVectorSpace(subspace);
-		if not IsInt(subs!.type) then
+		pg := shad!.geometry;
+		x:=shad!.parentflag;
+		vspace:=UnderlyingVectorSpace(x);
+		if not IsInt(shad!.type) then
 			Error("The subspaces of the collection need to have the same dimension");
         fi;
 		## the common type of elements of subs
-		d := subs!.type;        
-		W:=RandomSubspace(vspace,d);
-        return(VectorSpaceToElement(pg,AsList(Basis(W))));
+		d := shad!.type;
+		# now we need to distinguish two cases	
+		if d>Dimension(vspace) then
+		# in this case the shadow consists of subspaces through x
+		  repeat W:=Span(RandomSubspace(pg,d-Dimension(vspace)-1),x);
+		  until Dimension(W)=d-1;
+		else
+		# in this case we can just take a random subspace in x
+		  W:=RandomSubspace(pg,d-1);
+        fi;
+		return(W);
+
 	end );
 
 #############################################################################

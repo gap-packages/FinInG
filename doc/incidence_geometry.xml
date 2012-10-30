@@ -20,7 +20,7 @@ in general.
 <Chapter Label="incidencegeometry">
 <Heading>Incidence Geometry</Heading>
 
-The term geometry, or incidence geometry, is interpreted broadly in this package.
+The term geometry, or incidence geometry, is interpreted in a broad sense in this package.
 The basis for the construction of the objects in this package is an abstract
 incidence geometry consisting of elements, types, and an incidence relation. 
 To be more specific, an <E>incidence geometry</E> consists of a set of
@@ -44,23 +44,21 @@ see Chapter <Ref Chap="projective_spaces"/>.<P/>
 In this chapter we describe functionality that is <B>declared</B> for 
 incidence structures, which does not imply that operations described here will work
 for arbitrarily user constructed incidence structures. Its aim is furthermore to allow
-the user to become a bit familiar with the general philiosophy of the package, using examples
-that are in fact self-explanatory. Not all details of the commands used in the examples will
-be explained in this chapter, therefore we refer always to the relevant chapter of the commands,
-easily found using the index.
+the user to become a bit familiar with the general philosophy of the package, using examples
+that are self-explanatory. Not all details of the commands used in the examples will
+be explained in this chapter, therefore we refer to the relevant chapter of the commands. These can easily be found using the index.
 
 <Section>
 <Heading>Incidence structures</Heading>
 
 Incidence structures can be more general than incidence geometries, e.g. if they do not satisfy 
-axiom (ii). We allow the construction of such objects. This explains one of the top level categories in 
-<Package>FinInG</Package>
+axiom (ii) mentioned above. We allow the construction of such objects. This explains one of the top level categories in 
+<Package>FinInG</Package>.
 
 <ManSection>
 <Filt Name="IsIncidenceStructure" Type="Category"/>
 <Description>
-Top level category for all objects representing an incidence structure.
-<F>IsIncidenceStructure</F>. 
+Top level category for all objects representing an incidence structure. 
 </Description>
 </ManSection>
 
@@ -157,7 +155,7 @@ only methods are installed for the geometries that are built in <Package>FinInG<
 Any incidence structure contains a set of types. This set is usually
 just the list <C>[1 .. n]</C>. If specific names are 
 given to each type, this attribute returns the names for the
-particular incidence structure <A>inc</A>. The second variant returs the list of 
+particular incidence structure <A>inc</A>. The second variant returns the list of 
 plurals of these names.
 <Example>
 <#Include SYSTEM "../examples/include/incgeom_typesofels.include"> 
@@ -253,10 +251,9 @@ specified all elements of <A>inc</A> are returned.
 <Oper Name="Lines" Arg="inc"/>
 <Oper Name="Planes" Arg="inc"/>
 <Oper Name="Solids" Arg="inc"/>
-<Returns>The elements of <A>inc</A> of respective type 1,2,3, and 4.</Returns>
+<Returns>The elements of <A>inc</A> of type 1, 2, 3, and 4.</Returns>
 <Description>
-It is possible that <A>inc</A> is an incidence structure where the elements of type 1,2,3, and 4 
-respectively are not called "points", "lines", "planes", and "solids" respectively. The methods don't
+It is possible that <A>inc</A> is an incidence structure where the elements of type 1, 2, 3, and 4 are not called "points", "lines", "planes", and "solids", respectively. The methods don't
 check if names are given, and are just shortcuts to the operation <F>ElementsOfIncidenceStructure</F>.
 <Example>
 <#Include SYSTEM "../examples/include/incgeom_short.include"> 
