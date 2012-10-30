@@ -264,11 +264,12 @@ check if names are given, and are just shortcuts to the operation <F>ElementsOfI
 <ManSection>
 <Oper Name="IsIncident" Arg="u,v"/>
 <Oper Name="\*" Arg="u,v"/>
+<Oper Name="\in
 <Returns>true or false</Returns>
 <Description>
 <A>u</A> and <A>v</A> must be elements of an incidence structure.
 This function returns true if and only if <A>u</A> is incidence with <A>v</A>. Recall that 
-incidence is a symmetric relation. A method for the operation <F>\*</F> is intalled, applicable
+<C>IsIncident</C> is a symmetric relation, while <C>in<\C> is not. A method for the operation <F>\*</F> is intalled, applicable
 to objects in <C>IsElementOfIncidenceStructure</C>, and is just calling <F>IsIncident</F>.
 <Example>
 <#Include SYSTEM "../examples/include/incgeom_isincident.include"> 
@@ -284,7 +285,7 @@ to objects in <C>IsElementOfIncidenceStructure</C>, and is just calling <F>IsInc
 category <C>IsElementsOfIncidenceStructure</C>. <F>Random(C)</F> will return a random element
 in <A>C</A> provided there is a method installed. Our methods may refer to methods for random
 selection of e.g. subspaces of the underlying vector space, as in the example here, or refer
-to the use of a psuedo random element of an appropriate group, as is e.g. the case for subsapces
+to the use of a psuedo random element of an appropriate group, as is the case for subspaces
 of classical polar spaces.
 <Example>
 <#Include SYSTEM "../examples/include/incgeom_random.include"> 
