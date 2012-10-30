@@ -40,9 +40,9 @@ facility with matrix and permutation groups.
 <Heading>Overview over this manual</Heading>
 
 Chapter <Ref Chap="install"/> describes the installation of this package. Chapter <Ref
-Chap="examples"/> contains some extended examples, to introduce the user to the basic functionality and philosophy to get started. Chapter <Ref Chap="incidencegeometry"/> contains a rigourous discription of the basic structures. This chapter can be omitted at first reading, since the set of consequent chapters is also self contained. Chapters <Ref Chap="projective_spaces"/>, <Ref Chap="projgroup"/> and <Ref Chap="polaritiesofps"/>
+Chap="examples"/> contains some extended examples to introduce the user to the basic functionality and philosophy to get started. Chapter <Ref Chap="incidencegeometry"/> contains a rigourous discription of the basic structures. This chapter can be omitted at first reading, since the set of consequent chapters is also self contained. Chapters <Ref Chap="projective_spaces"/>, <Ref Chap="projgroup"/> and <Ref Chap="polaritiesofps"/>
 deal with projective spaces, projective semilinear groups, and polarities of projective spaces, respectively.
-In Chapter <Ref Chap="classicalpolarspaces"/> the functionality for classical polar spaces is treated and in Chapter <Ref Chap="affine"/> affine spaces and their groups are considered. <E>Geometry morhpisms</E> between various geometries that are 
+In Chapter <Ref Chap="classicalpolarspaces"/> the functionality for classical polar spaces is treated and in Chapter <Ref Chap="affine"/> affine spaces and their groups are considered. <E>Geometry morphisms</E> between various geometries that are 
 available in the package, are introduced and discussed in Chapter <Ref Chap="morphisms"/>. The final three chapters, <Ref Chap="varieties"/>, <Ref Chap="gpolygons"/>, and <Ref Chap="diagramgeometries"/> explain the basic functionality which is provided for algebraic varieties (in projective or affine spaces), generalised polygons, of which several models can be constructed, and finally coset geometries and diagrams.
 </Section>
 
