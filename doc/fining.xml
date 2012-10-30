@@ -31,7 +31,7 @@
     <Version>
       <#Include SYSTEM "../VERSION">
     </Version>
-<Date>2011</Date>
+<Date>2012</Date>
 	<Author>John Bamberg, Anton Betten, Philippe Cara, Jan De Beule, Michel Lavrauw, Max Neunhoeffer.
 	</Author>
 <!--
@@ -81,18 +81,19 @@ St Andrews, United Kingdom.
 -->    
 
 <Copyright>
-  &copyright; 2011 by the authors<P/>
+  &copyright; 2012 by the authors<P/>
   This package may be distributed under the terms and conditions of the
   GNU Public License Version 2 or higher.
 </Copyright>
 
 
 <Acknowledgements>
-The development phase of <Package>FinInG</Package> started rougly in 2005. The idea to write a package for 
+The development phase of <Package>FinInG</Package> started roughly in 2005. The idea to write a package for 
 projective geometry in GAP was known before, and resulted in <Package>pg</Package>, a relic that still
-can be found in the undeposited packages section of the GAP website. To create a tighter connection between
-finite geometry and the group theoretical functions present in GAP was one of the main objectives for the new package
-to develop, since <Package>pg</Package> lacks this point of view. 
+can be found in the undeposited packages section of the GAP website. 
+One of the main objectives was to develop the new package was to 
+create a tighter connection between
+finite geometry and the group theoretical functions present in GAP. 
 <P/>
 The authors thank Michael Pauley, Maska Law and Sven Reichard, for their contributions during the early days of the project.
 </Acknowledgements>
