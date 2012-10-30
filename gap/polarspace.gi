@@ -1998,7 +1998,7 @@ InstallMethod( RandomSubspace,
 
 # CHECKED 22/09/2011 jdb 
 #############################################################################
-#O  Random( <ps>, <d> )
+#O  Random( <subs> )
 # returns a random subspace of projective dimension <d> in the polar space <ps>
 ##
 InstallMethod( Random, 
