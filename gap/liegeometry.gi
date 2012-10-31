@@ -248,7 +248,7 @@ InstallMethod( EmptySubspace,
 
 InstallMethod( ViewObj, [IsEmptySubspace],
   function(x)
-    Print("< trivial subspace >");
+    Print("< empty subspace >");
   end );
   
 InstallMethod( PrintObj, [IsEmptySubspace],
@@ -258,7 +258,7 @@ InstallMethod( PrintObj, [IsEmptySubspace],
 
 InstallMethod( Display, [IsEmptySubspace],
   function(x)
-    Print("< trivial subspace >");
+    Print("< empty subspace >");
   end );
 
 # CHECKED 7/09/2011 jdb
@@ -298,11 +298,11 @@ InstallMethod( \^, "unwrapping an empty subspace",
 # CHECKED 7/09/2011 jdb
 #############################################################################
 #O  \in( <x>, <y> )
-# for two trivial subspaces. Returns true if the vectorspace of their ambient
+# for two empty subspaces. Returns true if the vectorspace of their ambient
 # spaces is the same.
 ## 
 InstallOtherMethod( \in, 
-	"for a trivial subspace and a trivial subspace", 
+	"for a empty subspace and a empty subspace", 
 	[ IsEmptySubspace, IsEmptySubspace ],
 	function( x, y )
 		if x!.geo!.vectorspace = y!.geo!.vectorspace then
@@ -315,11 +315,11 @@ InstallOtherMethod( \in,
 # CHECKED 7/09/2011 jdb
 #############################################################################
 #O  \in( <x>, <y> )
-# for the trivial subspace and a non trivial one. Returns true if the 
+# for the empty subspace and a non empty one. Returns true if the 
 # vectorspace of their ambient spaces is the same.
 ## 
 InstallOtherMethod( \in, 
-	"for the trivial subspace and an element of a Lie geometry", 
+	"for the empty subspace and an element of a Lie geometry", 
 	[ IsEmptySubspace, IsElementOfLieGeometry ],
 	function( x, y )
 		if x!.geo!.vectorspace = y!.geo!.vectorspace then
@@ -332,11 +332,11 @@ InstallOtherMethod( \in,
 # CHECKED 7/09/2011 jdb
 #############################################################################
 #O  \in( <x>, <y> )
-# for a non trivial subspace and the trivial one. Returns true if the 
+# for a non empty subspace and the empty one. Returns true if the 
 # vectorspace of their ambient spaces is the same.
 ## 
 InstallOtherMethod( \in, 
-	"for an element of a Lie geometry and the trivial subspace", 
+	"for an element of a Lie geometry and the empty subspace", 
 	[ IsElementOfLieGeometry, IsEmptySubspace ],
 	function( x, y )
 		if x!.geo!.vectorspace = y!.geo!.vectorspace then
@@ -349,14 +349,14 @@ InstallOtherMethod( \in,
 # CHECKED 7/09/2011 jdb
 #############################################################################
 #O  \in( <x>, <y> )
-# for the trivial subspace and a Lie geometry. Returns true if the vectorspace 
+# for the empty subspace and a Lie geometry. Returns true if the vectorspace 
 # of <x> is the same as the vectorspace of the geomery.
 # Remark that we do not implement a generic method to check if a particular 
 # Lie geometry is contained in the empty subspace. If this is desired, e.g. for
 # projective spces, it should be implemented for this particular space.
 ## 
 InstallOtherMethod( \in, 
-	"for the trivial subspace and a Lie geometry", 
+	"for the empty subspace and a Lie geometry", 
 	[ IsEmptySubspace, IsLieGeometry ],
 	function( x, y )
 		if x!.geo!.vectorspace = y!.vectorspace then
@@ -374,11 +374,11 @@ InstallOtherMethod( \in,
 # CHECKED 7/09/2011 jdb
 #############################################################################
 #O  Span( <x>, <y> )
-# for the trivial subspace and an element of a Lie geometry. Returns <y> if
+# for the empty subspace and an element of a Lie geometry. Returns <y> if
 # both arguments' ambient space has the same vectorspace
 ##
 InstallMethod( Span, 
-	"for the trivial subspace and an element of a Lie geometry", 
+	"for the empty subspace and an element of a Lie geometry", 
 	[ IsEmptySubspace, IsElementOfLieGeometry ],
 	function( x, y )
 		if x!.geo!.vectorspace = y!.geo!.vectorspace then
@@ -391,11 +391,11 @@ InstallMethod( Span,
 # CHECKED 7/09/2011 jdb
 #############################################################################
 #O  Span( <x>, <y> )
-# for an element of a Lie geometry and the trivial subspace. Returns <y> if
+# for an element of a Lie geometry and the empty subspace. Returns <y> if
 # both arguments' ambient space has the same vectorspace
 ##
 InstallMethod( Span, 
-	"for an element of a Lie geometry and the trivial subspace", 
+	"for an element of a Lie geometry and the empty subspace", 
 	[ IsElementOfLieGeometry, IsEmptySubspace ],
 	function( x, y )
 		if x!.geo!.vectorspace = y!.geo!.vectorspace then
@@ -408,11 +408,11 @@ InstallMethod( Span,
 # CHECKED 7/09/2011 jdb
 #############################################################################
 #O  Span( <x>, <y> )
-# for the trivial subspace and the trivial subspace. Returns <x> if
+# for the empty subspace and the empty subspace. Returns <x> if
 # both arguments' ambient space has the same vectorspace
 ##
 InstallMethod( Span, 
-	"for the trivial subspace and the trivial subspace",
+	"for the empty subspace and the empty subspace",
 	[IsEmptySubspace, IsEmptySubspace],
 	function( x, y )
 		if x!.geo!.vectorspace = y!.geo!.vectorspace then
@@ -425,11 +425,11 @@ InstallMethod( Span,
 # CHECKED 7/09/2011 jdb
 #############################################################################
 #O  Meet( <x>, <y> )
-# for the trivial subspace and the trivial subspace. Returns <x> if
+# for the empty subspace and the empty subspace. Returns <x> if
 # both arguments' ambient space has the same vectorspace.
 ##
 InstallMethod( Meet, 
-	"for the trivial subspace and a projective subspace", 
+	"for the empty subspace and a projective subspace", 
 	[ IsEmptySubspace, IsElementOfLieGeometry ],
 	function( x, y )
 		if x!.geo!.vectorspace = y!.geo!.vectorspace then
@@ -442,11 +442,11 @@ InstallMethod( Meet,
 # CHECKED 7/09/2011 jdb
 #############################################################################
 #O  Meet( <x>, <y> )
-# for an element of a Lie geometry and the trivial subspace. Returns <y> if
+# for an element of a Lie geometry and the empty subspace. Returns <y> if
 # both arguments' ambient space has the same vectorspace
 ##
 InstallMethod( Meet, 
-	"for the trivial subspace and a projective subspace", 
+	"for the empty subspace and a projective subspace", 
 	[ IsElementOfLieGeometry, IsEmptySubspace ],
 	function( x, y )
 		if x!.geo!.vectorspace = y!.geo!.vectorspace then
@@ -459,11 +459,11 @@ InstallMethod( Meet,
 # CHECKED 7/09/2011 jdb
 #############################################################################
 #O  Meet( <x>, <y> )
-# for the trivial subspace and the trivial subspace. Returns <x> if
+# for the empty subspace and the empty subspace. Returns <x> if
 # both arguments' ambient space has the same vectorspace
 ##
 InstallMethod( Meet, 
-	"for the trivial subspace and the trivial subspace",
+	"for the empty subspace and the empty subspace",
 	[IsEmptySubspace, IsEmptySubspace],
 	function( x, y )
 		if x!.geo!.vectorspace = y!.geo!.vectorspace then

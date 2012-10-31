@@ -38,7 +38,7 @@
 #  - make some tiny changes at Meet for lists, such that, when possible, the empty subspace is returned and not []. (this is a
 #    detail). 14/9/2011 jdb. (When a list with one element is given, it should return that element 26/05/12 ml)
 #  - think whether it makes sense that Span and Meet return [] when they receive []. (recall that [] used to represent the 
-#    trivial subspace in earlier days. 14/9/2011 jdb.
+#    empty subspace in earlier days. 14/9/2011 jdb.
 #  - improve Random method for shadow elements. see comment there.
 #  - have a closer look at the Baer substuff methods in this file.
 #  - whenever Wrap is used, check whether the input should be normalized or not. Done.
@@ -794,7 +794,7 @@ InstallMethod( EquationOfHyperplane,
 #	end );
 
 #############################################################################
-#  Span/Meet for trivial subspaces
+#  Span/Meet for empty subspaces
 #############################################################################
 
 # CHECKED 8/09/11 jdb
@@ -802,7 +802,7 @@ InstallMethod( EquationOfHyperplane,
 #O  Span( <x>, <y> ) returns the span of <x> and <y> 
 ##
 InstallMethod( Span, 
-	"for the trivial subspace and a projective space", 
+	"for the empty subspace and a projective space", 
 	[ IsEmptySubspace, IsProjectiveSpace ],
 	function( x, y )
 		if x!.geo!.vectorspace = y!.vectorspace then
@@ -817,7 +817,7 @@ InstallMethod( Span,
 #O  Span( <x>, <y> ) returns the span of <x> and <y> 
 ##
 InstallMethod( Span, 
-	"for the trivial subspace and a projective space", 
+	"for the empty subspace and a projective space", 
 	[ IsProjectiveSpace, IsEmptySubspace ],
 	function( x, y )
 		if x!.vectorspace = y!.geo!.vectorspace then
@@ -832,7 +832,7 @@ InstallMethod( Span,
 #O  Meet( <x>, <y> ) returns the intersection of <x> and <y> 
 ##
 InstallMethod( Meet, 
-	"for the trivial subspace and a projective subspace", 
+	"for the empty subspace and a projective subspace", 
 	[ IsEmptySubspace, IsProjectiveSpace ],
 	function( x, y )
 		if x!.geo!.vectorspace = y!.vectorspace then
@@ -847,7 +847,7 @@ InstallMethod( Meet,
 #O  Meet( <x>, <y> ) returns the intersection of <x> and <y> 
 ##
 InstallMethod( Meet, 
-	"for the trivial subspace and a projective subspace", 
+	"for the empty subspace and a projective subspace", 
 	[ IsProjectiveSpace, IsEmptySubspace ],
 	function( x, y )
 		if x!.vectorspace = y!.geo!.vectorspace then
@@ -1435,12 +1435,12 @@ InstallMethod( Iterator,
 #############################################################################
 # Methods for incidence.
 # Recall that: - we have a generic method to check set theoretic containment
-#                for two *elements* of a Lie geometry, and trivial subspaces.
+#                for two *elements* of a Lie geometry, and empty subspaces.
 #              - IsIncident is symmetrized set theoretic containment
 #              - we can extend the \in method (if desired) for the particular
 #                Lie geometry, such that we can get true if we ask if an 
 #                element is contained in the complete space, or if we consider
-#                the whole space and the trivial subspce.
+#                the whole space and the empty subspce.
 #              - \* is a different notation for IsIncident, declared and
 #                implement in geometry.g* 
 #############################################################################
@@ -1464,11 +1464,11 @@ InstallOtherMethod( \in,
 # CHECKED 11/09/11 jdb
 #############################################################################
 #O  \in( <x>, <y> )
-# returns false if and only if (and this is checked) <y> is the trivial subspace
+# returns false if and only if (and this is checked) <y> is the empty subspace
 # in the projective space <x>.
 ##
 InstallOtherMethod( \in, 
-	"for a projective subspace and its trivial subspace ", 
+	"for a projective subspace and its empty subspace ", 
 	[ IsProjectiveSpace, IsEmptySubspace ],
 	function( x, y )
 		if x = y!.geo then
@@ -1481,7 +1481,7 @@ InstallOtherMethod( \in,
 # CHECKED 11/09/11 jdb
 #############################################################################
 #O  \in( <x>, <dom> )
-# returns true if and only if (and this is checked) <x> is the trivial subspace
+# returns true if and only if (and this is checked) <x> is the empty subspace
 # in the projective space <dom>.
 ##
 InstallMethod( \in, 
@@ -1497,7 +1497,7 @@ InstallMethod( \in,
 # CHECKED 11/09/11 jdb
 #############################################################################
 #O  \in( <x>, <dom> )
-# returns true if and only if (and this is checked) <x> is the trivial subspace
+# returns true if and only if (and this is checked) <x> is the empty subspace
 # in the projective space <dom>.
 ##
 InstallMethod( \in, 

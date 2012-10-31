@@ -388,7 +388,7 @@ for the particular incidence structure <A>inc</A>.
 <Returns> The collection of elements of type <A>j</A> incident with <A>v</A></Returns>
 <Description>
 This operation is declared for objects <A>v</A> belonging to <C>IsElementOfIncidenceStructure</C>, 
-but relies to particular methods installed for particular incidence structures, and refers alwyas to
+but relies to particular methods installed for particular incidence structures, and refers always to
 <F>ShadowOfElement</F>, where the ambient geometry is derived from the element <A>v</A>, and using the
 integer <A>j</A>
 </Description>
@@ -404,10 +404,10 @@ integer <A>j</A>
 <Oper Name="Lines" Arg="v"/>
 <Oper Name="Planes" Arg="v"/>
 <Oper Name="Solids" Arg="v"/>
-<Returns>The collections of elements of <A>inc</A> of respective type 1,2,3, and 4, 
+<Returns>The collections of elements of <A>inc</A> of respective type 1, 2, 3, and 4, 
 that are incident with <A>v</A></Returns>
 <Description>
-It is possible that <A>inc</A> is an incidence structure where the elements of type 1,2,3, and 4 
+It is possible that <A>inc</A> is an incidence structure where the elements of type 1, 2, 3, and 4 
 respectively are not called "points", "lines", "planes", and "solids" respectively. The methods don't
 check if names are given, and are just shortcuts to the operation <F>ShadowOfElement</F>. The second variant
 derives the incidence structure to be used as the ambient geometry of <A>v</A>. Please keep in mind 
@@ -443,7 +443,7 @@ Subspaces( ( GF(31)^5 ), 1 )
 
 takes almost no time at all. But if you want a random element from this set,
 you could be waiting a while. Instead, the user is better off using an iterator
-or an enumerator to access elements of this collection. So too do we have
+or an enumerator to access elements of this collection. We have
 such a facility for the elements of a projective or polar space. At the moment,
 we have made available iterators for projective spaces, and enumerators for polar spaces. 
 We give basic examples of enumerators and iterators here. For <F>AsList</F>, we refer to 

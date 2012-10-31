@@ -31,7 +31,7 @@ end );
 
 InstallMethod( ViewObj, [IsEmptySubspace],
   function(x)
-    Print("< trivial subspace >");
+    Print("< empty subspace >");
   end );
   
 InstallMethod( PrintObj, [IsEmptySubspace],
@@ -41,7 +41,7 @@ InstallMethod( PrintObj, [IsEmptySubspace],
 
 InstallMethod( Display, [IsEmptySubspace],
   function(x)
-    Print("< trivial subspace >");
+    Print("< empty subspace >");
   end );
 
 # 
@@ -63,42 +63,42 @@ InstallMethod( \^, "unwrapping an empty subspace",
 # We change this to methods for \in. (17/04/2011, jdb).
 
 InstallOtherMethod( \in, 
-	"for the trivial subspace and a trivial subspace", 
+	"for the empty subspace and an empty subspace", 
 	[ IsEmptySubspace, IsEmptySubspace ],
 	function( x, y )
 		return true;
 	end );
   
 InstallOtherMethod( \in, 
-	"for the trivial subspace and a non trivial subspace", 
+	"for the empty subspace and a non empty subspace", 
 	[ IsEmptySubspace, IsSubspaceOfProjectiveSpace ],
 	function( x, y )
 		return true;
 	end );
 	
 InstallOtherMethod( \in, 
-	"for the trivial subspace and a non trivial subspace", 
+	"for the empty subspace and a non empty subspace", 
 	[ IsSubspaceOfProjectiveSpace, IsEmptySubspace ],
 	function( x, y )
 		return false;
 	end );
 
 InstallOtherMethod( \in, 
-	"for a projective subspace and its trivial subspace ", 
+	"for a projective subspace and its empty subspace ", 
 	[ IsProjectiveSpace, IsEmptySubspace ],
 	function( x, y )
 		return false;
 	end );
   
 InstallOtherMethod( \in, 
-	"for the trivial subspace and a projective subspace", 
+	"for the empty subspace and a projective subspace", 
 	[ IsEmptySubspace, IsProjectiveSpace ],
 	function( x, y )
 		return true;
 	end );
 
 InstallOtherMethod( \in, 
-	"for the trivial subspace and a projective subspace", 
+	"for the empty subspace and a projective subspace", 
 	[ IsProjectiveSpace, IsSubspaceOfProjectiveSpace ],
 	function( x, y )
 		return false;
@@ -106,58 +106,58 @@ InstallOtherMethod( \in,
 
 # Methods for \* with the EmtySubspace  
 
-#InstallOtherMethod( \*, "for the non-trivial subspace and a trivial subspace",  [IsSubspaceOfProjectiveSpace, IsEmptySubspace],
+#InstallOtherMethod( \*, "for the non-empty subspace and an empty subspace",  [IsSubspaceOfProjectiveSpace, IsEmptySubspace],
 #  function( a, b )
 #    return IsIncident(b, a);
 #  end );
 
-#InstallOtherMethod( \*, "for the trivial subspace and a nontrivial subspace",  [IsEmptySubspace, IsSubspaceOfProjectiveSpace],
+#InstallOtherMethod( \*, "for the empty subspace and a nonempty subspace",  [IsEmptySubspace, IsSubspaceOfProjectiveSpace],
 #  function( a, b )
 #    return IsIncident(b, a);
 #  end );
 
-#InstallOtherMethod( \*, "for the projective space and the trivial subspace",  [IsProjectiveSpace, IsEmptySubspace],
+#InstallOtherMethod( \*, "for the projective space and the empty subspace",  [IsProjectiveSpace, IsEmptySubspace],
 #  function( a, b )
 #    return IsIncident(b, a);
 #  end );
 
-#InstallOtherMethod( \*, "for the trivial subspace and a projective space",  [IsEmptySubspace, IsProjectiveSpace],
+#InstallOtherMethod( \*, "for the empty subspace and a projective space",  [IsEmptySubspace, IsProjectiveSpace],
 #  function( a, b )
 #    return IsIncident(b, a);
 #  end );
 
-#InstallOtherMethod( \*, "for the trivial subspace and a projective space",  [IsEmptySubspace, IsEmptySubspace],
+#InstallOtherMethod( \*, "for the empty subspace and a projective space",  [IsEmptySubspace, IsEmptySubspace],
 #  function( a, b )
 #    return IsIncident(b, a);
 #  end );
 	
 # Methods for Span with the EmptySubspace
 
-InstallMethod( Span, "for the trivial subspace and a projective subspace", 
+InstallMethod( Span, "for the empty subspace and a projective subspace", 
    [ IsEmptySubspace, IsSubspaceOfProjectiveSpace ],
   function( x, y )
     return y;
   end );
 
-InstallMethod( Span, "for the trivial subspace and a projective subspace", 
+InstallMethod( Span, "for the empty subspace and a projective subspace", 
    [ IsSubspaceOfProjectiveSpace, IsEmptySubspace ],
   function( x, y )
     return x;
   end );
 
-InstallMethod( Span, "for the trivial subspace and a projective subspace", 
+InstallMethod( Span, "for the empty subspace and a projective subspace", 
    [ IsEmptySubspace, IsProjectiveSpace ],
   function( x, y )
     return y;
   end );
 
-InstallMethod( Span, "for the trivial subspace and a projective subspace", 
+InstallMethod( Span, "for the empty subspace and a projective subspace", 
    [ IsProjectiveSpace, IsEmptySubspace ],
   function( x, y )
     return x;
   end );
   
-InstallMethod( Span, "for the trivial subspace and the trivial subspace",
+InstallMethod( Span, "for the empty subspace and the empty subspace",
 	[IsEmptySubspace, IsEmptySubspace],
 	function (x,y)
 		return x;
@@ -166,31 +166,31 @@ InstallMethod( Span, "for the trivial subspace and the trivial subspace",
 
 # Methods for Meet with the EmptySubspace
 
-InstallMethod( Meet, "for the trivial subspace and a projective subspace", 
+InstallMethod( Meet, "for the empty subspace and a projective subspace", 
    [ IsEmptySubspace, IsSubspaceOfProjectiveSpace ],
   function( x, y )
     return x;
   end );
 
-InstallMethod( Meet, "for the trivial subspace and a projective subspace", 
+InstallMethod( Meet, "for the empty subspace and a projective subspace", 
    [ IsSubspaceOfProjectiveSpace, IsEmptySubspace ],
   function( x, y )
     return y;
   end );
 
-InstallMethod( Meet, "for the trivial subspace and a projective subspace", 
+InstallMethod( Meet, "for the empty subspace and a projective subspace", 
    [ IsEmptySubspace, IsProjectiveSpace ],
   function( x, y )
     return x;
   end );
 
-InstallMethod( Meet, "for the trivial subspace and a projective subspace", 
+InstallMethod( Meet, "for the empty subspace and a projective subspace", 
    [ IsProjectiveSpace, IsEmptySubspace ],
   function( x, y )
     return y;
   end );
 
-InstallMethod( Meet, "for the trivial subspace and the trivial subspace",
+InstallMethod( Meet, "for the empty subspace and the empty subspace",
 	[IsEmptySubspace, IsEmptySubspace],
 	function (x,y)
 		return x;
