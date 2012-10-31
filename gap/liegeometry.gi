@@ -241,6 +241,17 @@ InstallMethod( EmptySubspace,
 		return w;
 	end );
 
+# Added 31/10/2012 jdb
+#############################################################################
+#O  BaseField( <sub> )
+# returns the basefield of the empty subspace.
+##
+InstallMethod( BaseField, 
+	"for the empty subspace of a Lie geometry", 
+	[IsEmptySubspace and IsEmptySubspaceRep],
+	sub -> AmbientSpace(sub)!.basefield );
+
+
 # 3 CHECKED 7/09/2011 jdb
 #############################################################################
 # View, PRint and Display for IsEmptySubspace

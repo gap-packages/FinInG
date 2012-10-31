@@ -1146,9 +1146,11 @@ InstallMethod( NaturalEmbeddingByFieldReduction,
 #####
 
 #############################################################################
-#O  BilinearFormFieldReduction( <bil1>, <f2> ) 
-# <bil1> is a bilinear form over <f1>, <f2> is a subfield of <f1>. This operation
-# returns the bilinear form T(bil1(.,.)), T the trace from <f1> to <f2>.
+#O  BilinearFormFieldReduction( <bil1>, <f2>, <alpha>, <basis> ) 
+# <bil1> is a bilinear form over <f1>, <f2> is a subfield of <f1>. 
+# <alpha> determines the linear map from f1 to <f2>, f1 the field extension of <f2>
+# with basis <basis>. This operation then
+# returns the bilinear form L(bil1(.,.)), L(x) = T(alpha*x), T the trace from <f1> to <f2>.
 ##
 InstallMethod( BilinearFormFieldReduction,
 	"for a bilinear form and a field",
