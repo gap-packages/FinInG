@@ -48,9 +48,8 @@ This category is a subcategory of <C>IsLieGeometry</C>, and contains all finite 
 </Description>
 </ManSection>
 
-The underlying vector space and matrix group will be to our advantage. We refer the reader to
-<Cite Key="HirschfeldThas"/> for the necessary background theory (if it is not
-otherwise provided).<P/> 
+We refer the reader to
+<Cite Key="HirschfeldThas"/> for the necessary background theory in case it is not provided in the manual.<P/> 
 
 <ManSection>
 <Oper Name="ProjectiveSpace" Arg="d, F"/>
@@ -132,8 +131,8 @@ not belong to the category <C>IsSubspaceOfProjectiveSpace</C>.
 <Description>
 <A>geo</A> is a projective space, and <A>v</A> is either a row vector (for points) or an <M>m x
 n</M> matrix (for an <M>(m-1)</M>-subspace of projective space of dimension <M>n-1</M>).
-In the case that <A>v</A> is a matrix, the rows represent basis vectors for the subspace. An
-exceptional case is when <A>v</A> is a zero-vector, whereby the trivial subspace is
+In the case that <A>v</A> is a matrix, the rows represent generators for the subspace. An
+exceptional case is when <A>v</A> is a zero-vector, in which case the trivial subspace is
 returned.
 <Example>
 <#Include SYSTEM "../examples/include/projsp_element1.include"> 
@@ -157,7 +156,7 @@ incidence results in an error message.
 <ManSection>
 <Oper Name="ProjectiveDimension" Arg="sub"/>
 <Returns>the projective dimension of a subspace of a projective space. The operation <F>ProjectiveDimension</F>
-is also applicable on the EmptySubspace
+is also applicable on the EmptySubspace.
 </Returns>
 <Description>
 <Example>
@@ -171,8 +170,8 @@ is also applicable on the EmptySubspace
 <Returns>the collection of elements of the projective space <A>ps</A> of type <A>j</A></Returns>
 <Description>
 For the projective space <A>ps</A> of dimension <M>d</M> and the type <A>j</A>, <M>1 &#8804; j &#8804; d</M>
-this operation returns the collection of <M>j-1</M> dimenaional subspaces. 
-An error message is produced when the projective space <A>as</A> has no elements of a required type.<Example>
+this operation returns the collection of <M>j-1</M> dimensional subspaces. 
+An error message is produced when the projective space <A>as</A> has no elements of the required type.<Example>
 <#Include SYSTEM "../examples/include/projsp_elements.include"> 
 </Example>
 </Description>
@@ -185,7 +184,7 @@ An error message is produced when the projective space <A>as</A> has no elements
 <Oper Name="Planes" Arg="as"/>
 <Oper Name="Solids" Arg="as"/>
 <Oper Name="Hyperplanes" Arg="as"/>
-<Returns>The elements of <A>as</A> of respective type 1,2,3,4, and the hyperplanes</Returns>
+<Returns>The elements of <A>as</A> of respective type 1, 2, 3, 4, and the hyperplanes</Returns>
 <Description>
 An error message is produced when the projective space <A>ps</A> has no elements of a required type.
 <Example>
@@ -262,7 +261,7 @@ of the geometry, but both the empty subspace and the whole projective space are 
 <Oper Name="AmbientSpace" Arg="el"/>
 <Returns>returns the ambient space of an element <A>el</A> of a projective space</Returns>
 <Description>
-This operation is also applicable on the trivial subspace.
+This operation is also applicable on the empty subspace and the whole space.
 <Example>
 <#Include SYSTEM "../examples/include/projsp_ambientspaceelps.include"> 
 </Example>
@@ -273,7 +272,7 @@ This operation is also applicable on the trivial subspace.
 <Oper Name="BaseField" Arg="el"/>
 <Returns>returns the base field of an element <A>el</A> of a projective space</Returns>
 <Description>
-This operation is also applicable on the trivial subspace.
+This operation is also applicable on the trivial subspace and the whole space.
 <Example>
 <#Include SYSTEM "../examples/include/projsp_basefieldelps.include"> 
 </Example>
@@ -289,7 +288,7 @@ The collection <A>elements</A> is an object in the category <C>IsElementsOfIncid
 i.e. an object representing the set of elements of a certain incidence structure of a given type. The 
 latter information can be derived e.g. using <C>AmbientSpace</C> and <C>Type</C>.
 <Example>
-<#Include SYSTEM "../examples/include/projsp_randomeltps.include"> 
+<#Include SYSTEM "../examples/include/projsp_randomeltsps.include"> 
 </Example>
 </Description>
 </ManSection>
@@ -302,7 +301,7 @@ The second variant returns a random element of a random type of the projective s
 </Returns>
 <Description>
 <Example>
-<#Include SYSTEM "../examples/include/projsp_randomeltsps.include"> 
+<#Include SYSTEM "../examples/include/projsp_randomeltps.include"> 
 </Example>
 </Description>
 </ManSection>
@@ -310,9 +309,9 @@ The second variant returns a random element of a random type of the projective s
 <ManSection>
 <Oper Name="Span" Arg="u,v"/>
 <Oper Name="Span" Arg="list"/>
-<Returns> an element </Returns>
+<Returns> an element or the empty subspace or the whole space</Returns>
 <Description>
-When <A>u</A> and <A>v</A> are elements of a projective or polar space.
+When <A>u</A> and <A>v</A> are elements of a projective.
 This function returns the span of the two elements. When <A>list</A> is 
 a list of elements of the same projective space, then this function returns
 the span of all elements in <A>list</A>. It is checked whether the elements 
@@ -329,9 +328,9 @@ variant of this operation.
 
 <ManSection>
 <Oper Name="Meet" Arg="u,v"/>
-<Returns>an element</Returns>
+<Returns>an element or the empty subspace or the whole space</Returns>
 <Description>
-When <A>u</A> and <A>v</A> are elements of a projective or polar space.
+When <A>u</A> and <A>v</A> are elements of a projective space.
 This function returns the intersection of the two elements. When <A>list</A> is 
 a list of elements of the same projective space, then this function returns
 the intersection of all elements in <A>list</A>. It is checked whether the elements 
@@ -438,10 +437,7 @@ also performs the checking.
 <Oper Name="Planes" Arg="v"/>
 <Oper Name="Solids" Arg="v"/>
 <Oper Name="Hyperplanes" Arg="v"/>
-<Returns>the elements of type <M>1,2,3</M>, and <M>4</M> incident with, and the hyperplanes <E>contained in</E>, respectively,
-of the projective space <A>ps</A>, incident with teh element <A>el</A>, in other words,
-the shadow of the elements of type i of the element <A>el</A>, and in the case of the hyperplanes, the shodow of the elements
-of type j-1 if j is the type of the element <A>v</A>. If <A>ps</A> is not given as an argument, it is deduced from <A>v</A> as its
+<Returns>The elements of the incidence geometry of the according type. If <A>ps</A> is not given as an argument, it is deduced from <A>v</A> as its
 ambient geometry.
 </Returns>
 <Description>
