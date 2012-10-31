@@ -264,13 +264,12 @@ check if names are given, and are just shortcuts to the operation <F>ElementsOfI
 <ManSection>
 <Oper Name="IsIncident" Arg="u,v"/>
 <Oper Name="\*" Arg="u,v"/>
-<Oper Name="\in
+<Oper Name="\in" Arg="u,v"/>
 <Returns>true or false</Returns>
 <Description>
 <A>u</A> and <A>v</A> must be elements of an incidence structure.
 This function returns true if and only if <A>u</A> is incidence with <A>v</A>. Recall that 
-<C>IsIncident</C> is a symmetric relation, while <C>in<\C> is not. A method for the operation <F>\*</F> is intalled, applicable
-to objects in <C>IsElementOfIncidenceStructure</C>, and is just calling <F>IsIncident</F>.
+<C>IsIncident</C> is a symmetric relation, while <C>in</C> is not. A method for the operation <F>\*</F> is installed, applicable to objects in <C>IsElementOfIncidenceStructure</C>, and is just calling <F>IsIncident</F>.
 <Example>
 <#Include SYSTEM "../examples/include/incgeom_isincident.include"> 
 </Example>
@@ -467,11 +466,11 @@ elements without repetition. Only three operations are applicable on an iterator
 
 For a collection of elements of a given type of certain incidence structures, <Package>FinInG</Package> also provides
 methods to compute an enumerator. In its simpliest form, an enumerator is just a list containing all the elements of the
-collection. Given any object in the lit, it is possible to retrieve its number in the list (which is then just its position). 
+collection. Given any object in the list, it is possible to retrieve its number in the list (which is then just its position). 
 Also, given any number between 1 and the length of the list, it is possible to get the corresponding element. For some
-collections of elements of particular incidence structures, a more advanced version of enumerators are implemented. Such
-an advanced version is an object containing two the two functions <F>ElementNumber</F> and <F>NumberElement</F>. Such functions
-typically are able to compute directly, without listing all elements, the element with a given number, or, conversely, compute
+collections of elements of particular incidence structures, a more advanced version of enumerators is implemented. Such
+an advanced version is an object containing the two functions <F>ElementNumber</F> and <F>NumberElement</F>. Such functions
+are able to compute directly, without listing all elements, the element with a given number, or, conversely, compute
 directly the number of a given element. Clearly, using an enumerator, it is possible to obtain a list containing all elements
 of a collection.
 
@@ -493,8 +492,8 @@ of a collection.
 
 The category <C>IsLieGeometry</C> contains the categories <C>IsProjectiveSpace</C> and <C>IsClassicalPolarSpace</C>, and 
 is bundling projective spaces and classical polar spaces. One common fact of these geometries is that their elements
-are represented by subspaces of a vector spaces. In these geometries, incidence is symmetrized set-theoretic containment. In this
-section we describe methods that are declared in a generic way for (elements) of Lie geometries. Again, having a declaration, does
+are represented by subspaces of a vector space. In these geometries, incidence is symmetrized set-theoretic containment. In this
+section we describe methods that are declared in a generic way for (elements of) Lie geometries. Again, having a declaration does
 not imply that methods are installed for all particular Lie geometries.
 
 <ManSection>
@@ -551,12 +550,11 @@ Lie geometries check whether the subspace of the vector space represents an elem
 <ManSection>
 <Oper Name="VectorSpaceToElement" Arg="ig, v"/>
 <Oper Name="VectorSpaceToElement" Arg="ig, l"/>
-<Returns>the element of <A>ig</A>, represented by the subspace spanned by <A>v</A> or <A>l</A></Returns>
+<Returns>the element of <A>ig</A>, represented by the subspace spanned by <A>v</A> or <A>l</A>, or returns the empty subspace.</Returns>
 <Description>
 The first variant of this operation takes as second argument a vector of the underlying vector space of <A>ig</A>.
 Such a vector represents possible a point of <A>ig</A>. The second variant takes as second argument a list
-of vectors in the underlying vector space of <A>ig</A>. Such a list represents a subspace of the vector space, of vector dimension
-the length of <A>l</A>, which represents possible an element of type the length of <A>l</A>. If the dimension of the subspace of 
+of vectors in the underlying vector space of <A>ig</A>. Such a list represents a subspace of the vector space. If the dimension of the subspace of 
 the underlying vector space is larger than zero and strictly less than the dimension of the vector space, it is checked if the subspace
 represents an element of <A>ig</A>, except when <A>ig</A> is a projective space. If <A>l</A> is a list of vectors generating the whole vector space,
 then <A>ig</A> is returned if and only if <A>ig</A> is a projective space, otherwise an error is produced. An empty list is not allowed as second
@@ -580,9 +578,9 @@ The argument <A>v</A> must be an element, so it is not allowed that <A>v</A> is 
 
 <ManSection>
 <Oper Name="\in" Arg="u,v"/>
-<Returns>true if and only if the element <A>u</A> is set-theoretically contained int the element <A>w</A></Returns>
+<Returns>true if and only if the element <A>u</A> is set-theoretically contained in the element <A>w</A></Returns>
 <Description>
-Both arguments must be elements of the same Lie geometry. The empty subspace and a Lie geometry are allowed also 
+Both arguments must be elements of the same Lie geometry. The empty subspace and a Lie geometry are also allowed
 as arguments. This relation is not symmetric, and the methods for <F>IsIncident</F>
 use this method to test incidence between elements. 
 <Example>
@@ -614,11 +612,11 @@ the elements of type one less that the type of <A>v</A> are asked.
 A Lie geometry, i.e. an object in the category <C>IsLieGeometry</C>, is naturally embedded 
 in a projective space. This is of course in a mathematical sense. In <Package>FinInG</Package>, certain
 embeddings are implemented by providing a mapping between geometries. The Lie geometries are 
-<E>hard wired</E> embeded, just simply because a category containing elements of a Lie geometry, is
+<E>hard wired</E> embedded, just simply because a category containing elements of a Lie geometry, is
 always a subcategory of <C>IsSubspaceOfProjectiveSpace</C>. As a consequence, operations applicable
 to objects in the category <C>IsSubspaceOfProjectiveSpace</C> are by default applicable to objects
 in any subcategory, so on elements of any Lie geometry. When dealing with elements of e.g. different polar
-spaces in the samen projective space, this yields a natural way of working with them, and investigating 
+spaces in the same projective space, this yields a natural way of working with them, and investigating 
 relations between them, without bothering about all necessary mappings. On the other hand, in some situations,
 it is impossible to decide in which geometry an element has to be considered. An easy example is the following.
 Consider two different quadrics in the same projective space. The intersection of two elements, one of each
@@ -634,7 +632,7 @@ operations for elements of Lie gometries.
 <Oper Name="Embed" Arg="ps, el"/>
 <Returns><A>el</A> as an element of <A>ps</A></Returns>
 <Description>
-Let <A>ps</A> be any Lie geometry. This method return <F>VectorSpaceToElement(ps,ElementToVectorSpace(el))</F>,
+Let <A>ps</A> be any Lie geometry. This method returns <F>VectorSpaceToElement(ps,ElementToVectorSpace(el))</F>,
 if the conversion is possible. <F>Embed</F> is declared as a synonym of <F>ElementToElement</F>.<Example>
 <#Include SYSTEM "../examples/include/incgeom_lie_elementtoelement.include"> 
 </Example>
