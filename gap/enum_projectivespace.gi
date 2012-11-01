@@ -17,7 +17,7 @@ end);
 
 # Illustration of this function:
 # q:=81; List(Elements(GF(q)),a-> a = PrimitiveRoot(GF(q))^(FinInGFieldNumbering(a,q)-1));
-# the first "false" is concerns the Zero(GF(q)), which gets labeled q.
+# the first "false" concerns the Zero(GF(q)), which gets labeled q.
 
 
 InstallGlobalFunction( FinInGFieldNumberingInverse,
