@@ -32,7 +32,7 @@ InstallGlobalFunction( FinInGFieldNumberingInverse,
 end);
 
 
-# Enumerator for a the points of a projective space
+# Enumerator for the points of a projective space
 
 InstallMethod( Enumerator, [ IsSubspacesOfProjectiveSpace ],
   function( elms )
