@@ -28,7 +28,7 @@
 #
 # Things To Do:
 #
-# - test CorrelationGroup
+# - test CorrelationCollineationGroup
 # - Documentation
 # - Random for correlation groups
 # - a tiny detail: just see if the methods for NiceMonomorphism are called when we
@@ -253,7 +253,7 @@ InstallMethod( \=,
 
 # CHECKED 14/09/11 jdb
 #############################################################################
-#O  ProjElWithFrob( <mat>, <frob>, <f>, <delta> )
+#O  ProjElWithFrobWithPSIsom( <mat>, <frob>, <f>, <delta> )
 # method to construct an object in the category IsProjGrpElWithFrobWithPSIsom,
 # i.e. correlations. This method is not intended for the users, it has no 
 # checks built in. the fourth argument must be the standard duality of a projective
@@ -272,7 +272,7 @@ InstallMethod( ProjElWithFrobWithPSIsom,
 
 # CHECKED 14/09/11 jdb
 #############################################################################
-#O  ProjElWithFrob( <mat>, <frob>, <f> )
+#O  ProjElWithFrobWithPSIsom( <mat>, <frob>, <f> )
 # method to construct an object in the category IsProjGrpElWithFrobWithPSIsom,
 # i.e. correlations. This method is not intended for the users, it has no 
 # checks built in. There is no fourth argument, the projective space isomorphism
@@ -294,7 +294,7 @@ InstallMethod( ProjElWithFrobWithPSIsom,
 
 # CHECKED 14/09/11 jdb
 #############################################################################
-#O  ProjElWithFrob( <mat>, <frob>, <f>, <delta> )
+#O  ProjElWithFrobWithPSIsom( <mat>, <frob>, <f>, <delta> )
 # method to construct an object in the category IsProjGrpElWithFrobWithPSIsom,
 # i.e. correlations. This method is not intended for the users, it has no 
 # checks built in. The fourth argument must be the identity mapping of a projective space.
@@ -735,12 +735,12 @@ InstallMethod( ProjElsWithFrobWithPSIsom,
 		return objectlist;
 	end );
 
-# CHECKED 19/09/2011 jdb
+# CHECKED 19/09/2011 jdb # changed 02/11/2012 ml
 #############################################################################
-#A  CorrelationGroup( <ps> )
-# returns the collineation group of the projective space <ps>
+#A  CorrelationCollineationGroup( <ps> )
+# returns the group of collineations and correlations of the projective space <ps>
 ##
-InstallMethod( CorrelationGroup, 
+InstallMethod( CorrelationCollineationGroup, 
 	"for a full projective space",
 	[ IsProjectiveSpace and IsProjectiveSpaceRep ],
 	function( ps )
@@ -759,9 +759,9 @@ InstallMethod( CorrelationGroup,
 		SetSize(corr, Size(g) / (q - 1) * Order(frob) * 2); #* 2 for the standard duality.
 	    pow := LogInt(q, Characteristic(f));
 		if pow > 1 then 
-			string := Concatenation("PGammaL(",String(d+1),",",String(q),")");
+			string := Concatenation("The FinInG correlation-collineation group PGammaL(",String(d+1),",",String(q),")");
 		else
-			string := Concatenation("PGL(",String(d+1),",",String(q),")");
+			string := Concatenation("The FinInG correlation-collineation group PGL(",String(d+1),",",String(q),")");
 		fi;
 		string := Concatenation(string," : 2");
 		SetName(corr,string);
@@ -896,7 +896,7 @@ InstallMethod( ProjectiveSpaceIsomorphism, [ IsProjGrpElWithFrobWithPSIsom and
 ##
 InstallOtherMethod( Embedding,
     "for a collineation group",
-	[IsProjectiveGroupWithFrob, IsProjGroupWithFrobWithPSIsom],
+	[IsCollineationGroup, IsProjGroupWithFrobWithPSIsom],
 	function(group,corr)
 	local hom;
 	if not ((BaseField(group)=BaseField(corr)) and (Dimension(group)=Dimension(corr))) then

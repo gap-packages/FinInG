@@ -57,9 +57,9 @@ BindGlobal( "ProjElsType", NewType( ProjElsFamily,
 DeclareOperation( "ProjEl", [IsMatrix and IsFFECollColl] );
 DeclareOperation( "ProjEls", [IsList] );
 
-DeclareSynonym( "IsProjectiveGroup", IsGroup and IsProjGrpElCollection);
+DeclareSynonym( "IsProjectivityGroup", IsGroup and IsProjGrpElCollection);
 
-InstallTrueMethod(IsHandledByNiceMonomorphism, IsProjectiveGroup);
+InstallTrueMethod(IsHandledByNiceMonomorphism, IsProjectivityGroup);
 
 DeclareOperation( "Projectivity", [ IsList, IsField] );
 
@@ -107,19 +107,19 @@ DeclareOperation( "FieldAutomorphism", [ IsProjGrpElWithFrob and IsProjGrpElWith
 DeclareGlobalFunction( "OnProjPoints" );
 DeclareGlobalFunction( "OnProjSubspacesNoFrob" );
 
-DeclareOperation( "ActionOnAllProjPoints", [IsProjectiveGroup] );
-DeclareOperation( "SetAsNiceMono", [IsProjectiveGroup, IsGroupHomomorphism] );
+DeclareOperation( "ActionOnAllProjPoints", [IsProjectivityGroup] );
+DeclareOperation( "SetAsNiceMono", [IsProjectivityGroup, IsGroupHomomorphism] );
 
-DeclareAttribute( "Dimension", IsProjectiveGroup );
-DeclareProperty( "CanComputeActionOnPoints", IsProjectiveGroup );
+DeclareAttribute( "Dimension", IsProjectivityGroup );
+DeclareProperty( "CanComputeActionOnPoints", IsProjectivityGroup );
 
-DeclareSynonym( "IsProjectiveGroupWithFrob", IsGroup and IsProjGrpElWithFrobCollection);
+DeclareSynonym( "IsCollineationGroup", IsGroup and IsProjGrpElWithFrobCollection);
 
 #################################################
 # action functions:
 #################################################
 
-InstallTrueMethod( IsHandledByNiceMonomorphism, IsProjectiveGroupWithFrob );
+InstallTrueMethod( IsHandledByNiceMonomorphism, IsCollineationGroup );
 
 DeclareGlobalFunction( "OnProjSubspaces" );
 DeclareGlobalFunction( "OnSetsProjSubspaces" );
@@ -127,11 +127,11 @@ DeclareGlobalFunction( "OnSetsProjSubspaces" );
 DeclareGlobalFunction( "OnProjPointsWithFrob" );
 DeclareGlobalFunction( "OnProjSubspacesWithFrob" );
 
-DeclareOperation( "ActionOnAllProjPoints", [IsProjectiveGroupWithFrob] );
-DeclareOperation( "SetAsNiceMono", [IsProjectiveGroupWithFrob, IsGroupHomomorphism] );
+DeclareOperation( "ActionOnAllProjPoints", [IsCollineationGroup] );
+DeclareOperation( "SetAsNiceMono", [IsCollineationGroup, IsGroupHomomorphism] );
 
-DeclareAttribute( "Dimension", IsProjectiveGroupWithFrob );
-DeclareProperty( "CanComputeActionOnPoints", IsProjectiveGroupWithFrob );
+DeclareAttribute( "Dimension", IsCollineationGroup );
+DeclareProperty( "CanComputeActionOnPoints", IsCollineationGroup );
 
 DeclareGlobalFunction( "NiceMonomorphismByOrbit" );
 DeclareGlobalFunction( "NiceMonomorphismByDomain" );

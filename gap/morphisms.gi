@@ -1075,7 +1075,7 @@ InstallMethod( NaturalEmbeddingByFieldReduction,
 			ConvertToMatrixRepNC( preimage, f1 );       
 			return ProjectiveSemilinearMap(preimage, f1);
 		end;
-		g1 := HomographyGroup( pg1 );
+		g1 := ProjectivityGroup( pg1 );
 		gens := GeneratorsOfGroup( g1 );
 		newgens := List(gens, hom);
 		g2 := Group( newgens );

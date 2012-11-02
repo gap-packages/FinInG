@@ -893,7 +893,7 @@ InstallMethod( ProjectiveSpaceIsomorphism, [ IsProjGrpElWithFrobWithPSIsom and
 ##
 InstallOtherMethod( Embedding,
     "for a collineation group",
-	[IsProjectiveGroupWithFrob, IsProjGroupWithFrobWithPSIsom],
+	[IsCollineationGroup, IsProjGroupWithFrobWithPSIsom],
 	function(group,corr)
 	local hom;
 	if not ((BaseField(group)=BaseField(corr)) and (Dimension(group)=Dimension(corr))) then

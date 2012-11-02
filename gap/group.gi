@@ -1103,21 +1103,21 @@ InstallMethod( OneSameMutability,
 
 InstallMethod( ViewObj, 
 	"for a projective group",
-	[IsProjectiveGroup],
+	[IsProjectivityGroup],
 	function( g )
 		Print("<projective group>");
 	end );
 
 InstallMethod( ViewObj, 
 	"for a trivial projective group",
-	[IsProjectiveGroup and IsTrivial],
+	[IsProjectivityGroup and IsTrivial],
 	function( g )
 		Print("<trivial projective group>");
 	end );
 
 InstallMethod( ViewObj, 
 	"for a projective group with gens",
-	[IsProjectiveGroup and HasGeneratorsOfGroup],
+	[IsProjectivityGroup and HasGeneratorsOfGroup],
 	function( g )
 		local gens;
 		gens := GeneratorsOfGroup(g);
@@ -1131,7 +1131,7 @@ InstallMethod( ViewObj,
 
 InstallMethod( ViewObj, 
 	"for a projective group with size",
-	[IsProjectiveGroup and HasSize],
+	[IsProjectivityGroup and HasSize],
 	function( g )
 		if Size(g) = 1 then
 			Print("<trivial projective group>");
@@ -1142,7 +1142,7 @@ InstallMethod( ViewObj,
 
 InstallMethod( ViewObj, 
 	"for a projective group with gens and size",
-	[IsProjectiveGroup and HasGeneratorsOfGroup and HasSize],
+	[IsProjectivityGroup and HasGeneratorsOfGroup and HasSize],
 	function( g )
 		local gens;
 		gens := GeneratorsOfGroup(g);
@@ -1156,21 +1156,21 @@ InstallMethod( ViewObj,
 	
 InstallMethod( ViewObj,	
 	"for a projective semilinear group",
-	[IsProjectiveGroupWithFrob],
+	[IsCollineationGroup],
 	function( g )
 		Print("<projective semilinear group>");
 	end );
 
 InstallMethod( ViewObj, 
 	"for a trivial projective semilinear group",
-	[IsProjectiveGroupWithFrob and IsTrivial],
+	[IsCollineationGroup and IsTrivial],
 	function( g )
 		Print("<trivial projective semilinear group>");
 	end );
 
 InstallMethod( ViewObj, 
 	"for a projective semilinear group with gens",
-	[IsProjectiveGroupWithFrob and HasGeneratorsOfGroup],
+	[IsCollineationGroup and HasGeneratorsOfGroup],
 	function( g )
 		local gens;
 		gens := GeneratorsOfGroup(g);
@@ -1184,7 +1184,7 @@ InstallMethod( ViewObj,
 
 InstallMethod( ViewObj, 
 	"for a projective semilinear group with size",
-	[IsProjectiveGroupWithFrob and HasSize],
+	[IsCollineationGroup and HasSize],
 	function( g )
 		if Size(g) = 1 then
 			Print("<trivial projective semilinear group>");
@@ -1195,7 +1195,7 @@ InstallMethod( ViewObj,
 
 InstallMethod( ViewObj, 
 	"for a projective semilinear group with gens and size",
-	[IsProjectiveGroupWithFrob and HasGeneratorsOfGroup and HasSize],
+	[IsCollineationGroup and HasGeneratorsOfGroup and HasSize],
 	function( g )
 		local gens;
 		gens := GeneratorsOfGroup(g);
@@ -1219,7 +1219,7 @@ InstallMethod( ViewObj,
 ## 
 InstallMethod( BaseField, 
 	"for a projective group",
-	[IsProjectiveGroup],
+	[IsProjectivityGroup],
 	function( g )
 		local f,gens;
 		if IsBound(g!.basefield) then
@@ -1247,7 +1247,7 @@ InstallMethod( BaseField,
 ## 
 InstallMethod( BaseField, 
 	"for a projective semilinear group",
-	[IsProjectiveGroupWithFrob],
+	[IsCollineationGroup],
 	function( g )
 		local f,gens;
 		if IsBound(g!.basefield) then
@@ -1278,7 +1278,7 @@ InstallMethod( BaseField,
 ## 
 InstallMethod( Dimension, 
 	"for a projective group",
-	[IsProjectiveGroup],
+	[IsProjectivityGroup],
 	function( g )
 		local gens;
 		if HasParent(g) then
@@ -1302,7 +1302,7 @@ InstallMethod( Dimension,
 ## 
 InstallMethod( Dimension, 
 	"for a projective semilinear group",
-	[IsProjectiveGroupWithFrob],
+	[IsCollineationGroup],
 	function( g )
 		local gens;
 		if HasParent(g) then
@@ -1323,8 +1323,8 @@ InstallMethod( Dimension,
 ## 
 InstallMethod( OneImmutable, 
 	"for a projective group",
-	# was: [IsGroup and IsProjectiveGroup], I think might be
-	[IsProjectiveGroup],
+	# was: [IsGroup and IsProjectivityGroup], I think might be
+	[IsProjectivityGroup],
 	function( g )
 		local gens, o;
 		gens := GeneratorsOfGroup(g);
@@ -1347,8 +1347,8 @@ InstallMethod( OneImmutable,
 ## 
 InstallMethod( OneImmutable, 
 	"for a projective semilinear group",
-	# was [IsGroup and IsProjectiveGroupWithFrob], I think might be
-	[IsProjectiveGroupWithFrob],
+	# was [IsGroup and IsCollineationGroup], I think might be
+	[IsCollineationGroup],
 	function( g )
 		local gens, o;
 		gens := GeneratorsOfGroup(g);
@@ -1379,7 +1379,7 @@ InstallMethod( OneImmutable,
 ## 
 InstallMethod( CanComputeActionOnPoints, 
 	"for a projective group",
-	[IsProjectiveGroup],
+	[IsProjectivityGroup],
 	function( g )
 		local d,q;
 		d := Dimension( g );
@@ -1399,7 +1399,7 @@ InstallMethod( CanComputeActionOnPoints,
 ## 
 InstallMethod( CanComputeActionOnPoints, 
 	"for a projective group with frob",
-	[IsProjectiveGroupWithFrob],
+	[IsCollineationGroup],
 	function( g )
 		local d,q;
 		d := Dimension( g );
@@ -1521,7 +1521,7 @@ InstallGlobalFunction( OnProjSubspacesWithFrob,
 ## 
 InstallMethod( ActionOnAllProjPoints, 
 	"for a projective group",
-	[ IsProjectiveGroup ],
+	[ IsProjectivityGroup ],
 	function( pg )
 		local a,d,f,orb;
 		f := BaseField(pg);
@@ -1539,7 +1539,7 @@ InstallMethod( ActionOnAllProjPoints,
 # of the underlying projective space.
 ## 
 InstallMethod( ActionOnAllProjPoints, "for a projective semilinear group",
-	[ IsProjectiveGroupWithFrob ],
+	[ IsCollineationGroup ],
 	function( pg )
 		local a,d,f,o,on,orb,v,zero, m, j;
 		f := BaseField(pg);
@@ -1641,7 +1641,7 @@ InstallGlobalFunction( NiceMonomorphismByDomain,
 ## John is probably right. A grep of SetAsNiceMono on all *.gi files gives only the InstallMethod( parts. (jdb 6/9/11). 
 
 InstallMethod( SetAsNiceMono, "for a projective group and an action hom",
-  [IsProjectiveGroup, IsGroupHomomorphism and IsInjective],
+  [IsProjectivityGroup, IsGroupHomomorphism and IsInjective],
   function( pg, a )
     SetNiceMonomorphism(pg,a);
     SetNiceObject(pg,Image(a));
@@ -1649,7 +1649,7 @@ InstallMethod( SetAsNiceMono, "for a projective group and an action hom",
   
 InstallMethod( SetAsNiceMono, 
   "for a projective semilinear group and an action hom",
-  [IsProjectiveGroupWithFrob, IsGroupHomomorphism and IsInjective],
+  [IsCollineationGroup, IsGroupHomomorphism and IsInjective],
   function( pg, a )
     SetNiceMonomorphism(pg,a);
     SetNiceObject(pg,Image(a));
@@ -1662,7 +1662,7 @@ InstallMethod( SetAsNiceMono,
 ##
 InstallMethod( NiceMonomorphism, 
 	"for a projective group (feasible case)",
-	[IsProjectiveGroup and CanComputeActionOnPoints and IsHandledByNiceMonomorphism], 
+	[IsProjectivityGroup and CanComputeActionOnPoints and IsHandledByNiceMonomorphism], 
 	50,
 	function( pg )
 	local hom, dom;
@@ -1683,7 +1683,7 @@ InstallMethod( NiceMonomorphism,
 ##
 InstallMethod( NiceMonomorphism, 
 	"for a projective group (nasty case)",
-	[IsProjectiveGroupWithFrob and IsHandledByNiceMonomorphism], 
+	[IsCollineationGroup and IsHandledByNiceMonomorphism], 
 	50,
 	function( pg )
 		local can, dom, hom;
@@ -1709,7 +1709,7 @@ InstallMethod( NiceMonomorphism,
 ##
 InstallMethod( NiceMonomorphism, 
 	"for a projective semilinear group (feasible case)",
-	[IsProjectiveGroupWithFrob and CanComputeActionOnPoints and
+	[IsCollineationGroup and CanComputeActionOnPoints and
 	IsHandledByNiceMonomorphism], 50,
 	function( pg )
 		return ActionOnAllProjPoints( pg );
@@ -1722,7 +1722,7 @@ InstallMethod( NiceMonomorphism,
 ##
 InstallMethod( NiceMonomorphism, 
 	"for a projective semilinear group (nasty case)",
-	[IsProjectiveGroupWithFrob and IsHandledByNiceMonomorphism], 50,
+	[IsCollineationGroup and IsHandledByNiceMonomorphism], 50,
 	function( pg )
 		local can;
 		can := CanComputeActionOnPoints(pg);
@@ -1737,7 +1737,7 @@ InstallMethod( NiceMonomorphism,
 
 InstallMethod( FindBasePointCandidates,
   "for a projective group",
-  [IsProjectiveGroup,IsRecord,IsInt],
+  [IsProjectivityGroup,IsRecord,IsInt],
   function(g,opt,i)
     local cand,d,f,gens;
     if IsBound(g!.basepointcandidates) and
@@ -1759,7 +1759,7 @@ InstallMethod( FindBasePointCandidates,
 
 InstallMethod( FindBasePointCandidates,
   "for a projective semilinear group",
-  [IsProjectiveGroupWithFrob,IsRecord,IsInt],
+  [IsCollineationGroup,IsRecord,IsInt],
   function(g,opt,i)
     local cand,d,f,gens;
     if IsBound(g!.basepointcandidates) and
@@ -1786,7 +1786,7 @@ InstallMethod( FindBasePointCandidates,
 
 InstallMethod( FindBasePointCandidates,
   "for a projective semilinear group",
-  [IsProjectiveGroupWithFrob,IsRecord,IsInt,IsObject],
+  [IsCollineationGroup,IsRecord,IsInt,IsObject],
 #
 # We need a four-argument version of this method for recent versions of GenSS.
 # We don't use "parentS" at all here.

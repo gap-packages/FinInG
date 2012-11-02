@@ -27,15 +27,14 @@ This is the chapter of the documentation describing the projective groups.
 A <E>collineation</E> of a projective space is a type preserving bijection of the
 elements of the projective space, that preserves incidence. The Fundamental Theorem
 of Projective Geometry states that every collineation of a Desarguesian projective
-space is induced by a semi-linear map of the underlying vector space.
+space of dimension at least two is induced by a semi-linear map of the underlying vector space.
 The group of all linear maps of a given <M>n+1</M>-dimensional
-vector space over a given field <M>GF(q)</M> is denoted by <M>GL(n+1,q)</M>. This is
-a matrix group consisting of all non-singular <M>n+1</M>-dimensional square matrices
+vector space over a given field <M>GF(q)</M> is denoted by <M>GL(n+1,q)</M>. This is a matrix group consisting of all non-singular square <M>n+1</M>-dimensional matrices
 over <M>GF(q)</M>. The group of all semilinear maps 
 of the vector space <M>V(n,q)</M> is obtained as the semidirect product of
 <M>GL(n,q)</M> and <M>Aut(GF(q))</M>, and is denoted by <Alt Not="HTML"><M>\Gamma L(n+1,q)</M></Alt><Alt
 Only="HTML">&#915;L(n+1,q)</Alt>.
-It is clear that each semilinear map induces a collineation of <M>PG(n,q)</M>. The
+Each semilinear map induces a collineation of <M>PG(n,q)</M>. The
 Fundamental theorem of Projective Geometry also guarantees that the converse holds. Note also
 that <Alt Not="HTML"><M>\Gamma L(n+1,q)</M></Alt><Alt
 Only="HTML">&#915;L(n+1,q)</Alt> does not act faithfully on the projective points,
@@ -80,8 +79,8 @@ underlying matrices <Alt Not="HTML"><M>A_1,A_2</M></Alt><Alt
 Only="HTML">A&lt;sub>1&lt;/sub>,A&lt;sub>2&lt;/sub></Alt> and respective underlying
 field automorphisms <Alt Not="HTML"><M>\theta_1,\theta_2</M></Alt><Alt
 Only="HTML">&#952;&lt;sub>1&lt;/sub>,&#952;&lt;sub>2&lt;/sub></Alt> is the collineation with
-underlying matrix <Alt Not="HTML"><M>A_1 \cdot A_2^{\theta_2^{-1}}</M></Alt><Alt
-Only="HTML">A&lt;sub>1&lt;/sub>A&lt;sub>2&lt;/sub>&lt;sup>&#952;&lt;sub>2&lt;/sub>&lt;sup>-1&lt;/sup>&lt;/sup></Alt> 
+underlying matrix <Alt Not="HTML"><M>A_1 \cdot A_2^{\theta_1^{-1}}</M></Alt><Alt
+Only="HTML">A&lt;sub>1&lt;/sub>A&lt;sub>2&lt;/sub>&lt;sup>&#952;&lt;sub>1&lt;/sub>&lt;sup>-1&lt;/sup>&lt;/sup></Alt> 
 and underlying field automorphism <Alt Not="HTML"><M>\theta_1 \theta_2</M></Alt>
 <Alt Only="HTML">&#952;&lt;sub>1&lt;/sub>&#952;&lt;sub>2&lt;/sub></Alt>.<P/>
 
@@ -126,9 +125,8 @@ field automorphisms <Alt Not="HTML"><M>\theta_1,\theta_2</M></Alt><Alt
 Only="HTML">&#952;&lt;sub>1&lt;/sub>,&#952;&lt;sub>2&lt;/sub></Alt>, and respective underlying 
 projective space isomorphisms (standard duality or identity map) <Alt Not="HTML"><M>\delta_1,\delta_2</M></Alt><Alt
 Only="HTML">&#948;&lt;sub>1&lt;/sub>,&#948;&lt;sub>2&lt;/sub></Alt>, is the element of 
-the correlation group with underlying matrix <Alt Not="HTML"><M>A_1 \cdot (A_2^{\theta_2^{-1}})^\delta_2</M></Alt><Alt
-Only="HTML">A&lt;sub>1&lt;/sub>(A&lt;sub>2&lt;/sub>&lt;sup>&#952;&lt;sub>2&lt;/sub>&lt;sup>-1&lt;/sup>&lt;/sup>)&lt;sup>
-&#948;&lt;sub>2&lt;/sub>&lt;/sup></Alt>,
+the correlation group with underlying matrix <Alt Not="HTML"><M>A_1 A_2^{\theta_1^{-1}}</M></Alt><Alt
+Only="HTML">A&lt;sub>1&lt;/sub>A&lt;sub>2&lt;/sub>&lt;sup>&#952;&lt;sub>1&lt;/sub>&lt;sup>-1&lt;/sup>&lt;/sup></Alt>,
 underlying field automorphism <Alt Not="HTML"><M>\theta_1 \theta_2</M></Alt>
 <Alt Only="HTML">&#952;&lt;sub>1&lt;/sub>&#952;&lt;sub>2&lt;/sub></Alt>, and underlying projective space automorphism 
 <Alt Not="HTML"><M>\delta_1 \delta_2.</M></Alt>
@@ -143,6 +141,92 @@ and return a (permutation) group isomorphic to the required group. Therefore we 
 not provide new methods for these commands, but assume that the user will obtain these
 groups as homography or special homography group of the appropriate projective space.
 We will follow this philosophy for the other classical groups. 
+
+
+<Section>
+<Heading>The groups <Alt Not="HTML"><M>P\Gamma{}L</M></Alt><Alt Only="HTML"><M>P&#915;L</M></Alt>, 
+<M>PGL</M>, and <M>PSL</M> in <Package>FinInG</Package>
+</Heading>
+
+As mentioned before the commands <F>PGL</F> (and <F>ProjectiveGeneralLinearGroup</F>) 
+and <F>PSL</F> (and <F>ProjectiveSpecialLinearGroup</F>) are already available in GAP 
+and return a (permutation) group isomorphic to the required group.
+
+In <Package>FinInG</Package>, different categories are created for these groups.
+
+<ManSection>
+<Heading>Categories for group elements</Heading>
+<Filt Name="IsProjectiveGroup" Type="Category"/>
+<Filt Name="IsProjectiveGroupWithFrob" Type="Category"/>
+<Filt Name="IsProjectivityGroup" Type="Category"/>
+<Filt Name="IsCollineationGroup" Type="Category"/>
+<Description>
+
+<C>IsProjectiveGroup</C> is ...
+<C>IsProjectivityGroup</C> is a category to which the group of projectivities of a projective space
+belongs (i.e. <M>PGL(n+1,q)</M>).
+<C>IsProjectiveGroupWithFrob</C> is a category to which the group of collineations of a projective
+space belongs (i.e. <Alt Not="HTML"><M>P\Gamma L(n+1,q)</M></Alt><Alt
+Only="HTML">P&#915;L(n+1,q)</Alt>).
+
+<C>IsCollineationGroup</C> (MOET NOG GECONTROLEERD WORDEN) applies the same filter to a group of automorphisms of a projective space as <C>IsProjecitiveGroupWithFrob</C>.
+
+<C>IsProjectiveGroup</C> is ...
+
+
+HIER VERDER WERKEN
+
+elements of <M>PGL(n+1,q)</M>, i.e. projectivities, 
+can be constructed as objects.
+<C>IsProjGrpElWithFrob</C> is a category in which elements of <Alt Not="HTML"><M>P\Gamma L(n+1,q)</M></Alt><Alt
+Only="HTML">P&#915;L(n+1,q)</Alt> can be constructed. So collineations in the
+mathematical sense (and thus also projectivities) can be constructed as objects in
+this category.
+</Description>
+</ManSection>
+
+
+<ManSection>
+<Oper Name="CollineationGroup" Arg="geom"/>
+<Returns>the group of collineations of geom</Returns>
+<Description>
+Let <A>geom</A> be the projective space <M>PG(n,q)</M> This operation returns the 
+group of collineations <Alt Not="HTML"><M>\Gamma L(n+1,q)</M></Alt><Alt
+Only="HTML">&#915;L(n+1,q)</Alt> of the projective space <M>PG(n,q)</M>. If
+<M>GF(q)</M> has no non-trivial field automorphisms, i.e. when <M>q</M> is prime,
+the group <M>PGL(n+1,q)</M> is the full collineation group and will be returned.
+<Example>
+<#Include SYSTEM "../examples/include/projgroups_collineationgroup.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="ProjectivityGroup" Arg="geom"/>
+<Oper Name="HomographyGroup" Arg="geom"/>
+<Returns>the group of projectivities of geom</Returns>
+<Description>
+Let <A>geom</A> be the projective space <M>PG(n,q)</M> This operation (and its synonym) returns the 
+group of projectivities <M>PGL(n+1,q)</M> of the projective space <M>PG(n,q)</M>.
+<Example>
+<#Include SYSTEM "../examples/include/projgroups_projectivitygroup.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="SpecialProjectivityGroup" Arg="geom"/>
+<Oper Name="SpecialHomographyGroup" Arg="geom"/>
+<Returns>the group of special projectivities of geom</Returns>
+<Description>
+Let <A>geom</A> be the projective space <M>PG(n,q)</M> This operation (and its synonym) returns the 
+group of special projectivities <M>PSL(n+1,q)</M> of the projective space <M>PG(n,q)</M>.
+<Example>
+<#Include SYSTEM "../examples/include/projgroups_specialprojectivitygroup.include"> 
+</Example>
+</Description>
+</ManSection>
+</Section>
 
 <Section>
 <Heading>Projectivities, collineations and correlations of projective spaces</Heading>
@@ -325,52 +409,6 @@ This function returns the order of <A>g</A>.
 
 </Section>
 
-<Section>
-<Heading>The groups <Alt Not="HTML"><M>P\Gamma{}L</M></Alt><Alt Only="HTML"><M>P&#915;L</M></Alt>, 
-<M>PGL</M>, and <M>PSL</M> in <Package>FinInG</Package>
-</Heading>
-
-<ManSection>
-<Oper Name="CollineationGroup" Arg="geom"/>
-<Returns>the group of collineations of geom</Returns>
-<Description>
-Let <A>geom</A> be the projective space <M>PG(n,q)</M> This operation returns the 
-group of collineations <Alt Not="HTML"><M>\Gamma L(n+1,q)</M></Alt><Alt
-Only="HTML">&#915;L(n+1,q)</Alt> of the projective space <M>PG(n,q)</M>. If
-<M>GF(q)</M> has no non-trivial field automorphisms, i.e. when <M>q</M> is prime,
-the group <M>PGL(n+1,q)</M> is the full collineation group and will be returned.
-<Example>
-<#Include SYSTEM "../examples/include/projgroups_collineationgroup.include"> 
-</Example>
-</Description>
-</ManSection>
-
-<ManSection>
-<Oper Name="ProjectivityGroup" Arg="geom"/>
-<Oper Name="HomographyGroup" Arg="geom"/>
-<Returns>the group of projectivities of geom</Returns>
-<Description>
-Let <A>geom</A> be the projective space <M>PG(n,q)</M> This operation (and its synonym) returns the 
-group of projectivities <M>PGL(n+1,q)</M> of the projective space <M>PG(n,q)</M>.
-<Example>
-<#Include SYSTEM "../examples/include/projgroups_projectivitygroup.include"> 
-</Example>
-</Description>
-</ManSection>
-
-<ManSection>
-<Oper Name="SpecialProjectivityGroup" Arg="geom"/>
-<Oper Name="SpecialHomographyGroup" Arg="geom"/>
-<Returns>the group of special projectivities of geom</Returns>
-<Description>
-Let <A>geom</A> be the projective space <M>PG(n,q)</M> This operation (and its synonym) returns the 
-group of special projectivities <M>PSL(n+1,q)</M> of the projective space <M>PG(n,q)</M>.
-<Example>
-<#Include SYSTEM "../examples/include/projgroups_specialprojectivitygroup.include"> 
-</Example>
-</Description>
-</ManSection>
-</Section>
 
 <Section>
 <Heading>Basic operations for projective groups</Heading>

@@ -207,7 +207,7 @@ DeclareOperation( "Planes", [IsIncidenceStructure] );
 DeclareOperation( "Solids", [IsIncidenceStructure] );
 
 DeclareAttribute( "CollineationGroup", IsIncidenceStructure );
-DeclareAttribute( "CorrelationGroup", IsIncidenceStructure );
+DeclareAttribute( "CorrelationCollineationGroup", IsIncidenceStructure );
 DeclareAttribute( "CollineationAction", IsIncidenceStructure );
 DeclareAttribute( "CorrelationAction", IsIncidenceStructure );
 DeclareAttribute( "RepresentativesOfElements", IsIncidenceStructure );

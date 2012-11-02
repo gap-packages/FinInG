@@ -66,8 +66,8 @@ BindGlobal( "IsFlagOfPSType", NewType( FlagsOfPS,
 
 DeclareOperation( "ProjectiveSpace", [IsInt, IsField] );
 DeclareOperation( "ProjectiveSpace", [IsInt, IsPosInt] );
-DeclareAttribute( "HomographyGroup", IsProjectiveSpace );
-DeclareAttribute( "SpecialHomographyGroup", IsProjectiveSpace );
+DeclareAttribute( "ProjectivityGroup", IsProjectiveSpace );
+DeclareAttribute( "SpecialProjectivityGroup", IsProjectiveSpace );
 #DeclareAttribute( "ProjectiveDimension", IsProjectiveSpace ); #next three: more general decl in liegeometry.gd
 #DeclareAttribute( "ProjectiveDimension", IsSubspaceOfProjectiveSpace );
 #DeclareAttribute( "ProjectiveDimension", IsEmpty );
@@ -96,8 +96,8 @@ DeclareOperation( "IsIncident", [IsProjectiveSpace, IsProjectiveSpace]);
 #DeclareAttribute( "AmbientSpace", IsSubspaceOfProjectiveSpace );
 
 
-DeclareSynonymAttr( "ProjectivityGroup", HomographyGroup );
-DeclareSynonymAttr( "SpecialProjectivityGroup", SpecialHomographyGroup );
+DeclareSynonymAttr( "HomographyGroup", ProjectivityGroup );
+DeclareSynonymAttr( "SpecialHomographyGroup", SpecialProjectivityGroup );
 
 DeclareSynonym( "PG", ProjectiveSpace ); 
 

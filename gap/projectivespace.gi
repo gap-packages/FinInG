@@ -957,7 +957,7 @@ InstallMethod( Size,
 # Constructors for groups of projective spaces.
 #############################################################################
 
-# CHECKED 10/09/2011 jdb
+# CHECKED 10/09/2011 jdb # changed ml 02/11/12
 #############################################################################
 #A  CollineationGroup( <ps> )
 # returns the collineation group of the projective space <ps>
@@ -982,21 +982,22 @@ InstallMethod( CollineationGroup,
 		pow := LogInt(q, Characteristic(f));
 		s := pow * q^(d*(d+1)/2)*Product(List([2..d+1], i->q^i-1)); 
 		if pow > 1 then 
-			SetName( coll, Concatenation("PGammaL(",String(d+1),",",String(q),")") );
+			SetName( coll, Concatenation("The FinInG collineation group PGammaL(",String(d+1),",",String(q),")") );
 		else
-			SetName( coll, Concatenation("PGL(",String(d+1),",",String(q),")") );
+			SetName( coll, Concatenation("The FinInG collineation group PGL(",String(d+1),",",String(q),")") );
+			# Remark that in the prime case, PGL is returned as a FinInG collineation group with associated automorphism F^0.
 		fi;	
 		SetSize( coll, s );    
 		return coll;
 	end );
 
-# CHECKED 10/09/2011 jdb
+# CHECKED 10/09/2011 jdb, changed ML 02/11/2012
 #############################################################################
-#A  HomographyGroup( <ps> )
-# returns the homogrphy group of the projective space <ps>
+#A  ProjectivityGroup( <ps> )
+# returns the group of projectivities of the projective space <ps>
 ##
-InstallMethod( HomographyGroup, 
-	"for a full projective space",
+InstallMethod( ProjectivityGroup, 
+	"for a projective space",
 	[ IsProjectiveSpace ],
 	function( ps )
 		local gg,d,f,frob,g,newgens,q,s;
@@ -1007,22 +1008,24 @@ InstallMethod( HomographyGroup,
 			Error("The dimension of the projective spaces needs to be at least 0");
 		fi;
 		g := GL(d+1,q);
-		frob := FrobeniusAutomorphism(f);
-		newgens := List(GeneratorsOfGroup(g),x->[x,frob^0]);
-		newgens := ProjElsWithFrob(newgens);
+		#frob := FrobeniusAutomorphism(f);
+		newgens:=GeneratorsOfGroup(g); # this replaces the next line (ml 02/11/12)
+		#newgens := List(GeneratorsOfGroup(g),x->[x,frob^0]);
+		newgens := ProjEls(newgens); # this replaces the next line (ml 02/11/12)
+		#newgens := ProjElsWithFrob(newgens);
 		gg := GroupWithGenerators(newgens);
 		s := q^(d*(d+1)/2)*Product(List([2..d+1], i->q^i-1)); 
-		SetName( gg, Concatenation("PGL(",String(d+1),",",String(q),")") );
+		SetName( gg, Concatenation("The FinInG projectivity group PGL(",String(d+1),",",String(q),")") );
 		SetSize( gg, s );
 		return gg;
 	end );
 
-# CHECKED 10/09/2011 jdb
+# CHECKED 10/09/2011 jdb, changed ML 02/11/2012
 #############################################################################
-#A  SpecialHomographyGroup( <ps> )
-# returns the special homogrphy group of the projective space <ps>
+#A  SpecialProjectivityGroup( <ps> )
+# returns the special projectivity group of the projective space <ps>
 ##
-InstallMethod( SpecialHomographyGroup, 
+InstallMethod( SpecialProjectivityGroup, 
 	"for a full projective space",
 	[ IsProjectiveSpace ],
 	function( ps )
@@ -1034,12 +1037,14 @@ InstallMethod( SpecialHomographyGroup,
 			Error("The dimension of the projective spaces needs to be at least 0");
 		fi;
 		g := SL(d+1,q);
-		frob := FrobeniusAutomorphism(f);
-		newgens := List(GeneratorsOfGroup(g),x->[x,frob^0]);
-		newgens := ProjElsWithFrob(newgens);
+		#frob := FrobeniusAutomorphism(f);
+		newgens:=GeneratorsOfGroup(g);  # this replaces the next line (ml 02/11/12)
+		#newgens := List(GeneratorsOfGroup(g),x->[x,frob^0]);
+		newgens:=ProjEls(newgens);  # this replaces the next line (ml 02/11/12)
+		#newgens := ProjElsWithFrob(newgens);
 		gg := GroupWithGenerators(newgens);
 		s := q^(d*(d+1)/2)*Product(List([2..d+1], i->q^i-1)) / GCD_INT(q-1, d+1);
-		SetName( gg, Concatenation("PSL(",String(d+1),",",String(q),")") );
+		SetName( gg, Concatenation("The FinInG PSL group PSL(",String(d+1),",",String(q),")") );
 		SetSize( gg, s );    
 		return gg;
 	end );
