@@ -443,13 +443,19 @@ InstallMethod( CollineationGroup,
        Info(InfoFinInG, 1, "Computing nice monomorphism...");
        orblen := (q+1)*(q^8+q^4+1);
        rep := RepresentativesOfElements(hexagon)[2];
-	 domain := Orb(coll, rep, OnProjSubspaces, 
+	   domain := Orb(coll, rep, OnProjSubspaces, 
                     rec(orbsizelimit := orblen, hashlen := 2*orblen, storenumbers := true));
        Enumerate(domain);
        Info(InfoFinInG, 1, "Found permutation domain…");
-	 hom := OrbActionHomomorphism(coll, domain);    
- 	 SetIsBijective(hom, true);
-	 SetNiceObject(coll, Image(hom) );
+	   hom := OrbActionHomomorphism(coll, domain);   
+		
+       #hom := NiceMonomorphismByOrbit(coll, rep,
+	   #            OnProjSubspaces, orblen );
+	 
+ 	   SetIsBijective(hom, true);
+       ## for some reason, hom has not stored a prefun
+
+	   SetNiceObject(coll, Image(hom) );
        SetNiceMonomorphism(coll, hom );
        SetCollineationAction(coll, OnProjSubspaces);
        SetName(coll, Concatenation("4D_3(",String(q),")") );

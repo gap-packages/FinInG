@@ -2069,10 +2069,11 @@ InstallMethod( Random,
 	function( shad )
 		local d, pg, x, vspace, W;
 		## the underlying projective space
-		pg := shad!.geometry;
-		x:=shad!.parentflag;
-		vspace:=UnderlyingVectorSpace(x);
-		if not IsInt(shad!.type) then
+		Print("calledthis2");
+		pg := subs!.geometry;
+		subspace:=subs!.parentflag;
+		vspace:=UnderlyingVectorSpace(subspace);
+		if not IsInt(subs!.type) then
 			Error("The subspaces of the collection need to have the same dimension");
         fi;
 		## the common type of elements of subs

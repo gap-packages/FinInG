@@ -1753,11 +1753,12 @@ InstallMethod( NaturalProjectionBySubspace,
         if not IsEmpty(y) then 
            ## Note: TriangulizeMat does not return a matrix of full
            ##       rank, whereas SemiEchelonMat does!
+     		y := SemiEchelonMat(y)!.vectors;  ## JB: 3/11/2012. Moved this line from the "else" to here so it also applies to the first case.
+
 			if x!.type - vdim = 1 then 
 				y := y[1]; 
 				ConvertToVectorRep(y, f);
 			else
-				y := SemiEchelonMat(y)!.vectors;  
 				ConvertToMatrixRepNC(y, f);
 			fi;
         fi;
@@ -1836,15 +1837,20 @@ InstallMethod( NaturalProjectionBySubspaceNC,
     func := function( x )
               local y;         
               y := List(x!.obj,i-> Coefficients(bas,i))*basimgs;   
-              y := SemiEchelonMat(y)!.vectors;  
+              y := SemiEchelonMat(y)!.vectors;     
               if x!.type - vdim = 1 then 
                  y := y[1]; 
                  ConvertToVectorRep(y, f);
               else
                  ConvertToMatrixRepNC(y, f);
               fi;
-              return Wrap(ps2, x!.type - vdim, y);
-           end;
+			  if not IsEmpty(y) then  
+			 	 return Wrap(ps2, x!.type - vdim, y);
+	          else  
+			     return EmptySubspace(ps2);
+			  fi;
+			end;
+
     pre := function( y )
               local x;          
               x := y!.obj; 
