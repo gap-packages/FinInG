@@ -2067,16 +2067,16 @@ InstallMethod( Random,
     # chooses a random element out of the collection of subspaces of given
     # dimension of a subspace of a projective space
 	function( shad )
-		local d, pg, x, vspace, W;
+		local d, pg, x, vspace, W, subspace;
 		## the underlying projective space
 		Print("calledthis2");
-		pg := subs!.geometry;
-		subspace:=subs!.parentflag;
+		pg := shad!.geometry;
+		subspace:=shad!.parentflag;
 		vspace:=UnderlyingVectorSpace(subspace);
-		if not IsInt(subs!.type) then
+		if not IsInt(shad!.type) then
 			Error("The subspaces of the collection need to have the same dimension");
         fi;
-		## the common type of elements of subs
+		## the common type of elements of shads
 		d := shad!.type;
 		# now we need to distinguish two cases	
 		if d>Dimension(vspace) then
