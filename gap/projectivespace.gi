@@ -991,7 +991,7 @@ InstallMethod( CollineationGroup,
 		return coll;
 	end );
 
-# CHECKED 10/09/2011 jdb, changed ML 02/11/2012
+# CHECKED 10/09/2011 jdb, changed ML 02/11/2012, changed JDB 05/11/2012
 #############################################################################
 #A  ProjectivityGroup( <ps> )
 # returns the group of projectivities of the projective space <ps>
@@ -1008,11 +1008,11 @@ InstallMethod( ProjectivityGroup,
 			Error("The dimension of the projective spaces needs to be at least 0");
 		fi;
 		g := GL(d+1,q);
-		#frob := FrobeniusAutomorphism(f);
-		newgens:=GeneratorsOfGroup(g); # this replaces the next line (ml 02/11/12)
-		#newgens := List(GeneratorsOfGroup(g),x->[x,frob^0]);
-		newgens := ProjEls(newgens); # this replaces the next line (ml 02/11/12)
-		#newgens := ProjElsWithFrob(newgens);
+		frob := FrobeniusAutomorphism(f); #needs this, jdb 05/11/2012, see two lines further.
+		#newgens:=GeneratorsOfGroup(g); # this replaces the next line (ml 02/11/12)
+		newgens := List(GeneratorsOfGroup(g),x->[x,frob^0]); # I changed back, and uncommented previous line (jdb 05/11/12)
+		#newgens := ProjEls(newgens); # this replaces the next line (ml 02/11/12)
+		newgens := ProjElsWithFrob(newgens);  # I changed back, and uncommented previous line (jdb 05/11/12)
 		gg := GroupWithGenerators(newgens);
 		s := q^(d*(d+1)/2)*Product(List([2..d+1], i->q^i-1)); 
 		SetName( gg, Concatenation("The FinInG projectivity group PGL(",String(d+1),",",String(q),")") );
@@ -1020,7 +1020,7 @@ InstallMethod( ProjectivityGroup,
 		return gg;
 	end );
 
-# CHECKED 10/09/2011 jdb, changed ML 02/11/2012
+# CHECKED 10/09/2011 jdb, changed ML 02/11/2012, changed JDB 05/11/2012
 #############################################################################
 #A  SpecialProjectivityGroup( <ps> )
 # returns the special projectivity group of the projective space <ps>
@@ -1037,11 +1037,11 @@ InstallMethod( SpecialProjectivityGroup,
 			Error("The dimension of the projective spaces needs to be at least 0");
 		fi;
 		g := SL(d+1,q);
-		#frob := FrobeniusAutomorphism(f);
-		newgens:=GeneratorsOfGroup(g);  # this replaces the next line (ml 02/11/12)
-		#newgens := List(GeneratorsOfGroup(g),x->[x,frob^0]);
-		newgens:=ProjEls(newgens);  # this replaces the next line (ml 02/11/12)
-		#newgens := ProjElsWithFrob(newgens);
+		frob := FrobeniusAutomorphism(f); #needs this, jdb 05/11/2012, see two lines further.
+		#newgens:=GeneratorsOfGroup(g);  # this replaces the next line (ml 02/11/12)
+		newgens := List(GeneratorsOfGroup(g),x->[x,frob^0]); # I changed back, and uncommented previous line (jdb 05/11/12)
+		#newgens:=ProjEls(newgens);  # this replaces the next line (ml 02/11/12)
+		newgens := ProjElsWithFrob(newgens); # I changed back, and uncommented previous line (jdb 05/11/12)
 		gg := GroupWithGenerators(newgens);
 		s := q^(d*(d+1)/2)*Product(List([2..d+1], i->q^i-1)) / GCD_INT(q-1, d+1);
 		SetName( gg, Concatenation("The FinInG PSL group PSL(",String(d+1),",",String(q),")") );
