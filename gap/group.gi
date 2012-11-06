@@ -1791,7 +1791,7 @@ InstallMethod( FindBasePointCandidates,
 # We don't use "parentS" at all here.
 #
   function(g,opt,i,parentS)
-    local cand,d,f,gens;
+    local cand,d,f,j,gens;
     if IsBound(g!.basepointcandidates) and
        g!.basepointcandidates.used < Length(g!.basepointcandidates.points) then
         return g!.basepointcandidates;
@@ -1807,9 +1807,11 @@ InstallMethod( FindBasePointCandidates,
     cand := rec( points := IdentityMat(d,f), used := 0,
                  ops := ListWithIdenticalEntries(d,OnProjPointsWithFrob) );
     if d > 1 then
-        Add(cand.points,ShallowCopy(cand.points[1]));
-        Add(cand.ops,OnProjPointsWithFrob);
-        cand.points[d+1][2] := PrimitiveRoot(f);
+        for j in [2..d] do
+            Add(cand.points,ShallowCopy(cand.points[1]));
+            Add(cand.ops,OnProjPointsWithFrob);
+            cand.points[d+j-1][j] := PrimitiveRoot(f);
+        od;
     fi;
     return cand;
   end );
