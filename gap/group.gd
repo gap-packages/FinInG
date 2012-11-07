@@ -57,11 +57,10 @@ BindGlobal( "ProjElsType", NewType( ProjElsFamily,
 DeclareOperation( "ProjEl", [IsMatrix and IsFFECollColl] );
 DeclareOperation( "ProjEls", [IsList] );
 
-DeclareSynonym( "IsProjectivityGroup", IsGroup and IsProjGrpElCollection);
-
-InstallTrueMethod(IsHandledByNiceMonomorphism, IsProjectivityGroup);
+#InstallTrueMethod(IsHandledByNiceMonomorphism, IsProjectivityGroup);
 
 DeclareOperation( "Projectivity", [ IsList, IsField] );
+
 
 ###################################################################
 # Construction operations for projective semilinear elements, that is matrices modulo scalars
@@ -92,6 +91,9 @@ DeclareOperation( "ProjectiveSemilinearMap", [ IsList, IsMapping, IsField] );
 DeclareSynonym( "CollineationOfProjectiveSpace", ProjectiveSemilinearMap);
 DeclareOperation( "ProjectivityByImageOfStandardFrameNC", [IsProjectiveSpace, IsList] );
 
+DeclareProperty( "IsProjectivity", IsProjGrpElWithFrob );
+
+
 ###################################################################
 # Some operations for elements
 ###################################################################
@@ -107,13 +109,29 @@ DeclareOperation( "FieldAutomorphism", [ IsProjGrpElWithFrob and IsProjGrpElWith
 DeclareGlobalFunction( "OnProjPoints" );
 DeclareGlobalFunction( "OnProjSubspacesNoFrob" );
 
-DeclareOperation( "ActionOnAllProjPoints", [IsProjectivityGroup] );
-DeclareOperation( "SetAsNiceMono", [IsProjectivityGroup, IsGroupHomomorphism] );
+# the following are not necessary, since the FinInG projectivity group is constructed
+# as a projective semilinear group (i.e. a collineation group), and for these
+# groups we have the operations defined (ml 05/11/2012)
+#DeclareOperation( "ActionOnAllProjPoints", [IsProjectivityGroup] );
+#DeclareOperation( "SetAsNiceMono", [IsProjectivityGroup, IsGroupHomomorphism] );
+#DeclareAttribute( "Dimension", IsProjectivityGroup );
+#DeclareProperty( "CanComputeActionOnPoints", IsProjectivityGroup );
 
-DeclareAttribute( "Dimension", IsProjectivityGroup );
-DeclareProperty( "CanComputeActionOnPoints", IsProjectivityGroup );
 
+
+#DeclareSynonym( "IsProjectivityGroup", IsGroup and IsProjGrpElCollection);
+# IsProjectivityGroup is no longer a filter, but an operation, since
+# a projectivity in FinInG is constructed as a semilinear map, with the
+# identity as companion automorphism
+#DeclareOperation( "IsProjectivityGroup", [IsProjGrpElWithFrob] );
+
+
+
+DeclareSynonym( "IsProjectiveSemilinearGroup", IsGroup and IsProjGrpElWithFrobCollection);
 DeclareSynonym( "IsCollineationGroup", IsGroup and IsProjGrpElWithFrobCollection);
+
+DeclareProperty( "IsProjectivityGroup", IsProjectiveSemilinearGroup );
+
 
 #################################################
 # action functions:

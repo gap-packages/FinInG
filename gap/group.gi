@@ -212,6 +212,41 @@ InstallMethod( Projectivity, [ IsMatrix and IsFFECollColl, IsField],
     return el;  
   end );
 
+# Added ml 7/11/2012
+#############################################################################
+#O  IsProjectivity( <g> )
+# method to check if a given projective semilinear map is a projectivity, 
+# i.e. if the corresponding frobenius automorphism is the identity
+## 
+InstallMethod( IsProjectivity, [ IsProjGrpElWithFrob],
+  function( g )
+    local F,sigma;
+		F:=g!.fld;
+		sigma:=g!.frob;
+		if sigma = FrobeniusAutomorphism(F)^0
+		then return true;
+		else return false;
+		fi;
+  end );
+
+# Added ml 7/11/2012
+#############################################################################
+#O  IsProjectivityGroup( <G> )
+# method to check if a given projective semilinear group G is a projectivity group, 
+# i.e. if the corresponding frobenius automorphisms of the generators are the identity
+## 
+InstallMethod( IsProjectivityGroup, [ IsProjectiveSemilinearGroup],
+  function( G )
+    local gens, F, set, g;
+		gens:=GeneratorsOfMagmaWithInverses(G);
+		F:=gens[1]!.fld;
+		set:=AsSet(List(gens,g->g!.frob));
+		if set = AsSet([FrobeniusAutomorphism(F)^0])
+		then return true;
+		else return false;
+		fi;
+  end );
+
 ###################################################################
 # Construction of "projective semilinear maps", that is matrices 
 # modulo scalars with frobenius automorphism
@@ -1101,58 +1136,59 @@ InstallMethod( OneSameMutability,
 # (without and with Frobenius)
 ###################################################################
 
-InstallMethod( ViewObj, 
-	"for a projective group",
-	[IsProjectivityGroup],
-	function( g )
-		Print("<projective group>");
-	end );
 
-InstallMethod( ViewObj, 
-	"for a trivial projective group",
-	[IsProjectivityGroup and IsTrivial],
-	function( g )
-		Print("<trivial projective group>");
-	end );
-
-InstallMethod( ViewObj, 
-	"for a projective group with gens",
-	[IsProjectivityGroup and HasGeneratorsOfGroup],
-	function( g )
-		local gens;
-		gens := GeneratorsOfGroup(g);
-		if Length(gens) = 0 then
-			Print("<trivial projective group>");
-		else
-			Print("<projective group with ",Length(gens),
-              " generators>");
-		fi;
-	end );
-
-InstallMethod( ViewObj, 
-	"for a projective group with size",
-	[IsProjectivityGroup and HasSize],
-	function( g )
-		if Size(g) = 1 then
-			Print("<trivial projective group>");
-		else
-			Print("<projective group of size ",Size(g),">");
-		fi;
-	end );
-
-InstallMethod( ViewObj, 
-	"for a projective group with gens and size",
-	[IsProjectivityGroup and HasGeneratorsOfGroup and HasSize],
-	function( g )
-		local gens;
-		gens := GeneratorsOfGroup(g);
-		if Length(gens) = 0 then
-			Print("<trivial projective group>");
-		else
-			Print("<projective group of size ",Size(g)," with ",
-              Length(gens)," generators>");
-		fi;
-	end );
+#InstallMethod( ViewObj, 
+#	"for a projective group",
+#	[IsProjectivityGroup],
+#	function( g )
+#		Print("<projective group>");
+#	end );
+#
+#InstallMethod( ViewObj, 
+#	"for a trivial projective group",
+#	[IsProjectivityGroup and IsTrivial],
+#	function( g )
+#		Print("<trivial projective group>");
+#	end );
+#
+#InstallMethod( ViewObj, 
+#	"for a projective group with gens",
+#	[IsProjectivityGroup and HasGeneratorsOfGroup],
+#	function( g )
+#		local gens;
+#		gens := GeneratorsOfGroup(g);
+#		if Length(gens) = 0 then
+#			Print("<trivial projective group>");
+#		else
+#			Print("<projective group with ",Length(gens),
+ #             " generators>");
+#		fi;
+#	end );
+#
+#InstallMethod( ViewObj, 
+#	"for a projective group with size",
+#	[IsProjectivityGroup and HasSize],
+#	function( g )
+#		if Size(g) = 1 then
+#			Print("<trivial projective group>");
+#		else
+#			Print("<projective group of size ",Size(g),">");
+#		fi;
+#	end );
+#
+#InstallMethod( ViewObj, 
+#	"for a projective group with gens and size",
+#	[IsProjectivityGroup and HasGeneratorsOfGroup and HasSize],
+#	function( g )
+#		local gens;
+#		gens := GeneratorsOfGroup(g);
+#		if Length(gens) = 0 then
+#			Print("<trivial projective group>");
+#		else
+#			Print("<projective group of size ",Size(g)," with ",
+ #             Length(gens)," generators>");
+#		fi;
+#	end );
 	
 InstallMethod( ViewObj,	
 	"for a projective semilinear group",
@@ -1217,28 +1253,32 @@ InstallMethod( ViewObj,
 #O  BaseField( <g> )
 # returns the base field of the projective group <g>
 ## 
-InstallMethod( BaseField, 
-	"for a projective group",
-	[IsProjectivityGroup],
-	function( g )
-		local f,gens;
-		if IsBound(g!.basefield) then
-			return g!.basefield;
-		fi;
-		if HasParent(g) then
-			f := BaseField(Parent(g));
-			g!.basefield := f;
-			return f;
-		fi;
-    # Now start to investigate:
-		gens := GeneratorsOfGroup(g);
-		if Length(gens) > 0 then
-			g!.basefield := gens[1]!.fld;
-			return g!.basefield;
-		fi;
-    # Now we have to give up:
-		Error("base field could not be determined");
-	end );
+
+
+# ml 07/11/2012: I have taken out the view, print and display methods
+# for projectivity groups, since these are also collineation groups in FinInG
+#InstallMethod( BaseField, 
+#	"for a projective group",
+#	[IsProjectivityGroup],
+#	function( g )
+#		local f,gens;
+#		if IsBound(g!.basefield) then
+#			return g!.basefield;
+#		fi;
+#		if HasParent(g) then
+#			f := BaseField(Parent(g));
+#			g!.basefield := f;
+#			return f;
+#		fi;
+ #   # Now start to investigate:
+#		gens := GeneratorsOfGroup(g);
+#		if Length(gens) > 0 then
+#			g!.basefield := gens[1]!.fld;
+#			return g!.basefield;
+#		fi;
+ #   # Now we have to give up:
+#		Error("base field could not be determined");
+#	end );
 
 # CHECKED 6/09/11 jdb
 #############################################################################
@@ -1276,21 +1316,25 @@ InstallMethod( BaseField,
 # of which <g> was defined as a projective group, or, in other words, as the 
 # size of the matrices.
 ## 
-InstallMethod( Dimension, 
-	"for a projective group",
-	[IsProjectivityGroup],
-	function( g )
-		local gens;
-		if HasParent(g) then
-			return Dimension(Parent(g));
-		fi;
-    # Now start to investigate:
-		gens := GeneratorsOfGroup(g);
-		if Length(gens) > 0 then
-			return Length(gens[1]!.mat);
-		fi;
-		Error("dimension could not be determined");
-	end );
+
+# ml 07/11/2012: I have taken out the view, print and display methods
+# for projectivity groups, since these are also collineation groups in FinInG
+
+#InstallMethod( Dimension, 
+#	"for a projective group",
+#	[IsProjectivityGroup],
+#	function( g )
+#		local gens;
+#		if HasParent(g) then
+#			return Dimension(Parent(g));
+#		fi;
+ #   # Now start to investigate:
+#		gens := GeneratorsOfGroup(g);
+#		if Length(gens) > 0 then
+#			return Length(gens[1]!.mat);
+#		fi;
+#		Error("dimension could not be determined");
+#	end );
 
 # CHECKED 6/09/11 jdb
 #############################################################################
@@ -1321,24 +1365,27 @@ InstallMethod( Dimension,
 #O  OneImmutable( <g> )
 # returns an immutable one of the projectivity group <g>
 ## 
-InstallMethod( OneImmutable, 
-	"for a projective group",
-	# was: [IsGroup and IsProjectivityGroup], I think might be
-	[IsProjectivityGroup],
-	function( g )
-		local gens, o;
-		gens := GeneratorsOfGroup(g);
-		if Length(gens) = 0 then
-			if HasParent(g) then
-				gens := GeneratorsOfGroup(Parent(g));
-			else
-				Error("sorry, no generators, no one");
-			fi;
-		fi;
-		o := rec( mat := OneImmutable( gens[1]!.mat ), fld := gens[1]!.fld );
-		Objectify( NewType(FamilyObj(gens[1]), IsProjGrpElRep), o );
-		return o;
-	end );
+# ml 07/11/2012: I have taken out the view, print and display methods
+# for projectivity groups, since these are also collineation groups in FinInG
+
+#InstallMethod( OneImmutable, 
+#	"for a projective group",
+#	# was: [IsGroup and IsProjectivityGroup], I think might be
+#	[IsProjectivityGroup],
+#	function( g )
+#		local gens, o;
+#		gens := GeneratorsOfGroup(g);
+#		if Length(gens) = 0 then
+#			if HasParent(g) then
+#				gens := GeneratorsOfGroup(Parent(g));
+#			else
+#				Error("sorry, no generators, no one");
+#			fi;
+#		fi;
+#		o := rec( mat := OneImmutable( gens[1]!.mat ), fld := gens[1]!.fld );
+#		Objectify( NewType(FamilyObj(gens[1]), IsProjGrpElRep), o );
+#		return o;
+#	end );
 
 # CHECKED 6/09/11 jdb
 #############################################################################
@@ -1376,20 +1423,23 @@ InstallMethod( OneImmutable,
 #P  CanComputeActionOnPoints( <g> )
 # is set true if we consider the computation of the action feasible.
 # for projective groups.
-## 
-InstallMethod( CanComputeActionOnPoints, 
-	"for a projective group",
-	[IsProjectivityGroup],
-	function( g )
-		local d,q;
-		d := Dimension( g );
-		q := Size( BaseField( g ) );
-		if (q^d - 1)/(q-1) > FINING.LimitForCanComputeActionOnPoints then
-			return false;
-		else
-			return true;
-		fi;
-	end );
+##
+# ml 07/11/2012: I have taken out the view, print and display methods
+# for projectivity groups, since these are also collineation groups in FinInG
+ 
+#InstallMethod( CanComputeActionOnPoints, 
+#	"for a projective group",
+#	[IsProjectivityGroup],
+#	function( g )
+#		local d,q;
+#		d := Dimension( g );
+#		q := Size( BaseField( g ) );
+#		if (q^d - 1)/(q-1) > FINING.LimitForCanComputeActionOnPoints then
+#			return false;
+#		else
+#			return true;
+#		fi;
+#	end );
   
 # CHECKED 6/09/11 jdb
 #############################################################################
@@ -1519,18 +1569,22 @@ InstallGlobalFunction( OnProjSubspacesWithFrob,
 # returns the action of the projective group <g> on the projective points
 # of the underlying projective space.
 ## 
-InstallMethod( ActionOnAllProjPoints, 
-	"for a projective group",
-	[ IsProjectivityGroup ],
-	function( pg )
-		local a,d,f,orb;
-		f := BaseField(pg);
-		d := Dimension(pg);
-		orb := MakeAllProjectivePoints(f,d);
-		a := ActionHomomorphism(pg,orb,OnProjPoints,"surjective");
-		SetIsInjective(a,true);
-		return a;
-	end );
+
+# ml 07/11/2012: I have taken out the view, print and display methods
+# for projectivity groups, since these are also collineation groups in FinInG
+
+#InstallMethod( ActionOnAllProjPoints, 
+#	"for a projective group",
+#	[ IsProjectivityGroup ],
+#	function( pg )
+#		local a,d,f,orb;
+#		f := BaseField(pg);
+#		d := Dimension(pg);
+#		orb := MakeAllProjectivePoints(f,d);
+#		a := ActionHomomorphism(pg,orb,OnProjPoints,"surjective");
+#		SetIsInjective(a,true);
+#		return a;
+#	end );
 
 # CHECKED 6/09/11 jdb
 #############################################################################
@@ -1639,12 +1693,14 @@ InstallGlobalFunction( NiceMonomorphismByDomain,
 ## Is this operation ever used? I think it obselete (JB: 26/09/08)
 ## John is probably right. A grep of SetAsNiceMono on all *.gi files gives only the InstallMethod( parts. (jdb 6/9/11). 
 
-InstallMethod( SetAsNiceMono, "for a projective group and an action hom",
-  [IsProjectivityGroup, IsGroupHomomorphism and IsInjective],
-  function( pg, a )
-    SetNiceMonomorphism(pg,a);
-    SetNiceObject(pg,Image(a));
-  end );
+# ml 07/11/2012: I have taken out the view, print and display methods
+# for projectivity groups, since these are also collineation groups in FinInG
+#InstallMethod( SetAsNiceMono, "for a projective group and an action hom",
+#  [IsProjectivityGroup, IsGroupHomomorphism and IsInjective],
+#  function( pg, a )
+#    SetNiceMonomorphism(pg,a);
+#    SetNiceObject(pg,Image(a));
+#  end );
   
 InstallMethod( SetAsNiceMono, 
   "for a projective semilinear group and an action hom",
