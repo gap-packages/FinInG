@@ -2056,6 +2056,7 @@ InstallMethod( Random,
 # a random line through a point now.
 #
 # This should be ok now. The method Random was wrong for shadows. Fixed 30/10/2012 ml.
+# The variable "x" was undefined. Fixed 07/11/2012 jb.
 #############################################################################
 #O  Random( <subs> )
 # returns a random element out of the collection of subspaces of given
@@ -2067,11 +2068,10 @@ InstallMethod( Random,
     # chooses a random element out of the collection of subspaces of given
     # dimension of a subspace of a projective space
 	function( shad )
-		local d, pg, x, vspace, W, subspace;
+		local d, pg, x, vspace, W;
 		## the underlying projective space
-		Print("calledthis2");
 		pg := shad!.geometry;
-		subspace:=shad!.parentflag;
+		x:=shad!.parentflag;
 		vspace:=UnderlyingVectorSpace(subspace);
 		if not IsInt(shad!.type) then
 			Error("The subspaces of the collection need to have the same dimension");
