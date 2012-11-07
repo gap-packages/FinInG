@@ -63,8 +63,8 @@ InstallMethod( IdentityMappingOfElementsOfProjectiveSpace,
 
 # CHECKED 14/09/11 jdb
 #############################################################################
-#O  IdentityMappingOfElementsOfProjectiveSpace( <ps> )
-# returns the identity mapping on the collection of subspaces of a projective space <ps>
+#O  StandardDualityOfProjectiveSpace( <ps> )
+# returns the Standard duality of a projective space
 ## 
 InstallMethod( StandardDualityOfProjectiveSpace, 
 	"for a projective space",
@@ -129,7 +129,7 @@ InstallMethod( PrintObj,
 
 ###################################################################
 # multiplying projective space isomorphisms. Actually, these methods
-# are not intended for the user, since there is not check to see
+# are not intended for the user, since there is no check to see
 # if the arguments are projective space isomorphisms of the same
 # projective space. On the other hand, the user should only use these 
 # objects as an argument for constructor functions of corrlelations. 
@@ -187,7 +187,7 @@ InstallMethod( \*,
 
 # CHECKED 14/09/11 jdb
 #############################################################################
-#O  \*( <delta1>, 0 )
+#O  \^( <delta1>, 0 )
 # returns One(delta1), <delta1> a projective space isomorphism
 ## 
 InstallMethod( \^,
@@ -199,7 +199,7 @@ InstallMethod( \^,
 
 # CHECKED 14/09/11 jdb
 #############################################################################
-#O  \*( <delta1>, <delta2> )
+#O  \=( <delta1>, <delta2> )
 # returns true iff <delta1>=<delta2>, two standard dualities.
 ## 
 InstallMethod( \=,
@@ -211,7 +211,7 @@ InstallMethod( \=,
 
 # CHECKED 14/09/11 jdb
 #############################################################################
-#O  \*( <delta1>, <delta2> )
+#O  \=( <delta1>, <delta2> )
 # returns false, since a duality is not the identitymap.
 InstallMethod( \=,
 	"for a standard-duality of a projective space and the identitymap",
@@ -222,7 +222,7 @@ InstallMethod( \=,
 
 # CHECKED 14/09/11 jdb
 #############################################################################
-#O  \*( <delta1>, <delta2> )
+#O  \=( <delta1>, <delta2> )
 # returns false, since a duality is not the identitymap.
 InstallMethod( \=,
 	"for the identity map and a standard-duality of a projective space",
@@ -233,7 +233,7 @@ InstallMethod( \=,
 
 # CHECKED 14/09/11 jdb
 #############################################################################
-#O  \*( <delta1>, <delta2> )
+#O  \=( <delta1>, <delta2> )
 # returns true iff <delta1>=<delta2>, two identitymaps of a projective space.
 ## 
 InstallMethod( \=,
@@ -581,7 +581,9 @@ InstallMethod( \*,
 	IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep],
 	function( a, b )
 		local el;  
-		el := rec( mat := a!.mat * ((b!.mat^(a!.frob^-1)))^a!.psisom, fld := a!.fld, #O Celle, dear friend, you missed this correction :-)
+		el := rec( mat := a!.mat * ((b!.mat^(a!.frob^-1)))^a!.psisom, fld := a!.fld, 
+				#O Celle, dear friend, you missed this correction :-)
+				#O True Jan, but I can't see everything, hey :-)
 				frob := a!.frob * b!.frob, psisom := a!.psisom * b!.psisom );
 		Objectify( ProjElsWithFrobWithPSIsomType, el);
 		return el;
