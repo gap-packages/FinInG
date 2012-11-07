@@ -4,9 +4,6 @@ ps := PolarSpace(form);
 pq := ParabolicQuadric(2,3);
 iso := IsomorphismPolarSpaces(ps, pq);
 KnownAttributesOfObject(iso);
-hom := Intertwiner(iso);;
+hom := Intertwiner(iso);
 quit;
-<<<<<<< .mine
 
-=======
->>>>>>> .r237

@@ -56,13 +56,7 @@ in <Package>FinInG</Package> which carries attributes and the given element
 map. The element map is given as a <C>IsGeneralMapping</C>, and so has a source
 and range.
 <Example>
-gap> ShowImpliedFilters(IsGeometryMorphism);
-Implies:
-   IsGeneralMapping
-   IsTotal
-   Tester(IsTotal)
-   IsSingleValued
-   Tester(IsSingleValued)
+<#Include SYSTEM "../examples/include/morphisms_filters.include"> 
 </Example>
 The usual operations of <C>ImagesElm</C>, <C>ImagesSet</C>, <C>PreImagesElm</C>, 
 <C>PreImagesSet</C> work for geometry
@@ -85,7 +79,7 @@ automorphism <M>g</M> of <M>S</M>, we have
 <Attr Name = "Intertwiner" Arg = "f"/>
 <Returns>a group homomorphism</Returns>
 <Description>
-The arguments <A>f</A> is a geometry morphism. If <A>f</A> comes equipped with
+The argument <A>f</A> is a geometry morphism. If <A>f</A> comes equipped with
 a natural intertwiner from an automorphism group of the source of <A>f</A> to
 the automorphism group to the image of <A>f</A>, then the user may be able
 to obtain the intertwiner by calling this operation (see the individual geometry

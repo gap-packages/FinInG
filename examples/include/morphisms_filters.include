@@ -1,0 +1,7 @@
+gap&gt; ShowImpliedFilters(IsGeometryMorphism);
+Implies:
+   IsGeneralMapping
+   IsTotal
+   Tester(IsTotal)
+   IsSingleValued
+   Tester(IsSingleValued)

@@ -121,8 +121,8 @@ on how one can create and use forms. Here we just display a worked example.
 
 </Section>
 
-<Section>
-<Heading>Canonical Polar Spaces</Heading>
+<Section Label="can_standard">
+<Heading>Canonical and standard Polar Spaces</Heading>
 
 To introduce the classification of polar spaces, we use the classification of
 the underlying forms in similarity classes. We follow mostly the approach and
@@ -162,14 +162,26 @@ similarity class, and non-degenerate forms in this class are called parabolic
 (bilinear) forms. In even dimension, there are two similarity classes, and
 non-degenerate forms are either elliptic (bilinear) forms or hyperbolic
 (bilinear) forms.<P/>
+
+Projectively, a formed vector space becomes a classical polar space embedded in a 
+projective space. Obviously, forms in the same similarity class determine
+exactly the same classical polar space. Conversely, it is well known that
+a classical polar space determines a form up to a constant factor, i.e. it determines
+a similarity class of forms. In <Package>FinInG</Package>, the word <E>canonical</E>
+is used in the mathematical sense, i.e. a classical polar space is <E>canonical</E>
+if its determining form belongs to a fixed similarity class. A classical polar space
+is called <E>standard</E> if its determining form is the fixed representant of the
+canonical similarity class. Hence a <E>standard</E> classical polar space is 
+always a <E>canonical</E> classical polar space.
+
 In the following table, we summerize the above information on polar spaces,
-together with the canonical forms that are chosen in
+together with the standard forms that are chosen in
 <Package>FinInG</Package>.
 
 <Table Align="|l|l|l|l|">
  <Caption>finite classical polar spaces</Caption>
  <HorLine/>
-  <Row><Item>polar space</Item><Item>canonical form</Item><Item>characteristic <M>p</M></Item>
+  <Row><Item>polar space</Item><Item>standard form</Item><Item>characteristic <M>p</M></Item>
   <Item>projective dimension</Item></Row>
  <HorLine/>
    <Row><Item>hermitian polar space</Item>
@@ -189,41 +201,41 @@ together with the canonical forms that are chosen in
    <Row><Item>hyperbolic quadric</Item>
    <Item><Alt Not="HTML"><M> X_0 X_1 + \ldots + X_{n-1}X_n
          </M></Alt><Alt Only="HTML">X&lt;sub>0&lt;/sub> X&lt;sub>1&lt;/sub> + ... +
-	 X&lt;sub>n-1&lt;/sub>X&lt;sub>n-1&lt;/sub></Alt>
+	 X&lt;sub>n-1&lt;/sub>X&lt;sub>n&lt;/sub></Alt>
    </Item><Item><Alt Only="HTML">p &#8801; 3 mod 4</Alt><Alt Not="HTML"><M>p \equiv 3\,\mathrm{mod}\,4</M></Alt> and p even</Item><Item>odd</Item></Row>
 
    <Row><Item>hyperbolic quadric</Item>
    <Item><Alt Not="HTML"><M> 2(X_0 X_1 + \ldots + X_{n-1}X_n)
          </M></Alt><Alt Only="HTML">2(X&lt;sub>0&lt;/sub> X&lt;sub>1&lt;/sub> + ... +
-	 X&lt;sub>n-1&lt;/sub>X&lt;sub>n-1&lt;/sub> )</Alt>
+	 X&lt;sub>n-1&lt;/sub>X&lt;sub>n&lt;/sub> )</Alt>
    </Item><Item><Alt Only="HTML">p &#8801; 1 mod 4</Alt><Alt Not="HTML"><M>p \equiv 1\,\mathrm{mod}\,4</M></Alt></Item><Item>odd</Item></Row>
    
    <Row><Item>parabolic quadric</Item>
    <Item><Alt Not="HTML"><M> X_0^2 + X_1X_2 + \ldots + X_{n-1}X_n
          </M></Alt><Alt Only="HTML">X&lt;sub>0&lt;/sub>&lt;sup>2&lt;/sup> +
 	 X&lt;sub>1&lt;/sub> X&lt;sub>2&lt;/sub> + ... +
-	 X&lt;sub>n-1&lt;/sub>X&lt;sub>n-1&lt;/sub></Alt>
+	 X&lt;sub>n-1&lt;/sub>X&lt;sub>n&lt;/sub></Alt>
    </Item><Item><Alt Only="HTML">p &#8801; 1,3 mod 8</Alt><Alt Not="HTML"><M>p \equiv 1,3\,\mathrm{mod}\,8</M></Alt> and p even</Item><Item>even</Item></Row>
    
    <Row><Item>parabolic quadric</Item>
    <Item><Alt Not="HTML"><M> t(X_0^2 + X_1X_2 + \ldots + X_{n-1}X_n),\,
          </M> <M>t</M> a primitive element of <M>GF(p)</M></Alt><Alt Only="HTML">t(X&lt;sub>0&lt;/sub>&lt;sup>2&lt;/sup> +
 	 X&lt;sub>1&lt;/sub> X&lt;sub>2&lt;/sub> + ... +
-	 X&lt;sub>n-1&lt;/sub>X&lt;sub>n-1&lt;/sub>), <M>t</M> a primitive element of <M>GF(p)</M></Alt>
+	 X&lt;sub>n-1&lt;/sub>X&lt;sub>n&lt;/sub>), <M>t</M> a primitive element of <M>GF(p)</M></Alt>
    </Item><Item><Alt Only="HTML">p &#8801; 5,7 mod 8</Alt><Alt Not="HTML"><M>p \equiv 5,7\,\mathrm{mod}\,8</M></Alt></Item><Item>even</Item></Row>
    
    <Row><Item>elliptic quadric</Item>
    <Item><Alt Not="HTML"><M>X_0^2 + X_1^2 + X_2X_3 + \ldots + X_{n-1}X_n
          </M></Alt><Alt Only="HTML">X&lt;sub>0&lt;/sub>&lt;sup>2&lt;/sup> +
 	 X&lt;sub>1&lt;/sub>&lt;sup>2&lt;/sup> +  X&lt;sub>2&lt;/sub>
-	 X&lt;sub>3&lt;/sub> + ... + X&lt;sub>n-1&lt;/sub>X&lt;sub>n-1&lt;/sub></Alt>
+	 X&lt;sub>3&lt;/sub> + ... + X&lt;sub>n-1&lt;/sub>X&lt;sub>n&lt;/sub></Alt>
    </Item><Item><Alt Only="HTML">p &#8801; 3 mod 4</Alt><Alt Not="HTML"><M>p \equiv 3\,\mathrm{mod}\,4</M></Alt></Item><Item>odd</Item></Row>
 
    <Row><Item>elliptic quadric</Item>
    <Item><Alt Not="HTML"><M>X_0^2 + tX_1^2 + X_2X_3 + \ldots + X_{n-1}X_n
          </M>, <M>t</M> a primitive element of <M>GF(p)</M></Alt><Alt Only="HTML">X&lt;sub>0&lt;/sub>&lt;sup>2&lt;/sup> +
 	 tX&lt;sub>1&lt;/sub>&lt;sup>2&lt;/sup> +  X&lt;sub>2&lt;/sub>
-	 X&lt;sub>3&lt;/sub> + ... + X&lt;sub>n-1&lt;/sub>X&lt;sub>n-1&lt;/sub>
+	 X&lt;sub>3&lt;/sub> + ... + X&lt;sub>n-1&lt;/sub>X&lt;sub>n&lt;/sub>
 	 , <M>t</M> a primitive element of <M>GF(p)</M></Alt>
    </Item><Item>odd</Item><Item>odd</Item></Row>
  
@@ -232,12 +244,13 @@ together with the canonical forms that are chosen in
          </M>, <M>Tr(d)=1</M></Alt><Alt Only="HTML">X&lt;sub>0&lt;/sub>&lt;sup>2&lt;/sup> +
 	 X&lt;sub>0&lt;/sub>X&lt;sub>1&lt;/sub> +
 	 d X&lt;sub>1&lt;/sub>&lt;sup>2&lt;/sup> +  X&lt;sub>2&lt;/sub> 
-	 X&lt;sub>3&lt;/sub> + ... + X&lt;sub>n-1&lt;/sub>X&lt;sub>n-1&lt;/sub>
+	 X&lt;sub>3&lt;/sub> + ... + X&lt;sub>n-1&lt;/sub>X&lt;sub>n&lt;/sub>
 	 , Tr(d) = 1</Alt>
    </Item><Item>even</Item><Item>odd</Item></Row>
 <HorLine/>
 </Table>
-We refer to Appendix <Ref Chap="groups_app"/> for information on the operations that construct canonical gram matrices.
+We refer to Appendix <Ref Chap="groups_app"/> for information on the operations that construct gram matrices that are used to
+obtain the above standard forms.
 
 <ManSection>
 <Oper Name="SymplecticSpace" Arg="d,F"/>

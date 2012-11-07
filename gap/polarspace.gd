@@ -79,7 +79,7 @@ DeclareProperty( "IsStandardPolarSpace", IsClassicalPolarSpace );
 # Constructor operations:
 #############################################################################
 
-DeclareOperation( "PolarSpaceStandard", [IsForm] );
+DeclareOperation( "PolarSpaceStandard", [IsForm, IsBool] );
 DeclareOperation( "PolarSpace", [IsForm, IsField, IsGroup, IsFunction] );
 DeclareOperation( "PolarSpace", [IsForm] );
 DeclareOperation( "PolarMap", [IsClassicalPolarSpace] );
@@ -106,6 +106,9 @@ DeclareOperation( "HyperbolicQuadric", [IsPosInt, IsField] );
 DeclareOperation( "HyperbolicQuadric", [IsPosInt, IsPosInt] );
 DeclareOperation( "HermitianPolarSpace", [IsPosInt, IsField] );
 DeclareOperation( "HermitianPolarSpace", [IsPosInt, IsPosInt] );
+
+DeclareOperation( "CanonicalPolarSpace", [IsClassicalPolarSpace] );
+DeclareOperation( "StandardPolarSpace", [IsClassicalPolarSpace] );
 
 #DeclareAttribute( "DefiningPolarity", IsClassicalPolarSpace );
 

@@ -55,7 +55,7 @@ affinefiles := ["affine_affinespace", "affine_dimension", "affine_basefield", "a
 
 
 
-morphismsfiles := ["morphisms_intertwiners","morphisms_embedding1","morphisms_embedding2",
+morphismsfiles := ["morphisms_filters", "morphisms_intertwiners","morphisms_embedding1","morphisms_embedding2",
 			"morphisms_fieldreducproj", "morphisms_intertwinerproj", "morphisms_fieldreducpolar1", "morphisms_fieldreducpolar2",
 			"morphisms_typesubspace",
           "morphisms_fieldreduc1", "morphisms_fieldreduc2","morphisms_subfield1","morphisms_subfield2",

@@ -1,12 +1,15 @@
-gap> form := BilinearFormByMatrix( IdentityMat(3,GF(3)), GF(3) );
-&lt; bilinear form >
-gap> ps := PolarSpace(form);
-&lt;polar space of rank 2 over GF(3)>
-gap> pq := ParabolicQuadric(2,3);
-Q(2, 3)
-gap> iso := IsomorphismPolarSpaces(ps, pq);
-&lt;geometry morphism from &lt;Elements of &lt;polar space of rank 2 over GF(
-3)>> to &lt;Elements of Q(2, 3)>>
-gap> KnownAttributesOfObject(iso);
+gap&gt; form := BilinearFormByMatrix( IdentityMat(3,GF(3)), GF(3) );
+&lt; bilinear form &gt;
+gap&gt; ps := PolarSpace(form);
+&lt;polar space in ProjectiveSpace(2,GF(3)): x_1^2+x_2^2+x_3^2=0 &gt;
+gap&gt; pq := ParabolicQuadric(2,3);
+standard Q(2, 3)
+gap&gt; iso := IsomorphismPolarSpaces(ps, pq);
+#I  Computing nice monomorphism...
+&lt;geometry morphism from &lt;Elements of &lt;polar space in ProjectiveSpace(2,GF(
+3)): x_1^2+x_2^2+x_3^2=0 &gt;&gt; to &lt;Elements of standard Q(2, 3)&gt;&gt;
+gap&gt; KnownAttributesOfObject(iso);
 [ "Range", "Source", "Intertwiner" ]
-gap> hom := Intertwiner(iso);;
+gap&gt; hom := Intertwiner(iso);
+MappingByFunction( &lt;projective semilinear group with 
+3 generators&gt;, PGammaO(3,3), function( y ) ... end, function( x ) ... end )

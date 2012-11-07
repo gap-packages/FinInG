@@ -24,7 +24,11 @@ This appendix gives more (technical) information on the construction of finite c
 <Heading>The finite classical groups in <Package>FinInG</Package> </Heading>
 
 <Section Label="groups_app_forms">
-<Heading>Canonical forms used to produce the finite classical groups.</Heading>
+<Heading>Standard forms used to produce the finite classical groups.</Heading>
+
+An overview of operations is given that produce gram matrices to construct standard forms. The notion
+<E>standard form</E> is explained in Section <Ref Sect="can_standard"/>, in the context of
+canonical and standard polar spaces.
 
 <ManSection>
 <Oper Name="CanonicalGramMatrix" Arg="type, d, f"/>
