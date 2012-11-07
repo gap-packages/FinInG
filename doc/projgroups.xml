@@ -114,9 +114,9 @@ Only="HTML">(y&lt;sub>0&lt;/sub>,y&lt;sub>1&lt;/sub>,...,y&lt;sub>n&lt;/sub>) =
 The product of two correlations of <M>PG(n,q)</M> is a collineation, and the
 product of a collineation and a correlaton is a correlation. So the set of all
 collineations and correlations of <M>PG(n,q)</M> form a group, called the
-<E>correlation group</E> of <M>PG(n,q)</M>. The convention determines completely 
-the action of correlations on all elements 
-of a projective space, and it follows that the product of two elements of the correlation group 
+<E>correlation-collineation group</E> of <M>PG(n,q)</M>. The convention determines completely 
+the action of correlations and collineations on all elements 
+of a projective space, and it follows that the product of two elements of the correlation-collineation group 
 <Alt Not="HTML"><M>\phi_1,\phi_2</M></Alt><Alt
 Only="HTML">&#966;&lt;sub>1&lt;/sub>,&#966;&lt;sub>2&lt;/sub></Alt> with respective
 underlying matrices <Alt Not="HTML"><M>A_1,A_2</M></Alt><Alt
@@ -125,8 +125,10 @@ field automorphisms <Alt Not="HTML"><M>\theta_1,\theta_2</M></Alt><Alt
 Only="HTML">&#952;&lt;sub>1&lt;/sub>,&#952;&lt;sub>2&lt;/sub></Alt>, and respective underlying 
 projective space isomorphisms (standard duality or identity map) <Alt Not="HTML"><M>\delta_1,\delta_2</M></Alt><Alt
 Only="HTML">&#948;&lt;sub>1&lt;/sub>,&#948;&lt;sub>2&lt;/sub></Alt>, is the element of 
-the correlation group with underlying matrix <Alt Not="HTML"><M>A_1 A_2^{\theta_1^{-1}}</M></Alt><Alt
-Only="HTML">A&lt;sub>1&lt;/sub>A&lt;sub>2&lt;/sub>&lt;sup>&#952;&lt;sub>1&lt;/sub>&lt;sup>-1&lt;/sup>&lt;/sup></Alt>,
+the correlation group with underlying matrix <Alt Not="HTML"><M>A_1 (A_2^{\theta_1^{-1}})^{\delta_2}</M></Alt><Alt
+Only="HTML">A&lt;sub>1&lt;/sub>(A&lt;sub>2&lt;/sub>&lt;sup>&#952;&lt;sub>1&lt;/sub>&lt;sup>-1&lt;/sup>&lt;/sup>)
+&lt;sup>&#948;&lt;sub>2&lt;/sub>&lt;/sup>
+</Alt>,
 underlying field automorphism <Alt Not="HTML"><M>\theta_1 \theta_2</M></Alt>
 <Alt Only="HTML">&#952;&lt;sub>1&lt;/sub>&#952;&lt;sub>2&lt;/sub></Alt>, and underlying projective space automorphism 
 <Alt Not="HTML"><M>\delta_1 \delta_2.</M></Alt>
