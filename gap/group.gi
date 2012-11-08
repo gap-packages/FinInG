@@ -935,20 +935,45 @@ InstallMethod( OneSameMutability,
 #12 CHECKED 6/09/11 jdb
 
 InstallOtherMethod( \^, "for a FFE vector and a Frobenius automorphism",
-  [ IsVector and IsFFECollection, IsFrobeniusAutomorphism ],
+  [ IsVector and IsFFECollection and IsMutable, IsFrobeniusAutomorphism ],
   function( v, f )
     return List(v,x->x^f);
   end );
 
-InstallOtherMethod( \^, "for a FFE vector and a trivial Frobenius automorphism",
-  [ IsVector and IsFFECollection, IsMapping and IsOne ],
+InstallOtherMethod( \^, "for a FFE vector and a Frobenius automorphism",
+  [ IsVector and IsFFECollection, IsFrobeniusAutomorphism ],
+  function( v, f )
+    return MakeImmutable(List(v,x->x^f));
+  end );
+
+InstallOtherMethod( \^, 
+  "for a mutable FFE vector and a trivial Frobenius automorphism",
+  [ IsVector and IsFFECollection and IsMutable, IsMapping and IsOne ],
   function( v, f )
     return v;
   end );
 
 InstallOtherMethod( \^, 
+  "for a mutable FFE vector and a trivial Frobenius automorphism",
+  [ IsVector and IsFFECollection and IsMutable, IsMapping and IsOne ],
+  function( v, f )
+    return ShallowCopy(v);
+  end );
+
+InstallOtherMethod( \^, 
   "for a compressed GF2 vector and a Frobenius automorphism",
   [ IsVector and IsFFECollection and IsGF2VectorRep, IsFrobeniusAutomorphism ],
+  function( v, f )
+    local w;
+    w := List(v,x->x^f);
+    ConvertToVectorRepNC(w,2);
+    return MakeImmutable(w);
+  end );
+
+InstallOtherMethod( \^, 
+  "for a mutable compressed GF2 vector and a Frobenius automorphism",
+  [ IsVector and IsFFECollection and IsGF2VectorRep and IsMutable, 
+    IsFrobeniusAutomorphism ],
   function( v, f )
     local w;
     w := List(v,x->x^f);
@@ -964,8 +989,27 @@ InstallOtherMethod( \^,
   end );
 
 InstallOtherMethod( \^, 
+  "for a mutable compressed GF2 vector and a trivial Frobenius automorphism",
+  [ IsVector and IsFFECollection and IsGF2VectorRep and IsMutable, 
+    IsMapping and IsOne ],
+  function( v, f )
+    return ShallowCopy(v);
+  end );
+
+InstallOtherMethod( \^, 
   "for a compressed 8bit vector and a Frobenius automorphism",
   [ IsVector and IsFFECollection and Is8BitVectorRep, IsFrobeniusAutomorphism ],
+  function( v, f )
+    local w;
+    w := List(v,x->x^f);
+    ConvertToVectorRepNC(w,Q_VEC8BIT(v));
+    return MakeImmutable(w);
+  end );
+
+InstallOtherMethod( \^, 
+  "for a mutable compressed 8bit vector and a Frobenius automorphism",
+  [ IsVector and IsFFECollection and Is8BitVectorRep and IsMutable, 
+    IsFrobeniusAutomorphism ],
   function( v, f )
     local w;
     w := List(v,x->x^f);
@@ -980,8 +1024,22 @@ InstallOtherMethod( \^,
     return v;
   end );
 
+InstallOtherMethod( \^, 
+  "for a mutable compressed 8bit vector and a trivial Frobenius automorphism",
+  [ IsVector and IsFFECollection and Is8BitVectorRep and IsMutable, 
+    IsMapping and IsOne ],
+  function( v, f )
+    return ShallowCopy(v);
+  end );
+
 InstallOtherMethod( \^, "for a FFE matrix and a Frobenius automorphism",
   [ IsMatrix and IsFFECollColl, IsFrobeniusAutomorphism ],
+  function( m, f )
+    return MakeImmutable(List(m,v->List(v,x->x^f)));
+  end );
+
+InstallOtherMethod( \^, "for a mutable FFE matrix and a Frobenius automorphism",
+  [ IsMatrix and IsFFECollColl and IsMutable, IsFrobeniusAutomorphism ],
   function( m, f )
     return List(m,v->List(v,x->x^f));
   end );
@@ -993,8 +1051,31 @@ InstallOtherMethod( \^, "for a FFE matrix and a trivial Frobenius automorphism",
   end );
 
 InstallOtherMethod( \^, 
+  "for a mutable FFE matrix and a trivial Frobenius automorphism",
+  [ IsMatrix and IsFFECollColl, IsMapping and IsOne ],
+  function( m, f )
+    return MutableCopyMat(m);
+  end );
+
+InstallOtherMethod( \^, 
   "for a compressed GF2 matrix and a Frobenius automorphism",
   [ IsMatrix and IsFFECollColl and IsGF2MatrixRep, IsFrobeniusAutomorphism ],
+  function( m, f )
+    local w,l,i;
+    l := [];
+    for i in [1..Length(m)] do
+        w := List(m[i],x->x^f);
+        ConvertToVectorRepNC(w,2);
+        Add(l,w);
+    od;
+    ConvertToMatrixRepNC(l,2);
+    return MakeImmutable(l);
+  end );
+
+InstallOtherMethod( \^, 
+  "for a mutable compressed GF2 matrix and a Frobenius automorphism",
+  [ IsMatrix and IsFFECollColl and IsGF2MatrixRep and IsMutable, 
+    IsFrobeniusAutomorphism ],
   function( m, f )
     local w,l,i;
     l := [];
@@ -1015,6 +1096,14 @@ InstallOtherMethod( \^,
   end );
 
 InstallOtherMethod( \^, 
+  "for a mutable compressed GF2 matrix and a trivial Frobenius automorphism",
+  [ IsMatrix and IsFFECollColl and IsGF2MatrixRep and IsMutable, 
+    IsMapping and IsOne ],
+  function( m, f )
+    return MutableCopyMat(m);
+  end );
+
+InstallOtherMethod( \^, 
   "for a compressed 8bit matrix and a Frobenius automorphism",
   [ IsMatrix and IsFFECollColl and Is8BitMatrixRep, IsFrobeniusAutomorphism ],
   function( m, f )
@@ -1027,7 +1116,24 @@ InstallOtherMethod( \^,
         Add(l,w);
     od;
     ConvertToMatrixRepNC(l,q);
-    return l;
+    return MakeImmutable(l);
+  end );
+
+InstallOtherMethod( \^, 
+  "for a mutable compressed 8bit matrix and a Frobenius automorphism",
+  [ IsMatrix and IsFFECollColl and Is8BitMatrixRep and IsMutable, 
+    IsFrobeniusAutomorphism ],
+  function( m, f )
+    local w,l,i,q;
+    l := [];
+    q := Q_VEC8BIT(m[1]);
+    for i in [1..Length(m)] do
+        w := List(m[i],x->x^f);
+        ConvertToVectorRepNC(w,q);
+        Add(l,w);
+    od;
+    ConvertToMatrixRepNC(l,q);
+    return MakeImmutable(l);
   end );
 
 InstallOtherMethod( \^, 
@@ -1035,6 +1141,14 @@ InstallOtherMethod( \^,
   [ IsMatrix and IsFFECollColl and Is8BitMatrixRep, IsMapping and IsOne ],
   function( m, f )
     return m;
+  end );
+
+InstallOtherMethod( \^, 
+  "for a mutable compressed 8bit matrix and a trivial Frobenius automorphism",
+  [ IsMatrix and IsFFECollColl and Is8BitMatrixRep and IsMutable, 
+    IsMapping and IsOne ],
+  function( m, f )
+    return MutableCopyMat(m);
   end );
 
 
