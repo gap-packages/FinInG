@@ -50,7 +50,7 @@ BindGlobal( "ProjElsWithFrobWithPSIsomType",
               IsProjGrpElWithFrobWithPSIsom and 
 	      IsProjGrpElWithFrobWithPSIsomRep ) );
 
-InstallTrueMethod( IsHandledByNiceMonomorphism, IsCollineationGroup );
+InstallTrueMethod( IsHandledByNiceMonomorphism, IsProjectiveGroupWithFrob );
 
 DeclareSynonym( "IsProjGroupWithFrobWithPSIsom", IsGroup and IsProjGrpElWithFrobWithPSIsomCollection);
 

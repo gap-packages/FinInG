@@ -101,9 +101,18 @@ DeclareOperation( "ProjectiveSemilinearMap", [ IsList, IsMapping, IsField] );
 
 DeclareOperation( "ProjectivityByImageOfStandardFrameNC", [IsProjectiveSpace, IsList] );
 
-DeclareSynonym( "IsCollineationOfProjectiveSpace", IsProjGrpElWithFrob);
+###################################################################
+# Tests whether collineation is a projectivity and so on ...
+###################################################################
+
+DeclareProperty( "IsProjectivity", IsProjGrpEl );
 DeclareProperty( "IsProjectivity", IsProjGrpElWithFrob );
+
+DeclareProperty( "IsProjectiveSemilinearMap", IsProjGrpEl );
 DeclareProperty( "IsProjectiveSemilinearMap", IsProjGrpElWithFrob );
+
+DeclareProperty( "IsCollineation", IsProjGrpEl );
+DeclareProperty( "IsCollineation", IsProjGrpElWithFrob );
 
 
 ###################################################################
@@ -130,26 +139,19 @@ DeclareGlobalFunction( "OnProjSubspacesNoFrob" );
 #DeclareProperty( "CanComputeActionOnPoints", IsProjectivityGroup );
 
 
-
-#DeclareSynonym( "IsProjectivityGroup", IsGroup and IsProjGrpElCollection);
-# IsProjectivityGroup is no longer a filter, but an operation, since
-# a projectivity in FinInG is constructed as a semilinear map, with the
-# identity as companion automorphism
-#DeclareOperation( "IsProjectivityGroup", [IsProjGrpElWithFrob] );
-
-
-
 #DeclareSynonym( "IsProjectiveSemilinearGroup", IsGroup and IsProjGrpElWithFrobCollection);
-DeclareSynonym( "IsCollineationGroup", IsGroup and IsProjGrpElWithFrobCollection);
+DeclareSynonym( "IsProjectiveGroupWithFrob", IsGroup and IsProjGrpElWithFrobCollection);
 
-DeclareProperty( "IsProjectivityGroup", IsCollineationGroup );
+DeclareProperty( "IsProjectivityGroup", IsProjectiveGroupWithFrob );
+DeclareProperty( "IsCollineationGroup", IsProjectiveGroupWithFrob );
+
 
 
 #################################################
 # action functions:
 #################################################
 
-InstallTrueMethod( IsHandledByNiceMonomorphism, IsCollineationGroup );
+InstallTrueMethod( IsHandledByNiceMonomorphism, IsProjectiveGroupWithFrob );
 
 DeclareGlobalFunction( "OnProjSubspaces" );
 DeclareGlobalFunction( "OnSetsProjSubspaces" );
@@ -157,11 +159,11 @@ DeclareGlobalFunction( "OnSetsProjSubspaces" );
 DeclareGlobalFunction( "OnProjPointsWithFrob" );
 DeclareGlobalFunction( "OnProjSubspacesWithFrob" );
 
-DeclareOperation( "ActionOnAllProjPoints", [IsCollineationGroup] );
-DeclareOperation( "SetAsNiceMono", [IsCollineationGroup, IsGroupHomomorphism] );
+DeclareOperation( "ActionOnAllProjPoints", [IsProjectiveGroupWithFrob] );
+DeclareOperation( "SetAsNiceMono", [IsProjectiveGroupWithFrob, IsGroupHomomorphism] );
 
-DeclareAttribute( "Dimension", IsCollineationGroup );
-DeclareProperty( "CanComputeActionOnPoints", IsCollineationGroup );
+DeclareAttribute( "Dimension", IsProjectiveGroupWithFrob );
+DeclareProperty( "CanComputeActionOnPoints", IsProjectiveGroupWithFrob );
 
 DeclareGlobalFunction( "NiceMonomorphismByOrbit" );
 DeclareGlobalFunction( "NiceMonomorphismByDomain" );

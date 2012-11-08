@@ -56,7 +56,7 @@ BindGlobal( "ProjElsWithFrobWithPSIsomType",
               IsProjGrpElWithFrobWithPSIsom and 
 	      IsProjGrpElWithFrobWithPSIsomRep ) );
 
-InstallTrueMethod( IsHandledByNiceMonomorphism, IsCollineationGroup );
+InstallTrueMethod( IsHandledByNiceMonomorphism, IsProjectiveGroupWithFrob );
 
 DeclareSynonym( "IsProjGroupWithFrobWithPSIsom", IsGroup and IsProjGrpElWithFrobWithPSIsomCollection);
 DeclareSynonym( "IsCorrelationCollineationGroup", IsGroup and IsProjGrpElWithFrobWithPSIsomCollection);
@@ -102,6 +102,22 @@ DeclareOperation( "Correlation", [ IsProjectiveSpace, IsMatrix, IsMapping, IsIde
 DeclareOperation( "UnderlyingMatrix", [ IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep ] );
 DeclareOperation( "FieldAutomorphism", [ IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep ] );
 DeclareOperation( "ProjectiveSpaceIsomorphism", [ IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep ] );
+
+
+###################################################################
+# Tests whether IsProjGrpElWithFrobWithPSIsom is a projectivity and so on ...
+###################################################################
+
+DeclareProperty( "IsProjectivity", IsProjGrpElWithFrobWithPSIsom );
+DeclareProperty( "IsProjectiveSemilinearMap", IsProjGrpElWithFrobWithPSIsom );
+DeclareProperty( "IsCollineation", IsProjGrpElWithFrobWithPSIsom );
+
+###################################################################
+# Tests whether CorrelationCollineationGroup is a ProjectivityGroup and so on ...
+###################################################################
+
+DeclareProperty( "IsProjectivityGroup", IsProjGroupWithFrobWithPSIsom );
+DeclareProperty( "IsCollineationGroup", IsProjGroupWithFrobWithPSIsom );
 
 
 #############################################################################

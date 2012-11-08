@@ -153,20 +153,32 @@ We will follow this philosophy for the other classical groups.
 
 <Section>
 <Heading> Projectivities, collineations and correlations of projective spaces.</Heading>
-As explained in the introduction, mathematically, the underlying object of a projectivity of a projective space is a nonsingular matrix. The underlying objects of a collineation of a projective space is a nonsingular matrix and a field automorphism, and the underlying objects of a correlation of a projective space is a nonsingular matrix, a field automorphism, and a duality. 
+As explained in the introduction, mathematically, the underlying object of a projectivity of a projective space is a nonsingular matrix. The underlying objects of a collineation of a projective space is a nonsingular matrix and a field automorphism (which might be the identity), and the underlying objects of a correlation of a projective space is a nonsingular matrix, a field automorphism, and an isomorphism between the projective space and its dual space.
 
-Of course this would give rise to different categories in <Package>FinInG</Package>. However, for computational reasons, and for user-friendlyness in <Package>FinInG</Package>, there are
-basically only two categories used: (i) pairs consisting of a nonsingular matrix and a field automorphism, and (ii) triples consisting of a nonsingular matrix, a field automorphism, and a projective space isomorphism. Type (i) corresponds to the category <C>IsCollineationOfProjectiveSpace</C> (or <C>IsProjGrpElWithFrob</C>); type (ii) to the category
-<C>IsCorrelationCollineation</C> (or <C>IsProjGrpElWithFrobWithPSIsom</C>).
+These are the different type of actions on projective spaces in <Package>FinInG</Package>, and they naturally give rise to the following
+representations.
+<ManSection>
+<Heading>Representations for group elements</Heading>
+<Filt Name="IsProjGrpElRep" Type="Representation"/>
+<Filt Name="IsProjGrpElWithFrobRep" Type="Representation"/>
+<Filt Name="IsProjGrpElWithFrobWithPSIsomRep" Type="Representation"/>
+<Description>
+<C>IsProjGrpElRep</C> is the representation naturally induced by a projectivity; <C>IsProjGrpElWithFrobRep</C> is the representation naturally induced by the notion of a collineation of projective space; and <C>IsProjGrpElWithFrobWithPSIsomRep</C> is the representation naturally induced by a correlation of a projective space. This means that an object in the category <C>IsProjGrpEl</C> has as underlying object a matrix; an object in the category <C>IsProjGrpElWithFrob</C> has as underlying object a pair consisting of a matrix and a field automorphism; and <C>IsProjGrpElWithFrobWithPSIsom</C> has as underlying object a triple consisting of a matrix, a field automorphism and an isomorphism from the projective space to its dual space. Also the basefield is stored as a
+component in the representation.
+</Description>
+</ManSection>
 
 <ManSection>
-<Heading>Collineations of projective spaces</Heading>
-<Filt Name="IsCollineationOfProjectiveSpace" Type="Category"/>
+<Heading>Categories for group elements</Heading>
+<Filt Name="IsProjGrpEl" Type="Category"/>
 <Filt Name="IsProjGrpElWithFrob" Type="Category"/>
+<Filt Name="IsProjGrpElWithFrobWithPSIsom" Type="Category"/>
 <Description>
-<C>IsCollineationOfProjectiveSpace</C> is the category of elements of <Alt Not="HTML"><M>P\Gamma L(n+1,q)</M></Alt><Alt
-Only="HTML">P&#915;L(n+1,q)</Alt>. So these are the elements corresponding to the pairs consisting of a nonsingular matrix and a field automorphism (as mentioned above (i)).
-<C>IsProjGrpElWithFrob</C> is a synonym of <C>IsCollineationOfProjectiveSpace</C>.
+<C>IsProjGrpEl</C>, <C>IsProjGrpElWithFrob</C>, and <C>IsProjGrpElWithFrobWithPSIsom</C> are the categories 
+naturally induced the notions of projectivities, collineations, and
+correlations of a projective space.
+This means that an object in the category <C>IsProjGrpEl</C> has as underlying object a matrix; an object in the category <C>IsProjGrpElWithFrob</C> has as underlying object a pair consisting of a matrix and a field automorphism; and <C>IsProjGrpElWithFrobWithPSIsom</C> has as underlying object a triple consisting of a matrix, a field automorphism and an isomorphism from the projective space to its dual space. Also the basefield is stored as a
+component in the representation.
 </Description>
 </ManSection>
 
@@ -174,32 +186,61 @@ Only="HTML">P&#915;L(n+1,q)</Alt>. So these are the elements corresponding to th
 <Heading>Projectivities</Heading>
 <Filt Name="IsProjectivity" Type="Property"/>
 <Description>
-<C>IsProjectivity</C> is a property that checks whether a given collineation is a projectivity, i.e. whether the element belongs
-to <M>PGL(n+1,q)</M>, or in other words whether the underlying
-field automorphism is the identity.This operation provides a user-friendly method to distinguish the projectivities from the projective strictly
-semilinear maps inside the category of collineations of a projective space.
+<C>IsProjectivity</C> is a property.
+Projectivities are the elements of <M>PGL(n+1,q)</M>. Every element belonging to <C>IsProjGrpEl</C> is by construction a projectivity. If <C>IsProjectivity</C> is applied to a an element
+belonging to <C>IsProjGrpElWithFrob</C>, then it verifies whether the
+underlying field automorphism is the identity.
+If <C>IsProjectivity</C> is applied to a an element
+belonging to <C>IsProjGrpElWithFrobWithPSIsom</C>, 
+then it verifies whether the
+underlying field automorphism is the identity, and whether the projective
+space isomorphism is the identity.
+This operation provides a user-friendly method to distinguish the projectivities from the projective strictly
+semilinear maps, and the correlations of a projective space.
 </Description>
 </ManSection>
+
+<ManSection>
+<Heading>Collineations of projective spaces</Heading>
+<Filt Name="IsCollineation" Type="Property"/>
+<Description>
+<C>IsCollineation</C> is property. All element of <Alt Not="HTML"><M>P\Gamma L(n+1,q)</M></Alt><Alt
+Only="HTML">P&#915;L(n+1,q)</Alt> are collineations, and therefor all
+elements belonging to <C>IsProjGrpElWithFrob</C> are collineations.
+But also a projectivity is a collineation, as well as an element belonging
+to <C>IsProjGrpElWithFrobWithPSIsom</C> with projective space isomorphism equal to the identity, is a collineation.
+</Description>
+</ManSection>
+
 
 <ManSection>
 <Heading>Projective strictly semilinear maps</Heading>
 <Filt Name="IsProjectiveSemilinearMap" Type="Property"/>
 <Description>
 <C>IsProjectiveSemilinearMap</C> is a property that checks whether a given collineation has a nontrivial underlying field automorphisms, i.e. whether the element belongs to <Alt Not="HTML"><M>P\Gamma L(n+1,q)</M></Alt><Alt
-Only="HTML">P&#915;L(n+1,q)</Alt>, but not to <M>PGL(n+1,q)</M>. It is important to point out that in <Package>FinInG</Package> not all collineations of a projective space are considered as <C>IsProjectiveSemilinearMap</C>! This operation provides a user-friendly method to distinguish the projective strictly
+Only="HTML">P&#915;L(n+1,q)</Alt>, but not to <M>PGL(n+1,q)</M>. It is important to point out that in <Package>FinInG</Package> not all collineations of a projective space are considered as <C>IsProjectiveSemilinearMap</C>! 
+
+If <C>IsProjectiveSemilinearMap</C> is applied to a an element
+belonging to <C>IsProjGrpElWithFrobWithPSIsom</C>, 
+then it verifies whether the
+underlying field automorphism is different from the identity, 
+and whether the projective
+space isomorphism equals the identity.
+
+
+This operation provides a user-friendly method to distinguish the projective strictly
 semilinear maps from projectivities inside the category of collineations of a projective space.
 </Description>
 </ManSection>
 
 <ManSection>
 <Heading>Correlations and collineations</Heading>
-<Filt Name="IsCorrelationCollineation" Type="Category"/>
 <Filt Name="IsProjGrpElWithFrobWithPSIsom" Type="Category"/>
+<Filt Name="IsCorrelationCollineation" Type="Category"/>
 <Filt Name="IsCorrelation" Type="Property"/>
 <Description>
-The underlying objects of a correlation-collineation in <Package>FinInG</Package> are a nonsingular matrix, a field automorphism and a projective space isomorphism. <C>IsCorrelationCollineation</C> is the category of these
-objects. If the projective space isomorphism is not the identity, then the element is a correlation, and <C>IsCorrelation</C> will return true.
-<C>IsProjGrpElWithFrobWithPSIsom</C> is a synonym of <C>IsCorrelationCollineation</C>.
+The underlying objects of a correlation-collineation in <Package>FinInG</Package> are a nonsingular matrix, a field automorphism and a projective space isomorphism. <C>IsProjGrpElWithFrobWithPSIsom</C> is the category of these objects. If the projective space isomorphism is not the identity, then the element is a correlation, and <C>IsCorrelation</C> will return true.
+<C>IsCorrelationCollineation</C> is a synonym of <C>IsProjGrpElWithFrobWithPSIsom</C>.
 </Description>
 </ManSection>
 </Section>
@@ -208,8 +249,20 @@ objects. If the projective space isomorphism is not the identity, then the eleme
 <Section>
 <Heading>Construction of projectivities, collineations and correlations.</Heading>
 
-In <Package>FinInG</Package>, projectivities and collineations are both constructed in the category <C>IsCollineationOfProjectiveSpace</C>; correlations are constructed in the category <C>IsCorrelationCollineation</C>.
+In <Package>FinInG</Package>, projectivities and collineations are both constructed in the category <C>IsProjGrpElWithFrob</C>; correlations are constructed in the category <C>IsProjGrpElWithFrobWithPSIsom</C>.
 
+<ManSection>
+<Oper Name="Projectivity" Arg="mat, f"/>
+<Oper Name="Projectivity" Arg="pg, mat"/>
+<Returns>a projectivity of a projective space</Returns>
+<Description><A>mat</A> must be a nonsingular matrix over the finite field
+<A>f</A>. In the second variant, the size of the nonsingular matrix <A>mat</A> must be one more than the dimension of the projective space <A>pg</A>.
+This creates an element of a projectivity group. But the returned object belongs to <C>IsProjGrpElWithFrob</C>!
+<Example>
+<#Include SYSTEM "../examples/include/projgroups_projectivity.include"> 
+</Example>
+</Description>
+</ManSection>
 
 <ManSection>
 <Oper Name="CollineationOfProjectiveSpace" Arg="mat, frob, f"/>
@@ -238,19 +291,6 @@ two arguments are compatible.
 </ManSection>
 
 
-<ManSection>
-<Oper Name="Projectivity" Arg="mat, f"/>
-<Oper Name="Projectivity" Arg="pg, mat"/>
-<Returns>a projectivity of a projective space</Returns>
-<Description><A>mat</A> must be a nonsingular matrix over the finite field
-<A>f</A>. In the second variant, the size of the nonsingular matrix <A>mat</A> must be one more than the dimension of the projective space <A>pg</A>.
-This creates an element of a projectivity group. The returned object belongs to
-<C>IsCollineationOfProjectiveSpace</C>. 
-<Example>
-<#Include SYSTEM "../examples/include/projgroups_projectivity.include"> 
-</Example>
-</Description>
-</ManSection>
 
 <ManSection>
 <Oper Name="ProjectiveSemilinearMap" Arg="mat, frob, f"/>
@@ -312,17 +352,15 @@ the category <C>IsProjGrpElWithFrobWithPSIsom</C>
 projective spaces</Heading> 
 
 <ManSection>
-<Heading>Representations for group elements</Heading>
-<Filt Name="IsProjGrpElRep" Type="Representation"/>
-<Filt Name="IsProjGrpElWithFrobRep" Type="Representation"/>
-<Filt Name="IsProjGrpElWithFrobWithPSIsom" Type="Representation"/>
+<Oper Name="Representative" Arg="g"/>
 <Description>
-As we have seen, in <Package>FinInG</Package>, a projectivity is described by
-a matrix, a collineation of a projective space by a matrix and a field
-automorphism, and a correlation of a projective space by a matrix, a field
-automorphism and a isomorphism of the projective space that is either the
-standard duality or the identity mapping. Also the basefield is stored as a
-component in the representation.
+<A>g</A> is a projectivity, collineation or correlation of a projective space.
+This function returns the reresentative components that determine <A>g</A>, i.e. a matrix, 
+a matricx and a field automorphism, and a matrix, a field automorphism, and a vector space isomorphism, 
+respectively.
+<Example>
+<#Include SYSTEM "../examples/include/projgroups_representative.include"> 
+</Example>
 </Description>
 </ManSection>
 
@@ -375,18 +413,6 @@ companion isomorphism of the projective space which defines <A>g</A>.
 </Description>
 </ManSection>
 
-<ManSection>
-<Oper Name="Representative" Arg="g"/>
-<Description>
-<A>g</A> is a projectivity, collineation or correlation of a projective space.
-This function returns the reresentative components that determine <A>g</A>, i.e. a matrix, 
-a matricx and a field automorphism, and a matrix, a field automorphism, and a vector space isomorphism, 
-respectively.
-<Example>
-<#Include SYSTEM "../examples/include/projgroups_representative.include"> 
-</Example>
-</Description>
-</ManSection>
 
 <ManSection>
 <Oper Name="Order" Arg="g"/>
@@ -406,30 +432,6 @@ This function returns the order of <A>g</A>.
 <Heading>The groups <Alt Not="HTML"><M>P\Gamma{}L</M></Alt><Alt Only="HTML"><M>P&#915;L</M></Alt>, 
 <M>PGL</M>, and <M>PSL</M> in <Package>FinInG</Package>
 </Heading>
-<ManSection>
-<Filt Name="IsProjectivityGroup" Type="Category"/>
-<Description>
-<C>IsProjectivityGroup</C> is a category to which the group of projectivities of a projective space
-belongs (i.e. <M>PGL(n+1,q)</M>).
-<C>IsProjectiveGroupWithFrob</C> is a category to which the group of collineations of a projective
-space belongs (i.e. <Alt Not="HTML"><M>P\Gamma L(n+1,q)</M></Alt><Alt
-Only="HTML">P&#915;L(n+1,q)</Alt>).
-
-<C>IsCollineationGroup</C> (MOET NOG GECONTROLEERD WORDEN) applies the same filter to a group of automorphisms of a projective space as <C>IsProjecitiveGroupWithFrob</C>.
-
-<C>IsProjectiveGroup</C> is ...
-
-
-HIER VERDER WERKEN
-
-elements of <M>PGL(n+1,q)</M>, i.e. projectivities, 
-can be constructed as objects.
-<C>IsProjGrpElWithFrob</C> is a category in which elements of <Alt Not="HTML"><M>P\Gamma L(n+1,q)</M></Alt><Alt
-Only="HTML">P&#915;L(n+1,q)</Alt> can be constructed. So collineations in the
-mathematical sense (and thus also projectivities) can be constructed as objects in
-this category.
-</Description>
-</ManSection>
 
 As mentioned before the commands <F>PGL</F> (and <F>ProjectiveGeneralLinearGroup</F>) 
 and <F>PSL</F> (and <F>ProjectiveSpecialLinearGroup</F>) are already available in GAP 
@@ -437,32 +439,32 @@ and return a (permutation) group isomorphic to the required group.
 
 In <Package>FinInG</Package>, different categories are created for these groups.
 
-
-
-<ManSection>
-<Oper Name="CollineationGroup" Arg="geom"/>
-<Returns>the group of collineations of geom</Returns>
-<Description>
-Let <A>geom</A> be the projective space <M>PG(n,q)</M> This operation returns the 
-group of collineations <Alt Not="HTML"><M>\Gamma L(n+1,q)</M></Alt><Alt
-Only="HTML">&#915;L(n+1,q)</Alt> of the projective space <M>PG(n,q)</M>. If
-<M>GF(q)</M> has no non-trivial field automorphisms, i.e. when <M>q</M> is prime,
-the group <M>PGL(n+1,q)</M> is the full collineation group and will be returned.
-<Example>
-<#Include SYSTEM "../examples/include/projgroups_collineationgroup.include"> 
-</Example>
-</Description>
-</ManSection>
-
 <ManSection>
 <Oper Name="ProjectivityGroup" Arg="geom"/>
 <Oper Name="HomographyGroup" Arg="geom"/>
 <Returns>the group of projectivities of geom</Returns>
 <Description>
 Let <A>geom</A> be the projective space <M>PG(n,q)</M> This operation (and its synonym) returns the 
-group of projectivities <M>PGL(n+1,q)</M> of the projective space <M>PG(n,q)</M>.
+group of projectivities <M>PGL(n+1,q)</M> of the projective space <M>PG(n,q)</M>. Note that although a projectivity is a collineation with the identity as associated field isomorphism, this group belongs to the category <C>IsProjectiveGroupWithFrob</C>, and its elements belong to <C>IsProjGrpElWithFrob</C>.
 <Example>
 <#Include SYSTEM "../examples/include/projgroups_projectivitygroup.include"> 
+</Example>
+</Description>
+</ManSection>
+
+
+<ManSection>
+<Oper Name="CollineationGroup" Arg="geom"/>
+<Returns>the group of collineations of geom</Returns>
+<Description>
+Let <A>geom</A> be the projective space <M>PG(n,q)</M>. 
+This operation returns the 
+group of collineations <Alt Not="HTML"><M>\Gamma L(n+1,q)</M></Alt><Alt
+Only="HTML">&#915;L(n+1,q)</Alt> of the projective space <M>PG(n,q)</M>. If
+<M>GF(q)</M> has no non-trivial field automorphisms, i.e. when <M>q</M> is prime,
+the group <M>PGL(n+1,q)</M> is the full collineation group and will be returned.
+<Example>
+<#Include SYSTEM "../examples/include/projgroups_collineationgroup.include"> 
 </Example>
 </Description>
 </ManSection>
@@ -479,6 +481,27 @@ group of special projectivities <M>PSL(n+1,q)</M> of the projective space <M>PG(
 </Example>
 </Description>
 </ManSection>
+
+<ManSection>
+<Filt Name="IsProjectivityGroup" Type="Property"/>
+<Description>
+<C>IsProjectivityGroup</C> is a property, which subgroups of
+a the <C>CollineationGroup</C> or a <C>CorrelationCollineationGroup</C> of
+a projective space might have. It checks whether the generators are projectivities. Of course <C>ProjectivityGroup</C> has
+this property.
+</Description>
+</ManSection>
+
+<ManSection>
+<Filt Name="IsCollineationGroup" Type="Property"/>
+<Description>
+<C>IsCollineationGroup</C> is a property, which subgroups of
+a the <C>CorrelationCollineationGroup</C> of a projective space might have.
+It checks whether the generators are collineations. Of course <C>ProjectivityGroup</C> and <C>CollineationGroup</C> have
+this property.
+</Description>
+</ManSection>
+
 </Section>
 
 <Section>

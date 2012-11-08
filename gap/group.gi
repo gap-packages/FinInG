@@ -27,7 +27,7 @@
 #
 # Things To Do:
 #
-# - Order for a projective semilinear element: done?
+# - Order for a projective collineation element: done?
 # - GammaOminus (q even). Done.
 # - Optimise the action operations/functions. Future work.
 # - Have ProjEl, ProjElWithFrob, and ProjElWithFrobWithVSIsom
@@ -234,13 +234,27 @@ InstallMethod( Projectivity, [ IsProjectiveSpace, IsMatrix],
 		return Projectivity(mat,gf);
 	end );
 
+
+###################################################################
+# Tests whether collineation is a projectivity and so on ...
+###################################################################
+
+# Added ml 7/11/2012
+#############################################################################
+#O  IsProjectivity( <g> )
+## 
+InstallMethod( IsProjectivity, [ IsProjGrpEl ],
+  function( g )
+	return true;
+  end );
+
 # Added ml 7/11/2012
 #############################################################################
 #O  IsProjectivity( <g> )
 # method to check if a given collineation of a projective space is a projectivity, 
 # i.e. if the corresponding frobenius automorphism is the identity
 ## 
-InstallMethod( IsProjectivity, [ IsCollineationOfProjectiveSpace ],
+InstallMethod( IsProjectivity, [ IsProjGrpElWithFrob ],
   function( g )
     local F,sigma;
 		F:=g!.fld;
@@ -254,10 +268,19 @@ InstallMethod( IsProjectivity, [ IsCollineationOfProjectiveSpace ],
 # Added ml 8/11/2012
 #############################################################################
 #O  IsProjectiveSemilinearMap( <g> )
+## 
+InstallMethod( IsProjectiveSemilinearMap, [ IsProjGrpEl],
+  function( g )
+	return false;
+  end );
+
+# Added ml 8/11/2012
+#############################################################################
+#O  IsProjectiveSemilinearMap( <g> )
 # method to check if a given collineation of a projective space is semilinear, 
 # i.e. if the corresponding frobenius automorphism is NOT the identity
 ## 
-InstallMethod( IsProjectiveSemilinearMap, [ IsCollineationOfProjectiveSpace ],
+InstallMethod( IsProjectiveSemilinearMap, [ IsProjGrpElWithFrob],
   function( g )
     local F,sigma;
 		F:=g!.fld;
@@ -268,13 +291,36 @@ InstallMethod( IsProjectiveSemilinearMap, [ IsCollineationOfProjectiveSpace ],
 		fi;
   end );
 
+  
+  
+# Added ml 8/11/2012
+#############################################################################
+#O  IsCollineation( <g> )
+## 
+InstallMethod( IsCollineation, [ IsProjGrpEl],
+  function( g )
+	return true;
+  end );
+
+# Added ml 8/11/2012
+#############################################################################
+#O  IsCollineation( <g> )
+# method to check if a given collineation of a projective space is semilinear, 
+# i.e. if the corresponding frobenius automorphism is NOT the identity
+## 
+InstallMethod( IsCollineation, [ IsProjGrpElWithFrob],
+  function( g )
+    return true;
+end );
+
+
 # Added ml 7/11/2012
 #############################################################################
 #O  IsProjectivityGroup( <G> )
-# method to check if a given projective semilinear group G is a projectivity group, 
+# method to check if a given projective collineation group G is a projectivity group, 
 # i.e. if the corresponding frobenius automorphisms of the generators are the identity
 ## 
-InstallMethod( IsProjectivityGroup, [ IsCollineationGroup],
+InstallMethod( IsProjectivityGroup, [ IsProjectiveGroupWithFrob],
   function( G )
     local gens, F, set, g;
 		gens:=GeneratorsOfMagmaWithInverses(G);
@@ -286,8 +332,18 @@ InstallMethod( IsProjectivityGroup, [ IsCollineationGroup],
 		fi;
   end );
 
+
+# Added ml 8/11/2012
+#############################################################################
+#O  IsCollineationGroup( <G> )
+##
+InstallMethod( IsCollineationGroup, [ IsProjectiveGroupWithFrob],
+  function( G )
+	return true;
+  end );
+
 ###################################################################
-# Construction of "projective semilinear maps", that is matrices 
+# Construction of "projective collineation maps", that is matrices 
 # modulo scalars with frobenius automorphism
 ###################################################################
 
@@ -530,7 +586,7 @@ InstallMethod( Collineation, [ IsProjectiveSpace, IsMatrix, IsMapping],
 #############################################################################
 #O  CollineationOfProjectiveSpace( <mat>, <frob>, <gf> )
 # method to construct an object in the category IsProjGrpElWithFrob, i.e. a 
-# collineation of a projective space, aka a projective semilinear map. 
+# collineation of a projective space, aka a projective collineation map. 
 # This method is intended for the user, and contains
 # a check whether the matrix is non-singular. The method relies on ProjElWithFrob,
 # which will produce an error if the entries of <mat> do not all belong to <gf>
@@ -554,7 +610,7 @@ InstallMethod( CollineationOfProjectiveSpace,
 #############################################################################
 #O  ProjectiveSemilinearMap( <mat>, <frob>, <gf> )
 # method to construct an object in the category IsProjGrpElWithFrob, i.e. a 
-# collineation of a projective space, aka a projective semilinear map. 
+# collineation of a projective space, aka a projective collineation map. 
 # This method is intended for the user, and contains
 # a check whether the matrix is non-singular. The method relies on ProjElWithFrob,
 # which will produce an error if the entries of <mat> do not all belong to <gf>
@@ -702,7 +758,7 @@ InstallMethod( PrintObj, "for a projective group element",
 InstallMethod( ViewObj, "for a projective group element with Frobenius",
   [IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
   function(el)
-    Print("<projective semilinear element: ");
+    Print("< a collineation: ");
     ViewObj(el!.mat);
     if IsOne(el!.frob) then
         Print(", F^0>");
@@ -714,7 +770,7 @@ InstallMethod( ViewObj, "for a projective group element with Frobenius",
 InstallMethod( Display, "for a projective group element with Frobenius",
   [IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
   function(el)
-    Print("<projective semilinear element, underlying matrix:\n");
+    Print("<a collineation , underlying matrix:\n");
     Display(el!.mat);
     if IsOne(el!.frob) then
         Print(", F^0>\n");
@@ -930,7 +986,7 @@ InstallOtherMethod( DegreeFFE,
 # CHECKED 6/09/11 jdb
 #############################################################################
 #O  DegreeFFE( <el> )
-# for projective semilinear maps. returns the degree of the underlying 
+# for projective collineation maps. returns the degree of the underlying 
 # field over its prime field.
 ## 
 InstallOtherMethod( DegreeFFE, 
@@ -955,7 +1011,7 @@ InstallMethod( Characteristic,
 # CHECKED 6/09/11 jdb
 #############################################################################
 #O  Characteristic( <el> )
-# for projective semilinear maps. returns the characteristic of the underlying field.
+# for projective collineation maps. returns the characteristic of the underlying field.
 ## 
 InstallMethod( Characteristic, 
 	"for projective group element with Frobenius",
@@ -1423,54 +1479,54 @@ InstallMethod( OneSameMutability,
 #	end );
 	
 InstallMethod( ViewObj,	
-	"for a projective semilinear group",
-	[IsCollineationGroup],
+	"for a projective collineation group",
+	[IsProjectiveGroupWithFrob],
 	function( g )
-		Print("<projective semilinear group>");
+		Print("<projective collineation group>");
 	end );
 
 InstallMethod( ViewObj, 
-	"for a trivial projective semilinear group",
-	[IsCollineationGroup and IsTrivial],
+	"for a trivial projective collineation group",
+	[IsProjectiveGroupWithFrob and IsTrivial],
 	function( g )
-		Print("<trivial projective semilinear group>");
+		Print("<trivial projective collineation group>");
 	end );
 
 InstallMethod( ViewObj, 
-	"for a projective semilinear group with gens",
-	[IsCollineationGroup and HasGeneratorsOfGroup],
+	"for a projective collineation group with gens",
+	[IsProjectiveGroupWithFrob and HasGeneratorsOfGroup],
 	function( g )
 		local gens;
 		gens := GeneratorsOfGroup(g);
 		if Length(gens) = 0 then
-			Print("<trivial projective semilinear group>");
+			Print("<trivial projective collineation group>");
 		else
-			Print("<projective semilinear group with ",Length(gens),
+			Print("<projective collineation group with ",Length(gens),
               " generators>");
 		fi;
 	end );
 
 InstallMethod( ViewObj, 
-	"for a projective semilinear group with size",
-	[IsCollineationGroup and HasSize],
+	"for a projective collineation group with size",
+	[IsProjectiveGroupWithFrob and HasSize],
 	function( g )
 		if Size(g) = 1 then
-			Print("<trivial projective semilinear group>");
+			Print("<trivial projective collineation group>");
 		else
-			Print("<projective semilinear group of size ",Size(g),">");
+			Print("<projective collineation group of size ",Size(g),">");
 		fi;
 	end );
 
 InstallMethod( ViewObj, 
-	"for a projective semilinear group with gens and size",
-	[IsCollineationGroup and HasGeneratorsOfGroup and HasSize],
+	"for a projective collineation group with gens and size",
+	[IsProjectiveGroupWithFrob and HasGeneratorsOfGroup and HasSize],
 	function( g )
 		local gens;
 		gens := GeneratorsOfGroup(g);
 		if Length(gens) = 0 then
-			Print("<trivial projective semilinear group>");
+			Print("<trivial projective collineation group>");
 		else
-			Print("<projective semilinear group of size ",Size(g)," with ",
+			Print("<projective collineation group of size ",Size(g)," with ",
               Length(gens)," generators>");
 		fi;
 	end );
@@ -1515,11 +1571,11 @@ InstallMethod( ViewObj,
 # CHECKED 6/09/11 jdb
 #############################################################################
 #O  BaseField( <g> )
-# returns the base field of the projective semilinear group <g>
+# returns the base field of the projective collineation group <g>
 ## 
 InstallMethod( BaseField, 
-	"for a projective semilinear group",
-	[IsCollineationGroup],
+	"for a projective collineation group",
+	[IsProjectiveGroupWithFrob],
 	function( g )
 		local f,gens;
 		if IsBound(g!.basefield) then
@@ -1571,14 +1627,14 @@ InstallMethod( BaseField,
 # CHECKED 6/09/11 jdb
 #############################################################################
 #O  Dimension( <g> )
-# returns the dimension of the projective semilinear group <g>. The dimension of this 
+# returns the dimension of the projective collineation group <g>. The dimension of this 
 # group is defined as the vector space dimension of the projective space  
 # of which <g> was defined as a projective group, or, in other words, as the 
 # size of the matrices.
 ## 
 InstallMethod( Dimension, 
-	"for a projective semilinear group",
-	[IsCollineationGroup],
+	"for a projective collineation group",
+	[IsProjectiveGroupWithFrob],
 	function( g )
 		local gens;
 		if HasParent(g) then
@@ -1622,12 +1678,12 @@ InstallMethod( Dimension,
 # CHECKED 6/09/11 jdb
 #############################################################################
 #O  OneImmutable( <g> )
-# returns immutable one of the projective semilinear group <g>
+# returns immutable one of the projective collineation group <g>
 ## 
 InstallMethod( OneImmutable, 
-	"for a projective semilinear group",
-	# was [IsGroup and IsCollineationGroup], I think might be
-	[IsCollineationGroup],
+	"for a projective collineation group",
+	# was [IsGroup and IsProjectiveGroupWithFrob], I think might be
+	[IsProjectiveGroupWithFrob],
 	function( g )
 		local gens, o;
 		gens := GeneratorsOfGroup(g);
@@ -1677,11 +1733,11 @@ InstallMethod( OneImmutable,
 #############################################################################
 #P  CanComputeActionOnPoints( <g> )
 # is set true if we consider the computation of the action feasible.
-# for projective semilinear groups.
+# for projective collineation groups.
 ## 
 InstallMethod( CanComputeActionOnPoints, 
 	"for a projective group with frob",
-	[IsCollineationGroup],
+	[IsProjectiveGroupWithFrob],
 	function( g )
 		local d,q;
 		d := Dimension( g );
@@ -1694,7 +1750,7 @@ InstallMethod( CanComputeActionOnPoints,
 	end );
   
 ###################################################################
-# Action functions for projective groups and projective semilinear
+# Action functions for projective groups and projective collineation
 # groups. The four action functions here are low level and not 
 # intended for the user.
 ###################################################################
@@ -1707,7 +1763,7 @@ InstallMethod( CanComputeActionOnPoints,
 # function OnLines, which is the "natural" actions of a matrix on a vector line.
 # Important: despite its natural name, this function is *not* intended for the user.
 # <line>: just a row vector, representing a vector line
-# <el>: a projective group element (so a projectivity, *not* a projective semilinear element.
+# <el>: a projective group element (so a projectivity, *not* a projective collineation element.
 # normalizing the result is handled by the Gap function OnLines. This function assumes that 
 # the input vector is also normalized (says the GAP manual). This became reality on september 19, 2011 :-)
 ## 
@@ -1726,7 +1782,7 @@ InstallGlobalFunction( OnProjPoints,
 # the result is hence normalized
 # Important: despite its natural name, this function is *not* intended for the user.
 # <line>: just a row vector, representing a projective point.
-# <el>: a projective semilinear element 
+# <el>: a projective collineation element 
 ## 
 InstallGlobalFunction( OnProjPointsWithFrob,
   function( line, el )
@@ -1755,7 +1811,7 @@ InstallGlobalFunction( OnProjPointsWithFrob,
 # mat*<el> in Hermite normal form. To be used in user action functions, we EchelonMat it, so that
 # the output can be used directly in a Wrap.
 # Important: despite its natural name, this function is *not* intended for the user.
-# <el>: a projective group element (so a projectivity, *not* a projective semilinear element.
+# <el>: a projective group element (so a projectivity, *not* a projective collineation element.
 ## 
 InstallGlobalFunction( OnProjSubspacesNoFrob,
 	function( subspace, el )
@@ -1775,7 +1831,7 @@ InstallGlobalFunction( OnProjSubspacesNoFrob,
 # OnRight, which computs the action of a matrix on a sub vector space. Here we have to rely on 
 # OnRight, and so we have to EchelonMat afterwards.
 # Important: despite its natural name, this function is *not* intended for the user.
-# <el>: a projective group element (so a projectivity, *not* a projective semilinear element.
+# <el>: a projective group element (so a projectivity, *not* a projective collineation element.
 ##
 InstallGlobalFunction( OnProjSubspacesWithFrob,
   function( subspace, el )
@@ -1791,7 +1847,7 @@ InstallGlobalFunction( OnProjSubspacesWithFrob,
 
 ###################################################################
 # Higher level user friendly operations to compute the action of a
-# projective and a projective semilinear group. These operations
+# projective and a projective collineation group. These operations
 # are based on the low level functions above.
 ###################################################################
 
@@ -1821,11 +1877,11 @@ InstallGlobalFunction( OnProjSubspacesWithFrob,
 # CHECKED 6/09/11 jdb
 #############################################################################
 #P  ActionOnAllProjPoints( <g> )
-# returns the action of the projective semilinear group <g> on the projective points
+# returns the action of the projective collineation group <g> on the projective points
 # of the underlying projective space.
 ## 
-InstallMethod( ActionOnAllProjPoints, "for a projective semilinear group",
-	[ IsCollineationGroup ],
+InstallMethod( ActionOnAllProjPoints, "for a projective collineation group",
+	[ IsProjectiveGroupWithFrob ],
 	function( pg )
 		local a,d,f,o,on,orb,v,zero, m, j;
 		f := BaseField(pg);
@@ -1849,7 +1905,7 @@ InstallMethod( ActionOnAllProjPoints, "for a projective semilinear group",
 	end );
 
 ###################################################################
-# NiceMonomorphism material for projective and projective semilinear 
+# NiceMonomorphism material for projective and projective collineation 
 # groups. 
 ###################################################################
 
@@ -1935,8 +1991,8 @@ InstallGlobalFunction( NiceMonomorphismByDomain,
 #  end );
   
 InstallMethod( SetAsNiceMono, 
-  "for a projective semilinear group and an action hom",
-  [IsCollineationGroup, IsGroupHomomorphism and IsInjective],
+  "for a projective collineation group and an action hom",
+  [IsProjectiveGroupWithFrob, IsGroupHomomorphism and IsInjective],
   function( pg, a )
     SetNiceMonomorphism(pg,a);
     SetNiceObject(pg,Image(a));
@@ -1970,7 +2026,7 @@ InstallMethod( NiceMonomorphism,
 ##
 InstallMethod( NiceMonomorphism, 
 	"for a projective group (nasty case)",
-	[IsCollineationGroup and IsHandledByNiceMonomorphism], 
+	[IsProjectiveGroupWithFrob and IsHandledByNiceMonomorphism], 
 	50,
 	function( pg )
 		local can, dom, hom;
@@ -1992,11 +2048,11 @@ InstallMethod( NiceMonomorphism,
 # CHECKED 6/09/11 jdb
 #############################################################################
 #O  NiceMonomorphism( <pg> )
-# <pg> is a projective semilinear group. This operation returns a nice monomorphism.
+# <pg> is a projective collineation group. This operation returns a nice monomorphism.
 ##
 InstallMethod( NiceMonomorphism, 
-	"for a projective semilinear group (feasible case)",
-	[IsCollineationGroup and CanComputeActionOnPoints and
+	"for a projective collineation group (feasible case)",
+	[IsProjectiveGroupWithFrob and CanComputeActionOnPoints and
 	IsHandledByNiceMonomorphism], 50,
 	function( pg )
 		return ActionOnAllProjPoints( pg );
@@ -2005,11 +2061,11 @@ InstallMethod( NiceMonomorphism,
 # CHECKED 6/09/11 jdb
 #############################################################################
 #O  NiceMonomorphism( <pg> )
-# <pg> is a projective semilinear group. This operation returns a nice monomorphism.
+# <pg> is a projective collineation group. This operation returns a nice monomorphism.
 ##
 InstallMethod( NiceMonomorphism, 
-	"for a projective semilinear group (nasty case)",
-	[IsCollineationGroup and IsHandledByNiceMonomorphism], 50,
+	"for a projective collineation group (nasty case)",
+	[IsProjectiveGroupWithFrob and IsHandledByNiceMonomorphism], 50,
 	function( pg )
 		local can;
 		can := CanComputeActionOnPoints(pg);
@@ -2045,8 +2101,8 @@ InstallMethod( FindBasePointCandidates,
   end );
 
 InstallMethod( FindBasePointCandidates,
-  "for a projective semilinear group",
-  [IsCollineationGroup,IsRecord,IsInt],
+  "for a projective collineation group",
+  [IsProjectiveGroupWithFrob,IsRecord,IsInt],
   function(g,opt,i)
     local cand,d,f,gens;
     if IsBound(g!.basepointcandidates) and
@@ -2072,8 +2128,8 @@ InstallMethod( FindBasePointCandidates,
   end );
 
 InstallMethod( FindBasePointCandidates,
-  "for a projective semilinear group",
-  [IsCollineationGroup,IsRecord,IsInt,IsObject],
+  "for a projective collineation group",
+  [IsProjectiveGroupWithFrob,IsRecord,IsInt,IsObject],
 #
 # We need a four-argument version of this method for recent versions of GenSS.
 # We don't use "parentS" at all here.
@@ -2293,8 +2349,8 @@ InstallMethod( CanonicalQuadraticForm,
 
 #############################################################################
 #O  SOdesargues( <type>, <d>, <f> )
-## returns the projective special orthogonal group, as a projective semilinear group.
-## The generators of the group are the projective semilinear elements that are 
+## returns the projective special orthogonal group, as a projective collineation group.
+## The generators of the group are the projective collineation elements that are 
 ## represented by the matrices that generate SO(type,d,q). The latter is available in GAP
 ##
 InstallMethod( SOdesargues, 
@@ -2335,8 +2391,8 @@ InstallMethod( SOdesargues,
 
 #############################################################################
 #O  GOdesargues( <type>, <d>, <f> )
-## returns the projective general orthogonal group, as a projective semilinear group.
-## The generators of the group are the projective semilinear elements that are 
+## returns the projective general orthogonal group, as a projective collineation group.
+## The generators of the group are the projective collineation elements that are 
 ## represented by the matrices that generate GO(type,d,q). The latter is available in GAP
 ##
 InstallMethod( GOdesargues, [IsInt, IsPosInt, IsField and IsFinite],
@@ -2372,8 +2428,8 @@ InstallMethod( GOdesargues, [IsInt, IsPosInt, IsField and IsFinite],
 
 #############################################################################
 #O  SUdesargues( <type>, <d>, <f> )
-## returns the projective special unitary group, as a projective semilinear group.
-## The generators of the group are the projective semilinear elements that are 
+## returns the projective special unitary group, as a projective collineation group.
+## The generators of the group are the projective collineation elements that are 
 ## represented by the matrices that generate SU(type,d,q). The latter is available in GAP
 ##
 InstallMethod( SUdesargues, [IsPosInt, IsField and IsFinite],
@@ -2396,8 +2452,8 @@ InstallMethod( SUdesargues, [IsPosInt, IsField and IsFinite],
 
 #############################################################################
 #O  GUdesargues( <type>, <d>, <f> )
-## returns the projective general unitary group, as a projective semilinear group.
-## The generators of the group are the projective semilinear elements that are 
+## returns the projective general unitary group, as a projective collineation group.
+## The generators of the group are the projective collineation elements that are 
 ## represented by the matrices that generate GU(type,d,q). The latter is available in GAP
 ##
 InstallMethod( GUdesargues, [IsPosInt, IsField and IsFinite],
@@ -2421,8 +2477,8 @@ InstallMethod( GUdesargues, [IsPosInt, IsField and IsFinite],
 
 #############################################################################
 #O  Spdesargues( <d>, <f> )
-## returns the projective special symplectic group, as a projective semilinear group.
-## The generators of the group are the projective semilinear elements that are 
+## returns the projective special symplectic group, as a projective collineation group.
+## The generators of the group are the projective collineation elements that are 
 ## represented by the matrices that generate Sp(d,q). The latter is available in GAP
 ##
 InstallMethod( Spdesargues, [IsPosInt, IsField and IsFinite],
@@ -2479,8 +2535,8 @@ InstallMethod( GeneralSymplecticGroup, [IsPosInt, IsField and IsFinite],
 
 #############################################################################
 #O  GSpdesargues( <d>, <f> )
-## returns the projective general symplectic group, as a projective semilinear group.
-## The generators of the group are the projective semilinear elements that are 
+## returns the projective general symplectic group, as a projective collineation group.
+## The generators of the group are the projective collineation elements that are 
 ## represented by the matrices that generate GSp(d,q). The latter is made possible now (see above method).
 ##
 InstallMethod( GSpdesargues, [IsPosInt, IsField and IsFinite],

@@ -119,6 +119,109 @@ InstallMethod( IsCorrelation, [ IsProjGrpElWithFrobWithPSIsom ],
 		else return true;
 		fi;
   end );
+  
+  
+  
+# Added ml 7/11/2012
+#############################################################################
+#O  IsProjectivity( <g> )
+# method to check if a given ProjGrpElWithFrobWithPSIsom is a projectivity,
+# i.e. if the corresponding frobenius automorphism and the psisom is the identity
+##
+InstallMethod( IsProjectivity, [ IsProjGrpElWithFrobWithPSIsom ],
+  function( g )
+    local F,sigma,delta;
+                F:=g!.fld;
+                sigma:=g!.frob;
+                delta:=g!.psisom;
+                if sigma = FrobeniusAutomorphism(F)^0 and IsIdentityMappingOfElementsOfProjectiveSpace(delta)
+                then return true;
+                else return false;
+                fi;
+  end );
+
+
+# Added ml 8/11/2012
+#############################################################################
+#O  IsProjectiveSemilinearMap( <g> )
+# method to check if a given ProjGrpElWithFrobWithPSIsom is a projective semilinear map,
+# i.e. if the corresponding frobenius automorphism is NOT the identity and the
+# psisom IS the identity
+##
+InstallMethod( IsProjectiveSemilinearMap, [ IsProjGrpElWithFrobWithPSIsom],
+  function( g )
+    local F,sigma,delta;
+                F:=g!.fld;
+                sigma:=g!.frob;
+                delta:=g!.psisom;
+                if sigma <> FrobeniusAutomorphism(F)^0 and IsIdentityMappingOfElementsOfProjectiveSpace(delta)
+                then return true;
+                else return false;
+                fi;
+  end );
+
+
+# Added ml 8/11/2012
+#############################################################################
+#O  IsCollineation( <g> )
+# method to check if a given ProjGrpElWithFrobWithPSIsom is a projective semilinear map,
+# i.e. if the corresponding frobenius automorphism is NOT the identity and the
+# psisom IS the identity
+##
+InstallMethod( IsCollineation, [ IsProjGrpElWithFrobWithPSIsom],
+  function( g )
+    local delta;
+                delta:=g!.psisom;
+                if IsIdentityMappingOfElementsOfProjectiveSpace(delta)
+                then return true;
+                else return false;
+                fi;
+  end );
+
+###################################################################
+# Tests whether CorrelationCollineationGroup is a ProjectivityGroup and so on ...
+###################################################################
+
+# Added ml 8/11/2012
+#############################################################################
+#O  IsProjectivityGroup( <G> )
+# method to check if a given CorrelationCollineationGroup G is a projectivity group, 
+# i.e. if the corresponding frobenius automorphisms of the generators are the identity
+# and the corresponding projective isomorphisms of the generators are the identity
+## 
+InstallMethod( IsProjectivityGroup, [ IsProjGroupWithFrobWithPSIsom ],
+  function( G )
+    local gens, F, d, set, g, set2;
+		gens:=GeneratorsOfMagmaWithInverses(G);
+		F:=gens[1]!.fld;
+		d:=Size(gens[1]!.mat)-1;
+		set:=AsSet(List(gens,g->g!.frob));
+		set2:=AsSet(List(gens,g->g!.psisom));
+		if set = AsSet([FrobeniusAutomorphism(F)^0]) and 
+				set2 = AsSet([IdentityMappingOfElementsOfProjectiveSpace(PG(d,F))])
+		then return true;
+		else return false;
+		fi;
+  end );
+
+
+# Added ml 8/11/2012
+#############################################################################
+#O  IsCollineationGroup( <G> )
+##
+InstallMethod( IsCollineationGroup, [ IsProjGroupWithFrobWithPSIsom ],
+  function( G )
+    local gens, F, d, set, g, set2;
+		gens:=GeneratorsOfMagmaWithInverses(G);
+		F:=gens[1]!.fld;
+		d:=Size(gens[1]!.mat)-1;
+		set2:=AsSet(List(gens,g->g!.psisom));
+		if set2 = AsSet([IdentityMappingOfElementsOfProjectiveSpace(PG(d,F))])
+		then return true;
+		else return false;
+		fi;
+  end );
+
 
 ###################################################################
 # ViewObj/Print/Display methods
@@ -1031,7 +1134,7 @@ InstallMethod( ProjectiveSpaceIsomorphism, [ IsProjGrpElWithFrobWithPSIsom and
 ##
 InstallOtherMethod( Embedding,
     "for a collineation group",
-	[IsCollineationGroup, IsProjGroupWithFrobWithPSIsom],
+	[IsProjectiveGroupWithFrob, IsProjGroupWithFrobWithPSIsom],
 	function(group,corr)
 	local hom;
 	if not ((BaseField(group)=BaseField(corr)) and (Dimension(group)=Dimension(corr))) then
