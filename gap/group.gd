@@ -60,6 +60,7 @@ DeclareOperation( "ProjEls", [IsList] );
 #InstallTrueMethod(IsHandledByNiceMonomorphism, IsProjectivityGroup);
 
 DeclareOperation( "Projectivity", [ IsList, IsField] );
+DeclareOperation( "Projectivity", [ IsProjectiveSpace, IsMatrix] );
 
 
 ###################################################################
@@ -86,12 +87,23 @@ DeclareOperation( "ProjElWithFrob", [IsMatrix and IsFFECollColl, IsMapping, IsFi
 DeclareOperation( "ProjElsWithFrob", [IsList] );
 DeclareOperation( "ProjElsWithFrob", [IsList, IsField] );
 
-DeclareOperation( "ProjectiveSemilinearMap", [ IsList, IsField] );
+#DeclareOperation( "ProjectiveSemilinearMap", [ IsList, IsField] ); # no longer valid (ml 8/11/12)
+DeclareOperation( "CollineationOfProjectiveSpace", [ IsList, IsField] );
+DeclareOperation( "CollineationOfProjectiveSpace", [ IsList, IsMapping, IsField] );
+DeclareOperation( "CollineationOfProjectiveSpace", [IsProjectiveSpace, IsMatrix] );
+DeclareOperation( "CollineationOfProjectiveSpace", [IsProjectiveSpace, IsMatrix, IsMapping] );
+
+DeclareOperation( "Collineation", [IsProjectiveSpace, IsMatrix] );
+DeclareOperation( "Collineation", [IsProjectiveSpace, IsMatrix, IsMapping] );
+
 DeclareOperation( "ProjectiveSemilinearMap", [ IsList, IsMapping, IsField] );
-DeclareSynonym( "CollineationOfProjectiveSpace", ProjectiveSemilinearMap);
+#DeclareSynonym( "CollineationOfProjectiveSpace", ProjectiveSemilinearMap); # no longer valid (ml 8/11/12)
+
 DeclareOperation( "ProjectivityByImageOfStandardFrameNC", [IsProjectiveSpace, IsList] );
 
+DeclareSynonym( "IsCollineationOfProjectiveSpace", IsProjGrpElWithFrob);
 DeclareProperty( "IsProjectivity", IsProjGrpElWithFrob );
+DeclareProperty( "IsProjectiveSemilinearMap", IsProjGrpElWithFrob );
 
 
 ###################################################################
@@ -127,10 +139,10 @@ DeclareGlobalFunction( "OnProjSubspacesNoFrob" );
 
 
 
-DeclareSynonym( "IsProjectiveSemilinearGroup", IsGroup and IsProjGrpElWithFrobCollection);
+#DeclareSynonym( "IsProjectiveSemilinearGroup", IsGroup and IsProjGrpElWithFrobCollection);
 DeclareSynonym( "IsCollineationGroup", IsGroup and IsProjGrpElWithFrobCollection);
 
-DeclareProperty( "IsProjectivityGroup", IsProjectiveSemilinearGroup );
+DeclareProperty( "IsProjectivityGroup", IsCollineationGroup );
 
 
 #################################################

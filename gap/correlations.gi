@@ -46,6 +46,8 @@ Print(", correlations\c");
 # (because we know that delta^-1 = delta.
 ###################################################################
 
+
+
 # CHECKED 14/09/11 jdb
 #############################################################################
 #O  IdentityMappingOfElementsOfProjectiveSpace( <ps> )
@@ -100,6 +102,23 @@ InstallMethod( StandardDualityOfProjectiveSpace,
 		Setter(InverseAttr)(obj,obj); #cannot set this attribute in previous line, because map does not exist then
 		return obj;
 	end );
+
+
+# Added ml 8/11/2012
+#############################################################################
+#O  IsCorrelation( <g> )
+# method to check if a given correlation-collineation of a projective space is 
+# a correlation, i.e. if the underlying psisom is not the IdentityMappingOfElementsOfProjectiveSpace
+## 
+InstallMethod( IsCorrelation, [ IsProjGrpElWithFrobWithPSIsom ],
+  function( g )
+    local delta;
+		delta:=g!.psisom;
+		if IsIdentityMappingOfElementsOfProjectiveSpace(delta)
+		then return false;
+		else return true;
+		fi;
+  end );
 
 ###################################################################
 # ViewObj/Print/Display methods
@@ -286,7 +305,8 @@ InstallMethod( ProjElWithFrobWithPSIsom,
 		local el,isom,q,n;
 		q := Size(f); 
 		n := Length(m);
-		isom := IdentityMappingOfElementsOfProjectiveSpace(ProjectiveSpace(n-1,f));  ## I hope this works! was wrong, for godsake, don't tell Celle about this type of mistakes :-(
+		isom := IdentityMappingOfElementsOfProjectiveSpace(ProjectiveSpace(n-1,f));  
+		## I hope this works! was wrong, for godsake, don't tell Celle about this type of mistakes :-(
 		el := rec( mat := m, fld := f, frob := frob, psisom := isom);
 		Objectify( ProjElsWithFrobWithPSIsomType, el );
 		return el;
@@ -358,7 +378,7 @@ InstallMethod( PrintObj,
 	end );
 
 ###################################################################
-# Some operations for correlations and correlation groups.
+# Some operations for correlations and correlation-collineation groups.
 ###################################################################
 
 # CHECKED 14/09/11 jdb
@@ -389,7 +409,7 @@ InstallMethod( BaseField,
 # CHECKED 14/09/11 jdb
 #############################################################################
 #O  BaseField( <g> )
-# returns the base field of the correlation group group <g>
+# returns the base field of the correlation-collineation group group <g>
 ## 
 InstallMethod( BaseField, "for a projective group with Frobenius with proj space isomorphism",
   [IsProjGroupWithFrobWithPSIsom],
@@ -817,7 +837,7 @@ InstallMethod( CorrelationOfProjectiveSpace,
 # method to construct an object in the category IsProjGrpElWithFrobWithPSIsom, i.e. a 
 # correlation of a projective space. This method is intended for the user, and contains
 # a check whether the matrix is non-singular. The method relies on ProjElWithFrobWithPSIsom,
-# the field automorphism will be trivial
+#
 ## 
 InstallMethod( CorrelationOfProjectiveSpace,
 	"for a matrix, a finite field, and a projective space isomorphism",
@@ -828,6 +848,25 @@ InstallMethod( CorrelationOfProjectiveSpace,
 		fi;
 		if delta!.ps!.basefield <> gf then
 			Error("<delta> is not a duality of the correct projective space");
+		fi;
+		return ProjElWithFrobWithPSIsom( mat, IdentityMapping(gf), gf, delta);
+	end );
+
+# Added ml 8/11/12
+#############################################################################
+#O  CorrelationOfProjectiveSpace( <mat>, <gf>, <delta> )
+# 
+# same method as above but now for delta equal to IsIdentityMappingOfElementsOfProjectiveSpace
+## 
+InstallMethod( CorrelationOfProjectiveSpace,
+	"for a matrix, a finite field, and a projective space isomorphism",
+	[ IsMatrix and IsFFECollColl, IsField, IsIdentityMappingOfElementsOfProjectiveSpace], 
+	function( mat, gf, delta )
+		if Rank(mat) <> Size(mat) then
+			Error("<mat> must not be singular");
+		fi;
+		if Source(delta)!.geometry <> PG(Size(mat)-1,gf) then
+			Error("<delta> is not the identity mapping of the correct projective space");
 		fi;
 		return ProjElWithFrobWithPSIsom( mat, IdentityMapping(gf), gf, delta);
 	end );
@@ -851,6 +890,100 @@ InstallMethod( CorrelationOfProjectiveSpace,
 			Error("<delta> is not a duality of the correct projective space");
 		fi;
 		return ProjElWithFrobWithPSIsom( mat, frob, gf, delta);
+	end ); 
+
+# Added ml 8/11/12
+#############################################################################
+#O  CorrelationOfProjectiveSpace( <mat>, <frob>, <gf>, <delta> )
+# 
+# same method as above but now for delta equal to IsIdentityMappingOfElementsOfProjectiveSpace
+## 
+InstallMethod( CorrelationOfProjectiveSpace,
+	"for a matrix, a frobenius automorphism, a finite field, and a projective space isomorphism",
+	[ IsMatrix and IsFFECollColl, IsRingHomomorphism and IsMultiplicativeElementWithInverse, IsField, 
+    IsIdentityMappingOfElementsOfProjectiveSpace], 
+	function( mat, frob, gf, delta )
+		if Rank(mat) <> Size(mat) then
+			Error("<mat> must not be singular");
+		fi;
+		if Source(delta)!.geometry <> PG(Size(mat)-1,gf) then
+			Error("<delta> is not the identity mapping of the correct projective space");
+		fi;
+		return ProjElWithFrobWithPSIsom( mat, frob, gf, delta);
+	end ); 
+
+# Added ml 8/11/12
+#############################################################################
+#O  CorrelationOfProjectiveSpace( <pg>, <mat>, <frob>, <delta> )
+# method to construct an object in the category IsProjGrpElWithFrobWithPSIsom, i.e. a 
+# correlation of a projective space. This method uses CorrelationOfProjectiveSpace
+## 
+InstallMethod( CorrelationOfProjectiveSpace,
+	"for a projective space, a matrix, a field automorphism, and a projective space isomorphism",
+	[ IsProjectiveSpace, IsMatrix and IsFFECollColl, IsRingHomomorphism and IsMultiplicativeElementWithInverse, 
+    IsStandardDualityOfProjectiveSpace], 
+	function( pg, mat, frob, delta )
+		if Dimension(pg)+1 <> Size(mat) then
+			Error("The arguments <pg> and <mat> are not compatible");
+		fi;
+		return CorrelationOfProjectiveSpace( mat, frob, BaseField(pg), delta);
+	end ); 
+
+# Added ml 8/11/12
+#############################################################################
+#O  CorrelationOfProjectiveSpace( <pg>, <mat>, <frob>, <delta> )
+# 
+# same method as above but now for delta equal to IsIdentityMappingOfElementsOfProjectiveSpace
+## 
+InstallMethod( CorrelationOfProjectiveSpace,
+	"for a projective space, a matrix, a field automorphism, and a projective space isomorphism",
+	[ IsProjectiveSpace, IsMatrix and IsFFECollColl, IsRingHomomorphism and IsMultiplicativeElementWithInverse, 
+    IsIdentityMappingOfElementsOfProjectiveSpace], 
+	function( pg, mat, frob, delta )
+		if Dimension(pg)+1 <> Size(mat) then
+			Error("The arguments <pg> and <mat> are not compatible");
+		fi;
+		if Source(delta)!.geometry <> pg then
+			Error("<delta> is not the identity mapping of the correct projective space");
+		fi;
+		return CorrelationOfProjectiveSpace( mat, frob, BaseField(pg), delta);
+	end ); 
+
+# Added ml 8/11/12
+#############################################################################
+#O  Correlation( <pg>, <mat>, <frob>, <delta> )
+# method to construct an object in the category IsProjGrpElWithFrobWithPSIsom, i.e. a 
+# correlation of a projective space. The method uses CorrelationOfProjectiveSpace
+## 
+InstallMethod( Correlation,
+	"for a projective space, a matrix, a field automorphism, and a projective space isomorphism",
+	[ IsProjectiveSpace, IsMatrix and IsFFECollColl, IsRingHomomorphism and IsMultiplicativeElementWithInverse, 
+    IsStandardDualityOfProjectiveSpace], 
+	function( pg, mat, frob, delta )
+		if Dimension(pg)+1 <> Size(mat) then
+			Error("The arguments <pg> and <mat> are not compatible");
+		fi;
+		return CorrelationOfProjectiveSpace( mat, frob, BaseField(pg), delta);
+	end ); 
+
+# Added ml 8/11/12
+#############################################################################
+#O  Correlation( <pg>, <mat>, <frob>, <delta> )
+# 
+# same method as above but now for delta equal to IsIdentityMappingOfElementsOfProjectiveSpace
+## 
+InstallMethod( Correlation,
+	"for a projective space, a matrix, a field automorphism, and a projective space isomorphism",
+	[ IsProjectiveSpace, IsMatrix and IsFFECollColl, IsRingHomomorphism and IsMultiplicativeElementWithInverse, 
+    IsIdentityMappingOfElementsOfProjectiveSpace], 
+	function( pg, mat, frob, delta )
+		if Dimension(pg)+1 <> Size(mat) then
+			Error("The arguments <pg> and <mat> are not compatible");
+		fi;
+		if Source(delta)!.geometry <> pg then
+			Error("<delta> is not the identity mapping of the correct projective space");
+		fi;
+		return CorrelationOfProjectiveSpace( mat, frob, BaseField(pg), delta);
 	end ); 
 
 ###################################################################

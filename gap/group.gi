@@ -184,41 +184,63 @@ InstallMethod( ProjEls, "for a list of ffe matrices",
     return ll;
   end );
 
-# CHECKED 5/09/11 jdb
+# CHECKED 5/09/11 jdb # changed ml 8/11/12
 #############################################################################
 #O  Projectivity( <mat>, <gf> )
-# method to construct an object in the category IsProjGrpEl, i.e. a projectivity, 
+# method to construct an object in the category IsProjGrpElWithFrob, but with
+# field automorphism equal to the identity, i.e. a projectivity, 
 # This method is intended for the user, and contains
 # a check whether the matrix is non-singular.
 ## 
 InstallMethod( Projectivity, [ IsMatrix and IsFFECollColl, IsField],
-  function( mat, gf )
-    local el, m2;
-    
     ## A bug was found here, during a nice August afternoon involving pigeons,
     ## where the variable m2 was assigned to the size of the field.
     ## jdb 13/12/08, Giessen, cold saturday afternoon. I still remember the
     ## pigeons, so does my computer. I add some lines now to check whether the
     ## matrix is non singular. 
-    m2 := ShallowCopy( mat );
-    if Rank(m2) <> Size(m2) then
-      Error("<mat> must not be singular");
-    fi;
-    ConvertToMatrixRepNC( m2, gf );
-    el := rec( mat := m2, fld := gf );
-    Objectify( NewType( ProjElsFamily,
-                        IsProjGrpEl and
-                        IsProjGrpElRep ), el );
-    return el;  
-  end );
+  	function( mat, gf )
+		local el, m2, fld, frob;
+		m2 := ShallowCopy(mat);
+		if Rank(m2) <> Size(m2) then
+			Error("<mat> must not be singular");
+		fi;
+		ConvertToMatrixRep( m2, gf );
+		el := rec( mat := m2, fld := gf, frob := FrobeniusAutomorphism(gf)^0 );
+		Objectify( ProjElsWithFrobType, el );
+		return el;
+	end );
+
+
+# Added ml 8/11/2012
+#############################################################################
+#O  Projectivity( <pg>, <mat> )
+# method to construct an object in the category IsProjGrpEl, i.e. a projectivity, 
+# This method is intended for the user, and contains
+# a check whether the matrix is non-singular.
+## 
+InstallMethod( Projectivity, [ IsProjectiveSpace, IsMatrix],
+#
+  	function( pg, mat )
+		local d,gf,m2;
+		d:=Dimension(pg);
+		gf:=pg!.basefield;
+		if d <> Size(mat)-1 then
+			Error("The arguments <mat> and <pg> are incompatible");
+		fi;
+		m2 := ShallowCopy(mat);
+		if Rank(m2) <> Size(m2) then
+			Error("<mat> must not be singular");
+		fi;
+		return Projectivity(mat,gf);
+	end );
 
 # Added ml 7/11/2012
 #############################################################################
 #O  IsProjectivity( <g> )
-# method to check if a given projective semilinear map is a projectivity, 
+# method to check if a given collineation of a projective space is a projectivity, 
 # i.e. if the corresponding frobenius automorphism is the identity
 ## 
-InstallMethod( IsProjectivity, [ IsProjGrpElWithFrob],
+InstallMethod( IsProjectivity, [ IsCollineationOfProjectiveSpace ],
   function( g )
     local F,sigma;
 		F:=g!.fld;
@@ -229,13 +251,30 @@ InstallMethod( IsProjectivity, [ IsProjGrpElWithFrob],
 		fi;
   end );
 
+# Added ml 8/11/2012
+#############################################################################
+#O  IsProjectiveSemilinearMap( <g> )
+# method to check if a given collineation of a projective space is semilinear, 
+# i.e. if the corresponding frobenius automorphism is NOT the identity
+## 
+InstallMethod( IsProjectiveSemilinearMap, [ IsCollineationOfProjectiveSpace ],
+  function( g )
+    local F,sigma;
+		F:=g!.fld;
+		sigma:=g!.frob;
+		if sigma = FrobeniusAutomorphism(F)^0
+		then return false;
+		else return true;
+		fi;
+  end );
+
 # Added ml 7/11/2012
 #############################################################################
 #O  IsProjectivityGroup( <G> )
 # method to check if a given projective semilinear group G is a projectivity group, 
 # i.e. if the corresponding frobenius automorphisms of the generators are the identity
 ## 
-InstallMethod( IsProjectivityGroup, [ IsProjectiveSemilinearGroup],
+InstallMethod( IsProjectivityGroup, [ IsCollineationGroup],
   function( G )
     local gens, F, set, g;
 		gens:=GeneratorsOfMagmaWithInverses(G);
@@ -407,17 +446,17 @@ InstallMethod( ProjElsWithFrob,
 	end );
 
 
-# CHECKED 5/09/11 jdb
+# CHECKED 5/09/11 jdb # changed ml 8/11/12
 #############################################################################
-#O  ProjectiveSemilinearMap( <mat>, <gf> )
+#O  CollineationOfProjectiveSpace( <mat>, <gf> )
 # method to construct an object in the category IsProjGrpElWithFrob, i.e. a 
-# collineation of a projective space, aka a projective semilinear map. 
+# collineation of a projective space. 
 # This method is intended for the user, and contains
 # a check whether the matrix is non-singular. The method relies on ProjElWithFrob,
 # which will produce an error if the entries of <mat> do not all belong to <gf>
-# the automorphism will be trivial
+# the automorphism will be trivial. Mathematically this is a projectivity.
 ## 
-InstallMethod( ProjectiveSemilinearMap, 
+InstallMethod( CollineationOfProjectiveSpace, 
 	[ IsMatrix and IsFFECollColl, IsField],
 	function( mat, gf )
     if Rank(mat) <> Size(mat) then
@@ -425,8 +464,92 @@ InstallMethod( ProjectiveSemilinearMap,
     fi;
     return ProjElWithFrob( mat, IdentityMapping(gf), gf);
 	end );
-  
-# CHECKED 5/09/11 jdb
+
+# Added ml 8/11/2012
+#############################################################################
+#O  CollineationOfProjectiveSpace( <pg>, <mat> )
+# method to construct an collineation of a projective space.
+## 
+InstallMethod( CollineationOfProjectiveSpace, [ IsProjectiveSpace, IsMatrix],
+#
+  	function( pg, mat )
+		local d,gf;
+		d:=Dimension(pg);
+		gf:=pg!.basefield;
+		if d <> Size(mat)-1 then
+			Error("The arguments <mat> and <pg> are incompatible");
+		fi;
+		return ProjElWithFrob( mat, IdentityMapping(gf), gf);
+	end );
+
+
+# Added ml 8/11/2012
+#############################################################################
+#O  CollineationOfProjectiveSpace( <pg>, <mat>, <frob>)
+# method to construct an collineation of a projective space.
+## 
+InstallMethod( CollineationOfProjectiveSpace, [ IsProjectiveSpace, IsMatrix, IsMapping],
+#
+  	function( pg, mat, frob )
+		local d,gf;
+		d:=Dimension(pg);
+		gf:=pg!.basefield;
+		if d <> Size(mat)-1 then
+			Error("The arguments <mat> and <pg> are incompatible");
+		fi;
+		return ProjElWithFrob( mat, frob, gf);
+	end );
+
+
+# Added ml 8/11/2012
+#############################################################################
+#O  Collineation( <pg>, <mat> )
+# shorter version of the previous method to construct an collineation of a projective space.
+## 
+InstallMethod( Collineation, [ IsProjectiveSpace, IsMatrix],
+#
+  	function( pg, mat )
+		return CollineationOfProjectiveSpace(pg,mat);
+	end );
+
+
+# Added ml 8/11/2012
+#############################################################################
+#O  Collineation( <pg>, <mat>, <frob> )
+# shorter version of the previous method to construct an collineation of a projective space.
+## 
+InstallMethod( Collineation, [ IsProjectiveSpace, IsMatrix, IsMapping],
+#
+  	function( pg, mat, frob )
+		return CollineationOfProjectiveSpace(pg,mat,frob);
+	end );
+
+
+# CHECKED 5/09/11 jdb # changed ml 8/11/12
+# 5/09/11 jdb: added a check to see if frob has <gf> as source
+#############################################################################
+#O  CollineationOfProjectiveSpace( <mat>, <frob>, <gf> )
+# method to construct an object in the category IsProjGrpElWithFrob, i.e. a 
+# collineation of a projective space, aka a projective semilinear map. 
+# This method is intended for the user, and contains
+# a check whether the matrix is non-singular. The method relies on ProjElWithFrob,
+# which will produce an error if the entries of <mat> do not all belong to <gf>
+## 
+InstallMethod( CollineationOfProjectiveSpace,  
+	[ IsMatrix and IsFFECollColl, IsRingHomomorphism and
+    IsMultiplicativeElementWithInverse, IsField], 
+	function( mat, frob, gf )
+    if Rank(mat) <> Size(mat) then
+		Error("<mat> must not be singular");
+    fi;
+    if Source(frob) <> gf then
+		Error("<frob> must be defined as an automorphis of <gf>");
+	fi;
+	return ProjElWithFrob( mat, frob, gf);
+	end );
+
+
+# CHECKED 5/09/11 jdb # changed ml 8/11/12
 # 5/09/11 jdb: added a check to see if frob has <gf> as source
 #############################################################################
 #O  ProjectiveSemilinearMap( <mat>, <frob>, <gf> )
@@ -440,14 +563,9 @@ InstallMethod( ProjectiveSemilinearMap,
 	[ IsMatrix and IsFFECollColl, IsRingHomomorphism and
     IsMultiplicativeElementWithInverse, IsField], 
 	function( mat, frob, gf )
-    if Rank(mat) <> Size(mat) then
-		Error("<mat> must not be singular");
-    fi;
-    if Source(frob) <> gf then
-		Error("<frob> must be defined as an automorphis of <gf>");
-	fi;
-	return ProjElWithFrob( mat, frob, gf);
+		return CollineationOfProjectiveSpace(mat,frob,gf);
 	end );
+
 
 # CHECKED 5/09/11 jdb
 #############################################################################

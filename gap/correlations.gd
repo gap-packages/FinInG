@@ -35,6 +35,11 @@ DeclareCategory( "IsStandardDualityOfProjectiveSpace", IsProjectiveSpaceIsomorph
 DeclareCategory( "IsIdentityMappingOfElementsOfProjectiveSpace", IsProjectiveSpaceIsomorphism );
 
 DeclareCategory( "IsProjGrpElWithFrobWithPSIsom", IsComponentObjectRep and IsMultiplicativeElementWithInverse );
+DeclareSynonym( "IsCorrelationCollineation", IsProjGrpElWithFrobWithPSIsom);
+
+DeclareProperty( "IsCorrelation", IsProjGrpElWithFrobWithPSIsom );# user-friendly functionality 
+
+
 DeclareCategoryCollections( "IsProjGrpElWithFrobWithPSIsom" );
 InstallTrueMethod( IsGeneratorsOfMagmaWithInverses, IsProjGrpElWithFrobWithPSIsomCollection );
 
@@ -78,10 +83,22 @@ DeclareOperation( "SetAsNiceMono",
                   [IsProjGroupWithFrobWithPSIsom, IsGroupHomomorphism] );
 DeclareAttribute( "Dimension", IsProjGroupWithFrobWithPSIsom );
 DeclareProperty( "CanComputeActionOnPoints", IsProjGroupWithFrobWithPSIsom );
+
 DeclareOperation( "CorrelationOfProjectiveSpace", [ IsList, IsField] );
 DeclareOperation( "CorrelationOfProjectiveSpace", [ IsList, IsMapping, IsField] );
+
 DeclareOperation( "CorrelationOfProjectiveSpace", [ IsList, IsField, IsStandardDualityOfProjectiveSpace] );
+DeclareOperation( "CorrelationOfProjectiveSpace", [ IsList, IsField, IsIdentityMappingOfElementsOfProjectiveSpace] );
+
 DeclareOperation( "CorrelationOfProjectiveSpace", [ IsList, IsMapping, IsField, IsStandardDualityOfProjectiveSpace] );
+DeclareOperation( "CorrelationOfProjectiveSpace", [ IsList, IsMapping, IsField, IsIdentityMappingOfElementsOfProjectiveSpace] );
+
+DeclareOperation( "CorrelationOfProjectiveSpace", [ IsProjectiveSpace, IsMatrix, IsMapping, IsStandardDualityOfProjectiveSpace] );
+DeclareOperation( "CorrelationOfProjectiveSpace", [ IsProjectiveSpace, IsMatrix, IsMapping, IsIdentityMappingOfElementsOfProjectiveSpace] );
+
+DeclareOperation( "Correlation", [ IsProjectiveSpace, IsMatrix, IsMapping, IsStandardDualityOfProjectiveSpace] );
+DeclareOperation( "Correlation", [ IsProjectiveSpace, IsMatrix, IsMapping, IsIdentityMappingOfElementsOfProjectiveSpace] );
+
 DeclareOperation( "UnderlyingMatrix", [ IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep ] );
 DeclareOperation( "FieldAutomorphism", [ IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep ] );
 DeclareOperation( "ProjectiveSpaceIsomorphism", [ IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep ] );
