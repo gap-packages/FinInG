@@ -38,7 +38,8 @@
 # - to do: check if in constructors of standard polar spaces, the Wrap should be
 #   replaced by VectorSpaceToElement
 # - check IsCollinear. Is this the best way to do it? Should it just take two points
-#   of a polar space? Think about it
+#   of a polar space? JB: I guess we could have points of one polar space and we want to check that
+# they are collinear with respect to a different polar space. I've fixed IsCollinear for Hermitian spaces.
 # - tiny optimalisations: Size/NumberOfTotallySingularSubspaces? (see questions at methods)
 #   \in: should probably not change the element (see remark at method).
 # - Check Iterator.
@@ -2247,9 +2248,14 @@ InstallMethod( Size,
 InstallMethod( IsCollinear, "for points of a polar space", 
               [IsClassicalPolarSpace and IsClassicalPolarSpaceRep, IsElementOfIncidenceStructure, IsElementOfIncidenceStructure],
   function( ps, a, b )
-    local m;
-    m := SesquilinearForm(ps)!.matrix;
-    return Unwrap(a)*m*Unwrap(b)=Zero(ps!.basefield);
+#    local m;
+#    m := SesquilinearForm(ps)!.matrix;
+#    return Unwrap(a)*m*Unwrap(b)=Zero(ps!.basefield);
+
+   # JB: There was a bug here for Hermitian polar spaces
+   # We may want to copy the code from \^ "for sesquilinear forms" to here
+
+    return IsZero( [Unwrap(a),Unwrap(b)]^SesquilinearForm(ps) );   
   end);
 
 
