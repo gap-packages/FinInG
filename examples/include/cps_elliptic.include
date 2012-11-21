@@ -1,5 +1,5 @@
 gap&gt; ps := EllipticQuadric(3,27);
-standard Q-(3, 27)
+Q-(3, 27)
 gap&gt; Display(ps);
 Q-(3, 27)
 Elliptic bilinear form

@@ -49,10 +49,9 @@ However, as is the case for projective spaces, we will consider the rank one geo
 forms of Witt index 1 als as examples of classical polar spaces. Even the elliptic quadric on the projective line,
 a <E>geometry</E> associated to an elliptic quadratic form on a two dimensional vector space over a finite field, is
 considered as a classical polar space. The reason for this treatment is that most, if not all, methods for 
-operations applicable on these geometries, rely on the same algebraic methodology.
-<P/>
-Currently, we restrict to the geometries associated to a non degenerate form. Geometries associated to such a form belong
-to the following category. Stricly spoken, we abuse the terminology a bit, if one asks that polar spaces have rank at least 2.
+operations applicable on these geometries, rely on the same algebraic methodology. So, in <Package>FinInG</Package>, 
+a classical polar space (sometimes abbreviated to polar space), is the geometry associated with a sesquilinear or quadratic
+form on a fininte dimensional vector space over a finite field.
 
 <ManSection>
 <Filt Name="IsClassicalPolarSpace" Type="Category"/>
@@ -74,10 +73,11 @@ Consider the projective space <M>PG(n,q)</M> with underlying vector space
 <M>f</M> is either Hermitian, alternating or symmetric. When the characteristic
 of the field is odd, respectively even, a symmetric bilinear form is called
 orthogonal, respectively, pseudo. We do not consider the pseudo case, so we
-suppose that <M>f</M> is Hermitian, symplectic or orthogonal. It is well known
-that the geometry consisting of the subspaces of <M>PG(n,q)</M> whose underlying
-vector subspace is totally isotropic with relation to <M>f</M>, is a polar space
-<M>P</M>. We call a polar space <E>Hermitian</E>, respectively,
+suppose that <M>f</M> is Hermitian, symplectic or orthogonal. The classical
+polar space associated with <M>f</M> is the incidence geometry whose elements
+are of the subspaces of <M>PG(n,q)</M> whose underlying
+vector subspace is totally isotropic with relation to <M>f</M>. 
+We call a polar space <E>Hermitian</E>, respectively,
 <E>symplectic</E>, <E>orthogonal</E>, if the underlying sesquilinear form is
 Hermitian, respectively, symplectic, orthogonal.<P/> 
 
@@ -86,10 +86,11 @@ characteristic than in odd characteristic. On the other hand, polar spaces
 geometrically comparable to orthogonal polar spaces in odd characteristic, do
 exist in even characteristic. The algebraic background is now established by
 quadratic forms on a vector space instead of bilinear forms. Consider a
-non-singular quadratic form <M>q</M> on a vector space <M>V(n+1,q)</M>. It is
-well known that the geometry consisting of the subspaces of <M>PG(n,q)</M> whose
-underlying vector subspace is totally singular with relation to <M>q</M>, is a
-polar space <M>P</M>. The connection with orthogonal polar spaces in odd
+non-singular quadratic form <M>q</M> on a vector space <M>V(n+1,q)</M>. The 
+classical polar space associated with <M>f</M> is the incidence geometry whose 
+elements are the subspaces of <M>PG(n,q)</M> whose
+underlying vector subspace is totally singular with relation to <M>q</M>. 
+The connection with orthogonal polar spaces in odd
 characteristic is clear, since in odd characteristic, quadratic forms and
 symmetric bilinear forms are equivalent. Therefore, we call polar spaces with an
 underlying quadratic form in even characteristic also <E>orthogonal</E> polar spaces.
@@ -103,7 +104,8 @@ created by use of the GAP package <Package>forms</Package>. In the second varian
 the argument <A>pol</A> must be a polarity of a projective space. An error message
 will be displayed if <A>pol</A> is a pseudo polarity. We refer to 
 Chapter <Ref Chap="polaritiesofps"/> for more information on polarities of 
-projective spaces.
+projective spaces, and more particularly to Section <Ref Sect="polarties_absolute"/> for
+the connection between polarities and forms.
 <Example>
 <#Include SYSTEM "../examples/include/cps_polarspaceform.include"> 
 </Example>
@@ -163,6 +165,14 @@ similarity class, and non-degenerate forms in this class are called parabolic
 non-degenerate forms are either elliptic (bilinear) forms or hyperbolic
 (bilinear) forms.<P/>
 
+If <Alt Not="HTML"><M>\phi</M></Alt><Alt Only="HTML">&#966;</Alt> induces a similarity of
+a formed vector space such that <Alt Not="HTML"><M>\lambda = 1</M></Alt>
+<Alt Only="HTML">&#955;=1</Alt>, then the similarity is called an <E>isometry</E> of the
+formed vector space. In almost all cases, each similarity class contains exactly one 
+isometry class. Only the orthogonal sesquilinear forms (hence in odd characteristic) come
+into two isometry classes. Consequently, if an isometry exists between formed vector spaces,
+they are called <E>isometric</E>.
+
 Projectively, a formed vector space becomes a classical polar space embedded in a 
 projective space. Obviously, forms in the same similarity class determine
 exactly the same classical polar space. Conversely, it is well known that
@@ -172,11 +182,12 @@ is used in the mathematical sense, i.e. a classical polar space is <E>canonical<
 if its determining form belongs to a fixed similarity class. A classical polar space
 is called <E>standard</E> if its determining form is the fixed representant of the
 canonical similarity class. Hence a <E>standard</E> classical polar space is 
-always a <E>canonical</E> classical polar space.
+always a <E>canonical</E> classical polar space, a cononical polar space is determined
+by a standard form upto a constant factor.
 
 In the following table, we summerize the above information on polar spaces,
 together with the standard forms that are chosen in
-<Package>FinInG</Package>.
+<Package>FinInG</Package>. Note that <M>Tr</M> refers to the absolute Trace.
 
 <Table Align="|l|l|l|l|">
  <Caption>finite classical polar spaces</Caption>
@@ -252,6 +263,8 @@ together with the standard forms that are chosen in
 We refer to Appendix <Ref Chap="groups_app"/> for information on the operations that construct gram matrices that are used to
 obtain the above standard forms.
 
+The following five operations always return polar spaces induced by one of the above standard forms.
+
 <ManSection>
 <Oper Name="SymplecticSpace" Arg="d,F"/>
 <Oper Name="SymplecticSpace" Arg="d,q"/>
@@ -326,10 +339,20 @@ over <A>F</A> for a field <A>F</A> or over GF(<A>q</A>) for a prime power
 <Oper Name="CanonicalPolarSpace" Arg="form"/>
 <Oper Name="CanonicalPolarSpace" Arg="P"/>
 <Returns>a classical polar space</Returns>
-<Description>the canonical polar space similar to the given polar space <A>P</A> of
-the classical polar space with underlying form <A>form</A>
+<Description>the canonical polar space isometric to the given polar space <A>P</A> or
+the classical polar space with underlying form <A>form</A>. 
 </Description>
 </ManSection>
+
+<ManSection>
+<Oper Name="StandardPolarSpace" Arg="form"/>
+<Oper Name="StandardPolarSpace" Arg="P"/>
+<Returns>a classical polar space</Returns>
+<Description>the polar space induced by a standard form and similar to the given polar space <A>P</A> or
+the classical polar space with underlying form <A>form</A>. 
+</Description>
+</ManSection>
+
 </Section>
 
 <Section>

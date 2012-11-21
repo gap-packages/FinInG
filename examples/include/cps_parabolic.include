@@ -1,5 +1,5 @@
 gap&gt; ps := ParabolicQuadric(2,9);
-standard Q(2, 9)
+Q(2, 9)
 gap&gt; Display(ps);
 Q(2, 9)
 Parabolic bilinear form

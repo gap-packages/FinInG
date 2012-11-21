@@ -1,4 +1,4 @@
 #constructing canonical hermitian variety.
-ps := HermitianVariety(2,25);
+ps := HermitianPolarSpace(2,25);
 Display(ps);
 quit;
