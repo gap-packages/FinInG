@@ -880,64 +880,43 @@ InstallMethod( CanonicalPolarSpace,
 	"for a polar space",
 	[ IsClassicalPolarSpace ],
 	function( ps )
-		local type, standard,d,f,form1,form2,isometric,b,mat1,mat2,canonicalmatrix,canonicalform, pq,types,max,reps,m,q;
+		local type, canonicalps,d,f,form1,form2,isometric,b,mat1,mat2,canonicalmatrix,canonicalform, pq,types,max,reps,m,q,gram;
 		d := ps!.dimension;
 		f := ps!.basefield;
 		q := Size(f);
 		type := PolarSpaceType( ps );
 		if type = "hermitian" then
-			standard := HermitianPolarSpace(d, f);               
+			canonicalps := HermitianPolarSpace(d, f);               
 			SetIsHermitianPolarSpace(ps, true);            
 		elif type = "symplectic" then
-			standard := SymplecticSpace(d, f);         
+			canonicalps := SymplecticSpace(d, f);         
 			SetIsSymplecticSpace(ps, true);
 		elif type = "elliptic" then 
-			standard := EllipticQuadric(d, f);         
+			canonicalps := EllipticQuadric(d, f);         
 			SetIsEllipticQuadric(ps, true);
 		elif type = "parabolic" then
-			standard := ParabolicQuadric(d, f);         
+			canonicalps := ParabolicQuadric(d, f);         
 			SetIsParabolicQuadric(ps, true);
 		elif type = "hyperbolic" then
-			standard := HyperbolicQuadric(d, f);         
+			canonicalps := HyperbolicQuadric(d, f);         
 			SetIsHyperbolicQuadric(ps, true);
 		fi;
-		if IsEvenInt(Size(f)) and type in ["parabolic", "elliptic", "hyperbolic"] then
+		if IsOddInt(Size(f)) and type in ["parabolic"] then
 			form1 := QuadraticForm( ps );
-			form2 := QuadraticForm( standard );
-		else
-			form1 := SesquilinearForm( ps );
-			form2 := SesquilinearForm( standard );
-		fi;
-		isometric := IsometricCanonicalForm(form1); #be careful with the notion Canonical in Forms package, its meaning is different than canonical in FinInG :-)
-		b := BaseChangeToCanonical(form2);
-		mat1 := GramMatrix(isometric);
-		canonicalmatrix := b^-1*mat1*(TransposedMat(b)^-1);
-		ConvertToMatrixRep(canonicalmatrix,f);
-		if IsEvenInt(Size(f)) and type in ["parabolic", "elliptic", "hyperbolic"] then
-			canonicalform := QuadraticFormByMatrix(canonicalmatrix, f);
-		elif type = "hermitian" then 
-			canonicalform := HermitianFormByMatrix(canonicalmatrix, f);
-		else
-			canonicalform := BilinearFormByMatrix(canonicalmatrix,f);
-		fi;
-		if canonicalmatrix = GramMatrix(form2) then
-			return standard;
-		else #now we know that we are dealing with a parabolic quadric
-			if IsEvenInt(Size(f)) then
-				canonicalform := QuadraticFormByMatrix(canonicalmatrix, f);
-			else 
-				canonicalform := BilinearFormByMatrix(canonicalmatrix, f);
-			fi;
-			pq := PolarSpaceStandard( canonicalform, false );
-			SetRankAttr( pq, d/2 );
-			types := TypesOfElementsOfIncidenceStructure( AmbientSpace(pq) );
-			SetTypesOfElementsOfIncidenceStructure(pq, types{[1..d/2]});
-			SetIsParabolicQuadric(pq, true);
-			SetIsCanonicalPolarSpace(pq, true);
-			SetIsStandardPolarSpace(pq, false);
-			SetPolarSpaceType(pq, "parabolic");
-			if RankAttr(pq) = 2 then
-				SetOrder( pq, [q, q]);
+			isometric := IsometricCanonicalForm(form1); #be careful with the notion Canonical in Forms package, its meaning is different than canonical in FinInG :-)
+			gram := GramMatrix(isometric);
+			canonicalmatrix := gram[1][1]*CanonicalGramMatrix("parabolic", d+1, f); 
+			canonicalform := BilinearFormByMatrix(canonicalmatrix, f);
+			canonicalps := PolarSpaceStandard( canonicalform, false );
+			SetRankAttr( canonicalps, d/2 );
+			types := TypesOfElementsOfIncidenceStructure( AmbientSpace(canonicalps) );
+			SetTypesOfElementsOfIncidenceStructure(canonicalps, types{[1..d/2]});
+			SetIsParabolicQuadric(canonicalps, true);
+			SetIsCanonicalPolarSpace(canonicalps, true);
+			SetIsStandardPolarSpace(canonicalps, false);
+			SetPolarSpaceType(canonicalps, "parabolic");
+			if RankAttr(canonicalps) = 2 then
+				SetOrder( canonicalps, [q, q]);
 			fi;
 			max := CanonicalOrbitRepresentativeForSubspaces("parabolic", d+1, f)[1];
 
@@ -960,12 +939,13 @@ InstallMethod( CanonicalPolarSpace,
 			od;   
 
     ## Wrap 'em up
-			reps := List([1..d/2], j -> Wrap(pq, j, reps[j]) );
-			SetRepresentativesOfElements(pq, reps);
-			SetClassicalGroupInfo( pq, rec( degree := (q^(d/2)-1)/(q-1)*(q^((d+2)/2-1)+1) ) );   
-			return pq;
+			reps := List([1..d/2], j -> Wrap(canonicalps, j, reps[j]) );
+			SetRepresentativesOfElements(canonicalps, reps);
+			SetClassicalGroupInfo( canonicalps, rec( degree := (q^(d/2)-1)/(q-1)*(q^((d+2)/2-1)+1) ) );
 		fi;
-	end );
+		return canonicalps;
+end );			
+
 
 #############################################################################
 # methods for some attributes.
@@ -1114,7 +1094,7 @@ InstallMethod( ViewObj,
 	"for a standard elliptic quadric",
 	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsEllipticQuadric and IsStandardPolarSpace],
 	function( p )
-		Print("standard Q-(",p!.dimension,", ",Size(p!.basefield),")");
+		Print("Q-(",p!.dimension,", ",Size(p!.basefield),")");
 	end );
 
 InstallMethod( ViewObj,
@@ -1128,7 +1108,7 @@ InstallMethod( ViewObj,
 	"for a standard symplectic space",
 	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsSymplecticSpace and IsStandardPolarSpace],
     function( p )
-		Print("standard W(",p!.dimension,", ",Size(p!.basefield),")");
+		Print("W(",p!.dimension,", ",Size(p!.basefield),")");
 	end );
 
 InstallMethod( ViewObj,
@@ -1142,7 +1122,7 @@ InstallMethod( ViewObj,
 	"for a standard parabolic quadric",
 	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsParabolicQuadric and IsStandardPolarSpace ],
     function( p )
-		Print("standard Q(",p!.dimension,", ",Size(p!.basefield),")");
+		Print("Q(",p!.dimension,", ",Size(p!.basefield),")");
 	end);
 
 InstallMethod( ViewObj,
@@ -1156,7 +1136,7 @@ InstallMethod( ViewObj,
 	"for a standard hyperbolic quadric",
 	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsHyperbolicQuadric and IsStandardPolarSpace],
     function( p )
-		Print("standard Q+(",p!.dimension,", ",Size(p!.basefield),")");
+		Print("Q+(",p!.dimension,", ",Size(p!.basefield),")");
 	end);
 
 InstallMethod( ViewObj,
@@ -1170,7 +1150,7 @@ InstallMethod( ViewObj,
 	"for a standard hermitian variety",
 	[IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsHermitianPolarSpace and IsStandardPolarSpace],
     function( p )
-		Print("standard H(",p!.dimension,", ",Sqrt(Size(p!.basefield)),"^2)");
+		Print("H(",p!.dimension,", ",Sqrt(Size(p!.basefield)),"^2)");
     end);
 
 InstallMethod( PrintObj, [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
