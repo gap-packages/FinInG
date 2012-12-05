@@ -108,8 +108,8 @@ DeclareOperation( "ProjectivityByImageOfStandardFrameNC", [IsProjectiveSpace, Is
 DeclareProperty( "IsProjectivity", IsProjGrpEl );
 DeclareProperty( "IsProjectivity", IsProjGrpElWithFrob );
 
-DeclareProperty( "IsProjectiveSemilinearMap", IsProjGrpEl );
-DeclareProperty( "IsProjectiveSemilinearMap", IsProjGrpElWithFrob );
+DeclareProperty( "IsStrictlySemilinear", IsProjGrpEl );
+DeclareProperty( "IsStrictlySemilinear", IsProjGrpElWithFrob );
 
 DeclareProperty( "IsCollineation", IsProjGrpEl );
 DeclareProperty( "IsCollineation", IsProjGrpElWithFrob );

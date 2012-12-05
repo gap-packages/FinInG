@@ -109,7 +109,7 @@ DeclareOperation( "ProjectiveSpaceIsomorphism", [ IsProjGrpElWithFrobWithPSIsom 
 ###################################################################
 
 DeclareProperty( "IsProjectivity", IsProjGrpElWithFrobWithPSIsom );
-DeclareProperty( "IsProjectiveSemilinearMap", IsProjGrpElWithFrobWithPSIsom );
+DeclareProperty( "IsStrictlySemilinear", IsProjGrpElWithFrobWithPSIsom );
 DeclareProperty( "IsCollineation", IsProjGrpElWithFrobWithPSIsom );
 
 ###################################################################

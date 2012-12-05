@@ -265,22 +265,22 @@ InstallMethod( IsProjectivity, [ IsProjGrpElWithFrob ],
 		fi;
   end );
 
-# Added ml 8/11/2012
+# Added ml 8/11/2012 # changed ml 28/11/2012
 #############################################################################
-#O  IsProjectiveSemilinearMap( <g> )
+#O  IsStrictlySemilinear( <g> )
 ## 
-InstallMethod( IsProjectiveSemilinearMap, [ IsProjGrpEl],
+InstallMethod( IsStrictlySemilinear, [ IsProjGrpEl],
   function( g )
 	return false;
   end );
 
-# Added ml 8/11/2012
+# Added ml 8/11/2012 # changed ml 28/11/2012
 #############################################################################
-#O  IsProjectiveSemilinearMap( <g> )
+#O  IsStrictlySemilinear( <g> )
 # method to check if a given collineation of a projective space is semilinear, 
 # i.e. if the corresponding frobenius automorphism is NOT the identity
 ## 
-InstallMethod( IsProjectiveSemilinearMap, [ IsProjGrpElWithFrob],
+InstallMethod( IsStrictlySemilinear, [ IsProjGrpElWithFrob],
   function( g )
     local F,sigma;
 		F:=g!.fld;

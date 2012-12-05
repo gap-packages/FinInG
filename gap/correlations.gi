@@ -141,20 +141,18 @@ InstallMethod( IsProjectivity, [ IsProjGrpElWithFrobWithPSIsom ],
   end );
 
 
-# Added ml 8/11/2012
+# Added ml 8/11/2012 # changed ml 28/11/2012
 #############################################################################
-#O  IsProjectiveSemilinearMap( <g> )
+#O  IsStrictlySemilinear( <g> )
 # method to check if a given ProjGrpElWithFrobWithPSIsom is a projective semilinear map,
-# i.e. if the corresponding frobenius automorphism is NOT the identity and the
-# psisom IS the identity
-##
-InstallMethod( IsProjectiveSemilinearMap, [ IsProjGrpElWithFrobWithPSIsom],
+# i.e. if the corresponding frobenius automorphism is NOT the identity ##
+InstallMethod( IsStrictlySemilinear, [ IsProjGrpElWithFrobWithPSIsom],
   function( g )
     local F,sigma,delta;
                 F:=g!.fld;
                 sigma:=g!.frob;
                 delta:=g!.psisom;
-                if sigma <> FrobeniusAutomorphism(F)^0 and IsIdentityMappingOfElementsOfProjectiveSpace(delta)
+                if sigma <> FrobeniusAutomorphism(F)^0
                 then return true;
                 else return false;
                 fi;

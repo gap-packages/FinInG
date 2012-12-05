@@ -215,12 +215,12 @@ to <C>IsProjGrpElWithFrobWithPSIsom</C> with projective space isomorphism equal 
 
 <ManSection>
 <Heading>Projective strictly semilinear maps</Heading>
-<Filt Name="IsProjectiveSemilinearMap" Type="Property"/>
+<Filt Name="IsStrictlySemilinear" Type="Property"/>
 <Description>
-<C>IsProjectiveSemilinearMap</C> is a property that checks whether a given collineation has a nontrivial underlying field automorphisms, i.e. whether the element belongs to <Alt Not="HTML"><M>P\Gamma L(n+1,q)</M></Alt><Alt
-Only="HTML">P&#915;L(n+1,q)</Alt>, but not to <M>PGL(n+1,q)</M>. It is important to point out that in <Package>FinInG</Package> not all collineations of a projective space are considered as <C>IsProjectiveSemilinearMap</C>! 
+<C>IsStrictlySemilinear</C> is a property that checks whether a given collineation has a nontrivial underlying field automorphisms, i.e. whether the element belongs to <Alt Not="HTML"><M>P\Gamma L(n+1,q)</M></Alt><Alt
+Only="HTML">P&#915;L(n+1,q)</Alt>, but not to <M>PGL(n+1,q)</M>. 
 
-If <C>IsProjectiveSemilinearMap</C> is applied to a an element
+If <C>IsStrictlySemilinear</C> is applied to a an element
 belonging to <C>IsProjGrpElWithFrobWithPSIsom</C>, 
 then it verifies whether the
 underlying field automorphism is different from the identity, 
