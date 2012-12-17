@@ -153,7 +153,7 @@ We will follow this philosophy for the other classical groups.
 
 <Section>
 <Heading> Projectivities, collineations and correlations of projective spaces.</Heading>
-As explained in the introduction, mathematically, the underlying object of a projectivity of a projective space is a nonsingular matrix. The underlying objects of a collineation of a projective space is a nonsingular matrix and a field automorphism (which might be the identity), and the underlying objects of a correlation of a projective space is a nonsingular matrix, a field automorphism, and an isomorphism between the projective space and its dual space.
+<!--As explained in the introduction, mathematically, the underlying object of a projectivity of a projective space is a nonsingular matrix. The underlying objects of a collineation of a projective space is a nonsingular matrix and a field automorphism (which might be the identity), and the underlying objects of a correlation of a projective space is a nonsingular matrix, a field automorphism, and an isomorphism between the projective space and its dual space.
 
 These are the different type of actions on projective spaces in <Package>FinInG</Package>, and they naturally give rise to the following
 representations.
@@ -180,7 +180,51 @@ correlations of a projective space.
 This means that an object in the category <C>IsProjGrpEl</C> has as underlying object a matrix; an object in the category <C>IsProjGrpElWithFrob</C> has as underlying object a pair consisting of a matrix and a field automorphism; and <C>IsProjGrpElWithFrobWithPSIsom</C> has as underlying object a triple consisting of a matrix, a field automorphism and an isomorphism from the projective space to its dual space. Also the basefield is stored as a
 component in the representation.
 </Description>
+</ManSection>!-->
+
+These are the different type of actions on projective spaces in <Package>FinInG</Package>, and they naturally 
+give rise to the following distinct categories and representations. Note that these categories and representations 
+are to be considered on a non-user level. Below we describe all user constuction methods that hide nicely these
+technical details.
+
+<ManSection>
+<Heading>Categories for group elements</Heading>
+<Filt Name="IsProjGrpEl" Type="Category"/>
+<Filt Name="IsProjGrpElWithFrob" Type="Category"/>
+<Filt Name="IsProjGrpElWithFrobWithPSIsom" Type="Category"/>
+<Description>
+<C>IsProjGrpEl</C>, <C>IsProjGrpElWithFrob</C>, and <C>IsProjGrpElWithFrobWithPSIsom</C> are the categories 
+naturally induced by the notions of projectivities, collineations, and correlations of a projective space. 
+</Description>
 </ManSection>
+
+<ManSection>
+<Heading>Representations for group elements</Heading>
+<Filt Name="IsProjGrpElRep" Type="Representation"/>
+<Filt Name="IsProjGrpElWithFrobRep" Type="Representation"/>
+<Filt Name="IsProjGrpElWithFrobWithPSIsomRep" Type="Representation"/>
+<Description>
+<C>IsProjGrpElRep</C> is the representation naturally induced by a projectivity; <C>IsProjGrpElWithFrobRep</C> is the 
+representation naturally induced by the notion of a collineation of projective space; and <C>IsProjGrpElWithFrobWithPSIsomRep</C> 
+is the representation naturally induced by a correlation of a projective space. 
+This means that an object in the representation <C>IsProjGrpElRep</C> has as underlying object a matrix; an object in the category 
+<C>IsProjGrpElWithFrobRep</C> has as underlying object a pair consisting of a matrix and a field automorphism; and 
+<C>IsProjGrpElWithFrobWithPSIsomRep</C> has as underlying object a triple consisting of a matrix, a field automorphism 
+and an isomorphism from the projective space to its dual space. Also the basefield is stored as a
+component in the representation. 
+</Description>
+</ManSection>
+
+The above mentioned categories allow us to make a distinction between projectivities, colleinations and correlations apart
+from there representation. However, in <Package>FinInG</Package>, a group element constructed in the categories <C>IsProjGrpElOrMore</C>
+is always constructed in the representation <C>IsProjGrpElMoreRep</C>. 
+
+<!--This means that an object in the category <C>IsProjGrpEl</C> has as 
+underlying object a matrix; an object in the category <C>IsProjGrpElWithFrob</C> has as underlying 
+object a pair consisting of a matrix and a field automorphism; and <C>IsProjGrpElWithFrobWithPSIsom</C> 
+has as underlying object a triple consisting of a matrix, a field automorphism and an isomorphism 
+from the projective space to its dual space. Also the basefield is stored as a
+component in the representation.!-->
 
 <ManSection>
 <Heading>Projectivities</Heading>
