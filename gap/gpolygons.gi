@@ -437,7 +437,7 @@ InstallMethod( CollineationGroup,
        for x in gens do
            ConvertToMatrixRep(x, f);
        od;
-       newgens := List(gens, x -> ProjectiveSemilinearMap(x,f));
+       newgens := List(gens, x -> CollineationOfProjectiveSpace(x,f));
        coll := GroupWithGenerators(newgens);
 
        Info(InfoFinInG, 1, "Computing nice monomorphism...");
@@ -499,9 +499,9 @@ InstallMethod( CollineationGroup,
             ConvertToMatrixRep(x, f);
          od;
          frob := FrobeniusAutomorphism(f); 
-         newgens := List(gens, x -> ProjectiveSemilinearMap(x, f));  
+         newgens := List(gens, x -> CollineationOfProjectiveSpace(x, f));  
          if not IsPrimeInt(Size(f)) then 
-            Add(newgens, ProjectiveSemilinearMap( IdentityMat(7,f), frob, f )); 
+            Add(newgens, CollineationOfProjectiveSpace( IdentityMat(7,f), frob, f )); 
          fi; 
          coll := GroupWithGenerators(newgens);
        else
@@ -532,9 +532,9 @@ InstallMethod( CollineationGroup,
              ConvertToMatrixRep(x,f);
           od;
           frob := FrobeniusAutomorphism(f); 
-          newgens := List(gens, x -> ProjectiveSemilinearMap(x, f));  
+          newgens := List(gens, x -> CollineationOfProjectiveSpace(x, f));  
           if not IsPrimeInt(Size(f)) then 
-             Add(newgens, ProjectiveSemilinearMap( IdentityMat(6,f), frob, f )); 
+             Add(newgens, CollineationOfProjectiveSpace( IdentityMat(6,f), frob, f )); 
           fi;
           coll := GroupWithGenerators(newgens);
 
@@ -1232,7 +1232,7 @@ InstallMethod( EGQByBLTSet,
           [ 0, 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 1, 0 ], 
           [ 0, 0, 1, 0, 0, 0 ], [ 0, 0, 0, 1, 0, 0 ] ];
    gens := List(gens, t-> b*t*b^-1);
-   gens := List(gens, t -> ProjectiveSemilinearMap(t,f));
+   gens := List(gens, t -> CollineationOfProjectiveSpace(t,f));
    elations := Group( gens ); 
    SetElationGroup( geo, elations );
 
@@ -1362,7 +1362,7 @@ InstallMethod( FlockGQByqClan, [ IsqClanObj ],
        Add(gens, mat(zero,zero,zero,a,zero) );
        Add(gens, mat(zero,zero,zero,zero,a) );
   od;
-  gens := List(gens, t -> ProjectiveSemilinearMap(t,f));
+  gens := List(gens, t -> CollineationOfProjectiveSpace(t,f));
   elations := SubgroupNC( stabblt, gens ); 
   SetElationGroup( geo, elations );
   SetCollineationAction( elations, action );

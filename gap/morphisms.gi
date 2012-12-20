@@ -1066,14 +1066,14 @@ InstallMethod( NaturalEmbeddingByFieldReduction,
 			local image;      
 			image := BlownUpMat(basis, m!.mat); 
 			ConvertToMatrixRepNC( image, f2 );       
-			return ProjectiveSemilinearMap(image, f2);
+			return CollineationOfProjectiveSpace(image, f2);
 		end;
 
 		hominv := function( m )
 			local preimage;      
 			preimage := ShrinkMat(basis, m!.mat); 
 			ConvertToMatrixRepNC( preimage, f1 );       
-			return ProjectiveSemilinearMap(preimage, f1);
+			return CollineationOfProjectiveSpace(preimage, f1);
 		end;
 		g1 := ProjectivityGroup( pg1 );
 		gens := GeneratorsOfGroup( g1 );
@@ -1335,13 +1335,13 @@ InstallMethod (NaturalEmbeddingByFieldReduction,
 			local image;      
 			image := BlownUpMat(basis, m!.mat); 
 			ConvertToMatrixRepNC( image, f2 );       
-			return ProjectiveSemilinearMap(image, f2);
+			return CollineationOfProjectiveSpace(image, f2);
 		end;
 		hominv := function( m )
 			local preimage;      
 			preimage := ShrinkMat(basis, m!.mat); 
 			ConvertToMatrixRepNC( preimage, f1 );       
-			return ProjectiveSemilinearMap(preimage, f1);
+			return CollineationOfProjectiveSpace(preimage, f1);
 		end;
 		g1 := SimilarityGroup( ps1 );
 		gens := GeneratorsOfGroup( g1 );
@@ -1524,13 +1524,13 @@ InstallMethod (CanonicalEmbeddingByFieldReduction,
 			local image;      
 			image := BlownUpMat(basis, m!.mat); 
 			ConvertToMatrixRepNC( image, f2 );       
-			return ProjectiveSemilinearMap(image, f2);
+			return CollineationOfProjectiveSpace(image, f2);
 		end;
 		hominv := function( m )
 			local preimage;      
 			preimage := ShrinkMat(basis, m!.mat); 
 			ConvertToMatrixRepNC( preimage, f1 );       
-			return ProjectiveSemilinearMap(preimage, f1);
+			return CollineationOfProjectiveSpace(preimage, f1);
 		end;
 		g1 := SimilarityGroup( ps1 );
 		gens := GeneratorsOfGroup( g1 );
@@ -1578,8 +1578,8 @@ InstallMethod( NaturalEmbeddingBySubfield,
 
     ## Intertwiner...
     
-		twinerfunc := x -> ProjectiveSemilinearMap( x!.mat, f2 );   
-		twinerprefun := y -> ProjectiveSemilinearMap( y!.mat, f1 );
+		twinerfunc := x -> CollineationOfProjectiveSpace( x!.mat, f2 );   
+		twinerprefun := y -> CollineationOfProjectiveSpace( y!.mat, f1 );
         g1 := ProjectivityGroup( geom1 );
 		gens1 := GeneratorsOfGroup( g1 );
 		gens2 := List(gens1, twinerfunc );
@@ -1664,8 +1664,8 @@ InstallMethod( NaturalEmbeddingBySubfield,
 
 		if HasIntertwiner( iso ) then 
 			f := Intertwiner(iso);
-			twinerfunc := x -> ImageElm(f, ProjectiveSemilinearMap( x!.mat, f2 ));   
-			twinerprefun := y -> ProjectiveSemilinearMap( f!.prefun(y)!.mat, f1 );
+			twinerfunc := x -> ImageElm(f, CollineationOfProjectiveSpace( x!.mat, f2 ));   
+			twinerprefun := y -> CollineationOfProjectiveSpace( f!.prefun(y)!.mat, f1 );
 			g1 := SimilarityGroup( geom1 );
 			gens1 := GeneratorsOfGroup( g1 );
 			gens2 := List(gens1, twinerfunc );
