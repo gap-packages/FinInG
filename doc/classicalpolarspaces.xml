@@ -718,12 +718,12 @@ Only="HTML">&#945;</Alt><Alt Not="HTML"><M>\alpha</M></Alt> of <M>F</M>.
 <P/>
 
 Collineations of classical polar spaces are induced by semi-similarities of the underlying
-formed vector space, and vice versa, analoguously by factoring out scalar matrices.
-In <Package>FinInG</Package>, also the subgroups corresponding with similarities and isomtries 
-are implemented, including a <E>special</E> variant, corresponding with the matrices having determinant
+formed vector space, and vice versa, analoguously by factoring out scalar matrices. The only exceptions
+are the two-dimensional unitary groups where the the full semi-similarity group can contain
+elements of its centre that are not scalars. In <Package>FinInG</Package>, the subgroups corresponding with similarities and isometries are also implemented, including a <E>special</E> variant, corresponding with the matrices having determinant
 one. We use a consistent terminology, where isometries, similarities, respectively, of the polar
 space, correspond with isometries, similarities, respectively, of the underlying formed vector space.
-special ismometries of a polar space are induced by isometries of the formed vector space that have a matrix
+special isometries of a polar space are induced by isometries of the formed vector space that have a matrix
 with determinant one. If <M>P</M> is a polar space with special isometry group, isometry group, similarity group, 
 collineation group, respectively, <M>SI</M>, <M>I</M>, <M>G</M>, <Alt Not="HTML"><M>\Gamma</M></Alt><Alt Only="HTML">&#915;</Alt>,
 respectively, then clearly <Alt Not="HTML"><M>SI \leqslant I \leqslant G \leqslant \Gamma</M></Alt>
@@ -784,6 +784,11 @@ overview.
 <Oper Name="CollineationGroup" Arg="ps"/>
 <Returns>the collineation group of the polar space <A>ps</A></Returns>
 <Description>
+    In most cases, the full projective semisimilarity group is returned. For two-dimensional
+    unitary groups, the centre may contain elements that are not scalars. In this case, we
+    return a central extension of the projective semisimilarity group. If the field
+    of definition <M>GF(q^2)</M> has <M>q</M> prime, we return the similarity group.
+
 <Example>
 <#Include SYSTEM "../examples/include/cps_collineation.include"> 
 </Example>
