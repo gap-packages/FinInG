@@ -2540,7 +2540,6 @@ InstallMethod( CollineationGroup,
 		d := ps!.dimension + 1; 
 		f := ps!.basefield;
 		if HasIsCanonicalPolarSpace(ps) and IsCanonicalPolarSpace(ps) then
-			#Print("yes2!");
 			type := PolarSpaceType( ps );
 			info := ClassicalGroupInfo( ps );
 			if type = "symplectic" then
@@ -2552,7 +2551,11 @@ InstallMethod( CollineationGroup,
 			elif type = "parabolic" then
 				g := GammaO(d,f);
 			elif type = "hermitian" then
-				g := GammaU(d, f);
+			    if IsPrime(Sqrt(Size(f))) then
+			       g := GUdesargues(d, f);
+			    else
+				   g := GammaU(d, f);
+				fi;
 			fi;
 		else    
 			iso := IsomorphismCanonicalPolarSpaceWithIntertwiner( ps );
@@ -2564,20 +2567,26 @@ InstallMethod( CollineationGroup,
 		fi;
         ## Setting up the NiceMonomorphism
 		Info(InfoFinInG, 1, "Computing nice monomorphism...");
-		x := RepresentativesOfElements( ps );   		
-		if not IsEmpty(x) then
-			x := x[1];
-			if FINING.Fast then
-				hom := NiceMonomorphismByOrbit( g, x!.obj, OnProjPointsWithFrob, info!.degree);
-			else 
-				points := Orbit(g, x, OnProjSubspaces);
-				hom := ActionHomomorphism(g, points, OnProjSubspaces, "surjective");    
-				SetIsBijective(hom, true);
-				SetNiceObject(g, Image(hom) );
-			fi;
-			SetNiceMonomorphism(g, hom );
-		else
-			Info(InfoFinInG, 1, "Polar space contains no elements. No nice monomorphism computed.");
+		x := RepresentativesOfElements( ps );  
+		
+		# For 2.PGammaU(d, q^2), the NiceMonomorphism will just use that
+		# for PGammaL(d, q)
+
+		if not (type = "hermitian" and d = 2 and not IsPrime(Sqrt(Size(f)))) then 		
+  		   if not IsEmpty(x) then
+		  	  x := x[1];
+			  if FINING.Fast then
+				  hom := NiceMonomorphismByOrbit( g, x!.obj, OnProjPointsWithFrob, info!.degree);
+			  else 
+				  points := Orbit(g, x, OnProjSubspaces);
+				  hom := ActionHomomorphism(g, points, OnProjSubspaces, "surjective");    
+				  SetIsBijective(hom, true);
+				  SetNiceObject(g, Image(hom) );
+			  fi;
+			  SetNiceMonomorphism(g, hom );
+		  else
+			  Info(InfoFinInG, 1, "Polar space contains no elements. No nice monomorphism computed.");
+		  fi;
 		fi;
 		return g;
 	end );

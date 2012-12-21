@@ -2849,6 +2849,10 @@ InstallMethod( GammaOplus, [IsPosInt, IsField and IsFinite],
 ## returns the projective semi-similarity group of hermitian form
 ## We rely on GU and the Frobenius automorphism.
 ##
+## Issue here. The centre of GammaU is nontrivial for d=2.
+## Our construction of classical groups in FinInG factors out the scalars,
+## but not the full centre.
+##
 InstallMethod( GammaU, [IsPosInt, IsField and IsFinite],
   function(d, f)
    ## bug here, there is more than scalars in the kernel of the action!
@@ -2865,8 +2869,13 @@ InstallMethod( GammaU, [IsPosInt, IsField and IsFinite],
     Add(gens, [IdentityMat(d, f), frob] );
     gens := ProjElsWithFrob( gens, f );
     g := GroupWithGenerators( gens );
-    SetName( g, Concatenation("PGammaU(",String(d),",",String(sqrtq),"^2)") );
     SetSize( g, Order(frob) * Size(gu) / (sqrtq+1) );
+    if d = 2 then
+       Info(InfoFinInG, 1, "Warning: We have only factored scalars out of GammaU to construct a central cover of PGammaU.\n The centre is thus nontrivial and acts trivially on totally isotropic 1-spaces.");
+       SetName( g, Concatenation("2.PGammaU(",String(d),",",String(sqrtq),"^2)") );
+    else
+       SetName( g, Concatenation("PGammaU(",String(d),",",String(sqrtq),"^2)") ); 
+    fi;
     return g;
   end );
 
