@@ -2851,6 +2851,7 @@ InstallMethod( GammaOplus, [IsPosInt, IsField and IsFinite],
 ##
 InstallMethod( GammaU, [IsPosInt, IsField and IsFinite],
   function(d, f)
+   ## bug here, there is more than scalars in the kernel of the action!
     local m, frob, b, gens, g, q, sqrtq, gu;
     q := Size(f);
     sqrtq := Sqrt(Size(f));
