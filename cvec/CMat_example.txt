@@ -1,0 +1,52 @@
+LoadPackage("fining");
+LoadPackage("cvec");
+InstallMethod( ProjElWithFrob, 
+	"for a ffe matrix and a Frobenius automorphism, and a field",
+	[IsMatrix and IsFFECollColl,
+	IsRingHomomorphism and IsMultiplicativeElementWithInverse,
+	IsField],
+	function( m, frob, f )
+		local el, m2;
+		m2 := NewMatrix(IsCMatRep, f, Size(m), m);
+		el := rec( mat := m2, fld := f, frob := frob );
+		Objectify( ProjElsWithFrobType, el );
+		return el;
+	end );
+	
+z := Z(17^2);          
+m := [[z,0*z],[0*z,z^0]];
+ConvertToMatrixRep(m,GF(17^2));
+m2 := NewMatrix(IsCMatRep, GF(17^2), 2, m);
+
+###########################
+#
+# Example: H(2,17^2)
+#
+###########################
+
+q := 17;
+p := Characteristic(GF(q));
+d := Log(q^2,p);
+h := HermitianPolarSpace(2,q^2);
+reps := RepresentativesOfElements(h);
+  # CVec version
+reps := List(reps, x -> Wrap(h, 1, CVec(x!.obj, p, d) ) );
+
+# CollineationGroup(h); does not work currently in FinInG
+
+g := GammaU(3, GF(q^2));
+info := ClassicalGroupInfo( h );
+gens := GeneratorsOfGroup(g);
+genmats := List(gens, m -> NewMatrix(IsCMatRep, GF(q^2), 3, m!.mat));
+gens2 := List([1..Size(genmats)], i -> ProjectiveSemilinearMap(genmats[i], gens[i]!.frob, GF(q^2)));
+g2 := Group(gens2);
+SetSize(g2, Size(g));
+SetDimension(g2, Dimension(g));
+SetName(g2, Concatenation("CVec: ", Name(g)));
+x := reps[1];
+
+hom := NiceMonomorphismByOrbit( g2, x, OnProjSubspaces, info!.degree);
+SetNiceMonomorphism(g2, hom );
+syl := SylowSubgroup(g2,7);
+
+
