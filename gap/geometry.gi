@@ -229,6 +229,14 @@ InstallMethod( Display,
 		Display(v!.obj);
 	end );
 
+# JB (31/01/2013): One thing that I would like in GAP is to have Display for vectors just
+# like that for matrices. So here is a method which makes this happen
+
+InstallMethod( Display, "for IsVector", [ IsVector ],
+	function( v )
+		Display( [v] );
+	end );
+
 InstallMethod( ViewObj, 
 	"for IsAllElementsOfIncidenceStructure",
 	[ IsAllElementsOfIncidenceStructure ],
