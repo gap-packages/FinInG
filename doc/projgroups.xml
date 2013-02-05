@@ -645,7 +645,9 @@ dimension completely.
 <Func Name="OnProjSubspaces" Arg="subspace, el"/>
 <Returns>a subspace of a projective space</Returns>
 <Description>
-This is a global function that returns the action of an element <A>g</A> of the collineation group on a subspace <A>subspace</A> of a projective space.
+This is a global function that returns the action of an element <A>el</A> of the collineation group on a subspace <A>subspace</A> of a projective space.
+<Par/><B>IMPORTANT:</B> This function should only be used for objects <A>el</A> in the category <C>IsProjGrpElWithFrob</C>!
+This is because this function does not check whether <A>el</A> is a correlation or a collineation. So when <A>el</A> is a object in the category <C>IsProjGrpElWithFrobWithPSIsom</C>, and <A>el</A> is a correlation (i.e. the associated PSIsom is NOT the identity) then this action will not give the image of the <A>subspace</A> under the correlation <A>el</A>. For the action of an object <A>el</A> in the category <C>IsProjGrpElWithFrobWithPSIsom</C>, the action <Ref Func="OnProjSubspacesExtended"/> should be used. 
 <Example>
 <#Include SYSTEM "../examples/include/projgroups_onprojsubspaces.include"> 
 </Example>
@@ -667,7 +669,7 @@ for the action to be easy to calculate.
 <Func Name="OnProjSubspacesExtended" Arg="subspace, el"/>
 <Returns>a subspace of a projective space</Returns>
 <Description>
-This should be used for the action of elements in the category <C>IsProjGrpElWithFrobWithPSIsom</C> (including the representation of collineations as correlations with third argument the identity, see <Ref Oper="CorrelationOfProjectiveSpace"/>), where
+This should be used for the action of elements in the category <C>IsProjGrpElWithFrobWithPSIsom</C> where
 <A>subspace</A> is a subspace of a projective or polar space and <A>el</A> is
 an element of the correlation group of the ambient geometry of <A>subspace</A>.
 This function returns the image of <A>subspace</A> under <A>el</A>, which is a
@@ -686,11 +688,11 @@ subspace of the same dimension as <A>subspace</A> if <A>el</A> is a collineation
 A <E>transvection</E> of the vector space <M>V=V(n+1,F)</M> is a linear map <Alt Only="HTML">&#964;</Alt><Alt Not="HTML"><M>\tau</M></Alt>
 from <M>V</M> to <M>V</M> with matrix <M>M</M> such that <M>rk(M-I)=1</M> and <Alt Only="HTML">(M-I)&lt;sup>2&lt;/sup>=0</Alt>
 <Alt Not="HTML"><M>(M-I)^2=0</M></Alt>. Different equivalent definitions 
-are found in the literature, here we followed <Cite Key="Cameron2"/>. From the definition it follows that
-<M>M</M> is the identity matrix or all eigenvalues of <M>M</M> equal one and <Alt Only="HTML">&#964;</Alt><Alt Not="HTML"><M>\tau</M></Alt>
-fixes all vectors in a vector hyperplane of <M>V(n+1,F)</M>. We can choose the base of <M>V</M> such that <Alt Not="HTML"><M>e_1,\ldots,e_{n-1}</M></Alt>
-<Alt Only="HTML">e&lt;sub>1&lt;/sub>...e&lt;sub>n-1&lt;/sub></Alt> belongs to <Alt Only="HTML">Ker(&#964;)</Alt><Alt Not="HTML"><M>Ker(\tau)</M></Alt>,
-implying that <M>M</M> equals
+are found in the literature, here we followed <Cite Key="Cameron2"/>. 
+Choosing a basis <Alt Not="HTML"><M>e_1,\ldots,e_n,e_{n+1}</M></Alt>
+<Alt Only="HTML">e&lt;sub>1&lt;/sub>,...,e&lt;sub>n&lt;/sub>,e&lt;sub>n+1&lt;/sub></Alt> such that <Alt Not="HTML"><M>e_1,\ldots,e_{n}</M></Alt>
+<Alt Only="HTML">e&lt;sub>1&lt;/sub>,...,e&lt;sub>n&lt;/sub></Alt> generates 
+the kernel of <M>M-I</M>, it follows that <M>M</M> equals
 <Alt Only="LaTeX"><Display>\left( \begin{array}{ccccc}
 1 &amp; 0 &amp; \ldots &amp; 0 &amp; 0 \\ 
 0 &amp; 1 &amp; \ldots &amp; 0 &amp; 0 \\ 
@@ -741,16 +743,19 @@ x_1 &amp; x_2 &amp; \ldots &amp; x_{n-1} &amp; 1 \\
 &lt;/table>&lt;/td>&lt;td style ="border-top:1px solid #000; border-bottom:1px solid #000;">&nbsp;&lt;/td>&lt;/tr>&lt;/table>&lt;/td>
 &lt;/tr>&lt;/table>
 </Alt>
-It follows easily that the vector hyperplanes that are fixed by <Alt Only="HTML">&#964;</Alt><Alt Not="HTML"><M>\tau</M></Alt> are the 
+<!--The vector hyperplanes that are fixed by <Alt Only="HTML">&#964;</Alt><Alt Not="HTML"><M>\tau</M></Alt> are the 
 hyperplanes containing the vector <Alt Only="HTML">v=(x&lt;sub>1&lt;/sub>,...,x&lt;sub>n&lt;/sub>,0)</Alt>
-<Alt Not="HTML"><M>v=(x_1,\ldots,x_n,0)</M></Alt>, a vetor contained in 
-<Alt Only="HTML">Ker(&#964;)</Alt><Alt Not="HTML"><M>Ker(\tau)</M></Alt>. It is easily seen now that the group of transvections that fix 
+<Alt Not="HTML"><M>v=(x_1,\ldots,x_n,0)</M></Alt>, a vector contained in 
+<Alt Only="HTML">Ker(&#964;)</Alt><Alt Not="HTML"><M>Ker(\tau)</M></Alt>.
+It is easily seen now that the group of transvections that fix 
 all vectors of a given vector hyperplane, form an abelian group, of order <Alt Only="HTML">q&lt;sup>2&lt;/sup></Alt>
 <Alt Not="HTML"><M>q^n</M></Alt> for <M>F=GF(q)</M>, and that each transvection has order <M>p</M>, the characteristic of <M>GF(q)</M>.
 Choosing <Alt Only="HTML">v=e&lt;sub>1&lt;/sub></Alt><Alt Not="HTML"><M>v=e_1</M></Alt> implies 
 <Alt Only="HTML">x&lt;sub>2&lt;/sub>=...=x&lt;sub>n&lt;/sub>=0</Alt>
 <Alt Not="HTML"><M>x_2=\ldots=x_n=0)</M></Alt> and <Alt Only="HTML">x&lt;sub>1&lt;/sub>=1</Alt>
-<Alt Not="HTML"><M>x_1=1</M></Alt>. It is also a well known fact that all transvections generate the group <M>SL(n+1,F)</M>.
+<Alt Not="HTML"><M>x_1=1</M></Alt>. 
+-->
+It is also a well known fact that all transvections generate the group <M>SL(n+1,F)</M>.
 
 A transvection gives rise to a projectivity of <M>PG(n,F)</M>, we call such an element an <E>elation</E>, 
 and it is a projectivity <Alt Not="HTML"><M>\phi</M></Alt><Alt Only="HTML">&#966;</Alt> fixing a hyperplane <M>H</M> pointwise, 
