@@ -1098,7 +1098,7 @@ InstallOtherMethod( \^,
 	"for an element of an incidence structure and a projective semilinear element",
 	[IsElementOfIncidenceStructure, IsProjGrpElWithFrobWithPSIsom],
 	function(x, em)
-		return OnProjSubspacesReversing(x,em);
+		return OnProjSubspacesExtended(x,em);
 	end );
 
 # CHECKED 11/09/11 jdb

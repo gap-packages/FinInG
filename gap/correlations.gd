@@ -68,7 +68,7 @@ InstallTrueMethod( IsHandledByNiceMonomorphism, IsProjGroupWithFrobWithPSIsom );
 
 DeclareGlobalFunction( "OnProjPointsWithFrobWithPSIsom" );
 DeclareGlobalFunction( "OnProjSubspacesWithFrobWithPSIsom" );
-DeclareGlobalFunction( "OnProjSubspacesReversing" );
+DeclareGlobalFunction( "OnProjSubspacesExtended" );
 
 DeclareOperation( "StandardDualityOfProjectiveSpace", [IsProjectiveSpace] );
 DeclareOperation( "IdentityMappingOfElementsOfProjectiveSpace", [IsProjectiveSpace] );

@@ -203,12 +203,12 @@ InstallMethod( IsPseudoPolarityOfProjectiveSpace,
 #installs the method for sub^phi with sub a subspace of a projectivespace and
 # phi a polarity of a projective space. To be discussed whether this should be done
 # in general or only for polarities.
-# uses OnProjSubspacesReversing, defined in group2.g*
+# uses OnProjSubspacesExtended, defined in group2.g*
 InstallOtherMethod( \^,
   "for an element of a projective space and a polarity of a projective space",
   [ IsSubspaceOfProjectiveSpace, IsPolarityOfProjectiveSpace],
   function(sub,phi)
-  return OnProjSubspacesReversing(sub,phi);
+  return OnProjSubspacesExtended(sub,phi);
 end );
 
 #the following is obsolete now.
@@ -220,7 +220,7 @@ end );
 #    return IsDegenerateForm( form );
 #  end );
 
-#InstallGlobalFunction( OnProjSubspacesReversing,
+#InstallGlobalFunction( OnProjSubspacesExtended,
 #  function( line, el )
 #    local vec,c;
 #    vec := (OnRight(line,el!.mat)^el!.frob)^el!.duality;

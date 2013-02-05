@@ -976,12 +976,12 @@ InstallGlobalFunction( OnProjSubspacesWithFrobWithPSIsom,
 
 # CHECKED 20/09/11 jdb
 #############################################################################
-#F  OnProjSubspacesReversing( <sub>, <el> )
+#F  OnProjSubspacesExtended( <sub>, <el> )
 # computes <sub>^<el>, where <sub> is an element of a projective space, and 
 # <el> a correlation. This function is stand alone now, and hence we still have
 # to do the canonization. Therefore we use VectorSpaceToElement.
 ##
-InstallGlobalFunction( OnProjSubspacesReversing,
+InstallGlobalFunction( OnProjSubspacesExtended,
 	function( sub, el )
 		local vec,newsub,ps,ty,newvec,rk;
 		vec := Unwrap(sub);
@@ -1059,7 +1059,7 @@ InstallMethod( ActionOnAllPointsHyperplanes,
 		od;
 		orb := List(Concatenation(orb,orb2),x->VectorSpaceToElement(ps,x)); #corrected 12/4/11
 		a := ActionHomomorphism(pg, orb,
-				OnProjSubspacesReversing, "surjective");
+				OnProjSubspacesExtended, "surjective");
 		SetIsInjective(a,true);
 		return a;
 	end );

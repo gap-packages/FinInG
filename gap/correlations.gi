@@ -1247,13 +1247,14 @@ InstallGlobalFunction( OnProjSubspacesWithFrobWithPSIsom,
 	end );
 
 # CHECKED 20/09/11 jdb
+# changed name 05/02/13 ml jdbOnProjSubspacesExtended
 #############################################################################
-#F  OnProjSubspacesReversing( <sub>, <el> )
+#F  OnProjSubspacesExtended( <sub>, <el> )
 # computes <sub>^<el>, where <sub> is an element of a projective space, and 
 # <el> a correlation. This function is stand alone now, and hence we still have
 # to do the canonization. Therefore we use VectorSpaceToElement.
 ##
-InstallGlobalFunction( OnProjSubspacesReversing,
+InstallGlobalFunction( OnProjSubspacesExtended,
 	function( sub, el )
 		local vec,newsub,ps,ty,newvec,rk;
 		vec := Unwrap(sub);
@@ -1331,7 +1332,7 @@ InstallMethod( ActionOnAllPointsHyperplanes,
 		od;
 		orb := List(Concatenation(orb,orb2),x->VectorSpaceToElement(ps,x)); #corrected 12/4/11
 		a := ActionHomomorphism(pg, orb,
-				OnProjSubspacesReversing, "surjective");
+				OnProjSubspacesExtended, "surjective");
 		SetIsInjective(a,true);
 		return a;
 	end );
@@ -1643,12 +1644,12 @@ InstallMethod( IsPseudoPolarityOfProjectiveSpace,
 #installs the method for sub^phi with sub a subspace of a projectivespace and
 # phi a polarity of a projective space. To be discussed whether this should be done
 # in general or only for polarities.
-# uses OnProjSubspacesReversing, defined in group2.g*
+# uses OnProjSubspacesExtended, defined in group2.g*
 InstallOtherMethod( \^,
   "for an element of a projective space and a polarity of a projective space",
   [ IsSubspaceOfProjectiveSpace, IsPolarityOfProjectiveSpace],
   function(sub,phi)
-  return OnProjSubspacesReversing(sub,phi);
+  return OnProjSubspacesExtended(sub,phi);
 end );
 
 #the following is obsolete now.
@@ -1660,7 +1661,7 @@ end );
 #    return IsDegenerateForm( form );
 #  end );
 
-#InstallGlobalFunction( OnProjSubspacesReversing,
+#InstallGlobalFunction( OnProjSubspacesExtended,
 #  function( line, el )
 #    local vec,c;
 #    vec := (OnRight(line,el!.mat)^el!.frob)^el!.duality;
