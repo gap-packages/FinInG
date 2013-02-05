@@ -305,8 +305,6 @@ InstallMethod( IsCollineation, [ IsProjGrpEl],
 # Added ml 8/11/2012
 #############################################################################
 #O  IsCollineation( <g> )
-# method to check if a given collineation of a projective space is semilinear, 
-# i.e. if the corresponding frobenius automorphism is NOT the identity
 ## 
 InstallMethod( IsCollineation, [ IsProjGrpElWithFrob],
   function( g )

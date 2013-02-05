@@ -38,7 +38,10 @@ DeclareCategory( "IsProjGrpElWithFrobWithPSIsom", IsComponentObjectRep and IsMul
 DeclareSynonym( "IsCorrelationCollineation", IsProjGrpElWithFrobWithPSIsom);
 
 DeclareProperty( "IsCorrelation", IsProjGrpElWithFrobWithPSIsom );# user-friendly functionality 
+DeclareProperty( "IsCorrelation", IsProjGrpElWithFrob );# user-friendly functionality 
+DeclareProperty( "IsCorrelation", IsProjGrpEl );# user-friendly functionality 
 
+DeclareProperty( "IsCollineation", IsProjGrpElWithFrobWithPSIsom );
 
 DeclareCategoryCollections( "IsProjGrpElWithFrobWithPSIsom" );
 InstallTrueMethod( IsGeneratorsOfMagmaWithInverses, IsProjGrpElWithFrobWithPSIsomCollection );

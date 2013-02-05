@@ -104,6 +104,19 @@ InstallMethod( StandardDualityOfProjectiveSpace,
 	end );
 
 
+# Added ml 5/02/2013
+#############################################################################
+#O  IsCollineation( <g> )
+##
+InstallMethod( IsCollineation, [ IsProjGrpElWithFrobWithPSIsom],
+  function( g )
+        if IsIdentityMappingOfElementsOfProjectiveSpace(g!.psisom) then
+        return true;
+        else return false;
+        fi;
+end );
+
+
 # Added ml 8/11/2012
 #############################################################################
 #O  IsCorrelation( <g> )
@@ -120,7 +133,27 @@ InstallMethod( IsCorrelation, [ IsProjGrpElWithFrobWithPSIsom ],
 		fi;
   end );
   
-  
+# Added ml 5/02/2013 User friendly method
+#############################################################################
+#O  IsCorrelation( <g> )
+# 
+## 
+InstallMethod( IsCorrelation, [ IsProjGrpElWithFrob ],
+  function( g )
+    return false;
+end );
+
+# Added ml 5/02/2013 User friendly method
+#############################################################################
+#O  IsCorrelation( <g> )
+# 
+## 
+InstallMethod( IsCorrelation, [ IsProjGrpEl ],
+  function( g )
+    return false;
+end );
+
+ 
   
 # Added ml 7/11/2012
 #############################################################################
