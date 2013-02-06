@@ -192,22 +192,6 @@ InstallMethod( IsStrictlySemilinear, [ IsProjGrpElWithFrobWithPSIsom],
   end );
 
 
-# Added ml 8/11/2012
-#############################################################################
-#O  IsCollineation( <g> )
-# method to check if a given ProjGrpElWithFrobWithPSIsom is a projective semilinear map,
-# i.e. if the corresponding frobenius automorphism is NOT the identity and the
-# psisom IS the identity
-##
-#InstallMethod( IsCollineation, [ IsProjGrpElWithFrobWithPSIsom],
-#  function( g )
-#    local delta;
-#                delta:=g!.psisom;
-#                if IsIdentityMappingOfElementsOfProjectiveSpace(delta)
-#                then return true;
-#                else return false;
-#                fi;
-#  end );
 
 ###################################################################
 # Tests whether CorrelationCollineationGroup is a ProjectivityGroup and so on ...
