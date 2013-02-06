@@ -2568,27 +2568,30 @@ InstallMethod( CollineationGroup,
         ## Setting up the NiceMonomorphism
 		x := RepresentativesOfElements( ps );  
 		
-		# For 2.PGammaU(d, q^2), the NiceMonomorphism will just use that
-		# for PGammaL(d, q)
-        if d = 2 and not IsPrime(Sqrt(Size(f))) then
-           type := PolarSpaceType( ps );
-       	else
-		   Info(InfoFinInG, 1, "No nice monomorphism computed.");
-		fi;
+		# We need to know in the case that d = 2 whether we have a
+		# hermitian polar space. If it is hermitian, then for 2.PGammaU(d, q^2), 
+		# the NiceMonomorphism will just use that for PGammaL(d, q)
 		 
-		if not type = "hermitian" and d = 2 and not IsPrime(Sqrt(Size(f))) then 		
-  		    if not IsEmpty(x) then
-	   	       x := x[1];
-			   if FINING.Fast then
-		          hom := NiceMonomorphismByOrbit( g, x!.obj, OnProjPointsWithFrob, info!.degree);
-			   else 
-			      points := Orbit(g, x, OnProjSubspaces);
-			      hom := ActionHomomorphism(g, points, OnProjSubspaces, "surjective");    
-			      SetIsBijective(hom, true);
-			      SetNiceObject(g, Image(hom) );
-			  fi;
-			  SetNiceMonomorphism(g, hom );
-		    fi;
+		if d=2 then
+		   type := PolarSpaceType( ps );
+           if type ="hermitian" then
+		      if not IsPrime(Sqrt(Size(f))) then
+		         Info(InfoFinInG, 1, "No nice monomorphism computed.");
+			  else
+			     if not IsEmpty(x) then
+	   	            x := x[1];
+			        if FINING.Fast then
+		               hom := NiceMonomorphismByOrbit( g, x!.obj, OnProjPointsWithFrob, info!.degree);
+			        else 
+			           points := Orbit(g, x, OnProjSubspaces);
+			           hom := ActionHomomorphism(g, points, OnProjSubspaces, "surjective");    
+			           SetIsBijective(hom, true);
+			           SetNiceObject(g, Image(hom) );
+			        fi;
+			        SetNiceMonomorphism(g, hom );
+			     fi;
+		 	  fi;
+		   fi;
 		fi;	
 
 		return g;
