@@ -1179,7 +1179,7 @@ InstallMethod( BLTSetByqClan,
 end );
 
 #############################################################################
-#O  EGQByBLTSet( <clan> )
+#O  EGQByBLTSet( <blt> )
 ##
 InstallMethod( EGQByBLTSet, 
      "constructs an EGQ from a BLT-set of points of Q(4,q) via the Knarr construction",

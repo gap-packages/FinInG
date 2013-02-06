@@ -1,11 +1,11 @@
 gap&gt; h:=HermitianPolarSpace(2, 7^2);
-standard H(2, 7^2)
+H(2, 7^2)
 gap&gt; pg := AmbientSpace( h );
 ProjectiveSpace(2, 49)
 gap&gt; lines := Lines( pg );
 &lt;lines of ProjectiveSpace(2, 49)&gt;
 gap&gt; curve := AsList( Points( h ) );;
-#I  Computing nice monomorphism...
+#I  No nice monomorphism computed.
 gap&gt; Size(curve);
 344
 gap&gt; Collected( List(lines, t -&gt; Number(curve, c-&gt; c in t)));

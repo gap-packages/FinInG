@@ -1,20 +1,32 @@
 gap&gt; w := SymplecticSpace(5, 3);
-standard W(5, 3)
+W(5, 3)
 gap&gt; g := IsometryGroup(w);
-#I  Computing nice monomorphism...
+#I  No nice monomorphism computed.
 PSp(6,3)
 gap&gt; syl := SylowSubgroup(g, 13);
-&lt;projective semilinear group of size 13&gt;
+&lt;projective collineation group of size 13&gt;
 gap&gt; planes := Planes( w );
-&lt;planes of standard W(5, 3)&gt;
+&lt;planes of W(5, 3)&gt;
 gap&gt; points := Points( w );
-&lt;points of standard W(5, 3)&gt;
+&lt;points of W(5, 3)&gt;
 gap&gt; orbs := Orbits(syl, planes , OnProjSubspaces);;
 gap&gt; IsPartialSpread := x -&gt; Number(points, p -&gt;
-&gt;          ForAny(x, i-&gt; p in i)) = Size(x)*13;;                                                                        
+&gt;          ForAny(x, i-&gt; p in i)) = Size(x)*13;;
 gap&gt; partialspreads := Filtered(orbs, IsPartialSpread);;
+gap&gt; Length(partialspreads);
+8
 gap&gt; 13s := Filtered(partialspreads, i -&gt; Size(i) = 13);;
+gap&gt; Length(13s);
+6
+gap&gt; 13s[1];
+[ &lt;a plane in W(5, 3)&gt;, &lt;a plane in W(5, 3)&gt;, &lt;a plane in W(5, 3)&gt;, 
+  &lt;a plane in W(5, 3)&gt;, &lt;a plane in W(5, 3)&gt;, &lt;a plane in W(5, 3)&gt;, 
+  &lt;a plane in W(5, 3)&gt;, &lt;a plane in W(5, 3)&gt;, &lt;a plane in W(5, 3)&gt;, 
+  &lt;a plane in W(5, 3)&gt;, &lt;a plane in W(5, 3)&gt;, &lt;a plane in W(5, 3)&gt;, 
+  &lt;a plane in W(5, 3)&gt; ]
 gap&gt; 26s := List(Combinations(13s,2), Union);;
 gap&gt; two := Union(Filtered(partialspreads, i -&gt; Size(i) = 1));;
 gap&gt; good26s := Filtered(26s, x-&gt;IsPartialSpread(Union(x, two)));;
 gap&gt; spreads := List(good26s, x-&gt;Union(x, two));;
+gap&gt; Length(spreads);
+5

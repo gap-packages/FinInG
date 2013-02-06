@@ -1929,13 +1929,13 @@ InstallGlobalFunction( NiceMonomorphismByOrbit,
         orb := Orb(g,x,op,rec(storenumbers := true));
         Enumerate(orb);
     fi;
-    pgens := ActionOnOrbit(orb,GeneratorsOfGroup(g));
+	pgens := ActionOnOrbit(orb,GeneratorsOfGroup(g));
     h := GroupWithGenerators(pgens);
     SetSize(h,Size(g));
     nr := Minimum(100,Length(orb));
     cand := rec( points := orb{[1..nr]}, used := 0,
                  ops := ListWithIdenticalEntries(nr,op) );
-    iso := GroupHomomorphismByImagesNCStabilizerChain(g,h,pgens,
+	iso := GroupHomomorphismByImagesNCStabilizerChain(g,h,pgens,
               rec( Cand := cand ), rec( ) );
     SetIsBijective(iso,true);
     return iso;

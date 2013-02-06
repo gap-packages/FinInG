@@ -151,8 +151,8 @@ preambledir := DirectoriesPackageLibrary("fining","examples/")[1];
 outputdir := DirectoriesPackageLibrary("fining","examples/output")[1];
 gap := Filename(Directory("/usr/bin/"),"gap4r4");  
 paths := JoinStringsWithSeparator(GAP_ROOT_PATHS,";");
-args := JoinStringsWithSeparator(["-l ",paths," -L fining.ws"," -o 4G"]," ");
-args := ["-l ",paths,"-L","fining.ws","-o","4G"];
+args := JoinStringsWithSeparator(["-l",paths," -L fining.ws"," -o 4G"]," ");
+args := ["-l",paths,"-L","fining.ws","-o","4G"];
 
 
 #create .out files using the saved workspace
@@ -165,7 +165,7 @@ Exec("which gap4r4"); #for UNIX only
 
 for filename in files do
   Print("Now converting file: ", filename, "\n");
-  gap := Filename(Directory("/usr/bin/"),"gap4r4");    #gap := Filename(Directory("/usr/bin/"),"gap4r5");
+  gap := Filename(Directory("/usr/bin/"),"gap4r5");    #gap := Filename(Directory("/usr/bin/"),"gap4r5");
   #stream := InputOutputLocalProcess( homedir, gap, [args]);
   stream := InputOutputLocalProcess( homedir, gap, args);
   cmd := Concatenation("file := \"",filename,".out\";");
@@ -205,7 +205,8 @@ for filename in files do
   ReadLine(input_stream);
   ReadLine(input_stream);
   line := ReadLine(input_stream);
-  while line <> "gap> quit;\n" or line <> "gap> \n" do
+  #while line <> "gap> quit;\n" or line <> "gap> \n" do
+  while line <> "gap> quit;\n" do
     if line <> "\n" then
       line := ReplacedString(line,"\\\n","\n");
       AppendTo(o,ReplacedString(ReplacedString(line,"<","&lt;"),">","&gt;"));
@@ -214,6 +215,7 @@ for filename in files do
   od;
 od;
 SizeScreen([80,24]);
+
 
 #create .include files suitable for include in html, e.g. on your homepage directory (for godsake,
 #comment your code!).

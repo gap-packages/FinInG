@@ -199,15 +199,15 @@ InstallMethod( IsStrictlySemilinear, [ IsProjGrpElWithFrobWithPSIsom],
 # i.e. if the corresponding frobenius automorphism is NOT the identity and the
 # psisom IS the identity
 ##
-InstallMethod( IsCollineation, [ IsProjGrpElWithFrobWithPSIsom],
-  function( g )
-    local delta;
-                delta:=g!.psisom;
-                if IsIdentityMappingOfElementsOfProjectiveSpace(delta)
-                then return true;
-                else return false;
-                fi;
-  end );
+#InstallMethod( IsCollineation, [ IsProjGrpElWithFrobWithPSIsom],
+#  function( g )
+#    local delta;
+#                delta:=g!.psisom;
+#                if IsIdentityMappingOfElementsOfProjectiveSpace(delta)
+#                then return true;
+#                else return false;
+#                fi;
+#  end );
 
 ###################################################################
 # Tests whether CorrelationCollineationGroup is a ProjectivityGroup and so on ...

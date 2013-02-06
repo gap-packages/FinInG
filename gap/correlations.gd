@@ -41,7 +41,7 @@ DeclareProperty( "IsCorrelation", IsProjGrpElWithFrobWithPSIsom );# user-friendl
 DeclareProperty( "IsCorrelation", IsProjGrpElWithFrob );# user-friendly functionality 
 DeclareProperty( "IsCorrelation", IsProjGrpEl );# user-friendly functionality 
 
-DeclareProperty( "IsCollineation", IsProjGrpElWithFrobWithPSIsom );
+#DeclareProperty( "IsCollineation", IsProjGrpElWithFrobWithPSIsom );
 
 DeclareCategoryCollections( "IsProjGrpElWithFrobWithPSIsom" );
 InstallTrueMethod( IsGeneratorsOfMagmaWithInverses, IsProjGrpElWithFrobWithPSIsomCollection );

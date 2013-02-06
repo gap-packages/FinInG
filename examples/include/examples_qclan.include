@@ -18,8 +18,8 @@ gap&gt; points := Points( egq );
 gap&gt; p := Random(points);
 &lt;a point of a Kantor family&gt;
 gap&gt; x := Random(elations);
-[ [ Z(3)^0, Z(3), 0*Z(3), Z(3) ], [ 0*Z(3), Z(3)^0, 0*Z(3), Z(3) ], 
-  [ 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3) ], [ 0*Z(3), 0*Z(3), 0*Z(3), Z(3)^0 ] ]
+[ [ Z(3)^0, Z(3), Z(3)^0, Z(3) ], [ 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3) ], 
+  [ 0*Z(3), 0*Z(3), Z(3)^0, Z(3)^0 ], [ 0*Z(3), 0*Z(3), 0*Z(3), Z(3)^0 ] ]
 gap&gt; OnKantorFamily(p,x);
 &lt;a point of a Kantor family&gt;
 gap&gt; orbs := Orbits( elations, points, OnKantorFamily);;

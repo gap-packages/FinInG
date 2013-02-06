@@ -31,6 +31,16 @@ In this chapter we provide some simple examples of the use of
 
 In this example, we consider a hyperoval of the projective
 plane <M>PG(2,4)</M>, that is, six points no three collinear.
+We will construct such a hyperoval by exploring a bit the particular
+properties of the projective plane <M>PG(2,4)</M>. The projective
+plane is initalised, its points are computed and listed; then a standard
+frame is constructed, of which we may assume that it is a subset
+of the hyperoval. 
+
+Finally, the stabiliser group of the hyperoval is
+computed, and it is checked that this group is isomorphic with the 
+symmetric group on six elements.
+
 <Example>
 <#Include SYSTEM "../examples/include/examples_pg24.include"> 
 </Example>
@@ -111,7 +121,8 @@ In this example, we embed <M>W(3,3)</M> in <M>W(5,3)</M>.
 
 <Subsection>
 <Heading>Spreads of <M>W(5,3)</M></Heading>
-A spread of <M>W(5,q)</M> is a set of <Math>q^3+1</Math> planes which
+A spread of <M>W(5,q)</M> is a set of <Alt Not="HTML"><M>q^3+1</M></Alt><Alt
+Only="HTML">q&lt;sup>3&lt;/sup>+1</Alt> planes which
 partition the points of <M>W(5,q)</M>. Here we enumerate all spreads of
 <M>W(5,3)</M> which have a set-wise stabiliser of order a multiple of 13.
   
