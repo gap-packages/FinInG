@@ -1,0 +1,36 @@
+gap&gt; id := IdentityMat(7, GF(3));;
+gap&gt; form := QuadraticFormByMatrix(id, GF(3));
+&lt; quadratic form &gt;
+gap&gt; ps := PolarSpace( form );
+&lt;polar space in ProjectiveSpace(
+6,GF(3)): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2+x_7^2=0 &gt;
+gap&gt; #The construction of the ovoid (a la Shult):
+gap&gt; psl32 := PSL(3,2);
+Group([ (4,6)(5,7), (1,2,4)(3,6,5) ])
+gap&gt; reps:=[[1,1,1,0,0,0,0], [-1,1,1,0,0,0,0],
+&gt; [1,-1,1,0,0,0,0], [1,1,-1,0,0,0,0]]*Z(3)^0;
+[ [ Z(3)^0, Z(3)^0, Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ], 
+  [ Z(3), Z(3)^0, Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ], 
+  [ Z(3)^0, Z(3), Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ], 
+  [ Z(3)^0, Z(3)^0, Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ] ]
+gap&gt; ovoid := Union( List(reps, x-&gt; Orbit(psl32, x, Permuted)) );;
+gap&gt; ovoid := List(ovoid, x -&gt; VectorSpaceToElement(ps, x));;
+gap&gt; #We check that this is indeed an ovoid...
+gap&gt; planes := AsList( Planes( ps ) );;
+#I  Computing collineation group of canonical polar space...
+gap&gt; ForAll(planes, p -&gt; Number(ovoid, x -&gt; x in p) = 1);
+true
+gap&gt; #The stabiliser is interesting since it yields the embedding of Sp(6,2) in PO(7,3). To efficiently compute the set-wise stabiliser, we refer to the induced permutation representation.
+gap&gt; g := IsometryGroup( ps );
+&lt;projective collineation group of size 9170703360 with 2 generators&gt;
+gap&gt; stabovoid := SetwiseStabilizer(g, OnProjSubspaces, ovoid)!.setstab;
+#I  Computing adjusted stabilizer chain...
+&lt;projective collineation group with 12 generators&gt;
+gap&gt; DisplayCompositionSeries(stabovoid);
+G (size 1451520)
+ | B(3,2) = O(7,2) ~ C(3,2) = S(6,2)
+1 (size 1)
+gap&gt; OrbitLengths(stabovoid, ovoid);
+[ 28 ]
+gap&gt; IsTransitive(stabovoid, ovoid);
+true

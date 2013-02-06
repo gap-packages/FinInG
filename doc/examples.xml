@@ -35,59 +35,15 @@ We will construct such a hyperoval by exploring a bit the particular
 properties of the projective plane <M>PG(2,4)</M>. The projective
 plane is initalised, its points are computed and listed; then a standard
 frame is constructed, of which we may assume that it is a subset
-of the hyperoval. 
-
-Finally, the stabiliser group of the hyperoval is
+of the hyperoval. Finally, the stabiliser group of the hyperoval is
 computed, and it is checked that this group is isomorphic with the 
 symmetric group on six elements.
 
-<Example>
-<#Include SYSTEM "../examples/include/examples_pg24.include"> 
-</Example>
-
-Now we may assume that our hyperoval contains the fundamental frame.
 
 <Example>
-<#Include SYSTEM "../examples/include/web_hyperoval24.include"> 
+<#Include SYSTEM "../examples/include/examples_hyperoval24_commented.include"> 
 </Example>
 
-There are six secant lines to this frame (``four choose two''). So we 
-put together these secant lines from the pairs of points of this frame.
-
-<Example>
-gap> pairs := Combinations( frame, 2 );
-[ [ &lt;a point in PG(2, 4)&gt;, &lt;a point in PG(2, 4)&gt; ], 
-  [ &lt;a point in PG(2, 4)&gt;, &lt;a point in PG(2, 4)&gt; ], 
-  [ &lt;a point in PG(2, 4)&gt;, &lt;a point in PG(2, 4)&gt; ], 
-  [ &lt;a point in PG(2, 4)&gt;, &lt;a point in PG(2, 4)&gt; ], 
-  [ &lt;a point in PG(2, 4)&gt;, &lt;a point in PG(2, 4)&gt; ], 
-  [ &lt;a point in PG(2, 4)&gt;, &lt;a point in PG(2, 4)&gt; ] ]
-gap> secants := List( pairs, p -> Span(p[1], p[2]) );
-[ &lt;a line in PG(2, 4)&gt;, &lt;a line in PG(2, 4)&gt;, &lt;a line in PG(2, 4)&gt;, 
-  &lt;a line in PG(2, 4)&gt;, &lt;a line in PG(2, 4)&gt;, &lt;a line in PG(2, 4)&gt; ]
-</Example>
-
-By a counting argument, it is known that the frame of <M>PG(2,4)</M>
-completes uniquely to a hyperoval.
-
-<Example>
-gap> leftover := Filtered( pointslist, t -> not ForAny( secants, s -> t in s ) );
-[ &lt;a point in PG(2, 4)&gt;, &lt;a point in PG(2, 4)&gt; ]
-gap> hyperoval := Union( frame, leftover );
-[ &lt;a point in PG(2, 4)&gt;, &lt;a point in PG(2, 4)&gt;, &lt;a point in PG(2, 4)&gt;, 
-  &lt;a point in PG(2, 4)&gt;, &lt;a point in PG(2, 4)&gt;, &lt;a point in PG(2, 4)&gt; ]
-</Example>
-
-This hyperoval has the symmetric group on six symbols as its stabiliser, which can easily be calculated:
-
-<Example>
-gap> g := CollineationGroup(pg);
-PGammaL(3,4)
-gap> stab := Stabilizer(g, Set(hyperoval), OnSetsProjSubspaces);
-&lt;projective semilinear group of size 720&gt;
-gap> StructureDescription( stab );
-"S6"
-</Example>
 </Section>
 
 <Section>
@@ -136,62 +92,14 @@ partition the points of <M>W(5,q)</M>. Here we enumerate all spreads of
   
 In this example, we construct the unique ovoid
 of the parabolic quadric <M>Q(6,3)</M>, first discovered by Patterson, but for
-which was given a nice construction by E. E. Shult.
-
-We begin with the ``sums of squares'' quadratic
-form over <M>GF(3)</M>.
+which was given a nice construction by E. E. Shult. We begin with the ``sums of squares'' 
+quadratic form over <M>GF(3)</M> and the associated polar space.
 
 <Example>
-gap> id := IdentityMat(7, GF(3));;
-gap> form := QuadraticFormByMatrix(id, GF(3));
-&lt; quadratic form &gt;
-gap> ps := PolarSpace( form );
-&lt;polar space of dimension 6 over GF(3)&gt;
+<#Include SYSTEM "../examples/include/examples_patterson_commented.include"> 
 </Example>
 
-The construction of the ovoid (a la Shult):
-
-<Example>
-gap> psl32 := PSL(3,2);
-Group([ (4,6)(5,7), (1,2,4)(3,6,5) ])
-gap> reps:=[[1,1,1,0,0,0,0], [-1,1,1,0,0,0,0],
-            [1,-1,1,0,0,0,0], [1,1,-1,0,0,0,0]]*Z(3)^0;
-[ [ Z(3)^0, Z(3)^0, Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ], 
-  [ Z(3), Z(3)^0, Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ], 
-  [ Z(3)^0, Z(3), Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ], 
-  [ Z(3)^0, Z(3)^0, Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ] ]
-gap> ovoid := Union( List(reps, x-> Orbit(psl32, x, Permuted)) );;
-gap> ovoid := List(ovoid, x -> VectorSpaceToElement(ps, x));;
-</Example>
-
-We check that this is indeed an ovoid...
-
-<Example>
-gap> planes := AsList( Planes( ps ) );;
-gap> ForAll(planes, p -> Number(ovoid, x -> x in p) = 1);
-true
-</Example>
-
-The stabiliser is interesting since it yields the embedding of
-<M>Sp(6,2)</M> in <M>PO(7,3)</M>. To efficiently compute the set-wise stabiliser,
-we refer to the induced permutation representation.
-
-<Example>
-gap> g := IsometryGroup( ps );
-&lt;projective semilinear group of size 9170703360 with 2 generators&gt;
-gap> stabovoid := SetwiseStabilizer(g, OnProjSubspaces, ovoid)!.setstab;
-&lt;projective semilinear group with 14 generators&gt;
-gap> DisplayCompositionSeries(stabovoid);
-G (size 1451520)
- | B(3,2) = O(7,2) ~ C(3,2) = S(6,2)
-1 (size 1)
-gap> OrbitLengths(stabovoid, ovoid);
-[ 28 ]
-gap> IsTransitive(stabovoid, ovoid);
-true
-</Example>
 </Subsection>
-
 
 </Section>
 
@@ -216,8 +124,8 @@ the associated BLT-set is a conic.
 <Heading>Two ways to construct a flock generalised quadrangle from a Kantor-Knuth semifield q-clan</Heading>
 
 We will construct an elation generalised quadrangle directly from the <E>Kantor-Knuth semifield q-clan</E>
-and also via its corresponding BLT-set. The q-clan in question here are the set of matrices <M>C_t</M> of the form
-
+and also via its corresponding BLT-set. The q-clan in question here are the set of matrices <Alt Not="HTML"><M>C_t</M></Alt><Alt
+Only="HTML">C&lt;sub>t&lt;/sub></Alt> of the form
 
 <Alt Only="HTML">
 &lt;table style="color:#000">&lt;tr>

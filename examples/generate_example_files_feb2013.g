@@ -22,8 +22,8 @@ quit;
 # examples.xml
 # files for chapter "Examples"
 
-examplesfiles := ["examples_pg24", "examples_hermitian", "examples_embedW", "examples_spreads", 
-                  "examples_qclan", "examples_KantorKnuth","examples_PSL211"];;
+examplesfiles := ["examples_hyperoval24", "examples_hermitian", "examples_embedW", "examples_patterson",  
+				  "examples_spreads", "examples_qclan", "examples_KantorKnuth","examples_PSL211"];;
 
 
 affinefiles := ["affine_parallel", "affine_shadow1", "affine_shadow2", "affine_basic", 
@@ -143,14 +143,23 @@ gap := Filename(Directory("/usr/bin/"),"gap4r4");
 args := ["-o","4G"];
 stream := InputOutputLocalProcess( dir, gap, args);
 
-
-
+#code below for gap4r4
 homedir := DirectoryCurrent();
 exampledir := DirectoriesPackageLibrary("fining","examples/gap")[1]; 
 preambledir := DirectoriesPackageLibrary("fining","examples/")[1]; 
 outputdir := DirectoriesPackageLibrary("fining","examples/output")[1];
 gap := Filename(Directory("/usr/bin/"),"gap4r4");  
 paths := JoinStringsWithSeparator(GAP_ROOT_PATHS,";");
+args := JoinStringsWithSeparator(["-l",paths," -L fining.ws"," -o 4G"]," ");
+args := ["-l",paths,"-L","fining.ws","-o","4G"];
+
+#code below for gap4r5
+homedir := DirectoryCurrent();
+exampledir := DirectoriesPackageLibrary("fining","examples/gap")[1]; 
+preambledir := DirectoriesPackageLibrary("fining","examples/")[1]; 
+outputdir := DirectoriesPackageLibrary("fining","examples/output")[1];
+gap := Filename(Directory("/usr/bin/"),"gap4r5");  
+paths := JoinStringsWithSeparator(GAP_ROOT_PATHS{[2,3]},";");
 args := JoinStringsWithSeparator(["-l",paths," -L fining.ws"," -o 4G"]," ");
 args := ["-l",paths,"-L","fining.ws","-o","4G"];
 
@@ -165,7 +174,7 @@ Exec("which gap4r4"); #for UNIX only
 
 for filename in files do
   Print("Now converting file: ", filename, "\n");
-  gap := Filename(Directory("/usr/bin/"),"gap4r5");    #gap := Filename(Directory("/usr/bin/"),"gap4r5");
+  #gap := Filename(Directory("/usr/bin/"),"gap4r5");    #this variable is defined above.
   #stream := InputOutputLocalProcess( homedir, gap, [args]);
   stream := InputOutputLocalProcess( homedir, gap, args);
   cmd := Concatenation("file := \"",filename,".out\";");

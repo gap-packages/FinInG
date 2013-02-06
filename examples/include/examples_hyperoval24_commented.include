@@ -1,0 +1,77 @@
+gap&gt; pg := ProjectiveSpace(2,4);
+ProjectiveSpace(2, 4)
+gap&gt; points := Points(pg);
+&lt;points of ProjectiveSpace(2, 4)&gt;
+gap&gt; pointslist := AsList(points);
+[ &lt;a point in ProjectiveSpace(2, 4)&gt;, &lt;a point in ProjectiveSpace(2, 4)&gt;, 
+  &lt;a point in ProjectiveSpace(2, 4)&gt;, &lt;a point in ProjectiveSpace(2, 4)&gt;, 
+  &lt;a point in ProjectiveSpace(2, 4)&gt;, &lt;a point in ProjectiveSpace(2, 4)&gt;, 
+  &lt;a point in ProjectiveSpace(2, 4)&gt;, &lt;a point in ProjectiveSpace(2, 4)&gt;, 
+  &lt;a point in ProjectiveSpace(2, 4)&gt;, &lt;a point in ProjectiveSpace(2, 4)&gt;, 
+  &lt;a point in ProjectiveSpace(2, 4)&gt;, &lt;a point in ProjectiveSpace(2, 4)&gt;, 
+  &lt;a point in ProjectiveSpace(2, 4)&gt;, &lt;a point in ProjectiveSpace(2, 4)&gt;, 
+  &lt;a point in ProjectiveSpace(2, 4)&gt;, &lt;a point in ProjectiveSpace(2, 4)&gt;, 
+  &lt;a point in ProjectiveSpace(2, 4)&gt;, &lt;a point in ProjectiveSpace(2, 4)&gt;, 
+  &lt;a point in ProjectiveSpace(2, 4)&gt;, &lt;a point in ProjectiveSpace(2, 4)&gt;, 
+  &lt;a point in ProjectiveSpace(2, 4)&gt; ]
+gap&gt; Display(pointslist[1]);
+ . . 1
+</Example>
+
+Now we may assume that our hyperoval contains the fundamental frame.
+
+<Example>
+gap&gt; frame := [[1,0,0],[0,1,0],[0,0,1],[1,1,1]]*Z(2)^0;
+[ [ Z(2)^0, 0*Z(2), 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2) ], 
+  [ 0*Z(2), 0*Z(2), Z(2)^0 ], [ Z(2)^0, Z(2)^0, Z(2)^0 ] ]
+gap&gt; frame := List(frame,x -&gt; VectorSpaceToElement(pg,x));
+[ &lt;a point in ProjectiveSpace(2, 4)&gt;, &lt;a point in ProjectiveSpace(2, 4)&gt;, 
+  &lt;a point in ProjectiveSpace(2, 4)&gt;, &lt;a point in ProjectiveSpace(2, 4)&gt; ]
+</Example>
+
+Alternatively, we could use:
+
+<Example>
+gap&gt; frame := StandardFrame( pg );
+[ &lt;a point in ProjectiveSpace(2, 4)&gt;, &lt;a point in ProjectiveSpace(2, 4)&gt;, 
+  &lt;a point in ProjectiveSpace(2, 4)&gt;, &lt;a point in ProjectiveSpace(2, 4)&gt; ]
+</Example>
+
+There are six secant lines to this frame (``four choose two''). So we 
+put together these secant lines from the pairs of points of this frame.
+
+<Example>
+gap&gt; pairs := Combinations(frame,2);
+[ [ &lt;a point in ProjectiveSpace(2, 4)&gt;, &lt;a point in ProjectiveSpace(2, 4)&gt; ], 
+  [ &lt;a point in ProjectiveSpace(2, 4)&gt;, &lt;a point in ProjectiveSpace(2, 4)&gt; ], 
+  [ &lt;a point in ProjectiveSpace(2, 4)&gt;, &lt;a point in ProjectiveSpace(2, 4)&gt; ], 
+  [ &lt;a point in ProjectiveSpace(2, 4)&gt;, &lt;a point in ProjectiveSpace(2, 4)&gt; ], 
+  [ &lt;a point in ProjectiveSpace(2, 4)&gt;, &lt;a point in ProjectiveSpace(2, 4)&gt; ], 
+  [ &lt;a point in ProjectiveSpace(2, 4)&gt;, &lt;a point in ProjectiveSpace(2, 4)&gt; ] ]
+gap&gt; secants := List(pairs,p -&gt; Span(p[1],p[2]));
+[ &lt;a line in ProjectiveSpace(2, 4)&gt;, &lt;a line in ProjectiveSpace(2, 4)&gt;, 
+  &lt;a line in ProjectiveSpace(2, 4)&gt;, &lt;a line in ProjectiveSpace(2, 4)&gt;, 
+  &lt;a line in ProjectiveSpace(2, 4)&gt;, &lt;a line in ProjectiveSpace(2, 4)&gt; ]
+</Example>
+
+By a counting argument, it is known that the frame of <M>PG(2,4)</M>
+completes uniquely to a hyperoval.
+
+<Example>
+gap&gt; leftover := Filtered(pointslist,t-&gt;not ForAny(secants,s-&gt;t in s));
+[ &lt;a point in ProjectiveSpace(2, 4)&gt;, &lt;a point in ProjectiveSpace(2, 4)&gt; ]
+gap&gt; hyperoval := Union(frame,leftover);
+[ &lt;a point in ProjectiveSpace(2, 4)&gt;, &lt;a point in ProjectiveSpace(2, 4)&gt;, 
+  &lt;a point in ProjectiveSpace(2, 4)&gt;, &lt;a point in ProjectiveSpace(2, 4)&gt;, 
+  &lt;a point in ProjectiveSpace(2, 4)&gt;, &lt;a point in ProjectiveSpace(2, 4)&gt; ]
+</Example>
+
+This hyperoval has the symmetric group on six symbols as its stabiliser, which can easily be calculated:
+
+<Example>
+gap&gt; g := CollineationGroup(pg);
+The FinInG collineation group PGammaL(3,4)
+gap&gt; stab := Stabilizer(g,Set(hyperoval),OnSets);
+&lt;projective collineation group of size 720&gt;
+gap&gt; StructureDescription(stab);
+"S6"

@@ -5,7 +5,6 @@ ProjectiveSpace(2, 49)
 gap&gt; lines := Lines( pg );
 &lt;lines of ProjectiveSpace(2, 49)&gt;
 gap&gt; curve := AsList( Points( h ) );;
-#I  No nice monomorphism computed.
 gap&gt; Size(curve);
 344
 gap&gt; Collected( List(lines, t -&gt; Number(curve, c-&gt; c in t)));

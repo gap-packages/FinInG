@@ -19,6 +19,5 @@ gap&gt; em := NaturalEmbeddingBySubspace( w3, w5, solid );
 gap&gt; points := Points( w3 );
 &lt;points of W(3, 3)&gt;
 gap&gt; points2 := ImagesSet(em, AsSet(points));;
-#I  No nice monomorphism computed.
 gap&gt; ForAll(points2, x -&gt; x in solid);
 true

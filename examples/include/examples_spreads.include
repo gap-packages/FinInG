@@ -1,7 +1,6 @@
 gap&gt; w := SymplecticSpace(5, 3);
 W(5, 3)
 gap&gt; g := IsometryGroup(w);
-#I  No nice monomorphism computed.
 PSp(6,3)
 gap&gt; syl := SylowSubgroup(g, 13);
 &lt;projective collineation group of size 13&gt;
