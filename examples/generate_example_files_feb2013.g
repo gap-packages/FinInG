@@ -46,7 +46,16 @@ projgroupsfiles := ["projgroups_isprojectivity", "projgroups_iscollineation", "p
 					"projgroups_embedding", "projgroups_onprojsubspaces", "projgroups_onprojsubspacesextended", "projgroups_elation1", "projgroups_elation2",
 					"projgroups_homology1", "projgroups_homology2", "projgroups_nicem", "projgroups_niceo", "projgroups_cancompute"];;
 	   
+polaritiespsfiles := ["polarities_construct1", "polarities_construct2", "polarities_fromform", "polarities_frompolarspace", 
+					"polarities_toform", "polarities_basefield", "polarities_grammatrix", "polarities_automorphism", "polarities_ishermitian",
+					"polarities_issymplectic", "polarities_isorthogonal", "polarities_ispseudo", "polarities_geometryofabsolutepoints",
+					"polarities_absolutepoints", "polarities_polarspace", "polarities_commuting"];
+
+
 	   
+	    
+	    
+
 	    
 	[  "projgroups_onprojsubspacesreversing", "projgroups_simgroup", 
 	  "projgroups_isomgroup", "projgroups_specialisomgroup", 
@@ -62,13 +71,6 @@ affinefiles := ["affine_parallel", "affine_shadow1", "affine_shadow2", "affine_b
 
 
 
-polaritiespsfiles := ["polarities_construct1", "polarities_construct2",
-          "polarities_fromform", "polarities_toform", "polarities_basefield", 
-	  "polarities_automorphism", "polarities_grammatrix", "polarities_ishermitian", 
-	  "polarities_issymplectic", "polarities_ispseudo", "polarities_isorthogonal", 
-	  "polarities_geometryofabsolutepoints", "polarities_absolutepoints", 
-	  "polarities_polarspace", "polarities_frompolarspace", 
-	  "polarities_commuting"];
 
 classicalpolfiles :=   ["cps_polarspaceform", "cps_example", "cps_symplectic", "cps_hermitian", "cps_parabolic", "cps_hyperbolic",
 						"cps_elliptic", "cps_underlyingvs", "cps_ambientspace", "cps_projectivedimension", "cps_rank",

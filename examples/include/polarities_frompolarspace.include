@@ -1,14 +1,13 @@
-gap&gt; ps := HermitianVariety(4,64);
+gap&gt; ps := HermitianPolarSpace(4,64);
 H(4, 8^2)
 gap&gt; phi := PolarityOfProjectiveSpace(ps);
 &lt;polarity of PG(4, GF(2^6)) &gt;
 gap&gt; ps := ParabolicQuadric(6,8);
 Q(6, 8)
 gap&gt; PolarityOfProjectiveSpace(ps);
-Error, no polarity of the ambient projective space can be associated to &lt;ps&gt; c
-alled from
-&lt;function&gt;( &lt;arguments&gt; ) called from read-eval-loop
-Entering break read-eval-print loop ...
+Error, no polarity of the ambient projective space can be associated to &lt;ps&gt; called from
+&lt;function "unknown"&gt;( &lt;arguments&gt; )
+ called from read-eval loop at line 11 of *stdin*
 you can 'quit;' to quit to outer loop, or
 you can 'return;' to continue
 brk&gt; quit;

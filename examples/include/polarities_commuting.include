@@ -10,16 +10,14 @@ gap&gt; psi := PolarityOfProjectiveSpace(mat2,GF(25));
 &lt;polarity of PG(3, GF(5^2)) &gt;
 gap&gt; phi*psi = psi*phi;
 true
-gap&gt; g := CorrelationGroup(PG(3,25));
-&lt;projective group with Frobenius with proj. space isomorphism of size 
-3719082276000000000000 with 4 generators&gt;
+gap&gt; g := CorrelationCollineationGroup(PG(3,25));
+The FinInG correlation-collineation group PGammaL(4,25) : 2
 gap&gt; h := CollineationGroup(PG(3,25));
-PGammaL(4,25)
+The FinInG collineation group PGammaL(4,25)
 gap&gt; hom := Embedding(h,g);
-MappingByFunction( PGammaL(4,25), &lt;projective group with Frobenius with proj. 
-space isomorphism of size 3719082276000000000000 with 
-4 generators&gt;, function( y ) ... end )
+MappingByFunction( The FinInG collineation group PGammaL(4,25), The FinInG cor
+relation-collineation group PGammaL(4,25) : 2, function( y ) ... end )
 gap&gt; coll := PreImagesRepresentative(hom,phi*psi);
-&lt;projective semilinear element: [ [ 0*Z(5), Z(5)^0, 0*Z(5), 0*Z(5) ], 
+&lt; a collineation: [ [ 0*Z(5), Z(5)^0, 0*Z(5), 0*Z(5) ], 
   [ Z(5)^0, 0*Z(5), 0*Z(5), 0*Z(5) ], [ 0*Z(5), 0*Z(5), 0*Z(5), Z(5)^0 ], 
   [ 0*Z(5), 0*Z(5), Z(5)^0, 0*Z(5) ] ], F^5&gt;

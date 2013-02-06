@@ -4,7 +4,7 @@ gap&gt; mat := IdentityMat(4,GF(16));
 gap&gt; phi := HermitianPolarityOfProjectiveSpace(mat,GF(16));
 &lt;polarity of PG(3, GF(2^4)) &gt;
 gap&gt; geom := GeometryOfAbsolutePoints(phi);
-&lt;polar space over GF(2^4)&gt;
+&lt;polar space in ProjectiveSpace(3,GF(2^4)): x_1^5+x_2^5+x_3^5+x_4^5=0 &gt;
 gap&gt; mat := [[1,0,0,0],[0,0,1,1],[0,1,1,0],[0,1,0,0]]*Z(32)^0;
 [ [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ], [ 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0 ], 
   [ 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ] ]

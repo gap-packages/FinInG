@@ -5,8 +5,8 @@ gap&gt; phi := PolarityOfProjectiveSpace(mat,GF(32));
 &lt;polarity of PG(3, GF(2^5)) &gt;
 gap&gt; ps := PolarSpace(phi);
 Error, &lt;polarity&gt; is pseudo and does not induce a polar space called from
-&lt;function&gt;( &lt;arguments&gt; ) called from read-eval-loop
-Entering break read-eval-print loop ...
+&lt;function "unknown"&gt;( &lt;arguments&gt; )
+ called from read-eval loop at line 10 of *stdin*
 you can 'quit;' to quit to outer loop, or
 you can 'return;' to continue
 brk&gt; quit;
@@ -19,4 +19,4 @@ gap&gt; mat := IdentityMat(5,GF(7));
 gap&gt; phi := PolarityOfProjectiveSpace(mat,GF(7));
 &lt;polarity of PG(4, GF(7)) &gt;
 gap&gt; ps := PolarSpace(phi);
-&lt;polar space over GF(7)&gt;
+&lt;polar space in ProjectiveSpace(4,GF(7)): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2=0 &gt;

@@ -4,11 +4,21 @@ gap&gt; mat := IdentityMat(4,GF(3));
 gap&gt; phi := PolarityOfProjectiveSpace(mat,GF(3));
 &lt;polarity of PG(3, GF(3)) &gt;
 gap&gt; points := AbsolutePoints(phi);
-&lt;All elements of Q+(3, 3)&gt;
+&lt;points of Q+(3, 3): x_1^2+x_2^2+x_3^2+x_4^2=0&gt;
 gap&gt; List(points);
-[ &lt;a point in Q+(3, 3)&gt;, &lt;a point in Q+(3, 3)&gt;, &lt;a point in Q+(3, 3)&gt;, 
-  &lt;a point in Q+(3, 3)&gt;, &lt;a point in Q+(3, 3)&gt;, &lt;a point in Q+(3, 3)&gt;, 
-  &lt;a point in Q+(3, 3)&gt;, &lt;a point in Q+(3, 3)&gt;, &lt;a point in Q+(3, 3)&gt;, 
-  &lt;a point in Q+(3, 3)&gt;, &lt;a point in Q+(3, 3)&gt;, &lt;a point in Q+(3, 3)&gt;, 
-  &lt;a point in Q+(3, 3)&gt;, &lt;a point in Q+(3, 3)&gt;, &lt;a point in Q+(3, 3)&gt;, 
-  &lt;a point in Q+(3, 3)&gt; ]
+[ &lt;a point in Q+(3, 3): x_1^2+x_2^2+x_3^2+x_4^2=0&gt;, 
+  &lt;a point in Q+(3, 3): x_1^2+x_2^2+x_3^2+x_4^2=0&gt;, 
+  &lt;a point in Q+(3, 3): x_1^2+x_2^2+x_3^2+x_4^2=0&gt;, 
+  &lt;a point in Q+(3, 3): x_1^2+x_2^2+x_3^2+x_4^2=0&gt;, 
+  &lt;a point in Q+(3, 3): x_1^2+x_2^2+x_3^2+x_4^2=0&gt;, 
+  &lt;a point in Q+(3, 3): x_1^2+x_2^2+x_3^2+x_4^2=0&gt;, 
+  &lt;a point in Q+(3, 3): x_1^2+x_2^2+x_3^2+x_4^2=0&gt;, 
+  &lt;a point in Q+(3, 3): x_1^2+x_2^2+x_3^2+x_4^2=0&gt;, 
+  &lt;a point in Q+(3, 3): x_1^2+x_2^2+x_3^2+x_4^2=0&gt;, 
+  &lt;a point in Q+(3, 3): x_1^2+x_2^2+x_3^2+x_4^2=0&gt;, 
+  &lt;a point in Q+(3, 3): x_1^2+x_2^2+x_3^2+x_4^2=0&gt;, 
+  &lt;a point in Q+(3, 3): x_1^2+x_2^2+x_3^2+x_4^2=0&gt;, 
+  &lt;a point in Q+(3, 3): x_1^2+x_2^2+x_3^2+x_4^2=0&gt;, 
+  &lt;a point in Q+(3, 3): x_1^2+x_2^2+x_3^2+x_4^2=0&gt;, 
+  &lt;a point in Q+(3, 3): x_1^2+x_2^2+x_3^2+x_4^2=0&gt;, 
+  &lt;a point in Q+(3, 3): x_1^2+x_2^2+x_3^2+x_4^2=0&gt; ]
