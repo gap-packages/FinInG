@@ -1,16 +1,16 @@
 gap&gt; ps := PG(8,16);
 ProjectiveSpace(8, 16)
 gap&gt; RandomSubspace(ps);
-&lt;a line in ProjectiveSpace(8, 16)&gt;
+&lt;a point in ProjectiveSpace(8, 16)&gt;
 gap&gt; RandomSubspace(ps);
-&lt;a plane in ProjectiveSpace(8, 16)&gt;
+&lt;a proj. 5-space in ProjectiveSpace(8, 16)&gt;
 gap&gt; RandomSubspace(ps);
 &lt;a proj. 7-space in ProjectiveSpace(8, 16)&gt;
 gap&gt; RandomSubspace(ps);
-&lt;a line in ProjectiveSpace(8, 16)&gt;
+&lt;a proj. 4-space in ProjectiveSpace(8, 16)&gt;
 gap&gt; RandomSubspace(ps);
-&lt;a line in ProjectiveSpace(8, 16)&gt;
+&lt;a plane in ProjectiveSpace(8, 16)&gt;
 gap&gt; RandomSubspace(ps);
-&lt;a solid in ProjectiveSpace(8, 16)&gt;
+&lt;a plane in ProjectiveSpace(8, 16)&gt;
 gap&gt; RandomSubspace(ps);
-&lt;a point in ProjectiveSpace(8, 16)&gt;
+&lt;a plane in ProjectiveSpace(8, 16)&gt;

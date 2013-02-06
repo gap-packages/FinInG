@@ -2038,6 +2038,7 @@ InstallMethod( Random,
   end );
   
 # CHECKED 14/09/2011 jdb.
+# Fixed a bug 6/02/2013 jdb. So do not trust me completely when I writed CHECKED :-(
 #############################################################################
 #O  Random( <subs> )
 # returns a random subspace out of the collection of all subspaces of 
@@ -2085,7 +2086,7 @@ InstallMethod( Random,
 		  until Dimension(W)=d-1;
 		else
 		# in this case we can just take a random subspace in x
-		  W:=RandomSubspace(pg,d-1);
+		  W:=RandomSubspace(x,d-1); #here was 'pg' instead of 'x', which is a bug! 
         fi;
 		return(W);
 

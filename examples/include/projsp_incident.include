@@ -23,12 +23,12 @@ false
 gap&gt; l in plane;
 false
 gap&gt; e := EmptySubspace(ps);
-&lt; trivial subspace &gt;
+&lt; empty subspace &gt;
 gap&gt; e * l;
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `PROD' on 2 arguments called from
-&lt;function&gt;( &lt;arguments&gt; ) called from read-eval-loop
-Entering break read-eval-print loop ...
+Error, no 1st choice method found for `*' on 2 arguments called from
+&lt;function "HANDLE_METHOD_NOT_FOUND"&gt;( &lt;arguments&gt; )
+ called from read-eval loop at line 21 of *stdin*
 you can 'quit;' to quit to outer loop, or
 you can 'return;' to continue
 brk&gt; quit;

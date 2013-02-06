@@ -32,19 +32,17 @@ incgeomfiles := ["incgeom_incstruct", "incgeom_categories1", "incgeom_typesofels
 				 "incgeom_lie_projdimension", "incgeom_ambientspace", "incgeom_lie_vectorspacetoelement", "incgeom_lie_elementtovectorspace", 
 				 "incgeom_lie_in", "incgeom_lie_hyperplanesof", "incgeom_lie_elementtoelement" ]; #"incgeom_lie_convert"
 
-
+projspfiles := ["projsp_projectivespace", "projsp_projdimension", "projsp_basefieldps", "projsp_underlyingvs", "projsp_element1",
+				"projsp_emptysubspace", "projsp_projdimension_element", "projsp_elements", "projsp_short", "projsp_incident", 
+				"projsp_standardframe", "projsp_coordinates", "projsp_eqhyperplane", "projsp_ambientspaceelps", "projsp_basefieldelps",
+				"projsp_randomeltps", "projsp_randomeltsps", "projsp_span", "projsp_meet", "projsp_flag", "projsp_chamber",
+				"projsp_shadowofelement", "projsp_shadowofflag", "projsp_elsel", "projsp_short", "projsp_iterator", "projsp_enumerator", 
+				"projsp_list" ];
 
 
 affinefiles := ["affine_parallel", "affine_shadow1", "affine_shadow2", "affine_basic", 
                "affine_elements", "affine_iterator", "affine_enumerator", "affine_join", "affine_meet"];;
 
-
-
-projspfiles := ["projsp_projectivespace", "projsp_projdimension", "projsp_basefieldps", "projsp_underlyingvs", "projsp_element1",
-				"projsp_emptysubspace", "projsp_projdimension_element", "projsp_elements", "projsp_short", "projsp_incident", 
-				"projsp_standardframe", "projsp_coordinates", "projsp_eqhyperplane", "projsp_ambientspaceelps", "projsp_basefieldelps",
-				"projsp_randomeltps", "projsp_randomeltsps", "projsp_span", "projsp_meet", "projsp_flag", "projsp_chamber",
-				"projsp_shadowofelement", "projsp_shadowofflag", "projsp_elsel", "projsp_enumerator", "projsp_iterator", "projsp_list" ];
 
 projgroupsfiles := ["projgroups_basefield",
 	  "projgroups_collineation", "projgroups_collineationgroup",

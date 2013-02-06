@@ -22,8 +22,8 @@ gap&gt; v := Random(Solids(ps));
 &lt;a solid in ProjectiveSpace(4, 5)&gt;
 gap&gt; flag := FlagOfIncidenceStructure(ps,[v,l,p]);
 Error, &lt;els&gt; does not determine a flag&gt; called from
-&lt;function&gt;( &lt;arguments&gt; ) called from read-eval-loop
-Entering break read-eval-print loop ...
+&lt;function "unknown"&gt;( &lt;arguments&gt; )
+ called from read-eval loop at line 19 of *stdin*
 you can 'quit;' to quit to outer loop, or
 you can 'return;' to continue
 brk&gt; quit;

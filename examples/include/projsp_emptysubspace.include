@@ -1,12 +1,12 @@
 gap&gt; e := EmptySubspace(PG(5,9));
-&lt; trivial subspace &gt;
+&lt; empty subspace &gt;
 gap&gt; p := VectorSpaceToElement(PG(5,9),[1,0,0,0,0,0]*Z(9)^0);
 &lt;a point in ProjectiveSpace(5, 9)&gt;
 gap&gt; e*p;
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `PROD' on 2 arguments called from
-&lt;function&gt;( &lt;arguments&gt; ) called from read-eval-loop
-Entering break read-eval-print loop ...
+Error, no 1st choice method found for `*' on 2 arguments called from
+&lt;function "HANDLE_METHOD_NOT_FOUND"&gt;( &lt;arguments&gt; )
+ called from read-eval loop at line 10 of *stdin*
 you can 'quit;' to quit to outer loop, or
 you can 'return;' to continue
 brk&gt; quit;
