@@ -2877,3 +2877,28 @@ InstallMethod( GammaU, [IsPosInt, IsField and IsFinite],
     return g;
   end );
 
+
+
+
+#############################
+# Stabilizer methods that should work faster
+################################
+
+
+InstallMethod( FiningStabilizer, [IsProjectiveGroupWithFrob, IsElementOfIncidenceStructure],
+		function(fining_group,el)
+		local type,geo,hom,enum,nr,stab,gens,x;
+		type:=el!.type;
+		geo:=el!.geo;
+		hom:=ActionHomomorphism(fining_group,ElementsOfIncidenceStructure(geo,type),OnProjSubspaces);
+		enum:=HomeEnumerator(UnderlyingExternalSet(hom));;
+		nr:=Position(enum,el);
+		stab:=Stabilizer(Image(hom),nr);
+		gens:=GeneratorsOfGroup(stab);;
+		gens:=List(gens,x->PreImagesRepresentative(hom,x));
+		stab:=GroupWithGenerators(gens);
+		return stab;
+end );
+
+
+
