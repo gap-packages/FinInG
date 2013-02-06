@@ -1,6 +1,7 @@
 gap&gt; coll := CollineationGroup(PG(4,8));
-PGammaL(5,8)
-gap&gt; corr := CorrelationGroup(PG(4,8));
-PGammaL(5,8) : 2
+The FinInG collineation group PGammaL(5,8)
+gap&gt; corr := CorrelationCollineationGroup(PG(4,8));
+The FinInG correlation-collineation group PGammaL(5,8) : 2
 gap&gt; phi := Embedding(coll,corr);
-MappingByFunction( PGammaL(5,8), PGammaL(5,8) : 2, function( y ) ... end )
+MappingByFunction( The FinInG collineation group PGammaL(5,8), The FinInG corr
+elation-collineation group PGammaL(5,8) : 2, function( y ) ... end )

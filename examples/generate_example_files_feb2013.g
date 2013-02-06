@@ -39,21 +39,28 @@ projspfiles := ["projsp_projectivespace", "projsp_projdimension", "projsp_basefi
 				"projsp_shadowofelement", "projsp_shadowofflag", "projsp_elsel", "projsp_short", "projsp_iterator", "projsp_enumerator", 
 				"projsp_list" ];
 
+projgroupsfiles := ["projgroups_isprojectivity", "projgroups_iscollineation", "projgroups_isstrictlysemilinear", "projgroups_iscorrelation",
+					"projgroups_projectivity", "projgroups_collineation", "projgroups_stduality", "projgroups_correlation",
+					"projgroups_representative", "projgroups_underlyingmatrix", "projgroups_basefield", "projgroups_fieldautomorphism", "projgroups_psisomorphism",
+					"projgroups_order", "projgroups_projectivitygroup", "projgroups_collineationgroup", "projgroups_specialprojectivitygroup", "projgroups_mult",
+					"projgroups_embedding", "projgroups_onprojsubspaces", "projgroups_onprojsubspacesextended", "projgroups_elation1", "projgroups_elation2",
+					"projgroups_homology1", "projgroups_homology2", "projgroups_nicem", "projgroups_niceo", "projgroups_cancompute"];;
+	   
+	   
+	    
+	[  "projgroups_onprojsubspacesreversing", "projgroups_simgroup", 
+	  "projgroups_isomgroup", "projgroups_specialisomgroup", 
+	    
+	   
+	    "projgroups_cancompute"];;
+
+
+
 
 affinefiles := ["affine_parallel", "affine_shadow1", "affine_shadow2", "affine_basic", 
                "affine_elements", "affine_iterator", "affine_enumerator", "affine_join", "affine_meet"];;
 
 
-projgroupsfiles := ["projgroups_basefield",
-	  "projgroups_collineation", "projgroups_collineationgroup",
-	  "projgroups_correlation", "projgroups_fieldautomorphism",
-	  "projgroups_projectivity", "projgroups_psisomorphism",
-	  "projgroups_stduality", "projgroups_underlyingmatrix", "projgroups_onprojsubspaces",
-	  "projgroups_onprojsubspacesreversing", "projgroups_simgroup", 
-	  "projgroups_isomgroup", "projgroups_specialisomgroup", 
-	  "projgroups_mult", "projgroups_embedding", "projgroups_representative",
-	  "projgroups_order", "projgroups_projectivitygroup","projgroups_specialprojectivitygroup",
-	  "projgroups_nicem", "projgroups_niceo", "projgroups_cancompute"];;
 
 polaritiespsfiles := ["polarities_construct1", "polarities_construct2",
           "polarities_fromform", "polarities_toform", "polarities_basefield", 

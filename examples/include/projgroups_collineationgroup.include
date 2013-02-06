@@ -1,16 +1,16 @@
 gap&gt; ps := ProjectiveSpace(3,16);
 ProjectiveSpace(3, 16)
 gap&gt; CollineationGroup(ps);
-PGammaL(4,16)
+The FinInG collineation group PGammaL(4,16)
 gap&gt; ps := ProjectiveSpace(4,81);
 ProjectiveSpace(4, 81)
 gap&gt; CollineationGroup(ps);
-PGammaL(5,81)
+The FinInG collineation group PGammaL(5,81)
 gap&gt; ps := ProjectiveSpace(5,3);
 ProjectiveSpace(5, 3)
 gap&gt; CollineationGroup(ps);
-PGL(6,3)
+The FinInG collineation group PGL(6,3)
 gap&gt; ps := ProjectiveSpace(2,2);
 ProjectiveSpace(2, 2)
 gap&gt; CollineationGroup(ps);
-PGL(3,2)
+The FinInG collineation group PGL(3,2)

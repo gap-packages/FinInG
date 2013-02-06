@@ -161,17 +161,21 @@ end );
 # method to check if a given ProjGrpElWithFrobWithPSIsom is a projectivity,
 # i.e. if the corresponding frobenius automorphism and the psisom is the identity
 ##
-InstallMethod( IsProjectivity, [ IsProjGrpElWithFrobWithPSIsom ],
-  function( g )
-    local F,sigma,delta;
-                F:=g!.fld;
-                sigma:=g!.frob;
-                delta:=g!.psisom;
-                if sigma = FrobeniusAutomorphism(F)^0 and IsIdentityMappingOfElementsOfProjectiveSpace(delta)
-                then return true;
-                else return false;
-                fi;
-  end );
+InstallMethod( IsProjectivity, 
+	"for objects in IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep",
+	[ IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep],
+	g -> IsOne(g!.frob) and IsOne(g!.psisom) );
+  
+#  function( g )
+#    local F,sigma,delta;
+#                F:=g!.fld;
+#                sigma:=g!.frob;
+#                delta:=g!.psisom;
+#                if sigma = FrobeniusAutomorphism(F)^0 and IsIdentityMappingOfElementsOfProjectiveSpace(delta)
+#                then return true;
+#                else return false;
+#                fi;
+#  end );
 
 
 # Added ml 8/11/2012 # changed ml 28/11/2012
@@ -179,17 +183,21 @@ InstallMethod( IsProjectivity, [ IsProjGrpElWithFrobWithPSIsom ],
 #O  IsStrictlySemilinear( <g> )
 # method to check if a given ProjGrpElWithFrobWithPSIsom is a projective semilinear map,
 # i.e. if the corresponding frobenius automorphism is NOT the identity ##
-InstallMethod( IsStrictlySemilinear, [ IsProjGrpElWithFrobWithPSIsom],
-  function( g )
-    local F,sigma,delta;
-                F:=g!.fld;
-                sigma:=g!.frob;
-                delta:=g!.psisom;
-                if sigma <> FrobeniusAutomorphism(F)^0
-                then return true;
-                else return false;
-                fi;
-  end );
+InstallMethod( IsStrictlySemilinear,
+	"for objects in IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep",
+	[ IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep],
+	g -> not IsOne(g!.frob) );
+
+#function( g )
+#    local F,sigma,delta;
+#                F:=g!.fld;
+#                sigma:=g!.frob;
+#                delta:=g!.psisom;
+#                if sigma <> FrobeniusAutomorphism(F)^0
+#                then return true;
+#                else return false;
+#                fi;
+#  end );
 
 
 

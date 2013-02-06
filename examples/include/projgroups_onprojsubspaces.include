@@ -3,7 +3,8 @@ ProjectiveSpace(4, 27)
 gap&gt; p := VectorSpaceToElement(ps,[ Z(3^3)^22,Z(3^3)^10,Z(3^3),Z(3^3)^3,Z(3^3)^3]);
 &lt;a point in ProjectiveSpace(4, 27)&gt;
 gap&gt; Display(p);
-[ Z(3)^0, Z(3^3)^14, Z(3^3)^5, Z(3^3)^7, Z(3^3)^7 ]
+z = Z(27)
+    1 z^14  z^5  z^7  z^7
 gap&gt; mat := [[ Z(3^3)^25,Z(3^3)^6,Z(3^3)^7,Z(3^3)^15], 
 &gt;   [Z(3^3)^9,Z(3)^0,Z(3^3)^10,Z(3^3)^18], 
 &gt;   [Z(3^3)^19,0*Z(3),Z(3),Z(3^3)^12], 
@@ -15,15 +16,15 @@ gap&gt; mat := [[ Z(3^3)^25,Z(3^3)^6,Z(3^3)^7,Z(3^3)^15],
 gap&gt; theta := FrobeniusAutomorphism(GF(27));
 FrobeniusAutomorphism( GF(3^3) )
 gap&gt; phi := CollineationOfProjectiveSpace(mat,theta,GF(27));
-&lt;projective semilinear element: 
-[ [ Z(3^3)^25, Z(3^3)^6, Z(3^3)^7, Z(3^3)^15 ], 
+&lt; a collineation: [ [ Z(3^3)^25, Z(3^3)^6, Z(3^3)^7, Z(3^3)^15 ], 
   [ Z(3^3)^9, Z(3)^0, Z(3^3)^10, Z(3^3)^18 ], 
   [ Z(3^3)^19, 0*Z(3), Z(3), Z(3^3)^12 ], 
   [ Z(3^3)^4, Z(3^3), Z(3^3), Z(3^3)^22 ] ], F^3&gt;
 gap&gt; r := OnProjSubspaces(p,phi);
 &lt;a point in ProjectiveSpace(4, 27)&gt;
 gap&gt; Display(r);
-[ Z(3)^0, 0*Z(3), 0*Z(3), Z(3^3)^17 ]
+z = Z(27)
+    1    .    . z^17
 gap&gt; vect := [[Z(3^3)^9,Z(3^3)^5,Z(3^3)^19,Z(3^3)^21,Z(3^3)^17],
 &gt;   [Z(3^3)^22,Z(3^3)^22,Z(3^3)^4,Z(3^3)^16,Z(3^3)^17],
 &gt;   [Z(3^3)^8,0*Z(3),Z(3^3)^24,Z(3),Z(3^3)^21]];

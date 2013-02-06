@@ -14,8 +14,8 @@ gap&gt; phi2 := CorrelationOfProjectiveSpace(mat,frob,GF(7^3));
   [ 0*Z(7), Z(7^3)^286, Z(7^3)^229 ] ], F^
 7, IdentityMapping( &lt;All elements of ProjectiveSpace(2, 343)&gt; ) &gt;
 gap&gt; delta := StandardDualityOfProjectiveSpace(ProjectiveSpace(2,GF(7^3)));
-StandardDuality( AllElementsOfIncidenceStructure( ProjectiveSpace(2,GF(7^
-3)) ) )
+StandardDuality( AllElementsOfIncidenceStructure( ProjectiveSpace(
+2,GF(7^3)) ) )
 gap&gt; phi3 := CorrelationOfProjectiveSpace(mat,GF(7^3),delta);
 &lt;projective element with Frobenius with projectivespace isomorphism
 [ [ Z(7^3), 0*Z(7), 0*Z(7) ], [ Z(7^3)^58, 0*Z(7), Z(7^3)^115 ], 
@@ -26,5 +26,5 @@ gap&gt; phi4 := CorrelationOfProjectiveSpace(mat,frob,GF(7^3),delta);
 &lt;projective element with Frobenius with projectivespace isomorphism
 [ [ Z(7^3), 0*Z(7), 0*Z(7) ], [ Z(7^3)^58, 0*Z(7), Z(7^3)^115 ], 
   [ 0*Z(7), Z(7^3)^286, Z(7^3)^229 ] ], F^
-7, StandardDuality( AllElementsOfIncidenceStructure( ProjectiveSpace(2,GF(7^
-3)) ) ) &gt;
+7, StandardDuality( AllElementsOfIncidenceStructure( ProjectiveSpace(
+2,GF(7^3)) ) ) &gt;

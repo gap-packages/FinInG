@@ -1,7 +1,7 @@
 gap&gt; NiceMonomorphism(CollineationGroup(ProjectiveSpace(7,8)));
 Error, action on projective points not feasible to calculate called from
-&lt;function&gt;( &lt;arguments&gt; ) called from read-eval-loop
-Entering break read-eval-print loop ...
+&lt;function "unknown"&gt;( &lt;arguments&gt; )
+ called from read-eval loop at line 8 of *stdin*
 you can 'quit;' to quit to outer loop, or
 you can 'return;' to continue
 brk&gt; quit;

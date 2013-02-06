@@ -5,7 +5,7 @@ gap&gt; sub := VectorSpaceToElement(ps,[[1,0,1,],[0,1,0]]*Z(3)^0);
 gap&gt; p := VectorSpaceToElement(ps,[1,0,2]*Z(3)^0);
 &lt;a point in ProjectiveSpace(2, 27)&gt;
 gap&gt; g := ProjectiveHomologyGroup(sub,p);
-&lt;projective semilinear group with 1 generators&gt;
+&lt;projective collineation group with 1 generators&gt;
 gap&gt; Order(g);
 26
 gap&gt; StructureDescription(g);

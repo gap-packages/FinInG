@@ -1,8 +1,8 @@
 gap&gt; g := HomographyGroup(PG(4,8));
-PGL(5,8)
+The FinInG projectivity group PGL(5,8)
 gap&gt; NiceObject(g);
 &lt;permutation group of size 4638226007491010887680 with 2 generators&gt;
 gap&gt; g := CollineationGroup(PG(4,8));
-PGammaL(5,8)
+The FinInG collineation group PGammaL(5,8)
 gap&gt; NiceObject(g);
 &lt;permutation group of size 13914678022473032663040 with 3 generators&gt;

@@ -1,24 +1,24 @@
 gap&gt; ps := ProjectiveSpace(3,16);
 ProjectiveSpace(3, 16)
 gap&gt; ProjectivityGroup(ps);
-PGL(4,16)
+The FinInG projectivity group PGL(4,16)
 gap&gt; HomographyGroup(ps);
-PGL(4,16)
+The FinInG projectivity group PGL(4,16)
 gap&gt; ps := ProjectiveSpace(4,81);
 ProjectiveSpace(4, 81)
 gap&gt; ProjectivityGroup(ps);
-PGL(5,81)
+The FinInG projectivity group PGL(5,81)
 gap&gt; HomographyGroup(ps);
-PGL(5,81)
+The FinInG projectivity group PGL(5,81)
 gap&gt; ps := ProjectiveSpace(5,3);
 ProjectiveSpace(5, 3)
 gap&gt; ProjectivityGroup(ps);
-PGL(6,3)
+The FinInG projectivity group PGL(6,3)
 gap&gt; HomographyGroup(ps);
-PGL(6,3)
+The FinInG projectivity group PGL(6,3)
 gap&gt; ps := ProjectiveSpace(2,2);
 ProjectiveSpace(2, 2)
 gap&gt; ProjectivityGroup(ps);
-PGL(3,2)
+The FinInG projectivity group PGL(3,2)
 gap&gt; HomographyGroup(ps);
-PGL(3,2)
+The FinInG projectivity group PGL(3,2)

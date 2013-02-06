@@ -223,8 +223,11 @@ component in the representation.
 </ManSection>
 
 The above mentioned categories allow us to make a distinction between projectivities, collineations and correlations apart
-from there representation. However, in <Package>FinInG</Package>, a group element constructed in the categories <C>IsProjGrpElMore</C>
-is always constructed in the representation <C>IsProjGrpElMoreRep</C>. 
+from their representation. However, in <Package>FinInG</Package>, a group element constructed in the categories <C>IsProjGrpElMore</C>
+is always constructed in the representation <C>IsProjGrpElMoreRep</C>. Furthermore, projectivities of projective spaces (and 
+also collineations of projective spaces) will by default be constructed in the category <C>IsProjGrpElWithFrobRep</C>. 
+This technical choice was made by the developpers to have the projectivity groups naturally embedded in the collineation groups.
+Correlations of projective spaces will be constructed in the category <C>IsProjGrpElWithFrobWithPSIsom</C>. 
 
 <!--This means that an object in the category <C>IsProjGrpEl</C> has as 
 underlying object a matrix; an object in the category <C>IsProjGrpElWithFrob</C> has as underlying 
@@ -248,6 +251,9 @@ underlying field automorphism is the identity, and whether the projective
 space isomorphism is the identity.
 This operation provides a user-friendly method to distinguish the projectivities from the projective strictly
 semilinear maps, and the correlations of a projective space.
+<Example>
+<#Include SYSTEM "../examples/include/projgroups_isprojectivity.include"> 
+</Example>
 </Description>
 </ManSection>
 
@@ -260,6 +266,9 @@ Only="HTML">P&#915;L(n+1,q)</Alt> are collineations, and therefor all
 elements belonging to <C>IsProjGrpElWithFrob</C> are collineations.
 But also a projectivity is a collineation, as well as an element belonging
 to <C>IsProjGrpElWithFrobWithPSIsom</C> with projective space isomorphism equal to the identity, is a collineation.
+<Example>
+<#Include SYSTEM "../examples/include/projgroups_iscollineation.include"> 
+</Example>
 </Description>
 </ManSection>
 
@@ -268,7 +277,8 @@ to <C>IsProjGrpElWithFrobWithPSIsom</C> with projective space isomorphism equal 
 <Heading>Projective strictly semilinear maps</Heading>
 <Filt Name="IsStrictlySemilinear" Type="Property"/>
 <Description>
-<C>IsStrictlySemilinear</C> is a property that checks whether a given collineation has a nontrivial underlying field automorphisms, i.e. whether the element belongs to <Alt Not="HTML"><M>P\Gamma L(n+1,q)</M></Alt><Alt
+<C>IsStrictlySemilinear</C> is a property that checks whether a given collineation has a nontrivial underlying field automorphisms, 
+i.e. whether the element belongs to <Alt Not="HTML"><M>P\Gamma L(n+1,q)</M></Alt><Alt
 Only="HTML">P&#915;L(n+1,q)</Alt>, but not to <M>PGL(n+1,q)</M>. 
 
 If <C>IsStrictlySemilinear</C> is applied to a an element
@@ -281,6 +291,9 @@ space isomorphism equals the identity.
 
 This operation provides a user-friendly method to distinguish the projective strictly
 semilinear maps from projectivities inside the category of collineations of a projective space.
+<Example>
+<#Include SYSTEM "../examples/include/projgroups_isstrictlysemilinear.include"> 
+</Example>
 </Description>
 </ManSection>
 
@@ -290,8 +303,13 @@ semilinear maps from projectivities inside the category of collineations of a pr
 <Filt Name="IsCorrelationCollineation" Type="Category"/>
 <Filt Name="IsCorrelation" Type="Property"/>
 <Description>
-The underlying objects of a correlation-collineation in <Package>FinInG</Package> are a nonsingular matrix, a field automorphism and a projective space isomorphism. <C>IsProjGrpElWithFrobWithPSIsom</C> is the category of these objects. If the projective space isomorphism is not the identity, then the element is a correlation, and <C>IsCorrelation</C> will return true.
+The underlying objects of a correlation-collineation in <Package>FinInG</Package> are a nonsingular matrix, a field 
+automorphism and a projective space isomorphism. <C>IsProjGrpElWithFrobWithPSIsom</C> is the category of these objects. 
+If the projective space isomorphism is not the identity, then the element is a correlation, and <C>IsCorrelation</C> will return true.
 <C>IsCorrelationCollineation</C> is a synonym of <C>IsProjGrpElWithFrobWithPSIsom</C>.
+<Example>
+<#Include SYSTEM "../examples/include/projgroups_iscorrelation.include"> 
+</Example>
 </Description>
 </ManSection>
 </Section>
@@ -300,7 +318,8 @@ The underlying objects of a correlation-collineation in <Package>FinInG</Package
 <Section>
 <Heading>Construction of projectivities, collineations and correlations.</Heading>
 
-In <Package>FinInG</Package>, projectivities and collineations are both constructed in the category <C>IsProjGrpElWithFrob</C>; correlations are constructed in the category <C>IsProjGrpElWithFrobWithPSIsom</C>.
+In <Package>FinInG</Package>, projectivities and collineations are both constructed in the category <C>IsProjGrpElWithFrob</C>; 
+correlations are constructed in the category <C>IsProjGrpElWithFrobWithPSIsom</C>.
 
 <ManSection>
 <Oper Name="Projectivity" Arg="mat, f"/>

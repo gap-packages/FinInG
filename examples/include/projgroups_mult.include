@@ -1,9 +1,8 @@
 gap&gt; x := Random(CollineationGroup(PG(3,4)));
-&lt;projective semilinear element: [ [ Z(2)^0, Z(2)^0, 0*Z(2), Z(2^2) ], 
-  [ 0*Z(2), Z(2^2)^2, Z(2)^0, Z(2)^0 ], 
-  [ Z(2^2)^2, 0*Z(2), Z(2^2)^2, Z(2^2)^2 ], 
-  [ 0*Z(2), 0*Z(2), Z(2^2)^2, Z(2^2) ] ], F^2&gt;
-gap&gt; y := Random(CorrelationGroup(PG(3,4)));
+&lt; a collineation: [ [ Z(2)^0, Z(2^2), Z(2)^0, Z(2^2)^2 ], 
+  [ 0*Z(2), 0*Z(2), Z(2)^0, Z(2^2)^2 ], [ Z(2^2), Z(2^2)^2, 0*Z(2), Z(2^2)^2 ]
+    , [ Z(2)^0, 0*Z(2), Z(2)^0, Z(2^2)^2 ] ], F^2&gt;
+gap&gt; y := Random(CorrelationCollineationGroup(PG(3,4)));
 &lt;projective element with Frobenius with projectivespace isomorphism
 [ [ 0*Z(2), Z(2^2), 0*Z(2), Z(2^2)^2 ], [ Z(2)^0, Z(2^2)^2, Z(2)^0, 0*Z(2) ], 
   [ Z(2)^0, Z(2^2), Z(2^2)^2, 0*Z(2) ], [ Z(2^2), Z(2)^0, 0*Z(2), Z(2)^0 ] 
@@ -11,7 +10,8 @@ gap&gt; y := Random(CorrelationGroup(PG(3,4)));
 3,GF(2^2)) ) ) &gt;
 gap&gt; x*y;
 &lt;projective element with Frobenius with projectivespace isomorphism
-[ [ 0*Z(2), Z(2^2)^2, Z(2)^0, 0*Z(2) ], [ Z(2)^0, Z(2^2)^2, Z(2)^0, Z(2)^0 ], 
-  [ Z(2)^0, Z(2^2)^2, Z(2)^0, Z(2^2) ], [ Z(2^2), 0*Z(2), Z(2)^0, Z(2^2) ] 
- ], F^2, StandardDuality( AllElementsOfIncidenceStructure( ProjectiveSpace(
+[ [ Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0 ], [ Z(2^2)^2, 0*Z(2), Z(2^2), Z(2^2)^2 ], 
+  [ Z(2)^0, Z(2^2)^2, Z(2^2)^2, 0*Z(2) ], 
+  [ Z(2^2)^2, Z(2^2)^2, Z(2^2), Z(2)^0 ] ], F^
+2, StandardDuality( AllElementsOfIncidenceStructure( ProjectiveSpace(
 3,GF(2^2)) ) ) &gt;

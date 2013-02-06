@@ -9,7 +9,7 @@ gap&gt; p1 := VectorSpaceToElement(ps,[0*Z(3),Z(3)^0,Z(3^4)^51,0*Z(3)]);
 gap&gt; p2 := VectorSpaceToElement(ps,[0*Z(3),Z(3)^0,Z(3^4)^44,0*Z(3)]);
 &lt;a point in ProjectiveSpace(3, 81)&gt;
 gap&gt; phi := HomologyOfProjectiveSpace(sub,centre,p1,p2);
-&lt;projective semilinear element: [ [ Z(3)^0, Z(3^4)^59, Z(3^4)^15, 0*Z(3) ], 
+&lt; a collineation: [ [ Z(3)^0, Z(3^4)^59, Z(3^4)^15, 0*Z(3) ], 
   [ 0*Z(3), Z(3^4)^5, Z(3^4)^15, 0*Z(3) ], 
   [ 0*Z(3), Z(3^4)^19, Z(3^4)^57, 0*Z(3) ], 
   [ 0*Z(3), Z(3^4)^19, Z(3^4)^55, Z(3)^0 ] ], F^0&gt;
