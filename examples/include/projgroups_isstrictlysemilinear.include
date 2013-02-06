@@ -1,0 +1,23 @@
+gap&gt; g := Random(HomographyGroup(PG(3,25)));
+&lt; a collineation: [ [ Z(5^2)^9, Z(5)^0, Z(5^2)^3, Z(5^2)^3 ], 
+  [ Z(5^2)^9, Z(5^2)^19, Z(5)^0, Z(5^2)^13 ], 
+  [ Z(5^2)^14, Z(5)^3, Z(5^2)^9, Z(5^2)^2 ], 
+  [ Z(5^2)^9, Z(5)^0, Z(5^2)^20, Z(5)^0 ] ], F^0&gt;
+gap&gt; IsStrictlySemilinear(g);
+false
+gap&gt; g := Random(CollineationGroup(PG(3,25)));
+&lt; a collineation: [ [ 0*Z(5), Z(5^2)^2, 0*Z(5), Z(5^2)^21 ], 
+  [ Z(5^2)^4, Z(5)^0, Z(5^2)^9, Z(5)^3 ], 
+  [ Z(5^2)^15, Z(5^2)^2, Z(5)^3, Z(5^2)^10 ], 
+  [ Z(5), Z(5^2)^16, Z(5^2)^21, Z(5^2)^13 ] ], F^5&gt;
+gap&gt; IsStrictlySemilinear(g);
+true
+gap&gt; g := Random(CorrelationCollineationGroup(PG(3,25)));
+&lt;projective element with Frobenius with projectivespace isomorphism
+[ [ Z(5^2)^14, Z(5^2)^2, Z(5^2)^20, Z(5^2)^4 ], 
+  [ Z(5)^0, Z(5^2)^2, Z(5^2)^14, Z(5^2)^23 ], 
+  [ Z(5^2)^22, Z(5^2)^20, 0*Z(5), Z(5^2)^7 ], 
+  [ Z(5^2)^2, Z(5^2)^11, Z(5^2)^23, Z(5) ] ], F^
+5, IdentityMapping( &lt;All elements of ProjectiveSpace(3, 25)&gt; ) &gt;
+gap&gt; IsStrictlySemilinear(g);
+true
