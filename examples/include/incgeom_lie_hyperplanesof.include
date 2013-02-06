@@ -7,9 +7,8 @@ gap&gt; h1 := Random(Hyperplanes(hyp));
 gap&gt; h2 := Random(Hyperplanes(h1));
 &lt;a point in ProjectiveSpace(3, 7)&gt;
 gap&gt; ps := SymplecticSpace(7,3);
-standard W(7, 3)
+W(7, 3)
 gap&gt; solid := Random(Solids(ps));
-#I  Computing nice monomorphism...
-&lt;a solid in standard W(7, 3)&gt;
+&lt;a solid in W(7, 3)&gt;
 gap&gt; plane := Random(Hyperplanes(solid));
-&lt;a plane in standard W(7, 3)&gt;
+&lt;a plane in W(7, 3)&gt;

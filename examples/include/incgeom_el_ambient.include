@@ -1,16 +1,16 @@
 gap&gt; plane := Random(Planes(HyperbolicQuadric(5,2)));
-#I  Computing nice monomorphism...
-&lt;a plane in standard Q+(5, 2)&gt;
+&lt;a plane in Q+(5, 2)&gt;
 gap&gt; AmbientGeometry(plane);
-standard Q+(5, 2)
+Q+(5, 2)
 gap&gt; l := Random(Lines(SplitCayleyHexagon(3)));
+#I  for Split Cayley Hexagon
+#I  Computing nice monomorphism...
+#I  Found permutation domain…
 &lt;a line of Split Cayley Hexagon of order 3&gt;
 gap&gt; AmbientGeometry(l);
 Split Cayley Hexagon of order 3
 gap&gt; p := Random(Points(EGQByBLTSet(BLTSetByqClan(LinearqClan(3)))));
-#I  No intertwiner computed. One of the polar spaces must have a collineation 
-group computed
-#I  Computing nice monomorphism...
+#I  No intertwiner computed. One of the polar spaces must have a collineation group computed
 #I  Now embedding dual BLT-set into W(5,q)...
 #I  Computing points(1) of Knarr construction...
 #I  Computing lines(1) of Knarr construction...
