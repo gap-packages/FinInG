@@ -61,9 +61,34 @@ classicalpolfiles := ["cps_polarspaceform", "cps_example", "cps_symplectic", "cp
 						 "cps_enumerator", "cps_iterator", "cps_aslist" ];
 	   
 	    
-	    
+affinefiles := [ "affine_affinespace", "affine_dimension", "affine_basefield", "affine_underlyingvs", "affine_ambientspace", "affine_subspaces",
+				 "affine_elements", "affine_short", "affine_incident", "affine_ambientspaceelas", "affine_basefieldelas", "affine_span", "affine_meet",
+				 "affine_isparallel", "affine_parallel", "affine_shadow1", "affine_shadow2", "affine_iterator", "affine_enumerator", "affine_affinegroupexample",
+				 "affine_affinegroupexample2", "affine_affinegroup", "affine_collineationgroup", "affine_actions"];
 
-	    
+
+"affine_parallel", "affine_shadow1", "affine_shadow2", "affine_basic", 
+               "affine_elements", "affine_iterator", "affine_enumerator", "affine_join", "affine_meet"];;	    
+
+
+
+affine_actions.g                affine_elements.g
+affine_affinegroup.g            affine_enumerator.g
+affine_affinegroupexample.g     affine_incident.g
+affine_affinegroupexample2.g    affine_isparallel.g
+affine_affinespace.g            affine_iterator.g
+affine_ambientspace.g           affine_meet.g
+affine_ambientspaceelas.g       affine_parallel.g
+affine_basefeldelas.g           affine_shadow1.g
+affine_basefield.g              affine_shadow2.g
+affine_basefieldelas.g          affine_short.g
+affine_basic.g                  affine_span.g
+affine_collineationgroup.g      affine_subspaces.g
+affine_dimension.g              affine_underlyingvs.g
+
+
+
+
 	[  "projgroups_onprojsubspacesreversing", "projgroups_simgroup", 
 	  "projgroups_isomgroup", "projgroups_specialisomgroup", 
 	    
@@ -73,8 +98,7 @@ classicalpolfiles := ["cps_polarspaceform", "cps_example", "cps_symplectic", "cp
 
 
 
-affinefiles := ["affine_parallel", "affine_shadow1", "affine_shadow2", "affine_basic", 
-               "affine_elements", "affine_iterator", "affine_enumerator", "affine_join", "affine_meet"];;
+
 
 
 

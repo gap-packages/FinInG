@@ -14,8 +14,8 @@ gap&gt; ElementsOfIncidenceStructure(ag,9);
 &lt;affine. subspaces of dim. 8 of AG(9, 64)&gt;
 gap&gt; ElementsOfIncidenceStructure(ag,10);
 Error, &lt;as&gt; has no elements of type &lt;j&gt; called from
-&lt;function&gt;( &lt;arguments&gt; ) called from read-eval-loop
-Entering break read-eval-print loop ...
+&lt;function "unknown"&gt;( &lt;arguments&gt; )
+ called from read-eval loop at line 15 of *stdin*
 you can 'quit;' to quit to outer loop, or
 you can 'return;' to continue
 brk&gt; quit;

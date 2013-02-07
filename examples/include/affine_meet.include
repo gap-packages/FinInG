@@ -10,4 +10,4 @@ gap&gt; x := Meet(p, l);
 gap&gt; x^_;
 [ Z(5)^0, Z(5)^0, 0*Z(5), 0*Z(5) ]
 gap&gt; Display(x);
-Affine point: [ Z(5)^0, Z(5)^0, 0*Z(5), 0*Z(5) ]
+Affine point:  1 1 . .
