@@ -12,3 +12,4 @@ IsDegenerateForm(qf);
 PolarSpace(qv);
 quit;
 quit;
+quit;

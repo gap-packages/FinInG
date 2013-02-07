@@ -1,24 +1,21 @@
 gap&gt; ps1 := SymplecticSpace(1,3^3);
-standard W(1, 27)
+W(1, 27)
 gap&gt; em := NaturalEmbeddingByFieldReduction(ps1,GF(3),true);
-#I  Computing nice monomorphism...
-&lt;geometry morphism from &lt;Elements of standard W(1, 
-27)&gt; to &lt;Elements of &lt;polar space in ProjectiveSpace(5,GF(
-3)): -x1*y6-x2*y5-x3*y4-x3*y6+x4*y3+x5*y2+x6*y1+x6*y3=0 &gt;&gt;&gt;
+&lt;geometry morphism from &lt;Elements of W(1, 
+27)&gt; to &lt;Elements of &lt;polar space in ProjectiveSpace(
+5,GF(3)): -x1*y6-x2*y5-x3*y4-x3*y6+x4*y3+x5*y2+x6*y1+x6*y3=0 &gt;&gt;&gt;
 gap&gt; ps2 := AmbientGeometry(Range(em));
-&lt;polar space in ProjectiveSpace(5,GF(
-3)): -x1*y6-x2*y5-x3*y4-x3*y6+x4*y3+x5*y2+x6*y1+x6*y3=0 &gt;
+&lt;polar space in ProjectiveSpace(
+5,GF(3)): -x1*y6-x2*y5-x3*y4-x3*y6+x4*y3+x5*y2+x6*y1+x6*y3=0 &gt;
 gap&gt; spread := List(Points(ps1),x-&gt;x^em);;
 gap&gt; i := Intertwiner(em);
-MappingByFunction( PGSp(2,27), &lt;projective semilinear group of size 
+MappingByFunction( PGSp(2,27), &lt;projective collineation group of size 
 19656 with 3 generators&gt;, function( m ) ... end, function( m ) ... end )
 gap&gt; coll := CollineationGroup(ps2);
-#I  Computing nice monomorphism...
 #I  Computing collineation group of canonical polar space...
-#I  Computing nice monomorphism...
-&lt;projective semilinear group of size 9170703360 with 4 generators&gt;
+&lt;projective collineation group of size 9170703360 with 4 generators&gt;
 gap&gt; stab := Group(ImagesSet(i,GeneratorsOfGroup(IsometryGroup(ps1))));
-&lt;projective semilinear group with 2 generators&gt;
+&lt;projective collineation group with 2 generators&gt;
 gap&gt; IsSubgroup(coll,stab);
 true
 gap&gt; List(Orbit(stab,spread[1]),x-&gt;x in spread);

@@ -1,5 +1,5 @@
 #morphisms_fieldreduc2.g
-h := HermitianVariety(2, 5^2);
+h := HermitianPolarSpace(2, 5^2);
 quadric := EllipticQuadric(5, 5);
 em := NaturalEmbeddingByFieldReduction(h, quadric);
 points := AsList(Points(h));;

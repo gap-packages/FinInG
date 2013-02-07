@@ -1,12 +1,11 @@
-gap> quadric := HyperbolicQuadric(5,3);                                         
+gap&gt; quadric := HyperbolicQuadric(5,3);                                         
 Q+(5, 3)
-gap> k := KleinCorrespondence( quadric );
-#I  Finding base change...
-#I  Computing nice monomorphism...
-&lt;geometry morphism from &lt;lines of PG(3, 3)> to &lt;points of Q+(5, 3)>>
-gap> pg := ProjectiveSpace(3, 3);
-PG(3, 3)
-gap> l := Random( Lines(pg) );
-&lt;a line in PG(3, 3)>
-gap> l^k;
-&lt;a point in Q+(5, 3)>
+gap&gt; k := KleinCorrespondence( quadric );
+&lt;geometry morphism from &lt;lines of ProjectiveSpace(3, 3)&gt; to &lt;points of Q+(5, 
+3)&gt;&gt;
+gap&gt; pg := ProjectiveSpace(3, 3);
+ProjectiveSpace(3, 3)
+gap&gt; l := Random( Lines(pg) );
+&lt;a line in ProjectiveSpace(3, 3)&gt;
+gap&gt; l^k;
+&lt;a point in Q+(5, 3)&gt;

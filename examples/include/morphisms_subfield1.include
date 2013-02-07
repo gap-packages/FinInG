@@ -1,18 +1,23 @@
-gap> pg1 := ProjectiveSpace(2, 3);
-PG(2, 3)
-gap> pg2 := ProjectiveSpace(2, 9);
-PG(2, 9)
-gap> em := NaturalEmbeddingBySubfield(pg1,pg2);
-&lt;geometry morphism from &lt;Elements of PG(2, 3)> to &lt;Elements of PG(2, 9)>>
-gap> points := AsList(Points( pg1 ));
-[ &lt;a point in PG(2, 3)>, &lt;a point in PG(2, 3)>, &lt;a point in PG(2, 3)>, 
-  &lt;a point in PG(2, 3)>, &lt;a point in PG(2, 3)>, &lt;a point in PG(2, 3)>, 
-  &lt;a point in PG(2, 3)>, &lt;a point in PG(2, 3)>, &lt;a point in PG(2, 3)>, 
-  &lt;a point in PG(2, 3)>, &lt;a point in PG(2, 3)>, &lt;a point in PG(2, 3)>, 
-  &lt;a point in PG(2, 3)> ]
-gap> image := ImagesSet(em, points);
-[ &lt;a point in PG(2, 9)>, &lt;a point in PG(2, 9)>, &lt;a point in PG(2, 9)>, 
-  &lt;a point in PG(2, 9)>, &lt;a point in PG(2, 9)>, &lt;a point in PG(2, 9)>, 
-  &lt;a point in PG(2, 9)>, &lt;a point in PG(2, 9)>, &lt;a point in PG(2, 9)>, 
-  &lt;a point in PG(2, 9)>, &lt;a point in PG(2, 9)>, &lt;a point in PG(2, 9)>, 
-  &lt;a point in PG(2, 9)> ]
+gap&gt; pg1 := ProjectiveSpace(2, 3);
+ProjectiveSpace(2, 3)
+gap&gt; pg2 := ProjectiveSpace(2, 9);
+ProjectiveSpace(2, 9)
+gap&gt; em := NaturalEmbeddingBySubfield(pg1,pg2);
+&lt;geometry morphism from &lt;All elements of ProjectiveSpace(2, 
+3)&gt; to &lt;All elements of ProjectiveSpace(2, 9)&gt;&gt;
+gap&gt; points := AsList(Points( pg1 ));
+[ &lt;a point in ProjectiveSpace(2, 3)&gt;, &lt;a point in ProjectiveSpace(2, 3)&gt;, 
+  &lt;a point in ProjectiveSpace(2, 3)&gt;, &lt;a point in ProjectiveSpace(2, 3)&gt;, 
+  &lt;a point in ProjectiveSpace(2, 3)&gt;, &lt;a point in ProjectiveSpace(2, 3)&gt;, 
+  &lt;a point in ProjectiveSpace(2, 3)&gt;, &lt;a point in ProjectiveSpace(2, 3)&gt;, 
+  &lt;a point in ProjectiveSpace(2, 3)&gt;, &lt;a point in ProjectiveSpace(2, 3)&gt;, 
+  &lt;a point in ProjectiveSpace(2, 3)&gt;, &lt;a point in ProjectiveSpace(2, 3)&gt;, 
+  &lt;a point in ProjectiveSpace(2, 3)&gt; ]
+gap&gt; image := ImagesSet(em, points);
+[ &lt;a point in ProjectiveSpace(2, 9)&gt;, &lt;a point in ProjectiveSpace(2, 9)&gt;, 
+  &lt;a point in ProjectiveSpace(2, 9)&gt;, &lt;a point in ProjectiveSpace(2, 9)&gt;, 
+  &lt;a point in ProjectiveSpace(2, 9)&gt;, &lt;a point in ProjectiveSpace(2, 9)&gt;, 
+  &lt;a point in ProjectiveSpace(2, 9)&gt;, &lt;a point in ProjectiveSpace(2, 9)&gt;, 
+  &lt;a point in ProjectiveSpace(2, 9)&gt;, &lt;a point in ProjectiveSpace(2, 9)&gt;, 
+  &lt;a point in ProjectiveSpace(2, 9)&gt;, &lt;a point in ProjectiveSpace(2, 9)&gt;, 
+  &lt;a point in ProjectiveSpace(2, 9)&gt; ]

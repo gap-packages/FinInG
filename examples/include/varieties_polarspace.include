@@ -19,8 +19,8 @@ Error, &lt;poly&gt; does not generate a Hermitian matrix called from
 GramMatrixByPolynomialForHermitianForm( pol, gf, n, vars ) called from
 HermitianFormByPolynomial( pol, pring, n ) called from
 HermitianFormByPolynomial( eq, r ) called from
-&lt;function&gt;( &lt;arguments&gt; ) called from read-eval-loop
-Entering break read-eval-print loop ...
+&lt;function "unknown"&gt;( &lt;arguments&gt; )
+ called from read-eval loop at line 16 of *stdin*
 you can 'quit;' to quit to outer loop, or
 you can 'return;' to continue
 brk&gt; quit;

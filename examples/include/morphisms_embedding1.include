@@ -1,16 +1,17 @@
-gap> geom1 := ProjectiveSpace(2, 3);
-PG(2, 3)
-gap> geom2 := ProjectiveSpace(3, 3);
-PG(3, 3)
-gap> planes := Planes(geom2);
-&lt;planes of PG(3, 3)>
-gap> hyp := Random(planes);
-&lt;a plane in PG(3, 3)>
-gap> em := NaturalEmbeddingBySubspace(geom1, geom2, hyp);
-&lt;geometry morphism from &lt;Elements of PG(2, 3)> to &lt;Elements of PG(3, 3)>>
-gap> points := Points(geom1);
-&lt;points of PG(2, 3)>
-gap> x := Random(points);
-&lt;a point in PG(2, 3)>
-gap> x^em;
-&lt;a point in PG(3, 3)>
+gap&gt; geom1 := ProjectiveSpace(2, 3);
+ProjectiveSpace(2, 3)
+gap&gt; geom2 := ProjectiveSpace(3, 3);
+ProjectiveSpace(3, 3)
+gap&gt; planes := Planes(geom2);
+&lt;planes of ProjectiveSpace(3, 3)&gt;
+gap&gt; hyp := Random(planes);
+&lt;a plane in ProjectiveSpace(3, 3)&gt;
+gap&gt; em := NaturalEmbeddingBySubspace(geom1, geom2, hyp);
+&lt;geometry morphism from &lt;All elements of ProjectiveSpace(2, 
+3)&gt; to &lt;All elements of ProjectiveSpace(3, 3)&gt;&gt;
+gap&gt; points := Points(geom1);
+&lt;points of ProjectiveSpace(2, 3)&gt;
+gap&gt; x := Random(points);
+&lt;a point in ProjectiveSpace(2, 3)&gt;
+gap&gt; x^em;
+&lt;a point in ProjectiveSpace(3, 3)&gt;

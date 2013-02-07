@@ -1,0 +1,28 @@
+gap&gt; pg:=PG(5,3);
+ProjectiveSpace(5, 3)
+gap&gt; planes:=Planes(pg);
+&lt;planes of ProjectiveSpace(5, 3)&gt;
+gap&gt; gv:=GrassmannVariety(2,pg);
+Grassmann Variety in ProjectiveSpace(19, 3)
+gap&gt; DefiningListOfPolynomials(gv);
+[ x_13*x_20-x_15*x_19+x_16*x_18, x_12*x_20-x_14*x_19+x_16*x_17, 
+  x_11*x_20-x_14*x_18+x_15*x_17, x_11*x_19-x_12*x_18+x_13*x_17, 
+  x_7*x_20-x_9*x_19+x_10*x_18, x_6*x_20-x_8*x_19+x_10*x_17, 
+  x_5*x_20-x_8*x_18+x_9*x_17, x_5*x_19-x_6*x_18+x_7*x_17, 
+  x_4*x_20-x_9*x_16+x_10*x_15, x_4*x_19-x_7*x_16+x_10*x_13, 
+  x_4*x_18-x_7*x_15+x_9*x_13, x_4*x_17+x_5*x_16-x_6*x_15+x_8*x_13, 
+  x_3*x_20-x_8*x_16+x_10*x_14, x_3*x_19-x_6*x_16+x_10*x_12, 
+  x_3*x_18-x_5*x_16-x_7*x_14+x_9*x_12, x_3*x_18-x_4*x_17-x_5*x_16+x_10*x_11, 
+  x_3*x_17-x_6*x_14+x_8*x_12, x_2*x_20-x_8*x_15+x_9*x_14, 
+  x_2*x_19-x_6*x_15+x_7*x_14+x_10*x_11, x_2*x_19+x_4*x_17-x_6*x_15+x_9*x_12, 
+  x_2*x_19-x_3*x_18+x_7*x_14-x_8*x_13, x_2*x_18-x_5*x_15+x_9*x_11, 
+  x_2*x_17-x_5*x_14+x_8*x_11, x_2*x_16-x_3*x_15+x_4*x_14, 
+  x_1*x_20-x_8*x_13+x_9*x_12-x_10*x_11, x_1*x_20-x_4*x_17+x_7*x_14-x_8*x_13, 
+  x_1*x_20+x_3*x_18-x_6*x_15+x_9*x_12, x_1*x_20-x_2*x_19+x_5*x_16-x_10*x_11, 
+  x_1*x_19-x_6*x_13+x_7*x_12, x_1*x_18-x_5*x_13+x_7*x_11, 
+  x_1*x_17-x_5*x_12+x_6*x_11, x_1*x_16-x_3*x_13+x_4*x_12, 
+  x_1*x_15-x_2*x_13+x_4*x_11, x_1*x_14-x_2*x_12+x_3*x_11 ]
+gap&gt; Size(Points(gv));
+33880
+gap&gt; gm:=GrassmannMap(gv);
+Grassmann Map of &lt;planes of ProjectiveSpace(5, 3)&gt;

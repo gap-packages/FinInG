@@ -1,15 +1,12 @@
-gap> w := SymplecticSpace(3,5);
+gap&gt; w := SymplecticSpace(3,5);
 W(3, 5)
-gap> lines:=AsList(Lines(w));;
-#I  Computing nice monomorphism...
-gap> duality := NaturalDuality(w);
-#I  Finding base change...
-#I  No intertwiner computed. One of the polar spaces must have a collineation 
-group computed
-&lt;geometry morphism from &lt;lines of W(3, 5)> to &lt;points of Q(4, 5)>>
-gap> l:=lines[1];
-&lt;a line in W(3, 5)>
-gap> l^duality;
-&lt;a point in Q(4, 5)>
-gap> PreImageElm(duality,last);
-&lt;a line in PG(3, 5)>
+gap&gt; lines:=AsList(Lines(w));;
+gap&gt; duality := NaturalDuality(w);
+#I  No intertwiner computed. One of the polar spaces must have a collineation group computed
+&lt;geometry morphism from &lt;lines of W(3, 5)&gt; to &lt;points of Q(4, 5)&gt;&gt;
+gap&gt; l:=lines[1];
+&lt;a line in W(3, 5)&gt;
+gap&gt; l^duality;
+&lt;a point in Q(4, 5)&gt;
+gap&gt; PreImageElm(duality,last);
+&lt;a line in W(3, 5)&gt;

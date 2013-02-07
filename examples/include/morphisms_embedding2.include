@@ -1,10 +1,10 @@
-gap> h1 := HermitianVariety(2, 3^2);
+gap&gt; h1 := HermitianPolarSpace(2, 3^2);
 H(2, 3^2)
-gap> h2 := HermitianVariety(3, 3^2);
+gap&gt; h2 := HermitianPolarSpace(3, 3^2);
 H(3, 3^2)
-gap> pg := AmbientSpace( h2 );    
-PG(3, 9)
-gap> pi := VectorSpaceToElement( pg, [[1,0,0,0],[0,1,0,0],[0,0,1,0]] * Z(9)^0 );
-&lt;a plane in PG(3, 9)>
-gap> em := NaturalEmbeddingBySubspace( h1, h2, pi );
-&lt;geometry morphism from &lt;Elements of H(2, 3^2)> to &lt;Elements of H(3, 3^2)>>
+gap&gt; pg := AmbientSpace( h2 );    
+ProjectiveSpace(3, 9)
+gap&gt; pi := VectorSpaceToElement( pg, [[1,0,0,0],[0,1,0,0],[0,0,1,0]] * Z(9)^0 );
+&lt;a plane in ProjectiveSpace(3, 9)&gt;
+gap&gt; em := NaturalEmbeddingBySubspace( h1, h2, pi );
+&lt;geometry morphism from &lt;Elements of H(2, 3^2)&gt; to &lt;Elements of H(3, 3^2)&gt;&gt;

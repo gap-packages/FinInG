@@ -378,18 +378,14 @@ InstallMethod( PolarSpace,
 			if degree = 2 then
 				form := QuadraticFormByPolynomial(eq,r);
 			else
-				if IsStandardHermitianVariety( var ) then
-					return HermitianPolarSpace( ProjectiveDimension(AmbientSpace(var)), f);
-				fi;
+				#if IsStandardHermitianVariety( var ) then
+				#	return HermitianPolarSpace( ProjectiveDimension(AmbientSpace(var)), f); #IsStandardHermitianVariety retunrs a no method found error. Commenting out solves the problem. Refinement to be done later.
+				#fi; 
 				form := HermitianFormByPolynomial(eq,r);
 			fi;
 			return PolarSpace(form);
 		fi;
 	end);
-
-
-
-
 
 
 

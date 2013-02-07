@@ -1,0 +1,35 @@
+gap&gt; F:=GF(5);
+GF(5)
+gap&gt; r:=PolynomialRing(F,4);
+GF(5)[x_1,x_2,x_3,x_4]
+gap&gt; x:=IndeterminatesOfPolynomialRing(r);
+[ x_1, x_2, x_3, x_4 ]
+gap&gt; pg:=PG(3,F);
+ProjectiveSpace(3, 5)
+gap&gt; f:=x[2]*x[3]+x[4]^2;
+x_2*x_3+x_4^2
+gap&gt; qv:=QuadraticVariety(pg,f);
+Quadratic Variety in ProjectiveSpace(3, 5)
+gap&gt; AsSet(List(Planes(pg),z-&gt;Size(Filtered(Points(z),x-&gt;x in qv))));
+[ 1, 6, 11 ]
+gap&gt; qf:=QuadraticForm(qv);
+&lt; quadratic form &gt;
+gap&gt; Display(qf);
+Quadratic form
+Gram Matrix:
+ . . . .
+ . . 1 .
+ . . . .
+ . . . 1
+Polynomial: [ [  x_2*x_3+x_4^2 ] ]
+gap&gt; IsDegenerateForm(qf);
+#I  Testing degeneracy of the *associated bilinear form*
+true
+gap&gt; PolarSpace(qv);
+Error, Form is singular called from
+PolarSpace( form ) called from
+&lt;function "unknown"&gt;( &lt;arguments&gt; )
+ called from read-eval loop at line 18 of *stdin*
+you can 'quit;' to quit to outer loop, or
+you can 'return;' to continue
+brk&gt; quit;

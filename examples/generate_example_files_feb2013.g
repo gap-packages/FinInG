@@ -67,39 +67,12 @@ affinefiles := [ "affine_affinespace", "affine_dimension", "affine_basefield", "
 				 "affine_affinegroupexample2", "affine_affinegroup", "affine_collineationgroup", "affine_actions"];
 
 
-"affine_parallel", "affine_shadow1", "affine_shadow2", "affine_basic", 
-               "affine_elements", "affine_iterator", "affine_enumerator", "affine_join", "affine_meet"];;	    
+morphismsfiles := ["morphisms_filters", "morphisms_isopolar", "morphisms_embedding1", "morphisms_embedding2", "morphisms_fieldreducproj", 
+					"morphisms_intertwinerproj", "morphisms_fieldreducpolar1", "morphisms_fieldreducpolar2", "morphisms_subfield1",
+					"morphisms_subfield2", "morphisms_projection", "morphisms_klein", "morphisms_duality", "morphisms_completion" ];
 
 
-
-affine_actions.g                affine_elements.g
-affine_affinegroup.g            affine_enumerator.g
-affine_affinegroupexample.g     affine_incident.g
-affine_affinegroupexample2.g    affine_isparallel.g
-affine_affinespace.g            affine_iterator.g
-affine_ambientspace.g           affine_meet.g
-affine_ambientspaceelas.g       affine_parallel.g
-affine_basefeldelas.g           affine_shadow1.g
-affine_basefield.g              affine_shadow2.g
-affine_basefieldelas.g          affine_short.g
-affine_basic.g                  affine_span.g
-affine_collineationgroup.g      affine_subspaces.g
-affine_dimension.g              affine_underlyingvs.g
-
-
-
-
-	[  "projgroups_onprojsubspacesreversing", "projgroups_simgroup", 
-	  "projgroups_isomgroup", "projgroups_specialisomgroup", 
-	    
-	   
-	    "projgroups_cancompute"];;
-
-
-
-
-
-
+varieties_files := ["varieties_general", "varieties_polarspace", "varieties_veronese", "varieties_segre", "varieties_hermitian", "varieties_quadratic", "varieties_grassmann" ];
 
 
 
@@ -136,9 +109,7 @@ projpolfiles1 := ["projpol_projectivespace", "projpol_polarspaceform",
 		 "projpol_parabolic", "projpol_hyperbolic", "projpol_element1", "projpol_in"];
 		 
 
-morphismsfiles := ["morphisms_intertwiners","morphisms_embedding1","morphisms_embedding2","morphisms_typesubspace",
-          "morphisms_fieldreduc1", "morphisms_fieldreduc2","morphisms_subfield1","morphisms_subfield2",
-          "morphisms_isopolar","morphisms_projection","morphisms_completion","morphisms_klein","morphisms_duality"];;
+
 		  
 varieties_files := ["varieties_general", "varieties_polarspace", "varieties_veronese", "varieties_segre", "varieties_hermitian", "varieties_quadratic", "varieties_grassmann" ];
 

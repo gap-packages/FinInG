@@ -1,14 +1,20 @@
-gap> ps := HyperbolicQuadric(5,3);
+gap&gt; ps := HyperbolicQuadric(5,3);
 Q+(5, 3)
-gap> x := Random( Points(ps) );;
-gap> planes_on_x := AsList( Planes(x) );
-[ &lt;a plane in Q+(5, 3)>, &lt;a plane in Q+(5, 3)>, &lt;a plane in Q+(5, 3)>, 
-  &lt;a plane in Q+(5, 3)>, &lt;a plane in Q+(5, 3)>, &lt;a plane in Q+(5, 3)>, 
-  &lt;a plane in Q+(5, 3)>, &lt;a plane in Q+(5, 3)> ]
-gap> proj := NaturalProjectionBySubspace(ps, x);
+gap&gt; x := Random(Points(ps));;
+gap&gt; planes_on_x := AsList( Planes(x) );
+[ &lt;a plane in Q+(5, 3)&gt;, &lt;a plane in Q+(5, 3)&gt;, &lt;a plane in Q+(5, 3)&gt;, 
+  &lt;a plane in Q+(5, 3)&gt;, &lt;a plane in Q+(5, 3)&gt;, &lt;a plane in Q+(5, 3)&gt;, 
+  &lt;a plane in Q+(5, 3)&gt;, &lt;a plane in Q+(5, 3)&gt; ]
+gap&gt; proj := NaturalProjectionBySubspace(ps, x);
 &lt;geometry morphism from &lt;Elements of Q+(5, 
-3)> to &lt;Elements of &lt;polar space of rank 3 over GF(3)>>>
-gap> image := ImagesSet(proj, planes_on_x);
-[ &lt;a line in Q+(3, 3)>, &lt;a line in Q+(3, 3)>, &lt;a line in Q+(3, 3)>, 
-  &lt;a line in Q+(3, 3)>, &lt;a line in Q+(3, 3)>, &lt;a line in Q+(3, 3)>, 
-  &lt;a line in Q+(3, 3)>, &lt;a line in Q+(3, 3)> ]
+3)&gt; to &lt;Elements of &lt;polar space in ProjectiveSpace(
+3,GF(3)): x_1*x_2+x_3*x_4=0 &gt;&gt;&gt;
+gap&gt; image := ImagesSet(proj, planes_on_x);
+[ &lt;a line in Q+(3, 3): x_1*x_2+x_3*x_4=0&gt;, 
+  &lt;a line in Q+(3, 3): x_1*x_2+x_3*x_4=0&gt;, 
+  &lt;a line in Q+(3, 3): x_1*x_2+x_3*x_4=0&gt;, 
+  &lt;a line in Q+(3, 3): x_1*x_2+x_3*x_4=0&gt;, 
+  &lt;a line in Q+(3, 3): x_1*x_2+x_3*x_4=0&gt;, 
+  &lt;a line in Q+(3, 3): x_1*x_2+x_3*x_4=0&gt;, 
+  &lt;a line in Q+(3, 3): x_1*x_2+x_3*x_4=0&gt;, 
+  &lt;a line in Q+(3, 3): x_1*x_2+x_3*x_4=0&gt; ]

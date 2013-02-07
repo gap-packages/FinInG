@@ -1,0 +1,23 @@
+gap&gt; F:=GF(25);
+GF(5^2)
+gap&gt; r:=PolynomialRing(F,3);
+GF(5^2)[x_1,x_2,x_3]
+gap&gt; x:=IndeterminatesOfPolynomialRing(r);
+[ x_1, x_2, x_3 ]
+gap&gt; pg:=PG(2,F);
+ProjectiveSpace(2, 25)
+gap&gt; f:=x[1]^6+x[2]^6+x[3]^6;
+x_1^6+x_2^6+x_3^6
+gap&gt; hv:=HermitianVariety(pg,f);
+Hermitian Variety in ProjectiveSpace(2, 25)
+gap&gt; AsSet(List(Lines(pg),l-&gt;Size(Filtered(Points(l),x-&gt;x in hv))));
+[ 1, 6 ]
+gap&gt; hv:=HermitianVariety(5,4);
+Hermitian Variety in ProjectiveSpace(5, 4)
+gap&gt; hps:=PolarSpace(hv);
+&lt;polar space in ProjectiveSpace(
+5,GF(2^2)): x_1^3+x_2^3+x_3^3+x_4^3+x_5^3+x_6^3=0 &gt;
+gap&gt; hf:=SesquilinearForm(hv);
+&lt; hermitian form &gt;
+gap&gt; PolynomialOfForm(hf);
+x_1^3+x_2^3+x_3^3+x_4^3+x_5^3+x_6^3
