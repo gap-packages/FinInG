@@ -319,7 +319,7 @@ polar space induced by <A>f</A>.
 
 <Package>FinInG</Package> constructs polarites of projective spaces as correlations. This allows polarities to be multiplied
 easily, resulting in a collineation. The resulting collineation is constructed in the correlation group
-but can be mapped onto its unique representative in the collineation group. We provide an example.
+but can be mapped onto its unique representative in the collineation group. We provide an example with two commuting polarities.
 
 <Example>
 <#Include SYSTEM "../examples/include/polarities_commuting.include"> 

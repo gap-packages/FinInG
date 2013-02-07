@@ -46,7 +46,7 @@ From the axiomatic point of view, a polar space is a point-line geometry, and ha
 rank at least 2. Considering a sesquilinear or quadratic form <M>f</M>, of Witt index 1, the associated 
 geometry consists only of projective points, and is then in the axiomatic treatment, not a polar space.
 However, as is the case for projective spaces, we will consider the rank one geometries associated to
-forms of Witt index 1 als as examples of classical polar spaces. Even the elliptic quadric on the projective line,
+forms of Witt index 1 as examples of classical polar spaces. Even the elliptic quadric on the projective line,
 a <E>geometry</E> associated to an elliptic quadratic form on a two dimensional vector space over a finite field, is
 considered as a classical polar space. The reason for this treatment is that most, if not all, methods for 
 operations applicable on these geometries, rely on the same algebraic methodology. So, in <Package>FinInG</Package>, 
@@ -100,7 +100,7 @@ underlying quadratic form in even characteristic also <E>orthogonal</E> polar sp
 <Oper Name="PolarSpace" Arg="pol"/>
 <Returns>a classical polar space</Returns>
 <Description><A>form</A> must be a sesquilinear or quadratic form
-created by use of the GAP package <Package>forms</Package>. In the second variant,
+created by use of the GAP package <Package>Forms</Package>. In the second variant,
 the argument <A>pol</A> must be a polarity of a projective space. An error message
 will be displayed if <A>pol</A> is a pseudo polarity. We refer to 
 Chapter <Ref Chap="polaritiesofps"/> for more information on polarities of 
@@ -112,7 +112,7 @@ the connection between polarities and forms.
 </Description>
 </ManSection>
 
-<Package>FinInG</Package> relies on the package <Package>forms</Package> for its facility
+<Package>FinInG</Package> relies on the package <Package>Forms</Package> for its facility
 with sesquilinear and quadratic forms. One can specify a polar space with a user-defined
 form, and we refer to the documention for <Package>forms</Package> for information
 on how one can create and use forms. Here we just display a worked example.
@@ -134,16 +134,16 @@ terminology of <Cite Key="KleidmanLiebeck"/>, as we did in the manual of the pac
 Consider a vector space <M>V=V(n+1,q)</M> and a sequilinear form <M>f</M> on
 <M>V</M>. The couple <M>(V,f)</M> is called a formed space. Consider now two
 formed spaces <M>(V,f)</M> and <M>(V,f')</M>, where <M>f</M> and <M>f'</M> are
-two sesquilinear forms on <M>V</M>. A non-degenerate linear map <Alt
+two sesquilinear forms on <M>V</M>. A non-singular linear map <Alt
 Not="HTML"><M>\phi</M></Alt> <Alt Only="HTML">&#966;</Alt> from <M>V</M> to itself
 induces a <E>similarity</E> of the formed space <M>(V,f)</M> to the formed space
 <M>(V,f')</M> if and only if <Alt Not="HTML"><M>f(v,w) = \lambda f'(\phi(v),
-\phi(w)).</M></Alt> <Alt Only="HTML">f(v,w) = &#955;
+\phi(w))</M></Alt> <Alt Only="HTML">f(v,w) = &#955;
 (f'(&#966;(v),&#966;(w)))</Alt>, for all vectors <M>v,w</M> some non-zero <Alt  
 Only="HTML">&#955; in <M>GF(q)</M></Alt>. Up to similarity, there is only one
 class of non-degenerate Hermitian forms, and one class of non-degenerate
 symplectic forms on a given vector space <M>V</M>. For symmetric bilinear forms
-in odd characteristic, the number of similarity classes is dependent of the
+in odd characteristic, the number of similarity classes depends on the
 dimension of <M>V</M>. In odd dimension, there is only one similarity class, and
 non-degenerate forms in this class are called parabolic (bilinear) forms. In
 even dimension, there are two similarity classes, and non-degenerate forms are
@@ -155,11 +155,10 @@ The couple <M>(V,q)</M> is called a formed space. Consider now two formed spaces
 forms on <M>V</M>. A non-degenerate linear map <Alt Not="HTML"><M>\phi</M></Alt>
 <Alt Only="HTML">&#966;</Alt> from <M>V</M> to itself induces a
 <E>similarity</E> of the formed space <M>(V,q)</M> to the formed space 
-<M>(V,q')</M> if and only if <Alt Not="HTML"><M>q(v) = \lambda f'(\phi(v))).</M></Alt>
+<M>(V,q')</M> if and only if <Alt Not="HTML"><M>q(v) = \lambda f'(\phi(v)))</M></Alt>
 <Alt Only="HTML">f(v) = &#955; (f'(&#966;(v)))</Alt>, for all vectors <M>v</M>
 some non-zero <Alt Only="HTML">&#955; in <M>GF(q)</M></Alt>. For quadratic
-forms in even characteristic, the number of similarity classes is
-dependent of the dimension of <M>V</M>. In odd dimension, there is only one
+forms in even characteristic, the number of similarity classes depends on the dimension of <M>V</M>. In odd dimension, there is only one
 similarity class, and non-degenerate forms in this class are called parabolic
 (bilinear) forms. In even dimension, there are two similarity classes, and
 non-degenerate forms are either elliptic (bilinear) forms or hyperbolic
@@ -371,7 +370,7 @@ The vector space on which <M>f</M> is acting is returned.
 
 <ManSection>
 <Oper Name="AmbientSpace" Arg="ps"/>
-<Returns>a projective space</Returns>
+<Returns>the ambient projective space</Returns>
 <Description>
 When <A>ps</A> is a polar space, this operation returns the ambient projective space, i.e. the
 underlying projective space of the sequilinear or quadratic form that defines <A>ps</A>.
@@ -385,7 +384,7 @@ underlying projective space of the sequilinear or quadratic form that defines <A
 <Oper Name="ProjectiveDimension" Arg="ps"/>
 <Oper Name="Dimension" Arg="ps"/>
 <Returns>the dimension of the ambient projective space of <A>ps</A></Returns>
-<Description>When <A>ps</A> is a polar space, an ambient projective space <M>P</M>is 
+<Description>When <A>ps</A> is a polar space, an ambient projective space <M>P</M> is 
 uniquely defined and can be asked using <F>AmbientSpace</F>. This operation and
 its synomym <F>Dimension</F> returns the dimension of <M>P</M>.
 <Example>
@@ -454,7 +453,7 @@ The elements of a finite classical polar space <M>P</M> are the subspaces of the
 that are totally isotropic with relation to the sequilinear or quadratic form that defines <M>P</M>. Constructing
 subspaces of finite classical polar spaces is done as in the projective space case, except that additional 
 checks are implemented in the methods to check that the subspace of the vector space is totally isotropic.
-The empty subspace, also called the trivial subspace, has dimenion -1, corresponds with the zero dimensional 
+The empty subspace, also called the trivial subspace, which has dimenion -1, corresponds with the zero dimensional 
 vector space of the underlying vector space of the ambient projective space of <M>P</M>, and is of course 
 totally isotropic. As such, is is considered as a subspace of a finite classical polar space in the mathematical 
 sense, but not as an element of the incidence geometry, and hence do in <Package>FinInG</Package>
@@ -464,12 +463,11 @@ not belong to the category <C>IsSubspaceOfClassicalPolarSpace</C>.
 <Oper Name="VectorSpaceToElement" Arg="ps, v"/>
 <Returns>an element of the polar space <A>geo</A></Returns>
 <Description>
-Let <A>ps</A> be a polar space, and <A>v</A> is either a row vector (for points) or an <M>m x
-n</M> matrix (for an <M>(m-1)</M>-subspace of a polar space with an <M>(n-1)</M>-dimensional ambient projective space.
+Let <A>ps</A> be a polar space, and <A>v</A> is either a row vector (for points) or an <M>m</M>x<M>n</M> matrix (for an <M>(m-1)</M>-subspace of a polar space with an <M>(n-1)</M>-dimensional ambient projective space.
 In the case that <A>v</A> is a matrix, the rows represent basis vectors for the subspace. An
 exceptional case is when <A>v</A> is a zero-vector, whereby the trivial subspace is
 returned. It is checked that the subspace defined by <M>v</M> is totally isotropic with relation to the form
-defining <A>ps</A>
+defining <A>ps</A>.
 <Example>
 <#Include SYSTEM "../examples/include/cps_element1.include"> 
 </Example>
@@ -507,7 +505,7 @@ is also applicable on the EmptySubspace
 <Returns>the collection of elements of the projective space <A>ps</A> of type <A>j</A></Returns>
 <Description>
 For the projective space <A>ps</A> of dimension <M>d</M> and the type <A>j</A>, <M>1 \leq j \leq d</M>
-this operation returns the collection of <M>j-1</M> dimenaional subspaces.  <Example>
+this operation returns the collection of <M>j-1</M> dimensional subspaces.  <Example>
 <#Include SYSTEM "../examples/include/cps_elements.include"> 
 </Example>
 </Description>
@@ -591,7 +589,7 @@ planes chosen at random.
 <Oper Name="IsCollinear" Arg="ps,u,v"/>
 <Returns> Boolean </Returns>
 <Description>
-<A>u</A> and <A>v</A> are elements of the polar space
+<A>u</A> and <A>v</A> are points of the polar space
 <A>ps</A>. This function returns True if <A>u</A> and <A>v</A> are incident 
 with a common line and False otherwise.
 </Description>
@@ -602,31 +600,9 @@ with a common line and False otherwise.
 <Returns>a function for the polarity</Returns>
 <Description> <A>ps</A> must be a polar space.
 This operation returns the polarity of the polar space <A>ps</A> in
-the form of a function. (Put more here when Jan has implemented polarities).
-<Example>
-gap> pq := ParabolicQuadric(4,3);
-Q(4, 3)
-gap> perp := Polarity(pq);
-function( v ) ... end
-gap> lines := Lines(ps);
-&lt;lines of Q(4, 3)&gt;
-gap> l:=Random(lines);
-&lt;a line in Q(4, 3)&gt;
-gap> perp(l);
-&lt;a plane in PG(4, 3)&gt;
-</Example>
+the form of a function.
 </Description>
 </ManSection>
-
-<ManSection>
-<Oper Name="AmbientSpace" Arg="ps"/>
-<Returns> the ambient projective space </Returns>
-<Description>
-<A>ps</A> is a polar space.
-This function returns the ambient projective spce of <A>ps</A>.
-</Description>
-</ManSection>
-
 
 <ManSection>
 <Oper Name="TypeOfSubspace" Arg="ps, v"/>
@@ -652,7 +628,7 @@ with the type of subspace: <Q>degenerate</Q>, <Q>symplectic</Q>, <Q>hermitian</Q
 
 The classical groups (apart from the general lines group), are the matrix groups that <E>respect</E>, in a certain
 way, a sesquilinear or quadratic form. We formally recall the definitions used in <Package>FinInG</Package>. These
-definitions are exactly the same as in <Package>forms</Package>.<P/>
+definitions are exactly the same as in <Package>Forms</Package>.<P/>
 
 Let <M>(V,f)</M> and <M>(W,g)</M> be two formed vector spaces over the same
 field <M>F</M>, where both <M>f</M> and <M>g</M> are sesquilinear forms. Suppose
@@ -723,7 +699,7 @@ are the two-dimensional unitary groups where the the full semi-similarity group 
 elements of its centre that are not scalars. In <Package>FinInG</Package>, the subgroups corresponding with similarities and isometries are also implemented, including a <E>special</E> variant, corresponding with the matrices having determinant
 one. We use a consistent terminology, where isometries, similarities, respectively, of the polar
 space, correspond with isometries, similarities, respectively, of the underlying formed vector space.
-special isometries of a polar space are induced by isometries of the formed vector space that have a matrix
+Special isometries of a polar space are induced by isometries of the formed vector space that have a matrix
 with determinant one. If <M>P</M> is a polar space with special isometry group, isometry group, similarity group, 
 collineation group, respectively, <M>SI</M>, <M>I</M>, <M>G</M>, <Alt Not="HTML"><M>\Gamma</M></Alt><Alt Only="HTML">&#915;</Alt>,
 respectively, then clearly <Alt Not="HTML"><M>SI \leqslant I \leqslant G \leqslant \Gamma</M></Alt>
@@ -803,17 +779,17 @@ overview.
 <Subsection>
 <Heading>Enumerators for polar spaces</Heading>
 
-An enumerator a collection of subspaces of a given type of a polar space is provided in <Package>FinInG</Package>. If <A>C</A> is
-such a collection, the <F>List(C)</F> will use the enumerator to compute a list with all the elements of <A>C</A>.
+An enumerator for a collection of subspaces of a given type of a polar space is provided in <Package>FinInG</Package>. If <A>C</A> is
+such a collection, then <F>List(C)</F> will use the enumerator to compute a list with all the elements of <A>C</A>.
 </Subsection>
 
 
 <ManSection>
 <Oper Name="Enumerator" Arg="C"/>
 <Oper Name="List" Arg="C"/>
-<Returns> an enumerator for the collection <A>C</A>, a list with all elements of <A>C</A>, respectively</Returns>
+<Returns> an enumerator for the collection <A>C</A> and a list with all elements of <A>C</A></Returns>
 <Description>
-<A>C</A> is a collection of subspaces of a polar space.
+The argument <A>C</A> is a collection of subspaces of a polar space.
 <Example>
 <#Include SYSTEM "../examples/include/cps_enumerator.include"> 
 </Example>
