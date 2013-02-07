@@ -2,16 +2,14 @@ gap&gt; id := IdentityMat(7, GF(3));;
 gap&gt; form := QuadraticFormByMatrix(id, GF(3));
 &lt; quadratic form &gt;
 gap&gt; ps := PolarSpace( form );
-&lt;polar space in ProjectiveSpace(6,GF(
-3)): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2+x_7^2=0 &gt;
+&lt;polar space in ProjectiveSpace(
+6,GF(3)): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2+x_7^2=0 &gt;
 gap&gt; psl32 := PSL(3,2);
 Group([ (4,6)(5,7), (1,2,4)(3,6,5) ])
 gap&gt; reps:=[[1,1,1,0,0,0,0], [-1,1,1,0,0,0,0], [1,-1,1,0,0,0,0], [1,1,-1,0,0,0,0]]*Z(3)^0;;
 gap&gt; ovoid := Union( List(reps, x-&gt; Orbit(psl32, x, Permuted)) );;
 gap&gt; ovoid := List(ovoid, x -&gt; VectorSpaceToElement(ps, x));;
 gap&gt; planes := AsList( Planes( ps ) );;
-#I  Computing nice monomorphism...
 #I  Computing collineation group of canonical polar space...
-#I  Computing nice monomorphism...
 gap&gt; ForAll(planes, p -&gt; Number(ovoid, x -&gt; x in p) = 1);
 true

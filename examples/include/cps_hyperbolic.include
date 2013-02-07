@@ -10,7 +10,7 @@ Gram Matrix:
  . . 2 . . .
  . . . . . 2
  . . . . 2 .
-Polynomial: x_1*x_2+x_3*x_4+x_5*x_6
+Polynomial: [ [  x_1*x_2+x_3*x_4+x_5*x_6 ] ]
 Witt Index: 3
 gap&gt; ps := HyperbolicQuadric(3,4);
 Q+(3, 4)
@@ -22,7 +22,7 @@ Gram Matrix:
  . . . .
  . . . 1
  . . . .
-Polynomial: x_1*x_2+x_3*x_4
+Polynomial: [ [  x_1*x_2+x_3*x_4 ] ]
 Witt Index: 2
 Bilinear form
 Gram Matrix:

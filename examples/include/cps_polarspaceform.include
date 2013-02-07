@@ -4,8 +4,8 @@ gap&gt; mat := [[0,0,0,1],[0,0,-2,0],[0,2,0,0],[-1,0,0,0]]*Z(5)^0;
 gap&gt; form := BilinearFormByMatrix(mat,GF(25));
 &lt; bilinear form &gt;
 gap&gt; ps := PolarSpace(form);
-&lt;polar space in ProjectiveSpace(3,GF(5^
-2)): x1*y4+Z(5)^3*x2*y3+Z(5)*x3*y2-x4*y1=0 &gt;
+&lt;polar space in ProjectiveSpace(
+3,GF(5^2)): x1*y4+Z(5)^3*x2*y3+Z(5)*x3*y2-x4*y1=0 &gt;
 gap&gt; r := PolynomialRing(GF(32),4);
 GF(2^5)[x_1,x_2,x_3,x_4]
 gap&gt; poly := r.3*r.2+r.1*r.4;

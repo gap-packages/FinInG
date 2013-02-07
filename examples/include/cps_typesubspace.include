@@ -1,6 +1,6 @@
-gap&gt; h1 := HermitianVariety(2, 3^2);
-standard H(2, 3^2)
-gap&gt; h2 := HermitianVariety(3, 3^2);
+gap&gt; h1 := HermitianPolarSpace(2, 3^2);
+H(2, 3^2)
+gap&gt; h2 := HermitianPolarSpace(3, 3^2);
 H(3, 3^2)
 gap&gt; pg := AmbientSpace( h2 );    
 ProjectiveSpace(3, 9)

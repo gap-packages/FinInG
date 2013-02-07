@@ -1,28 +1,18 @@
 gap&gt; mat := IdentityMat(6,GF(5));
-[ [ Z(5)^0, 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5) ], 
-  [ 0*Z(5), Z(5)^0, 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5) ], 
-  [ 0*Z(5), 0*Z(5), Z(5)^0, 0*Z(5), 0*Z(5), 0*Z(5) ], 
-  [ 0*Z(5), 0*Z(5), 0*Z(5), Z(5)^0, 0*Z(5), 0*Z(5) ], 
-  [ 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), Z(5)^0, 0*Z(5) ], 
-  [ 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), Z(5)^0 ] ]
+&lt; mutable compressed matrix 6x6 over GF(5) &gt;
 gap&gt; form := BilinearFormByMatrix(mat,GF(5));
 &lt; bilinear form &gt;
 gap&gt; ps := PolarSpace(form);
-&lt;polar space in ProjectiveSpace(5,GF(
-5)): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2=0 &gt;
+&lt;polar space in ProjectiveSpace(
+5,GF(5)): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2=0 &gt;
 gap&gt; IsEllipticQuadric(ps);
 false
 gap&gt; mat := IdentityMat(6,GF(7));
-[ [ Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7) ], 
-  [ 0*Z(7), Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7) ], 
-  [ 0*Z(7), 0*Z(7), Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7) ], 
-  [ 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^0, 0*Z(7), 0*Z(7) ], 
-  [ 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^0, 0*Z(7) ], 
-  [ 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^0 ] ]
+&lt; mutable compressed matrix 6x6 over GF(7) &gt;
 gap&gt; form := BilinearFormByMatrix(mat,GF(7));
 &lt; bilinear form &gt;
 gap&gt; ps := PolarSpace(form);
-&lt;polar space in ProjectiveSpace(5,GF(
-7)): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2=0 &gt;
+&lt;polar space in ProjectiveSpace(
+5,GF(7)): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2=0 &gt;
 gap&gt; IsEllipticQuadric(ps);
 true

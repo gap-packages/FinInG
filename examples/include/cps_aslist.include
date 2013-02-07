@@ -1,5 +1,4 @@
 gap&gt; ps := HyperbolicQuadric(5,3);
-standard Q+(5, 3)
+Q+(5, 3)
 gap&gt; lines := AsList(Lines(ps));
-#I  Computing nice monomorphism...
 &lt;closed orbit, 520 points&gt;

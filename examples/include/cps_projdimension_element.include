@@ -1,15 +1,15 @@
 gap&gt; ps := EllipticQuadric(7,8);
-standard Q-(7, 8)
+Q-(7, 8)
 gap&gt; mat := [[0,0,1,0,0,0,0,0],[0,0,0,0,1,0,0,0]]*Z(8)^0;
 [ [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ], 
   [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ] ]
 gap&gt; line := VectorSpaceToElement(ps,mat);
-&lt;a line in standard Q-(7, 8)&gt;
+&lt;a line in Q-(7, 8)&gt;
 gap&gt; ProjectiveDimension(line);
 1
 gap&gt; Dimension(line);
 1
 gap&gt; e := EmptySubspace(ps);
-&lt; trivial subspace &gt;
+&lt; empty subspace &gt;
 gap&gt; ProjectiveDimension(e);
 -1

@@ -7,6 +7,6 @@ ps := EllipticQuadric(3,27);
 SimilarityGroup(ps);
 ps := ParabolicQuadric(4,8);
 SimilarityGroup(ps);
-ps := HermitianVariety(4,9);
+ps := HermitianPolarSpace(4,9);
 SimilarityGroup(ps);
 quit;

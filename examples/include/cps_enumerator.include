@@ -1,9 +1,9 @@
 gap&gt; Enumerator(Points(ParabolicQuadric(6,3)));
-EnumeratorOfSubspacesOfClassicalPolarSpace( &lt;points of standard Q(6, 3)&gt; )
-gap&gt; Enumerator(Lines(HermitianVariety(4,4)));
+EnumeratorOfSubspacesOfClassicalPolarSpace( &lt;points of Q(6, 3)&gt; )
+gap&gt; Enumerator(Lines(HermitianPolarSpace(4,4)));
 EnumeratorOfSubspacesOfClassicalPolarSpace( &lt;lines of H(4, 2^2)&gt; )
-gap&gt; planes := List(Planes(HermitianVariety(5,4)));;
+gap&gt; planes := List(Planes(HermitianPolarSpace(5,4)));;
 gap&gt; time;
-13761
+13605
 gap&gt; Length(planes);
 891

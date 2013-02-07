@@ -7,7 +7,7 @@ Gram Matrix:
  1 . .
  . . 2
  . 2 .
-Polynomial: x_1^2+x_2*x_3
+Polynomial: [ [  x_1^2+x_2*x_3 ] ]
 Witt Index: 1
 gap&gt; ps := ParabolicQuadric(4,16);
 Q(4, 16)
@@ -20,7 +20,7 @@ Gram Matrix:
  . . . . .
  . . . . 1
  . . . . .
-Polynomial: x_1^2+x_2*x_3+x_4*x_5
+Polynomial: [ [  x_1^2+x_2*x_3+x_4*x_5 ] ]
 Witt Index: 2
 Bilinear form
 Gram Matrix:

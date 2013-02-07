@@ -1,25 +1,20 @@
 gap&gt; ps := SymplecticSpace(3,4);
 W(3, 4)
 gap&gt; CollineationGroup(ps);
-#I  Computing nice monomorphism...
 PGammaSp(4,4)
 gap&gt; ps := HyperbolicQuadric(5,8);
-standard Q+(5, 8)
+Q+(5, 8)
 gap&gt; CollineationGroup(ps);
-#I  Computing nice monomorphism...
 PGammaO+(6,8)
 gap&gt; ps := EllipticQuadric(3,27);
-standard Q-(3, 27)
+Q-(3, 27)
 gap&gt; CollineationGroup(ps);
-#I  Computing nice monomorphism...
 PGammaO-(4,27)
 gap&gt; ps := ParabolicQuadric(4,8);
 Q(4, 8)
 gap&gt; CollineationGroup(ps);
-#I  Computing nice monomorphism...
 PGammaO(5,8)
-gap&gt; ps := HermitianVariety(4,9);
+gap&gt; ps := HermitianPolarSpace(4,9);
 H(4, 3^2)
 gap&gt; CollineationGroup(ps);
-#I  Computing nice monomorphism...
-PGammaU(5,3^2)
+PGU(5,3^2)
