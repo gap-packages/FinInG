@@ -345,7 +345,7 @@ InstallMethod( AffineSubspace,
 			v2 := VectorSpaceTransversalElement( geom!.vectorspace, x, v );
 			ConvertToVectorRep(x, gf);
 			ConvertToMatrixRep(x, gf);
-			return Wrap(geom, Length(x), [v2,x]);
+			return Wrap(geom, Length(x)+1, [v2,x]);
 		fi;
 	end ); 
   
@@ -394,7 +394,7 @@ InstallMethod( AffineSubspace,
        v2 := VectorSpaceTransversalElement( geom!.vectorspace, x, v );
        ConvertToVectorRep(x, gf);
        ConvertToMatrixRep(x, gf);
-       return Wrap(geom, Length(x), [v2,x]);
+       return Wrap(geom, Length(x)+1, [v2,x]);
     fi;
   end ); 
 
