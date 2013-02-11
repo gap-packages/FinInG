@@ -48,7 +48,7 @@ underlying <M>n</M>-dimensional vector space
 over the finite field <M>GF(q)</M>. The <M>i</M>-dimensional subspaces of <M>AG(n,q)</M> 
 (i.e. the elements of type <M>i-1</M>) are defined as the cosets of the <M>i</M>-dimensional 
 subspaces of the underlying vector space. Hence, the common representation of such a subspace is
-<Display>v+S.</Display>s
+<Display>v+S.</Display>
 
 Hence one can think of a subspace of an affine space as consisting of: (i) an affine point,
 representing the coset, and and (ii) a <Q>direction</Q>, which is an element of an <M>n-1</M>-dimensional

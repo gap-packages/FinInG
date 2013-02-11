@@ -61,3 +61,5 @@ Print("\n");
 #ReadPackage("fining","gap/emptysubspace.gi");
 #ReadPackage("fining","gap/linearalgebra_patch.g");
 ##ReadPackage("fining","gap/polaritiesps.gi"); #obsolete.
+
+ReadPackage("fining","gap/stabilisers.gi"); # added 11/02/13 ml

@@ -204,11 +204,4 @@ DeclareOperation( "GammaU", [IsPosInt, IsField and IsFinite]);
 DeclareOperation( "GammaSp", [IsPosInt, IsField and IsFinite]);
 
 
-#############################
-# Stabilizer methods that should work faster
-################################
-
-
-DeclareOperation( "FiningStabilizer", [IsProjectiveGroupWithFrob, IsElementOfIncidenceStructure]);
-
 

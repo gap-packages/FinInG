@@ -193,10 +193,10 @@ Another example, this time with polar spaces:
 <Returns>a geometry morphism</Returns>
 <Description>
 This operation comes in four flavours. For the first flavour, the argument <A>geom1</A> is a projective 
-space over a field <Alt Not="HTML"><M>L=GF(q^t)</M></Alt><Alt Only="HTML">GF(q&lt;sup>t&lt;/sup>)</Alt>.
+space over a field <Alt Not="HTML"><M>L=GF(q^t)</M></Alt><Alt Only="HTML">L=GF(q&lt;sup>t&lt;/sup>)</Alt>.
 The argument <A>f2</A> is a subfield <M>K=GF(q)</M> of <M>L</M>. The argument <M>B</M>
 is a basis for <M>L</M> as a <M>K</M>-vectorspace. When this argument is not given, a basis for <M>L</M> over <M>K</M>
-is computed using <F>Basis(AsVectorSpace(K,L)</F>. It is checked whether <A>f2</A> is a subfield of the basefield of
+is computed using <F>Basis(AsVectorSpace(K,L))</F>. It is checked whether <A>f2</A> is a subfield of the basefield of
 <A>geom1</A>. The third and fourth flavour are comparable, where now <M>K</M> is found as the basefield of <A>geom2</A>.
 In fact the arguments <A>geom1</A> and <A>geom2</A> are the projective spaces
 <Alt Not="HTML"><M>PG(r-1,q^t)</M></Alt><Alt Only="HTML">PG(r-1,q&lt;sup>t&lt;/sup>)</Alt> and
