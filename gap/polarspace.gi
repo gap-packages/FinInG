@@ -2551,11 +2551,13 @@ InstallMethod( CollineationGroup,
 			elif type = "parabolic" then
 				g := GammaO(d,f);
 			elif type = "hermitian" then
-			    if IsPrime(Sqrt(Size(f))) then
-			       g := GUdesargues(d, f);
-			    else
+			  # JB: I don't know why I had done this, so reverting back to simpler code.
+			  #
+			  #  if IsPrime(Sqrt(Size(f))) then
+			  #     g := GUdesargues(d, f);
+			  #  else
 				   g := GammaU(d, f);
-				fi;
+			  #	fi;
 			fi;
 		else    
 			iso := IsomorphismCanonicalPolarSpaceWithIntertwiner( ps );
