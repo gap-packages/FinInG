@@ -1,0 +1,22 @@
+gap&gt; ps := PG(3,8);
+ProjectiveSpace(3, 8)
+gap&gt; g := CollineationGroup(ps);
+The FinInG collineation group PGammaL(4,8)
+gap&gt; p := Random(Points(ps));
+&lt;a point in ProjectiveSpace(3, 8)&gt;
+gap&gt; g1 := Stabilizer(g,p);
+&lt;projective collineation group of size 177223237632&gt;
+gap&gt; time;
+13759
+gap&gt; g2 := FiningStabiliser(g,p);
+&lt;projective collineation group of size 177223237632 with 2 generators&gt;
+gap&gt; time;
+312
+gap&gt; g3 := FiningStabiliserOrb(g,p);
+&lt;projective collineation group with 15 generators&gt;
+gap&gt; time;
+46
+gap&gt; g1=g2;
+true
+gap&gt; g2=g3;
+true

@@ -3,19 +3,16 @@
   projgroup.xml    FinInG package documentation
                                                                    John Bamberg
                                                                    Anton Betten
-                                                                   Jan De Beule
                                                                   Philippe Cara
+                                                                   Jan De Beule
                                                                  Michel Lavrauw
-                                                                  and Maska Law
-                                                             and Michael Pauley
-                                                            and Max Neunhoeffer
-                                                              and Sven Reichard
+                                                                Max Neunhoeffer
 
-  Copyright (C) 2009, University of Western Australia
+  Copyright (C) 2013, University of Western Australia
                       Colorado State University
-                      Lehrstuhl D fuer Mathematik
-                      Ghent University
                       Vrije Universiteit Brussel
+                      Ghent University
+					  Università degli Studi di Padova
 
 This is the chapter of the documentation describing the projective groups.
 

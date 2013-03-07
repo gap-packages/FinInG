@@ -1,0 +1,16 @@
+gap&gt; ps := PG(3,8);
+ProjectiveSpace(3, 8)
+gap&gt; g := CollineationGroup(ps);
+The FinInG collineation group PGammaL(4,8)
+gap&gt; p := Random(Points(ps));
+&lt;a point in ProjectiveSpace(3, 8)&gt;
+gap&gt; Stabilizer(g,p,OnProjSubspaces);
+&lt;projective collineation group of size 177223237632&gt;
+gap&gt; time;
+13527
+gap&gt; line := Random(Lines(ps));
+&lt;a line in ProjectiveSpace(3, 8)&gt;
+gap&gt; Stabilizer(g,line,OnProjSubspaces);
+&lt;projective collineation group of size 21849440256&gt;
+gap&gt; time;
+108345

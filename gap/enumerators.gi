@@ -2091,7 +2091,9 @@ InstallMethod( Enumerator,
      ## in using the enum_* commands before an isomorphism was made. Fixed now. John 02/06/2010
 
      if HasIsCanonicalPolarSpace( ps ) and IsCanonicalPolarSpace( ps ) then     
-        if type in [ "hyperbolic", "elliptic", "parabolic" ] then
+          #Print("scheisse 1\n");
+
+		if type in [ "hyperbolic", "elliptic", "parabolic" ] then
            e := FG_enum_orthogonal(ps, j);
         elif type = "hermitian" then
            e := FG_enum_hermitian(ps, j);
@@ -2116,7 +2118,7 @@ InstallMethod( Enumerator,
                 ) );
      else
         ## The following is an isomorphism from the canonical polar space TO ps
-  
+  #Print("scheisse \n");
         iso := IsomorphismCanonicalPolarSpace( ps );
         pscanonical := Source(iso)!.geometry;     
 

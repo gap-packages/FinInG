@@ -31,6 +31,14 @@
 ## in some small dimensional hermitian cases (e.g. H(3,5^2), H(2,7^2), H(2,9^2)), but
 ## in all other cases the FiningStabiliser is the faster.
 #############################################################################
+
+Print(", stabilisers\c");
+
+# CHECKED 7/03/13 jdb
+#############################################################################
+#O  FiningElementStabiliserOp( <g>, <e>, <act> )
+# helper operation, returns the stabiliser of e under g, using action function act.
+##
 InstallMethod( FiningElementStabiliserOp,
 	"for a collineation group, an element of a projective space and an action function",
 	[ IsGroup, IsSubspaceOfProjectiveSpace, IsFunction],
@@ -42,24 +50,51 @@ InstallMethod( FiningElementStabiliserOp,
 		return stab;
 	end );
 		
-InstallMethod( FiningStabiliser,	[IsProjectiveGroupWithFrob, IsElementOfIncidenceStructure],
-# this uses the FiningElementStabiliserOp function
-		function(fining_group,el)
-		local stab;
-		stab:=FiningElementStabiliserOp(fining_group,el,OnProjSubspaces);
-		return stab;
+# CHECKED 7/03/13 jdb
+#############################################################################
+#O  FiningStabiliser( <g>, <e> )
+# returns the stabiliser of e under g. It is assumed that e is a subspace of a projective space
+# and g a collineation group, such that OnProjSubspaces will be the natural action to use.
+# then the FiningElementStabiliserOp is called.
+##
+InstallMethod( FiningStabiliser,	
+	"for a collineation group and a subspace of a projective space",
+	[ IsProjectiveGroupWithFrob, IsSubspaceOfProjectiveSpace],
+	function(fining_group,el)
+	return FiningElementStabiliserOp(fining_group,el,OnProjSubspaces);
 end );
 
-InstallMethod( FiningStabiliserEstimate, 
-	[IsProjectiveGroupWithFrob, IsElementOfIncidenceStructure],
-	# This uses the ORB_EstimateOrbitSize command from the ORB package, and it
-	# it is extremely fast. Much faster than the methods here, in ALL cases.
+
+# CHECKED 7/03/13 jdb
+#############################################################################
+#O  FiningStabiliserOrb( <g>, <e> )
+# returns the stabiliser of e under g.
+# This uses the ORB_EstimateOrbitSize command from the ORB package, and it
+# it is extremely fast. Much faster than the methods here, in ALL cases.
+# again the natural action OnProjSubspaces is assumed.
+##
+InstallMethod( FiningStabiliserOrb, 
+	[IsProjectiveGroupWithFrob, IsSubspaceOfProjectiveSpace],
 	function(fining_group,el);
 	return Group(ORB_EstimateOrbitSize(ProductReplacer(fining_group),el,OnProjSubspaces,15,1000000,60000).Sgens);
 end );
 
-#ORB_EstimateOrbitSize(ProductReplacer(g),x,OnProjSubspaces,15,1000000,60000);
-		
+# CHECKED 7/03/13 jdb
+#############################################################################
+#O  FiningSetwiseStabiliser( <g>, <set> )
+# returns the setwise stabiliser of set under g.
+# This uses SetwiseStabilizer from the orb package. The natural action OnProjSubspaces is
+# assumed.
+##
+InstallMethod( FiningSetwiseStabiliser,
+	"for a set of elements of an projective space of a given type",
+	[IsProjectiveGroupWithFrob,  IsSubspaceOfProjectiveSpaceCollection and IsHomogeneousList],
+	function(g,set)
+		return SetwiseStabilizer(g, OnProjSubspaces, set)!.setstab;
+end );
+
+
+
 #############################
 # Stabiliser methods using the permutation representation of a group action
 ################################

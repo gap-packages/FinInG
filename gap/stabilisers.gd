@@ -25,10 +25,11 @@
 # Stabiliser methods that should work faster
 ################################
 
-
 DeclareOperation( "FiningElementStabiliserOp", [IsGroup, IsObject, IsFunction] );
 DeclareOperation( "FiningStabiliser", [IsProjectiveGroupWithFrob, IsElementOfIncidenceStructure]);
-DeclareOperation( "FiningStabiliserEstimate", [IsProjectiveGroupWithFrob, IsElementOfIncidenceStructure]);
+DeclareOperation( "FiningStabiliserOrb", [IsProjectiveGroupWithFrob, IsElementOfIncidenceStructure]);
+
+DeclareOperation( "FiningSetwiseStabiliser", [IsProjectiveGroupWithFrob, IsSubspaceOfProjectiveSpaceCollection and IsHomogeneousList]);
 
 #############################
 # Stabiliser methods using the permutation representation of a group action

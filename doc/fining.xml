@@ -7,20 +7,19 @@
 
 <!--
 
-  fining.xml          FinInG package documentation    
+  fining.xml		FinInG package documentation
                                                                    John Bamberg
-																   Anton Betten
-                                                              and Philippe Cara
-                                                               and Jan De Beule
-                                                             and Michel Lavrauw
-                                                            and Max Neunhoeffer
+                                                                   Anton Betten
+                                                                  Philippe Cara
+                                                                   Jan De Beule
+                                                                 Michel Lavrauw
+                                                                Max Neunhoeffer
 
-  Copyright 2011 University of Western Australia, Perth
-                 Lehrstuhl D fuer Mathematik, RWTH Aachen
-                 Ghent University
-                 Colorado State University
-                 Vrije Universiteit Brussel
-
+  Copyright (C) 2013, University of Western Australia
+                      Colorado State University
+                      Vrije Universiteit Brussel
+                      Ghent University
+					  Università degli Studi di Padova
 -->
 
 <Book Name="FinInG">
@@ -113,6 +112,7 @@ The authors thank Michael Pauley, Maska Law and Sven Reichard, for their contrib
 <#Include SYSTEM "projgroups.xml">
 <#Include SYSTEM "polaritiesofps.xml">
 <#Include SYSTEM "classicalpolarspaces.xml">
+<#Include SYSTEM "stab_orbs.xml">
 <#Include SYSTEM "affine.xml">
 <#Include SYSTEM "morphisms.xml">
 <!--#Include SYSTEM "schemes.xml"-->

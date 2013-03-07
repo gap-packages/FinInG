@@ -60,6 +60,9 @@ classicalpolfiles := ["cps_polarspaceform", "cps_example", "cps_symplectic", "cp
 						"cps_specialisometry", "cps_isometry", "cps_similarity", "cps_collineation", 
 						 "cps_enumerator", "cps_iterator", "cps_aslist" ];
 	   
+stab_orbsfiles := [ "stab_orbs_example1", "stab_orbs_finingstabiliser", "stab_orbs_finingstabiliserorb", "stab_orbs_timing1",
+						"stab_orbs_setwisegeneric", "stab_orbs_finingsetwisestabiliser", "stab_orbs_"stab_orbs_timing2"];
+
 	    
 affinefiles := [ "affine_affinespace", "affine_dimension", "affine_basefield", "affine_underlyingvs", "affine_ambientspace", "affine_subspaces",
 				 "affine_elements", "affine_short", "affine_incident", "affine_ambientspaceelas", "affine_basefieldelas", "affine_span", "affine_meet",

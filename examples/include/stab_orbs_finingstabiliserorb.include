@@ -1,0 +1,47 @@
+gap&gt; ps := PG(5,4);
+ProjectiveSpace(5, 4)
+gap&gt; g := SpecialHomographyGroup(ps);
+The FinInG PSL group PSL(6,4)
+gap&gt; p := Random(Points(ps));
+&lt;a point in ProjectiveSpace(5, 4)&gt;
+gap&gt; FiningStabiliserOrb(g,p);
+&lt;projective collineation group with 15 generators&gt;
+gap&gt; line := Random(Lines(ps));
+&lt;a line in ProjectiveSpace(5, 4)&gt;
+gap&gt; FiningStabiliserOrb(g,line);
+&lt;projective collineation group with 15 generators&gt;
+gap&gt; plane := Random(Planes(ps));
+&lt;a plane in ProjectiveSpace(5, 4)&gt;
+gap&gt; FiningStabiliserOrb(g,plane);
+&lt;projective collineation group with 15 generators&gt;
+gap&gt; ps := HyperbolicQuadric(5,5);
+Q+(5, 5)
+gap&gt; g := IsometryGroup(ps);
+PGO(1,6,5)
+gap&gt; p := Random(Points(ps));
+&lt;a point in Q+(5, 5)&gt;
+gap&gt; FiningStabiliserOrb(g,p);
+&lt;projective collineation group with 15 generators&gt;
+gap&gt; line := Random(Lines(ps));
+&lt;a line in Q+(5, 5)&gt;
+gap&gt; FiningStabiliserOrb(g,line);
+&lt;projective collineation group with 15 generators&gt;
+gap&gt; plane := Random(Planes(ps));
+&lt;a plane in Q+(5, 5)&gt;
+gap&gt; FiningStabiliserOrb(g,plane);
+&lt;projective collineation group with 15 generators&gt;
+gap&gt; h := SplitCayleyHexagon(3);
+Split Cayley Hexagon of order 3
+gap&gt; g := CollineationGroup(h);
+#I  for Split Cayley Hexagon
+#I  Computing nice monomorphism...
+#I  Found permutation domain…
+G_2(3)
+gap&gt; p := Random(Points(h));
+&lt;a point of Split Cayley Hexagon of order 3&gt;
+gap&gt; FiningStabiliserOrb(g,p);
+&lt;projective collineation group with 15 generators&gt;
+gap&gt; line := Random(Lines(h));
+&lt;a line of Split Cayley Hexagon of order 3&gt;
+gap&gt; FiningStabiliserOrb(g,line);
+&lt;projective collineation group with 15 generators&gt;

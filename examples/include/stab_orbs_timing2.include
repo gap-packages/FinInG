@@ -1,0 +1,19 @@
+gap&gt; ps := ParabolicQuadric(4,4);
+Q(4, 4)
+gap&gt; g := CollineationGroup(ps);
+PGammaO(5,4)
+gap&gt; l1 := Random(Lines(ps));
+&lt;a line in Q(4, 4)&gt;
+gap&gt; l2 := Random(Lines(ps));
+&lt;a line in Q(4, 4)&gt;
+gap&gt; g1 := Stabilizer(g,Set([l1,l2]),OnSets);
+&lt;projective collineation group of size 720&gt;
+gap&gt; time;
+31095
+gap&gt; g2 := FiningSetwiseStabiliser(g,Set([l1,l2]));
+#I  Computing adjusted stabilizer chain...
+&lt;projective collineation group with 4 generators&gt;
+gap&gt; time;
+56
+gap&gt; g1=g2;
+true
