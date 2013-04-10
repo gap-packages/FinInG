@@ -65,10 +65,17 @@ InstallGlobalFunction( PositionNonZeroFromRight,
 #F  FG_pos( q, x ): inverse function of FG_ffenumber
 # q: prime power, x element of GF(q).
 ##
+#InstallGlobalFunction( FG_pos,
+#	function(q, x)
+#		return Position(AsList(GF(q)), x) - 1;
+#	end );
+#
+#  JB (10/04/2013): Changed this slightly, but I don't think it makes a difference.
+
 InstallGlobalFunction( FG_pos,
-	function(q, x)
-		return Position(AsList(GF(q)), x) - 1;
-	end );
+		function(q, x)
+			return Position(Enumerator(GF(q)), x) - 1;
+		end );
 
 #############################################################################
 #F  FG_div(	a, b )
@@ -84,14 +91,28 @@ InstallGlobalFunction( FG_div,
 # q: prime power, a: integer. Returns element number a, where element 0= Zero(GF(q))
 # element a (<>0) = Z(q)^(a-1)
 ##
+#InstallGlobalFunction( FG_ffenumber,
+#	function(q, a)       
+#		if a = 0 then 
+#			return 0 * Z(q);
+#		else 
+#			return Z(q)^(a-1);
+#		fi;
+#	end );
+#
+#  JB (10/04/2013). First, happy birthday Jan! A simple change to the 
+#  method FG_ffenumber now solves the problems with enumerators. Apparently
+#  GAP stores the list of GF(q) elements as an attribute for GF(q) ... so we
+#  can simply call Enumerator(GF(q)) for the correct ordering. Otherwise, if
+#  this is slow, we could actually put the ordering by degree and exponent here.
+#  For the moment, let us just make sure that it works.
+
 InstallGlobalFunction( FG_ffenumber,
 	function(q, a)       
-		if a = 0 then 
-			return 0 * Z(q);
-		else 
-			return Z(q)^(a-1);
-		fi;
+		return Enumerator(GF(q))[a+1];
 	end );
+
+
 
 #the next function seems never used.
 #############################################################################
