@@ -1,0 +1,101 @@
+<!-- 
+
+  stab_orbs.xml    FinInG package documentation
+                                                                   John Bamberg
+                                                                   Anton Betten
+                                                                  Philippe Cara
+                                                                   Jan De Beule
+                                                                 Michel Lavrauw
+                                                                Max Neunhoeffer
+
+  Copyright (C) 2013, University of Western Australia
+                      Colorado State University
+                      Vrije Universiteit Brussel
+                      Ghent University
+					  Università degli Studi di Padova
+
+This is the chapter of the documentation describing the stabilisers and orbits.
+
+-->
+
+<Chapter Label="acts_stab_orbs">
+<Heading>Actions, stabilisers and orbits</Heading>
+
+<Section>
+<Heading>Stabilisers</Heading>
+
+The GAP function <F>Stabilizer</F> is a generic function to compute stabilisers of one object (or sets or tuples etc. of objects)
+under a group, using a specified action function. This generic function can be used together with the in <Package>FinInG</Package>
+implemented groups and elements of geometries. However, computing time can be very long, already in small geometries.
+
+<Example>
+<#Include SYSTEM "../examples/include/stab_orbs_example1.include"> 
+</Example>
+
+The packages <Package>GenSS</Package> and <Package>orb</Package> required by <Package>FinInG</Package> provide 
+efficient operations to compute stabilisers, and <Package>FinInG</Package> provides functionality to used 
+these operations for the particular groups and (elements) of geometries.
+
+<ManSection>
+<Oper Name="FiningStabiliser" Arg="g, el"/>
+<Returns>The subgroup of <A>g</A> stabilising the element <A>el</A></Returns>
+<Description>The argument <A>g</A> is a group of collineations acting on the element <A>el</A>, being a
+subspace of a projective space (and hence, all elements of a Lie geometry are allowed as second argument).
+This operation relies on the <Package>GenSS</Package> operation <F>Stab</F>.
+<Example>
+<#Include SYSTEM "../examples/include/stab_orbs_finingstabiliser.include"> 
+</Example>
+</Description>
+</ManSection>
+
+
+<ManSection>
+<Oper Name="FiningStabiliserOrb" Arg="g, el"/>
+<Returns>The subgroup of <A>g</A> stabilising the element <A>el</A></Returns>
+<Description>The argument <A>g</A> is a group of collineations acting on the element <A>el</A>, being a
+subspace of a projective space (and hence, all elements of a Lie geometry are allowed as second argument).
+This operation relies on some particular <Package>orb</Package> functionality.
+<Example>
+<#Include SYSTEM "../examples/include/stab_orbs_finingstabiliserorb.include"> 
+</Example>
+</Description>
+</ManSection>
+
+A small example shows the difference in computing time. Clearly the <F>FiningStabiliserOrb</F> is the fastest 
+way to compute stabilizers of one element.
+<Example>
+<#Include SYSTEM "../examples/include/stab_orbs_timing1.include"> 
+</Example>
+
+Computing the setwise stabiliser under a group is possible using <F>Stabilizer</F>. Not suprisingly, the
+computing time can also be very long.
+
+<Example>
+<#Include SYSTEM "../examples/include/stab_orbs_setwisegeneric.include"> 
+</Example>
+
+The package <Package>GenSS</Package> provides an efficient operation to compute setwise stabilisers, 
+and <Package>FinInG</Package> provides functionality to used these <Package>GenSS</Package> operation 
+for the particular groups and (elements) of geometries.
+
+<ManSection>
+<Oper Name="FiningSetwiseStabiliser" Arg="g, els"/>
+<Returns>The subgroup of <A>g</A> stabilising the set <A>els</A></Returns>
+<Description>The argument <A>g</A> is a group of collineations acting on the element <A>el</A>, being a
+subspace of a projective space (and hence, all elements of a Lie geometry are allowed as second argument).
+The argument <A>els</A> is a set of elements of the same type of the same Lie geometry, the elements are all in 
+the category <C>IsSubspaceOfProjectiveSpace</C>. The underlying action function is assumed to be
+<F>OnProjSubspaces</F>
+<Example>
+<#Include SYSTEM "../examples/include/stab_orbs_finingsetwisestabiliser.include"> 
+</Example>
+</Description>
+</ManSection>
+
+A small example shows the difference in computing time. 
+<Example>
+<#Include SYSTEM "../examples/include/stab_orbs_timing2.include"> 
+</Example>
+
+</Section>
+</Chapter>
