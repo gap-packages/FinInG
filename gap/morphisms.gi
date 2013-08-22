@@ -1575,7 +1575,7 @@ InstallMethod (CanonicalEmbeddingByFieldReduction,
 	#   Q -> Q- (w even, q odd)
 	#####################################################################
 
-    local type1, type2, form1, form2, f1, f2, w, newps, sigma, map, gamma, q, n, A, alpha, basis;
+    local type1, type2, form1, form2, f1, f2, w, newps, sigma, map, gamma, q, n, A, alpha, basis, is_square;
 					
 	type1 := PolarSpaceType(ps1);
 	type2 := PolarSpaceType(ps2);
@@ -1594,7 +1594,8 @@ InstallMethod (CanonicalEmbeddingByFieldReduction,
 	w := Log(Size(f1),q);	# conforming to Nick's notation
 	A := ProjectiveDimension(ps1)+1; 	# conforming to Nick's notation
 	basis := CanonicalBasis(AsVectorSpace(f2,f1));
-
+    is_square := function(x, f) return IsZero(x) or IsEvenInt(LogFFE(x,PrimitiveRoot(f))); end;
+      
 	if IsSesquilinearForm(form1) then
        	if type1 = "hermitian" and type2 = "hermitian" and IsOddInt(w) then
 			Info(InfoFinInG, 1, "These polar spaces are suitable for field reduction");
@@ -1648,13 +1649,13 @@ InstallMethod (CanonicalEmbeddingByFieldReduction,
 			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis, computeintertwiner );			
 		elif type1 = "parabolic" and type2 = "hyperbolic" and IsEvenInt(w) and IsOddInt(q) then
 			Info(InfoFinInG, 1, "These polar spaces are suitable for field reduction");
-			gamma := GramMatrix(form1)[1][1]; 	# conforming to Nick's notation
+			gamma := GramMatrix(form1)[1][1]; 	# conforming to Nick's notation   
 				# Nick's condition:
 			n := w/2;
-			alpha := First(f1, a -> (not IsZero(a) and -(a*gamma)^(q+1) in GF(q^n) and 
-									 not IsEvenInt(LogFFE(-(a*gamma)^(q+1),Z(q^n)))) or
+			alpha := First(f1, a -> (not IsZero(a) and (a*gamma)^(q+1) in GF(q^n) and 
+									 not is_square(-(a*gamma)^(q+1), GF(q^n))) or
 									(not IsZero(a) and (a*gamma)^-2 in GF(q^n) and 
-									 IsOddInt(LogFFE( (a*gamma)^-2, Z(q^n))))
+									 not is_square( (a*gamma)^-2, GF(q^n)))
 									);
 				
 			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis, computeintertwiner );			
@@ -1662,12 +1663,13 @@ InstallMethod (CanonicalEmbeddingByFieldReduction,
 		elif type1 = "parabolic" and type2 = "elliptic" and IsEvenInt(w) and IsOddInt(q) then
 			Info(InfoFinInG, 1, "These polar spaces are suitable for field reduction");
 			gamma := GramMatrix(form1)[1][1]; 	# conforming to Nick's notation
+			Print("gamma: ",gamma,"\n");
 				# Nick's condition:
 			n := w/2;
-			alpha := First(f1, a -> (not IsZero(a) and not -(a*gamma)^(q+1) in GF(q^n) and 
-									 IsEvenInt(LogFFE(-(a*gamma)^(q+1),Z(q^n)))) and
-									(not IsZero(a) and not (a*gamma)^-2 in GF(q^n) and 
-									 not IsOddInt(LogFFE( (a*gamma)^-2, Z(q^n))))
+			alpha := First(f1, a -> not IsZero(a) and (a*gamma)^(q+1) in GF(q^n) and 
+									 is_square(-(a*gamma)^(q+1), GF(q^n)) and
+									 (a*gamma)^-2 in GF(q^n) and 
+									 is_square( (a*gamma)^-2, GF(q^n) )
 									);
 
 			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis, computeintertwiner );			
