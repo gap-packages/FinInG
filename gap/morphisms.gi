@@ -1545,6 +1545,144 @@ InstallMethod (CanonicalEmbeddingByFieldReduction,
 
 
 
+# John's method for CanonicalEmbeddingByFieldReduction. It works well except for the
+# last two quadratic form cases. Something is wrong in interpreting Nick Gill's conditions
+# on alpha.
+#############################################################################
+
+InstallMethod (CanonicalEmbeddingByFieldReduction,
+	"for a polar space, a field, and a boolean",
+	[IsClassicalPolarSpace, IsClassicalPolarSpace, IsBool],
+	function(ps1, ps2, computeintertwiner)
+
+	#####################################################################
+	#  Different cases of PolarSpace(A-1, q^w) -> PolarSpace(wA-1, q)
+	#
+	#  Sesquilinear forms
+	#  	H -> H (w odd)
+	#  	H -> W (w even)
+	#  	H -> Q+ (w even, A even)
+	#  	H -> Q- (w even, A odd)
+	#  	W -> W (always)
+	#
+	#  Quadratic forms	
+	# A even			
+	#	Q+ -> Q+ (always)
+	#	Q- -> Q- (always)
+	# A odd
+	#	Q -> Q (w odd, q odd)
+	#   Q -> Q+ (w even, q odd)
+	#   Q -> Q- (w even, q odd)
+	#####################################################################
+
+    local type1, type2, form1, form2, f1, f2, w, newps, sigma, map, gamma, q, n, A, alpha, basis;
+					
+	type1 := PolarSpaceType(ps1);
+	type2 := PolarSpaceType(ps2);
+	if type1 in ["hyperbolic", "parabolic", "elliptic"] then 
+	   form1 := QuadraticForm(ps1);
+	else
+	   form1 := SesquilinearForm(ps1);
+	fi;
+	f1 := ps1!.basefield;
+	f2 := ps2!.basefield;
+	q := Size(f2);
+	
+	if not IsSubset(f1,f2) then
+	   Error("Fields are incompatible");
+	fi;
+	w := Log(Size(f1),q);	# conforming to Nick's notation
+	A := ProjectiveDimension(ps1)+1; 	# conforming to Nick's notation
+	basis := CanonicalBasis(AsVectorSpace(f2,f1));
+
+	if IsSesquilinearForm(form1) then
+       	if type1 = "hermitian" and type2 = "hermitian" and IsOddInt(w) then
+			Info(InfoFinInG, 1, "These polar spaces are suitable for field reduction");
+				# need alpha to be fixed by sigma: x -> x^q
+			alpha := One(f1);
+			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis, computeintertwiner );	
+			
+	   	elif type1 = "hermitian" and type2 = "symplectic" and IsEvenInt(w) then
+			Info(InfoFinInG, 1, "These polar spaces are suitable for field reduction");
+			if IsEvenInt(q) then
+				# need alpha to be fixed by sigma: x -> x^q
+				alpha := One(f1);				
+			else
+				# need sigma(alpha)=-alpha
+				sigma := Sqrt(Size(f1));
+				alpha := First(f1, t->not IsZero(t) and t^sigma = -t);				
+			fi;	
+			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis, computeintertwiner );	
+		
+	   	elif type1 = "hermitian" and type2 = "hyperbolic" and IsEvenInt(w) and IsEvenInt(A) 
+				and IsOddInt(q) then
+			Info(InfoFinInG, 1, "These polar spaces are suitable for field reduction");
+			alpha := One(f1);	
+			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis, computeintertwiner );	
+						
+	   	elif type1 = "hermitian" and type2 = "elliptic" and IsEvenInt(w) and IsOddInt(A) 
+				and IsOddInt(q) then
+			Info(InfoFinInG, 1, "These polar spaces are suitable for field reduction");
+			alpha := One(f1);	
+			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis, computeintertwiner );	
+			
+	   	elif type1 = "symplectic" and type2 = "symplectic" then
+			Info(InfoFinInG, 1, "These polar spaces are suitable for field reduction");
+			alpha := One(f1);				
+			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis, computeintertwiner );	
+		else
+		 	Error("These polar spaces are not suitable for field reduction.");
+		fi;
+	else 	# form1 is a quadratic form
+		if type1 = "hyperbolic" and type2 = "hyperbolic" then
+			Info(InfoFinInG, 1, "These polar spaces are suitable for field reduction");
+			alpha := One(f1);
+			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis, computeintertwiner );	
+		elif type1 = "elliptic" and type2 = "elliptic" then
+			Info(InfoFinInG, 1, "These polar spaces are suitable for field reduction");
+			alpha := One(f1);
+			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis, computeintertwiner );	
+		elif type1 = "parabolic" and type2 = "parabolic" and IsOddInt(w) and IsOddInt(q) then
+			Info(InfoFinInG, 1, "These polar spaces are suitable for field reduction");
+			alpha := One(f1);
+			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis, computeintertwiner );			
+		elif type1 = "parabolic" and type2 = "hyperbolic" and IsEvenInt(w) and IsOddInt(q) then
+			Info(InfoFinInG, 1, "These polar spaces are suitable for field reduction");
+			gamma := GramMatrix(form1)[1][1]; 	# conforming to Nick's notation
+				# Nick's condition:
+			n := w/2;
+			alpha := First(f1, a -> (not IsZero(a) and -(a*gamma)^(q+1) in GF(q^n) and 
+									 not IsEvenInt(LogFFE(-(a*gamma)^(q+1),Z(q^n)))) or
+									(not IsZero(a) and (a*gamma)^-2 in GF(q^n) and 
+									 IsOddInt(LogFFE( (a*gamma)^-2, Z(q^n))))
+									);
+				
+			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis, computeintertwiner );			
+			
+		elif type1 = "parabolic" and type2 = "elliptic" and IsEvenInt(w) and IsOddInt(q) then
+			Info(InfoFinInG, 1, "These polar spaces are suitable for field reduction");
+			gamma := GramMatrix(form1)[1][1]; 	# conforming to Nick's notation
+				# Nick's condition:
+			n := w/2;
+			alpha := First(f1, a -> (not IsZero(a) and not -(a*gamma)^(q+1) in GF(q^n) and 
+									 IsEvenInt(LogFFE(-(a*gamma)^(q+1),Z(q^n)))) and
+									(not IsZero(a) and not (a*gamma)^-2 in GF(q^n) and 
+									 not IsOddInt(LogFFE( (a*gamma)^-2, Z(q^n))))
+									);
+
+			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis, computeintertwiner );			
+			
+		else
+		 	Error("These polar spaces are not suitable for field reduction.");
+		
+     	fi;	
+	fi;
+		
+	return map;
+end );
+
+
+
 
 # CHECKED 28/09/11 jdb
 #############################################################################

@@ -148,7 +148,9 @@ DeclareOperation( "NaturalEmbeddingByFieldReduction",
 
 
 DeclareOperation( "CanonicalEmbeddingByFieldReduction", 
-					[ IsClassicalPolarSpace, IsField, IsBool ]);
+					[ IsClassicalPolarSpace, IsField, IsBool ]);  
+DeclareOperation( "CanonicalEmbeddingByFieldReduction", 
+					[ IsClassicalPolarSpace, IsClassicalPolarSpace, IsBool ]);
 
 #############################################################################
 ## C5 morphisms
