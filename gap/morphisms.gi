@@ -1632,7 +1632,8 @@ InstallMethod (CanonicalEmbeddingByFieldReduction,
 	#   Q -> Q- (w even, q odd)
 	#####################################################################
 
-    local type1, type2, form1, form1b, form2, f1, f2, w, newps, sigma, map, gamma, q, n, A, alpha, basis, is_square;
+    local type1, type2, form1, form1b, form2, f1, f2, w, newps, sigma, map, 
+		  gamma, q, n, A, alpha, basis, is_square, morphism, iso;
 					
 	type1 := PolarSpaceType(ps1);
 	type2 := PolarSpaceType(ps2);
@@ -1730,12 +1731,17 @@ InstallMethod (CanonicalEmbeddingByFieldReduction,
 		
      	fi;	
 	fi;
-	#iso := IsomorphismPolarSpacesNC(ps2, canonical, false);	
-	#em:=NaturalEmbeddingByFieldReduction(AmbientSpace(ps1),AmbientSpace(ps2));
+	iso := IsomorphismPolarSpacesNC(AmbientGeometry(Range(map)), ps2, computeintertwiner);	
+	morphism := GeometryMorphismByFunction(ElementsOfIncidenceStructure(ps1), 
+                                       ElementsOfIncidenceStructure(ps2), 
+                                        x -> iso!.fun(map!.fun(x)), false,  x -> map!.prefun(iso!.prefun(x)) );
 
-	# Still need to change basis to original polar space. 
+	# The intertwiner is a record element and so we need to adjust this manually
+	# This still needs testing.
+	
+    SetIntertwiner(morphism, CompositionMapping(Intertwiner(iso), Intertwiner(map)) );
 		
-	return map;
+	return morphism;
 end );
 
 
