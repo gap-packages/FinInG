@@ -115,6 +115,10 @@ DeclareOperation( "BilinearFormFieldReduction",	[ IsBilinearForm, IsField, IsFFE
 DeclareOperation( "QuadraticFormFieldReduction", [ IsQuadraticForm, IsField, IsFFE, IsBasis ]);
 DeclareOperation( "HermitianFormFieldReduction", [ IsHermitianForm, IsField, IsFFE, IsBasis ]);
 
+DeclareOperation( "BilinearFormFieldReduction",	[ IsBilinearForm, IsField, IsFFE ]);
+DeclareOperation( "QuadraticFormFieldReduction", [ IsQuadraticForm, IsField, IsFFE ]);
+DeclareOperation( "HermitianFormFieldReduction", [ IsHermitianForm, IsField, IsFFE ]);
+
 
 # master version for the user: handle all parameters.
 DeclareOperation( "NaturalEmbeddingByFieldReduction", 

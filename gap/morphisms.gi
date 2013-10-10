@@ -1193,7 +1193,6 @@ InstallMethod( QuadraticFormFieldReduction,
 	# f2 is a subfield of the basefield for the quadratic form q1
 	local f1,basvecs,d1,t,d2,V2,V1,phi,b2,b2vecs,mat2,i,bil1,j,qf2;
 	f1:=qf1!.basefield;
-	#basis:=Basis(AsVectorSpace(f2,f1));
 	basvecs:=BasisVectors(basis);
 	d1:=Size(qf1!.matrix);
 	t:=Dimension(AsVectorSpace(f2,f1));
@@ -1287,11 +1286,13 @@ InstallMethod (NaturalEmbeddingByFieldReduction,
 					map,hom,hominv,g1,gens,newgens,g2,twiner;
 	type1 := PolarSpaceType(ps1);
 	f1:=ps1!.basefield;
-	#basis:=Basis(AsVectorSpace(f2,f1));
+	
 	# 1. the polar space is of orthogonal type
 	if type1 in ["hyperbolic","elliptic","parabolic"] then
 		qf1:=QuadraticForm(ps1);
-		qf2:=QuadraticFormFieldReduction(qf1,f2,alpha,basis);
+#		qf2:=QuadraticFormFieldReduction(qf1,f2,alpha,basis);
+		qf2:=QuadraticFormFieldReduction(qf1,f2,alpha);  # John's method (without "basis")
+		
 		if IsSingularForm(qf2) then 
 			Error("The field reduction does not yield a natural embedding");
 		else ps2:=PolarSpace(qf2);
@@ -1436,11 +1437,11 @@ InstallMethod (CanonicalEmbeddingByFieldReduction,
 					map,hom,hominv,g1,gens,newgens,g2,twiner,canonicalform,canonical,
 					c1,c2,change,invchange;
 	type1 := PolarSpaceType(ps1);
-	
+
 	# 1. the polar space is of orthogonal type
 	if type1 in ["hyperbolic","elliptic","parabolic"] then
 		qf1:=QuadraticForm(ps1);
-		form2:=QuadraticFormFieldReduction(qf1,f2);
+		form2:=QuadraticFormFieldReduction(qf1,f2);   
 		if IsSingularForm(qf2) then 
 			Error("The field reduction does not yield a natural embedding");
 		else ps2:=PolarSpace(qf2);
@@ -1544,11 +1545,67 @@ InstallMethod (CanonicalEmbeddingByFieldReduction,
 	end );
 
 
-
+#####################################################################################
+#
 # John's method for CanonicalEmbeddingByFieldReduction. It works well except for the
-# last two quadratic form cases. Something is wrong in interpreting Nick Gill's conditions
-# on alpha.
-#############################################################################
+# last two quadratic form cases. Since q is odd, I have come up with a work around.
+# Something is wrong with QuadraticFormFieldReduction.
+#
+#####################################################################################
+
+# JB: Is the argument "basis" really needed? I've made two operations for my work-around below
+# that can be distinguished from the other methods by the number of arguments (I do not have "basis").
+
+InstallMethod( QuadraticFormFieldReduction,
+	"for a quadratic form and a field",
+	[ IsQuadraticForm, IsField, IsFFE ],
+	function(qf1, f2, alpha)
+		# f2 is a subfield of the basefield for the quadratic form q1
+	local f1,d1,t,d2,V2,phi,b2,b2vecs,mat1,mat2,i,j,bil1,qf2,bil2;
+
+	# In the odd characteristic case, we can use the bilinear form.
+	if IsOddInt(Size(f2)) then
+	   	bil1 := AssociatedBilinearForm( qf1 );
+	   	bil2 := BilinearFormFieldReduction(bil1, f2, alpha);
+	    qf2 := QuadraticFormByBilinearForm(bil2);
+    else
+		# There is still a problem here that needs resolving.
+		mat1 := qf1!.matrix;
+		f1 := qf1!.basefield;
+		d1 := Size(mat1);
+		t := Dimension(AsVectorSpace(f2,f1));
+		d2 := d1*t;
+		b2 := Basis(f2^d2);
+		b2vecs := BasisVectors(b2);
+		for i in [1..d2-1] do
+			for j in [i+1..d2] do
+				mat2[i][j]:=Trace(f1,f2,alpha*(ShrinkVec(f1,f2,b2vecs[i]+b2vecs[j]))^qf1
+								-(ShrinkVec(f1,f2,b2vecs[i]))^qf1-(ShrinkVec(f1,f2,b2vecs[j]))^qf1);
+			od;
+		od;
+		qf2 := QuadraticFormByMatrix(mat2,f2);
+	fi;	
+	return qf2;
+end );
+
+InstallMethod( BilinearFormFieldReduction,
+	"for a bilinear form and a field",
+	[ IsBilinearForm, IsField, IsFFE ],
+	function(bil1, f2, alpha)
+		# f2 is a subfield of the basefield of the bilinear form bil1
+	local mat1,f1,d1,t,d2,b2,b2vecs,mat2, bil2;
+	mat1 := bil1!.matrix;
+	f1 := bil1!.basefield;
+	d1 := Size(mat1);
+	t := Dimension(AsVectorSpace(f2,f1));
+	d2 := d1*t;
+	b2 := Basis(f2^d2);
+	b2vecs := BasisVectors(b2);	
+	mat2 := List([1..d2], i -> List([1..d2], j -> 
+		Trace(f1,f2,alpha*(ShrinkVec(f1,f2,b2vecs[i]) * mat1 * ShrinkVec(f1,f2,b2vecs[j])))));	
+	bil2 := BilinearFormByMatrix(mat2,f2);
+	return bil2;
+end );
 
 InstallMethod (CanonicalEmbeddingByFieldReduction,
 	"for a polar space, a field, and a boolean",
@@ -1575,7 +1632,7 @@ InstallMethod (CanonicalEmbeddingByFieldReduction,
 	#   Q -> Q- (w even, q odd)
 	#####################################################################
 
-    local type1, type2, form1, form2, f1, f2, w, newps, sigma, map, gamma, q, n, A, alpha, basis, is_square;
+    local type1, type2, form1, form1b, form2, f1, f2, w, newps, sigma, map, gamma, q, n, A, alpha, basis, is_square;
 					
 	type1 := PolarSpaceType(ps1);
 	type2 := PolarSpaceType(ps2);
@@ -1648,30 +1705,24 @@ InstallMethod (CanonicalEmbeddingByFieldReduction,
 			alpha := One(f1);
 			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis, computeintertwiner );			
 		elif type1 = "parabolic" and type2 = "hyperbolic" and IsEvenInt(w) and IsOddInt(q) then
-			Info(InfoFinInG, 1, "These polar spaces are suitable for field reduction");
-			gamma := GramMatrix(form1)[1][1]; 	# conforming to Nick's notation   
-				# Nick's condition:
-			n := w/2;
-			alpha := First(f1, a -> (not IsZero(a) and (a*gamma)^(q+1) in GF(q^n) and 
-									 not is_square(-(a*gamma)^(q+1), GF(q^n))) or
-									(not IsZero(a) and (a*gamma)^-2 in GF(q^n) and 
-									 not is_square( (a*gamma)^-2, GF(q^n)))
-									);
-				
-			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis, computeintertwiner );			
-			
-		elif type1 = "parabolic" and type2 = "elliptic" and IsEvenInt(w) and IsOddInt(q) then
-			Info(InfoFinInG, 1, "These polar spaces are suitable for field reduction");
-			gamma := GramMatrix(form1)[1][1]; 	# conforming to Nick's notation
-			Print("gamma: ",gamma,"\n");
-				# Nick's condition:
-			n := w/2;
-			alpha := First(f1, a -> not IsZero(a) and (a*gamma)^(q+1) in GF(q^n) and 
-									 is_square(-(a*gamma)^(q+1), GF(q^n)) and
-									 (a*gamma)^-2 in GF(q^n) and 
-									 is_square( (a*gamma)^-2, GF(q^n) )
-									);
+			Info(InfoFinInG, 1, "These polar spaces are suitable for field reduction: Parabolic -> Hyperbolic");
+			# JB: I couldn't get it to work purely with quadratic forms, but we can use
+			# the bilinear form since q is odd
 
+			if q mod 4 = 1 then
+ 				alpha := First(f1, a -> not IsZero(a) and not is_square( a, f1 ) );
+			else
+				alpha := First(f1, a -> not IsZero(a) and is_square( a, f1 ) );
+			fi;
+			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis, computeintertwiner );
+						
+		elif type1 = "parabolic" and type2 = "elliptic" and IsEvenInt(w) and IsOddInt(q) then
+			Info(InfoFinInG, 1, "These polar spaces are suitable for field reduction: Parabolic -> Elliptic");
+			if q mod 4 = 1 then
+ 				alpha := First(f1, a -> not IsZero(a) and is_square( a, f1 ) );
+			else
+				alpha := First(f1, a -> not IsZero(a) and not is_square( a, f1 ) );
+			fi;
 			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis, computeintertwiner );			
 			
 		else
@@ -1679,6 +1730,10 @@ InstallMethod (CanonicalEmbeddingByFieldReduction,
 		
      	fi;	
 	fi;
+	#iso := IsomorphismPolarSpacesNC(ps2, canonical, false);	
+	#em:=NaturalEmbeddingByFieldReduction(AmbientSpace(ps1),AmbientSpace(ps2));
+
+	# Still need to change basis to original polar space. 
 		
 	return map;
 end );
