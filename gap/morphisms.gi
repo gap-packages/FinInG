@@ -825,6 +825,24 @@ InstallMethod( ShrinkVec,
 	fi;
 end );
 
+#############################################################################
+#O ShrinkVec( <f1>, <f2>, <v>, basis )
+# The same operation as above, but now with a basis as extra argument
+InstallMethod( ShrinkVec, 
+	"for a field, a subfield and a vector",
+	[ IsField, IsField, IsVector, IsBasis ],
+	function( f1,f2,v,basis )
+	local t,d1,d2,basvecs;
+	t:=Dimension(AsVectorSpace(f2,f1));
+	d1:=Length(v)/t;
+	if IsInt(d1) then
+		basvecs:=BasisVectors(basis);
+		return List([1..d1],i->v{[(i-1)*t+1..i*t]}*basvecs);
+	else
+		Error("The length of v is not divisible by the degree of the field extension");
+	fi;
+end );
+
 
 
 #############################################################################
@@ -1135,6 +1153,23 @@ InstallMethod( NaturalEmbeddingByFieldReduction,
 		return NaturalEmbeddingByFieldReduction(pg1,pg2!.basefield,basis);
 	end );
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ############################################################################
 #		POLAR SPACES
 ##############################################################################
@@ -1157,11 +1192,9 @@ InstallMethod( BilinearFormFieldReduction,
 	[ IsBilinearForm, IsField, IsFFE, IsBasis ],
 	function(bil1,f2,alpha,basis)
 	# f2 is a subfield of the basefield of the bilinear form bil1
-	local mat1,f1,basvecs,d1,t,d2,V2,V1,phi,b2,b2vecs,mat2,i,row,j,bil2;
+	local mat1,f1,d1,t,d2,V2,V1,phi,b2,b2vecs,mat2,i,row,j,bil2;
 	mat1:=bil1!.matrix;
 	f1:=bil1!.basefield;
-	#basis:=Basis(AsVectorSpace(f2,f1));
-	basvecs:=BasisVectors(basis);
 	d1:=Size(mat1);
 	t:=Dimension(AsVectorSpace(f2,f1));
 	d2:=d1*t;
@@ -1173,7 +1206,7 @@ InstallMethod( BilinearFormFieldReduction,
 	for i in [1..d2] do 
 		row:=[];
 		for j in [1..d2] do
-			Add(row,Trace(f1,f2,alpha*(ShrinkVec(f1,f2,b2vecs[i])*mat1*ShrinkVec(f1,f2,b2vecs[j]))));
+			Add(row,Trace(f1,f2,alpha*(ShrinkVec(f1,f2,b2vecs[i],basis)*mat1*ShrinkVec(f1,f2,b2vecs[j],basis))));
 		od;
 		Add(mat2,row);
 	od;
@@ -1182,7 +1215,19 @@ InstallMethod( BilinearFormFieldReduction,
 end );
 
 #############################################################################
-#O  QuadraticFormFieldReduction( <qf1>, <f2> ) 
+#O  BilinearFormFieldReduction( <bil1>, <f2>, <alpha>, <basis> ) 
+# The same as above, but without specified basis. In this case the canonical basis is used.
+##
+InstallMethod( BilinearFormFieldReduction,
+	"for a bilinear form and a field",
+	[ IsBilinearForm, IsField, IsFFE ],
+	function(bil1,f2,alpha)
+	# f2 is a subfield of the basefield of the bilinear form bil1
+	return BilinearFormFieldReduction(bil1,f2,alpha,Basis(AsVectorSpace(f2,bil1!.basefield)));
+end );
+
+#############################################################################
+#O  QuadraticFormFieldReduction( <qf1>, <f2>, <alpha>, <basis> ) 
 # <bil1> is a bilinear form over <f1>, <f2> is a subfield of <f1>. This operation
 # returns the bilinear form T(qf1(.,.)), T the trace from <f1> to <f2>.
 ##
@@ -1203,18 +1248,34 @@ InstallMethod( QuadraticFormFieldReduction,
 	b2vecs:=BasisVectors(b2);
 	mat2:=IdentityMat(d2,f2);
 	for i in [1..d2] do
-		mat2[i][i]:=Trace(f1,f2,(ShrinkVec(f1,f2,b2vecs[i]))^qf1);
+		mat2[i][i]:=Trace(f1,f2,alpha*((ShrinkVec(f1,f2,b2vecs[i]))^qf1));
 	od;
 	for i in [1..d2-1] do
 		for j in [i+1..d2] do
-			mat2[i][j]:=Trace(f1,f2,alpha*(ShrinkVec(f1,f2,b2vecs[i]+b2vecs[j]))^qf1
-							-(ShrinkVec(f1,f2,b2vecs[i]))^qf1-(ShrinkVec(f1,f2,b2vecs[j]))^qf1);
+			mat2[i][j]:=Trace(f1,f2,alpha*((ShrinkVec(f1,f2,b2vecs[i]+b2vecs[j]))^qf1
+							-(ShrinkVec(f1,f2,b2vecs[i]))^qf1-(ShrinkVec(f1,f2,b2vecs[j]))^qf1));
 			#mat2[j][i]:=mat2[i][j]; THESE entries need to be zero
 		od;
 	od;
 	qf2:=QuadraticFormByMatrix(mat2,f2);
 	return qf2;
 end );
+
+#############################################################################
+# #O  QuadraticFormFieldReduction( <qf1>, <f2>, <alpha> )
+# The same as above, but without specified basis. In this case the canonical basis is used.
+##
+InstallMethod( QuadraticFormFieldReduction,
+	"for a quadratic form and a field",
+	[ IsQuadraticForm, IsField, IsFFE ],
+	function(qf1,f2,alpha)
+	local basis,qf2;
+	# f2 is a subfield of the basefield for the quadratic form q1
+	basis:=Basis(AsVectorSpace(f2,qf1!.basefield));
+	qf2:=QuadraticFormFieldReduction(qf1,f2,alpha,basis);
+	return qf2;
+end );
+
 
 # CHANGED jdb 9/4/12: added arguments basis and alpha.
 # one more remark. Some values of alpha will cause HermitianFormByMatrix (so odd t) 
