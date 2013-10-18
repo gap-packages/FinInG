@@ -1229,7 +1229,7 @@ end );
 #############################################################################
 #O  QuadraticFormFieldReduction( <qf1>, <f2>, <alpha>, <basis> ) 
 # <bil1> is a bilinear form over <f1>, <f2> is a subfield of <f1>. This operation
-# returns the bilinear form T(qf1(.,.)), T the trace from <f1> to <f2>.
+# returns the bilinear form T(alpha*qf1(.,.)), T the trace from <f1> to <f2>.
 ##
 InstallMethod( QuadraticFormFieldReduction,
 	"for a quadratic form and a field",
@@ -1285,7 +1285,7 @@ end );
 #############################################################################
 #O  HermitianFormFieldReduction( <qf1>, <f2> ) 
 # <bil1> is a hermitian form over <f1>, <f2> is a subfield of <f1>. This operation
-# returns the form T(qf1(.,.)). Depending on the degree of the field extension, this
+# returns the form T(alpha*bil1(.,.)). Depending on the degree of the field extension, this
 # yields either a bilinear form or a hermitian form.
 ##
 InstallMethod( HermitianFormFieldReduction,
