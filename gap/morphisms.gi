@@ -884,7 +884,7 @@ InstallMethod( BlownUpProjectiveSpaceBySubfield,
 
 # CHECKED 1/10/11 jdb
 #############################################################################
-#O  BlownUpSubspaceOfProjectiveSpace( <B>, <mat> ) 
+#O  BlownUpSubspaceOfProjectiveSpace( <B>, <subspace> ) 
 #  blows up a subspace of a projective space by field reduction
 ##
 InstallMethod( BlownUpSubspaceOfProjectiveSpace,
@@ -909,7 +909,7 @@ InstallMethod( BlownUpSubspaceOfProjectiveSpace,
 	end );
 
 #############################################################################
-#O  BlownUpSubspaceOfProjectiveSpaceBySubfield( <B>, <mat> ) 
+#O  BlownUpSubspaceOfProjectiveSpaceBySubfield( <B>, <subspace> ) 
 #	blows up a subspace of projective space by field reduction
 # This is w.r.t. to the canonical basis of the field over the subfield.
 ##
@@ -928,7 +928,7 @@ InstallMethod( BlownUpSubspaceOfProjectiveSpaceBySubfield,
 	end );
 
 #############################################################################
-#O  IsDesarguesianSpreadElement( <B>, <mat> ) 
+#O  IsDesarguesianSpreadElement( <B>, <subspace> ) 
 # checks if a subspace is a blown up point using field reduction, w.r.t. a basis
 ##
 InstallMethod( IsDesarguesianSpreadElement, 
@@ -1000,6 +1000,11 @@ InstallMethod( IsBlownUpSubspaceOfProjectiveSpace,
 #############################################################################
 #		PROJECTIVE SPACES
 #############################################################################
+
+#
+#  A recent reference on field reduction of projective spaces is
+#  "Field reduction and linear sets in finite geomety" by Lavrauw
+#   and Van de Voorde (preprint 2013)
 
 #############################################################################
 #O  NaturalEmbeddingByFieldReduction( <geom1>, <field>, <basis> ) 
@@ -1174,11 +1179,24 @@ InstallMethod( NaturalEmbeddingByFieldReduction,
 #		POLAR SPACES
 ##############################################################################
 
+
+#
+#  Two references on field reduction of polar spaces:
+#  [1] from group theoretic point of view: "Polar spaces and embeddings of classical groups" by Nick Gill
+#  (New Zealand J. Math)
+#  [2] from finite geometry point of view: "Field reduction and linear sets in finite geomety" by Lavrauw
+#   and Van de Voorde (preprint 2013)
+#
+#  We will use [2] as it is more convenient to us.
+
+
+
 ####
 #
-# First some operations that we will need
+# First the field reduction of bilinear forms, quadratic forms and hermitian forms
 #
 #####
+
 
 #############################################################################
 #O  BilinearFormFieldReduction( <bil1>, <f2>, <alpha>, <basis> ) 
@@ -1187,6 +1205,12 @@ InstallMethod( NaturalEmbeddingByFieldReduction,
 # with basis <basis>. This operation then
 # returns the bilinear form L(bil1(.,.)), L(x) = T(alpha*x), T the trace from <f1> to <f2>.
 ##
+# REMARK (ml 31/10/13) The fourth argument is a basis of L over K. This just gives
+# extra functionality to the user, and it is used as third argument in the 
+# operation ShrinkVec. 
+# There is also a version of this field reduction operation, which does not use
+# a basis as fourth argument. In this case the standard GAP basis is used.
+
 InstallMethod( BilinearFormFieldReduction,
 	"for a bilinear form and a field",
 	[ IsBilinearForm, IsField, IsFFE, IsBasis ],
@@ -1215,7 +1239,7 @@ InstallMethod( BilinearFormFieldReduction,
 end );
 
 #############################################################################
-#O  BilinearFormFieldReduction( <bil1>, <f2>, <alpha>, <basis> ) 
+#O  BilinearFormFieldReduction( <bil1>, <f2>, <alpha> ) 
 # The same as above, but without specified basis. In this case the canonical basis is used.
 ##
 InstallMethod( BilinearFormFieldReduction,
@@ -1231,6 +1255,12 @@ end );
 # <bil1> is a bilinear form over <f1>, <f2> is a subfield of <f1>. This operation
 # returns the bilinear form T(alpha*qf1(.,.)), T the trace from <f1> to <f2>.
 ##
+# REMARK (ml 31/10/13) The fourth argument is a basis of L over K. This just gives
+# extra functionality to the user, and it is used as third argument in the 
+# operation ShrinkVec. 
+# There is also a version of this field reduction operation, which does not use
+# a basis as fourth argument. In this case the standard GAP basis is used.
+
 InstallMethod( QuadraticFormFieldReduction,
 	"for a quadratic form and a field",
 	[ IsQuadraticForm, IsField, IsFFE, IsBasis ],
@@ -1248,12 +1278,12 @@ InstallMethod( QuadraticFormFieldReduction,
 	b2vecs:=BasisVectors(b2);
 	mat2:=IdentityMat(d2,f2);
 	for i in [1..d2] do
-		mat2[i][i]:=Trace(f1,f2,alpha*((ShrinkVec(f1,f2,b2vecs[i]))^qf1));
+		mat2[i][i]:=Trace(f1,f2,alpha*((ShrinkVec(f1,f2,b2vecs[i],basis))^qf1));
 	od;
 	for i in [1..d2-1] do
 		for j in [i+1..d2] do
-			mat2[i][j]:=Trace(f1,f2,alpha*((ShrinkVec(f1,f2,b2vecs[i]+b2vecs[j]))^qf1
-							-(ShrinkVec(f1,f2,b2vecs[i]))^qf1-(ShrinkVec(f1,f2,b2vecs[j]))^qf1));
+			mat2[i][j]:=Trace(f1,f2,alpha*((ShrinkVec(f1,f2,b2vecs[i]+b2vecs[j],basis))^qf1
+							-(ShrinkVec(f1,f2,b2vecs[i],basis))^qf1-(ShrinkVec(f1,f2,b2vecs[j],basis))^qf1));
 			#mat2[j][i]:=mat2[i][j]; THESE entries need to be zero
 		od;
 	od;
@@ -1277,27 +1307,26 @@ InstallMethod( QuadraticFormFieldReduction,
 end );
 
 
-# CHANGED jdb 9/4/12: added arguments basis and alpha.
-# one more remark. Some values of alpha will cause HermitianFormByMatrix (so odd t) 
-# to produce an error message. This is normal, see overview in N. Gill's paper
-# but as we don't check this in the inputs, this function is not meant for the
-# user.
 #############################################################################
-#O  HermitianFormFieldReduction( <qf1>, <f2> ) 
-# <bil1> is a hermitian form over <f1>, <f2> is a subfield of <f1>. This operation
+#O  HermitianFormFieldReduction( <hf1>, <f2>, <alpha>, <basis> ) 
+# <hf1> is a hermitian form over <f1>, <f2> is a subfield of <f1>. This operation
 # returns the form T(alpha*bil1(.,.)). Depending on the degree of the field extension, this
 # yields either a bilinear form or a hermitian form.
 ##
+# REMARK (ml 31/10/13) The fourth argument is a basis of L over K. This just gives
+# extra functionality to the user, and it is used as third argument in the 
+# operation ShrinkVec. 
+# There is also a version of this field reduction operation, which does not use
+# a basis as fourth argument. In this case the standard GAP basis is used.
+
 InstallMethod( HermitianFormFieldReduction,
 	"for a hermitian form and a field",
 	[ IsHermitianForm, IsField, IsFFE, IsBasis ],
 	function(hf1,f2,alpha,basis)
 	# f2 is a subfield of the basefield for the hermitian form hf1
 	# here the basefield is always a square
-	local f1,basvecs,d1,t,d2,V2,V1,phi,b2,b2vecs,mat2,i,row,j,hf2;
+	local f1,d1,t,d2,V2,V1,phi,b2,b2vecs,mat2,i,row,j,hf2;
 	f1:=hf1!.basefield;
-	#basis:=Basis(AsVectorSpace(f2,f1));
-	basvecs:=BasisVectors(basis);
 	d1:=Size(hf1!.matrix);
 	t:=Dimension(AsVectorSpace(f2,f1));
 	d2:=d1*t;
@@ -1309,7 +1338,7 @@ InstallMethod( HermitianFormFieldReduction,
 	for i in [1..d2] do 
 		row:=[];
 		for j in [1..d2] do
-			Add(row,Trace(f1,f2,alpha*([ShrinkVec(f1,f2,b2vecs[i]),ShrinkVec(f1,f2,b2vecs[j])]^hf1)));
+			Add(row,Trace(f1,f2,alpha*([ShrinkVec(f1,f2,b2vecs[i],basis),ShrinkVec(f1,f2,b2vecs[j],basis)]^hf1)));
 		od;
 		Add(mat2,row);
 	od;
@@ -1322,9 +1351,34 @@ InstallMethod( HermitianFormFieldReduction,
 	return hf2;
 end );
 
+
+#############################################################################
+# #O  HermitianFormFieldReduction( <hf11>, <f2>, <alpha> ) 
+# The same as above, but without specified basis. In this case the canonical basis is used.
+##
+
+InstallMethod( HermitianFormFieldReduction,
+	"for a hermitian form and a field",
+	[ IsHermitianForm, IsField, IsFFE ],
+	function(hf1,f2,alpha)
+	# f2 is a subfield of the basefield for the hermitian form hf1
+	# here the basefield is always a square
+	local basis;
+	
+	basis:=Basis(AsVectorSpace(f2,hf1!.basefield));
+	return HermitianFormFieldReduction(hf1,f2,alpha,basis);
+end );
+
+
+
+
+
+
+
+
 ##########################################################
 #
-# The embeddings for polar spaces
+# Next the embeddings for polar spaces based on the field reduction of the forms above
 # 
 #############################################################################
 
@@ -1333,10 +1387,6 @@ end );
 #O  NaturalEmbeddingByFieldReduction( <ps1>, <f2>, <alpha>, <basis>, <bool> ) 
 # returns a geometry morphism, described below. If <bool> is true, then an intertwiner
 # is computed.
-#
-#  A good reference on field reduction of polar spaces is
-#  "Polar spaces and embeddings of classical groups" by Nick Gill
-#  (New Zealand J. Math). 
 ##
 InstallMethod (NaturalEmbeddingByFieldReduction,
 	"for a polar space, a field, a basis, a finite field element, and a boolean",
@@ -1351,8 +1401,7 @@ InstallMethod (NaturalEmbeddingByFieldReduction,
 	# 1. the polar space is of orthogonal type
 	if type1 in ["hyperbolic","elliptic","parabolic"] then
 		qf1:=QuadraticForm(ps1);
-#		qf2:=QuadraticFormFieldReduction(qf1,f2,alpha,basis);
-		qf2:=QuadraticFormFieldReduction(qf1,f2,alpha);  # John's method (without "basis")
+		qf2:=QuadraticFormFieldReduction(qf1,f2,alpha,basis);
 		
 		if IsSingularForm(qf2) then 
 			Error("The field reduction does not yield a natural embedding");
@@ -1363,7 +1412,7 @@ InstallMethod (NaturalEmbeddingByFieldReduction,
 		bil1:=SesquilinearForm(ps1);
 		bil2:=BilinearFormFieldReduction(bil1,f2,alpha,basis);
 		ps2:=PolarSpace(bil2);
-	# 1. the polar space is of hermitian type	
+	# 3. the polar space is of hermitian type	
 	elif type1 in ["hermitian"] then
 		hf1:=SesquilinearForm(ps1);
 		hf2:=HermitianFormFieldReduction(hf1,f2,alpha,basis);
@@ -1371,6 +1420,7 @@ InstallMethod (NaturalEmbeddingByFieldReduction,
 	fi;
 	
 	em:=NaturalEmbeddingByFieldReduction(AmbientSpace(ps1),AmbientSpace(ps2));
+	# this is the field reduction for projective spaces PG(r-1,q^t) -> PG(rt-1,q)
 	
 	fun:=function(x)
 		local projfun;
@@ -1481,220 +1531,47 @@ InstallMethod( NaturalEmbeddingByFieldReduction,
 	function( geom1, geom2 )
 		return NaturalEmbeddingByFieldReduction( geom1, geom2, true );
 	end );
-
-#the method below is UNFINISHED. I just put the framework here (jdb 21/12/2011).
-#############################################################################
-#O  CanonicalEmbeddingByFieldReduction( <ps1>, <f2>, <bool> ) 
-# returns a geometry morphism, described below. If <bool> is true, then an intertwiner
-# is computed. We embed into a canonical polar space. The function is 
-# strongly based on its non-canonical variant.
-##
-InstallMethod (CanonicalEmbeddingByFieldReduction,
-	"for a polar space, a field, and a boolean",
-	[IsClassicalPolarSpace, IsField, IsBool],
-	function(ps1,f2,computeintertwiner)
-	# f2 must be a subfield of the basefield of the classical polar space
-	local type1,qf1,qf2,ps2,bil1,bil2,hf1,hf2,em,fun,prefun,basis,f1,d,iso,form2,type2,
-					map,hom,hominv,g1,gens,newgens,g2,twiner,canonicalform,canonical,
-					c1,c2,change,invchange;
-	type1 := PolarSpaceType(ps1);
-
-	# 1. the polar space is of orthogonal type
-	if type1 in ["hyperbolic","elliptic","parabolic"] then
-		qf1:=QuadraticForm(ps1);
-		form2:=QuadraticFormFieldReduction(qf1,f2);   
-		if IsSingularForm(qf2) then 
-			Error("The field reduction does not yield a natural embedding");
-		else ps2:=PolarSpace(qf2);
-		fi;
-	# 2. the polar space is of symplectic type
-	elif type1 in ["symplectic"] then
-		bil1:=SesquilinearForm(ps1);
-		form2:=BilinearFormFieldReduction(bil1,f2);
-		ps2:=PolarSpace(form2);
-	# 1. the polar space is of hermitian type	
-	elif type1 in ["hermitian"] then
-		hf1:=SesquilinearForm(ps1);
-		form2:=HermitianFormFieldReduction(hf1,f2); #could be another form than a hermitian form
-		ps2:=PolarSpace(form2);
-	fi;
-	type2 := PolarSpaceType(ps2);
-	d := ProjectiveDimension(ps2);
-	if type2 = "hermitian" then
-		canonical := HermitianPolarSpace(d, f2);  
-		canonicalform := SesquilinearForm(canonical);             
-	elif type2 = "symplectic" then
-		canonical := SymplecticSpace(d, f2);  
-		canonicalform := SesquilinearForm(canonical);              
-	elif type2 = "elliptic" then 
-		canonical := EllipticQuadric(d, f2); 
-		canonicalform := QuadraticForm(canonical);        
-	elif type2 = "parabolic" then
-		canonical := ParabolicQuadric(d, f2);
-		canonicalform := QuadraticForm(canonical);        
-	elif type2 = "hyperbolic" then
-		canonical := HyperbolicQuadric(d, f2);
-		canonicalform := QuadraticForm(canonical);        
-	fi;
-	c1 := BaseChangeToCanonical( form2 );
-	c2 := BaseChangeToCanonical( canonicalform );
-	change := c1^-1 * c2;       
-	ConvertToMatrixRepNC(change, f2);
-	invchange := change^-1;     
-		
-	#iso := IsomorphismPolarSpacesNC(ps2, canonical, false);
 	
-	#em:=NaturalEmbeddingByFieldReduction(AmbientSpace(ps1),AmbientSpace(ps2));
 	
-	f1:=ps1!.basefield;
-	basis:=Basis(AsVectorSpace(f2,f1));
-	fun:=function(x)
-		local mat;
-		mat := x!.obj;
-		if x!.type = 1 then
-			mat := [mat];
-		fi;
-		#projfun:=em!.fun;
-		#isofun := iso!.fun;
-		return VectorSpaceToElement(canonical,(BlownUpMat(basis,mat)*change));
-		#return isofun(VectorSpaceToElement(ps2,projfun(x)!.obj));
-	end;
 	
-	prefun:=function(x)
-		local mat; #projprefun,isoprefun;
-		mat := x!.obj;
-		if x!.type = 1 then
-			mat := [mat];
-		fi;
-		mat := mat*invchange;
-		#projprefun:=em!.prefun;
-		#isoprefun := iso!.prefun;
-		#return VectorSpaceToElement(ps1,projprefun(isoprefun(x))!.obj);
-		return VectorSpaceToElement(ps1,ShrinkMat(basis,mat));
-	end;
-	
-	map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(ps1),
-                                         ElementsOfIncidenceStructure(canonical),
-                                         fun, false, prefun);
-		
-	SetIsInjective( map, true );
-	
-	## Now creating intertwiner
-	
-	if computeintertwiner then
-		hom := function( m )
-			local image;      
-			image := BlownUpMat(basis, m!.mat); 
-			ConvertToMatrixRepNC( image, f2 );       
-			return CollineationOfProjectiveSpace(image, f2);
-		end;
-		hominv := function( m )
-			local preimage;      
-			preimage := ShrinkMat(basis, m!.mat); 
-			ConvertToMatrixRepNC( preimage, f1 );       
-			return CollineationOfProjectiveSpace(preimage, f1);
-		end;
-		g1 := SimilarityGroup( ps1 );
-		gens := GeneratorsOfGroup( g1 );
-		newgens := List(gens, hom);
-		g2 := Group( newgens );
-		SetSize(g2, Size(g1));
-		twiner := GroupHomomorphismByFunction(g1, g2, hom, hominv);
-		SetIntertwiner( map, twiner);
-	fi;
-	return map;
-	end );
-
-
 #####################################################################################
-#
-# John's method for CanonicalEmbeddingByFieldReduction. It works well except for the
-# last two quadratic form cases. Since q is odd, I have come up with a work around.
-# Something is wrong with QuadraticFormFieldReduction.
-#
+# ml 31/10/2013
+# This NaturalEmbeddingByFieldReduction takes two polar spaces and returns an embedding
+# obtained by field reduction if such an embedding exists, otherwise it returns an error.
+# It does not compute the intertwiner, this can be added later (if desired).
+# 
 #####################################################################################
 
-# JB: Is the argument "basis" really needed? I've made two operations for my work-around below
-# that can be distinguished from the other methods by the number of arguments (I do not have "basis").
 
-InstallMethod( QuadraticFormFieldReduction,
-	"for a quadratic form and a field",
-	[ IsQuadraticForm, IsField, IsFFE ],
-	function(qf1, f2, alpha)
-		# f2 is a subfield of the basefield for the quadratic form q1
-	local f1,d1,t,d2,V2,phi,b2,b2vecs,mat1,mat2,i,j,bil1,qf2,bil2;
-
-	# In the odd characteristic case, we can use the bilinear form.
-	if IsOddInt(Size(f2)) then
-	   	bil1 := AssociatedBilinearForm( qf1 );
-	   	bil2 := BilinearFormFieldReduction(bil1, f2, alpha);
-	    qf2 := QuadraticFormByBilinearForm(bil2);
-    else
-		# There is still a problem here that needs resolving.
-		mat1 := qf1!.matrix;
-		f1 := qf1!.basefield;
-		d1 := Size(mat1);
-		t := Dimension(AsVectorSpace(f2,f1));
-		d2 := d1*t;
-		b2 := Basis(f2^d2);
-		b2vecs := BasisVectors(b2);
-		for i in [1..d2-1] do
-			for j in [i+1..d2] do
-				mat2[i][j]:=Trace(f1,f2,alpha*(ShrinkVec(f1,f2,b2vecs[i]+b2vecs[j]))^qf1
-								-(ShrinkVec(f1,f2,b2vecs[i]))^qf1-(ShrinkVec(f1,f2,b2vecs[j]))^qf1);
-			od;
-		od;
-		qf2 := QuadraticFormByMatrix(mat2,f2);
-	fi;	
-	return qf2;
-end );
-
-InstallMethod( BilinearFormFieldReduction,
-	"for a bilinear form and a field",
-	[ IsBilinearForm, IsField, IsFFE ],
-	function(bil1, f2, alpha)
-		# f2 is a subfield of the basefield of the bilinear form bil1
-	local mat1,f1,d1,t,d2,b2,b2vecs,mat2, bil2;
-	mat1 := bil1!.matrix;
-	f1 := bil1!.basefield;
-	d1 := Size(mat1);
-	t := Dimension(AsVectorSpace(f2,f1));
-	d2 := d1*t;
-	b2 := Basis(f2^d2);
-	b2vecs := BasisVectors(b2);	
-	mat2 := List([1..d2], i -> List([1..d2], j -> 
-		Trace(f1,f2,alpha*(ShrinkVec(f1,f2,b2vecs[i]) * mat1 * ShrinkVec(f1,f2,b2vecs[j])))));	
-	bil2 := BilinearFormByMatrix(mat2,f2);
-	return bil2;
-end );
-
-InstallMethod (CanonicalEmbeddingByFieldReduction,
-	"for a polar space, a field, and a boolean",
-	[IsClassicalPolarSpace, IsClassicalPolarSpace, IsBool],
-	function(ps1, ps2, computeintertwiner)
+InstallMethod (NaturalEmbeddingByFieldReduction,
+	"for two classical polar spaces",
+	[IsClassicalPolarSpace, IsClassicalPolarSpace],
+	function(ps1, ps2)
 
 	#####################################################################
-	#  Different cases of PolarSpace(A-1, q^w) -> PolarSpace(wA-1, q)
+	#  List of possible embeddings of ps1 in PG(r-1, q^t) -> ps2 in PG(rt-1, q)
 	#
-	#  Sesquilinear forms
-	#  	H -> H (w odd)
-	#  	H -> W (w even)
-	#  	H -> Q+ (w even, A even)
-	#  	H -> Q- (w even, A odd)
+	#  Hermitian
+	#  	H -> H (t odd)
+	#  	H -> W (t even)
+	#  	H -> Q+ (t even, r even)
+	#  	H -> Q- (t even, r odd)
+	#
+	#  Symplectic
 	#  	W -> W (always)
 	#
-	#  Quadratic forms	
-	# A even			
+	#  Orthogonal	
+	# r even			
 	#	Q+ -> Q+ (always)
 	#	Q- -> Q- (always)
-	# A odd
-	#	Q -> Q (w odd, q odd)
-	#   Q -> Q+ (w even, q odd)
-	#   Q -> Q- (w even, q odd)
+	# r odd
+	#	Q -> Q (t odd, q odd)
+	#   Q -> Q+ (t even, q odd)
+	#   Q -> Q- (t even, q odd)
 	#####################################################################
 
-    local type1, type2, form1, form1b, form2, f1, f2, w, newps, sigma, map, 
-		  gamma, q, n, A, alpha, basis, is_square, morphism, iso;
+    local t, r, type1, type2, form1, form1b, form2, f1, f2, newps, sigma, map, 
+		  gamma, bil1, q, n, alpha, basis, is_square, morphism, iso;
 					
 	type1 := PolarSpaceType(ps1);
 	type2 := PolarSpaceType(ps2);
@@ -1710,46 +1587,46 @@ InstallMethod (CanonicalEmbeddingByFieldReduction,
 	if not IsSubset(f1,f2) then
 	   Error("Fields are incompatible");
 	fi;
-	w := Log(Size(f1),q);	# conforming to Nick's notation
-	A := ProjectiveDimension(ps1)+1; 	# conforming to Nick's notation
+	t := Log(Size(f1),q);
+	r := ProjectiveDimension(ps1)+1;
 	basis := CanonicalBasis(AsVectorSpace(f2,f1));
     is_square := function(x, f) return IsZero(x) or IsEvenInt(LogFFE(x,PrimitiveRoot(f))); end;
       
 	if IsSesquilinearForm(form1) then
-       	if type1 = "hermitian" and type2 = "hermitian" and IsOddInt(w) then
+       	if type1 = "hermitian" and type2 = "hermitian" and IsOddInt(t) then
 			Info(InfoFinInG, 1, "These polar spaces are suitable for field reduction");
-				# need alpha to be fixed by sigma: x -> x^q
+				# need alpha to be fixed by sigma:
 			alpha := One(f1);
-			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis, computeintertwiner );	
+			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis );	
 			
-	   	elif type1 = "hermitian" and type2 = "symplectic" and IsEvenInt(w) then
+	   	elif type1 = "hermitian" and type2 = "symplectic" and IsEvenInt(t) then
 			Info(InfoFinInG, 1, "These polar spaces are suitable for field reduction");
 			if IsEvenInt(q) then
-				# need alpha to be fixed by sigma: x -> x^q
+				# need alpha to be fixed by sigma:
 				alpha := One(f1);				
 			else
 				# need sigma(alpha)=-alpha
 				sigma := Sqrt(Size(f1));
-				alpha := First(f1, t->not IsZero(t) and t^sigma = -t);				
+				alpha := First(f1, x->not IsZero(x) and x^sigma = -x);				
 			fi;	
-			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis, computeintertwiner );	
+			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis );	
 		
-	   	elif type1 = "hermitian" and type2 = "hyperbolic" and IsEvenInt(w) and IsEvenInt(A) 
+	   	elif type1 = "hermitian" and type2 = "hyperbolic" and IsEvenInt(t) and IsEvenInt(r) 
 				and IsOddInt(q) then
 			Info(InfoFinInG, 1, "These polar spaces are suitable for field reduction");
 			alpha := One(f1);	
-			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis, computeintertwiner );	
+			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis );	
 						
-	   	elif type1 = "hermitian" and type2 = "elliptic" and IsEvenInt(w) and IsOddInt(A) 
+	   	elif type1 = "hermitian" and type2 = "elliptic" and IsEvenInt(t) and IsOddInt(r) 
 				and IsOddInt(q) then
 			Info(InfoFinInG, 1, "These polar spaces are suitable for field reduction");
 			alpha := One(f1);	
-			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis, computeintertwiner );	
+			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis );	
 			
 	   	elif type1 = "symplectic" and type2 = "symplectic" then
 			Info(InfoFinInG, 1, "These polar spaces are suitable for field reduction");
 			alpha := One(f1);				
-			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis, computeintertwiner );	
+			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis );	
 		else
 		 	Error("These polar spaces are not suitable for field reduction.");
 		fi;
@@ -1757,55 +1634,78 @@ InstallMethod (CanonicalEmbeddingByFieldReduction,
 		if type1 = "hyperbolic" and type2 = "hyperbolic" then
 			Info(InfoFinInG, 1, "These polar spaces are suitable for field reduction");
 			alpha := One(f1);
-			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis, computeintertwiner );	
+			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis );	
 		elif type1 = "elliptic" and type2 = "elliptic" then
 			Info(InfoFinInG, 1, "These polar spaces are suitable for field reduction");
 			alpha := One(f1);
-			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis, computeintertwiner );	
-		elif type1 = "parabolic" and type2 = "parabolic" and IsOddInt(w) and IsOddInt(q) then
+			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis );	
+		elif type1 = "parabolic" and type2 = "parabolic" and IsOddInt(t) and IsOddInt(q) then
 			Info(InfoFinInG, 1, "These polar spaces are suitable for field reduction");
 			alpha := One(f1);
-			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis, computeintertwiner );			
-		elif type1 = "parabolic" and type2 = "hyperbolic" and IsEvenInt(w) and IsOddInt(q) then
-			Info(InfoFinInG, 1, "These polar spaces are suitable for field reduction: Parabolic -> Hyperbolic");
-			# JB: I couldn't get it to work purely with quadratic forms, but we can use
-			# the bilinear form since q is odd
+			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis );	
 
-			if q mod 4 = 1 then
- 				alpha := First(f1, a -> not IsZero(a) and not is_square( a, f1 ) );
-			else
-				alpha := First(f1, a -> not IsZero(a) and is_square( a, f1 ) );
+		# If ps1 is parabolic and ps2 is hyperbolic or elliptic, 
+		# then the choice of alpha that we will use for the embedding
+		# depends on the isometry type of ps1. The isometry type is determined by
+		# gamma being a square or not, where gamma is
+		# (-1)^(r-1)/2 times the determinant of the bilinear form, divided by two.
+		# The conditions we use here are taken from [Lavrauw - Van de Voorde: "Field
+		# reduction and linear sets in finite geometry", preprint], they are
+		# somewhat easier to work with than the conditions in Gill's paper.
+
+		elif type1 = "parabolic" and type2 = "hyperbolic" and IsEvenInt(t) and IsOddInt(q) then
+			Info(InfoFinInG, 1, "These polar spaces are suitable for field reduction: Parabolic -> Hyperbolic");
+			bil1:=AssociatedBilinearForm(form1); # important to use this instead of 
+			# BilinearFormByQuadraticForm (see documentation of the Forms package).
+			gamma:=((-1)^((r-1)/2)) * Determinant(bil1!.matrix)/2;
+			if q^(t/2) mod 4 = 1 then # the product of alpha and gamma must be a nonsquare
+ 				alpha := First(f1, a -> not IsZero(a) and not is_square( a*gamma, f1 ) );
+			else # the product of alpha and gamma must be a square
+				alpha := First(f1, a -> not IsZero(a) and is_square( a*gamma, f1 ) );
 			fi;
-			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis, computeintertwiner );
+			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis );
 						
-		elif type1 = "parabolic" and type2 = "elliptic" and IsEvenInt(w) and IsOddInt(q) then
+		elif type1 = "parabolic" and type2 = "elliptic" and IsEvenInt(t) and IsOddInt(q) then
 			Info(InfoFinInG, 1, "These polar spaces are suitable for field reduction: Parabolic -> Elliptic");
-			if q mod 4 = 1 then
- 				alpha := First(f1, a -> not IsZero(a) and is_square( a, f1 ) );
-			else
-				alpha := First(f1, a -> not IsZero(a) and not is_square( a, f1 ) );
+			bil1:=AssociatedBilinearForm(form1); # important to use this instead of 
+			# BilinearFormByQuadraticForm (see documentation of the Forms package).
+			gamma:=((-1)^((r-1)/2)) * Determinant(bil1!.matrix)/2;
+			if q^(t/2) mod 4 = 1 then # the product of alpha and gamma must be a square
+ 				alpha := First(f1, a -> not IsZero(a) and is_square( a*gamma, f1 ) );
+			else # the product of alpha and gamma must be a nonsquare
+				alpha := First(f1, a -> not IsZero(a) and not is_square( a*gamma, f1 ) );
 			fi;
-			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis, computeintertwiner );			
+			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis );			
 			
 		else
 		 	Error("These polar spaces are not suitable for field reduction.");
-		
      	fi;	
 	fi;
-	iso := IsomorphismPolarSpacesNC(AmbientGeometry(Range(map)), ps2, computeintertwiner);	
+	
+	iso := IsomorphismPolarSpacesNC(AmbientGeometry(Range(map)), ps2);	
 	morphism := GeometryMorphismByFunction(ElementsOfIncidenceStructure(ps1), 
                                        ElementsOfIncidenceStructure(ps2), 
                                         x -> iso!.fun(map!.fun(x)), false,  x -> map!.prefun(iso!.prefun(x)) );
 
 	# The intertwiner is a record element and so we need to adjust this manually
 	# This still needs testing.
-	
-    SetIntertwiner(morphism, CompositionMapping(Intertwiner(iso), Intertwiner(map)) );
+	#SetIntertwiner(morphism, CompositionMapping(Intertwiner(iso), Intertwiner(map)) );
 		
 	return morphism;
 end );
 
 
+
+
+
+
+#############################################################################
+#
+#
+# Embeddings by SUBFIELDS
+#
+#
+#############################################################################
 
 
 # CHECKED 28/09/11 jdb
@@ -1950,6 +1850,32 @@ InstallMethod( NaturalEmbeddingBySubfield,
 	function( geom1, geom2 )
 		return NaturalEmbeddingBySubfield( geom1, geom2, true );
 	end );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#############################################################################
+#
+#
+# PROJECTIONS
+#
+#
+#############################################################################
+
+
 
 # CHECKED 28/09/11 jdb
 #############################################################################
@@ -2340,11 +2266,46 @@ InstallMethod( NaturalProjectionBySubspaceNC,
     return map;
   end );
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #############################################################################
 # two helper operations. They can be used by the users, but on the other hand
 # the form of the Klein quadric is fixed, so this is against the philiosphy of
 # FinInG, at least for user functions. Also, there are no checks. So I will not
 # describe these in the documentation.
+#############################################################################
+
+
+#############################################################################
+#
+#
+# PLUCKER coordinates and KLEIN correspondence
+#
+#
 #############################################################################
 
 # CHECKED 28/09/11 jdb
@@ -2460,6 +2421,20 @@ InstallMethod( KleinCorrespondence,
 
     ## put intertwiner in PGammaL(4,q)->PGO^+(6,q) 
 	end );
+
+
+
+
+
+
+
+#############################################################################
+#
+#
+# DUALITIES between W(q) and Q(4,q)
+#
+#
+#############################################################################
 
 # CHECKED 28/09/11 jdb
 #############################################################################
