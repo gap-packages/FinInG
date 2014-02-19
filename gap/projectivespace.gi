@@ -1483,20 +1483,31 @@ InstallOtherMethod( \in,
 		fi;
 	end );
 
-# CHECKED 11/09/11 jdb
+# CHECKED 19/02/14 jdb
 #############################################################################
 #O  \in( <x>, <dom> )
-# returns true if and only if (and this is checked) <x> is the empty subspace
-# in the projective space <dom>.
+# returns true if and only if the ambient space of x is equal to dom.
+# note that when <x> is an element of a projective space, if would be
+# sufficient to define ps as x!geo. But for <x> an element of e.g. a quadric
+# and dom the ambient space of the quadric, this would result in checking
+# whether a quadric = a projective space, and for this check no method is
+# implemented for \= (doing so would be ridiculous). However, to make sure
+# that e.g. checking wheter a point of a quadric lies in the ambient space
+# of a projective space, this method will be called. So we have to use 
+# the AmbientSpace of the element here.
 ##
 InstallMethod( \in, 
 	"for a subspace of a projective space and projective space",  
     [IsSubspaceOfProjectiveSpace, IsProjectiveSpace],
 	function( x, dom )
 		local ps;
-		ps := x!.geo;
-		return ps!.dimension = dom!.dimension and 
+		ps := AmbientSpace(x);
+        if dom = ps then
+          return ps!.dimension = dom!.dimension and
 			ps!.basefield = dom!.basefield;
+        else
+          Error( "<dom> is different from the ambient space of <x>" );
+        fi;
 	end );
 
 # CHECKED 11/09/11 jdb
