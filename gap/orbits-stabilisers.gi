@@ -152,7 +152,14 @@ InstallMethod( FiningStabiliserPerm, [IsProjectiveGroupWithFrob, IsElementOfInci
 		hom:=ActionHomomorphism(fining_group,ElementsOfIncidenceStructure(geo,type),OnProjSubspaces);
 		enum:=HomeEnumerator(UnderlyingExternalSet(hom));;
 		nr:=Position(enum,el);
-		stab:=Stabiliser(Image(hom),nr);
+		stab:=Stabilizer(Image(hom),nr); 
+
+#here was an issue. Ml originally wrote "Stabiliser", but meant "Stabilizer", 
+#according to his own documentation of this method. But "Stabiliser" is defined in the 
+#package AutPGrp. So if this package is not present or loaded, this gives an error.
+#However, if this package was loaded, then something else was happening than intended.
+#We (pc+jdb) think that this issue is understood now.
+
 		gens:=GeneratorsOfGroup(stab);;
 		gens:=List(gens,x->PreImagesRepresentative(hom,x));
 		stab:=GroupWithGenerators(gens);
