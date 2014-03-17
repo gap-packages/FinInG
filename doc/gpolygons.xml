@@ -449,7 +449,7 @@ exists.
 Some of our generalised polygons come equipped automatically with a collineation group.
 For example, the generalised hexagons have their collineation groups already installed,
 and so do the classical generalised quadrangles. However, the collineation group
-of a projective plane is calculated via using the package <Package>Grape</Package>.
+of a projective plane is calculated using the package <Package>Grape</Package>.
 We refer to <Ref Oper="CollineationAction"/> for an example.
 </Description>
 </ManSection>

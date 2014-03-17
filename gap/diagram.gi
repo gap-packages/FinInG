@@ -1179,7 +1179,7 @@ InstallMethod( GeometryOfRank2Residue, "for a rank 2 residue", [IsRank2Residue],
     return residue!.residuegeometry;
   end );
 
-# 
+# CHECKED 17/03/2014 PhC
 #############################################################################
 #F Rank2Parameters ( <geo> )
 # 

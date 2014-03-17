@@ -78,7 +78,7 @@ implemented groups and elements of geometries. However, computing time can be ve
 </Example>
 
 The packages <Package>GenSS</Package> and <Package>orb</Package> required by <Package>FinInG</Package> provide 
-efficient operations to compute stabilisers, and <Package>FinInG</Package> provides functionality to used 
+efficient operations to compute stabilisers, and <Package>FinInG</Package> provides functionality to use 
 these operations for the particular groups and (elements) of geometries.
 
 <ManSection>

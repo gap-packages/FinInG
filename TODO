@@ -147,3 +147,12 @@ Here is what needs to be done:
 - work on IsomorphismPolarSpaces (doesn't seem to be clean enough)
 
 - changed this file by adding this line (17/3/2014) to test my svn behaviour.
+
+ADDED 17/3/2014
+===============
+
+- IncidenceGraphOfGeneralizedPolygon should become a method for the 
+(more general) IncidenceGraph, which is now defined for coset 
+geometries. Maybe the latter should become 
+IncidenceGraphOfCosetGeometry, a method for IncidenceGraph.
+

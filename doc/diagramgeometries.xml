@@ -33,7 +33,7 @@ on <Package>GRAPE</Package>.
 Suppose we have an <E>incidence
 geometry</E> <Alt Not="HTML"><M>\Gamma</M></Alt><Alt Only="HTML">&#915;</Alt>
 (as defined in chapter <Ref Chap="incidencegeometry"/>), together with
-a group <M>G</M> of automorphisms of <Alt Not="HTML"><M>\Gamma</M></Alt><Alt Only="HTML">&#915;</Alt> is also given such that <M>G</M> is
+a group <M>G</M> of automorphisms of <Alt Not="HTML"><M>\Gamma</M></Alt><Alt Only="HTML">&#915;</Alt> such that <M>G</M> is
 transitive on the set of <E>chambers</E> of <M>\Gamma</M> (also
 defined in chapter <Ref Chap="incidencegeometry"/>). This implies
 that <M>G</M> is also transitive on the set of all elements of any
@@ -53,8 +53,7 @@ if the corresponding cosets have a nonempty intersection.<P/>
 
 We now use the above observation to define an incidence structure from
 a group <M>G</M> together with a set of
-subgroups <Alt Not="HTML"><M>G_{1},G_{2},...,G_{n}</M></Alt>
-<Alt Only="HTML">G&lt;sub>1&lt;/sub>,G&lt;sub>2&lt;/sub>,...,G&lt;sub>n&lt;/sub></Alt>.
+subgroups <Alt Not="HTML"><M>G_{1},G_{2},...,G_{n}</M></Alt><Alt Only="HTML">G&lt;sub>1&lt;/sub>,G&lt;sub>2&lt;/sub>,...,G&lt;sub>n&lt;/sub></Alt>.
 The type set is <Alt Not="HTML"><M>\{1,2,...,n\}</M></Alt><Alt Only="HTML">&#123;1,2,...,n&#125;</Alt>. 
 By definition the elements of type <M>i</M> are the (right) cosets of the subgroup 
 <Alt Not="HTML"><M>G_{i}</M></Alt><Alt Only="HTML">G&lt;sub>i&lt;/sub></Alt>. Two
