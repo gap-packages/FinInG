@@ -15,4 +15,5 @@ Length(elements);
 type := x -> ProjectiveDimension(x)+1;
 inc_rel := \*;
 inc := IncidenceStructure(elements,inc_rel,type,[1,2,3,4]);
+Rank(inc);
 quit;

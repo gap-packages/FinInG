@@ -20,16 +20,23 @@ in general.
 <Chapter Label="incidencegeometry">
 <Heading>Incidence Geometry</Heading>
 
-The term geometry, or incidence geometry, is interpreted in a broad sense in this package.
-The basis for the construction of the objects in this package is an abstract
-incidence geometry consisting of elements, types, and an incidence relation. 
-To be more specific, an <E>incidence geometry</E> consists of a set of
-elements, 
+We follow <Cite Key="BC2013"/> for the definitions of incidence structure and 
+incidence geometry. An <E>incidence structure</E> consists of a set of elements, 
 a symmetric relation on the elements and a type function from the set of
-elements to an index set (i.e., every element has a ``type''). There are two axioms: 
-(i) no two elements of the same type are incident; (ii) every maximal flag contains
-an element of each type. Thus, a projective 5-space is an incidence geometry
-with five types of elements; points, lines, planes, solids, and hyperplanes.<P/>
+elements to an index set (i.e., every element has a ``type''). It satisfies
+the following axiom: <E>(i) no two elements of the same type are incident.</E>
+An incidence structure without type function is in fact a multipartite graph where
+the adjacency is the incidence (so with a loop in each vertex). 
+
+The term geometry, or incidence geometry, is interpreted braodly in this package.
+Particularly, an <E>incidence geometry</E> is an incidence structure satisfying 
+the following axiom: <E>(ii)every maximal flag contains an element of each type</E>.
+In graph terminology, this means that every maximal clique contains an element of each type.
+
+Thus, a projective 5-space is an incidence geometry with five types of elements: points, lines, 
+planes, solids, and hyperplanes. A finite classical polar space of rank 3 is an incidence geometry
+with three types of elements: points, lines, and planes. Depending on the viewpoint, the Grassman variety
+of the lines of a projective 4-space, is an incidence structure that is not an incidence geometry.<P/>
 
 <Package>FinInG</Package> concerns itself primarily with the most
 commonly studied incidence geometries of rank more than 2: projective spaces,
@@ -37,8 +44,7 @@ polar spaces, and affine spaces. However, some facility with generalised polygon
 has been included. Throughout, no matter the geometry, we have made the convention that
 an element of type 1 is a ``point'', an element of type 2 is a ``line'', and so forth.
 The examples we use in this section use projective spaces, which have
-not yet been introduced to the 
-reader in this manual. For further information on projective spaces,
+not yet been introduced to the  reader in this manual. For further information on projective spaces,
 see Chapter <Ref Chap="projective_spaces"/>.<P/>
 
 In this chapter we describe functionality that is <B>declared</B> for 
