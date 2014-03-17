@@ -1,21 +1,18 @@
 <!-- 
 
-  projgroup.xml    FinInG package documentation
+  diagramgeometries.xml    FinInG package documentation
                                                                    John Bamberg
                                                                    Anton Betten
                                                                    Jan De Beule
                                                                   Philippe Cara
                                                                  Michel Lavrauw
-                                                                  and Maska Law
-                                                             and Michael Pauley
-                                                            and Max Neunhoeffer
-                                                              and Sven Reichard
+																Max Neunhoeffer
 
-  Copyright (C) 2008, University of Western Australia
+ Copyright (C) 2014, University of Western Australia
                       Colorado State University
-                      Lehrstuhl D fuer Mathematik
-                      Ghent University
                       Vrije Universiteit Brussel
+                      Ghent University
+					  Università degli Studi di Padova
 
 This is the chapter of the documentation describing the projective groups.
 
@@ -227,6 +224,14 @@ contains the line order and the number of lines (i.e. elements of type
 2).
 </Description>
 </ManSection>
+
+The following example illustrates the <F>Rank2Parameters</F>. It uses the <Package>AtlasRep</Package> to 
+fetch the second Janko group, also know as the Hall-Janko group. The constructed geometry is also known as
+the Cohen-Tits near octagon.
+
+<Example>
+<#Include SYSTEM "../examples/include/diagram_nearoctagon.include"> 
+</Example>
 
 <ManSection>
 <Oper Name="Rk2GeoDiameter" Arg="cg,type"/>

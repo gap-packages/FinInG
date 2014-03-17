@@ -1,0 +1,23 @@
+gap&gt; LoadPackage("atlasrep");
+-----------------------------------------------------------------------------
+Loading  AtlasRep 1.5.0 (An Atlas of Group Representations)
+by Robert A. Wilson (http://www.maths.qmw.ac.uk/~raw),
+   Richard A. Parker (richpark@gmx.co.uk),
+   Simon Nickerson (http://web.mat.bham.ac.uk/S.Nickerson),
+   John N. Bray (http://www.maths.qmw.ac.uk/~jnb), and
+   Thomas Breuer (http://www.math.rwth-aachen.de/~Thomas.Breuer).
+Homepage: http://www.math.rwth-aachen.de/~Thomas.Breuer/atlasrep
+-----------------------------------------------------------------------------
+true
+gap&gt; j2:=AtlasGroup("J2"); #Uses AtlasRep package
+&lt;permutation group of size 604800 with 2 generators&gt;
+gap&gt; max3:=AtlasSubgroup(j2,3); #member of 3rd ATLAS class of max. subgps
+&lt;permutation group of size 1920 with 2 generators&gt;
+gap&gt; max4:=AtlasSubgroup(j2,4); #member of 4th ATLAS class of max. subgps
+&lt;permutation group of size 1152 with 2 generators&gt;
+gap&gt; conj3:=ConjugacyClassSubgroups(j2,max3);;
+gap&gt; g1:=First(conj3, c -&gt; Size(Intersection(c,max4))=384);;
+gap&gt; g2:=max4;;
+gap&gt; cg:=CosetGeometry(j2,[g1,g2]);;
+gap&gt; Rank2Parameters(cg);
+[ [ 6, 8, 8 ], [ 2, 315 ], [ 4, 525 ] ]
