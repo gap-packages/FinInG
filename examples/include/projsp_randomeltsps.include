@@ -1,9 +1,9 @@
 gap&gt; ps := PG(9,49);
 ProjectiveSpace(9, 49)
-gap&gt; Random(Points(ps));
-&lt;a point in ProjectiveSpace(9, 49)&gt;
 gap&gt; Random(Lines(ps));
 &lt;a line in ProjectiveSpace(9, 49)&gt;
+gap&gt; Random(Points(ps));
+&lt;a point in ProjectiveSpace(9, 49)&gt;
 gap&gt; Random(Solids(ps));
 &lt;a solid in ProjectiveSpace(9, 49)&gt;
 gap&gt; Random(Hyperplanes(ps));
