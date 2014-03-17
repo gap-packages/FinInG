@@ -1,6 +1,6 @@
 #############################################################################
 ##
-##  orbits_stabilizers.gd              FinInG package
+##  orbits-stabilizers.gd              FinInG package
 ##                                                              John Bamberg
 ##                                                              Anton Betten
 ##                                                              Jan De Beule
