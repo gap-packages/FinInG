@@ -1,3 +1,4 @@
+<!--comment-->
 gap&gt; pg := PG(4,2);
 ProjectiveSpace(4, 2)
 gap&gt; pg2 := PG(9,2);
