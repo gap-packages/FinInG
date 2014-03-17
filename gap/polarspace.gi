@@ -2007,7 +2007,7 @@ InstallMethod( NumberOfTotallySingularSubspaces,
 		return Size(Subspaces(GF(q)^r, j)) * Product(List([1..j], i -> q^(r-i) * qe +1));
 	end);
 
-# CHECKED 27/09/11 jdb
+# CHECKED 17/03/14 jdb
 #############################################################################
 #O  TypeOfSubspace( <ps>, <w> )
 # returns the type of the polar space induced by <ps> in the projective subspace

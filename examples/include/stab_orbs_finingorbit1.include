@@ -1,0 +1,11 @@
+Q(6, 3)
+gap&gt; g := CollineationGroup(ps);
+PGammaO(7,3)
+gap&gt; pg := PG(6,3);
+ProjectiveSpace(6, 3)
+gap&gt; s := First(Solids(pg),t -&gt; TypeOfSubspace(ps,t) = "elliptic" );
+&lt;a solid in ProjectiveSpace(6, 3)&gt;
+gap&gt; orbit := FiningOrbit(g,s,OnProjSubspaces);
+&lt;closed orbit, 265356 points&gt;
+gap&gt; time;
+46254

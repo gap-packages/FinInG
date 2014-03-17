@@ -1,0 +1,21 @@
+gap&gt; ps := HermitianPolarSpace(3,9);
+H(3, 3^2)
+gap&gt; g := CollineationGroup(ps);
+PGammaU(4,3^2)
+gap&gt; FiningOrbits(g,Lines(PG(3,9)),OnProjSubspaces);
+75%..98%..100%..[ &lt;closed orbit, 5670 points&gt;, &lt;closed orbit, 1680 points&gt;, 
+  &lt;closed orbit, 112 points&gt; ]
+gap&gt; FiningOrbits(g,Planes(PG(3,9)),OnProjSubspaces);
+65%..100%..[ &lt;closed orbit, 540 points&gt;, &lt;closed orbit, 280 points&gt; ]
+gap&gt; ps := ParabolicQuadric(2,5);
+Q(2, 5)
+gap&gt; g := CollineationGroup(ps);
+PGammaO(3,5)
+gap&gt; pts := Filtered(Points(PG(2,5)),x-&gt;not x in ps);;
+gap&gt; Length(pts);
+25
+gap&gt; FiningOrbits(g,Points(PG(2,5)),OnProjSubspaces);
+19%..67%..100%..[ &lt;closed orbit, 6 points&gt;, &lt;closed orbit, 15 points&gt;, 
+  &lt;closed orbit, 10 points&gt; ]
+gap&gt; FiningOrbits(g,pts,OnProjSubspaces);
+60%..100%..[ &lt;closed orbit, 15 points&gt;, &lt;closed orbit, 10 points&gt; ]

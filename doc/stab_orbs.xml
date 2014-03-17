@@ -19,7 +19,52 @@ This is the chapter of the documentation describing the stabilisers and orbits.
 -->
 
 <Chapter Label="acts_stab_orbs">
-<Heading>Actions, stabilisers and orbits</Heading>
+<Heading>Orbits, stabilisers and actions</Heading>
+
+<Section>
+<Heading>Orbits</Heading>
+GAP provides generic functionality to compute orbits. These functions are, generally spoken, applicable to the
+groups implemented in <Package>FinInG</Package>, combined with the appropriate action functions. However, the generic
+functions applied in such situations are rather time comsuming. <Package>FinInG</Package> therefore provides alternative
+functions to compute orbits.
+
+<ManSection>
+<Oper Name="FiningOrbit" Arg="g, obj, act"/>
+<Returns>The orbit of the object <A>obj</A> under the action <A>act</A> of the
+group <A>g</A>.</Returns>
+<Description>
+The argument <A>obj</A> is either a subspace of a projective space, then combined with
+the action function <F>OnProjSubspaces</F>, or a set of elements of a projective space, then
+combined with the action function <F>OnSetsProjSubspaces</F>. The group <A>g</A> is a subgroup
+of a collineation group of a projective space. In both cases the action function computes the action
+of <A>el</A> under the group element <A>g</A>.
+<Example>
+<#Include SYSTEM "../examples/include/stab_orbs_finingorbit1.include"> 
+</Example>
+The second example shows the possible use of <F>FiningOrbit</F> in combination with the action function
+<F>OnSetsProjSubspaces</F>. Please note that this variant is probably not the most efficient way to compute all elliptic
+quadrics contained in the parabolic quadric <M>ps</M>. Experiments show that for <M>q=5</M> the second variant takes an 
+unreasonable amount of time.Also note that the second argument <A>el</A> must be
+a set (and therefore it might be necessary to apply <F>Set</F> on a collection of elements).
+<Example>
+<#Include SYSTEM "../examples/include/stab_orbs_finingorbit2.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="FiningOrbits" Arg="g, set, act"/>
+<Returns>The orbits of the group <A>g</A> on <A>set</A> under the action of <A>act</A>.</Returns>
+<Description>
+The set is a set of elements of a projective space, the group <A>g</A> is a subgroup of the collineation group
+of a projective space, and <A>act</A> is the function <F>OnProjSubspaces</F>.
+<Example>
+<#Include SYSTEM "../examples/include/stab_orbs_finingorbits1.include"> 
+</Example>
+</Description>
+</ManSection>
+
+</Section>
 
 <Section>
 <Heading>Stabilisers</Heading>

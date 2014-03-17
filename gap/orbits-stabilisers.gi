@@ -49,6 +49,18 @@ InstallMethod( FiningOrbit,
 		return Enumerate(Orb(g,e,act));
 	end );
 	
+# ADDED 17/03/14 jdb
+#############################################################################
+#O  FiningOrbit( <g>, <e>, <act> )
+# helper operation, returns the stabiliser of e under g, using action function act.
+##
+InstallMethod( FiningOrbit,
+	"for a collineation group, an element of a projective space and an action function",
+	[ IsProjectiveGroupWithFrob, CategoryCollections(IsElementOfIncidenceStructure), IsFunction],
+	function(g,e,act)
+		return Enumerate(Orb(g,e,act));
+	end );
+
 # ADDED 17/03/14 jdb, based on John's mail.
 #############################################################################
 #O  FiningOrbits( <g>, <e>, <act> )
@@ -56,7 +68,36 @@ InstallMethod( FiningOrbit,
 ##
 InstallMethod( FiningOrbits,
 	"for a collineation group, an element of a projective space and an action function",
-	[ IsProjectiveGroupWithFrob, IsElementsOfIncidenceGeometry, IsFunction],
+	[ IsProjectiveGroupWithFrob, IsElementsOfIncidenceStructure, IsFunction],
+	function(g,set,action)
+	local orbs, set2, x, o, upto, newupto;
+	orbs := [];
+	set2 := ShallowCopy(set);
+	set2 := Set(set2);;
+	upto := 0;
+	repeat
+		x := set2[1];
+		o := Enumerate(Orb(g, x, action));
+		Add(orbs, o);
+		SubtractSet(set2, AsList(o));
+		newupto := Int(100 * (Size(set)-Size(set2))/Size(set));
+		if newupto <> upto then
+			upto:=newupto;
+			Print(upto, "%..\c");
+		fi;
+	until IsEmpty(set2);
+	return orbs;
+	end );
+
+	
+# ADDED 17/03/14 jdb, based on John's mail.
+#############################################################################
+#O  FiningOrbits( <g>, <e>, <act> )
+# helper operation, returns the stabiliser of e under g, using action function act.
+##
+InstallMethod( FiningOrbits,
+	"for a collineation group, an element of a projective space and an action function",
+	[ IsProjectiveGroupWithFrob, CategoryCollections(IsElementOfIncidenceStructure), IsFunction],
 	function(g,set,action)
 	local orbs, set2, x, o, upto, newupto;
 	orbs := [];
