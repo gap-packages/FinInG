@@ -169,6 +169,16 @@ paths := JoinStringsWithSeparator(GAP_ROOT_PATHS{[2,3]},";");
 args := JoinStringsWithSeparator(["-l",paths," -L fining.ws"," -o 4G"]," ");
 args := ["-l",paths,"-L","fining.ws","-o","4G"];
 
+#code below for gap4r6
+homedir := DirectoryCurrent();
+exampledir := DirectoriesPackageLibrary("fining","examples/gap")[1]; 
+preambledir := DirectoriesPackageLibrary("fining","examples/")[1]; 
+outputdir := DirectoriesPackageLibrary("fining","examples/output")[1];
+gap := Filename(Directory("/usr/bin/"),"gap4r6");
+paths := JoinStringsWithSeparator(GAP_ROOT_PATHS{[2,3]},";");
+args := JoinStringsWithSeparator(["-l",paths," -L fining.ws"," -o 4G"]," ");
+args := ["-l",paths,"-L","fining.ws","-o","4G"];
+
 
 #create .out files using the saved workspace
 #IMPORTANT: here we suppose that the script to start up our favorite version of
