@@ -1,6 +1,6 @@
 #############################################################################
 ##
-##  stabilizers.gi              FinInG package
+##  orbits_stabilizers.gd              FinInG package
 ##                                                              John Bamberg
 ##                                                              Anton Betten
 ##                                                              Jan De Beule
@@ -8,7 +8,7 @@
 ##                                                            Michel Lavrauw
 ##                                                           Max Neunhoeffer
 ##
-##  Copyright 2013	Colorado State University, Fort Collins
+##  Copyright 2014	Colorado State University, Fort Collins
 ##					Università degli Studi di Padova
 ##					Universeit Gent
 ##					University of St. Andrews
@@ -16,7 +16,7 @@
 ##                  Vrije Universiteit Brussel
 ##                 
 ##
-##  Implementation stuff for placeholders of stabilizer functions
+##  Implementation stuff for placeholders of orbits/stabilizer functions
 ##
 #############################################################################
 ##
@@ -30,9 +30,52 @@
 ## and elliptic in three dimensions). The FiningStabiliserPerm2 seems to be a bit faster
 ## in some small dimensional hermitian cases (e.g. H(3,5^2), H(2,7^2), H(2,9^2)), but
 ## in all other cases the FiningStabiliser is the faster.
+##
+## 
 #############################################################################
 
-Print(", stabilisers\c");
+Print(", orbits+stabilisers\c");
+
+
+# ADDED 17/03/14 jdb
+#############################################################################
+#O  FiningOrbit( <g>, <e>, <act> )
+# helper operation, returns the stabiliser of e under g, using action function act.
+##
+InstallMethod( FiningOrbit,
+	"for a collineation group, an element of a projective space and an action function",
+	[ IsProjectiveGroupWithFrob, IsElementOfIncidenceStructure, IsFunction],
+	function(g,e,act)
+		return Enumerate(Orb(g,e,act));
+	end );
+	
+# ADDED 17/03/14 jdb, based on John's mail.
+#############################################################################
+#O  FiningOrbits( <g>, <e>, <act> )
+# helper operation, returns the stabiliser of e under g, using action function act.
+##
+InstallMethod( FiningOrbits,
+	"for a collineation group, an element of a projective space and an action function",
+	[ IsProjectiveGroupWithFrob, IsElementsOfIncidenceGeometry, IsFunction],
+	function(g,set,action)
+	local orbs, set2, x, o, upto, newupto;
+	orbs := [];
+	set2 := ShallowCopy(set);
+	set2 := Set(set2);;
+	upto := 0;
+	repeat
+		x := set2[1];
+		o := Enumerate(Orb(g, x, action));
+		Add(orbs, o);
+		SubtractSet(set2, AsList(o));
+		newupto := Int(100 * (Size(set)-Size(set2))/Size(set));
+		if newupto <> upto then
+			upto:=newupto;
+			Print(upto, "%..\c");
+		fi;
+	until IsEmpty(set2);
+	return orbs;
+	end );
 
 # CHECKED 7/03/13 jdb
 #############################################################################

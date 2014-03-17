@@ -6,12 +6,9 @@
 ##                                                              Jan De Beule
 ##                                                             Philippe Cara
 ##                                                            Michel Lavrauw
-##                                                                 Maska Law
 ##                                                           Max Neunhoeffer
-##                                                            Michael Pauley
-##                                                             Sven Reichard
 ##
-##  Copyright 2011	Colorado State University, Fort Collins
+##  Copyright 2014	Colorado State University, Fort Collins
 ##					Università degli Studi di Padova
 ##					Universeit Gent
 ##					University of St. Andrews
@@ -53,4 +50,4 @@ ReadPackage("fining","gap/gpolygons.gd");
 ##ReadPackage("fining","gap/polaritiesps.gd"); #obsolete
 
 
-ReadPackage("fining","gap/stabilisers.gd"); # added 11/02/13 ml
+ReadPackage("fining","gap/orbits-stabilisers.gd"); # added 11/02/13 ml

@@ -1,6 +1,6 @@
 #############################################################################
 ##
-##  stabilizers.gd              FinInG package
+##  orbits_stabilizers.gd              FinInG package
 ##                                                              John Bamberg
 ##                                                              Anton Betten
 ##                                                              Jan De Beule
@@ -8,7 +8,7 @@
 ##                                                            Michel Lavrauw
 ##                                                           Max Neunhoeffer
 ##
-##  Copyright 2013	Colorado State University, Fort Collins
+##  Copyright 2014	Colorado State University, Fort Collins
 ##					Università degli Studi di Padova
 ##					Universeit Gent
 ##					University of St. Andrews
@@ -16,10 +16,17 @@
 ##                  Vrije Universiteit Brussel
 ##                 
 ##
-##  Declaration stuff for placeholders of stabilizer functions
+##  Declaration stuff for placeholders of orbits/stabilizer functions
 ##
 #############################################################################
 
+
+#############################
+# Orbit(s) methods that should work faster
+################################
+
+DeclareOperation( "FiningOrbit", [IsGroup, IsObject, IsFunction] );
+DeclareOperation( "FiningOrbits", [IsGroup, IsObject, IsFunction] );
 
 #############################
 # Stabiliser methods that should work faster

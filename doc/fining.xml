@@ -15,7 +15,7 @@
                                                                  Michel Lavrauw
                                                                 Max Neunhoeffer
 
-  Copyright (C) 2013, University of Western Australia
+  Copyright (C) 2014, University of Western Australia
                       Colorado State University
                       Vrije Universiteit Brussel
                       Ghent University
@@ -30,7 +30,7 @@
     <Version>
       <#Include SYSTEM "../VERSION">
     </Version>
-<Date>2012</Date>
+<Date>2014</Date>
 	<Author>John Bamberg, Anton Betten, Philippe Cara, Jan De Beule, Michel Lavrauw, Max Neunhoeffer.
 	</Author>
 <!--
@@ -80,7 +80,7 @@ St Andrews, United Kingdom.
 -->    
 
 <Copyright>
-  &copyright; 2012 by the authors<P/>
+  &copyright; 2014 by the authors<P/>
   This package may be distributed under the terms and conditions of the
   GNU Public License Version 2 or higher.
 </Copyright>
