@@ -217,7 +217,8 @@ InstallMethod( FiningStabiliserPerm, [IsProjectiveGroupWithFrob, IsElementOfInci
 		return stab;
 end );
 
-InstallMethod( FiningStabiliserPerm2, [IsProjectiveGroupWithFrob, IsElementOfIncidenceStructure],
+InstallMethod( FiningStabiliserPerm2, 
+	[IsProjectiveGroupWithFrob, IsElementOfIncidenceStructure],
 	# this uses the Stab method from the genss package AND the ActionHomomorphism
 		function(fining_group,el)
 		local type,geo,hom,enum,nr,size,stab,gens,x,im;
@@ -235,6 +236,23 @@ InstallMethod( FiningStabiliserPerm2, [IsProjectiveGroupWithFrob, IsElementOfInc
 		gens:=List(gens,x->PreImagesRepresentative(hom,x));
 		stab:=GroupWithGenerators(gens);
 		return stab;
+end );
+
+
+InstallMethod( FixedSubspaces, 
+	"for a projectivity and a projective space",
+	[IsProjectiveGroupWithFrob, IsProjectiveSpace],
+	# fixed subspaces by John.
+	function(g,pg)
+	local gens, md, fixed, flag;
+	gens := GeneratorsOfGroup(g);
+	flag := ForAll(gens, t -> IsOne(t!.frob));
+	if not flag then
+		Error("Group contains field automorphisms.");
+	fi;
+	md := GModuleByMats(List(gens,t->t!.mat), pg!.basefield);
+	fixed := Filtered(MTX.BasesSubmodules(md),t->not Size(t) in [0,Rank(pg)+1]);
+	return List(fixed,t->VectorSpaceToElement(pg,t));
 end );
 
 

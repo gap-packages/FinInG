@@ -42,7 +42,11 @@ DeclareOperation( "FiningSetwiseStabiliser", [IsProjectiveGroupWithFrob, IsSubsp
 # Stabiliser methods using the permutation representation of a group action
 ################################
 
-
 DeclareOperation( "FiningStabiliserPerm", [IsProjectiveGroupWithFrob, IsElementOfIncidenceStructure]);
 DeclareOperation( "FiningStabiliserPerm2", [IsProjectiveGroupWithFrob, IsElementOfIncidenceStructure]);
 
+#############################
+# Action related methods.
+################################
+
+DeclareOperation( "FixedSubspaces", [IsProjectiveGroupWithFrob, IsProjectiveSpace] );

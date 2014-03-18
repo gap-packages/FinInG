@@ -13,6 +13,24 @@ InstallMethod( ProjElWithFrob,
 		return el;
 	end );
 	
+
+InstallGlobalFunction( OnProjSubspaces,
+  function( var, el )
+    local amb,geo,newvar,newvar2,q,p,d,bf;
+    geo := var!.geo;   
+    if var!.type = 1 then
+        newvar := OnProjPointsWithFrob(var!.obj,el);
+    else
+        newvar := OnProjSubspacesWithFrob(var!.obj,el);
+    fi;
+    bf := geo!.basefield;
+    q := Size(bf);
+    p := Characteristic(bf);
+    d := Log(q,p);
+    return Wrap(geo,var!.type,CVec(newvar,p,d));
+  end );
+
+
 z := Z(17^2);          
 m := [[z,0*z],[0*z,z^0]];
 ConvertToMatrixRep(m,GF(17^2));
