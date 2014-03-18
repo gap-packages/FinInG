@@ -201,6 +201,10 @@ DeclareAttribute( "TypesOfElementsOfIncidenceStructurePlural", IsIncidenceStruct
 DeclareOperation( "ElementsOfIncidenceStructure", [IsIncidenceStructure] );
 DeclareOperation( "ElementsOfIncidenceStructure", [IsIncidenceStructure, IsPosInt] );
 DeclareOperation( "ElementsOfIncidenceStructure", [IsIncidenceStructure, IsString] );
+
+DeclareOperation( "NrElementsOfIncidenceStructure", [IsIncidenceStructure, IsPosInt] );
+DeclareOperation( "NrElementsOfIncidenceStructure", [IsIncidenceStructure, IsString] );
+
 DeclareOperation( "Points", [IsIncidenceStructure] );
 DeclareOperation( "Lines", [IsIncidenceStructure] );
 DeclareOperation( "Planes", [IsIncidenceStructure] );

@@ -306,7 +306,7 @@ InstallMethod( BorelSubgroup, "for coset geometries",
 ##
 ##############################################################
 
-# 
+# CHECKED 18/3/2014 PhC
 #############################################################################
 #O IsFlagTransitiveGeometry
 #  
@@ -952,7 +952,7 @@ InstallGlobalFunction( DrawDiagram,
 # 
 #############################################################################
 #F Drawing_Diagram
-# 
+#  Left over from Bamberg times
 # 
 ##
 InstallGlobalFunction( Drawing_Diagram,
@@ -1198,9 +1198,12 @@ InstallMethod( GeometryOfRank2Residue, "for a rank 2 residue", [IsRank2Residue],
 InstallMethod( Rank2Parameters, "for a coset geometry of rank 2", [IsCosetGeometry], 
   function(geo)
 
-#  ***** Check that the input is kosher ******
+local incgr, reps, g, dp, dl, sp, sl, np, nl, locinfo;
 
-  local incgr, reps, g, dp, dl, sp, sl, np, nl, locinfo;
+#  ***** Check that the input is kosher ******
+  if Size(geo!.parabolics)<>2 then
+    Error("Usage Rank2Parameters: is ONLY for geometries of rank two!\n");
+  fi;
 
   incgr:=IncidenceGraph(geo);
   reps:=incgr!.representatives; #we assume the GRAPE graph has an element of each type in its 'representative' field. This is indeed the case when the geometry is flag-transitive.

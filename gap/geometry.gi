@@ -282,6 +282,33 @@ InstallMethod( ElementsOfIncidenceStructure,
 		fi;
 		end);
 
+# 
+#############################################################################
+#O  NrElementsOfIncidenceStructure( <ps>, <str> )
+# returns the number of elements of an incidence structure <ps> provided there 
+# is an  installed method for ElementsOfIncidenceStructure for the 
+# particular <ps> and <str> is occuring in 
+# TypesOfElementsOfIncidenceStructurePlural(<ps>). 
+## 
+InstallMethod( NrElementsOfIncidenceStructure,
+	"for an incidence structure and a string",
+	[IsIncidenceStructure, IsString],
+	function( ps, str )
+		return Size(ElementsOfIncidenceStructure(ps, str));
+		end);
+
+#############################################################################
+#O  NrElementsOfIncidenceStructure( <ps>, <typ> )
+# returns the number of elements of an incidence structure <ps> provided there 
+# is an  installed method for ElementsOfIncidenceStructure for the 
+# particular <ps>.
+## 
+InstallMethod( NrElementsOfIncidenceStructure,
+	"for an incidence structure and a type",
+	[IsIncidenceStructure, IsPosInt],
+	function( ps, typ )
+		return Size(ElementsOfIncidenceStructure(ps, typ));
+		end);
 
 # CHECKED 18/4/2011 jdb
 #############################################################################
