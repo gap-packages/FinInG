@@ -131,6 +131,8 @@ InstallMethod( FiningElementStabiliserOp,
 		t := e!.type;
 		size := Size(ElementsOfIncidenceStructure(e!.geo,e!.type)); #strongly using here that we know the representation well...
 		stab := Stab(g,e,act,rec( Size:=Size(g), DoEstimate := size )).stab;
+		# JB: 18/03/2014
+		SetParent(stab, g);
 		return stab;
 	end );
 		
@@ -159,8 +161,12 @@ end );
 ##
 InstallMethod( FiningStabiliserOrb, 
 	[IsProjectiveGroupWithFrob, IsSubspaceOfProjectiveSpace],
-	function(fining_group,el);
-	return Group(ORB_EstimateOrbitSize(ProductReplacer(fining_group),el,OnProjSubspaces,15,1000000,60000).Sgens);
+	function(fining_group,el)
+		local stab;
+		stab := Group(ORB_EstimateOrbitSize(ProductReplacer(fining_group),el,OnProjSubspaces,15,1000000,60000).Sgens);
+		# JB: 18/03/2014
+		SetParent(stab, fining_group);
+	return stab; 
 end );
 
 # CHECKED 7/03/13 jdb
@@ -174,7 +180,11 @@ InstallMethod( FiningSetwiseStabiliser,
 	"for a set of elements of an projective space of a given type",
 	[IsProjectiveGroupWithFrob,  IsSubspaceOfProjectiveSpaceCollection and IsHomogeneousList],
 	function(g,set)
-		return SetwiseStabilizer(g, OnProjSubspaces, set)!.setstab;
+		local stab;
+		# JB: 18/03/2014
+		stab := SetwiseStabilizer(g, OnProjSubspaces, set)!.setstab;
+		SetParent(stab, g);
+		return stab;
 end );
 
 
