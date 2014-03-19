@@ -171,6 +171,49 @@ InstallMethod( ElementsOfIncidenceStructure, [IsCosetGeometry, IsPosInt],
     return vars;
 end );
 
+#############################################################################
+#O  ElementsOfIncidenceStructure( <cg> )
+# returns all the elements of the coset geometry <cg> 
+## 
+InstallMethod( ElementsOfIncidenceStructure, 
+	"for a coset geometry",
+	[IsCosetGeometry],
+	function( cg )
+		return Objectify(
+			NewType( ElementsCollFamily, IsAllElementsOfCosetGeometry and IsAllElementsOfCosetGeometryRep ),
+				rec( geometry := cg,
+					type := "all") #added this field in analogy with the collection that contains all subspaces of a vector space.
+				);
+	end);
+
+# 
+#############################################################################
+#O  RandomElement( <cg> )
+# returns a random element of random type in the given coset geometry
+# <cg>
+##
+InstallMethod( RandomElement, 
+	"for a coset geometry",
+	[IsCosetGeometry],
+	function(cg)
+		local i;
+		i:=Random(TypesOfElementsOfIncidenceStructure(cg));
+		return Random(ElementsOfIncidenceStructure(cg,i));
+	end );
+
+# 
+#############################################################################
+#O  Random( <alleleofcg> )
+# returns a random element a coset geometry
+# 
+##
+InstallMethod( Random, 
+	"for element category of coset geometry",
+	[IsAllElementsOfCosetGeometry],
+	function(allele)
+		return RandomElement(allele!.geometry);
+	end );
+
 #
 ###########################################################################
 #O Size
@@ -234,7 +277,6 @@ InstallMethod(Iterator, "for elements of a coset geometry",
             S := iter ));
     return newiter;
 end );
-
 
 # CHECKED 06/09/11 PhC
 #############################################################################

@@ -128,6 +128,8 @@ DeclareOperation( "AmbientGroup", [ IsCosetGeometry ] );
 DeclareOperation( "FlagToStandardFlag", [ IsCosetGeometry, IsHomogeneousList ] );
 DeclareOperation( "ResidueOfFlag", [ IsCosetGeometry, IsHomogeneousList ] );
 DeclareOperation( "CanonicalResidueOfFlag", [ IsCosetGeometry, IsHomogeneousList ] );
+DeclareOperation( "RandomElement", [ IsCosetGeometry] );
+#DeclareOperation( "Random", [ IsAllElementsOfCosetGeometry] );
 DeclareOperation( "Rk2GeoDiameter", [ IsCosetGeometry, IsPosInt] );
 DeclareOperation( "GeometryOfRank2Residue", [ IsRank2Residue ]);
 DeclareAttribute( "Rank2Parameters", IsCosetGeometry );
