@@ -268,6 +268,22 @@ check if names are given, and are just shortcuts to the operation <F>ElementsOfI
 </ManSection>
 
 <ManSection>
+<Oper Name="NrElementsOfIncidenceStructure" Arg="inc, j"/>
+<Oper Name="NrElementsOfIncidenceStructure" Arg="inc, str"/>
+<Returns>a positive integer</Returns>
+<Description><A>inc</A> must be an incidence structure, <A>j</A> must be
+a type of element of <A>inc</A>. This function returns the number of elements
+of <A>inc</A> of type <A>j</A>, and an error is displayed if <A>inc</A> has no 
+elements of type <A>j</A>. In the alternative form of this function
+<A>str</A> can be one of ``points", ``lines", ``planes" or ``solids" and the
+function returns the number of elements of type 1, 2, 3 or 4 respectively, of course if <A>inc</A> has elements of the deduced type.
+<Example>
+<#Include SYSTEM "../examples/include/incgeom_nrelements.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
 <Oper Name="IsIncident" Arg="u,v"/>
 <Oper Name="\*" Arg="u,v"/>
 <Oper Name="\in" Arg="u,v"/>
