@@ -2393,6 +2393,7 @@ InstallMethod( ProjectiveElationGroup,
 	return group;
 end );
 
+# cmat change 20/3/14. some arithmetic is not yet possible with cmats. 
 #############################################################################
 #O  ProjectiveElationGroup( <sub> )
 #  returns group of elations with axis sub 
@@ -2407,7 +2408,7 @@ InstallMethod( ProjectiveElationGroup,
 	if (Dimension(sub) <> n-1) then
 		Error("<sub> must be a hyperplane");
 	fi;	
-	mat := ElementToVectorSpace(sub);
+	mat := Unpack(ElementToVectorSpace(sub));
 	f := BaseField(sub);
 	vssub := VectorSpace(f,mat);
 	#e0 := ElementToVectorSpace(centre);
@@ -2466,8 +2467,9 @@ InstallMethod( HomologyOfProjectiveSpace,
 	return CollineationOfProjectiveSpace(el,f);
 end );
 
+## cmat change 20/3/14. some arithmetic is not yet possible with cmats. 
 #############################################################################
-#O  ProjectiveElationGroup( <sub>, <centre> )
+#O  ProjectiveHomologyGroup( <sub>, <centre> )
 #  returns group of homologies with axis sub and centre centre
 ##
 InstallMethod( ProjectiveHomologyGroup,
@@ -2484,7 +2486,7 @@ InstallMethod( ProjectiveHomologyGroup,
 	elif centre in sub then
 		Error("The point <centre> and <sub> must not be incident");
 	fi;
-	M := Concatenation(ElementToVectorSpace(sub),[ElementToVectorSpace(centre)]);
+	M := Concatenation(Unpack(ElementToVectorSpace(sub)),[Unpack(ElementToVectorSpace(centre))]);
 	f := BaseField(sub);
 	q := Size(f);
 	el := ShallowCopy(IdentityMat(n+1,f));

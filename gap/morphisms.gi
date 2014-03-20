@@ -59,6 +59,15 @@
 #
 ########################################
 
+
+########################################
+# 20/3/14
+# cmat notice: in many operations we will compute
+# a matrix to initialize a form. Forms can not handle cmats, so
+# Unpacking the cmats will sometimes be necessary.
+########################################
+
+
 ############################################################
 ## Generic constructor operations, not intended for the user.
 ############################################################
@@ -341,6 +350,7 @@ InstallMethod( NaturalEmbeddingBySubspaceNC,
 	end );
 
 # CHECKED 27/09/11 jdb + ml
+# cmat version 20/3/14.
 #############################################################################
 #O  NaturalEmbeddingBySubspace( <ps1>, <ps2>, <v> ) returns a geometry morphism
 # from the polar space <ps1> into <ps2>, a polar space induced as a section of
@@ -362,7 +372,6 @@ InstallMethod( NaturalEmbeddingBySubspace,
     ## Check that fields are the same and v is non-degenerate 
 		if geom2!.basefield <> f then
 			Error("fields of both spaces must be the same");
-			#return; #why was this return? 
 		fi;
     #27/9/2011. jdb was wondering on the next 7 lines. Is this not just tyv = "degenerate"?
 	#if not (ty2 = "parabolic" and IsEvenInt(Size(f))) then
@@ -374,7 +383,6 @@ InstallMethod( NaturalEmbeddingBySubspace,
     #fi;
 		if rk > d2 or d1 > d2 then
 			Error("dimensions are incompatible"); 
-			#return;
 		fi;	
 		if tyv = "degenerate" then
 			Error("subspace is degenerate");
@@ -389,13 +397,13 @@ InstallMethod( NaturalEmbeddingBySubspace,
           ## is a field automorphism), where M is the form for geom2,
           ## will be equivalent to the form for geom1.
 
-			basis := v!.obj;
+			basis := Unpack(v!.obj); #cmat unpack
 
           ## As usual we must consider two cases, the quadratic form case
           ## and the sesquilinear form case. We then obtain a base change matrix c1.
 
 			if HasQuadraticForm( geom2 ) and HasQuadraticForm( geom1 ) then
-				quad1 := QuadraticForm(geom1);
+				quad1 := QuadraticForm(geom1); #cmat notice: these are never cmats. So keep untouched.
 				quad2 := QuadraticForm(geom2);
 				newmat := basis * quad2!.matrix * TransposedMat(basis);
 				formonv := QuadraticFormByMatrix(newmat, f);
@@ -417,18 +425,18 @@ InstallMethod( NaturalEmbeddingBySubspace,
 
 			c2 := BaseChangeToCanonical( formonv );
 			change := c1^-1 * c2;        
-			ConvertToMatrixRep(change, f);
+			# ConvertToMatrixRep(change, f); #became useless.
 			invchange := change^-1;
 			bs := BaseSteinitzVectors(Basis(geom2!.vectorspace), basis);
 			invbasis := Inverse(Concatenation(bs!.subspace, bs!.factorspace));
-			ConvertToMatrixRep(invbasis, f);
-			func := x -> VectorSpaceToElement( geom2, x!.obj * change * basis);
+			# ConvertToMatrixRep(invbasis, f); #same here.
+			func := x -> VectorSpaceToElement( geom2, Unpack(x!.obj) * change * basis);
 			pre := function(y)
 				local newy;
 				if not y in v then
 					Error("Applying preimage to an element which is not in the range");
 				fi;
-				newy:= y!.obj * invbasis;
+				newy:= Unpack(y!.obj) * invbasis;
 				if IsMatrix(newy) then 
 					newy := newy{[1..Size(newy)]}{[1..rk]};
 					ConvertToMatrixRepNC(newy, f);
@@ -449,8 +457,9 @@ InstallMethod( NaturalEmbeddingBySubspace,
 	end );
   
 # CHECKED 28/09/11 jdb
+# cmat comments: see NaturalEmbeddingBySubspace (above).
 #############################################################################
-#O  NaturalEmbeddingBySubspace( <ps1>, <ps2>, <v> ) 
+#O  NaturalEmbeddingBySubspaceNC( <ps1>, <ps2>, <v> ) 
 ## This operation is just like its namesake except that it 
 ## has no checks
 ##  
@@ -472,7 +481,7 @@ InstallMethod( NaturalEmbeddingBySubspaceNC,
           ## is a field automorphism), where M is the form for geom2,
           ## will be equivalent to the form for geom1.
 
-		basis := v!.obj;
+		basis := Unpack(v!.obj);
 
           ## As usual we must consider two cases, the quadratic form case
           ## and the sesquilinear form case. We then obtain a base change matrix c1.
@@ -500,16 +509,16 @@ InstallMethod( NaturalEmbeddingBySubspaceNC,
 
 		c2 := BaseChangeToCanonical( formonv );
 		change := c1^-1 * c2;        
-		ConvertToMatrixRepNC(change, f);
+		#ConvertToMatrixRepNC(change, f);
 		invchange := change^-1;
 		bs := BaseSteinitzVectors(Basis(geom2!.vectorspace), basis);
 		invbasis := Inverse(Concatenation(bs!.subspace, bs!.factorspace));
-		ConvertToMatrixRepNC(invbasis, f);
+		#ConvertToMatrixRepNC(invbasis, f);
 
-		func := x -> VectorSpaceToElement( geom2, x!.obj * change * basis);
+		func := x -> VectorSpaceToElement( geom2, Unpack(x!.obj) * change * basis);
 		pre := function(y)
 			local newy;
-			newy:= y!.obj * invbasis;
+			newy:= Unpack(y!.obj) * invbasis;
 				if IsMatrix(newy) then 
 					newy := newy{[1..Size(newy)]}{[1..rk]};
 					ConvertToMatrixRepNC(newy, f);
@@ -1900,7 +1909,7 @@ InstallMethod( NaturalProjectionBySubspace,
     fi;
     psdim := ps!.dimension;
     f := ps!.basefield;
-    b := v!.obj;
+    b := Unpack(v!.obj); #cmat unpack necessary for infra.
     vdim := v!.type;  
     if vdim = 1 then b:=[b]; fi;
     vs := ps!.vectorspace;
@@ -1938,7 +1947,7 @@ InstallMethod( NaturalProjectionBySubspace,
         if not v in x then
 			Error("Subspace is not incident with the subspace of projection");
 		fi;
-        y := List(x^_,i-> Coefficients(bas,i))*basimgs;  
+        y := List(Unpack(x^_),i-> Coefficients(bas,i))*basimgs;  #x^_ = UnWrap(x).
         if not IsEmpty(y) then 
            ## Note: TriangulizeMat does not return a matrix of full
            ##       rank, whereas SemiEchelonMat does!
@@ -1946,23 +1955,25 @@ InstallMethod( NaturalProjectionBySubspace,
 
 			if x!.type - vdim = 1 then 
 				y := y[1]; 
-				ConvertToVectorRep(y, f);
-			else
-				ConvertToMatrixRepNC(y, f);
+				#ConvertToVectorRep(y, f);
 			fi;
+			#else
+			#	ConvertToMatrixRepNC(y, f);
+			#fi;
         fi;
 		if not IsEmpty(y) then  
-			return Wrap(ps2, x!.type - vdim, y);
-            else  
+			#return Wrap(ps2, x!.type - vdim, y);
+            return VectorSpaceToElement(ps2,y);
+			else  
 				return EmptySubspace(ps2);
 			fi;
 		end;
 		pre := function( y )
 			local x;          
-            x := y!.obj; 
+            x := Unpack(y!.obj); 
             if y!.type = 1 then x := [x]; fi;
             x :=  Concatenation(x * compl, b); 
-            ConvertToMatrixRepNC(x, f);
+            #ConvertToMatrixRepNC(x, f);
             return VectorSpaceToElement(ps, x);
 		end;
 		map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(ps), 

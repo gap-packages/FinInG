@@ -1840,6 +1840,7 @@ InstallMethod( VectorSpaceToElement,
 # CHECKED 22/09/11 jdb  
 # Changed 28/11/11 jdb + pc, according to remark in tiny optimalisations.
 # added a comment 30/11/11
+# cmat version: Unpack before piping to forms. (20/3/14)
 #############################################################################
 #O  \in( <w>, <ps> ) true if the element <w> is contained in <ps>
 # remarks: should we change this? I mean: this method makes a projective subspace
@@ -1862,7 +1863,7 @@ InstallMethod( \in,
 			not IsSubset(ps!.basefield, w!.geo!.basefield) then
 			return false;
 		fi;
-		r := w!.obj;
+		r := Unpack(w!.obj); #here is the cmat change.
 		if w!.type = 1 then r := [r]; fi;
     # check if the subspace is totally isotropic/singular
 		if HasQuadraticForm(ps) then
@@ -2079,7 +2080,7 @@ InstallMethod( TypeOfSubspace,
     ## "degenerate", "hermitian", "symplectic", "elliptic",
     ## "hyperbolic", or "parabolic".
     
-		local pstype, dim, type, mat, gf, q, form, newform;
+		local pstype, dim, type, mat, gf, q, form, newform,uw;
 		pstype := PolarSpaceType( ps );
 		gf := ps!.basefield;             
 		q := Size(gf);
@@ -2087,7 +2088,8 @@ InstallMethod( TypeOfSubspace,
 
 		if pstype in ["elliptic", "parabolic", "hyperbolic"] and IsEvenInt(q) then
 			form := QuadraticForm( ps );
-			mat := w!.obj * form!.matrix * TransposedMat(w!.obj);
+			uw := Unpack(w!.obj); #here is an unpack cmat change
+			mat := uw * form!.matrix * TransposedMat(uw);
 			newform := QuadraticFormByMatrix( mat, gf );
 
 #  jdb makes a change here. it was 'IsDegenerateForm( newform )' but it is clear that we want to test whether
@@ -2107,7 +2109,8 @@ InstallMethod( TypeOfSubspace,
 		else
 			form := SesquilinearForm( ps );
 			#mat := w!.obj * form!.matrix * TransposedMat(w!.obj); #I will use something more advanced to include hermitian forms.
-			mat := [Unpack(w!.obj),Unpack(w!.obj)]^form; #here is the unpack cmat change :-)
+			uw := Unpack(w!.obj); #here is an unpack cmat change
+			mat := [uw,uw]^form; 
 			if pstype = "symplectic" then
 				newform := BilinearFormByMatrix( mat, gf );
 				if IsDegenerateForm( newform ) then
@@ -2205,6 +2208,7 @@ end );
 #############################################################################
 
 # CHECKED 22/09/11 jdb
+# cmat notice. in this case just the ConvertToMatrixRep causes trouble.
 #############################################################################
 #O ShadowOfElement(<ps>, <v>, <j> ). Recall that for every particular Lie 
 # geometry a method for ShadowOfElement  must be installed. 
@@ -2224,7 +2228,7 @@ InstallMethod( ShadowOfElement,
 			if IsVector(localouter) and not IsMatrix(localouter) then
 				localouter := [localouter]; 
 			fi;
-			ConvertToMatrixRep( localouter, f );
+			#ConvertToMatrixRep( localouter, f );
 			localfactorspace := Subspace(ps!.vectorspace, localouter);
 			sz := Size(Subspaces(localfactorspace, j));
 		elif j = vdim then
@@ -2443,7 +2447,8 @@ InstallMethod( AbsolutePoints,
 #    return perpv!.type >= v!.type and v in perp(v);
 #  end );
 
-# this is obsolete now, but not completely. see also PolarityOfProjectiveSpace method.
+#CHECKED 20/3/14
+# cmat notice: for some computations it seems necessary to Unpack the cmats.
 #############################################################################
 #O PolarMap( <ps> ) returns the polar map associated to the polar space <ps>.
 # in most cases this polar map is just the polarity. Actually, this operation is
@@ -2467,12 +2472,12 @@ InstallMethod( PolarMap,
        perp := function(v)
          local perpv, uv, rk, aut;
          aut := CompanionAutomorphism(ps);
-         uv := v!.obj;
+         uv := Unpack(v!.obj); #cmat unpack.
          if v!.type = 1 then uv := [uv]; fi; 
          perpv := MutableCopyMat(TriangulizedNullspaceMat( m * TransposedMat(uv)^aut )); 
-         rk := Rank(perpv);   
-         if rk = 1 then perpv := perpv[1]; fi;
-         return Wrap(AmbientSpace(ps), rk, perpv);
+         #rk := Rank(perpv);   
+         # if rk = 1 then perpv := perpv[1]; fi;
+         return VectorSpaceToElement(AmbientSpace(ps), perpv); #cmat notice: now Wrap cannot be used anymore, rk not needed.
        end;
     else
        if IsEvenInt(Size(f)) and 
@@ -2485,20 +2490,20 @@ InstallMethod( PolarMap,
        
        perp := function(v)
          local perpv, uv, rk;
-         uv := v!.obj;
+         uv := Unpack(v!.obj); #cmat unpack.
          if v!.type = 1 then uv := [uv]; fi; 
          perpv := MutableCopyMat(TriangulizedNullspaceMat( bi * TransposedMat(uv) )); 
-         rk := Rank(perpv);   
-         if rk = 1 then
-            perpv := perpv[1]; 
-            ConvertToVectorRep( perpv, f );
-         else
-		             ConvertToMatrixRep( perpv, f );
-         fi;
-         return Wrap(AmbientSpace(ps), rk, perpv);
+         #rk := Rank(perpv);   
+         #if rk = 1 then
+         #   perpv := perpv[1]; 
+            #ConvertToVectorRep( perpv, f );
+         #else
+			#ConvertToMatrixRep( perpv, f );
+         #fi;
+         return VectorSpaceToElement(AmbientSpace(ps), perpv); #cmat notice: now Wrap cannot be used anymore, rk not needed anymore.
        end;
     fi;
-    return perp; ## should we return a correlation here?
+    return perp; ## should we return a correlation here? No.
   end );
 
 #InstallMethod( DefiningPolarity, "for a polar space, if it is defined by a polarity",
