@@ -6,12 +6,9 @@
 ##                                                              Jan De Beule
 ##                                                             Philippe Cara
 ##                                                            Michel Lavrauw
-##                                                                 Maska Law
 ##                                                           Max Neunhoeffer
-##                                                            Michael Pauley
-##                                                             Sven Reichard
 ##
-##  Copyright 2011	Colorado State University, Fort Collins
+##  Copyright 2014	Colorado State University, Fort Collins
 ##					Università degli Studi di Padova
 ##					Universeit Gent
 ##					University of St. Andrews
@@ -70,6 +67,12 @@ DeclareOperation( "VectorSpaceToElement", [IsLieGeometry, Is8BitVectorRep] );
 DeclareOperation( "VectorSpaceToElement", [IsLieGeometry, IsPlistRep] );
 DeclareOperation( "VectorSpaceToElement", [IsLieGeometry, Is8BitMatrixRep] );
 DeclareOperation( "VectorSpaceToElement", [IsLieGeometry, IsGF2MatrixRep] );
+
+#new on 18/3/2014 and 20/3/14.
+DeclareOperation( "VectorSpaceToElement", [IsLieGeometry, IsCVecRep] );
+DeclareOperation( "VectorSpaceToElement", [IsLieGeometry, IsCMatRep] );
+
+
 DeclareOperation( "ElementToVectorSpace", [IsElementOfLieGeometry] );
 #DeclareOperation( "EmptySubspace", [IsClassicalPolarSpace] );
 #DeclareOperation( "EmptySubspace", [IsProjectiveSpace] );

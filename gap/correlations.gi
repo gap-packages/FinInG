@@ -6,12 +6,9 @@
 ##                                                              Jan De Beule
 ##                                                             Philippe Cara
 ##                                                            Michel Lavrauw
-##                                                                 Maska Law
 ##                                                           Max Neunhoeffer
-##                                                            Michael Pauley
-##                                                             Sven Reichard
 ##
-##  Copyright 2011	Colorado State University, Fort Collins
+##  Copyright 2014	Colorado State University, Fort Collins
 ##					Università degli Studi di Padova
 ##					Universeit Gent
 ##					University of St. Andrews
@@ -19,8 +16,7 @@
 ##                  Vrije Universiteit Brussel
 ##                 
 ##
-##  Implementation stuff for correlation groups, and polarities of a 
-##  projective space
+##  Implementation stuff for correlation groups
 ##
 #############################################################################
 
@@ -397,6 +393,27 @@ InstallMethod( \=,
 
 
 # CHECKED 14/09/11 jdb
+# cmat changed 19/3/14
+#############################################################################
+#O  ProjElWithFrobWithPSIsom( <mat>, <frob>, <f>, <delta> )
+# method to construct an object in the category IsProjGrpElWithFrobWithPSIsom,
+# i.e. correlations. This method is not intended for the users, it has no 
+# checks built in. the fourth argument must be the standard duality of a projective
+# space.
+##
+InstallMethod( ProjElWithFrobWithPSIsom, 
+	"for a cmat/ffe matrix, a Frobenius automorphism, a field and the st. duality",
+	[IsCMatRep and IsFFECollColl, IsRingHomomorphism and IsMultiplicativeElementWithInverse,
+	  IsField, IsStandardDualityOfProjectiveSpace],
+	function( m, frob, f, delta )
+		local el;
+		el := rec( mat := m, fld := f, frob := frob, psisom := delta );
+		Objectify( ProjElsWithFrobWithPSIsomType, el );
+		return el;
+	end );
+
+
+#added 19/3/14
 #############################################################################
 #O  ProjElWithFrobWithPSIsom( <mat>, <frob>, <f>, <delta> )
 # method to construct an object in the category IsProjGrpElWithFrobWithPSIsom,
@@ -409,13 +426,39 @@ InstallMethod( ProjElWithFrobWithPSIsom,
 	[IsMatrix and IsFFECollColl, IsRingHomomorphism and IsMultiplicativeElementWithInverse,
 	  IsField, IsStandardDualityOfProjectiveSpace],
 	function( m, frob, f, delta )
-		local el;
-		el := rec( mat := m, fld := f, frob := frob, psisom := delta );
+		local el,cmat;
+		cmat := NewMatrix(IsCMatRep,f,Length(m[1]),m);
+		el := rec( mat := cmat, fld := f, frob := frob, psisom := delta );
 		Objectify( ProjElsWithFrobWithPSIsomType, el );
 		return el;
 	end );
 
+
 # CHECKED 14/09/11 jdb
+# cmat changed 19/3/14
+#############################################################################
+#O  ProjElWithFrobWithPSIsom( <mat>, <frob>, <f> )
+# method to construct an object in the category IsProjGrpElWithFrobWithPSIsom,
+# i.e. correlations. This method is not intended for the users, it has no 
+# checks built in. There is no fourth argument, the projective space isomorphism
+# will be the identity mapping of the projective space.
+##
+InstallMethod( ProjElWithFrobWithPSIsom, 
+	"for a cmat/ffe matrix, a Frobenius automorphism and a field",
+	[IsCMatRep and IsFFECollColl, IsRingHomomorphism and IsMultiplicativeElementWithInverse,
+	  IsField],
+	function( m, frob, f )
+		local el,isom,q,n;
+		q := Size(f); 
+		n := Length(m);
+		isom := IdentityMappingOfElementsOfProjectiveSpace(ProjectiveSpace(n-1,f));  
+		## I hope this works! was wrong, for godsake, don't tell Celle about this type of mistakes :-(
+		el := rec( mat := m, fld := f, frob := frob, psisom := isom);
+		Objectify( ProjElsWithFrobWithPSIsomType, el );
+		return el;
+	end );
+	
+# added 19/3/14
 #############################################################################
 #O  ProjElWithFrobWithPSIsom( <mat>, <frob>, <f> )
 # method to construct an object in the category IsProjGrpElWithFrobWithPSIsom,
@@ -428,17 +471,38 @@ InstallMethod( ProjElWithFrobWithPSIsom,
 	[IsMatrix and IsFFECollColl, IsRingHomomorphism and IsMultiplicativeElementWithInverse,
 	  IsField],
 	function( m, frob, f )
-		local el,isom,q,n;
+		local el,isom,q,n,cmat;
 		q := Size(f); 
 		n := Length(m);
+		cmat := NewMatrix(IsCMatRep,f,Length(m[1]),m);
 		isom := IdentityMappingOfElementsOfProjectiveSpace(ProjectiveSpace(n-1,f));  
 		## I hope this works! was wrong, for godsake, don't tell Celle about this type of mistakes :-(
-		el := rec( mat := m, fld := f, frob := frob, psisom := isom);
+		el := rec( mat := cmat, fld := f, frob := frob, psisom := isom);
 		Objectify( ProjElsWithFrobWithPSIsomType, el );
 		return el;
 	end );
 
+
 # CHECKED 14/09/11 jdb
+# cmat changed 19/3/14
+#############################################################################
+#O  ProjElWithFrobWithPSIsom( <mat>, <frob>, <f>, <delta> )
+# method to construct an object in the category IsProjGrpElWithFrobWithPSIsom,
+# i.e. correlations. This method is not intended for the users, it has no 
+# checks built in. The fourth argument must be the identity mapping of a projective space.
+##
+InstallMethod( ProjElWithFrobWithPSIsom, 
+	"for a cmat/ffe matrix and a Frobenius automorphism, a field and the identity mapping",
+	[IsCMatRep and IsFFECollColl, IsRingHomomorphism and IsMultiplicativeElementWithInverse,
+	  IsField, IsGeneralMapping	and IsSPGeneralMapping and IsOne],
+	function( m, frob, f, delta )
+		local el;
+		el := rec( mat := m, fld := f, frob := frob, psisom := delta );
+		Objectify( ProjElsWithFrobWithPSIsomType, el );
+		return el;
+	end );
+	
+# added 19/3/14
 #############################################################################
 #O  ProjElWithFrobWithPSIsom( <mat>, <frob>, <f>, <delta> )
 # method to construct an object in the category IsProjGrpElWithFrobWithPSIsom,
@@ -450,11 +514,13 @@ InstallMethod( ProjElWithFrobWithPSIsom,
 	[IsMatrix and IsFFECollColl, IsRingHomomorphism and IsMultiplicativeElementWithInverse,
 	  IsField, IsGeneralMapping	and IsSPGeneralMapping and IsOne],
 	function( m, frob, f, delta )
-		local el;
-		el := rec( mat := m, fld := f, frob := frob, psisom := delta );
+		local el,cmat;
+		cmat := NewMatrix(IsCMatRep,f,Length(m[1]),m);
+		el := rec( mat := cmat, fld := f, frob := frob, psisom := delta );
 		Objectify( ProjElsWithFrobWithPSIsomType, el );
 		return el;
 	end );
+
 
 ###################################################################
 # Viewing, displaying, printing methods.
@@ -465,7 +531,7 @@ InstallMethod( ViewObj,
 	"for a projective group element with Frobenius with duality",
 	[IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep],
 	function(el)
-		Print("<projective element with Frobenius with projectivespace isomorphism");
+		Print("<projective element with Frobenius with projectivespace isomorphism: ");
 		ViewObj(el!.mat);
 		if IsOne(el!.frob) then
 			Print(", F^0, ");
@@ -481,7 +547,7 @@ InstallMethod( Display,
 	[IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep],
 	function(el)
 		Print("<projective element with Frobenius, underlying matrix, \n");
-		Display(el!.mat);
+		Print(el!.mat);
 		if IsOne(el!.frob) then
 			Print(", F^0");
 		else
@@ -565,6 +631,7 @@ InstallMethod( BaseField, "for a projective group with Frobenius with proj space
 ###################################################################
 
 # CHECKED 15/09/11 jdb
+# small change 19/3/14 
 #############################################################################
 #O  \=( <a>, <b> )
 # returns true iff the correlations <a> and <b> are the same.
@@ -581,9 +648,10 @@ InstallMethod( \=,
 		bb := b!.mat;
 		p := PositionNonZero(aa[1]);
 		s := bb[1][p] / aa[1][p];
-		for i in [1..Length(aa)] do
-			if s*aa[i] <> bb[i] then return false; fi;
-		od;
+        if s*aa <> bb then return false; fi; #small change
+		#for i in [1..Length(aa)] do
+		#	if s*aa[i] <> bb[i] then return false; fi;
+		#od;
 		if a!.psisom <> b!.psisom then return false; fi;
 		return true;
 	end );
@@ -672,6 +740,13 @@ InstallMethod( OneSameMutability,
 ###################################
 #7 CHECKED 15/09/11 jdb
 
+# added the cvec one 20/3/14.
+InstallOtherMethod( \^, "for a cvec/FFE vector and a id. mapping of el. of ps.",
+  [ IsCVecRep and IsFFECollection, IsIdentityMappingOfElementsOfProjectiveSpace ],
+  function( v, f )
+    return v;
+  end );
+
 InstallOtherMethod( \^, "for a FFE vector and a id. mapping of el. of ps.",
   [ IsVector and IsFFECollection, IsIdentityMappingOfElementsOfProjectiveSpace ],
   function( v, f )
@@ -692,12 +767,26 @@ InstallOtherMethod( \^,
     return v;
   end );
 
+#added the cmat one 20/3/14.
+InstallOtherMethod( \^, "for a FFE matrix and a st. duality",
+  [ IsCMatRep and IsFFECollColl, IsStandardDualityOfProjectiveSpace ],
+  function( m, f )
+    return TransposedMat(Inverse(m));
+  end );
+
 InstallOtherMethod( \^, "for a FFE matrix and a st. duality",
   [ IsMatrix and IsFFECollColl, IsStandardDualityOfProjectiveSpace ],
   function( m, f )
     return TransposedMat(Inverse(m));
   end );
 
+#added the cmat one 20/3/14.
+InstallOtherMethod( \^, "for a FFE matrix and a id. mapping of el. of ps.",
+  [ IsCMatRep and IsFFECollColl, IsIdentityMappingOfElementsOfProjectiveSpace ],
+  function( m, f )
+    return m;
+  end );
+  
 InstallOtherMethod( \^, "for a FFE matrix and a id. mapping of el. of ps.",
   [ IsMatrix and IsFFECollColl, IsIdentityMappingOfElementsOfProjectiveSpace ],
   function( m, f )

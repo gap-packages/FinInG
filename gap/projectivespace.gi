@@ -6,12 +6,9 @@
 ##                                                              Jan De Beule
 ##                                                             Philippe Cara
 ##                                                            Michel Lavrauw
-##                                                                 Maska Law
 ##                                                           Max Neunhoeffer
-##                                                            Michael Pauley
-##                                                             Sven Reichard
 ##
-##  Copyright 2011	Colorado State University, Fort Collins
+##  Copyright 2014	Colorado State University, Fort Collins
 ##					Università degli Studi di Padova
 ##					Universeit Gent
 ##					University of St. Andrews
@@ -425,7 +422,24 @@ InstallMethod( \in,
 ## version of GAP, with the new Row and Matrix types.
 
 ## Should we have methods for the new types given by the cvec package?
-## Currently we don't load the cvec package.
+## Currently we don't load the cvec package. Since 18/3/14 we do. The next 
+## method also inserts a method for cmat.
+
+# added 20/3/14
+#############################################################################
+#O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
+# by the vectorspace <v>. Several checks are built in. 
+# This method unpacks the cmat, and uses the other VectorSpaceToElement method for PlistRep.
+# this is maybe not too efficient, but row selection like x{list} (list is a list of positions)
+# seems to fail, although according to the documentation, it should work. 
+# In the future this could be made better.
+##
+InstallMethod( VectorSpaceToElement, 
+	"for a projective space and a CMatRep",
+	[IsProjectiveSpace, IsCMatRep],
+	function( geom, v )
+	return VectorSpaceToElement(geom, Unpack(v));
+	end );
 
 # CHECKED 20/09/11
 #############################################################################
@@ -436,7 +450,7 @@ InstallMethod( VectorSpaceToElement,
 	"for a projective space and a Plist",
 	[IsProjectiveSpace, IsPlistRep],
 	function( geom, v )
-		local  x, n, i; 
+		local  x, n, i, y; 
 		## when v is empty... 
         if IsEmpty(v) then
 			Error("<v> does not represent any element");
@@ -469,13 +483,18 @@ InstallMethod( VectorSpaceToElement,
 		## entered a matrix with rank 1 (thus at this stage
 		## we will have a matrix with one row).
         ## We must also compress our vector/matrix.
-        if Length(x) = 1 then
-			x := x[1];
-			ConvertToVectorRep(x, geom!.basefield); # the extra basefield is necessary.
-			return Wrap(geom, 1, x);
+		y := NewMatrix(IsCMatRep,geom!.basefield,Length(x[1]),x);
+		#NewMatrix is currently undocumented in cvec, but creates a CMat object from a list of lists, using CMat which uses then a list of cvec vectors.
+		if Length(y) = 1 then
+			return Wrap(geom, 1, y[1]);
+			#x := x[1];
+			#ConvertToVectorRep(x, geom!.basefield); # the extra basefield is necessary.
+			#return Wrap(geom, 1, x);
+			#return Wrap(geom, 1, CVec(Unpack(x), geom!.basefield) ); # changed to cvec 18/3/2014.
 		else
-			ConvertToMatrixRep(x, geom!.basefield); # the same here.
-			return Wrap(geom, Length(x), x);
+			#ConvertToMatrixRep(x, geom!.basefield);
+			#return Wrap(geom, Length(x), x);
+			return Wrap(geom, Length(y), y);
 		fi;
 	end );
 
@@ -488,7 +507,7 @@ InstallMethod( VectorSpaceToElement,
 	"for a projective space and a compressed GF(2)-matrix",
 	[IsProjectiveSpace, IsGF2MatrixRep],
 	function( geom, v )
-		local  x, n, i;
+		local  x, n, i, y;
 		## when v is empty... 
 		if IsEmpty(v) then
 			Error("<v> does not represent any element");
@@ -528,13 +547,16 @@ InstallMethod( VectorSpaceToElement,
 		## entered a matrix with rank 1 (thus at this stage
 		## we will have a matrix with one row).
 	    ## We must also compress our vector/matrix.
-		if Length(x) = 1 then
-			x := x[1];
-			ConvertToVectorRep(x, geom!.basefield); # the extra basefield is necessary.
-			return Wrap(geom, 1, x);
+		y := NewMatrix(IsCMatRep,geom!.basefield,Length(x[1]),x);
+		if Length(y) = 1 then
+			return Wrap(geom, 1, y[1]);
+			#x := x[1];
+			#ConvertToVectorRep(x, geom!.basefield); # the extra basefield is necessary.
+			#return Wrap(geom, 1, x);
+			#return Wrap(geom, 1, CVec(Unpack(x), geom!.basefield) ); # changed to cvec 18/3/2014.
 		else
-			ConvertToMatrixRep(x, geom!.basefield);
-			return Wrap(geom, Length(x), x);
+			#ConvertToMatrixRep(x, geom!.basefield);
+			return Wrap(geom, Length(y), y);
 		fi;
 	end );
   
@@ -547,7 +569,7 @@ InstallMethod( VectorSpaceToElement,
 	"for a compressed basis of a vector subspace",
 	[IsProjectiveSpace, Is8BitMatrixRep],
 	function( geom, v )
-		local  x, n, i;
+		local  x, n, i, y;
 		## when v is empty... 
 		if IsEmpty(v) then
 			Error("<v> does not represent any element");
@@ -587,28 +609,31 @@ InstallMethod( VectorSpaceToElement,
 		## entered a matrix with rank 1 (thus at this stage
 		## we will have a matrix with one row).
 		## We must also compress our vector/matrix.
-		if Length(x) = 1 then
-			x := x[1];
-			ConvertToVectorRep(x, geom!.basefield); # the extra basefield is necessary.
-			return Wrap(geom, 1, x);
+		y := NewMatrix(IsCMatRep,geom!.basefield,Length(x[1]),x);
+		if Length(y) = 1 then
+			return Wrap(geom, 1, y[1]);
+			#x := x[1];
+			#ConvertToVectorRep(x, geom!.basefield); # the extra basefield is necessary.
+			#return Wrap(geom, 1, x);
+			#return Wrap(geom, 1, CVec(Unpack(x), geom!.basefield) ); # changed to cvec 18/3/2014.
 		else
-			ConvertToMatrixRep(x, geom!.basefield);
-			return Wrap(geom, Length(x), x);
+			#ConvertToMatrixRep(x, geom!.basefield);
+			return Wrap(geom, Length(y), y);
 		fi;
-	end );  
+		end );
   
-# CHECKED 11/04/15 jdb
-# CHANGED 19/9/2011 jdb + ml
-# CHECKED 21/09/2011 jdb
+### The next mathod constructs an element using a cvec. 
+
+# ADDED 20/3/2014 jdb
 #############################################################################
 #O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
 # by the rowvector <v>. Several checks are built in.
 ##
 InstallMethod( VectorSpaceToElement,
 	"for a row vector",
-	[IsProjectiveSpace, IsRowVector],
+	[IsProjectiveSpace, IsCVecRep],
 	function( geom, v )
-		local  x;
+		local  x, y;
 		## when v is empty... does this ever occur for a row vector? No. jdb 21/09/2011
 		#if IsEmpty(v) then
 		#	Error("<v> does not represent any element");
@@ -625,8 +650,41 @@ InstallMethod( VectorSpaceToElement,
 			return EmptySubspace(geom);
 		else
 			MultRowVector(x,Inverse( x[PositionNonZero(x)] ));
-			ConvertToVectorRep(x, geom!.basefield);
 			return Wrap(geom, 1, x);
+		fi;
+	end );
+
+# CHECKED 11/04/15 jdb
+# CHANGED 19/9/2011 jdb + ml
+# CHECKED 21/09/2011 jdb
+#############################################################################
+#O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
+# by the rowvector <v>. Several checks are built in.
+##
+InstallMethod( VectorSpaceToElement,
+	"for a row vector",
+	[IsProjectiveSpace, IsRowVector],
+	function( geom, v )
+		local  x, y;
+		## when v is empty... does this ever occur for a row vector? No. jdb 21/09/2011
+		#if IsEmpty(v) then
+		#	Error("<v> does not represent any element");
+		#fi;
+		x := ShallowCopy(v);
+		## dimension should be correct
+		if Length(v) <> geom!.dimension + 1 then
+			Error("Dimensions are incompatible");
+		fi;
+		## We must also compress our vector.
+		#ConvertToVectorRep(x, geom!.basefield);
+		## bad characters, such as jdb, checked this with input zero vector...
+		if IsZero(x) then
+			return EmptySubspace(geom);
+		else
+			MultRowVector(x,Inverse( x[PositionNonZero(x)] ));
+			y := NewMatrix(IsCMatRep,geom!.basefield,Length(x),[x]);
+			#ConvertToVectorRep(x, geom!.basefield);
+			return Wrap(geom, 1, y[1]);
 		fi;
 	end );
 
@@ -640,7 +698,7 @@ InstallMethod( VectorSpaceToElement,
 	"for a projective space and an 8-bit vector",
 	[IsProjectiveSpace, Is8BitVectorRep],
 	function( geom, v )
-		local  x, n, i;
+		local  x, n, i, y;
 		## when v is empty...
 		if IsEmpty(v) then
 			return EmptySubspace(geom);
@@ -657,8 +715,9 @@ InstallMethod( VectorSpaceToElement,
 			return EmptySubspace(geom);
 		else
 			MultRowVector(x,Inverse( x[PositionNonZero(x)] ));
-			ConvertToVectorRep(x, geom!.basefield);
-			return Wrap(geom, 1, x);
+			y := NewMatrix(IsCMatRep,geom!.basefield,Length(x),[x]);
+			#ConvertToVectorRep(x, geom!.basefield);
+			return Wrap(geom, 1, y[1]);
 		fi;
 	end );
 
@@ -743,7 +802,7 @@ InstallMethod( Coordinates,
 		if not Dimension(point)=0 then 
 			Error("The argument is not a projective point");
 		else 
-			return ShallowCopy(point!.obj);
+			return ShallowCopy(Unpack(point!.obj));
 		fi;
 	end );
   
@@ -976,7 +1035,9 @@ InstallMethod( CollineationGroup,
 		g := GL(d+1,q);
 		frob := FrobeniusAutomorphism(f);
 		newgens := List(GeneratorsOfGroup(g),x->[x,frob^0]);
-		Add(newgens,[One(g),frob]);
+		if not IsOne(frob) then
+			Add(newgens,[One(g),frob]); #somehow we forgot that this is trivial if IsOne(frob)
+		fi; 
 		newgens := ProjElsWithFrob(newgens);
 		coll := GroupWithGenerators(newgens);
 		pow := LogInt(q, Characteristic(f));
@@ -1116,6 +1177,7 @@ InstallGlobalFunction( OnSetsProjSubspaces,
 #############################################################################
 
 # CHECKED 11/09/11 jdb
+# cvec change: only necessary to convert the output of MakeAllProjectivePoints. (19/3/14).
 #############################################################################
 #O  AsList( <vs>) 
 # returns a list of all elements in <vs>, which is a collection of subspaces of
@@ -1129,14 +1191,16 @@ InstallMethod( AsList,
 	## We use the package "orb" by Mueller, Neunhoeffer and Noeske,
 	## which is much quicker than using an iterator to get all of the
 	## projective subspaces of a certain dimension.
-	local geo, g, p, o, type, sz;
+	local geo, g, p, o, type, sz, bf, d;
 	geo := vs!.geometry;
 	g := ProjectivityGroup(geo);
 	type := vs!.type; 
 	sz := Size(vs);
 	if type = 1 then
-		o := MakeAllProjectivePoints(geo!.basefield, geo!.dimension);
-		o := List(o, t -> Wrap(geo, type, t));;   
+		bf := geo!.basefield;
+		d := geo!.dimension;
+		o := MakeAllProjectivePoints(bf, d);
+		o := List(o, t -> Wrap(geo, type, CVec(t, bf) ) );;   
 	else
 		p := NextIterator(Iterator(vs));
 		o := Orb(g, p, OnProjSubspaces, rec( hashlen:=Int(5/4*sz), 
@@ -1220,6 +1284,7 @@ InstallMethod( AsList,
 ######################################
 #
 # Put compressed matrices here....
+# If you mean with "here" the Iterator, then no worries since it uses VectorSpaceToElement, which uses now cvec/cmat.
 #
 #####################################
 
@@ -1707,6 +1772,9 @@ end );
 #############################################################################
 #O  Span( <x>, <y> )
 # returns <x,y>, <x> and <y> two subspaces of a projective space.
+# cvec note (19/3/14: SumIntersectionMat seems to be incompatible with
+# cvecs. So I will Unpack, do what I have to do, and get what I want
+# since VectorSpaceToElement is helping here.
 ##
 InstallMethod( Span, 
 	"for two subspaces of a projective space",
@@ -1718,8 +1786,8 @@ InstallMethod( Span,
 	typy := y!.type;
 	vec := x!.geo!.vectorspace;
 	if vec = y!.geo!.vectorspace then
-		ux := Unwrap(x);
-		uy := Unwrap(y);
+		ux := Unpack(Unwrap(x)); #here is the cvec/cmat unpack :-)
+		uy := Unpack(Unwrap(y));
 		if typx = 1 then ux := [ux]; fi;
 		if typy = 1 then uy := [uy]; fi;
 		span := SumIntersectionMat(ux, uy)[1];	
@@ -1749,6 +1817,8 @@ InstallMethod( Span,
 #############################################################################
 #O  Span( <l> )
 # returns the span of the projective subspaces in <l>.
+# cvec note (19/3/14: Unpack for this kind of work, in combination with VectorSpaceToElement
+# seems to be succesful. So the changes here are obvious:
 ##
 InstallMethod( Span, "for a homogeneous list of subspaces of a projective space",
 	[ IsHomogeneousList and IsSubspaceOfProjectiveSpaceCollection ],
@@ -1765,7 +1835,7 @@ InstallMethod( Span, "for a homogeneous list of subspaces of a projective space"
 			F := amb!.basefield;
 			unwrapped := [];
 			for r in l do
-				unr := r!.obj;
+				unr := Unpack(r!.obj); #here is the change.
 				if r!.type = 1 then unr := [unr]; fi;
 				Append(unwrapped, unr);
 			od;
@@ -1860,6 +1930,9 @@ end );
 # Lie geometries with the same ambient projective space, it is not possible to decide
 # if the two geometries equal. So it makes no sense to construct the result in any other
 # space then the ambient space.
+# cvec note (19/3/14): SumIntersectionMat seems to be incompatible with
+# cvecs. So I will Unpack, do what I have to do, and get what I want
+# since VectorSpaceToElement is helping here.
 #############################################################################
 #O  Meet( <x>, <y> )
 # returns the intersection of <x> and <y>, two subspaces of a projective space.
@@ -1872,8 +1945,8 @@ InstallMethod( Meet,
 		typx := x!.type;
 		typy := y!.type;
 		if x!.geo!.vectorspace = y!.geo!.vectorspace then 
-			ux := Unwrap(x); 
-			uy := Unwrap(y);
+			ux := Unpack(Unwrap(x)); #here is the change. 
+			uy := Unpack(Unwrap(y));
 			if typx = 1 then ux := [ux]; fi;
 			if typy = 1 then uy := [uy]; fi;
 			f := x!.geo!.basefield; 

@@ -6,12 +6,9 @@
 ##                                                              Jan De Beule
 ##                                                             Philippe Cara
 ##                                                            Michel Lavrauw
-##                                                                 Maska Law
 ##                                                           Max Neunhoeffer
-##                                                            Michael Pauley
-##                                                             Sven Reichard
 ##
-##  Copyright 2011	Colorado State University, Fort Collins
+##  Copyright 2014	Colorado State University, Fort Collins
 ##					Università degli Studi di Padova
 ##					Universeit Gent
 ##					University of St. Andrews
@@ -19,7 +16,7 @@
 ##                  Vrije Universiteit Brussel
 ##                 
 ##
-##  Implementation stuff for some new group representations
+##  Implementation stuff for our "projective groups"
 ##
 #############################################################################
 
@@ -43,6 +40,10 @@
 Print(", group\c");
 
 # CHECKED 5/09/11 jdb
+# We are currently CVec'ing everything. I decide to keep this function as is, and
+# convert its output where appriopriate to a list of cvecs
+# This makes that converting the vectors here to a dirty GAP vector is useless, so I
+# uncommented the if q <= 256 statement.
 #############################################################################
 #F  MakeAllProjectivePoints( f,d )
 # Global function to compute all points of a projective space. Not for users.
@@ -71,7 +72,7 @@ function(f,d)
   els := Elements(f);
   q := Length(els);
   v := ListWithIdenticalEntries(d+1,Zero(f));
-  if q <= 256 then ConvertToVectorRep(v,q); fi;
+  #if q <= 256 then ConvertToVectorRep(v,q); fi;
   vs := EmptyPlist(q^d);
   sp := EmptyPlist((q^(d+1)-1)/(q-1));
   for x in els do
@@ -133,6 +134,7 @@ InstallGlobalFunction(IsScalarMatrix,
 ## deleting some of it.
 
 # CHECKED 5/09/11 jdb
+# We are in the very big cvec operation and will skip all methods for non frob groups right now. 19/3/2014.
 # I am not completely happy with the behaviour of this method, since there might
 # be some issue with the field.
 # On the other hand, it is not intended for the user and might even be obselete
@@ -185,6 +187,7 @@ InstallMethod( ProjEls, "for a list of ffe matrices",
   end );
 
 # CHECKED 5/09/11 jdb # changed ml 8/11/12
+# changed 19/3/2014 to cmat.
 #############################################################################
 #O  Projectivity( <mat>, <gf> )
 # method to construct an object in the category IsProjGrpElWithFrob, but with
@@ -199,12 +202,38 @@ InstallMethod( Projectivity, [ IsMatrix and IsFFECollColl, IsField],
     ## pigeons, so does my computer. I add some lines now to check whether the
     ## matrix is non singular. 
   	function( mat, gf )
-		local el, m2, fld, frob;
+		local el, m2, fld, frob, cmat;
 		m2 := ShallowCopy(mat);
+		#if RowLength(m2) <> Length(m2) then
+		#	Error("<mat> must be a square matrix");
+		#fi;
 		if Rank(m2) <> Size(m2) then
 			Error("<mat> must not be singular");
 		fi;
-		ConvertToMatrixRep( m2, gf );
+		#ConvertToMatrixRep( m2, gf );
+		cmat := NewMatrix( IsCMatRep, gf, Size(m2) , m2);
+		el := rec( mat := cmat, fld := gf, frob := FrobeniusAutomorphism(gf)^0 );
+		Objectify( ProjElsWithFrobType, el );
+		return el;
+	end );
+
+# added 19/3/2014 (cmat).
+#############################################################################
+#O  Projectivity( <mat>, <gf> )
+# method to construct an object in the category IsProjGrpElWithFrob,
+# as above, with input a cmat and field
+## 
+InstallMethod( Projectivity, [ IsCMatRep and IsFFECollColl, IsField],
+  	function( mat, gf )
+		local el, m2, fld, frob, cmat;
+		m2 := ShallowCopy(mat);
+		#if RowLength(m2) <> Length(m2) then 
+		#	Error("<mat> must be a square matrix");
+		#fi;
+		if Rank(m2) <> Length(m2) then
+			Error("<mat> must not be singular");
+		fi;
+		#ConvertToMatrixRep( m2, gf );
 		el := rec( mat := m2, fld := gf, frob := FrobeniusAutomorphism(gf)^0 );
 		Objectify( ProjElsWithFrobType, el );
 		return el;
@@ -228,6 +257,35 @@ InstallMethod( Projectivity, [ IsProjectiveSpace, IsMatrix],
 			Error("The arguments <mat> and <pg> are incompatible");
 		fi;
 		m2 := ShallowCopy(mat);
+		#if RowLength(m2) <> Length(m2) then 
+		#	Error("<mat> must be a square matrix");
+		#fi;
+		if Rank(m2) <> Size(m2) then
+			Error("<mat> must not be singular");
+		fi;
+		return Projectivity(mat,gf);
+	end );
+
+# Added ml cmat version 19/3/14.
+#############################################################################
+#O  Projectivity( <pg>, <mat> )
+# method to construct an object in the category IsProjGrpEl, i.e. a projectivity, 
+# This method is intended for the user, and contains
+# a check whether the matrix is non-singular.
+## 
+InstallMethod( Projectivity, [ IsProjectiveSpace, IsCMatRep],
+#
+  	function( pg, mat )
+		local d,gf,m2;
+		d:=Dimension(pg);
+		gf:=pg!.basefield;
+		if d <> Size(mat)-1 then
+			Error("The arguments <mat> and <pg> are incompatible");
+		fi;
+		m2 := ShallowCopy(mat);
+		#if RowLength(m2) <> Length(m2) then 
+		#	Error("<mat> must be a square matrix");
+		#fi;
 		if Rank(m2) <> Size(m2) then
 			Error("<mat> must not be singular");
 		fi;
@@ -346,6 +404,28 @@ InstallMethod( IsCollineationGroup, [ IsProjectiveGroupWithFrob],
 ###################################################################
 
 # CHECKED 5/09/11 jdb
+# cmat changed 19/3/14
+#############################################################################
+#O  ProjElWithFrob( <mat>, <frob>, <f> )
+# method to construct an object in the category IsProjGrpElWithFrob, i.e. projective 
+# semilinear maps aka "matrices modulo scalars with frob". This method is not 
+# intended for the users, it has no checks built in.
+##
+InstallMethod( ProjElWithFrob, 
+	"for a cmat/ffe matrix and a Frobenius automorphism, and a field",
+	[IsCMatRep and IsFFECollColl, #changed 19/3/14 to cmat.
+	IsRingHomomorphism and IsMultiplicativeElementWithInverse,
+	IsField],
+	function( m, frob, f )
+		local el, m2;
+		m2 := ShallowCopy(m);
+		#ConvertToMatrixRep( m2, f );
+		el := rec( mat := m2, fld := f, frob := frob );
+		Objectify( ProjElsWithFrobType, el );
+		return el;
+	end );
+	
+# added 19/03/14
 #############################################################################
 #O  ProjElWithFrob( <mat>, <frob>, <f> )
 # method to construct an object in the category IsProjGrpElWithFrob, i.e. projective 
@@ -354,19 +434,22 @@ InstallMethod( IsCollineationGroup, [ IsProjectiveGroupWithFrob],
 ##
 InstallMethod( ProjElWithFrob, 
 	"for a ffe matrix and a Frobenius automorphism, and a field",
-	[IsMatrix and IsFFECollColl,
+	[IsMatrix and IsFFECollColl, 
 	IsRingHomomorphism and IsMultiplicativeElementWithInverse,
 	IsField],
 	function( m, frob, f )
-		local el, m2;
+		local el, m2, cmat;
 		m2 := ShallowCopy(m);
-		ConvertToMatrixRep( m2, f );
-		el := rec( mat := m2, fld := f, frob := frob );
+		#ConvertToMatrixRep( m2, f );
+		cmat := NewMatrix(IsCMatRep,f,Length(m2[1]),m2);
+		el := rec( mat := cmat, fld := f, frob := frob );
 		Objectify( ProjElsWithFrobType, el );
 		return el;
 	end );
+	
 
 # CHECKED 5/09/11 jdb
+# cmat changed 19/3/14
 #############################################################################
 #O  ProjElWithFrob( <mat>, <frob> )
 # method to construct an object in the category IsProjGrpElWithFrob, i.e. projective 
@@ -375,8 +458,8 @@ InstallMethod( ProjElWithFrob,
 # This method relies on DefaultFieldOfMatrix and Range(<frbo>) to determine the field to be used
 ##
 InstallMethod( ProjElWithFrob, 
-	"for a ffe matrix and a Frobenius automorphism",
-	[IsMatrix and IsFFECollColl,
+	"for a cmat/ffe matrix and a Frobenius automorphism",
+	[IsCMatRep and IsFFECollColl, #changed 19/3/14. 
 	IsRingHomomorphism and IsMultiplicativeElementWithInverse], 
 	1, #to set higher priority than the next method.
 	function ( m, frob )
@@ -402,6 +485,7 @@ InstallMethod( ProjElWithFrob,
 	end);
  
 # CHECKED 5/09/11 jdb
+# cmat changed 19/3/14
 #############################################################################
 #O  ProjElWithFrob( <mat>, <frob> )
 # method to construct an object in the category IsProjGrpElWithFrob, i.e. projective 
@@ -412,8 +496,8 @@ InstallMethod( ProjElWithFrob,
 # but we built in a little check to abvoid disasters.
 ##
 InstallMethod( ProjElWithFrob, 
-	"for a ffe matrix and a trivial Frobenius automorphism",
-	[IsMatrix and IsFFECollColl,
+	"for a cmat/ffe matrix and a trivial Frobenius automorphism",
+	[IsCMatRep and IsFFECollColl,
 	IsRingHomomorphism and IsMultiplicativeElementWithInverse], 
 	0, #to set lower priority than the previous method.
 	function( m, frob )
@@ -422,7 +506,7 @@ InstallMethod( ProjElWithFrob,
 		  Error("<frob> is not trivial. Something went wrong when calling this method");
 		fi;
 		m2 := ShallowCopy(m); 
-		ConvertToMatrixRepNC( m2 );
+		#ConvertToMatrixRepNC( m2 );
 		el := rec( mat := m2, fld := DefaultFieldOfMatrix(m), frob := frob );
 		Objectify( ProjElsWithFrobType, el );
 		return el;
@@ -461,7 +545,7 @@ InstallMethod( ProjElsWithFrob,
 # if this is not possible.
 ##
 InstallMethod( ProjElsWithFrob, 
-	"for a list of pairs of ffe matrices and Frobenius automorphisms",
+	"for a list of pairs of cmat/ffe matrices and Frobenius automorphisms",
 	[IsList],
 	function( l )
     local matrixfield, frobfield, mchar, fchar, oldchar, f, dim, m, objectlist;
@@ -843,9 +927,10 @@ InstallMethod( \=, "for two projective group elements with Frobenius",
     bb := b!.mat;
     p := PositionNonZero(aa[1]);
     s := bb[1][p] / aa[1][p];
-    for i in [1..Length(aa)] do
-        if s*aa[i] <> bb[i] then return false; fi;
-    od;
+    if s*aa <> bb then return false; fi;
+	#for i in [1..Length(aa)] do
+        #if s*aa[i] <> bb[i] then return false; fi;
+    #od;
     return true;
   end );
 
@@ -1112,26 +1197,59 @@ InstallOtherMethod( \^, "for a FFE vector and a Frobenius automorphism",
     return List(v,x->x^f);
   end );
 
+#cvec version
+InstallOtherMethod( \^, "for a cvec/FFE vector and a Frobenius automorphism",
+  [ IsCVecRep and IsFFECollection and IsMutable, IsFrobeniusAutomorphism ],
+  function( v, f )
+    return CVec(List(v,x->x^f),BaseField(v));
+  end );
+
 InstallOtherMethod( \^, "for a FFE vector and a Frobenius automorphism",
   [ IsVector and IsFFECollection, IsFrobeniusAutomorphism ],
   function( v, f )
     return MakeImmutable(List(v,x->x^f));
   end );
 
-InstallOtherMethod( \^, 
-  "for a mutable FFE vector and a trivial Frobenius automorphism",
-  [ IsVector and IsFFECollection and IsMutable, IsMapping and IsOne ],
+#cvec version
+InstallOtherMethod( \^, "for a cvec/FFE vector and a Frobenius automorphism",
+  [ IsCVecRep and IsFFECollection, IsFrobeniusAutomorphism ],
   function( v, f )
-    return v;
+    return MakeImmutable(CVec(List(v,x->x^f),BaseField(v)));
   end );
 
+#we think that this method is not needed, worse, should not be used.
+#InstallOtherMethod( \^, 
+#  "for a mutable FFE vector and a trivial Frobenius automorphism",
+#  [ IsVector and IsFFECollection and IsMutable, IsMapping and IsOne ],
+#  function( v, f )
+#    return v;
+#  end );
+
+#cvec version
+#InstallOtherMethod( \^, 
+#  "for a mutable cvec/FFE vector and a trivial Frobenius automorphism",
+#  [ IsCVecRep and IsFFECollection and IsMutable, IsMapping and IsOne ],
+#  function( v, f )
+#    return v;
+#  end );
+  
 InstallOtherMethod( \^, 
   "for a mutable FFE vector and a trivial Frobenius automorphism",
   [ IsVector and IsFFECollection and IsMutable, IsMapping and IsOne ],
   function( v, f )
     return ShallowCopy(v);
   end );
+  
+#cvec version
+InstallOtherMethod( \^, 
+  "for a mutable cvec/FFE vector and a trivial Frobenius automorphism",
+  [ IsCVecRep and IsFFECollection and IsMutable, IsMapping and IsOne ],
+  function( v, f )
+    return ShallowCopy(v);
+  end );
 
+#the next operations until the matrix section, the methods will become obsolete as soon as fining is cvec'ed.
+  
 InstallOtherMethod( \^, 
   "for a compressed GF2 vector and a Frobenius automorphism",
   [ IsVector and IsFFECollection and IsGF2VectorRep, IsFrobeniusAutomorphism ],
@@ -1204,16 +1322,38 @@ InstallOtherMethod( \^,
     return ShallowCopy(v);
   end );
 
+#### matrix methods
+
 InstallOtherMethod( \^, "for a FFE matrix and a Frobenius automorphism",
   [ IsMatrix and IsFFECollColl, IsFrobeniusAutomorphism ],
   function( m, f )
     return MakeImmutable(List(m,v->List(v,x->x^f)));
   end );
 
+#cmat
+InstallOtherMethod( \^, "for a FFE matrix and a Frobenius automorphism",
+  [ IsCMatRep and IsFFECollColl, IsFrobeniusAutomorphism ],
+  function( m, f )
+    return MakeImmutable(CMat(List(m,v->v^f)));
+  end );  
+  
+#InstallOtherMethod( \^, "for a FFE matrix and a Frobenius automorphism",
+#  [ IsMatrix and IsFFECollColl, IsFrobeniusAutomorphism ],
+#  function( m, f )
+#    return MakeImmutable(List(m,v->List(v,x->x^f)));
+#  end );
+  
 InstallOtherMethod( \^, "for a mutable FFE matrix and a Frobenius automorphism",
   [ IsMatrix and IsFFECollColl and IsMutable, IsFrobeniusAutomorphism ],
   function( m, f )
     return List(m,v->List(v,x->x^f));
+  end );
+
+#cmat
+InstallOtherMethod( \^, "for a mutable FFE matrix and a Frobenius automorphism",
+  [ IsCMatRep and IsFFECollColl and IsMutable, IsFrobeniusAutomorphism ],
+  function( m, f )
+    return CMat(List(m,v->v^f));
   end );
 
 InstallOtherMethod( \^, "for a FFE matrix and a trivial Frobenius automorphism",
@@ -1222,12 +1362,28 @@ InstallOtherMethod( \^, "for a FFE matrix and a trivial Frobenius automorphism",
     return m;
   end );
 
+#cmat
+InstallOtherMethod( \^, "for a FFE matrix and a trivial Frobenius automorphism",
+  [ IsCMatRep and IsFFECollColl and IsMutable, IsMapping and IsOne ],
+  function( m, f )
+    return ShallowCopy(m);
+  end );
+
 InstallOtherMethod( \^, 
   "for a mutable FFE matrix and a trivial Frobenius automorphism",
   [ IsMatrix and IsFFECollColl, IsMapping and IsOne ],
   function( m, f )
     return MutableCopyMat(m);
   end );
+
+#cmat  
+InstallOtherMethod( \^, "for a FFE matrix and a trivial Frobenius automorphism",
+  [ IsCMatRep and IsFFECollColl , IsMapping and IsOne ],
+  function( m, f )
+    return MakeImmutable(ShallowCopy(m));
+  end );
+
+#the next matrix methods will become obsolete.
 
 InstallOtherMethod( \^, 
   "for a compressed GF2 matrix and a Frobenius automorphism",
@@ -1812,11 +1968,12 @@ InstallGlobalFunction( OnProjPointsWithFrob,
 # <el>: a projective group element (so a projectivity, *not* a projective collineation element.
 ## 
 InstallGlobalFunction( OnProjSubspacesNoFrob,
-	function( subspace, el )
+	function( matrix, el )
+		# matrix is a matrix containing the basis vectors of some subspace.
 		local mat;
-		mat := TriangulizeMat(OnSubspacesByCanonicalBasis(subspace,el!.mat));
+		mat := TriangulizeMat(OnSubspacesByCanonicalBasis(matrix,el!.mat));
 		return mat;
-		#return EchelonMat(OnSubspacesByCanonicalBasis(subspace,el!.mat)).vectors;
+		#return EchelonMat(OnSubspacesByCanonicalBasis(matrix,el!.mat)).vectors;
 	end );
 
 # CHECKED 6/09/11 jdb
@@ -1832,9 +1989,10 @@ InstallGlobalFunction( OnProjSubspacesNoFrob,
 # <el>: a projective group element (so a projectivity, *not* a projective collineation element.
 ##
 InstallGlobalFunction( OnProjSubspacesWithFrob,
-  function( subspace, el )
+  function( matrix, el )
+	# matrix is a matrix containing the basis vectors of some subspace.
     local vec,c;
-    vec := OnRight(subspace,el!.mat)^el!.frob;
+    vec := OnRight(matrix,el!.mat)^el!.frob;
     if not(IsMutable(vec)) then
         vec := MutableCopyMat(vec);
     fi;
@@ -1873,6 +2031,7 @@ InstallGlobalFunction( OnProjSubspacesWithFrob,
 #	end );
 
 # CHECKED 6/09/11 jdb
+# cvec change 19/3/14
 #############################################################################
 #P  ActionOnAllProjPoints( <g> )
 # returns the action of the projective collineation group <g> on the projective points
@@ -1882,6 +2041,7 @@ InstallMethod( ActionOnAllProjPoints, "for a projective collineation group",
 	[ IsProjectiveGroupWithFrob ],
 	function( pg )
 		local a,d,f,o,on,orb,v,zero, m, j;
+		Print("using ActionOnAllProjPoints\n");
 		f := BaseField(pg);
 		d := Dimension(pg);
 		o := One(f);
@@ -1894,7 +2054,7 @@ InstallMethod( ActionOnAllProjPoints, "for a projective collineation group",
 		for m in f^d do
 			j := PositionNot(m, zero);
 		if j <= d and m[j] = o then
-			Add(orb, m);
+			Add(orb, CVec(m,f)); #here is the change.
 		fi;
 		od;
 		a := ActionHomomorphism(pg,orb,OnProjPointsWithFrob,"surjective");
@@ -1997,6 +2157,7 @@ InstallMethod( SetAsNiceMono,
   end );
 
 # CHECKED 6/09/11 jdb
+# cvec change 19/3/14
 #############################################################################
 #O  NiceMonomorphism( <pg> )
 # <pg> is a projective group. This operation returns a nice monomorphism.
@@ -2006,10 +2167,13 @@ InstallMethod( NiceMonomorphism,
 	[IsProjectivityGroup and CanComputeActionOnPoints and IsHandledByNiceMonomorphism], 
 	50,
 	function( pg )
-	local hom, dom;
-    dom := MakeAllProjectivePoints( BaseField(pg), Dimension(pg) - 1);
-    if FINING.Fast then
-       hom := NiceMonomorphismByDomain( pg, dom, OnProjPointsWithFrob );
+	local hom, dom,bf;
+	bf := BaseField(pg);
+    dom := MakeAllProjectivePoints( bf, Dimension(pg) - 1);
+    dom := List(dom,x->CVec(x,bf));
+	if FINING.Fast then
+		Print("efgkes");
+	   hom := NiceMonomorphismByDomain( pg, dom, OnProjPointsWithFrob );
     else 
        hom := ActionHomomorphism(pg, dom, OnProjPointsWithFrob, "surjective");    
        SetIsBijective(hom, true);
@@ -2018,6 +2182,7 @@ InstallMethod( NiceMonomorphism,
 	end );
   
 # CHECKED 6/09/11 jdb
+# cvec change 19/3/14
 #############################################################################
 #O  NiceMonomorphism( <pg> )
 # <pg> is a projective group. This operation returns a nice monomorphism.
@@ -2027,12 +2192,15 @@ InstallMethod( NiceMonomorphism,
 	[IsProjectiveGroupWithFrob and IsHandledByNiceMonomorphism], 
 	50,
 	function( pg )
-		local can, dom, hom;
+		local can, dom, hom, bf;
+	Print("calling NiceMonomorphism (nasty case)\n");	
+		bf := BaseField(pg);
 		can := CanComputeActionOnPoints(pg);
 		if not(can) then
 			Error("action on projective points not feasible to calculate");
 		else
 			dom := MakeAllProjectivePoints( BaseField(pg), Dimension(pg) - 1 );
+		    dom := List(dom,x->CVec(x,bf));
 			if FINING.Fast then
 				hom := NiceMonomorphismByDomain( pg, dom, OnProjPointsWithFrob );
 			else 
@@ -2051,7 +2219,7 @@ InstallMethod( NiceMonomorphism,
 InstallMethod( NiceMonomorphism, 
 	"for a projective collineation group (feasible case)",
 	[IsProjectiveGroupWithFrob and CanComputeActionOnPoints and
-	IsHandledByNiceMonomorphism], 50,
+	IsHandledByNiceMonomorphism], 1,
 	function( pg )
 		return ActionOnAllProjPoints( pg );
 	end );

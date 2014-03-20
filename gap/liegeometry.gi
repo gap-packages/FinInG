@@ -223,6 +223,7 @@ InstallMethod( Solids, "for a Lie geometry",
 
 # CHECKED 7/09/2011 jdb
 # Changed 28/11/11 jdb+pc
+# Changed 18/03/14 jdb+ml
 #############################################################################
 #O  EmptySubspace( <g> )
 # returns the empty subspace in the Lie geometry <g>
@@ -233,8 +234,14 @@ InstallMethod( EmptySubspace,
 	function( g )
 		local  vs,x,w,ty;
 		vs:=UnderlyingVectorSpace(g);
-		x := ShallowCopy(Zero(vs));
-		w := rec( geo := g, obj := x );
+		#x := ShallowCopy(Zero(vs));
+		#x := Unpack(ShallowCopy(Zero(vs))); #Unpack is the answer to all our CVec/CMat questions. 
+#This is actually a bit eaxagerated. Sometimes Zero(vs) will return a "dirty" GAP vector, then Unpack works. But sometims
+#it will be a list, then Unpack does not work anymore. I don't want a case distinction here. ZeroVector (from cvec) 
+#asks a cvec as argument, which is a bit inconvenient. So I do it the dirty way.
+		x := NewMatrix(IsCMatRep,g!.basefield,g!.dimension+1,[Zero(ShallowCopy(vs))]);
+		#w := rec( geo := g, obj := x ); #changed 19/3/2014
+		w := rec( geo := g, obj := x[1] );
 		ty:= NewType( NewFamily("EmptySubspaceFamily"), IsEmptySubspace and IsEmptySubspaceRep );
 		#ObjectifyWithAttributes( w, ty, AmbientSpace, g, ProjectiveDimension, -1);
 		ObjectifyWithAttributes( w, ty, AmbientSpace, AmbientSpace(g), ProjectiveDimension, -1);
