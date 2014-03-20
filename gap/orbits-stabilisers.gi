@@ -132,7 +132,15 @@ InstallMethod( FiningElementStabiliserOp,
 		size := Size(ElementsOfIncidenceStructure(e!.geo,e!.type)); #strongly using here that we know the representation well...
 		stab := Stab(g,e,act,rec( Size:=Size(g), DoEstimate := size )).stab;
 		# JB: 18/03/2014
-		SetParent(stab, g);
+		# SetParent(stab, g);
+		# ml 20/03/14: There was an issue with SetParent. This gives an error unless a nice monomorphism is 
+		# available for the parent group. It is not completely clear WHY this is the case, and this might be gap
+		# issue. We therefore choose NOT to use SetParent.
+		# We could work around this by adding the following, but first we need to fully understand this issue.
+		# if HasNiceMonomorphism(g) and not IsIdenticalObj( Parent( g ), stab ) then
+		#  	  SetParent(stab, Parent( g ));
+		# fi;
+
 		return stab;
 	end );
 		
@@ -165,7 +173,8 @@ InstallMethod( FiningStabiliserOrb,
 		local stab;
 		stab := Group(ORB_EstimateOrbitSize(ProductReplacer(fining_group),el,OnProjSubspaces,15,1000000,60000).Sgens);
 		# JB: 18/03/2014
-		SetParent(stab, fining_group);
+		# SetParent(stab, fining_group);
+		# ml 20/03/14: There was an issue with SetParent (see comments in the code of FiningElementStabiliserOp)
 	return stab; 
 end );
 
@@ -183,7 +192,9 @@ InstallMethod( FiningSetwiseStabiliser,
 		local stab;
 		# JB: 18/03/2014
 		stab := SetwiseStabilizer(g, OnProjSubspaces, set)!.setstab;
-		SetParent(stab, g);
+		# SetParent(stab, g);
+		# ml 20/03/14: There was an issue with SetParent (see comments in the code of FiningElementStabiliserOp)
+
 		return stab;
 end );
 
