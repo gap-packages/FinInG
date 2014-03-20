@@ -1957,7 +1957,6 @@ InstallMethod( Meet,
 		else
 			Error("Subspaces belong to different ambient spaces");
 		fi;
-    #return; #why is this return;?
   end );
 
 #############################################################################
