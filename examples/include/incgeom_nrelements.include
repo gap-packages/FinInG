@@ -1,0 +1,6 @@
+gap&gt; ps:=ProjectiveSpace(4,3);
+ProjectiveSpace(4, 3)
+gap&gt; NrElementsOfIncidenceStructure(ps, 2);
+1210
+gap&gt; NrElementsOfIncidenceStructure(ps, "points");
+121
