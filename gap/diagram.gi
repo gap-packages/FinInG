@@ -207,7 +207,7 @@ InstallMethod( RandomElement,
 # returns a random element a coset geometry
 # 
 ##
-InstallMethod( Random, 
+InstallOtherMethod( Random, 
 	"for element category of coset geometry",
 	[IsAllElementsOfCosetGeometry],
 	function(allele)
