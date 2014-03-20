@@ -737,9 +737,9 @@ InstallMethod( UnderlyingVectorSpace,
 		local vspace,W;
 		vspace:=UnderlyingVectorSpace(subspace!.geo);
 		if subspace!.type = 1 then
-			W:=SubspaceNC(vspace,[subspace!.obj]);
+			W:=SubspaceNC(vspace,[Unpack(subspace!.obj)]); #possibly unpack here to avoid bloody seg fault.
 		else
-			W:=SubspaceNC(vspace,subspace!.obj);
+			W:=SubspaceNC(vspace,Unpack(subspace!.obj));
 		fi;
 		return W;
 	end);
@@ -1959,7 +1959,6 @@ InstallMethod( Meet,
 		else
 			Error("Subspaces belong to different ambient spaces");
 		fi;
-    #return; #why is this return;?
   end );
 
 # CHECKED 14/09/2011 jdb.

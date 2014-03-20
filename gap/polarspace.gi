@@ -481,6 +481,7 @@ InstallMethod( CanonicalOrbitRepresentativeForSubspaces,
 #############################################################################
 
 # CHECKED 21/09/11 jdb
+# Cmat adapted 20/3/14
 #############################################################################
 #O  EllipticQuadric( <d>, <f> )
 # returns the standard elliptic quadrac. See CanonicalQuadraticForm and CanonicalGramMatrix
@@ -490,7 +491,7 @@ InstallMethod( EllipticQuadric,
 	"for an integer and a field",
 	[ IsPosInt, IsField ],
 	function( d, f )
-		local eq,m,types,max,reps,q,form;
+		local eq,m,types,max,reps,q,form,creps;
 		q := Size(f);
 		if IsEvenInt(d) then
 			Error("dimension must be odd");
@@ -520,23 +521,25 @@ InstallMethod( EllipticQuadric,
 	## it could be that max is empty, not Max of course, but the variable max.	
 
 		if not IsEmpty(max) then
-			reps := [ max[1] ];
-			Append(reps, List([2..(d-1)/2], j -> max{[1..j]}));  
-		
+			reps := [ [max[1]] ]; #small change
+			Append(reps, List([2..(d-1)/2], j -> max{[1..j]})); 
 	## We would like the representative to be stored as
 	## compressed matrices. Then they will be more efficient
 	## to work with.
-  
-			for m in reps do
-				if IsMatrix(m) then
-					ConvertToMatrixRep(m,f);
-				else 
-					ConvertToVectorRep(m,f);
-				fi;
-			od;   
+			
+			creps := List(reps,x->NewMatrix(IsCMatRep, f, d+1, x));
+			creps[1] := creps[1][1]; #max is not empty, first element should always be a 1xn matrix->cvec.
+			
+			#for m in reps do
+			#	if IsMatrix(m) then
+			#		ConvertToMatrixRep(m,f);
+			#	else 
+			#		ConvertToVectorRep(m,f);
+			#	fi;
+			#od;   
 
-    ## Wrap 'em up
-			reps := List([1..(d-1)/2], j -> Wrap(eq, j, reps[j]) );
+    ## Wrap 'em up #can be done without using VectorSpaceToElement (and hence withou computations) now :-)
+			reps := List([1..(d-1)/2], j -> Wrap(eq, j, creps[j]) ); #one more small change :-)
 			SetRepresentativesOfElements(eq, reps);
 		else;
 			SetRepresentativesOfElements(eq, []);
@@ -558,6 +561,7 @@ InstallMethod( EllipticQuadric,
 	end );
 
 # CHECKED 21/09/11 jdb
+# Cmat adapted 20/3/14
 #############################################################################
 #O  SymplecticSpace( <d>, <f> )
 # returns the standard symplectic space. See CanonicalGramMatrix
@@ -567,7 +571,7 @@ InstallMethod( SymplecticSpace,
 	"for an integer and a field",
 	[ IsPosInt, IsField ],
 	function( d, f )
-		local w,frob,m,types,max,reps,q,form;
+		local w,frob,m,types,max,reps,q,form,creps;
 		if IsEvenInt(d) then
 			Error("dimension must be odd");
 			return;
@@ -590,22 +594,26 @@ InstallMethod( SymplecticSpace,
 
     ## Here we take the maximal totally isotropic subspace rep
     ## max and make representatives for lower dimensional subspaces
-		reps := [ max[1] ];
+		reps := [ [ max[1] ] ]; #small change
 		Append(reps, List([2..(d+1)/2], j -> max{[1..j]}));  
 
     ## We would like the representative to be stored as
     ## compressed matrices. Then they will be more efficient
     ## to work with.
-		for m in reps do
-			if IsMatrix(m) then
-				ConvertToMatrixRep(m,f);
-			else 
-				ConvertToVectorRep(m,f);
-			fi;
-		od;   
+
+		creps := List(reps,x->NewMatrix(IsCMatRep, f, d+1, x));
+		creps[1] := creps[1][1]; #max is not empty, first element should always be a 1xn matrix->cvec.
+
+		#for m in reps do
+		#	if IsMatrix(m) then
+		#		ConvertToMatrixRep(m,f);
+		#	else 
+		#		ConvertToVectorRep(m,f);
+		#	fi;
+		#od;   
 
     ## Wrap 'em up
-		reps := List([1..(d+1)/2], j -> Wrap(w, j, reps[j]) );
+		reps := List([1..(d+1)/2], j -> Wrap(w, j, creps[j]) ); #one more small change :-)
 		SetRepresentativesOfElements(w, reps);
         SetClassicalGroupInfo( w, rec(  degree := (q^(d+1)-1)/(q-1) ) );    
 		return w;
@@ -625,6 +633,7 @@ InstallMethod(SymplecticSpace,
 	end );
 
 # CHECKED 21/09/11 jdb
+# Cmat adapted 20/3/14
 #############################################################################
 #O  ParabolicQuadric( <d>, <f> )
 # returns the standard parabolic quadric. See CanonicalQuadraticForm and CanonicalGramMatrix
@@ -634,7 +643,7 @@ InstallMethod( ParabolicQuadric,
 	"for an integer and a field",	
 	[ IsPosInt, IsField ],
 	function( d, f )
-		local pq,m,types,max,reps,q,form;
+		local pq,m,types,max,reps,q,form,creps;
 		if IsOddInt(d) then
 			Error("dimension must be even");
 			return;
@@ -662,23 +671,25 @@ InstallMethod( ParabolicQuadric,
     ## Here we take the maximal totally isotropic subspace rep
     ## max and make representatives for lower dimensional subspaces
 
-		reps := [ max[1] ];
+		reps := [ [ max[1] ] ]; #small change
 		Append(reps, List([2..d/2], j -> max{[1..j]}));  
 
     ## We would like the representative to be stored as
     ## compressed matrices. Then they will be more efficient
     ## to work with.
-  
-		for m in reps do
-			if IsMatrix(m) then
-				ConvertToMatrixRep(m,f);
-			else 
-				ConvertToVectorRep(m,f);
-			fi;
-		od;   
+		creps := List(reps,x->NewMatrix(IsCMatRep, f, d+1, x));
+		creps[1] := creps[1][1]; #max is not empty, first element should always be a 1xn matrix->cvec.
+		
+		#for m in reps do
+		#	if IsMatrix(m) then
+		#		ConvertToMatrixRep(m,f);
+		#	else 
+		#		ConvertToVectorRep(m,f);
+		#	fi;
+		#od;   
 
     ## Wrap 'em up
-		reps := List([1..d/2], j -> Wrap(pq, j, reps[j]) );
+		reps := List([1..d/2], j -> Wrap(pq, j, creps[j]) ); #one more small change :-)
 		SetRepresentativesOfElements(pq, reps);
         SetClassicalGroupInfo( pq, rec( degree := (q^(d/2)-1)/(q-1)*(q^((d+2)/2-1)+1) ) );   
 		return pq;
@@ -697,6 +708,7 @@ InstallMethod( ParabolicQuadric,
 	end );
 
 # CHECKED 21/09/11 jdb
+# Cmat adapted 20/3/14
 #############################################################################
 #O  HyperbolicQuadric( <d>, <f> )
 # returns the standard hyperbolic quadric. See CanonicalQuadraticForm and CanonicalGramMatrix
@@ -706,7 +718,7 @@ InstallMethod( HyperbolicQuadric,
 	"for an integer and a field",	
 	[ IsPosInt, IsField ],
 	function( d, f )
-		local hq,m,types,max,reps,q,form;
+		local hq,m,types,max,reps,q,form,creps;
 		q := Size(f);
 		if IsEvenInt(d) then
 			Error("dimension must be odd");
@@ -734,23 +746,26 @@ InstallMethod( HyperbolicQuadric,
     ## Here we take the maximal totally isotropic subspace rep
     ## max and make representatives for lower dimensional subspaces
 
-		reps := [ max[1] ];
+		reps := [ [ max[1] ] ]; #small change
 		Append(reps, List([2..(d+1)/2], j -> max{[1..j]}));  
 
     ## We would like the representative to be stored as
     ## compressed matrices. Then they will be more efficient
     ## to work with.
+
+		creps := List(reps,x->NewMatrix(IsCMatRep, f, d+1, x));
+		creps[1] := creps[1][1]; #max is not empty, first element should always be a 1xn matrix->cvec.
   
-		for m in reps do
-			if IsMatrix(m) then
-				ConvertToMatrixRep(m,f);
-			else 
-				ConvertToVectorRep(m,f);
-			fi;
-		od;   
+		#for m in reps do
+		#	if IsMatrix(m) then
+		#		ConvertToMatrixRep(m,f);
+		#	else 
+		#		ConvertToVectorRep(m,f);
+		#	fi;
+		#od;   
 
     ## Wrap 'em up
-		reps := List([1..(d+1)/2], j -> Wrap(hq, j, reps[j]) );
+		reps := List([1..(d+1)/2], j -> Wrap(hq, j, creps[j]) ); #one more small change :-)
 		SetRepresentativesOfElements(hq, reps);
         SetClassicalGroupInfo( hq, rec( degree := (q^((d+1)/2)-1)/(q-1)*(q^((d+1)/2-1)+1)) );
 		return hq;
@@ -769,6 +784,7 @@ InstallMethod(HyperbolicQuadric,
 	end );
 
 # CHECKED 21/09/11 jdb
+# Cmat adapted 20/3/14
 #############################################################################
 #O  HermitianPolarSpace( <d>, <f> )
 # returns the standard hermitian variety. See CanonicalGramMatrix
@@ -778,7 +794,7 @@ InstallMethod( HermitianPolarSpace,
 	"for an integer and a field",	
 	[ IsPosInt, IsField ],
 	function( d, f )
-		local h,m,types,max,reps,q;
+		local h,m,types,max,reps,q,creps;
 		if PrimePowersInt(Size(f))[2] mod 2 <> 0 then
 			Error("field order must be a square");
 			return;
@@ -804,22 +820,26 @@ InstallMethod( HermitianPolarSpace,
 
     ## Here we take the maximal totally isotropic subspace rep
     ## max and make representatives for lower dimensional subspaces
-		reps := [ max[1] ];
+		reps := [ [ max[1] ] ]; #small change
 		Append(reps, List([2..RankAttr(h)], j -> max{[1..j]}));  
 
     ## We would like the representative to be stored as
     ## compressed matrices. Then they will be more efficient
     ## to work with.
-		for m in reps do
-			if IsMatrix(m) then
-				ConvertToMatrixRep(m,f);
-			else
-				ConvertToVectorRep(m,f);  
-			fi;
-		od;   
+
+		creps := List(reps,x->NewMatrix(IsCMatRep, f, d+1, x));
+		creps[1] := creps[1][1]; #max is not empty, first element should always be a 1xn matrix->cvec.
+
+		#for m in reps do
+		#	if IsMatrix(m) then
+		#		ConvertToMatrixRep(m,f);
+		#	else
+		#		ConvertToVectorRep(m,f);  
+		#	fi;
+		#od;   
 
     ## Wrap 'em up
-		reps := List([1..RankAttr(h)], j -> Wrap(h, j, reps[j]) );
+		reps := List([1..RankAttr(h)], j -> Wrap(h, j, creps[j]) ); #one more small change :-)
 		SetRepresentativesOfElements(h, reps);
 		SetClassicalGroupInfo( h, rec(  degree := (q^d-(-1)^d)*(q^(d+1)-(-1)^(d+1))/(q^2-1)) );
 		return h;
@@ -870,6 +890,7 @@ InstallMethod( StandardPolarSpace,
 	end );
 
 # ADDED 7/11/12 jdb
+# Cmat adapted 20/3/14
 #############################################################################
 #O  CanonicalPolarSpace( <ps> )
 # assume that f is the form determining <ps>, then this operation returns a 
@@ -880,7 +901,7 @@ InstallMethod( CanonicalPolarSpace,
 	"for a polar space",
 	[ IsClassicalPolarSpace ],
 	function( ps )
-		local type, canonicalps,d,f,form1,form2,isometric,b,mat1,mat2,canonicalmatrix,canonicalform, pq,types,max,reps,m,q,gram;
+		local type, canonicalps,d,f,form1,form2,isometric,b,mat1,mat2,canonicalmatrix,canonicalform, pq,types,max,reps,m,q,gram,creps;
 		d := ps!.dimension;
 		f := ps!.basefield;
 		q := Size(f);
@@ -923,23 +944,26 @@ InstallMethod( CanonicalPolarSpace,
     ## Here we take the maximal totally isotropic subspace rep
     ## max and make representatives for lower dimensional subspaces
 
-			reps := [ max[1] ];
+			reps := [ [ max[1] ] ]; #small change
 			Append(reps, List([2..d/2], j -> max{[1..j]}));  
 
     ## We would like the representative to be stored as
     ## compressed matrices. Then they will be more efficient
     ## to work with.
   
-			for m in reps do
-				if IsMatrix(m) then
-					ConvertToMatrixRep(m,f);
-				else 
-					ConvertToVectorRep(m,f);
-				fi;
-			od;   
+			creps := List(reps,x->NewMatrix(IsCMatRep, f, d+1, x));
+			creps[1] := creps[1][1]; #max is not empty, first element should always be a 1xn matrix->cvec.
+
+			#for m in reps do
+			#	if IsMatrix(m) then
+			#		ConvertToMatrixRep(m,f);
+			#	else 
+			#		ConvertToVectorRep(m,f);
+			#	fi;
+			#od;   
 
     ## Wrap 'em up
-			reps := List([1..d/2], j -> Wrap(canonicalps, j, reps[j]) );
+			reps := List([1..d/2], j -> Wrap(canonicalps, j, creps[j]) ); #one more small change :-)
 			SetRepresentativesOfElements(canonicalps, reps);
 			SetClassicalGroupInfo( canonicalps, rec( degree := (q^(d/2)-1)/(q-1)*(q^((d+2)/2-1)+1) ) );
 		fi;
@@ -1536,7 +1560,40 @@ InstallMethod( Size,
 ## jb 19/02/2009: Just changed the compressed matrix methods
 ##               so that length 1 matrices are allowed.
 
+###cmat methods need to be added here. VectorSpaceToElement checks wheter 
+# a vectorspace really makes an element of a polar space by checking 
+# whether it is totally isotropic. Therefore we need some forms functionality.
+# Since forms is not working with cmat/cvecs, and this will not change, we have
+# to unpack a cmat before piping it to forms. Hence it makes sens to create VectorSpaceToElement
+# methods the lazy way: just unpack and pipe to an existing VectorSpaceToElement method.
+###
+
+# Added 20/3/14 jdb
+#############################################################################
+#O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
+# by the vectorspace <v>. 
+##
+InstallMethod( VectorSpaceToElement, 
+	"for a polar space and a CMat",
+	[IsClassicalPolarSpace, IsCMatRep],
+	function( geom, v )
+	return VectorSpaceToElement(geom,Unpack(v));
+	end );
+	
+# Added 20/3/14 jdb
+#############################################################################
+#O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
+# by the vectorspace <v>. 
+##
+InstallMethod( VectorSpaceToElement, 
+	"for a polar space and a cvec",
+	[IsClassicalPolarSpace, IsCVecRep],
+	function( geom, v )
+	return VectorSpaceToElement(geom,Unpack(v));
+	end );
+
 # CHECKED 21/09/11 jdb
+# cmat change 20/3/14.
 #############################################################################
 #O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
 # by the vectorspace <v>. Several checks are built in. 
@@ -1545,12 +1602,14 @@ InstallMethod( Size,
 # I had Q+(11,3) (with a different form than usual) and tried to wrap
 # [ [ 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3), Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ] ]
 # It kept on returning 0*Z(3).
+# JDB: I kept John's historical note, but the code where the bug was, has disappeared with the cmat adaptation :-)
+# Information on NewMatrix us here can be found in projectivespaces.gi, method for VectorSpaceToElement.
 #
 InstallMethod( VectorSpaceToElement, 
 	"for a polar space and a Plist",
 	[IsClassicalPolarSpace, IsPlistRep],
 	function( geom, v )
-		local  x, n, i;
+		local  x, n, i, y;
 		## when v is empty... 
 		if IsEmpty(v) then
 			Error("<v> does not represent any element");
@@ -1589,17 +1648,16 @@ InstallMethod( VectorSpaceToElement,
 				Error("<x> does not generate an element of <geom>");
 			fi;
 		fi;
-		if Length(x) = 1 then
-			x := x[1];
-			ConvertToVectorRep(x, geom!.basefield); # the extra basefield is necessary.
-			return Wrap(geom, 1, x);  ## JB: woh, big problem found here: changed x[1] to x.
+		y := NewMatrix(IsCMatRep,geom!.basefield,Length(x[1]),x);
+		if Length(y) = 1 then
+			return Wrap(geom, 1, y[1]);
 		else
-			ConvertToMatrixRep(x, geom!.basefield);
-			return Wrap(geom, Length(x), x);
+			return Wrap(geom, Length(y), y);
 		fi;
 	end );
 
 # CHECKED 21/09/11
+# cmat changed 20/3/14.
 #############################################################################
 #O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
 # by the vectorspace <v>. Several checks are built in. 
@@ -1608,7 +1666,7 @@ InstallMethod( VectorSpaceToElement,
 	"for a compressed GF(2)-matrix",
 	[IsClassicalPolarSpace, IsGF2MatrixRep],
 	function( geom, v )
-		local  x, n, i;
+		local  x, n, i, y;
 		if IsEmpty(v) then
 			Error("<v> does not represent any element");
 		fi;
@@ -1641,19 +1699,16 @@ InstallMethod( VectorSpaceToElement,
 				Error("<x> does not generate an element of <geom>");
 			fi;
 		fi;
-		if Length(x) = 1 then
-			x := x[1];
-			if not IsGF2VectorRep(x) then
-				ConvertToVectorRep(x, geom!.basefield);
-			fi;
-			return Wrap(geom, 1, x);
+		y := NewMatrix(IsCMatRep,geom!.basefield,Length(x[1]),x);
+		if Length(y) = 1 then
+			return Wrap(geom, 1, y[1]);
 		else
-			return Wrap(geom, Length(x), ImmutableMatrix(geom!.basefield, x));
+			return Wrap(geom, Length(y), y);
 		fi;
-		#return Wrap(geom, Length(v), x); ??? why was this line? jdb.
   end );
   
 # CHECKED 21/09/11
+# cmat changed 20/3/14.
 #############################################################################
 #O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
 # by the vectorspace <v>. Several checks are built in. 
@@ -1662,7 +1717,7 @@ InstallMethod( VectorSpaceToElement,
 	"for a compressed basis of a vector subspace",
 	[IsClassicalPolarSpace, Is8BitMatrixRep],
 	function( geom, v )
-		local  x, n, i; 
+		local  x, n, i,y; 
 		if IsEmpty(v) then
 			Error("<v> does not represent any element");
 		fi;
@@ -1699,19 +1754,16 @@ InstallMethod( VectorSpaceToElement,
 				Error("<x> does not generate an element of <geom>");
 			fi;
 		fi;
-		if Length(x) = 1 then
-		x := x[1];
-		if not Is8BitVectorRep(x) then
-            ConvertToVectorRep(x, geom!.basefield);
-		fi;
-		return Wrap(geom, 1, x);
+		y := NewMatrix(IsCMatRep,geom!.basefield,Length(x[1]),x);
+		if Length(y) = 1 then
+			return Wrap(geom, 1, y[1]);
 		else
-			return Wrap(geom, Length(x), ImmutableMatrix(geom!.basefield, x));
-      fi;
-    #return Wrap(geom, Length(v), x); ??? why was this line? jdb.
+			return Wrap(geom, Length(y), y);
+		fi;
 end );
 
 # CHECKED 21/09/11 jdb
+# cvec version 20/3/14
 #############################################################################
 #O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
 # by the rowvector <v>. Several checks are built in.
@@ -1720,7 +1772,7 @@ InstallMethod( VectorSpaceToElement,
 	"for a row vector",
 	[IsClassicalPolarSpace, IsRowVector],
 	function( geom, v )
-		local  x;
+		local  x,y;
 		## dimension should be correct
 		if Length(v) <> geom!.dimension + 1 then
 			Error("Dimensions are incompatible");
@@ -1739,12 +1791,13 @@ InstallMethod( VectorSpaceToElement,
 				fi;
 			fi;
 			MultRowVector(x,Inverse( x[PositionNonZero(x)] ));
-			ConvertToVectorRep(x, geom!.basefield);
-			return Wrap(geom, 1, x);
+			y := NewMatrix(IsCMatRep,geom!.basefield,Length(x),[x]);
+			return Wrap(geom, 1, y[1]);
 		fi;
   end );
 
-# CHECKED 22/09/11 jdb  
+# CHECKED 22/09/11 jdb 
+# cvec version 20/3/14
 #############################################################################
 #O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
 # by the rowvector <v>. Several checks are built in.
@@ -1753,7 +1806,7 @@ InstallMethod( VectorSpaceToElement,
 	"for a polar space and an 8-bit vector",
 	[IsClassicalPolarSpace, Is8BitVectorRep],
 	function( geom, v )
-		local  x, n, i;
+		local  x, n, i,y;
 		## when v is empty...
 		if IsEmpty(v) then
 			return EmptySubspace(geom);
@@ -1779,8 +1832,8 @@ InstallMethod( VectorSpaceToElement,
 				fi;
 			fi;			
 			MultRowVector(x,Inverse( x[PositionNonZero(x)] ));
-			ConvertToVectorRep(x, geom!.basefield);
-			return Wrap(geom, 1, x);
+			y := NewMatrix(IsCMatRep,geom!.basefield,Length(x),[x]);
+			return Wrap(geom, 1, y[1]);
 		fi;
 	end );
 
@@ -1871,6 +1924,9 @@ InstallMethod( Span,
 
 
 #ADDED 30/11/2011 jdb.
+# cvec note (20/3/14): SumIntersectionMat seems to be incompatible with
+# cvecs. So I will Unpack, do what I have to do, and get what I want
+# since VectorSpaceToElement is helping here.
 #############################################################################
 #O  Meet( <x>, <y> )
 # returns the intersection of <x> and <y>, two subspaces of a polar space.
@@ -1883,8 +1939,8 @@ InstallMethod( Meet,
 		typx := x!.type;
 		typy := y!.type;
 		if x!.geo!.vectorspace = y!.geo!.vectorspace then 
-			ux := Unwrap(x); 
-			uy := Unwrap(y);
+			ux := Unpack(Unwrap(x)); 
+			uy := Unpack(Unwrap(y));
 			if typx = 1 then ux := [ux]; fi;
 			if typy = 1 then uy := [uy]; fi;
 			f := x!.geo!.basefield; 
@@ -2008,6 +2064,7 @@ InstallMethod( NumberOfTotallySingularSubspaces,
 	end);
 
 # CHECKED 17/03/14 jdb
+# cmat version. Same consideration as elsewhere: forms does not use cmats, so unpack before piping to form.
 #############################################################################
 #O  TypeOfSubspace( <ps>, <w> )
 # returns the type of the polar space induced by <ps> in the projective subspace
@@ -2051,7 +2108,7 @@ InstallMethod( TypeOfSubspace,
 		else
 			form := SesquilinearForm( ps );
 			#mat := w!.obj * form!.matrix * TransposedMat(w!.obj); #I will use something more advanced to include hermitian forms.
-			mat := [w!.obj,w!.obj]^form;
+			mat := [Unpack(w!.obj),Unpack(w!.obj)]^form; #here is the unpack cmat change :-)
 			if pstype = "symplectic" then
 				newform := BilinearFormByMatrix( mat, gf );
 				if IsDegenerateForm( newform ) then

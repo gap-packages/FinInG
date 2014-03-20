@@ -530,6 +530,7 @@ InstallMethod( NaturalEmbeddingBySubspaceNC,
 	end );
   
 # CHECKED 28/09/11 jdb (and added a check that basefields of <ps1> and <ps2> are equal.)
+#cmat changed 20/3/14.
 #############################################################################
 #O  IsomorphismPolarSpaces( <ps1>, <ps2>, <bool> ) 
 # returns the coordinate transformation from <ps1> to <ps2> (which must be
@@ -560,9 +561,9 @@ InstallMethod( IsomorphismPolarSpaces,
 		fi;
 		c1 := BaseChangeToCanonical( form1 );
 		c2 := BaseChangeToCanonical( form2 );
-		change := c1^-1 * c2;       
-		ConvertToMatrixRep(change, f);
-		invchange := change^-1;     
+		change := NewMatrix(IsCMatRep, ps1!.basefield, ps1!.dimension+1,c1^-1 * c2);  #cmat change here
+		#ConvertToMatrixRep(change, f);
+		invchange := Inverse(change); 
 		if ty1 = "hermitian" then
 			change := change^CompanionAutomorphism(ps2);
 			invchange := invchange^CompanionAutomorphism(ps1);
@@ -651,9 +652,9 @@ InstallMethod( IsomorphismPolarSpacesNC,
 		fi;
 		c1 := BaseChangeToCanonical( form1 );
 		c2 := BaseChangeToCanonical( form2 );
-		change := c1^-1 * c2;       
-		ConvertToMatrixRepNC(change, f);
-		invchange := change^-1;     
+		change := NewMatrix(IsCMatRep, ps1!.basefield, ps1!.dimension+1,c1^-1 * c2);  #cmat change here
+		#ConvertToMatrixRepNC(change, f);
+		invchange := Inverse(change);     
 		func := function(x)
 			return VectorSpaceToElement(ps2, ShallowCopy(x!.obj) * change);
 		end;
