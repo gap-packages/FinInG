@@ -59,6 +59,8 @@ DeclareRepresentation( "IsEdgeOfDiagramRep", IsEdgeOfDiagram, [ "edge"] );
 DeclareCategory( "IsRank2Residue", IsComponentObjectRep and IsAttributeStoringRep );
 DeclareRepresentation( "IsRank2ResidueRep", IsRank2Residue, [ "edge", "geo" ] );
 
+DeclareCategory( "IsFlagOfCosetGeometry", IsFlagOfIncidenceStructure );
+
 
 ## Collections
 
@@ -78,6 +80,11 @@ DeclareCategoryCollections("IsRank2Residue");
 BindGlobal( "Rank2ResidueFamily", 
   NewFamily( "Rank2ResidueFamily", IsRank2Residue, IsRank2Residue));
 
+#DeclareCategoryCollections("IsElementOfCosetGeometry");
+
+BindGlobal( "FlagsOfCG", NewFamily( "FlagsOfCGFamily", IsObject ));  
+BindGlobal( "IsFlagOfCGType", NewType( FlagsOfCG,
+                                    IsFlagOfCosetGeometry and IsFlagOfIncidenceStructureRep) );
 
 #############################################################################
 ##
@@ -128,10 +135,17 @@ DeclareOperation( "AmbientGroup", [ IsCosetGeometry ] );
 DeclareOperation( "FlagToStandardFlag", [ IsCosetGeometry, IsHomogeneousList ] );
 DeclareOperation( "ResidueOfFlag", [ IsCosetGeometry, IsHomogeneousList ] );
 DeclareOperation( "CanonicalResidueOfFlag", [ IsCosetGeometry, IsHomogeneousList ] );
-DeclareOperation( "RandomElement", [ IsCosetGeometry] );
-#DeclareOperation( "Random", [ IsAllElementsOfCosetGeometry] );
+DeclareOperation( "FlagOfIncidenceStructure", [ IsCosetGeometry, IsHomogeneousList ] );
+DeclareOperation( "Type", [ IsFlagOfCosetGeometry ] );
+DeclareOperation( "RandomElement", [ IsCosetGeometry ] );
+DeclareOperation( "RandomFlag", [ IsCosetGeometry ] );
+DeclareOperation( "RandomChamber", [ IsCosetGeometry ] );
+#DeclareOperation( "Random", [ IsAllElementsOfCosetGeometry ] );
+DeclareOperation( "AutGroupIncidenceStructureWithNauty", [ IsCosetGeometry ]);
+DeclareOperation( "CorGroupIncidenceStructureWithNauty", [ IsCosetGeometry ]);
 DeclareOperation( "Rk2GeoDiameter", [ IsCosetGeometry, IsPosInt] );
 DeclareOperation( "GeometryOfRank2Residue", [ IsRank2Residue ]);
+
 DeclareAttribute( "Rank2Parameters", IsCosetGeometry );
 
 if not IsBound( Graph ) then 

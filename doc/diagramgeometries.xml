@@ -290,6 +290,7 @@ used to check flag-transitivity if needed.
 
 <ManSection>
 <Oper Name="DrawDiagram" Arg="Diag,filename"/>
+<Oper Name="DrawDiagram" Arg="Diag,filename,vertexverbosity"/>
 <Oper Name="DrawDiagram" Arg="Diag,filename,vertexverbosity,edgeverbosity"/>
 <Returns>does not return anything but writes a file <A>filename</A>.ps</Returns>
 <Description> 
@@ -303,9 +304,9 @@ you will get an friendly error message and a file <A>filename</A>.dot
 will be written. You can then compile this file later or ask a friend
 to help you.
 
-By default the diagram provides for each type <M>i</M> the <M>i</M>-order and the number of elements of type <M>i</M>. This behaviour can be changed by providing an <A>vertexverbosity</A>. A value <A>2</A> results in no label under the vertices and a value <A>1</A> gives only the <M>i</M>-order. Any other potitive integer value yields the default behaviour.
+By default the diagram provides for each type <M>i</M> the <M>i</M>-order and the number of elements of type <M>i</M>. This behaviour can be changed by providing an <A>vertexverbosity</A>. A value <A>2</A> results in no label under the vertices and a value <A>1</A> gives only the <M>i</M>-order. Any other potitive integer value yields the default behaviour. 
 
-The default labels for the edges of the diagram use the standard convention that a <M>[g,dp,dl]</M>-gon with all three parameters equal is labelled only with the number <M>g</M>. Moreover the label <M>3</M> is usually not written. Putting <A>edgeverbosity</A> equal to <M>2</M> puts no labels at all. This yields the so called ``basic diagram'' of the geometry. With <A>edgeverbosity</A> equal to any integer greater than <M>2</M> all labels contain girth and both diameters.
+The default labels for the edges of the diagram use the standard convention that a <M>[g,dp,dl]</M>-gon with all three parameters equal is labelled only with the number <M>g</M>. Putting <A>edgeverbosity</A> equal to <M>2</M> puts no labels at all. This yields the so called ``basic diagram'' of the geometry. With <A>edgeverbosity</A> equal to any integer greater than <M>2</M> all labels contain girth and both diameters.
 </Description>
 </ManSection>
 

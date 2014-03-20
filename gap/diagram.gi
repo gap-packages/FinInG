@@ -152,6 +152,64 @@ InstallGlobalFunction( OnCosetGeometryElement,
     return Wrap(c!.geo, c!.type, OnRight(c!.obj, t));
 end ); 
 
+# 
+#############################################################################
+#O  \^( <x>, <gm> )
+##
+InstallOtherMethod( \^, 
+	"for an element of a coset geometry and an element of its group",
+	[IsElementOfCosetGeometry, IsMultiplicativeElementWithInverse],
+	function(x, gm)
+		return OnCosetGeometryElement(x,gm);
+	end );
+
+# 
+#############################################################################
+#O  \^( <x>, <gm> )
+##
+InstallOtherMethod( \^, 
+	"for a flag of a coset geometry and an element of its group",
+	[IsFlagOfCosetGeometry, IsMultiplicativeElementWithInverse],
+	function(x, gm)
+		return FlagOfIncidenceStructure(x!.geo, OnTuples(x!.els,gm));
+	end );
+
+# 
+#############################################################################
+#O  Type ( <flag> )
+##
+InstallMethod( Type, 
+	"for a flag of a coset geometry",
+	[IsFlagOfCosetGeometry],
+	function(flag)
+		return Set(List(flag!.els,Type));
+	end );
+
+
+# 
+#############################################################################
+#O  FlagOfIncidenceStructure( <cg>, <els> )
+# returns the flag of the coset geometry <cg> with elements in <els>.
+# the method does check whether the input really determines a flag.
+##
+InstallMethod( FlagOfIncidenceStructure,
+	"for a coset geometry and a list of pairwise incident elements",
+	[ IsCosetGeometry, IsHomogeneousList ],
+	function(cg,els)
+		local list,i,test,type,flag;
+		list := Set(ShallowCopy(els));
+		if Length(list) > Rank(cg) then
+		  Error("A flag must contain at most Rank(<cg>) elements");
+		fi;
+		test := Set(List([1..Length(list)-1],i -> IsIncident(list[i],list[i+1])));
+		if (test <> [ true ] and test <> []) then
+		  Error("<els> does not determine a flag");
+		fi;
+		flag := rec(geo := cg, types := List(list,x->x!.type), els := list);
+		ObjectifyWithAttributes(flag, IsFlagOfCGType, IsEmptyFlag, false);
+		return flag;
+	end);
+
 #
 ##########################################################################
 #O ElementsOfIncidenceStructure
@@ -203,11 +261,44 @@ InstallMethod( RandomElement,
 
 # 
 #############################################################################
+#O  RandomChamber( <cg> )
+# returns a random chamber in the given coset geometry
+# <cg>
+##
+InstallOtherMethod( RandomChamber, 
+	"for a coset geometry",
+	[IsCosetGeometry],
+	function(cg)
+		local ele, els;
+		ele:=Random(cg!.group);
+		els:=OnTuples(StandardFlagOfCosetGeometry(cg),ele);
+		return FlagOfIncidenceStructure(cg,els);
+	end );
+
+# 
+#############################################################################
+#O  RandomFlag( <cg> )
+# returns a random flag in the given coset geometry
+# <cg>
+##
+InstallOtherMethod( RandomFlag, 
+	"for a coset geometry",
+	[IsCosetGeometry],
+	function(cg)
+		local type, flag;
+		type:=Random(Combinations(TypesOfElementsOfIncidenceStructure(cg)));
+		flag:=RandomChamber(cg)!.els{type};
+		return FlagOfIncidenceStructure(cg,flag);
+	end );
+
+
+# 
+#############################################################################
 #O  Random( <alleleofcg> )
 # returns a random element a coset geometry
 # 
 ##
-InstallOtherMethod( Random, 
+InstallMethod( Random, 
 	"for element category of coset geometry",
 	[IsAllElementsOfCosetGeometry],
 	function(allele)
@@ -510,7 +601,7 @@ InstallMethod( StandardFlagOfCosetGeometry, "for coset geometries",
   local parabolics, flag;
 
   parabolics:=cg!.parabolics;
-  flag:=List([1..Size(parabolics)], i -> Wrap(cg,i,parabolics[i]));
+  flag:=List([1..Size(parabolics)], i -> Wrap(cg,i,RightCoset(parabolics[i],Identity(cg!.group))));
   return flag;
 end );
 
@@ -729,6 +820,57 @@ InstallMethod( IncidenceGraph, [ IsCosetGeometry ],
     return gamma;
   end );
 
+#
+################################################################
+# O AutGroupIncidenceStructureWithNauty( <inc> )
+#
+#   Computes automorphism group of incidence structure via Nauty
+#   Should first check whether <inc> has an incidence graph
+#   At the moment this works for coset geometries
+#
+#   The resulting group is a permutation group and its action on 
+#   the original incidence structure is not explicitly given
+#
+InstallMethod( AutGroupIncidenceStructureWithNauty, 
+	       [ IsCosetGeometry ],
+  function( inc )
+
+  local colorclasses, sum, i, incgrph;
+
+# automorphisms should fix the type set. This is done by using 
+# colorClasses in Nauty. We use the fact that when defining the 
+# incidence graph, the vertices are an enumeration of all elements 
+# of type 1, followed by alle elements of type 2, ...
+# So the color classes are easy to give.
+#
+    colorclasses:=[];
+    sum:=0;
+    for i in TypesOfElementsOfIncidenceStructure(inc) do
+	Add(colorclasses,
+	[sum+1..sum+NrElementsOfIncidenceStructure(inc,i)]);
+	sum:=sum+NrElementsOfIncidenceStructure(inc,i);
+    od;
+
+    incgrph:=IncidenceGraph(inc);
+
+    return(AutGroupGraph(incgrph, colorclasses));
+
+  end);
+
+#
+################################################################
+# O CorGroupIncidenceStructureWithNauty( <inc> )
+#
+#   Computes correlation group of incidence structure via Nauty
+#   Should first check whether <inc> has an incidence graph
+#   At the moment this works for coset geometries
+#
+InstallMethod( CorGroupIncidenceStructureWithNauty, 
+	       [ IsCosetGeometry ],
+  function( inc )
+    return(AutGroupGraph(IncidenceGraph(inc)));
+end );
+
 #############################################################################
 # View/Print methods
 #############################################################################
@@ -751,6 +893,18 @@ InstallMethod( ViewObj, "for coset geometry",
   [ IsCosetGeometry and IsCosetGeometryRep ],
   function( geo )
     Print("CosetGeometry( ", geo!.group, " )");
+  end );
+
+InstallMethod( ViewObj, "for flag of coset geometry",
+  [ IsFlagOfCosetGeometry ],
+  function( flag )
+    Print("Flag of coset geometry < ", flag!.geo, " >");
+  end );
+
+InstallMethod( PrintObj, "for flag of coset geometry", 
+  [ IsFlagOfCosetGeometry ],
+  function( flag )
+    Print("Flag of coset geometry ", flag!.els );
   end );
 
 InstallMethod( PrintObj, "for coset geometry", 
@@ -937,10 +1091,12 @@ InstallGlobalFunction( DrawDiagram,
       else
         Error("usage DrawDiagram: third argument must be a vertex verbosity natural number.\n");
       fi;
-      if arglen = 4 and (IsPosInt(arg[4]) or IsZero(arg[4])) then
-        edgeverbosity:=arg[4];
-      else
-        Error("Usage DrawDiagram: fourth argument must be an edge verbosity natural number.\n");
+      if (arglen = 4) then
+      	 if (IsPosInt(arg[4]) or IsZero(arg[4])) then
+           edgeverbosity:=arg[4];
+         else
+           Error("Usage DrawDiagram: fourth argument must be an edge verbosity natural number.\n");
+	 fi;
       fi;
     fi;
     ##################Done checking!
@@ -963,9 +1119,9 @@ InstallGlobalFunction( DrawDiagram,
 
     for e in edges do
       longstring:=Concatenation(longstring, String(e!.edge[1]), " -> ", String(e!.edge[2]));
-      if edgeverbosity = 2 then
+      if edgeverbosity = 2 then #no label, i.e. basic diagram
         longstring:=Concatenation(longstring, " [label = \"", "\", arrowhead = none ];\n");
-      elif edgeverbosity = 1 and Size(Set(ParametersEdge(e)))= 1 then
+      elif edgeverbosity = 1 and Size(Set(ParametersEdge(e)))= 1 then #shorthand generalized n-gons
         longstring:=Concatenation(longstring, " [label = \"", String(ParametersEdge(e)[1]), "\", arrowhead = none ];\n");
       else
         longstring:=Concatenation(longstring, " [label = \"", String(ParametersEdge(e)[2]), " ", 
