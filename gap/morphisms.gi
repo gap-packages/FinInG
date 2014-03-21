@@ -255,6 +255,7 @@ InstallOtherMethod( PreImagesSet,
 ## The specialised operations...
 
 # CHECKED 14/12/11 jdb + ml (and added a check that basefields of <ps1> and <ps2> are equal.)
+# cmat changed 21/3/14.
 #############################################################################
 #O  NaturalEmbeddingBySubspace( <ps1>, <ps2>, <v> ) returns a geometry morphism
 # from the projective space <ps1> into <v>, an element of the projective space
@@ -267,7 +268,7 @@ InstallMethod( NaturalEmbeddingBySubspace,
 	function( geom1, geom2, v ) 
 		local d1, d2, rk, f, invbasis, basis, func, pre, map, morphism, bs;
 		rk := v!.type;
-		basis := v!.obj;
+		basis := Unpack(v!.obj); #cmat change
 		d1 := geom1!.dimension + 1;
 		d2 := geom2!.dimension + 1;
 		f := geom2!.basefield;
@@ -285,22 +286,22 @@ InstallMethod( NaturalEmbeddingBySubspace,
     ##    is our embedding. We simply extend B to a basis for geom2.
 		bs := BaseSteinitzVectors(Basis(geom2!.vectorspace), basis);
 		invbasis := Inverse(Concatenation(bs!.subspace, bs!.factorspace));
-		ConvertToMatrixRep(invbasis, f);
-		func := x -> VectorSpaceToElement(geom2 , x!.obj * basis);
+		#ConvertToMatrixRep(invbasis, f); #useless now.
+		func := x -> VectorSpaceToElement(geom2 , Unpack(x!.obj) * basis); #VectorSpaceToElement makes sure the 2nd arg becomes cmat.
 		pre := function(y)
 			local newy;
 			if not y in v then
 				Error("Applying preimage to an element which is not in the range");
 			fi;
-			newy:= y!.obj * invbasis;
+			newy:= Unpack(y!.obj) * invbasis; #cmat change.
 			if not IsMatrix(newy) then 
-				newy := newy{[1..d1]}; 
-                ConvertToVectorRepNC(newy, f);
+				newy := newy{[1..d1]};
+                #ConvertToVectorRepNC(newy, f); #useless now.
 			else
 				newy := newy{[1..Size(newy)]}{[1..d1]};
-				ConvertToMatrixRepNC(newy, f);
+				#ConvertToMatrixRepNC(newy, f); #useless now.
 			fi;
-			return VectorSpaceToElement(geom1, newy);
+			return VectorSpaceToElement(geom1, newy); #VectorSpaceToElement etc.
 		end;   
 		morphism := GeometryMorphismByFunction(ElementsOfIncidenceStructure(geom1), 
                                            ElementsOfIncidenceStructure(geom2), 
@@ -310,6 +311,7 @@ InstallMethod( NaturalEmbeddingBySubspace,
 	end );
 
 # CHECKED 27/09/11 jdb + ml
+# cmat changed 21/3/14.
 #############################################################################
 #O  NaturalEmbeddingBySubspaceNC( <ps1>, <ps2>, <v> ) 
 ## This operation is just like its namesake except that it 
@@ -320,24 +322,24 @@ InstallMethod( NaturalEmbeddingBySubspaceNC,
 	[ IsProjectiveSpace, IsProjectiveSpace, IsSubspaceOfProjectiveSpace ],
 	function( geom1, geom2, v ) 
 		local d1, f, invbasis, basis, func, pre, map, morphism, bs;
-		basis := v!.obj;
+		basis := Unpack(v!.obj); #cmat change
 		d1 := geom1!.dimension + 1;
 		f := geom2!.basefield;
 		bs := BaseSteinitzVectors(Basis(geom2!.vectorspace), basis);
 		invbasis := Inverse(Concatenation(bs!.subspace, bs!.factorspace));
-		ConvertToMatrixRep(invbasis, f);
-		func := x -> VectorSpaceToElement(geom2 , x!.obj * basis);
+		# ConvertToMatrixRep(invbasis, f); #useless now.
+		func := x -> VectorSpaceToElement(geom2 , x!.obj * basis); #VectorSpaceToElement etc.
 		pre := function(y)
 			local newy;
-			newy:= y!.obj * invbasis;
+			newy:= Unpack(y!.obj) * invbasis; #cmat change
 			if not IsMatrix(newy) then 
 				newy := newy{[1..d1]}; 
-				ConvertToVectorRepNC(newy, f);
+				#ConvertToVectorRepNC(newy, f); useless now.
 			else
 				newy := newy{[1..Size(newy)]}{[1..d1]};
-				ConvertToMatrixRepNC(newy, f);
+				#ConvertToMatrixRepNC(newy, f); useless now.
 			fi;
-			return VectorSpaceToElement(geom1, newy);
+			return VectorSpaceToElement(geom1, newy); #cfr. supra.
 		end;   
 		morphism := GeometryMorphismByFunction(ElementsOfIncidenceStructure(geom1), 
                                            ElementsOfIncidenceStructure(geom2), 
@@ -1760,6 +1762,7 @@ InstallMethod( NaturalEmbeddingBySubfield,
 	end );
   
 # CHECKED 28/09/11 jdb
+# cmat changes 21/3/14.
 #############################################################################
 #O  NaturalEmbeddingBySubfield( <geom1>, <geom2>, <bool> )
 # returns the embedding of <geom1> in <geom2>, two polar spaces of the
@@ -1815,7 +1818,7 @@ InstallMethod( NaturalEmbeddingBySubfield,
 		fi;
 		ps := PolarSpace(form);
 		iso := IsomorphismPolarSpacesNC(ps, geom2, computeintertwiner);
-		func :=  x -> VectorSpaceToElement(ps, ShallowCopy(x!.obj))^iso;
+		func :=  x -> VectorSpaceToElement(ps, ShallowCopy(x!.obj))^iso; #should be no problem since VectorSpaceToElement allows cmat.
 		prefun := function( x )
 			local y;            
             y := iso!.prefun(x);
