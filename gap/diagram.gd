@@ -143,6 +143,7 @@ DeclareOperation( "RandomChamber", [ IsCosetGeometry ] );
 #DeclareOperation( "Random", [ IsAllElementsOfCosetGeometry ] );
 DeclareOperation( "AutGroupIncidenceStructureWithNauty", [ IsCosetGeometry ]);
 DeclareOperation( "CorGroupIncidenceStructureWithNauty", [ IsCosetGeometry ]);
+DeclareOperation( "IsIsomorphicIncidenceStructureWithNauty", [ IsCosetGeometry, IsCosetGeometry ]);
 DeclareOperation( "Rk2GeoDiameter", [ IsCosetGeometry, IsPosInt] );
 DeclareOperation( "GeometryOfRank2Residue", [ IsRank2Residue ]);
 

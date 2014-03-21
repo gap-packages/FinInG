@@ -871,6 +871,46 @@ InstallMethod( CorGroupIncidenceStructureWithNauty,
     return(AutGroupGraph(IncidenceGraph(inc)));
 end );
 
+#
+################################################################
+# O IsIsomorphicIncidenceStructureWithNauty( <inc1>, <inc2> )
+#
+#   Computes whether <inc1> and <inc2> are isomorphic incidence 
+#   structures, using nauty on coloured graphs.
+#
+InstallMethod( IsIsomorphicIncidenceStructureWithNauty, 
+	       [ IsCosetGeometry, IsCosetGeometry ],
+  function( inc1, inc2 )
+
+  local colorclasses1, colorclasses2, sum, i, incgrph1, incgrph2;
+
+    colorclasses1:=[];
+    sum:=0;
+    for i in TypesOfElementsOfIncidenceStructure(inc1) do
+	Add(colorclasses1,
+	[sum+1..sum+NrElementsOfIncidenceStructure(inc1,i)]);
+	sum:=sum+NrElementsOfIncidenceStructure(inc1,i);
+    od;
+
+    colorclasses2:=[];
+    sum:=0;
+    for i in TypesOfElementsOfIncidenceStructure(inc2) do
+	Add(colorclasses2,
+	[sum+1..sum+NrElementsOfIncidenceStructure(inc2,i)]);
+	sum:=sum+NrElementsOfIncidenceStructure(inc2,i);
+    od;
+
+    if colorclasses2 <> colorclasses1 then
+      return false;
+    fi;
+
+    incgrph1:=IncidenceGraph(inc1);
+    incgrph2:=IncidenceGraph(inc2);
+
+    return(IsIsomorphicGraph(rec(graph:=incgrph1, colourClasses:=colorclasses1), rec(graph:=incgrph2, colourClasses:=colorclasses1)));
+
+  end);
+
 #############################################################################
 # View/Print methods
 #############################################################################

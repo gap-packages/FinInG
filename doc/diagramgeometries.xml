@@ -34,7 +34,7 @@ a group <M>G</M> of automorphisms of <Alt Not="HTML"><M>\Gamma</M></Alt><Alt Onl
 transitive on the set of <E>chambers</E> of <M>\Gamma</M> (also
 defined in chapter <Ref Chap="incidencegeometry"/>). This implies
 that <M>G</M> is also transitive on the set of all elements of any
-chosen type <M>i</M>. If we consider a chamber <Alt Not="HTML"><M>c_{1},c_{2},... ,c_{n}</M></Alt>
+chosen type <M>i</M>. If we consider a chamber <Alt Not="HTML"><M>\{c_{1},c_{2},... ,c_{n}\}</M></Alt>
 <Alt Only="HTML">c&lt;sub>1&lt;/sub>,c&lt;sub>2&lt;/sub>,...,c&lt;sub>n&lt;/sub></Alt>
 such that <Alt Not="HTML"><M>c_{i}</M></Alt><Alt Only="HTML">c&lt;sub>i&lt;/sub></Alt> is of type <M>i</M>, 
 we can look at the stabilizer <Alt Not="HTML"><M>G_{i}</M></Alt><Alt Only="HTML">G&lt;sub>i&lt;/sub></Alt>
@@ -50,7 +50,7 @@ if the corresponding cosets have a nonempty intersection.<P/>
 
 We now use the above observation to define an incidence structure from
 a group <M>G</M> together with a set of
-subgroups <Alt Not="HTML"><M>G_{1},G_{2},...,G_{n}</M></Alt><Alt Only="HTML">G&lt;sub>1&lt;/sub>,G&lt;sub>2&lt;/sub>,...,G&lt;sub>n&lt;/sub></Alt>.
+subgroups <Alt Not="HTML"><M>\{G_{1},G_{2},...,G_{n}\}</M></Alt><Alt Only="HTML">G&lt;sub>1&lt;/sub>,G&lt;sub>2&lt;/sub>,...,G&lt;sub>n&lt;/sub></Alt>.
 The type set is <Alt Not="HTML"><M>\{1,2,...,n\}</M></Alt><Alt Only="HTML">&#123;1,2,...,n&#125;</Alt>. 
 By definition the elements of type <M>i</M> are the (right) cosets of the subgroup 
 <Alt Not="HTML"><M>G_{i}</M></Alt><Alt Only="HTML">G&lt;sub>i&lt;/sub></Alt>. Two
@@ -88,14 +88,6 @@ of <A>l</A>.
 </ManSection>
 
 <ManSection>
-<Oper Name="RandomElement" Arg="cg"/>
-<Returns>a random element of <A>cg</A></Returns>
-<Description> 
-<A>cg</A> must be a coset geometry.
-</Description>
-</ManSection>
-
-<ManSection>
 <Oper Name="AmbientGroup" Arg="cg"/>
 <Returns>the group used to define the coset geometry <A>cg</A></Returns>
 <Description> 
@@ -108,6 +100,30 @@ of <A>l</A>.
 <Returns>the Borel subgroup of de geometry <A>cg</A></Returns>
 <Description> 
 The Borel subgroup is equal to the stabilizer of a chamber. It corresponds to the intersection of all parabolic subgrops.
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="RandomElement" Arg="cg"/>
+<Returns>a random element of <A>cg</A></Returns>
+<Description> 
+<A>cg</A> must be a coset geometry.
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="RandomFlag" Arg="cg"/>
+<Returns>a random flag of <A>cg</A></Returns>
+<Description> 
+<A>cg</A> must be a coset geometry.
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="RandomChamber" Arg="cg"/>
+<Returns>a random chamber of <A>cg</A></Returns>
+<Description> 
+<A>cg</A> must be a coset geometry.
 </Description>
 </ManSection>
 
@@ -163,7 +179,7 @@ indeed residually connected.
 <Returns>standard chamber of <A>cg</A></Returns>
 <Description> 
 The standard chamber just consists of all parabolic subgroups
-(i.e. the trivial cosets of these subgroups). <A>cg</A> must be a
+(i.e. the trivial cosets of these subgroups). The object returned is a FlagOfIncidenceStructure. <A>cg</A> must be a
 coset geometry. 
 <!--Maybe this function should be called StandardChamberOfCosetGeometry.-->
 </Description>
@@ -220,6 +236,17 @@ functionality can now be used to analyse <A>cg</A> via its incidence graph.
 </ManSection>
 
 <ManSection>
+<Oper Name="Rk2GeoDiameter" Arg="cg,type"/>
+<Returns>the point (or line) diameter.</Returns>
+<Description> 
+<A>cg</A> must be a coset geometry of rank 2. <A>type</A> must be
+either <C>1</C> or <C>2</C>. This function computes
+the point diameter of <A>cg</A> when <A>type</A> is <C>1</C> and the
+line diameter when <A>type</A> is <C>2</C>.
+</Description>
+</ManSection>
+
+<ManSection>
 <Oper Name="Rank2Parameters" Arg="cg"/>
 <Returns>a list of length 3.</Returns>
 <Description> 
@@ -233,23 +260,50 @@ contains the line order and the number of lines (i.e. elements of type
 </Description>
 </ManSection>
 
-The following example illustrates the <F>Rank2Parameters</F>. It uses the <Package>AtlasRep</Package> to 
-fetch the second Janko group, also known as the Hall-Janko group. Beware that the <Package>AtlasRep</Package> needs special write permissions on some systems. The constructed geometry is known as the Cohen-Tits near octagon.
+The following example illustrates <F>Rank2Parameters</F>. It uses <Package>AtlasRep</Package> to 
+fetch the second Janko group, also known as the Hall-Janko group. Beware that <Package>AtlasRep</Package> needs special write permissions on some systems. The constructed geometry has gonality 6 and both diameters equal to 8. It is known as the <E>Cohen-Tits near octagon</E>.
 
 <Example>
 <#Include SYSTEM "../examples/include/diagram_nearoctagon.include"> 
 </Example>
+</Section>
+<Section>
+<Heading>Automorphisms, Correlations and Isomorphisms</Heading>
+An <E>automorphism</E> of an incidence structure <Alt Not="HTML"><M>\Gamma</M></Alt><Alt Only="HTML">&#915;</Alt> is a permutation of the element set of <Alt Not="HTML"><M>\Gamma</M></Alt><Alt Only="HTML">&#915;</Alt> such that incidence is preserved and types are fixed (i.e. the type of the image of an element coincides with the type of that element). One (not very efficient) way to compute the (full) automorphism group of <Alt Not="HTML"><M>\Gamma</M></Alt><Alt Only="HTML">&#915;</Alt> is to compute its incidence graph and then use the available <F>nauty</F> machinery to obtain the group. 
 
 <ManSection>
-<Oper Name="Rk2GeoDiameter" Arg="cg,type"/>
-<Returns>the point (or line) diameter.</Returns>
+<Oper Name="AutGroupIncidenceStructureWithNauty" Arg="cg"/>
+<Returns>permutation group isomorphic to the full automorphism group of <cg>.</Returns>
 <Description> 
-<A>cg</A> must be a coset geometry of rank 2. <A>type</A> must be
-either <C>1</C> or <C>2</C>. This function computes
-the point diameter of <A>cg</A> when <A>type</A> is <C>1</C> and the
-line diameter when <A>type</A> is <C>2</C>.
+The group is computed with <F>nauty</F>, which is part of <Package>GRAPE</Package> but has to be compiled on your system before use. The group returned is a permutation group acting on the set <F>[1..Sum(TypesOfElementsOfIncidenceStructure(cg), t -> NrElementsOfIncidenceStructure(cg,t))]</F>, which is exactly the vertex set of <F>IncidenceGraph(cg)</F>. At the moment the action of the automorphism group on <F>cg</F> is not provided but it can be recovered from the knowledge that the vertex set of <F>IncidenceGraph(cg)</F> ifrst contains alle elements of type 1 in <F>cg</F>, then alle elements of type 2, etc.
 </Description>
 </ManSection>
+
+<ManSection>
+<Oper Name="IsIsomorphicIncidenceStructureWithNauty" Arg="cg1, cg2"/>
+<Returns>true iff cg1 and cg2 are isomorphic.</Returns>
+<Description> 
+We use <F>nauty</F>, which is part of <Package>GRAPE</Package> but has to be compiled on your system before use. Isomorphism is tested (with <F>nauty</F>) after converting the coset geometries <A>cg1</A> and <A>cg2</A> to coloured graphs.
+</Description>
+</ManSection>
+
+
+<Example>
+<#Include SYSTEM "../examples/include/diagram_autiso.include"> 
+</Example>
+
+<ManSection>
+<Oper Name="CorGroupIncidenceStructureWithNauty" Arg="cg"/>
+<Returns>permutation group isomorphic to the full automorphism group of <cg>.</Returns>
+<Description> 
+The group is computed with <F>nauty</F>, which is part of <Package>GRAPE</Package> but has to be compiled on your system before use. The group returned is a permutation group acting on the set <F>[1..Sum(TypesOfElementsOfIncidenceStructure(cg), t -> NrElementsOfIncidenceStructure(cg,t))]</F>, which is exactly the vertex set of <F>IncidenceGraph(cg)</F>. At the moment the action of the automorphism group on <F>cg</F> is not provided but it can be recovered from the knowledge that the vertex set of <F>IncidenceGraph(cg)</F> ifrst contains alle elements of type 1 in <F>cg</F>, then alle elements of type 2, etc.
+</Description>
+</ManSection>
+
+<Example>
+<#Include SYSTEM "../examples/include/diagram_autcor.include"> 
+</Example>
+
 </Section>
 <Section>
 <Heading>Diagrams</Heading>
@@ -262,17 +316,17 @@ Since the geometry is flag-transitive, all chambers are
 equivalent. Let's fix a chamber <Alt Not="HTML"><M>C=\{c_{1}, c_{2},\ldots,c_{n}\}</M></Alt>
 <Alt Only="HTML">C = &#123; c&lt;sub>1&lt;/sub>,c&lt;sub>2&lt;/sub>,...,c&lt;sub>n&lt;/sub>&#125;</Alt>,
 with <Alt Not="HTML"><M>c_{i}</M></Alt><Alt Only="HTML">c&lt;sub>i&lt;/sub></Alt> of type <M>i</M>. For each subset 
-<Alt Not="HTML"><M>{i,j}</M></Alt><Alt Only="HTML">&#123;i,j&#125;</Alt> of
-size two in <Alt Not="HTML"><M>I={1,2,\ldots,n}</M></Alt><Alt Only="HTML">&#123;1,2,...n&#125;</Alt> we take the residue of the
+<Alt Not="HTML"><M>\{i,j\}</M></Alt><Alt Only="HTML">&#123;i,j&#125;</Alt> of
+size two in <Alt Not="HTML"><M>I=\{1,2,\ldots,n\}</M></Alt><Alt Only="HTML">&#123;1,2,...n&#125;</Alt> we take the residue of the
 flag <Alt Not="HTML"><M>C\setminus \{c_{i},c_{j}\}</M></Alt>
 <Alt Only="HTML">C \ &#123; c&lt;sub>i&lt;/sub>, c&lt;sub>j&lt;/sub>&#125;</Alt>. Flag transitivity ensures
-that <E>all</E> residues of type <M>I\setminus\{i,j\}</M> are
+that <E>all</E> residues of type <M>\{i,j\}</M> are
 isomorphic to each other. For each such residue, the structure is
 described by some parameters: the gonality and the point and line
 diameters. For each type <M>i</M>, we also define the <M>i</M>-order
-to be the elements of type <M>i</M> in the residue of a(ny) flag of
+to be one less than the number of elements of type <M>i</M> in the residue of a(ny) flag of 
 type <M>I\setminus\{i\}</M>. All this information is depicted in
-a <E>diagram</E> which is bascically a graph with vertex set <M>I</M>
+a <E>diagram</E> which is bascically a labelled graph with vertex set <M>I</M>
 and edges whenever the point diamater, the line diameter and the
 gonality are all greater than <M>2</M>.
 
@@ -289,12 +343,12 @@ used to check flag-transitivity if needed.
 </ManSection>
 
 <ManSection>
-<Oper Name="DrawDiagram" Arg="Diag,filename"/>
-<Oper Name="DrawDiagram" Arg="Diag,filename,vertexverbosity"/>
-<Oper Name="DrawDiagram" Arg="Diag,filename,vertexverbosity,edgeverbosity"/>
+<Oper Name="DrawDiagram" Arg="diag,filename"/>
+<Oper Name="DrawDiagram" Arg="diag,filename,vertexverbosity"/>
+<Oper Name="DrawDiagram" Arg="diag,filename,vertexverbosity,edgeverbosity"/>
 <Returns>does not return anything but writes a file <A>filename</A>.ps</Returns>
 <Description> 
-<A>Diag</A> must be a diagram. Writes a file <A>filename</A>.ps in the
+<A>diag</A> must be a diagram. Writes a file <A>filename</A>.ps in the
 current directory with a pictorial version of the diagram. This
 command uses the <Package>graphviz</Package> package which is
 available from http://www.graphviz.org. <P/>
@@ -304,11 +358,13 @@ you will get an friendly error message and a file <A>filename</A>.dot
 will be written. You can then compile this file later or ask a friend
 to help you.
 
-By default the diagram provides for each type <M>i</M> the <M>i</M>-order and the number of elements of type <M>i</M>. This behaviour can be changed by providing an <A>vertexverbosity</A>. A value <A>2</A> results in no label under the vertices and a value <A>1</A> gives only the <M>i</M>-order. Any other potitive integer value yields the default behaviour. 
+By default the diagram provides for each type <M>i</M> the <M>i</M>-order and the number of elements of type <M>i</M>. This behaviour can be changed by providing a <A>vertexverbosity</A> level. A value <A>2</A> results in no label under the vertices and a value <A>1</A> gives only the <M>i</M>-order. Any other potitive integer value yields the default behaviour. 
 
 The default labels for the edges of the diagram use the standard convention that a <M>[g,dp,dl]</M>-gon with all three parameters equal is labelled only with the number <M>g</M>. Putting <A>edgeverbosity</A> equal to <M>2</M> puts no labels at all. This yields the so called ``basic diagram'' of the geometry. With <A>edgeverbosity</A> equal to any integer greater than <M>2</M> all labels contain girth and both diameters.
 </Description>
 </ManSection>
+
+<Alt Not="HTML">\medskip</Alt>
 
 We illustrate the diagram feature with
 Neumaier's <Alt Not="HTML"><M>A_8</M></Alt><Alt Only="HTML">A&lt;sub>8&lt;/sub></Alt>-geometry. 
@@ -336,15 +392,15 @@ become planes of <M>AG(3,2)</M>. The remaining 4-subsets will be called
 
 A well-known rank 4 geometry discovered by Neumaier
 in 1984 can be described using these concepts. This geometry is quite
-important since its residue of cotype 0 is the famous 
+important since its residue of cotype <M>1</M> is the famous 
 <Alt Not="HTML"><M>A_7</M></Alt><Alt Only="HTML">A&lt;sub>7&lt;/sub></Alt>-geometry which is known to be the only flag-transitive locally
 classical <M>C_3</M>-geometry which is not a polar space (see Aschbacher1984
 for details).
 
 The Neumaier geometry can be constructed as follows. The elements of
 types 1 and 2 are the vertices and edges of the complete graph <Alt Not="HTML"><M>K_8</M></Alt><Alt Only="HTML">K&lt;sub>8&lt;/sub></Alt>,
-the elements of type 2 are the 4-subsets of the vertex set 
-of <Alt Not="HTML"><M>K_8</M></Alt><Alt Only="HTML">K&lt;sub>8&lt;/sub></Alt> and the elements of type 3 are the 15 nonequivalent labelings
+the elements of type 3 are the 4-subsets of the vertex set 
+of <Alt Not="HTML"><M>K_8</M></Alt><Alt Only="HTML">K&lt;sub>8&lt;/sub></Alt> and the elements of type 4 are the 15 nonequivalent labelings
 of <Alt Not="HTML"><M>K_8</M></Alt><Alt Only="HTML">K&lt;sub>8&lt;/sub></Alt>. Incidences are mostly the natural ones. A 4-subset
 is incident with a labeling of <Alt Not="HTML"><M>K_8</M></Alt><Alt Only="HTML">K&lt;sub>8&lt;/sub></Alt> if it is the set of points of a
 nonplane in the model of <M>AG(3,2)</M> defined by the labeling.
@@ -356,7 +412,7 @@ The produced diagrams are included here: Neumaier's <Alt Not="HTML"><M>A_8</M></
 The <Alt Not="HTML"><M>A_7</M></Alt><Alt Only="HTML">A&lt;sub>7&lt;/sub></Alt> geometry:<P/>
 <Alt Only="HTML">&lt;img src="a7geo.jpg">&lt;/img></Alt><Alt Only="LaTeX">\includegraphics[scale=0.5]{a7geo.pdf}</Alt><P/><P/>
 
-
+On a UNIX system we can start an external viewer (``gv'' or ghostview in this case) from within GAP with the <F>Exec</F> command.
 
 </Section>
 </Chapter>
