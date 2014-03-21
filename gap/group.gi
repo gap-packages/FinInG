@@ -2261,7 +2261,7 @@ InstallMethod( FindBasePointCandidates,
         f := BaseField(g);
         d := Dimension(g);
     fi;
-    cand := rec( points := IdentityMat(d,f), used := 0,
+    cand := rec( points := NewMatrix(IsCMatRep, f,d, IdentityMat(d,f)) , used := 0,
                  ops := ListWithIdenticalEntries(d,OnProjPoints) );
     return cand;
   end );
@@ -2283,7 +2283,7 @@ InstallMethod( FindBasePointCandidates,
         f := BaseField(g);
         d := Dimension(g);
     fi;
-    cand := rec( points := IdentityMat(d,f), used := 0,
+    cand := rec( points := NewMatrix(IsCMatRep, f,d, IdentityMat(d,f)), used := 0,
                  ops := ListWithIdenticalEntries(d,OnProjPointsWithFrob) );
     if d > 1 then
         Add(cand.points,ShallowCopy(cand.points[1]));
@@ -2314,7 +2314,7 @@ InstallMethod( FindBasePointCandidates,
         f := BaseField(g);
         d := Dimension(g);
     fi;
-    cand := rec( points := IdentityMat(d,f), used := 0,
+    cand := rec( points := NewMatrix(IsCMatRep, f,d, IdentityMat(d,f)), used := 0,
                  ops := ListWithIdenticalEntries(d,OnProjPointsWithFrob) );
     if d > 1 then
         for j in [2..d] do
