@@ -273,7 +273,7 @@ An <E>automorphism</E> of an incidence structure <Alt Not="HTML"><M>\Gamma</M></
 
 <ManSection>
 <Oper Name="AutGroupIncidenceStructureWithNauty" Arg="cg"/>
-<Returns>permutation group isomorphic to the full automorphism group of <cg>.</Returns>
+<Returns>permutation group isomorphic to the full automorphism group of <A>cg</A>.</Returns>
 <Description> 
 The group is computed with <F>nauty</F>, which is part of <Package>GRAPE</Package> but has to be compiled on your system before use. The group returned is a permutation group acting on the set <F>[1..Sum(TypesOfElementsOfIncidenceStructure(cg), t -> NrElementsOfIncidenceStructure(cg,t))]</F>, which is exactly the vertex set of <F>IncidenceGraph(cg)</F>. At the moment the action of the automorphism group on <F>cg</F> is not provided but it can be recovered from the knowledge that the vertex set of <F>IncidenceGraph(cg)</F> ifrst contains alle elements of type 1 in <F>cg</F>, then alle elements of type 2, etc.
 </Description>
@@ -294,7 +294,7 @@ We use <F>nauty</F>, which is part of <Package>GRAPE</Package> but has to be com
 
 <ManSection>
 <Oper Name="CorGroupIncidenceStructureWithNauty" Arg="cg"/>
-<Returns>permutation group isomorphic to the full automorphism group of <cg>.</Returns>
+<Returns>permutation group isomorphic to the full automorphism group of<A>cg</A>.</Returns>
 <Description> 
 The group is computed with <F>nauty</F>, which is part of <Package>GRAPE</Package> but has to be compiled on your system before use. The group returned is a permutation group acting on the set <F>[1..Sum(TypesOfElementsOfIncidenceStructure(cg), t -> NrElementsOfIncidenceStructure(cg,t))]</F>, which is exactly the vertex set of <F>IncidenceGraph(cg)</F>. At the moment the action of the automorphism group on <F>cg</F> is not provided but it can be recovered from the knowledge that the vertex set of <F>IncidenceGraph(cg)</F> ifrst contains alle elements of type 1 in <F>cg</F>, then alle elements of type 2, etc.
 </Description>

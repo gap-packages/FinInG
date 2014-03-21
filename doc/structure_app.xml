@@ -32,7 +32,7 @@ loading: geometry, liegeometry, group, projectivespace, correlations,
 polarspace/morphisms, enumerators, diagram, varieties, affinespace/affinegroup, 
 gpolygons
 </Example>
-The different components are liested an refer to the corresponding filenames. So 
+The different components are listed and refer to the corresponding filenames. So
 <E>component</E> refers to <E>component.gd</E> and <E>component.gi</E>. When
 When <E>component1/component2</E> is displayed, Both <E>component1.gi</E> and 
 <E>component2.gi</E> depend on the declarations in both <E>component1.gd</E> and 
