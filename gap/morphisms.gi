@@ -1944,7 +1944,7 @@ InstallMethod( NaturalProjectionBySubspace,
         if not v in x then
 			Error("Subspace is not incident with the subspace of projection");
 		fi;
-        y := List(Unpack(x^_),i-> Coefficients(bas,i))*basimgs;  #x^_ = UnWrap(x).
+        y := List(Unpack(x^_),i-> Coefficients(bas,i))*basimgs;  #x^_ = UnWrap(x), cmat unpack
         if not IsEmpty(y) then 
            ## Note: TriangulizeMat does not return a matrix of full
            ##       rank, whereas SemiEchelonMat does!
@@ -1967,7 +1967,7 @@ InstallMethod( NaturalProjectionBySubspace,
 		end;
 		pre := function( y )
 			local x;          
-            x := Unpack(y!.obj); 
+            x := Unpack(y!.obj);  #cmat unpack
             if y!.type = 1 then x := [x]; fi;
             x :=  Concatenation(x * compl, b); 
             #ConvertToMatrixRepNC(x, f);
@@ -2079,6 +2079,7 @@ InstallOtherMethod(\QUO,
 	end );
 
 # CHECKED 28/09/11 jdb
+#cmat change 21/3/14
 #############################################################################
 #O  NaturalProjectionBySubspace( <ps>, <v> )
 # returns the morphism from the polar space to the quotient space of the 
@@ -2100,11 +2101,11 @@ InstallMethod( NaturalProjectionBySubspace,
     pstype := PolarSpaceType(ps); 
     psdim := ps!.dimension;
     f := ps!.basefield;
-    b := v!.obj;
+    b := Unpack(v!.obj); #cmat unpack necessary for infra.
     vdim := v!.type;  
     if vdim = 1 then b:=[b]; fi; 
     perp := PolarMap(ps);
-    vs := VectorSpace(f, perp(v)!.obj);
+    vs := VectorSpace(f, Unpack(perp(v)!.obj)); #PolarMap maps to elements, containing a cmat.
 
     ## if v has dimension j, then the new geometry 
     ## has dimension psdim - 2*vardim
@@ -2127,7 +2128,7 @@ InstallMethod( NaturalProjectionBySubspace,
     # Matrix of the linear transformation we want
     basimgs:= Concatenation( List( Wvectors, v -> zero ),
                              BasisVectors( canbas ) );
-    ConvertToMatrixRep(basimgs, f);
+    #ConvertToMatrixRep(basimgs, f); #useles now.
     a := compl;
 
     if HasQuadraticForm( ps ) then
@@ -2157,13 +2158,13 @@ InstallMethod( NaturalProjectionBySubspace,
               if v = x then return
                  EmptySubspace(ps2); 
               else
-                 y := List(x!.obj,i-> Coefficients(bas,i))*basimgs;  
+                 y := List(Unpack(x!.obj),i-> Coefficients(bas,i))*basimgs;  #cmat unpack here
                  y := SemiEchelonMat(y)!.vectors;   
                  if x!.type - vdim = 1 then 
                     y := y[1]; 
-                    ConvertToVectorRep(y, f);
-                 else
-                    ConvertToMatrixRepNC(y, f);
+                    #ConvertToVectorRep(y, f);
+                 #else
+                 #   ConvertToMatrixRepNC(y, f);
                  fi;
                  return VectorSpaceToElement(ps2, y);
               fi;
@@ -2174,10 +2175,10 @@ InstallMethod( NaturalProjectionBySubspace,
               if not y in ps2 then
                  Error("Subspace is not an element of the polar space");
               fi;
-              x := y!.obj; 
+              x := Unpack(y!.obj); #cmat unpack here.
               if y!.type = 1 then x := [x]; fi;
               x := Concatenation(x * compl, StructuralCopy( b )); 
-              ConvertToMatrixRepNC(x, f);
+              #ConvertToMatrixRepNC(x, f); #useless now.
               return VectorSpaceToElement(ps, x);
             end;
     map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(ps), 
