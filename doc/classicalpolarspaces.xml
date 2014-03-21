@@ -623,6 +623,17 @@ with the type of subspace: <Q>degenerate</Q>, <Q>symplectic</Q>, <Q>hermitian</Q
 
 </Section>
 
+
+<Section Label="polar:shadows">
+<Heading>Shadow of elements</Package></Heading>
+
+a section similar to the shadow of elements section in chapter projective spaces.
+
+cps_shadow_of_element.g
+
+</Section>
+
+
 <Section Label="polar:classicalgroups">
 <Heading>Projective Orthogonal/Unitary/Symplectic groups in <Package>FinInG</Package></Heading>
 

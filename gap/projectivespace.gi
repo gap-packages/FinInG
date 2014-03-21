@@ -1338,7 +1338,7 @@ InstallMethod( FlagOfIncidenceStructure,
 		local list,i,test,type,flag;
 		list := Set(ShallowCopy(els));
 		if Length(list) > Rank(ps) then
-		  Error("A flag must contain at least two elements and at most Rank(<ps>) elemnts");
+		  Error("A flag can contain at most Rank(<ps>) elements");
 		fi;
 		test := Set(List([1..Length(list)-1],i -> IsIncident(list[i],list[i+1])));
 		if (test <> [ true ] and test <> []) then
