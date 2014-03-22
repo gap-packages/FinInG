@@ -1731,14 +1731,18 @@ InstallMethod( BaseField,
 	"for a projective collineation group",
 	[IsProjectiveGroupWithFrob],
 	function( g )
-		local f,gens;
+		local f,gens,P;
 		if IsBound(g!.basefield) then
 			return g!.basefield;
 		fi;
-		if HasParent(g) then
-			f := BaseField(Parent(g));
-			g!.basefield := f;
-			return f;
+		# This if statement can cause an infinite loop!
+		if HasParent(g) then  # JB 22/03/2014
+			P := Parent(g);
+			if IsBound(P!.basefield) then
+				f := BaseField(P);
+				g!.basefield := f;
+				return f;
+			fi;
 		fi;
     # Now start to investigate:
 		gens := GeneratorsOfGroup(g);
@@ -1749,6 +1753,8 @@ InstallMethod( BaseField,
     # Now we have to give up:
 		Error("base field could not be determined");
 	end );
+	
+# TO DO (22/03/2014): We ought to set the basefield on creating collineation groups.
 
 # CHECKED 6/09/11 jdb
 #############################################################################
@@ -1842,7 +1848,7 @@ InstallMethod( OneImmutable,
 		local gens, o;
 		gens := GeneratorsOfGroup(g);
 		if Length(gens) = 0 then
-			if HasParent(g) then
+			if HasParent(g) and HasOneImmutable(Parent(g)) then	# JB 22/03/2014
 				gens := GeneratorsOfGroup(Parent(g));
 			else
 				Error("sorry, no generators, no one");
