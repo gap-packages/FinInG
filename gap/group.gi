@@ -1791,7 +1791,7 @@ InstallMethod( Dimension,
 	[IsProjectiveGroupWithFrob],
 	function( g )
 		local gens;
-		if HasParent(g) then
+		if HasParent(g) and HasDimension(Parent(g)) then	#JB: 22/03/2014: Made sure the parent had a dimension first
 			return Dimension(Parent(g));
 		fi;
     # Now start to investigate:
