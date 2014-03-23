@@ -1809,7 +1809,7 @@ InstallMethod( Dimension,
 		if Length(gens) > 0 then
 			return Length(gens[1]!.mat);
 		elif IsTrivial(g) then				#JB: 22/03/2014: The trivial group with no generators slipped through.
-		 	return Length(One(hh)!.mat);
+		 	return Length(One(g)!.mat);
 		fi;
 		Error("dimension could not be determined");
 	end );
