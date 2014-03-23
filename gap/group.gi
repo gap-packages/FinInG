@@ -1739,7 +1739,7 @@ InstallMethod( BaseField,
 		if HasParent(g) then  # JB 22/03/2014
 			P := Parent(g);
 			if IsBound(P!.basefield) then
-				f := BaseField(P);
+				f := P!.basefield;
 				g!.basefield := f;
 				return f;
 			fi;
@@ -1749,7 +1749,11 @@ InstallMethod( BaseField,
 		if Length(gens) > 0 then
 			g!.basefield := gens[1]!.fld;
 			return g!.basefield;
+		elif IsTrivial(g) then				#JB: 22/03/2014: The trivial group with no generators slipped through.
+			g!.basefield := One(g)!.fld;
+			return g!.basefield;
 		fi;
+				
     # Now we have to give up:
 		Error("base field could not be determined");
 	end );
@@ -1804,6 +1808,8 @@ InstallMethod( Dimension,
 		gens := GeneratorsOfGroup(g);
 		if Length(gens) > 0 then
 			return Length(gens[1]!.mat);
+		elif IsTrivial(g) then				#JB: 22/03/2014: The trivial group with no generators slipped through.
+		 	return Length(One(hh)!.mat);
 		fi;
 		Error("dimension could not be determined");
 	end );
