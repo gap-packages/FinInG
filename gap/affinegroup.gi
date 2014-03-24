@@ -8,7 +8,7 @@
 ##                                                            Michel Lavrauw
 ##                                                           Max Neunhoeffer
 ##
-##  Copyright 2012	Colorado State University, Fort Collins
+##  Copyright 2014	Colorado State University, Fort Collins
 ##					Università degli Studi di Padova
 ##					Universeit Gent
 ##					University of St. Andrews

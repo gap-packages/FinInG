@@ -8,13 +8,12 @@
 ##                                                            Michel Lavrauw
 ##                                                           Max Neunhoeffer
 ##
-##  Copyright 2011	Colorado State University, Fort Collins
+##  Copyright 2014	Colorado State University, Fort Collins
 ##					Università degli Studi di Padova
 ##					Universeit Gent
 ##					University of St. Andrews
 ##					University of Western Australia, Perth
 ##                  Vrije Universiteit Brussel
-##                 
 ##
 ##  Implementation stuff for affine spaces
 ##
@@ -74,13 +73,6 @@ InstallMethod( AffineSpace,
 # Attributes of affine spaces
 #
 #############################################################################
-
-# is obsolete now due to the little change in AffineSpace
-#InstallMethod( RankAttr, "for an affine space",
-#  [ IsAffineSpace and IsAffineSpaceRep ],
-#  function( as )
-#    return as!.dimension;
-#  end );
 
 # CHECKED 20/03/11 jdb
 #############################################################################
@@ -180,6 +172,51 @@ InstallMethod( TypesOfElementsOfIncidenceStructurePlural,
 	end );
 
 #############################################################################
+# helper methods to construct affine subspacs.
+#############################################################################
+
+
+#############################################################################
+#O  VectorSpaceTransversalElement( <space>, <subspace>, <v> )
+# This is an internal subroutine which is not expected to be used by the user;
+# Returns a canonical vector from <v>+<subspace>
+##
+InstallMethod( VectorSpaceTransversalElement,
+	"for a vector space, a matric, a vector",
+	[IsVectorSpace, IsFFECollColl, IsVector],
+	function(space, subspace, v)
+		local basis;
+		basis := SemiEchelonBasis( Subspace(space, subspace) );
+		return SiftedVector(basis, v);
+	end );
+
+#############################################################################
+#O  VectorSpaceTransversal( <space>, <subspace> )
+# This is an internal subroutine which is not expected to be used by the user;
+# Returns a typed object containing a record with two components
+# Note: IsVectorSpaceTransversal is a subfilter of IsSubspacesOfVectorSpace
+##
+InstallMethod( VectorSpaceTransversal, 
+	"for a vector space, a matrix",
+	[IsVectorSpace, IsFFECollColl],
+	function(space, subspace)
+		return Objectify(
+               NewType( CollectionsFamily( FamilyObj( space ) ),
+                    IsVectorSpaceTransversal and IsVectorSpaceTransversalRep),
+           rec( vectorspace := space, subspace := subspace ) );    
+	end );
+
+#############################################################################
+#O  ViewObj( <trans> )
+InstallMethod( ViewObj, 
+	"for a vectorspace transversal",
+	[ IsVectorSpaceTransversal and IsVectorSpaceTransversalRep ],
+	function( trans )
+		Print("<vector space transversal of ", trans!.vectorspace,">");
+	end );
+
+
+#############################################################################
 #
 #  Methods for making subspaces
 #
@@ -198,6 +235,16 @@ InstallMethod( TypesOfElementsOfIncidenceStructurePlural,
 #
 # The treatment of the matrix representing the subspace at infinity, is similar to 
 # the treatment in the methods for VectorSpaceToElement in projectivespace.gi
+#
+# 24/3/2014
+# cvec/cmat changes lead to the methods for 
+# [ IsAffineSpace, IsCVecRep ]
+# [ IsAffineSpace, IsCVecRep, IsCMatRep ]
+#
+# more methods might be necessary in the future.
+# Note that an affine point is represented by just one vector, while an affine 
+# space by an object [v,m], where v is vector and m is a matrix. Currently we
+# will change this into a cvec/cmat. 
 #
 #############################################################################
 
@@ -223,6 +270,8 @@ InstallMethod( Wrap,
 
 # CHECKED 12/03/12 jdb
 # but I am unhappy with the fact that an empty v just returns [].
+# 24/3/2014. I changed it now, entering [] gives an error.
+# cvec/cmat change.
 #############################################################################
 #O  AffineSubspace( <geom>, <v>, <m> )
 # returns the subspace of <geom>, with representative <v> and subspace at infinity
@@ -235,15 +284,16 @@ InstallMethod( AffineSubspace,
 		local  x, n, i, gf, v2;
 		gf := geom!.basefield;
 		## when v is empty... 
-		if IsEmpty(v) then
-			return [];
-		fi;
-		x := MutableCopyMat(m);
-		TriangulizeMat(x);
+		#if IsEmpty(v) then
+		#	return [];
+		#fi;
         ## dimension should be correct
-        if Length(v) <> geom!.dimension or Length(v) <> Length(x[1]) then
+        x := MutableCopyMat(m);
+		if Length(v) <> geom!.dimension or Length(v) <> Length(x[1]) then
 			Error("Dimensions are incompatible");
 		fi;
+		TriangulizeMat(x);
+
 		## Remove zero rows. It is possible the the user
 		## has inputted a matrix which does not have full rank
         n := Length(x);
@@ -251,9 +301,9 @@ InstallMethod( AffineSubspace,
 		while i < n and ForAll(x[n-i], IsZero) do
 			i := i+1; 
 		od;
-		if i = n then
-			return [];
-		fi;
+		#if i = n then #this case corresponds simple with the "empty subspace at infty", so a point must be returned.
+		#	return [];
+		#fi;
 		x := x{[1..n-i]};
 		if Length(x) = geom!.dimension then
 			return geom;
@@ -263,21 +313,24 @@ InstallMethod( AffineSubspace,
 		## entered a matrix with rank 1 (thus at this stage
 		## we will have a matrix with one row).
         ## We must also compress our vector/matrix.
+        ##note that IsZero([[]])=IsZero([])=true.
         if IsZero(x) then
-        ## return an affine point
-			v2 := ShallowCopy(v);
-			ConvertToVectorRep(v2, gf);
+		## return an affine point
+			v2 := NewMatrix(IsCMatRep,gf,geom!.dimension,[v])[1];
+			#ConvertToVectorRep(v2, gf); #useless now.
 			return Wrap(geom, 1, v2);
 		else
 		## find transversal element
 			v2 := VectorSpaceTransversalElement( geom!.vectorspace, x, v );
-			ConvertToVectorRep(x, gf);
-			ConvertToMatrixRep(x, gf);
+			v2 := NewMatrix(IsCMatRep,gf,geom!.dimension,[v2])[1];
+			#ConvertToVectorRep(x, gf);
+			#ConvertToMatrixRep(x, gf); #should have been ConvertToMatrixRep(v2,gf) ?
+			x := NewMatrix(IsCMatRep,gf,geom!.dimension,x);
 			return Wrap(geom, Length(x)+1, [v2,x]);
 		fi;
 	end );
 
-# CHECKED 12/03/12 jdb
+# CHECKED 24/3/3014 jdb
 #############################################################################
 #O  AffineSubspace( <geom>, <v>  )
 # returns the point in the affine space <geom> determined by <v> 
@@ -286,25 +339,28 @@ InstallMethod( AffineSubspace,
 	"for a row vector",
     [IsAffineSpace, IsRowVector],
 	function( geom, v )
-		local gf, v2;
-		gf := geom!.basefield;
-		# I found the next lines a bit infelicious, so I replaced it by an error message.
-		## when v is empty...  
-		if IsEmpty(v) then
-		#return [];
-			Error( "<v> should not be empty" );
-		fi;
-        ## dimension should be correct (another argument to change the above).
         if Length(v) <> geom!.dimension then
 			Error("Dimensions are incompatible");
 		fi;
-		v2 := ShallowCopy( v );
-		ConvertToVectorRep(v, gf);
-		return Wrap(geom, 1, v2);
+		return Wrap(geom, 1, CVec(Unpack(v),geom!.basefield));
+	end );
+	
+# CHECKED 24/3/3014 jdb
+#############################################################################
+#O  AffineSubspace( <geom>, <v>  )
+# returns the point in the affine space <geom> determined by <v> 
+##
+InstallMethod( AffineSubspace, 
+	"for a row vector",
+    [IsAffineSpace, IsCVecRep],
+	function( geom, v )
+        if Length(v) <> geom!.dimension then
+			Error("Dimensions are incompatible");
+		fi;
+		return Wrap(geom, 1, v);
 	end );
 
-# CHECKED 12/03/12 jdb
-# but I am unhappy with the fact that an empty v just returns [].
+# CHECKED 24/3/3014 jdb
 #############################################################################
 #O  AffineSubspace( <geom>, <v>, <m> )
 # returns the subspace of <geom>, with representative <v> and subspace at infinity
@@ -315,43 +371,34 @@ InstallMethod( AffineSubspace,
     [IsAffineSpace, IsRowVector, Is8BitMatrixRep],
 	function( geom, v, m )
   ## We have simply copied the code that was for IsPlistRep
-	local  x, n, i, gf, v2;
-		gf := geom!.basefield;     
-		if IsEmpty(v) then
-			return [];
-		fi;
-		x := MutableCopyMat(m);
-		TriangulizeMat(x);
+		local  x, n, i, gf, v2;
+		gf := geom!.basefield;
+        x := MutableCopyMat(m);
 		if Length(v) <> geom!.dimension or Length(v) <> Length(x[1]) then
 			Error("Dimensions are incompatible");
 		fi;
-		n := Length(x);
+		TriangulizeMat(x);
+        n := Length(x);
 		i := 0;
 		while i < n and ForAll(x[n-i], IsZero) do
 			i := i+1; 
 		od;
-		if i = n then
-			return [];
-		fi;
 		x := x{[1..n-i]};
 		if Length(x) = geom!.dimension then
 			return geom;
 		fi;   
-		if IsZero(x) then
-			v2 := ShallowCopy(v);
-			ConvertToVectorRep(v2, gf);
+        if IsZero(x) then
+			v2 := NewMatrix(IsCMatRep,gf,geom!.dimension,[v])[1];
 			return Wrap(geom, 1, v2);
 		else
 			v2 := VectorSpaceTransversalElement( geom!.vectorspace, x, v );
-			ConvertToVectorRep(x, gf);
-			ConvertToMatrixRep(x, gf);
+			v2 := NewMatrix(IsCMatRep,gf,geom!.dimension,[v2])[1];
+			x := NewMatrix(IsCMatRep,gf,geom!.dimension,x);
 			return Wrap(geom, Length(x)+1, [v2,x]);
 		fi;
 	end ); 
   
-  
-# CHECKED 12/03/12 jdb
-# but I am unhappy with the fact that an empty v just returns [].
+# CHECKED 24/3/3014 jdb
 #############################################################################
 #O  AffineSubspace( <geom>, <v>, <m> )
 # returns the subspace of <geom>, with representative <v> and subspace at infinity
@@ -361,41 +408,69 @@ InstallMethod( AffineSubspace,
 	"for a row vector and 8-bit matrix",
     [IsAffineSpace, IsRowVector, IsGF2MatrixRep],
 	function( geom, v, m )
+    ## We have simply copied the code that was for IsPlistRep
+		local  x, n, i, gf, v2;
+		gf := geom!.basefield;
+        x := MutableCopyMat(m);
+		if Length(v) <> geom!.dimension or Length(v) <> Length(x[1]) then
+			Error("Dimensions are incompatible");
+		fi;
+		TriangulizeMat(x);
+        n := Length(x);
+		i := 0;
+		while i < n and ForAll(x[n-i], IsZero) do
+			i := i+1; 
+		od;
+		x := x{[1..n-i]};
+		if Length(x) = geom!.dimension then
+			return geom;
+		fi;   
+        if IsZero(x) then
+			v2 := NewMatrix(IsCMatRep,gf,geom!.dimension,[v])[1];
+			return Wrap(geom, 1, v2);
+		else
+			v2 := VectorSpaceTransversalElement( geom!.vectorspace, x, v );
+			v2 := NewMatrix(IsCMatRep,gf,geom!.dimension,[v2])[1];
+			x := NewMatrix(IsCMatRep,gf,geom!.dimension,x);
+			return Wrap(geom, Length(x)+1, [v2,x]);
+		fi;
+  end ); 
   
-  ## We have simply copied the code that was for IsPlistRep
-  
-    local  x, n, i, gf, v2;
-    gf := geom!.basefield;     
-    if IsEmpty(v) then
-       return [];
-    fi;
-    x := MutableCopyMat(m);
-    TriangulizeMat(x);
-    if Length(v) <> geom!.dimension or Length(v) <> Length(x[1]) then
-       Error("Dimensions are incompatible");
-    fi;
-    n := Length(x);
-    i := 0;
-    while i < n and ForAll(x[n-i], IsZero) do
-          i := i+1; 
-    od;
-    if i = n then
-       return [];
-    fi;
-    x := x{[1..n-i]};
-    if Length(x) = geom!.dimension then
-       return geom;
-    fi;   
-    if IsZero(x) then
-       v2 := ShallowCopy(v);
-       ConvertToVectorRep(v2, gf);
-       return Wrap(geom, 1, v2);
-    else
-       v2 := VectorSpaceTransversalElement( geom!.vectorspace, x, v );
-       ConvertToVectorRep(x, gf);
-       ConvertToMatrixRep(x, gf);
-       return Wrap(geom, Length(x)+1, [v2,x]);
-    fi;
+# ADDED 24/3/3014 jdb
+#############################################################################
+#O  AffineSubspace( <geom>, <v>, <m> )
+# returns the subspace of <geom>, with representative <v> and subspace at infinity
+# determined by <m>. 
+##
+InstallMethod( AffineSubspace, 
+	"for a row vector and 8-bit matrix",
+    [IsAffineSpace, IsCVecRep, IsCMatRep],
+	function( geom, v, m )
+		local  x, n, i, gf, v2;
+		gf := geom!.basefield;
+        x := MutableCopyMat(Unpack(m)); #cmat might give trouble with {}
+		if Length(v) <> geom!.dimension or Length(v) <> Length(x[1]) then
+			Error("Dimensions are incompatible");
+		fi;
+		TriangulizeMat(x);
+        n := Length(x);
+		i := 0;
+		while i < n and ForAll(x[n-i], IsZero) do
+			i := i+1; 
+		od;
+		x := x{[1..n-i]};
+		if Length(x) = geom!.dimension then
+			return geom;
+		fi;   
+        if IsZero(x) then
+			v2 := NewMatrix(IsCMatRep,gf,geom!.dimension,[v])[1];
+			return Wrap(geom, 1, v2);
+		else
+			v2 := VectorSpaceTransversalElement( geom!.vectorspace, x, v );
+			v2 := NewMatrix(IsCMatRep,gf,geom!.dimension,[v2])[1];
+			x := NewMatrix(IsCMatRep,gf,geom!.dimension,x);
+			return Wrap(geom, Length(x)+1, [v2,x]);
+		fi;
   end ); 
 
 # CHECKED 13/03/12 jdb
@@ -440,29 +515,11 @@ InstallMethod( Random,
 		return x;
 	end );
 		
-#twice the same?
-# CHECKED 13/03/12 jdb
-#############################################################################
-#O  Random( <subs> )
-# returns a random element in the collection <subs>
-##
-#InstallMethod( Random, 
-#	"for a collection of subspaces of an affine space",
-#    [ IsSubspacesOfAffineSpace ],
-    # chooses a random element out of the collection of subspaces of given
-    # dimension of an affine space
-#	function( subs )
-#		local x;
-#		x := RandomSubspace( subs!.geometry, subs!.type );
-#		return x;
-#	end );
-
 #############################################################################
 #
 #  ElementsOfIncidenceStructure, enumerators, iterators
 #
 #############################################################################
-
 
 # CHECKED 13/03/12 jdb
 #############################################################################
@@ -502,10 +559,9 @@ InstallMethod( ElementsOfIncidenceStructure,
 #############################################################################
 # User friendly named operations for points, lines, planes, solids
 # for affine spaces. These operations are not checking if the affine space
-# really contains the elements of the asked type. If not, an error will be
-# produced by ElementsOfIncidenceStructure. 
+# really contains the elements of the asked type, since ElementsOfIncidenceStructure 
+# does. 
 #############################################################################
-
 
 # CHECKED 13/03/12 jdb
 #############################################################################
@@ -578,30 +634,7 @@ InstallMethod(Size,
 	function( vs ) 
 		return vs!.size; 
 	end );
-
-InstallMethod( VectorSpaceTransversalElement, [IsVectorSpace, IsFFECollColl, IsVector],
-  function(space, subspace, v)
-  
-    # Returns a canonical vector from <v>+<subspace>
     
-    local basis;
-    basis := SemiEchelonBasis( Subspace(space, subspace) );
-    return SiftedVector(basis, v);
-  end );
-
-InstallMethod( VectorSpaceTransversal, [IsVectorSpace, IsFFECollColl],
-  function(space, subspace)
-  
-    # Returns a typed object containing a record with two components
-    # Note: IsVectorSpaceTransversal is a subfilter of IsSubspacesOfVectorSpace
-    
-    return Objectify(
-               NewType( CollectionsFamily( FamilyObj( space ) ),
-                    IsVectorSpaceTransversal and IsVectorSpaceTransversalRep),
-           rec( vectorspace := space, subspace := subspace ) );    
-  end );
-  
-  
 #############################################################################
 # Methods to create flags.
 #############################################################################
@@ -618,7 +651,7 @@ InstallMethod( FlagOfIncidenceStructure,
 		local list,i,test,type,flag;
 		list := Set(ShallowCopy(els));
 		if Length(list) > Rank(as) then
-		  Error("A flag must contain at least two elements and at most Rank(<as>) elements");
+		  Error("A flag ca at most Rank(<as>) elements");
 		fi;
 		test := Set(List([1..Length(list)-1],i -> IsIncident(list[i],list[i+1])));
 		if (test <> [ true ] and test <> []) then
@@ -674,13 +707,18 @@ InstallMethod( Display,
 		fi;
 	end );
 
+#############################################################################
+# Enumerator method(s)
+#############################################################################
 
-
-
-
-
-InstallMethod( Enumerator, [ IsVectorSpaceTransversal ],
-  function( trans )  
+#############################################################################
+#O  Enumerator( <trans> )
+# return an Enumerator for a vectorspace transversal.
+##
+InstallMethod( Enumerator, 
+	"for a vector space transversal",	
+	[ IsVectorSpaceTransversal ],
+	function( trans )  
     
     # returns an enumerator for the canonical elements of all cosets of 
     # <subspace> in <space>. 
@@ -692,15 +730,78 @@ InstallMethod( Enumerator, [ IsVectorSpaceTransversal ],
     enumcomp := Enumerator( complement );
     enum := EnumeratorByFunctions( trans, rec(            
             ElementNumber := function(e, n)
-              local v;
-              v := enumcomp[n];
-              return VectorSpaceTransversalElement(space, subspace, v);
+				local v;
+				v := enumcomp[n];
+				return VectorSpaceTransversalElement(space, subspace, v);
             end,
             NumberElement := enumcomp!.NumberElement,
-           # Length := e -> enumcomp!.Length ));   # silly enumerator of v.spaces doesn't always have "Length"
+            #Length := e -> enumcomp!.Length ));   # silly enumerator of v.spaces doesn't always have "Length"
             Length := e -> Size(complement) ));
     return enum;
-  end );
+	end );
+
+# 24/3/2014. cmat adapted.
+#############################################################################
+#O  Enumerator( <vs> )
+# return an Enumerator for subspaces of an affine space of given type.
+##
+InstallMethod( Enumerator, 
+	"for subspaces of an affine space",
+    [ IsSubspacesOfAffineSpace ],  
+	function( vs )
+	## An affine subspace will be represented by a pair (vector,direction).
+	## So for example, an affine plane x+<W> will be represented by
+	## (x', proj. line)  (where x' is the transversal rep corresponding to x).
+    local as, j, vars, vec, subs, f, enum, enumV, classsize;
+    as := vs!.geometry;
+    j := vs!.type;
+    vec := as!.vectorspace;
+    f := as!.basefield;
+    if j = 1 then 
+       enumV := Enumerator( vec );
+       enum := EnumeratorByFunctions( vs, rec(
+            ElementNumber := function(e, n)
+              local v;
+              v := enumV[n]; 
+              #ConvertToVectorRep(v, f);
+              return Wrap(as, 1, NewMatrix(IsCMatRep,f,as!.dimension,[v])[1]); #looks ugly, avoids an extra call.
+            end,
+            NumberElement := function(e, x)
+              local v;
+              v := Unpack(x!.obj);
+              return Position(enumV, v);
+            end ));    
+    else
+       enumV := Enumerator( Subspaces( vec, j-1 ) ); 
+       classsize := Size(f)^(Dimension(vec)-j+1);
+       enum := EnumeratorByFunctions( vs, rec(
+            ElementNumber := function(e, n)
+               local l, k, enumtrans, v; 
+               
+               ## The way this works is that n is the position
+               ## of the l-th coset incident with the k-th (j-1)-space
+               ## of as.      
+          
+               l := n mod classsize;
+               if l = 0 then l := classsize; fi;  
+               k := (n-l) / classsize + 1;  
+               v := NewMatrix(IsCMatRep,f,as!.dimension,BasisVectors(Basis(enumV[k])));
+               enumtrans := Enumerator( VectorSpaceTransversal(vec, Unpack(v)) );
+               return Wrap(as, j, [ NewMatrix(IsCMatRep,f,as!.dimension,[enumtrans[l]])[1], v ] );
+            end,
+            NumberElement := function( e, x )
+              local w, k, enumtrans, l;
+              ## Here we must first find the unique direction of x
+              ## incident with x, and then find its place in the ordering.
+              w := Unpack(x!.obj[2]); #x!.obj = [cvec,cmat]        
+              k := Position(enumV, w);  
+              enumtrans := Enumerator( VectorSpaceTransversal(vec, w) );
+              l := Position(enumtrans, Unpack(x!.obj[1]));
+              return (k-1)*classsize + l;
+            end ) );
+     fi;
+    return enum;
+ end );    
 
 
 InstallMethod(Iterator, "for subspaces of an affine space",
@@ -733,63 +834,6 @@ InstallMethod(Iterator, "for subspaces of an affine space",
   end );
   
   
-InstallMethod( Enumerator, "for subspaces of an affine space",
-        [ IsSubspacesOfAffineSpace ],  
-  function( vs )
-  ## An affine subspace will be represented by a pair (vector,direction).
-  ## So for example, an affine plane x+<W> will be represented by
-  ## (x', proj. line)  (where x' is the transversal rep corresponding to x).
-  
-    local as, j, vars, vec, subs, f, enum, enumV, classsize;
-    as := vs!.geometry;
-    j := vs!.type;
-    vec := as!.vectorspace;
-    f := as!.basefield;
-    if j = 1 then 
-       enumV := Enumerator( vec );
-       enum := EnumeratorByFunctions( vs, rec(
-            ElementNumber := function(e, n)
-              local v;
-              v := enumV[n];
-              ConvertToVectorRep(v, f);
-              return Wrap(as, 1, v);
-            end,
-            NumberElement := function(e, x)
-              local v;
-              v := x!.obj;
-              return Position(enumV, v);
-            end ));    
-    else
-       enumV := Enumerator( Subspaces( vec, j-1 ) ); 
-       classsize := Size(f)^(Dimension(vec)-j+1);
-       enum := EnumeratorByFunctions( vs, rec(
-            ElementNumber := function(e, n)
-               local l, k, enumtrans, v; 
-               
-               ## The way this works is that n is the position
-               ## of the l-th coset incident with the k-th (j-1)-space
-               ## of as.      
-          
-               l := n mod classsize;
-               if l = 0 then l := classsize; fi;  
-               k := (n-l) / classsize + 1;  
-               v := BasisVectors(Basis(enumV[k]));
-               enumtrans := Enumerator( VectorSpaceTransversal(vec, v) );
-               return Wrap(as, j, [ enumtrans[l], v ] );
-            end,
-            NumberElement := function( e, x )
-              local w, k, enumtrans, l;
-              ## Here we must first find the unique direction of x
-              ## incident with x, and then find its place in the ordering.
-              w := x!.obj[2];        
-              k := Position(enumV, w);  
-              enumtrans := Enumerator( VectorSpaceTransversal(vec, w) );
-              l := Position(enumtrans, x!.obj[1]);
-              return (k-1)*classsize + l;
-            end ) );
-     fi;
-    return enum;
- end );    
      
   
   
@@ -846,10 +890,6 @@ InstallMethod( Display, [ IsSubspaceOfAffineSpace ],
     fi;
   end );
 
-InstallMethod( ViewObj, [ IsVectorSpaceTransversal and IsVectorSpaceTransversalRep ],
-  function( trans )
-    Print("<vector space transversal of ", trans!.space,">");
-  end );
 
 #############################################################################
 #

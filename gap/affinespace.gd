@@ -6,16 +6,14 @@
 ##                                                             Philippe Cara
 ##                                                              Jan De Beule
 ## 							                                  Michel Lavrauw
-##                                                                 Maska Law
 ##                                                           Max Neunhoeffer
-##                                                            Michael Pauley
-##                                                             Sven Reichard
 ##
-##  Copyright 2008 University of Western Australia, Perth
-##                 Lehrstuhl D fuer Mathematik, RWTH Aachen
-##                 Ghent University
-##                 Colorado State University
-##                 Vrije Universiteit Brussel
+##  Copyright 2014	Colorado State University, Fort Collins
+##					Università degli Studi di Padova
+##					Universeit Gent
+##					University of St. Andrews
+##					University of Western Australia, Perth
+##                  Vrije Universiteit Brussel
 ##
 ##  Declaration stuff for affine spaces
 ##
@@ -82,9 +80,12 @@ DeclareOperation( "Hyperplanes", [IsAffineSpace] );
 
 
 DeclareOperation( "AffineSubspace", [ IsAffineSpace, IsRowVector] );
+DeclareOperation( "AffineSubspace", [ IsAffineSpace, IsCVecRep] );
 DeclareOperation( "AffineSubspace", [ IsAffineSpace, IsRowVector, IsPlistRep ] );
 DeclareOperation( "AffineSubspace", [ IsAffineSpace, IsRowVector, Is8BitMatrixRep ] );
 DeclareOperation( "AffineSubspace", [ IsAffineSpace, IsRowVector, IsGF2MatrixRep ] );
+DeclareOperation( "AffineSubspace", [ IsAffineSpace, IsCVecRep, IsCMatRep] );
+
 DeclareOperation( "RandomSubspace", [ IsAffineSpace, IsInt]);
 DeclareOperation( "IsParallel", [ IsSubspaceOfAffineSpace, IsSubspaceOfAffineSpace ] );
 
