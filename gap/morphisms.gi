@@ -1,4 +1,4 @@
-#############################################################################
+	#############################################################################
 ##
 ##  morphisms.gi              FinInG package
 ##                                                              John Bamberg
@@ -1762,7 +1762,7 @@ InstallMethod( NaturalEmbeddingBySubfield,
 	end );
   
 # CHECKED 28/09/11 jdb
-# cmat changes 21/3/14.
+# cmat changes 21/3/14 and 24/3/2014, after a nice cultural weekend :-)
 #############################################################################
 #O  NaturalEmbeddingBySubfield( <geom1>, <geom2>, <bool> )
 # returns the embedding of <geom1> in <geom2>, two polar spaces of the
@@ -1836,8 +1836,10 @@ InstallMethod( NaturalEmbeddingBySubfield,
 
 		if HasIntertwiner( iso ) then 
 			f := Intertwiner(iso);
-			twinerfunc := x -> ImageElm(f, CollineationOfProjectiveSpace( x!.mat, f2 ));   
-			twinerprefun := y -> CollineationOfProjectiveSpace( f!.prefun(y)!.mat, f1 );
+			#x!.mat will be cmat over f1, so Unpack it, CollineationOfProjectiveSpace deals with it.
+			twinerfunc := x -> ImageElm(f, CollineationOfProjectiveSpace( Unpack(x!.mat), f2 ));   
+			#refun(u)!.mat will be cmat over f2 (officially), so Unpack it, CollineationOfProjectiveSpace deals with it.			
+			twinerprefun := y -> CollineationOfProjectiveSpace( Unpack(f!.prefun(y)!.mat), f1 );
 			g1 := SimilarityGroup( geom1 );
 			gens1 := GeneratorsOfGroup( g1 );
 			gens2 := List(gens1, twinerfunc );

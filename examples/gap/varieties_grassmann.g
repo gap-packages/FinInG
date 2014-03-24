@@ -6,4 +6,3 @@ DefiningListOfPolynomials(gv);
 Size(Points(gv));
 gm:=GrassmannMap(gv);
 quit;
-quit;
