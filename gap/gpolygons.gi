@@ -6,12 +6,9 @@
 ##                                                              Jan De Beule
 ##                                                             Philippe Cara
 ##                                                            Michel Lavrauw
-##                                                                 Maska Law
 ##                                                           Max Neunhoeffer
-##                                                            Michael Pauley
-##                                                             Sven Reichard
 ##
-##  Copyright 2011	Colorado State University, Fort Collins
+##  Copyright 2014	Colorado State University, Fort Collins
 ##					Università degli Studi di Padova
 ##					Universeit Gent
 ##					University of St. Andrews
@@ -226,6 +223,7 @@ InstallMethod( Wrap,
 # JB: A big change here. I've separated the CollineationGroup out to an
 # attribute, just like we do for polar spaces and the like. 19/06/2012
 
+# 24/3/2014. cmat changes.
 #############################################################################
 #O  SplitCayleyHexagon( <f> )
 # returns the split cayley hexagon over <f>
@@ -244,34 +242,37 @@ InstallMethod( SplitCayleyHexagon,
        ## [1,0,0,0,0,0,0],[0,1,0,0,0,0,0],[0,0,1,0,0,0,0]];
 
 	   ## this is Hendrik's form
-       hvm := List([1..7], i -> [0,0,0,0,0,0,0]*One(f));
-       hvm{[1..3]}{[5..7]} := IdentityMat(3, f);
-       hvm{[5..7]}{[1..3]} := IdentityMat(3, f);
-       hvm[4][4] := -2*One(f);
-       hvmform := BilinearFormByMatrix(hvm, f);
-       ps := PolarSpace(hvmform);
-
-       reppointvect := ElementToVectorSpace(RepresentativesOfElements(ps)[1]);
+		hvm := List([1..7], i -> [0,0,0,0,0,0,0]*One(f));
+		hvm{[1..3]}{[5..7]} := IdentityMat(3, f);
+		hvm{[5..7]}{[1..3]} := IdentityMat(3, f);
+		hvm[4][4] := -2*One(f);
+		hvmform := BilinearFormByMatrix(hvm, f);
+		ps := PolarSpace(hvmform);
+		# ElementToVectorSpace will return a cvec. 
+		reppointvect := ElementToVectorSpace(RepresentativesOfElements(ps)[1]);
 
        ## Hendrik's canonical line is <(1,0,0,0,0,0,0), (0,0,0,0,0,0,1)>
-       replinevect := [[1,0,0,0,0,0,0], [0,0,0,0,0,0,1]] * One(f);
-       TriangulizeMat(replinevect);
-	 ConvertToMatrixRep(replinevect, f);
+		replinevect := [[1,0,0,0,0,0,0], [0,0,0,0,0,0,1]] * One(f);
+		TriangulizeMat(replinevect);
+		#ConvertToMatrixRep(replinevect, f); #is useless now.
     else
        ## Here we embed the hexagon in W(5,q)
        ## Hendrik's form
-       hvm := List([1..6], i -> [0,0,0,0,0,0]*One(f));
-       hvm{[1..3]}{[4..6]} := IdentityMat(3, f);
-       hvm{[4..6]}{[1..3]} := IdentityMat(3, f);       
-       hvmform := BilinearFormByMatrix(hvm, f);   
-       ps := PolarSpace(hvmform);
-       reppointvect := ElementToVectorSpace(RepresentativesOfElements(ps)[1]); #to be changed
+		hvm := List([1..6], i -> [0,0,0,0,0,0]*One(f));
+		hvm{[1..3]}{[4..6]} := IdentityMat(3, f);
+		hvm{[4..6]}{[1..3]} := IdentityMat(3, f);       
+		hvmform := BilinearFormByMatrix(hvm, f);   
+		ps := PolarSpace(hvmform);
+		# ElementToVectorSpace will return a cvec. 
+		reppointvect := ElementToVectorSpace(RepresentativesOfElements(ps)[1]); #to be changed
 
-       ## Hendrik's canonical line is <(1,0,0,0,0,0), (0,0,0,0,0,1)>
-       replinevect := [[1,0,0,0,0,0], [0,0,0,0,0,1]] * One(f);
-       TriangulizeMat(replinevect);
-       ConvertToMatrixRep(replinevect, f);
-    fi; 
+		## Hendrik's canonical line is <(1,0,0,0,0,0), (0,0,0,0,0,1)>
+		replinevect := [[1,0,0,0,0,0], [0,0,0,0,0,1]] * One(f);
+		TriangulizeMat(replinevect);
+		#ConvertToMatrixRep(replinevect, f); #is useless now.
+    fi;
+	#now comes the cmatrixification of the replinevect
+	replinevect := NewMatrix(IsCMatRep,f,Length(reppointvect),replinevect);
 
 	#in the next line, we set the data fields for the geometry. We have to take into account that H(q) will also be
 	#a Lie geometry, so it needs more data fields than a GP. But we can derive this information from ps.
@@ -287,6 +288,7 @@ InstallMethod( SplitCayleyHexagon,
 
     #now we are ready to pack the representatives of the elements, which are also elements of a polar space.
     #recall that reppointvect and replinevect are triangulized.
+	#we can not count here on VectorSpaceToElement (yet). Otherwise I could have left out the "replinevect := NewMatrix(Is..." part above.
     w := rec(geo := geo, type := 1, obj := reppointvect);
     reppoint := Objectify( NewType( SoPSFamily, IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep and
 					            	IsElementOfGeneralisedPolygon and IsSubspaceOfClassicalPolarSpace ), w );
@@ -309,6 +311,7 @@ InstallMethod( SplitCayleyHexagon,
 		return SplitCayleyHexagon(GF(q));
 	end );
 
+# 24/3/2014. cmat changes. Same principle as SplitCayleyHexagon
 #############################################################################
 #O  TwistedTrialityHexagon( <f> )
 # returns the twisted triality hexagon over <f>
@@ -335,11 +338,11 @@ InstallMethod( TwistedTrialityHexagon,
 	## Hendrik's canonical point is <(1,0,0,0,0,0,0,0)>	
     reppointvect := ([1,0,0,0,0,0,0,0] * One(f));
     MultRowVector(reppointvect,Inverse( reppointvect[PositionNonZero(reppointvect)] ));
-	ConvertToVectorRep(reppointvect, f);
+	#ConvertToVectorRep(reppointvect, f); #useless now.
 
 	## Hendrik's canonical line is <(1,0,0,0,0,0,0,0), (0,0,0,0,0,0,1,0)>
     replinevect := ([[1,0,0,0,0,0,0,0], [0,0,0,0,0,0,1,0]] * One(f));
-	ConvertToMatrixRep(replinevect, f);
+	#ConvertToMatrixRep(replinevect, f); #useless now.
 
     geo := rec( points := [], lines := [], incidence:= \*, basefield := BaseField(ps), 
 		dimension := Dimension(ps), vectorspace := UnderlyingVectorSpace(ps), polarspace := ps );
@@ -351,7 +354,12 @@ InstallMethod( TwistedTrialityHexagon,
 
 	#now we are ready to pack the representatives of the elements, which are also elements of a polar space.
 	#recall that reppointvect and replinevect are triangulized.
-    w := rec(geo := geo, type := 1, obj := reppointvect);
+	#now come the cvec/cmat ing of reppointvect and repplinevect.
+   	
+	reppointvect := CVec(reppointvect,f);
+   	replinevect := NewMatrix(IsCMatRep,f,Length(reppointvect),replinevect);
+
+	w := rec(geo := geo, type := 1, obj := reppointvect);
     reppoint := Objectify( NewType( SoPSFamily, IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep and
 							IsElementOfGeneralisedPolygon and IsSubspaceOfClassicalPolarSpace ), w );
     w := rec(geo := geo, type := 2, obj := replinevect);
