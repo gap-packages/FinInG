@@ -744,6 +744,8 @@ InstallMethod( Enumerator,
 #############################################################################
 #O  Enumerator( <vs> )
 # return an Enumerator for subspaces of an affine space of given type.
+# there is a bug somewhere here or in the Enumerator above which I cannot grasp.
+# I am really fed up with this shit.
 ##
 InstallMethod( Enumerator, 
 	"for subspaces of an affine space",
