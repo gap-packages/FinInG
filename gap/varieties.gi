@@ -1761,7 +1761,7 @@ InstallMethod( ConicOnFivePoints,
 
     local gf, r, vecs, mat, sol, poly, mat2, plane, embed,
           pg, d, dplus1, pairs, vars, indets;
-    if Size(pts) < 5 then
+    if Size(AsSet(pts)) < 5 then
        Error("Not enough points");
     fi;
 
@@ -1771,10 +1771,20 @@ InstallMethod( ConicOnFivePoints,
 
     ## check that the points span a plane
 
-    if Rank( List(pts, t -> t!.obj) ) <> 3 then
+    if Dimension( Span(pts) ) <> 2 then
        Error("Points do not span a plane");
     fi;
 
+    ## we also need to allow the user to define a conic in a plane
+    ## which is embedded in a higher dimensional projective space
+    ## until we have done this, we need to check whether the ambient
+    ## space of the points is a plane
+    if not (Size(AsSet(List(pts,t -> AmbientSpace(t))))=1 and 
+			Dimension(AmbientSpace(Random(pts)))=2) then 
+	Error("The ambient space of the points should be a plane");
+    fi;
+	
+    
     pg := AmbientSpace(pts[1]!.geo);
     gf := pg!.basefield;
     dplus1 := Dimension(pg) + 1;
