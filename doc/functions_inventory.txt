@@ -27,14 +27,13 @@ correlations.gi: global functions
 
 F: OnProjPointsWithFrobWithPSIsom
 F: OnProjSubspacesWithFrobWithPSIsom
-F: OnProjSubspacesReversing
+F: OnProjSubspacesExtended
 
 polarspace.gi: global functions
 
 
 morphisms.gi: global functions
 
-F: LeukBasis
 
 enumerators.gi: global functions
 

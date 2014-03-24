@@ -8,14 +8,14 @@ A: RankAttr: IsIncidenceStructure
 A: TypesOfElementsOfIncidenceStructure: IsIncidenceStructure
 A: TypesOfElementsOfIncidenceStructurePlural: IsIncidenceStructure
 A: CollineationGroup: IsIncidenceStructure
-A: CorrelationGroup: IsIncidenceStructure
+A: CorrelationCollineationGroup: IsIncidenceStructure
 A: CollineationAction: IsIncidenceStructure
 A: CorrelationAction: IsIncidenceStructure
 A: RepresentativesOfElements: IsIncidenceStructure
 A: AmbientGeometry: IsIncidenceStructure
 A: AmbientGeometry: IsElementOfIncidenceStructureandIsElementOfIncidenceStructureRep
 A: AmbientGeometry: IsElementsOfIncidenceStructureandIsElementsOfIncidenceStructureRep
-A: AmbientGeometry: IsAllElementsOfIncidenceStructureandIsAllElementsOfIncidenceStructureRep
+A: AmbientGeometry: IsAllElementsOfIncidenceStructure
 
 liegeometry.gd: attributes
 
@@ -27,13 +27,12 @@ A: ProjectiveDimension: IsEmptySubspace
 
 group.gd: attributes
 
-A: Dimension: IsProjectiveGroup
 A: Dimension: IsProjectiveGroupWithFrob
 
 projectivespace.gd: attributes
 
-A: HomographyGroup: IsProjectiveSpace
-A: SpecialHomographyGroup: IsProjectiveSpace
+A: ProjectivityGroup: IsProjectiveSpace
+A: SpecialProjectivityGroup: IsProjectiveSpace
 A: Dimension: IsProjectiveSpace
 A: Dimension: IsSubspaceOfProjectiveSpace
 A: Dimension: IsEmpty
@@ -99,10 +98,16 @@ varieties.gd: attributes
 
 A: DefiningListOfPolynomials: IsAlgebraicVariety
 A: AmbientSpace: IsAlgebraicVariety
+A: SesquilinearForm: IsHermitianVariety
+A: QuadraticForm: IsQuadraticVariety
+A: Source: IsGeometryMap
+A: Range: IsGeometryMap
 
 affinespace.gd: attributes
 
+A: Dimension: IsAffineSpace
 A: AmbientSpace: IsAffineSpace
+A: AmbientSpace: IsSubspaceOfAffineSpace
 
 affinegroup.gd: attributes
 
@@ -117,4 +122,5 @@ A: ElationGroup: IsElationGQ
 A: BasePointOfEGQ: IsElationGQ
 A: IncidenceMatrixOfGeneralisedPolygon: IsGeneralisedPolygon
 A: IsLinearqClan: IsqClanObj
+A: AmbientPolarSpace: IsGeneralisedHexagon
 
