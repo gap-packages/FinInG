@@ -184,6 +184,7 @@ DeclareOperation( "MakeRank2Residue", [ IsRank2Residue ] );
 ## Drawing diagrams
 
 DeclareGlobalFunction( "DrawDiagram" );
+DeclareGlobalFunction( "DrawDiagramWithNeato" );
 
 
 

@@ -185,8 +185,8 @@ a dotty viewer (such as GraphViz).
 </Example>
 
 The output of this example uses <C>dotty</C> which is a sophisticated graph
-drawing program. In a later version of our package, we might use <C>neato</C> to make a diagram with straight lines.
-Here is what the output looks like:
+drawing program. We also provide <F>DrawDiagramWithNeato</F> to make a diagram with straight lines, using <C>neato</C>.
+Here is what the output looks like with the standard <F>DrawDiagram</F> command:
 
 <Alt Only="HTML">&lt;img src="PSL211.jpg">&lt;/img></Alt>
 <Alt Only="LaTeX">\includegraphics{PSL211.jpg}</Alt>

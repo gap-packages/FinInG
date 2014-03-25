@@ -123,7 +123,7 @@ InstallMethod( Rank2Residues, [ IsIncidenceGeometry ],
     return residues;
   end );
 
-#
+# CHECKED 25/3/2014
 ##########################################################################
 #O MakeRank2Residue
 # 
@@ -1198,6 +1198,87 @@ InstallGlobalFunction( DrawDiagram,
     ######## Checking the availability of GraphViz dot in path...
     if Whereisdot() then
         Exec( Concatenation("dot -Tps ", filename, ".dot -o ", filename, ".ps") );
+    else
+        Info(InfoWarning, 1, "Package `FinInG': Only .dot file written for diagram.");
+    fi;	
+    return;
+  end );
+
+# CHECKED 25/3/2014 PhC
+#############################################################################
+#O DrawDiagramWithNeato
+# 
+# 
+##
+InstallGlobalFunction( DrawDiagramWithNeato, 
+  function( arg )
+    local diagram, filename, vertices, edges, longstring, v, e, vertexverbosity, edgeverbosity, arglen;
+   
+    vertexverbosity:=0; #default orders and nr of elements
+    edgeverbosity:=1;   #default shorthand for generalized n-gons
+    arglen:=Length(arg);
+    ############################# Checking arguments and initializing
+    if not(arglen in [2,3,4]) then
+      Error("usage DrawDiagram: must have at least 2 and at most 4 arguments.\n");
+    elif not(IsDiagram(arg[1]) and IsString(arg[2])) then
+      Error("usage DrawDiagram: first argument must be a diagram, second argument must be a filename string.\n");
+    fi;
+
+    diagram:=arg[1];
+    filename:=arg[2];
+    vertices := diagram!.vertices;
+    edges := diagram!.edges;  
+
+    if arglen > 2 then
+      if IsPosInt(arg[3]) or IsZero(arg[3]) then
+        vertexverbosity:=arg[3];
+      else
+        Error("usage DrawDiagram: third argument must be a vertex verbosity natural number.\n");
+      fi;
+      if (arglen = 4) then
+      	 if (IsPosInt(arg[4]) or IsZero(arg[4])) then
+           edgeverbosity:=arg[4];
+         else
+           Error("Usage DrawDiagram: fourth argument must be an edge verbosity natural number.\n");
+	 fi;
+      fi;
+    fi;
+    ##################Done checking!
+    longstring := "digraph DIAGRAM{\n rankdir = LR;\n";
+    for v in vertices do
+      longstring:=Concatenation(longstring, "subgraph cluster", String(v!.type), " {\n");
+      longstring:=Concatenation(longstring, "color=transparent\n");    
+      longstring:=Concatenation(longstring, "node [shape=circle, width=0.1]; ", String(v!.type), " [label=\"\"];\n");    
+      longstring:=Concatenation(longstring, "labelloc=b\n");    
+      if vertexverbosity =2 then
+        longstring:=Concatenation(longstring, "label=\"", "\";\n}\n"); 
+      elif vertexverbosity =1 then
+        longstring:=Concatenation(longstring, "label=\"", String(OrderVertex(v)),
+                   "\";\n}\n"); 
+      else
+        longstring:=Concatenation(longstring, "label=\"", String(OrderVertex(v)), "\\n", String(NrElementsVertex(v)),
+                   "\";\n}\n"); 
+      fi;
+    od;
+
+    for e in edges do
+      longstring:=Concatenation(longstring, String(e!.edge[1]), " -> ", String(e!.edge[2]));
+      if edgeverbosity = 2 then #no label, i.e. basic diagram
+        longstring:=Concatenation(longstring, " [label = \"", "\", arrowhead = none ];\n");
+      elif edgeverbosity = 1 and Size(Set(ParametersEdge(e)))= 1 then #shorthand generalized n-gons
+        longstring:=Concatenation(longstring, " [label = \"", String(ParametersEdge(e)[1]), "\", arrowhead = none ];\n");
+      else
+        longstring:=Concatenation(longstring, " [label = \"", String(ParametersEdge(e)[2]), " ", 
+                  String(ParametersEdge(e)[1]), " ", 
+                  String(ParametersEdge(e)[3]), "\", arrowhead = none ];\n");
+      fi;
+    od;    
+
+    longstring:=Concatenation(longstring, "}\n");    
+    PrintTo( Concatenation(filename, ".dot") , longstring );
+    ######## Checking the availability of GraphViz dot in path...
+    if Whereisdot() then
+        Exec( Concatenation("neato -Tps ", filename, ".dot -o ", filename, ".ps") );
     else
         Info(InfoWarning, 1, "Package `FinInG': Only .dot file written for diagram.");
     fi;	
