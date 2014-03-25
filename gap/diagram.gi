@@ -199,11 +199,11 @@ InstallMethod( FlagOfIncidenceStructure,
 		local list,i,test,type,flag;
 		list := Set(ShallowCopy(els));
 		if Length(list) > Rank(cg) then
-		  Error("A flag must contain at most Rank(<cg>) elements");
+		  Error("A flag must contain at most Rank(<cg>) elements.\n");
 		fi;
 		test := Set(List([1..Length(list)-1],i -> IsIncident(list[i],list[i+1])));
 		if (test <> [ true ] and test <> []) then
-		  Error("<els> does not determine a flag");
+		  Error("<els> does not determine a flag.\n");
 		fi;
 		flag := rec(geo := cg, types := List(list,x->x!.type), els := list);
 		ObjectifyWithAttributes(flag, IsFlagOfCGType, IsEmptyFlag, false);
@@ -220,6 +220,9 @@ InstallMethod( ElementsOfIncidenceStructure, [IsCosetGeometry, IsPosInt],
   function( cg, j )
 
     local vars;
+    if j > Rank(cg) then 
+      Error("<cg> has no elements of type <j>.\n");
+    fi;
     vars := rec( geometry := cg, type := j );
     Objectify(
       NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
@@ -703,7 +706,7 @@ InstallMethod( CanonicalResidueOfFlag, "for coset geometries",
           Add( respabs, Intersection( resg, i ) );
        od;
 #     else
-#       Error("not implemented for not flag-transitive geometries");
+#       Error("not implemented for not flag-transitive geometries.\n");
 #     fi;
      
      return CosetGeometry( resg, respabs ); 
@@ -753,7 +756,7 @@ InstallMethod( ResidueOfFlag, "for coset geometries",
        respabs := List(respabs, t -> t^r);
        resg := resg^r;
      else
-       Error("not implemented for not flag-transitive geometries");
+       Error("not implemented for not flag-transitive geometries.\n");
      fi;
      
      return CosetGeometry( resg, respabs ); 
@@ -776,7 +779,7 @@ InstallMethod( IncidenceGraph, [ IsCosetGeometry and IsHandledByNiceMonomorphism
     local fastgeo, gamma, hom;
 
     if not "grape" in RecNames(GAPInfo.PackagesLoaded) then
-       Error("You must load the Grape package in order to use IncidenceGraph\n");
+       Error("You must load the Grape package in order to use IncidenceGraph.\n");
     fi;
 
     if FINING.Fast then
@@ -808,7 +811,7 @@ InstallMethod( IncidenceGraph, [ IsCosetGeometry ],
     local g, vars, gamma, allvars, reps, hom1, hom2, im1, im2, d, em1, em2, gens, newgens, diagonal;
 
     if not "grape" in RecNames(GAPInfo.PackagesLoaded) then
-       Error("You must load the Grape package\n");
+       Error("You must load the Grape package.\n");
     fi;
 
     g := geo!.group;
