@@ -2053,7 +2053,7 @@ InstallMethod( ActionOnAllProjPoints, "for a projective collineation group",
 	[ IsProjectiveGroupWithFrob ],
 	function( pg )
 		local a,d,f,o,on,orb,v,zero, m, j;
-		Print("using ActionOnAllProjPoints\n");
+		#Print("using ActionOnAllProjPoints\n");
 		f := BaseField(pg);
 		d := Dimension(pg);
 		o := One(f);
