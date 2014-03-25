@@ -1,21 +1,20 @@
 <!-- 
-
   affine.xml    FinInG package documentation
                                                                    John Bamberg
                                                                    Anton Betten
                                                                   Philippe Cara
                                                                    Jan De Beule
                                                                  Michel Lavrauw
-                                                                      Maska Law
-                                                                 Michael Pauley
                                                                 Max Neunhoeffer
-                                                                  Sven Reichard
 
-  Copyright (C) 2008, University of Western Australia
-                      Lehrstuhl D fuer Mathematik
-                      Ghent University
+  Copyright (C) 2014,	Colorado State University
+						Università degli Studi di Padova
+						Universiteit Gent
+						University of St. Andrews
+						University of Western Australia
+                        Vrije Universiteit Brussel
 
-This is the chapter of the documentation describing affine spaces.
+This is the chapter of the documentation describing affine spaces/affine groups.
 -->
 
 <Chapter Label="affine">
@@ -361,54 +360,6 @@ subspace collections of affine spaces.
 </Description>
 </ManSection>
 
-
-One technical aspect of the design behind affine spaces in <Package>FinInG</Package>
-are having canonical transversals for subspaces of vector spaces. So we provide some
-documentation below for the interested user.
-
-<ManSection>
-<Filt Name = "IsVectorSpaceTransversal"/>
-<Description>
-The category <C>IsVectorSpaceTransversal</C> represents a special object
-in <Package>FinInG</Package> which carries a record with two components:
-<A>space</A> and <A>subspace</A>. This category is a subcategory of
-<C>IsSubspacesOfVectorSpace</C>, however, we do not recommend that the
-user apply methods normally used for this category to our objects (they won't work!). Our
-objects are only used in order to facilitate computing enumerators
-of subspace collections.
-</Description>
-</ManSection>
-
-<ManSection>
-<Oper Name="VectorSpaceTransversal" Arg="space, mat"/>
-<Returns> a collection for representing a transversal of a subspaces of a vector space </Returns>
-<Description>
-<A>space</A> is a vector space <M>V</M> and <A>mat</A> is a matrix whose rows are a basis for a subspace
-<M>U</M> of <M>V</M>. A transversal for <M>U</M> in <M>V</M> is a set of coset representatives
-for the quotient <M>V/U</M>. This collection comes equipped with an enumerator operation.
-</Description>
-</ManSection>
-
-<ManSection>
-<Oper Name="VectorSpaceTransversalElement" Arg="space, mat, vector"/>
-<Returns> a canonical coset representative </Returns>
-<Description>
-<A>space</A> is a vector space <M>V</M>, <A>mat</A> is a matrix whose rows are a basis for a subspace
-<M>U</M> of <M>V</M>, and <A>vector</A> is a vector <M>v</M> of <M>V</M>. 
-A canonical representative <M>v'</M> is returned for the coset <M>U+v</M>.
-</Description>
-</ManSection>
-
-<ManSection>
-<Oper Name="ComplementSpace" Arg="space, mat"/>
-<Returns> a collection for representing a transversal of a subspaces of a vector space </Returns>
-<Description>
-<A>space</A> is a vector space <M>V</M> and <A>mat</A> is a matrix whose rows are a basis for a subspace
-<M>U</M> of <M>V</M>. The operation is almost a complete copy of the function <C>BaseSteinitzVector</C>
-except that just a basis for the complement of <M>U</M> is returned instead of a full record.
-</Description>
-</ManSection>
-
 </Section>
 
 <Section>
@@ -587,6 +538,60 @@ affine spaces: points, lines, planes, etc.
 </Example>
 </Description>
 </ManSection>
+
+</Section>
+
+
+<Section>
+<Heading>Technical aspects</Heading>
+
+One technical aspect of the design behind affine spaces in <Package>FinInG</Package>
+are having canonical transversals for subspaces of vector spaces. So we provide some
+documentation below for the interested user.
+
+<ManSection>
+<Filt Name = "IsVectorSpaceTransversal"/>
+<Description>
+The category <C>IsVectorSpaceTransversal</C> represents a special object
+in <Package>FinInG</Package> which carries a record with two components:
+<A>space</A> and <A>subspace</A>. This category is a subcategory of
+<C>IsSubspacesOfVectorSpace</C>, however, we do not recommend that the
+user apply methods normally used for this category to our objects (they won't work!). Our
+objects are only used in order to facilitate computing enumerators
+of subspace collections.
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="VectorSpaceTransversal" Arg="space, mat"/>
+<Returns> a collection for representing a transversal of a subspaces of a vector space </Returns>
+<Description>
+<A>space</A> is a vector space <M>V</M> and <A>mat</A> is a matrix whose rows are a basis for a subspace
+<M>U</M> of <M>V</M>. A transversal for <M>U</M> in <M>V</M> is a set of coset representatives
+for the quotient <M>V/U</M>. This collection comes equipped with an enumerator operation.
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="VectorSpaceTransversalElement" Arg="space, mat, vector"/>
+<Returns> a canonical coset representative </Returns>
+<Description>
+<A>space</A> is a vector space <M>V</M>, <A>mat</A> is a matrix whose rows are a basis for a subspace
+<M>U</M> of <M>V</M>, and <A>vector</A> is a vector <M>v</M> of <M>V</M>. 
+A canonical representative <M>v'</M> is returned for the coset <M>U+v</M>.
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="ComplementSpace" Arg="space, mat"/>
+<Returns> a collection for representing a transversal of a subspaces of a vector space </Returns>
+<Description>
+<A>space</A> is a vector space <M>V</M> and <A>mat</A> is a matrix whose rows are a basis for a subspace
+<M>U</M> of <M>V</M>. The operation is almost a complete copy of the function <C>BaseSteinitzVector</C>
+except that just a basis for the complement of <M>U</M> is returned instead of a full record.
+</Description>
+</ManSection>
+
 
 </Section>
 
