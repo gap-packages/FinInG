@@ -214,6 +214,16 @@ InstallMethod( ViewObj,
 	function( trans )
 		Print("<vector space transversal of ", trans!.vectorspace,">");
 	end );
+	
+#############################################################################
+#O  PrintObj( <trans> )
+InstallMethod( PrintObj, 
+	"for a vectorspace transversal",
+	[ IsVectorSpaceTransversal and IsVectorSpaceTransversalRep ],
+	function( trans )
+		Print("<vector space transversal of ", trans!.vectorspace," subspace spanned by ",trans!.subspace, ">");
+	end );
+
 
 
 #############################################################################
@@ -792,11 +802,12 @@ InstallMethod( Enumerator,
                return Wrap(as, j, [ NewMatrix(IsCMatRep,f,as!.dimension,[enumtrans[l]])[1], v ] );
             end,
             NumberElement := function( e, x )
-              local w, k, enumtrans, l;
+              local w, vw, k, enumtrans, l;
               ## Here we must first find the unique direction of x
               ## incident with x, and then find its place in the ordering.
-              w := Unpack(x!.obj[2]); #x!.obj = [cvec,cmat]        
-              k := Position(enumV, w);  
+              w :=Unpack(x!.obj[2]); #x!.obj = [cvec,cmat]        
+              vw := Subspace(vec,w);
+			  k := Position(enumV, vw);  
               enumtrans := Enumerator( VectorSpaceTransversal(vec, w) );
               l := Position(enumtrans, Unpack(x!.obj[1]));
               return (k-1)*classsize + l;
