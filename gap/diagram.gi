@@ -186,7 +186,7 @@ InstallMethod( Type,
 	end );
 
 
-# 
+# CHECKED 24/3/2014 PhC
 #############################################################################
 #O  FlagOfIncidenceStructure( <cg>, <els> )
 # returns the flag of the coset geometry <cg> with elements in <els>.
@@ -271,7 +271,7 @@ InstallOtherMethod( RandomChamber,
 	function(cg)
 		local ele, els;
 		ele:=Random(cg!.group);
-		els:=OnTuples(StandardFlagOfCosetGeometry(cg),ele);
+		els:=OnTuples(StandardFlagOfCosetGeometry(cg)!.els,ele);
 		return FlagOfIncidenceStructure(cg,els);
 	end );
 
@@ -498,7 +498,7 @@ InstallMethod( IsFlagTransitiveGeometry, "for coset geometries",
     return true;
 end );
 
-# 
+# CHECKED 24/3/2014 PhC
 #############################################################################
 #O IsFirmGeometry
 #  
@@ -523,7 +523,7 @@ InstallMethod( IsFirmGeometry, "for coset geometries",
        ## contained in any Pi = \cap{Hj: j<>i}.
 
        borel := BorelSubgroup( cg );
-       return not ForAny(pis, t -> IsSubset(t, borel));
+       return not ForAny(pis, t -> IsSubset(borel, t));
     else
        ## In this case, the coset geometry is firm
        ## if and only if for every i, Pi is not contained in Hi
@@ -532,6 +532,28 @@ InstallMethod( IsFirmGeometry, "for coset geometries",
        return not ForAny([1..Size(parabolics)], i -> 
               IsSubset(parabolics[i], pis[i]) );
     fi;
+end );
+
+# CHECKED 24/3/2014 PhC
+#############################################################################
+#O IsThinGeometry
+#  
+# Checks whether a coset geometry is thin
+##
+InstallMethod( IsThinGeometry, "for coset geometries",
+               [ IsCosetGeometry ],
+  function( cg )
+
+    local parabolics, pis, without_i, int, borel, i;
+    parabolics := ParabolicSubgroups( cg );
+    pis := [];
+    for i in [1..Size(parabolics)] do
+        without_i := Difference( [1..Size(parabolics)], [ i ] );
+        int := Intersection( parabolics{without_i} );
+        Add(pis, int);
+    od;
+    return ForAll([1..Size(parabolics)], i -> 
+              Index(pis[i], BorelSubgroup(cg))=2 );
 end );
 
 # CHECKED 06/09/11 PhC
@@ -589,7 +611,7 @@ InstallMethod( IsResiduallyConnected, "for coset geometries",
     return test;
 end );
 
-# 
+# CHECKED 24/3/2014 PhC
 #############################################################################
 # StandardFlagOfCosetGeometry
 #  
@@ -602,7 +624,7 @@ InstallMethod( StandardFlagOfCosetGeometry, "for coset geometries",
 
   parabolics:=cg!.parabolics;
   flag:=List([1..Size(parabolics)], i -> Wrap(cg,i,RightCoset(parabolics[i],Identity(cg!.group))));
-  return flag;
+  return FlagOfIncidenceStructure(cg,flag);
 end );
 
 # 
@@ -1100,7 +1122,7 @@ InstallMethod( DiagramOfGeometry, "for flag-transitive coset geometry", [IsCoset
     return diagram;
   end );
 
-# 
+# CHECKED 24/3/2014 PhC
 #############################################################################
 #O DrawDiagram
 # 
@@ -1183,7 +1205,7 @@ InstallGlobalFunction( DrawDiagram,
 
 ####################################
 ## Draw diagram using ASCII characters, mainly for Display
-##
+## Obsolete ?
 ##
 ###################################
 
@@ -1395,6 +1417,11 @@ InstallMethod( Rk2GeoDiameter, "for a coset geometry", [IsCosetGeometry,
 IsPosInt],
   function( cg, type ) # type in {1,2}
     local parabs, d, g, gpchain;
+    if Rank(cg) > 2 then Error("usage Rk2GeoDiameter: this is only for rank 2 geometries.\n"); fi;
+    if IsZero(type) or type > 2 then
+      Error("usage Rk2GeoDiameter: the only possible types for a rank 2 coset geometry are 1 (points) and 2 (lines).\n");
+    fi;
+    Print("#I If this takes long, you might want to try Rank2Parameters ...\n"); 
     parabs:=ParabolicSubgroups(cg);
     g:=AmbientGroup(cg);
     d:=0;
