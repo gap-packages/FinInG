@@ -2,20 +2,18 @@
 ##
 ##  diagram.gd              FinInG package
 ##                                                              John Bamberg
-##				                                Anton Betten
-##                                                              Jan De Beule
+## 								                                Anton Betten
 ##                                                             Philippe Cara
-## 			                                      Michel Lavrauw
-##                                                                 Maska Law
+##                                                              Jan De Beule
+## 							                                  Michel Lavrauw
 ##                                                           Max Neunhoeffer
-##                                                            Michael Pauley
-##                                                             Sven Reichard
 ##
-##  Copyright 2008 University of Western Australia, Perth
-##                 Lehrstuhl D fuer Mathematik, RWTH Aachen
-##                 Ghent University
-##                 Colorado State University
-##                 Vrije Universiteit Brussel
+##  Copyright 2014	Colorado State University, Fort Collins
+##					Università degli Studi di Padova
+##					Universeit Gent
+##					University of St. Andrews
+##					University of Western Australia, Perth
+##                  Vrije Universiteit Brussel
 ##
 ##  Declaration stuff for diagram geometries
 ##
