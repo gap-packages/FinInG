@@ -454,7 +454,7 @@ InstallMethod( CollineationGroup,
 	   domain := Orb(coll, rep, OnProjSubspaces, 
                     rec(orbsizelimit := orblen, hashlen := 2*orblen, storenumbers := true));
        Enumerate(domain);
-       Info(InfoFinInG, 1, "Found permutation domain…");
+       Info(InfoFinInG, 1, "Found permutation domain...");
 	   hom := OrbActionHomomorphism(coll, domain);   
 		
        #hom := NiceMonomorphismByOrbit(coll, rep,
@@ -554,7 +554,7 @@ InstallMethod( CollineationGroup,
        domain := Orb(coll, rep, OnProjSubspaces, 
                   rec(orbsizelimit := orblen, hashlen := 2*orblen, storenumbers := true));
        Enumerate(domain);
-       Info(InfoFinInG, 1, "Found permutation domain…");
+       Info(InfoFinInG, 1, "Found permutation domain...");
 	 hom := OrbActionHomomorphism(coll, domain);    
  	 SetIsBijective(hom, true);
 	 SetNiceObject(coll, Image(hom) );
@@ -1436,7 +1436,7 @@ InstallMethod( EGQByBLTSet,
    od;
    gqpoints2 := Set(gqpoints2); 
 
-   Info(InfoFinInG, 1, "Computing lines(2) of Knarr construction...please wait");
+   Info(InfoFinInG, 1, "Computing lines(2) of Knarr construction... please wait");
 
    gqlines2 := [];
    info := InfoLevel( InfoFinInG );
