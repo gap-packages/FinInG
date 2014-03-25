@@ -42,7 +42,7 @@
 # with 0's and a 1 in the last spot. We can then just use ProjElWithFrob
 # wrapping in order to incoorporate the Frobenius map.
 
-# CHECKED 27/3/2012 jdb
+# CHECKED 25/3/14 jdb
 #############################################################################
 #O  AffineGroup( <as> )
 # returns AGL(d,q)  
@@ -104,9 +104,12 @@ InstallMethod( CollineationGroup,
   end );
 
 # CHECKED 27/3/2012 jdb
+# cvec changed 25/3/14.
 #############################################################################
 #F  OnAffinePoints( <y>, <el> )
 # implements action of projective semilinear elements on affine points.
+# <y> is subspace
+# <el> is group element.
 ##
 InstallGlobalFunction( OnAffinePoints, 
   function( y, el )
@@ -115,11 +118,12 @@ InstallGlobalFunction( OnAffinePoints,
        # [y, 1] |  A  0| = [yA + x, 1]
        #        |     0|
        #        |  x  1|
-    local yobj, new, d, geo;
-    geo := y!.geo;
+    local yobj, new, d, geo, bf;
+	geo := y!.geo;
+    bf := geo!.basefield;
     d := geo!.dimension;
-    yobj := y!.obj;
-    yobj := Concatenation(yobj, [ One(geo!.basefield) ]);
+    yobj := Unpack(y!.obj);
+    yobj := CVec(Concatenation(yobj, [ One(bf) ]),bf); #Concatenation will make this a real lis, so CVec is applicable.
     new := yobj * el!.mat;
     new := new^el!.frob;
     new := new{[1..d]};
@@ -127,6 +131,8 @@ InstallGlobalFunction( OnAffinePoints,
   end );
 
 # CHECKED 27/3/2012 jdb
+# cvec/cmat change 25/3/14.
+# unpacking three times, and using AffineSubspace seems to be the easiest solution.
 #############################################################################
 #F  OnAffineNotPoints( <subspace>, <el> )
 # implements action of projective semilinear elements on affine subspaces different
@@ -137,23 +143,24 @@ InstallGlobalFunction( OnAffinePoints,
 ##
 InstallGlobalFunction( OnAffineNotPoints,
   function( subspace, el )
-     local dir, v, vec, newv, ag, mat, newdir, d, frob;
+     local dir, v, vec, newv, ag, mat, newdir, d, frob, bf;
      ag := subspace!.geo;
      d := ag!.dimension;
      vec := ag!.vectorspace;
-     v := subspace!.obj[1];
-     dir := subspace!.obj[2];
-     mat := el!.mat;
+     v := Unpack(subspace!.obj[1]);
+     dir := Unpack(subspace!.obj[2]);
+     mat := Unpack(el!.mat);
      frob := el!.frob;
      newdir := dir * mat{[1..d]}{[1..d]};
      newdir := newdir^frob;
 	 TriangulizeMat(newdir);   
-     newv := Concatenation(v, [ One(ag!.basefield) ]);
+     newv := Concatenation(v, [ One(ag!.basefield) ]); #will be a plain list.
      newv := newv * mat;
      newv := newv^frob;
      newv := newv{[1..d]};
      newv := VectorSpaceTransversalElement(vec, newdir, newv);
-     return Wrap(ag, subspace!.type, [newv, newdir]);
+     return AffineSubspace(ag,newv,newdir);
+	 #return Wrap(ag, subspace!.type, [newv, newdir]);
   end );
 
 # CHECKED 27/3/2012 jdb
