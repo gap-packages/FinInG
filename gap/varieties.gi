@@ -166,6 +166,7 @@ InstallMethod( PrintObj,
 		ViewObj(var!.geometry);
 	end );
 
+
 #############################################################################
 #O  DualCoordinatesOfHyperplane( <hyp> )
 # returns the dual coordinate of a hyperplane in a projective space.
@@ -180,12 +181,12 @@ InstallMethod( DualCoordinatesOfHyperplane,
 			else
 				mat:=hyp!.obj;
 				a:=NullspaceMat(TransposedMat(mat));
-			return a[1];
+			return Unpack(a[1]);
 			fi;
 	end );
 	
 #############################################################################
-#O  DualCoordinatesOfHyperplane( <hyp> )
+#O  HyperplaneByDualCoordinates( <pg>,<vector> )
 # returns the hyperplanes by given dual coordinates.
 ##
 InstallMethod( HyperplaneByDualCoordinates,
