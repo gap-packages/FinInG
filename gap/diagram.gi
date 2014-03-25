@@ -135,7 +135,7 @@ InstallMethod( MakeRank2Residue, [ IsRank2Residue ],
     local geo, flag;
       geo:=res!.geo;
       if IsCosetGeometry(geo) then
-        flag:=StandardFlagOfCosetGeometry(geo){Difference(TypesOfElementsOfIncidenceStructure(geo),res!.edge)};
+        flag:=StandardFlagOfCosetGeometry(geo)!.els{Difference(TypesOfElementsOfIncidenceStructure(geo),res!.edge)};
         res!.residuegeometry:=CanonicalResidueOfFlag(geo,flag);
       else
         Error("Don't know how to compute residue!\n");
@@ -1067,6 +1067,7 @@ InstallMethod( \=, [ IsEdgeOfDiagram and IsEdgeOfDiagramRep,
 # 
 ##
 InstallMethod( DiagramOfGeometry, "for flag-transitive coset geometry", [IsCosetGeometry],
+
   function( cg )
     local rank2residues, vertices, types, x, v, edges, parameters, e, diagram, parabolics;
 
