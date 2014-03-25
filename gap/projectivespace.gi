@@ -917,6 +917,10 @@ InstallMethod( Meet,
 	end );
 
 # CHECKED 8/09/11 jdb
+# 25/3/14 It turns out that there is a problem when we do not Unpack 
+# cvec/cmat with Size(Subspaces(localfactorspace)). As there is never an action
+# on shadow of flag objects, it is not unreasonable to store the matrices as
+# GAP matrices rather than cvec/cmats.
 #############################################################################
 #O ShadowOfElement(<ps>, <v>, <j> ). Recall that for every particular Lie 
 # geometry a method for ShadowOfElement  must be installed. 
@@ -931,12 +935,12 @@ InstallMethod( ShadowOfElement,
 		local localinner, localouter, localfactorspace;
 		if j < v!.type then
 			localinner := [];
-			localouter := v!.obj;
+			localouter := Unpack(v!.obj);
 		elif j = v!.type then
-			localinner := v!.obj;
-			localouter := localinner;
+			localinner := Unpack(v!.obj);
+			localouter := Unpack(localinner);
 		else
-			localinner := v!.obj;
+			localinner := Unpack(v!.obj);
 			localouter := BasisVectors(Basis(ps!.vectorspace));
 		fi;
     	if IsVector(localinner) and not IsMatrix(localinner) then
@@ -1393,6 +1397,10 @@ InstallMethod( Display, "for a flag of a projective space",
 	end );
 
 # CHECKED 18/4/2011 jdb
+# 25/3/14 It turns out that there is a problem when we do not Unpack 
+# cvec/cmat with Size(Subspaces(localfactorspace)). As there is never an action
+# on shadow of flag objects, it is not unreasonable to store the matrices as
+# GAP matrices rather than cvec/cmats.
 #############################################################################
 #O  ShadowOfFlag( <ps>, <flag>, <j> )
 # returns the shadow elements of <flag>, i.e. the elements of <ps> of type <j> 
@@ -1434,16 +1442,16 @@ InstallMethod( ShadowOfFlag,
 	fi;
 	if not smallertypes = [] then
 		if localinner!.type = 1 then
-			localinner:=[localinner!.obj];
+			localinner:=[Unpack(localinner!.obj)]; #here is the cmat change
 		else
-			localinner:=localinner!.obj;
+			localinner:=Unpack(localinner!.obj);
 		fi;
 	fi;
     if not biggertypes = [] then
 		if localouter!.type = 1 then
-			localouter := [localouter!.obj];
+			localouter := [Unpack(localouter!.obj)];
         else
-			localouter := localouter!.obj;
+			localouter := Unpack(localouter!.obj);
         fi;
 	fi;
     localfactorspace := Subspace(ps!.vectorspace, 
@@ -1459,7 +1467,7 @@ InstallMethod( ShadowOfFlag,
           outer := localouter,
           factorspace := localfactorspace,
 		  parentflag := flag,
-          size := Size(Subspaces(localfactorspace))
+          size := Size(Subspaces(localfactorspace)) #this causes a problem when localfactorspace consists of cvec/cmat.
         )
       );
 	end);
