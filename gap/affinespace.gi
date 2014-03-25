@@ -68,6 +68,23 @@ InstallMethod( AffineSpace,
 		return AffineSpace(d, GF(q));
 	end );
 
+############################################################################
+#
+# ViewObj/PrintObj for affine spaces
+#
+#############################################################################
+
+
+InstallMethod( ViewObj, [ IsAffineSpace and IsAffineSpaceRep ],
+  function( p )
+    Print("AG(",p!.dimension,", ",Size(p!.basefield),")");
+  end );
+
+InstallMethod( PrintObj, [ IsAffineSpace and IsAffineSpaceRep ],
+  function( p )
+    Print("AffineSpace(",p!.dimension,",",p!.basefield,")");
+  end );  
+
 #############################################################################
 #
 # Attributes of affine spaces
@@ -175,7 +192,6 @@ InstallMethod( TypesOfElementsOfIncidenceStructurePlural,
 # helper methods to construct affine subspacs.
 #############################################################################
 
-
 #############################################################################
 #O  VectorSpaceTransversalElement( <space>, <subspace>, <v> )
 # This is an internal subroutine which is not expected to be used by the user;
@@ -223,8 +239,6 @@ InstallMethod( PrintObj,
 	function( trans )
 		Print("<vector space transversal of ", trans!.vectorspace," subspace spanned by ",trans!.subspace, ">");
 	end );
-
-
 
 #############################################################################
 #
@@ -277,6 +291,53 @@ InstallMethod( Wrap,
 			IsElementOfIncidenceStructureRep and IsSubspaceOfAffineSpace ), w );
 		return w;
 	end );
+
+#############################################################################
+#
+# ViewObj/PrintObjDisplay of subspaces of affine spaces
+#
+#############################################################################
+
+InstallMethod( ViewObj, 
+	[ IsSubspacesOfAffineSpace and IsSubspacesOfAffineSpaceRep ],
+	function( vs )
+		Print("<",TypesOfElementsOfIncidenceStructurePlural(vs!.geometry)[vs!.type]," of ");
+		ViewObj(vs!.geometry);
+		Print(">");
+	end );
+
+InstallMethod( PrintObj, 
+	[ IsSubspacesOfAffineSpace and IsAllSubspacesOfProjectiveSpaceRep ],
+	function( vs )
+		Print("Elements( ",vs!.geometry," , ",vs!.type,")");
+	end );
+
+# special method to view an affine subspace as it is usually thought of
+
+InstallMethod( Display, 
+	[ IsSubspaceOfAffineSpace ],
+	function( x )
+		local u, t;
+		u := x!.obj;
+		if x!.type = 1 then
+			Print("Affine point: ");
+			Display( u );
+		else
+			if x!.type in [2, 3, 4] then
+				Print("Affine ", TypesOfElementsOfIncidenceStructure(x!.geo)[x!.type], ":\n");
+			else
+				Print("Affine ", x!.type, "-space :\n");
+			fi;
+			Print("Coset representative: ", u[1], "\n" );
+			Print("Coset (direction): ", u[2], "\n" );      
+		fi;
+	end );
+
+#############################################################################
+#
+# User methods to construct subspaces of affine spaces.
+#
+#############################################################################
 
 # CHECKED 12/03/12 jdb
 # but I am unhappy with the fact that an empty v just returns [].
@@ -352,7 +413,7 @@ InstallMethod( AffineSubspace,
         if Length(v) <> geom!.dimension then
 			Error("Dimensions are incompatible");
 		fi;
-		return Wrap(geom, 1, CVec(Unpack(v),geom!.basefield));
+		return Wrap(geom, 1, NewMatrix(IsCMatRep,geom!.basefield,geom!.dimension,[v])[1] );
 	end );
 	
 # CHECKED 24/3/3014 jdb
@@ -744,7 +805,12 @@ InstallMethod( Enumerator,
 				v := enumcomp[n];
 				return VectorSpaceTransversalElement(space, subspace, v);
             end,
-            NumberElement := enumcomp!.NumberElement,
+            NumberElement := function(e,v)
+				local n;
+				n := Position(enumcomp,v);
+				return n;
+			end,
+			#NumberElement := enumcomp!.NumberElement,
             #Length := e -> enumcomp!.Length ));   # silly enumerator of v.spaces doesn't always have "Length"
             Length := e -> Size(complement) ));
     return enum;
@@ -754,8 +820,6 @@ InstallMethod( Enumerator,
 #############################################################################
 #O  Enumerator( <vs> )
 # return an Enumerator for subspaces of an affine space of given type.
-# there is a bug somewhere here or in the Enumerator above which I cannot grasp.
-# I am really fed up with this shit.
 ##
 InstallMethod( Enumerator, 
 	"for subspaces of an affine space",
@@ -793,7 +857,6 @@ InstallMethod( Enumerator,
                ## The way this works is that n is the position
                ## of the l-th coset incident with the k-th (j-1)-space
                ## of as.      
-          
                l := n mod classsize;
                if l = 0 then l := classsize; fi;  
                k := (n-l) / classsize + 1;  
@@ -816,91 +879,39 @@ InstallMethod( Enumerator,
     return enum;
  end );    
 
-
-InstallMethod(Iterator, "for subspaces of an affine space",
-        [IsSubspacesOfAffineSpace],  
-  function( vs )
-  ## An affine subspace will be represented by a pair (vector,direction).
-  ## So for example, an affine plane x+<W> will be represented by
-  ## (x', proj. line)  (where x' is the transversal rep corresponding to x).
-    local ps, j, vars, vec, subs, f;
-    ps := vs!.geometry;
-    j := vs!.type;
-    vec := ps!.vectorspace;
-    f := ps!.basefield;
-    if j = 1 then 
-       vars := List(vec, x -> Wrap(ps, 1, x));
-       return IteratorList( vars );
-    else
-       ## we need a transversal for each subspace
-       if j = 2 then 
-         subs := List(ElementsOfIncidenceStructure(ProjectiveSpace(ps!.dimension-1,f), 1), 
+# cmat adapted.
+#############################################################################
+#O  Iterator( <vs> )
+# iterator for affine subspaces of a given type.
+##
+InstallMethod( Iterator, 
+	"for subspaces of an affine space",
+    [IsSubspacesOfAffineSpace],  
+	function( vs )
+	## An affine subspace will be represented by a pair (vector,direction).
+	## So for example, an affine plane x+<W> will be represented by
+	## (x', proj. line)  (where x' is the transversal rep corresponding to x).
+		local ps, j, vars, vec, subs, f;
+		ps := vs!.geometry;
+		j := vs!.type;
+		vec := ps!.vectorspace;
+		f := ps!.basefield;
+		if j = 1 then 
+			vars := List(vec, x -> AffineSubspace(ps, x));
+			return IteratorList( vars );
+		else
+	## we need a transversal for each subspace
+			if j = 2 then 
+				subs := List(ElementsOfIncidenceStructure(ProjectiveSpace(ps!.dimension-1,f), 1), 
                      x -> [x!.obj]);
-       else
-         subs := List(ElementsOfIncidenceStructure(ProjectiveSpace(ps!.dimension-1,f), j-1), 
+			else
+				subs := List(ElementsOfIncidenceStructure(ProjectiveSpace(ps!.dimension-1,f), j-1), 
                      x -> x!.obj);
-       fi;
-       vars := Union(List(subs, x -> 
-                 List(VectorSpaceTransversal(vec, x), y -> Wrap(ps, j, [y,x]))));
-       return IteratorList( vars );
-    fi;
-  end );
-  
-  
-     
-  
-  
-
-
-
-#############################################################################
-#
-# Display methods
-#
-#############################################################################
-
-InstallMethod( ViewObj, [ IsAffineSpace and IsAffineSpaceRep ],
-  function( p )
-    Print("AG(",p!.dimension,", ",Size(p!.basefield),")");
-  end );
-
-InstallMethod( PrintObj, [ IsAffineSpace and IsAffineSpaceRep ],
-  function( p )
-    Print("AffineSpace(",p!.dimension,",",p!.basefield,")");
-  end );  
-
-InstallMethod( ViewObj, [ IsSubspacesOfAffineSpace and
-  IsSubspacesOfAffineSpaceRep ],
-  function( vs )
-    Print("<",TypesOfElementsOfIncidenceStructurePlural(vs!.geometry)[vs!.type]," of ");
-    ViewObj(vs!.geometry);
-    Print(">");
-  end );
-
-InstallMethod( PrintObj, [ IsSubspacesOfAffineSpace and
-  IsAllSubspacesOfProjectiveSpaceRep ],
-  function( vs )
-    Print("Elements( ",vs!.geometry," , ",vs!.type,")");
-  end );
-
-# special method to view an affine subspace as it is usually thought of
-
-InstallMethod( Display, [ IsSubspaceOfAffineSpace ],
-  function( x )
-    local u, t;
-    u := x!.obj;
-    if x!.type = 1 then
-      Print("Affine point: ");
-      Display( u );
-    else
-      if x!.type in [2, 3, 4] then
-         Print("Affine ", TypesOfElementsOfIncidenceStructure(x!.geo)[x!.type], ":\n");
-      else
-         Print("Affine ", x!.type, "-space :\n");
-      fi;
-      Print("Coset representative: ", u[1], "\n" );
-      Print("Coset (direction): ", u[2], "\n" );      
-    fi;
+			fi;
+			vars := Union(List(subs, x -> 
+                 List(VectorSpaceTransversal(vec, x), y -> AffineSubspace(ps,y,x))));
+			return IteratorList( vars );
+		fi;
   end );
 
 
@@ -1040,55 +1051,82 @@ InstallMethod( IsIncident,
 ## An affine space is a complete lattice 
 ## (with the empty set as bottom element).
 
-InstallMethod( Span, [IsSubspaceOfAffineSpace, IsSubspaceOfAffineSpace],
-  function( x, y )  
-    local ux1, uy1, ux2, uy2, ambx, amby, typx, typy, span, temp;
-    ambx := AmbientSpace(x!.geo);
-    amby := AmbientSpace(y!.geo);
-    typx := x!.type;
-    typy := y!.type;
+#############################################################################
+#O  Span( <x>, <y> )
+# cvec/cmat: I took no risk and unpackked everything to do linear algebra.
+##
+InstallMethod( Span,
+	"for two affine subspaces",
+	[IsSubspaceOfAffineSpace, IsSubspaceOfAffineSpace],
+	function( x, y )  
+		local ux1, uy1, ux2, uy2, ambx, amby, typx, typy, span, temp;
+		ambx := AmbientSpace(x!.geo);
+		amby := AmbientSpace(y!.geo);
+		typx := x!.type;
+		typy := y!.type;
 
-    ## affine span of x + A and y + B is 
-    ##  x + <y-x, A,B>
+		## affine span of x + A and y + B is 
+		##  x + <y-x, A,B>
 
-    if ambx!.vectorspace = amby!.vectorspace then
-      if typx = 1 then ux1 := x!.obj; ux2 := [];
-      else ux1 := x!.obj[1]; ux2 := x!.obj[2];
-      fi;
-      if typy = 1  then uy1 := y!.obj; uy2 := [];
-      else uy1 := x!.obj[1]; uy2 := y!.obj[2];
-      fi;  
-      span := MutableCopyMat(ux2);
-      Append(span, uy2);
-      Append(span, [uy1-ux1]); 
-      span := MutableCopyMat(SemiEchelonMat(span).vectors);
-      # if the span is [], then x=y, so return x.
-      if Length(span) = 0 then
-        return x;
-      fi;
-      # if the span is the whole space, return that.
-      if Length(span) = ambx!.dimension + 1 then
-        return ambx;
-      fi;      
-      TriangulizeMat(span);
-      return Wrap(ambx, Rank(span)+1, 
-       [VectorSpaceTransversalElement(ambx!.vectorspace,span,ux1), span]);
-    else
-      Error("Subspaces belong to different ambient spaces");
-    fi;
-    return;
+		if not (ambx!.vectorspace = amby!.vectorspace) then
+			Error("Subspaces belong to different ambient spaces");
+		fi;
+
+		if typx = 1 then 
+			ux1 := Unpack(x!.obj); 
+			ux2 := [];
+		else 
+			ux1 := Unpack(x!.obj[1]); 
+			ux2 := Unpack(x!.obj[2]);
+		fi;
+		if typy = 1  then 
+			uy1 := Unpack(y!.obj); 
+			uy2 := [];
+		else 
+			uy1 := Unpack(y!.obj[1]); 
+			uy2 := Unpack(y!.obj[2]);
+		fi;  
+		span := MutableCopyMat(ux2);
+		Append(span, uy2); #this is the reason to unpack everything, if span would be cmat, and uy2 e.g. [], this becomes very ugly.
+		Append(span, [uy1-ux1]); 
+		span := MutableCopyMat(SemiEchelonMat(span).vectors);
+			
+		# if the span is [], then x=y, so return x.
+		
+		if Length(span) = 0 then
+			return x;
+		fi;
+			
+		# if the span is the whole space, return that.
+		if Length(span) = ambx!.dimension + 1 then
+			return ambx;
+		fi;      
+		#TriangulizeMat(span); #AffineSubspace will do this now.
+		return AffineSubspace(ambx, VectorSpaceTransversalElement(ambx!.vectorspace,span,ux1), span); #makes sure cvec/cmat is used.
   end );
 
 
-InstallMethod( Meet, [IsSubspaceOfAffineSpace, IsSubspaceOfAffineSpace],
-  function( x, y )
-    local ag, ux1, uy1, ux2, uy2, typx, typy, int, 
-          rep, t, f, vec, rk, trans;
-    typx := x!.type;
-    typy := y!.type; 
-    ag := x!.geo;
-    f := ag!.basefield; 
-    vec := ag!.vectorspace;
+#############################################################################
+#O  Meet( <x>, <y> )
+# cvec/cmat: I took no risk and unpackked everything to do linear algebra.
+##
+InstallMethod( Meet, 
+	"for two affine subspaces",
+	[IsSubspaceOfAffineSpace, IsSubspaceOfAffineSpace],
+	function( x, y )
+		local ag, ux1, uy1, ux2, uy2, typx, typy, int, 
+          rep, t, f, vec, rk, trans,ambx,amby;
+		ag := x!.geo;
+		ambx := AmbientSpace(x);
+		amby := AmbientSpace(x);
+		if not (ambx!.vectorspace = amby!.vectorspace) then
+			Error("Subspaces belong to different ambient spaces");
+		fi;
+
+		typx := x!.type;
+		typy := y!.type; 
+		f := ag!.basefield; 
+		vec := ag!.vectorspace;
 
   ## Cases for the intersection of x + A and y + B
   ## (i) A int B = 0 => (x+A) int (y+B) is a point or empty
@@ -1097,61 +1135,61 @@ InstallMethod( Meet, [IsSubspaceOfAffineSpace, IsSubspaceOfAffineSpace],
   ## dimension dim(A int B), or empty
   ## (iv) A empty or B empty => equal or empty 
 
-    if vec = y!.geo!.vectorspace then 
       
-    ## redundant cases 
-      if x = y then 
-         return x;
-      elif (typx = 1 or typy = 1) then
-         return [];
-      fi;
+	## redundant cases 
+		if x = y then 
+			return x;
+		elif (typx = 1 or typy = 1) then
+			return [];
+		fi;
 
-      ux1 := x!.obj[1]; ux2 := x!.obj[2];
-      uy1 := y!.obj[1]; uy2 := y!.obj[2];
-    ## parallel spaces
-      if ux2 = uy2 then return []; fi;
-    ## find intersection of two spaces
-      int := SumIntersectionMat(ux2, uy2)[2];
-      if not IsEmpty(int) and Rank(int) > 0 then 
-          int := MutableCopyMat(int);
-          TriangulizeMat(int);
-          rk := Rank(int) + 1;        
-      ## Now check to see if the affine intersection
-      ## is empty. We will need a representative anyway.
-          trans := VectorSpaceTransversal(vec, int);
-          rep := 0;
-          for t in trans do
-            if Rank(Union([t-ux1], ux2)) = Rank(ux2) and
-               Rank(Union([t-uy1], uy2)) = Rank(uy2) then
-               rep := t; break;
-            fi;
-          od;
-          if rep = 0 then 
-             return []; 
-          elif rk = 1 then  
-             return Wrap( ag, rk, rep);
-          fi;
-          return Wrap( ag, rk, [rep, int]);
-      else   ## case (i)
-          rep := 0;
-          for t in vec do
-            if not IsZero(t) and
-               Rank(Union([t-ux1], ux2)) = Rank(ux2) and
-               Rank(Union([t-uy1], uy2)) = Rank(uy2) then
-               rep := t; break;
-            fi;
-          od;
-          if rep = 0 then 
-             return [];
-          else
-             return Wrap( ag, 1, rep);
-          fi;
-      fi;
-    else
-      Error("Subspaces belong to different ambient spaces");
-    fi;
-    return;
-  end );
+		ux1 := Unpack(x!.obj[1]); 
+		ux2 := Unpack(x!.obj[2]);
+		uy1 := Unpack(y!.obj[1]); 
+		uy2 := Unpack(y!.obj[2]);
+	## parallel spaces, case x=y is handled above.
+		if ux2 = uy2 then 
+			return []; 
+		fi;
+	
+	## find intersection of two spaces
+		int := SumIntersectionMat(ux2, uy2)[2];
+		
+		if not IsEmpty(int) and Rank(int) > 0 then 
+			int := MutableCopyMat(int);
+			TriangulizeMat(int);
+			rk := Rank(int) + 1;        
+		## Now check to see if the affine intersection
+		## is empty. We will need a representative anyway.
+			trans := VectorSpaceTransversal(vec, int);
+			rep := 0;
+			for t in trans do
+				if Rank(Union([t-ux1], ux2)) = Rank(ux2) and
+					Rank(Union([t-uy1], uy2)) = Rank(uy2) then
+					rep := t; break;
+				fi;
+			od;
+			if rep = 0 then 
+				return []; 
+			elif rk = 1 then  
+				return AffineSubspace( ag, rep);
+			fi;
+			return AffineSubspace( ag, rep, int);
+		else   ## case (i)
+			rep := 0;
+			for t in vec do
+				if not IsZero(t) and Rank(Union([t-ux1], ux2)) = Rank(ux2) and
+					Rank(Union([t-uy1], uy2)) = Rank(uy2) then
+					rep := t; break;
+				fi;
+			od;
+			if rep = 0 then 
+				return [];
+			else
+				return AffineSubspace( ag, rep);
+			fi;
+		fi;
+	end );
 
 
 # CHECKED 20/3/2012 jdb
@@ -1163,82 +1201,93 @@ InstallMethod( IsParallel,
 	"for two affine subspaces",
 	[ IsSubspaceOfAffineSpace, IsSubspaceOfAffineSpace ],
 	function( a, b );
-    if a!.type <> a!.type then
-       Error("Subspaces must be of the same dimension");
-    fi;
-    if a!.geo <> a!.geo then
-       Error("Ambient affine spaces must be the same");
-    fi;
-    if a!.type = 1 then
-       return true;
-    else
-       return a!.obj[2] = b!.obj[2];
-    fi;
-  end );
+		if a!.type <> a!.type then
+			Error("Subspaces must be of the same dimension");
+		fi;
+		if a!.geo <> a!.geo then
+			Error("Ambient affine spaces must be the same");
+		fi;
+		if a!.type = 1 then
+			return true;
+		else
+			return a!.obj[2] = b!.obj[2];
+		fi;
+	end );
 
-InstallMethod( ProjectiveCompletion, [ IsAffineSpace ],
-  function( as )
+#############################################################################
+#O  ProjectiveCompletion( <x>, <y> )
+# geometry morphism. Usual unpack to avoid potential problems.
+# to be checked later.
+##
+InstallMethod( ProjectiveCompletion, 
+	"for an affine space",
+	[ IsAffineSpace ],
+	function( as )
     # Returns an embedding of an affine space
     # into a projective space (its projective completion). 
     # For example, the point (x, y, z) goes to <(1, x, y, z)>    
     # An intertwiner is unnecessary, CollineationGroup(as) is 
     # subgroup of CollineationGroup(ps).
 
-    local d, gf, ps, func, pre, map, morphism, vec, one, hom;
+    local d, gf, ps, func, pre, map, morphism, vec, one, hom, infinity;
     d := as!.dimension;
     gf := as!.basefield;
     ps := ProjectiveSpace(d, gf);
     one := One(gf);    
     vec := as!.vectorspace;
-
-    func := function( x )
-      local repx, subspace, n, trans, new, i, j;
-      repx := x!.obj;
-      n := x!.type;
-      if not x in as then 
-         Error("Subspace is not an element of the domain (affine space)");
-      fi;
-      if n > 1 then      
-         subspace := repx[2];
-         trans := repx[1];
-         # simply put all vectors together and put 0's in the first column
-         new := NullMat(n, d+1, gf);
-         new{[1..n-1]}{[2..d+1]} := subspace;
-         new[n][1] := one;
-         new[n]{[2..d+1]} := trans; 
-      else
-         new := Concatenation([one], repx); 
-      fi;
-      return VectorSpaceToElement(ps, new);
+ 	infinity := VectorSpaceToElement(ps,ShallowCopy(IdentityMat(d+1,gf)){[2..d+1]});
+	func := function( x )
+		local repx, subspace, n, trans, new, i, j;
+		repx := x!.obj;
+		n := x!.type;
+		if not x in as then 
+			Error("Subspace is not an element of the domain (affine space)");
+		fi;
+		if n > 1 then      
+			subspace := Unpack(repx[2]);
+			trans := Unpack(repx[1]);
+			# simply put all vectors together and put 0's in the first column
+			new := NullMat(n, d+1, gf);
+			new{[1..n-1]}{[2..d+1]} := subspace;
+			new[n][1] := one;
+			new[n]{[2..d+1]} := trans; 
+		else
+			new := Concatenation([one], Unpack(repx)); 
+		fi;
+		return VectorSpaceToElement(ps, new);
     end;
  
     pre := function( y )
-      local n, repy, subspace, trans, new, zerov, hyp, elm;
-      n := y!.type;
-      repy := y!.obj;
-      if not y in ps then 
-         Error("Subspace is not an element of the range (projective space)");
-      fi;
-      if n > 1 then
-         zerov := NullMat(1,d,gf);
-         hyp := TransposedMat(Concatenation(zerov, IdentityMat(d, gf)));
-         subspace := SumIntersectionMat(hyp, repy)[2];
-         repy := SortedList(y!.obj);  
-         # Make use of lexicographic ordering
-         # Zero at front gives the parallel class       
-         trans := repy[n];
+		local n, repy, subspace, trans, new, zerov, elm, hyp;
+		if not y in ps then 
+			Error("Subspace is not an element of the range (projective space)");
+		fi;
+		if y * infinity then
+			Error("Subspace is an element at infinity");
+		fi;
+		n := y!.type;
+		repy := y!.obj;
+		if n > 1 then
+			repy := List(repy,x->Unpack(x));
+			zerov := NullMat(1,d,gf);
+			hyp := TransposedMat(Concatenation(zerov, IdentityMat(d, gf)));
+			subspace := SumIntersectionMat(hyp, repy)[2];
+			repy := SortedList(y!.obj);  
+			# Make use of lexicographic ordering
+			# Zero at front gives the parallel class       
+			trans := repy[n];
       
-         # curtail
-         trans := trans{[2..d+1]};
-         subspace := subspace{[1..n-1]}{[2..d+1]}; 
-         new := VectorSpaceTransversalElement(vec, subspace, trans);
-         elm := Wrap(as, n, [new, subspace]);
-      else
-         trans := repy{[2..d+1]};
-         elm := Wrap(as, 1, trans);
-      fi;
-      return elm;
-    end;
+			# curtail
+			trans := trans{[2..d+1]};
+			subspace := subspace{[1..n-1]}{[2..d+1]}; 
+			new := VectorSpaceTransversalElement(vec, subspace, trans);
+			elm := AffineSubspace(as, new, subspace);
+		else
+			trans := repy{[2..d+1]};
+			elm := AffineSubspace(as, trans);
+		fi;
+		return elm;
+	end;
 
     map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(as), 
                                       ElementsOfIncidenceStructure(ps), func, false, pre);
@@ -1252,136 +1301,171 @@ end );
 #
 #  (We use the completion to the projective space)
 #
-#
 #############################################################################
 
 
-InstallMethod( ShadowOfElement, [IsAffineSpace, IsSubspaceOfAffineSpace, IsPosInt],
-  function( as, v, j )   
-    return Objectify(
-      NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
+#############################################################################
+#O  ShadowOfElement( <as>, <v>, <j> )
+# Returns the elements of type j incidence with <v>, a usual shadow object 
+# in FinInG.
+##
+InstallMethod( ShadowOfElement, 
+	"for an affine space, an affine subspace, a positive integer",
+	[IsAffineSpace, IsSubspaceOfAffineSpace, IsPosInt],
+	function( as, v, j )   
+		return Objectify(
+			NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
                                    IsShadowSubspacesOfAffineSpace and
                                    IsShadowSubspacesOfAffineSpaceRep),
-        rec( geometry := as, type := j, list := [v] ) );
-  end );
+					rec( geometry := as, type := j, list := [v] ) );
+	end );
   
-InstallMethod( ShadowOfFlag, [IsAffineSpace, IsFlagOfIncidenceStructure, IsPosInt],
-  function( as, flag, j )
-        #   empty flag - return all subspaces of the right type
-    if IsEmptyFlag(flag) then
-      return ElementsOfIncidenceStructure(as, j);
-    fi;
 
-    return Objectify(
-      NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
+#############################################################################
+#O  ShadowOfFlag( <as>, <v>, <j> )
+# Returns the elements of type j incidence with a flag, a usual shadow object 
+# in FinInG.
+##
+InstallMethod( ShadowOfFlag, 
+	"for an affine space, a flag of affine elements, a positive integer",
+	[IsAffineSpace, IsFlagOfIncidenceStructure, IsPosInt],
+	function( as, flag, j )
+        #   empty flag - return all subspaces of the right type
+		if IsEmptyFlag(flag) then
+			return ElementsOfIncidenceStructure(as, j);
+		fi;
+		return Objectify(
+			NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
                                    IsShadowSubspacesOfAffineSpace and
                                    IsShadowSubspacesOfAffineSpaceRep),
-        rec( geometry := as, type := j, list := flag!.els ) #JDB: added !.els here (flags used to be lists, are objects now).
-      );
-  end);
+				rec( geometry := as, type := j, list := flag!.els ) #JDB: added !.els here (flags used to be lists, are objects now).
+					);
+	end);
   
-InstallMethod( ParallelClass, "for an affine space and subspace",
-          [IsAffineSpace, IsSubspaceOfAffineSpace], 
-  function( as, v )
-    if v!.type = 0 then
-       Error("Subspace must be nontrivial");
-    elif v!.type = 1 then
-       return Points( as );     
-    else
-      return Objectify(
-        NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
+#############################################################################
+#O  ParallelClass( <as>, <v> )
+# returns the collection of elements parallel with <v>
+##
+InstallMethod( ParallelClass, 
+	"for an affine space and subspace",
+	[IsAffineSpace, IsSubspaceOfAffineSpace], 
+	function( as, v )
+		#if v!.type = 0 then
+		#	Error("Subspace must be nontrivial"); #this never occurs, it is not possible te constuct elements of type 0.
+		if v!.type = 1 then
+			return Points( as );     
+		else
+			return Objectify(
+				NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
                                    IsParallelClassOfAffineSpace and
                                    IsParallelClassOfAffineSpaceRep),
-                 rec( geometry := as, element := v ) );
-    fi;      
-  end );
+						rec( geometry := as, element := v ) );
+		fi;      
+	end );
   
-InstallMethod( ParallelClass, "for an affine subspace", [ IsSubspaceOfAffineSpace ], 
-  x -> ParallelClass( x!.geo, x ) );
+#############################################################################
+#O  ParallelClass( <as>, <v> )
+# returns the collection of elements parallel with <v>
+##
+InstallMethod( ParallelClass, 
+	"for an affine subspace", 
+	[ IsSubspaceOfAffineSpace ], 
+	x -> ParallelClass( x!.geo, x ) );
 
 
-InstallMethod( Iterator, "for a parallel class of an affine space",
-        [IsParallelClassOfAffineSpace and IsParallelClassOfAffineSpaceRep ],
-  function( pclass )
-    local as, v, type, direction, vec, elms;
-    as := pclass!.geometry;
-    v := pclass!.element;
-    type := v!.type;
-    direction := v!.obj[2];
-    vec := as!.vectorspace;
-    
-    ## Do the trivial cases:
-    if type = 1 then 
-       ## it already has an iterator...
-       return Iterator( pclass );
-    fi;
-  
-    elms := List(VectorSpaceTransversal(vec, direction), y -> Wrap(as, type, [y,direction]) );
-    return IteratorList( elms ); 
-  end );
+#############################################################################
+#O  Iterator( <pclass> )
+# iterator for a parallel class of an element of an affine space.
+##
+InstallMethod( Iterator, 
+	"for a parallel class of an affine space",
+	[IsParallelClassOfAffineSpace and IsParallelClassOfAffineSpaceRep ],
+	function( pclass )
+		local as, v, type, direction, vec, elms;
+		as := pclass!.geometry;
+		v := pclass!.element;
+		type := v!.type;
+		direction := Unpack(v!.obj[2]); #a parallel class of a point is not in IsParallelClassOfAffineSpace(Rep)
+		vec := as!.vectorspace;
+        ## Do the trivial cases:
+		#if type = 1 then #cannot occur
+        ## it already has an iterator...
+        #return Iterator( pclass );
+        #fi;
+		elms := List(VectorSpaceTransversal(vec, direction), y -> AffineSubspace(as, y,direction) );
+		return IteratorList( elms ); 
+	end );
 
-InstallMethod( Size, [IsShadowSubspacesOfAffineSpace and
-                      IsShadowSubspacesOfAffineSpaceRep ],
-  function( vs )
-    local ps, list, map, shad, j, as;
-    as := vs!.geometry;
-    j := vs!.type;
-    map := ProjectiveCompletion(as);
-    ps := Range(map)!.geometry;
-    list := vs!.list;    
-    if Size( list ) = 1 then
-       shad := ShadowOfElement( ps, ImageElm(map, list[1]), j);
-    else
-	   shad := ShadowOfFlag( ps, ImagesSet(map, list), j);
-    fi;
-    return Size( shad );
+
+#############################################################################
+#O  Size( <vs> )
+# number of elements in a shadow.
+##
+InstallMethod( Size, 
+	"for a shadow of an element of an affine subspace",
+	[IsShadowSubspacesOfAffineSpace and IsShadowSubspacesOfAffineSpaceRep ],
+	function( vs )
+		local ps, list, map, shad, j, as;
+		as := vs!.geometry;
+		j := vs!.type;
+		map := ProjectiveCompletion(as);
+		ps := Range(map)!.geometry;
+		list := vs!.list;    
+		if Size( list ) = 1 then
+			shad := ShadowOfElement( ps, ImageElm(map, list[1]), j);
+		else
+			shad := ShadowOfFlag( ps, ImagesSet(map, list), j);
+		fi;
+		return Size( shad );
   end);
 
 
-InstallMethod( Iterator, "for a shadow in an affine space",
-     [IsShadowSubspacesOfAffineSpace and IsShadowSubspacesOfAffineSpaceRep ],
-  function( vs )
-    local as, i, j, ps, map, iter, list, dim, hyperplane, x, newfinish, assoc;
-    as := vs!.geometry;
-    j := vs!.type;
-    map := ProjectiveCompletion(as);
-    ps := Range(map)!.geometry;
-    list := vs!.list;  
-    dim := ps!.dimension+1;
-    hyperplane := VectorSpaceToElement(ps, IdentityMat(dim,ps!.basefield){[2..dim]});
-    
-    if Size( list ) = 1 then
-       x := list[1];
-       i := x!.type;
-       iter := StructuralCopy(Iterator( ShadowOfElement( ps, ImageElm(map, x), j) ));
-       #
-       #  We simple change the IsDoneIterator in iter.
-       #  It took me ages to figure out how this all works!
-       # 
-       newfinish := Maximum(  [ Binomial(i-1,j-1), Binomial(dim-i,j-i) ] );   ##JB: Happy that this works!
-       assoc := iter!.S!.associatedIterator;
-       assoc!.choiceiter!.IsDoneIterator := 
-	         iter -> iter!.pos = newfinish and IsDoneIterator(assoc!.spaceiter);
-    else
-       # still need to truncate the iterator of this one ...
-       Print("Iterators of shadows of flags in affine spaces are not complete in this version\n");
-       iter := Iterator( ShadowOfFlag( ps, ImagesSet(map, list), j) );
-    fi;
- 
-	
-    return IteratorByFunctions( rec(
-      NextIterator := function(iter)
-        local x;
-        repeat
-          x := NextIterator(iter!.S);
-        until not x in hyperplane;
-        return PreImageElm(map, x);
-      end,
-      IsDoneIterator := iter -> IsDoneIterator(iter!.S),
-      ShallowCopy := iter -> rec( S := ShallowCopy(iter!.S) ),
-      S := iter )    
-    );
-  end);
+#############################################################################
+#O  Iterator( <pclass> )
+# iterator for a shadow of an element in an affine space.
+##
+InstallMethod( Iterator, 
+	"for a shadow in an affine space",
+	[IsShadowSubspacesOfAffineSpace and IsShadowSubspacesOfAffineSpaceRep ],
+	function( vs )
+		local as, i, j, ps, map, iter, list, dim, hyperplane, x, newfinish, assoc;
+		as := vs!.geometry;
+		j := vs!.type;
+		map := ProjectiveCompletion(as);
+		ps := Range(map)!.geometry;
+		list := vs!.list;  
+		dim := ps!.dimension+1;
+		hyperplane := VectorSpaceToElement(ps, IdentityMat(dim,ps!.basefield){[2..dim]});
+		if Size( list ) = 1 then
+			x := list[1];
+			i := x!.type;
+			iter := StructuralCopy(Iterator( ShadowOfElement( ps, ImageElm(map, x), j) ));
+			#
+			#  We simple change the IsDoneIterator in iter.
+			#  It took me ages to figure out how this all works!
+			# 
+			newfinish := Maximum(  [ Binomial(i-1,j-1), Binomial(dim-i,j-i) ] );   ##JB: Happy that this works!
+			assoc := iter!.S!.associatedIterator;
+			assoc!.choiceiter!.IsDoneIterator := 
+				iter -> iter!.pos = newfinish and IsDoneIterator(assoc!.spaceiter);
+		else
+			# still need to truncate the iterator of this one ...
+			Print("Iterators of shadows of flags in affine spaces are not complete in this version\n");
+			iter := Iterator( ShadowOfFlag( ps, ImagesSet(map, list), j) );
+		fi;
+		return IteratorByFunctions( rec(
+									NextIterator := function(iter)
+										local x;
+										repeat
+											x := NextIterator(iter!.S);
+										until not x in hyperplane;
+										return PreImageElm(map, x);
+									end,
+									IsDoneIterator := iter -> IsDoneIterator(iter!.S),
+									ShallowCopy := iter -> rec( S := ShallowCopy(iter!.S) ),
+									S := iter )    
+								);
+	end);
 
 
 #############################################################################
@@ -1391,26 +1475,23 @@ InstallMethod( Iterator, "for a shadow in an affine space",
 #############################################################################
 
 
-InstallMethod( ViewObj, [ IsShadowSubspacesOfAffineSpace and
-                          IsShadowSubspacesOfAffineSpaceRep ],
-  function( vs )
-    Print("<shadow ",TypesOfElementsOfIncidenceStructurePlural(vs!.geometry)[vs!.type]," in ");
-    ViewObj(vs!.geometry);
-    Print(">");
-  end );
+InstallMethod( ViewObj, 
+	[ IsShadowSubspacesOfAffineSpace and IsShadowSubspacesOfAffineSpaceRep ],
+	function( vs )
+		Print("<shadow ",TypesOfElementsOfIncidenceStructurePlural(vs!.geometry)[vs!.type]," in ");
+		ViewObj(vs!.geometry);
+		Print(">");
+	end );
   
-InstallMethod( ViewObj, [ IsParallelClassOfAffineSpace and
-                          IsParallelClassOfAffineSpaceRep ],
-  function( vs )
-    Print("<parallel class of ",
-   TypesOfElementsOfIncidenceStructurePlural(vs!.geometry)[vs!.element!.type]," in ");
-    ViewObj(vs!.geometry);
-    Print(">");
-  end );
+InstallMethod( ViewObj, 
+	[ IsParallelClassOfAffineSpace and IsParallelClassOfAffineSpaceRep ],
+	function( vs )
+		Print("<parallel class of ",
+		TypesOfElementsOfIncidenceStructurePlural(vs!.geometry)[vs!.element!.type]," in ");
+		ViewObj(vs!.geometry);
+		Print(">");
+	end );
 
-
-
-  
 #############################################################################
 #
 # Nice shorthand methods for shadows of elements
@@ -1457,3 +1538,9 @@ InstallMethod( Solids, [ IsAffineSpace, IsSubspaceOfAffineSpace ],
   function( geo, var )
     return ShadowOfElement(geo, var, 4);
   end );
+
+
+
+
+
+
