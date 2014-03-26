@@ -938,7 +938,7 @@ InstallMethod( ShadowOfElement,
 			localouter := Unpack(v!.obj);
 		elif j = v!.type then
 			localinner := Unpack(v!.obj);
-			localouter := Unpack(localinner);
+			localouter := localinner;
 		else
 			localinner := Unpack(v!.obj);
 			localouter := BasisVectors(Basis(ps!.vectorspace));
@@ -959,7 +959,7 @@ InstallMethod( ShadowOfElement,
 									inner := localinner,
 									outer := localouter,
 									factorspace := localfactorspace,
-									parentflag := v,
+									parentflag := FlagOfIncidenceStructure(ps,[v]),
 									size := Size(Subspaces(localfactorspace))
 								)
 						);
@@ -1348,8 +1348,8 @@ InstallMethod( FlagOfIncidenceStructure,
 		if (test <> [ true ] and test <> []) then
 		  Error("<els> does not determine a flag>");
 		fi;
-		flag := rec(geo := ps, types := List(list,x->x!.type), els := list);
-		ObjectifyWithAttributes(flag, IsFlagOfPSType, IsEmptyFlag, false);
+		flag := rec(geo := ps, types := List(list,x->x!.type), els := list, vectorspace := ps!.vectorspace );
+		ObjectifyWithAttributes(flag, IsFlagOfPSType, IsEmptyFlag, false );
 		return flag;
 	end);
 
@@ -1363,10 +1363,24 @@ InstallMethod( FlagOfIncidenceStructure,
 	[ IsProjectiveSpace, IsList and IsEmpty ],
 	function(ps,els)
 		local flag;
-		flag := rec(geo := ps, types := [], els := []);
-		ObjectifyWithAttributes(flag, IsFlagOfPSType, IsEmptyFlag, true);
+		flag := rec(geo := ps, types := [], els := [], vectorspace := ps!.vectorspace );
+		ObjectifyWithAttributes(flag, IsFlagOfPSType, IsEmptyFlag, true );
 		return flag;
 	end);
+
+
+# ADDED 26/3/2014 jdb
+#############################################################################
+#O  UnderlyingVectorSpace( <flag> )
+# returns the UnderlyingVectorSpace of <flag>
+##
+InstallMethod( UnderlyingVectorSpace,
+	"for a flag of a projective space",
+	[ IsFlagOfProjectiveSpace and IsFlagOfIncidenceStructureRep ],
+	function(flag)
+		return flag!.vectorspace;
+	end);
+
 
 #############################################################################
 # View/Print/Display methods for flags
@@ -1395,6 +1409,20 @@ InstallMethod( Display, "for a flag of a projective space",
 			Display(flag!.els);
 		fi;
 	end );
+
+# AdDED 26/3/2014 jdb
+#############################################################################
+#O ShadowOfFlag( <ps>, <flag>, <j>
+# returns the shadow elements of <flag> if it is empty, i.e. all the elements 
+# of <ps> of type <j>. The returned object will not be IsShadowSubspacesOfProjectiveSpace
+# but just IsSubspaceOfProjectiveSpace. This makes enumeration afterwards more efficient.
+InstallMethod( ShadowOfFlag, 
+	"for a projective space, a flag and an integer",
+	[IsProjectiveSpace, IsFlagOfProjectiveSpace and IsEmptyFlag, IsPosInt],
+	function( ps, flag, j )
+		return ElementsOfIncidenceStructure(ps,j);
+	end );
+
 
 # CHECKED 18/4/2011 jdb
 # 25/3/14 It turns out that there is a problem when we do not Unpack 

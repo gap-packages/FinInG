@@ -54,6 +54,8 @@ BindGlobal( "FlagsOfPS", NewFamily( "FlagsOfPSFamily", IsObject ));
 
 BindGlobal( "IsFlagOfPSType", NewType( FlagsOfPS,
                                     IsFlagOfProjectiveSpace and IsFlagOfIncidenceStructureRep) );
+									
+DeclareOperation( "UnderlyingVectorSpace", [ IsFlagOfProjectiveSpace ]	);
 
 #############################################################################
 #
