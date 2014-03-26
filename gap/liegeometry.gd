@@ -73,7 +73,7 @@ DeclareOperation( "VectorSpaceToElement", [IsLieGeometry, IsCVecRep] );
 DeclareOperation( "VectorSpaceToElement", [IsLieGeometry, IsCMatRep] );
 
 
-DeclareOperation( "ElementToVectorSpace", [IsElementOfLieGeometry] );
+DeclareOperation( "UnderlyingObject", [IsElementOfLieGeometry] );
 #DeclareOperation( "EmptySubspace", [IsClassicalPolarSpace] );
 #DeclareOperation( "EmptySubspace", [IsProjectiveSpace] );
 DeclareOperation( "EmptySubspace", [IsLieGeometry] );

@@ -26,7 +26,9 @@
 ################################
 
 DeclareOperation( "FiningOrbit", [IsGroup, IsObject, IsFunction] );
+DeclareOperation( "FiningOrbit", [IsGroup, IsObject] );
 DeclareOperation( "FiningOrbits", [IsGroup, IsObject, IsFunction] );
+DeclareOperation( "FiningOrbits",[IsGroup, IsObject] );
 
 #############################
 # Stabiliser methods that should work faster

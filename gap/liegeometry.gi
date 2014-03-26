@@ -55,10 +55,10 @@ InstallMethod( Wrap,
 
 # CHECKED 17/04/11 jdb
 #############################################################################
-#O  ElementToVectorSpace( <x> )
+#O  UnderlyingObject( <x> )
 # User version of Unwrap, for elements of Lie geometries.
 ##
-InstallMethod( ElementToVectorSpace, 
+InstallMethod( UnderlyingObject, 
 	"for an element of a LieGeometry",
 	[IsElementOfLieGeometry],
 	function( x )
@@ -813,13 +813,13 @@ InstallMethod( RandomSubspace,
 # Added 28/11/2011 jdb.
 #############################################################################
 #O  ElementToElement( <geo>, <el> )
-# returns the element VectorSpaceToElement(<geo>,ElementToVectorSpace(<el>))
+# returns the element VectorSpaceToElement(<geo>,UnderlyingObject(<el>))
 ##
 InstallMethod( ElementToElement,
 	"for a Lie geometry and an element of a Lie geometry",
 	[IsLieGeometry, IsElementOfLieGeometry],
 	function(ps,el)
-		return VectorSpaceToElement(ps,ElementToVectorSpace(el));
+		return VectorSpaceToElement(ps,UnderlyingObject(el));
 	end );
 
 #############################################################################
@@ -829,7 +829,7 @@ InstallMethod( ElementToElement,
 # Added 28/11/2011 jdb.
 #############################################################################
 #O  ConvertElement( <geo>, <el> )
-# chages the element <el> to VectorSpaceToElement(<geo>,ElementToVectorSpace(<el>))
+# chages the element <el> to VectorSpaceToElement(<geo>,UnderlyingObject(<el>))
 # with a check whether this is possible.
 ##
 #InstallMethod( ConvertElement,
@@ -847,7 +847,7 @@ InstallMethod( ElementToElement,
 # Added 28/11/2011 jdb.
 #############################################################################
 #O  ConvertElementNC( <geo>, <el> )
-# chages the element <el> to VectorSpaceToElement(<geo>,ElementToVectorSpace(<el>))
+# chages the element <el> to VectorSpaceToElement(<geo>,UnderlyingObject(<el>))
 # *without* checks. Please use with extreme care. Belgium might get a government if you use
 # this function when you shouldn't.
 ##

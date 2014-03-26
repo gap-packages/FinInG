@@ -2239,7 +2239,7 @@ InstallMethod( ShadowOfElement,
 		else  
 			localinner := v!.obj;
 			localouter := PolarMap(ps)(v)!.obj; #actually, this is not a polarity when q is even and ps is parabolic.
-			#localouter := ElementToVectorSpace(v^PolarityOfProjectiveSpace(ps));
+			#localouter := UnderlyingObject(v^PolarityOfProjectiveSpace(ps));
 			if pstype = "symplectic" then
 				localfactorspace := SymplecticSpace( psdim- 2*vdim, f );
 			elif pstype = "hermitian" then

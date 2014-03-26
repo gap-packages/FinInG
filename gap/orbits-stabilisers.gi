@@ -37,10 +37,17 @@
 Print(", orbits+stabilisers\c");
 
 
-# ADDED 17/03/14 jdb
+
+
+############################################################
+# ORBITS
+###################################################
+
+
+# 26/03/14 CHECKED ml
 #############################################################################
 #O  FiningOrbit( <g>, <e>, <act> )
-# helper operation, returns the stabiliser of e under g, using action function act.
+# helper operation, returns the orbit of e under g, using action function act.
 ##
 InstallMethod( FiningOrbit,
 	"for a collineation group, an element of a projective space and an action function",
@@ -48,11 +55,24 @@ InstallMethod( FiningOrbit,
 	function(g,e,act)
 		return Enumerate(Orb(g,e,act));
 	end );
-	
-# ADDED 17/03/14 jdb
+
+# ADDED 26/03/14 ml
+#############################################################################
+#O  FiningOrbit( <g>, <e> )
+#  returns the orbit of e under g
+##
+InstallMethod( FiningOrbit,
+	"for a collineation group, an element of a projective space",
+	[ IsProjectiveGroupWithFrob, IsElementOfIncidenceStructure ],
+	function(g,e )
+		return FiningOrbit(g,e,OnProjSubspaces);
+	end );
+
+
+# 26/03/14 CHECKED ml
 #############################################################################
 #O  FiningOrbit( <g>, <e>, <act> )
-# helper operation, returns the stabiliser of e under g, using action function act.
+# helper operation, returns the orbit of e under g, using action function act.
 ##
 InstallMethod( FiningOrbit,
 	"for a collineation group, an element of a projective space and an action function",
@@ -61,10 +81,24 @@ InstallMethod( FiningOrbit,
 		return Enumerate(Orb(g,e,act));
 	end );
 
+
+# ADDED 26/03/14 ml
+#############################################################################
+#O  FiningOrbit( <g>, <e> )
+#  returns the orbit of e under g
+##
+InstallMethod( FiningOrbit,
+	"for a collineation group, an element of a projective space",
+	[ IsProjectiveGroupWithFrob, CategoryCollections(IsElementOfIncidenceStructure) ],
+	function(g,e )
+		return FiningOrbit(g,e,OnProjSubspaces);
+	end );
+
+
 # ADDED 17/03/14 jdb, based on John's mail.
 #############################################################################
 #O  FiningOrbits( <g>, <e>, <act> )
-# helper operation, returns the stabiliser of e under g, using action function act.
+# helper operation, returns the orbits of e under g, using action function act.
 ##
 InstallMethod( FiningOrbits,
 	"for a collineation group, an element of a projective space and an action function",
@@ -89,11 +123,23 @@ InstallMethod( FiningOrbits,
 	return orbs;
 	end );
 
+# ADDED 26/03/14 ml
+#############################################################################
+#O  FiningOrbits( <g>, <e> )
+#  returns the orbits of e under g
+##
+InstallMethod( FiningOrbits,
+	"for a collineation group, an element of a projective space",
+	[ IsProjectiveGroupWithFrob, IsElementsOfIncidenceStructure ],
+	function(g,e )
+		return FiningOrbits(g,e,OnProjSubspaces);
+	end );
+
 	
 # ADDED 17/03/14 jdb, based on John's mail.
 #############################################################################
 #O  FiningOrbits( <g>, <e>, <act> )
-# helper operation, returns the stabiliser of e under g, using action function act.
+# helper operation, returns the orbits of e under g, using action function act.
 ##
 InstallMethod( FiningOrbits,
 	"for a collineation group, an element of a projective space and an action function",
@@ -117,6 +163,24 @@ InstallMethod( FiningOrbits,
 	until IsEmpty(set2);
 	return orbs;
 	end );
+
+# ADDED 26/03/14 ml
+#############################################################################
+#O  FiningOrbits( <g>, <e> )
+#  returns the orbits of e under g
+##
+InstallMethod( FiningOrbit,
+	"for a collineation group, an element of a projective space",
+	[ IsProjectiveGroupWithFrob, CategoryCollections(IsElementOfIncidenceStructure) ],
+	function(g,e )
+		return FiningOrbits(g,e,OnProjSubspaces);
+	end );
+
+
+
+############################################################
+# STABILISERS
+###################################################
 
 # CHECKED 7/03/13 jdb
 #############################################################################

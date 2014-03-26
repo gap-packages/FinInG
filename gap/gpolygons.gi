@@ -248,8 +248,8 @@ InstallMethod( SplitCayleyHexagon,
 		hvm[4][4] := -2*One(f);
 		hvmform := BilinearFormByMatrix(hvm, f);
 		ps := PolarSpace(hvmform);
-		# ElementToVectorSpace will return a cvec. 
-		reppointvect := ElementToVectorSpace(RepresentativesOfElements(ps)[1]);
+		# UnderlyingObject will return a cvec. 
+		reppointvect := UnderlyingObject(RepresentativesOfElements(ps)[1]);
 
        ## Hendrik's canonical line is <(1,0,0,0,0,0,0), (0,0,0,0,0,0,1)>
 		replinevect := [[1,0,0,0,0,0,0], [0,0,0,0,0,0,1]] * One(f);
@@ -263,8 +263,8 @@ InstallMethod( SplitCayleyHexagon,
 		hvm{[4..6]}{[1..3]} := IdentityMat(3, f);       
 		hvmform := BilinearFormByMatrix(hvm, f);   
 		ps := PolarSpace(hvmform);
-		# ElementToVectorSpace will return a cvec. 
-		reppointvect := ElementToVectorSpace(RepresentativesOfElements(ps)[1]); #to be changed
+		# UnderlyingObject will return a cvec. 
+		reppointvect := UnderlyingObject(RepresentativesOfElements(ps)[1]); #to be changed
 
 		## Hendrik's canonical line is <(1,0,0,0,0,0), (0,0,0,0,0,1)>
 		replinevect := [[1,0,0,0,0,0], [0,0,0,0,0,1]] * One(f);

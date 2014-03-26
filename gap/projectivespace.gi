@@ -2391,15 +2391,15 @@ InstallMethod( ElationOfProjectiveSpace,
 		Error("The points <point1> and <point2> must not be incident with <sub>");
 	fi;
 	centre := Meet(sub,Span(point1,point2));
-	mat := ElementToVectorSpace(sub);
+	mat := UnderlyingObject(sub);
 	f := BaseField(sub);
 	vssub := VectorSpace(f,mat);
-	e0 := ElementToVectorSpace(centre);
+	e0 := UnderlyingObject(centre);
 	ei := BasisVectors(Basis(ComplementSpace(vssub,[e0])));
-	en := ElementToVectorSpace(point1);
+	en := UnderlyingObject(point1);
 	M := Concatenation([e0],ei,[en]);
 	el := ShallowCopy(IdentityMat(n+1,f));
-	p2vect := ElementToVectorSpace(point2)*M^-1;
+	p2vect := UnderlyingObject(point2)*M^-1;
 	el[n+1][1] := p2vect[1]/p2vect[n+1];
 	el := M^(-1)*el*M;
 	return CollineationOfProjectiveSpace(el,f);
@@ -2423,10 +2423,10 @@ InstallMethod( ProjectiveElationGroup,
 	elif not centre in sub then
 		Error("The point <centre> and <sub> must be incident");
 	fi;
-	mat := ElementToVectorSpace(sub);
+	mat := UnderlyingObject(sub);
 	f := BaseField(sub);
 	vssub := VectorSpace(f,mat);
-	e0 := ElementToVectorSpace(centre);
+	e0 := UnderlyingObject(centre);
 	ei := BasisVectors(Basis(ComplementSpace(vssub,[e0])));
 	en := BasisVectors(Basis(ComplementSpace(f^(n+1),mat)))[1];
 	M := Concatenation([e0],ei,[en]);
@@ -2458,10 +2458,10 @@ InstallMethod( ProjectiveElationGroup,
 	if (Dimension(sub) <> n-1) then
 		Error("<sub> must be a hyperplane");
 	fi;	
-	mat := Unpack(ElementToVectorSpace(sub));
+	mat := Unpack(UnderlyingObject(sub));
 	f := BaseField(sub);
 	vssub := VectorSpace(f,mat);
-	#e0 := ElementToVectorSpace(centre);
+	#e0 := UnderlyingObject(centre);
 	#ei := BasisVectors(Basis(ComplementSpace(vssub,[e0])));
 	en := BasisVectors(Basis(ComplementSpace(f^(n+1),mat)))[1];
 	M := Concatenation(mat,[en]);
@@ -2502,16 +2502,16 @@ InstallMethod( HomologyOfProjectiveSpace,
 	elif Dimension(Span([centre,point1,point2])) <> 1 then
 		Error("<centre>, <point1>, and <point2> must span a line");
 	fi;
-	mat := ElementToVectorSpace(sub);
+	mat := UnderlyingObject(sub);
 	f := BaseField(sub);
 	vssub := VectorSpace(f,mat);
-	e0 := ElementToVectorSpace(Meet(Span(centre,point1),sub));
+	e0 := UnderlyingObject(Meet(Span(centre,point1),sub));
 	ei := BasisVectors(Basis(ComplementSpace(vssub,[e0])));
-	en := ElementToVectorSpace(centre);
+	en := UnderlyingObject(centre);
 	M := Concatenation([e0],ei,[en]);
 	el := ShallowCopy(IdentityMat(n+1,f));
-	p1vect := ElementToVectorSpace(point1)*M^-1;
-	p2vect := ElementToVectorSpace(point2)*M^-1;
+	p1vect := UnderlyingObject(point1)*M^-1;
+	p2vect := UnderlyingObject(point2)*M^-1;
 	el[n+1][n+1] := (p2vect[n+1]*p1vect[1])/(p2vect[1]*p1vect[n+1]);
 	el := M^(-1)*el*M;
 	return CollineationOfProjectiveSpace(el,f);
@@ -2536,7 +2536,7 @@ InstallMethod( ProjectiveHomologyGroup,
 	elif centre in sub then
 		Error("The point <centre> and <sub> must not be incident");
 	fi;
-	M := Concatenation(Unpack(ElementToVectorSpace(sub)),[Unpack(ElementToVectorSpace(centre))]);
+	M := Concatenation(Unpack(UnderlyingObject(sub)),[Unpack(UnderlyingObject(centre))]);
 	f := BaseField(sub);
 	q := Size(f);
 	el := ShallowCopy(IdentityMat(n+1,f));
