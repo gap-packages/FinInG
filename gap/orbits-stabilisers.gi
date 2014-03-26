@@ -95,7 +95,7 @@ InstallMethod( FiningOrbit,
 	end );
 
 
-# ADDED 17/03/14 jdb, based on John's mail.
+# CHECKED 26/03/14 ml
 #############################################################################
 #O  FiningOrbits( <g>, <e>, <act> )
 # helper operation, returns the orbits of e under g, using action function act.
@@ -135,46 +135,14 @@ InstallMethod( FiningOrbits,
 		return FiningOrbits(g,e,OnProjSubspaces);
 	end );
 
-	
-# ADDED 17/03/14 jdb, based on John's mail.
-#############################################################################
-#O  FiningOrbits( <g>, <e>, <act> )
-# helper operation, returns the orbits of e under g, using action function act.
-##
-InstallMethod( FiningOrbits,
-	"for a collineation group, an element of a projective space and an action function",
-	[ IsProjectiveGroupWithFrob, CategoryCollections(IsElementOfIncidenceStructure), IsFunction],
-	function(g,set,action)
-	local orbs, set2, x, o, upto, newupto;
-	orbs := [];
-	set2 := ShallowCopy(set);
-	set2 := Set(set2);;
-	upto := 0;
-	repeat
-		x := set2[1];
-		o := Enumerate(Orb(g, x, action));
-		Add(orbs, o);
-		SubtractSet(set2, AsList(o));
-		newupto := Int(100 * (Size(set)-Size(set2))/Size(set));
-		if newupto <> upto then
-			upto:=newupto;
-			Print(upto, "%..\c");
-		fi;
-	until IsEmpty(set2);
-	return orbs;
-	end );
 
-# ADDED 26/03/14 ml
-#############################################################################
-#O  FiningOrbits( <g>, <e> )
-#  returns the orbits of e under g
-##
-InstallMethod( FiningOrbit,
-	"for a collineation group, an element of a projective space",
-	[ IsProjectiveGroupWithFrob, CategoryCollections(IsElementOfIncidenceStructure) ],
-	function(g,e )
-		return FiningOrbits(g,e,OnProjSubspaces);
-	end );
+
+
+############################################################
+# TOT HIER GECHECKED !!!!!!!!
+############################################################
+
+
 
 
 
