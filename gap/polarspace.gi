@@ -2221,7 +2221,7 @@ InstallMethod( ShadowOfElement,
 		vdim := v!.type;  
         if j < vdim then
 			localinner := [];
-			localouter := v!.obj;
+			localouter := Unpack(v!.obj);
 			if IsVector(localouter) and not IsMatrix(localouter) then
 				localouter := [localouter]; 
 			fi;
@@ -2229,7 +2229,7 @@ InstallMethod( ShadowOfElement,
 			localfactorspace := Subspace(ps!.vectorspace, localouter);
 			sz := Size(Subspaces(localfactorspace, j));
 		elif j = vdim then
-			localinner := v!.obj;
+			localinner := Unpack(v!.obj);
 			if IsVector(localinner) and not IsMatrix(localinner) then
 				localinner := [localinner]; 
 			fi;
@@ -2237,8 +2237,8 @@ InstallMethod( ShadowOfElement,
 			localfactorspace := TrivialSubspace(ps!.vectorspace);
 			sz := 1;
 		else  
-			localinner := v!.obj;
-			localouter := PolarMap(ps)(v)!.obj; #actually, this is not a polarity when q is even and ps is parabolic.
+			localinner := Unpack(v!.obj);
+			localouter := Unpack(PolarMap(ps)(v)!.obj); #actually, this is not a polarity when q is even and ps is parabolic.
 			#localouter := UnderlyingObject(v^PolarityOfProjectiveSpace(ps));
 			if pstype = "symplectic" then
 				localfactorspace := SymplecticSpace( psdim- 2*vdim, f );
