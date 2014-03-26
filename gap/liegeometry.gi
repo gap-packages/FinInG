@@ -626,6 +626,9 @@ InstallMethod( Hyperplanes,
 	"for elements of a Lie geometry",
 	[ IsElementOfLieGeometry ],
 	function( var )
+		if var!.type = 1 then
+			Error("There are no elements of type 0");
+		fi;
 		return ShadowOfElement( var!.geo, var, var!.type - 1 );
   end );
 
