@@ -1410,20 +1410,6 @@ InstallMethod( Display, "for a flag of a projective space",
 		fi;
 	end );
 
-# AdDED 26/3/2014 jdb
-#############################################################################
-#O ShadowOfFlag( <ps>, <flag>, <j>
-# returns the shadow elements of <flag> if it is empty, i.e. all the elements 
-# of <ps> of type <j>. The returned object will not be IsShadowSubspacesOfProjectiveSpace
-# but just IsSubspaceOfProjectiveSpace. This makes enumeration afterwards more efficient.
-InstallMethod( ShadowOfFlag, 
-	"for a projective space, a flag and an integer",
-	[IsProjectiveSpace, IsFlagOfProjectiveSpace and IsEmptyFlag, IsPosInt],
-	function( ps, flag, j )
-		return ElementsOfIncidenceStructure(ps,j);
-	end );
-
-
 # CHECKED 18/4/2011 jdb
 # 25/3/14 It turns out that there is a problem when we do not Unpack 
 # cvec/cmat with Size(Subspaces(localfactorspace)). As there is never an action
@@ -2182,34 +2168,62 @@ InstallMethod( Random,
 # returns a random element out of the collection of subspaces of given
 # dimension contained in a subspace of a projective space
 ##
+#InstallMethod( Random, 
+#	"for a collection of subspaces of a subspace of a projective space",
+#	[ IsShadowSubspacesOfProjectiveSpace ],
+    # chooses a random element out of the collection of subspaces of given
+    # dimension of a subspace of a projective space
+#	function( shad )
+#		local d, pg, x, vspace, W;
+		## the underlying projective space
+#		pg := shad!.geometry;
+#		x:=shad!.parentflag;
+#		vspace:=UnderlyingVectorSpace(x);
+#		if not IsInt(shad!.type) then
+#			Error("The subspaces of the collection need to have the same dimension");
+#        fi;
+		## the common type of elements of shads
+#		d := shad!.type;
+		# now we need to distinguish two cases	
+#		if d>Dimension(vspace) then
+		# in this case the shadow consists of subspaces through x
+#		  repeat W:=Span(RandomSubspace(pg,d-Dimension(vspace)-1),x);
+#		  until Dimension(W)=d-1;
+#		else
+		# in this case we can just take a random subspace in x
+#		  W:=RandomSubspace(x,d-1); #here was 'pg' instead of 'x', which is a bug! 
+#        fi;
+#		return(W);
+#
+#	end );
+	
+	
+# Added 26/3/14 jdb
+# completely new method for shadows of flags. Note that the above method
+# only worked for shadows of one element. The linear algebra for the new method
+# is actually done in the creation of the shadow. The Iterator method
+# for shadows was inpiring for this method.
+#############################################################################
+#O  Random( <subs> )
+# returns a random element out of the collection of subspaces of given
+# dimension contained in a subspace of a projective space
+##
 InstallMethod( Random, 
 	"for a collection of subspaces of a subspace of a projective space",
 	[ IsShadowSubspacesOfProjectiveSpace ],
     # chooses a random element out of the collection of subspaces of given
     # dimension of a subspace of a projective space
 	function( shad )
-		local d, pg, x, vspace, W;
+		local rand, mat, vs, j, pg;
 		## the underlying projective space
 		pg := shad!.geometry;
-		x:=shad!.parentflag;
-		vspace:=UnderlyingVectorSpace(x);
-		if not IsInt(shad!.type) then
-			Error("The subspaces of the collection need to have the same dimension");
-        fi;
-		## the common type of elements of shads
-		d := shad!.type;
-		# now we need to distinguish two cases	
-		if d>Dimension(vspace) then
-		# in this case the shadow consists of subspaces through x
-		  repeat W:=Span(RandomSubspace(pg,d-Dimension(vspace)-1),x);
-		  until Dimension(W)=d-1;
-		else
-		# in this case we can just take a random subspace in x
-		  W:=RandomSubspace(x,d-1); #here was 'pg' instead of 'x', which is a bug! 
-        fi;
-		return(W);
-
+		j := shad!.type;
+		rand := BasisVectors(Basis(Random(Subspaces(shad!.factorspace,j-Size(shad!.inner)))));
+		mat := shad!.inner;
+		vs := Concatenation(rand,mat);
+		return VectorSpaceToElement(pg,vs);
 	end );
+
 
 #############################################################################
 # Baer sublines and Baer subplanes:
