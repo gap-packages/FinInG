@@ -2053,7 +2053,7 @@ InstallMethod( ActionOnAllProjPoints, "for a projective collineation group",
 	[ IsProjectiveGroupWithFrob ],
 	function( pg )
 		local a,d,f,o,on,orb,v,zero, m, j;
-		Print("using ActionOnAllProjPoints\n");
+		Info(InfoFinInG,4,"Using ActionOnAllProjPoints");
 		f := BaseField(pg);
 		d := Dimension(pg);
 		o := One(f);
@@ -2206,7 +2206,7 @@ InstallMethod( NiceMonomorphism,
 	50,
 	function( pg )
 		local can, dom, hom, bf;
-	Print("calling NiceMonomorphism (nasty case)\n");	
+		Info(InfoFinInG,4,"Using NiceMonomorphism for proj. group (nasty)");
 		bf := BaseField(pg);
 		can := CanComputeActionOnPoints(pg);
 		if not(can) then
