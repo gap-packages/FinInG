@@ -202,6 +202,10 @@ indeed residually connected.
 </Description>
 </ManSection>
 
+<Example>
+<#Include SYSTEM "../examples/include/diagram_connectedness.include"> 
+</Example>
+
 <ManSection>
 <Oper Name="StandardFlagOfCosetGeometry" Arg="cg"/>
 <Returns>standard chamber of <A>cg</A></Returns>
@@ -220,6 +224,11 @@ coset geometry.
 <A>fl</A> must be a chamber given as a list of cosets of the parabolic subgroups of <A>cg</A>.
 </Description>
 </ManSection>
+
+<Example>
+<#Include SYSTEM "../examples/include/diagram_flagmapping.include"> 
+</Example>
+
 
 <ManSection>
 <Oper Name="CanonicalResidueOfFlag" Arg="cg,fl"/>
@@ -240,9 +249,12 @@ set <M>\{i_1,i_2,\ldots ,i_k\}</M> of <A>fl</A>.
 <Returns>the residue of <A>fl</A> in <A>cg</A>.</Returns>
 <Description> 
 <A>cg</A> must be a coset geometry. 
-CHECK the back-mapping. Still not quite right. I'll have another look.
 </Description>
 </ManSection>
+
+<Example>
+<#Include SYSTEM "../examples/include/diagram_residues.include"> 
+</Example>
 
 <ManSection>
 <Oper Name="IncidenceGraph" Arg="cg"/>
@@ -297,7 +309,7 @@ fetch the second Janko group, also known as the Hall-Janko group. Beware that <P
 </Section>
 <Section>
 <Heading>Automorphisms, Correlations and Isomorphisms</Heading>
-An <E>automorphism</E> of an incidence structure <Alt Not="HTML"><M>\Gamma</M></Alt><Alt Only="HTML">&#915;</Alt> is a permutation of the element set of <Alt Not="HTML"><M>\Gamma</M></Alt><Alt Only="HTML">&#915;</Alt> such that incidence is preserved and types are fixed (i.e. the type of the image of an element coincides with the type of that element). One (not very efficient) way to compute the (full) automorphism group of <Alt Not="HTML"><M>\Gamma</M></Alt><Alt Only="HTML">&#915;</Alt> is to compute its incidence graph and then use the available <F>nauty</F> machinery to obtain the group. 
+An <E>automorphism</E> of an incidence structure <Alt Not="HTML"><M>\Gamma</M></Alt><Alt Only="HTML">&#915;</Alt> is a permutation of the element set of <Alt Not="HTML"><M>\Gamma</M></Alt><Alt Only="HTML">&#915;</Alt> such that incidence is preserved and types are fixed (i.e. the type of the image of an element coincides with the type of that element). One way to compute the (full) automorphism group of <Alt Not="HTML"><M>\Gamma</M></Alt><Alt Only="HTML">&#915;</Alt> is to compute its incidence graph and then use the available <F>nauty</F> machinery to obtain the group. 
 
 <ManSection>
 <Oper Name="AutGroupIncidenceStructureWithNauty" Arg="cg"/>
