@@ -1,0 +1,23 @@
+gap&gt; L:=SimpleLieAlgebra("D",8,Rationals);
+&lt;Lie algebra of dimension 120 over Rationals&gt;
+gap&gt; rs:=RootSystem(L);
+&lt;root system of rank 8&gt;
+gap&gt; w:=WeylGroup(rs);
+&lt;matrix group with 8 generators&gt;
+gap&gt; gens:=GeneratorsOfGroup(w);;
+gap&gt; pabs:=List(gens, g -&gt; Group(Difference(gens, [g])));
+[ &lt;matrix group with 7 generators&gt;, &lt;matrix group with 7 generators&gt;, 
+  &lt;matrix group with 7 generators&gt;, &lt;matrix group with 7 generators&gt;, 
+  &lt;matrix group with 7 generators&gt;, &lt;matrix group with 7 generators&gt;, 
+  &lt;matrix group with 7 generators&gt;, &lt;matrix group with 7 generators&gt; ]
+gap&gt; g:=Group(gens);
+&lt;matrix group with 8 generators&gt;
+gap&gt; cg:=CosetGeometry(g,pabs);;
+gap&gt; cham:=RandomChamber(cg);; # Time of last command: 23945 ms
+gap&gt; FlagToStandardFlag(cg,cham); # Time of last command: 1720 ms
+[ [ 0, 0, 0, 0, 1, -1, 0, 0 ], [ 0, 0, 0, 1, 0, -1, 0, 0 ], 
+  [ 0, 0, 0, 1, 0, 0, -1, -1 ], [ 1, -1, 0, 1, 0, 0, -1, -1 ], 
+  [ 0, -1, 0, 1, 0, 0, -1, -1 ], [ 0, -1, 0, 1, 0, 0, 0, -2 ], 
+  [ 0, -1, 1, 0, 0, 0, 0, -1 ], [ 0, -1, 0, 1, 0, 0, 0, -1 ] ]
+gap&gt; cham^last = StandardFlagOfCosetGeometry(cg); # Time of last command:1005 ms
+true
