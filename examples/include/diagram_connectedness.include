@@ -1,0 +1,69 @@
+gap&gt; ps:=HyperbolicQuadric(7,2);
+Q+(7, 2)
+gap&gt; g:=IsometryGroup(ps);;
+gap&gt; reps:=RepresentativesOfElements(ps);
+[ &lt;a point in Q+(7, 2)&gt;, &lt;a line in Q+(7, 2)&gt;, &lt;a plane in Q+(7, 2)&gt;, 
+  &lt;a solid in Q+(7, 2)&gt; ]
+gap&gt; solids:=Orbit(g,reps[4]);;
+gap&gt; ps:=HyperbolicQuadric(7,2);
+Q+(7, 2)
+gap&gt; g:=IsometryGroup(ps);;
+gap&gt; reps:=RepresentativesOfElements(ps);
+[ &lt;a point in Q+(7, 2)&gt;, &lt;a line in Q+(7, 2)&gt;, &lt;a plane in Q+(7, 2)&gt;, 
+  &lt;a solid in Q+(7, 2)&gt; ]
+gap&gt; h:=DerivedSubgroup(g);; # to get greek and latin solids
+gap&gt; orbs:=FiningOrbits(h,Solids(ps));;
+50%..100%..gap&gt; List(orbs, Size);
+[ 135, 135 ]
+gap&gt; Filtered(orbs[2], s -&gt; ProjectiveDimension(Meet(orbs[1][1],s))=2); # to
+[ &lt;a solid in Q+(7, 2)&gt;, &lt;a solid in Q+(7, 2)&gt;, &lt;a solid in Q+(7, 2)&gt;, 
+  &lt;a solid in Q+(7, 2)&gt;, &lt;a solid in Q+(7, 2)&gt;, &lt;a solid in Q+(7, 2)&gt;, 
+  &lt;a solid in Q+(7, 2)&gt;, &lt;a solid in Q+(7, 2)&gt;, &lt;a solid in Q+(7, 2)&gt;, 
+  &lt;a solid in Q+(7, 2)&gt;, &lt;a solid in Q+(7, 2)&gt;, &lt;a solid in Q+(7, 2)&gt;, 
+  &lt;a solid in Q+(7, 2)&gt;, &lt;a solid in Q+(7, 2)&gt;, &lt;a solid in Q+(7, 2)&gt; ]
+gap&gt; #find a latin incident with the greek which is orbs[1][1]
+gap&gt; # Now we have a chamber
+gap&gt; goodreps:=[reps[1],reps[2],orbs[1][1],last[1]];
+[ &lt;a point in Q+(7, 2)&gt;, &lt;a line in Q+(7, 2)&gt;, &lt;a solid in Q+(7, 2)&gt;, 
+  &lt;a solid in Q+(7, 2)&gt; ]
+gap&gt; pabs:=List(goodreps, r -&gt; FiningStabiliser(h,r));
+[ &lt;projective collineation group of size 1290240 with 2 generators&gt;, 
+  &lt;projective collineation group of size 110592 with 4 generators&gt;, 
+  &lt;projective collineation group of size 1290240 with 2 generators&gt;, 
+  &lt;projective collineation group of size 1290240 with 4 generators&gt; ]
+gap&gt; cos:=CosetGeometry(h,pabs);
+CosetGeometry( Group( 
+[ ProjElWithFrob(NewMatrix(IsCMatRep,GF(2,1),8,[
+    [ Z(2)^0, Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0 ],
+    [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ],
+    [ 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ],
+    [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ],
+    [ 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), Z(2)^0 ],
+    [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ],
+    [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ],
+    [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2) 
+     ],]),IdentityMapping( GF(2) )), ProjElWithFrob(NewMatrix(IsCMatRep,GF(2,
+    1),8,[[ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ],
+    [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ],
+    [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ],
+    [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ],
+    [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), Z(2)^0 ],
+    [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ],
+    [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ],
+    [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2) 
+     ],]),IdentityMapping( GF(2) )), ProjElWithFrob(NewMatrix(IsCMatRep,GF(2,
+    1),8,[[ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ],
+    [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2) ],
+    [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ],
+    [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ],
+    [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ],
+    [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ],
+    [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2) ],
+    [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0 
+     ],]),IdentityMapping( GF(2) )) ] ) )
+gap&gt; IsConnected(cos);
+true
+gap&gt; IsResiduallyConnected(cos); # Time of last command: 570727 ms
+true
+gap&gt; time;
+611973
