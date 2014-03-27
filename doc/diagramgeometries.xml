@@ -99,10 +99,10 @@ of <A>l</A>.
 <Oper Name="Borelsubgroup" Arg="cg"/>
 <Returns>the Borel subgroup of de geometry <A>cg</A></Returns>
 <Description> 
-The Borel subgroup is equal to the stabilizer of a chamber. It corresponds to the intersection of all parabolic subgrops.
+The Borel subgroup is equal to the stabilizer of a chamber. It corresponds to the intersection of all parabolic subgroups.
 </Description>
-</ManSection>
 
+</ManSection>
 <ManSection>
 <Oper Name="RandomElement" Arg="cg"/>
 <Returns>a random element of <A>cg</A></Returns>
@@ -127,6 +127,10 @@ The Borel subgroup is equal to the stabilizer of a chamber. It corresponds to th
 </Description>
 </ManSection>
 
+<Example>
+<#Include SYSTEM "../examples/include/diagram_random.include"> 
+</Example>
+
 <ManSection>
 <Oper Name="IsFlagTransitiveGeometry" Arg="cg"/>
 <Returns>true if and only if the group <A>G</A> defining <A>cg</A>
@@ -143,6 +147,10 @@ attribute <C>IsFlagTransitiveGeometry</C> if you are sure the coset geometry is
 indeed flag-transitive.
 </Description>
 </ManSection>
+
+<Example>
+<#Include SYSTEM "../examples/include/diagram_notFT.include"> 
+</Example>
 
 <ManSection>
 <Oper Name="IsFirmGeometry" Arg="cg"/>

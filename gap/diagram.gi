@@ -129,7 +129,8 @@ InstallMethod( MakeRank2Residue, [ IsRank2Residue ],
     local geo, flag;
       geo:=res!.geo;
       if IsCosetGeometry(geo) then
-        flag:=StandardFlagOfCosetGeometry(geo)!.els{Difference(TypesOfElementsOfIncidenceStructure(geo),res!.edge)};
+        flag:=FlagOfIncidenceStructure(geo, StandardFlagOfCosetGeometry(geo)!.els{Difference(TypesOfElementsOfIncidenceStructure(geo),res!.edge)});
+#I know this is ugly but I have no time to define subflags
         res!.residuegeometry:=CanonicalResidueOfFlag(geo,flag);
       else
         Error("Don't know how to compute residue!\n");
@@ -308,6 +309,19 @@ InstallOtherMethod( RandomFlag,
 		type:=Random(Combinations(TypesOfElementsOfIncidenceStructure(cg)));
 		flag:=RandomChamber(cg)!.els{type};
 		return FlagOfIncidenceStructure(cg,flag);
+	end );
+
+# 
+#############################################################################
+#O  ElementsOfFlag( <flag> )
+# returns elements of a flag 
+# 
+##
+InstallMethod( ElementsOfFlag, 
+	"for a coset geometry flag",
+	[IsFlagOfCosetGeometry],
+	function(flag)
+		return flag!.els;
 	end );
 
 
@@ -721,14 +735,14 @@ InstallMethod( FlagToStandardFlag, "for coset geometries",
     return g;
   end );
 
-# 
+# CHECKED 27/3/2014 PhC
 #############################################################################
 # CanonicalResidueOfFlag
 #  
 # 
 ##
 InstallMethod( CanonicalResidueOfFlag, "for coset geometries",
-               [ IsCosetGeometry, IsHomogeneousList ],
+               [ IsCosetGeometry, IsFlagOfCosetGeometry ],
 
   function( cg, flag )
 
@@ -738,8 +752,9 @@ InstallMethod( CanonicalResidueOfFlag, "for coset geometries",
 
     local typesflag, types, parabolics, i, resg, respabs;
 
+     typesflag := Set(flag!.types);
 #    if IsFlagTransitiveGeometry( cg ) then
-       typesflag := Set(flag, t->t!.type);
+#       typesflag := Set(flag, t->t!.type);
        if IsEmpty( typesflag ) then
          return cg;
        fi;
@@ -769,7 +784,7 @@ InstallMethod( CanonicalResidueOfFlag, "for coset geometries",
 # 
 ##
 InstallMethod( ResidueOfFlag, "for coset geometries",
-               [ IsCosetGeometry, IsHomogeneousList ],
+               [ IsCosetGeometry, IsFlagOfCosetGeometry ],
 
   function( cg, flag )
 
@@ -780,7 +795,7 @@ InstallMethod( ResidueOfFlag, "for coset geometries",
     local typesflag, types, r, parabolics, i, resg, respabs;
 
     if IsFlagTransitiveGeometry( cg ) then
-       typesflag := Set(flag, t->t!.type);
+       typesflag := Set(flag!.types);
        if IsEmpty( typesflag ) then
          return cg;
        fi;
@@ -803,6 +818,7 @@ InstallMethod( ResidueOfFlag, "for coset geometries",
        ## The mathematics here needs checking/testing!
        
        r := FlagToStandardFlag( cg, flag );  
+       r:=Inverse(r);
        respabs := List(respabs, t -> t^r);
        resg := resg^r;
      else
