@@ -2053,22 +2053,23 @@ InstallMethod( ActionOnAllProjPoints, "for a projective collineation group",
 	[ IsProjectiveGroupWithFrob ],
 	function( pg )
 		local a,d,f,o,on,orb,v,zero, m, j;
-		#Print("using ActionOnAllProjPoints\n");
+		Print("using ActionOnAllProjPoints\n");
 		f := BaseField(pg);
 		d := Dimension(pg);
 		o := One(f);
 		on := One(pg);
 		v := ZeroMutable(on!.mat[1]);
 		v[1] := o;
-		# orb := Orbit(pg,v,OnProjPointsWithFrob);
-		zero := Zero(f);
-		orb := [];
-		for m in f^d do
-			j := PositionNot(m, zero);
-		if j <= d and m[j] = o then
-			Add(orb, CVec(m,f)); #here is the change.
-		fi;
-		od;
+		#orb := Orbit(pg,v,OnProjPointsWithFrob);
+		#orb := Orb(pg,v,OnProjPointsWithFrob);
+		#zero := Zero(f);
+		#orb := [];
+		#for m in f^d do
+		#	j := PositionNot(m, zero);
+		#if j <= d and m[j] = o then
+		#	Add(orb, CVec(m,f)); #here is the change.
+		#fi;
+		#od;
 		a := ActionHomomorphism(pg,orb,OnProjPointsWithFrob,"surjective");
 		SetIsInjective(a,true);
 		return a;
@@ -2180,11 +2181,11 @@ InstallMethod( NiceMonomorphism,
 	50,
 	function( pg )
 	local hom, dom,bf;
+	Info(InfoFinInG,4,"Using NiceMonomorphism for proj. group (feasible)");
 	bf := BaseField(pg);
     dom := MakeAllProjectivePoints( bf, Dimension(pg) - 1);
     dom := List(dom,x->CVec(x,bf));
 	if FINING.Fast then
-		Print("efgkes");
 	   hom := NiceMonomorphismByDomain( pg, dom, OnProjPointsWithFrob );
     else 
        hom := ActionHomomorphism(pg, dom, OnProjPointsWithFrob, "surjective");    
@@ -2254,8 +2255,13 @@ InstallMethod( NiceMonomorphism,
 		fi;
 	end );
 
-## FindBasePointCandidates: are these methods also obsolete in the sense that they are never used?
+## FindBasePointCandidates: are these methods also obsolete in the sense that they are never used? No! They are used in GenSS :-)
 
+#############################################################################
+#O  FindBasePointCandidates( <g>, <opt>, <i> )
+# <pg> is a projective collineation group. <op> and <i> are arguments required
+# to be used in GenSS.
+##
 InstallMethod( FindBasePointCandidates,
   "for a projective group",
   [IsProjectivityGroup,IsRecord,IsInt],
@@ -2278,6 +2284,11 @@ InstallMethod( FindBasePointCandidates,
     return cand;
   end );
 
+#############################################################################
+#O  FindBasePointCandidates( <g>, <opt>, <i> )
+# <pg> is a projective collineation group. <op> and <i> are arguments required
+# to be used in GenSS.
+##
 InstallMethod( FindBasePointCandidates,
   "for a projective collineation group",
   [IsProjectiveGroupWithFrob,IsRecord,IsInt],
@@ -2305,6 +2316,12 @@ InstallMethod( FindBasePointCandidates,
     return cand;
   end );
 
+
+#############################################################################
+#O  FindBasePointCandidates( <g>, <opt>, <i> )
+# <pg> is a projective collineation group. <opt>, <i>, <parentS> are arguments 
+# required to be used in GenSS.
+##
 InstallMethod( FindBasePointCandidates,
   "for a projective collineation group",
   [IsProjectiveGroupWithFrob,IsRecord,IsInt,IsObject],
@@ -2337,6 +2354,7 @@ InstallMethod( FindBasePointCandidates,
     fi;
     return cand;
   end );
+
 
 #################################################
 # Our classical groups:
