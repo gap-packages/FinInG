@@ -1,0 +1,16 @@
+gap&gt; g:=SymmetricGroup(4);
+Sym( [ 1 .. 4 ] )
+gap&gt; g1:=Subgroup(g,[(1,2,3)]);
+Group([ (1,2,3) ])
+gap&gt; g2:=Subgroup(g,[(1,4)]);
+Group([ (1,4) ])
+gap&gt; g3:=Subgroup(g,[(1,2,3,4)]);
+Group([ (1,2,3,4) ])
+gap&gt; cg:=CosetGeometry(g,[g1,g2,g3]);
+CosetGeometry( SymmetricGroup( [ 1 .. 4 ] ) )
+gap&gt; IsFlagTransitiveGeometry(cg);
+false
+gap&gt; cg2:=CosetGeometry(g,[g1,g2]);
+CosetGeometry( SymmetricGroup( [ 1 .. 4 ] ) )
+gap&gt; IsFlagTransitiveGeometry(cg2);
+true

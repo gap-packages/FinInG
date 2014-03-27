@@ -79,7 +79,8 @@ morphismsfiles := ["morphisms_filters", "morphisms_isopolar", "morphisms_embeddi
 varieties_files := ["varieties_general", "varieties_polarspace", "varieties_veronese", "varieties_segre", "varieties_hermitian", "varieties_quadratic", "varieties_grassmann" ];
 
 
-diagramfiles := ["diagram_cosetgeom", "diagram_neumaier", "diagram_indmin", "diagram_nearoctagon", "diagram_autiso", "diagram_autcor"];
+diagramfiles := ["diagram_cosetgeom", "diagram_neumaier", "diagram_indmin", "diagram_nearoctagon", "diagram_autiso", "diagram_autcor",
+                    "diagram_random", "diagram_notFT"];
 
 
 "projpol_specialisometry", "projpol_isometry", "projpol_similarity", "cps_underlyingvs", "cps_ambientspace",
@@ -178,6 +179,18 @@ gap := Filename(Directory("/usr/bin/"),"gap4r6");
 paths := JoinStringsWithSeparator(GAP_ROOT_PATHS{[2,3]},";");
 args := JoinStringsWithSeparator(["-l",paths," -L fining.ws"," -o 4G"]," ");
 args := ["-l",paths,"-L","fining.ws","-o","4G"];
+
+
+#code below for gap4r7
+homedir := DirectoryCurrent();
+exampledir := DirectoriesPackageLibrary("fining","examples/gap")[1]; 
+preambledir := DirectoriesPackageLibrary("fining","examples/")[1]; 
+outputdir := DirectoriesPackageLibrary("fining","examples/output")[1];
+gap := Filename(Directory("/usr/bin/"),"gap4r7");
+paths := JoinStringsWithSeparator(GAP_ROOT_PATHS{[2,3]},";");
+args := JoinStringsWithSeparator(["-l",paths," -L fining.ws"," -o 4G"]," ");
+args := ["-l",paths,"-L","fining.ws","-o","4G"];
+
 
 
 #create .out files using the saved workspace

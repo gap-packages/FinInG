@@ -1,0 +1,20 @@
+# Diagram/Random example
+g:=SymmetricGroup(5);
+g1:=Stabilizer(g,[1,2],OnSets);
+g2:=Stabilizer(g,[[1,2],[3,4]],OnSetsSets);
+cg:=CosetGeometry(g,[g1,g2]);
+RandomElement(cg);
+Display(last);
+RandomFlag(cg);
+flg:=RandomFlag(cg);
+Type(flg);
+flg2:=RandomFlag(cg);
+Type(flg2);
+IsChamberOfIncidenceStructure(flg2);
+IsChamberOfIncidenceStructure(flg);
+Display(flg2);
+cham:=RandomChamber(cg);
+IsChamberOfIncidenceStructure(cham);
+ElementsOfFlag(cham);
+IsIncident(last[1],last[2]);
+quit;
