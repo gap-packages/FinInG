@@ -26,14 +26,14 @@ with finite projective spaces.
 <Section>
 <Heading>Projective Spaces and basic operations</Heading>
 
-A <E>projective space</E> is a point-line incidence geometry, satisfying few well known axioms. 
+A <E>projective space</E> is a point-line incidence geometry, satisfying a few well known axioms. 
 An axiomatic treatment can e.g. be found in <Cite Key="VY65a"/> and <Cite Key="VY65b"/>. 
-Projective spaces are axiomatically, point-line geometries, but
+Projective spaces are axiomatically point-line geometries, but
 may contain higher dimensional projective subspaces too. <P/>
 
 In <Package>FinInG</Package>, we deal with <E>finite Desarguesian projective
 spaces</E>. It is well known that these geometries can be described completely using
-vector spaces over finite fields. The elements of the projective space are all subspaces of the vector space.
+vector spaces over finite fields. The elements of the projective space are all nontrivial subspaces of the vector space.
 So the projective points correspond with the vectorlines, the projective lines correspond with the vectorplanes, etc.
 From the axiomatic point of view, a projective space is a point-line geometry, 
 and has rank at least 2. But a projective line is obtained if we start with a two dimensional vector space. Starting with a
@@ -118,12 +118,12 @@ Hence, simply <A>ps</A> will be returned.
 <Heading>Subspaces of projective spaces</Heading>
 
 The elements of a projective space <M>PG(n,q)</M> are the subspaces of a suitable dimension. The 
-empty subspace, also called the trivial subspace, has dimenion -1, corresponds with the zero dimensional 
-vector space of the underlying vector space of <M>PG(n,q)</M>, and is hence represented by the zero vector
+empty subspace, also called the trivial subspace, has dimenion <M>-1</M> and corresponds to the zero dimensional 
+vector subspace of the underlying vector space of <M>PG(n,q)</M>, and is hence represented by the zero vector
 of lenght <M>n+1</M> over the underlying field <M>GF(q)</M>. The trivial subspace and the whole projective 
-space are mathematically considerd as a subsace of the projective geometry, but not as elements of the 
+space are mathematically considerd as a subspace of the projective geometry, but not as elements of the 
 incidence geometry, and hence do in <Package>FinInG</Package>
-not belong to the category <C>IsSubspaceOfProjectiveSpace</C>.
+<B>not</B> belong to the category <C>IsSubspaceOfProjectiveSpace</C>.
 
 <ManSection>
 <Oper Name="VectorSpaceToElement" Arg="geo, v"/>
@@ -328,6 +328,7 @@ variant of this operation.
 
 <ManSection>
 <Oper Name="Meet" Arg="u,v"/>
+<Oper Name="Meet" Arg="list"/>
 <Returns>an element or the empty subspace or the whole space</Returns>
 <Description>
 When <A>u</A> and <A>v</A> are elements of a projective space.
@@ -338,7 +339,7 @@ the intersection of all elements in <A>list</A>. It is checked whether the eleme
 the trivial subspace and the whole projective space are not objects in
 the category <C>IsSubspaceOfProjectiveSpace</C>, they are allowed as 
 argument for this operation, also as member of the argument of the second
-variant of this operation.
+variant of this operation. We remark that the result of a <F>Meet</F> operation can be the empty subspace.
 <Example>
 <#Include SYSTEM "../examples/include/projsp_meet.include"> 
 </Example>
@@ -366,7 +367,7 @@ the empty flag is returned.</Returns>
 
 <ManSection>
 <Oper Name="IsChamberOfIncidenceStructure" Arg="flag"/>
-<Returns>true if <A>flag</A> is a chamber flag</Returns>
+<Returns>true if <A>flag</A> is a chamber</Returns>
 <Description>
 <Example>
 <#Include SYSTEM "../examples/include/projsp_chamber.include"> 
@@ -383,13 +384,10 @@ the empty flag is returned.</Returns>
 <ManSection>
 <Oper Name="ShadowOfElement" Arg="ps, el, i"/>
 <Oper Name="ShadowOfElement" Arg="ps, el, str"/>
-<Returns>the shadow elements of type <A>i</A> in <A>el</A>. The second variant determines 
+<Returns>the elements of type <A>i</A> incident with <A>el</A>. The second variant determines 
 the type <A>i</A> from the position of <A>str</A> in the list returned by 
 <F>TypesOfElementsOfIncidenceStructurePlural</F></Returns>
 <Description>
-Given the element <A>el</A> in the projective space <A>ps</A>, this
-operation returns the elements of <A>ps</A> of type <A>i</A> incident
-with <A>el</A>.
 <Example>
 <#Include SYSTEM "../examples/include/projsp_shadowofelement.include"> 
 </Example>
@@ -399,10 +397,10 @@ with <A>el</A>.
 <ManSection>
 <Oper Name="ShadowOfFlag" Arg="ps, flag, i"/>
 <Oper Name="ShadowOfFlag" Arg="ps, flag, str"/>
-<Returns>the shadow elements of type <A>i</A> in the flag <A>flag</A>, i.e. the elements of type
+<Returns>the type <A>i</A> shadow elements of the flag <A>flag</A>, i.e. the elements of type
 <A>i</A> incident with all elements of <A>flag</A>. The
 second variant determines the type <A>i</A> from the position of <A>str</A> in the list
-returned by <F>TypesOfElementsOfIncidenceStructurePlural</F>
+returned by <F>TypesOfElementsOfIncidenceStructurePlural</F>.
 </Returns>
 <Description>
 <Example>
@@ -414,7 +412,7 @@ returned by <F>TypesOfElementsOfIncidenceStructurePlural</F>
 <ManSection>
 <Oper Name="ElementsIncidentWithElementOfIncidenceStructure" Arg="el, i"/>
 <Returns>the elements of type <A>i</A> incident with <A>el</A>, in other words,
-the shadow of the elements of type i of the element <A>el</A>
+the type <A>i</A> shadow of the element <A>el</A>
 </Returns>
 <Description>
 Internally, the function <F>FlagOfIncidenceStructure</F> is used to create a flag from <A>list</A>. This function
@@ -456,7 +454,7 @@ ambient geometry.
 <Oper Name="Iterator" Arg="subspaces"/>
 <Returns>an iterator for the collection <A>subspaces</A></Returns>
 <Description>
-We refer to <Ref Oper="Iterator"/> for the definition of an iterator.
+We refer to the GAP operation <Ref Oper="Iterator"/> for the definition of an iterator.
 <Example>
 <#Include SYSTEM "../examples/include/projsp_iterator.include"> 
 </Example>
@@ -483,7 +481,7 @@ be used as an enumerator, but this might be time consuming.
 <Returns>the complete list of elements in the collection <A>subspaces</A></Returns>
 <Description>
 The operation <F>List</F> will return a complete list, the operation <F>AsList</F> will return an <Package>orb</Package> object,
-representing a complete orbit, i.e. representing in this case a complete list. To obtain the elements explicitely, one has
+representing a complete orbit, i.e. representing in this case a complete list. To obtain the elements explicitly, one has
 to issue the <F>List</F> operation with as argument the <Package>orb</Package> object again. Applying <F>List</F> directly
 to a collection of subspaces, refers to the enumerator for the collection, while using <F>AsList</F> uses the <Package>orb</Package>
 to compute all subspaces as an orbit.
