@@ -111,8 +111,8 @@ DeclareAttribute( "AmbientSpace", IsAlgebraicVariety );
 
 DeclareOperation( "ProjectiveVariety", [IsProjectiveSpace, IsPolynomialRing, IsList] );
 DeclareOperation( "ProjectiveVariety", [IsProjectiveSpace, IsList] );
-DeclareOperation( "DualCoordinatesOfHyperplane", [IsSubspaceOfProjectiveSpace] );
-DeclareOperation( "HyperplaneByDualCoordinates", [IsProjectiveSpace,IsList] );
+#DeclareOperation( "DualCoordinatesOfHyperplane", [IsSubspaceOfProjectiveSpace] ); #moved to projectivespace.gd
+#DeclareOperation( "HyperplaneByDualCoordinates", [IsProjectiveSpace,IsList] );
 
 DeclareOperation( "HermitianVariety", [IsPosInt,IsField] );
 DeclareOperation( "HermitianVariety", [IsPosInt,IsPosInt] );

@@ -166,42 +166,43 @@ InstallMethod( PrintObj,
 		ViewObj(var!.geometry);
 	end );
 
-
+#moved to projectivespace.gi
 #############################################################################
 #O  DualCoordinatesOfHyperplane( <hyp> )
 # returns the dual coordinate of a hyperplane in a projective space.
 ##
-InstallMethod( DualCoordinatesOfHyperplane,
-	"for a subspace of a projective space",
-		[IsSubspaceOfProjectiveSpace],
-		function(hyp)
-			local mat,a;
-			if not Dimension(hyp)=Dimension(hyp!.geo)-1 then
-				Error("The argument is not a hyperplane");
-			else
-				mat:=hyp!.obj;
-				a:=NullspaceMat(TransposedMat(mat));
-			return Unpack(a[1]);
-			fi;
-	end );
-	
+#InstallMethod( DualCoordinatesOfHyperplane,
+#	"for a subspace of a projective space",
+#		[IsSubspaceOfProjectiveSpace],
+#		function(hyp)
+#			local mat,a;
+#			if not Dimension(hyp)=Dimension(hyp!.geo)-1 then
+#				Error("The argument is not a hyperplane");
+#			else
+#				mat:=hyp!.obj;
+#				a:=NullspaceMat(TransposedMat(mat));
+#			return Unpack(a[1]);
+#			fi;
+#	end );
+
+#moved to projectivespace.gi
 #############################################################################
 #O  HyperplaneByDualCoordinates( <pg>,<vector> )
 # returns the hyperplanes by given dual coordinates.
 ##
-InstallMethod( HyperplaneByDualCoordinates,
-	"for a projective space and a list with coordinates",
-	[IsProjectiveSpace,IsList],
-	function(pg,a)
-		local mat,list;
-		if not Size(a)=Dimension(pg)+1 or not ForAll(a,x->x in pg!.basefield) then
-			Error("The dual coordinates are not compatible with the projective space");
-		else
-			mat:=[a];
-			list:=NullspaceMat(TransposedMat(mat));
-			return VectorSpaceToElement(pg,list);
-		fi;
-	end );
+#InstallMethod( HyperplaneByDualCoordinates,
+#	"for a projective space and a list with coordinates",
+#	[IsProjectiveSpace,IsList],
+#	function(pg,a)
+#		local mat,list;
+#		if not Size(a)=Dimension(pg)+1 or not ForAll(a,x->x in pg!.basefield) then
+#			Error("The dual coordinates are not compatible with the projective space");
+#		else
+#			mat:=[a];
+#			list:=NullspaceMat(TransposedMat(mat));
+#			return VectorSpaceToElement(pg,list);
+#		fi;
+#	end );
 
 
 

@@ -139,6 +139,9 @@ DeclareOperation( "Meet", [IsSubspaceOfProjectiveSpace, IsProjectiveSpace] );
 DeclareOperation( "Meet", [IsProjectiveSpace, IsSubspaceOfProjectiveSpace] );
 DeclareOperation( "Meet", [IsList]);
 
+DeclareOperation( "DualCoordinatesOfHyperplane", [IsSubspaceOfProjectiveSpace] );
+DeclareOperation( "HyperplaneByDualCoordinates", [IsProjectiveSpace,IsList] );
+
 #############################################################################
 # A useful non-user operation.
 #############################################################################

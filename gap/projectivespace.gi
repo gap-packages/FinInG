@@ -806,22 +806,60 @@ InstallMethod( Coordinates,
 		fi;
 	end );
   
-# CHECKED 8/09/11 jdb
+# obsolete
 #############################################################################
 #O  CoordinatesOfHyperplane( <hyp> ) returns the coordinates of the hyperplane
 # <hyp>
 ##
-InstallMethod( CoordinatesOfHyperplane, 
-	"for a hyperplane of a projective space",
-	[IsSubspaceOfProjectiveSpace],
-	function(hyp)
-		local pg;
-		pg:=ShallowCopy(hyp!.geo);
-		if not hyp!.type=Dimension(pg) then 
-			Error("The argument is not a hyperplane");
-		else 
-			#perp:=StandardDualityOfProjectiveSpace(pg);
-			return Coordinates(VectorSpaceToElement(pg,NullspaceMat(TransposedMat(hyp!.obj))));
+#InstallMethod( CoordinatesOfHyperplane, 
+#	"for a hyperplane of a projective space",
+#	[IsSubspaceOfProjectiveSpace],
+#	function(hyp)
+#		local pg;
+#		pg:=ShallowCopy(hyp!.geo);
+#		if not hyp!.type=Dimension(pg) then 
+#			Error("The argument is not a hyperplane");
+#		else 
+#			#perp:=StandardDualityOfProjectiveSpace(pg);
+#			return Coordinates(VectorSpaceToElement(pg,NullspaceMat(TransposedMat(hyp!.obj))));
+#		fi;
+#	end );
+
+# came from varieties.gi
+#############################################################################
+#O  DualCoordinatesOfHyperplane( <hyp> )
+# returns the dual coordinate of a hyperplane in a projective space.
+##
+InstallMethod( DualCoordinatesOfHyperplane,
+	"for a subspace of a projective space",
+		[IsSubspaceOfProjectiveSpace],
+		function(hyp)
+			local mat,a;
+			if not Dimension(hyp)=Dimension(hyp!.geo)-1 then
+				Error("The argument is not a hyperplane");
+			else
+				mat:=hyp!.obj;
+				a:=NullspaceMat(TransposedMat(mat));
+				return Unpack(a[1]);
+			fi;
+	end );
+
+# came from varieties.gi	
+#############################################################################
+#O  HyperplaneByDualCoordinates( <pg>,<vector> )
+# returns the hyperplanes by given dual coordinates.
+##
+InstallMethod( HyperplaneByDualCoordinates,
+	"for a projective space and a list with coordinates",
+	[IsProjectiveSpace,IsList],
+	function(pg,a)
+		local mat,list;
+		if not Size(a)=Dimension(pg)+1 or not ForAll(a,x->x in pg!.basefield) then
+			Error("The dual coordinates are not compatible with the projective space");
+		else
+			mat:=[a];
+			list:=NullspaceMat(TransposedMat(mat));
+			return VectorSpaceToElement(pg,list);
 		fi;
 	end );
 
@@ -838,7 +876,7 @@ InstallMethod( EquationOfHyperplane,
 		pg:=AmbientGeometry(hyp);
 		r:=PolynomialRing(pg!.basefield,pg!.dimension + 1);
 		indets:=IndeterminatesOfPolynomialRing(r);
-		v:=CoordinatesOfHyperplane(hyp);
+		v:=DualCoordinatesOfHyperplane(hyp);
 		return Sum(List([1..Size(indets)],i->v[i]*indets[i]));
 	end );
 	
