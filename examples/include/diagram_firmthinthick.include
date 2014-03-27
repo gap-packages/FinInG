@@ -1,0 +1,31 @@
+gap&gt; g:=SymmetricGroup(8);;
+gap&gt; pabs:=[];;
+gap&gt; pabs[1]:=Stabilizer(g,1);; pabs[2]:=Stabilizer(g,2);;
+gap&gt; pabs[3]:=Stabilizer(g,3);;
+gap&gt; pabs[4]:=Stabilizer(g,[1,2,3,4],OnSets);;
+gap&gt; pabs[5]:=Stabilizer(g,[1,2,3,4,5],OnSets);;
+gap&gt; pabs[6]:=Stabilizer(g,6);; pabs[7]:=Stabilizer(g,7);;
+gap&gt; cg:=CosetGeometry(g,pabs);
+CosetGeometry( SymmetricGroup( [ 1 .. 8 ] ) )
+gap&gt; IsFirmGeometry(cg);
+true
+gap&gt; IsThinGeometry(cg);
+true
+gap&gt; IsThickGeometry(cg);
+false
+gap&gt; truncation:=CosetGeometry(g,pabs{[1..5]});
+CosetGeometry( SymmetricGroup( [ 1 .. 8 ] ) )
+gap&gt; IsFirmGeometry(truncation);
+true
+gap&gt; IsThinGeometry(truncation);
+false
+gap&gt; IsThickGeometry(truncation);
+false
+gap&gt; truncation2:=CosetGeometry(g,pabs{[4,5]});
+CosetGeometry( SymmetricGroup( [ 1 .. 8 ] ) )
+gap&gt; IsFirmGeometry(truncation2);
+true
+gap&gt; IsThinGeometry(truncation2);
+false
+gap&gt; IsThickGeometry(truncation2);
+true

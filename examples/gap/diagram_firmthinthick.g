@@ -1,0 +1,21 @@
+# Firm/Thin/Thick example
+g:=SymmetricGroup(8);;
+pabs:=[];;
+pabs[1]:=Stabilizer(g,1);; pabs[2]:=Stabilizer(g,2);;
+pabs[3]:=Stabilizer(g,3);;
+pabs[4]:=Stabilizer(g,[1,2,3,4],OnSets);;
+pabs[5]:=Stabilizer(g,[1,2,3,4,5],OnSets);;
+pabs[6]:=Stabilizer(g,6);; pabs[7]:=Stabilizer(g,7);;
+cg:=CosetGeometry(g,pabs);
+IsFirmGeometry(cg);
+IsThinGeometry(cg);
+IsThickGeometry(cg);
+truncation:=CosetGeometry(g,pabs{[1..5]});
+IsFirmGeometry(truncation);
+IsThinGeometry(truncation);
+IsThickGeometry(truncation);
+truncation2:=CosetGeometry(g,pabs{[4,5]});
+IsFirmGeometry(truncation2);
+IsThinGeometry(truncation2);
+IsThickGeometry(truncation2);
+quit;
