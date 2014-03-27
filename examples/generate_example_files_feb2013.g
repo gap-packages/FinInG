@@ -80,7 +80,8 @@ varieties_files := ["varieties_general", "varieties_polarspace", "varieties_vero
 
 
 diagramfiles := ["diagram_cosetgeom", "diagram_neumaier", "diagram_indmin", "diagram_nearoctagon", "diagram_autiso", "diagram_autcor",
-                    "diagram_random", "diagram_notFT", "diagram_firmthinthick", "diagram_connectedness", "diagram_flagmapping"];
+                    "diagram_random", "diagram_notFT", "diagram_firmthinthick", "diagram_connectedness", "diagram_flagmapping",
+                    "diagram_residues"];
 
 
 "projpol_specialisometry", "projpol_isometry", "projpol_similarity", "cps_underlyingvs", "cps_ambientspace",
