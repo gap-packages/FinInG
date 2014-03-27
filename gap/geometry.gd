@@ -2,16 +2,13 @@
 ##
 ##  geometry.gd              FinInG package
 ##                                                              John Bamberg
-##                                                              Anton Betten
-##                                                              Jan De Beule
+## 								                                Anton Betten
 ##                                                             Philippe Cara
-##                                                            Michel Lavrauw
-##                                                                 Maska Law
+##                                                              Jan De Beule
+## 							                                  Michel Lavrauw
 ##                                                           Max Neunhoeffer
-##                                                            Michael Pauley
-##                                                             Sven Reichard
 ##
-##  Copyright 2011	Colorado State University, Fort Collins
+##  Copyright 2014	Colorado State University, Fort Collins
 ##					Università degli Studi di Padova
 ##					Universeit Gent
 ##					University of St. Andrews
