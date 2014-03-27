@@ -24,10 +24,6 @@
 # Things To Do:
 #
 # - testing
-# - Lots of attributes (in general, but at least for coset geometries), such as
-#     - "IsFirmGeometry"
-#     - "IsThinGeometry"
-#     - "IsThickGeometry"
 # - documentation
 # - Priorities
 #   1. Residues
@@ -207,6 +203,28 @@ InstallMethod( FlagOfIncidenceStructure,
 		ObjectifyWithAttributes(flag, IsFlagOfCGType, IsEmptyFlag, false);
 		return flag;
 	end);
+
+# 27/3/2014
+#############################################################################
+#O \= ( < flag1 >, <flag2 > )
+# Returns true if <flag1> and <flag2> represent the same flag in a 
+# coset geometry 
+# 
+##
+InstallOtherMethod( \=, [ IsFlagOfCosetGeometry, IsFlagOfCosetGeometry ],
+  function( flag1, flag2 )
+    local result, cg1, cg2;
+    cg1:=flag1!.geo;
+    cg2:=flag2!.geo;
+    if cg1 <> cg2 then
+      Print("#I the two flags are not in the same incidence structure!\n");
+      return false;
+    fi;
+    result:= (Set(flag1!.types)=Set(flag2!.types)) and (Set(flag1!.els)=Set(flag2!.els));
+    return result;
+  end );
+
+# 
 
 #
 ##########################################################################
@@ -545,7 +563,7 @@ InstallMethod( IsThinGeometry, "for coset geometries",
                [ IsCosetGeometry ],
   function( cg )
 
-    local parabolics, pis, without_i, int, borel, i;
+    local parabolics, pis, without_i, int, borel, i, result;
     parabolics := ParabolicSubgroups( cg );
     pis := [];
     for i in [1..Size(parabolics)] do
@@ -553,8 +571,39 @@ InstallMethod( IsThinGeometry, "for coset geometries",
         int := Intersection( parabolics{without_i} );
         Add(pis, int);
     od;
-    return ForAll([1..Size(parabolics)], i -> 
-              Index(pis[i], BorelSubgroup(cg))=2 );
+    result:= ForAll(pis, psg -> Index(psg, BorelSubgroup(cg))=2 );
+    if result then 
+      Setter(IsThickGeometry)(cg,false); 
+      Setter(IsFirmGeometry)(cg, true);
+    fi;
+    return result;
+end );
+
+# CHECKED 27/3/2014 PhC
+#############################################################################
+#O IsThickGeometry
+#  
+# Checks whether a coset geometry is thick
+##
+InstallMethod( IsThickGeometry, "for coset geometries",
+               [ IsCosetGeometry ],
+  function( cg )
+
+    local parabolics, pis, without_i, int, borel, i, result;
+    parabolics := ParabolicSubgroups( cg );
+    pis := [];
+    for i in [1..Size(parabolics)] do
+        without_i := Difference( [1..Size(parabolics)], [ i ] );
+        int := Intersection( parabolics{without_i} );
+        Add(pis, int);
+    od;
+    result:= ForAll([1..Size(parabolics)], i -> 
+              Index(pis[i], BorelSubgroup(cg))>2 );
+    if result then 
+      Setter(IsThinGeometry)(cg,false); 
+      Setter(IsFirmGeometry)(cg,true);
+    fi;
+    return result;
 end );
 
 # CHECKED 06/09/11 PhC
@@ -628,14 +677,16 @@ InstallMethod( StandardFlagOfCosetGeometry, "for coset geometries",
   return FlagOfIncidenceStructure(cg,flag);
 end );
 
-# 
+
+
+# CHECKED 27/3/2014
 #############################################################################
 # FlagToStandardFlag
 #  
 # 
 ##
 InstallMethod( FlagToStandardFlag, "for coset geometries",
-                [ IsCosetGeometry, IsHomogeneousList ],
+                [ IsCosetGeometry, IsFlagOfCosetGeometry ],
   function( cg, flag )
   
     ## This operation returns an element g which maps 
@@ -650,6 +701,7 @@ InstallMethod( FlagToStandardFlag, "for coset geometries",
     local g, x, reps, pabs, i, int, ginv;
     
     # initialise
+    flag:=flag!.els;
     reps := List(flag, t -> Representative(t!.obj) );
     pabs := ParabolicSubgroups( cg ){ List(flag, t->t!.type) };
     g := reps[1]^-1;
