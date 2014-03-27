@@ -88,7 +88,7 @@ St Andrews, United Kingdom.
 
 <Acknowledgements>
 The development phase of <Package>FinInG</Package> started roughly in 2005. The idea to write a package for 
-projective geometry in GAP was known before, and resulted in <Package>pg</Package>, a relic that still
+projective geometry in GAP had emerged before, and resulted in <Package>pg</Package>, a relic that still
 can be found in the undeposited packages section of the GAP website. 
 One of the main objectives was to develop the new package was to 
 create a tighter connection between
