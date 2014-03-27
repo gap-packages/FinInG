@@ -2218,7 +2218,7 @@ InstallMethod( Enumerator,
        enum := EnumeratorByFunctions( res, rec(
           ElementNumber := function(e, num)
              local x;
-             x := BasisVectors( Basis( enumps2[num] ) );
+             x := NewMatrix(IsCMatRep,ps!.basefield,ps!.dimension+1,BasisVectors( Basis( enumps2[num] ) ) );
              if j = 1 then
                 return Wrap(ps, j, x[1]);
              else
