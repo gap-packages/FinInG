@@ -6,18 +6,18 @@
                                                                    Jan De Beule
                                                                   Philippe Cara
                                                                  Michel Lavrauw
-                                                                  and Maska Law
-                                                             and Michael Pauley
-                                                            and Max Neunhoeffer
-                                                              and Sven Reichard
+                                                                Max Neunhoeffer
 
-  Copyright (C) 2009, University of Western Australia
-                      Colorado State University
-                      Lehrstuhl D fuer Mathematik
-                      Ghent University
-                      Vrije Universiteit Brussel
+  Copyright (C) 2014,	Colorado State University, Fort Collins
+						Università degli Studi di Padova
+						Universeit Gent
+						University of St. Andrews
+						University of Western Australia, Perth
+						Vrije Universiteit Brussel
 
-This appendix gives more (technical) information on the construction of finite classical groups.
+
+This appendix gives more (technical) information on the construction of finite classical groups 
+and related topics.
 
 -->
 <Appendix Label="groups_app">
@@ -594,6 +594,27 @@ the generators to be added are computed.
 </Description>
 </ManSection>
 
+</Section>
+
+<Section Label="groups_app_forms">
+<Heading>Basis of the collineation groups</Heading>
+
+The <Package>GenSS</Package> uses a function <F>FindBasePointCandidates</F> taking a group as one of the arguments.
+From a geometrical point of view, it is straightforward to construct a basis for a collineation group for the action
+on projective points. 
+
+<ManSection>
+<Oper Name="FindBasePointCandidates" Arg="g, opt, i, parentS"/>
+<Returns>a record</Returns>
+<Description>
+The returned record contains the base points for the action, and some other fields.
+The information in the other fields is determined from the arguments <A>opt</A> and <A>i</A>. 
+More information on these details can be found in the manual of <Package>GenSS</Package>.
+</Description>
+</ManSection>
+
+Variations on this version of <F>BasePointCandidates</F> are found in <Package>FinInG</Package> used in previous
+versions of <Package>GenSS</Package>. These variations are already or will become obsolete in the (near) future.
 
 </Section>
 </Appendix>
