@@ -2062,14 +2062,14 @@ InstallMethod( ActionOnAllProjPoints, "for a projective collineation group",
 		v[1] := o;
 		#orb := Orbit(pg,v,OnProjPointsWithFrob);
 		#orb := Orb(pg,v,OnProjPointsWithFrob);
-		#zero := Zero(f);
-		#orb := [];
-		#for m in f^d do
-		#	j := PositionNot(m, zero);
-		#if j <= d and m[j] = o then
-		#	Add(orb, CVec(m,f)); #here is the change.
-		#fi;
-		#od;
+		zero := Zero(f);
+		orb := [];
+		for m in f^d do
+			j := PositionNot(m, zero);
+		if j <= d and m[j] = o then
+			Add(orb, CVec(m,f)); #here is the change.
+		fi;
+		od;
 		a := ActionHomomorphism(pg,orb,OnProjPointsWithFrob,"surjective");
 		SetIsInjective(a,true);
 		return a;
