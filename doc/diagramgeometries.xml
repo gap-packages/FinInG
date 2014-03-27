@@ -161,6 +161,26 @@ An incidence geometry is said to be <E>firm</E> if every nonmaximal flag is cont
 </ManSection>
 
 <ManSection>
+<Oper Name="IsThickGeometry" Arg="cg"/>
+<Returns>true if and only if <A>cg</A> is thick.</Returns>
+<Description> 
+An incidence geometry is said to be <E>tick</E> if every nonmaximal flag is contained in at least three chambers. <A>cg</A> must be a coset geometry. 
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="IsThinGeometry" Arg="cg"/>
+<Returns>true if and only if <A>cg</A> is thin.</Returns>
+<Description> 
+An incidence geometry is said to be <E>thin</E> if every rank one residue contains exactly 2 elements. This means that every comaximal flag is contained in exactly 2 chambers. <A>cg</A> must be a coset geometry. 
+</Description>
+</ManSection>
+
+<Example>
+<#Include SYSTEM "../examples/include/diagram_firmthinthick.include"> 
+</Example>
+
+<ManSection>
 <Oper Name="IsConnected" Arg="cg"/>
 <Returns>true if and only if <A>cg</A> is connected.</Returns>
 <Description> 
