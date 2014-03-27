@@ -157,7 +157,7 @@ t &amp; 0 \\
 </Alt>
 
 where t runs over the elements of <M>GF(q)</M>, <M>q</M> is odd and not prime, <M>n</M> is a fixed nonsquare 
-and <Alt Not="HTML">\phi </Alt><Alt Only="HTML">&#966;</Alt> is a nontrivial automorphism of <M>GF(q)</M>.
+and <Alt Not="HTML"><M>\phi</M></Alt><Alt Only="HTML">&#966;</Alt> is a nontrivial automorphism of <M>GF(q)</M>.
 
 <Example>
 <#Include SYSTEM "../examples/include/examples_KantorKnuth.include"> 
