@@ -115,7 +115,7 @@ DeclareCategory( "IsGeneralisedPolygon", IsIncidenceGeometry );
 DeclareCategory( "IsProjectivePlane", IsGeneralisedPolygon );
 DeclareCategory( "IsGeneralisedQuadrangle", IsGeneralisedPolygon );
 DeclareCategory( "IsGeneralisedHexagon", IsGeneralisedPolygon );
-DeclareCategory( "IsGeneralisedOctogon", IsGeneralisedPolygon );
+DeclareCategory( "IsGeneralisedOctagon", IsGeneralisedPolygon );
 
 DeclareCategory( "IsElationGQ", IsGeneralisedQuadrangle );
 DeclareCategory( "IsElationGQByKantorFamily", IsElationGQ );

@@ -72,7 +72,7 @@ InstallMethod( ElementsOfIncidenceStructure,
 			sz := s^2 + s + 1;
 		elif IsGeneralisedQuadrangle(gp) then 
 			sz := (1+s)*(1+s*t);
-		elif IsGeneralisedOctogon(gp) then
+		elif IsGeneralisedOctagon(gp) then
 			sz := (1+s)*(1+s*t+s^2*t^2+s^3*t^3);
 		fi;        
 		return Objectify( NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
@@ -1939,14 +1939,14 @@ InstallMethod( PrintObj,
 
 InstallMethod( ViewObj, 
 	"for a generalised hexagon with an order",	
-	[ IsGeneralisedOctogon and HasOrder ],
+	[ IsGeneralisedOctagon and HasOrder ],
 	function( p )
-		Print("<generalised octogon of order ",Order(p), ">");
+		Print("<generalised octagon of order ",Order(p), ">");
 	end );
 
 InstallMethod( PrintObj, 
-	"for a generalised octogon with an order",
-	[ IsGeneralisedOctogon and HasOrder ],
+	"for a generalised octagon with an order",
+	[ IsGeneralisedOctagon and HasOrder ],
 	function( p )
 		Print("Generalised ",p!.gonality,"-gon of order ",Order(p),
 			", consisting of ", Size(p!.points), " points and ", Size(p!.lines)," lines");
