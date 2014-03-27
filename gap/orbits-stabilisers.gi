@@ -47,7 +47,7 @@ Print(", orbits+stabilisers\c");
 # 26/03/14 CHECKED ml
 #############################################################################
 #O  FiningOrbit( <g>, <e>, <act> )
-# helper operation, returns the orbit of e under g, using action function act.
+#  returns the orbit of e under g, using action function act.
 ##
 InstallMethod( FiningOrbit,
 	"for a collineation group, an element of a projective space and an action function",
@@ -59,7 +59,8 @@ InstallMethod( FiningOrbit,
 # ADDED 26/03/14 ml
 #############################################################################
 #O  FiningOrbit( <g>, <e> )
-#  returns the orbit of e under g
+#  returns the orbit of e under g. It is assumed that e is a subspace of a projective space
+# and g a collineation group, such that OnProjSubspaces will be the natural action to use.
 ##
 InstallMethod( FiningOrbit,
 	"for a collineation group, an element of a projective space",
@@ -72,7 +73,7 @@ InstallMethod( FiningOrbit,
 # 26/03/14 CHECKED ml
 #############################################################################
 #O  FiningOrbit( <g>, <e>, <act> )
-# helper operation, returns the orbit of e under g, using action function act.
+#  returns the orbit of e under g, using action function act.
 ##
 InstallMethod( FiningOrbit,
 	"for a collineation group, an element of a projective space and an action function",
@@ -85,7 +86,8 @@ InstallMethod( FiningOrbit,
 # ADDED 26/03/14 ml
 #############################################################################
 #O  FiningOrbit( <g>, <e> )
-#  returns the orbit of e under g
+#  returns the orbit of e under g. It is assumed that e is a subspace of a projective space
+# and g a collineation group, such that OnProjSubspaces will be the natural action to use.
 ##
 InstallMethod( FiningOrbit,
 	"for a collineation group, an element of a projective space",
@@ -98,7 +100,7 @@ InstallMethod( FiningOrbit,
 # CHECKED 26/03/14 ml
 #############################################################################
 #O  FiningOrbits( <g>, <e>, <act> )
-# helper operation, returns the orbits of e under g, using action function act.
+#  returns the orbits of e under g, using action function act.
 ##
 InstallMethod( FiningOrbits,
 	"for a collineation group, an element of a projective space and an action function",
@@ -126,7 +128,8 @@ InstallMethod( FiningOrbits,
 # ADDED 26/03/14 ml
 #############################################################################
 #O  FiningOrbits( <g>, <e> )
-#  returns the orbits of e under g
+#  returns the orbits of e under g. It is assumed that e is a subspace of a projective space
+# and g a collineation group, such that OnProjSubspaces will be the natural action to use.
 ##
 InstallMethod( FiningOrbits,
 	"for a collineation group, an element of a projective space",
@@ -138,19 +141,12 @@ InstallMethod( FiningOrbits,
 
 
 
-############################################################
-# TOT HIER GECHECKED !!!!!!!!
-############################################################
-
-
-
-
 
 ############################################################
 # STABILISERS
 ###################################################
 
-# CHECKED 7/03/13 jdb
+# # 26/03/14 CHECKED ml
 #############################################################################
 #O  FiningElementStabiliserOp( <g>, <e>, <act> )
 # helper operation, returns the stabiliser of e under g, using action function act.
@@ -163,20 +159,10 @@ InstallMethod( FiningElementStabiliserOp,
 		t := e!.type;
 		size := Size(ElementsOfIncidenceStructure(e!.geo,e!.type)); #strongly using here that we know the representation well...
 		stab := Stab(g,e,act,rec( Size:=Size(g), DoEstimate := size )).stab;
-		# JB: 18/03/2014
-		# SetParent(stab, g);
-		# ml 20/03/14: There was an issue with SetParent. This gives an error unless a nice monomorphism is 
-		# available for the parent group. It is not completely clear WHY this is the case, and this might be gap
-		# issue. We therefore choose NOT to use SetParent.
-		# We could work around this by adding the following, but first we need to fully understand this issue.
-		# if HasNiceMonomorphism(g) and not IsIdenticalObj( Parent( g ), stab ) then
-		#  	  SetParent(stab, Parent( g ));
-		# fi;
-
 		return stab;
 	end );
 		
-# CHECKED 7/03/13 jdb
+# # 26/03/14 CHECKED ml
 #############################################################################
 #O  FiningStabiliser( <g>, <e> )
 # returns the stabiliser of e under g. It is assumed that e is a subspace of a projective space
@@ -191,12 +177,12 @@ InstallMethod( FiningStabiliser,
 end );
 
 
-# CHECKED 7/03/13 jdb
+# # 26/03/14 CHECKED ml
 #############################################################################
 #O  FiningStabiliserOrb( <g>, <e> )
 # returns the stabiliser of e under g.
 # This uses the ORB_EstimateOrbitSize command from the ORB package, and it
-# it is extremely fast. Much faster than the methods here, in ALL cases.
+# it is extremely fast. Much faster than the other methods here, in ALL cases.
 # again the natural action OnProjSubspaces is assumed.
 ##
 InstallMethod( FiningStabiliserOrb, 
@@ -204,13 +190,10 @@ InstallMethod( FiningStabiliserOrb,
 	function(fining_group,el)
 		local stab;
 		stab := Group(ORB_EstimateOrbitSize(ProductReplacer(fining_group),el,OnProjSubspaces,15,1000000,60000).Sgens);
-		# JB: 18/03/2014
-		# SetParent(stab, fining_group);
-		# ml 20/03/14: There was an issue with SetParent (see comments in the code of FiningElementStabiliserOp)
-	return stab; 
+	return stab;
 end );
 
-# CHECKED 7/03/13 jdb
+# # 26/03/14 CHECKED ml
 #############################################################################
 #O  FiningSetwiseStabiliser( <g>, <set> )
 # returns the setwise stabiliser of set under g.
@@ -222,11 +205,7 @@ InstallMethod( FiningSetwiseStabiliser,
 	[IsProjectiveGroupWithFrob,  IsSubspaceOfProjectiveSpaceCollection and IsHomogeneousList],
 	function(g,set)
 		local stab;
-		# JB: 18/03/2014
 		stab := SetwiseStabilizer(g, OnProjSubspaces, set)!.setstab;
-		# SetParent(stab, g);
-		# ml 20/03/14: There was an issue with SetParent (see comments in the code of FiningElementStabiliserOp)
-
 		return stab;
 end );
 
@@ -237,6 +216,7 @@ end );
 ################################
 
 
+# 27/03/14 CHECKED ml
 InstallMethod( FiningStabiliserPerm, [IsProjectiveGroupWithFrob, IsElementOfIncidenceStructure],
 	# this uses the ActionHomomorphism and the Stabiliser method in standard gap
 		function(fining_group,el)
@@ -247,19 +227,13 @@ InstallMethod( FiningStabiliserPerm, [IsProjectiveGroupWithFrob, IsElementOfInci
 		enum:=HomeEnumerator(UnderlyingExternalSet(hom));;
 		nr:=Position(enum,el);
 		stab:=Stabilizer(Image(hom),nr); 
-
-#here was an issue. Ml originally wrote "Stabiliser", but meant "Stabilizer", 
-#according to his own documentation of this method. But "Stabiliser" is defined in the 
-#package AutPGrp. So if this package is not present or loaded, this gives an error.
-#However, if this package was loaded, then something else was happening than intended.
-#We (pc+jdb) think that this issue is understood now.
-
 		gens:=GeneratorsOfGroup(stab);;
 		gens:=List(gens,x->PreImagesRepresentative(hom,x));
 		stab:=GroupWithGenerators(gens);
 		return stab;
 end );
 
+# 27/03/14 CHECKED ml
 InstallMethod( FiningStabiliserPerm2, 
 	[IsProjectiveGroupWithFrob, IsElementOfIncidenceStructure],
 	# this uses the Stab method from the genss package AND the ActionHomomorphism
@@ -282,7 +256,8 @@ InstallMethod( FiningStabiliserPerm2,
 end );
 
 
-InstallMethod( FixedSubspaces, 
+# 27/03/14 CHECKED ml
+InstallMethod( FixedSubspaces,
 	"for a projectivity and a projective space",
 	[IsProjectiveGroupWithFrob, IsProjectiveSpace],
 	# fixed subspaces by John.
@@ -293,7 +268,7 @@ InstallMethod( FixedSubspaces,
 	if not flag then
 		Error("Group contains field automorphisms.");
 	fi;
-	md := GModuleByMats(List(gens,t->t!.mat), pg!.basefield);
+	md := GModuleByMats(List(gens,t->Unpack(t!.mat)), pg!.basefield);
 	fixed := Filtered(MTX.BasesSubmodules(md),t->not Size(t) in [0,Rank(pg)+1]);
 	return List(fixed,t->VectorSpaceToElement(pg,t));
 end );
