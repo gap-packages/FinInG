@@ -6,18 +6,16 @@
                                                                    Jan De Beule
                                                                   Philippe Cara
                                                                  Michel Lavrauw
-                                                                  and Maska Law
-                                                             and Michael Pauley
                                                             and Max Neunhoeffer
-                                                              and Sven Reichard
 
-  Copyright (C) 2008, University of Western Australia
-                      Colorado State University
-                      Lehrstuhl D fuer Mathematik
-                      Ghent University
-                      Vrije Universiteit Brussel
+Copyright (C) 2014,         Colorado State University
+                            Università degli Studi di Padova
+                            Universiteit Gent
+                            University of St. Andrews
+                            University of Western Australia     
+                            Vrije Universiteit Brussel
 
-This is the chapter of the documentation describing geometry morphisms.
+ This is the chapter of the documentation describing geometry morphisms.
 
 XML code to remember:
 <A> </A>:  for arguments
@@ -34,10 +32,21 @@ Here we describe what is meant by a <E>geometry morphism</E>
 in <Package>FinInG</Package> and the various operations and tools available
 to the user.
 
-<Section>
-<Heading>Geometry morphisms in FinInG</Heading>
-
-Suppose that <M>S</M> and <M>S'</M> are two incidence geometries. 
+When using groups in &GAP;, we often use homomorphisms to pass from
+one situation to another, even though mathematically it may appear to
+be unneccessary, there can be ambiguities if the functionality
+is too flexible. This also applies to finite geometry. Take for example
+the usual exercise of thinking of a hyperplane in a projective
+space as another projective space. To conform with similar things in
+&GAP;, the right thing to do is to embed one projective space into another,
+rather than having one projective space automatically a substructure
+of another. The reason for this is that there are many ways one can
+do this embedding, even though we may dispense with this choice when we
+are working mathematically. So to avoid ambiguity, we stipulate that
+one should construct the embedding explicitly. How this is done will
+be the subject of this chapter.
+<P/>
+Suppose that <M>S</M> and <M>S'</M> are two incidence geometries.
 A <E>geometry morphism</E> from <M>S</M> to <M>S'</M> is defined to be a map
 from the elements of <M>S</M> to the elements of <M>S'</M> which preserves
 incidence and induces a function from the type set of <M>S</M> to the
@@ -46,7 +55,15 @@ examples of geometry morphisms, but they have been dealt with in more specific
 ways in <Package>FinInG</Package>.  We will mainly be concerned with geometry
 morphisms where the source and range are different. Hence, the natural embedding
 of a projective space in a larger projective space, the mapping induced by field
-reduction, and the Klein correspondence are examples of such geometry morphisms.
+reduction, and e.g. the Klein correspondence are examples of such geometry morphisms.
+<P/>
+As a geometry morphism from <M>S</M> to <M>S'</M> preserves incidence, it also preserves
+the symmetry, and hence it nduces also a map from the collineation group
+of <M>S</M> into the collineation group of <M>S'</M>. Such a map will be called an <E>Intertwiner</E>,
+and <Package>FinInG</Package> can provide these maps for most of the geometry morphisms.
+
+<Section>
+<Heading>Geometry morphisms in FinInG</Heading>
 
 <ManSection>
 <Fam Name = "IsGeometryMorphism"/>
@@ -100,7 +117,7 @@ The source of the homomorphism is dependent on the geometry.
 </Section>
 
 <Section>
-<Heading>Isomorphisms between polar spaces</Heading>
+<Heading>Bijective geometry morphisms</Heading>
 
 An important class of geometry morphisms in <Package>FinInG</Package> are the isomorphisms between
 polar spaces of the same kind that are induced by coordinate transformations. 
@@ -135,34 +152,33 @@ are polar spaces of the same type.
 <Oper Name="IsomorphismPolarSpacesNC" Arg="ps1, ps2, boolean"/>
 </ManSection>
 
+<ManSection>
+<Oper Name="NaturalDuality" Arg="gq"/>
+<Returns>a geometry morphism</Returns>
+<Description>
+The argument <A>gq</A> is either the symplectic generalised quadrangle
+<C>W(3,q)</C> or the hermitian generalised quadrangle <C>H(3,q^2)</C>.  By the
+Klein correspondence, the lines of <M>W(3,q)</M> are mapped to the points
+of <M>Q(4,q)</M>, which results in a point-line duality from <M>W(3,q)</M>
+onto <M>Q(4,q)</M>. Likewise, the Klein correspondence induces a duality
+between <M>H(3,q^2)</M> and <M>Q^-(5,q)</M>.  At the moment, the geometry
+morphism returned is a map from lines to points.  This operation does not
+require that the input is the canonical version of the generalised quadrangle;
+it suffices that the input has the correct polarity type.
+<Example>
+<#Include SYSTEM "../examples/include/morphisms_duality.include">
+</Example>
+</Description>
+</ManSection>
+
 </Section>
 
 <Section>
-<Heading>When will you use geometry morphisms?</Heading>
-
-When using groups in &GAP;, we often use homomorphisms to pass from
-one situation to another, even though mathematically it may appear to
-be unneccessary, there can be ambiguities if the functionality
-is too flexible. This also applies to finite geometry. Take for example
-the usual exercise of thinking of a hyperplane in a projective
-space as another projective space. To conform with similar things in
-&GAP;, the right thing to do is to embed one projective space into another,
-rather than having one projective space automatically a substructure
-of another. The reason for this is that there are many ways one can
-do this embedding, even though we may dispense with this choice when we
-are working mathematically. So to avoid ambiguity, we stipulate that
-one should construct the embedding explicitly. How this is done will
-be the subject of the following section.
-</Section>
-
-
-<Section>
-<Heading>Natural geometry morphisms</Heading>
+<Heading>Embeddings</Heading>
 
 The most natural of geometry morphisms include, for example, the embedding of a
 projective space into another via a subspace, or the projection of a polar space
 to a smaller polar space of the same type via a totally isotropic subspace.
-
 
 <ManSection>
 <Oper Name="NaturalEmbeddingBySubspace" Arg="geom1, geom2, v"/>
@@ -330,55 +346,6 @@ we construct a linear blocking set of the symplectic generalised quadrangle over
 </ManSection>
 
 <ManSection>
-<Oper Name="BlownUpProjectiveSpace" Arg="basis, pg1"/>
-<Returns>a projective space</Returns>
-<Description>
-Blows up the projective space <A>pg1</A> with respect to the <A>basis</A> using field reduction. 
-If the argument <A>pg1</A> is has projective dimension <M>r-1</M> over the finite field 
-<Alt Not="HTML"><M>GF(q^t)</M></Alt><Alt Only="HTML">
-GF(q&lt;sup>t&lt;/sup>)</Alt>, and <A>basis</A> is a basis of <Alt Not="HTML"><M>GF(q^t)</M></Alt><Alt Only="HTML">
-GF(q&lt;sup>t&lt;/sup>)</Alt> over <M>GF(q)</M>, 
-then this functions returns a projective space of dimension <M>rt-1</M> over GF(q).
-</Description>
-</ManSection>
-
-<ManSection>
-<Oper Name="BlownUpProjectiveSpaceBySubfield" Arg="subfield,pg"/>
-<Returns>a projective space</Returns>
-<Description>
-Blows up a projective space <A>pg</A> with respect to the standard basis of the basefield of <A>pg</A> over the <A>subfield</A>.
-</Description>
-</ManSection>
-
-<ManSection>
-<Oper Name="BlownUpSubspaceOfProjectiveSpace" Arg="basis,subspace"/>
-<Returns>a subspace of a projective space</Returns>
-<Description>
-Blows up a <A>subspace</A> of a projective space with respect to the <A>basis</A> using field reduction and returns it a subspace of the projective space obtained from blowing up the ambient projective space of <A>subspace</A> with respect to <A>basis</A> using field reduction.
-</Description>
-</ManSection>
-
-
-<ManSection>
-<Oper Name="BlownUpSubspaceOfProjectiveSpaceBySubfield" Arg="subfield,subspace"/>
-<Returns>a subspace of a projective space</Returns>
-<Description>
-Blows up a <A>subspace</A> of a projective space with respect to the
-standard basis of the basefield of <A>subspace</A> over the <A>subfield</A>, using field reduction and 
-returns it a subspace of the projective space obtained from blowing up the ambient projective space of <A>subspace</A> over the subfield.
-</Description>
-</ManSection>
-
-
-<ManSection>
-<Oper Name="IsDesarguesianSpreadElement" Arg="basis,subspace"/>
-<Returns>true or false</Returns>
-<Description>
-Checks wether the <A>subspace</A> is a subspace which is obtained from a blowing up a projective point using field reduction with respect to <A>basis</A>.
-</Description>
-</ManSection>
-
-<ManSection>
 <Oper Name="NaturalEmbeddingBySubField" Arg="geom1, geom2"/>
 <Oper Name="NaturalEmbeddingBySubField" Arg="geom1, geom2, boolean"/>
 <Returns>a geometry morphism</Returns>
@@ -444,6 +411,25 @@ In this example, we embed <M>W(5,3)</M> in <Alt Not="HTML"><M>H(5,3^2)</M></Alt>
 </Description>
 </ManSection>
 
+<ManSection>
+    <Oper Name="ProjectiveCompletion" Arg="as"/>
+    <Returns>a geometry morphism</Returns>
+    <Description>
+        The argument <A>as</A> is an affine space. This operation returns an embedding
+        of <A>as</A> into the projective space <A>ps</A> of the same dimension, and over the same field.
+        For example, the point <M>(x, y, z)</M> goes to the projective point with
+        homogeneous coordinates <M>(1, x, y, z)</M>. An intertwiner is unnecessary,
+        <F>CollineationGroup(as)</F> is a subgroup of <F>CollineationGroup(ps)</F>.
+        <Example>
+            <#Include SYSTEM "../examples/include/morphisms_completion.include">
+            </Example>
+        </Description>
+    </ManSection>
+
+</Section>
+
+<Section>
+<Heading>Projections</Heading>
 
 <ManSection>
 <Oper Name="NaturalProjectionBySubspace" Arg="ps, v"/>
@@ -512,22 +498,7 @@ it suffices that the input has the correct polarity type.
 </Description>
 </ManSection>
 
-<ManSection>
-<Oper Name="ProjectiveCompletion" Arg="as"/>
-<Returns>a geometry morphism</Returns>
-<Description>
-The argument <A>as</A> is an affine space. This operation returns an embedding
-of <A>as</A> into the projective space <A>ps</A> of the same dimension, and over the same field.
-For example, the point <M>(x, y, z)</M> goes to the projective point with
-homogeneous coordinates <M>(1, x, y, z)</M>. An intertwiner is unnecessary, 
-<F>CollineationGroup(as)</F> is a subgroup of <F>CollineationGroup(ps)</F>.
-<Example>
-<#Include SYSTEM "../examples/include/morphisms_completion.include"> 
-</Example>
-</Description>
-</ManSection>
-
-
+</Section>
 
 
 
@@ -587,5 +558,59 @@ gap> p^vmap;
 -->
 
 
+<Section>
+<Heading>Low level functions</Heading>
+
+
+<ManSection>
+    <Oper Name="BlownUpProjectiveSpace" Arg="basis, pg1"/>
+    <Returns>a projective space</Returns>
+    <Description>
+        Blows up the projective space <A>pg1</A> with respect to the <A>basis</A> using field reduction.
+        If the argument <A>pg1</A> is has projective dimension <M>r-1</M> over the finite field
+        <Alt Not="HTML"><M>GF(q^t)</M></Alt><Alt Only="HTML">
+            GF(q&lt;sup>t&lt;/sup>)</Alt>, and <A>basis</A> is a basis of <Alt Not="HTML"><M>GF(q^t)</M></Alt><Alt Only="HTML">
+                GF(q&lt;sup>t&lt;/sup>)</Alt> over <M>GF(q)</M>,
+            then this functions returns a projective space of dimension <M>rt-1</M> over GF(q).
+    </Description>
+</ManSection>
+
+<ManSection>
+    <Oper Name="BlownUpProjectiveSpaceBySubfield" Arg="subfield,pg"/>
+    <Returns>a projective space</Returns>
+    <Description>
+        Blows up a projective space <A>pg</A> with respect to the standard basis of the basefield of <A>pg</A> over the <A>subfield</A>.
+    </Description>
+</ManSection>
+
+<ManSection>
+    <Oper Name="BlownUpSubspaceOfProjectiveSpace" Arg="basis,subspace"/>
+    <Returns>a subspace of a projective space</Returns>
+    <Description>
+        Blows up a <A>subspace</A> of a projective space with respect to the <A>basis</A> using field reduction and returns it a subspace of the projective space obtained from blowing up the ambient projective space of <A>subspace</A> with respect to <A>basis</A> using field reduction.
+    </Description>
+</ManSection>
+
+
+<ManSection>
+    <Oper Name="BlownUpSubspaceOfProjectiveSpaceBySubfield" Arg="subfield,subspace"/>
+    <Returns>a subspace of a projective space</Returns>
+    <Description>
+        Blows up a <A>subspace</A> of a projective space with respect to the
+        standard basis of the basefield of <A>subspace</A> over the <A>subfield</A>, using field reduction and
+        returns it a subspace of the projective space obtained from blowing up the ambient projective space of <A>subspace</A> over the subfield.
+    </Description>
+</ManSection>
+
+
+<ManSection>
+    <Oper Name="IsDesarguesianSpreadElement" Arg="basis,subspace"/>
+    <Returns>true or false</Returns>
+    <Description>
+        Checks wether the <A>subspace</A> is a subspace which is obtained from a blowing up a projective point using field reduction with respect to <A>basis</A>.
+    </Description>
+</ManSection>
+
 </Section>
+
 </Chapter>

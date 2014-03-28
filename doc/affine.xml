@@ -543,7 +543,7 @@ affine spaces: points, lines, planes, etc.
 
 
 <Section>
-<Heading>Technical aspects</Heading>
+<Heading>Low level operations</Heading>
 
 One technical aspect of the design behind affine spaces in <Package>FinInG</Package>
 are having canonical transversals for subspaces of vector spaces. So we provide some
