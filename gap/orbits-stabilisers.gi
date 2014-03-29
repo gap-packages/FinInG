@@ -146,14 +146,20 @@ InstallMethod( FiningOrbits,
 # STABILISERS
 ###################################################
 
-# # 26/03/14 CHECKED ml
+# # 29/03/14 CHECKED jb
 #############################################################################
 #O  FiningElementStabiliserOp( <g>, <e>, <act> )
 # helper operation, returns the stabiliser of e under g, using action function act.
 ##
 InstallMethod( FiningElementStabiliserOp,
-	"for a collineation group, an element of a projective space and an action function",
-	[ IsGroup, IsSubspaceOfProjectiveSpace, IsFunction],
+	"for a collineation group, an element of an incidence structure, and an action function",
+	[ IsGroup, IsElementOfIncidenceStructure, IsFunction],
+
+	# JB: 29/03/14
+	# Recall from geometry.gd, that we declared the representation 
+	# IsElementOfIncidenceStructureRep to have the following components:
+	# 	[ "geo", "type", "obj" ] );
+	
 	function(g,e,act)
 		local t,size, stab;
 		t := e!.type;
@@ -177,6 +183,19 @@ InstallMethod( FiningStabiliser,
 	return FiningElementStabiliserOp(fining_group,el,OnProjSubspaces);
 end );
 
+# # 29/03/14 CHECKED jb
+#############################################################################
+#O  FiningStabiliser( <g>, <e> )
+# returns the stabiliser of e under g. It is assumed that e is a subspace of an affine space
+# and g a collineation group, such that OnAffineSubspaces will be the natural action to use.
+# then the FiningElementStabiliserOp is called.
+##
+InstallMethod( FiningStabiliser,	
+	"for a collineation group and a subspace of a projective space",
+	[ IsProjectiveGroupWithFrob, IsSubspaceOfAffineSpace],
+	function(fining_group,el)
+	return FiningElementStabiliserOp(fining_group,el,OnAffineSubspaces);
+end );
 
 # # 26/03/14 CHECKED ml
 #############################################################################
@@ -191,6 +210,22 @@ InstallMethod( FiningStabiliserOrb,
 	function(fining_group,el)
 		local stab;
 		stab := Group(ORB_EstimateOrbitSize(ProductReplacer(fining_group),el,OnProjSubspaces,15,1000000,60000).Sgens);
+	return stab;
+end );
+
+# # 29/03/14 CHECKED jb
+#############################################################################
+#O  FiningStabiliserOrb( <g>, <e> )
+# returns the stabiliser of e under g.
+# This uses the ORB_EstimateOrbitSize command from the ORB package, and it
+# it is extremely fast. Much faster than the other methods here, in ALL cases.
+# again the natural action OnAffineSubspaces is assumed.
+##
+InstallMethod( FiningStabiliserOrb, 
+	[IsProjectiveGroupWithFrob, IsSubspaceOfAffineSpace],
+	function(fining_group,el)
+		local stab;
+		stab := Group(ORB_EstimateOrbitSize(ProductReplacer(fining_group),el,OnAffineSubspaces,15,1000000,60000).Sgens);
 	return stab;
 end );
 
