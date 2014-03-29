@@ -39,6 +39,7 @@ DeclareOperation( "FiningStabiliser", [IsProjectiveGroupWithFrob, IsElementOfInc
 DeclareOperation( "FiningStabiliserOrb", [IsProjectiveGroupWithFrob, IsElementOfIncidenceStructure]);
 
 DeclareOperation( "FiningSetwiseStabiliser", [IsProjectiveGroupWithFrob, IsSubspaceOfProjectiveSpaceCollection and IsHomogeneousList]);
+DeclareOperation( "FiningSetwiseStabiliser", [IsProjectiveGroupWithFrob, IsSubspaceOfAffineSpaceCollection and IsHomogeneousList]);
 
 #############################
 # Stabiliser methods using the permutation representation of a group action

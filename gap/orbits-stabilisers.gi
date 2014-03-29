@@ -229,7 +229,7 @@ InstallMethod( FiningStabiliserOrb,
 	return stab;
 end );
 
-# # 26/03/14 CHECKED ml
+# # 26/03/14 CHECKED jb
 #############################################################################
 #O  FiningSetwiseStabiliser( <g>, <set> )
 # returns the setwise stabiliser of set under g.
@@ -241,11 +241,27 @@ InstallMethod( FiningSetwiseStabiliser,
 	[IsProjectiveGroupWithFrob,  IsSubspaceOfProjectiveSpaceCollection and IsHomogeneousList],
 	function(g,set)
 		local stab;
-		stab := SetwiseStabilizer(g, OnProjSubspaces, set)!.setstab;		
+		stab := SetwiseStabilizer(g, OnProjSubspaces, set)!.setstab;
+		SetParent(stab, g);    # since Max forgot to put this command in his code
 		return stab;
 end );
 
-
+# # 29/03/14 CHECKED jb
+#############################################################################
+#O  FiningSetwiseStabiliser( <g>, <set> )
+# returns the setwise stabiliser of set under g.
+# This uses SetwiseStabilizer from the orb package. The natural action OnAffineSubspaces is
+# assumed.
+##
+InstallMethod( FiningSetwiseStabiliser,
+	"for a set of elements of an projective space of a given type",
+	[IsProjectiveGroupWithFrob,  IsSubspaceOfAffineSpaceCollection and IsHomogeneousList],
+	function(g,set)
+		local stab;
+		stab := SetwiseStabilizer(g, OnAffineSubspaces, set)!.setstab;		
+		SetParent(stab, g);    # since Max forgot to put this command in his code
+		return stab;
+end );
 
 #############################
 # Stabiliser methods using the permutation representation of a group action
