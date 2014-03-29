@@ -54,6 +54,9 @@ ReadPackage("fining","gap/affinegroup.gi");
 
 ReadPackage("fining","gap/gpolygons.gi");
 
+ReadPackage("fining","gap/genss_patch.g");
+
+
 #ReadPackage("fining","gap/emptysubspace.gi");
 #ReadPackage("fining","gap/linearalgebra_patch.g");
 ##ReadPackage("fining","gap/polaritiesps.gi"); #obsolete.

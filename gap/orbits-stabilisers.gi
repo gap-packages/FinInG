@@ -160,6 +160,7 @@ InstallMethod( FiningElementStabiliserOp,
 		size := Size(ElementsOfIncidenceStructure(e!.geo,e!.type)); #strongly using here that we know the representation well...
 		stab := Stab(g,e,act,rec( Size:=Size(g), DoEstimate := size )).stab;
 		return stab;
+		
 	end );
 		
 # # 26/03/14 CHECKED ml
@@ -205,7 +206,7 @@ InstallMethod( FiningSetwiseStabiliser,
 	[IsProjectiveGroupWithFrob,  IsSubspaceOfProjectiveSpaceCollection and IsHomogeneousList],
 	function(g,set)
 		local stab;
-		stab := SetwiseStabilizer(g, OnProjSubspaces, set)!.setstab;
+		stab := SetwiseStabilizer(g, OnProjSubspaces, set)!.setstab;		
 		return stab;
 end );
 
