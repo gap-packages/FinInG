@@ -1,0 +1,26 @@
+gap&gt; id := IdentityMat(8,GF(7));
+&lt; mutable compressed matrix 8x8 over GF(7) &gt;
+gap&gt; form := BilinearFormByMatrix(id,GF(7));
+&lt; bilinear form &gt;
+gap&gt; ps := PolarSpace(form);
+&lt;polar space in ProjectiveSpace(
+7,GF(7)): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2+x_7^2+x_8^2=0 &gt;
+gap&gt; Rank(ps);
+4
+gap&gt; ps;
+Q+(7, 7): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2+x_7^2+x_8^2=0
+gap&gt; mat := [[1,0,0,0,3,2,0,0],[0,1,0,0,0,0,3,2],[0,0,1,0,5,3,0,0]]*Z(7)^0;
+[ [ Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7), Z(7), Z(7)^2, 0*Z(7), 0*Z(7) ], 
+  [ 0*Z(7), Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), Z(7), Z(7)^2 ], 
+  [ 0*Z(7), 0*Z(7), Z(7)^0, 0*Z(7), Z(7)^5, Z(7), 0*Z(7), 0*Z(7) ] ]
+gap&gt; plane := VectorSpaceToElement(ps,mat);
+&lt;a plane in Q+(7, 7): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2+x_7^2+x_8^2=0&gt;
+gap&gt; time;
+1
+gap&gt; shadow := ShadowOfElement(ps,plane,4);
+&lt;shadow solids in Q+(7, 7): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2+x_7^2+x_8^2=0&gt;
+gap&gt; List(shadow);
+[ &lt;a solid in Q+(7, 7): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2+x_7^2+x_8^2=0&gt;, 
+  &lt;a solid in Q+(7, 7): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2+x_7^2+x_8^2=0&gt; ]
+gap&gt; shadow := ShadowOfElement(ps,plane,2);
+&lt;shadow lines in Q+(7, 7): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2+x_7^2+x_8^2=0&gt;

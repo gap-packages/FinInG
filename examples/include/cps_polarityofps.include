@@ -1,0 +1,17 @@
+gap&gt; ps := SymplecticSpace(5,9);
+W(5, 9)
+gap&gt; phi := PolarityOfProjectiveSpace(ps);
+&lt;polarity of PG(5, GF(3^2)) &gt;
+gap&gt; ps := EllipticQuadric(3,4);
+Q-(3, 4)
+gap&gt; phi := PolarityOfProjectiveSpace(ps);
+&lt;polarity of PG(3, GF(2^2)) &gt;
+gap&gt; ps := ParabolicQuadric(4,4);
+Q(4, 4)
+gap&gt; phi := PolarityOfProjectiveSpace(ps);
+Error, no polarity of the ambient projective space can be associated to &lt;ps&gt; called from
+&lt;function "unknown"&gt;( &lt;arguments&gt; )
+ called from read-eval loop at line 13 of *stdin*
+you can 'quit;' to quit to outer loop, or
+you can 'return;' to continue
+brk&gt; quit;

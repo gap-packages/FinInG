@@ -2,18 +2,20 @@
 
   projectivespaces.xml    FinInG package documentation
                                                                    John Bamberg
-                                                               and Jan De Beule
-                                                                  and Maska Law
-                                                             and Michael Pauley
-                                                            and Max Neunhoeffer
-                                                              and Sven Reichard
+                                                                   Anton Betten
+                                                                  Philippe Cara
+                                                                   Jan De Beule
+                                                                 Michel Lavrauw
+                                                                Max Neunhoeffer
 
-  Copyright (C) 2009, University of Western Australia
-                      Lehrstuhl D fuer Mathematik
-                      Ghent University
+  Copyright (C) 2014,	Colorado State University
+						Università degli Studi di Padova
+						Universiteit Gent
+						University of St. Andrews
+						University of Western Australia
+                        Vrije Universiteit Brussel
 
-This is the chapter of the documentation describing the 
-projective and polar spaces.
+This is the chapter of the documentation describing the projective spaces.
 
 -->
 
@@ -377,7 +379,7 @@ the empty flag is returned.</Returns>
 
 </Section>
 
-<Section>
+<Section Label="projsp:shadows">
 
 <Heading>Shadows of Projective Subspaces</Heading>
 

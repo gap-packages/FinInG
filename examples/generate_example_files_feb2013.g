@@ -53,12 +53,12 @@ polaritiespsfiles := ["polarities_construct1", "polarities_construct2", "polarit
 
 
 classicalpolfiles := ["cps_polarspaceform", "cps_example", "cps_symplectic", "cps_hermitian", "cps_parabolic", "cps_hyperbolic",
-						"cps_elliptic", "cps_underlyingvs", "cps_ambientspace", "cps_projectivedimension", "cps_rank",
+						"cps_elliptic", "cps_iscanonicalps", "cps_underlyingvs", "cps_ambientspace", "cps_projectivedimension", "cps_rank",
 						"cps_basefield", "cps_ishyperbolicquadric", "cps_isellipticquadric", "cps_isparabolicquadric", 
 						"cps_element1", "cps_emptysubspace", "cps_projdimension_element", "cps_elements", 
-						"cps_ambientspaceelps", "cps_coordinates", "cps_incident", "cps_span", "cps_typesubspace", 
+						"cps_ambientspaceelps", "cps_coordinates", "cps_incident", "cps_span", "cps_typesubspace", "cps_shadowofelement",
 						"cps_specialisometry", "cps_isometry", "cps_similarity", "cps_collineation", 
-						 "cps_enumerator", "cps_iterator", "cps_aslist" ];
+						 "cps_enumerator", "cps_iterator", "cps_aslist", "cps_polarityofps" ];
 	   
 stab_orbsfiles := [ "stab_orbs_finingorbit1", "stab_orbs_finingorbit2", "stab_orbs_finingorbits1", "stab_orbs_example1", "stab_orbs_finingstabiliser", 
 					"stab_orbs_finingstabiliserorb", "stab_orbs_timing1", "stab_orbs_setwisegeneric", "stab_orbs_finingsetwisestabiliser", 

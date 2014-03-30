@@ -886,6 +886,64 @@ InstallMethod( StandardPolarSpace,
 		return standard;
 	end );
 
+# ADDED 30/3/14 jdb
+#############################################################################
+#O  IsCanonicalPolarSpace( <ps> )
+# returns true if <ps> is canonical. Remind that canonical means similar to
+# standard: in geometrical terms: the same geometry as a standard polar space
+# with an underlying form that differs a factor with a standard form.
+# Calling this operation also makes sure the ClassicalGroupInfo is set and
+# the correct property. This mechanism makes sure that when a user constructs
+# his favorite-non-standard-but-canonical polar space, it is recognised by
+# FinInG, and only once a base change computation by forms will be done.
+##
+InstallMethod( IsCanonicalPolarSpace,
+	"for a polar space",
+	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
+	function( ps )
+	local type, form, d, bf, st, gram, c1, c2, order, q, result;
+	type := PolarSpaceType(ps); #a base change is computed in forms.
+	d := ps!.dimension;
+	bf := ps!.basefield;
+	if HasQuadraticForm(ps) then
+		form := QuadraticForm(ps);
+		gram := GramMatrix(form);
+		st := CanonicalQuadraticForm(type, d+1, bf); #returns a matrix.
+	else
+		form := SesquilinearForm(ps);
+		gram := GramMatrix(form);
+		st := CanonicalGramMatrix(type, d+1, bf);
+	fi;
+	q := Size(bf);
+	if type = "elliptic" then
+		SetIsEllipticQuadric(ps,true);
+		order := (q^((d+1)/2)+1)*(q^((d+1)/2-1)-1)/(q-1);
+	elif type = "parabolic" then
+		SetIsParabolicQuadric(ps,true);
+		order := (q^(d/2)-1)/(q-1)*(q^((d+2)/2-1)+1);
+	elif type = "hyperbolic" then
+		SetIsHyperbolicQuadric(ps,true);
+		order := (q^((d+1)/2)-1)/(q-1)*(q^((d+1)/2-1)+1);
+	elif type = "symplectic" then
+		SetIsSymplecticSpace(ps,true);
+		order := (q^(d+1)-1)/(q-1);
+	elif type = "hermitian" then
+		SetIsHermitianPolarSpace(ps,true);
+		q := Sqrt(q);
+		order := (q^d-(-1)^d)*(q^(d+1)-(-1)^(d+1))/(q^2-1);
+	fi;
+	c1 := First(gram[1],x->not IsZero(x));
+	if c1 = fail then
+		return false;
+	fi;
+	c2 := First(st[1],x->not IsZero(x));
+	result :=  c1*st = c2*gram;
+	if result then
+		SetClassicalGroupInfo( ps, rec(  degree := order ) );
+	fi;
+	return result;
+end );
+
 # ADDED 7/11/12 jdb
 # Cmat adapted 20/3/14
 #############################################################################

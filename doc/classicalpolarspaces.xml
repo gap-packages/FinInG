@@ -1,19 +1,21 @@
 <!-- 
 
-  projectivespaces.xml    FinInG package documentation
+  classicalpolarspaces.xml    FinInG package documentation
                                                                    John Bamberg
-                                                               and Jan De Beule
-                                                                  and Maska Law
-                                                             and Michael Pauley
-                                                            and Max Neunhoeffer
-                                                              and Sven Reichard
+                                                                   Anton Betten
+                                                                  Philippe Cara
+                                                                   Jan De Beule
+                                                                 Michel Lavrauw
+                                                                Max Neunhoeffer
 
-  Copyright (C) 2009, University of Western Australia
-                      Lehrstuhl D fuer Mathematik
-                      Ghent University
+  Copyright (C) 2014,	Colorado State University
+						Università degli Studi di Padova
+						Universiteit Gent
+						University of St. Andrews
+						University of Western Australia
+                        Vrije Universiteit Brussel
 
-This is the chapter of the documentation describing the 
-projective and polar spaces.
+This is the chapter of the documentation describing the classical polar spaces.
 
 -->
 
@@ -260,7 +262,12 @@ together with the standard forms that are chosen in
 <HorLine/>
 </Table>
 We refer to Appendix <Ref Chap="groups_app"/> for information on the operations that construct gram matrices that are used to
-obtain the above standard forms.
+obtain the above standard forms.<P/>
+The <Package>FinInG</Package> provides a lot of flexibility to construct polar spaces. The user may choose a particular quadratic
+or sesquilinear form, but may also chose to construct polars spaces that have one of the above mentioned forms as underlying form.
+Furthermore, <Package>FinInG</Package> will detect when necessary if the user constructed polar space is canonical. This mechanism 
+gives the user complete flexibility while avoiding unecessary computations when e.g. constructing the collineation group of a user
+defined polar space.<P/>
 
 The following five operations always return polar spaces induced by one of the above standard forms.
 
@@ -330,6 +337,22 @@ over <A>F</A> for a field <A>F</A> or over GF(<A>q</A>) for a prime power
 <A>q</A>.
 <Example>
 <#Include SYSTEM "../examples/include/cps_elliptic.include"> 
+</Example>
+</Description>
+</ManSection>
+
+The following operations are applicable on any classical polar space in <Package>FinInG</Package>. 
+
+<ManSection>
+<Attr Name="IsCanonicalPolarSpace" Arg="ps"/>
+<Returns>true or false</Returns>
+<Description>
+This attribute returns true when a polar space with a particular underlying form is canonical.
+The execution of this attribute on a general user constructed polar space needs to check the type
+of <A>ps</A>. The obtained extra information is stored automatically as attribute for <A>ps</A>, 
+as can be noted by the different printing of <A>ps</A> before and after execution.
+<Example>
+<#Include SYSTEM "../examples/include/cps_iscanonicalps.include"> 
 </Example>
 </Description>
 </ManSection>
@@ -596,11 +619,18 @@ with a common line and False otherwise.
 </ManSection>
 
 <ManSection>
-<Oper Name="Polarity" Arg="ps"/>
-<Returns>a function for the polarity</Returns>
-<Description> <A>ps</A> must be a polar space.
-This operation returns the polarity of the polar space <A>ps</A> in
-the form of a function.
+<Oper Name="PolarityOfProjectiveSpace" Arg="ps"/>
+<Returns>a polarity of a projective space</Returns>
+<Description> <A>ps</A> must be a polar space. This operation 
+returns, when possible a polarity of the ambient projective
+space of <A>ps</A>. It is well known that except for orthogonal polar
+spaces in even characteristic, a classical polar space is in fact the 
+geometry of absolute points of a polarity of a projective space, and
+that no polarity can be associated to parabolic quadrics in even characteristic.
+Polarities of projective spaces are discussed in more detail in Chapter <Ref Chap="polaritiesofps"/>.
+<Example>
+<#Include SYSTEM "../examples/include/cps_polarityofps.include"> 
+</Example>
 </Description>
 </ManSection>
 
@@ -620,16 +650,41 @@ with the type of subspace: <Q>degenerate</Q>, <Q>symplectic</Q>, <Q>hermitian</Q
 </Description>
 </ManSection>
 
-
 </Section>
-
 
 <Section Label="polar:shadows">
 <Heading>Shadow of elements</Heading>
 
-a section similar to the shadow of elements section in chapter projective spaces.
+The functionality in this section is comparable to the shadow functionality for elements of projective spaces, which
+are described in Section <Ref Sect="projsp:shadows"/>. The generic description of shadows of elements of incidence structures
+can be found in Section <Ref Sect="inc_geom:shadows"/>.
 
-cps_shadow_of_element.g
+<ManSection>
+<Oper Name="ShadowOfElement" Arg="ps, el, i"/>
+<Oper Name="ShadowOfElement" Arg="ps, el, str"/>
+<Returns>the elements of type <A>i</A> incident with <A>el</A>. The second variant determines 
+the type <A>i</A> from the position of <A>str</A> in the list returned by 
+<F>TypesOfElementsOfIncidenceStructurePlural</F></Returns>
+<Description>
+<Example>
+<#Include SYSTEM "../examples/include/cps_shadowofelement.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="ElementsIncidentWithElementOfIncidenceStructure" Arg="el, i"/>
+<Returns>the elements of type <A>i</A> incident with <A>el</A>, in other words,
+the type <A>i</A> shadow of the element <A>el</A>
+</Returns>
+<Description>
+Internally, the function <F>FlagOfIncidenceStructure</F> is used to create a flag from <A>list</A>. This function
+also performs the checking.
+<Example>
+</Example>
+</Description>
+</ManSection>
+
 
 </Section>
 
