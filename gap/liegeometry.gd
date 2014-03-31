@@ -54,6 +54,7 @@ DeclareRepresentation( "IsShadowElementsOfLieGeometryRep", IsElementsOfIncidence
 
 DeclareOperation( "UnderlyingVectorSpace", [IsLieGeometry] );
 DeclareOperation( "UnderlyingVectorSpace", [IsElementOfLieGeometry] );
+DeclareOperation( "UnderlyingVectorSpace", [IsFlagOfLieGeometry]	); #came from projectivespaces.gd
 
 DeclareAttribute( "AmbientSpace", IsLieGeometry );
 DeclareAttribute( "AmbientSpace", IsElementOfLieGeometry );

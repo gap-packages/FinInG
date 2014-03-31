@@ -320,6 +320,19 @@ InstallMethod( IsChamberOfIncidenceStructure,
 	flag -> Length(flag!.types) = Rank(flag!.geo)
 	);
 
+# added by pc, moved to here 31/3/14
+#############################################################################
+#O  ElementsOfFlag( <flag> )
+# returns elements of a flag 
+# 
+##
+InstallMethod( ElementsOfFlag, 
+	"for a coset geometry flag",
+	[ IsFlagOfIncidenceStructure and IsFlagOfIncidenceStructureRep ],
+	function(flag)
+		return flag!.els;
+	end );
+
 
 # CHECKED 18/4/2011 jdb
 #############################################################################

@@ -75,7 +75,8 @@ InstallMethod( Wrap,
 	function( geo, type, o )
 		local w;
 		w := rec( geo := geo, type := type, obj := o );
-		Objectify( NewType( SoPSFamily, IsElementOfIncidenceStructure and
+		Objectify( NewType( SoPSFamily, IsElementOfIncidenceStructure and 
+		#Objectify( NewType( SoCPSFamily, IsElementOfIncidenceStructure and #keep this, maybe for future use.
 		IsElementOfIncidenceStructureRep and IsSubspaceOfClassicalPolarSpace ), w );
     return w;
 	end );
@@ -2201,6 +2202,83 @@ InstallMethod( TypeOfSubspace,
 		return;
 	end );
 
+#############################################################################
+# Methods to create flags.
+#############################################################################
+
+# ADDED 31/3/2014 jdb
+#############################################################################
+#O  FlagOfIncidenceStructure( <ps>, <els> )
+# returns the flag of the projective space <ps> with elements in <els>.
+# the method checks whether the input really determines a flag.
+##
+InstallMethod( FlagOfIncidenceStructure,
+	"for a projective space and list of subspaces of the projective space",
+	[ IsClassicalPolarSpace, IsSubspaceOfProjectiveSpaceCollection ],
+	function(ps,els)
+		local list,i,test,type,flag;
+		list := Set(ShallowCopy(els));
+		if Length(list) > Rank(ps) then
+		  Error("A flag can contain at most Rank(<ps>) elements");
+		fi;
+		test := Set(List(list,x->x in ps));
+		if (test <> [ true ] and test <> []) then
+		  Error("not all elements in <els> belong to <ps>"); #we are obliged to check this here because I can't get CategoryCollections work for cps...
+		fi;
+		test := Set(List([1..Length(list)-1],i -> IsIncident(list[i],list[i+1])));
+		if (test <> [ true ] and test <> []) then
+		  Error("<els> does not determine a flag>");
+		fi;
+		flag := rec(geo := ps, types := List(list,x->x!.type), els := list, vectorspace := ps!.vectorspace );
+		ObjectifyWithAttributes(flag, IsFlagOfCPSType, IsEmptyFlag, false );
+		return flag;
+	end);
+
+# ADDED 31/3/2014 jdb
+#############################################################################
+#O  FlagOfIncidenceStructure( <ps>, <els> )
+# returns the empty flag of the projective space <ps>.
+##
+InstallMethod( FlagOfIncidenceStructure,
+	"for a projective space and an empty list",
+	[ IsClassicalPolarSpace, IsList and IsEmpty ],
+	function(ps,els)
+		local flag;
+		flag := rec(geo := ps, types := [], els := [], vectorspace := ps!.vectorspace );
+		ObjectifyWithAttributes(flag, IsFlagOfCPSType, IsEmptyFlag, true );
+		return flag;
+	end);
+
+
+#############################################################################
+# View/Print/Display methods for flags
+#############################################################################
+
+InstallMethod( ViewObj, "for a flag of a polar space",
+	[ IsFlagOfClassicalPolarSpace and IsFlagOfIncidenceStructureRep ],
+	function( flag )
+		Print("<a flag of ",flag!.geo," >");
+	end );
+
+InstallMethod( PrintObj, "for a flag of a projective space",
+	[ IsFlagOfClassicalPolarSpace and IsFlagOfIncidenceStructureRep ],
+	function( flag )
+		PrintObj(flag!.els);
+	end );
+
+InstallMethod( Display, "for a flag of a projective space",
+	[ IsFlagOfClassicalPolarSpace and IsFlagOfIncidenceStructureRep ],
+	function( flag )
+		if IsEmptyFlag(flag) then
+			Print("<empty flag of ",flag!.geo,")>\n");
+		else
+			Print("<a flag of ",flag!.geo,"with elements of types ",flag!.types,"\n");
+			Print("respectively spanned by\n");
+			Display(flag!.els);
+		fi;
+	end );
+
+
 ############################################################################
 ## Methods for random stuff
 ## Since it is quick to find a pseudo-random element
@@ -2208,6 +2286,7 @@ InstallMethod( TypeOfSubspace,
 ## we just find a random collineation and take the image
 ## of the associated element representative (see RepresentativesOfElements).
 #############################################################################
+
 
 # CHECKED 22/09/2011 jdb.
 #############################################################################

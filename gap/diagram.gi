@@ -317,12 +317,12 @@ InstallOtherMethod( RandomFlag,
 # returns elements of a flag 
 # 
 ##
-InstallMethod( ElementsOfFlag, 
-	"for a coset geometry flag",
-	[IsFlagOfCosetGeometry],
-	function(flag)
-		return flag!.els;
-	end );
+#InstallMethod( ElementsOfFlag, 
+#	"for a coset geometry flag",
+#	[IsFlagOfCosetGeometry],
+#	function(flag)
+#		return flag!.els;
+#	end );
 
 
 # 

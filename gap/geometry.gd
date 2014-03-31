@@ -228,6 +228,8 @@ DeclareOperation( "FlagOfIncidenceStructure", [ IsIncidenceStructure, IsElementO
 DeclareOperation( "FlagOfIncidenceStructure", [ IsIncidenceStructure, IsList and IsEmpty ]);
 DeclareOperation( "ChamberOfIncidenceStructure", [ IsElementOfIncidenceStructureCollection ]);
 
+DeclareOperation( "ElementsOfFlag", [ IsFlagOfIncidenceStructure ]);
+
 DeclareOperation( "IsIncident", [IsElementOfIncidenceStructure, IsElementOfIncidenceStructure] );
 DeclareOperation( "IsCollinear", [IsIncidenceStructure, IsElementOfIncidenceStructure, IsElementOfIncidenceStructure]);
 DeclareOperation( "Span", [IsElementOfIncidenceStructure, IsElementOfIncidenceStructure]);

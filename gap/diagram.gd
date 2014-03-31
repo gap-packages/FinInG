@@ -140,7 +140,7 @@ DeclareOperation( "RandomElement", [ IsCosetGeometry ] );
 DeclareOperation( "RandomFlag", [ IsCosetGeometry ] );
 DeclareOperation( "RandomChamber", [ IsCosetGeometry ] );
 #DeclareOperation( "Random", [ IsAllElementsOfCosetGeometry ] );
-DeclareOperation( "ElementsOfFlag", [ IsFlagOfCosetGeometry ]);
+#DeclareOperation( "ElementsOfFlag", [ IsFlagOfCosetGeometry ]); #moved to geometry.gd.
 DeclareOperation( "AutGroupIncidenceStructureWithNauty", [ IsCosetGeometry ]);
 DeclareOperation( "CorGroupIncidenceStructureWithNauty", [ IsCosetGeometry ]);
 DeclareOperation( "IsIsomorphicIncidenceStructureWithNauty", [ IsCosetGeometry, IsCosetGeometry ]);

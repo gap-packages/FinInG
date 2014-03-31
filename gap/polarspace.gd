@@ -2,20 +2,18 @@
 ##
 ##  polarspace.gd              FinInG package
 ##                                                              John Bamberg
-## 								Anton Betten
+##                                                              Anton Betten
 ##                                                              Jan De Beule
 ##                                                             Philippe Cara
-## 							      Michel Lavrauw
-##                                                                 Maska Law
+##                                                            Michel Lavrauw
 ##                                                           Max Neunhoeffer
-##                                                            Michael Pauley
-##                                                             Sven Reichard
 ##
-##  Copyright 2006 University of Western Australia, Perth
-##                 Lehrstuhl D fuer Mathematik, RWTH Aachen
-##                 Ghent University
-##                 Colorado State University
-##                 Vrije Universiteit Brussel
+##  Copyright 2014	Colorado State University, Fort Collins
+##					Università degli Studi di Padova
+##					Universeit Gent
+##					University of St. Andrews
+##					University of Western Australia, Perth
+##                  Vrije Universiteit Brussel
 ##
 ##  Declaration stuff for polar spaces
 ##
@@ -39,7 +37,15 @@ DeclareRepresentation( "IsShadowSubspacesOfClassicalPolarSpaceRep", IsShadowElem
 #DeclareCategoryCollections("IsSubspaceOfClassicalPolarSpace");
 #BindGlobal( "SoCPSFamily", 
 #  NewFamily( "SoCPSFamily", IsSubspaceOfClassicalPolarSpace, IsSubspaceOfClassicalPolarSpace));
-#BindGlobal( "SoCPSCollFamily", CollectionsFamily(SoPSFamily) );
+
+#BindGlobal( "SoCPSCollFamily", CollectionsFamily(SoCPSFamily) );
+
+DeclareCategory( "IsFlagOfClassicalPolarSpace", IsFlagOfProjectiveSpace );
+
+BindGlobal( "FlagsOfCPS", NewFamily( "FlagsOfCPSFamily", IsObject ));  
+
+BindGlobal( "IsFlagOfCPSType", NewType( FlagsOfCPS,
+                                    IsFlagOfClassicalPolarSpace and IsFlagOfIncidenceStructureRep) );
 
 #############################################################################
 # Categories and Representations:
