@@ -1220,6 +1220,7 @@ InstallGlobalFunction( OnSetsProjSubspaces,
 
 # CHECKED 11/09/11 jdb
 # cvec change: only necessary to convert the output of MakeAllProjectivePoints. (19/3/14).
+# This is done now (ml 31/03/14)
 #############################################################################
 #O  AsList( <vs>) 
 # returns a list of all elements in <vs>, which is a collection of subspaces of
@@ -1242,7 +1243,8 @@ InstallMethod( AsList,
 		bf := geo!.basefield;
 		d := geo!.dimension;
 		o := MakeAllProjectivePoints(bf, d);
-		o := List(o, t -> Wrap(geo, type, CVec(t, bf) ) );;   
+		o := List(o, t -> Wrap(geo, type, t ) );;  
+		# o := List(o, t -> Wrap(geo, type, CVec(t, bf) ) );;   
 	else
 		p := NextIterator(Iterator(vs));
 		o := Orb(g, p, OnProjSubspaces, rec( hashlen:=Int(5/4*sz), 

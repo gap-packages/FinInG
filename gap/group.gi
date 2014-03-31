@@ -68,10 +68,12 @@ function(f,d)
   #   gap> Random(omega);
   #   ## returns a compressed vector
 
+
   local els,i,j,l,q,sp,v,vs,w,ww,x;
   els := Elements(f);
   q := Length(els);
-  v := ListWithIdenticalEntries(d+1,Zero(f));
+  v := CVec([1..d+1]*Zero(f),f); # using cvecs (ml 31/03/13) 
+  #v := ListWithIdenticalEntries(d+1,Zero(f));
   #if q <= 256 then ConvertToVectorRep(v,q); fi;
   vs := EmptyPlist(q^d);
   sp := EmptyPlist((q^(d+1)-1)/(q-1));
@@ -2184,7 +2186,7 @@ InstallMethod( NiceMonomorphism,
 	Info(InfoFinInG,4,"Using NiceMonomorphism for proj. group (feasible)");
 	bf := BaseField(pg);
     dom := MakeAllProjectivePoints( bf, Dimension(pg) - 1);
-    dom := List(dom,x->CVec(x,bf));
+    #dom := List(dom,x->CVec(x,bf)); # (ml 31/03/14) MakeAllProjectivePoints produces already cvecs 
 	if FINING.Fast then
 	   hom := NiceMonomorphismByDomain( pg, dom, OnProjPointsWithFrob );
     else 
@@ -2213,7 +2215,7 @@ InstallMethod( NiceMonomorphism,
 			Error("action on projective points not feasible to calculate");
 		else
 			dom := MakeAllProjectivePoints( BaseField(pg), Dimension(pg) - 1 );
-		    dom := List(dom,x->CVec(x,bf));
+		    #dom := List(dom,x->CVec(x,bf)); # (ml 31/03/14) MakeAllProjectivePoints produces already cvecs 
 			if FINING.Fast then
 				hom := NiceMonomorphismByDomain( pg, dom, OnProjPointsWithFrob );
 			else 
