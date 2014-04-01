@@ -2445,15 +2445,23 @@ InstallMethod( KleinCorrespondence,
 
 #############################################################################
 #O  NaturalDuality( <w> )
-# returns the well known isomorphism between W(3,q) and Q(4,q). The latter 
-# will be the standard one, the former a user defined one.
+# returns the well known isomorphism between W(3,q) and Q(4,q). 
+# Both polar spaces may be user defined. 
+# Setup: - Plucker Coordinates map lines of PG(3,q) on points of Q+(5,q)=X0X5+X1X4+X2X3 = 0
+#       - restricting to lines of W(3,q), this maps goes to Q(4,q): X0^2 = X1X4+X2X3, which is the above 
+#           intersecting with the hyperplane X0+X5 = 0.
+#        - When using PluckerCoordinates, we only need the first 5. When using InversePluckerCoordinates,
+#        we make the sixth coordinate equal to minus the first.
+#       - points of W(3,q): take two lines through a point -> mapped on two collinear points of Q -> line
+#       - lines of Q(4,q): take the two spanning points -> two lines of W -> Meet of these lines is the point
+#           we are looking for.
+#       - some base changes are necessary.
+#############################################################################
 ##
-InstallMethod( NaturalDuality, 
-	"for a symplectic polar space of rank 2",
+InstallMethod( NaturalDuality,
+	"for a symplectic GQ and a parabolic quadric",
 	[ IsClassicalGQ, IsClassicalGQ ],
 	function( w, q4q )
-    #local f, iso, mat, form_quadric, quadric, klein, hyp, pg,
-    #      q4q, emq4q, func, map, one, i, pre;
     local f, one, mat, form_quadric, quadric, map, form_w, cq4q, cw, can,
         func, pre, formw, c1, c2;
     if not IsSymplecticSpace(w) then
@@ -2539,6 +2547,7 @@ InstallMethod( NaturalDuality,
     SetIsBijective( map, true );
     return map;
  end );
+
 
 # CHECKED 28/09/11 jdb
 #############################################################################

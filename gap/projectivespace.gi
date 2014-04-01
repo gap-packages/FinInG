@@ -434,7 +434,7 @@ InstallMethod( \in,
 # seems to fail, although according to the documentation, it should work. 
 # In the future this could be made better.
 ##
-InstallMethod( VectorSpaceToElement, 
+InstallMethod( VectorSpaceToElement,
 	"for a projective space and a CMatRep",
 	[IsProjectiveSpace, IsCMatRep],
 	function( geom, v )
