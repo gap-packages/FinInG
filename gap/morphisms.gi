@@ -2331,13 +2331,12 @@ InstallMethod( NaturalProjectionBySubspaceNC,
 ##
 InstallMethod( PluckerCoordinates, 
 	"for a line of PG(3,q)",
-    [ IsSubspaceOfProjectiveSpace ],
-	function( l )
-		local pij, lobj, u, v, coords;
+    [ IsMatrix ],
+	function( lobj )
+		local pij, u, v, coords;
 		pij := function(u,v,i,j)
 			return u[i]*v[j] - u[j] * v[i];
 		end;
-		lobj := l!.obj; 
 		u := lobj[1];
 		v := lobj[2];
 		coords := [pij(u,v,1,2),pij(u,v,1,3),pij(u,v,1,4),
@@ -2353,17 +2352,15 @@ InstallMethod( PluckerCoordinates,
 ##
 InstallMethod( InversePluckerCoordinates, 
 	"for a point of Q+(5,q)",
-    [ IsSubspaceOfProjectiveSpace ],
+    [ IsVector ],
 
    ## The point must satisfy the Pluecker relation x1x6+x2x5+x3x4=0.
-	function( var )
-		local pairs, i, pair, l, f, zero, x;
-		x := var!.obj;
+	function( x )
+		local pairs, i, pair, l, f, zero;
 		pairs := [[1,2],[1,3],[1,4],[2,3],[4,2],[3,4]];
 		i := PositionNonZero(x);
 		pair := pairs[i];
-		f := var!.geo!.basefield;
-		zero := Zero(f);
+		zero := Zero(x[1]);
         l := [];
 		if 1 in pair then
 			Add(l, [ zero, x[1], x[2], x[3] ]);
@@ -2438,12 +2435,6 @@ InstallMethod( KleinCorrespondence,
     ## put intertwiner in PGammaL(4,q)->PGO^+(6,q) 
 	end );
 
-
-
-
-
-
-
 #############################################################################
 #
 #
@@ -2452,7 +2443,6 @@ InstallMethod( KleinCorrespondence,
 #
 #############################################################################
 
-# CHECKED 28/09/11 jdb
 #############################################################################
 #O  NaturalDuality( <w> )
 # returns the well known isomorphism between W(3,q) and Q(4,q). The latter 
@@ -2460,53 +2450,92 @@ InstallMethod( KleinCorrespondence,
 ##
 InstallMethod( NaturalDuality, 
 	"for a symplectic polar space of rank 2",
-	[IsSymplecticSpace and IsGeneralisedPolygon ],
-	function( w )
-    ## First, we define the klein quadric which naturally corresponds
-    ## with the canonical symplectic quadrangle. We then
-    ## setup a polar space isomorphism for the given symplectic space.
-    ## The function of our mapping takes a line of w, maps
-    ## it to the canonical quadrangle, and then maps it to the Klein
-    ## quadric.
-    local f, iso, mat, form_quadric, quadric, klein, hyp, pg,
-          q4q, emq4q, func, map, one, i, pre;
+	[ IsClassicalGQ, IsClassicalGQ ],
+	function( w, q4q )
+    #local f, iso, mat, form_quadric, quadric, klein, hyp, pg,
+    #      q4q, emq4q, func, map, one, i, pre;
+    local f, one, mat, form_quadric, quadric, map, form_w, cq4q, cw, can,
+        func, pre, formw, c1, c2;
+    if not IsSymplecticSpace(w) then
+        Error("<w> should be a symplectic GQ");
+    fi;
+    if not IsParabolicQuadric( q4q ) then
+        Error("<q> should be a parabolic quadric");
+    fi;
     f := w!.basefield;
     one := One(f);
-    mat := NullMat(6, 6, f);
-    for i in [1..3] do
-       mat[i][7-i] := one;
-    od;
-    if IsOddInt(Size(f)) then
-       form_quadric := BilinearFormByMatrix(mat+TransposedMat(mat), f);
-    else  
-       form_quadric := QuadraticFormByMatrix(mat, f);
-    fi;
-    quadric := PolarSpace( form_quadric );
-    SetIsHyperbolicQuadric( quadric, true );
-    klein := KleinCorrespondence( quadric ); 
-    pg := AmbientSpace(quadric);
-    hyp := IdentityMat(6, f){[1..5]};
-    hyp[1][6] := -one;
-    hyp := VectorSpaceToElement(pg, hyp);
-    q4q := ParabolicQuadric(4, f);
-    emq4q := NaturalEmbeddingBySubspace(q4q, quadric, hyp);
-    if IsCanonicalPolarSpace( w ) then
-       func := l -> PreImageElm(emq4q, ImageElm(klein, l));
-       pre := p -> Wrap( w, 2, PreImageElm(klein, ImageElm(emq4q, p))!.obj );
+    mat := NullMat(5, 5, f);
+    mat[1][1] := one;
+    mat[2][5] := -one;
+    mat[3][4] := -one;
+    form_quadric := QuadraticFormByMatrix(mat, f);
+	c1 := BaseChangeToCanonical( form_quadric );
+    if not IsCanonicalPolarSpace(q4q) then
+        c2 := BaseChangeToCanonical(QuadraticForm(q4q));
+        cq4q := c2^-1 * c1;
     else
-       iso := IsomorphismCanonicalPolarSpace( w );
-       func := function( l )
-              local p;         
-              p := ImageElm(klein, PreImageElm(iso, l));
-              return PreImageElm(emq4q, p);
-            end;
-       pre := function( p )
-              local l;
-              l := ImageElm(emq4q, p);
-              return Wrap( w, 2, PreImageElm(klein, ImageElm(iso, l))!.obj );
-            end;
+        cq4q := c1;
     fi;
-    map := GeometryMorphismByFunction(Lines(w), Points(q4q), func, pre);
+    if IsCanonicalPolarSpace( w ) then
+        func := function( el )
+            local list,l1,l2,iter;
+            if el!.type = 2 then #dealing with a line
+                return VectorSpaceToElement(q4q, PluckerCoordinates(el!.obj){[1..5]} * cq4q^-1 );
+            else
+                iter := Iterator(Lines(el));
+                l1 := NextIterator(iter);
+                l2 := NextIterator(iter);
+                list := [ PluckerCoordinates(l1!.obj){[1..5]} * cq4q^-1,
+                            PluckerCoordinates(l2!.obj){[1..5]} * cq4q^-1 ];
+                return VectorSpaceToElement(q4q, list);
+            fi;
+        end;
+        pre := function( el )
+            local vec;
+            if el!.type = 1 then #dealing with a point
+                vec := Unpack(el!.obj)*cq4q;
+                vec[6] := -vec[1];
+                return VectorSpaceToElement(w, InversePluckerCoordinates(vec) );
+            else
+                vec := Unpack(el!.obj)*cq4q;
+                vec[1][6] := -vec[1][1];
+                vec[2][6] := -vec[2][1];
+                return Meet( VectorSpaceToElement(w, InversePluckerCoordinates(vec[1]) ),
+                                VectorSpaceToElement(w, InversePluckerCoordinates(vec[2]) ) );
+            fi;
+        end;
+    else
+		formw := SesquilinearForm( w );
+		cw := BaseChangeToCanonical( formw );
+        func := function( el )
+            local list,l1,l2,iter;
+            if el!.type = 2 then #dealing with a line
+                return VectorSpaceToElement(q4q, PluckerCoordinates(Unpack(el!.obj)*cw^-1){[1..5]} * cq4q^-1);
+            else
+                iter := Iterator(Lines(el));
+                l1 := NextIterator(iter);
+                l2 := NextIterator(iter);
+                list := [ PluckerCoordinates(Unpack(l1!.obj)*cw^-1){[1..5]} * cq4q^-1,
+                            PluckerCoordinates(Unpack(l2!.obj)*cw^-1){[1..5]} * cq4q^-1 ];
+                return VectorSpaceToElement(q4q, list);
+            fi;
+        end;
+        pre := function( el )
+            local vec;
+            if el!.type = 1 then #dealing with a point
+                vec := Unpack(el!.obj)*cq4q;
+                vec[6] := -vec[1];
+                return VectorSpaceToElement(w, InversePluckerCoordinates(vec) * cw);
+            else;
+                vec := Unpack(el!.obj)*cq4q;
+                vec[1][6] := -vec[1][1];
+                vec[2][6] := -vec[2][1];
+                return Meet( VectorSpaceToElement(w, InversePluckerCoordinates(vec[1]) * cw ),
+                                VectorSpaceToElement(w, InversePluckerCoordinates(vec[2]) * cw ) );
+            fi;
+        end;
+    fi;
+    map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(w), ElementsOfIncidenceStructure(q4q), func, pre);
     SetIsBijective( map, true );
     return map;
  end );

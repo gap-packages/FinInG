@@ -2905,9 +2905,9 @@ InstallMethod( SimilarityGroup, [ IsClassicalPolarSpace and IsClassicalPolarSpac
 		
 #############################################################################
 #P  IsParabolicQuadric( <ps> )
-# returns all the elements of the polar space <ps> 
-## 
-InstallMethod( IsParabolicQuadric, 
+# returns true if <ps> is a parabolic quadric
+##
+InstallMethod( IsParabolicQuadric,
 	"for a polar space having HasQuadraticForm",
 	[IsClassicalPolarSpace],
 	1,
@@ -2921,8 +2921,8 @@ InstallMethod( IsParabolicQuadric,
 	
 #############################################################################
 #P  IsParabolicQuadric( <ps> )
-# returns all the elements of the polar space <ps> 
-## 
+# returns true if <ps> is a parabolic quadric
+##
 InstallMethod( IsParabolicQuadric, 
 	"for a polar space",
 	[IsClassicalPolarSpace],
@@ -2932,8 +2932,8 @@ InstallMethod( IsParabolicQuadric,
 
 #############################################################################
 #P  IsHyperbolicQuadric( <ps> )
-# returns all the elements of the polar space <ps> 
-## 
+# returns true if <ps> is a hyperbolic quadric
+##
 InstallMethod( IsHyperbolicQuadric, 
 	"for a polar space having HasQuadraticForm",
 	[IsClassicalPolarSpace],
@@ -2948,8 +2948,8 @@ InstallMethod( IsHyperbolicQuadric,
 	
 #############################################################################
 #P  IsHyperbolicQuadric( <ps> )
-# returns all the elements of the polar space <ps> 
-## 
+# returns true if <ps> is a hyperbolic quadric
+##
 InstallMethod( IsHyperbolicQuadric, 
 	"for a polar space",
 	[IsClassicalPolarSpace],
@@ -2960,8 +2960,8 @@ InstallMethod( IsHyperbolicQuadric,
 
 #############################################################################
 #P  IsEllipticQuadric( <ps> )
-# returns all the elements of the polar space <ps> 
-## 
+# returns true if <ps> is an elliptic quadric
+##
 InstallMethod( IsEllipticQuadric, 
 	"for a polar space having HasQuadraticForm",
 	[IsClassicalPolarSpace],
@@ -2976,13 +2976,36 @@ InstallMethod( IsEllipticQuadric,
 	
 #############################################################################
 #P  IsEllipticQuadric( <ps> )
-# returns all the elements of the polar space <ps> 
-## 
+# returns true if <ps> is an elliptic quadric
+##
 InstallMethod( IsEllipticQuadric, 
 	"for a polar space",
 	[IsClassicalPolarSpace],
 	function( ps )
 		return IsEllipticForm(SesquilinearForm(ps));
+	end);
+
+
+#############################################################################
+#P  IsSymplecticSpace( <ps> )
+# returns true if <ps> is an elliptic quadric
+##
+InstallMethod( IsSymplecticSpace,
+	"for a polar space",
+	[IsClassicalPolarSpace],
+	function( ps )
+		return PolarSpaceType(ps)="symplectic";
+	end);
+    
+#############################################################################
+#P  IsHermitianPolarSpace( <ps> )
+# returns true if <ps> is an elliptic quadric
+##
+InstallMethod( IsHermitianPolarSpace,
+	"for a polar space",
+	[IsClassicalPolarSpace],
+	function( ps )
+		return PolarSpaceType(ps)="hermitian";
 	end);
 
 #############################################################################
@@ -3001,3 +3024,6 @@ InstallMethod( DefiningListOfPolynomials,
 	function( ps )
 		return [EquationForPolarSpace(ps)];
 	end);
+
+
+

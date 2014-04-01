@@ -172,11 +172,16 @@ DeclareOperation( "NaturalEmbeddingBySubfield",
 ## Other morphisms
 #############################################################################
 
-DeclareOperation( "PluckerCoordinates", [ IsSubspaceOfProjectiveSpace ]);
-DeclareOperation( "InversePluckerCoordinates", [ IsSubspaceOfProjectiveSpace ]);
+DeclareOperation( "PluckerCoordinates", [ IsMatrix ]);
+DeclareOperation( "InversePluckerCoordinates", [ IsVector ]);
 DeclareOperation( "KleinCorrespondence", [ IsClassicalPolarSpace ]);
 
-DeclareOperation( "NaturalDuality", [ IsSymplecticSpace and IsGeneralisedPolygon ]);
+DeclareOperation( "NaturalDuality", [ IsClassicalGQ ]);
+DeclareOperation( "NaturalDuality", [ IsClassicalGQ, IsClassicalGQ ]);
+
+
 DeclareOperation( "NaturalDuality", [ IsHermitianPolarSpace and IsGeneralisedPolygon ]);
+
+
 DeclareOperation( "ProjectiveCompletion", [ IsAffineSpace ] );
 
