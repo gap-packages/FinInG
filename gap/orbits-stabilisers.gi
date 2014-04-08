@@ -57,6 +57,7 @@ InstallMethod( FiningOrbit,
 	end );
 
 # ADDED 26/03/14 ml
+# CHANGED 08/04/14 jb
 #############################################################################
 #O  FiningOrbit( <g>, <e> )
 #  returns the orbit of e under g. It is assumed that e is a subspace of a projective space
@@ -64,12 +65,24 @@ InstallMethod( FiningOrbit,
 ##
 InstallMethod( FiningOrbit,
 	"for a collineation group, an element of a projective space",
-	[ IsProjectiveGroupWithFrob, IsElementOfIncidenceStructure ],
+	[ IsProjectiveGroupWithFrob,  IsSubspaceOfProjectiveSpace ],
 	function(g,e )
 		return FiningOrbit(g,e,OnProjSubspaces);
 	end );
 
-
+# ADDED 08/04/14 jb
+#############################################################################
+#O  FiningOrbit( <g>, <e> )
+#  returns the orbit of e under g. It is assumed that e is a subspace of a affine space
+# and g a collineation group, such that OnAffineSubspaces will be the natural action to use.
+##
+InstallMethod( FiningOrbit,
+	"for a collineation group, an element of a affine space",
+	[ IsProjectiveGroupWithFrob,  IsSubspaceOfAffineSpace ],
+	function(g,e )
+		return FiningOrbit(g,e,OnAffineSubspaces);
+	end );
+	
 # 26/03/14 CHECKED ml
 #############################################################################
 #O  FiningOrbit( <g>, <e>, <act> )
@@ -98,13 +111,14 @@ InstallMethod( FiningOrbit,
 
 
 # CHECKED 26/03/14 ml
+# CHANGED 08/04/14 jb
 #############################################################################
 #O  FiningOrbits( <g>, <e>, <act> )
 #  returns the orbits of e under g, using action function act.
 ##
 InstallMethod( FiningOrbits,
-	"for a collineation group, an element of a projective space and an action function",
-	[ IsProjectiveGroupWithFrob, IsElementsOfIncidenceStructure, IsFunction],
+	"for a group, a homogeneous list, and an action function",
+	[ IsGroup, IsHomogeneousList, IsFunction],
 	function(g,set,action)
 	local orbs, set2, x, o, upto, newupto;
 	orbs := [];
@@ -126,19 +140,31 @@ InstallMethod( FiningOrbits,
 	end );
 
 # ADDED 26/03/14 ml
+# CHANGED 08/04/14 jb
 #############################################################################
 #O  FiningOrbits( <g>, <e> )
 #  returns the orbits of e under g. It is assumed that e is a subspace of a projective space
 # and g a collineation group, such that OnProjSubspaces will be the natural action to use.
 ##
 InstallMethod( FiningOrbits,
-	"for a collineation group, an element of a projective space",
-	[ IsProjectiveGroupWithFrob, IsElementsOfIncidenceStructure ],
+	"for a collineation group, elements of a projective space",
+	[ IsProjectiveGroupWithFrob,  IsSubspaceOfProjectiveSpaceCollection and IsHomogeneousList  ],
 	function(g,e )
 		return FiningOrbits(g,e,OnProjSubspaces);
 	end );
 
-
+# ADDED 08/04/14 jb
+#############################################################################
+#O  FiningOrbits( <g>, <e> )
+#  returns the orbits of e under g. It is assumed that e is a subspace of an affine space
+# and g a collineation group, such that OnAffineSubspaces will be the natural action to use.
+##
+InstallMethod( FiningOrbits,
+	"for a collineation group, elements of an affine space",
+	[ IsProjectiveGroupWithFrob, IsSubspaceOfAffineSpaceCollection and IsHomogeneousList ],
+	function(g,e )
+		return FiningOrbits(g,e,OnAffineSubspaces);
+	end );
 
 
 
@@ -191,7 +217,7 @@ end );
 # then the FiningElementStabiliserOp is called.
 ##
 InstallMethod( FiningStabiliser,	
-	"for a collineation group and a subspace of a projective space",
+	"for a collineation group and a subspace of a affine space",
 	[ IsProjectiveGroupWithFrob, IsSubspaceOfAffineSpace],
 	function(fining_group,el)
 	return FiningElementStabiliserOp(fining_group,el,OnAffineSubspaces);
@@ -254,7 +280,7 @@ end );
 # assumed.
 ##
 InstallMethod( FiningSetwiseStabiliser,
-	"for a set of elements of an projective space of a given type",
+	"for a set of elements of an affine space of a given type",
 	[IsProjectiveGroupWithFrob,  IsSubspaceOfAffineSpaceCollection and IsHomogeneousList],
 	function(g,set)
 		local stab;
