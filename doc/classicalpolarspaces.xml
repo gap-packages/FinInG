@@ -8,14 +8,27 @@
                                                                  Michel Lavrauw
                                                                 Max Neunhoeffer
 
+<<<<<<< .mine
+ Copyright (C) 2014,    Colorado State University
+                        Università degli Studi di Padova
+                        Universiteit Gent
+                        University of St. Andrews
+                        University of Western Australia
+                        Vrije Universiteit Brussel
+=======
   Copyright (C) 2014,	Colorado State University
 						Università degli Studi di Padova
 						Universiteit Gent
 						University of St. Andrews
 						University of Western Australia
                         Vrije Universiteit Brussel
+>>>>>>> .r922
 
+<<<<<<< .mine
+ This is the chapter of the documentation describing the classsical polar spaces.
+=======
 This is the chapter of the documentation describing the classical polar spaces.
+>>>>>>> .r922
 
 -->
 
@@ -183,7 +196,7 @@ is used in the mathematical sense, i.e. a classical polar space is <E>canonical<
 if its determining form belongs to a fixed similarity class. A classical polar space
 is called <E>standard</E> if its determining form is the fixed representant of the
 canonical similarity class. Hence a <E>standard</E> classical polar space is 
-always a <E>canonical</E> classical polar space, a cononical polar space is determined
+always a <E>canonical</E> classical polar space, a canonical polar space is determined
 by a standard form upto a constant factor.
 
 In the following table, we summerize the above information on polar spaces,

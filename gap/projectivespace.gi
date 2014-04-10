@@ -834,17 +834,19 @@ InstallMethod( DualCoordinatesOfHyperplane,
 	"for a subspace of a projective space",
 		[IsSubspaceOfProjectiveSpace],
 		function(hyp)
-			local mat,a;
+			local mat,a,x;
 			if not Dimension(hyp)=Dimension(hyp!.geo)-1 then
 				Error("The argument is not a hyperplane");
 			else
 				mat:=hyp!.obj;
 				a:=NullspaceMat(TransposedMat(mat));
-				return Unpack(a[1]);
+				x := Unpack(a[1]);
+                MultRowVector(x,Inverse( x[PositionNonZero(x)] ));
+                return x;
 			fi;
 	end );
 
-# came from varieties.gi	
+# came from varieties.gi
 #############################################################################
 #O  HyperplaneByDualCoordinates( <pg>,<vector> )
 # returns the hyperplanes by given dual coordinates.

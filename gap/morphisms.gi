@@ -2325,9 +2325,12 @@ InstallMethod( NaturalProjectionBySubspaceNC,
 #############################################################################
 
 # CHECKED 28/09/11 jdb
+# changed 28/3/14 jdb
 #############################################################################
 #O  PluckerCoordinates( <l> )
-# returns the Plucker coordinates of the line <l>.
+# returns the Plucker coordinates of the line <l>. We accept a matrix representin
+# the line. No check on whether this is a line of PG(3,q), so use with care.
+# cmat note: whether l is a cmat or not, coords will be a plain list (so not cvec).
 ##
 InstallMethod( PluckerCoordinates, 
 	"for a line of PG(3,q)",
@@ -2345,10 +2348,13 @@ InstallMethod( PluckerCoordinates,
 	end );
 
 # CHECKED 28/09/11 jdb
+# changed 28/3/14 jdb
 #############################################################################
 #O  InversePluckerCoordinates( <var> )
 # returns a list of two vectors spanning the line with Plucker coordinates <var>
-# cuation: this list is not Triangulized!
+# no check on whether this is really a line of the particular Q+(5,q):X0X5+X1X4+X2X3
+# caution: the list l is not Triangulized!
+# cmat note: l will be an ordinary matrix.
 ##
 InstallMethod( InversePluckerCoordinates, 
 	"for a point of Q+(5,q)",
@@ -2417,7 +2423,7 @@ InstallMethod( KleinCorrespondence,
 		plucker := 
            function( l )
              local pt1, pt2;
-             pt1 := PluckerCoordinates( l );
+             pt1 := PluckerCoordinates( l!.obj );
              pt2 := ImageElm( iso, VectorSpaceToElement(ps, pt1) );
              return pt2;
            end;
@@ -2425,7 +2431,7 @@ InstallMethod( KleinCorrespondence,
            function( var )
              local x, l;
              x := iso!.prefun(var);
-             l := InversePluckerCoordinates( x );
+             l := InversePluckerCoordinates( x!.obj );
              return VectorSpaceToElement(pg, l);
            end;
 		map := GeometryMorphismByFunction(Lines(pg), Points(quadric), plucker, inv);
@@ -2611,7 +2617,7 @@ InstallMethod( NaturalDuality,
     if IsCanonicalPolarSpace( h ) then
        func := function( l )
          local pl, mu, pos;
-         pl := PluckerCoordinates( l );
+         pl := PluckerCoordinates( l!.obj );
 
          ## We must be careful at this step.
          ## Normalisation by a scalar actually matters here.
@@ -2630,7 +2636,7 @@ InstallMethod( NaturalDuality,
          local p2, invpl;
          p2 := PreImageElm(iso2, p); 
          p2 := VectorSpaceToElement(pg5, p2!.obj * xinv);
-         invpl := InversePluckerCoordinates( p2 );
+         invpl := InversePluckerCoordinates( p2!.obj );
          return VectorSpaceToElement(h,invpl);         
        end;
     else
@@ -2638,7 +2644,7 @@ InstallMethod( NaturalDuality,
     
        func := function( l )
          local pl, mu, pos;
-         pl := PluckerCoordinates( PreImageElm(iso, l) );
+         pl := PluckerCoordinates( PreImageElm(iso, l)!.obj );
          pos := PositionNonZero( pl );
          mu := First( AsList(f), m -> m^(q-1) = pl[pos] / pl[7-pos]);      
          pl := mu * pl;
@@ -2649,7 +2655,7 @@ InstallMethod( NaturalDuality,
          local p2, invpl;
          p2 := PreImageElm(iso2, p); 
          p2 := VectorSpaceToElement(pg5, p2!.obj * xinv);
-         invpl := InversePluckerCoordinates( p2 );
+         invpl := InversePluckerCoordinates( p2!.obj );
          return ImageElm(iso, VectorSpaceToElement(h,invpl));         
        end;
     fi;
