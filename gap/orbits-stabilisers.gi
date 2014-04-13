@@ -166,6 +166,31 @@ InstallMethod( FiningOrbits,
 		return FiningOrbits(g,e,OnAffineSubspaces);
 	end );
 
+# ADDED 14/04/14 jb
+#############################################################################
+#O  FiningOrbits( <g>, <e> )
+#  returns the orbits on e under g. It is assumed that e is a collection of subspaces of a projective space
+#  and g a collineation group, such that OnProjSubspaces will be the natural action to use.
+##
+InstallMethod( FiningOrbits,
+	"for a collineation group, elements-collection of a projective space",
+	[ IsProjectiveGroupWithFrob,  IsSubspacesOfProjectiveSpace ],
+	function(g,e )
+		return FiningOrbits(g,AsList(e),OnProjSubspaces);
+	end );
+	
+# ADDED 14/04/14 jb
+#############################################################################
+#O  FiningOrbits( <g>, <e> )
+#  returns the orbits on e under g. It is assumed that e is a collection of subspaces of an affine space
+#  and g a collineation group, such that OnAffineSubspaces will be the natural action to use.
+##
+InstallMethod( FiningOrbits,
+	"for a collineation group, elements-collection of an affine space",
+	[ IsProjectiveGroupWithFrob,  IsSubspacesOfAffineSpace ],
+	function(g,e )
+		return FiningOrbits(g,AsList(e),OnAffineSubspaces);
+	end );
 
 
 ############################################################
@@ -180,11 +205,11 @@ InstallMethod( FiningOrbits,
 InstallMethod( FiningElementStabiliserOp,
 	"for a collineation group, an element of an incidence structure, and an action function",
 	[ IsGroup, IsElementOfIncidenceStructure, IsFunction],
-
-	# JB: 29/03/14
-	# Recall from geometry.gd, that we declared the representation 
-	# IsElementOfIncidenceStructureRep to have the following components:
-	# 	[ "geo", "type", "obj" ] );
+	
+	# JB: 13/04/14
+	# Not happy with this code. Some flaws:
+	# (1) the record "size" is wrong. It should be the degree.
+	# (2) it assumes that the size of g is known, so it computes it. I've asked Max what best-practice should be.
 	
 	function(g,e,act)
 		local t,size, stab;
@@ -235,7 +260,7 @@ InstallMethod( FiningStabiliserOrb,
 	[IsProjectiveGroupWithFrob, IsSubspaceOfProjectiveSpace],
 	function(fining_group,el)
 		local stab;
-		stab := Group(ORB_EstimateOrbitSize(ProductReplacer(fining_group),el,OnProjSubspaces,15,1000000,60000).Sgens);
+		stab := SubgroupNC(fining_group, ORB_EstimateOrbitSize(ProductReplacer(fining_group),el,OnProjSubspaces,15,1000000,60000).Sgens);
 	return stab;
 end );
 
