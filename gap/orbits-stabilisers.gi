@@ -156,7 +156,7 @@ InstallMethod( FiningOrbits,
 # ADDED 08/04/14 jb
 #############################################################################
 #O  FiningOrbits( <g>, <e> )
-#  returns the orbits of e under g. It is assumed that e is a subspace of an affine space
+#  returns the orbits of e under g. It is assumed that e is homogeneous list of affine spaces
 # and g a collineation group, such that OnAffineSubspaces will be the natural action to use.
 ##
 InstallMethod( FiningOrbits,
@@ -188,6 +188,58 @@ InstallMethod( FiningOrbits,
 InstallMethod( FiningOrbits,
 	"for a collineation group, elements-collection of an affine space",
 	[ IsProjectiveGroupWithFrob,  IsSubspacesOfAffineSpace ],
+	function(g,e )
+		return FiningOrbits(g,AsList(e),OnAffineSubspaces);
+	end );
+
+# ADDED 14/04/14 jb
+#############################################################################
+#O  FiningOrbits( <g>, <e> )
+#  returns the orbits on e under g. It is assumed that e is a shadow space of projective spaces
+# and g a collineation group, such that OnProjSubspaces will be the natural action to use.
+##
+InstallMethod( FiningOrbits,
+	"for a collineation group, shadow space of a projective space",
+	[ IsProjectiveGroupWithFrob, IsShadowSubspacesOfProjectiveSpace	],
+	function(g,e )
+		return FiningOrbits(g,AsList(e),OnProjSubspaces);
+	end );
+
+# ADDED 14/04/14 jb
+#############################################################################
+#O  FiningOrbits( <g>, <e> )
+#  returns the orbits on e under g. It is assumed that e is a shadow space of affine spaces
+# and g a collineation group, such that OnAffineSubspaces will be the natural action to use.
+##
+InstallMethod( FiningOrbits,
+	"for a collineation group, shadow space of an affine space",
+	[ IsProjectiveGroupWithFrob, IsShadowSubspacesOfAffineSpace	],
+	function(g,e )
+		return FiningOrbits(g,AsList(e),OnAffineSubspaces);
+	end );
+	
+# ADDED 14/04/14 jb
+#############################################################################
+#O  FiningOrbits( <g>, <e> )
+#  returns the orbits on e under g. It is assumed that e is a shadow space of a polar space
+# and g a collineation group, such that OnProjSubspaces will be the natural action to use.
+##
+InstallMethod( FiningOrbits,
+	"for a collineation group, shadow space of a polar space",
+	[ IsProjectiveGroupWithFrob, IsShadowSubspacesOfClassicalPolarSpace	],
+	function(g,e )
+		return FiningOrbits(g,AsList(e),OnProjSubspaces);
+	end );
+
+# ADDED 14/04/14 jb
+#############################################################################
+#O  FiningOrbits( <g>, <e> )
+#  returns the orbits on e under g. It is assumed that e is a parallel class of affine spaces
+# and g a collineation group, such that OnAffineSubspaces will be the natural action to use.
+##
+InstallMethod( FiningOrbits,
+	"for a collineation group, parallel class of an affine space",
+	[ IsProjectiveGroupWithFrob, IsParallelClassOfAffineSpace	],
 	function(g,e )
 		return FiningOrbits(g,AsList(e),OnAffineSubspaces);
 	end );
