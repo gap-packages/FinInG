@@ -1736,12 +1736,12 @@ InstallMethod( NaturalEmbeddingBySubfield,
 		if geom1!.dimension  <> geom2!.dimension or not IsSubset(f2,f1) then  
 			Error("Dimensions and/or field sizes are incompatible"); return;
 		fi;
-		func :=  x -> VectorSpaceToElement(geom2, ShallowCopy(x!.obj));
+		func :=  x -> VectorSpaceToElement(geom2, ShallowCopy(Unpack(x!.obj))); #here an unpack is needed to avoid field incompatibilites.
 		prefun := function( x )
 			if not ForAll( Flat(x!.obj), i -> i in f1 ) then
 				Error("Element does not have all of its coordinates in ", f1);
 			fi;
-			return VectorSpaceToElement(geom1, ShallowCopy(x!.obj));
+			return VectorSpaceToElement(geom1, ShallowCopy(Unpack(x!.obj))); # the same here.
 		end;
 		map := GeometryMorphismByFunction( ElementsOfIncidenceStructure(geom1), 
                                        ElementsOfIncidenceStructure(geom2),
@@ -1819,14 +1819,14 @@ InstallMethod( NaturalEmbeddingBySubfield,
 		fi;
 		ps := PolarSpace(form);
 		iso := IsomorphismPolarSpacesNC(ps, geom2, computeintertwiner);
-		func :=  x -> VectorSpaceToElement(ps, ShallowCopy(x!.obj))^iso; #should be no problem since VectorSpaceToElement allows cmat.
+		func :=  x -> VectorSpaceToElement(ps, ShallowCopy(Unpack(x!.obj)))^iso; #should be no problem since VectorSpaceToElement allows cmat.
 		prefun := function( x )
 			local y;            
             y := iso!.prefun(x);
             if not ForAll( Flat(y!.obj), i -> i in f1 ) then
 				Error("Element does not have all of its coordinates in ", f1);
 			fi;
-            return VectorSpaceToElement(geom1, ShallowCopy(y!.obj));
+            return VectorSpaceToElement(geom1, ShallowCopy(Unpack(y!.obj)));
 		end;
 		map := GeometryMorphismByFunction( ElementsOfIncidenceStructure(geom1), 
                                        ElementsOfIncidenceStructure(geom2),
