@@ -2357,7 +2357,7 @@ InstallMethod( PluckerCoordinates,
 # cmat note: l will be an ordinary matrix.
 ##
 InstallMethod( InversePluckerCoordinates, 
-	"for a point of Q+(5,q)",
+	"for a vector repr. a point of Q+(5,q): X0X5+X1X4+X2X3=0",
     [ IsVector ],
 
    ## The point must satisfy the Pluecker relation x1x6+x2x5+x3x4=0.
@@ -2490,6 +2490,7 @@ InstallMethod( NaturalDuality,
     else
         cq4q := c1;
     fi;
+	formw := SesquilinearForm( w );
     if IsCanonicalPolarSpace( w ) then
         func := function( el )
             local list,l1,l2,iter;
@@ -2519,7 +2520,6 @@ InstallMethod( NaturalDuality,
             fi;
         end;
     else
-		formw := SesquilinearForm( w );
 		cw := BaseChangeToCanonical( formw );
         func := function( el )
             local list,l1,l2,iter;
