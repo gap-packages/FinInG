@@ -1847,7 +1847,7 @@ InstallMethod( VectorSpaceToElement,
 				fi;
 			fi;
 			MultRowVector(x,Inverse( x[PositionNonZero(x)] ));
-			y := NewMatrix(IsCMatRep,geom!.basefield,Length(x),[x]);
+            y := NewMatrix(IsCMatRep,geom!.basefield,Length(x),[x]);
 			return Wrap(geom, 1, y[1]);
 		fi;
   end );

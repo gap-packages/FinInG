@@ -173,8 +173,10 @@ DeclareOperation( "PluckerCoordinates", [ IsMatrix ]);
 DeclareOperation( "InversePluckerCoordinates", [ IsVector ]);
 DeclareOperation( "KleinCorrespondence", [ IsClassicalPolarSpace ]);
 
-DeclareOperation( "NaturalDuality", [ IsClassicalGQ ]);
 DeclareOperation( "NaturalDuality", [ IsClassicalGQ, IsClassicalGQ ]);
+
+DeclareOperation( "NaturalDualitySymplectic", [ IsClassicalGQ, IsClassicalGQ ]);
+DeclareOperation( "NaturalDualityHermitian", [ IsClassicalGQ, IsClassicalGQ ]);
 
 
 DeclareOperation( "NaturalDuality", [ IsHermitianPolarSpace and IsGeneralisedPolygon ]);
