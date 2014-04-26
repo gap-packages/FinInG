@@ -2449,7 +2449,7 @@ InstallMethod( KleinCorrespondence,
 #
 #############################################################################
 
-
+# Added april 2014 jdb.
 #############################################################################
 #O  NaturalDuality( <gq1>, <gq2> )
 ##
@@ -2466,22 +2466,23 @@ InstallMethod( NaturalDuality,
     fi;
     end );
 
+# Added april 2014. jdb
 #############################################################################
 #O  NaturalDualitySymplectic( <w> )
 # returns the well known isomorphism between W(3,q) and Q(4,q). 
 # Both polar spaces may be user defined. 
-# Setup: - Plucker Coordinates map lines of PG(3,q) on points of Q+(5,q)=X0X5+X1X4+X2X3 = 0
-#       - restricting to lines of W(3,q), this maps goes to Q(4,q): X0^2 = X1X4+X2X3, which is the above 
-#           intersecting with the hyperplane X0+X5 = 0.
-#        - When using PluckerCoordinates, we only need the first 5. When using InversePluckerCoordinates,
-#         we make the sixth coordinate equal to minus the first.
-#       - points of W(3,q): take its pole under the polarity associated with W(3,q), this defines a plane.
-#           From this plane's underlying object, we have three lines -> three points of Q+(5,q), then intersect
-#           with X0+X5=0 to find a line of Q(4,q).
-#       - lines of Q(4,q): take the two spanning points -> two lines of W -> Meet of these lines is the point
-#           we are looking for.
-#       - some base changes are necessary.
-#       - all the linear algebra is hard coded.
+# Setup: - Plucker Coordinates map lines of PG(3,q) on points of Q+(5,q): X0X5+X1X4+X2X3 = 0
+#        - restricting to lines of W(3,q), the range is the points of Q(4,q): X0^2 = X1X4+X2X3, which is the above 
+#          intersecting with the hyperplane X0+X5 = 0.
+#        - When using PluckerCoordinates, we only need the first 5 coordinates. When using InversePluckerCoordinates,
+#          we make the sixth coordinate equal to minus the first.
+#        - points of W(3,q): take its pole under the polarity associated with W(3,q), this defines a plane.
+#          From this plane's underlying object, we have three lines -> three points of Q+(5,q) spanning a generator
+#		   then intersect this generator with X0+X5=0 to find the line of Q(4,q).
+#        - lines of Q(4,q): take the two spanning points -> two lines of W -> Meet of these lines is the point
+#          we are looking for.
+#        - some base changes are necessary.
+#        - all the linear algebra is hard coded.
 #############################################################################
 ##
 InstallMethod( NaturalDualitySymplectic,
@@ -2489,7 +2490,7 @@ InstallMethod( NaturalDualitySymplectic,
 	[ IsClassicalGQ, IsClassicalGQ ],
 	function( w, q4q )
     local f, one, mat, form_quadric, quadric, map, form_w, cq4q, cw, can,
-        func, pre, formw, c1, c2, delta;
+        func, pre, formw, c1, c2, delta, hyp;
     f := w!.basefield;
     one := One(f);
     mat := NullMat(5, 5, f);
@@ -2506,17 +2507,17 @@ InstallMethod( NaturalDualitySymplectic,
     fi;
 	formw := SesquilinearForm( w );
     delta := PolarityOfProjectiveSpace(w);
-    if IsCanonicalPolarSpace( w ) then
+    hyp := IdentityMat(6,f){[1..5]}; #this and next are in fact HyperplaneByDualCoorindates([1,0,0,0,0,1]..)
+    hyp[1][6] := -one;
+   	if IsCanonicalPolarSpace( w ) then
         func := function( el )
-            local list,plane,vec,hyp;
+            local list,plane,vec;
             if el!.type = 2 then #dealing with a line
                 return VectorSpaceToElement(q4q, PluckerCoordinates(el!.obj){[1..5]} * cq4q^-1 );
             else
                 plane := el^delta;
                 vec := Unpack(plane!.obj); #we have the plane, next line: use three lines in it.
                 list := [ PluckerCoordinates(vec{[1,2]}), PluckerCoordinates(vec{[2,3]}), PluckerCoordinates(vec{[1,3]}) ];
-                hyp := IdentityMat(6,f){[1..5]}; #this and next are in fact HyperplaneByDualCoorindates([1,0,0,0,0,1]..)
-                hyp[1][6] := -one;
        			plane := SumIntersectionMat(list, hyp)[2]; #hard coded Meet operation :-)
                 list := List(plane,x->x{[1..5]}*cq4q^-1); #remember that we only need the first five coordinates, and do not forget base change
                 return VectorSpaceToElement(q4q, list);
@@ -2538,15 +2539,13 @@ InstallMethod( NaturalDualitySymplectic,
     else
 		cw := BaseChangeToCanonical( formw );
         func := function( el )
-            local list,plane,vec,hyp;
+            local list,plane,vec;
                 if el!.type = 2 then #dealing with a line
                 return VectorSpaceToElement(q4q, PluckerCoordinates(Unpack(el!.obj)*cw^-1){[1..5]} * cq4q^-1);
             else
                 plane := el^delta;
                 vec := Unpack(plane!.obj)*cw^-1;
                 list := [ PluckerCoordinates(vec{[1,2]}), PluckerCoordinates(vec{[2,3]}), PluckerCoordinates(vec{[1,3]}) ];
-                hyp := IdentityMat(6,f){[1..5]};
-                hyp[1][6] := -one;
        			plane := SumIntersectionMat(list, hyp)[2];                 
                 list := List(plane,x->x{[1..5]}*cq4q^-1);
                 return VectorSpaceToElement(q4q, list);
@@ -2572,10 +2571,36 @@ InstallMethod( NaturalDualitySymplectic,
     return map;
  end );
 
+# Added april 2014. jdb
 #############################################################################
-#O  NaturalDualityHermitian( <h, q5q> )
-# returns the well known isomorphism between H(3,q^2) and Q-(5,q). The latter 
-# will be the standard one, the former a user defined one.
+#O  NaturalDualityHermitian( <h>, <q5q> )
+# returns the well known isomorphism between H(3,q^2) and Q-(5,q). 
+# Both polar spaces may be user defined. 
+# Setup: - Plucker Coordinates map lines of PG(3,q^2) on points of Q+(5,q^2): X0X5+X1X4+X2X3 = 0
+#        - restricting to lines of H(3,q^2), the range is the points of Q-(5,q). The details (thanks jb for pointing these out!)
+#			1. Suppose l is a line of H(3,q^2), pl its Plucker coordinates. 
+#			then up to a scalar, pl is of the form (x,y,z,z^q,y^q,x^q). We first make sure that
+#			our vector is really in this form (up to no scalar!).
+#           2. The projectivity of PG(5,q^2) which maps the Plucker coordinates of the lines of H(3,q^2)
+#           to PG(5,q). See "Finite Projective Spaces of Three Dimensions" by Hirschfeld and Thas (section 19.2).
+#			is defined.
+#			3. Appluing this collineation on plucker coordinates (in the right form, see above), makes
+#			sure this is a point of the Elliptic Quadric Q-(5,q): x1^2+x2^2+x3^2+x4^2+x5^2+x6^2 - e(x1x6+x2x5+x3x4)  
+#			4. The result pl*x might be over GF(q) modulo a GF(q^2)
+#			factor, then this causes problems in the VectorSpaceToElement
+#			call, since using cvec/cmat, now requires this to be a vector
+#			over GF(q). So we have to normalize first, then do the base change
+#			then use VectorSpaceToElement.
+#		 - the inverse is easier: the combination of InversePluckerCoordinates and xinv.
+#		 - points of H(3,q^2): take its pole under the polarity associated with H(3,q^2), this defines a plane.
+#          From this plane's underlying object, we have three lines -> three points of Q+(5,q^2) spanning a generator.
+#		   Apply x on this generator and the intersection with the standard PG(5,q) yields a line of Q^-(5,q).
+#		   To compute this intersection we first blow up, use the hard coded Meet, and then Shrink.
+#        - lines of Q^-(5,q): take the two spanning points -> two lines of H -> Meet of these lines is the point
+#          we are looking for.
+#        - some base changes are necessary.
+#        - all the linear algebra is hard coded.
+#############################################################################
 ##
 InstallMethod( NaturalDualityHermitian,
 	"for H(3,q^2) and Q-(5,q)",
@@ -2590,7 +2615,7 @@ InstallMethod( NaturalDualityHermitian,
     #      func, pre, i, map, e, ps, form, iso2;
     
     local f, frob, q, one, alpha, e, mat1, mat2, i, form_quadric, c1, c2, cq5q,
-            func, pre, map, x, xinv, formh, ch;
+            func, pre, map, x, xinv, formh, ch, bmat, delta, basis;
     f := h!.basefield;
     frob := FrobeniusAutomorphism(f);
     q := Sqrt(Size(f));
@@ -2622,12 +2647,9 @@ InstallMethod( NaturalDualityHermitian,
         cq5q := c1;
     fi;
 
-    ## We need a projectivity of PG(5,q^2) which maps
-    ## the Plucker coordinates of the lines of H(3,q^2)
-    ## to PG(5,q). See "Finite Projective Spaces of Three Dimensions"
-    ## by Hirschfeld and Thas (section 19.2).
-
-    mat1 := IdentityMat(6, f) * alpha;
+	#see comments in header which collineation x represents.
+    
+	mat1 := IdentityMat(6, f) * alpha;
     mat2 := NullMat(6, 6, f);
     for i in [1..6] do
        mat2[i][7-i] := one;
@@ -2636,58 +2658,85 @@ InstallMethod( NaturalDualityHermitian,
     xinv := x^-1;
 
 	formh := SesquilinearForm( h );
+
+    delta := PolarityOfProjectiveSpace(h);
+	bmat := NullMat(6,12,GF(q));
+	for i in [1..6] do
+		bmat[i][2*i-1] := one;
+	od;
+	basis := Basis(AsVectorSpace(GF(q),GF(q^2)));
+
     if IsCanonicalPolarSpace( h ) then
-       func := function( l )
-            local pl, mu, pos, vec;
-            pl := PluckerCoordinates( l!.obj );
-
-         ## We must be careful at this step.
-         ## Normalisation by a scalar actually matters here.
-         ## Up to a scalar, pl is of the form
-         ##     (x,y,z,z^q,y^q,x^q)
-         ## and so before we multiply by x, we must have
-         ## that our vector is really in this form (up to no scalar!).
-         ## Furthermore, the result pl*x might be over GF(q) modulo a GF(q^2)
-         ## factor, then this causes problems in the VectorSpaceToElement
-         ## call, since using cvec/cmat, now requires this to be a vector
-         ## over GF(q). So we have to norm first, then do the base change
-         ## then use VectorSpaceToElement.
-
-            pos := PositionNonZero( pl );
-            mu := First( AsList(f), m -> m^(q-1) = pl[pos] / pl[7-pos]);
-            pl := mu * pl;
-            vec := pl*x;
-   			MultRowVector(vec,Inverse( vec[PositionNonZero(vec)] ));
-            return VectorSpaceToElement(q5q, vec * cq5q^-1);
-        end;
+       func := function( el )
+            local pl, mu, pos, vec, plane, bgen, list;
+            
+			if el!.type = 2 then #dealing with a line
+				pl := PluckerCoordinates( Unpack(el!.obj) ); #the Unpack might be unnecessary, but harmless anyway.
+				#see the comments in the header for what we do here.
+				pos := PositionNonZero( pl );
+				mu := First( AsList(f), m -> m^(q-1) = pl[pos] / pl[7-pos]);
+				pl := mu * pl;
+				vec := pl*x;
+				MultRowVector(vec,Inverse( vec[PositionNonZero(vec)] ));
+				return VectorSpaceToElement(q5q, vec * cq5q^-1);
+			else
+				plane := el^delta;
+                vec := Unpack(plane!.obj); #we have the plane, next line: use three lines in it.
+                list := [ PluckerCoordinates(vec{[1,2]}), PluckerCoordinates(vec{[2,3]}), PluckerCoordinates(vec{[1,3]}) ];
+				bgen := BlownUpMat(basis,list*x);
+				list := SumIntersectionMat(bgen, bmat)[2]; #hard coded Meet operation :-)
+				vec := List(list,x->ShrinkVec(GF(q^2),GF(q),x));
+                return VectorSpaceToElement(q5q, vec * cq5q^-1);				
+			fi;
+		end;
  
-        pre := function( p )
-            local vec;
-            vec := Unpack(p!.obj)*cq5q;
-            return VectorSpaceToElement(h, InversePluckerCoordinates(vec * xinv) );
-        end;
+        pre := function( el )
+			local vec ;
+            if el!.type = 1 then #dealing with a point
+				vec := Unpack(el!.obj)*cq5q;
+				return VectorSpaceToElement(h, InversePluckerCoordinates(vec * xinv) );
+			else
+				vec := (Unpack(el!.obj)*cq5q)*xinv;
+                return VectorSpaceToElement(h, SumIntersectionMat(InversePluckerCoordinates(vec[1]), InversePluckerCoordinates(vec[2]))[2] );
+			fi;
+		end;
     else
    		ch := BaseChangeToCanonical( formh );
-        func := function( l )
-            local pl, mu, pos, vec;
-            pl := PluckerCoordinates( Unpack(l!.obj)*ch^-1 );
-            pos := PositionNonZero( pl );
-            mu := First( AsList(f), m -> m^(q-1) = pl[pos] / pl[7-pos]);
-            pl := mu * pl;
-            vec := pl*x;
-   			MultRowVector(vec,Inverse( vec[PositionNonZero(vec)] ));
-            return VectorSpaceToElement(q5q, vec * cq5q^-1);
-        end;
+        func := function( el )
+            local pl, mu, pos, vec, plane, bgen, list;
+   			if el!.type = 2 then #dealing with a line
+				pl := PluckerCoordinates( Unpack(el!.obj)*ch^-1 );
+				pos := PositionNonZero( pl );
+				mu := First( AsList(f), m -> m^(q-1) = pl[pos] / pl[7-pos]);
+				pl := mu * pl;
+				vec := pl*x;
+				MultRowVector(vec,Inverse( vec[PositionNonZero(vec)] ));
+				return VectorSpaceToElement(q5q, vec * cq5q^-1);
+			else
+				plane := el^delta;
+                vec := Unpack(plane!.obj)*ch^-1; #we have the plane, next line: use three lines in it.
+                list := [ PluckerCoordinates(vec{[1,2]}), PluckerCoordinates(vec{[2,3]}), PluckerCoordinates(vec{[1,3]}) ];
+				bgen := BlownUpMat(basis,list*x);
+				list := SumIntersectionMat(bgen, bmat)[2]; #hard coded Meet operation :-)
+				vec := List(list,x->ShrinkVec(GF(q^2),GF(q),x));
+                return VectorSpaceToElement(q5q, vec * cq5q^-1);				
+			fi;
+		end;
         
-         pre := function( p )
+		pre := function( el )
             local vec;
-            vec := Unpack(p!.obj)*cq5q;
-            return VectorSpaceToElement(h, InversePluckerCoordinates(vec * xinv) * ch );
-        end;
+            if el!.type = 1 then #dealing with a point
+				vec := Unpack(el!.obj)*cq5q;
+				return VectorSpaceToElement(h, InversePluckerCoordinates(vec * xinv) * ch );
+			else
+				vec := (Unpack(el!.obj)*cq5q)*xinv;
+                return VectorSpaceToElement(h, SumIntersectionMat(InversePluckerCoordinates(vec[1]), InversePluckerCoordinates(vec[2]))[2] * ch );
+			fi;
+		end;
 
     fi;
 
-    map := GeometryMorphismByFunction(Lines(h), Points(q5q), func, pre);
+    map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(h), ElementsOfIncidenceStructure(q5q), func, pre);
     SetIsBijective( map, true );
     return map;
     end
