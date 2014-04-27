@@ -169,18 +169,27 @@ DeclareOperation( "NaturalEmbeddingBySubfield",
 ## Other morphisms
 #############################################################################
 
+#helper operations
 DeclareOperation( "PluckerCoordinates", [ IsMatrix ]);
 DeclareOperation( "InversePluckerCoordinates", [ IsVector ]);
-DeclareOperation( "KleinCorrespondence", [ IsClassicalPolarSpace ]);
-
-DeclareOperation( "NaturalDuality", [ IsClassicalGQ, IsClassicalGQ ]);
 
 DeclareOperation( "NaturalDualitySymplectic", [ IsClassicalGQ, IsClassicalGQ ]);
 DeclareOperation( "NaturalDualityHermitian", [ IsClassicalGQ, IsClassicalGQ ]);
 
+DeclareOperation( "NaturalDualityParabolic", [ IsClassicalGQ, IsClassicalGQ ]);
+DeclareOperation( "NaturalDualityElliptic", [ IsClassicalGQ, IsClassicalGQ ]);
 
-DeclareOperation( "NaturalDuality", [ IsHermitianPolarSpace and IsGeneralisedPolygon ]);
+#the user stuff.
+
+DeclareOperation( "KleinCorrespondence", [ IsClassicalPolarSpace ]);
+
+DeclareOperation( "NaturalDuality", [ IsClassicalGQ, IsClassicalGQ ]);
+DeclareOperation( "NaturalDuality", [ IsClassicalGQ ]);
+
 
 
 DeclareOperation( "ProjectiveCompletion", [ IsAffineSpace ] );
+
+DeclareOperation( "IsomorphicProjection", [IsClassicalPolarSpace] );
+DeclareOperation( "IsomorphicProjection", [IsClassicalPolarSpace, IsClassicalPolarSpace] );
 

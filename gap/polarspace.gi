@@ -3025,5 +3025,20 @@ InstallMethod( DefiningListOfPolynomials,
 		return [EquationForPolarSpace(ps)];
 	end);
 
+#added 26/4/2014 jdb
+#############################################################################
+#A  NucleusOfParabolicQuadric( <ps> )
+# returns the nuclues of a parabolic quadric (even characteristic).
+## 
+InstallMethod( NucleusOfParabolicQuadric, 
+	"for a polar space",
+	[ IsClassicalPolarSpace ],
+	function( ps )
+	if not IsParabolicQuadric(ps) and IsEvenInt(Size(BaseField(ps))) then
+		Error(" <ps> has no nucleus" );
+	else
+		return VectorSpaceToElement( AmbientSpace(ps), RadicalOfFormBaseMat( SesquilinearForm(ps) ) );
+	fi;
+end);
 
 

@@ -72,6 +72,7 @@ DeclareAttribute( "PolarSpaceType", IsClassicalPolarSpace );
 DeclareAttribute( "CompanionAutomorphism", IsClassicalPolarSpace );
 DeclareAttribute( "ClassicalGroupInfo", IsClassicalPolarSpace );
 DeclareAttribute( "EquationForPolarSpace", IsClassicalPolarSpace );
+DeclareAttribute( "NucleusOfParabolicQuadric", IsClassicalPolarSpace );
 
 DeclareProperty( "IsEllipticQuadric", IsClassicalPolarSpace );
 DeclareProperty( "IsSymplecticSpace", IsClassicalPolarSpace );

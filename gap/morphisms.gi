@@ -1168,23 +1168,6 @@ InstallMethod( NaturalEmbeddingByFieldReduction,
 		return NaturalEmbeddingByFieldReduction(pg1,pg2!.basefield,basis);
 	end );
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ############################################################################
 #		POLAR SPACES
 ##############################################################################
@@ -1198,7 +1181,6 @@ InstallMethod( NaturalEmbeddingByFieldReduction,
 #   and Van de Voorde (preprint 2013)
 #
 #  We will use [2] as it is more convenient to us.
-
 
 
 ####
@@ -1378,11 +1360,6 @@ InstallMethod( HermitianFormFieldReduction,
 	basis:=Basis(AsVectorSpace(f2,hf1!.basefield));
 	return HermitianFormFieldReduction(hf1,f2,alpha,basis);
 end );
-
-
-
-
-
 
 
 
@@ -1704,11 +1681,6 @@ InstallMethod (NaturalEmbeddingByFieldReduction,
 	return morphism;
 end );
 
-
-
-
-
-
 #############################################################################
 #
 #
@@ -1866,29 +1838,11 @@ InstallMethod( NaturalEmbeddingBySubfield,
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #############################################################################
-#
 #
 # PROJECTIONS
 #
-#
 #############################################################################
-
-
 
 # CHECKED 28/09/11 jdb
 #############################################################################
@@ -1897,7 +1851,7 @@ InstallMethod( NaturalEmbeddingBySubfield,
 # subspace <v>. It is checked if <v> is a subspace of <ps>.
 ##
 InstallMethod( NaturalProjectionBySubspace, 
-	"for a projective space and a singular subspace",
+	"for a projective space and a subspace of the projective space",
 	[ IsProjectiveSpace, IsSubspaceOfProjectiveSpace ], 
 	function(ps, v)
 
@@ -2282,46 +2236,17 @@ InstallMethod( NaturalProjectionBySubspaceNC,
     return map;
   end );
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#############################################################################
+#
+# Klein correspondence
+#
+#############################################################################
 
 #############################################################################
 # two helper operations. They can be used by the users, but on the other hand
 # the form of the Klein quadric is fixed, so this is against the philiosphy of
-# FinInG, at least for user functions. Also, there are no checks. So I will not
-# describe these in the documentation.
-#############################################################################
-
-
-#############################################################################
-#
-#
-# PLUCKER coordinates and KLEIN correspondence
-#
-#
+# FinInG, at least for user functions. Also, there are no checks. So we will 
+# describe these in the technical section of the documentation.
 #############################################################################
 
 # CHECKED 28/09/11 jdb
@@ -2443,32 +2368,19 @@ InstallMethod( KleinCorrespondence,
 
 #############################################################################
 #
-#
-# DUALITIES between W(q) and Q(4,q)
-#
+# DUALITIES between W(q) and Q(4,q) and H(3,q^2) and Q-(5,q)
 #
 #############################################################################
 
-# Added april 2014 jdb.
 #############################################################################
-#O  NaturalDuality( <gq1>, <gq2> )
-##
-InstallMethod( NaturalDuality,
-	"for a GQ and a GQ",
-	[ IsClassicalGQ, IsClassicalGQ ],
-	function( gq1, gq2 )
-    if IsSymplecticSpace( gq1 ) and IsParabolicQuadric( gq2 ) then
-        return NaturalDualitySymplectic( gq1, gq2 );
-    elif (IsHermitianPolarSpace( gq1 ) and Dimension( gq1 ) = 3) and IsEllipticQuadric( gq2) then
-        return NaturalDualityHermitian( gq1, gq2 );
-    else
-        Error("no duality possible between <gq1> and <gq2>");
-    fi;
-    end );
+# two helper operations. These were derived from the previous version of 
+# NaturalDuality. In pinciple useable by the user, but NaturalDuality will
+# interface them.
+#############################################################################
 
 # Added april 2014. jdb
 #############################################################################
-#O  NaturalDualitySymplectic( <w> )
+#O  NaturalDualitySymplectic( <w>, <q4q> )
 # returns the well known isomorphism between W(3,q) and Q(4,q). 
 # Both polar spaces may be user defined. 
 # Setup: - Plucker Coordinates map lines of PG(3,q) on points of Q+(5,q): X0X5+X1X4+X2X3 = 0
@@ -2483,6 +2395,7 @@ InstallMethod( NaturalDuality,
 #          we are looking for.
 #        - some base changes are necessary.
 #        - all the linear algebra is hard coded.
+#		 - except for the filters, there is not real check whether the input the correct GQ.
 #############################################################################
 ##
 InstallMethod( NaturalDualitySymplectic,
@@ -2600,6 +2513,7 @@ InstallMethod( NaturalDualitySymplectic,
 #          we are looking for.
 #        - some base changes are necessary.
 #        - all the linear algebra is hard coded.
+#		 - except for the filters, there is not real check whether the input the correct GQ.
 #############################################################################
 ##
 InstallMethod( NaturalDualityHermitian,
@@ -2739,116 +2653,204 @@ InstallMethod( NaturalDualityHermitian,
     map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(h), ElementsOfIncidenceStructure(q5q), func, pre);
     SetIsBijective( map, true );
     return map;
-    end
-);
+end );
 
-# CHECKED 28/09/11 jdb
+# Added april 2014. jdb
 #############################################################################
-#O  NaturalDuality( <w> )
-# returns the well known isomorphism between H(3,q^2) and Q-(5,q). The latter 
-# will be the standard one, the former a user defined one.
+#O  NaturalDualityParabolic( <q4q>, <w> )
+# returns the well known isomorphism between Q(4,q) and W(3,q).
+# First the duality between the given W(3,q), and Q(4,q) is computed using
+# NaturalDualitySymplectic, then simple its fun and prefun are swapped.
+# Except for the filters, there is not real check whether the input the correct GQ.
+#############################################################################
 ##
-InstallMethod( NaturalDuality, 
-	"for a hermitian variety of rank 2",
-	[ IsHermitianPolarSpace and IsGeneralisedPolygon ],
-	function( h )
-    ## The way this works is that we map the lines of h to the canonical H(3,q^2),
-    ## which Klein corresponds to points of Q+(5,q^2) using the usual plucker map.
-    ## This subgeometry is then mapped to PG(5,q), where we can associate it to
-    ## Q-(5,q).
-
-    local f, frob, q, one, iso, eq, pg5, alpha, mat1, mat2, x, xinv,
-          func, pre, i, map, e, ps, form, iso2;
-    f := h!.basefield;
-    frob := FrobeniusAutomorphism(f);
-    q := Sqrt(Size(f));
-    one := One(f);   
-   
-    eq := EllipticQuadric(5, q);
-    pg5 := AmbientSpace( eq );
-
-    ## We need a projectivity of PG(5,q^2) which maps
-    ## the Plucker coordinates of the lines of H(3,q^2)
-    ## to PG(5,q). See "Finite Projective Spaces of Three Dimensions"
-    ## by Hirschfeld and Thas (section 19.2).
-
-    alpha := First(f, a -> (a^q)^2 <> a^2);
-    mat1 := IdentityMat(6, f) * alpha;
-    mat2 := NullMat(6, 6, f);
-    for i in [1..6] do
-       mat2[i][7-i] := one;
-    od;
-    x := mat1 + mat2 * alpha^q;
-
-    e := alpha^(q-1) + alpha^(1-q);
-
-    ## The form for the Elliptic Quadric that we get is
-    ## x1^2+x2^2+x3^2+x4^2+x5^2+x6^2 - e(x1x6+x2x5+x3x4)  
-
-    mat1 := IdentityMat(6, GF(q));
-    mat2 := NullMat(6, 6, f);
-    for i in [1..3] do
-       mat2[2*i-1][8-2*i] := one;
-    od; 
-    mat1 := mat1 - e * mat2;
-
-    if IsOddInt( q ) then
-       form := BilinearFormByMatrix(mat1 + TransposedMat(mat1), GF(q));
-    else
-       form := QuadraticFormByMatrix(mat1, GF(q));  
-    fi;
-    ps := PolarSpace( form );
-    iso2 := IsomorphismPolarSpaces(ps, eq);
-    xinv := x^-1;
-
-    if IsCanonicalPolarSpace( h ) then
-       func := function( l )
-         local pl, mu, pos;
-         pl := PluckerCoordinates( l!.obj );
-
-         ## We must be careful at this step.
-         ## Normalisation by a scalar actually matters here.
-         ## Up to a scalar, pl is of the form
-         ##     (x,y,z,z^q,y^q,x^q)
-         ## and so before we multiply by x, we must have
-         ## that our vector is really in this form (up to no scalar!).
-
-         pos := PositionNonZero( pl );
-         mu := First( AsList(f), m -> m^(q-1) = pl[pos] / pl[7-pos]);      
-         pl := mu * pl;
-         return VectorSpaceToElement(ps, pl * x)^iso2;
-       end;
- 
-       pre := function( p )
-         local p2, invpl;
-         p2 := PreImageElm(iso2, p); 
-         p2 := VectorSpaceToElement(pg5, p2!.obj * xinv);
-         invpl := InversePluckerCoordinates( p2!.obj );
-         return VectorSpaceToElement(h,invpl);         
-       end;
-    else
-       iso := IsomorphismCanonicalPolarSpace( h );
-    
-       func := function( l )
-         local pl, mu, pos;
-         pl := PluckerCoordinates( PreImageElm(iso, l)!.obj );
-         pos := PositionNonZero( pl );
-         mu := First( AsList(f), m -> m^(q-1) = pl[pos] / pl[7-pos]);      
-         pl := mu * pl;
-         return VectorSpaceToElement(ps, pl * x)^iso2; 
-       end;
- 
-       pre := function( p )
-         local p2, invpl;
-         p2 := PreImageElm(iso2, p); 
-         p2 := VectorSpaceToElement(pg5, p2!.obj * xinv);
-         invpl := InversePluckerCoordinates( p2!.obj );
-         return ImageElm(iso, VectorSpaceToElement(h,invpl));         
-       end;
-    fi;
-
-    map := GeometryMorphismByFunction(Lines(h), Points(eq), func, pre);
+InstallMethod( NaturalDualityParabolic,
+	"for a GQ and a GQ",
+	[ IsClassicalGQ, IsClassicalGQ ],
+	function( q4q, w )
+	local em, map;
+	em := NaturalDualitySymplectic(w,q4q);
+    map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(q4q), ElementsOfIncidenceStructure(w), em!.prefun, em!.fun);
     SetIsBijective( map, true );
     return map;
+end );
+
+# Added april 2014. jdb
+#############################################################################
+#O  NaturalDualityElliptic( <q4q>, <w> )
+# returns the well known isomorphism between Q-(5,q) and H(3,q^2).
+# First the duality between the given Q-(5,q), and H(3,q^2) is computed using
+# NaturalDualityHermitian, then simple its fun and prefun are swapped.
+# Except for the filters, there is not real check whether the input the correct GQ.
+#############################################################################
+##
+InstallMethod( NaturalDualityElliptic,
+	"for a GQ and a GQ",
+	[ IsClassicalGQ, IsClassicalGQ ],
+	function( q5q, h )
+	local em, map;
+	em := NaturalDualityHermitian(h,q5q);
+    map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(q5q), ElementsOfIncidenceStructure(h), em!.prefun, em!.fun);
+    SetIsBijective( map, true );
+    return map;
+end );
+
+# Added april 2014 jdb.
+#############################################################################
+#O  NaturalDuality( <gq1>, <gq2> )
+# This is the interface to the helper functions. It simply checks the input 
+# and decides which NaturalDuality... to use.
+##
+InstallMethod( NaturalDuality,
+	"for a GQ and a GQ",
+	[ IsClassicalGQ, IsClassicalGQ ],
+	function( gq1, gq2 )
+    if IsSymplecticSpace( gq1 ) and IsParabolicQuadric( gq2 ) then
+        return NaturalDualitySymplectic( gq1, gq2 );
+    elif (IsHermitianPolarSpace( gq1 ) and Dimension( gq1 ) = 3) and IsEllipticQuadric( gq2) then
+        return NaturalDualityHermitian( gq1, gq2 );
+    elif IsParabolicQuadric( gq1 ) and IsSymplecticSpace( gq2 ) then
+        return NaturalDualityParabolic( gq1, gq2 );
+	elif IsEllipticQuadric( gq1 ) and (IsHermitianPolarSpace( gq2 ) and Dimension( gq2 ) = 3)then
+        return NaturalDualityElliptic( gq1, gq2 );
+	else
+        Error("no duality possible between <gq1> and <gq2>");
+    fi;
+end );
+	
+# Added april 2014 jdb.
+#############################################################################
+#O  NaturalDuality( <gq1> )
+# This is the interface to the helper functions. It simply checks the input 
+# and decides which NaturalDuality... to use.
+##
+InstallMethod( NaturalDuality,
+	"for a GQ and a GQ",
+	[ IsClassicalGQ ],
+	function( gq1 )
+	local q;
+    if IsSymplecticSpace( gq1 ) then
+        return NaturalDualitySymplectic( gq1, ParabolicQuadric(4, BaseField(gq1)) ) ;
+    elif (IsHermitianPolarSpace( gq1 ) and Dimension( gq1 ) = 3) then
+        q := Sqrt(Size(BaseField(gq1)));
+		return NaturalDualityHermitian( gq1, EllipticQuadric(5,GF(q)) );
+    elif IsParabolicQuadric( gq1 ) then
+		return NaturalDualityParabolic( gq1, SymplecticSpace(3, BaseField(gq1) ) );
+	elif IsEllipticQuadric( gq1 ) then
+		q := Size(BaseField(gq1));
+		return NaturalDualityElliptic( gq1, HermitianPolarSpace(3, q^2));
+	else
+        Error("no duality possible on <gq1>");
+    fi;
+    end );
+
+
+#############################################################################
+#
+# Self-Dualities between W(q) and Q(4,q) (q even).
+#
+#############################################################################
+
+# Added april 2014 jdb.
+#############################################################################
+#O  IsomorphicProjection( <quadric>, <w> )
+##
+InstallMethod( IsomorphicProjection,
+	"for two classical polar spaces",
+	[ IsClassicalPolarSpace, IsClassicalPolarSpace ],
+	function(quadric, w)
+	local q,f, func, pre, nucleus, n, mat, hyp, map, can_form, cquadric, cquadricinv,
+	cw, cwinv, twinerfunc, twinerprefun, coll1, coll2, hom;
+	f := BaseField(quadric);
+	q := Size(f);
+	if not IsEvenInt(q) and f = BaseField(w) then
+		Error(" Characteristic of basefields must be even and basfields must be equal");
+	elif Rank(quadric) <> Rank(w) then
+		Error(" Rank of polar spaces must be equal ");
+	fi;
+	n := quadric!.dimension + 1;
+	mat := IdentityMat(n,f);
+	if IsCanonicalPolarSpace(quadric) then
+		can_form := QuadraticForm(quadric);
+		cquadric := IdentityMat(n,f);
+		cquadricinv := cquadric;
+	else
+		cquadric := BaseChangeToCanonical(QuadraticForm(quadric));
+		can_form := QuadraticFormByMatrix( CanonicalQuadraticForm("parabolic", n, f), f);
+		cquadricinv := cquadric^-1;
+	fi;
+	if IsCanonicalPolarSpace(w) then
+		cw := IdentityMat(n-1,f);
+		cwinv := cw;
+	else
+		cw := BaseChangeToCanonical(SesquilinearForm(w));
+		cwinv := cw^-1;
+	fi;
+	nucleus := mat[1]; #vector representing the nucleus
+	hyp := mat{[2..n]}; #hyperplane on which we will project.
+	func := function( el )
+		local vec, proj;
+		if el!.type = 1 then
+			vec := [Unpack(el!.obj) * cquadricinv, nucleus];
+		else
+			vec := Concatenation(Unpack(el!.obj) * cquadricinv, [nucleus]);
+		fi;
+		proj := SumIntersectionMat(vec, hyp)[2]; #hard coded Meet operation :-)
+		vec := List(proj,x->x{[2..n]}); #make it a GF(q)^(n-1) vector ends the projection.
+		return VectorSpaceToElement(w, vec * cw);
+	end;
+	pre := function(el)
+		local vec, i;
+		if el!.type = 1 then
+			vec := [Unpack(el!.obj) * cwinv];
+		else
+			vec := Unpack(el!.obj) * cwinv;
+		fi;
+		vec := List(vec,x->Concatenation([0*Z(q)^0],x));
+		for i in [1..Length(vec)] do
+			vec[i][1] := (vec[i]^can_form)^(q/2);
+		od;
+		return VectorSpaceToElement(quadric, vec * cquadric);
+	end;
+	
+	twinerfunc := function( el )
+		local mat,frob;
+		frob := el!.frob;
+		#mat := Unpack(el!.mat){[2..n]}{[2..n]};
+		mat := cquadric * Unpack(el!.mat) * cquadricinv^frob;
+		mat := mat{[2..n]}{[2..n]};
+		return ProjElWithFrob(cwinv * mat * cw^frob,frob,f);
+	end;
+	
+	twinerprefun := function( el )
+		local newmat,mat,frob,i,vec,y;
+		frob := el!.frob;
+		#mat := cw * Unpack(el!.mat) * cwinv^frob;
+		mat := Unpack(el!.mat);
+		newmat := NullMat(n,n,f);
+		newmat{[2..n]}{[2..n]} := mat;
+		y := 0*Z(q)^0;
+		for i in [2..n] do
+			vec := Concatenation([0*Z(q)^0],mat[i-1])^frob;
+			newmat[i][1] := ((vec^can_form)^(q/2))^(frob^-1);
+			y := y+newmat[i][1];
+		od;
+		vec := List(TransposedMat(mat),x->Sum(x)^frob); #is the image of (1,1,...,1) under el.
+		vec := Concatenation([0*Z(q)^0],vec); #make it ready for evaluation under can_form.
+		newmat[1][1] := y+((vec^can_form)^(q/2))^(frob^-1); #now vec is the image of (1,1,...1) on the quadric.
+		#return ProjElWithFrob(cquadricinv * newmat * cquadric^frob, frob, f);
+		return ProjElWithFrob( newmat , frob, f);
+	end;
+	
+	coll1 := CollineationGroup(quadric);
+	coll2 := CollineationGroup(w);
+	hom := GroupHomomorphismByFunction(coll1, coll2, twinerfunc, twinerprefun); 
+
+    map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(quadric), ElementsOfIncidenceStructure(w), func, pre);
+    SetIsBijective( map, true );
+	SetIntertwiner( map, hom );      
+
+    return map;
  end );
+
 
