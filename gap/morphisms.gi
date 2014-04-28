@@ -31,29 +31,14 @@
 # - maybe make a more userfriendly system to avoid em!.prefun( <arg> )
 # - in the same sense: do we want a NaturalDuality starting from Q(4,q) and Q-(5,q)? 
 #   And the self duality of Q(4,q) and W(3,q), q even.
-
 # - test operations BlownUpSubspaceOfProjectiveSpace, BlownUpSubspaceOfProjectiveSpaceBySubfield, 
-
 # - an optimalization is possible: each time VectorSpaceToElement is used, this might be replaced
 #   by Wrap. VectorSpaceToElement is of course useful for testing purposes. Currently, we left it on
 #   to find bugs quicker. But it looks already quite well.
 #
 # Documentation check list
-# - IsGeometryMorphism: done
-# - Intertwiner: done
-# - NaturalEmbeddingBySubspace(NC): done
-# - NaturalProjectionBySubspace(NC): done
-# - NaturalEmbeddingByFieldReduction: done
-# - NaturalEmbeddingBySubfield: done
-# - IsomorphismPolarSpaces(NC): done
-# - VeroneseMap: move this to varieties: done
-# - SegreMap: move this to varieties: done
 # - PluckerCoordinates: not documented, but there is a good reason for, see the comments at the code
 # - InversePluckerCoordinates: not documented, see one line above this.
-# - KleinCorrespondence: done
-# - GrassmannMap: move this to varieties: done
-# - NaturalDuality: done
-# - ProjectiveCompletion: done
 #
 ########################################
 
