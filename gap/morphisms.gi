@@ -2757,9 +2757,32 @@ InstallMethod( NaturalDuality,
 #############################################################################
 
 # Added april 2014 jdb.
-# needs documentation and comments in the code.
 #############################################################################
 #O  IsomorphismPolarSpacesProjectionFromNucleus( <quadric>, <w>, <bool> )
+# returns the isomorphism between Q(2n,q) and W(2n-1,w). Both may be user
+# defined.
+# standard Q(2n,q): X0^2+X1X2+...X2n-1X2n: nucleus: (1,0,0,...,0,0)
+# standard W(2n,q): X0Y1+X1Y0+...X2n-2X2n.
+# projecting from nucleus yields the automorphism. Going back: consider a point
+# of W(2n-1,q): evaluate it under X1X2+...X2n-1X2n: this yields a value z.
+# the equation X0^2 = z has exactly one solution -> point of Q(2n,q).
+# The interwiner: given an element of PGammaO(2n+1,q): it is sufficient to select
+# a submatrix, sinc the projection is equivalent with removing X0
+# given an element of PGammaSp: the points (1,0,...0), (0,1,...0), ... (0,0,...0)
+# are, with an extra 0 in front, also points of Q(2n,q). Compute the elements of
+# the symplectic points, compute the preimage of this image under the projection
+# this yields the first column of the matrix of the corresponding element of 
+# PGammaO. Since the nucleus is fixed under the elements of PGammaO, the first
+# row (except the very first element), is zero. To compute the first element,
+# we need the image of the n+2 nd point under the given element. So find a 
+# symplectic point that together with the other symplectic points forms part of a 
+# frame, make sure the preimage can be computed, compute the image under el, and
+# compute its preimage. This gives the very first element of the PGammaO element.
+# Note that for q=2 this element is necessarily one. Note that the general code 
+# works anyway also for q=2 and n even, which explains the exception in the
+# twinerprefun.
+# Finally: base changes are included if Q and W are not canonical. This is straight-
+# forward.
 ##
 InstallMethod( IsomorphismPolarSpacesProjectionFromNucleus,
 	"for two classical polar spaces",
