@@ -79,6 +79,9 @@ DeclareOperation( "NaturalProjectionBySubspaceNC",
                      [ IsClassicalPolarSpace, IsSubspaceOfClassicalPolarSpace ]);
 DeclareOperation( "NaturalProjectionBySubspaceNC",
                      [ IsProjectiveSpace, IsSubspaceOfProjectiveSpace ]);
+                     
+DeclareOperation( "IsomorphismPolarSpacesProjectionFromNucleus", [IsClassicalPolarSpace, IsClassicalPolarSpace, IsBool ] );
+
 
 #############################################################################
 ## C3 morphisms
@@ -190,6 +193,4 @@ DeclareOperation( "NaturalDuality", [ IsClassicalGQ ]);
 
 DeclareOperation( "ProjectiveCompletion", [ IsAffineSpace ] );
 
-DeclareOperation( "IsomorphicProjection", [IsClassicalPolarSpace] );
-DeclareOperation( "IsomorphicProjection", [IsClassicalPolarSpace, IsClassicalPolarSpace] );
 

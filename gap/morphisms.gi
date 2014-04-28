@@ -551,11 +551,16 @@ InstallMethod( IsomorphismPolarSpaces,
     [ IsClassicalPolarSpace, IsClassicalPolarSpace, IsBool ],
 	function( ps1, ps2, computeintertwiner )
 		local form1, form2, f, map, c1, c2, change, invchange, hom, ty1, ty2,
-          coll1, coll2, gens1, gens2, x, y, func, inv, twinerfunc, twinerprefun;
+          coll1, coll2, gens1, gens2, x, y, func, inv, twinerfunc, twinerprefun, r1, r2;
 		ty1 := PolarSpaceType( ps1 );
 		ty2 := PolarSpaceType( ps2 );
-		if ty1 <> ty2 then 
-			Error("Polar spaces are of different type");
+		if ty1 = "parabolic" and ty2 = "symplectic" then
+            return IsomorphismPolarSpacesProjectionFromNucleus(ps1, ps2, computeintertwiner);
+        fi;
+        r1 := Rank(ps1);
+        r2 := Rank(ps2);
+        if ty1 <> ty2 or r1 <> r2 then
+			Error("Polar spaces are of different type or of different rank");
 		fi;
 		f := ps1!.basefield;
 		if f <> ps2!.basefield then
@@ -2752,17 +2757,19 @@ InstallMethod( NaturalDuality,
 #############################################################################
 
 # Added april 2014 jdb.
+# needs documentation and comments in the code.
 #############################################################################
-#O  IsomorphicProjection( <quadric>, <w> )
+#O  IsomorphismPolarSpacesProjectionFromNucleus( <quadric>, <w>, <bool> )
 ##
-InstallMethod( IsomorphicProjection,
+InstallMethod( IsomorphismPolarSpacesProjectionFromNucleus,
 	"for two classical polar spaces",
-	[ IsClassicalPolarSpace, IsClassicalPolarSpace ],
-	function(quadric, w)
+	[ IsClassicalPolarSpace, IsClassicalPolarSpace, IsBool ],
+	function(quadric, w, computeintertwiner)
 	local q,f, func, pre, nucleus, n, mat, hyp, map, can_form, cquadric, cquadricinv,
-	cw, cwinv, twinerfunc, twinerprefun, coll1, coll2, hom;
+	cw, cwinv, twinerfunc, twinerprefun, coll1, coll2, hom, ones, one, gens1, gens2;
 	f := BaseField(quadric);
 	q := Size(f);
+    one := One(f);
 	if not IsEvenInt(q) and f = BaseField(w) then
 		Error(" Characteristic of basefields must be even and basfields must be equal");
 	elif Rank(quadric) <> Rank(w) then
@@ -2813,6 +2820,8 @@ InstallMethod( IsomorphicProjection,
 		return VectorSpaceToElement(quadric, vec * cquadric);
 	end;
 	
+    ones := List([1..n],x->one); #all ones for several purposes.
+
 	twinerfunc := function( el )
 		local mat,frob;
 		frob := el!.frob;
@@ -2823,32 +2832,69 @@ InstallMethod( IsomorphicProjection,
 	end;
 	
 	twinerprefun := function( el )
-		local newmat,mat,frob,i,vec,y;
+		local newmat,mat,frob,i,vec,y,newvec,z,zprime;
 		frob := el!.frob;
-		#mat := cw * Unpack(el!.mat) * cwinv^frob;
-		mat := Unpack(el!.mat);
+		mat := cw * Unpack(el!.mat) * cwinv^frob;
+		#mat := Unpack(el!.mat);
 		newmat := NullMat(n,n,f);
 		newmat{[2..n]}{[2..n]} := mat;
-		y := 0*Z(q)^0;
+
+        #compute the first column of newmat (except for newmat[1][1].
 		for i in [2..n] do
 			vec := Concatenation([0*Z(q)^0],mat[i-1])^frob;
 			newmat[i][1] := ((vec^can_form)^(q/2))^(frob^-1);
-			y := y+newmat[i][1];
 		od;
-		vec := List(TransposedMat(mat),x->Sum(x)^frob); #is the image of (1,1,...,1) under el.
-		vec := Concatenation([0*Z(q)^0],vec); #make it ready for evaluation under can_form.
-		newmat[1][1] := y+((vec^can_form)^(q/2))^(frob^-1); #now vec is the image of (1,1,...1) on the quadric.
-		#return ProjElWithFrob(cquadricinv * newmat * cquadric^frob, frob, f);
-		return ProjElWithFrob( newmat , frob, f);
+		#vec := List(TransposedMat(mat),x->Sum(x)^frob); #is the image of (1,1,...,1) under el.
+        
+        if not (q=2 and IsEvenInt((n-1)/2)) then
+            vec := ShallowCopy(ones);
+            vec[1] := 0*one;
+            vec[2] := Z(q);
+            z := (vec^can_form)^(q/2);
+
+            y := vec*newmat;
+            y := y[1];
+            newvec := (vec * newmat)^frob; #remind that the symplectic part is in [2..n].
+            newvec[1] := 0*one;
+            zprime := ((newvec^can_form)^(q/2))^(frob^-1);
+        
+        #image of (alpha,1,1,...,1) under el (symplectic point!)
+
+            newmat[1][1] := (zprime+y)/z;
+        else
+            newmat[1][1] := one;
+        fi;
+
+		return ProjElWithFrob(cquadricinv * newmat * cquadric^frob, frob, f);
+		#return ProjElWithFrob( newmat , frob, f);
 	end;
-	
-	coll1 := CollineationGroup(quadric);
-	coll2 := CollineationGroup(w);
-	hom := GroupHomomorphismByFunction(coll1, coll2, twinerfunc, twinerprefun); 
 
     map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(quadric), ElementsOfIncidenceStructure(w), func, pre);
     SetIsBijective( map, true );
-	SetIntertwiner( map, hom );      
+
+    if computeintertwiner then
+        if (HasIsCanonicalPolarSpace( quadric ) and IsCanonicalPolarSpace( quadric )) or
+            HasCollineationGroup( quadric ) then
+			coll1 := CollineationGroup(quadric);
+			gens1 := GeneratorsOfGroup( coll1 );
+			gens2 := List(gens1, twinerfunc);
+			coll2 := GroupWithGenerators(gens2);
+			hom := GroupHomomorphismByFunction(coll1, coll2, twinerfunc, twinerprefun);
+			SetIntertwiner( map, hom );
+			UseIsomorphismRelation(coll1,coll2);
+        elif (HasIsCanonicalPolarSpace( w ) and IsCanonicalPolarSpace( w )) or
+			HasCollineationGroup( w ) then
+			coll2 := CollineationGroup( w );
+			gens2 := GeneratorsOfGroup( coll2 );
+			gens1 := List(gens2, twinerprefun );
+			coll1 := GroupWithGenerators(gens1);
+			hom := GroupHomomorphismByFunction(coll1, coll2, twinerfunc, twinerprefun);
+			SetIntertwiner( map, hom );
+			UseIsomorphismRelation(coll1,coll2);
+		else
+			Info(InfoFinInG, 1, "No intertwiner computed. One of the polar spaces must have a collineation group computed");
+		fi;
+    fi;
 
     return map;
  end );
