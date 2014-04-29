@@ -184,7 +184,15 @@ DeclareOperation( "NaturalDualityElliptic", [ IsClassicalGQ, IsClassicalGQ ]);
 
 #the user stuff.
 
+DeclareOperation( "KleinCorrespondence", [ IsClassicalPolarSpace, IsBool ]);
 DeclareOperation( "KleinCorrespondence", [ IsClassicalPolarSpace ]);
+
+DeclareOperation( "KleinCorrespondence", [ IsField, IsBool ]);
+DeclareOperation( "KleinCorrespondence", [ IsField ]);
+
+DeclareOperation( "KleinCorrespondence", [ IsPosInt, IsBool ]);
+DeclareOperation( "KleinCorrespondence", [ IsPosInt ]);
+
 
 DeclareOperation( "NaturalDuality", [ IsClassicalGQ, IsClassicalGQ ]);
 DeclareOperation( "NaturalDuality", [ IsClassicalGQ ]);

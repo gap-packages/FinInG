@@ -2298,6 +2298,62 @@ InstallMethod( InversePluckerCoordinates,
 		return l;
 	end );
 
+
+#############################################################################
+#O  KleinCorrespondence( <f> )
+# returns the well known morphism from the lines of PG(3,f), f a finite field
+# to the points of Q+(5,q): x0x5+x1x4+x2x3 = 0. This is the bare essential 
+# of some geometry morphisms that follow. For didactical reasons, it looks 
+# useful to me to have this version that maps to a fixed hyperbolic quadric. 
+# Of course a flexible verion of this operation is also present.
+##
+InstallMethod( KleinCorrespondence, 
+	"for a hyperbolic quadric",
+    [ IsField, IsBool ],
+		function( f, computeintertwiner )
+		local i, form, map, pg, mat, pre, plucker, ps, inv, one;
+		one := One(f);
+
+    ## The form for the resulting Plucker coordinates is 
+    ## x1x6+x2x5+x3x4 = 0
+	
+		mat := NullMat(6, 6, f);
+		for i in [1..3] do
+			mat[i][7-i] := one;
+		od;
+		form := QuadraticFormByMatrix(mat, f);
+		ps := PolarSpace( form );
+		pg := ProjectiveSpace(3,f);
+		plucker := 
+           function( l )
+             local pt1;
+             pt1 := PluckerCoordinates( l!.obj );
+             return VectorSpaceToElement(ps, pt1);
+           end;
+		inv := 
+           function( x )
+             local l;
+             l := InversePluckerCoordinates( x!.obj );
+             return VectorSpaceToElement(pg, l);
+           end;
+		map := GeometryMorphismByFunction(Lines(pg), Points(ps), plucker, inv);
+		SetIsBijective(map, true);
+		return map;
+
+    ## put intertwiner in PGammaL(4,q)->PGO^+(6,q) 
+	end );
+
+#############################################################################
+#O  KleinCorrespondence( <q> )
+# returns KleinCorrespondence( GF(q) )
+##
+InstallMethod( KleinCorrespondence, 
+	"for a hyperbolic quadric",
+    [ IsPosInt ],
+	q -> KleinCorrespondence(GF(q))
+	);
+	
+	
 # CHECKED 28/09/11 jdb
 #############################################################################
 #O  KleinCorrespondence( <var> )
