@@ -2242,13 +2242,14 @@ InstallMethod( NaturalProjectionBySubspaceNC,
 # CHECKED 28/09/11 jdb
 # changed 28/3/14 jdb
 #############################################################################
-#O  PluckerCoordinates( <l> )
-# returns the Plucker coordinates of the line <l>. We accept a matrix representin
-# the line. No check on whether this is a line of PG(3,q), so use with care.
-# cmat note: whether l is a cmat or not, coords will be a plain list (so not cvec).
+#O  PluckerCoordinates( <lobj> )
+# returns the Plucker coordinates of the line represented by <lobj>. We accept 
+# a matrix representing the line. No check on whether this is a line of PG(3,q),`
+# so use with care. cmat note: whether l is a cmat or not, coords will be a plain 
+# list (so no cvec).
 ##
 InstallMethod( PluckerCoordinates, 
-	"for a line of PG(3,q)",
+	"for a matrix representing a line of PG(3,q)",
     [ IsMatrix ],
 	function( lobj )
 		local pij, u, v, coords;
@@ -2261,7 +2262,7 @@ InstallMethod( PluckerCoordinates,
 			pij(u,v,2,3),pij(u,v,4,2),pij(u,v,3,4)];
 		return coords;
 	end );
-
+	
 # CHECKED 28/09/11 jdb
 # changed 28/3/14 jdb
 #############################################################################
@@ -2298,20 +2299,65 @@ InstallMethod( InversePluckerCoordinates,
 		return l;
 	end );
 
-
 #############################################################################
-#O  KleinCorrespondence( <f> )
+# Klein correspondence: the user operations.
+#############################################################################
+
+# added may 2014 jdb
+#############################################################################
+#O  PluckerCoordinates( <l> )
+# returns the Plucker coordinates of the line <l>. The is the user variant
+# of the operation. It accepts a line of PG(3,q), does some checking, and
+# uses the helper operation.
+##
+InstallMethod( PluckerCoordinates, 
+	"for a line of PG(3,q)",
+    [ IsSubspaceOfProjectiveSpace ],
+	function( l )
+		if Dimension(AmbientSpace(l)) <> 3 then
+			Error("<l> is not a line of a three dimensional projective space");
+		elif l!.type <> 2 then
+			Error("<l> is not a line");
+		fi;
+		return PluckerCoordinates(l!.obj);
+	end );
+
+# added may 2014 jdb
+#############################################################################
+#O  KleinCorrespondence( <f>, <computeintertwiner> )
 # returns the well known morphism from the lines of PG(3,f), f a finite field
 # to the points of Q+(5,q): x0x5+x1x4+x2x3 = 0. This is the bare essential 
 # of some geometry morphisms that follow. For didactical reasons, it looks 
 # useful to me to have this version that maps to a fixed hyperbolic quadric. 
 # Of course a flexible verion of this operation is also present.
 ##
+# The interwiner: - the frobenius automorphism commutes with taking PluckerCoordinates
+#					so we only have to deal with the matrices in the twiner/pretwiner
+#					funcs.
+#				  - A projectivity is known if its image of a frame is known. So:
+#					going from PGL(4,q) -> PGO+(6,q): the standard basepoints of PG(5,q)
+#					are points of the quadric, compute the lines (InversePlucker), their image,
+#					, computer the point (Plucker), this gives the matrix of the element
+#					of PGO+(5,q) where each row is determined up to a factor. It turns out
+#					using order as in twinerfunc, the needed factors are always the same:
+#					[1,1,1,1,1,-1]. This explains the '-' at newmat[6] line.
+#					going from PGO+(5,q) -> PGL(4,q): cave canem: projectivities swapping
+#					greek and latin planes do not induce a projectivity of PG(3,q)!
+#					The principle is the same as above, just more work is needed to compute
+#					the factors here (they seem not to be independant of the group element now).
+#					Checking whether greek/latins are swapped is done by mapping a point
+#					to a generator, computing the image, mapping back, and see whether
+#					the three lines span PG(3,q). If so, we have the point, if not,
+#					the image of the point is a plane and the projectivity of Q+(5,q)
+#					swaps the greeks/latins and induces in fact a correlation of PG(3,q).
+##
 InstallMethod( KleinCorrespondence, 
 	"for a hyperbolic quadric",
     [ IsField, IsBool ],
 		function( f, computeintertwiner )
-		local i, form, map, pg, mat, pre, plucker, ps, inv, one;
+		local i, form, map, pg, mat, pre, plucker, ps, inv, one, twinerfunc, 
+		twinerprefun, coll1, gens1, coll2, gens2, hom, id;
+		
 		one := One(f);
 
     ## The form for the resulting Plucker coordinates is 
@@ -2324,23 +2370,78 @@ InstallMethod( KleinCorrespondence,
 		form := QuadraticFormByMatrix(mat, f);
 		ps := PolarSpace( form );
 		pg := ProjectiveSpace(3,f);
+		
 		plucker := 
            function( l )
              local pt1;
              pt1 := PluckerCoordinates( l!.obj );
              return VectorSpaceToElement(ps, pt1);
            end;
+		
 		inv := 
            function( x )
              local l;
              l := InversePluckerCoordinates( x!.obj );
              return VectorSpaceToElement(pg, l);
            end;
+		
 		map := GeometryMorphismByFunction(Lines(pg), Points(ps), plucker, inv);
 		SetIsBijective(map, true);
-		return map;
+		
+		twinerfunc := function(g)
+			local mat,newmat;
+			mat := Unpack(g!.mat);
+			newmat := [];
+			newmat[1] := PluckerCoordinates([mat[2],mat[1]]);
+			newmat[2] := PluckerCoordinates([mat[3],mat[1]]);
+			newmat[3] := PluckerCoordinates([mat[4],mat[1]]);
+			newmat[4] := PluckerCoordinates([mat[3],mat[2]]);
+			newmat[5] := PluckerCoordinates([mat[4],-mat[2]]);
+			newmat[6] := -PluckerCoordinates([-mat[4],mat[3]]);
+			return ProjElWithFrob(newmat,g!.frob,f);
+		end;
+		
+		id := IdentityMat(4, f);
+		
+		twinerprefun := function( g )
+			local mat, newmat, lines, pts, ipts, ilines, e, x, ept,
+				ielines, ie, cs, iept;
+			mat := Unpack(g!.mat);
+			lines:= [];
+			lines[1] := [[id[1],id[2]],[id[1],id[3]],[id[1],id[4]]];
+			lines[2] := [[id[2],id[3]],[id[2],id[4]]];
+			lines[3] := [[id[3],id[4]],[id[3],id[1]]];
+			lines[4] := [[id[4],id[1]],[id[4],id[2]]];
+			pts := List(lines,x->List(x,y->PluckerCoordinates(y)));
+			ipts := List(pts,x->x*mat);
+			ilines := List(ipts,x->List(x,y->InversePluckerCoordinates(y)));
+			if Rank(Union(ilines[1])) = 3 then
+				Error( "<el> is not inducing a collineation of PG(3,q)" );
+			fi;
+			ipts := List(ilines, x->SumIntersectionMat(x[1],x[2])[2]);
+			newmat := List(ipts,x->x[1]);
+			e := [1,1,1,1]*one;
+			ept := List([[e,id[1]],[e,id[2]]],y->PluckerCoordinates(y));
+			iept := List(ept,x->x*mat);
+			ielines := List(iept,x->InversePluckerCoordinates(x));
+			ie := SumIntersectionMat(ielines[1],ielines[2])[2];
+			cs := SolutionMat(newmat,ie[1]);
+			for i in [1..4] do
+				newmat[i] := newmat[i]*cs[i];
+			od;
+			return ProjElWithFrob(newmat,g!.frob,f);
+		end;
 
-    ## put intertwiner in PGammaL(4,q)->PGO^+(6,q) 
+		if computeintertwiner then
+			coll1 := CollineationGroup(PG(3,f));
+			gens1 := GeneratorsOfGroup(coll1);
+			gens2 := List(gens1, twinerfunc);
+			coll2 := GroupWithGenerators(gens2);
+			hom := GroupHomomorphismByFunction(coll1, coll2, twinerfunc, twinerprefun);
+			SetIntertwiner( map, hom );
+		fi;
+		
+		return map;
 	end );
 
 #############################################################################
@@ -2350,13 +2451,23 @@ InstallMethod( KleinCorrespondence,
 InstallMethod( KleinCorrespondence, 
 	"for a hyperbolic quadric",
     [ IsPosInt ],
-	q -> KleinCorrespondence(GF(q))
+	q -> KleinCorrespondence(GF(q),true)
 	);
 	
+#############################################################################
+#O  KleinCorrespondence( <q> )
+# returns KleinCorrespondence( GF(q) )
+##
+InstallMethod( KleinCorrespondence, 
+	"for a hyperbolic quadric",
+    [ IsPosInt, IsBool ],
+	function(q, computeintertwiner )
+		return KleinCorrespondence(GF(q),computeintertwiner);
+	end );
 	
 # CHECKED 28/09/11 jdb
 #############################################################################
-#O  KleinCorrespondence( <var> )
+#O  KleinCorrespondence( <quadric> )
 # returns the well known morphism from the lines of PG(3,q) to the points
 # of Q+(5,q). Of course, the bilinear form determining the latter, can be chosen
 # by the users.
@@ -2365,8 +2476,8 @@ InstallMethod( KleinCorrespondence,
 	"for a hyperbolic quadric",
      [ IsClassicalPolarSpace ],
 	function( quadric )
-		local f, i, form, map, pg, mat,
-			pre, plucker, ps, iso, inv, one;
+		local f, i, form, map, pg, mat, twinerfunc, twinerprefun,
+			pre, func, ps, iso, one, c, c1, c2, id;
 		if ProjectiveDimension(quadric) <> 5 then
 			Error("<ps> is not Klein's quadric");
 		fi;
@@ -2383,34 +2494,156 @@ InstallMethod( KleinCorrespondence,
 		for i in [1..3] do
 			mat[i][7-i] := one;
 		od;
-		if IsEvenInt( Size(f) ) then
-			form := QuadraticFormByMatrix(mat, f);
-		else
-			form := BilinearFormByMatrix(mat + TransposedMat(mat), f);
-		fi;
+		form := QuadraticFormByMatrix(mat, f);
 		ps := PolarSpace( form );
-		iso := IsomorphismPolarSpacesNC( ps, quadric );
+		c1 := BaseChangeToCanonical( form );
+		if not IsCanonicalPolarSpace(quadric) then
+			c2 := BaseChangeToCanonical(QuadraticForm(quadric));
+			c := c2^-1 * c1;
+		else
+			c := c1;
+		fi;
 		pg := ProjectiveSpace(3,f);
-		plucker := 
-           function( l )
-             local pt1, pt2;
-             pt1 := PluckerCoordinates( l!.obj );
-             pt2 := ImageElm( iso, VectorSpaceToElement(ps, pt1) );
-             return pt2;
-           end;
-		inv := 
-           function( var )
-             local x, l;
-             x := iso!.prefun(var);
-             l := InversePluckerCoordinates( x!.obj );
+		
+		func := function( el )
+             local pt1;
+             pt1 := PluckerCoordinates( el!.obj );
+             return VectorSpaceToElement(quadric, pt1 * c^-1 );
+        end;
+		
+		pre := function( el )
+             local l;
+             l := InversePluckerCoordinates( el!.obj * c );
              return VectorSpaceToElement(pg, l);
-           end;
-		map := GeometryMorphismByFunction(Lines(pg), Points(quadric), plucker, inv);
+        end;
+		
+		map := GeometryMorphismByFunction(Lines(pg), Points(quadric), func, pre);
 		SetIsBijective(map, true);
+		
+# I just have to include that base changes here. But now I have to go shopping.
+
+		twinerfunc := function(g)
+			local mat,newmat;
+			mat := Unpack(g!.mat);
+			newmat := [];
+			newmat[1] := PluckerCoordinates([mat[2],mat[1]]);
+			newmat[2] := PluckerCoordinates([mat[3],mat[1]]);
+			newmat[3] := PluckerCoordinates([mat[4],mat[1]]);
+			newmat[4] := PluckerCoordinates([mat[3],mat[2]]);
+			newmat[5] := PluckerCoordinates([mat[4],-mat[2]]);
+			newmat[6] := -PluckerCoordinates([-mat[4],mat[3]]);
+			return ProjElWithFrob(newmat,g!.frob,f);
+		end;
+		
+		id := IdentityMat(4, f);
+		
+		twinerprefun := function( g )
+			local mat, newmat, lines, pts, ipts, ilines, e, x, ept,
+				ielines, ie, cs, iept;
+			mat := Unpack(g!.mat);
+			lines:= [];
+			lines[1] := [[id[1],id[2]],[id[1],id[3]],[id[1],id[4]]];
+			lines[2] := [[id[2],id[3]],[id[2],id[4]]];
+			lines[3] := [[id[3],id[4]],[id[3],id[1]]];
+			lines[4] := [[id[4],id[1]],[id[4],id[2]]];
+			pts := List(lines,x->List(x,y->PluckerCoordinates(y)));
+			ipts := List(pts,x->x*mat);
+			ilines := List(ipts,x->List(x,y->InversePluckerCoordinates(y)));
+			if Rank(Union(ilines[1])) = 3 then
+				Error( "<el> is not inducing a collineation of PG(3,q)" );
+			fi;
+			ipts := List(ilines, x->SumIntersectionMat(x[1],x[2])[2]);
+			newmat := List(ipts,x->x[1]);
+			e := [1,1,1,1]*one;
+			ept := List([[e,id[1]],[e,id[2]]],y->PluckerCoordinates(y));
+			iept := List(ept,x->x*mat);
+			ielines := List(iept,x->InversePluckerCoordinates(x));
+			ie := SumIntersectionMat(ielines[1],ielines[2])[2];
+			cs := SolutionMat(newmat,ie[1]);
+			for i in [1..4] do
+				newmat[i] := newmat[i]*cs[i];
+			od;
+			return ProjElWithFrob(newmat,g!.frob,f);
+		end;
+
 		return map;
 
     ## put intertwiner in PGammaL(4,q)->PGO^+(6,q) 
 	end );
+
+
+#############################################################################
+#O  KleinCorrespondenceExtended( <f> )
+# returns the well known morphism from the lines of PG(3,f), f a finite field
+# to the points of Q+(5,q): x0x5+x1x4+x2x3 = 0. This is the bare essential 
+# of some geometry morphisms that follow. For didactical reasons, it looks 
+# useful to me to have this version that maps to a fixed hyperbolic quadric. 
+# Of course a flexible verion of this operation is also present.
+##
+InstallMethod( KleinCorrespondenceExtended, 
+	"for a hyperbolic quadric",
+    [ IsField ],
+		function( f )
+		local i, form, map, pg, mat, pre, plucker, ps, inv, one, twinerfunc, 
+		twinerprefun, coll1, gens1, coll2, gens2, hom;
+		
+		one := One(f);
+
+    ## The form for the resulting Plucker coordinates is 
+    ## x1x6+x2x5+x3x4 = 0
+	
+		mat := NullMat(6, 6, f);
+		for i in [1..3] do
+			mat[i][7-i] := one;
+		od;
+		form := QuadraticFormByMatrix(mat, f);
+		ps := PolarSpace( form );
+		pg := ProjectiveSpace(3,f);
+		
+		plucker := function( el )
+			local t, vec, newvec, ptvec, elvec;
+			t := el!.type;
+			elvec := Unpack(el!.obj);
+			if t = 1 then
+				vec := BasisVectors(Basis(Lines(el)!.factorspace));
+				newvec := [PluckerCoordinates([elvec,vec[1]]), PluckerCoordinates([elvec,vec[2]]), PluckerCoordinates([elvec,vec[3]])];
+				return VectorSpaceToElement(ps,newvec);
+			elif t = 2 then
+				return VectorSpaceToElement(ps,PluckerCoordinates(elvec));
+			elif t = 3 then
+				newvec := [PluckerCoordinates( elvec{[1,2]}), PluckerCoordinates( elvec{[2,3]} ), PluckerCoordinates( elvec{[1,3]} )];
+				return VectorSpaceToElement(ps,newvec);
+			fi;
+		end;
+		
+		inv := function( el )
+			local elvec,t,newvec,lines,space;
+			t := el!.type;
+			elvec := Unpack(el!.obj);
+			if t = 1 then
+				newvec := InversePluckerCoordinates( elvec );
+				return VectorSpaceToElement(pg, newvec);
+			elif t = 3 then
+				newvec := List(elvec,x->InversePluckerCoordinates( x ));
+				lines := List(newvec,x->VectorSpaceToElement(pg,x));
+				space := Meet(lines);
+				if IsEmptySubspace(space) then
+					return Span(lines);
+				else
+					return space;
+				fi;
+			elif t = 2 then
+				Error("Lines of Klein quadric have no preimage");
+			fi;
+		end;
+		
+		map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(pg), ElementsOfIncidenceStructure(ps), plucker, inv);
+		SetIsBijective(map, true);
+		
+		return map;
+	end );
+
+
 
 #############################################################################
 #

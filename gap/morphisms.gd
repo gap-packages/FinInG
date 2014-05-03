@@ -53,13 +53,22 @@ DeclareOperation( "GeometryMorphismByFunction",
 ## isomorphisms
 #############################################################################
 
-DeclareOperation( "IsomorphismPolarSpaces", 
-                     [ IsClassicalPolarSpace, IsClassicalPolarSpace, IsBool ]);
-DeclareOperation( "IsomorphismPolarSpaces", 
-                     [ IsClassicalPolarSpace, IsClassicalPolarSpace ]);
+# first one is a helper operations
+
+DeclareOperation( "IsomorphismPolarSpacesProjectionFromNucleus", [IsClassicalPolarSpace, IsClassicalPolarSpace, IsBool ] );
+
+# the NC versions of the isomorphisms, for internal use, not including the previous one.
+
 DeclareOperation( "IsomorphismPolarSpacesNC", 
 					 [ IsClassicalPolarSpace, IsClassicalPolarSpace, IsBool ]);
 DeclareOperation( "IsomorphismPolarSpacesNC", 
+                     [ IsClassicalPolarSpace, IsClassicalPolarSpace ]);
+
+# the user operations.
+
+DeclareOperation( "IsomorphismPolarSpaces", 
+                     [ IsClassicalPolarSpace, IsClassicalPolarSpace, IsBool ]);
+DeclareOperation( "IsomorphismPolarSpaces", 
                      [ IsClassicalPolarSpace, IsClassicalPolarSpace ]);
 
 #############################################################################
@@ -80,9 +89,6 @@ DeclareOperation( "NaturalProjectionBySubspaceNC",
 DeclareOperation( "NaturalProjectionBySubspaceNC",
                      [ IsProjectiveSpace, IsSubspaceOfProjectiveSpace ]);
                      
-DeclareOperation( "IsomorphismPolarSpacesProjectionFromNucleus", [IsClassicalPolarSpace, IsClassicalPolarSpace, IsBool ] );
-
-
 #############################################################################
 ## C3 morphisms
 #############################################################################
@@ -176,16 +182,9 @@ DeclareOperation( "NaturalEmbeddingBySubfield",
 DeclareOperation( "PluckerCoordinates", [ IsMatrix ]);
 DeclareOperation( "InversePluckerCoordinates", [ IsVector ]);
 
-DeclareOperation( "NaturalDualitySymplectic", [ IsClassicalGQ, IsClassicalGQ ]);
-DeclareOperation( "NaturalDualityHermitian", [ IsClassicalGQ, IsClassicalGQ ]);
+# Klein correspondence: from the bare essentials to the more advanced (all user functions)
 
-DeclareOperation( "NaturalDualityParabolic", [ IsClassicalGQ, IsClassicalGQ ]);
-DeclareOperation( "NaturalDualityElliptic", [ IsClassicalGQ, IsClassicalGQ ]);
-
-#the user stuff.
-
-DeclareOperation( "KleinCorrespondence", [ IsClassicalPolarSpace, IsBool ]);
-DeclareOperation( "KleinCorrespondence", [ IsClassicalPolarSpace ]);
+DeclareOperation( "PluckerCoordinates", [ IsSubspaceOfProjectiveSpace ]);
 
 DeclareOperation( "KleinCorrespondence", [ IsField, IsBool ]);
 DeclareOperation( "KleinCorrespondence", [ IsField ]);
@@ -193,11 +192,31 @@ DeclareOperation( "KleinCorrespondence", [ IsField ]);
 DeclareOperation( "KleinCorrespondence", [ IsPosInt, IsBool ]);
 DeclareOperation( "KleinCorrespondence", [ IsPosInt ]);
 
+DeclareOperation( "KleinCorrespondence", [ IsClassicalPolarSpace, IsBool ]);
+DeclareOperation( "KleinCorrespondence", [ IsClassicalPolarSpace ]);
+
+DeclareOperation( "KleinCorrespondenceExtended", [ IsField, IsBool ]);
+DeclareOperation( "KleinCorrespondenceExtended", [ IsField ]);
+DeclareOperation( "KleinCorrespondenceExtended", [ IsPosInt, IsBool ]);
+DeclareOperation( "KleinCorrespondenceExtended", [ IsPosInt ]);
+DeclareOperation( "KleinCorrespondenceExtended", [ IsClassicalPolarSpace, IsBool ]);
+DeclareOperation( "KleinCorrespondenceExtended", [ IsClassicalPolarSpace ]);
+
+# derived dualities. 
+# first: helper operations
+
+DeclareOperation( "NaturalDualitySymplectic", [ IsClassicalGQ, IsClassicalGQ ]);
+DeclareOperation( "NaturalDualityHermitian", [ IsClassicalGQ, IsClassicalGQ ]);
+
+DeclareOperation( "NaturalDualityParabolic", [ IsClassicalGQ, IsClassicalGQ ]);
+DeclareOperation( "NaturalDualityElliptic", [ IsClassicalGQ, IsClassicalGQ ]);
+
+# second: user operations.
 
 DeclareOperation( "NaturalDuality", [ IsClassicalGQ, IsClassicalGQ ]);
 DeclareOperation( "NaturalDuality", [ IsClassicalGQ ]);
 
-
+# some left over: projective completion.
 
 DeclareOperation( "ProjectiveCompletion", [ IsAffineSpace ] );
 
