@@ -2918,7 +2918,7 @@ InstallMethod( NaturalDualitySymplectic,
 #           2. The projectivity of PG(5,q^2) which maps the Plucker coordinates of the lines of H(3,q^2)
 #           to PG(5,q). See "Finite Projective Spaces of Three Dimensions" by Hirschfeld and Thas (section 19.2).
 #			is defined.
-#			3. Appluing this collineation on plucker coordinates (in the right form, see above), makes
+#			3. Applying this collineation on plucker coordinates (in the right form, see above), makes
 #			sure this is a point of the Elliptic Quadric Q-(5,q): x1^2+x2^2+x3^2+x4^2+x5^2+x6^2 - e(x1x6+x2x5+x3x4)  
 #			4. The result pl*x might be over GF(q) modulo a GF(q^2)
 #			factor, then this causes problems in the VectorSpaceToElement

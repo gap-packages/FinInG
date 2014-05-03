@@ -58,7 +58,7 @@ of a projective space in a larger projective space, the mapping induced by field
 reduction, and e.g. the Klein correspondence are examples of such geometry morphisms.
 <P/>
 As a geometry morphism from <M>S</M> to <M>S'</M> preserves incidence, it also preserves
-the symmetry, and hence it nduces also a map from the collineation group
+the symmetry, and hence it induces also a map from the collineation group
 of <M>S</M> into the collineation group of <M>S'</M>. Such a map will be called an <E>Intertwiner</E>,
 and <Package>FinInG</Package> can provide these maps for most of the geometry morphisms.
 
@@ -82,8 +82,8 @@ a &GAP; function, we advise the user to not use this for geometry morphisms.
 </Description>
 </ManSection>
 
-For some geometry morphisms, there is also an accompanying intertwiner for
-the automorphism groups of the source range. Given a geometry morphism
+For most geometry morphisms, there is also an accompanying intertwiner for
+the automorphism groups of the source and range. Given a geometry morphism
 <M>f</M> from <M>S</M> to <M>S'</M>, an intertwiner <Alt Not="HTML"><M>\phi</M></Alt>
 <Alt Only="HTML">&#966;</Alt> is a map
 from the automorphism group of <M>S</M> to the automorphism group of 
@@ -98,7 +98,7 @@ automorphism <M>g</M> of <M>S</M>, we have
 <Description>
 The argument <A>f</A> is a geometry morphism. If <A>f</A> comes equipped with
 a natural intertwiner from an automorphism group of the source of <A>f</A> to
-the automorphism group to the image of <A>f</A>, then the user may be able
+the automorphism group to the image of <A>f</A>, then the user may is able
 to obtain the intertwiner by calling this operation (see the individual geometry
 morphism constructions). There is no method to compute an intertwiner for a given
 geometry morphism, the attribute is or is not set during the construction of the geometry
@@ -127,44 +127,59 @@ polar spaces of the same kind that are induced by coordinate transformations.
 <Oper Name="IsomorphismPolarSpaces" Arg="ps1, ps2, boolean"/>
 <Returns>a geometry morphism</Returns>
 <Description>
-The arguments <A>ps1</A> and <A>ps2</A> are equivalent polar spaces, and this
-function returns a geometry isomorphism between them. 
+The arguments <A>ps1</A> and <A>ps2</A> are <E>equivalent</E> polar spaces, i.e. up to 
+coordinate transformation, the underlying sesquilinear or quadratic form determines the
+same polar space, or, <A>ps1</A> is a parabolic quadric over a finite field <M>f</M> of even charateristic in 
+dimension <M>2n</M> and <A>ps2</A> is a symplectic space over <M>f</M> in dimension <M>2n-1</M>, then
+this operation returns a geometry isomorphism between them. 
 The optional third argument <A>boolean</A> can take either <C>true</C> or
-<C>false</C> as input, and then our operation will or will not compute the 
+<C>false</C> as input, and then the operation will or will not compute the 
 intertwiner accordingly. The user may wish that the intertwiner is not computed
 when working with large polar spaces. The default (when calling the operation
 with two arguments) is set to <C>true</C>, and in this case,
 if at least one of <A>ps1</A> or <A>ps2</A> has
 a collineation group installed as an attribute, then an intertwining
-homomorphism is installed as an attribute. That is, we also obtain a natural
-group isomorphism from the collineation group of <A>ps1</A> onto the collineation
-group of <A>ps2</A> (see also <Ref Attr="Intertwiner" Style="Text"/>).
+homomorphism is installed as an attribute of the resulting geometry morphism. 
+Hence we also obtain a natural group isomorphism from the collineation group of 
+<A>ps1</A> onto the collineation group of <A>ps2</A> (see also <Ref Attr="Intertwiner" Style="Text"/>).
 <Example>
 <#Include SYSTEM "../examples/include/morphisms_isopolar.include"> 
 </Example>
 </Description>
-
-<Description>
-Both functions also have a "no check" version, which does not check whether <A>ps1</A> and <A>ps2</A>
-are polar spaces of the same type.
-</Description>
-<Oper Name="IsomorphismPolarSpacesNC" Arg="ps1, ps2"/>
-<Oper Name="IsomorphismPolarSpacesNC" Arg="ps1, ps2, boolean"/>
 </ManSection>
 
 <ManSection>
+<Oper Name="NaturalDuality" Arg="gq1, gq2"/>
+<Oper Name="NaturalDuality" Arg="gq1, gq2, boolean"/>
 <Oper Name="NaturalDuality" Arg="gq"/>
+<Oper Name="NaturalDuality" Arg="gq, boolean"/>
 <Returns>a geometry morphism</Returns>
 <Description>
-The argument <A>gq</A> is either the symplectic generalised quadrangle
-<C>W(3,q)</C> or the hermitian generalised quadrangle <C>H(3,q^2)</C>.  By the
-Klein correspondence, the lines of <M>W(3,q)</M> are mapped to the points
-of <M>Q(4,q)</M>, which results in a point-line duality from <M>W(3,q)</M>
-onto <M>Q(4,q)</M>. Likewise, the Klein correspondence induces a duality
-between <M>H(3,q^2)</M> and <M>Q^-(5,q)</M>.  At the moment, the geometry
-morphism returned is a map from lines to points.  This operation does not
-require that the input is the canonical version of the generalised quadrangle;
-it suffices that the input has the correct polarity type.
+It is well known that the classical generalised quadrangles <M>W(3,q)</M> and <M>Q(4,q)</M>
+are dually isomorphic, the same holds for the classical generalised quadrangles <M>Q^-(5,q)</M>
+and <M>H(3,q^2)</M>. These isomorphisms are implemented through the operation <F>NaturalDuality</F>,
+this operation will return a geometry morphism with <C>ElementsOfIncidenceStructure(gq1)</C> as
+source and <C>ElementsOfIncidenceStructure(gq2)</C> as range, in other words, it is a geometry
+morphism from all the elements of <A>gq1</A> onto all the elements of <A>gq2</A>, preserving the incidence,
+and swapping the types.<P/>
+
+The first version requires two arguments: either the symplectic or parabolic
+quadrangle, in any order, and defined by any suitable bilinear/quadratic and bilinear form; or the
+ellipitc or hermitian quadrangle (in dimension <M>3</M>), in any order, and defined by any suitable
+bilinear/quadratic and hermitian form. In all cases the generalised quadrangles may be the standard
+one provided by the package <Package>FinInG</Package>. <P/>
+
+The second version requires only one argument, either <M>W(3,q)</M>, <M>Q(4,q)</M>, <M>Q^-(5,q)</M>, or
+<M>H(3,q^2)</M>, standard or specified by the users using an appropriate bilinear, quadratic or hermitian
+form. The range of the returned geometry morphism will be the set of all elements of a suitable generalised
+quadrangle, in standard form.<P/>
+
+The first and second verion without a booleand as argument will, if possible return a geometry morphism
+equipped with an intertwiner. Using the boolean argument <A>false</A> will return a geometry morphism
+that is not equipped with an intertwiner.<P/>
+
+In all cases it is checked that the input generalised quadrangle(s) are appropriate, i.e. right type and
+of rank 2.
 <Example>
 <#Include SYSTEM "../examples/include/morphisms_duality.include">
 </Example>
@@ -560,6 +575,15 @@ gap> p^vmap;
 
 <Section>
 <Heading>Low level functions</Heading>
+
+<ManSection>
+<Oper Name="IsomorphismPolarSpacesNC" Arg="ps1, ps2"/>
+<Oper Name="IsomorphismPolarSpacesNC" Arg="ps1, ps2, boolean"/>
+<Description>
+<F>IsomorphismPolarSpacesNC</F> is the version of <F>IsomorphismPolarSpaces</F> where no checks are built in, and the
+isomorphism between parabolic quadrics and symplectic spaces is not implemented. This version is used internally.
+</Description>
+</ManSection>
 
 
 <ManSection>

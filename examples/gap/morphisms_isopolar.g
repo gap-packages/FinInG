@@ -11,4 +11,8 @@ CollineationGroup(ps1);
 CollineationGroup(ps2);
 iso := IsomorphismPolarSpaces(ps1,ps2,true);
 hom := Intertwiner( iso );
+ps1 := ParabolicQuadric(6,8);
+ps2 := SymplecticSpace(5,8);
+em := IsomorphismPolarSpaces(ps1,ps2);
+hom := Intertwiner(em);
 quit;

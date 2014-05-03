@@ -18,11 +18,11 @@ gap&gt; form2 := QuadraticFormByMatrix(mat2,GF(5));
 gap&gt; ps2 := PolarSpace(form2);
 &lt;polar space in ProjectiveSpace(5,GF(5)): x_1*x_6+x_2*x_5+x_3*x_4=0 &gt;
 gap&gt; iso := IsomorphismPolarSpaces(ps1,ps2,true);
-#I  No intertwiner computed. One of the polar spaces must have a collineation group computed
-&lt;geometry morphism from &lt;Elements of &lt;polar space in ProjectiveSpace(
-5
- ,GF(5)): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2=0 &gt;&gt; to &lt;Elements of &lt;polar space
- in ProjectiveSpace(5,GF(5)): x_1*x_6+x_2*x_5+x_3*x_4=0 &gt;&gt;&gt;
+#I  No intertwiner computed. One of the polar spaces must have a collineation \
+group computed
+&lt;geometry morphism from &lt;Elements of Q+(5, 
+5): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2=0&gt; to &lt;Elements of Q+(5, 
+5): x_1*x_6+x_2*x_5+x_3*x_4=0&gt;&gt;
 gap&gt; CollineationGroup(ps1);
 #I  Computing collineation group of canonical polar space...
 &lt;projective collineation group of size 58032000000 with 4 generators&gt;
@@ -37,3 +37,18 @@ gap&gt; hom := Intertwiner( iso );
 MappingByFunction( &lt;projective collineation group of size 58032000000 with 
 4 generators&gt;, &lt;projective collineation group of size 58032000000 with 
 4 generators&gt;, function( y ) ... end, function( x ) ... end )
+gap&gt; ps1 := ParabolicQuadric(6,8);
+Q(6, 8)
+gap&gt; ps2 := SymplecticSpace(5,8);
+W(5, 8)
+gap&gt; em := IsomorphismPolarSpaces(ps1,ps2);
+#I  Have 36171 points.
+#I  Have 37381 points in new orbit.
+#I  Have 36171 points.
+#I  Have 37388 points in new orbit.
+&lt;geometry morphism from &lt;Elements of Q(6, 8)&gt; to &lt;Elements of W(5,\
+ 8)&gt;&gt;
+gap&gt; hom := Intertwiner(em);
+MappingByFunction( PGammaO(7,8), &lt;projective collineation group of size 
+27231016821530296320 with 
+3 generators&gt;, function( el ) ... end, function( el ) ... end )
