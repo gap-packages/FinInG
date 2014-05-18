@@ -2352,9 +2352,9 @@ InstallMethod( PluckerCoordinates,
 #					swaps the greeks/latins and induces in fact a correlation of PG(3,q).
 ##
 InstallMethod( KleinCorrespondence, 
-	"for a hyperbolic quadric",
+	"for a finite field and a boolean",
     [ IsField, IsBool ],
-		function( f, computeintertwiner )
+	function( f, computeintertwiner )
 		local i, form, map, pg, mat, pre, plucker, ps, inv, one, twinerfunc, 
 		twinerprefun, coll1, gens1, coll2, gens2, hom, id;
 		
@@ -2540,7 +2540,6 @@ InstallMethod( KleinCorrespondence,
 			newmat[4] := PluckerCoordinates([mat[3],mat[2]]);
 			newmat[5] := PluckerCoordinates([mat[4],-mat[2]]);
 			newmat[6] := -PluckerCoordinates([-mat[4],mat[3]]);
-			newmat := newmat; 
 			return ProjElWithFrob(c * newmat * cinv^frob,frob,f); #base change is here.
 		end;
 		
@@ -2821,10 +2820,11 @@ InstallMethod( KleinCorrespondenceExtended,
 ##
 InstallMethod( NaturalDualitySymplectic,
 	"for a symplectic GQ and a parabolic quadric",
-	[ IsClassicalGQ, IsClassicalGQ ],
-	function( w, q4q )
+	[ IsClassicalGQ, IsClassicalGQ, IsBool ],
+	function( w, q4q, computeintertwiner )
     local f, one, mat, form_quadric, quadric, map, form_w, cq4q, cw, can,
-        func, pre, formw, c1, c2, delta, hyp;
+        func, pre, formw, c1, c2, delta, hyp, coll1, coll2, gens1, gens2, hom,
+		twinerfunc, twinerprefun;
     f := w!.basefield;
     one := One(f);
     mat := NullMat(5, 5, f);
@@ -2901,7 +2901,31 @@ InstallMethod( NaturalDualitySymplectic,
         end;
     fi;
     map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(w), ElementsOfIncidenceStructure(q4q), func, pre);
-    SetIsBijective( map, true );
+	SetIsBijective( map, true );
+    
+	twinerfunc := function(g)
+		local mat,newmat;
+		mat := Unpack(g!.mat);
+		newmat := [];
+		newmat[1] := PluckerCoordinates([mat[2],mat[1]]){[1..5]};
+		newmat[2] := PluckerCoordinates([mat[3],mat[1]]){[1..5]};
+		newmat[3] := PluckerCoordinates([mat[4],mat[1]]){[1..5]};
+		newmat[4] := PluckerCoordinates([mat[3],mat[2]]){[1..5]};
+		newmat[5] := PluckerCoordinates([mat[4],-mat[2]]){[1..5]};
+		return ProjElWithFrob(newmat,g!.frob,f);
+		return newmat;
+	end;
+	
+	twinerprefun := x->x;
+	if computeintertwiner then
+		coll1 := CollineationGroup(w);
+		gens1 := GeneratorsOfGroup(coll1);
+		gens2 := List(gens1, twinerfunc);
+		coll2 := GroupWithGenerators(gens2);
+		hom := GroupHomomorphismByFunction(coll1, coll2, twinerfunc, twinerprefun);
+		SetIntertwiner( map, hom );
+	fi;
+	
     return map;
  end );
 

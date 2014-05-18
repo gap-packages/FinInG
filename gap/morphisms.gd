@@ -208,6 +208,9 @@ DeclareOperation( "KleinCorrespondenceExtended", [ IsClassicalPolarSpace ]);
 DeclareOperation( "NaturalDualitySymplectic", [ IsClassicalGQ, IsClassicalGQ ]);
 DeclareOperation( "NaturalDualityHermitian", [ IsClassicalGQ, IsClassicalGQ ]);
 
+DeclareOperation( "NaturalDualitySymplectic", [ IsClassicalGQ, IsClassicalGQ, IsBool ]);
+
+
 DeclareOperation( "NaturalDualityParabolic", [ IsClassicalGQ, IsClassicalGQ ]);
 DeclareOperation( "NaturalDualityElliptic", [ IsClassicalGQ, IsClassicalGQ ]);
 
