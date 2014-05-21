@@ -247,6 +247,8 @@ PreImageElm(hom,g);
 Collected(List(pts,x->PreImageElm(em,x^g)=PreImageElm(em,x)^(PreImageElm(hom,g))));
 List(gens{[1,3,4]},g->Collected(List(pts,x->PreImageElm(em,x^g)=PreImageElm(em,x)^(PreImageElm(hom,g)))));
 
+List(gens,g->Collected(List(pts,x->PreImageElm(em,x^g)=PreImageElm(em,x)^(PreImageElm(hom,g)))));
+
 
 q := 2;
 mat := [[0,0,0,0,0,1],[0,0,0,0,1,0],[0,0,0,1,0,0],[0,0,1,0,0,0],[0,1,0,0,0,0],[1,0,0,0,0,0]]*Z(q)^0;
@@ -269,5 +271,127 @@ group := CollineationGroup(w);
 gens := GeneratorsOfGroup(group);
 pts := AsList(Lines(w));
 List(gens,g->Collected(List(pts,x->PreImageElm(em,x^g)=PreImageElm(em,x)^(PreImageElm(hom,g)))));
+
+twinerfunc := function(g)
+local mat,newmat,frob;
+mat := Unpack(g!.mat);
+frob := g!.frob;
+newmat := [];
+newmat[2] := PluckerCoordinates([mat[3],mat[1]]){[1..5]};
+newmat[3] := PluckerCoordinates([mat[4],mat[1]]){[1..5]};
+newmat[4] := -PluckerCoordinates([-mat[3],mat[2]]){[1..5]};
+newmat[5] := PluckerCoordinates([mat[4],-mat[2]]){[1..5]};
+newmat[1] := PluckerCoordinates([mat[2]+mat[3],mat[1]+mat[4]]){[1..5]} - newmat[2] - newmat[5];
+return ProjElWithFrob(newmat,frob,f); #base change is here.
+end;
+
+
+
+
+f := GF(5);
+one := One(f);
+mat := NullMat(5, 5, f);
+mat[1][1] := one;
+mat[2][5] := -one;
+mat[3][4] := -one;
+form_quadric := QuadraticFormByMatrix(mat, f);
+ps := PolarSpace( form_quadric );
+
+vec1 := [1,1,0,0,1,-1]*Z(5)^0;
+
+vec2 := [0,1,0,0,0,0]*Z(5)^0;
+vec3 := [0,0,1,0,0,0]*Z(5)^0;
+vec4 := [0,0,0,1,0,0]*Z(5)^0;
+vec5 := [0,0,0,0,1,0]*Z(5)^0;
+
+vec6 := [0,1,1,-1,1,0]*Z(5)^0;
+
+iv1 := InversePluckerCoordinates(vec1);
+iv2 := InversePluckerCoordinates(vec2);
+iv3 := InversePluckerCoordinates(vec3);
+iv4 := InversePluckerCoordinates(vec4);
+iv5 := InversePluckerCoordinates(vec5);
+iv6 := InversePluckerCoordinates(vec6);
+
+
+p1 := VectorSpaceToElement(ps,vec1{[1..5]});
+p2 := VectorSpaceToElement(ps,vec2{[1..5]});
+p3 := VectorSpaceToElement(ps,vec3{[1..5]});
+p4 := VectorSpaceToElement(ps,vec4{[1..5]});
+p5 := VectorSpaceToElement(ps,vec5{[1..5]});
+
+
+#zelfde probleem als boven.
+
+q := 5;
+group := CollineationGroup(PG(3,q));
+g := Random(group);
+mat := Unpack(g!.mat);
+
+newmat := [];
+newmat[1] := PluckerCoordinates([mat[2],mat[1]]);
+newmat[2] := PluckerCoordinates([mat[3],mat[1]]);
+newmat[3] := PluckerCoordinates([mat[4],mat[1]]);
+newmat[4] := PluckerCoordinates([mat[3],mat[2]]);
+newmat[5] := PluckerCoordinates([mat[4],-mat[2]]);
+newmat[6] := -PluckerCoordinates([-mat[4],mat[3]]);
+
+systemmat := ShallowCopy(newmat);
+o := One(GF(q));
+z := Z(q);
+p := Characteristic(GF(q));
+vec := [o,-o,-o,o*(p-1)/2,o*(p-1)/2,o*(p-1)];
+
+#image of vec via klein correspondence
+ipl := InversePluckerCoordinates(vec);
+line := ipl*mat;
+pl := PluckerCoordinates(line);
+
+for i in [1..6] do
+for j in [1..6] do
+systemmat[j][i] := systemmat[j][i]*vec[j];
+od;
+od;
+
+cs := SolutionMat(systemmat,pl);
+
+id := IdentityMat(4,f);
+
+        twinerprefun := function( g )
+			local mat, newmat, lines, pts, ipts, ilines, e, x, ept,
+				ielines, ie, cs, iept, frob;
+			frob := g!.frob;
+            #mat := cw * Unpack(g!.mat) * cwinv^frob;
+			#mat := cq4q * Unpack(g!.mat) * cq4qinv^frob;
+            mat := Unpack(g!.mat);
+            lines:= [];
+            lines[1] := [[id[1],id[3]],[id[1],id[4]]];
+            lines[2] := [[id[2],id[3]],[id[2],id[4]]];
+            lines[3] := [[id[3],id[1]],[id[3],id[2]]];
+            lines[4] := [[id[4],id[1]],[id[4],id[2]]];
+            pts := List(lines,x->List(x,y->PluckerCoordinates(y){[1..5]}));
+            ipts := List(pts,x->x*mat);
+            for i in [1..Length(ipts)] do
+                for j in [1..2] do
+                    ipts[i][j][6] := -ipts[i][j][1];
+                od;
+            od;
+            ilines := List(ipts,x->List(x,y->InversePluckerCoordinates(y)));
+            ipts := List(ilines, x->SumIntersectionMat(x[1],x[2])[2]);
+            newmat := List(ipts,x->x[1]);
+			e := [1,1,1,1]*one;
+			ept := List([[e,id[1]+id[4]],[e,id[2]+id[3]]],y->PluckerCoordinates(y){[1..5]});
+			iept := List(ept,x->x*mat);
+            iept[1][6] := -iept[1][1];
+            iept[2][6] := -iept[2][1];
+
+			ielines := List(iept,x->InversePluckerCoordinates(x));
+			ie := SumIntersectionMat(ielines[1],ielines[2])[2];
+			cs := SolutionMat(newmat,ie[1]);
+			for i in [1..4] do
+				newmat[i] := newmat[i]*cs[i];
+			od;
+			return ProjElWithFrob(newmat,g!.frob,f);
+		end;
 
 

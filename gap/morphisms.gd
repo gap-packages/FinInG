@@ -182,10 +182,12 @@ DeclareOperation( "NaturalEmbeddingBySubfield",
 DeclareOperation( "PluckerCoordinates", [ IsMatrix ]);
 DeclareOperation( "InversePluckerCoordinates", [ IsVector ]);
 
-# Klein correspondence: from the bare essentials to the more advanced (all user functions)
+#Klein correspondence: from the bare essentials to the more advanced (all user functions)
 
+#user version of PluckerCoordinates.
 DeclareOperation( "PluckerCoordinates", [ IsSubspaceOfProjectiveSpace ]);
 
+# the morpihms.
 DeclareOperation( "KleinCorrespondence", [ IsField, IsBool ]);
 DeclareOperation( "KleinCorrespondence", [ IsField ]);
 

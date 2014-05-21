@@ -2246,7 +2246,7 @@ InstallMethod( NaturalProjectionBySubspaceNC,
 # returns the Plucker coordinates of the line represented by <lobj>. We accept 
 # a matrix representing the line. No check on whether this is a line of PG(3,q),`
 # so use with care. cmat note: whether l is a cmat or not, coords will be a plain 
-# list (so no cvec).
+# list (so no cvec). This is the internal version accepting a matrix.
 ##
 InstallMethod( PluckerCoordinates, 
 	"for a matrix representing a line of PG(3,q)",
@@ -2262,7 +2262,37 @@ InstallMethod( PluckerCoordinates,
 			pij(u,v,2,3),pij(u,v,4,2),pij(u,v,3,4)];
 		return coords;
 	end );
-	
+
+# CHECKED 28/09/11 jdb
+# changed 28/3/14 jdb
+#############################################################################
+#O  PluckerCoordinates( <line> )
+# returns the Plucker coordinates of the line represented by <lobj>. We accept 
+# a matrix representing the line. No check on whether this is a line of PG(3,q),`
+# so use with care. cmat note: whether l is a cmat or not, coords will be a plain 
+# list (so no cvec). This is the user version accepting a subspace of a projective
+# space.
+##
+InstallMethod( PluckerCoordinates, 
+	"for a matrix representing a line of PG(3,q)",
+    [ IsSubspaceOfProjectiveSpace ],
+	function( l )
+		local pij, u, v, coords,lobj;
+		if l!.type <> 2 or Dimension(l!.geo) <> 3 then
+            Error(" <l> must be a line of a PG(3,q)");
+        fi;
+        lobj := l!.obj;
+        pij := function(u,v,i,j)
+			return u[i]*v[j] - u[j] * v[i];
+		end;
+		u := lobj[1];
+		v := lobj[2];
+		coords := [pij(u,v,1,2),pij(u,v,1,3),pij(u,v,1,4),
+			pij(u,v,2,3),pij(u,v,4,2),pij(u,v,3,4)];
+		return coords;
+	end );
+
+
 # CHECKED 28/09/11 jdb
 # changed 28/3/14 jdb
 #############################################################################
@@ -2815,6 +2845,7 @@ InstallMethod( KleinCorrespondenceExtended,
 #          we are looking for.
 #        - some base changes are necessary.
 #        - all the linear algebra is hard coded.
+#        - the intertwiners: inspired by the intertwiners of the Klein Correspondence.
 #		 - except for the filters, there is not real check whether the input the correct GQ.
 #############################################################################
 ##
@@ -2824,7 +2855,7 @@ InstallMethod( NaturalDualitySymplectic,
 	function( w, q4q, computeintertwiner )
     local f, one, mat, form_quadric, quadric, map, form_w, cq4q, cw, can,
         func, pre, formw, c1, c2, delta, hyp, coll1, coll2, gens1, gens2, hom,
-		twinerfunc, twinerprefun;
+		twinerfunc, twinerprefun, cq4qinv, cwinv, id;
     f := w!.basefield;
     one := One(f);
     mat := NullMat(5, 5, f);
@@ -2839,6 +2870,7 @@ InstallMethod( NaturalDualitySymplectic,
     else
         cq4q := c1;
     fi;
+    cq4qinv := cq4q^-1;
 	formw := SesquilinearForm( w );
     delta := PolarityOfProjectiveSpace(w);
     hyp := IdentityMat(6,f){[1..5]}; #this and next are in fact HyperplaneByDualCoorindates([1,0,0,0,0,1]..)
@@ -2903,20 +2935,115 @@ InstallMethod( NaturalDualitySymplectic,
     map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(w), ElementsOfIncidenceStructure(q4q), func, pre);
 	SetIsBijective( map, true );
     
-	twinerfunc := function(g)
-		local mat,newmat;
-		mat := Unpack(g!.mat);
-		newmat := [];
-		newmat[1] := PluckerCoordinates([mat[2],mat[1]]){[1..5]};
-		newmat[2] := PluckerCoordinates([mat[3],mat[1]]){[1..5]};
-		newmat[3] := PluckerCoordinates([mat[4],mat[1]]){[1..5]};
-		newmat[4] := PluckerCoordinates([mat[3],mat[2]]){[1..5]};
-		newmat[5] := PluckerCoordinates([mat[4],-mat[2]]){[1..5]};
-		return ProjElWithFrob(newmat,g!.frob,f);
-		return newmat;
-	end;
+    id := IdentityMat(4, f);
+
+   	if IsCanonicalPolarSpace( w ) then
+    
+        twinerfunc := function(g)
+            local mat,newmat,frob;
+            mat := Unpack(g!.mat);
+            frob := g!.frob;
+            newmat := [];
+            newmat[2] := PluckerCoordinates([mat[3],mat[1]]){[1..5]};
+            newmat[3] := PluckerCoordinates([mat[4],mat[1]]){[1..5]};
+            newmat[4] := -PluckerCoordinates([-mat[3],mat[2]]){[1..5]};
+            newmat[5] := PluckerCoordinates([mat[4],-mat[2]]){[1..5]};
+            newmat[1] := PluckerCoordinates([mat[2]+mat[3],mat[1]+mat[4]]){[1..5]} - newmat[2] - newmat[5];
+            return ProjElWithFrob(cq4q * newmat * cq4qinv^frob,frob,f); #base change is here.
+            return newmat;
+        end;
 	
-	twinerprefun := x->x;
+        twinerprefun := function( g )
+			local mat, newmat, lines, pts, ipts, ilines, e, x, ept,
+				ielines, ie, cs, iept, frob, i, j;
+			frob := g!.frob;
+			mat := cq4qinv * Unpack(g!.mat) * cq4q^frob;
+            lines:= [];
+            lines[1] := [[id[1],id[3]],[id[1],id[4]]];
+            lines[2] := [[id[2],id[3]],[id[2],id[4]]];
+            lines[3] := [[id[3],id[1]],[id[3],id[2]]];
+            lines[4] := [[id[4],id[1]],[id[4],id[2]]];
+            pts := List(lines,x->List(x,y->PluckerCoordinates(y){[1..5]}));
+            ipts := List(pts,x->x*mat);
+            for i in [1..Length(ipts)] do
+                for j in [1..2] do
+                    ipts[i][j][6] := -ipts[i][j][1];
+                od;
+            od;
+            ilines := List(ipts,x->List(x,y->InversePluckerCoordinates(y)));
+            ipts := List(ilines, x->SumIntersectionMat(x[1],x[2])[2]);
+            newmat := List(ipts,x->x[1]);
+			e := [1,1,1,1]*one;
+			ept := List([[e,id[1]+id[4]],[e,id[1]+id[2]]],y->PluckerCoordinates(y){[1..5]});
+			iept := List(ept,x->x*mat);
+            iept[1][6] := -iept[1][1];
+            iept[2][6] := -iept[2][1];
+
+			ielines := List(iept,x->InversePluckerCoordinates(x));
+			ie := SumIntersectionMat(ielines[1],ielines[2])[2];
+			cs := SolutionMat(newmat,ie[1]);
+			for i in [1..4] do
+				newmat[i] := newmat[i]*cs[i];
+			od;
+			return ProjElWithFrob(newmat,g!.frob,f);
+		end;
+
+    else
+
+   		cw := BaseChangeToCanonical( SesquilinearForm(w) );
+        cwinv := cw^-1;
+
+        twinerfunc := function(g)
+            local mat,newmat,frob;
+            frob := g!.frob;
+            mat := cw * Unpack(g!.mat) * cwinv^frob;
+            newmat := [];
+            newmat[2] := PluckerCoordinates([mat[3],mat[1]]){[1..5]};
+            newmat[3] := PluckerCoordinates([mat[4],mat[1]]){[1..5]};
+            newmat[4] := -PluckerCoordinates([-mat[3],mat[2]]){[1..5]};
+            newmat[5] := PluckerCoordinates([mat[4],-mat[2]]){[1..5]};
+            newmat[1] := PluckerCoordinates([mat[2]+mat[3],mat[1]+mat[4]]){[1..5]} - newmat[2] - newmat[5];
+            return ProjElWithFrob(cq4q * newmat * cq4qinv^frob,frob,f); #base change is here.
+            return newmat;
+        end;
+
+        twinerprefun := function( g )
+			local mat, newmat, lines, pts, ipts, ilines, e, x, ept,
+				ielines, ie, cs, iept, frob, i, j;
+			frob := g!.frob;
+			mat := cq4qinv * Unpack(g!.mat) * cq4q^frob;
+            lines:= [];
+            lines[1] := [[id[1],id[3]],[id[1],id[4]]];
+            lines[2] := [[id[2],id[3]],[id[2],id[4]]];
+            lines[3] := [[id[3],id[1]],[id[3],id[2]]];
+            lines[4] := [[id[4],id[1]],[id[4],id[2]]];
+            pts := List(lines,x->List(x,y->PluckerCoordinates(y){[1..5]}));
+            ipts := List(pts,x->x*mat);
+            for i in [1..Length(ipts)] do
+                for j in [1..2] do
+                    ipts[i][j][6] := -ipts[i][j][1];
+                od;
+            od;
+            ilines := List(ipts,x->List(x,y->InversePluckerCoordinates(y)));
+            ipts := List(ilines, x->SumIntersectionMat(x[1],x[2])[2]);
+            newmat := List(ipts,x->x[1]);
+			e := [1,1,1,1]*one;
+			ept := List([[e,id[1]+id[4]],[e,id[1]+id[2]]],y->PluckerCoordinates(y){[1..5]});
+			iept := List(ept,x->x*mat);
+            iept[1][6] := -iept[1][1];
+            iept[2][6] := -iept[2][1];
+
+			ielines := List(iept,x->InversePluckerCoordinates(x));
+			ie := SumIntersectionMat(ielines[1],ielines[2])[2];
+			cs := SolutionMat(newmat,ie[1]);
+			for i in [1..4] do
+				newmat[i] := newmat[i]*cs[i];
+			od;
+			return ProjElWithFrob(cwinv * newmat * cw^frob,g!.frob,f);
+		end;
+
+    fi;
+
 	if computeintertwiner then
 		coll1 := CollineationGroup(w);
 		gens1 := GeneratorsOfGroup(coll1);
