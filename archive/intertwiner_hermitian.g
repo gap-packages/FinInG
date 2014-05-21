@@ -1,3 +1,6 @@
+q := 9;
+f := GF(q^2);
+
 
 alpha := First(f, a -> (a^q)^2 <> a^2);
 e := alpha^(q-1) + alpha^(1-q);
@@ -18,6 +21,7 @@ cq5q := c2^-1 * c1;
 else
 cq5q := c1;
 fi;
+cq5qinv := cq5q^-1;
 
 mat1 := IdentityMat(6, f) * alpha;
 mat2 := NullMat(6, 6, f);
@@ -29,7 +33,7 @@ xinv := x^-1;
 
 
 twinerfunc := function(g)
-local mat,newmat,frob,newmat2,n;
+local mat,newmat,frob,newmat2,n,frob2,j,arg;
 frob := g!.frob;
 mat := Unpack(g!.mat);
 newmat := [];
@@ -42,13 +46,20 @@ newmat[6] := -PluckerCoordinates([-mat[4],mat[3]]);
 newmat2 :=  xinv*newmat*x^(frob^-1);
 n := First(newmat2[1],x->not IsZero(x));
 newmat2 := List(newmat2,x->List(x,y->y/n));
-
-return newmat2;
+if not IsOne(frob) then
+j := Log(frob!.power,Characteristic(f));
+else 
+j := 0;
+fi;
+frob2 := FrobeniusAutomorphism(GF(q))^(j mod q);
+arg := ShallowCopy(cq5q * newmat2 * cq5qinv^frob2);
+return [arg,frob2];
 end;
 
 
 ProjElWithFrob(newmat,g!.frob,f);
 ProjElWithFrob(newmat,frob2,GF(q));
+ProjElWithFrob(test,frob2,GF(q));
 ProjElWithFrob(test,frob2,GF(q));
 
 
