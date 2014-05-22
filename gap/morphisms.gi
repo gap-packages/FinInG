@@ -2996,7 +2996,7 @@ InstallMethod( NaturalDualitySymplectic,
         twinerfunc := function(g)
             local mat,newmat,frob;
             frob := g!.frob;
-            mat := cw * Unpack(g!.mat) * cwinv^frob;
+            mat := cw * Unpack(g!.mat) * cwinv^(frob^-1);
             newmat := [];
             newmat[2] := PluckerCoordinates([mat[3],mat[1]]){[1..5]};
             newmat[3] := PluckerCoordinates([mat[4],mat[1]]){[1..5]};
@@ -3243,7 +3243,6 @@ InstallMethod( NaturalDualityHermitian,
             newmat[6] := -PluckerCoordinates([-mat[4],mat[3]]);
             newmat2 :=  xinv*newmat*x^(frob^-1);
             n := First(newmat2[1],x->not IsZero(x));
-            #newmat2 := List(newmat2,x->List(x,y->y/n));
             newmat2 := newmat2/n;
             if not IsOne(frob) then
                 j := Log(frob!.power,Characteristic(f));
@@ -3254,7 +3253,6 @@ InstallMethod( NaturalDualityHermitian,
             arg := cq5q * newmat2 * cq5qinv^frob2;
             ConvertToMatrixRep(arg);
             return ProjElWithFrob(arg,frob2,GF(q));
-            #return [arg,frob2];
         end;
 
         twinerprefun := x -> x;
@@ -3267,7 +3265,7 @@ InstallMethod( NaturalDualityHermitian,
         twinerfunc := function(g)
             local mat,newmat,frob,newmat2,n,frob2,j,arg;
             frob := g!.frob;
-            mat := ch * Unpack(g!.mat) * chinv^frob;
+            mat := ch * Unpack(g!.mat) * chinv^(frob^-1);
             newmat := [];
             newmat[1] := PluckerCoordinates([mat[2],mat[1]]);
             newmat[2] := PluckerCoordinates([mat[3],mat[1]]);
@@ -3277,7 +3275,6 @@ InstallMethod( NaturalDualityHermitian,
             newmat[6] := -PluckerCoordinates([-mat[4],mat[3]]);
             newmat2 :=  xinv*newmat*x^(frob^-1);
             n := First(newmat2[1],x->not IsZero(x));
-            #newmat2 := List(newmat2,x->List(x,y->y/n));
             newmat2 := newmat2/n;
             if not IsOne(frob) then
                 j := Log(frob!.power,Characteristic(f));
@@ -3286,9 +3283,9 @@ InstallMethod( NaturalDualityHermitian,
             fi;
             frob2 := FrobeniusAutomorphism(GF(q))^(j mod q);
             arg := ShallowCopy(cq5q * newmat2 * cq5qinv^frob2);
+            ConvertToMatrixRep(arg);
             return ProjElWithFrob(arg,frob2,GF(q));
             Print(q,"\n");
-            #return [arg,frob2];
         end;
 
         twinerprefun := x -> x;

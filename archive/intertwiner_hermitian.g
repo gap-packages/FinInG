@@ -65,3 +65,109 @@ ProjElWithFrob(test,frob2,GF(q));
 ProjElWithFrob(test,frob2,GF(q));
 
 
+
+q := 9;
+
+mat2 := [ [ 0*Z(q), Z(q)^0, 0*Z(q), 0*Z(q), 0*Z(q), 0*Z(q) ],
+  [ 0*Z(q), 0*Z(q), 0*Z(q), 0*Z(q), 0*Z(q), 0*Z(q) ], 
+  [ 0*Z(q), 0*Z(q), 0*Z(q), Z(q)^0, 0*Z(q), 0*Z(q) ], 
+  [ 0*Z(q), 0*Z(q), 0*Z(q), 0*Z(q), 0*Z(q), 0*Z(q) ], 
+  [ 0*Z(q), 0*Z(q), 0*Z(q), 0*Z(q), Z(q)^0, 0*Z(q) ], 
+  [ 0*Z(q), 0*Z(q), 0*Z(q), 0*Z(q), 0*Z(q), Z(q) ] ];
+  
+mat := [ [ 0*Z(q), Z(q)^0, 0*Z(q), 0*Z(q) ], [ Z(q)^0, 0*Z(q), 0*Z(q), 0*Z(q) ], 
+  [ 0*Z(q), 0*Z(q), 0*Z(q), Z(q)^0 ], [ 0*Z(q), 0*Z(q), Z(q)^0, 0*Z(q) ] ];
+
+
+hform := HermitianFormByMatrix(mat,GF(q^2));
+h := PolarSpace(hform);
+qform := QuadraticFormByMatrix(mat2,GF(q));
+q5q := PolarSpace(qform);
+
+em := NaturalDualityHermitian(h,q5q,true);
+hom := Intertwiner(em);
+
+lines := Lines(h);
+
+group := CollineationGroup(h);
+g := Random(group);
+
+Collected(List(lines,x->(x^g)^em = (x^em)^(g^hom)));
+List(gens,g->Collected(List(lines,x->(x^g)^em = (x^em)^(g^hom))));
+
+
+####################################################
+
+
+q := 9;
+f := GF(q^2);
+
+alpha := First(f, a -> (a^q)^2 <> a^2);
+e := alpha^(q-1) + alpha^(1-q);
+one := One(GF(q));
+
+mat1 := IdentityMat(6, GF(q));
+mat2 := NullMat(6, 6, f);
+for i in [1..3] do
+mat2[2*i-1][8-2*i] := one;
+od;
+mat1 := mat1 - e * mat2;
+form_quadric := QuadraticFormByMatrix(mat1, GF(q));
+
+c1 := BaseChangeToCanonical( form_quadric );
+if not IsCanonicalPolarSpace(q5q) then
+c2 := BaseChangeToCanonical(QuadraticForm(q5q));
+cq5q := c2^-1 * c1;
+else
+cq5q := c1;
+fi;
+cq5qinv := cq5q^-1;
+
+mat1 := IdentityMat(6, f) * alpha;
+mat2 := NullMat(6, 6, f);
+for i in [1..6] do
+mat2[i][7-i] := one;
+od;
+x := mat1 + mat2 * alpha^q;
+xinv := x^-1;
+
+
+		twinerprefun := function( g )
+			local mat, newmat, lines, pts, ipts, ilines, e, ept,
+				ielines, ie, cs, iept, frob, frob2, j;
+			frob := g!.frob;
+			mat := x * Unpack(g!.mat) * xinv^(frob^-1);      #base change is here.
+			lines:= [];
+			lines[1] := [[id[1],id[2]],[id[1],id[3]]];
+			lines[2] := [[id[2],id[3]],[id[2],id[4]]];
+			lines[3] := [[id[3],id[4]],[id[3],id[1]]];
+			lines[4] := [[id[4],id[1]],[id[4],id[2]]];
+			pts := List(lines,x->List(x,y->PluckerCoordinates(y)));
+			ipts := List(pts,x->x*mat);
+			ilines := List(ipts,x->List(x,y->InversePluckerCoordinates(y)));
+			ipts := List(ilines, x->SumIntersectionMat(x[1],x[2])[2]);
+			newmat := List(ipts,x->x[1]);
+			e := [1,1,1,1]*one;
+			ept := List([[e,id[1]],[e,id[2]]],y->PluckerCoordinates(y));
+			iept := List(ept,x->x*mat);
+			ielines := List(iept,x->InversePluckerCoordinates(x));
+			ie := SumIntersectionMat(ielines[1],ielines[2])[2];
+			cs := SolutionMat(newmat,ie[1]);
+			for i in [1..4] do
+				newmat[i] := newmat[i]*cs[i];
+			od;
+            if not IsOne(frob) then
+                j := Log(frob!.power,Characteristic(f));
+            else
+                j := 0;
+            fi;
+            frob2 := FrobeniusAutomorphism(GF(q^2))^j;
+			return ProjElWithFrob(newmat,g!.frob,f);
+		end;
+
+
+
+
+
+
+
