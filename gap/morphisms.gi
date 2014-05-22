@@ -3251,7 +3251,8 @@ InstallMethod( NaturalDualityHermitian,
                 j := 0;
             fi;
             frob2 := FrobeniusAutomorphism(GF(q))^(j mod q);
-            arg := ShallowCopy(cq5q * newmat2 * cq5qinv^frob2);
+            arg := cq5q * newmat2 * cq5qinv^frob2;
+            ConvertToMatrixRep(arg);
             return ProjElWithFrob(arg,frob2,GF(q));
             #return [arg,frob2];
         end;
