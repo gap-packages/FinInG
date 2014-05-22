@@ -235,6 +235,8 @@ g := Random(group);
 Collected(List(lines,x->(x^g)^em = (x^em)^(g^hom)));
 List(gens,g->Collected(List(lines,x->(x^g)^em = (x^em)^(g^hom))));
 
+Collected(List(pts,x->(x^g)^em = (x^em)^h))));
+
 group := CollineationGroup(ps);
 gens := GeneratorsOfGroup(group);
 pts := Points(ps);

@@ -45,7 +45,8 @@ newmat[5] := PluckerCoordinates([mat[4],-mat[2]]);
 newmat[6] := -PluckerCoordinates([-mat[4],mat[3]]);
 newmat2 :=  xinv*newmat*x^(frob^-1);
 n := First(newmat2[1],x->not IsZero(x));
-newmat2 := List(newmat2,x->List(x,y->y/n));
+#newmat2 := List(newmat2,x->List(x,y->y/n));
+newmat2 := newmat2/n;
 if not IsOne(frob) then
 j := Log(frob!.power,Characteristic(f));
 else 
@@ -53,7 +54,8 @@ j := 0;
 fi;
 frob2 := FrobeniusAutomorphism(GF(q))^(j mod q);
 arg := ShallowCopy(cq5q * newmat2 * cq5qinv^frob2);
-return [arg,frob2];
+return ProjElWithFrob(arg,frob2,GF(q));
+#return [arg,frob2];
 end;
 
 

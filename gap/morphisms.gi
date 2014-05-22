@@ -3090,8 +3090,8 @@ InstallMethod( NaturalDualitySymplectic,
 ##
 InstallMethod( NaturalDualityHermitian,
 	"for H(3,q^2) and Q-(5,q)",
-	[ IsClassicalGQ,  IsClassicalGQ ],
-	function( h, q5q )
+	[ IsClassicalGQ,  IsClassicalGQ, IsBool ],
+	function( h, q5q, computeinterwiner )
     ## The way this works is that we map the lines of h to the canonical H(3,q^2),
     ## which Klein corresponds to points of Q+(5,q^2) using the usual plucker map.
     ## This subgeometry is then mapped to PG(5,q), where we can associate it to
@@ -3101,7 +3101,9 @@ InstallMethod( NaturalDualityHermitian,
     #      func, pre, i, map, e, ps, form, iso2;
     
     local f, frob, q, one, alpha, e, mat1, mat2, i, form_quadric, c1, c2, cq5q,
-            func, pre, map, x, xinv, formh, ch, bmat, delta, basis;
+            func, pre, map, x, xinv, formh, ch, chinv, bmat, delta, basis, twinerfunc,
+            twinerprefun, coll1,coll2, gens1, gens2, cq5qinv, hom;
+
     f := h!.basefield;
     frob := FrobeniusAutomorphism(f);
     q := Sqrt(Size(f));
@@ -3132,6 +3134,7 @@ InstallMethod( NaturalDualityHermitian,
     else
         cq5q := c1;
     fi;
+    cq5qinv := cq5q^-1;
 
 	#see comments in header which collineation x represents.
     
@@ -3141,6 +3144,7 @@ InstallMethod( NaturalDualityHermitian,
        mat2[i][7-i] := one;
     od;
     x := mat1 + mat2 * alpha^q;
+    x := List(x,y->y);
     xinv := x^-1;
 
 	formh := SesquilinearForm( h );
@@ -3224,6 +3228,81 @@ InstallMethod( NaturalDualityHermitian,
 
     map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(h), ElementsOfIncidenceStructure(q5q), func, pre);
     SetIsBijective( map, true );
+    
+    if IsCanonicalPolarSpace( h ) then
+        twinerfunc := function(g)
+            local mat,newmat,frob,newmat2,n,frob2,j,arg;
+            frob := g!.frob;
+            mat := Unpack(g!.mat);
+            newmat := [];
+            newmat[1] := PluckerCoordinates([mat[2],mat[1]]);
+            newmat[2] := PluckerCoordinates([mat[3],mat[1]]);
+            newmat[3] := PluckerCoordinates([mat[4],mat[1]]);
+            newmat[4] := PluckerCoordinates([mat[3],mat[2]]);
+            newmat[5] := PluckerCoordinates([mat[4],-mat[2]]);
+            newmat[6] := -PluckerCoordinates([-mat[4],mat[3]]);
+            newmat2 :=  xinv*newmat*x^(frob^-1);
+            n := First(newmat2[1],x->not IsZero(x));
+            #newmat2 := List(newmat2,x->List(x,y->y/n));
+            newmat2 := newmat2/n;
+            if not IsOne(frob) then
+                j := Log(frob!.power,Characteristic(f));
+            else
+                j := 0;
+            fi;
+            frob2 := FrobeniusAutomorphism(GF(q))^(j mod q);
+            arg := ShallowCopy(cq5q * newmat2 * cq5qinv^frob2);
+            return ProjElWithFrob(arg,frob2,GF(q));
+            #return [arg,frob2];
+        end;
+
+        twinerprefun := x -> x;
+
+    else
+
+  		ch := BaseChangeToCanonical( SesquilinearForm(h) );
+        chinv := ch^-1;
+        
+        twinerfunc := function(g)
+            local mat,newmat,frob,newmat2,n,frob2,j,arg;
+            frob := g!.frob;
+            mat := ch * Unpack(g!.mat) * chinv^frob;
+            newmat := [];
+            newmat[1] := PluckerCoordinates([mat[2],mat[1]]);
+            newmat[2] := PluckerCoordinates([mat[3],mat[1]]);
+            newmat[3] := PluckerCoordinates([mat[4],mat[1]]);
+            newmat[4] := PluckerCoordinates([mat[3],mat[2]]);
+            newmat[5] := PluckerCoordinates([mat[4],-mat[2]]);
+            newmat[6] := -PluckerCoordinates([-mat[4],mat[3]]);
+            newmat2 :=  xinv*newmat*x^(frob^-1);
+            n := First(newmat2[1],x->not IsZero(x));
+            #newmat2 := List(newmat2,x->List(x,y->y/n));
+            newmat2 := newmat2/n;
+            if not IsOne(frob) then
+                j := Log(frob!.power,Characteristic(f));
+            else
+                j := 0;
+            fi;
+            frob2 := FrobeniusAutomorphism(GF(q))^(j mod q);
+            arg := ShallowCopy(cq5q * newmat2 * cq5qinv^frob2);
+            return ProjElWithFrob(arg,frob2,GF(q));
+            Print(q,"\n");
+            #return [arg,frob2];
+        end;
+
+        twinerprefun := x -> x;
+
+    fi;
+    
+   	if computeinterwiner then
+		coll1 := CollineationGroup(h);
+		gens1 := GeneratorsOfGroup(coll1);
+		gens2 := List(gens1, twinerfunc);
+		coll2 := GroupWithGenerators(gens2);
+		hom := GroupHomomorphismByFunction(coll1, coll2, twinerfunc, twinerprefun);
+		SetIntertwiner( map, hom );
+	fi;
+
     return map;
 end );
 
