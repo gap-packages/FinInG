@@ -7,3 +7,7 @@ b := x*m*x^-1;
 t := x^-1*b*x;
 n := Z(81)^75;
 t := t/n;
+
+NewMatrix(IsCMatRep,GF(9),3,t);
+NewMatrix(IsCMatRep,GF(81),3,t);
+
