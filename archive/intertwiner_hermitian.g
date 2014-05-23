@@ -136,33 +136,33 @@ xinv := x^-1;
 			local mat, newmat, lines, pts, ipts, ilines, e, ept,
 				ielines, ie, cs, iept, frob, frob2, j;
 			frob := g!.frob;
-			mat := x * Unpack(g!.mat) * xinv^(frob^-1);      #base change is here.
-			lines:= [];
-			lines[1] := [[id[1],id[2]],[id[1],id[3]]];
-			lines[2] := [[id[2],id[3]],[id[2],id[4]]];
-			lines[3] := [[id[3],id[4]],[id[3],id[1]]];
-			lines[4] := [[id[4],id[1]],[id[4],id[2]]];
-			pts := List(lines,x->List(x,y->PluckerCoordinates(y)));
-			ipts := List(pts,x->x*mat);
-			ilines := List(ipts,x->List(x,y->InversePluckerCoordinates(y)));
-			ipts := List(ilines, x->SumIntersectionMat(x[1],x[2])[2]);
-			newmat := List(ipts,x->x[1]);
-			e := [1,1,1,1]*one;
-			ept := List([[e,id[1]],[e,id[2]]],y->PluckerCoordinates(y));
-			iept := List(ept,x->x*mat);
-			ielines := List(iept,x->InversePluckerCoordinates(x));
-			ie := SumIntersectionMat(ielines[1],ielines[2])[2];
-			cs := SolutionMat(newmat,ie[1]);
-			for i in [1..4] do
-				newmat[i] := newmat[i]*cs[i];
-			od;
+			mat := x * (cq5qinv * Unpack(g!.mat) * cq5q^(frob^-1) ) * xinv^(frob^-1);      #base change is here.
             if not IsOne(frob) then
                 j := Log(frob!.power,Characteristic(f));
             else
                 j := 0;
             fi;
             frob2 := FrobeniusAutomorphism(GF(q^2))^j;
-			return ProjElWithFrob(newmat,g!.frob,f);
+			lines:= [];
+			lines[1] := [[id[1],id[2]],[id[1],id[3]]];
+			lines[2] := [[id[2],id[3]],[id[2],id[4]]];
+			lines[3] := [[id[3],id[4]],[id[3],id[1]]];
+			lines[4] := [[id[4],id[1]],[id[4],id[2]]];
+			pts := List(lines,x->List(x,y->PluckerCoordinates(y)));
+			ipts := List(pts,x->(x*mat)^frob2);
+			ilines := List(ipts,x->List(x,y->InversePluckerCoordinates(y)));
+			ipts := List(ilines, x->SumIntersectionMat(x[1],x[2])[2]);
+			newmat := List(ipts,x->x[1]);
+			e := [1,1,1,1]*one;
+			ept := List([[e,id[1]],[e,id[2]]],y->PluckerCoordinates(y));
+			iept := List(ept,x->(x*mat)^frob2);
+			ielines := List(iept,x->InversePluckerCoordinates(x));
+			ie := SumIntersectionMat(ielines[1],ielines[2])[2];
+			cs := SolutionMat(newmat,ie[1]);
+			for i in [1..4] do
+				newmat[i] := newmat[i]*cs[i];
+			od;
+			return ProjElWithFrob(newmat,frob2,f);
 		end;
 
 
