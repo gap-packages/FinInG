@@ -123,6 +123,8 @@ cq5q := c1;
 fi;
 cq5qinv := cq5q^-1;
 
+id := IdentityMat(4,f);
+
 mat1 := IdentityMat(6, f) * alpha;
 mat2 := NullMat(6, 6, f);
 for i in [1..6] do
@@ -137,6 +139,7 @@ xinv := x^-1;
 				ielines, ie, cs, iept, frob, frob2, j;
 			frob := g!.frob;
 			mat := x * (cq5qinv * Unpack(g!.mat) * cq5q^(frob^-1) ) * xinv^(frob^-1);      #base change is here.
+			#mat := x * Unpack(g!.mat) * xinv^(frob^-1);      #base change is here.
             if not IsOne(frob) then
                 j := Log(frob!.power,Characteristic(f));
             else
@@ -166,6 +169,18 @@ xinv := x^-1;
 		end;
 
 
+test_em := function(g)
+local frob, frob2, j, mat;
+frob := g!.frob;
+mat := x * (cq5qinv * Unpack(g!.mat) * cq5q^(frob^-1) ) * xinv^(frob^-1);      #base change is here.
+if not IsOne(frob) then
+j := Log(frob!.power,Characteristic(f));
+else
+j := 0;
+fi;
+frob2 := FrobeniusAutomorphism(GF(q^2))^j;
+return ProjElWithFrob(mat,frob2,f);
+end;
 
 
 
