@@ -139,6 +139,7 @@ xinv := x^-1;
 				ielines, ie, cs, iept, frob, frob2, j;
 			frob := g!.frob;
 			mat := x * (cq5qinv * Unpack(g!.mat) * cq5q^(frob^-1) ) * xinv^(frob^-1);      #base change is here.
+			mat := x * (cq5q * Unpack(g!.mat) * cq5qinv^(frob^-1) ) * xinv^(frob^-1);      #base change is here.
 			#mat := x * Unpack(g!.mat) * xinv^(frob^-1);      #base change is here.
             if not IsOne(frob) then
                 j := Log(frob!.power,Characteristic(f));
@@ -187,8 +188,14 @@ q5q := EllipticQuadric(5,q);
 herm := HermitianPolarSpace(3,q^2);
 em := NaturalDualityHermitian(q5q,herm,true);
 
+group := CollineationGroup(q5q);
+gens := GeneratorsOfGroup(group);
+pts := Points(q5q);
+hom := Intertwiner(em);
 
 Collected(List(pts,x->PreImageElm(em,x^g)=PreImageElm(em,x)^(PreImageElm(hom,g))));
 List(gens,g->Collected(List(pts,x->PreImageElm(em,x^g)=PreImageElm(em,x)^(PreImageElm(hom,g)))));
+
+Collected(List(pts,x->(x^g)^em = (x^em)^(h)));
 
 
