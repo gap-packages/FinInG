@@ -182,7 +182,13 @@ frob2 := FrobeniusAutomorphism(GF(q^2))^j;
 return ProjElWithFrob(mat,frob2,f);
 end;
 
+q := 4;
+q5q := EllipticQuadric(5,q);
+herm := HermitianPolarSpace(3,q^2);
+em := NaturalDualityHermitian(q5q,herm,true);
 
 
+Collected(List(pts,x->PreImageElm(em,x^g)=PreImageElm(em,x)^(PreImageElm(hom,g))));
+List(gens,g->Collected(List(pts,x->PreImageElm(em,x^g)=PreImageElm(em,x)^(PreImageElm(hom,g)))));
 
 
