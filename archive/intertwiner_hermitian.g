@@ -199,3 +199,120 @@ List(gens,g->Collected(List(pts,x->PreImageElm(em,x^g)=PreImageElm(em,x)^(PreIma
 Collected(List(pts,x->(x^g)^em = (x^em)^(h)));
 
 
+#############################
+
+q := 4;
+f := GF(q^2);
+one := One(f);
+
+
+    alpha := First(f, a -> (a^q)^2 <> a^2);
+    e := alpha^(q-1) + alpha^(1-q);
+
+
+	mat1 := IdentityMat(6, f) * alpha;
+    mat2 := NullMat(6, 6, f);
+    for i in [1..6] do
+       mat2[i][7-i] := one;
+    od;
+    x := mat1 + mat2 * alpha^q;
+    x := List(x,y->y);
+    xinv := x^-1;
+
+
+
+    #first set up the elliptic quadric we get if we start from the standard hermitian polar space.
+
+    ## The form for the Elliptic Quadric that we get is
+    ## x1^2+x2^2+x3^2+x4^2+x5^2+x6^2 - e(x1x6+x2x5+x3x4)  
+
+    mat1 := IdentityMat(6, GF(q));
+    mat2 := NullMat(6, 6, f);
+    for i in [1..3] do
+       mat2[2*i-1][8-2*i] := one;
+    od; 
+    mat1 := mat1 - e * mat2;
+    form_quadric := QuadraticFormByMatrix(mat1, GF(q));
+
+equadric := PolarSpace(form_quadric);
+
+mat := NullMat(6, 6, f);
+for i in [1..3] do
+mat[i][7-i] := one;
+od;
+form := QuadraticFormByMatrix(mat, f);
+klein := PolarSpace( form );
+
+
+step1_forward := function(g)
+local mat,frob,frob2,j;
+frob := g!.frob;
+            if not IsOne(frob) then
+                j := Log(frob!.power,Characteristic(f));
+            else
+                j := 0;
+            fi;
+            frob2 := FrobeniusAutomorphism(GF(q^2))^j;
+mat := x * (cq5qinv * Unpack(g!.mat) * cq5q^(frob^-1) ) * xinv^(frob2^-1);      #base change is here.
+return ProjElWithFrob(mat,frob2,f);
+end;
+
+step1_backward := function(g)
+local mat,frob,frob2,j;
+frob := g!.frob;
+mat := xinv*Unpack(g!.mat)*x^(frob^-1);
+if not IsOne(frob) then
+j := Log(frob!.power,Characteristic(f));
+else
+j := 0;
+fi;
+frob2 := FrobeniusAutomorphism(GF(q))^(j mod q);
+ConvertToMatrixRep(mat);
+return ProjElWithFrob(mat,frob2,f);
+end;
+
+
+em1_forward := function(el);
+return VectorSpaceToElement(klein,el!.obj*cq5q*xinv);
+end;
+
+em1_backward := function(el);
+return VectorSpaceToElement(equadric,el!.obj*x);
+end;
+
+pts := Points(equadric);
+List(pts,x->em1_forward(x));
+
+egroup := CollineationGroup(equadric);
+kleingroup := CollineationGroup(klein);
+
+group := CollineationGroup(q5q);
+
+g := Random(group);
+h := step1_forward(g);
+
+Collected(List(pts,x->em1_forward(x)^h = em1_forward(x^g)));
+
+gens := GeneratorsOfGroup(egroup);
+List(gens,g->Collected(List(lines,x->em1_forward(x^g) = (em1_forward(x))^(step1_forward(g)))));
+
+List(gens,g->Collected(List(pts,x->em1_forward(x^g) = (em1_forward(x))^(PreImageElm(hom,g)))));
+
+
+g2 := step1_backward(h);
+
+
+em2 := function(g)
+local frob,newmat;
+frob := g!.frob;
+newmat := cq5qinv * Unpack(g!.mat) * cq5q^(frob^-1);
+return ProjElWithFrob(newmat,frob,GF(q));
+end;
+
+
+list := [];
+for i in [1..Length(gens)] do
+Print(i,"\n");
+Add(list,PreImageElm(hom,gens[i])^hom=gens[i]);
+od;
+

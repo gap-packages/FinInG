@@ -3102,7 +3102,8 @@ InstallMethod( NaturalDualityHermitian,
     
     local f, frob, q, one, alpha, e, mat1, mat2, i, form_quadric, c1, c2, cq5q,
             func, pre, map, x, xinv, formh, ch, chinv, bmat, delta, basis, twinerfunc,
-            twinerprefun, coll1,coll2, gens1, gens2, cq5qinv, hom, id;
+            twinerprefun, coll1,coll2, gens1, gens2, cq5qinv, hom, id, id6, special, theta,
+            switch;
 
     f := h!.basefield;
     frob := FrobeniusAutomorphism(f);
@@ -3228,7 +3229,12 @@ InstallMethod( NaturalDualityHermitian,
 
     map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(h), ElementsOfIncidenceStructure(q5q), func, pre);
     SetIsBijective( map, true );
+
     id := IdentityMat(4,f);
+    id6 := IdentityMat(6,f);
+    special := List([1..6],i->id6[7-i]);
+    i := Log(q,Characteristic(f));
+    theta := FrobeniusAutomorphism(f)^i;
 
     if IsCanonicalPolarSpace( h ) then
         twinerfunc := function(g)
@@ -3258,29 +3264,49 @@ InstallMethod( NaturalDualityHermitian,
 
 		twinerprefun := function( g )
 			local mat, newmat, lines, pts, ipts, ilines, e, ept,
-				ielines, ie, cs, iept, frob, frob2, j;
+				ielines, ie, cs, iept, frob, frob2, j, n;
 			frob := g!.frob;
-			mat := x * (cq5qinv * Unpack(g!.mat) * cq5q^(frob^-1) ) * xinv^(frob^-1);      #base change is here.
-			#mat := x * Unpack(g!.mat) * xinv^(frob^-1);      #base change is here.
+            #first setup the frobenius automorphism over GF(q^2)=f.
             if not IsOne(frob) then
                 j := Log(frob!.power,Characteristic(f));
             else
                 j := 0;
             fi;
-            frob2 := FrobeniusAutomorphism(GF(q^2))^j;
-			lines:= [];
-			lines[1] := [[id[1],id[2]],[id[1],id[3]]];
+            frob2 := FrobeniusAutomorphism(f)^j;
+            #base change. Note that frob is used to change from different Q-(5,q)'s, frob2 for Q-(5,q) -> Q+(5,q^2)
+			mat := x * (cq5qinv * Unpack(g!.mat) * cq5q^(frob^-1) ) * xinv^(frob2^-1);      #base change is here.
+            #now from Q+(5,q^2) to H(3,q^2).
+            lines:= [];
+			pts := [];
+            ipts := [];
+            ilines := [];
+            lines[1] := [[id[1],id[2]],[id[1],id[3]],[id[1],id[4]]];
+            pts[1] := List(lines[1],y->PluckerCoordinates(y));
+            ipts[1] := (pts[1]*mat);
+            ilines[1] := List(ipts[1],y->InversePluckerCoordinates(y));
+            switch := theta^0;
+            if Rank(Union(ilines[1])) = 3 then
+                Print("switch\n");
+                mat := (mat^theta) * special;
+                frob2 := frob2 * theta;
+                switch := theta;
+            fi;
+            n := First(mat[1],x->not IsZero(x));
+            mat := mat/n;
+   			lines[1] := [[id[1],id[2]],[id[1],id[3]]];
 			lines[2] := [[id[2],id[3]],[id[2],id[4]]];
 			lines[3] := [[id[3],id[4]],[id[3],id[1]]];
 			lines[4] := [[id[4],id[1]],[id[4],id[2]]];
 			pts := List(lines,x->List(x,y->PluckerCoordinates(y)));
-			ipts := List(pts,x->(x*mat)^frob2);
+			ipts := List(pts,x->(x*mat)^switch);
+   			#ipts := List(pts,x->(x*mat));
 			ilines := List(ipts,x->List(x,y->InversePluckerCoordinates(y)));
 			ipts := List(ilines, x->SumIntersectionMat(x[1],x[2])[2]);
 			newmat := List(ipts,x->x[1]);
 			e := [1,1,1,1]*one;
 			ept := List([[e,id[1]],[e,id[2]]],y->PluckerCoordinates(y));
-			iept := List(ept,x->(x*mat)^frob2);
+			iept := List(ept,x->(x*mat)^switch);
+			#iept := List(ept,x->(x*mat));
 			ielines := List(iept,x->InversePluckerCoordinates(x));
 			ie := SumIntersectionMat(ielines[1],ielines[2])[2];
 			cs := SolutionMat(newmat,ie[1]);
