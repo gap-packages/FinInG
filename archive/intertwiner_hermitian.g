@@ -316,3 +316,38 @@ Print(i,"\n");
 Add(list,PreImageElm(hom,gens[i])^hom=gens[i]);
 od;
 
+twinerprefun := function( g )
+			local mat, newmat, lines, pts, ipts, ilines, e, ept,
+				ielines, ie, cs, iept, frob, frob2, j, n, switch;
+			frob := g!.frob;
+            #first setup the frobenius automorphism over GF(q^2)=f.
+            if not IsOne(frob) then
+                j := Log(frob!.power,Characteristic(f));
+            else
+                j := 0;
+            fi;
+            frob2 := FrobeniusAutomorphism(f)^j;
+            #base change. Note that frob is used to change from different Q-(5,q)'s, frob2 for Q-(5,q) -> Q+(5,q^2)
+			mat := x * (cq5qinv * Unpack(g!.mat) * cq5q^(frob^-1) ) * xinv^(frob2^-1);      #base change is here.
+            #now from Q+(5,q^2) to H(3,q^2).
+            lines:= [];
+			pts := [];
+            ipts := [];
+            ilines := [];
+            lines[1] := [[id[1],id[2]],[id[1],id[3]],[id[1],id[4]]];
+            pts[1] := List(lines[1],y->PluckerCoordinates(y));
+            ipts[1] := (pts[1]*mat);
+            ilines[1] := List(ipts[1],y->InversePluckerCoordinates(y));
+            switch := theta^0;
+            if Rank(Union(ilines[1])) = 3 then
+                Print("switch\n");
+                mat := (mat^theta) * special;
+                frob2 := frob2 * theta;
+                switch := theta;
+            fi;
+            n := First(mat[1],x->not IsZero(x));
+            mat := mat/n;
+			return ProjElWithFrob(mat,frob2,f);
+end;
+
+
