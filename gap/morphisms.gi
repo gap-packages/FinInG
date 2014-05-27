@@ -28,7 +28,7 @@
 # - Preimages for GrassmannMap, VeroneseMap, and SegreMap.HermitianPolarSpace
 # - intertwiners for GrassmannMap and SegreMap
 # - should there be a type function as an attribute?
-# - maybe make a more userfriendly system to avoid em!.prefun( <arg> )
+# - maybe make a more user friendly system to avoid em!.prefun( <arg> )
 # - in the same sense: do we want a NaturalDuality starting from Q(4,q) and Q-(5,q)? 
 #   And the self duality of Q(4,q) and W(3,q), q even.
 # - test operations BlownUpSubspaceOfProjectiveSpace, BlownUpSubspaceOfProjectiveSpaceBySubfield, 
@@ -581,14 +581,17 @@ InstallMethod( IsomorphismPolarSpaces,
 		twinerprefun := function( x )
 			local y;
 				y := MutableCopyMat( x!.mat );
-                return ProjElWithFrob( change * y * invchange^x!.frob, x!.frob, f );  
+                #return ProjElWithFrob( change * y * invchange^x!.frob, x!.frob, f );  
+                return ProjElWithFrob( change * y * invchange^(x!.frob^-1), x!.frob, f );  
+
 			end;  
        
     # map from gens1 to gens2
 		twinerfunc := function( y )
 			local x;
 				x := MutableCopyMat( y!.mat );
-                return ProjElWithFrob( invchange * x * change^y!.frob, y!.frob, f ); 
+                #return ProjElWithFrob( invchange * x * change^y!.frob, y!.frob, f );
+                return ProjElWithFrob( invchange * x * change^(y!.frob^-1), y!.frob, f ); 
 			end;
 		if computeintertwiner then
 			if (HasIsCanonicalPolarSpace( ps1 ) and IsCanonicalPolarSpace( ps1 )) or
@@ -668,14 +671,16 @@ InstallMethod( IsomorphismPolarSpacesNC,
 		twinerprefun := function( x )
 			local y;
 			y := MutableCopyMat( x!.mat );
-            return ProjElWithFrob( change * y * invchange^x!.frob, x!.frob, f );  
+                #return ProjElWithFrob( invchange * x * change^y!.frob, y!.frob, f );
+                return ProjElWithFrob( invchange * x * change^(y!.frob^-1), y!.frob, f ); 
 		end;  
        
     # map from gens1 to gens2
 		twinerfunc := function( y )
 			local x;
             x := MutableCopyMat( y!.mat );
-            return ProjElWithFrob( invchange * x * change^y!.frob, y!.frob, f ); 
+                #return ProjElWithFrob( invchange * x * change^y!.frob, y!.frob, f );
+                return ProjElWithFrob( invchange * x * change^(y!.frob^-1), y!.frob, f ); 
 		end;
 		if computeintertwiner then
 			if (HasIsCanonicalPolarSpace( ps1 ) and IsCanonicalPolarSpace( ps1 )) or
@@ -2589,7 +2594,8 @@ InstallMethod( KleinCorrespondence,
 			ipts := List(pts,x->x*mat);
 			ilines := List(ipts,x->List(x,y->InversePluckerCoordinates(y)));
 			if Rank(Union(ilines[1])) = 3 then
-				Error( "<el> is not inducing a collineation of PG(3,q)" );
+				Info(InfoFinInG, 1, "<el> is not inducing a collineation of PG(3,q)");
+				return fail;
 			fi;
 			ipts := List(ilines, x->SumIntersectionMat(x[1],x[2])[2]);
 			newmat := List(ipts,x->x[1]);
@@ -2824,13 +2830,12 @@ InstallMethod( KleinCorrespondenceExtended,
 
 #############################################################################
 # two helper operations. These were derived from the previous version of 
-# NaturalDuality. In pinciple useable by the user, but NaturalDuality will
-# interface them.
+# NaturalDuality. The new NaturalDuality will interface these.
 #############################################################################
 
 # Added april 2014. jdb
 #############################################################################
-#O  NaturalDualitySymplectic( <w>, <q4q> )
+#O  NaturalDualitySymplectic( <w>, <q4q>, <computeintertwiner>, <reverse> )
 # returns the well known isomorphism between W(3,q) and Q(4,q). 
 # Both polar spaces may be user defined. 
 # Setup: - Plucker Coordinates map lines of PG(3,q) on points of Q+(5,q): X0X5+X1X4+X2X3 = 0
@@ -2851,9 +2856,9 @@ InstallMethod( KleinCorrespondenceExtended,
 ##
 InstallMethod( NaturalDualitySymplectic,
 	"for a symplectic GQ and a parabolic quadric",
-	[ IsClassicalGQ, IsClassicalGQ, IsBool ],
-	function( w, q4q, computeintertwiner )
-    local f, one, mat, form_quadric, quadric, map, form_w, cq4q, cw, can,
+	[ IsClassicalGQ, IsClassicalGQ, IsBool, IsBool ],
+	function( w, q4q, computeintertwiner, reverse )
+    local f, one, mat, form_quadric, quadric, data, form_w, cq4q, cw, can,
         func, pre, formw, c1, c2, delta, hyp, coll1, coll2, gens1, gens2, hom,
 		twinerfunc, twinerprefun, cq4qinv, cwinv, id;
     f := w!.basefield;
@@ -2932,133 +2937,137 @@ InstallMethod( NaturalDualitySymplectic,
             fi;
         end;
     fi;
-    map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(w), ElementsOfIncidenceStructure(q4q), func, pre);
-	SetIsBijective( map, true );
-    
-    id := IdentityMat(4, f);
+     
+	if not reverse then
+		data := rec( func := func, pre := pre);
+	else
+		data := rec( func := pre, pre := func);
+	fi;
 
-   	if IsCanonicalPolarSpace( w ) then
-    
-        twinerfunc := function(g)
-            local mat,newmat,frob;
-            mat := Unpack(g!.mat);
-            frob := g!.frob;
-            newmat := [];
-            newmat[2] := PluckerCoordinates([mat[3],mat[1]]){[1..5]};
-            newmat[3] := PluckerCoordinates([mat[4],mat[1]]){[1..5]};
-            newmat[4] := -PluckerCoordinates([-mat[3],mat[2]]){[1..5]};
-            newmat[5] := PluckerCoordinates([mat[4],-mat[2]]){[1..5]};
-            newmat[1] := PluckerCoordinates([mat[2]+mat[3],mat[1]+mat[4]]){[1..5]} - newmat[2] - newmat[5];
-            return ProjElWithFrob(cq4q * newmat * cq4qinv^frob,frob,f); #base change is here.
-            return newmat;
-        end;
+   	if computeintertwiner then
+
+		id := IdentityMat(4, f);
 	
-        twinerprefun := function( g )
-			local mat, newmat, lines, pts, ipts, ilines, e, x, ept,
-				ielines, ie, cs, iept, frob, i, j;
-			frob := g!.frob;
-			mat := cq4qinv * Unpack(g!.mat) * cq4q^frob;
-            lines:= [];
-            lines[1] := [[id[1],id[3]],[id[1],id[4]]];
-            lines[2] := [[id[2],id[3]],[id[2],id[4]]];
-            lines[3] := [[id[3],id[1]],[id[3],id[2]]];
-            lines[4] := [[id[4],id[1]],[id[4],id[2]]];
-            pts := List(lines,x->List(x,y->PluckerCoordinates(y){[1..5]}));
-            ipts := List(pts,x->x*mat);
-            for i in [1..Length(ipts)] do
-                for j in [1..2] do
-                    ipts[i][j][6] := -ipts[i][j][1];
-                od;
-            od;
-            ilines := List(ipts,x->List(x,y->InversePluckerCoordinates(y)));
-            ipts := List(ilines, x->SumIntersectionMat(x[1],x[2])[2]);
-            newmat := List(ipts,x->x[1]);
-			e := [1,1,1,1]*one;
-			ept := List([[e,id[1]+id[4]],[e,id[1]+id[2]]],y->PluckerCoordinates(y){[1..5]});
-			iept := List(ept,x->x*mat);
-            iept[1][6] := -iept[1][1];
-            iept[2][6] := -iept[2][1];
+		if IsCanonicalPolarSpace( w ) then
+    
+			twinerfunc := function(g)
+				local mat,newmat,frob;
+				mat := Unpack(g!.mat);
+				frob := g!.frob;
+				newmat := [];
+				newmat[2] := PluckerCoordinates([mat[3],mat[1]]){[1..5]};
+				newmat[3] := PluckerCoordinates([mat[4],mat[1]]){[1..5]};
+				newmat[4] := -PluckerCoordinates([-mat[3],mat[2]]){[1..5]};
+				newmat[5] := PluckerCoordinates([mat[4],-mat[2]]){[1..5]};
+				newmat[1] := PluckerCoordinates([mat[2]+mat[3],mat[1]+mat[4]]){[1..5]} - newmat[2] - newmat[5];
+				return ProjElWithFrob(cq4q * newmat * cq4qinv^(frob^-1),frob,f); #base change is here.
+				return newmat;
+			end;
+	
+			twinerprefun := function( g )
+				local mat, newmat, lines, pts, ipts, ilines, e, x, ept,
+					ielines, ie, cs, iept, frob, i, j;
+				frob := g!.frob;
+				mat := cq4qinv * Unpack(g!.mat) * cq4q^(frob^-1);
+				lines:= [];
+				lines[1] := [[id[1],id[3]],[id[1],id[4]]];
+				lines[2] := [[id[2],id[3]],[id[2],id[4]]];
+				lines[3] := [[id[3],id[1]],[id[3],id[2]]];
+				lines[4] := [[id[4],id[1]],[id[4],id[2]]];
+				pts := List(lines,x->List(x,y->PluckerCoordinates(y){[1..5]}));
+				ipts := List(pts,x->x*mat);
+				for i in [1..Length(ipts)] do
+					for j in [1..2] do
+						ipts[i][j][6] := -ipts[i][j][1];
+					od;
+				od;
+				ilines := List(ipts,x->List(x,y->InversePluckerCoordinates(y)));
+				ipts := List(ilines, x->SumIntersectionMat(x[1],x[2])[2]);
+				newmat := List(ipts,x->x[1]);
+				e := [1,1,1,1]*one;
+				ept := List([[e,id[1]+id[4]],[e,id[1]+id[2]]],y->PluckerCoordinates(y){[1..5]});
+				iept := List(ept,x->x*mat);
+				iept[1][6] := -iept[1][1];
+				iept[2][6] := -iept[2][1];
 
-			ielines := List(iept,x->InversePluckerCoordinates(x));
-			ie := SumIntersectionMat(ielines[1],ielines[2])[2];
-			cs := SolutionMat(newmat,ie[1]);
-			for i in [1..4] do
-				newmat[i] := newmat[i]*cs[i];
-			od;
-			return ProjElWithFrob(newmat,g!.frob,f);
-		end;
+				ielines := List(iept,x->InversePluckerCoordinates(x));
+				ie := SumIntersectionMat(ielines[1],ielines[2])[2];
+				cs := SolutionMat(newmat,ie[1]);
+				for i in [1..4] do
+					newmat[i] := newmat[i]*cs[i];
+				od;
+				return ProjElWithFrob(newmat,g!.frob,f);
+			end;
 
-    else
+		else
 
-   		cw := BaseChangeToCanonical( SesquilinearForm(w) );
-        cwinv := cw^-1;
+			cw := BaseChangeToCanonical( SesquilinearForm(w) );
+			cwinv := cw^-1;
 
-        twinerfunc := function(g)
-            local mat,newmat,frob;
-            frob := g!.frob;
-            mat := cw * Unpack(g!.mat) * cwinv^(frob^-1);
-            newmat := [];
-            newmat[2] := PluckerCoordinates([mat[3],mat[1]]){[1..5]};
-            newmat[3] := PluckerCoordinates([mat[4],mat[1]]){[1..5]};
-            newmat[4] := -PluckerCoordinates([-mat[3],mat[2]]){[1..5]};
-            newmat[5] := PluckerCoordinates([mat[4],-mat[2]]){[1..5]};
-            newmat[1] := PluckerCoordinates([mat[2]+mat[3],mat[1]+mat[4]]){[1..5]} - newmat[2] - newmat[5];
-            return ProjElWithFrob(cq4q * newmat * cq4qinv^frob,frob,f); #base change is here.
-            return newmat;
-        end;
+			twinerfunc := function(g)
+				local mat,newmat,frob;
+				frob := g!.frob;
+				mat := cw * Unpack(g!.mat) * cwinv^(frob^-1);
+				newmat := [];
+				newmat[2] := PluckerCoordinates([mat[3],mat[1]]){[1..5]};
+				newmat[3] := PluckerCoordinates([mat[4],mat[1]]){[1..5]};
+				newmat[4] := -PluckerCoordinates([-mat[3],mat[2]]){[1..5]};
+				newmat[5] := PluckerCoordinates([mat[4],-mat[2]]){[1..5]};
+				newmat[1] := PluckerCoordinates([mat[2]+mat[3],mat[1]+mat[4]]){[1..5]} - newmat[2] - newmat[5];
+				return ProjElWithFrob(cq4q * newmat * cq4qinv^(frob^-1),frob,f); #base change is here.
+				return newmat;
+			end;
 
-        twinerprefun := function( g )
-			local mat, newmat, lines, pts, ipts, ilines, e, x, ept,
-				ielines, ie, cs, iept, frob, i, j;
-			frob := g!.frob;
-			mat := cq4qinv * Unpack(g!.mat) * cq4q^frob;
-            lines:= [];
-            lines[1] := [[id[1],id[3]],[id[1],id[4]]];
-            lines[2] := [[id[2],id[3]],[id[2],id[4]]];
-            lines[3] := [[id[3],id[1]],[id[3],id[2]]];
-            lines[4] := [[id[4],id[1]],[id[4],id[2]]];
-            pts := List(lines,x->List(x,y->PluckerCoordinates(y){[1..5]}));
-            ipts := List(pts,x->x*mat);
-            for i in [1..Length(ipts)] do
-                for j in [1..2] do
-                    ipts[i][j][6] := -ipts[i][j][1];
-                od;
-            od;
-            ilines := List(ipts,x->List(x,y->InversePluckerCoordinates(y)));
-            ipts := List(ilines, x->SumIntersectionMat(x[1],x[2])[2]);
-            newmat := List(ipts,x->x[1]);
-			e := [1,1,1,1]*one;
-			ept := List([[e,id[1]+id[4]],[e,id[1]+id[2]]],y->PluckerCoordinates(y){[1..5]});
-			iept := List(ept,x->x*mat);
-            iept[1][6] := -iept[1][1];
-            iept[2][6] := -iept[2][1];
-
-			ielines := List(iept,x->InversePluckerCoordinates(x));
-			ie := SumIntersectionMat(ielines[1],ielines[2])[2];
-			cs := SolutionMat(newmat,ie[1]);
-			for i in [1..4] do
-				newmat[i] := newmat[i]*cs[i];
-			od;
-			return ProjElWithFrob(cwinv * newmat * cw^frob,g!.frob,f);
-		end;
-
-    fi;
-
-	if computeintertwiner then
-		coll1 := CollineationGroup(w);
-		gens1 := GeneratorsOfGroup(coll1);
-		gens2 := List(gens1, twinerfunc);
-		coll2 := GroupWithGenerators(gens2);
-		hom := GroupHomomorphismByFunction(coll1, coll2, twinerfunc, twinerprefun);
-		SetIntertwiner( map, hom );
+			twinerprefun := function( g )
+				local mat, newmat, lines, pts, ipts, ilines, e, x, ept,
+					ielines, ie, cs, iept, frob, i, j;
+				frob := g!.frob;
+				mat := cq4qinv * Unpack(g!.mat) * cq4q^(frob^-1);
+				lines:= [];
+				lines[1] := [[id[1],id[3]],[id[1],id[4]]];
+				lines[2] := [[id[2],id[3]],[id[2],id[4]]];
+				lines[3] := [[id[3],id[1]],[id[3],id[2]]];
+				lines[4] := [[id[4],id[1]],[id[4],id[2]]];
+				pts := List(lines,x->List(x,y->PluckerCoordinates(y){[1..5]}));
+				ipts := List(pts,x->x*mat);
+				for i in [1..Length(ipts)] do
+					for j in [1..2] do
+						ipts[i][j][6] := -ipts[i][j][1];
+					od;
+				od;
+				ilines := List(ipts,x->List(x,y->InversePluckerCoordinates(y)));
+				ipts := List(ilines, x->SumIntersectionMat(x[1],x[2])[2]);
+				newmat := List(ipts,x->x[1]);
+				e := [1,1,1,1]*one;
+				ept := List([[e,id[1]+id[4]],[e,id[1]+id[2]]],y->PluckerCoordinates(y){[1..5]});
+				iept := List(ept,x->x*mat);
+				iept[1][6] := -iept[1][1];
+				iept[2][6] := -iept[2][1];
+	
+				ielines := List(iept,x->InversePluckerCoordinates(x));
+				ie := SumIntersectionMat(ielines[1],ielines[2])[2];
+				cs := SolutionMat(newmat,ie[1]);
+				for i in [1..4] do
+					newmat[i] := newmat[i]*cs[i];
+				od;
+				return ProjElWithFrob(cwinv * newmat * cw^(frob^-1),g!.frob,f);
+			end;
+		fi;
+		if not reverse then		
+			data.twinerfunc := twinerfunc;
+			data.twinerprefun := twinerprefun;
+		else
+			data.twinerfunc := twinerprefun;
+			data.twinerprefun := twinerfunc;
+		fi;
 	fi;
 	
-    return map;
+    return data;
  end );
 
 # Added april 2014. jdb
 #############################################################################
-#O  NaturalDualityHermitian( <h>, <q5q> )
+#O  NaturalDualityHermitian( <h>, <q5q>, <computeintertwiner>, <reverse> )
 # returns the well known isomorphism between H(3,q^2) and Q-(5,q). 
 # Both polar spaces may be user defined. 
 # Setup: - Plucker Coordinates map lines of PG(3,q^2) on points of Q+(5,q^2): X0X5+X1X4+X2X3 = 0
@@ -3106,8 +3115,8 @@ InstallMethod( NaturalDualitySymplectic,
 ##
 InstallMethod( NaturalDualityHermitian,
 	"for H(3,q^2) and Q-(5,q)",
-	[ IsClassicalGQ,  IsClassicalGQ, IsBool ],
-	function( h, q5q, computeinterwiner )
+	[ IsClassicalGQ,  IsClassicalGQ, IsBool, IsBool ],
+	function( h, q5q, computeintertwiner, reverse )
     ## The way this works is that we map the lines of h to the canonical H(3,q^2),
     ## which Klein corresponds to points of Q+(5,q^2) using the usual plucker map.
     ## This subgeometry is then mapped to PG(5,q), where we can associate it to
@@ -3117,7 +3126,7 @@ InstallMethod( NaturalDualityHermitian,
     #      func, pre, i, map, e, ps, form, iso2;
     
     local f, frob, q, one, alpha, e, mat1, mat2, i, form_quadric, c1, c2, cq5q,
-            func, pre, map, x, xinv, formh, ch, chinv, bmat, delta, basis, twinerfunc,
+            func, pre, data, x, xinv, formh, ch, chinv, bmat, delta, basis, twinerfunc,
             twinerprefun, coll1,coll2, gens1, gens2, cq5qinv, hom, id, id6, special, theta;
 
     f := h!.basefield;
@@ -3242,286 +3251,319 @@ InstallMethod( NaturalDualityHermitian,
 
     fi;
 
-    map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(h), ElementsOfIncidenceStructure(q5q), func, pre);
-    SetIsBijective( map, true );
+    #map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(h), ElementsOfIncidenceStructure(q5q), func, pre);
+    #SetIsBijective( map, true );
 
-    id := IdentityMat(4,f);
-    id6 := IdentityMat(6,f);
-    special := List([1..6],i->id6[7-i]);
-    i := Log(q,Characteristic(f));
-    theta := FrobeniusAutomorphism(f)^i;
-
-    if IsCanonicalPolarSpace( h ) then
-        twinerfunc := function(g)
-            local mat,newmat,frob,newmat2,n,frob2,j,arg;
-            frob := g!.frob;
-            mat := Unpack(g!.mat);
-            newmat := [];
-            newmat[1] := PluckerCoordinates([mat[2],mat[1]]);
-            newmat[2] := PluckerCoordinates([mat[3],mat[1]]);
-            newmat[3] := PluckerCoordinates([mat[4],mat[1]]);
-            newmat[4] := PluckerCoordinates([mat[3],mat[2]]);
-            newmat[5] := PluckerCoordinates([mat[4],-mat[2]]);
-            newmat[6] := -PluckerCoordinates([-mat[4],mat[3]]);
-            newmat2 :=  xinv*newmat*x^(frob^-1);
-            n := First(newmat2[1],x->not IsZero(x));
-            newmat2 := newmat2/n;
-            if not IsOne(frob) then
-                j := Log(frob!.power,Characteristic(f));
-            else
-                j := 0;
-            fi;
-            frob2 := FrobeniusAutomorphism(GF(q))^(j mod q);
-            arg := cq5q * newmat2 * cq5qinv^(frob2^-1);
-            ConvertToMatrixRep(arg);
-            return ProjElWithFrob(arg,frob2,GF(q));
-        end;
-
-		twinerprefun := function( g )
-			local mat, newmat, lines, pts, ipts, ilines, e, ept,
-				ielines, ie, cs, iept, frob, frob2, j, n, switch;
-			frob := g!.frob;
-            #first setup the frobenius automorphism over GF(q^2)=f.
-            if not IsOne(frob) then
-                j := Log(frob!.power,Characteristic(f));
-            else
-                j := 0;
-            fi;
-            frob2 := FrobeniusAutomorphism(f)^j;
-            #base change. Note that frob is used to change from different Q-(5,q)'s, frob2 for Q-(5,q) -> Q+(5,q^2)
-			mat := x * (cq5qinv * Unpack(g!.mat) * cq5q^(frob^-1) ) * xinv^(frob2^-1);      #base change is here.
-            #now from Q+(5,q^2) to H(3,q^2).
-            lines:= [];
-			pts := [];
-            ipts := [];
-            ilines := [];
-            lines[1] := [[id[1],id[2]],[id[1],id[3]],[id[1],id[4]]];
-            pts[1] := List(lines[1],y->PluckerCoordinates(y));
-            ipts[1] := (pts[1]*mat);
-            ilines[1] := List(ipts[1],y->InversePluckerCoordinates(y));
-            switch := theta^0;
-            if Rank(Union(ilines[1])) = 3 then
-                #Print("switch\n");
-                mat := (mat^theta) * special;
-                frob2 := frob2 * theta;
-                switch := theta;
-            fi;
-            n := First(mat[1],x->not IsZero(x));
-            mat := mat/n;
-   			lines[1] := [[id[1],id[2]],[id[1],id[3]]];
-			lines[2] := [[id[2],id[3]],[id[2],id[4]]];
-			lines[3] := [[id[3],id[4]],[id[3],id[1]]];
-			lines[4] := [[id[4],id[1]],[id[4],id[2]]];
-			pts := List(lines,x->List(x,y->PluckerCoordinates(y)));
-			ipts := List(pts,x->(x*mat)^switch);
-   			#ipts := List(pts,x->(x*mat));
-			ilines := List(ipts,x->List(x,y->InversePluckerCoordinates(y)));
-			ipts := List(ilines, x->SumIntersectionMat(x[1],x[2])[2]);
-			newmat := List(ipts,x->x[1]);
-			e := [1,1,1,1]*one;
-			ept := List([[e,id[1]],[e,id[2]]],y->PluckerCoordinates(y));
-			iept := List(ept,x->(x*mat)^switch);
-			#iept := List(ept,x->(x*mat));
-			ielines := List(iept,x->InversePluckerCoordinates(x));
-			ie := SumIntersectionMat(ielines[1],ielines[2])[2];
-			cs := SolutionMat(newmat,ie[1]);
-			for i in [1..4] do
-				newmat[i] := newmat[i]*cs[i];
-			od;
-			return ProjElWithFrob(newmat,frob2,f);
-		end;
-
-    else
-
-  		ch := BaseChangeToCanonical( SesquilinearForm(h) );
-        chinv := ch^-1;
-        
-        twinerfunc := function(g)
-            local mat,newmat,frob,newmat2,n,frob2,j,arg;
-            frob := g!.frob;
-            mat := ch * Unpack(g!.mat) * chinv^(frob^-1);
-            newmat := [];
-            newmat[1] := PluckerCoordinates([mat[2],mat[1]]);
-            newmat[2] := PluckerCoordinates([mat[3],mat[1]]);
-            newmat[3] := PluckerCoordinates([mat[4],mat[1]]);
-            newmat[4] := PluckerCoordinates([mat[3],mat[2]]);
-            newmat[5] := PluckerCoordinates([mat[4],-mat[2]]);
-            newmat[6] := -PluckerCoordinates([-mat[4],mat[3]]);
-            newmat2 :=  xinv*newmat*x^(frob^-1);
-            n := First(newmat2[1],x->not IsZero(x));
-            newmat2 := newmat2/n;
-            if not IsOne(frob) then
-                j := Log(frob!.power,Characteristic(f));
-            else
-                j := 0;
-            fi;
-            frob2 := FrobeniusAutomorphism(GF(q))^(j mod q);
-            arg := ShallowCopy(cq5q * newmat2 * cq5qinv^(frob2^-1));
-            ConvertToMatrixRep(arg);
-            return ProjElWithFrob(arg,frob2,GF(q));
-        end;
-
-		twinerprefun := function( g )
-			local mat, newmat, lines, pts, ipts, ilines, e, ept,
-				ielines, ie, cs, iept, frob, frob2, j, n, switch;
-			frob := g!.frob;
-            #first setup the frobenius automorphism over GF(q^2)=f.
-            if not IsOne(frob) then
-                j := Log(frob!.power,Characteristic(f));
-            else
-                j := 0;
-            fi;
-            frob2 := FrobeniusAutomorphism(f)^j;
-            #base change. Note that frob is used to change from different Q-(5,q)'s, frob2 for Q-(5,q) -> Q+(5,q^2)
-			mat := x * (cq5qinv * Unpack(g!.mat) * cq5q^(frob^-1) ) * xinv^(frob2^-1);      #base change is here.
-            #now from Q+(5,q^2) to H(3,q^2).
-            lines:= [];
-			pts := [];
-            ipts := [];
-            ilines := [];
-            lines[1] := [[id[1],id[2]],[id[1],id[3]],[id[1],id[4]]];
-            pts[1] := List(lines[1],y->PluckerCoordinates(y));
-            ipts[1] := (pts[1]*mat);
-            ilines[1] := List(ipts[1],y->InversePluckerCoordinates(y));
-            switch := theta^0;
-            if Rank(Union(ilines[1])) = 3 then
-                #Print("switch\n");
-                mat := (mat^theta) * special;
-                frob2 := frob2 * theta;
-                switch := theta;
-            fi;
-            n := First(mat[1],x->not IsZero(x));
-            mat := mat/n;
-   			lines[1] := [[id[1],id[2]],[id[1],id[3]]];
-			lines[2] := [[id[2],id[3]],[id[2],id[4]]];
-			lines[3] := [[id[3],id[4]],[id[3],id[1]]];
-			lines[4] := [[id[4],id[1]],[id[4],id[2]]];
-			pts := List(lines,x->List(x,y->PluckerCoordinates(y)));
-			ipts := List(pts,x->(x*mat)^switch);
-   			#ipts := List(pts,x->(x*mat));
-			ilines := List(ipts,x->List(x,y->InversePluckerCoordinates(y)));
-			ipts := List(ilines, x->SumIntersectionMat(x[1],x[2])[2]);
-			newmat := List(ipts,x->x[1]);
-			e := [1,1,1,1]*one;
-			ept := List([[e,id[1]],[e,id[2]]],y->PluckerCoordinates(y));
-			iept := List(ept,x->(x*mat)^switch);
-			#iept := List(ept,x->(x*mat));
-			ielines := List(iept,x->InversePluckerCoordinates(x));
-			ie := SumIntersectionMat(ielines[1],ielines[2])[2];
-			cs := SolutionMat(newmat,ie[1]);
-			for i in [1..4] do
-				newmat[i] := newmat[i]*cs[i];
-			od;
-			return ProjElWithFrob(chinv * newmat * ch^(frob2^-1),frob2,f);
-		end;
-
-    fi;
-    
-   	if computeinterwiner then
-		coll1 := CollineationGroup(h);
-		gens1 := GeneratorsOfGroup(coll1);
-		gens2 := List(gens1, twinerfunc);
-		coll2 := GroupWithGenerators(gens2);
-		hom := GroupHomomorphismByFunction(coll1, coll2, twinerfunc, twinerprefun);
-		SetIntertwiner( map, hom );
+	if not reverse then
+		data := rec( func := func, pre := pre);
+	else
+		data := rec( func := pre, pre := func);
 	fi;
+   	
+	if computeintertwiner then
+		id := IdentityMat(4,f);
+		id6 := IdentityMat(6,f);
+		special := List([1..6],i->id6[7-i]);
+		i := Log(q,Characteristic(f));
+		theta := FrobeniusAutomorphism(f)^i;
 
-    return map;
-end );
+		if IsCanonicalPolarSpace( h ) then
+			twinerfunc := function(g)
+				local mat,newmat,frob,newmat2,n,frob2,j,arg;
+				frob := g!.frob;
+				mat := Unpack(g!.mat);
+				newmat := [];
+				newmat[1] := PluckerCoordinates([mat[2],mat[1]]);
+				newmat[2] := PluckerCoordinates([mat[3],mat[1]]);
+				newmat[3] := PluckerCoordinates([mat[4],mat[1]]);
+				newmat[4] := PluckerCoordinates([mat[3],mat[2]]);
+				newmat[5] := PluckerCoordinates([mat[4],-mat[2]]);
+				newmat[6] := -PluckerCoordinates([-mat[4],mat[3]]);
+				newmat2 :=  xinv*newmat*x^(frob^-1);
+				n := First(newmat2[1],x->not IsZero(x));
+				newmat2 := newmat2/n;
+				if not IsOne(frob) then
+					j := Log(frob!.power,Characteristic(f));
+				else
+					j := 0;
+				fi;
+				frob2 := FrobeniusAutomorphism(GF(q))^(j mod q);
+				arg := cq5q * newmat2 * cq5qinv^(frob2^-1);
+				ConvertToMatrixRep(arg);
+				return ProjElWithFrob(arg,frob2,GF(q));
+			end;
 
-# Added april 2014. jdb
-#############################################################################
-#O  NaturalDualityParabolic( <q4q>, <w> )
-# returns the well known isomorphism between Q(4,q) and W(3,q).
-# First the duality between the given W(3,q), and Q(4,q) is computed using
-# NaturalDualitySymplectic, then simple its fun and prefun are swapped.
-# Except for the filters, there is not real check whether the input the correct GQ.
-#############################################################################
-##
-InstallMethod( NaturalDualityParabolic,
-	"for a GQ and a GQ",
-	[ IsClassicalGQ, IsClassicalGQ ],
-	function( q4q, w )
-	local em, map;
-	em := NaturalDualitySymplectic(w,q4q);
-    map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(q4q), ElementsOfIncidenceStructure(w), em!.prefun, em!.fun);
-    SetIsBijective( map, true );
-    return map;
-end );
+			twinerprefun := function( g )
+				local mat, newmat, lines, pts, ipts, ilines, e, ept,
+					ielines, ie, cs, iept, frob, frob2, j, n, switch;
+					frob := g!.frob;
+				#first setup the frobenius automorphism over GF(q^2)=f.
+				if not IsOne(frob) then
+					j := Log(frob!.power,Characteristic(f));
+				else
+					j := 0;
+				fi;
+				frob2 := FrobeniusAutomorphism(f)^j;
+				#base change. Note that frob is used to change from different Q-(5,q)'s, frob2 for Q-(5,q) -> Q+(5,q^2)
+				mat := x * (cq5qinv * Unpack(g!.mat) * cq5q^(frob^-1) ) * xinv^(frob2^-1);      #base change is here.
+				#now from Q+(5,q^2) to H(3,q^2).
+				lines:= [];
+				pts := [];
+				ipts := [];
+				ilines := [];
+				lines[1] := [[id[1],id[2]],[id[1],id[3]],[id[1],id[4]]];
+				pts[1] := List(lines[1],y->PluckerCoordinates(y));
+				ipts[1] := (pts[1]*mat);
+				ilines[1] := List(ipts[1],y->InversePluckerCoordinates(y));
+				switch := theta^0;
+				if Rank(Union(ilines[1])) = 3 then
+					#Print("switch\n");
+					mat := (mat^theta) * special;
+					frob2 := frob2 * theta;
+					switch := theta;
+				fi;
+				n := First(mat[1],x->not IsZero(x));
+				mat := mat/n;
+				lines[1] := [[id[1],id[2]],[id[1],id[3]]];
+				lines[2] := [[id[2],id[3]],[id[2],id[4]]];
+				lines[3] := [[id[3],id[4]],[id[3],id[1]]];
+				lines[4] := [[id[4],id[1]],[id[4],id[2]]];
+				pts := List(lines,x->List(x,y->PluckerCoordinates(y)));
+				ipts := List(pts,x->(x*mat)^switch);
+				#ipts := List(pts,x->(x*mat));
+				ilines := List(ipts,x->List(x,y->InversePluckerCoordinates(y)));
+				ipts := List(ilines, x->SumIntersectionMat(x[1],x[2])[2]);
+				newmat := List(ipts,x->x[1]);
+				e := [1,1,1,1]*one;
+				ept := List([[e,id[1]],[e,id[2]]],y->PluckerCoordinates(y));
+				iept := List(ept,x->(x*mat)^switch);
+				#iept := List(ept,x->(x*mat));
+				ielines := List(iept,x->InversePluckerCoordinates(x));
+				ie := SumIntersectionMat(ielines[1],ielines[2])[2];
+				cs := SolutionMat(newmat,ie[1]);
+				for i in [1..4] do
+					newmat[i] := newmat[i]*cs[i];
+				od;
+				return ProjElWithFrob(newmat,frob2,f);
+			end;
 
-# Added april 2014. jdb
-#############################################################################
-#O  NaturalDualityElliptic( <q4q>, <w> )
-# returns the well known isomorphism between Q-(5,q) and H(3,q^2).
-# First the duality between the given Q-(5,q), and H(3,q^2) is computed using
-# NaturalDualityHermitian, then simple its fun and prefun are swapped.
-# Except for the filters, there is not real check whether the input the correct GQ.
-#############################################################################
-##
-InstallMethod( NaturalDualityElliptic,
-	"for a GQ and a GQ",
-	[ IsClassicalGQ, IsClassicalGQ ],
-	function( q5q, h )
-	local em, map;
-	em := NaturalDualityHermitian(h,q5q);
-    map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(q5q), ElementsOfIncidenceStructure(h), em!.prefun, em!.fun);
-    SetIsBijective( map, true );
-    return map;
+		else
+
+			ch := BaseChangeToCanonical( SesquilinearForm(h) );
+			chinv := ch^-1;
+        
+			twinerfunc := function(g)
+				local mat,newmat,frob,newmat2,n,frob2,j,arg;
+				frob := g!.frob;
+				mat := ch * Unpack(g!.mat) * chinv^(frob^-1);
+				newmat := [];
+				newmat[1] := PluckerCoordinates([mat[2],mat[1]]);
+				newmat[2] := PluckerCoordinates([mat[3],mat[1]]);
+				newmat[3] := PluckerCoordinates([mat[4],mat[1]]);
+				newmat[4] := PluckerCoordinates([mat[3],mat[2]]);
+				newmat[5] := PluckerCoordinates([mat[4],-mat[2]]);
+				newmat[6] := -PluckerCoordinates([-mat[4],mat[3]]);
+				newmat2 :=  xinv*newmat*x^(frob^-1);
+				n := First(newmat2[1],x->not IsZero(x));
+				newmat2 := newmat2/n;
+				if not IsOne(frob) then
+					j := Log(frob!.power,Characteristic(f));
+				else
+					j := 0;
+				fi;
+				frob2 := FrobeniusAutomorphism(GF(q))^(j mod q);
+				arg := ShallowCopy(cq5q * newmat2 * cq5qinv^(frob2^-1));
+				ConvertToMatrixRep(arg);
+				return ProjElWithFrob(arg,frob2,GF(q));
+			end;
+
+			twinerprefun := function( g )
+				local mat, newmat, lines, pts, ipts, ilines, e, ept,
+					ielines, ie, cs, iept, frob, frob2, j, n, switch;
+				frob := g!.frob;
+				#first setup the frobenius automorphism over GF(q^2)=f.
+				if not IsOne(frob) then
+					j := Log(frob!.power,Characteristic(f));
+				else
+					j := 0;
+				fi;
+				frob2 := FrobeniusAutomorphism(f)^j;
+				#base change. Note that frob is used to change from different Q-(5,q)'s, frob2 for Q-(5,q) -> Q+(5,q^2)
+				mat := x * (cq5qinv * Unpack(g!.mat) * cq5q^(frob^-1) ) * xinv^(frob2^-1);      #base change is here.
+				#now from Q+(5,q^2) to H(3,q^2).
+				lines:= [];
+				pts := [];
+				ipts := [];
+				ilines := [];
+				lines[1] := [[id[1],id[2]],[id[1],id[3]],[id[1],id[4]]];
+				pts[1] := List(lines[1],y->PluckerCoordinates(y));
+				ipts[1] := (pts[1]*mat);
+				ilines[1] := List(ipts[1],y->InversePluckerCoordinates(y));
+				switch := theta^0;
+				if Rank(Union(ilines[1])) = 3 then
+					#Print("switch\n");
+					mat := (mat^theta) * special;
+					frob2 := frob2 * theta;
+					switch := theta;
+				fi;
+				n := First(mat[1],x->not IsZero(x));
+				mat := mat/n;
+				lines[1] := [[id[1],id[2]],[id[1],id[3]]];
+				lines[2] := [[id[2],id[3]],[id[2],id[4]]];
+				lines[3] := [[id[3],id[4]],[id[3],id[1]]];
+				lines[4] := [[id[4],id[1]],[id[4],id[2]]];
+				pts := List(lines,x->List(x,y->PluckerCoordinates(y)));
+				ipts := List(pts,x->(x*mat)^switch);
+				#ipts := List(pts,x->(x*mat));
+				ilines := List(ipts,x->List(x,y->InversePluckerCoordinates(y)));
+				ipts := List(ilines, x->SumIntersectionMat(x[1],x[2])[2]);
+				newmat := List(ipts,x->x[1]);
+				e := [1,1,1,1]*one;
+				ept := List([[e,id[1]],[e,id[2]]],y->PluckerCoordinates(y));
+				iept := List(ept,x->(x*mat)^switch);
+				#iept := List(ept,x->(x*mat));
+				ielines := List(iept,x->InversePluckerCoordinates(x));
+				ie := SumIntersectionMat(ielines[1],ielines[2])[2];
+				cs := SolutionMat(newmat,ie[1]);
+				for i in [1..4] do
+					newmat[i] := newmat[i]*cs[i];
+				od;
+				return ProjElWithFrob(chinv * newmat * ch^(frob2^-1),frob2,f);
+			end;
+
+		fi;
+		if not reverse then		
+			data.twinerfunc := twinerfunc;
+			data.twinerprefun := twinerprefun;
+		else
+			data.twinerfunc := twinerprefun;
+			data.twinerprefun := twinerfunc;
+		fi;
+    fi;
+
+	return data;
+	
 end );
 
 # Added april 2014 jdb.
 #############################################################################
-#O  NaturalDuality( <gq1>, <gq2> )
+#O  NaturalDuality( <gq1>, <gq2>, <bool> )
 # This is the interface to the helper functions. It simply checks the input 
 # and decides which NaturalDuality... to use.
 ##
 InstallMethod( NaturalDuality,
 	"for a GQ and a GQ",
-	[ IsClassicalGQ, IsClassicalGQ ],
-	function( gq1, gq2 )
+	[ IsClassicalGQ, IsClassicalGQ, IsBool ],
+	function( gq1, gq2, computeintertwiner )
+	local bf1,bf2,data, coll1,coll2,gens1,gens2, map, hom;
+	bf1 := gq1!.basefield;
+	bf2 := gq2!.basefield;
     if IsSymplecticSpace( gq1 ) and IsParabolicQuadric( gq2 ) then
-        return NaturalDualitySymplectic( gq1, gq2 );
-    elif (IsHermitianPolarSpace( gq1 ) and Dimension( gq1 ) = 3) and IsEllipticQuadric( gq2) then
-        return NaturalDualityHermitian( gq1, gq2 );
+        if bf1 <> bf2 then
+			Error("<gq1> and <gq2> have a different base field");
+		fi;
+		data := NaturalDualitySymplectic( gq1, gq2, computeintertwiner, false);
+	elif (IsHermitianPolarSpace( gq1 ) and Dimension( gq1 ) = 3) and IsEllipticQuadric( gq2) then
+		if Size(bf1) <> Size(bf2)^2 then
+			Error("base field of <gq1> must have order the square of the base field of <gq2>");
+		fi;
+		data := NaturalDualityHermitian( gq1, gq2, computeintertwiner, false);
     elif IsParabolicQuadric( gq1 ) and IsSymplecticSpace( gq2 ) then
-        return NaturalDualityParabolic( gq1, gq2 );
-	elif IsEllipticQuadric( gq1 ) and (IsHermitianPolarSpace( gq2 ) and Dimension( gq2 ) = 3)then
-        return NaturalDualityElliptic( gq1, gq2 );
+        if bf1 <> bf2 then
+			Error("<gq1> and <gq2> have a different base field");
+		fi;
+		data := NaturalDualitySymplectic( gq2, gq1, computeintertwiner, true);
+	elif IsEllipticQuadric( gq1 ) and (IsHermitianPolarSpace( gq2 ) and Dimension( gq2 ) = 3) then
+		if Size(bf1^2) <> Size(bf2) then
+			Error("base field of <gq2> must have order the square of the base field of <gq1>");
+		fi;
+		data := NaturalDualityHermitian( gq2, gq1, computeintertwiner, true);
 	else
         Error("no duality possible between <gq1> and <gq2>");
     fi;
+	map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(gq1), ElementsOfIncidenceStructure(gq2),
+					data.func, data.pre);
+	SetIsBijective( map, true );
+    if computeintertwiner then
+        if (HasIsCanonicalPolarSpace( gq1 ) and IsCanonicalPolarSpace( gq1 )) or
+            HasCollineationGroup( gq1 ) then
+			coll1 := CollineationGroup(gq1);
+			gens1 := GeneratorsOfGroup( coll1 );
+			gens2 := List(gens1, data.twinerfunc);
+			coll2 := GroupWithGenerators(gens2);
+			hom := GroupHomomorphismByFunction(coll1, coll2, data.twinerfunc, data.twinerprefun);
+			SetIntertwiner( map, hom );
+			UseIsomorphismRelation(coll1,coll2);
+        elif (HasIsCanonicalPolarSpace( gq2 ) and IsCanonicalPolarSpace( gq2 )) or
+			HasCollineationGroup( gq2 ) then
+			coll2 := CollineationGroup( gq2 );
+			gens2 := GeneratorsOfGroup( coll2 );
+			gens1 := List(gens2, data.twinerprefun );
+			coll1 := GroupWithGenerators(gens1);
+			hom := GroupHomomorphismByFunction(coll1, coll2, data.twinerfunc, data.twinerprefun);
+			SetIntertwiner( map, hom );
+			UseIsomorphismRelation(coll1,coll2);
+		else
+			Info(InfoFinInG, 1, "No intertwiner computed. One of the polar spaces must have a collineation group computed");
+		fi;
+    fi;
+
+	return map;
 end );
-	
-# Added april 2014 jdb.
+
+# Added may 2014 jdb.
 #############################################################################
-#O  NaturalDuality( <gq1> )
+#O  NaturalDuality( <gq1>, <gq2> )
+# returns NaturalDuality( <gq1>, <gq2>, true)
+##
+InstallMethod( NaturalDuality,
+	"for a GQ and a GQ",
+	[ IsClassicalGQ, IsClassicalGQ ],
+	function(gq1,gq2)
+		return NaturalDuality(gq1,gq2,true);
+	end);
+
+# Added may 2014 jdb.
+#############################################################################
+#O  NaturalDuality( <gq1>, <computeintertwiner> )
 # This is the interface to the helper functions. It simply checks the input 
 # and decides which NaturalDuality... to use.
 ##
 InstallMethod( NaturalDuality,
 	"for a GQ and a GQ",
-	[ IsClassicalGQ ],
-	function( gq1 )
+	[ IsClassicalGQ, IsBool ],
+	function( gq1, computeintertwiner )
 	local q;
     if IsSymplecticSpace( gq1 ) then
-        return NaturalDualitySymplectic( gq1, ParabolicQuadric(4, BaseField(gq1)) ) ;
+        return NaturalDuality( gq1, ParabolicQuadric(4, BaseField(gq1)), computeintertwiner ) ;
     elif (IsHermitianPolarSpace( gq1 ) and Dimension( gq1 ) = 3) then
         q := Sqrt(Size(BaseField(gq1)));
-		return NaturalDualityHermitian( gq1, EllipticQuadric(5,GF(q)) );
+		return NaturalDuality( gq1, EllipticQuadric(5,GF(q)), computeintertwiner );
     elif IsParabolicQuadric( gq1 ) then
-		return NaturalDualityParabolic( gq1, SymplecticSpace(3, BaseField(gq1) ) );
+		return NaturalDuality( gq1, SymplecticSpace(3, BaseField(gq1), computeintertwiner ) );
 	elif IsEllipticQuadric( gq1 ) then
 		q := Size(BaseField(gq1));
-		return NaturalDualityElliptic( gq1, HermitianPolarSpace(3, q^2));
+		return NaturalDuality( gq1, HermitianPolarSpace(3, q^2), computeintertwiner);
 	else
         Error("no duality possible on <gq1>");
     fi;
     end );
 
+# Added may 2014 jdb.
+#############################################################################
+#O  NaturalDuality( <gq1> )
+# returns NaturalDuality( <gq1>, true)
+##
+InstallMethod( NaturalDuality,
+	"for a GQ and a GQ",
+	[ IsClassicalGQ, IsClassicalGQ ],
+	function(gq1,gq2)
+		return NaturalDuality(gq1,true);
+	end);
 
 #############################################################################
 #
-# Self-Dualities between W(q) and Q(4,q) (q even).
+# Q(2n,q) -> W(2n-1,q) (q even).
 #
 #############################################################################
 
@@ -3618,15 +3660,15 @@ InstallMethod( IsomorphismPolarSpacesProjectionFromNucleus,
 		local mat,frob;
 		frob := el!.frob;
 		#mat := Unpack(el!.mat){[2..n]}{[2..n]};
-		mat := cquadric * Unpack(el!.mat) * cquadricinv^frob;
+		mat := cquadric * Unpack(el!.mat) * cquadricinv^(frob^-1);
 		mat := mat{[2..n]}{[2..n]};
-		return ProjElWithFrob(cwinv * mat * cw^frob,frob,f);
+		return ProjElWithFrob(cwinv * mat * cw^(frob^-1),frob,f);
 	end;
 	
 	twinerprefun := function( el )
 		local newmat,mat,frob,i,vec,y,newvec,z,zprime;
 		frob := el!.frob;
-		mat := cw * Unpack(el!.mat) * cwinv^frob;
+		mat := cw * Unpack(el!.mat) * cwinv^(frob^-1);
 		#mat := Unpack(el!.mat);
 		newmat := NullMat(n,n,f);
 		newmat{[2..n]}{[2..n]} := mat;
@@ -3657,7 +3699,7 @@ InstallMethod( IsomorphismPolarSpacesProjectionFromNucleus,
             newmat[1][1] := one;
         fi;
 
-		return ProjElWithFrob(cquadricinv * newmat * cquadric^frob, frob, f);
+		return ProjElWithFrob(cquadricinv * newmat * cquadric^(frob^-1), frob, f);
 		#return ProjElWithFrob( newmat , frob, f);
 	end;
 

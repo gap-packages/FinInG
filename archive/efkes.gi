@@ -526,13 +526,13 @@ qform := QuadraticFormByMatrix(nqmat,GF(q));
 q4q := PolarSpace(qform);
 
 mat := [[0,1,0,0],[-1,0,0,0],[0,0,0,-1],[0,0,1,0]]*Z(q)^0;
-wform := BilinearFormByMatrix(mat,GF(q^2));
+wform := BilinearFormByMatrix(mat,GF(q));
 w := PolarSpace(wform);
-em := NaturalDualityHermitian(w,q4q,true);
+em := NaturalDualitySymplectic(w,q4q,true);
 hom := Intertwiner(em);
 
-pts := AsList(Points(q5q));
-group := CollineationGroup(q5q);
+pts := AsList(Points(q4q));
+group := CollineationGroup(q4q);
 gens := GeneratorsOfGroup(group);
 
 List(gens,g->Collected(List(pts,x->PreImageElm(em,x^g)=PreImageElm(em,x)^(PreImageElm(hom,g)))));
@@ -544,8 +544,8 @@ od;
 List(rand,g->Collected(List(pts,x->PreImageElm(em,x^g)=PreImageElm(em,x)^(PreImageElm(hom,g)))));
 
 
-lines := AsList(Lines(herm));
-group := CollineationGroup(herm);
+lines := AsList(Lines(w));
+group := CollineationGroup(w);
 gens := GeneratorsOfGroup(group);
 
 List(gens,g->Collected(List(lines,x->(x^g)^em = (x^em)^(g^hom))));
@@ -556,4 +556,115 @@ Add(rand,Random(group));
 od;
 List(rand,g->Collected(List(lines,x->(x^g)^em = (x^em)^(g^hom))));
 
+################
+more testing
+################
+
+q := 8;
+
+ps1 := ParabolicQuadric(4,q);
+ps2 := SymplecticSpace(3,q);
+
+pts := AsList(Points(ps1));
+
+group := CollineationGroup(ps1);
+gens := GeneratorsOfGroup(group);
+
+em := NaturalDuality(ps1,ps2);
+hom := Intertwiner(em);
+
+List(gens,g->Collected(List(pts,x->(x^g)^em = (x^em)^(g^hom))));
+
+ps1 := EllipticQuadric(5,q);
+ps2 := HermitianPolarSpace(3,q^2);
+
+pts := AsList(Points(ps1));
+pts := AsList(Lines(ps1));
+
+group := CollineationGroup(ps1);
+gens := GeneratorsOfGroup(group);
+
+em := NaturalDuality(ps1,ps2);
+hom := Intertwiner(em);
+
+List(gens,g->Collected(List(pts,x->(x^g)^em = (x^em)^(g^hom))));
+
+#overschot
+
+# Added april 2014. jdb
+#############################################################################
+#O  NaturalDualityParabolic( <q4q>, <w> )
+# returns the well known isomorphism between Q(4,q) and W(3,q).
+# First the duality between the given W(3,q), and Q(4,q) is computed using
+# NaturalDualitySymplectic, then simple its fun and prefun are swapped.
+# Except for the filters, there is not real check whether the input the correct GQ.
+#############################################################################
+##
+InstallMethod( NaturalDualityParabolic,
+	"for a GQ and a GQ",
+	[ IsClassicalGQ, IsClassicalGQ ],
+	function( q4q, w )
+	local em, map;
+	em := NaturalDualitySymplectic(w,q4q);
+    map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(q4q), ElementsOfIncidenceStructure(w), em!.prefun, em!.fun);
+    SetIsBijective( map, true );
+    return map;
+end );
+
+# Added april 2014. jdb
+#############################################################################
+#O  NaturalDualityElliptic( <q4q>, <w> )
+# returns the well known isomorphism between Q-(5,q) and H(3,q^2).
+# First the duality between the given Q-(5,q), and H(3,q^2) is computed using
+# NaturalDualityHermitian, then simple its fun and prefun are swapped.
+# Except for the filters, there is not real check whether the input the correct GQ.
+#############################################################################
+##
+InstallMethod( NaturalDualityElliptic,
+	"for a GQ and a GQ",
+	[ IsClassicalGQ, IsClassicalGQ ],
+	function( q5q, h )
+	local em, map;
+	em := NaturalDualityHermitian(h,q5q);
+    map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(q5q), ElementsOfIncidenceStructure(h), em!.prefun, em!.fun);
+    SetIsBijective( map, true );
+    return map;
+end );
+
+# Added april 2014 jdb.
+#############################################################################
+#O  NaturalDuality( <gq1>, <gq2>, <bool> )
+# This is the interface to the helper functions. It simply checks the input 
+# and decides which NaturalDuality... to use.
+##
+InstallMethod( NaturalDuality,
+	"for a GQ and a GQ",
+	[ IsClassicalGQ, IsClassicalGQ, IsBool ],
+	function( gq1, gq2, computeintertwiner )
+
+# Added april 2014 jdb.
+#############################################################################
+#O  NaturalDuality( <gq1>, <computeintertwiner> )
+# This is the interface to the helper functions. It simply checks the input 
+# and decides which NaturalDuality... to use.
+##
+InstallMethod( NaturalDuality,
+	"for a GQ and a GQ",
+	[ IsClassicalGQ, IsBool ],
+	function( gq1, computeintertwiner )
+	local q;
+    if IsSymplecticSpace( gq1 ) then
+        return NaturalDuality( gq1, ParabolicQuadric(4, BaseField(gq1)), computeintertwiner ) ;
+    elif (IsHermitianPolarSpace( gq1 ) and Dimension( gq1 ) = 3) then
+        q := Sqrt(Size(BaseField(gq1)));
+		return NaturalDuality( gq1, EllipticQuadric(5,GF(q)), computeintertwiner );
+    elif IsParabolicQuadric( gq1 ) then
+		return NaturalDuality( gq1, SymplecticSpace(3, BaseField(gq1), computeintertwiner ) );
+	elif IsEllipticQuadric( gq1 ) then
+		q := Size(BaseField(gq1));
+		return NaturalDuality( gq1, HermitianPolarSpace(3, q^2), computeintertwiner);
+	else
+        Error("no duality possible on <gq1>");
+    fi;
+    end );
 

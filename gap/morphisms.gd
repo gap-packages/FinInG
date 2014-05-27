@@ -207,20 +207,18 @@ DeclareOperation( "KleinCorrespondenceExtended", [ IsClassicalPolarSpace ]);
 # derived dualities. 
 # first: helper operations
 
-DeclareOperation( "NaturalDualitySymplectic", [ IsClassicalGQ, IsClassicalGQ ]);
-DeclareOperation( "NaturalDualityHermitian", [ IsClassicalGQ, IsClassicalGQ ]);
-
-DeclareOperation( "NaturalDualitySymplectic", [ IsClassicalGQ, IsClassicalGQ, IsBool ]);
-DeclareOperation( "NaturalDualityHermitian", [ IsClassicalGQ, IsClassicalGQ, IsBool ]);
-
-
-DeclareOperation( "NaturalDualityParabolic", [ IsClassicalGQ, IsClassicalGQ ]);
-DeclareOperation( "NaturalDualityElliptic", [ IsClassicalGQ, IsClassicalGQ ]);
+DeclareOperation( "NaturalDualitySymplectic", [ IsClassicalGQ, IsClassicalGQ, IsBool, IsBool ]);
+DeclareOperation( "NaturalDualityHermitian", [ IsClassicalGQ, IsClassicalGQ, IsBool, IsBool ]);
 
 # second: user operations.
 
+DeclareOperation( "NaturalDuality", [ IsClassicalGQ, IsClassicalGQ, IsBool ]);
 DeclareOperation( "NaturalDuality", [ IsClassicalGQ, IsClassicalGQ ]);
+DeclareOperation( "NaturalDuality", [ IsClassicalGQ, IsBool ]);
 DeclareOperation( "NaturalDuality", [ IsClassicalGQ ]);
+
+
+
 
 # some left over: projective completion.
 
