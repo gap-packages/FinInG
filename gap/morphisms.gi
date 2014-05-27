@@ -3556,8 +3556,8 @@ InstallMethod( NaturalDuality,
 ##
 InstallMethod( NaturalDuality,
 	"for a GQ and a GQ",
-	[ IsClassicalGQ, IsClassicalGQ ],
-	function(gq1,gq2)
+	[ IsClassicalGQ ],
+	function(gq1)
 		return NaturalDuality(gq1,true);
 	end);
 
