@@ -398,10 +398,9 @@ id := IdentityMat(4,f);
 
 ############################################
 
-structural testing
+structural testing (hermitian -> Q-(5,q).
 
 ############################################
-
 
 q := 8;
 q5q := EllipticQuadric(5,q);
@@ -438,12 +437,11 @@ List(rand,g->Collected(List(lines,x->(x^g)^em = (x^em)^(g^hom))));
 
 q := 8;
 
-
-
 q5q := EllipticQuadric(5,q);
 form := QuadraticForm(q5q);
-qmat := GramMatrix(form);
-nqmat := qmat{[3,4,5,6,1,2]};
+qmat := TransposedMat(GramMatrix(form));
+nqmat := TransposedMat(qmat{[3,4,5,6,1,2]});
+nqmat := nqmat{[3,4,5,6,1,2]};
 qform := QuadraticFormByMatrix(nqmat,GF(q));
 q5q := PolarSpace(qform);
 
@@ -451,6 +449,86 @@ mat := [[0,1,0,0],[1,0,0,0],[0,0,0,1],[0,0,1,0]]*Z(q)^0;
 hform := HermitianFormByMatrix(mat,GF(q^2));
 herm := PolarSpace(hform);
 em := NaturalDualityHermitian(herm,q5q,true);
+hom := Intertwiner(em);
+
+pts := AsList(Points(q5q));
+group := CollineationGroup(q5q);
+gens := GeneratorsOfGroup(group);
+
+List(gens,g->Collected(List(pts,x->PreImageElm(em,x^g)=PreImageElm(em,x)^(PreImageElm(hom,g)))));
+
+rand := [];
+for i in [1..4] do
+Add(rand,Random(group));
+od;
+List(rand,g->Collected(List(pts,x->PreImageElm(em,x^g)=PreImageElm(em,x)^(PreImageElm(hom,g)))));
+
+
+lines := AsList(Lines(herm));
+group := CollineationGroup(herm);
+gens := GeneratorsOfGroup(group);
+
+List(gens,g->Collected(List(lines,x->(x^g)^em = (x^em)^(g^hom))));
+
+rand := [];
+for i in [1..4] do
+Add(rand,Random(group));
+od;
+List(rand,g->Collected(List(lines,x->(x^g)^em = (x^em)^(g^hom))));
+
+############################################
+
+structural testing (symplectic -> Q(4,q).
+
+############################################
+
+q := 8;
+q4q := ParabolicQuadric(4,q);
+w := SymplecticSpace(3,q);
+em := NaturalDualitySymplectic(w,q4q,true);
+hom := Intertwiner(em);
+
+pts := AsList(Points(q4q));
+group := CollineationGroup(q4q);
+gens := GeneratorsOfGroup(group);
+
+List(gens,g->Collected(List(pts,x->PreImageElm(em,x^g)=PreImageElm(em,x)^(PreImageElm(hom,g)))));
+
+rand := [];
+for i in [1..4] do
+Add(rand,Random(group));
+od;
+List(rand,g->Collected(List(pts,x->PreImageElm(em,x^g)=PreImageElm(em,x)^(PreImageElm(hom,g)))));
+
+
+lines := AsList(Lines(w));
+group := CollineationGroup(w);
+gens := GeneratorsOfGroup(group);
+
+List(gens,g->Collected(List(lines,x->(x^g)^em = (x^em)^(g^hom))));
+
+rand := [];
+for i in [1..4] do
+Add(rand,Random(group));
+od;
+List(rand,g->Collected(List(lines,x->(x^g)^em = (x^em)^(g^hom))));
+
+##### non canonical polar spaces.
+
+q := 8;
+
+q4q := ParabolicQuadric(4,q);
+form := QuadraticForm(q4q);
+qmat := TransposedMat(GramMatrix(form));
+nqmat := TransposedMat(qmat{[2,3,4,5,1]});
+nqmat := nqmat{[2,3,4,5,1]};
+qform := QuadraticFormByMatrix(nqmat,GF(q));
+q4q := PolarSpace(qform);
+
+mat := [[0,1,0,0],[-1,0,0,0],[0,0,0,-1],[0,0,1,0]]*Z(q)^0;
+wform := BilinearFormByMatrix(mat,GF(q^2));
+w := PolarSpace(wform);
+em := NaturalDualityHermitian(w,q4q,true);
 hom := Intertwiner(em);
 
 pts := AsList(Points(q5q));
