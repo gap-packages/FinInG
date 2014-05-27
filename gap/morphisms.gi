@@ -3301,7 +3301,7 @@ InstallMethod( NaturalDualityHermitian,
             ilines[1] := List(ipts[1],y->InversePluckerCoordinates(y));
             switch := theta^0;
             if Rank(Union(ilines[1])) = 3 then
-                Print("switch\n");
+                #Print("switch\n");
                 mat := (mat^theta) * special;
                 frob2 := frob2 * theta;
                 switch := theta;
@@ -3385,7 +3385,7 @@ InstallMethod( NaturalDualityHermitian,
             ilines[1] := List(ipts[1],y->InversePluckerCoordinates(y));
             switch := theta^0;
             if Rank(Union(ilines[1])) = 3 then
-                Print("switch\n");
+                #Print("switch\n");
                 mat := (mat^theta) * special;
                 frob2 := frob2 * theta;
                 switch := theta;
@@ -3412,7 +3412,7 @@ InstallMethod( NaturalDualityHermitian,
 			for i in [1..4] do
 				newmat[i] := newmat[i]*cs[i];
 			od;
-			return ProjElWithFrob(chinv * newmat * ch^frob2,frob2,f);
+			return ProjElWithFrob(chinv * newmat * ch^(frob2^-1),frob2,f);
 		end;
 
     fi;
