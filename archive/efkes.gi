@@ -445,7 +445,7 @@ nqmat := nqmat{[3,4,5,6,1,2]};
 qform := QuadraticFormByMatrix(nqmat,GF(q));
 q5q := PolarSpace(qform);
 
-mat := [[0,1,0,0],[1,0,0,0],[0,0,0,1],[0,0,1,0]]*Z(q)^0;
+mat := [[0,1,0,0],[1,0,0,0],[0,0,0,Z(q)],[0,0,Z(q),0]]*Z(q)^0;
 hform := HermitianFormByMatrix(mat,GF(q^2));
 herm := PolarSpace(hform);
 em := NaturalDualityHermitian(herm,q5q,true);

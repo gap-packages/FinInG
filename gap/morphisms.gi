@@ -19,7 +19,7 @@
 ##  Implementation stuff for incidence geometry morphisms
 ##
 #############################################################################
-## 24/3/2014 11:08
+## 28/5/2014 10:11
 
 ########################################
 #
@@ -3540,7 +3540,7 @@ InstallMethod( NaturalDuality,
         q := Sqrt(Size(BaseField(gq1)));
 		return NaturalDuality( gq1, EllipticQuadric(5,GF(q)), computeintertwiner );
     elif IsParabolicQuadric( gq1 ) then
-		return NaturalDuality( gq1, SymplecticSpace(3, BaseField(gq1), computeintertwiner ) );
+		return NaturalDuality( gq1, SymplecticSpace(3, BaseField(gq1) ),  computeintertwiner );
 	elif IsEllipticQuadric( gq1 ) then
 		q := Size(BaseField(gq1));
 		return NaturalDuality( gq1, HermitianPolarSpace(3, q^2), computeintertwiner);
