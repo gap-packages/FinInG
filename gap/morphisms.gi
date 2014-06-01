@@ -672,7 +672,8 @@ InstallMethod( IsomorphismPolarSpacesNC,
 			local y;
 			y := MutableCopyMat( x!.mat );
                 #return ProjElWithFrob( invchange * x * change^y!.frob, y!.frob, f );
-                return ProjElWithFrob( invchange * x * change^(y!.frob^-1), y!.frob, f ); 
+                #return ProjElWithFrob( invchange * x * change^(y!.frob^-1), y!.frob, f );
+                return ProjElWithFrob( change * y * invchange^(x!.frob^-1), x!.frob, f );
 		end;  
        
     # map from gens1 to gens2

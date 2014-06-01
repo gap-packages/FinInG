@@ -283,5 +283,58 @@ gens := GeneratorsOfGroup(group2);
 pts := AsList(Points(gq2));
 List(gens,g->Collected(List(pts,x->PreImageElm(em,x^g)=PreImageElm(em,x)^(PreImageElm(hom,g)))));
 
+####### more testing #######
 
+q5q := EllipticQuadric(5,q);
+form := QuadraticForm(q5q);
+qmat := TransposedMat(GramMatrix(form));
+nqmat := TransposedMat(qmat{[3,4,5,6,1,2]});
+nqmat := nqmat{[3,4,5,6,1,2]};
+qform := QuadraticFormByMatrix(nqmat,GF(q));
+gq1 := PolarSpace(qform);
+gq2 := q5q;
+em := IsomorphismPolarSpaces(gq1,gq2,true);
+
+em := IsomorphismPolarSpacesNC(gq1,gq2,true);
+
+hom := Intertwiner(em);
+
+group1 := CollineationGroup(gq1);
+gens := GeneratorsOfGroup(group1);
+pts := AsList(Points(gq1));
+List(gens,g->Collected(List(pts,x->(x^g)^em = (x^em)^(g^hom))));
+
+group2 := CollineationGroup(gq2);
+gens := GeneratorsOfGroup(group2);
+pts := AsList(Points(gq2));
+List(gens,g->Collected(List(pts,x->PreImageElm(em,x^g)=PreImageElm(em,x)^(PreImageElm(hom,g)))));
+
+
+mat := [[0,1,0,0],[1,0,0,0],[0,0,0,Z(q)],[0,0,Z(q),0]]*Z(q)^0;
+hform := HermitianFormByMatrix(mat,GF(q^2));
+gq2 := PolarSpace(hform);
+gq1 := HermitianPolarSpace(3,q^2);
+
+em := IsomorphismPolarSpaces(gq1,gq2,true);
+
+em := IsomorphismPolarSpacesNC(gq1,gq2,true);
+
+hom := Intertwiner(em);
+
+group1 := CollineationGroup(gq1);
+gens := GeneratorsOfGroup(group1);
+pts := AsList(Points(gq1));
+List(gens,g->Collected(List(pts,x->(x^g)^em = (x^em)^(g^hom))));
+
+group2 := CollineationGroup(gq2);
+gens := GeneratorsOfGroup(group2);
+pts := AsList(Points(gq2));
+List(gens,g->Collected(List(pts,x->PreImageElm(em,x^g)=PreImageElm(em,x)^(PreImageElm(hom,g)))));
+
+###### naturalembedding by field reduction test ###########
+
+q := 4;
+q3q := HyperbolicQuadric(3,q^2);
+q7q := HyperbolicQuadric(7,q);
+em := NaturalEmbeddingByFieldReduction(q3q,q7q);
 
