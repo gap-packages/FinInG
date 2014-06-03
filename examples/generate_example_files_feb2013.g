@@ -44,7 +44,8 @@ projgroupsfiles := ["projgroups_isprojectivity", "projgroups_iscollineation", "p
 					"projgroups_representative", "projgroups_underlyingmatrix", "projgroups_basefield", "projgroups_fieldautomorphism", "projgroups_psisomorphism",
 					"projgroups_order", "projgroups_projectivitygroup", "projgroups_collineationgroup", "projgroups_specialprojectivitygroup", "projgroups_mult",
 					"projgroups_embedding", "projgroups_onprojsubspaces", "projgroups_onprojsubspacesextended", "projgroups_elation1", "projgroups_elation2",
-					"projgroups_homology1", "projgroups_homology2", "projgroups_nicem", "projgroups_niceo", "projgroups_cancompute"];;
+					"projgroups_homology1", "projgroups_homology2", "projgroups_nicem", "projgroups_niceo", "projgroups_cancompute", "projgroups_random",
+                    "projgroups_correlationcollineationgroup"];;
 	   
 polaritiespsfiles := ["polarities_construct1", "polarities_construct2", "polarities_fromform", "polarities_frompolarspace", 
 					"polarities_toform", "polarities_basefield", "polarities_grammatrix", "polarities_automorphism", "polarities_ishermitian",

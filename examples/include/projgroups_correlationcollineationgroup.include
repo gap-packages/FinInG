@@ -1,0 +1,8 @@
+gap&gt; pg := PG(4,3);
+ProjectiveSpace(4, 3)
+gap&gt; group := CorrelationCollineationGroup(pg);
+The FinInG correlation-collineation group PGL(5,3) : 2
+gap&gt; pg := PG(3,8);
+ProjectiveSpace(3, 8)
+gap&gt; group := CorrelationCollineationGroup(pg);
+The FinInG correlation-collineation group PGammaL(4,8) : 2

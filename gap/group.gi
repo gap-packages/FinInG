@@ -2047,11 +2047,12 @@ InstallGlobalFunction( OnProjSubspacesWithFrob,
 # CHECKED 6/09/11 jdb
 # cvec change 19/3/14
 #############################################################################
-#P  ActionOnAllProjPoints( <g> )
+#O  ActionOnAllProjPoints( <g> )
 # returns the action of the projective collineation group <g> on the projective points
 # of the underlying projective space.
 ## 
-InstallMethod( ActionOnAllProjPoints, "for a projective collineation group",
+InstallMethod( ActionOnAllProjPoints, 
+    "for a projective collineation group",
 	[ IsProjectiveGroupWithFrob ],
 	function( pg )
 		local a,d,f,o,on,orb,v,zero, m, j;
@@ -2096,7 +2097,8 @@ InstallGlobalFunction( NiceMonomorphismByOrbit,
     # op an operation suitable for x and g
     # It is guaranteed that g acts faithfully on the orbit.
     local cand,h,iso,nr,orb,pgens;
-	if orblen <> false then
+    Print("Using NM by Domain\n");
+    if orblen <> false then
 		orb := Orb(g,x,op,rec(orbsizelimit := orblen, hashlen := 2*orblen,
                               storenumbers := true));
         Enumerate(orb);
@@ -2118,7 +2120,7 @@ InstallGlobalFunction( NiceMonomorphismByOrbit,
 
 # CHECKED 6/09/11 jdb
 #############################################################################
-#F  NiceMonomorphismByDomain( <g>, <x>, <op>, <orblen> )
+#F  NiceMonomorphismByDomain( <g>, <dom>, <op> )
 # <g>: projective groups, size attribute *set* ; <x>: an element; 
 # <op> operation suitable for <x> and <g>
 # important: this functions relies on the GenSS package. 

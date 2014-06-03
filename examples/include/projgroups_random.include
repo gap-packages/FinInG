@@ -1,0 +1,16 @@
+gap&gt; pg := PG(4,8);
+ProjectiveSpace(4, 8)
+gap&gt; group := CollineationGroup(pg);
+The FinInG collineation group PGammaL(5,8)
+gap&gt; HasNiceMonomorphism(group);
+false
+gap&gt; Random(group);
+&lt; a collineation: &lt;cmat 5x5 over GF(2,3)&gt;, F^4&gt;
+gap&gt; time;
+731
+gap&gt; HasNiceMonomorphism(group);
+true
+gap&gt; Random(group);
+&lt; a collineation: &lt;cmat 5x5 over GF(2,3)&gt;, F^0&gt;
+gap&gt; time;
+3
