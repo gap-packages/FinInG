@@ -1,0 +1,27 @@
+gap&gt; quadric := HyperbolicQuadric(5,3);                                         
+Q+(5, 3)
+gap&gt; k := KleinCorrespondence( quadric );
+&lt;geometry morphism from &lt;lines of ProjectiveSpace(3, 3)&gt; to &lt;points of Q+(5, 
+3)&gt;&gt;
+gap&gt; pg := ProjectiveSpace(3, 3);
+ProjectiveSpace(3, 3)
+gap&gt; l := Random( Lines(pg) );
+&lt;a line in ProjectiveSpace(3, 3)&gt;
+gap&gt; l^k;
+&lt;a point in Q+(5, 3)&gt;
+gap&gt; id := IdentityMat(6,GF(13));
+&lt; mutable compressed matrix 6x6 over GF(13) &gt;
+gap&gt; form := QuadraticFormByMatrix(id,GF(13));
+&lt; quadratic form &gt;
+gap&gt; quadric := PolarSpace(form);
+&lt;polar space in ProjectiveSpace(
+5,GF(13)): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2=0 &gt;
+gap&gt; k := KleinCorrespondence( quadric );
+&lt;geometry morphism from &lt;lines of ProjectiveSpace(3, 13)&gt; to &lt;points of Q+(5, 
+13): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2=0&gt;&gt;
+gap&gt; pg := AmbientGeometry(Source(k));
+ProjectiveSpace(3, 13)
+gap&gt; l := Random(Lines(pg));
+&lt;a line in ProjectiveSpace(3, 13)&gt;
+gap&gt; l^k;
+&lt;a point in Q+(5, 13): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2=0&gt;

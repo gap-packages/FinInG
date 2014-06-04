@@ -2482,7 +2482,7 @@ InstallMethod( KleinCorrespondence,
 
 #############################################################################
 #O  KleinCorrespondence( <q> )
-# returns KleinCorrespondence( GF(q) )
+# returns KleinCorrespondence( GF(q), true )
 ##
 InstallMethod( KleinCorrespondence, 
 	"for a prime power",
@@ -2492,14 +2492,25 @@ InstallMethod( KleinCorrespondence,
 	
 #############################################################################
 #O  KleinCorrespondence( <q> )
-# returns KleinCorrespondence( GF(q) )
+# returns KleinCorrespondence( GF(q), computeintertwiner )
 ##
 InstallMethod( KleinCorrespondence, 
-	"for a hyperbolic quadric",
+	"for a prime power and a boolean",
     [ IsPosInt, IsBool ],
 	function(q, computeintertwiner )
 		return KleinCorrespondence(GF(q),computeintertwiner);
 	end );
+    
+#############################################################################
+#O  KleinCorrespondence( <f> )
+# returns KleinCorrespondence( GF(q), true )
+##
+InstallMethod( KleinCorrespondence, 
+	"for a finite field",
+    [ IsField ],
+	f -> KleinCorrespondence(f,true)
+	);
+
 	
 # CHECKED 28/09/11 jdb
 #############################################################################

@@ -91,10 +91,15 @@ The development phase of <Package>FinInG</Package> started roughly in 2005. The 
 projective geometry in GAP had emerged before, and resulted in <Package>pg</Package>, a relic that still
 can be found in the undeposited packages section of the GAP website. 
 One of the main objectives was to develop the new package was to 
-create a tighter connection between
-finite geometry and the group theoretical functions present in GAP. 
+create a tighter connection between finite geometry and the group theoretical functions present in GAP.
 <P/>
 The authors thank Michael Pauley, Maska Law and Sven Reichard, for their contributions during the early days of the project.
+<P/>
+Jan De Beule and Michel Lavrauw have been supported by the Research Foundation Flanders -- Belgium (FWO), and
+John Bamberg has been supported by a Marie Curie grant and an ARC grant during almost the whole development
+phase of <Package>FinInG</Package>. The authors are grateful for this support ans also for the fact that these
+funding agencies allow to invest time in this development. That this is possible is because these agencies
+do not focus on counting publications to judge the output of their supported researchers.
 </Acknowledgements>
 
 

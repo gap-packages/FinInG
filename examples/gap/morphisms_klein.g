@@ -1,7 +1,8 @@
 #morphisms_klein.g
-quadric := HyperbolicQuadric(5,3);                                         
-k := KleinCorrespondence( quadric );
-pg := ProjectiveSpace(3, 3);
+k := KleinCorrespondence( 9 );
+Intertwiner(k);
+pg := ProjectiveSpace(3, 9);
+AmbientGeometry(Range(k));
 l := Random( Lines(pg) );
 l^k;
 quit;

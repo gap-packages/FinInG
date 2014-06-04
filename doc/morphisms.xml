@@ -154,8 +154,11 @@ Hence we also obtain a natural group isomorphism from the collineation group of
 <Heading>Dualities</Heading>
 
 It is well known that the classical generalised quadrangles <M>W(3,q)</M> and <M>Q(4,q)</M>
-are dually isomorphic, the same holds for the classical generalised quadrangles <M>Q^-(5,q)</M>
-and <M>H(3,q^2)</M>. These isomorphisms are implemented through the operation <F>NaturalDuality</F>,
+are dually isomorphic, the same holds for the classical generalised quadrangles
+
+<Alt Not="HTML"><M>Q^-(5,q)</M></Alt><Alt Only="HTML">Q&lt;sup>-&lt;/sup>(5,q)</Alt>
+and <Alt Not="HTML"><M>H(3,q^2)</M></Alt><Alt Only="HTML">H(3,q&lt;sup>2&lt;/sup>)</Alt>.
+These isomorphisms are implemented through the operation <F>NaturalDuality</F>,
 this operation will return a geometry morphism with <C>ElementsOfIncidenceStructure(gq1)</C> as
 source and <C>ElementsOfIncidenceStructure(gq2)</C> as range, in other words, it is a geometry
 morphism from all the elements of <A>gq1</A> onto all the elements of <A>gq2</A>, preserving the incidence,
@@ -179,8 +182,10 @@ ellipitc or hermitian quadrangle (in dimension <M>3</M>), in any order, and defi
 bilinear/quadratic and hermitian form. In all cases the generalised quadrangles may be the standard
 one provided by the package <Package>FinInG</Package>. <P/>
 
-The thrid version requires only one argument, either <M>W(3,q)</M>, <M>Q(4,q)</M>, <M>Q^-(5,q)</M>, or
-<M>H(3,q^2)</M>, standard or specified by the users using an appropriate bilinear, quadratic or hermitian
+The thrid version requires only one argument, either <M>W(3,q)</M>, <M>Q(4,q)</M>,
+<Alt Not="HTML"><M>Q^-(5,q)</M></Alt><Alt Only="HTML">Q&lt;sup>-&lt;/sup>(5,q)</Alt>, or
+<Alt Not="HTML"><M>H(3,q^2)</M></Alt><Alt Only="HTML">H(3,q&lt;sup>2&lt;/sup>)</Alt>,
+standard or specified by the users using an appropriate bilinear, quadratic or hermitian
 form. The range of the returned geometry morphism will be the set of all elements of a suitable generalised
 quadrangle, in standard form.<P/>
 
@@ -488,12 +493,20 @@ that are commonly used in finite geometry.
 
 		   
 <ManSection>
-<Oper Name="KleinCorrespondence" Arg="quadric"/>
+<Oper Name="KleinCorrespondence" Arg="f"/>
+<Oper Name="KleinCorrespondence" Arg="f, boolean"/>
+<Oper Name="KleinCorrespondence" Arg="q"/>
+<Oper Name="KleinCorrespondence" Arg="q, boolean"/>
 <Returns>a geometry morphism</Returns>
 <Description>
-The argument <A>quadric</A> is a 5-dimensional hyperbolic quadric
-<M>Q^+(5,q)</M>, and this function returns the Klein correspondence from the lines
-of <M>PG(3,q)</M> to the points of <A>quadric</A>.
+    The argument <A>f</A> is a finite field, the argument <A>q</A> is a prime power.
+    The first an the third version use <K>true</K> as value for <A>boolean</A>.
+    When using <K>true</K> as value for the boolean, the intertwiner is computed.
+    This variant of the operation <F>KleinCorrespondence</F> has always as ambient geometry of
+    its range the hyperbolic quadric <Alt Not="HTML"><M>Q^+(5,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>(5,q)</Alt>
+    with equation <M>X_0X_5+X_1X_4+X_2X_3 = 0</M>. The returned geometry morphism has the lines of <M>PG(3,q)</M>
+    as source and the points of <Alt Not="HTML"><M>Q^+(5,q)</M></Alt><Alt Only="HTML">Q&lt;sup>-&lt;/sup>(5,q)</Alt>
+    as range.
 <Example>
 <#Include SYSTEM "../examples/include/morphisms_klein.include"> 
 </Example>
@@ -501,23 +514,21 @@ of <M>PG(3,q)</M> to the points of <A>quadric</A>.
 </ManSection>
 
 <ManSection>
-<Oper Name="NaturalDuality" Arg="gq"/>
+<Oper Name="KleinCorrespondence" Arg="quadric"/>
+<Oper Name="KleinCorrespondence" Arg="quadric, boolean"/>
 <Returns>a geometry morphism</Returns>
 <Description>
-The argument <A>gq</A> is either the symplectic generalised quadrangle
-<C>W(3,q)</C> or the hermitian generalised quadrangle <C>H(3,q^2)</C>.  By the
-Klein correspondence, the lines of <M>W(3,q)</M> are mapped to the points
-of <M>Q(4,q)</M>, which results in a point-line duality from <M>W(3,q)</M>
-onto <M>Q(4,q)</M>. Likewise, the Klein correspondence induces a duality
-between <M>H(3,q^2)</M> and <M>Q^-(5,q)</M>.  At the moment, the geometry
-morphism returned is a map from lines to points.  This operation does not
-require that the input is the canonical version of the generalised quadrangle;
-it suffices that the input has the correct polarity type.
+The argument <A>quadric</A> is a hyperbolic quadric in a 5 dimensional projective space.
+If <A>boolean</A> is <K>true</K> or not given, this operation returns the geometry morphism
+equipped with an intertwiner. The returned geometry morphism has the lines of <M>PG(3,q)</M>
+as source and the points of <Alt Not="HTML"><M>Q^+(5,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>(5,q)</Alt>
+as range.
 <Example>
-<#Include SYSTEM "../examples/include/morphisms_duality.include"> 
+<#Include SYSTEM "../examples/include/morphisms_klein2.include">
 </Example>
 </Description>
 </ManSection>
+
 
 </Section>
 
