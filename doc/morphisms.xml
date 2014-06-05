@@ -530,6 +530,22 @@ as range.
 </ManSection>
 
 
+<ManSection>
+<Oper Name="KleinCorrespondenceExtended" Arg="quadric"/>
+<Oper Name="KleinCorrespondenceExtended" Arg="quadric, boolean"/>
+<Returns>a geometry morphism</Returns>
+<Description>
+The argument <A>quadric</A> is a hyperbolic quadric in a 5 dimensional projective space.
+If <A>boolean</A> is <K>true</K> or not given, this operation returns the geometry morphism
+equipped with an intertwiner. The returned geometry morphism has the elements of <M>PG(3,q)</M>
+as source and the elements of <Alt Not="HTML"><M>Q^+(5,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>(5,q)</Alt>
+as range, hence this operation is a kind of extension of <F>KleinCorrespondence</F>.
+<Example>
+<#Include SYSTEM "../examples/include/morphisms_klein3.include">
+</Example>
+</Description>
+</ManSection>
+
 </Section>
 
 

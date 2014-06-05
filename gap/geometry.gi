@@ -482,3 +482,26 @@ InstallMethod( Display,
 		Print("Incidence structure of rank ", RankAttr(x)," with elements of type ",x!.typeset);
 	end );
 
+#############################################################################
+# methods for the two general properties
+# We are gratefull to Harald Gropp for pointing out the difference clearly 
+# between a configuration and a constellation during the conference 
+# Combinatorics 2014.
+#############################################################################
+
+InstallMethod( IsConfiguration,
+    "for an incidence structure",
+    [ IsIncidenceStructure],
+    function(x)
+    Info(InfoFinInG, 10, "The authors are grateful to Harald Gropp for pointing out clearly the difference between a configuration and a constellation.");
+    return true;
+    end );
+    
+InstallMethod( IsConstellation,
+    "for an incidence structure",
+    [ IsIncidenceStructure],
+    function(x)
+    Info(InfoFinInG, 10, "The authors are grateful to Harald Gropp for pointing out clearly the difference between a configuration and a constellation.");
+    return true;
+    end );
+

@@ -2452,7 +2452,8 @@ InstallMethod( KleinCorrespondence,
 			ipts := List(pts,x->x*mat);
 			ilines := List(ipts,x->List(x,y->InversePluckerCoordinates(y)));
 			if Rank(Union(ilines[1])) = 3 then
-				Error( "<el> is not inducing a collineation of PG(3,q)" );
+				Info(InfoFinInG, 1, "<el> is not inducing a collineation of PG(3,q)");
+				return fail;
 			fi;
 			ipts := List(ilines, x->SumIntersectionMat(x[1],x[2])[2]);
 			newmat := List(ipts,x->x[1]);

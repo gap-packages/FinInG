@@ -74,7 +74,7 @@ affinefiles := [ "affine_affinespace", "affine_dimension", "affine_basefield", "
 
 morphismsfiles := ["morphisms_filters", "morphisms_isopolar", "morphisms_embedding1", "morphisms_embedding2", "morphisms_fieldreducproj", 
 					"morphisms_intertwinerproj", "morphisms_fieldreducpolar1", "morphisms_fieldreducpolar2", "morphisms_subfield1",
-					"morphisms_subfield2", "morphisms_projection", "morphisms_klein", "morphisms_klein2", "morphisms_duality", "morphisms_completion" ];
+					"morphisms_subfield2", "morphisms_projection", "morphisms_klein", "morphisms_klein2", "morphisms_klein3", "morphisms_duality", "morphisms_completion" ];
 
 
 varieties_files := ["varieties_general", "varieties_polarspace", "varieties_veronese", "varieties_segre", "varieties_hermitian", "varieties_quadratic", "varieties_grassmann" ];

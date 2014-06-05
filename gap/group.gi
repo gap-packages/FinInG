@@ -2097,7 +2097,6 @@ InstallGlobalFunction( NiceMonomorphismByOrbit,
     # op an operation suitable for x and g
     # It is guaranteed that g acts faithfully on the orbit.
     local cand,h,iso,nr,orb,pgens;
-    Print("Using NM by Domain\n");
     if orblen <> false then
 		orb := Orb(g,x,op,rec(orbsizelimit := orblen, hashlen := 2*orblen,
                               storenumbers := true));

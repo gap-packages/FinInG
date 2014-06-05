@@ -20,7 +20,7 @@ TrialitySplitCayleyPoint := function(el)
 end;
 
 ZeroPointToOnePointsSpaceByTriality := function(el)
-# el is a point of H(q)
+# el is a point of T(q,q^3)
     local z, hyps, y, pg, spacevec, f, frob, n;
     f := BaseField(el);
     frob := FrobeniusAutomorphism(f);
@@ -79,7 +79,9 @@ q := 5;
 hq := SplitCayleyHexagon(q);
 ps := AmbientPolarSpace(hq);
 pts6 := AsList(Points(ps));
-planes6 := List(pts6,x->OnePointToPlane(x));
+#planes6 := List(pts6,x->OnePointToPlane(x));
+planes6 := List(pts6,x->SplitCayleyPointToPlane(x));
+
 
 flags := [];
 for i in [1..Length(pts6)] do
@@ -105,7 +107,7 @@ Girth(graph);
 
 #############################################################################
 #O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
-# by the rowvector <v>. <geom> is a generalised hexagong, so an ambient polar space
+# by the rowvector <v>. <geom> is a generalised hexagon, so an ambient polar space
 # ps is available. A point of geom is necessary a point of ps, but for T(q^3,q) we need
 # to check whether the point of Q+(7,q) is absolute.
 ##

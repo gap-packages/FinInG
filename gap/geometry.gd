@@ -14,10 +14,8 @@
 ##					University of St. Andrews
 ##					University of Western Australia, Perth
 ##                  Vrije Universiteit Brussel
-##                 
 ##
-##  Declaration stuff for geometries. changed by the new gang of 
-##  four, September 24, 2008, st. andrews.
+##  Declaration stuff for geometries.
 ##
 #############################################################################
 
@@ -299,5 +297,10 @@ DeclareOperation( "Lines", [ IsIncidenceStructure, IsElementOfIncidenceStructure
 DeclareOperation( "Planes", [ IsIncidenceStructure, IsElementOfIncidenceStructure ] );
 DeclareOperation( "Solids", [ IsIncidenceStructure, IsElementOfIncidenceStructure ] );
 DeclareOperation( "Hyperplanes", [ IsIncidenceStructure, IsElementOfIncidenceStructure ] );
+
+#and two very general properties.
+
+DeclareProperty( "IsConfiguration", IsIncidenceStructure );
+DeclareProperty( "IsConstellation", IsIncidenceStructure );
 
 

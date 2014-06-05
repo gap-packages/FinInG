@@ -1,0 +1,23 @@
+gap&gt; ps := HyperbolicQuadric(5,7);
+Q+(5, 7)
+gap&gt; em := KleinCorrespondenceExtended(ps);
+&lt;geometry morphism from &lt;All elements of ProjectiveSpace(3, 
+7)&gt; to &lt;Elements of Q+(5, 7)&gt;&gt;
+gap&gt; hom := Intertwiner(em);
+MappingByFunction( The FinInG collineation group PGL(4,7), &lt;projective colline
+ation group with 2 generators&gt;, function( g ) ... end, function( g ) ... end )
+gap&gt; mat := [[0,0,0,0,0,1],[0,0,0,0,1,0],[0,0,0,1,0,0],
+&gt; 	[0,0,1,0,0,0],[0,1,0,0,0,0],[1,0,0,0,0,0]]*Z(7)^0;
+[ [ 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^0 ], 
+  [ 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^0, 0*Z(7) ], 
+  [ 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^0, 0*Z(7), 0*Z(7) ], 
+  [ 0*Z(7), 0*Z(7), Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7) ], 
+  [ 0*Z(7), Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7) ], 
+  [ Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7) ] ]
+gap&gt; g := Projectivity(mat,GF(7));
+&lt; a collineation: &lt;cmat 6x6 over GF(7,1)&gt;, F^0&gt;
+gap&gt; g in CollineationGroup(ps);
+true
+gap&gt; PreImageElm(hom,g);
+#I  &lt;el&gt; is not inducing a collineation of PG(3,q)
+fail
