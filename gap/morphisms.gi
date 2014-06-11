@@ -1686,7 +1686,8 @@ end );
 #############################################################################
 
 
-# CHECKED 28/09/11 jdb
+# CHECKED 11/06/14 jdb
+# found another cvec/cmat bug thanks to our testuses Geertrui!
 #############################################################################
 #O  NaturalEmbeddingBySubfield( <geom1>, <geom2> )
 # returns the embedding of <geom1> in <geom2>, two projective spaces of the
@@ -1718,8 +1719,8 @@ InstallMethod( NaturalEmbeddingBySubfield,
 
     ## Intertwiner...
     
-		twinerfunc := x -> CollineationOfProjectiveSpace( x!.mat, f2 );   
-		twinerprefun := y -> CollineationOfProjectiveSpace( y!.mat, f1 );
+		twinerfunc := x -> CollineationOfProjectiveSpace( Unpack(x!.mat), f2 ); #here was an unpack needed!
+		twinerprefun := y -> CollineationOfProjectiveSpace( Unpack(y!.mat), f1 ); #here too!
         g1 := ProjectivityGroup( geom1 );
 		gens1 := GeneratorsOfGroup( g1 );
 		gens2 := List(gens1, twinerfunc );
