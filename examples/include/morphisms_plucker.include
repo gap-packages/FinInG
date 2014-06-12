@@ -1,0 +1,20 @@
+gap&gt; pg := PG(3,169);
+ProjectiveSpace(3, 169)
+gap&gt; l := Random(Lines(pg));
+&lt;a line in ProjectiveSpace(3, 169)&gt;
+gap&gt; vec := PluckerCoordinates(l);
+[ Z(13)^0, Z(13^2)^138, Z(13^2)^93, Z(13^2)^53, Z(13^2)^71, Z(13^2)^106 ]
+gap&gt; mat := [[0,0,0,0,0,1],[0,0,0,0,1,0],[0,0,0,1,0,0],
+&gt; [0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]]*Z(13)^0;
+[ [ 0*Z(13), 0*Z(13), 0*Z(13), 0*Z(13), 0*Z(13), Z(13)^0 ], 
+  [ 0*Z(13), 0*Z(13), 0*Z(13), 0*Z(13), Z(13)^0, 0*Z(13) ], 
+  [ 0*Z(13), 0*Z(13), 0*Z(13), Z(13)^0, 0*Z(13), 0*Z(13) ], 
+  [ 0*Z(13), 0*Z(13), 0*Z(13), 0*Z(13), 0*Z(13), 0*Z(13) ], 
+  [ 0*Z(13), 0*Z(13), 0*Z(13), 0*Z(13), 0*Z(13), 0*Z(13) ], 
+  [ 0*Z(13), 0*Z(13), 0*Z(13), 0*Z(13), 0*Z(13), 0*Z(13) ] ]
+gap&gt; form := QuadraticFormByMatrix(mat,GF(169));
+&lt; quadratic form &gt;
+gap&gt; klein := PolarSpace(form);
+&lt;polar space in ProjectiveSpace(5,GF(13^2)): x_1*x_6+x_2*x_5+x_3*x_4=0 &gt;
+gap&gt; VectorSpaceToElement(klein,vec);
+&lt;a point in Q+(5, 169): x_1*x_6+x_2*x_5+x_3*x_4=0&gt;

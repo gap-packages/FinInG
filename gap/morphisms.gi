@@ -23,14 +23,15 @@
 
 ########################################
 #
-# Things To Do:
+# Things To Do (as a future project)
+# - Make source of intertwiner of NaturalEmbeddingBySubfield the complete collineation group.
+# - Implement the missing intertwiners (e.g. with NaturalEmbeddingSubspace).
 #
 # - Preimages for GrassmannMap, VeroneseMap, and SegreMap.HermitianPolarSpace
 # - intertwiners for GrassmannMap and SegreMap
 # - should there be a type function as an attribute?
 # - maybe make a more user friendly system to avoid em!.prefun( <arg> )
-# - in the same sense: do we want a NaturalDuality starting from Q(4,q) and Q-(5,q)? 
-#   And the self duality of Q(4,q) and W(3,q), q even.
+# - And the self duality of Q(4,q) and W(3,q), q even.
 # - test operations BlownUpSubspaceOfProjectiveSpace, BlownUpSubspaceOfProjectiveSpaceBySubfield, 
 # - an optimalization is possible: each time VectorSpaceToElement is used, this might be replaced
 #   by Wrap. VectorSpaceToElement is of course useful for testing purposes. Currently, we left it on
@@ -1019,6 +1020,8 @@ InstallMethod( IsBlownUpSubspaceOfProjectiveSpace,
 # that <geom1> and <geom2> have the same ambient vectorspace over K, then this
 # operation returns the natural embedding, i.e. with relation to the given basis
 # of L over K.
+# Important note: the intertwiner has as source the *Projectivity group* only, not
+# the full collineation group!
 ##
 InstallMethod( NaturalEmbeddingByFieldReduction, 
 	"for two projective spaces and a basis",
@@ -1090,20 +1093,28 @@ InstallMethod( NaturalEmbeddingByFieldReduction,
                                          fun, false, prefun);
 		
 		SetIsInjective( map, true );
-    ## Now creating intertwiner
-		hom := function( m )
-			local image;      
+        
+        ## Now creating intertwiner
+        ## 12/6/14: added check to see whether m is really a projectivity
+		
+        hom := function( m )
+			local image;
+            if not IsOne(m!.frob) then
+                return fail;
+                Info(InfoFinInG, 1, "<el> is not a projectivity");
+            fi;
 			image := BlownUpMat(basis, m!.mat); 
 			ConvertToMatrixRepNC( image, f2 );       
 			return CollineationOfProjectiveSpace(image, f2);
 		end;
 
 		hominv := function( m )
-			local preimage;      
-			preimage := ShrinkMat(basis, m!.mat); 
+			local preimage;
+			preimage := ShrinkMat(basis, Unpack(m!.mat));
 			ConvertToMatrixRepNC( preimage, f1 );       
 			return CollineationOfProjectiveSpace(preimage, f1);
 		end;
+
 		g1 := ProjectivityGroup( pg1 );
 		gens := GeneratorsOfGroup( g1 );
 		newgens := List(gens, hom);
@@ -2280,24 +2291,24 @@ InstallMethod( PluckerCoordinates,
 # list (so no cvec). This is the user version accepting a subspace of a projective
 # space.
 ##
-InstallMethod( PluckerCoordinates, 
-	"for a matrix representing a line of PG(3,q)",
-    [ IsSubspaceOfProjectiveSpace ],
-	function( l )
-		local pij, u, v, coords,lobj;
-		if l!.type <> 2 or Dimension(l!.geo) <> 3 then
-            Error(" <l> must be a line of a PG(3,q)");
-        fi;
-        lobj := l!.obj;
-        pij := function(u,v,i,j)
-			return u[i]*v[j] - u[j] * v[i];
-		end;
-		u := lobj[1];
-		v := lobj[2];
-		coords := [pij(u,v,1,2),pij(u,v,1,3),pij(u,v,1,4),
-			pij(u,v,2,3),pij(u,v,4,2),pij(u,v,3,4)];
-		return coords;
-	end );
+#InstallMethod( PluckerCoordinates,
+#	"for a matrix representing a line of PG(3,q)",
+#    [ IsSubspaceOfProjectiveSpace ],
+#	function( l )
+#		local pij, u, v, coords,lobj;
+#		if l!.type <> 2 or Dimension(l!.geo) <> 3 then
+#           Error(" <l> must be a line of a PG(3,q)");
+#        fi;
+#        lobj := l!.obj;
+#        pij := function(u,v,i,j)
+#			return u[i]*v[j] - u[j] * v[i];
+#		end;
+#		u := lobj[1];
+#		v := lobj[2];
+#		coords := [pij(u,v,1,2),pij(u,v,1,3),pij(u,v,1,4),
+#			pij(u,v,2,3),pij(u,v,4,2),pij(u,v,3,4)];
+#		return coords;
+#	end );
 
 
 # CHECKED 28/09/11 jdb

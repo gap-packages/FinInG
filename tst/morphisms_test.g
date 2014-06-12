@@ -338,3 +338,22 @@ q3q := HyperbolicQuadric(3,q^2);
 q7q := HyperbolicQuadric(7,q);
 em := NaturalEmbeddingByFieldReduction(q3q,q7q);
 
+###### naturalembedding by field reduction projective case test ###########
+
+n := 1;
+q := 3;
+h := 2;
+
+pg1 := PG(n,q^h);
+em := NaturalEmbeddingByFieldReduction(pg1,GF(q));
+hom := Intertwiner(em);
+group1 := HomographyGroup(pg1);
+gens := GeneratorsOfGroup(group1);
+pts := AsList(Points(pg1));;
+List(gens,g->Collected(List(pts,x->(x^g)^em = (x^em)^(g^hom))));
+
+gens2 := List(gens,x->x^hom);
+els2 := List(pts,x->x^em);
+group2 := Group(gens2);
+List(gens2,g->Collected(List(els2,x->PreImageElm(em,x^g)=PreImageElm(em,x)^(PreImageElm(hom,g)))));
+

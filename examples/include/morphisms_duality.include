@@ -2,11 +2,35 @@ gap&gt; w := SymplecticSpace(3,5);
 W(3, 5)
 gap&gt; lines:=AsList(Lines(w));;
 gap&gt; duality := NaturalDuality(w);
-#I  No intertwiner computed. One of the polar spaces must have a collineation group computed
-&lt;geometry morphism from &lt;lines of W(3, 5)&gt; to &lt;points of Q(4, 5)&gt;&gt;
+&lt;geometry morphism from &lt;Elements of W(3, 5)&gt; to &lt;Elements of Q(4, 5)&gt;&gt;
 gap&gt; l:=lines[1];
 &lt;a line in W(3, 5)&gt;
 gap&gt; l^duality;
 &lt;a point in Q(4, 5)&gt;
 gap&gt; PreImageElm(duality,last);
 &lt;a line in W(3, 5)&gt;
+gap&gt; hom := Intertwiner(duality);
+MappingByFunction( PGammaSp(4,5), &lt;projective collineation group of size 
+9360000 with 4 generators&gt;, function( g ) ... end, function( g ) ... end )
+gap&gt; q := 5;
+5
+gap&gt; q5q := EllipticQuadric(5,q);
+Q-(5, 5)
+gap&gt; mat := [[0,1,0,0],[1,0,0,0],[0,0,0,Z(q)],[0,0,Z(q),0]]*Z(q)^0;
+[ [ 0*Z(5), Z(5)^0, 0*Z(5), 0*Z(5) ], [ Z(5)^0, 0*Z(5), 0*Z(5), 0*Z(5) ], 
+  [ 0*Z(5), 0*Z(5), 0*Z(5), Z(5) ], [ 0*Z(5), 0*Z(5), Z(5), 0*Z(5) ] ]
+gap&gt; hform := HermitianFormByMatrix(mat,GF(q^2));
+&lt; hermitian form &gt;
+gap&gt; herm := PolarSpace(hform);
+&lt;polar space in ProjectiveSpace(
+3,GF(5^2)): x1^5*x2+x1*x2^5+Z(5)*x3^5*x4+Z(5)*x3*x4^5=0 &gt;
+gap&gt; duality := NaturalDuality(q5q,herm,true);
+&lt;geometry morphism from &lt;Elements of Q-(5, 5)&gt; to &lt;Elements of H(3, 
+5^2): x1^5*x2+x1*x2^5+Z(5)*x3^5*x4+Z(5)*x3*x4^5=0&gt;&gt;
+gap&gt; hom := Intertwiner(duality);
+MappingByFunction( PDeltaO-(6,5), &lt;projective collineation group of size 
+58968000000 with 3 generators&gt;, function( g ) ... end, function( g ) ... end )
+gap&gt; g := Random(CollineationGroup(q5q));
+&lt; a collineation: &lt;cmat 6x6 over GF(5,1)&gt;, F^0&gt;
+gap&gt; g^hom;
+&lt; a collineation: &lt;cmat 4x4 over GF(5,2)&gt;, F^5&gt;

@@ -151,14 +151,88 @@ Hence we also obtain a natural group isomorphism from the collineation group of
 </Section>
 
 <Section>
-<Heading>Dualities</Heading>
+<Heading>Klein correspondence and derived dualities</Heading>
+
+The Klein correspondence is a well known geometry morphism from the lines
+of <M>PG(3,q)</M> to the points of a hyperbolic quadric in <M>PG(5,q)</M>.
+This morphism and some derived morphisms are provided in <Package>FinInG</Package>.
+
+The bare essential of the Klein corresondence is the so-called Plücker map.
+
+<ManSection>
+<Oper Name="PluckerCoordinates" Arg="line"/>
+<Description>
+This operation takes a line of <M>PG(3,q)</M> as argument. It returns the plucker coordinates of the argument as list of finite
+field elements. The retured list can be used in operations as <F>VectorSpaceToElement</F>, and represents a point of the hyperbolic
+quadric in <M>PG(5,q)</M> with equation <Alt Not="HTML"><M>X_0X_5+X_1X_4+X_2X_3 = 0</M></Alt>
+<Alt Only="HTML">X&lt;sub>0&lt;/sub>X&lt;sub>5&lt;/sub>+X&lt;sub>1&lt;/sub>X&lt;sub>4&lt;/sub>+X&lt;sub>2&lt;/sub>X&lt;sub>3&lt;/sub> = 0</Alt>
+<Example>
+<#Include SYSTEM "../examples/include/morphisms_plucker.include">
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="KleinCorrespondence" Arg="f"/>
+<Oper Name="KleinCorrespondence" Arg="f, boolean"/>
+<Oper Name="KleinCorrespondence" Arg="q"/>
+<Oper Name="KleinCorrespondence" Arg="q, boolean"/>
+<Returns>a geometry morphism</Returns>
+<Description>
+The argument <A>f</A> is a finite field, the argument <A>q</A> is a prime power.
+The first an the third version use <K>true</K> as value for <A>boolean</A>.
+When using <K>true</K> as value for the boolean, the intertwiner is computed.
+This variant of the operation <F>KleinCorrespondence</F> has always as ambient geometry of
+its range the hyperbolic quadric <Alt Not="HTML"><M>Q^+(5,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>(5,q)</Alt>
+with equation <Alt Not="HTML"><M>X_0X_5+X_1X_4+X_2X_3 = 0</M></Alt>
+<Alt Only="HTML">X&lt;sub>0&lt;/sub>X&lt;sub>5&lt;/sub>+X&lt;sub>1&lt;/sub>X&lt;sub>4&lt;/sub>+X&lt;sub>2&lt;/sub>X&lt;sub>3&lt;/sub> = 0</Alt>
+The returned geometry morphism has the lines of <M>PG(3,q)</M>
+as source and the points of <Alt Not="HTML"><M>Q^+(5,q)</M></Alt><Alt Only="HTML">Q&lt;sup>-&lt;/sup>(5,q)</Alt>
+as range.
+<Example>
+<#Include SYSTEM "../examples/include/morphisms_klein.include">
+</Example>
+</Description>
+</ManSection>
+    
+<ManSection>
+<Oper Name="KleinCorrespondence" Arg="quadric"/>
+<Oper Name="KleinCorrespondence" Arg="quadric, boolean"/>
+<Returns>a geometry morphism</Returns>
+<Description>
+The argument <A>quadric</A> is a hyperbolic quadric in a 5 dimensional projective space.
+If <A>boolean</A> is <K>true</K> or not given, this operation returns the geometry morphism
+equipped with an intertwiner. The returned geometry morphism has the lines of <M>PG(3,q)</M>
+as source and the points of <Alt Not="HTML"><M>Q^+(5,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>(5,q)</Alt>
+as range.
+<Example>
+<#Include SYSTEM "../examples/include/morphisms_klein2.include">
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="KleinCorrespondenceExtended" Arg="quadric"/>
+<Oper Name="KleinCorrespondenceExtended" Arg="quadric, boolean"/>
+<Returns>a geometry morphism</Returns>
+<Description>
+The argument <A>quadric</A> is a hyperbolic quadric in a 5 dimensional projective space.
+If <A>boolean</A> is <K>true</K> or not given, this operation returns the geometry morphism
+equipped with an intertwiner. The returned geometry morphism has the elements of <M>PG(3,q)</M>
+as source and the elements of <Alt Not="HTML"><M>Q^+(5,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>(5,q)</Alt>
+as range, hence this operation is a kind of extension of <F>KleinCorrespondence</F>.
+<Example>
+<#Include SYSTEM "../examples/include/morphisms_klein3.include">
+</Example>
+</Description>
+</ManSection>
 
 It is well known that the classical generalised quadrangles <M>W(3,q)</M> and <M>Q(4,q)</M>
 are dually isomorphic, the same holds for the classical generalised quadrangles
-
 <Alt Not="HTML"><M>Q^-(5,q)</M></Alt><Alt Only="HTML">Q&lt;sup>-&lt;/sup>(5,q)</Alt>
 and <Alt Not="HTML"><M>H(3,q^2)</M></Alt><Alt Only="HTML">H(3,q&lt;sup>2&lt;/sup>)</Alt>.
-These isomorphisms are implemented through the operation <F>NaturalDuality</F>,
+Essentially, these dual isomorphisms are based on the Klein correspondence, and
+are implemented through the operation <F>NaturalDuality</F>,
 this operation will return a geometry morphism with <C>ElementsOfIncidenceStructure(gq1)</C> as
 source and <C>ElementsOfIncidenceStructure(gq2)</C> as range, in other words, it is a geometry
 morphism from all the elements of <A>gq1</A> onto all the elements of <A>gq2</A>, preserving the incidence,
@@ -172,9 +246,10 @@ and swapping the types.<P/>
 <Returns>a geometry morphism</Returns>
 <Description>
 The operation allows the construction of the duality between <M>W(3,q)</M> and <M>Q(4,q)</M>, 
-respectively <M>Q^-(5,q)</M> and <M>H(3,q^2)</M>, in two directions. Checks on the correctness
-of the basefields done, and it is checked that the input generalised quadrangle(s) are appropriate,
-i.e. the right type and of rank 2.
+respectively <Alt Not="HTML"><M>Q^-(5,q)</M></Alt><Alt Only="HTML">Q&lt;sup>-&lt;/sup>(5,q)</Alt>, or
+<Alt Not="HTML"><M>H(3,q^2)</M></Alt><Alt Only="HTML">H(3,q&lt;sup>2&lt;/sup>)</Alt>, in two directions.
+Checks on the correctness of the basefields done, and it is checked that the input generalised
+quadrangle(s) are appropriate, i.e. the right type and of rank 2.
 
 The first version requires two arguments: either the symplectic or parabolic
 quadrangle, in any order, and defined by any suitable bilinear/quadratic and bilinear form; or the
@@ -485,70 +560,6 @@ as <C>NaturalProjectionBySubspace(SymplecticSpace(3,3), v)</C>.
 
 </Section>
 
-<Section>
-<Heading>Some special kinds of geometry morphisms</Heading>
-
-In this section we provide some more specialised geometry morphisms,
-that are commonly used in finite geometry.
-
-		   
-<ManSection>
-<Oper Name="KleinCorrespondence" Arg="f"/>
-<Oper Name="KleinCorrespondence" Arg="f, boolean"/>
-<Oper Name="KleinCorrespondence" Arg="q"/>
-<Oper Name="KleinCorrespondence" Arg="q, boolean"/>
-<Returns>a geometry morphism</Returns>
-<Description>
-    The argument <A>f</A> is a finite field, the argument <A>q</A> is a prime power.
-    The first an the third version use <K>true</K> as value for <A>boolean</A>.
-    When using <K>true</K> as value for the boolean, the intertwiner is computed.
-    This variant of the operation <F>KleinCorrespondence</F> has always as ambient geometry of
-    its range the hyperbolic quadric <Alt Not="HTML"><M>Q^+(5,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>(5,q)</Alt>
-    with equation <M>X_0X_5+X_1X_4+X_2X_3 = 0</M>. The returned geometry morphism has the lines of <M>PG(3,q)</M>
-    as source and the points of <Alt Not="HTML"><M>Q^+(5,q)</M></Alt><Alt Only="HTML">Q&lt;sup>-&lt;/sup>(5,q)</Alt>
-    as range.
-<Example>
-<#Include SYSTEM "../examples/include/morphisms_klein.include"> 
-</Example>
-</Description>
-</ManSection>
-
-<ManSection>
-<Oper Name="KleinCorrespondence" Arg="quadric"/>
-<Oper Name="KleinCorrespondence" Arg="quadric, boolean"/>
-<Returns>a geometry morphism</Returns>
-<Description>
-The argument <A>quadric</A> is a hyperbolic quadric in a 5 dimensional projective space.
-If <A>boolean</A> is <K>true</K> or not given, this operation returns the geometry morphism
-equipped with an intertwiner. The returned geometry morphism has the lines of <M>PG(3,q)</M>
-as source and the points of <Alt Not="HTML"><M>Q^+(5,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>(5,q)</Alt>
-as range.
-<Example>
-<#Include SYSTEM "../examples/include/morphisms_klein2.include">
-</Example>
-</Description>
-</ManSection>
-
-
-<ManSection>
-<Oper Name="KleinCorrespondenceExtended" Arg="quadric"/>
-<Oper Name="KleinCorrespondenceExtended" Arg="quadric, boolean"/>
-<Returns>a geometry morphism</Returns>
-<Description>
-The argument <A>quadric</A> is a hyperbolic quadric in a 5 dimensional projective space.
-If <A>boolean</A> is <K>true</K> or not given, this operation returns the geometry morphism
-equipped with an intertwiner. The returned geometry morphism has the elements of <M>PG(3,q)</M>
-as source and the elements of <Alt Not="HTML"><M>Q^+(5,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>(5,q)</Alt>
-as range, hence this operation is a kind of extension of <F>KleinCorrespondence</F>.
-<Example>
-<#Include SYSTEM "../examples/include/morphisms_klein3.include">
-</Example>
-</Description>
-</ManSection>
-
-</Section>
-
-
 
 <!--
 <ManSection>
@@ -610,11 +621,24 @@ gap> p^vmap;
 <Heading>Low level functions</Heading>
 
 <ManSection>
+<Oper Name="PluckerCoordinates" Arg="matrix"/>
+<Oper Name="InversePluckerCoordinates" Arg="vector"/>
+<Description>
+The first operation can also take a matrix representing a line of <M>PG(3,q)</M> as argument.
+No checks are performed in this case. It returns the plucker coordinates of the argument
+as list of finite field elements. The second operation is the inverse of the first. No check
+is performed whether the argument represents a point of the correct hyperbolic quadric. Both operations
+are to be used internally only.
+</Description>
+</ManSection>
+
+<ManSection>
 <Oper Name="IsomorphismPolarSpacesNC" Arg="ps1, ps2"/>
 <Oper Name="IsomorphismPolarSpacesNC" Arg="ps1, ps2, boolean"/>
 <Description>
-<F>IsomorphismPolarSpacesNC</F> is the version of <F>IsomorphismPolarSpaces</F> where no checks are built in, and the
-isomorphism between parabolic quadrics and symplectic spaces is not implemented. This version is used internally.
+<F>IsomorphismPolarSpacesNC</F> is the version of <F>IsomorphismPolarSpaces</F> where no checks are built in, and
+which is only applicable when the two polar spaces are equivalent. As no checks are built in, this operation is to
+be used internally only.
 </Description>
 </ManSection>
 

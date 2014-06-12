@@ -5,6 +5,7 @@ duality := NaturalDuality(w);
 l:=lines[1];
 l^duality;
 PreImageElm(duality,last);
+hom := Intertwiner(duality);
 q := 5;
 q5q := EllipticQuadric(5,q);
 mat := [[0,1,0,0],[1,0,0,0],[0,0,0,Z(q)],[0,0,Z(q),0]]*Z(q)^0;
