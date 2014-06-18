@@ -8,3 +8,44 @@ gap&gt; pi := VectorSpaceToElement( pg, [[1,0,0,0],[0,1,0,0],[0,0,1,0]] * Z(9)^0
 &lt;a plane in ProjectiveSpace(3, 9)&gt;
 gap&gt; em := NaturalEmbeddingBySubspace( h1, h2, pi );
 &lt;geometry morphism from &lt;Elements of H(2, 3^2)&gt; to &lt;Elements of H(3, 3^2)&gt;&gt;
+gap&gt; ps1 := ParabolicQuadric(4,4);
+Q(4, 4)
+gap&gt; ps2 := ParabolicQuadric(6,4);
+Q(6, 4)
+gap&gt; pg := AmbientSpace( ps2 );    
+ProjectiveSpace(6, 4)
+gap&gt; pi := VectorSpaceToElement( pg, [[1,0,0,0,0,0,0],[0,1,0,0,0,0,0],[0,0,1,0,0,0,0],
+&gt; [0,0,0,1,0,0,0],[0,0,0,0,1,0,0]] * Z(4)^0 );
+&lt;a proj. 4-space in ProjectiveSpace(6, 4)&gt;
+gap&gt; em := NaturalEmbeddingBySubspace( ps1, ps2, pi );
+&lt;geometry morphism from &lt;Elements of Q(4, 4)&gt; to &lt;Elements of Q(6, 4)&gt;&gt;
+gap&gt; List(Lines(ps1),x-&gt;x^em);
+[ &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, 
+  &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, 
+  &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, 
+  &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, 
+  &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, 
+  &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, 
+  &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, 
+  &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, 
+  &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, 
+  &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, 
+  &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, 
+  &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, 
+  &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, 
+  &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, 
+  &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, 
+  &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, 
+  &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, 
+  &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, 
+  &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, 
+  &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, 
+  &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, 
+  &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, 
+  &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, 
+  &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, 
+  &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, 
+  &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, 
+  &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, 
+  &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, &lt;a line in Q(6, 4)&gt;, 
+  &lt;a line in Q(6, 4)&gt; ]

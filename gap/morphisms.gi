@@ -38,8 +38,6 @@
 #   to find bugs quicker. But it looks already quite well.
 #
 # Documentation check list
-# - PluckerCoordinates: not documented, but there is a good reason for, see the comments at the code
-# - InversePluckerCoordinates: not documented, see one line above this.
 #
 ########################################
 
