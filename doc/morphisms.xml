@@ -276,11 +276,13 @@ that is not equipped with an intertwiner.<P/>
 </Section>
 
 <Section>
-<Heading>Embeddings</Heading>
+<Heading>Embeddings of projective spaces</Heading>
 
 The most natural of geometry morphisms include, for example, the embedding of a
-projective space into another via a subspace, or the projection of a polar space
-to a smaller polar space of the same type via a totally isotropic subspace.
+projective space into another via a subspace, the embedding of a projective
+space over a field into a projective space of the same dimension over an extended
+field, or the embedding of a projective space over a field into a projective
+space of higher dimension over a subfield through so-called field extension.
 
 <ManSection>
 <Oper Name="NaturalEmbeddingBySubspace" Arg="geom1, geom2, v"/>
@@ -294,12 +296,32 @@ be equivalent as geometries. An Intertwiner is not implemented for this geometry
 <Example>
 <#Include SYSTEM "../examples/include/morphisms_embedding1.include"> 
 </Example>
-Another example, this time with polar spaces:
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="NaturalEmbeddingBySubField" Arg="geom1, geom2"/>
+<Oper Name="NaturalEmbeddingBySubField" Arg="geom1, geom2, boolean"/>
+<Returns>a geometry morphism</Returns>
+<Description>
+The arguments <A>geom1</A> and <A>geom2</A> are projective spaces of
+the same dimension. This function returns a geometry morphism representing the natural embedding
+of <A>geom1</A> into <A>geom2</A> as a subfield geometry.
+The geometry morphism also comes equipped with an intertwiner (see
+<Ref Attr="Intertwiner" Style="Text"/>). The optional third argument <A>boolean</A>
+can take either <C>true</C> or
+<C>false</C> as input, and then our operation will or will not compute the
+intertwiner accordingly. The default (when calling the operation
+with two arguments) is set to <C>true</C>. Note that the source of the intertwiner is the
+projectivity group of <A>geom1</A> and its range is a subgroup of the projectivity group
+of <A>geom2</A>. Here is a simple example where the geometry morphism takes the points
+of <M>PG(2,3)</M> and embeds them into <M>PG(2,9)</M>.
 <Example>
-<#Include SYSTEM "../examples/include/morphisms_embedding2.include"> 
+<#Include SYSTEM "../examples/include/morphisms_subfield1.include">
 </Example>
 </Description>
 </ManSection>
+
 
 <ManSection>
 <Oper Name="NaturalEmbeddingByFieldReduction" Arg="geom1, f2, B"/>
@@ -317,8 +339,7 @@ is computed using <F>Basis(AsVectorSpace(K,L))</F>. It is checked whether <A>f2<
 In fact the arguments <A>geom1</A> and <A>geom2</A> are the projective spaces
 <Alt Not="HTML"><M>PG(r-1,q^t)</M></Alt><Alt Only="HTML">PG(r-1,q&lt;sup>t&lt;/sup>)</Alt> and
 <Alt Not="HTML"><M>PG(rt-1,q)</M></Alt><Alt Only="HTML">PG(rt-1,q)</Alt> respectively. As in the previous flavours, the 
-argument <A>B</A> is optional. An intertwiner is only implemented for this geometry morphism with
-projective spaces as argument.
+argument <A>B</A> is optional. An intertwiner is implemented for this geometry morphism.
 <Example>
 <#Include SYSTEM "../examples/include/morphisms_fieldreducproj.include"> 
 </Example>
@@ -342,6 +363,12 @@ automorphism of order two, corresponding with the Frobenius automorphism.
 </Example>
 </Description>
 </ManSection>
+
+</Section>
+
+<Section>
+<Heading>Embeddings of polar spaces</Heading>
+
 
 <ManSection>
 <Oper Name="NaturalEmbeddingByFieldReduction" Arg="geom1, f2"/>
@@ -629,6 +656,15 @@ No checks are performed in this case. It returns the plucker coordinates of the 
 as list of finite field elements. The second operation is the inverse of the first. No check
 is performed whether the argument represents a point of the correct hyperbolic quadric. Both operations
 are to be used internally only.
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="IsomorphismPolarSpacesProjectionFromNucleus" Arg="quadric, w, boolean"/>
+<Description>
+This operation returns the isomorphism between a parabolic quadric and a sympletic polar space. Although it
+is checked whether the base field and rank of both polar spaces are equal, this operation is menat for internal use
+only. This operation is called by the operation <F>IsomorphismPolarSpaces</F>.
 </Description>
 </ManSection>
 

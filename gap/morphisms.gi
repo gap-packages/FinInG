@@ -766,7 +766,8 @@ InstallMethod( ShrinkMat,
 	for i in [1..m/d] do
 		row:=[]; 
 		for j in [1..n/d] do
-			submat:=blocks[(i-1)*d+j];
+			#submat:=blocks[(i-1)*d+j]; #wrong line?
+   			submat:=blocks[(i-1)*(m/d)+j];
 			checklist:=List([1..d],i->(vecs[i]^(-1)*(Sum([1..d],j->submat[i][j]*vecs[j]))));
 			if Size(AsSet(checklist))<>1 then 
 				Error("The matrix is not a blown up matrix");
@@ -1698,7 +1699,7 @@ end );
 
 
 # CHECKED 11/06/14 jdb
-# found another cvec/cmat bug thanks to our testuses Geertrui!
+# found another cvec/cmat bug thanks to our testuser Geertrui!
 #############################################################################
 #O  NaturalEmbeddingBySubfield( <geom1>, <geom2> )
 # returns the embedding of <geom1> in <geom2>, two projective spaces of the
@@ -1716,22 +1717,55 @@ InstallMethod( NaturalEmbeddingBySubfield,
 		if geom1!.dimension  <> geom2!.dimension or not IsSubset(f2,f1) then  
 			Error("Dimensions and/or field sizes are incompatible"); return;
 		fi;
-		func :=  x -> VectorSpaceToElement(geom2, ShallowCopy(Unpack(x!.obj))); #here an unpack is needed to avoid field incompatibilites.
-		prefun := function( x )
+		
+        func :=  x -> VectorSpaceToElement(geom2, Unpack(x!.obj)); #here an unpack is needed to avoid field incompatibilites.
+		
+        prefun := function( x )
+            local xmat;
 			if not ForAll( Flat(x!.obj), i -> i in f1 ) then
 				Error("Element does not have all of its coordinates in ", f1);
 			fi;
-			return VectorSpaceToElement(geom1, ShallowCopy(Unpack(x!.obj))); # the same here.
+            xmat := Unpack(x!.obj);
+            if x!.type = 1 then
+                ConvertToVectorRep(xmat);
+            else
+                ConvertToMatrixRep(xmat);
+            fi;
+			return VectorSpaceToElement(geom1, xmat ); # the same here.
 		end;
-		map := GeometryMorphismByFunction( ElementsOfIncidenceStructure(geom1), 
+		
+        map := GeometryMorphismByFunction( ElementsOfIncidenceStructure(geom1),
                                        ElementsOfIncidenceStructure(geom2),
                                        func, false, prefun ); 
 		SetIsInjective( map, true );
 
     ## Intertwiner...
     
-		twinerfunc := x -> CollineationOfProjectiveSpace( Unpack(x!.mat), f2 ); #here was an unpack needed!
-		twinerprefun := y -> CollineationOfProjectiveSpace( Unpack(y!.mat), f1 ); #here too!
+		twinerfunc := function( x )
+            local xmat;
+            if not IsOne(x!.frob) then
+				Info(InfoFinInG, 1, "<el> is not in the source of the intertwiner");
+                return fail;
+            fi;
+            xmat := x!.mat;
+            return CollineationOfProjectiveSpace( Unpack(x!.mat), f2 ); #here was an unpack needed!
+        end;
+
+		twinerprefun := function( y )
+            local ymat,q;
+            if not IsOne(y!.frob) then
+				Info(InfoFinInG, 1, "<el> is not in the range of the intertwiner");
+                return fail;
+            fi;
+            ymat := Unpack(y!.mat); #here too!
+            q := ConvertToMatrixRep(ymat);
+            if not q = Size(f1) then
+   				Info(InfoFinInG, 1, "<el> is not in the range of the intertwiner");
+                return fail;
+            fi;
+            return CollineationOfProjectiveSpace(ymat,f1);
+        end;
+        
         g1 := ProjectivityGroup( geom1 );
 		gens1 := GeneratorsOfGroup( g1 );
 		gens2 := List(gens1, twinerfunc );

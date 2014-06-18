@@ -1,6 +1,6 @@
-gap&gt; pg1 := ProjectiveSpace(2, 3);
+gap&gt; pg1 := PG(2,3);
 ProjectiveSpace(2, 3)
-gap&gt; pg2 := ProjectiveSpace(2, 9);
+gap&gt; pg2 := PG(2,9);
 ProjectiveSpace(2, 9)
 gap&gt; em := NaturalEmbeddingBySubfield(pg1,pg2);
 &lt;geometry morphism from &lt;All elements of ProjectiveSpace(2, 
@@ -21,3 +21,25 @@ gap&gt; image := ImagesSet(em, points);
   &lt;a point in ProjectiveSpace(2, 9)&gt;, &lt;a point in ProjectiveSpace(2, 9)&gt;, 
   &lt;a point in ProjectiveSpace(2, 9)&gt;, &lt;a point in ProjectiveSpace(2, 9)&gt;, 
   &lt;a point in ProjectiveSpace(2, 9)&gt; ]
+gap&gt; hom := Intertwiner(em);
+MappingByFunction( The FinInG projectivity group PGL(3,3), &lt;projective colline
+ation group of size 5616 with 
+2 generators&gt;, function( x ) ... end, function( y ) ... end )
+gap&gt; group1 := ProjectivityGroup(pg1);
+The FinInG projectivity group PGL(3,3)
+gap&gt; gens := GeneratorsOfGroup(group1);
+[ &lt; a collineation: &lt;cmat 3x3 over GF(3,1)&gt;, F^0&gt;, 
+  &lt; a collineation: &lt;cmat 3x3 over GF(3,1)&gt;, F^0&gt; ]
+gap&gt; group1_image := Group(List(gens,x-&gt;x^hom));
+&lt;projective collineation group with 2 generators&gt;
+gap&gt; Order(group1_image);
+5616
+gap&gt; group2 := ProjectivityGroup(pg2);
+The FinInG projectivity group PGL(3,9)
+gap&gt; Order(group2);
+42456960
+gap&gt; g := Random(group2);
+&lt; a collineation: &lt;cmat 3x3 over GF(3,2)&gt;, F^0&gt;
+gap&gt; PreImageElm(hom,g);
+#I  &lt;el&gt; is not in the range of the intertwiner
+fail

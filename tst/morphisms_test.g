@@ -340,9 +340,11 @@ em := NaturalEmbeddingByFieldReduction(q3q,q7q);
 
 ###### naturalembedding by field reduction projective case test ###########
 
-n := 1;
-q := 3;
-h := 2;
+n := 2;
+q := 4;
+h := 3;
+
+basis := Basis(AsVectorSpace(GF(q),GF(q^h)));
 
 pg1 := PG(n,q^h);
 em := NaturalEmbeddingByFieldReduction(pg1,GF(q));
@@ -353,7 +355,46 @@ pts := AsList(Points(pg1));;
 List(gens,g->Collected(List(pts,x->(x^g)^em = (x^em)^(g^hom))));
 
 gens2 := List(gens,x->x^hom);
-els2 := List(pts,x->x^em);
+els2 := List(pts,x->x^em);;
 group2 := Group(gens2);
 List(gens2,g->Collected(List(els2,x->PreImageElm(em,x^g)=PreImageElm(em,x)^(PreImageElm(hom,g)))));
+
+List(gens,x->ShrinkMat(basis,BlownUpMat(basis,Unpack(x!.mat)))=Unpack(x!.mat));
+
+## BlownUpMat - ShrinkMat tests.
+
+n := 1;
+q := 3;
+h := 3;
+
+basis := Basis(AsVectorSpace(GF(q),GF(q^h)));
+
+group1 := HomographyGroup(PG(1,q^h));
+mats := List(group1,x->x!.mat);;
+
+bmats := List(mats,x->BlownUpMat(basis,x));;
+
+###### naturalembedding by subfield projective case test ###########
+
+n := 3;
+q := 5;
+h := 3;
+
+pg1 := PG(n,q);
+pg2 := PG(n,q^h);
+
+em := NaturalEmbeddingBySubfield(pg1,pg2);
+hom := Intertwiner(em);
+group1 := HomographyGroup(pg1);
+gens := GeneratorsOfGroup(group1);
+els := AsList(Points(pg1));;
+els := AsList(Lines(pg1));;
+List(gens,g->Collected(List(els,x->(x^g)^em = (x^em)^(g^hom))));
+
+gens2 := List(gens,x->x^hom);
+els := List(els,x->x^em);
+group2 := Group(gens2);
+List(gens2,g->Collected(List(els,x->PreImageElm(em,x^g)=PreImageElm(em,x)^(PreImageElm(hom,g)))));
+
+
 
