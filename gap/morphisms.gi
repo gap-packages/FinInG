@@ -799,7 +799,7 @@ InstallMethod( ShrinkMat,
 #  end );
 
 InstallMethod( ShrinkMat, 
-	"for a field, a subfield and a vector",
+	"for a field, a subfield and a matrix",
 	[ IsField,IsField, IsMatrix ],
 	function( f1,f2,mat )
 	# This gives the same result as ShrinkMat(B,mat) with B the natural basis returned by
@@ -915,7 +915,7 @@ InstallMethod( BlownUpSubspaceOfProjectiveSpace,
 	end );
 
 #############################################################################
-#O  BlownUpSubspaceOfProjectiveSpaceBySubfield( <B>, <subspace> ) 
+#O  BlownUpSubspaceOfProjectiveSpaceBySubfield( <subfield>, <subspace> )
 #	blows up a subspace of projective space by field reduction
 # This is w.r.t. to the canonical basis of the field over the subfield.
 ##

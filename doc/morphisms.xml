@@ -371,6 +371,74 @@ An Intertwiner is not implemented for this geometry morphism.
 </Description>
 </ManSection>
 
+<ManSection>
+    <Oper Name="NaturalEmbeddingBySubField" Arg="geom1, geom2"/>
+    <Oper Name="NaturalEmbeddingBySubField" Arg="geom1, geom2, boolean"/>
+    <Returns>a geometry morphism</Returns>
+    <Description>
+        The arguments <A>geom1</A> and <A>geom2</A> are projective or polar spaces of
+        the same dimension. This function returns a geometry morphism representing the natural embedding
+        of <A>geom1</A> into <A>geom2</A> as a subfield geometry.  If <A>geom1</A>
+        and <A>geom2</A> are polar spaces, then the only such possible embeddings are
+        listed in the table below (see <Cite Key="KleidmanLiebeck"/>):
+        
+        
+        <Table Align="l|l|l">
+            <Caption>Subfield embeddings of polar spaces</Caption>
+            <Row>
+                <Item>Polar Space 1</Item><Item>Polar Space 2</Item><Item>Conditions</Item>
+            </Row>
+            <HorLine/>
+            <HorLine/>
+            <Row>
+                <Item><M>W(2n-1,q)</M></Item>
+                <Item><Alt Not="HTML"><M>W(2n-1,q^a)</M></Alt><Alt Only="HTML">W(2n-1,q&lt;sup>a&lt;/sup>)</Alt></Item>
+                <Item>--</Item>
+            </Row>
+            <Row>
+                <Item><M>W(2n-1,q)</M></Item>
+                <Item><Alt Not="HTML"><M>H(2n-1,q^2)</M></Alt><Alt Only="HTML">H(2n-1,q&lt;sup>2&lt;/sup>)</Alt></Item>
+                <Item>--</Item>
+            </Row>
+            <Row>
+                <Item><Alt Not="HTML"><M>H(d,q^2)</M></Alt><Alt Only="HTML">H(d,q&lt;sup>2&lt;/sup>)</Alt></Item>
+                <Item><Alt Not="HTML"><M>H(d,q^{2r})</M></Alt><Alt Only="HTML">H(d,q&lt;sup>2r&lt;/sup>)</Alt></Item>
+                <Item>r odd</Item>
+            </Row>
+            <Row>
+                <Item><Alt Not="HTML"><M>O^\epsilon(d,q)</M></Alt><Alt Only="HTML">O&lt;sup>&#949;&lt;/sup>(d,q)</Alt></Item>
+                <Item><Alt Not="HTML"><M>H(d,q^2)</M></Alt><Alt Only="HTML">H(d,q&lt;sup>2&lt;/sup>)</Alt></Item>
+                <Item>q odd</Item>
+            </Row>
+            <Row>
+                <Item><Alt Not="HTML"><M>O^\epsilon(d,q)</M></Alt><Alt Only="HTML">O&lt;sup>&#949;&lt;/sup>(d,q)</Alt></Item>
+                <Item><Alt Not="HTML"><M>O^{\epsilon'}(d,q^r)</M></Alt><Alt Only="HTML">O&lt;sup>&#949;'&lt;/sup>(d,q&lt;sup>r&lt;/sup>)</Alt></Item>
+                <Item><Alt Not="HTML"><M>\epsilon=(\epsilon')^r</M></Alt><Alt Only="HTML">&#949;=(&#949;')&lt;sup>r&lt;/sup></Alt></Item>
+            </Row>
+        </Table>
+        
+        The geometry morphism also comes equipped with an intertwiner (see
+        <Ref Attr="Intertwiner" Style="Text"/>). The optional third argument <A>boolean</A>
+        can take either <C>true</C> or
+        <C>false</C> as input, and then our operation will or will not compute the
+        intertwiner accordingly. The user may wish that the intertwiner is not computed
+        when embedding into large polar spaces. The default (when calling the operation
+        with two arguments) is set to <C>true</C>.
+        Here is a simple example where the geometry morphism takes the points
+        of <M>PG(2,3)</M> and embeds them into <M>PG(2,9)</M>.
+        <Example>
+<#Include SYSTEM "../examples/include/morphisms_subfield1.include"> 
+            </Example>
+            In this example, we embed <M>W(5,3)</M> in <Alt Not="HTML"><M>H(5,3^2)</M></Alt>
+            <Alt Only="HTML">H(5,3&lt;sup>2&lt;/sup>)</Alt>.
+            <Example>
+                <#Include SYSTEM "../examples/include/morphisms_subfield2.include"> 
+                </Example>
+            </Description>
+</ManSection>
+
+
+
 
 <ManSection>
 <Oper Name="NaturalEmbeddingByFieldReduction" Arg="geom1, f2"/>
@@ -476,72 +544,6 @@ we construct a linear blocking set of the symplectic generalised quadrangle over
 </ManSection>
 
 <ManSection>
-<Oper Name="NaturalEmbeddingBySubField" Arg="geom1, geom2"/>
-<Oper Name="NaturalEmbeddingBySubField" Arg="geom1, geom2, boolean"/>
-<Returns>a geometry morphism</Returns>
-<Description>
-The arguments <A>geom1</A> and <A>geom2</A> are projective or polar spaces of
-the same dimension. This function returns a geometry morphism representing the natural embedding
-of <A>geom1</A> into <A>geom2</A> as a subfield geometry.  If <A>geom1</A>
-and <A>geom2</A> are polar spaces, then the only such possible embeddings are
-listed in the table below (see <Cite Key="KleidmanLiebeck"/>):
-
-
-<Table Align="l|l|l">
- <Caption>Subfield embeddings of polar spaces</Caption>
-  <Row>
-   <Item>Polar Space 1</Item><Item>Polar Space 2</Item><Item>Conditions</Item>
-  </Row>
- <HorLine/>
- <HorLine/>
-  <Row>
-   <Item><M>W(2n-1,q)</M></Item>
-   <Item><Alt Not="HTML"><M>W(2n-1,q^a)</M></Alt><Alt Only="HTML">W(2n-1,q&lt;sup>a&lt;/sup>)</Alt></Item>
-   <Item>--</Item>
-  </Row> 
-  <Row>
-   <Item><M>W(2n-1,q)</M></Item>
-   <Item><Alt Not="HTML"><M>H(2n-1,q^2)</M></Alt><Alt Only="HTML">H(2n-1,q&lt;sup>2&lt;/sup>)</Alt></Item>
-   <Item>--</Item>
-  </Row>  
-  <Row>
-   <Item><Alt Not="HTML"><M>H(d,q^2)</M></Alt><Alt Only="HTML">H(d,q&lt;sup>2&lt;/sup>)</Alt></Item>
-   <Item><Alt Not="HTML"><M>H(d,q^{2r})</M></Alt><Alt Only="HTML">H(d,q&lt;sup>2r&lt;/sup>)</Alt></Item>
-   <Item>r odd</Item>
-  </Row>
-  <Row>
-   <Item><Alt Not="HTML"><M>O^\epsilon(d,q)</M></Alt><Alt Only="HTML">O&lt;sup>&#949;&lt;/sup>(d,q)</Alt></Item>
-   <Item><Alt Not="HTML"><M>H(d,q^2)</M></Alt><Alt Only="HTML">H(d,q&lt;sup>2&lt;/sup>)</Alt></Item>
-   <Item>q odd</Item>
-  </Row>
-  <Row>
-   <Item><Alt Not="HTML"><M>O^\epsilon(d,q)</M></Alt><Alt Only="HTML">O&lt;sup>&#949;&lt;/sup>(d,q)</Alt></Item>
-   <Item><Alt Not="HTML"><M>O^{\epsilon'}(d,q^r)</M></Alt><Alt Only="HTML">O&lt;sup>&#949;'&lt;/sup>(d,q&lt;sup>r&lt;/sup>)</Alt></Item>
-   <Item><Alt Not="HTML"><M>\epsilon=(\epsilon')^r</M></Alt><Alt Only="HTML">&#949;=(&#949;')&lt;sup>r&lt;/sup></Alt></Item>
-  </Row>
-</Table>
-
-The geometry morphism also comes equipped with an intertwiner (see 
-<Ref Attr="Intertwiner" Style="Text"/>). The optional third argument <A>boolean</A> 
-can take either <C>true</C> or
-<C>false</C> as input, and then our operation will or will not compute the 
-intertwiner accordingly. The user may wish that the intertwiner is not computed
-when embedding into large polar spaces. The default (when calling the operation
-with two arguments) is set to <C>true</C>.
-Here is a simple example where the geometry morphism takes the points
-of <M>PG(2,3)</M> and embeds them into <M>PG(2,9)</M>.
-<Example>
-<#Include SYSTEM "../examples/include/morphisms_subfield1.include"> 
-</Example>
-In this example, we embed <M>W(5,3)</M> in <Alt Not="HTML"><M>H(5,3^2)</M></Alt>
-<Alt Only="HTML">H(5,3&lt;sup>2&lt;/sup>)</Alt>.
-<Example>
-<#Include SYSTEM "../examples/include/morphisms_subfield2.include"> 
-</Example>
-</Description>
-</ManSection>
-
-<ManSection>
     <Oper Name="ProjectiveCompletion" Arg="as"/>
     <Returns>a geometry morphism</Returns>
     <Description>
@@ -585,156 +587,6 @@ as <C>NaturalProjectionBySubspace(SymplecticSpace(3,3), v)</C>.
 <#Include SYSTEM "../examples/include/morphisms_projection.include"> 
 </Example>
 </Description>
-</ManSection>
-
-</Section>
-
-
-<!--
-<ManSection>
-<Oper Name="GrassmannMap" Arg="k, n, q"/>
-<Oper Name="GrassmannMap" Arg="k, ps"/>
-<Oper Name="GrassmannMap" Arg="vars"/>
-<Returns>a geometry morphism</Returns>
-<Description>
-If one argument <A>vars</A> is given, then <A>vars</A> is the set of
-k-subspaces of a projective space. If two arguments are given, then
-<A>k</A> is a dimension and <A>ps</A> is a projective space. Finally,
-if three arguments <A>k</A>, <A>n</A>, and <A>q</A> are given, then they
-represent k-subspaces of the projective space <M>PG(n,q)</M>. Here,
-k must be at least 1 but at most n-2. This operation returns a projective
-algebraic variety; the Grassmann variety
-<M>Gr(k,n,q)</M>.
-<Example>
-gap> g := GrassmannMap(lines);
-&lt;geometry morphism from &lt;lines of PG(3, 3)&gt; to &lt;points of Gr(1, 3, 3)&gt;&gt;
-gap> l := Random(lines);
-&lt;a line in PG(3, 3)&gt;
-gap> l^g;
-&lt;a point in Gr(1, 3, 3)&gt;
-</Example>
-</Description>
-</ManSection>
-
-<ManSection>
-<Oper Name="SegreMap" Arg="list"/>
-<Returns>a geometry morphism</Returns>
-<Description>
-<Example>
-</Example>
-</Description>
-</ManSection>
-
-<ManSection>
-<Oper Name="VeroneseMap" Arg="n, q"/>
-<Oper Name="VeroneseMap" Arg="n, F"/>
-<Oper Name="VeroneseMap" Arg="ps"/>
-<Returns>a geometry morphism</Returns>
-<Description>
-<Example>
-gap> pg:=ProjectiveSpace(3,3);
-PG(3, 3)
-gap> vmap:=VeroneseMap(pg);
-&lt;geometry morphism from &lt;points of PG(3, 3)&gt; to &lt;points of Ver(9, 3)&gt;&gt;
-gap> p:=Random(Points(pg));
-&lt;a point in PG(3, 3)&gt;
-gap> p^vmap;
-&lt;a point in Ver(9, 3)&gt;
-</Example>
-</Description>
-</ManSection>
--->
-
-
-<Section>
-<Heading>Low level functions</Heading>
-
-<ManSection>
-<Oper Name="PluckerCoordinates" Arg="matrix"/>
-<Oper Name="InversePluckerCoordinates" Arg="vector"/>
-<Description>
-The first operation can also take a matrix representing a line of <M>PG(3,q)</M> as argument.
-No checks are performed in this case. It returns the plucker coordinates of the argument
-as list of finite field elements. The second operation is the inverse of the first. No check
-is performed whether the argument represents a point of the correct hyperbolic quadric. Both operations
-are to be used internally only.
-</Description>
-</ManSection>
-
-<ManSection>
-<Oper Name="IsomorphismPolarSpacesProjectionFromNucleus" Arg="quadric, w, boolean"/>
-<Description>
-This operation returns the isomorphism between a parabolic quadric and a sympletic polar space. Although it
-is checked whether the base field and rank of both polar spaces are equal, this operation is menat for internal use
-only. This operation is called by the operation <F>IsomorphismPolarSpaces</F>.
-</Description>
-</ManSection>
-
-<ManSection>
-<Oper Name="IsomorphismPolarSpacesNC" Arg="ps1, ps2"/>
-<Oper Name="IsomorphismPolarSpacesNC" Arg="ps1, ps2, boolean"/>
-<Description>
-<F>IsomorphismPolarSpacesNC</F> is the version of <F>IsomorphismPolarSpaces</F> where no checks are built in, and
-which is only applicable when the two polar spaces are equivalent. As no checks are built in, this operation is to
-be used internally only.
-</Description>
-</ManSection>
-
-<ManSection>
-<Oper Name="NaturalEmbeddingBySubspaceNC" Arg="geom1, geom2, v"/>
-<Description>
-The operation <F>NaturalEmbeddingBySubspaceNC</F> is the ``no check'' version of <F>NaturalEmbeddingBySubspace</F>.
-</Description>
-</ManSection>
-
-
-<ManSection>
-    <Oper Name="BlownUpProjectiveSpace" Arg="basis, pg1"/>
-    <Returns>a projective space</Returns>
-    <Description>
-        Blows up the projective space <A>pg1</A> with respect to the <A>basis</A> using field reduction.
-        If the argument <A>pg1</A> is has projective dimension <M>r-1</M> over the finite field
-        <Alt Not="HTML"><M>GF(q^t)</M></Alt><Alt Only="HTML">
-            GF(q&lt;sup>t&lt;/sup>)</Alt>, and <A>basis</A> is a basis of <Alt Not="HTML"><M>GF(q^t)</M></Alt><Alt Only="HTML">
-                GF(q&lt;sup>t&lt;/sup>)</Alt> over <M>GF(q)</M>,
-            then this functions returns a projective space of dimension <M>rt-1</M> over GF(q).
-    </Description>
-</ManSection>
-
-<ManSection>
-    <Oper Name="BlownUpProjectiveSpaceBySubfield" Arg="subfield,pg"/>
-    <Returns>a projective space</Returns>
-    <Description>
-        Blows up a projective space <A>pg</A> with respect to the standard basis of the basefield of <A>pg</A> over the <A>subfield</A>.
-    </Description>
-</ManSection>
-
-<ManSection>
-    <Oper Name="BlownUpSubspaceOfProjectiveSpace" Arg="basis,subspace"/>
-    <Returns>a subspace of a projective space</Returns>
-    <Description>
-        Blows up a <A>subspace</A> of a projective space with respect to the <A>basis</A> using field reduction and returns it a subspace of the projective space obtained from blowing up the ambient projective space of <A>subspace</A> with respect to <A>basis</A> using field reduction.
-    </Description>
-</ManSection>
-
-
-<ManSection>
-    <Oper Name="BlownUpSubspaceOfProjectiveSpaceBySubfield" Arg="subfield,subspace"/>
-    <Returns>a subspace of a projective space</Returns>
-    <Description>
-        Blows up a <A>subspace</A> of a projective space with respect to the
-        standard basis of the basefield of <A>subspace</A> over the <A>subfield</A>, using field reduction and
-        returns it a subspace of the projective space obtained from blowing up the ambient projective space of <A>subspace</A> over the subfield.
-    </Description>
-</ManSection>
-
-
-<ManSection>
-    <Oper Name="IsDesarguesianSpreadElement" Arg="basis,subspace"/>
-    <Returns>true or false</Returns>
-    <Description>
-        Checks wether the <A>subspace</A> is a subspace which is obtained from a blowing up a projective point using field reduction with respect to <A>basis</A>.
-    </Description>
 </ManSection>
 
 </Section>

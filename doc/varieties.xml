@@ -387,3 +387,58 @@ A <E>Grassmann variety</E> in <Package>FinInG</Package> is a projective algebrai
 
 </Chapter>
 
+<!--
+ <ManSection>
+ <Oper Name="GrassmannMap" Arg="k, n, q"/>
+ <Oper Name="GrassmannMap" Arg="k, ps"/>
+ <Oper Name="GrassmannMap" Arg="vars"/>
+ <Returns>a geometry morphism</Returns>
+ <Description>
+ If one argument <A>vars</A> is given, then <A>vars</A> is the set of
+ k-subspaces of a projective space. If two arguments are given, then
+ <A>k</A> is a dimension and <A>ps</A> is a projective space. Finally,
+ if three arguments <A>k</A>, <A>n</A>, and <A>q</A> are given, then they
+ represent k-subspaces of the projective space <M>PG(n,q)</M>. Here,
+ k must be at least 1 but at most n-2. This operation returns a projective
+ algebraic variety; the Grassmann variety
+ <M>Gr(k,n,q)</M>.
+ <Example>
+ gap> g := GrassmannMap(lines);
+ &lt;geometry morphism from &lt;lines of PG(3, 3)&gt; to &lt;points of Gr(1, 3, 3)&gt;&gt;
+ gap> l := Random(lines);
+ &lt;a line in PG(3, 3)&gt;
+ gap> l^g;
+ &lt;a point in Gr(1, 3, 3)&gt;
+ </Example>
+ </Description>
+ </ManSection>
+ 
+ <ManSection>
+ <Oper Name="SegreMap" Arg="list"/>
+ <Returns>a geometry morphism</Returns>
+ <Description>
+ <Example>
+ </Example>
+ </Description>
+ </ManSection>
+ 
+ <ManSection>
+ <Oper Name="VeroneseMap" Arg="n, q"/>
+ <Oper Name="VeroneseMap" Arg="n, F"/>
+ <Oper Name="VeroneseMap" Arg="ps"/>
+ <Returns>a geometry morphism</Returns>
+ <Description>
+ <Example>
+ gap> pg:=ProjectiveSpace(3,3);
+ PG(3, 3)
+ gap> vmap:=VeroneseMap(pg);
+ &lt;geometry morphism from &lt;points of PG(3, 3)&gt; to &lt;points of Ver(9, 3)&gt;&gt;
+ gap> p:=Random(Points(pg));
+ &lt;a point in PG(3, 3)&gt;
+ gap> p^vmap;
+ &lt;a point in Ver(9, 3)&gt;
+ </Example>
+ </Description>
+ </ManSection>
+ -->
+
