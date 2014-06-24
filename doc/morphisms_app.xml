@@ -1,0 +1,207 @@
+<!-- 
+
+  morphisms_app.xml    FinInG package documentation
+                                                                   John Bamberg
+                                                                   Anton Betten
+                                                                   Jan De Beule
+                                                                  Philippe Cara
+                                                                 Michel Lavrauw
+                                                                Max Neunhoeffer
+
+  Copyright (C) 2014,	Colorado State University, Fort Collins
+						Università degli Studi di Padova
+						Universeit Gent
+						University of St. Andrews
+						University of Western Australia, Perth
+						Vrije Universiteit Brussel
+
+
+This appendix gives more (technical) information on the low level functions for morphisms.
+ 
+-->
+<Appendix Label="morphisms_app">
+<Heading>Low level functions for morphisms</Heading>
+
+<Section Label="field_red_forms">
+<Heading>Field reduction and vector spaces</Heading>
+
+<ManSection>
+<Oper Name="ShrinkVec" Arg="f1, f2, v, basis"/>
+<Oper Name="ShrinkVec" Arg="f1, f2, v"/>
+<Returns>a vector</Returns>
+<Description>
+The argument <A>f2</A> is a subfield of <A>f1</A> and v is vector
+in a vectorspace <M>V</M> over <A>f2</A>. The second flavour Returns
+return the vector of length <M>d/t</M>, where <M>d=dim(V)</M>,
+and <M>t=[f1:f2]</M>. The first flavour uses the natural basis
+<F>Basis(AsVectorSpace(f2,f1))</F>. It is not checked whether
+<A>f2</A> is a subfield of <A>f1</A>, but it is checked whether
+the lengt of <A>v</A> is a multiple of the degree of the field extension.
+</Description>
+</ManSection>
+
+
+<ManSection>
+<Oper Name="ShrinkMat" Arg="basis, matrix"/>
+<Oper Name="ShrinkMat" Arg="f1, f2, matrix"/>
+<Returns>a matrix</Returns>
+<Description>
+Let <M>K=GF(q)</M> and let <Alt Not="HTML"><M>L=GF(q^d)</M></Alt><Alt Only="HTML">L=GF(q&lt;sup>d&lt;/sup>)</Alt>.
+Asumme that <M>B</M> is a basis for <M>L</M> as <M>K</M> vector space. Let
+<Alt Not="HTML"><M>A=(a_{ij})</M></Alt><Alt Only="HTML">A=(a&lt;sub>ij &lt;/sub>)</Alt> be a matrix over <M>L</M>.
+The result of <F>BlownUpMat(B,A)</F> is the matrix
+<Alt Not="HTML"><M>M=(m_{ij})</M></Alt><Alt Only="HTML">M=(m&lt;sub>ij &lt;/sub>)</Alt>, where each entry
+<Alt Not="HTML"><M>a=a_{ij}</M></Alt><Alt Only="HTML">a=a&lt;sub>ij &lt;/sub></Alt> is replaced by
+the <Alt Not="HTML"><M>d \times d</M></Alt><Alt Only="HTML"><M>d \times d</M></Alt> matrix <Alt Not="HTML"><M>M_a</M></Alt>
+<Alt Only="HTML">M&lt;sub>a&lt;/sub></Alt>, representing the linear map <Alt Not="HTML"><M>x \mapsto ax</M></Alt><Alt Only="HTML"><M>x |-> ax</M></Alt>
+with respect to the basis <M>B</M>. This means that if <Alt Not="HTML"><M>B=\{b_1,b_2,\ldots,b_d\}</M></Alt>
+<Alt Only="HTML">B={b&lt;sub>1&lt;/sub>,b&lt;sub>2&lt;/sub>,...,b&lt;sub>d&lt;/sub>}</Alt>, then the row <M>j</M> is row of the <M>d</M>
+coefficients of <Alt Not="HTML"><M>ab_j</M></Alt><Alt Only="HTML">ab&lt;sub>j&lt;/sub></Alt> with resepect to the basis
+<M>B</M>. The operation <F>ShrinkMat</F> implements the converse of <F>BlownUpMat</F>.
+It is checked if the input is a blown up matrix as follows. Let <M>A</M> be a
+<Alt Not="HTML"><M>dm \times dn</M></Alt><Alt Only="HTML"><M>dm \times dn</M></Alt> matrix.
+For each <Alt Not="HTML"><M>d \times d</M></Alt><Alt Only="HTML"><M>d \times d</M></Alt>
+block, say <M>M</M>, we need to check that the set <Alt Not="HTML"><M>\{b_i^(-1) \sum_{j=1}^{d} m_{ij} b_j: i \in \{1,..,d\}\}</M></Alt>
+<Alt Only="HTML">{b&lt;sub>i&lt;/sub>&lt;sup>-1&lt;/sup><M>\sum</M>&lt;sub>1&lt;/sub>&lt;sup>d&lt;/sup>m&lt;sub>ij&lt;/sub>b&lt;sub>j&lt;/sub>: <M>i \in \{1,\ldots,d\}</M>}</Alt>.
+has size one, since the unique element in that case is the element <M>a \in L</M> represented as a linear map by M with respect to the basis <M>B</M>.<P/>
+The first flavour of this operation requires a given basis as first argument. The second flavour requires a field <A>f1</A> and a subfield <A>f2</A> as first two arguments
+and calls the first flavour with <F>Basis(AsVectorSpace(f2,f1))</F> as basis. It is not checked whether <A>f2</A> is a subfield of <A>f1</A>.
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="BlownUpProjectiveSpace" Arg="basis, pg1"/>
+<Returns>a projective space</Returns>
+<Description>
+Let <A>basis</A> be a basis of the field <Alt Not="HTML"><M>GF(q^t)</M></Alt><Alt Only="HTML">GF(q&lt;sup>t&lt;/sup>)</Alt>
+that is an extension of the basefield of the <M>r-1</M> dimensional projective space <A>pg1</A>.
+This operation returns the <M>rt-1</M> dimensional projective space over <M>GF(q)</M>. The basis itself is only used to determine
+the field <Alt Not="HTML"><M>GF(q^t)</M></Alt><Alt Only="HTML">GF(q&lt;sup>t&lt;/sup>)</Alt>.
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="BlownUpProjectiveSpaceBySubfield" Arg="subfield, pg"/>
+<Returns>a projective space</Returns>
+<Description>
+Blows up a projective space <A>pg</A> with respect to the standard basis of the basefield of <A>pg</A> over the <A>subfield</A>.
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="BlownUpSubspaceOfProjectiveSpace" Arg="basis, subspace"/>
+<Oper Name="BlownUpSubspaceOfProjectiveSpace" Arg="basis, space"/>
+<Returns>a subspace of a projective space</Returns>
+<Description>
+The first flavour blows up a <A>subspace</A> of a projective space with respect to the <A>basis</A> using
+field reduction and returns a subspace of the projective space obtained from blowing
+up the ambient projective space of <A>subspace</A> with respect to <A>basis</A> using field reduction.
+This operation relies on <F>BlownUpMat</F>.
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="BlownUpSubspaceOfProjectiveSpaceBySubfield" Arg="subfield,subspace"/>
+<Returns>a subspace of a projective space</Returns>
+<Description>
+Blows up a <A>subspace</A> of a projective space with respect to the
+standard basis of the basefield of <A>subspace</A> over the <A>subfield</A>, using field reduction and
+returns it a subspace of the projective space obtained from blowing up the ambient
+projective space of <A>subspace</A> over the subfield.
+</Description>
+</ManSection>
+
+
+<ManSection>
+<Oper Name="IsDesarguesianSpreadElement" Arg="basis,subspace"/>
+<Returns>true or false</Returns>
+<Description>
+Checks wether the <A>subspace</A> is a subspace which is obtained from a blowing up a projective point using field reduction with respect to <A>basis</A>.
+</Description>
+</ManSection>
+
+</Section>
+
+
+<Section Label="field_red_forms">
+<Heading>Field reduction and forms</Heading>
+
+<ManSection>
+<Oper Name="QuadraticFormFieldReduction" Arg="qf1, f2, alpha, basis"/>
+<Oper Name="QuadraticFormFieldReduction" Arg="qf1, f2, alpha"/>
+<Returns>a quadratic form</Returns>
+<Description>
+<Example>
+
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="BilinearFormFieldReduction" Arg="bil11, f2, alpha, basis"/>
+<Oper Name="BilinearFormFieldReduction" Arg="bil11, f2, alpha"/>
+<Returns>a bilinear form</Returns>
+<Description>
+<Example>
+            
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="HermitianFormFieldReduction" Arg="hf1, f2, alpha, basis"/>
+<Oper Name="HermitianFormFieldReduction" Arg="hf1, f2, alpha"/>
+<Returns>a hermitian form</Returns>
+<Description>
+<Example>
+            
+</Example>
+</Description>
+</ManSection>
+
+</Section>
+
+
+<Section>
+    <Heading>Low level functions</Heading>
+    
+    <ManSection>
+        <Oper Name="PluckerCoordinates" Arg="matrix"/>
+        <Oper Name="InversePluckerCoordinates" Arg="vector"/>
+        <Description>
+            The first operation can also take a matrix representing a line of <M>PG(3,q)</M> as argument.
+            No checks are performed in this case. It returns the plucker coordinates of the argument
+            as list of finite field elements. The second operation is the inverse of the first. No check
+            is performed whether the argument represents a point of the correct hyperbolic quadric. Both operations
+            are to be used internally only.
+        </Description>
+    </ManSection>
+    
+    <ManSection>
+        <Oper Name="IsomorphismPolarSpacesProjectionFromNucleus" Arg="quadric, w, boolean"/>
+        <Description>
+            This operation returns the isomorphism between a parabolic quadric and a sympletic polar space. Although it
+            is checked whether the base field and rank of both polar spaces are equal, this operation is menat for internal use
+            only. This operation is called by the operation <F>IsomorphismPolarSpaces</F>.
+        </Description>
+    </ManSection>
+    
+    <ManSection>
+        <Oper Name="IsomorphismPolarSpacesNC" Arg="ps1, ps2"/>
+        <Oper Name="IsomorphismPolarSpacesNC" Arg="ps1, ps2, boolean"/>
+        <Description>
+            <F>IsomorphismPolarSpacesNC</F> is the version of <F>IsomorphismPolarSpaces</F> where no checks are built in, and
+            which is only applicable when the two polar spaces are equivalent. As no checks are built in, this operation is to
+            be used internally only.
+        </Description>
+    </ManSection>
+    
+    <ManSection>
+        <Oper Name="NaturalEmbeddingBySubspaceNC" Arg="geom1, geom2, v"/>
+        <Description>
+            The operation <F>NaturalEmbeddingBySubspaceNC</F> is the ``no check'' version of <F>NaturalEmbeddingBySubspace</F>.
+        </Description>
+    </ManSection>
+
+</Section>
+</Appendix>
