@@ -437,32 +437,28 @@ An Intertwiner is not implemented for this geometry morphism.
             </Description>
 </ManSection>
 
-
-
-
 <ManSection>
-<Oper Name="NaturalEmbeddingByFieldReduction" Arg="geom1, f2"/>
-<Oper Name="NaturalEmbeddingByFieldReduction" Arg="geom1, f2, B"/>
-<Oper Name="NaturalEmbeddingByFieldReduction" Arg="geom1, f2, boolean"/>
-<Returns>a geometry morphism</Returns>
+<Heading> Embedding of polar spaces by field reduction</Heading>
 <Description>
-The argument <A>geom1</A> is a classical polar space over a field <M>L</M> and <A>f2</A> is a subfield <M>K</M> of <M>L</M>,
-<Alt Not="HTML"><M>L=GF(q^t)</M></Alt> <Alt Only="HTML">GF(q&lt;sup>t&lt;/sup>)</Alt> and <M>K=GF(q)</M>. 
-This function returns a geometry morphism representing the natural embedding of <A>geom1</A> into 
-a classical polar space <M>S</M> via field reduction, based on the following principle.
-Consider the trace map <M>T:</M><Alt Not="HTML"><M>L=GF(q^t) \rightarrow GF(q):</M></Alt>
+Let <M>P</M> be a polar space over a field <Alt Not="HTML"><M>L=GF(q^t)</M></Alt> <Alt Only="HTML">GF(q&lt;sup>t&lt;/sup>)</Alt> and let <M>K=GF(q)</M>. Let <M>f</M> be the form
+determining on the <M>r</M> dimensional vector space <M>V</M> over <M>L</M> determining <M>P</M>. Consider the trace map <M>T:</M><Alt Not="HTML"><M>L=GF(q^t) \rightarrow GF(q):</M></Alt>
 <Alt Only="HTML">GF(q&lt;sup>t&lt;/sup>) &#8594; GF(q):</Alt><Alt Not="HTML"><M>x \mapsto x^{q^t}+ x^{q^{t-1}} +\ldots x</M></Alt>
-<Alt Only="HTML">x &#8594; x&lt;sup>q&lt;sup>t&lt;/sup>&lt;/sup> + x&lt;sup>q&lt;sup>t-1&lt;/sup>&lt;/sup> + &#8230; x</Alt>. 
-The polar space <A>geom1</A> is the geometry associated to a quadratic or sequilinear form <M>f</M>, acting on an <M>r</M>-dimensional 
-vector space <M>V1</M> over the finite field <Alt Not="HTML"><M>GF(q^t)</M></Alt><Alt Only="HTML">GF(q&lt;sup>t&lt;/sup>)</Alt>.
-We first consider the <M>rt</M>-dimensional vector space <M>V2</M> over the finite field <M>GF(q)</M>. There is a bijective map 
-<Alt Not="HTML"><M>\Phi</M></Alt><Alt Only="HTML">&#934;</Alt> from <M>V1</M> to <M>V2</M>. Now it is easy to see that 
-<Alt Only="HTML">T &#8226; f &#8226; &#934; &lt;sup>-1&lt;/sup></Alt><Alt Not="HTML">T \circ f \circ \Phi^{-1}</Alt> will be a
-quadratic or sesquilinear form (depending on <M>f</M> being quadratic or sesquilinear) acting on <M>V2</M>, and hence, if not 
-singular or degenerate, induce a polar space over the finite field <M>GF(q)</M>. An element of <A>geom1</A> is mapped to an element
-of the induced polar space over <M>GF(q)</M> using the same principle as for the natural embedding by field reduction for projective
-spaces, of course now restricted to the elements of <A>geom1</A>. The only such possible embeddings are
-listed in the table below (see <Cite Key="Gill"/>):
+<Alt Only="HTML">x &#8594; x&lt;sup>q&lt;sup>t&lt;/sup>&lt;/sup> + x&lt;sup>q&lt;sup>t-1&lt;/sup>&lt;/sup> + &#8230; x</Alt>. Define for any <M>\alpha \in L</M> the map <M>T_{\alpha}: GF(q^t)\rightarrow
+    GF(q): T_{\alpha}(x) = T(\alpha x)</M>.
+
+Consider the <M>rt</M> dimensional vector space <M>W</M> over <M>K</M>. There is a bijective map
+<Alt Not="HTML"><M>\Phi</M></Alt><Alt Only="HTML">&#934;</Alt> from <M>V</M> to <M>W</M>. Now it is easy to see that <Alt Only="HTML">T&lt;sub>&#945;&lt;/sub> &#8226; f &#8226; &#934; &lt;sup>-1&lt;/sup></Alt><Alt Not="HTML">T_{\alpha} \circ f \circ \Phi^{-1}</Alt> will be a
+quadratic or sesquilinear form (depending on <M>\alpha</M>, and <M>f</M> being quadratic or sesquilinear) acting on <M>W</M>, and hence, if not singular or degenerate, inducing a polar space <M>S</M> over the finite field <M>GF(q)</M>. An element of <M>P</M> can be mapped on an element of <M>S</M> by simply blowing up using
+using field reduction. So the resulting polar space <M>W</M> is dependent on the original form <M>f</M>,
+the parameter <M>\alpha</M> and the blowing up of elements by field reduction, the latter being dependent
+on the basis of <M>L</M> as a <M>K</M> vector space. <Package>FinInG</Package> provides two approaches.
+The first approach starts from <M>P</M> and the parameters <M>K</M>, <M>\alpha</M> and a basis for <M>L</M>
+as <M>K</M> vector space. Then the resulting form <Alt Only="HTML">T&lt;sub>&#945;&lt;/sub> &#8226; f &#8226; &#934; &lt;sup>-1&lt;/sup></Alt><Alt Not="HTML">T_{\alpha} \circ f \circ \Phi^{-1}</Alt> is determined,
+and the associated polar space <M>W</M> will be the range of the embedding. The second approach starts
+from two given polar spaces <M>P</M> and <M>S</M>. Based on this input, it is determined wheter an embedding
+based on the above described principle is possible, and the necessary parameters are computed. The resulting
+embedding is a geometry morhpism from <M>P</M> to <M>S</M>.<P/>
+The embeddings possible using the principle described here are listed in the following table see <Cite Key="Gill"/>).
 
 <Table Align="l|l|l">
  <Caption>Field reduction of polar spaces</Caption>
@@ -526,8 +522,17 @@ listed in the table below (see <Cite Key="Gill"/>):
    <Item>q odd</Item>
  </Row>
 </Table>
+</Description>
+</ManSection>
 
-The geometry morphism also comes equipped with an intertwiner (see 
+<ManSection>
+<Oper Name="NaturalEmbeddingByFieldReduction" Arg="ps1,f2, alpha, basis, bool"/>
+<Oper Name="NaturalEmbeddingByFieldReduction" Arg="ps1,f2, alpha, basis"/>
+<Oper Name="NaturalEmbeddingByFieldReduction" Arg="ps1,f2, bool"/>
+<Oper Name="NaturalEmbeddingByFieldReduction" Arg="ps1,f2, alpha"/>
+<Oper Name="NaturalEmbeddingByFieldReduction" Arg="ps1,f2"/>
+<Description>
+The geometry morphism also comes equipped with an intertwiner (see
 <Ref Attr="Intertwiner" Style="Text"/>). This intertwiner has as its domain the isometry 
 group of <A>geom1</A>. The optional third argument <A>boolean</A> can take either <C>true</C> or
 <C>false</C> as input, and then this operation will or will not compute the 

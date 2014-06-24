@@ -27,7 +27,7 @@ behind the package.
 <Section Label="philosophy">
 <Heading>Philosophy</Heading>
 
-<Package>FinInG</Package> is a package for computation in 
+<Package>FinInG</Package> (pronounciation: f&#618;n&#618;&#331;) is a package for computation in
 Finite Incidence Geometry. It provides users with the basic tools to 
 work in various areas of finite geometry from the realms of 
 projective spaces to the flat lands of generalised polygons. 

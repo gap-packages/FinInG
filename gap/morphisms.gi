@@ -1489,7 +1489,7 @@ InstallMethod (NaturalEmbeddingByFieldReduction,
 
 #third particular version: user wants a particular alpha, agrees with base and bool.
 #############################################################################
-#O  NaturalEmbeddingByFieldReduction( <geom1>, <f2>, <bool> ) 
+#O  NaturalEmbeddingByFieldReduction( <geom1>, <f2>, <alpha> )
 # returns NaturalEmbeddingByFieldReduction( <geom1>, <f2>, <alpha>, <basis>, true )
 # where <basis> is the canonical basis of BaseField(geom1) over <f2>.
 #
@@ -1502,7 +1502,7 @@ InstallMethod (NaturalEmbeddingByFieldReduction,
 
 #fourth version: user wants a particular alpha, and basis, agrees with bool.
 #############################################################################
-#O  NaturalEmbeddingByFieldReduction( <geom1>, <f2>, <bool> ) 
+#O  NaturalEmbeddingByFieldReduction( <geom1>, <f2>, <alpha>, <basis> )
 # returns NaturalEmbeddingByFieldReduction( <geom1>, <f2>, <alpha>, <basis>, true )
 #
 InstallMethod (NaturalEmbeddingByFieldReduction,
