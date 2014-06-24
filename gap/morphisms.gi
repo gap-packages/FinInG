@@ -1459,20 +1459,46 @@ InstallMethod (NaturalEmbeddingByFieldReduction,
 	return map;
 	end );
 
-# first particular version: user agrees with everything
+
+#first version: user wants a particular alpha, and basis, agrees with bool=true.
 #############################################################################
-#O  NaturalEmbeddingByFieldReduction( <geom1>, <f2> ) 
+#O  NaturalEmbeddingByFieldReduction( <geom1>, <f2>, <alpha>, <basis> )
 # returns NaturalEmbeddingByFieldReduction( <geom1>, <f2>, <alpha>, <basis>, true )
-# where <basis> is the canonical basis of BaseField(geom1) over <f2>, and
-# <alpha> is One(f2).
+#
 InstallMethod (NaturalEmbeddingByFieldReduction,
 	"for a polar space and a field",
-	[IsClassicalPolarSpace, IsField],
-	function(ps1,f2)
-		return NaturalEmbeddingByFieldReduction(ps1,f2,One(f2),Basis(AsVectorSpace(f2,BaseField(ps1))),true);
+	[IsClassicalPolarSpace, IsField, IsFFE, IsBasis],
+	function(ps1,f2,alpha,basis)
+		return NaturalEmbeddingByFieldReduction(ps1,f2,alpha,basis,true);
 	end );
-	
-# second particular version: user agrees but wants to control intertwiner
+
+#second particular version: user wants a particular alpha, and bool, agrees with basis.
+#############################################################################
+#O  NaturalEmbeddingByFieldReduction( <geom1>, <f2>, <alpha>, <bool> )
+# returns NaturalEmbeddingByFieldReduction( <geom1>, <f2>, <alpha>, <basis>, true )
+# where <basis> is the canonical basis of BaseField(geom1) over <f2>.
+#
+InstallMethod (NaturalEmbeddingByFieldReduction,
+	"for a polar space and a field",
+	[IsClassicalPolarSpace, IsField, IsFFE, IsBool],
+	function(ps1,f2,alpha,bool)
+		return NaturalEmbeddingByFieldReduction(ps1,f2,alpha,Basis(AsVectorSpace(f2,BaseField(ps1))),bool);
+	end );
+
+#third particular version: user wants a particular alpha, agrees with basis and bool.
+#############################################################################
+#O  NaturalEmbeddingByFieldReduction( <geom1>, <f2>, <alpha> )
+# returns NaturalEmbeddingByFieldReduction( <geom1>, <f2>, <alpha>, <basis>, true )
+# where <basis> is the canonical basis of BaseField(geom1) over <f2>.
+#
+InstallMethod (NaturalEmbeddingByFieldReduction,
+	"for a polar space and a field",
+	[IsClassicalPolarSpace, IsField, IsFFE],
+	function(ps1,f2,alpha)
+		return NaturalEmbeddingByFieldReduction(ps1,f2,alpha,Basis(AsVectorSpace(f2,BaseField(ps1))),true);
+	end );
+
+# fourth particular version: user agrees but wants to control intertwiner
 #############################################################################
 #O  NaturalEmbeddingByFieldReduction( <geom1>, <f2>, <bool> ) 
 # returns NaturalEmbeddingByFieldReduction( <geom1>, <f2>, <one>, <basis>, <bool> )
@@ -1487,31 +1513,18 @@ InstallMethod (NaturalEmbeddingByFieldReduction,
 		return NaturalEmbeddingByFieldReduction(ps1,f2,One(f2),Basis(AsVectorSpace(f2,BaseField(ps1))),bool);
 	end );
 
-#third particular version: user wants a particular alpha, agrees with base and bool.
+# fifth particular version: user agrees with everything
 #############################################################################
-#O  NaturalEmbeddingByFieldReduction( <geom1>, <f2>, <alpha> )
+#O  NaturalEmbeddingByFieldReduction( <geom1>, <f2> ) 
 # returns NaturalEmbeddingByFieldReduction( <geom1>, <f2>, <alpha>, <basis>, true )
-# where <basis> is the canonical basis of BaseField(geom1) over <f2>.
-#
+# where <basis> is the canonical basis of BaseField(geom1) over <f2>, and
+# <alpha> is One(f2).
 InstallMethod (NaturalEmbeddingByFieldReduction,
 	"for a polar space and a field",
-	[IsClassicalPolarSpace, IsField, IsFFE],
-	function(ps1,f2,alpha)
-		return NaturalEmbeddingByFieldReduction(ps1,f2,alpha,Basis(AsVectorSpace(f2,BaseField(ps1))),true);
+	[IsClassicalPolarSpace, IsField],
+	function(ps1,f2)
+		return NaturalEmbeddingByFieldReduction(ps1,f2,One(f2),Basis(AsVectorSpace(f2,BaseField(ps1))),true);
 	end );
-
-#fourth version: user wants a particular alpha, and basis, agrees with bool.
-#############################################################################
-#O  NaturalEmbeddingByFieldReduction( <geom1>, <f2>, <alpha>, <basis> )
-# returns NaturalEmbeddingByFieldReduction( <geom1>, <f2>, <alpha>, <basis>, true )
-#
-InstallMethod (NaturalEmbeddingByFieldReduction,
-	"for a polar space and a field",
-	[IsClassicalPolarSpace, IsField, IsFFE, IsBasis],
-	function(ps1,f2,alpha,basis)
-		return NaturalEmbeddingByFieldReduction(ps1,f2,alpha,basis,true);
-	end );
-
 
 # CHECKED 28/09/11 jdb
 #############################################################################

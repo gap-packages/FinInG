@@ -203,5 +203,12 @@ Checks wether the <A>subspace</A> is a subspace which is obtained from a blowing
         </Description>
     </ManSection>
 
+<ManSection>
+<Oper Name="NaturalProjectionBySubspaceNC" Arg="ps, v"/>
+<Description>
+The operation <F>NaturalEmbeddingBySubspaceNC</F> is the ``no check'' version of <F>NaturalEmbeddingBySubspace</F>.
+</Description>
+</ManSection>
+
 </Section>
 </Appendix>

@@ -437,14 +437,16 @@ An Intertwiner is not implemented for this geometry morphism.
             </Description>
 </ManSection>
 
-<ManSection>
+<ManSection Label="polar_red">
 <Heading> Embedding of polar spaces by field reduction</Heading>
 <Description>
-Let <M>P</M> be a polar space over a field <Alt Not="HTML"><M>L=GF(q^t)</M></Alt> <Alt Only="HTML">GF(q&lt;sup>t&lt;/sup>)</Alt> and let <M>K=GF(q)</M>. Let <M>f</M> be the form
-determining on the <M>r</M> dimensional vector space <M>V</M> over <M>L</M> determining <M>P</M>. Consider the trace map <M>T:</M><Alt Not="HTML"><M>L=GF(q^t) \rightarrow GF(q):</M></Alt>
-<Alt Only="HTML">GF(q&lt;sup>t&lt;/sup>) &#8594; GF(q):</Alt><Alt Not="HTML"><M>x \mapsto x^{q^t}+ x^{q^{t-1}} +\ldots x</M></Alt>
-<Alt Only="HTML">x &#8594; x&lt;sup>q&lt;sup>t&lt;/sup>&lt;/sup> + x&lt;sup>q&lt;sup>t-1&lt;/sup>&lt;/sup> + &#8230; x</Alt>. Define for any <M>\alpha \in L</M> the map <M>T_{\alpha}: GF(q^t)\rightarrow
-    GF(q): T_{\alpha}(x) = T(\alpha x)</M>.
+Let <M>P</M> be a polar space over a field <Alt Not="HTML"><M>L=GF(q^t)</M></Alt> <Alt Only="HTML">GF(q&lt;sup>t&lt;/sup>)</Alt> 
+and let <M>K=GF(q)</M>. Let <M>f</M> be the form determining on the <M>r</M> dimensional vector space <M>V</M> over <M>L</M> 
+determining <M>P</M>. Consider the trace map <M>T:</M><Alt Not="HTML"><M>L=GF(q^t) \rightarrow GF(q):</M></Alt>
+<Alt Only="HTML">GF(q&lt;sup>t&lt;/sup>) &#8594; GF(q):</Alt><Alt Not="HTML"><M>x \mapsto x^{q^t}+ x^{q^{t-1}} + \ldots x</M></Alt>
+<Alt Only="HTML">x &#8594; x&lt;sup>q&lt;sup>t&lt;/sup>&lt;/sup> + x&lt;sup>q&lt;sup>t-1&lt;/sup>&lt;/sup> + &#8230; x</Alt>. 
+Define for any <M>\alpha \in L</M> the map <Alt Not="HTML"><M>T_{\alpha}: GF(q^t)\rightarrow
+    GF(q): T_{\alpha}(x) = T(\alpha x)</M></Alt> <Alt Only="HTML">T&lt;sub>&#945;&lt;/sub>: GF(q&lt;sup>t&lt;/sup>)&#8594; GF(q): x &#8594; T(&#945; x)</Alt>.
 
 Consider the <M>rt</M> dimensional vector space <M>W</M> over <M>K</M>. There is a bijective map
 <Alt Not="HTML"><M>\Phi</M></Alt><Alt Only="HTML">&#934;</Alt> from <M>V</M> to <M>W</M>. Now it is easy to see that <Alt Only="HTML">T&lt;sub>&#945;&lt;/sub> &#8226; f &#8226; &#934; &lt;sup>-1&lt;/sup></Alt><Alt Not="HTML">T_{\alpha} \circ f \circ \Phi^{-1}</Alt> will be a
@@ -454,10 +456,12 @@ the parameter <M>\alpha</M> and the blowing up of elements by field reduction, t
 on the basis of <M>L</M> as a <M>K</M> vector space. <Package>FinInG</Package> provides two approaches.
 The first approach starts from <M>P</M> and the parameters <M>K</M>, <M>\alpha</M> and a basis for <M>L</M>
 as <M>K</M> vector space. Then the resulting form <Alt Only="HTML">T&lt;sub>&#945;&lt;/sub> &#8226; f &#8226; &#934; &lt;sup>-1&lt;/sup></Alt><Alt Not="HTML">T_{\alpha} \circ f \circ \Phi^{-1}</Alt> is determined,
-and the associated polar space <M>W</M> will be the range of the embedding. The second approach starts
+and the associated polar space <M>W</M> will be the range of the embedding. Note that the resulting polar
+space will not necessarily be canonical. The second approach starts
 from two given polar spaces <M>P</M> and <M>S</M>. Based on this input, it is determined wheter an embedding
 based on the above described principle is possible, and the necessary parameters are computed. The resulting
-embedding is a geometry morhpism from <M>P</M> to <M>S</M>.<P/>
+embedding is a geometry morhpism from <M>P</M> to <M>S</M>. Note that the polar spaces used as an argument
+may be freely chosen and are not required to be in the canonical form.<P/>
 The embeddings possible using the principle described here are listed in the following table see <Cite Key="Gill"/>).
 
 <Table Align="l|l|l">
@@ -528,19 +532,25 @@ The embeddings possible using the principle described here are listed in the fol
 <ManSection>
 <Oper Name="NaturalEmbeddingByFieldReduction" Arg="ps1,f2, alpha, basis, bool"/>
 <Oper Name="NaturalEmbeddingByFieldReduction" Arg="ps1,f2, alpha, basis"/>
-<Oper Name="NaturalEmbeddingByFieldReduction" Arg="ps1,f2, bool"/>
+<Oper Name="NaturalEmbeddingByFieldReduction" Arg="ps1,f2, alpha, bool"/>
 <Oper Name="NaturalEmbeddingByFieldReduction" Arg="ps1,f2, alpha"/>
+<Oper Name="NaturalEmbeddingByFieldReduction" Arg="ps1,f2, bool"/>
 <Oper Name="NaturalEmbeddingByFieldReduction" Arg="ps1,f2"/>
+<Returns>a geometry morphism</Returns>
 <Description>
-The geometry morphism also comes equipped with an intertwiner (see
-<Ref Attr="Intertwiner" Style="Text"/>). This intertwiner has as its domain the isometry 
-group of <A>geom1</A>. The optional third argument <A>boolean</A> can take either <C>true</C> or
-<C>false</C> as input, and then this operation will or will not compute the 
-intertwiner accordingly. The user may wish that the intertwiner is not computed
+<A>ps1</A> is a polar space over a field extension <M>L</M> of <A>f2</A>, <A>basis</A> is a 
+basis for <M>L</M> as <A>f2</A> vector space, <A>alpha</A> is a non-zero element of <M>L</M>.
+The version of <F>NaturalEmbeddingByFieldReduction</F> implements the first approach as explained in 
+<Ref Sect="polar_red"/>. When no argument <A>basis</A> is given, a basis for <M>L</M> over <A>f2</A>
+is computed using <F>Basis(AsVectorSpace(K,L))</F>. When no argument <A>alpha</A> is given, 
+<F>One(f2)</F> is used as value for <A>alpha</A>. When <A>bool</A> is true or not given, an intertwiner
+is computed, when <A>bool</A> is <A>false</A>, no intertwiner is computed. This intertwiner has as 
+its domain the isometry group of <A>ps1</A>. The user may wish that the intertwiner is not computed
 when embedding into large polar spaces. The default (when calling the operation
-with two arguments) is set to <C>true</C>. In the first example, we construct a spread of maximal subspaces (solids) 
-in a 7 dimensional symplectic space. We compute a subgroup of its stabilizer group using the intertwiner. In the second example,
-we construct a linear blocking set of the symplectic generalised quadrangle over <M>GF(9)</M>. 
+with two arguments) is set to <C>true</C>. In the first example, we construct a spread of maximal 
+subspaces (solids) in a 7 dimensional symplectic space. We compute a subgroup of its stabilizer 
+group using the intertwiner. In the second example, we construct a linear blocking set of the 
+symplectic generalised quadrangle over <M>GF(9)</M>. 
 <Example>
 <#Include SYSTEM "../examples/include/morphisms_fieldreducpolar1.include">
 <#Include SYSTEM "../examples/include/morphisms_fieldreducpolar2.include"> 
@@ -549,20 +559,13 @@ we construct a linear blocking set of the symplectic generalised quadrangle over
 </ManSection>
 
 <ManSection>
-    <Oper Name="ProjectiveCompletion" Arg="as"/>
-    <Returns>a geometry morphism</Returns>
-    <Description>
-        The argument <A>as</A> is an affine space. This operation returns an embedding
-        of <A>as</A> into the projective space <A>ps</A> of the same dimension, and over the same field.
-        For example, the point <M>(x, y, z)</M> goes to the projective point with
-        homogeneous coordinates <M>(1, x, y, z)</M>. An intertwiner is unnecessary,
-        <F>CollineationGroup(as)</F> is a subgroup of <F>CollineationGroup(ps)</F>.
-        <Example>
-            <#Include SYSTEM "../examples/include/morphisms_completion.include">
-            </Example>
-        </Description>
-    </ManSection>
-
+<Oper Name="NaturalEmbeddingByFieldReduction" Arg="ps1,ps2"/>
+<Returns>a geometry morphism</Returns>
+<Description>
+If <A>ps1</A> and <A>ps2</A> are two polar spaces corresponding with one line in the table presented in
+<Ref Sect="polar_red"/>, then this operation returns the corresponding embedding. 
+</Description>
+</ManSection>
 </Section>
 
 <Section>
@@ -590,6 +593,26 @@ for example, <C>SymplecticSpace(3, 3) / v</C> achieves the same thing
 as <C>NaturalProjectionBySubspace(SymplecticSpace(3,3), v)</C>.
 <Example>
 <#Include SYSTEM "../examples/include/morphisms_projection.include"> 
+</Example>
+</Description>
+</ManSection>
+
+</Section>
+
+<Section>
+<Heading>Projective completion</Heading>
+
+<ManSection>
+<Oper Name="ProjectiveCompletion" Arg="as"/>
+<Returns>a geometry morphism</Returns>
+<Description>
+The argument <A>as</A> is an affine space. This operation returns an embedding
+of <A>as</A> into the projective space <A>ps</A> of the same dimension, and over the same field.
+For example, the point <M>(x, y, z)</M> goes to the projective point with
+homogeneous coordinates <M>(1, x, y, z)</M>. An intertwiner is unnecessary,
+<F>CollineationGroup(as)</F> is a subgroup of <F>CollineationGroup(ps)</F>.
+<Example>
+<#Include SYSTEM "../examples/include/morphisms_completion.include">
 </Example>
 </Description>
 </ManSection>

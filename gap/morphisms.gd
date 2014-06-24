@@ -128,34 +128,27 @@ DeclareOperation( "HermitianFormFieldReduction", [ IsHermitianForm, IsField, IsF
 
 
 # master version for the user: handle all parameters.
-DeclareOperation( "NaturalEmbeddingByFieldReduction", 
-					[ IsClassicalPolarSpace, IsField, IsFFE, IsBasis, IsBool ] );
+DeclareOperation( "NaturalEmbeddingByFieldReduction", [ IsClassicalPolarSpace, IsField, IsFFE, IsBasis, IsBool ] );
 
-# first particular version: user agrees with everything
+#first version: user wants a particular alpha, and basis, agrees with bool=true.
+DeclareOperation( "NaturalEmbeddingByFieldReduction", [ IsClassicalPolarSpace, IsField, IsFFE, IsBasis ]);
 
-DeclareOperation( "NaturalEmbeddingByFieldReduction",
-				[ IsClassicalPolarSpace, IsField ]);
+#second particular version: user wants a particular alpha, and bool, agrees with basis.
+DeclareOperation( "NaturalEmbeddingByFieldReduction", [ IsClassicalPolarSpace, IsField, IsFFE, IsBool ] );
 
-# second particular version: user agrees but wants to control intertwiner
+#third particular version: user wants a particular alpha, agrees with basis and bool.
+DeclareOperation( "NaturalEmbeddingByFieldReduction", [ IsClassicalPolarSpace, IsField, IsFFE ]);
 
-DeclareOperation( "NaturalEmbeddingByFieldReduction",
-				[ IsClassicalPolarSpace, IsField, IsBool ]);
+# fourth particular version: user agrees but wants to control intertwiner
+DeclareOperation( "NaturalEmbeddingByFieldReduction", [ IsClassicalPolarSpace, IsField, IsBool ]);
 
-#third particular version: user wants a particular alpha, agrees with base and bool.
-
-DeclareOperation( "NaturalEmbeddingByFieldReduction",
-				[ IsClassicalPolarSpace, IsField, IsFFE ]);
-
-#fourth version: user wants a particular alpha, and base, agrees with bool.
-DeclareOperation( "NaturalEmbeddingByFieldReduction",
-				[ IsClassicalPolarSpace, IsField, IsFFE, IsBasis ]);
+# fifth particular version: user agrees with everything
+DeclareOperation( "NaturalEmbeddingByFieldReduction", [ IsClassicalPolarSpace, IsField ]);
 
 
-DeclareOperation( "NaturalEmbeddingByFieldReduction",
-                     [ IsClassicalPolarSpace, IsClassicalPolarSpace, IsBool ]);
-
-DeclareOperation( "NaturalEmbeddingByFieldReduction",
-					 [ IsClassicalPolarSpace, IsClassicalPolarSpace]);
+# master version with two polar spaces as argument, second one with control on intertwiner.
+DeclareOperation( "NaturalEmbeddingByFieldReduction", [ IsClassicalPolarSpace, IsClassicalPolarSpace, IsBool ]);
+DeclareOperation( "NaturalEmbeddingByFieldReduction", [ IsClassicalPolarSpace, IsClassicalPolarSpace]);
 
 
 DeclareOperation( "CanonicalEmbeddingByFieldReduction", 

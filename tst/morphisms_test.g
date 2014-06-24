@@ -396,5 +396,21 @@ els := List(els,x->x^em);
 group2 := Group(gens2);
 List(gens2,g->Collected(List(els,x->PreImageElm(em,x^g)=PreImageElm(em,x)^(PreImageElm(hom,g)))));
 
+###### naturalembedding by field reduction polar spaces ###########
+
+q := 3;
+n := 2;
+t := 2;
+f := GF(q);
+ps := SymplecticSpace(2*n-1,q^t);
+alpha := Z(q^t);
+em := NaturalEmbeddingByFieldReduction(ps,GF(q));
+
+els := Points(ps);
+elsem := List(els,x->x^em);
+List(elsem,x->PreImageElm(em,x));
+els := Lines(ps);
+elsem := List(els,x->x^em);
+List(elsem,x->PreImageElm(em,x));
 
 
