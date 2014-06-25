@@ -321,6 +321,36 @@ of <M>PG(2,3)</M> and embeds them into <M>PG(2,9)</M>.
 </Description>
 </ManSection>
 
+<ManSection Label="proj_red">
+<Heading> Embedding of projective spaces by field reduction</Heading>
+<Description>
+Consider the projective space <Alt Not="HTML"><M>PG(n-1,q^t)</M></Alt><Alt Only="HTML">PG(n-1,q&lt;sup>t&lt;/sup>)</Alt>.
+ The elements are represented by sub vector spaces of <Alt Not="HTML"><M>V(n,q^t)</M></Alt><Alt Only="HTML">V(n,q&lt;sup>t&lt;/sup>)</Alt>. 
+ The field <Alt Not="HTML"><M>L=GF(q^t)</M></Alt><Alt Only="HTML">L=GF(q&lt;sup>t&lt;/sup>)</Alt> itself is a 
+ <M>t</M>-dimensional vector space over <M>GF(q)</M>, clearly, a <M>k</M> dimensional sub vector space of 
+ <Alt Not="HTML"><M>V(n,q^t)</M></Alt><Alt Only="HTML">V(n,q&lt;sup>t&lt;/sup>)</Alt> is also a 
+ <M>kn</M>-dimensional sub vector space of the <M>nt</M>-dimensional vector space over <M>GF(q)</M>. 
+ This induces an embedding from <Alt Not="HTML"><M>PG(n-1,q^t)</M></Alt><Alt Only="HTML">PG(n-1,q&lt;sup>t&lt;/sup>)</Alt>
+into <M>PG(nt-1,q)</M>. The embedding will be determined by the chosen basis of <M>L</M> as a vector space over <M>GF(q)</M>.
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="BlownUpSubspaceOfProjectiveSpace" Arg="B, subspace"/>
+<Returns>a subspace of a projective space</Returns>
+<Description>
+Let <A>B</A> be a basis for the field <Alt Not="HTML"><M>L=GF(q^t)</M></Alt><Alt Only="HTML">L=GF(q&lt;sup>t&lt;/sup>)</Alt> as
+<M>GF(q)</M> vector space, and let <A>subspace</A> be a <M>k-1</M>-dimensional subspace of 
+<Alt Not="HTML"><M>PG(n-1,q^t)</M></Alt><Alt Only="HTML">PG(n-1,q&lt;sup>t&lt;/sup>)</Alt> represented by a <M>k</M>-dimensional
+sub vector space <M>S</M> of <Alt Not="HTML"><M>V(n,q^t)</M></Alt><Alt Only="HTML">V(n,q&lt;sup>t&lt;/sup>)</Alt>. 
+This operation returns the <M>kt-1</M>-dimensional subspace of <M>PG(nt-1,q)</M> represented by blowing up <M>S</M> with respect to
+the base <A>B</A>. This operation relies on the &GAP; operation <F>BlownUpMat</F>. In the example, the effect of chosen a different
+basis is shown.
+<Example>
+<#Include SYSTEM "../examples/include/morphisms_blownupsubspace.include">
+</Example>
+</Description>
+</ManSection>
 
 <ManSection>
 <Oper Name="NaturalEmbeddingByFieldReduction" Arg="geom1, f2, B"/>
