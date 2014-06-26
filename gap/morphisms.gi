@@ -1109,6 +1109,10 @@ InstallMethod( NaturalEmbeddingByFieldReduction,
 
 		hominv := function( m )
 			local preimage;
+            if not IsOne(m!.frob) then
+                return fail;
+                Info(InfoFinInG, 1, "<el> is not a projectivity");
+            fi;
 			preimage := ShrinkMat(basis, Unpack(m!.mat));
 			ConvertToMatrixRepNC( preimage, f1 );       
 			return CollineationOfProjectiveSpace(preimage, f1);

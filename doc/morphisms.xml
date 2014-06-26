@@ -369,7 +369,7 @@ In fact the arguments <A>geom1</A> and <A>geom2</A> are the projective spaces
 <Alt Not="HTML"><M>PG(r-1,q^t)</M></Alt><Alt Only="HTML">PG(r-1,q&lt;sup>t&lt;/sup>)</Alt> and
 <Alt Not="HTML"><M>PG(rt-1,q)</M></Alt><Alt Only="HTML">PG(rt-1,q)</Alt> respectively. As in the previous flavours, the 
 argument <A>B</A> is optional. <P/>An intertwiner is always available for this geometry morphism, and has source the
-homograph group of <A>geom1</A> and as range a subgroup of the homography group of <A>geom2</A> (or the projective space
+homography group of <A>geom1</A> and as range a subgroup of the homography group of <A>geom2</A> (or the projective space
 of the appropriate dimension over <A>f2</A>.
 Notice in the example
 below the difference of a factor 2 in the orders of the group, which comes of course from restricing the homomorphism to

@@ -346,8 +346,10 @@ h := 3;
 
 basis := Basis(AsVectorSpace(GF(q),GF(q^h)));
 
+basis := Basis(AsVectorSpace(GF(q),GF(q^h)),[Z(q),Z(q^3),Z(q^3)^7]);
+
 pg1 := PG(n,q^h);
-em := NaturalEmbeddingByFieldReduction(pg1,GF(q));
+em := NaturalEmbeddingByFieldReduction(pg1,GF(q),basis);
 hom := Intertwiner(em);
 group1 := HomographyGroup(pg1);
 gens := GeneratorsOfGroup(group1);
@@ -395,6 +397,25 @@ gens2 := List(gens,x->x^hom);
 els := List(els,x->x^em);
 group2 := Group(gens2);
 List(gens2,g->Collected(List(els,x->PreImageElm(em,x^g)=PreImageElm(em,x)^(PreImageElm(hom,g)))));
+
+###### naturalembedding by field reduction projective spaces ###########
+
+q := 3;
+n := 2;
+t := 2;
+f := GF(q);
+ps := PG(n,q^t);
+alpha := Z(q^t);
+em := NaturalEmbeddingByFieldReduction(ps,GF(q));
+
+els := Points(ps);
+elsem := List(els,x->x^em);
+List(elsem,x->PreImageElm(em,x));
+els := Lines(ps);
+elsem := List(els,x->x^em);
+List(elsem,x->PreImageElm(em,x));
+
+
 
 ###### naturalembedding by field reduction polar spaces ###########
 
