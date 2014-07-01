@@ -415,7 +415,17 @@ els := Lines(ps);
 elsem := List(els,x->x^em);
 List(elsem,x->PreImageElm(em,x));
 
-
+q := 3;
+t := 2;
+basis := Basis(AsVectorSpace(GF(q),GF(q^t)));
+ps := PG(3,q^t);
+lines := List(AsList(Lines(ps)));;
+em := NaturalEmbeddingByFieldReduction(ps,GF(q));
+mats := List(lines,x->Unpack(UnderlyingObject(x^em)));;
+Length(mats);
+vecs := List(mats,x->ShrinkMat(basis,x));;
+newlines := List(vecs,x->VectorSpaceToElement(ps,x));;
+newlines2 := List(lines,x->PreImageElm(em,x^em));;
 
 ###### naturalembedding by field reduction polar spaces ###########
 
@@ -425,7 +435,7 @@ t := 2;
 f := GF(q);
 ps := SymplecticSpace(2*n-1,q^t);
 alpha := Z(q^t);
-em := NaturalEmbeddingByFieldReduction(ps,GF(q));
+em := NaturalEmbeddingByFieldReduction(ps,GF(q),alpha);
 
 els := Points(ps);
 elsem := List(els,x->x^em);
@@ -434,4 +444,13 @@ els := Lines(ps);
 elsem := List(els,x->x^em);
 List(elsem,x->PreImageElm(em,x));
 
+hom := Intertwiner(em);
+group1 := SimilarityGroup(ps);
+gens := GeneratorsOfGroup(group1);
+els := AsList(Points(ps));;
+List(gens,g->Collected(List(els,x->(x^g)^em = (x^em)^(g^hom))));
+
+gens2 := List(gens,x->x^hom);
+group2 := Group(gens2);
+List(gens2,g->Collected(List(elsem,x->PreImageElm(em,x^g)=PreImageElm(em,x)^(PreImageElm(hom,g)))));
 

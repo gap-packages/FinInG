@@ -1037,21 +1037,24 @@ InstallMethod( NaturalEmbeddingByFieldReduction,
 		if not q2^t = q1 then
 			Error( "<f2> is not a subfield of the base field of <pg1> ");
 		fi;
-		#f2 := pg2!.basefield;
 		d1 := pg1!.dimension + 1;
 		d2 := d1*t;
 		pg2 := ProjectiveSpace(d2-1,q2);
-		#d2 := pg2!.dimension + 1;
-		#if not (IsInt(d2/d1)) then 
-		#	Error("The second geometry is not obtained from the first geometry by field reduction");
-		#fi;
 		if not (IsBasis(basis) and f1=GF((basis!.q)^basis!.d) and f2=GF(basis!.q) and d1*(basis!.d)=d2) then
 			Error("The basis is not a basis or is not compatible with the basefields of the geometries");
 		fi;
-		#t:=d2/d1;
-		fun := function( x ); # This map blows up a subspace of geom1 to a subspace of geom2
-			return BlownUpSubspaceOfProjectiveSpace(basis,x);
-		end; 
+
+		fun := function( subspace ) # This map blows up a subspace of geom1 to a subspace of geom2
+            local mat1,mat2;
+            #return BlownUpSubspaceOfProjectiveSpace(basis,x);
+            mat1 := subspace!.obj;
+            if subspace!.type = 1 then
+                mat1 := [subspace!.obj];
+            fi;
+            mat2 := BlownUpMat(basis,mat1);
+            return VectorSpaceToElement(pg2,mat2);
+		end;
+
 		prefun := function( subspace ) # This map is the inverse of func and returns an error, or a subspace of geom1
 			local flag,basvecs,mat1,span,x,v,v1,i;
 			flag:=true;
@@ -1390,11 +1393,16 @@ InstallMethod (NaturalEmbeddingByFieldReduction,
 	[IsClassicalPolarSpace, IsField, IsFFE, IsBasis, IsBool],
 	function(ps1,f2,alpha,basis,computeintertwiner)
 	# f2 must be a subfield of the basefield of the classical polar space
-	local type1,qf1,qf2,ps2,bil1,bil2,hf1,hf2,em,fun,prefun,f1,
-					map,hom,hominv,g1,gens,newgens,g2,twiner;
+	local type1,qf1,qf2,ps2,bil1,bil2,hf1,hf2,fun,prefun,f1,
+					map,hom,hominv,g1,gens,newgens,g2,twiner, t,q1,q2,d1,d2;
 	type1 := PolarSpaceType(ps1);
 	f1:=ps1!.basefield;
-	
+	q1 := Size(f1);
+	q2 := Size(f2);
+	t := LogInt(q1,q2);
+	d1 := ps1!.dimension + 1;
+	d2 := d1*t;
+
 	# 1. the polar space is of orthogonal type
 	if type1 in ["hyperbolic","elliptic","parabolic"] then
 		qf1:=QuadraticForm(ps1);
@@ -1416,24 +1424,66 @@ InstallMethod (NaturalEmbeddingByFieldReduction,
 		ps2:=PolarSpace(hf2);
 	fi;
 	
-	em:=NaturalEmbeddingByFieldReduction(AmbientSpace(ps1),AmbientSpace(ps2));
+	#em:=NaturalEmbeddingByFieldReduction(AmbientSpace(ps1),AmbientSpace(ps2));
 	# this is the field reduction for projective spaces PG(r-1,q^t) -> PG(rt-1,q)
 	
-	fun:=function(x)
-		local projfun;
-		projfun:=em!.fun;
-		return VectorSpaceToElement(ps2,projfun(x)!.obj);
-	end;
-		
-	prefun:=function(x)
-		local projprefun;
-		projprefun:=em!.prefun;
-		return VectorSpaceToElement(ps1,projprefun(x)!.obj);
-	end;
+	#fun:=function(x)
+	#	local projfun;
+	#	projfun:=em!.fun;
+	#	return VectorSpaceToElement(ps2,projfun(x)!.obj);
+	#end;
 	
+    fun := function( subspace )
+        local mat1,mat2;
+        mat1 := subspace!.obj;
+        if subspace!.type = 1 then
+            mat1 := [subspace!.obj];
+        fi;
+        mat2 := BlownUpMat(basis,mat1);
+        return VectorSpaceToElement(ps2,mat2);
+    end;
+
+
+	#prefun:=function(x)
+	#	local projprefun;
+	#	projprefun:=em!.prefun;
+	#	return VectorSpaceToElement(ps1,projprefun(x)!.obj);
+	#end;
+
+    prefun := function( subspace ) # This map is the inverse of func and returns an error, or a subspace of geom1
+        local flag,basvecs,mat1,span,x,v,v1,i;
+        flag:=true;
+        if not subspace in ps2 then
+            Error("The input is not in the range fo the field reduction map!");
+        fi;
+        if not IsInt((Dimension(subspace)+1)/t) then
+            flag:=false;
+        else
+            basvecs:=BasisVectors(basis);
+            mat1:=[];
+            span:=[];
+            repeat
+                repeat
+                    x:=Random(Points(subspace));
+                until not x in span;
+                v:=Coordinates(x);
+                v1:=List([1..d1],i->v{[(i-1)*t+1..i*t]}*basvecs);
+                Add(mat1,v1);
+                span:=VectorSpaceToElement(ps2,BlownUpMat(basis,mat1));
+            until Dimension(span)=Dimension(subspace);
+            if not span = subspace then
+                flag:= false;
+            fi;
+        fi;
+        if flag= false then
+            Error("The input is not in the range of the field reduction map!");
+        fi;
+        return VectorSpaceToElement(ps1,mat1);
+    end;
+
 	map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(ps1),
                                          ElementsOfIncidenceStructure(ps2),
-                                         fun, false, prefun);
+                                            fun, false, prefun);
 		
 	SetIsInjective( map, true );
 	
@@ -1448,7 +1498,7 @@ InstallMethod (NaturalEmbeddingByFieldReduction,
 		end;
 		hominv := function( m )
 			local preimage;      
-			preimage := ShrinkMat(basis, m!.mat); 
+            preimage := ShrinkMat(basis, Unpack(m!.mat));
 			ConvertToMatrixRepNC( preimage, f1 );       
 			return CollineationOfProjectiveSpace(preimage, f1);
 		end;
@@ -1470,7 +1520,7 @@ InstallMethod (NaturalEmbeddingByFieldReduction,
 # returns NaturalEmbeddingByFieldReduction( <geom1>, <f2>, <alpha>, <basis>, true )
 #
 InstallMethod (NaturalEmbeddingByFieldReduction,
-	"for a polar space and a field",
+	"for a polar space and a field, a finite field element, and a basis",
 	[IsClassicalPolarSpace, IsField, IsFFE, IsBasis],
 	function(ps1,f2,alpha,basis)
 		return NaturalEmbeddingByFieldReduction(ps1,f2,alpha,basis,true);
@@ -1483,7 +1533,7 @@ InstallMethod (NaturalEmbeddingByFieldReduction,
 # where <basis> is the canonical basis of BaseField(geom1) over <f2>.
 #
 InstallMethod (NaturalEmbeddingByFieldReduction,
-	"for a polar space and a field",
+	"for a polar space and a field, a finite field element, and a boolean",
 	[IsClassicalPolarSpace, IsField, IsFFE, IsBool],
 	function(ps1,f2,alpha,bool)
 		return NaturalEmbeddingByFieldReduction(ps1,f2,alpha,Basis(AsVectorSpace(f2,BaseField(ps1))),bool);
@@ -1496,7 +1546,7 @@ InstallMethod (NaturalEmbeddingByFieldReduction,
 # where <basis> is the canonical basis of BaseField(geom1) over <f2>.
 #
 InstallMethod (NaturalEmbeddingByFieldReduction,
-	"for a polar space and a field",
+	"for a polar space, a field, and a finite field element",
 	[IsClassicalPolarSpace, IsField, IsFFE],
 	function(ps1,f2,alpha)
 		return NaturalEmbeddingByFieldReduction(ps1,f2,alpha,Basis(AsVectorSpace(f2,BaseField(ps1))),true);
@@ -1511,7 +1561,7 @@ InstallMethod (NaturalEmbeddingByFieldReduction,
 # want the intertwiner.
 #
 InstallMethod (NaturalEmbeddingByFieldReduction,
-	"for a polar space and a field",
+	"for a polar space, a field, and a boolean",
 	[IsClassicalPolarSpace, IsField, IsBool],
 	function(ps1,f2,bool)
 		return NaturalEmbeddingByFieldReduction(ps1,f2,One(f2),Basis(AsVectorSpace(f2,BaseField(ps1))),bool);

@@ -327,9 +327,9 @@ of <M>PG(2,3)</M> and embeds them into <M>PG(2,9)</M>.
 Consider the fields <M>K=GF(q)</M> and <Alt Not="HTML"><M>L=GF(q^t)</M></Alt>
 <Alt Only="HTML">L=GF(q&lt;sup>t&lt;/sup>)</Alt>. The field <M>L</M> is a <M>t</M>-dimensional
 vector space over <M>K</M>. Hence, with respect to a chosen base <M>B</M> for <M>L</M>
-as a <M>K</M>-vectorspace, there is a bijection between the vectorspaces
+as a <M>K</M>-vectorspace, the bijection between the vectorspaces
 <Alt Not="HTML"><M>V(n,q^t)</M></Alt><Alt Only="HTML">V(n,q&lt;sup>t&lt;/sup>)</Alt> and
-<M>V(tn,q)</M>.
+<M>V(tn,q)</M> can be implemented.
 
 Consider the projective space <Alt Not="HTML"><M>PG(n-1,q^t)</M></Alt><Alt Only="HTML">PG(n-1,q&lt;sup>t&lt;/sup>)</Alt>.
  The elements are represented by sub vector spaces of <Alt Not="HTML"><M>V(n,q^t)</M></Alt><Alt Only="HTML">V(n,q&lt;sup>t&lt;/sup>)</Alt>. Clearly, a <M>k</M> dimensional sub vector space of
