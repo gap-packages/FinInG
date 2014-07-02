@@ -454,3 +454,31 @@ gens2 := List(gens,x->x^hom);
 group2 := Group(gens2);
 List(gens2,g->Collected(List(elsem,x->PreImageElm(em,x^g)=PreImageElm(em,x)^(PreImageElm(hom,g)))));
 
+
+############## new prefun #################
+
+    prefun := function( subspace ) # This map is the inverse of func and returns an error, or a subspace of geom1
+        local flag,basvecs,mat1,span,x,v,v1,i,vecs;
+        flag:=true;
+        if not subspace in ps2 then
+            Error("The input is not in the range of the field reduction map!");
+        fi;
+        if not IsInt((Dimension(subspace)+1)/t) then
+            flag:=false;
+        else
+            basvecs:=BasisVectors(basis);
+            mat1:=[];
+            span:=[];
+            vecs := Unpack(UnderlyingObject(subspace));
+            mat1 := List(vecs,x->List([1..d1],i->x{[(i-1)*t+1..i*t]}*basvecs));
+            span:=VectorSpaceToElement(ps2,BlownUpMat(basis,mat1));
+            if not span=subspace then
+                flag := false;
+            fi;
+        fi;
+        if flag= false then
+            Error("The input is not in the range of the field reduction map!");
+        fi;
+        return VectorSpaceToElement(ps1,mat1);
+    end;
+

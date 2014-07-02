@@ -1055,44 +1055,38 @@ InstallMethod( NaturalEmbeddingByFieldReduction,
             return VectorSpaceToElement(pg2,mat2);
 		end;
 
-		prefun := function( subspace ) # This map is the inverse of func and returns an error, or a subspace of geom1
-			local flag,basvecs,mat1,span,x,v,v1,i;
-			flag:=true;
-			if not subspace in pg2 then 
-				Error("The input is not in the range fo the field reduction map!");
-			fi;
-			if not IsInt((Dimension(subspace)+1)/t) then 
-				flag:=false;
-			else
-				basvecs:=BasisVectors(basis);
-				mat1:=[];
-				span:=[];
-				repeat
-					repeat 
-						x:=Random(Points(subspace)); 
-					until not x in span;
-					v:=Coordinates(x);
-					v1:=List([1..d1],i->v{[(i-1)*t+1..i*t]}*basvecs);
-					Add(mat1,v1);
-					span:=VectorSpaceToElement(pg2,BlownUpMat(basis,mat1));
-				until Dimension(span)=Dimension(subspace);
-				if not span = subspace then 
-					flag:= false;
-				fi;
-			fi;
-			if flag= false then 
-				Error("The input is not in the range of the field reduction map!");
-			fi;
-			return VectorSpaceToElement(pg1,mat1);
-		end;
- 
+        prefun := function( subspace ) # This map is the inverse of func and returns an error, or a subspace of geom1
+            local flag,basvecs,mat1,span,x,v,v1,i,vecs;
+            flag:=true;
+            if not subspace in pg2 then
+                Error("The input is not in the range of the field reduction map!");
+            fi;
+            if not IsInt((Dimension(subspace)+1)/t) then
+                flag := false;
+            else
+                basvecs:=BasisVectors(basis);
+                mat1:=[];
+                span:=[];
+                vecs := Unpack(UnderlyingObject(subspace));
+                mat1 := List(vecs,x->List([1..d1],i->x{[(i-1)*t+1..i*t]}*basvecs));
+                span := VectorSpaceToElement(pg2,BlownUpMat(basis,mat1));
+                if not span = subspace then
+                    flag := false;
+                fi;
+            fi;
+            if flag= false then
+                Error("The input is not in the range of the field reduction map!");
+            fi;
+            return VectorSpaceToElement(pg1,mat1);
+        end;
+
    		#prefun := function( x ) #I want to find out why this is not correct...
 		#	return VectorSpaceToElement(pg1,ShrinkMat(basis,x!.obj));
 		#end;
        
 		map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(pg1),
                                          ElementsOfIncidenceStructure(pg2),
-                                         fun, false, prefun);
+                                            fun, false, prefun);
 		
 		SetIsInjective( map, true );
         
@@ -1450,11 +1444,12 @@ InstallMethod (NaturalEmbeddingByFieldReduction,
 	#	return VectorSpaceToElement(ps1,projprefun(x)!.obj);
 	#end;
 
+    # new version (2/7/14, much faster since we avoid the repeat loops and Random calls.
     prefun := function( subspace ) # This map is the inverse of func and returns an error, or a subspace of geom1
-        local flag,basvecs,mat1,span,x,v,v1,i;
+        local flag,basvecs,mat1,span,x,v,v1,i,vecs;
         flag:=true;
         if not subspace in ps2 then
-            Error("The input is not in the range fo the field reduction map!");
+            Error("The input is not in the range of the field reduction map!");
         fi;
         if not IsInt((Dimension(subspace)+1)/t) then
             flag:=false;
@@ -1462,17 +1457,11 @@ InstallMethod (NaturalEmbeddingByFieldReduction,
             basvecs:=BasisVectors(basis);
             mat1:=[];
             span:=[];
-            repeat
-                repeat
-                    x:=Random(Points(subspace));
-                until not x in span;
-                v:=Coordinates(x);
-                v1:=List([1..d1],i->v{[(i-1)*t+1..i*t]}*basvecs);
-                Add(mat1,v1);
-                span:=VectorSpaceToElement(ps2,BlownUpMat(basis,mat1));
-            until Dimension(span)=Dimension(subspace);
-            if not span = subspace then
-                flag:= false;
+            vecs := Unpack(UnderlyingObject(subspace));
+            mat1 := List(vecs,x->List([1..d1],i->x{[(i-1)*t+1..i*t]}*basvecs));
+            span:=VectorSpaceToElement(ps2,BlownUpMat(basis,mat1));
+            if not span=subspace then
+                flag := false;
             fi;
         fi;
         if flag= false then
@@ -1481,9 +1470,8 @@ InstallMethod (NaturalEmbeddingByFieldReduction,
         return VectorSpaceToElement(ps1,mat1);
     end;
 
-	map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(ps1),
-                                         ElementsOfIncidenceStructure(ps2),
-                                            fun, false, prefun);
+	map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(ps1), ElementsOfIncidenceStructure(ps2),
+                                           fun, false, prefun);
 		
 	SetIsInjective( map, true );
 	
@@ -1591,22 +1579,18 @@ InstallMethod( NaturalEmbeddingByFieldReduction,
 	function( geom1, geom2 )
 		return NaturalEmbeddingByFieldReduction( geom1, geom2, true );
 	end );
-	
-	
-	
-#####################################################################################
+
 # ml 31/10/2013
+# changed with new prefun 2/7/14 jdb
+#####################################################################################
+# O  NaturalEmbeddingByFieldReduction
 # This NaturalEmbeddingByFieldReduction takes two polar spaces and returns an embedding
 # obtained by field reduction if such an embedding exists, otherwise it returns an error.
-# It does not compute the intertwiner, this can be added later (if desired).
-# 
-#####################################################################################
-
-
+##
 InstallMethod (NaturalEmbeddingByFieldReduction,
 	"for two classical polar spaces",
-	[IsClassicalPolarSpace, IsClassicalPolarSpace],
-	function(ps1, ps2)
+	[IsClassicalPolarSpace, IsClassicalPolarSpace, IsBool],
+	function(ps1, ps2, computeintertwiner)
 
 	#####################################################################
 	#  List of possible embeddings of ps1 in PG(r-1, q^t) -> ps2 in PG(rt-1, q)
@@ -1630,8 +1614,9 @@ InstallMethod (NaturalEmbeddingByFieldReduction,
 	#   Q -> Q- (t even, q odd)
 	#####################################################################
 
-    local t, r, type1, type2, form1, form1b, form2, f1, f2, newps, sigma, map, 
-		  gamma, bil1, q, n, alpha, basis, is_square, morphism, iso;
+    local t, r, type1, type2, form1, form1b, f1, f2, newps, sigma, map,
+		  gamma, bil1, q, n, alpha, basis, is_square, iso, form2, fun, prefun,
+          c1, c2, cps2, cps2inv, d1, hom, hominv, g1, g2, gens, newgens, twiner;
 					
 	type1 := PolarSpaceType(ps1);
 	type2 := PolarSpaceType(ps2);
@@ -1640,6 +1625,7 @@ InstallMethod (NaturalEmbeddingByFieldReduction,
 	else
 	   form1 := SesquilinearForm(ps1);
 	fi;
+    d1 := ps1!.dimension+1;
 	f1 := ps1!.basefield;
 	f2 := ps2!.basefield;
 	q := Size(f2);
@@ -1657,8 +1643,8 @@ InstallMethod (NaturalEmbeddingByFieldReduction,
 			Info(InfoFinInG, 1, "These polar spaces are suitable for field reduction");
 				# need alpha to be fixed by sigma:
 			alpha := One(f1);
-			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis );	
-			
+			#map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis );
+			form2 := HermitianFormFieldReduction(form1,f2,alpha,basis);
 	   	elif type1 = "hermitian" and type2 = "symplectic" and IsEvenInt(t) then
 			Info(InfoFinInG, 1, "These polar spaces are suitable for field reduction");
 			if IsEvenInt(q) then
@@ -1669,40 +1655,47 @@ InstallMethod (NaturalEmbeddingByFieldReduction,
 				sigma := Sqrt(Size(f1));
 				alpha := First(f1, x->not IsZero(x) and x^sigma = -x);				
 			fi;	
-			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis );	
+			#map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis );
+            form2 := HermitianFormFieldReduction(form1,f2,alpha,basis);
 		
 	   	elif type1 = "hermitian" and type2 = "hyperbolic" and IsEvenInt(t) and IsEvenInt(r) 
 				and IsOddInt(q) then
 			Info(InfoFinInG, 1, "These polar spaces are suitable for field reduction");
 			alpha := One(f1);	
-			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis );	
+			#map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis );
+            form2 := HermitianFormFieldReduction(form1,f2,alpha,basis);
 						
 	   	elif type1 = "hermitian" and type2 = "elliptic" and IsEvenInt(t) and IsOddInt(r) 
 				and IsOddInt(q) then
 			Info(InfoFinInG, 1, "These polar spaces are suitable for field reduction");
 			alpha := One(f1);	
-			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis );	
+			#map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis );
+            form2 := HermitianFormFieldReduction(form1,f2,alpha,basis);
 			
 	   	elif type1 = "symplectic" and type2 = "symplectic" then
 			Info(InfoFinInG, 1, "These polar spaces are suitable for field reduction");
 			alpha := One(f1);				
-			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis );	
-		else
+			#map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis );
+            form2 := BilinearFormFieldReduction(form1,f2,alpha,basis);
+        else
 		 	Error("These polar spaces are not suitable for field reduction.");
 		fi;
 	else 	# form1 is a quadratic form
 		if type1 = "hyperbolic" and type2 = "hyperbolic" then
 			Info(InfoFinInG, 1, "These polar spaces are suitable for field reduction");
 			alpha := One(f1);
-			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis );	
+			#map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis );
+            form2 := QuadraticFormFieldReduction(form1,f2,alpha,basis);
 		elif type1 = "elliptic" and type2 = "elliptic" then
 			Info(InfoFinInG, 1, "These polar spaces are suitable for field reduction");
 			alpha := One(f1);
-			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis );	
+			#map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis );
+            form2 := QuadraticFormFieldReduction(form1,f2,alpha,basis);
 		elif type1 = "parabolic" and type2 = "parabolic" and IsOddInt(t) and IsOddInt(q) then
 			Info(InfoFinInG, 1, "These polar spaces are suitable for field reduction");
 			alpha := One(f1);
-			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis );	
+			#map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis );
+            form2 := QuadraticFormFieldReduction(form1,f2,alpha,basis);
 
 		# If ps1 is parabolic and ps2 is hyperbolic or elliptic, 
 		# then the choice of alpha that we will use for the embedding
@@ -1723,8 +1716,9 @@ InstallMethod (NaturalEmbeddingByFieldReduction,
 			else # the product of alpha and gamma must be a square
 				alpha := First(f1, a -> not IsZero(a) and is_square( a*gamma, f1 ) );
 			fi;
-			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis );
-						
+			#map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis );
+            form2 := QuadraticFormFieldReduction(form1,f2,alpha,basis);
+
 		elif type1 = "parabolic" and type2 = "elliptic" and IsEvenInt(t) and IsOddInt(q) then
 			Info(InfoFinInG, 1, "These polar spaces are suitable for field reduction: Parabolic -> Elliptic");
 			bil1:=AssociatedBilinearForm(form1); # important to use this instead of 
@@ -1735,24 +1729,113 @@ InstallMethod (NaturalEmbeddingByFieldReduction,
 			else # the product of alpha and gamma must be a nonsquare
 				alpha := First(f1, a -> not IsZero(a) and not is_square( a*gamma, f1 ) );
 			fi;
-			map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis );			
-			
+			#map := NaturalEmbeddingByFieldReduction( ps1, f2, alpha, basis );
+            form2 := QuadraticFormFieldReduction(form1,f2,alpha,basis);
+
 		else
 		 	Error("These polar spaces are not suitable for field reduction.");
      	fi;	
 	fi;
 	
-	iso := IsomorphismPolarSpacesNC(AmbientGeometry(Range(map)), ps2);	
-	morphism := GeometryMorphismByFunction(ElementsOfIncidenceStructure(ps1), 
-                                       ElementsOfIncidenceStructure(ps2), 
-                                        x -> iso!.fun(map!.fun(x)), false,  x -> map!.prefun(iso!.prefun(x)) );
+	c1 := BaseChangeToCanonical( form2 );
+    if not IsCanonicalPolarSpace(ps2) then
+        if type2 in ["parabolic", "hyperbolic", "elliptic"] then
+            c2 := BaseChangeToCanonical(QuadraticForm(ps2));
+        else
+            c2 := BaseChangeToCanonical(SesquilinearForm(ps2));
+        fi;
+        cps2 := c2^-1 * c1;
+    else
+        cps2 := c1;
+    fi;
+    cps2inv := cps2^-1;
 
-	# The intertwiner is a record element and so we need to adjust this manually
-	# This still needs testing.
-	#SetIntertwiner(morphism, CompositionMapping(Intertwiner(iso), Intertwiner(map)) );
+    fun := function( subspace )
+        local mat1,mat2;
+        mat1 := subspace!.obj;
+        if subspace!.type = 1 then
+            mat1 := [subspace!.obj];
+        fi;
+        mat2 := BlownUpMat(basis,mat1);
+        return VectorSpaceToElement(ps2,mat2*cps2inv);
+    end;
+
+    #this version of prefun is new (2/7/14).
+    prefun := function( subspace ) # This map is the inverse of func and returns an error, or a subspace of geom1
+        local flag,basvecs,mat1,span,x,v,v1,i,vecs;
+        flag:=true;
+        if not subspace in ps2 then
+            Error("The input is not in the range of the field reduction map!");
+        fi;
+        if not IsInt((Dimension(subspace)+1)/t) then
+            flag:=false;
+        else
+            basvecs:=BasisVectors(basis);
+            mat1 := [];
+            span := [];
+            vecs := Unpack(UnderlyingObject(subspace))*cps2;
+            mat1 := List(vecs,x->List([1..d1],i->x{[(i-1)*t+1..i*t]}*basvecs));
+            span := VectorSpaceToElement(ps2,BlownUpMat(basis,mat1)*cps2inv);
+            if not span = subspace then
+                flag := false;
+            fi;
+        fi;
+        if flag= false then
+            Error("The input is not in the range of the field reduction map!");
+        fi;
+        return VectorSpaceToElement(ps1,mat1);
+    end;
+
+    #iso := IsomorphismPolarSpacesNC(AmbientGeometry(Range(map)), ps2);
+	#morphism := GeometryMorphismByFunction(ElementsOfIncidenceStructure(ps1),
+    #                                   ElementsOfIncidenceStructure(ps2),
+    #                                    x -> iso!.fun(map!.fun(x)), false,  x -> map!.prefun(iso!.prefun(x)) );
+
+	map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(ps1),
+                                         ElementsOfIncidenceStructure(ps2),
+                                            fun, false, prefun);
+	SetIsInjective( map, true );
+
+	if computeintertwiner then
+		hom := function( m )
+			local image;      
+			image := BlownUpMat(basis, m!.mat); 
+			ConvertToMatrixRepNC( image, f2 );       
+			return CollineationOfProjectiveSpace(cps2 * image * cps2inv, f2);
+		end;
+		hominv := function( m )
+			local preimage;      
+            preimage := ShrinkMat(basis, cps2inv * Unpack(m!.mat) * cps2);
+			ConvertToMatrixRepNC( preimage, f1 );       
+			return CollineationOfProjectiveSpace(preimage, f1);
+		end;
+		g1 := SimilarityGroup( ps1 );
+		gens := GeneratorsOfGroup( g1 );
+		newgens := List(gens, hom);
+		g2 := Group( newgens );
+		SetSize(g2, Size(g1));
+		twiner := GroupHomomorphismByFunction(g1, g2, hom, hominv);
+		SetIntertwiner( map, twiner);
+	fi;
+
+	SetIntertwiner(map, hom );
 		
-	return morphism;
+	return map;
 end );
+
+# added 2/7/14 jdb
+#####################################################################################
+# O  NaturalEmbeddingByFieldReduction
+# This NaturalEmbeddingByFieldReduction takes two polar spaces and returns an embedding
+# obtained by field reduction if such an embedding exists, otherwise it returns an error.
+##
+InstallMethod (NaturalEmbeddingByFieldReduction,
+	"for two classical polar spaces",
+	[IsClassicalPolarSpace, IsClassicalPolarSpace],
+	function(ps1, ps2)
+        return NaturalEmbeddingByFieldReduction(ps1,ps2,true);
+    end );
+
 
 #############################################################################
 #
