@@ -1,21 +1,21 @@
 <!-- 
 
   intro.xml            FinInG package documentation 
-                                                                   John Bamberg
-                                                              and Philippe Cara
-                                                               and Jan De Beule
-                                                             and Michel Lavrauw
-                                                                  and Maska Law
-                                                             and Michael Pauley
-                                                            and Max Neunhoeffer
-                                                              and Sven Reichard
-
-  Copyright 2008 University of Western Australia, Perth
-                 Lehrstuhl D fuer Mathematik, RWTH Aachen
-                 Ghent University
-                 Colorado State University
-                 Vrije Universiteit Brussel
-                 
+ 
+                                                                John Bamberg
+                                                                Anton Betten
+                                                               Philippe Cara
+                                                                Jan De Beule
+                                                              Michel Lavrauw
+                                                             Max Neunhoeffer
+ 
+ Copyright (C) 2014, University of Western Australia
+                     Colorado State University
+                     Vrije Universiteit Brussel
+                     Ghent University
+                     Università degli Studi di Padova
+ 
+ 
 This chapter gives a short introduction and explains the philosophy
 behind the package.
 
@@ -27,9 +27,9 @@ behind the package.
 <Section Label="philosophy">
 <Heading>Philosophy</Heading>
 
-<Package>FinInG</Package> (pronounciation: f&#618;n&#618;&#331;) is a package for computation in
-Finite Incidence Geometry. It provides users with the basic tools to 
-work in various areas of finite geometry from the realms of 
+<Package>FinInG</Package> (pronounciation: <Alt Only="LaTeX">\textipa{f\;I{}n\;I{}N}</Alt><Alt Only="HTML">f&#618;n&#618;&#331;</Alt>) is a package for computation in
+Finite Incidence Geometry. It provides users with the basic tools to
+work in various areas of finite geometry from the realms of
 projective spaces to the flat lands of generalised polygons. 
 The algebraic power of GAP is employed, particularly in its 
 facility with matrix and permutation groups.
@@ -48,26 +48,24 @@ available in the package, are introduced and discussed in Chapter <Ref Chap="mor
 
 <Section>
 <Heading>The Development Team</Heading>
-<Alt Only="HTML">This is the development team (without Anton),  meeting in St. Andrews in september 2008, 
-from left to right: Philippe Cara, Michel Lavrauw, Max Neunh&#246;ffer, Jan De Beule and John Bamberg</Alt>
-<Alt Only="LaTeX">This is the development team (without Anton)  meeting in St. Andrews in september 2008, from left to
-right: Philippe Cara, Michel Lavrauw, Max Neunh\"offer, Jan De Beule and John
-Bamberg</Alt>.<P/>
+This is the development team (without Anton),  meeting in St. Andrews in september 2008,
+from left to right: Philippe Cara, Michel Lavrauw, Max Neunh&#246;ffer, Jan De Beule and John Bamberg
+<P/>
 <Alt Only="HTML">&lt;img src="devteamstasep08.jpg">&lt;/img></Alt>
-<Alt Only="LaTeX">\includegraphics[scale=0.5]{devteamstasep08.jpg}</Alt><P/>
+<Alt Only="LaTeX">\includegraphics[scale=0.6]{devteamstasep08.jpg}</Alt><P/>
 The development team meeting again (without Anton and Max), now
 in Vicenza in april 2011. from left to right: Michel Lavrauw, John Bamberg, Philippe
 Cara, Jan De Beule.<P/>
 <Alt Only="HTML">&lt;img src="devteamvicapr11.jpg">&lt;/img></Alt>
-<Alt Only="LaTeX">\includegraphics[scale=0.5]{devteamvicapr11.jpg}</Alt><P/>
+<Alt Only="LaTeX">\includegraphics[scale=0.6]{devteamvicapr11.jpg}</Alt><P/>
 Survivors of the first version of <Package>FinInG</Package>, enjoying a trip to Chioggia, december 2011.
 <P/>
 <Alt Only="HTML">&lt;img src="devteamchidec11.jpg">&lt;/img></Alt>
-<Alt Only="LaTeX">\includegraphics[scale=0.5]{devteamchidec11.jpg}</Alt><P/>
+<Alt Only="LaTeX">\includegraphics[scale=0.6]{devteamchidec11.jpg}</Alt><P/>
 The same survivors, staring at the destiny.
 <P/>
 <Alt Only="HTML">&lt;img src="devteamdestiny.jpg">&lt;/img></Alt>
-<Alt Only="LaTeX">\includegraphics[scale=0.5]{devteamdestiny.jpg}</Alt><P/>
+<Alt Only="LaTeX">\includegraphics[scale=0.6]{devteamdestiny.jpg}</Alt><P/>
 </Section>
 
 

@@ -46,13 +46,13 @@ own declarations and the ones before.
 <Heading>Declarations</Heading>
 <Description>
 <Example>
-<#Include SYSTEM "operations_inventory.txt"> 
+<#Include SYSTEM "./output/operations_inventory.txt">
 </Example>
 <Example>
-<#Include SYSTEM "attributes_inventory.txt"> 
+<#Include SYSTEM "./output/attributes_inventory.txt">
 </Example>
 <Example>
-<#Include SYSTEM "properties_inventory.txt"> 
+<#Include SYSTEM "./output/properties_inventory.txt">
 </Example>
 </Description>
 </ManSection>
@@ -61,10 +61,10 @@ own declarations and the ones before.
 <Heading>Functions/Methods</Heading>
 <Description>
 <Example>
-<#Include SYSTEM "functions_inventory.txt"> 
+<#Include SYSTEM "./output/functions_inventory.txt">
 </Example>
 <Example>
-<#Include SYSTEM "methods_inventory.txt"> 
+<#Include SYSTEM "./output/methods_inventory.txt"> 
 </Example>
 
 </Description>

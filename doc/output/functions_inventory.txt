@@ -94,6 +94,7 @@ diagram.gi: global functions
 
 F: OnCosetGeometryElement
 F: DrawDiagram
+F: DrawDiagramWithNeato
 F: Drawing_Diagram
 
 varieties.gi: global functions

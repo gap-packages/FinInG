@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE Book SYSTEM "gapdoc.dtd">
-<?LaTeX ExtraPreamble="\usepackage{graphicx}"?>
-<?LaTeX ExtraPreamble="\usepackage{amsfonts}"?>
+<?LaTeX ExtraPreamble="\usepackage{graphicx,amsfonts,tipa}"?>
 
 
 <!--
@@ -100,6 +99,12 @@ John Bamberg has been supported by a Marie Curie grant and an ARC grant during a
 phase of <Package>FinInG</Package>. The authors are grateful for this support ans also for the fact that these
 funding agencies allow to invest time in this development. That this is possible is because these agencies
 do not focus on counting publications to judge the output of their supported researchers.
+<P/>
+John Bamberg, Philippe Cara and Jan De Beule have spent several weeks in Vicenza while developing <Package>FinInG</Package>.
+We acknowledge the hospitality of Michel Lavrauw and Corrado Zanella. Our stays in Vicenza were always fruitful and very
+enjoyable. During or daily morning and afternoon coffee breaks, we discussed topics, while enjoying coffee in <E>Caffe Pigaffeta</E>,
+<Homepage>http://www.caffepigafetta.it</Homepage>. Although one cannot acknowledge the bakery who provided us with the sandwiches,
+we acknowledge very much the hospitality of Carla and Luigi, who introduced us to many different kinds of coffees from all over the world.
 </Acknowledgements>
 
 
@@ -120,7 +125,6 @@ do not focus on counting publications to judge the output of their supported res
 <#Include SYSTEM "stab_orbs.xml">
 <#Include SYSTEM "affine.xml">
 <#Include SYSTEM "morphisms.xml">
-<!--#Include SYSTEM "schemes.xml"-->
 <#Include SYSTEM "varieties.xml">
 <#Include SYSTEM "gpolygons.xml">
 <#Include SYSTEM "diagramgeometries.xml">

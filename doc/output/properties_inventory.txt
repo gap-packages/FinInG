@@ -2,6 +2,8 @@ Properties
 
 geometry.gd: properties
 
+P: IsConfiguration: IsIncidenceStructure
+P: IsConstellation: IsIncidenceStructure
 
 liegeometry.gd: properties
 
