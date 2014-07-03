@@ -1,0 +1,37 @@
+# field reduction zoals het door God bedoeld is.
+ps1 := SymplecticSpace(1,5^3);
+ps2 := SymplecticSpace(5,5);
+em := NaturalEmbeddingByFieldReduction(ps1,ps2);
+pts := Points(ps1);
+spread := List(pts,x->x^em);;
+test := Union(List(spread,x->List(Points(x))));;
+Set(test)=Set(AsList(Points(ps2)));
+hom := Intertwiner(em);
+group := IsometryGroup(ps1);
+Order(group);
+gens := List(GeneratorsOfGroup(group),x->x^hom);
+group2 := Range(hom);
+Order(group2);
+biggroup := CollineationGroup(ps2);
+stab := FiningSetwiseStabiliser(biggroup,spread);
+time;
+Order(stab);
+ps1 := HermitianPolarSpace(2,7^2);
+ps2 := EllipticQuadric(5,7);
+em := NaturalEmbeddingByFieldReduction(ps1,ps2);
+pts := Points(ps1);
+spread := List(pts,x->x^em);;
+test := Union(List(spread,x->List(Points(x))));;
+Set(test)=Set(AsList(Points(ps2)));
+hom := Intertwiner(em);
+group := IsometryGroup(ps1);
+Order(group);
+gens := List(GeneratorsOfGroup(group),x->x^hom);
+group2 := Range(hom);
+Order(group2);
+biggroup := CollineationGroup(ps2);
+stab := FiningSetwiseStabiliser(biggroup,spread);
+time;
+Order(stab);
+quit;
+

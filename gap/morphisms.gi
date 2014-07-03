@@ -1065,8 +1065,6 @@ InstallMethod( NaturalEmbeddingByFieldReduction,
                 flag := false;
             else
                 basvecs:=BasisVectors(basis);
-                mat1:=[];
-                span:=[];
                 vecs := Unpack(UnderlyingObject(subspace));
                 mat1 := List(vecs,x->List([1..d1],i->x{[(i-1)*t+1..i*t]}*basvecs));
                 span := VectorSpaceToElement(pg2,BlownUpMat(basis,mat1));
@@ -1459,7 +1457,7 @@ InstallMethod (NaturalEmbeddingByFieldReduction,
             span:=[];
             vecs := Unpack(UnderlyingObject(subspace));
             mat1 := List(vecs,x->List([1..d1],i->x{[(i-1)*t+1..i*t]}*basvecs));
-            span:=VectorSpaceToElement(ps2,BlownUpMat(basis,mat1));
+            span := VectorSpaceToElement(AmbientSpace(ps2),BlownUpMat(basis,mat1)); #the ambientspace makes sure that there is no error message here yet.
             if not span=subspace then
                 flag := false;
             fi;
@@ -1478,27 +1476,32 @@ InstallMethod (NaturalEmbeddingByFieldReduction,
 	## Now creating intertwiner
 	
 	if computeintertwiner then
-		hom := function( m )
-			local image;      
-			image := BlownUpMat(basis, m!.mat); 
-			ConvertToMatrixRepNC( image, f2 );       
-			return CollineationOfProjectiveSpace(image, f2);
-		end;
-		hominv := function( m )
-			local preimage;      
-            preimage := ShrinkMat(basis, Unpack(m!.mat));
-			ConvertToMatrixRepNC( preimage, f1 );       
-			return CollineationOfProjectiveSpace(preimage, f1);
-		end;
-		g1 := SimilarityGroup( ps1 );
-		gens := GeneratorsOfGroup( g1 );
-		newgens := List(gens, hom);
-		g2 := Group( newgens );
-		SetSize(g2, Size(g1));
-		twiner := GroupHomomorphismByFunction(g1, g2, hom, hominv);
-		SetIntertwiner( map, twiner);
+        if (HasIsCanonicalPolarSpace( ps1 ) and IsCanonicalPolarSpace( ps1 )) or
+            HasCollineationGroup( ps1 ) then
+            
+            hom := function( m )
+                local image;
+                image := BlownUpMat(basis, m!.mat);
+                ConvertToMatrixRepNC( image, f2 );
+                return CollineationOfProjectiveSpace(image, f2);
+            end;
+            hominv := function( m )
+                local preimage;
+                preimage := ShrinkMat(basis, Unpack(m!.mat));
+                ConvertToMatrixRepNC( preimage, f1 );
+                return CollineationOfProjectiveSpace(preimage, f1);
+            end;
+            g1 := IsometryGroup( ps1 );
+            gens := GeneratorsOfGroup( g1 );
+            newgens := List(gens, hom);
+            g2 := Group( newgens );
+            SetSize(g2, Size(g1));
+            twiner := GroupHomomorphismByFunction(g1, g2, hom, hominv);
+            SetIntertwiner( map, twiner);
+        fi;
 	fi;
-	return map;
+
+    return map;
 	end );
 
 
@@ -1614,7 +1617,7 @@ InstallMethod (NaturalEmbeddingByFieldReduction,
 	#   Q -> Q- (t even, q odd)
 	#####################################################################
 
-    local t, r, type1, type2, form1, form1b, f1, f2, newps, sigma, map,
+    local t, r, type1, type2, form1, f1, f2, newps, sigma, map,
 		  gamma, bil1, q, n, alpha, basis, is_square, iso, form2, fun, prefun,
           c1, c2, cps2, cps2inv, d1, hom, hominv, g1, g2, gens, newgens, twiner;
 					
@@ -1761,6 +1764,7 @@ InstallMethod (NaturalEmbeddingByFieldReduction,
     end;
 
     #this version of prefun is new (2/7/14).
+
     prefun := function( subspace ) # This map is the inverse of func and returns an error, or a subspace of geom1
         local flag,basvecs,mat1,span,x,v,v1,i,vecs;
         flag:=true;
@@ -1771,16 +1775,14 @@ InstallMethod (NaturalEmbeddingByFieldReduction,
             flag:=false;
         else
             basvecs:=BasisVectors(basis);
-            mat1 := [];
-            span := [];
             vecs := Unpack(UnderlyingObject(subspace))*cps2;
             mat1 := List(vecs,x->List([1..d1],i->x{[(i-1)*t+1..i*t]}*basvecs));
-            span := VectorSpaceToElement(ps2,BlownUpMat(basis,mat1)*cps2inv);
+            span := VectorSpaceToElement(AmbientSpace(ps2),BlownUpMat(basis,mat1)*cps2inv); #the ambientspace makes sure that there is no error message here yet.
             if not span = subspace then
                 flag := false;
             fi;
         fi;
-        if flag= false then
+        if flag = false then
             Error("The input is not in the range of the field reduction map!");
         fi;
         return VectorSpaceToElement(ps1,mat1);
@@ -1796,27 +1798,30 @@ InstallMethod (NaturalEmbeddingByFieldReduction,
                                             fun, false, prefun);
 	SetIsInjective( map, true );
 
-	if computeintertwiner then
-		hom := function( m )
-			local image;      
-			image := BlownUpMat(basis, m!.mat); 
-			ConvertToMatrixRepNC( image, f2 );       
-			return CollineationOfProjectiveSpace(cps2 * image * cps2inv, f2);
-		end;
-		hominv := function( m )
-			local preimage;      
-            preimage := ShrinkMat(basis, cps2inv * Unpack(m!.mat) * cps2);
-			ConvertToMatrixRepNC( preimage, f1 );       
-			return CollineationOfProjectiveSpace(preimage, f1);
-		end;
-		g1 := SimilarityGroup( ps1 );
-		gens := GeneratorsOfGroup( g1 );
-		newgens := List(gens, hom);
-		g2 := Group( newgens );
-		SetSize(g2, Size(g1));
-		twiner := GroupHomomorphismByFunction(g1, g2, hom, hominv);
-		SetIntertwiner( map, twiner);
-	fi;
+    if (HasIsCanonicalPolarSpace( ps1 ) and IsCanonicalPolarSpace( ps1 )) or
+            HasCollineationGroup( ps1 ) then
+        if computeintertwiner then
+            hom := function( m )
+                local image;
+                image := BlownUpMat(basis, m!.mat);
+                ConvertToMatrixRepNC( image, f2 );
+                return CollineationOfProjectiveSpace(cps2 * image * cps2inv, f2);
+            end;
+            hominv := function( m )
+                local preimage;
+                preimage := ShrinkMat(basis, cps2inv * Unpack(m!.mat) * cps2);
+                ConvertToMatrixRepNC( preimage, f1 );
+                return CollineationOfProjectiveSpace(preimage, f1);
+            end;
+            g1 := IsometryGroup( ps1 );
+            gens := GeneratorsOfGroup( g1 );
+            newgens := List(gens, hom);
+            g2 := Group( newgens );
+            SetSize(g2, Size(g1));
+            twiner := GroupHomomorphismByFunction(g1, g2, hom, hominv);
+            SetIntertwiner( map, twiner);
+        fi;
+    fi;
 
 	SetIntertwiner(map, hom );
 		

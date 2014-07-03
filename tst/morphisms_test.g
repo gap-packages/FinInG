@@ -445,7 +445,7 @@ elsem := List(els,x->x^em);
 List(elsem,x->PreImageElm(em,x));
 
 hom := Intertwiner(em);
-group1 := SimilarityGroup(ps);
+group1 := IsometryGroup(ps);
 gens := GeneratorsOfGroup(group1);
 els := AsList(Points(ps));;
 List(gens,g->Collected(List(els,x->(x^g)^em = (x^em)^(g^hom))));

@@ -1,0 +1,72 @@
+gap&gt; ps1 := SymplecticSpace(1,5^3);
+W(1, 125)
+gap&gt; ps2 := SymplecticSpace(5,5);
+W(5, 5)
+gap&gt; em := NaturalEmbeddingByFieldReduction(ps1,ps2);
+#I  These polar spaces are suitable for field reduction
+&lt;geometry morphism from &lt;Elements of W(1, 125)&gt; to &lt;Elements of W(5, 5)&gt;&gt;
+gap&gt; pts := Points(ps1);
+&lt;points of W(1, 125)&gt;
+gap&gt; spread := List(pts,x-&gt;x^em);;
+gap&gt; test := Union(List(spread,x-&gt;List(Points(x))));;
+gap&gt; Set(test)=Set(AsList(Points(ps2)));
+true
+gap&gt; hom := Intertwiner(em);
+MappingByFunction( PSp(2,125), &lt;projective collineation group of size 
+976500 with 2 generators&gt;, function( m ) ... end, function( m ) ... end )
+gap&gt; group := IsometryGroup(ps1);
+PSp(2,125)
+gap&gt; Order(group);
+976500
+gap&gt; gens := List(GeneratorsOfGroup(group),x-&gt;x^hom);
+[ &lt; a collineation: &lt;cmat 6x6 over GF(5,1)&gt;, F^0&gt;, 
+  &lt; a collineation: &lt;cmat 6x6 over GF(5,1)&gt;, F^0&gt; ]
+gap&gt; group2 := Range(hom);
+&lt;projective collineation group of size 976500 with 2 generators&gt;
+gap&gt; Order(group2);
+976500
+gap&gt; biggroup := CollineationGroup(ps2);
+PGammaSp(6,5)
+gap&gt; stab := FiningSetwiseStabiliser(biggroup,spread);
+#I  Computing adjusted stabilizer chain...
+&lt;projective collineation group with 7 generators&gt;
+gap&gt; time;
+5110
+gap&gt; Order(stab);
+5859000
+gap&gt; ps1 := HermitianPolarSpace(2,7^2);
+H(2, 7^2)
+gap&gt; ps2 := EllipticQuadric(5,7);
+Q-(5, 7)
+gap&gt; em := NaturalEmbeddingByFieldReduction(ps1,ps2);
+#I  These polar spaces are suitable for field reduction
+&lt;geometry morphism from &lt;Elements of H(2, 7^2)&gt; to &lt;Elements of Q-(5, 7)&gt;&gt;
+gap&gt; pts := Points(ps1);
+&lt;points of H(2, 7^2)&gt;
+gap&gt; spread := List(pts,x-&gt;x^em);;
+gap&gt; test := Union(List(spread,x-&gt;List(Points(x))));;
+gap&gt; Set(test)=Set(AsList(Points(ps2)));
+true
+gap&gt; hom := Intertwiner(em);
+MappingByFunction( PGU(3,7^2), &lt;projective collineation group of size 
+5663616 with 2 generators&gt;, function( m ) ... end, function( m ) ... end )
+gap&gt; group := IsometryGroup(ps1);
+PGU(3,7^2)
+gap&gt; Order(group);
+5663616
+gap&gt; gens := List(GeneratorsOfGroup(group),x-&gt;x^hom);
+[ &lt; a collineation: &lt;cmat 6x6 over GF(7,1)&gt;, F^0&gt;, 
+  &lt; a collineation: &lt;cmat 6x6 over GF(7,1)&gt;, F^0&gt; ]
+gap&gt; group2 := Range(hom);
+&lt;projective collineation group of size 5663616 with 2 generators&gt;
+gap&gt; Order(group2);
+5663616
+gap&gt; biggroup := CollineationGroup(ps2);
+PDeltaO-(6,7)
+gap&gt; stab := FiningSetwiseStabiliser(biggroup,spread);
+#I  Computing adjusted stabilizer chain...
+&lt;projective collineation group with 10 generators&gt;
+gap&gt; time;
+2325
+gap&gt; Order(stab);
+90617856

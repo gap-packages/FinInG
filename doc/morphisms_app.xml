@@ -126,14 +126,18 @@ Checks wether the <A>subspace</A> is a subspace which is obtained from a blowing
 <Section Label="field_red_forms">
 <Heading>Field reduction and forms</Heading>
 
+The embedding of polar spaces by field reduction is explained in detail in Section <Ref Sect="polar_red"/>,
+and relies on the following three operations.
+
 <ManSection>
 <Oper Name="QuadraticFormFieldReduction" Arg="qf1, f2, alpha, basis"/>
 <Oper Name="QuadraticFormFieldReduction" Arg="qf1, f2, alpha"/>
 <Returns>a quadratic form</Returns>
 <Description>
-<Example>
-
-</Example>
+Let <M>f</M> be quadratic form determining a polar space over the field <M>L</M> This operation returns
+the quadratic form <Alt Only="HTML">T&lt;sub>&#945;&lt;/sub> &#8226; f &#8226; &#934; &lt;sup>-1&lt;/sup></Alt>
+<Alt Not="HTML">T_{\alpha} \circ f \circ \Phi^{-1}</Alt> over a subfield <M>K</M> of <M>L</M>, as explained
+in Section <Ref Sect="polar_red"/>.
 </Description>
 </ManSection>
 
@@ -142,9 +146,10 @@ Checks wether the <A>subspace</A> is a subspace which is obtained from a blowing
 <Oper Name="BilinearFormFieldReduction" Arg="bil11, f2, alpha"/>
 <Returns>a bilinear form</Returns>
 <Description>
-<Example>
-            
-</Example>
+    Let <M>f</M> be bilinear form determining a polar space over the field <M>L</M> This operation returns
+    the quadratic form <Alt Only="HTML">T&lt;sub>&#945;&lt;/sub> &#8226; f &#8226; &#934; &lt;sup>-1&lt;/sup></Alt>
+    <Alt Not="HTML">T_{\alpha} \circ f \circ \Phi^{-1}</Alt> over a subfield <M>K</M> of <M>L</M>, as explained
+    in Section <Ref Sect="polar_red"/>.
 </Description>
 </ManSection>
 
@@ -153,9 +158,10 @@ Checks wether the <A>subspace</A> is a subspace which is obtained from a blowing
 <Oper Name="HermitianFormFieldReduction" Arg="hf1, f2, alpha"/>
 <Returns>a hermitian form</Returns>
 <Description>
-<Example>
-            
-</Example>
+    Let <M>f</M> be bilinear form determining a polar space over the field <M>L</M> This operation returns
+    the quadratic form <Alt Only="HTML">T&lt;sub>&#945;&lt;/sub> &#8226; f &#8226; &#934; &lt;sup>-1&lt;/sup></Alt>
+    <Alt Not="HTML">T_{\alpha} \circ f \circ \Phi^{-1}</Alt> over a subfield <M>K</M> of <M>L</M>, as explained
+    in Section <Ref Sect="polar_red"/>.
 </Description>
 </ManSection>
 
