@@ -3227,7 +3227,7 @@ InstallMethod( NaturalDualitySymplectic,
 				newmat[5] := PluckerCoordinates([mat[4],-mat[2]]){[1..5]};
 				newmat[1] := PluckerCoordinates([mat[2]+mat[3],mat[1]+mat[4]]){[1..5]} - newmat[2] - newmat[5];
 				return ProjElWithFrob(cq4q * newmat * cq4qinv^(frob^-1),frob,f); #base change is here.
-				return newmat;
+				#return newmat;
 			end;
 
 			twinerprefun := function( g )
@@ -3944,5 +3944,419 @@ InstallMethod( IsomorphismPolarSpacesProjectionFromNucleus,
 
     return map;
  end );
+
+# Added july 2014 jdb.
+#############################################################################
+#O SelfDualitySymplectic
+# combines NaturalDualitySymplectic with IsomorphismPolarSpacesProjectionFromNucleus,
+# most of the code is recycled from these operations, and is documented there.
+# Note that we have less base changes to deal with. Starting from a canonical W(3,q), 
+# the obtained Q(4,q) has form X_0^2+X1X4+X2X3=0. The base change X4<->X2 is represented
+# by perm5 at the Q(4,q) side and perm4 at the projected W(3,q) side.
+# This operation is a helper operation for SelfDuality, there are no checks 
+# on the input.
+# order: W(3,q) -> Q(4,q) -> W(3,q), by Plucker and then projection.
+# -> twinerfunc: 1. PsP(4,q) -> PGO(5,q) by Plucker (twinerfunc of NaturalDualitySymplectic)
+#                2. PGO(5,q) -> PsP(4,q) by projection (twinerfunc of Isomorphism...Nucleus)
+# -> twinerprefun: 1. PsP(4,q) -> PPGO(5,q) by inverse projection (twinerprefun of Isomorphism...Nucleus)
+#                  2. PGO(5,q) -> PsP(4,q) by inverse Plucker (twinerprefun of NaturalDualitySymplectic)
+#############################################################################
+#
+InstallMethod( SelfDualitySymplectic,
+	"for a symplectic GQ and a boolean",
+	[ IsClassicalGQ, IsBool ],
+	function( w, computeintertwiner )
+    local f, one, mat, quad_form, quadric, data, form_w, cw, cwinv, q, map,
+        func, pre, formw, delta, hyp, coll1, hom, ones, can_form,
+		twinerfunc, twinerprefun, cq4qinv, id, hyp2, nucleus, perm4, gram, perm5;
+    f := w!.basefield;
+    one := One(f);
+	formw := SesquilinearForm( w );
+    delta := PolarityOfProjectiveSpace(w);
+    hyp := IdentityMat(6,f){[1..5]}; #this and next are in fact HyperplaneByDualCoorindates([1,0,0,0,0,1]..)
+    hyp[1][6] := -one;
+    nucleus := [1,0,0,0,0]*one;
+	mat := IdentityMat(5,f);
+    hyp2 := mat{[2..5]};
+    perm4 := IdentityMat(4,f){[1,4,3,2]};
+    perm5 := IdentityMat(5,f){[1,2,5,4,3]};
+    gram := [[1,0,0,0,0],[0,0,0,0,1],[0,0,0,1,0],[0,0,0,0,0],[0,0,0,0,0]]*one;
+    quad_form := QuadraticFormByMatrix(gram,f);
+    q := Size(f);
+    cw := IdentityMat(4,f);
+    if not IsCanonicalPolarSpace( w ) then
+        cw := BaseChangeToCanonical( formw );
+    fi;
+    cwinv := cw^-1;
+    can_form := QuadraticFormByMatrix( CanonicalQuadraticForm("parabolic", 5, f), f);
+    ones := List([1..5],x->one); #all ones for several purposes.
+    id := IdentityMat(4, f);
+
+    func := function( el )
+        local list,plane,vec,proj;
+        if el!.type = 2 then #dealing with a line
+            vec := [ PluckerCoordinates(Unpack(el!.obj) * cwinv){[1..5]}, nucleus];
+            proj := SumIntersectionMat(vec, hyp2)[2];
+            vec := List(proj,x->x{[2..5]});
+            return VectorSpaceToElement(w, ( vec * perm4 ) * cw);
+        else
+            plane := el^delta;
+            vec := Unpack(plane!.obj) * cwinv;
+            list := [ PluckerCoordinates(vec{[1,2]}), PluckerCoordinates(vec{[2,3]}), PluckerCoordinates(vec{[1,3]}) ];
+            plane := SumIntersectionMat(list, hyp)[2]; #hard coded Meet operation :-)
+            list := List(plane,x->x{[1..5]});
+            vec := Concatenation(list, [nucleus]);
+            proj := SumIntersectionMat(vec, hyp2)[2];
+            vec := List(proj,x->x{[2..5]});
+            return VectorSpaceToElement(w, ( vec * perm4 ) * cw);
+        fi;
+    end;
+
+    pre := function( el )
+        local vec,i;
+        if el!.type = 1 then #dealing with a point
+            vec := [Unpack(el!.obj) * cwinv] * perm4;
+        else
+            vec := (Unpack(el!.obj) * cwinv )* perm4;
+        fi;
+        vec := List(vec,x->Concatenation([0*Z(q)^0],x));
+        for i in [1..Length(vec)] do
+            vec[i][1] := (vec[i]^quad_form)^(q/2);
+        od;
+        if el!.type = 1 then #dealing with a point
+            vec[1][6] := -vec[1][1];
+            return VectorSpaceToElement(w, InversePluckerCoordinates(vec[1]) * cw );
+        else
+            vec[1][6] := -vec[1][1];
+            vec[2][6] := -vec[2][1];
+            return VectorSpaceToElement(w, (SumIntersectionMat(InversePluckerCoordinates(vec[1]), InversePluckerCoordinates(vec[2]))[2]) * cw );
+        fi;
+    end;
+    
+    map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(w), ElementsOfIncidenceStructure(w), func, pre);
+    SetIsBijective( map, true );
+    
+    twinerfunc := function(g)
+        local mat,newmat,frob;
+        frob := g!.frob;
+        mat := cw * Unpack(g!.mat) * cwinv^(frob^-1);
+        newmat := [];
+        newmat[2] := PluckerCoordinates([mat[3],mat[1]]){[1..5]};
+        newmat[3] := PluckerCoordinates([mat[4],mat[1]]){[1..5]};
+        newmat[4] := -PluckerCoordinates([-mat[3],mat[2]]){[1..5]};
+        newmat[5] := PluckerCoordinates([mat[4],-mat[2]]){[1..5]};
+        newmat[1] := PluckerCoordinates([mat[2]+mat[3],mat[1]+mat[4]]){[1..5]} - newmat[2] - newmat[5];
+        newmat := perm5 * newmat * perm5^(frob^-1);
+        newmat := newmat{[2..5]}{[2..5]};
+        return ProjElWithFrob(cwinv * newmat * cw^(frob^-1),frob,f);
+    end;
+
+	twinerprefun := function( el )
+		local newmat,mat,frob,i,vec,y,newvec,z,zprime,
+            lines, pts, ipts, ilines, e, x, ept, ielines, 
+            ie, cs, iept, j;
+		frob := el!.frob;
+		mat := cw * Unpack(el!.mat) * cwinv^(frob^-1);
+		newmat := NullMat(5,5,f);
+		newmat{[2..5]}{[2..5]} := mat;
+
+        #compute the first column of newmat (except for newmat[1][1].
+		for i in [2..5] do
+			vec := Concatenation([0*Z(q)^0],mat[i-1])^frob;
+			newmat[i][1] := ((vec^can_form)^(q/2))^(frob^-1);
+		od;
+
+        if not q = 2 then
+            vec := ShallowCopy(ones);
+            vec[1] := 0*one;
+            vec[2] := Z(q);
+            z := (vec^can_form)^(q/2);
+
+            y := vec*newmat;
+            y := y[1];
+            newvec := (vec * newmat)^frob; #remind that the symplectic part is in [2..n].
+            newvec[1] := 0*one;
+            zprime := ((newvec^can_form)^(q/2))^(frob^-1);
+        
+        #image of (alpha,1,1,...,1) under el (symplectic point!)
+
+            newmat[1][1] := (zprime+y)/z;
+        else
+            newmat[1][1] := one;
+        fi;
+		
+        mat := perm5 * newmat * perm5;
+ 
+        lines:= [];
+        lines[1] := [[id[1],id[3]],[id[1],id[4]]];
+        lines[2] := [[id[2],id[3]],[id[2],id[4]]];
+        lines[3] := [[id[3],id[1]],[id[3],id[2]]];
+        lines[4] := [[id[4],id[1]],[id[4],id[2]]];
+        pts := List(lines,x->List(x,y->PluckerCoordinates(y){[1..5]}));
+        ipts := List(pts,x->x*mat);
+        for i in [1..Length(ipts)] do
+            for j in [1..2] do
+                ipts[i][j][6] := -ipts[i][j][1];
+            od;
+        od;
+        ilines := List(ipts,x->List(x,y->InversePluckerCoordinates(y)));
+        ipts := List(ilines, x->SumIntersectionMat(x[1],x[2])[2]);
+        newmat := List(ipts,x->x[1]);
+        e := [1,1,1,1]*one;
+        ept := List([[e,id[1]+id[4]],[e,id[1]+id[2]]],y->PluckerCoordinates(y){[1..5]});
+        iept := List(ept,x->x*mat);
+        iept[1][6] := -iept[1][1];
+        iept[2][6] := -iept[2][1];
+	
+        ielines := List(iept,x->InversePluckerCoordinates(x));
+        ie := SumIntersectionMat(ielines[1],ielines[2])[2];
+        cs := SolutionMat(newmat,ie[1]);
+        for i in [1..4] do
+            newmat[i] := newmat[i]*cs[i];
+        od;
+        return ProjElWithFrob(cwinv * newmat * cw^(frob^-1),frob,f);
+
+	end;
+
+    if computeintertwiner then
+        if (HasIsCanonicalPolarSpace( w ) and IsCanonicalPolarSpace( w )) or
+            HasCollineationGroup( w ) then
+			coll1 := CollineationGroup(w);
+			hom := GroupHomomorphismByFunction(coll1, coll1, twinerfunc, twinerprefun);
+			SetIntertwiner( map, hom );
+			#UseIsomorphismRelation(coll1,coll2);
+ 		else
+			Info(InfoFinInG, 1, "No intertwiner computed. The polar space must have a collineation group computed");
+		fi;
+    fi;
+
+    return map;
+end );
+
+# Added july 2014 jdb.
+#############################################################################
+#O SelfDualityParabolic
+# combines NaturalDualitySymplectic with IsomorphismPolarSpacesProjectionFromNucleus,
+# most of the code is recycled from these operations, and is documented there.
+# Note that we have less base changes to deal with. Starting from a canonical W(3,q), 
+# the obtained Q(4,q) has form X_0^2+X1X4+X2X3=0. The base change X4<->X2 is represented
+# by perm5 at the Q(4,q) side and perm4 at the projected W(3,q) side.
+# This operation is a helper operation for SelfDuality, there are no checks 
+# on the input.
+# order: Q(4,q) -> W(3,q) -> Q(4,q), by projection and then Plucker.
+# -> twinerfunc: 1. PGO(5,q) -> PsP(4,q) by projection (twinerfunc of Isomorphism...Nucleus)
+#                2. PsP(4,q) -> PGO(5,q) by Plucker (twinerfunc of NaturalDualitySymplectic)
+# -> twinerprefun: 1. PGO(5,q) -> PsP(4,q) by inverse Plucker (twinerprefun of NaturalDualitySymplectic)
+#                  2. PsP(4,q) -> PPGO(5,q) by inverse projection (twinerprefun of Isomorphism...Nucleus)
+#############################################################################
+#
+InstallMethod( SelfDualityParabolic,
+	"for a symplectic GQ and a boolean",
+	[ IsClassicalGQ, IsBool ],
+	function( q4q, computeintertwiner )
+    local f, one, mat, quad_form, quadric, data, cq, cqinv, q, map, can_form,
+        func, pre, formq, delta, hyp, coll1, coll2, gens1, gens2, hom, ones,
+		twinerfunc, twinerprefun, id, hyp2, nucleus, perm4, perm5, gram;
+
+    f := q4q!.basefield;
+    one := One(f);
+    hyp := IdentityMat(6,f){[1..5]}; #this and next are in fact HyperplaneByDualCoorindates([1,0,0,0,0,1]..)
+    hyp[1][6] := -one;
+    mat := IdentityMat(5,f);
+    hyp2 := mat{[2..5]};
+    perm4 := IdentityMat(4,f){[1,4,3,2]};
+    perm5 := IdentityMat(5,f){[1,2,5,4,3]};
+    quad_form := QuadraticFormByMatrix(CanonicalQuadraticForm("parabolic",5,f),f);
+    q := Size(f);
+    nucleus := [1,0,0,0,0]*one;
+    delta := CanonicalGramMatrix("symplectic",4,f); #we will hard code the polarity :-)
+    formq := QuadraticForm(q4q);
+    
+    cq := IdentityMat(5,f);
+    if not IsCanonicalPolarSpace( q4q ) then
+        cq := BaseChangeToCanonical( formq );
+    fi;
+    cqinv := cq^-1;
+
+    func := function( el )
+        local list,plane,vec,proj;
+        if el!.type = 1 then
+            vec := [Unpack(el!.obj) * cqinv, nucleus];
+        else
+            vec := Concatenation(Unpack(el!.obj) * cqinv, [nucleus]);
+        fi;
+        proj := SumIntersectionMat(vec, hyp2)[2]; #hard coded Meet operation :-)
+        vec := List(proj,x->x{[2..5]}); #make it a GF(q)^(n-1) vector ends the projection.
+        if el!.type = 2 then
+            vec := [PluckerCoordinates(vec){[1..5]}] * perm5;
+            return VectorSpaceToElement(q4q,vec * cq);
+        else
+            plane := NullspaceMat(TransposedMat(vec*delta));
+            list := [ PluckerCoordinates(plane{[1,2]}), PluckerCoordinates(plane{[2,3]}), PluckerCoordinates(plane{[1,3]}) ];
+            plane := SumIntersectionMat(list, hyp)[2]; #hard coded Meet operation :-)
+            list := List(plane,x->x{[1..5]}) * perm5;
+            return VectorSpaceToElement(q4q,list * cq);
+        fi;
+    end;
+
+    pre := function( el )
+        local vec,ivec,i;
+        if el!.type = 1 then #dealing with a point
+            vec := [Unpack(el!.obj) * cqinv ] * perm5;
+            vec[1][6] := -vec[1][1];
+            ivec := InversePluckerCoordinates(vec[1]);
+        else
+            vec := (Unpack(el!.obj) * cqinv )* perm5;
+            vec[1][6] := -vec[1][1];
+            vec[2][6] := -vec[2][1];
+            ivec := SumIntersectionMat(InversePluckerCoordinates(vec[1]), InversePluckerCoordinates(vec[2]))[2];
+        fi;
+        ivec := List(ivec,x->Concatenation([0*Z(q)^0],x));
+        for i in [1..Length(ivec)] do
+            ivec[i][1] := (ivec[i]^quad_form)^(q/2);
+        od;
+        return VectorSpaceToElement(q4q,ivec * cq);
+    end;
+
+    map := GeometryMorphismByFunction(ElementsOfIncidenceStructure(q4q), ElementsOfIncidenceStructure(q4q), func, pre);
+    SetIsBijective( map, true );
+
+    can_form := QuadraticFormByMatrix( CanonicalQuadraticForm("parabolic", 5, f), f);
+    ones := List([1..5],x->one); #all ones for several purposes.
+    id := IdentityMat(4, f);
+
+	twinerfunc := function( el )
+		local mat,frob, newmat;
+		frob := el!.frob;
+		mat := cq * Unpack(el!.mat) * cqinv^(frob^-1);
+		mat := mat{[2..5]}{[2..5]};
+        newmat := [];
+        newmat[2] := PluckerCoordinates([mat[3],mat[1]]){[1..5]};
+        newmat[3] := PluckerCoordinates([mat[4],mat[1]]){[1..5]};
+        newmat[4] := -PluckerCoordinates([-mat[3],mat[2]]){[1..5]};
+        newmat[5] := PluckerCoordinates([mat[4],-mat[2]]){[1..5]};
+        newmat[1] := PluckerCoordinates([mat[2]+mat[3],mat[1]+mat[4]]){[1..5]} - newmat[2] - newmat[5];
+        newmat := perm5 * newmat * perm5;
+        return ProjElWithFrob(cqinv * newmat * cq^(frob^-1),frob,f);
+	end;
+    
+	twinerprefun := function( el )
+		local newmat,mat,frob,i,vec,y,newvec,z,zprime,
+            lines, pts, ipts, ilines, e, x, ept, ielines, 
+            ie, cs, iept, j;
+		frob := el!.frob;
+		mat := perm5 * cq * Unpack(el!.mat) * cqinv^(frob^-1) * perm5;
+
+        lines:= [];
+        lines[1] := [[id[1],id[3]],[id[1],id[4]]];
+        lines[2] := [[id[2],id[3]],[id[2],id[4]]];
+        lines[3] := [[id[3],id[1]],[id[3],id[2]]];
+        lines[4] := [[id[4],id[1]],[id[4],id[2]]];
+        pts := List(lines,x->List(x,y->PluckerCoordinates(y){[1..5]}));
+        ipts := List(pts,x->x*mat);
+        for i in [1..Length(ipts)] do
+            for j in [1..2] do
+                ipts[i][j][6] := -ipts[i][j][1];
+            od;
+        od;
+        ilines := List(ipts,x->List(x,y->InversePluckerCoordinates(y)));
+        ipts := List(ilines, x->SumIntersectionMat(x[1],x[2])[2]);
+        newmat := List(ipts,x->x[1]);
+        e := [1,1,1,1]*one;
+        ept := List([[e,id[1]+id[4]],[e,id[1]+id[2]]],y->PluckerCoordinates(y){[1..5]});
+        iept := List(ept,x->x*mat);
+        iept[1][6] := -iept[1][1];
+        iept[2][6] := -iept[2][1];
+	
+        ielines := List(iept,x->InversePluckerCoordinates(x));
+        ie := SumIntersectionMat(ielines[1],ielines[2])[2];
+        cs := SolutionMat(newmat,ie[1]);
+        for i in [1..4] do
+            newmat[i] := newmat[i]*cs[i];
+        od;
+        mat := ShallowCopy(newmat);
+
+		newmat := NullMat(5,5,f);
+		newmat{[2..5]}{[2..5]} := mat;
+
+        #compute the first column of newmat (except for newmat[1][1].
+		for i in [2..5] do
+			vec := Concatenation([0*Z(q)^0],mat[i-1])^frob;
+			newmat[i][1] := ((vec^can_form)^(q/2))^(frob^-1);
+		od;
+
+        if not q = 2 then
+            vec := ShallowCopy(ones);
+            vec[1] := 0*one;
+            vec[2] := Z(q);
+            z := (vec^can_form)^(q/2);
+
+            y := vec*newmat;
+            y := y[1];
+            newvec := (vec * newmat)^frob; #remind that the symplectic part is in [2..n].
+            newvec[1] := 0*one;
+            zprime := ((newvec^can_form)^(q/2))^(frob^-1);
+        
+        #image of (alpha,1,1,...,1) under el (symplectic point!)
+
+            newmat[1][1] := (zprime+y)/z;
+        else
+            newmat[1][1] := one;
+        fi;
+		
+        return ProjElWithFrob(cqinv * newmat * cq^(frob^-1),frob,f);
+
+	end;
+
+    if computeintertwiner then
+        if (HasIsCanonicalPolarSpace( q4q ) and IsCanonicalPolarSpace( q4q )) or
+            HasCollineationGroup( q4q ) then
+			coll1 := CollineationGroup(q4q);
+			hom := GroupHomomorphismByFunction(coll1, coll1, twinerfunc, twinerprefun);
+			SetIntertwiner( map, hom );
+			#UseIsomorphismRelation(coll1,coll2);
+ 		else
+			Info(InfoFinInG, 1, "No intertwiner computed. The polar space must have a collineation group computed");
+		fi;
+    fi;
+
+    return map;
+end );
+
+# Added july 2014 jdb.
+#############################################################################
+#O  SelfDuality( <gq>, <bool> )
+# This is the interface to the helper functions. It simply checks the input 
+# and decides which NaturalDuality... to use.
+##
+InstallMethod( SelfDuality,
+	"for a GQ and a boolean",
+	[ IsClassicalGQ, IsBool ],
+	function( gq, computeintertwiner )
+    local f;
+    f := gq!.basefield;
+    if not IsEvenInt(Characteristic(f)) then
+        Error( "<gq> must be a GQ over a field of even characteristic");
+    fi;
+    if IsSymplecticSpace(gq) then
+        return SelfDualitySymplectic(gq, computeintertwiner );
+    elif IsParabolicQuadric( gq ) then
+        return SelfDualityParabolic(gq, computeintertwiner );
+    else
+        Error("<gq> must be a symplectic GQ or a parabolic quadric");
+    fi;
+end );
+
+# Added july 2014 jdb.
+#############################################################################
+#O  SelfDuality( <gq>, <bool> )
+# This is the interface to the helper functions. It returns SelfDuality(<gq>,true)
+##
+InstallMethod( SelfDuality,
+	"for a GQ and a boolean",
+	[ IsClassicalGQ ],
+	function( gq )
+        return SelfDuality(gq, true);
+end );
 
 

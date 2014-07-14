@@ -79,10 +79,9 @@ and range.
 <Example>
 <#Include SYSTEM "../examples/include/morphisms_filters.include"> 
 </Example>
-The usual operations of <C>ImagesElm</C>, <C>ImagesSet</C>, <C>PreImagesElm</C>, 
-<C>PreImagesSet</C> work for geometry
-morphisms, as well as the overload operator <C>\^</C>. Since <C>Image</C> is
-a &GAP; function, we advise the user to not use this for geometry morphisms.
+The usual operations of <C>ImageElm</C>, and <C>PreImageElm</C>,
+have methods installed for for geometry
+morphisms, as well as the overload operator <C>\^</C>.
 </Description>
 </ManSection>
 
@@ -264,7 +263,7 @@ one provided by the package <Package>FinInG</Package>. <P/>
 The third version requires only one argument, either <M>W(3,q)</M>, <M>Q(4,q)</M>,
 <Alt Not="HTML"><M>Q^-(5,q)</M></Alt><Alt Only="HTML">Q&lt;sup>-&lt;/sup>(5,q)</Alt>, or
 <Alt Not="HTML"><M>H(3,q^2)</M></Alt><Alt Only="HTML">H(3,q&lt;sup>2&lt;/sup>)</Alt>,
-standard or specified by the users using an appropriate bilinear, quadratic or hermitian
+standard or user specified using an appropriate bilinear, quadratic or hermitian
 form. The range of the returned geometry morphism will be the set of all elements of a suitable generalised
 quadrangle, in standard form.<P/>
 
@@ -277,6 +276,25 @@ that is not equipped with an intertwiner.<P/>
 </Description>
 </ManSection>
 
+The combination of the isomorphism of the GQs <M>W(3,q)</M>, <M>Q(4,q)</M> when <M>q</M> is even
+and the duality between the same GQs, yields a duality from each of these GQs itself. The operation
+<F>SelfDuality</F> implements this combination.
+
+<ManSection>
+<Oper Name="SelfDuality" Arg="gq"/>
+<Oper Name="SelfDuality" Arg="gq, boolean"/>
+<Returns>a geometry morphism</Returns>
+<Description>
+It is checked wheter the base field of <A>gq</A> is a field of charateristic 2 and whether
+<A>gq</A> is a symplectic generalised quadrangle or a parabolic quadric.
+The first version will return, when possible, a geometry morphism equipped with an intertwiner.
+Using the boolean argument <A>false</A> will return a geometry morphism
+that is not equipped with an intertwiner. The example shows the use of the boolean argument.
+<Example>
+<#Include SYSTEM "../examples/include/morphisms_selfduality.include">
+</Example>
+</Description>
+</ManSection>
 </Section>
 
 <Section>
@@ -488,13 +506,14 @@ Define for any <M>\alpha \in L</M> the map <Alt Not="HTML"><M>T_{\alpha}: GF(q^t
     GF(q): T_{\alpha}(x) = T(\alpha x)</M></Alt> <Alt Only="HTML">T&lt;sub>&#945;&lt;/sub>: GF(q&lt;sup>t&lt;/sup>)&#8594; GF(q): x &#8594; T(&#945; x)</Alt>.
 
 Consider the <M>rt</M> dimensional vector space <M>W</M> over <M>K</M>. There is a bijective map
-<Alt Not="HTML"><M>\Phi</M></Alt><Alt Only="HTML">&#934;</Alt> from <M>V</M> to <M>W</M>. Now it is easy to see that <Alt Only="HTML">T&lt;sub>&#945;&lt;/sub> &#8226; f &#8226; &#934; &lt;sup>-1&lt;/sup></Alt><Alt Not="HTML">T_{\alpha} \circ f \circ \Phi^{-1}</Alt> will be a
+<Alt Not="HTML"><M>\Phi</M></Alt><Alt Only="HTML">&#934;</Alt> from <M>V</M> to <M>W</M>. Now it is easy to see that <Alt Only="HTML">T&lt;sub>&#945;&lt;/sub> &#8226; f &#8226; &#934; &lt;sup>-1&lt;/sup></Alt><Alt Not="HTML"><M>T_{\alpha} \circ f \circ \Phi^{-1}</M></Alt> will be a
 quadratic or sesquilinear form (depending on <M>\alpha</M>, and <M>f</M> being quadratic or sesquilinear) acting on <M>W</M>, and hence, if not singular or degenerate, inducing a polar space <M>S</M> over the finite field <M>GF(q)</M>. An element of <M>P</M> can be mapped on an element of <M>S</M> by simply blowing up using
 using field reduction. So the resulting polar space <M>W</M> is dependent on the original form <M>f</M>,
 the parameter <M>\alpha</M> and the blowing up of elements by field reduction, the latter being dependent
 on the basis of <M>L</M> as a <M>K</M> vector space. <Package>FinInG</Package> provides two approaches.
 The first approach starts from <M>P</M> and the parameters <M>K</M>, <M>\alpha</M> and a basis for <M>L</M>
-as <M>K</M> vector space. Then the resulting form <Alt Only="HTML">T&lt;sub>&#945;&lt;/sub> &#8226; f &#8226; &#934; &lt;sup>-1&lt;/sup></Alt><Alt Not="HTML">T_{\alpha} \circ f \circ \Phi^{-1}</Alt> is determined,
+as <M>K</M> vector space. Then the resulting form <Alt Only="HTML">T&lt;sub>&#945;&lt;/sub> &#8226; f &#8226; &#934; &lt;sup>-1&lt;/sup></Alt>
+<Alt Not="HTML"><M>T_{\alpha} \circ f \circ \Phi^{-1}</M></Alt> is determined,
 and the associated polar space <M>W</M> will be the range of the embedding. Note that the resulting polar
 space will not necessarily be canonical. The second approach starts
 from two given polar spaces <M>P</M> and <M>S</M>. Based on this input, it is determined wheter an embedding

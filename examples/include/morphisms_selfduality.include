@@ -1,0 +1,34 @@
+gap&gt; q := 16;
+16
+gap&gt; mat := [[0,1,0,0,0],[0,0,0,0,0],[0,0,1,0,0],[0,0,0,0,0],[0,0,0,1,0]]*Z(q)^0;
+[ [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ], 
+  [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ], 
+  [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ], 
+  [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ], 
+  [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2) ] ]
+gap&gt; form := QuadraticFormByMatrix(mat,GF(q));
+&lt; quadratic form &gt;
+gap&gt; q4q := PolarSpace(form);
+&lt;polar space in ProjectiveSpace(4,GF(2^4)): x_1*x_2+x_3^2+x_4*x_5=0 &gt;
+gap&gt; em := SelfDuality(q4q);
+#I  No intertwiner computed. The polar space must have a collineation group computed
+&lt;geometry morphism from &lt;Elements of Q(4, 
+16): x_1*x_2+x_3^2+x_4*x_5=0&gt; to &lt;Elements of Q(4, 
+16): x_1*x_2+x_3^2+x_4*x_5=0&gt;&gt;
+gap&gt; CollineationGroup(q4q);
+#I  Computing collineation group of canonical polar space...
+&lt;projective collineation group of size 4380799795200 with 3 generators&gt;
+gap&gt; em := SelfDuality(q4q);
+&lt;geometry morphism from &lt;Elements of Q(4, 
+16): x_1*x_2+x_3^2+x_4*x_5=0&gt; to &lt;Elements of Q(4, 
+16): x_1*x_2+x_3^2+x_4*x_5=0&gt;&gt;
+gap&gt; hom := Intertwiner(em);
+MappingByFunction( &lt;projective collineation group of size 4380799795200 with 
+3 generators&gt;, &lt;projective collineation group of size 4380799795200 with 
+3 generators&gt;, function( el ) ... end, function( el ) ... end )
+gap&gt; q := 16;
+16
+gap&gt; w := SymplecticSpace(3,q);
+W(3, 16)
+gap&gt; em := SelfDuality(w);
+&lt;geometry morphism from &lt;Elements of W(3, 16)&gt; to &lt;Elements of W(3, 16)&gt;&gt;

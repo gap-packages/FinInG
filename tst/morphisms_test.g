@@ -482,3 +482,70 @@ List(gens2,g->Collected(List(elsem,x->PreImageElm(em,x^g)=PreImageElm(em,x)^(Pre
         return VectorSpaceToElement(ps1,mat1);
     end;
 
+
+### self dualities ####
+
+q := 16;
+w := SymplecticSpace(3,q);
+group := CollineationGroup(w);
+gens := GeneratorsOfGroup(group);
+els := List(Points(w));;
+
+em := SelfDuality(w);
+hom := Intertwiner(em);
+List(gens,g->Collected(List(els,x->(x^g)^em = (x^em)^(g^hom))));
+List(gens,g->Collected(List(els,x->PreImageElm(em,x^g)=PreImageElm(em,x)^(PreImageElm(hom,g)))));
+
+els := List(Lines(w));;
+List(gens,g->Collected(List(els,x->(x^g)^em = (x^em)^(g^hom))));
+List(gens,g->Collected(List(els,x->PreImageElm(em,x^g)=PreImageElm(em,x)^(PreImageElm(hom,g)))));
+
+q := 16;
+q4q := ParabolicQuadric(4,q);
+group := CollineationGroup(q4q);
+gens := GeneratorsOfGroup(group);
+els := List(Points(q4q));;
+
+em := SelfDuality(q4q);
+hom := Intertwiner(em);
+List(gens,g->Collected(List(els,x->(x^g)^em = (x^em)^(g^hom))));
+List(gens,g->Collected(List(els,x->PreImageElm(em,x^g)=PreImageElm(em,x)^(PreImageElm(hom,g)))));
+
+els := List(Lines(q4q));;
+List(gens,g->Collected(List(els,x->(x^g)^em = (x^em)^(g^hom))));
+List(gens,g->Collected(List(els,x->PreImageElm(em,x^g)=PreImageElm(em,x)^(PreImageElm(hom,g)))));
+
+q := 16;
+mat := [[0,0,0,1],[0,0,1,0],[0,1,0,0],[1,0,0,0]]*Z(q)^0;
+form := BilinearFormByMatrix(mat,GF(q));
+w := PolarSpace(form);
+group := CollineationGroup(w);
+gens := GeneratorsOfGroup(group);
+els := List(Points(w));;
+
+em := SelfDuality(w);
+hom := Intertwiner(em);
+List(gens,g->Collected(List(els,x->(x^g)^em = (x^em)^(g^hom))));
+List(gens,g->Collected(List(els,x->PreImageElm(em,x^g)=PreImageElm(em,x)^(PreImageElm(hom,g)))));
+
+els := List(Lines(w));;
+List(gens,g->Collected(List(els,x->(x^g)^em = (x^em)^(g^hom))));
+List(gens,g->Collected(List(els,x->PreImageElm(em,x^g)=PreImageElm(em,x)^(PreImageElm(hom,g)))));
+
+q := 16;
+mat := [[0,1,0,0,0],[0,0,0,0,0],[0,0,1,0,0],[0,0,0,0,0],[0,0,0,1,0]]*Z(q)^0;
+form := QuadraticFormByMatrix(mat,GF(q));
+q4q := PolarSpace(form);
+group := CollineationGroup(q4q);
+gens := GeneratorsOfGroup(group);
+els := List(Points(q4q));;
+
+em := SelfDuality(q4q);
+hom := Intertwiner(em);
+List(gens,g->Collected(List(els,x->(x^g)^em = (x^em)^(g^hom))));
+List(gens,g->Collected(List(els,x->PreImageElm(em,x^g)=PreImageElm(em,x)^(PreImageElm(hom,g)))));
+
+els := List(Lines(q4q));;
+List(gens,g->Collected(List(els,x->(x^g)^em = (x^em)^(g^hom))));
+List(gens,g->Collected(List(els,x->PreImageElm(em,x^g)=PreImageElm(em,x)^(PreImageElm(hom,g)))));
+
