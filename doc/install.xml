@@ -30,13 +30,13 @@ This package requires the GAP packages <Package>GAPDoc</Package>, version 0.99 o
 Currently, one function will use the <Package>Design</Package> package, but this package is not required to
 load <Package>FinInG</Package>. The package <Package>GenSS</Package> requires the package <Package>IO</Package>.
 
-Currently, the packages <Package>GAPDoc</Package>, <Package>GRAPE</Package>, <Package>Forms</Package> and <Package>Design</Package> 
-are accepted GAP packages, the packages <Package>orb</Package>, <Package>GenSS</Package> and <Package>IO</Package>
-are deposited. All can be found through the GAP website.
+The packages required by <Package>FinInG</Package> are all part of the standard GAP distribution.
 
-The recent development stage of <Package>FinInG</Package> is based on GAP4r4p12. We have done testing using the beta
-release of GAP4r5, and no installation differences occured. In this section, we describe in detail the installation procedure 
-for <Package>FinInG</Package>, assuming the use of GAP4r4. We have also (succesfully) tested this procedure with GAP4r5 beta.
+The recent development stage of <Package>FinInG</Package> is based on GAP4r5. We have done testing using GAP4r7, 
+and no installation differences occured. In this section, we describe in detail the installation procedure   
+for <Package>FinInG</Package>, assuming the use of GAP4r7. We have also (succesfully) tested this procedure with 
+some older GAP releases but these required manual installation of <Package>GenSS</Package>,  <Package>IO</Package> 
+and <Package>Orb</Package>. 
 
 <Section>
 <Heading>Installing <Package>FinInG</Package> under UNIX like systems</Heading>
@@ -45,15 +45,15 @@ The installation of <Package>FinInG</Package> itself is generic for each UNIX li
 MacOSX. You only need a terminal application, and you need acces to the standard unix tools gunzip and tar. The installation procedure
 for <Package>FinInG</Package>, a standard GAP package, does <E>not</E> require compilation. Each GAP installation has a 
 pkg directory, containing supplemental GAP packages. If you have acces to this filesystem, you can locate it, e.g. 
-<Display>/usr/local/gap4r4/pkg/</Display>
-Download the <Package>FinInG</Package> archive "fining-...-tar.gz" to this location, and unpack the archive. This can be done by issuing
-<Display>gunzip fining-...-tar.gz</Display> 
-which yields a file "fining-...-tar", in the pkg directory, after which issuing the command 
-<Display>tar -xf finin-...-tar</Display>
+<Display>/usr/local/gap4r7/pkg/</Display>
+Download the <Package>FinInG</Package> archive "fining-....tgz" to this location, and unpack the archive. This can be done by issuing
+<Display>gunzip fining-....tar.gz</Display> 
+which yields a file "fining-....tar", in the pkg directory, after which issuing the command 
+<Display>tar -xf fining-....tar</Display>
 unpacks the archive in a subdirectory fining.
 
-After successfully unpacking the archive, you can locate the directoy 
-<Display>/usr/local/gap4r4/pkg/fining/.</Display> 
+After successfully unpacking the archive, you can locate the directory 
+<Display>/usr/local/gap4r7/pkg/fining/.</Display> 
 This directory contains a subdirectory "./doc", containing an html and pdf version of the manual. The html version is accessible by opening the file "chap0.html" in your favorite browser. 
 The pdf version of the manual can be found in the file "manual.pdf".
 
@@ -64,42 +64,26 @@ If you installed <Package>FinInG</Package> in the central GAP pkg directory, you
 you installed <Package>FinInG</Package> in your local pkg directory, 
 e.g. "/home/yourself/pkg/", then move to "/home/yourself", and issue 
 the command 
-<Display>gap4r4 -l "/usr/local/gap4r4;./"</Display> 
+<Display>gap -l "/usr/local/gap4r7;./"</Display> 
 This will cause gap to startup and use as pkg directory both its own central pkg directory, i.e.
-"/usr/loca/gap4r4/pkg", as well as your local pkg directory, i.e. "/home/yourself/pkg/". You should see something like the following
+"/usr/local/gap4r7/pkg", as well as your local pkg directory, i.e. "/home/yourself/pkg/". You should see something like the following
 output. Notice that the packages <Package>GAPDoc</Package> and <Package>IO</Package> are loaded by default. This is not 
 necessarily the case, but loading fining will force to load required packages anyway. 
 
 <Example>
-            #########           ######         ###########           ###  
-         #############          ######         ############         ####  
-        ##############         ########        #############       #####  
-       ###############         ########        #####   ######      #####  
-      ######         #         #########       #####    #####     ######  
-     ######                   ##########       #####    #####    #######  
-     #####                    ##### ####       #####   ######   ########  
-     ####                    #####  #####      #############   ###  ####  
-     #####     #######       ####    ####      ###########    ####  ####  
-     #####     #######      #####    #####     ######        ####   ####  
-     #####     #######      #####    #####     #####         #############
-      #####      #####     ################    #####         #############
-      ######     #####     ################    #####         #############
-      ################    ##################   #####                ####  
-       ###############    #####        #####   #####                ####  
-         #############    #####        #####   #####                ####  
-          #########      #####          #####  #####                ####  
-                                                                          
-     Information at:  http://www.gap-system.org
-     Try '?help' for help. See also  '?copyright' and  '?authors'
-    
-   Loading the library. Please be patient, this may take a while.
-GAP4, Version: 4.4.12 of 17-Dec-2008, i686-apple-darwin10.8.0-gcc
-Components:  small 2.1, small2 2.0, small3 2.0, small4 1.0, small5 1.0, 
-             small6 1.0, small7 1.0, small8 1.0, small9 1.0, small10 0.2, 
-             id2 3.0, id3 2.1, id4 1.0, id5 1.0, id6 1.0, id9 1.0, id10 0.1, 
-             trans 1.0, prim 2.1  loaded.
-Packages:    GAPDoc 1.3, IO 3.3, TomLib 1.1.4  loaded.
-gap> 
+ ┌───────┐   GAP, Version 4.7.5 of 24-May-2014 (free software, GPL)
+ │  GAP  │   http://www.gap-system.org
+ └───────┘   Architecture: x86_64-unknown-linux-gnu-gcc-default64
+ Libs used:  gmp
+ Loading the library and packages ...
+ Components: trans 1.0, prim 2.1, small* 1.0, id* 1.0
+ Packages:   AClib 1.2, Alnuth 3.0.0, AtlasRep 1.5.0, AutPGrp 1.6, 
+             CRISP 1.3.8, Cryst 4.1.12, CrystCat 1.1.6, CTblLib 1.2.2, 
+             FactInt 1.5.3, FGA 1.2.0, GAPDoc 1.5.1, IO 4.3.1, IRREDSOL 1.2.4, 
+             LAGUNA 3.6.4, Polenta 1.3.2, Polycyclic 2.11, RadiRoot 2.7, 
+             ResClasses 3.3.2, Sophus 1.23, SpinSym 1.5, TomLib 1.2.4
+ Try '?help' for help. See also  '?copyright' and  '?authors'
+gap>
 </Example>
 To load <Package>FinInG</Package>, issue 
 <Display>
@@ -137,31 +121,36 @@ by Max Neunhoeffer (http://www-groups.mcs.st-and.ac.uk/~neunhoef) and
 -----------------------------------------------------------------------------
 true
 </Example>
-If the installation was successfull, then, the following output should be visible.
+If the installation was successful, then, the following output should be visible.
 <Example>
-Packages:    GAPDoc 1.3, IO 3.3, TomLib 1.1.4  loaded.
 gap> LoadPackage("fining");
 ---------------------------------------------------------------------
-Loading 'Forms' 1.2.3 (29/08/2011)
+Loading 'Forms' 1.2.2 (29/08/2011)
 by John Bamberg (http://school.maths.uwa.edu.au/~bamberg/)
    Jan De Beule (http://cage.ugent.be/~jdebeule)
 For help, type: ?Forms 
 ---------------------------------------------------------------------
--------------------------------------------------------------------------------------
-Loading  orb 3.8 (orb - Methods to enumerate orbits)
+─────────────────────────────────────────────────────────────────────────────
+Loading  orb 4.7.1 (Methods to enumerate orbits)
 by Juergen Mueller (http://www.math.rwth-aachen.de/~Juergen.Mueller),
    Max Neunhoeffer (http://www-groups.mcs.st-and.ac.uk/~neunhoef), and
    Felix Noeske (http://www.math.rwth-aachen.de/~Felix.Noeske).
--------------------------------------------------------------------------------------
--------------------------------------------------------------------------------------
-Loading  genss 1.3 (genss - generic Schreier-Sims)
+Homepage: http://neunhoef.github.io/orb/
+─────────────────────────────────────────────────────────────────────────────
+─────────────────────────────────────────────────────────────────────────────
+Loading  genss 1.6.1 (Generic Schreier-Sims)
 by Max Neunhoeffer (http://www-groups.mcs.st-and.ac.uk/~neunhoef) and
    Felix Noeske (http://www.math.rwth-aachen.de/~Felix.Noeske).
--------------------------------------------------------------------------------------
-
-Loading  GRAPE 4.3  (GRaph Algorithms using PErmutation groups),
-by L.H.Soicher@qmul.ac.uk.
-
+Homepage: http://neunhoef.github.io/genss/
+─────────────────────────────────────────────────────────────────────────────
+─────────────────────────────────────────────────────────────────────────────
+Loading  GRAPE 4.6.1 (GRaph Algorithms using PErmutation groups)
+by Leonard H. Soicher (http://www.maths.qmul.ac.uk/~leonard/).
+Homepage: http://www.maths.qmul.ac.uk/~leonard/grape/
+─────────────────────────────────────────────────────────────────────────────
+patching: forms loading: geometry, liegeometry, group, projectivespace, 
+correlations, polarspace/morphisms, enumerators, diagram, varieties, 
+affinespace/affinegroup, gpolygons, stabilisers
 ---------------------------------------------------------------------
       ______________       ________      _________   _____________   
       ___  ____/__(_)__________  _/________  ____/   __&lt;  /__  __   
@@ -170,16 +159,14 @@ by L.H.Soicher@qmul.ac.uk.
       /_/      /_/  /_/ /_//___/  /_/ /_/____/      /_/_(_)____/    
 ---------------------------------------------------------------------
 Loading  FinInG 1.0 (Finite Incidence Geometry) 
-by John Bamberg (http://cage.ugent.be/~bamberg)
+by John Bamberg (http://school.maths.uwa.edu.au/~bamberg/)
    Anton Betten (http://www.math.colostate.edu/~betten)
    Jan De Beule (http://cage.ugent.be/~jdebeule)
    Philippe Cara (http://homepages.vub.ac.be/~pcara)
    Michel Lavrauw (http://cage.ugent.be/~ml)
-   Max Neunhoeffer (http://www.math.rwth-aachen.de/~Max.Neunhoeffer)
+   Max Neunhoeffer (http://www-groups.mcs.st-and.ac.uk/~neunhoef/)
 For help, type: ?FinInG 
 ---------------------------------------------------------------------
-loading: geometry, liegeometry, group, projectivespace, correlations, polarspace/morphis
-ms, enumerators, diagram, varieties, affinespace/affinegroup, gpolygons
 true
 gap> 
 </Example>

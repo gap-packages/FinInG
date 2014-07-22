@@ -27,9 +27,6 @@
 # - documentation
 # - Priorities
 #   1. Residues
-#   2. Recognition of rank 2 geometries
-#   3. Diagram and graph
-#   4. Documentation
 #
 ########################################
 
@@ -249,6 +246,7 @@ InstallMethod( ElementsOfIncidenceStructure, [IsCosetGeometry, IsPosInt],
     return vars;
 end );
 
+#
 #############################################################################
 #O  ElementsOfIncidenceStructure( <cg> )
 # returns all the elements of the coset geometry <cg> 
