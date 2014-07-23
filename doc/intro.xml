@@ -71,7 +71,7 @@ MacOSX. You only need a terminal application, and you need acces to the standard
     pkg directory, containing supplemental GAP packages. If you have acces to this filesystem, you can locate it, e.g.
     <Display>/usr/local/gap4r7/pkg/</Display>
     Download the <Package>FinInG</Package> archive "fining-....tgz" to this location, and unpack the archive. This can be done by issuing
-    <Display>gunzip fining-....tar.gz</Display>
+    <Display>gunzip fining-....tgz</Display>
     which yields a file "fining-....tar", in the pkg directory, after which issuing the command
     <Display>tar -xf fining-....tar</Display>
     unpacks the archive in a subdirectory fining.
