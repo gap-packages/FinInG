@@ -641,12 +641,13 @@ the intertwiner.
 <Returns>a geometry morphism</Returns>
 <Description>
 The argument <A>ps</A> is a projective or polar space, and <A>v</A> is a
-subspace of <A>ps</A>. In the case that <A>ps</A> is a projective space, this
-operation returns a geometry morphism from the subspaces containing
-<A>v</A> to the subspaces of a smaller projective space over the same
-field. Similarly, if <A>ps</A> is a polar space, this operation returns a
-geometry morphism from the totally singular subspaces containing <A>v</A> to a
-polar space of smaller dimension, but of the same polar space type.
+subspace of <A>ps</A>. In the case that <A>ps</A> is a projective space,
+the geometry of subspaces containing <A>v</A> is a projective space
+of lower dimension over the same basefield, and this operation returns the
+corresponding geometry morphism. In the case that <A>ps</A> is a polar space,
+the geometry of elements pf <A>ps</A> containing <A>v</A> is a polar space
+of lower rank and of the same type over the same basefield, and this operation
+returns the corresponding geometry morphism.
 It is checked whether <A>v</A> is a subspace of <A>ps</A>,
 and whether the input of the function and preimage of the returned
 geometry morphism is valid or not. We should also mention here a shorthand for
@@ -674,7 +675,6 @@ of <A>as</A> into the projective space <A>ps</A> of the same dimension, and over
 For example, the point <M>(x, y, z)</M> goes to the projective point with
 homogeneous coordinates <M>(1, x, y, z)</M>. An intertwiner is unnecessary,
 <F>CollineationGroup(as)</F> is a subgroup of <F>CollineationGroup(ps)</F>.
-An intertwiner is not available for this geometry morphism.
 <Example>
 <#Include SYSTEM "../examples/include/morphisms_completion.include">
 </Example>

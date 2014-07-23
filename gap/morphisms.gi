@@ -2057,7 +2057,7 @@ InstallMethod( NaturalProjectionBySubspace,
           Wvectors, mb, compl, gen, bas, img, 
           canbas, zero, basimgs, ps2, map, hom, f;
     if not v in ps then
-       Error("Subspace is not a member of the projective space");
+       Error("<v> is not an element of <ps>");
     fi;
     psdim := ps!.dimension;
     f := ps!.basefield;
@@ -2251,7 +2251,7 @@ InstallMethod( NaturalProjectionBySubspace,
           Wvectors, mb, compl, gen, bas, img, canbas, zero, basimgs,
           ps2, map, hom, a, m, newform, f, perp;
     if not v in ps then
-		Error("Subspace is not a member of the polar space");
+		Error("<v> is not an element of <ps>");
     fi;
     pstype := PolarSpaceType(ps); 
     psdim := ps!.dimension;

@@ -106,7 +106,7 @@ Diameter(graph);
 Girth(graph);
 
 #############################################################################
-#O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
+#O  VectorSpaceToElement( <geom>, <v> ) returns the element in <geom> determined
 # by the rowvector <v>. <geom> is a generalised hexagon, so an ambient polar space
 # ps is available. A point of geom is necessary a point of ps, but for T(q^3,q) we need
 # to check whether the point of Q+(7,q) is absolute.

@@ -115,7 +115,6 @@ we acknowledge very much the hospitality of Carla and Luigi, who introduced us t
 
 <Body>
 <#Include SYSTEM "intro.xml">
-<#Include SYSTEM "install.xml">
 <#Include SYSTEM "examples.xml">
 <#Include SYSTEM "incidence_geometry.xml">
 <#Include SYSTEM "projectivespaces.xml">
