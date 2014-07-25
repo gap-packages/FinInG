@@ -549,3 +549,89 @@ els := List(Lines(q4q));;
 List(gens,g->Collected(List(els,x->(x^g)^em = (x^em)^(g^hom))));
 List(gens,g->Collected(List(els,x->PreImageElm(em,x^g)=PreImageElm(em,x)^(PreImageElm(hom,g)))));
 
+###### naturalembedding by subfield polar space case test ###########
+
+n := 3;
+q := 5;
+h := 2;
+
+ps1 := SymplecticSpace(n,q);
+ps2 := HermitianPolarSpace(n,q^h);
+
+testpts := List(Points(ps1),x->x^em);
+testlines := List(Lines(ps1),x->x^em);
+List(testpts,x->PreImageElm(em,x));
+List(testlines,x->PreImageElm(em,x));
+
+
+em := NaturalEmbeddingBySubfield(ps1,ps2);
+hom := Intertwiner(em);
+group1 := HomographyGroup(pg1);
+gens := GeneratorsOfGroup(group1);
+els := AsList(Points(pg1));;
+els := AsList(Lines(pg1));;
+List(gens,g->Collected(List(els,x->(x^g)^em = (x^em)^(g^hom))));
+
+gens2 := List(gens,x->x^hom);
+els := List(els,x->x^em);
+group2 := Group(gens2);
+List(gens2,g->Collected(List(els,x->PreImageElm(em,x^g)=PreImageElm(em,x)^(PreImageElm(hom,g)))));
+
+
+geom1 := SymplecticSpace(n,q);
+geom2 := HermitianPolarSpace(n,q^h);
+
+f1 := geom1!.basefield; q1 := Size(f1); 
+f2 := geom2!.basefield; q2 := Size(f2);       
+type1 := PolarSpaceType(geom1);
+type2 := PolarSpaceType(geom2);
+
+gram := GramMatrix( SesquilinearForm(geom1) );
+gamma := First( f2, t -> not IsZero(t) and IsZero(t^q1+t)); 
+newgram := gamma * gram;
+form := HermitianFormByMatrix(newgram, f2);
+geom3 := PolarSpace(form);
+
+change := BaseChangeToCanonical(form);
+invchange := change^-1;
+
+func := function( el )
+	return VectorSpaceToElement(geom2,Unpack(el!.obj) * invchange);
+end; 
+
+basis := Basis(AsVectorSpace(f1,f2));
+d := geom1!.dimension+1;
+n := Length(basis);
+bmat := NullMat(d,d*n,f1);
+one := One(f1);
+for i in [1..d] do
+	bmat[i][1+(i-1)*n] := one;
+od;
+
+bgen := BlownUpMat(basis,vec);
+list := SumIntersectionMat(bgen, bmat)[2]; #hard coded Meet operation :-)
+nvec := List(list,x->ShrinkVec(f2,f1,x));
+
+
+prefun := function( el )
+	local vec,nvec,list;
+	vec := Unpack(el!.obj) * change;
+	if el!.type = 1 then
+		nvec := vec / First(vec,x->not IsZero(x));
+		if not ForAll( nvec, i -> i in f1 ) then
+			Error("Element is not in the range of the geometry morphism");
+		fi;	
+		ConvertToVectorRepNC(nvec,f1); #necessary, also if appearantly vec is already over f1.
+	else
+		bgen := BlownUpMat(basis,vec);
+		list := SumIntersectionMat(bgen, bmat)[2]; #hard coded Meet operation :-)
+		nvec := List(list,x->ShrinkVec(f2,f1,x));
+		if not (IsMatrix(nvec) and Length(nvec) = el!.type) then
+			#return fail;
+			Error("Element is not in the range of the geometry morphism");
+		fi;
+		ConvertToMatrixRepNC(nvec,f1);
+	fi;
+	return VectorSpaceToElement(geom1,nvec);
+end;
+	

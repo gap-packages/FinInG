@@ -8,3 +8,12 @@ gap&gt; points := AsList(Points(w));;
 gap&gt; image := ImagesSet(em, points);;
 gap&gt; ForAll(image, x -&gt; x in h);
 true
+gap&gt; hq:=HyperbolicQuadric(3,4);
+Q+(3, 4)
+gap&gt; eq:=EllipticQuadric(3,2);
+Q-(3, 2)
+gap&gt; em:=NaturalEmbeddingBySubfield(eq,hq);
+&lt;geometry morphism from &lt;Elements of Q-(3, 2)&gt; to &lt;Elements of Q+(3, 4)&gt;&gt;
+gap&gt; eqpts:=ImagesSet(em,AsList(Points(eq)));
+[ &lt;a point in Q+(3, 4)&gt;, &lt;a point in Q+(3, 4)&gt;, &lt;a point in Q+(3, 4)&gt;, 
+  &lt;a point in Q+(3, 4)&gt;, &lt;a point in Q+(3, 4)&gt; ]

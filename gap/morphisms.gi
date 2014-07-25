@@ -1929,20 +1929,22 @@ InstallMethod( NaturalEmbeddingBySubfield,
 		return map;
 	end );
   
-# CHECKED 28/09/11 jdb
+# CHECKED 25/7/14 jdb. With new (and correct now) prefun. Intertwiner currently disabled.
 # cmat changes 21/3/14 and 24/3/2014, after a nice cultural weekend :-)
 #############################################################################
 #O  NaturalEmbeddingBySubfield( <geom1>, <geom2>, <bool> )
 # returns the embedding of <geom1> in <geom2>, two polar spaces of the
 # same dimension, over the fields K and L respectively, where L is an extension
 # of K. An Intertwiner is computed if <bool> is true.
+# The prefun principle is taken from NaturalDualityHermitian.
 ##
 InstallMethod( NaturalEmbeddingBySubfield, 
 	"for two polar spaces and a boolean",
 	[ IsClassicalPolarSpace, IsClassicalPolarSpace, IsBool ],
 	function( geom1, geom2, computeintertwiner )
 		local map, f1, f2, q1, q2, gamma, func, prefun, g1, g2, gens1, gens2, f,
-          r, type1, type2, iso, gram, newgram, form, ps, hom, twinerfunc, twinerprefun;
+          r, type1, type2, iso, gram, newgram, form, ps, hom, twinerfunc, twinerprefun,
+		  change, invchange, basis, d, n, bmat, one, i;
         
     #
     #  Check Kleidman and Liebeck Table 4.5.A
@@ -1972,29 +1974,70 @@ InstallMethod( NaturalEmbeddingBySubfield,
 			elif [type1, type2] = ["hermitian", "hermitian"] and IsOddInt(r) then
 				form := HermitianFormByMatrix(gram, f2);
 			elif type1 in ["elliptic", "parabolic", "hyperbolic"] and 
-				type2 = "hermitian" and r =2 and IsOddInt(q2) then
+				type2 = "hermitian" and r=2 and IsOddInt(q2) then
 				form := HermitianFormByMatrix(gram, f2);
 			elif (IsOddInt(r) and type2 in ["elliptic", "parabolic", "hyperbolic"] and 
 				type1 = type2) or (IsEvenInt(r) and [type1, type2] in [["elliptic","hyperbolic"], 
 				["hyperbolic","hyperbolic"], ["parabolic","parabolic"]]) then
-				form := BilinearFormByMatrix(gram, f2);           
+				gram := GramMatrix( QuadraticForm(geom1) );
+				form := QuadraticFormByMatrix(gram, f2);           
 			else
 				Error("Not possible for these geometries\n");
 			fi;   
 		else
 			Error("Dimensions and/or field sizes are incompatible"); return;
 		fi;
-		ps := PolarSpace(form);
-		iso := IsomorphismPolarSpacesNC(ps, geom2, computeintertwiner);
-		func :=  x -> VectorSpaceToElement(ps, ShallowCopy(Unpack(x!.obj)))^iso; #should be no problem since VectorSpaceToElement allows cmat.
-		prefun := function( x )
-			local y;            
-            y := iso!.prefun(x);
-            if not ForAll( Flat(y!.obj), i -> i in f1 ) then
-				Error("Element does not have all of its coordinates in ", f1);
+		
+		change := BaseChangeToCanonical(form);
+		invchange := change^-1;
+
+		#ps := PolarSpace(form);
+		#iso := IsomorphismPolarSpacesNC(ps, geom2, computeintertwiner);
+		#func :=  x -> VectorSpaceToElement(ps, ShallowCopy(Unpack(x!.obj)))^iso; #should be no problem since VectorSpaceToElement allows cmat.
+		#prefun := function( x )
+		#	local y;            
+        #    y := iso!.prefun(x);
+        #    if not ForAll( Flat(y!.obj), i -> i in f1 ) then
+		#		Error("Element does not have all of its coordinates in ", f1);
+		#	fi;
+        #    return VectorSpaceToElement(geom1, ShallowCopy(Unpack(y!.obj)));
+		#end;
+		
+		d := geom1!.dimension+1;
+		basis := Basis(AsVectorSpace(f1,f2));
+		n := Length(basis);
+		bmat := NullMat(d,d*n,f1);
+		one := One(f1);
+		for i in [1..d] do
+			bmat[i][1+(i-1)*n] := one;
+		od;
+
+		func := function( el )
+			return VectorSpaceToElement(geom2,Unpack(el!.obj) * invchange);
+		end; 
+
+		prefun := function( el )
+			local vec,nvec,list,bgen;
+			vec := Unpack(el!.obj) * change;
+			if el!.type = 1 then
+				nvec := vec / First(vec,x->not IsZero(x));
+				if not ForAll( nvec, i -> i in f1 ) then
+					Error("Element is not in the range of the geometry morphism");
+				fi;	
+				ConvertToVectorRepNC(nvec,f1); #necessary, also if appearantly vec is already over f1.
+			else
+				bgen := BlownUpMat(basis,vec);
+				list := SumIntersectionMat(bgen, bmat)[2]; #hard coded Meet operation :-)
+				nvec := List(list,x->ShrinkVec(f2,f1,x));
+				if not (IsMatrix(nvec) and Length(nvec) = el!.type) then
+					#return fail;
+					Error("Element is not in the range of the geometry morphism");
+				fi;
+				ConvertToMatrixRepNC(nvec,f1);
 			fi;
-            return VectorSpaceToElement(geom1, ShallowCopy(Unpack(y!.obj)));
+			return VectorSpaceToElement(geom1,nvec);
 		end;
+		
 		map := GeometryMorphismByFunction( ElementsOfIncidenceStructure(geom1), 
                                        ElementsOfIncidenceStructure(geom2),
                                        func, false, prefun ); 
@@ -2002,20 +2045,20 @@ InstallMethod( NaturalEmbeddingBySubfield,
     
     ## intertwiner...
 
-		if HasIntertwiner( iso ) then 
-			f := Intertwiner(iso);
+		#if HasIntertwiner( iso ) then 
+		#	f := Intertwiner(iso);
 			#x!.mat will be cmat over f1, so Unpack it, CollineationOfProjectiveSpace deals with it.
-			twinerfunc := x -> ImageElm(f, CollineationOfProjectiveSpace( Unpack(x!.mat), f2 ));   
+		#	twinerfunc := x -> ImageElm(f, CollineationOfProjectiveSpace( Unpack(x!.mat), f2 ));   
 			#refun(u)!.mat will be cmat over f2 (officially), so Unpack it, CollineationOfProjectiveSpace deals with it.			
-			twinerprefun := y -> CollineationOfProjectiveSpace( Unpack(f!.prefun(y)!.mat), f1 );
-			g1 := SimilarityGroup( geom1 );
-			gens1 := GeneratorsOfGroup( g1 );
-			gens2 := List(gens1, twinerfunc );
-			g2 := Group(gens2);
-			SetSize(g2, Size(g1));
-			hom := GroupHomomorphismByFunction(g1, g2, twinerfunc, twinerprefun);    
-			SetIntertwiner(map, hom);
-		fi;
+		#	twinerprefun := y -> CollineationOfProjectiveSpace( Unpack(f!.prefun(y)!.mat), f1 );
+		#	g1 := SimilarityGroup( geom1 );
+		#	gens1 := GeneratorsOfGroup( g1 );
+		#	gens2 := List(gens1, twinerfunc );
+		#	g2 := Group(gens2);
+		#	SetSize(g2, Size(g1));
+		#	hom := GroupHomomorphismByFunction(g1, g2, twinerfunc, twinerprefun);    
+		#	SetIntertwiner(map, hom);
+		#fi;
 		return map;
 	end );
 
@@ -2030,7 +2073,6 @@ InstallMethod( NaturalEmbeddingBySubfield,
 	function( geom1, geom2 )
 		return NaturalEmbeddingBySubfield( geom1, geom2, true );
 	end );
-
 
 
 #############################################################################

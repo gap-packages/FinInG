@@ -481,17 +481,10 @@ An Intertwiner is not implemented for this geometry morphism.
         intertwiner accordingly. The user may wish that the intertwiner is not computed
         when embedding into large polar spaces. The default (when calling the operation
         with two arguments) is set to <C>true</C>.
-        Here is a simple example where the geometry morphism takes the points
-        of <M>PG(2,3)</M> and embeds them into <M>PG(2,9)</M>.
-        <Example>
-<#Include SYSTEM "../examples/include/morphisms_subfield1.include"> 
-            </Example>
-            In this example, we embed <M>W(5,3)</M> in <Alt Not="HTML"><M>H(5,3^2)</M></Alt>
-            <Alt Only="HTML">H(5,3&lt;sup>2&lt;/sup>)</Alt>.
-            <Example>
-                <#Include SYSTEM "../examples/include/morphisms_subfield2.include"> 
-                </Example>
-            </Description>
+<Example>
+<#Include SYSTEM "../examples/include/morphisms_subfield2.include"> 
+</Example>
+</Description>
 </ManSection>
 
 <ManSection Label="polar_red">
