@@ -558,24 +558,123 @@ h := 2;
 ps1 := SymplecticSpace(n,q);
 ps2 := HermitianPolarSpace(n,q^h);
 
+em := NaturalEmbeddingBySubfield(ps1,ps2);
+
+
 testpts := List(Points(ps1),x->x^em);
 testlines := List(Lines(ps1),x->x^em);
 List(testpts,x->PreImageElm(em,x));
 List(testlines,x->PreImageElm(em,x));
 
-
-em := NaturalEmbeddingBySubfield(ps1,ps2);
 hom := Intertwiner(em);
-group1 := HomographyGroup(pg1);
+group1 := SimilarityGroup(ps1);
 gens := GeneratorsOfGroup(group1);
-els := AsList(Points(pg1));;
-els := AsList(Lines(pg1));;
+els := AsList(Points(ps1));;
+els := AsList(Lines(ps1));;
 List(gens,g->Collected(List(els,x->(x^g)^em = (x^em)^(g^hom))));
 
 gens2 := List(gens,x->x^hom);
 els := List(els,x->x^em);
 group2 := Group(gens2);
 List(gens2,g->Collected(List(els,x->PreImageElm(em,x^g)=PreImageElm(em,x)^(PreImageElm(hom,g)))));
+
+
+matw := [[0,0,0,1],[0,0,1,0],[0,-1,0,0],[-1,0,0,0]]*One(GF(q));
+formw := BilinearFormByMatrix(matw,GF(q));
+ps1 := PolarSpace(formw);
+math := [[0,1,0,0],[1,0,0,0],[0,0,0,Z(q)],[0,0,Z(q),0]]*Z(q)^0;
+hform := HermitianFormByMatrix(math,GF(q^2));
+ps2 := PolarSpace(hform);
+
+################
+
+q := 5;
+h := 3;
+
+math := [[0,1,0,0],[1,0,0,0],[0,0,0,1],[0,0,1,0]]*One(GF(q));
+formh := HermitianFormByMatrix(math,GF(q^2));
+ps1 := PolarSpace(formh);
+
+math2 := [[0,1,0,0],[1,0,0,0],[0,0,0,Z(q)],[0,0,Z(q),0]]*Z(q)^0;
+hform2 := HermitianFormByMatrix(math2,GF(q^(2*h)));
+ps2 := PolarSpace(hform2);
+
+em := NaturalEmbeddingBySubfield(ps1,ps2);
+
+testpts := List(Points(ps1),x->x^em);
+testlines := List(Lines(ps1),x->x^em);
+List(testpts,x->PreImageElm(em,x));
+List(testlines,x->PreImageElm(em,x));
+
+hom := Intertwiner(em);
+group1 := SimilarityGroup(ps1);
+gens := GeneratorsOfGroup(group1);
+els := AsList(Points(ps1));;
+els := AsList(Lines(ps1));;
+List(gens,g->Collected(List(els,x->(x^g)^em = (x^em)^(g^hom))));
+
+gens2 := List(gens,x->x^hom);
+els := List(els,x->x^em);
+group2 := Group(gens2);
+List(gens2,g->Collected(List(els,x->PreImageElm(em,x^g)=PreImageElm(em,x)^(PreImageElm(hom,g)))));
+
+################
+
+q := 3;
+mat := IdentityMat(4,GF(q));
+formq := QuadraticFormByMatrix(mat,GF(q));
+ps1 := PolarSpace(formq);
+
+math2 := [[0,1,0,0],[1,0,0,0],[0,0,0,Z(q)],[0,0,Z(q),0]]*Z(q)^0;
+hform2 := HermitianFormByMatrix(math2,GF(q^2));
+ps2 := PolarSpace(hform2);
+
+em := NaturalEmbeddingBySubfield(ps1,ps2);
+
+testpts := List(Points(ps1),x->x^em);
+testlines := List(Lines(ps1),x->x^em);
+List(testpts,x->PreImageElm(em,x));
+List(testlines,x->PreImageElm(em,x));
+
+hom := Intertwiner(em);
+group1 := SimilarityGroup(ps1);
+gens := GeneratorsOfGroup(group1);
+els := AsList(Points(ps1));;
+els := AsList(Lines(ps1));;
+List(gens,g->Collected(List(els,x->(x^g)^em = (x^em)^(g^hom))));
+
+gens2 := List(gens,x->x^hom);
+els := List(els,x->x^em);
+group2 := Group(gens2);
+List(gens2,g->Collected(List(els,x->PreImageElm(em,x^g)=PreImageElm(em,x)^(PreImageElm(hom,g)))));
+
+################
+q := 16;
+mat1 := [[0,1,0,0,0],[0,0,0,0,0],[0,0,0,1,0],[0,0,0,0,0],[0,0,0,0,1]]*Z(q)^0;
+form := QuadraticFormByMatrix(mat1,GF(q));
+ps1 := PolarSpace(form);
+ps2 := ParabolicQuadric(4,q^3);
+
+em := NaturalEmbeddingBySubfield(ps1,ps2);
+
+testpts := List(Points(ps1),x->x^em);
+testlines := List(AsList(Lines(ps1)),x->x^em);
+List(testpts,x->PreImageElm(em,x));
+List(testlines,x->PreImageElm(em,x));
+
+hom := Intertwiner(em);
+group1 := SimilarityGroup(ps1);
+gens := GeneratorsOfGroup(group1);
+els := AsList(Points(ps1));;
+els := AsList(Lines(ps1));;
+List(gens,g->Collected(List(els,x->(x^g)^em = (x^em)^(g^hom))));
+
+gens2 := List(gens,x->x^hom);
+els := List(els,x->x^em);
+group2 := Group(gens2);
+List(gens2,g->Collected(List(els,x->PreImageElm(em,x^g)=PreImageElm(em,x)^(PreImageElm(hom,g)))));
+
+
 
 
 geom1 := SymplecticSpace(n,q);

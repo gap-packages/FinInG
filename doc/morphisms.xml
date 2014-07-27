@@ -429,58 +429,61 @@ An Intertwiner is not implemented for this geometry morphism.
 </ManSection>
 
 <ManSection>
-    <Oper Name="NaturalEmbeddingBySubField" Arg="geom1, geom2"/>
-    <Oper Name="NaturalEmbeddingBySubField" Arg="geom1, geom2, boolean"/>
-    <Returns>a geometry morphism</Returns>
-    <Description>
-        The arguments <A>geom1</A> and <A>geom2</A> are projective or polar spaces of
-        the same dimension. This function returns a geometry morphism representing the natural embedding
-        of <A>geom1</A> into <A>geom2</A> as a subfield geometry.  If <A>geom1</A>
-        and <A>geom2</A> are polar spaces, then the only such possible embeddings are
-        listed in the table below (see <Cite Key="KleidmanLiebeck"/>):
+<Oper Name="NaturalEmbeddingBySubField" Arg="geom1, geom2"/>
+<Oper Name="NaturalEmbeddingBySubField" Arg="geom1, geom2, boolean"/>
+<Returns>a geometry morphism</Returns>
+<Description>
+The arguments <A>geom1</A> and <A>geom2</A> are projective or polar spaces with an underlying vector
+space of the same dimension and the basefield <M>L</M> of <A>geom2</A> is an extension of the basefield 
+<M>K</M> of <A>geom1</A>. The form <M>f</M> determining <A>geom1</A> is clearly also a form over <M>L</M>,
+an determines a polar space. By considering the underlying vectorspaces determining the elements of <A>geom1</A>
+over the extended field <M>L</M>, there is an obvious embedding of <A>geom1</A> in the polar space over the 
+extended field. Considering <M>f</M> over a field extension might change its type. Therefore the 
+only such possible embeddings, where the polar spaces may be chosen up to equivalent form, 
+are listed in the table below (see <Cite Key="KleidmanLiebeck"/>):
         
+<Table Align="l|l|l">
+<Caption>Subfield embeddings of polar spaces</Caption>
+<Row>
+<Item>Polar Space 1</Item><Item>Polar Space 2</Item><Item>Conditions</Item>
+</Row>
+<HorLine/>
+<HorLine/>
+<Row>
+<Item><M>W(2n-1,q)</M></Item>
+<Item><Alt Not="HTML"><M>W(2n-1,q^a)</M></Alt><Alt Only="HTML">W(2n-1,q&lt;sup>a&lt;/sup>)</Alt></Item>
+<Item>--</Item>
+</Row>
+<Row>
+<Item><M>W(2n-1,q)</M></Item>
+<Item><Alt Not="HTML"><M>H(2n-1,q^2)</M></Alt><Alt Only="HTML">H(2n-1,q&lt;sup>2&lt;/sup>)</Alt></Item>
+<Item>--</Item>
+</Row>
+<Row>
+<Item><Alt Not="HTML"><M>H(d,q^2)</M></Alt><Alt Only="HTML">H(d,q&lt;sup>2&lt;/sup>)</Alt></Item>
+<Item><Alt Not="HTML"><M>H(d,q^{2r})</M></Alt><Alt Only="HTML">H(d,q&lt;sup>2r&lt;/sup>)</Alt></Item>
+<Item>r odd</Item>
+</Row>
+<Row>
+<Item><Alt Not="HTML"><M>O^\epsilon(d,q)</M></Alt><Alt Only="HTML">O&lt;sup>&#949;&lt;/sup>(d,q)</Alt></Item>
+<Item><Alt Not="HTML"><M>H(d,q^2)</M></Alt><Alt Only="HTML">H(d,q&lt;sup>2&lt;/sup>)</Alt></Item>
+<Item>q odd</Item>
+</Row>
+<Row>
+<Item><Alt Not="HTML"><M>O^\epsilon(d,q)</M></Alt><Alt Only="HTML">O&lt;sup>&#949;&lt;/sup>(d,q)</Alt></Item>
+<Item><Alt Not="HTML"><M>O^{\epsilon'}(d,q^r)</M></Alt><Alt Only="HTML">O&lt;sup>&#949;'&lt;/sup>(d,q&lt;sup>r&lt;/sup>)</Alt></Item>
+<Item><Alt Not="HTML"><M>\epsilon=(\epsilon')^r</M></Alt><Alt Only="HTML">&#949;=(&#949;')&lt;sup>r&lt;/sup></Alt></Item>
+</Row>
+</Table>
         
-        <Table Align="l|l|l">
-            <Caption>Subfield embeddings of polar spaces</Caption>
-            <Row>
-                <Item>Polar Space 1</Item><Item>Polar Space 2</Item><Item>Conditions</Item>
-            </Row>
-            <HorLine/>
-            <HorLine/>
-            <Row>
-                <Item><M>W(2n-1,q)</M></Item>
-                <Item><Alt Not="HTML"><M>W(2n-1,q^a)</M></Alt><Alt Only="HTML">W(2n-1,q&lt;sup>a&lt;/sup>)</Alt></Item>
-                <Item>--</Item>
-            </Row>
-            <Row>
-                <Item><M>W(2n-1,q)</M></Item>
-                <Item><Alt Not="HTML"><M>H(2n-1,q^2)</M></Alt><Alt Only="HTML">H(2n-1,q&lt;sup>2&lt;/sup>)</Alt></Item>
-                <Item>--</Item>
-            </Row>
-            <Row>
-                <Item><Alt Not="HTML"><M>H(d,q^2)</M></Alt><Alt Only="HTML">H(d,q&lt;sup>2&lt;/sup>)</Alt></Item>
-                <Item><Alt Not="HTML"><M>H(d,q^{2r})</M></Alt><Alt Only="HTML">H(d,q&lt;sup>2r&lt;/sup>)</Alt></Item>
-                <Item>r odd</Item>
-            </Row>
-            <Row>
-                <Item><Alt Not="HTML"><M>O^\epsilon(d,q)</M></Alt><Alt Only="HTML">O&lt;sup>&#949;&lt;/sup>(d,q)</Alt></Item>
-                <Item><Alt Not="HTML"><M>H(d,q^2)</M></Alt><Alt Only="HTML">H(d,q&lt;sup>2&lt;/sup>)</Alt></Item>
-                <Item>q odd</Item>
-            </Row>
-            <Row>
-                <Item><Alt Not="HTML"><M>O^\epsilon(d,q)</M></Alt><Alt Only="HTML">O&lt;sup>&#949;&lt;/sup>(d,q)</Alt></Item>
-                <Item><Alt Not="HTML"><M>O^{\epsilon'}(d,q^r)</M></Alt><Alt Only="HTML">O&lt;sup>&#949;'&lt;/sup>(d,q&lt;sup>r&lt;/sup>)</Alt></Item>
-                <Item><Alt Not="HTML"><M>\epsilon=(\epsilon')^r</M></Alt><Alt Only="HTML">&#949;=(&#949;')&lt;sup>r&lt;/sup></Alt></Item>
-            </Row>
-        </Table>
-        
-        The geometry morphism also comes equipped with an intertwiner (see
-        <Ref Attr="Intertwiner" Style="Text"/>). The optional third argument <A>boolean</A>
-        can take either <C>true</C> or
-        <C>false</C> as input, and then our operation will or will not compute the
-        intertwiner accordingly. The user may wish that the intertwiner is not computed
-        when embedding into large polar spaces. The default (when calling the operation
-        with two arguments) is set to <C>true</C>.
+The geometry morphism also comes equipped with an intertwiner (see
+<Ref Attr="Intertwiner" Style="Text"/>). The optional third argument <A>boolean</A>
+can take either <C>true</C> or
+<C>false</C> as input, and then our operation will or will not compute the
+intertwiner accordingly. When set <C>true</C>, the intertwiner
+will be computed if <F>HasCollineationGroup(geom1)</F> is true. 
+The user may wish that the intertwiner is not computed when embedding large polar spaces. 
+The default (when calling the operation with two arguments) is set to <C>true</C>.
 <Example>
 <#Include SYSTEM "../examples/include/morphisms_subfield2.include"> 
 </Example>

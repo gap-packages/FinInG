@@ -1929,7 +1929,7 @@ InstallMethod( NaturalEmbeddingBySubfield,
 		return map;
 	end );
   
-# CHECKED 25/7/14 jdb. With new (and correct now) prefun. Intertwiner currently disabled.
+# CHECKED 25/7/14 jdb. With new (and correct now) prefun. 
 # cmat changes 21/3/14 and 24/3/2014, after a nice cultural weekend :-)
 #############################################################################
 #O  NaturalEmbeddingBySubfield( <geom1>, <geom2>, <bool> )
@@ -1944,7 +1944,7 @@ InstallMethod( NaturalEmbeddingBySubfield,
 	function( geom1, geom2, computeintertwiner )
 		local map, f1, f2, q1, q2, gamma, func, prefun, g1, g2, gens1, gens2, f,
           r, type1, type2, iso, gram, newgram, form, ps, hom, twinerfunc, twinerprefun,
-		  change, invchange, basis, d, n, bmat, one, i;
+		  change, invchange, basis, d, n, bmat, one, i, c1, c2, form2;
         
     #
     #  Check Kleidman and Liebeck Table 4.5.A
@@ -1962,6 +1962,7 @@ InstallMethod( NaturalEmbeddingBySubfield,
 		f2 := geom2!.basefield; q2 := Size(f2);       
 		type1 := PolarSpaceType(geom1);
 		type2 := PolarSpaceType(geom2);
+		form2 := SesquilinearForm( geom2 ); #will be changed in last case only
 		if geom1!.dimension = geom2!.dimension and IsSubset(f2, f1) then  
 			r := LogInt(q2, q1);
 			gram := GramMatrix( SesquilinearForm(geom1) );
@@ -1980,7 +1981,8 @@ InstallMethod( NaturalEmbeddingBySubfield,
 				type1 = type2) or (IsEvenInt(r) and [type1, type2] in [["elliptic","hyperbolic"], 
 				["hyperbolic","hyperbolic"], ["parabolic","parabolic"]]) then
 				gram := GramMatrix( QuadraticForm(geom1) );
-				form := QuadraticFormByMatrix(gram, f2);           
+				form := QuadraticFormByMatrix(gram, f2);
+				form2 := QuadraticForm(geom2);           
 			else
 				Error("Not possible for these geometries\n");
 			fi;   
@@ -1988,21 +1990,15 @@ InstallMethod( NaturalEmbeddingBySubfield,
 			Error("Dimensions and/or field sizes are incompatible"); return;
 		fi;
 		
-		change := BaseChangeToCanonical(form);
+		c1 := BaseChangeToCanonical( form );
+		if not IsCanonicalPolarSpace( geom2 ) then
+			c2 := BaseChangeToCanonical( form2 );
+			change := c2^-1 * c1;
+		else
+			change := c1;
+		fi;
 		invchange := change^-1;
 
-		#ps := PolarSpace(form);
-		#iso := IsomorphismPolarSpacesNC(ps, geom2, computeintertwiner);
-		#func :=  x -> VectorSpaceToElement(ps, ShallowCopy(Unpack(x!.obj)))^iso; #should be no problem since VectorSpaceToElement allows cmat.
-		#prefun := function( x )
-		#	local y;            
-        #    y := iso!.prefun(x);
-        #    if not ForAll( Flat(y!.obj), i -> i in f1 ) then
-		#		Error("Element does not have all of its coordinates in ", f1);
-		#	fi;
-        #    return VectorSpaceToElement(geom1, ShallowCopy(Unpack(y!.obj)));
-		#end;
-		
 		d := geom1!.dimension+1;
 		basis := Basis(AsVectorSpace(f1,f2));
 		n := Length(basis);
@@ -2042,24 +2038,48 @@ InstallMethod( NaturalEmbeddingBySubfield,
                                        ElementsOfIncidenceStructure(geom2),
                                        func, false, prefun ); 
 		SetIsInjective( map, true );
-    
-    ## intertwiner...
+ 
+   		twinerfunc := function( x )
+            local xmat;
+            if not IsOne(x!.frob) then
+				Info(InfoFinInG, 1, "<el> is not in the source of the intertwiner");
+                return fail;
+            fi;
+            xmat := x!.mat;
+            return CollineationOfProjectiveSpace( change * Unpack(x!.mat) * invchange, f2 ); #here was an unpack needed!
+        end;
 
-		#if HasIntertwiner( iso ) then 
-		#	f := Intertwiner(iso);
-			#x!.mat will be cmat over f1, so Unpack it, CollineationOfProjectiveSpace deals with it.
-		#	twinerfunc := x -> ImageElm(f, CollineationOfProjectiveSpace( Unpack(x!.mat), f2 ));   
-			#refun(u)!.mat will be cmat over f2 (officially), so Unpack it, CollineationOfProjectiveSpace deals with it.			
-		#	twinerprefun := y -> CollineationOfProjectiveSpace( Unpack(f!.prefun(y)!.mat), f1 );
-		#	g1 := SimilarityGroup( geom1 );
-		#	gens1 := GeneratorsOfGroup( g1 );
-		#	gens2 := List(gens1, twinerfunc );
-		#	g2 := Group(gens2);
-		#	SetSize(g2, Size(g1));
-		#	hom := GroupHomomorphismByFunction(g1, g2, twinerfunc, twinerprefun);    
-		#	SetIntertwiner(map, hom);
-		#fi;
+		twinerprefun := function( y )
+            local ymat,q;
+            if not IsOne(y!.frob) then
+				Info(InfoFinInG, 1, "<el> is not in the range of the intertwiner");
+                return fail;
+            fi;
+            ymat := invchange * Unpack(y!.mat) * change; #here too!
+            ymat := ymat/First(ymat[1],x->not IsZero(x));
+			if not ForAll( Flat(ymat), i -> i in f1 ) then
+				Info(InfoFinInG, 1, "<el> is not in the range of the intertwiner");
+				return fail;
+			else
+				ConvertToMatrixRepNC(ymat,f1);
+                return CollineationOfProjectiveSpace(ymat,f1);
+            fi;
+        end;
+        
+        if HasCollineationGroup( geom1 ) then
+			g1 := SimilarityGroup( geom1 );
+			gens1 := GeneratorsOfGroup( g1 );
+			gens2 := List(gens1, twinerfunc );
+			g2 := Group(gens2);
+			SetSize(g2, Size(g1));
+			hom := GroupHomomorphismByFunction(g1, g2, twinerfunc, twinerprefun);    
+			SetIntertwiner(map, hom);
+		else
+			Info(InfoFinInG, 1, "No intertwiner computed. <geom1> must have a collineation group computed");
+		fi;
+		
 		return map;
+
 	end );
 
 # CHECKED 28/09/11 jdb
