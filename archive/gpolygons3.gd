@@ -23,28 +23,29 @@
 # Important notice: in the next line, "points" and "lines" are the underlying objects (or a representative) 
 # of the real points and lines of the GP to be constructed.
 # "incidence" is a function that determines whether the wrapped elements with given underlying objects, are incident.
-DeclareRepresentation( "IsGeneralisedPolygonRep", IsGeneralisedPolygon, [ "incidence", "points", "lines", "shadpoint", "shadline", "distance" ]);
+DeclareRepresentation( "IsGeneralisedPolygonRep", IsGeneralisedPolygon, [ "incidence", "points", "lines", "listelements", "shadpoint", "shadline", "distance" ]);
 
-DeclareCategory( "IsElementOfGeneralisedPolygon", IsElementOfIncidenceStructure );
-DeclareCategory( "IsAllElementsOfGeneralisedPolygon", IsElementsOfIncidenceStructure );
-DeclareRepresentation( "IsAllElementsOfGeneralisedPolygonRep", IsElementsOfIncidenceStructure, [ "geometry", "type" ] );
+DeclareCategory( "IsElementOfGeneralisedPolygon", IsElementOfIncidenceGeometry );
+DeclareCategory( "IsElementsOfGeneralisedPolygon", IsElementsOfIncidenceGeometry );
+DeclareCategory( "IsAllElementsOfGeneralisedPolygon", IsAllElementsOfIncidenceGeometry );
 
-DeclareCategory( "IsAllElementsOfProjectivePlane", IsAllElementsOfGeneralisedPolygon );
-DeclareRepresentation( "IsAllElementsOfProjectivePlaneRep", IsAllElementsOfGeneralisedPolygonRep, [ "geometry", "type" ] );
+DeclareRepresentation( "IsElementsOfGeneralisedPolygonRep", IsElementsOfIncidenceStructureRep, [ "geometry", "type" ] );
 
-DeclareCategory( "IsAllElementsOfGeneralisedQuadrangle", IsAllElementsOfGeneralisedPolygon );
-DeclareRepresentation( "IsAllElementsOfGeneralisedQuadrangleRep", IsAllElementsOfGeneralisedPolygonRep, [ "geometry", "type" ] );
+#DeclareCategory( "IsAllElementsOfProjectivePlane", IsAllElementsOfGeneralisedPolygon );
+#DeclareRepresentation( "IsAllElementsOfProjectivePlaneRep", IsAllElementsOfGeneralisedPolygonRep, [ "geometry", "type" ] );
+
+#DeclareCategory( "IsAllElementsOfGeneralisedQuadrangle", IsAllElementsOfGeneralisedPolygon );
+#DeclareRepresentation( "IsAllElementsOfGeneralisedQuadrangleRep", IsAllElementsOfGeneralisedPolygonRep, [ "geometry", "type" ] );
 
 
-DeclareCategory( "IsAllElementsOfGeneralisedHexagon", IsAllElementsOfGeneralisedPolygon );
-DeclareRepresentation( "IsAllElementsOfGeneralisedHexagonRep", IsAllElementsOfGeneralisedPolygonRep, [ "geometry", "type" ] );
+#DeclareCategory( "IsAllElementsOfGeneralisedHexagon", IsAllElementsOfGeneralisedPolygon );
+#DeclareRepresentation( "IsAllElementsOfGeneralisedHexagonRep", IsAllElementsOfGeneralisedPolygonRep, [ "geometry", "type" ] );
 
-DeclareCategory( "IsElementOfKantorFamily", IsElementOfGeneralisedPolygon );
-DeclareCategory( "IsAllElementsOfKantorFamily", IsAllElementsOfGeneralisedPolygon );
-DeclareRepresentation( "IsElementOfKantorFamilyRep", IsElementOfKantorFamily, [ "geo", "type", "class", "obj" ]);
+#DeclareCategory( "IsElementOfKantorFamily", IsElementOfGeneralisedPolygon );
+#DeclareCategory( "IsAllElementsOfKantorFamily", IsAllElementsOfGeneralisedPolygon );
+#DeclareRepresentation( "IsElementOfKantorFamilyRep", IsElementOfKantorFamily, [ "geo", "type", "class", "obj" ]);
 
 DeclareCategory( "IsShadowElementsOfGeneralisedPolygon", IsElementsOfIncidenceStructure );
-
 DeclareRepresentation( "IsShadowElementsOfGeneralisedPolygonRep", IsElementsOfIncidenceStructure, [ "geometry", "type", "element", "func" ]);
 
 ### new stuff
@@ -84,6 +85,8 @@ DeclareAttribute( "AmbientPolarSpace", IsGeneralisedHexagon);
 #DeclareOperation("Span",[IsElementOfGeneralisedPolygon, IsElementOfGeneralisedPolygon]);
 
 DeclareGlobalFunction( "OnKantorFamily" );
+
+DeclareGlobalFunction( "SplitCayleyPointToPlane" );
 
 DeclareOperation( "SplitCayleyHexagon", [IsField and IsFinite] );
 DeclareOperation( "SplitCayleyHexagon", [IsPosInt] );
@@ -127,8 +130,8 @@ DeclareOperation( "EGQByqClan", [ IsqClanObj and IsqClanRep ] );
 # Operations and functions for projective planes
 #############################################################################
 
-DeclareOperation( "ProjectivePlaneByBlocks", [ IsHomogeneousList ] );
-DeclareOperation( "ProjectivePlaneByIncidenceMatrix", [ IsMatrix ] );
+#DeclareOperation( "ProjectivePlaneByBlocks", [ IsHomogeneousList ] );
+#DeclareOperation( "ProjectivePlaneByIncidenceMatrix", [ IsMatrix ] );
 
 #############################################################################
 # Mutable attributes

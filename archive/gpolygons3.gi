@@ -34,12 +34,12 @@ Print(", gpolygons\c");
 #
 #############################################################################
 
-
 InstallMethod( GeneralisedPolygonByBlocks,
     "for a homogeneous list",
     [ IsHomogeneousList ],
     function( blocks )
-        local pts, gp, ty, i, graph, sz, adj, girth, shadpoint, shadline, s, t, dist, vn;
+        local pts, gp, ty, i, graph, sz, adj, girth, shadpoint, shadline, s, t, dist, vn, 
+		listels;
         pts := Union(blocks);
         s := Size(blocks[1]) - 1;
         if not ForAll(blocks, b -> Size(b) = s + 1 ) then
@@ -91,7 +91,15 @@ InstallMethod( GeneralisedPolygonByBlocks,
             Error("<blocks> do not define a thick finite generalised polygon");
         fi;
         
-        vn := VertexNames(graph);
+        listels := function( geom, i )
+			if i = 1 then
+				return List(pts,x->Wrap(geom,i,x));
+			else
+				return List(blocks,x->Wrap(geom,i,x));
+			fi;
+		end;
+				
+		vn := VertexNames(graph);
 
         shadpoint := function( pt )
             return List(Filtered(blocks,x->pt!.obj in x),y->Wrap(pt!.geo,2,y));
@@ -108,8 +116,8 @@ InstallMethod( GeneralisedPolygonByBlocks,
             return Distance(graph,Position(vn,el1!.obj),Position(vn,el2!.obj));
         end;
 
-        gp := rec( points := pts, lines := blocks, incidence := i, shadowofpoint := shadpoint,
-            shadowofline := shadline, distance := dist );
+        gp := rec( points := pts, lines := blocks, incidence := i, listelements := listels, 
+					shadowofpoint := shadpoint, shadowofline := shadline, distance := dist );
 
         Objectify( ty, gp );
         SetTypesOfElementsOfIncidenceStructure(gp, ["point","line"]);
@@ -144,7 +152,8 @@ InstallMethod( GeneralisedPolygonByElements,
     "for two sets (points and lines), and an incidence function",
     [ IsSet, IsSet, IsFunction ],
     function( pts, lns, inc )
-    local adj, act, graph, ty, girth, shadpoint, shadline, s, t, gp, vn, dist;
+    local adj, act, graph, ty, girth, shadpoint, shadline, s, t, 
+	gp, vn, dist, listels;
 
     adj := function(x,y)
     if x in pts and y in pts then
@@ -187,6 +196,14 @@ InstallMethod( GeneralisedPolygonByElements,
 	s := Length(Adjacency(graph,Size(pts)+1))-1; # number of points on a line minus 1.
 	t := Length(Adjacency(graph,1))-1; # number of linbes on a point minus 1.
 
+    listels := function( geom, i )
+		if i = 1 then
+			return List(pts,x->Wrap(geom,i,x));
+		else
+			return List(lns,x->Wrap(geom,i,x));
+		fi;
+	end;
+
     shadpoint := function( pt )
         return List(vn{Adjacency(graph,Position(vn,pt!.obj))},x->Wrap(gp,2,x));
     end;
@@ -199,8 +216,8 @@ InstallMethod( GeneralisedPolygonByElements,
         return Distance(graph,Position(vn,el1!.obj),Position(vn,el2!.obj));
     end;
     
-    gp := rec( points := pts, lines := lns, incidence := inc, shadowofpoint := shadpoint,
-            shadowofline := shadline, distance := dist );
+    gp := rec( points := pts, lines := lns, incidence := inc, listelements := listels, 
+				shadowofpoint := shadpoint, shadowofline := shadline, distance := dist );
 
     Objectify( ty, gp );
 	SetOrder(gp, [s,t] );
@@ -213,7 +230,8 @@ InstallMethod( GeneralisedPolygonByElements,
     "for two sets (points and lines), and an incidence function",
     [ IsSet, IsSet, IsFunction, IsGroup, IsFunction ],
     function( pts, lns, inc, group, act )
-    local adj, graph, ty, girth, shadpoint, shadline, s, t, gp, vn, dist;
+    local adj, graph, ty, girth, shadpoint, shadline, s, t, gp, vn, 
+	dist, listels;
 
     adj := function(x,y)
     if x in pts and y in pts then
@@ -253,17 +271,17 @@ InstallMethod( GeneralisedPolygonByElements,
     
     vn := VertexNames(graph);
 
-    #shadpoint := function( pt )
-    #    return List(Filtered(lns,x->inc(pt!.obj,x)),y->Wrap(pt!.geo,2,y));
-    #end;
+    listels := function( geom, i )
+		if i = 1 then
+			return List(pts,x->Wrap(geom,i,x));
+		else
+			return List(lns,x->Wrap(geom,i,x));
+		fi;
+	end;
 
     shadpoint := function( pt )
         return List(vn{Adjacency(graph,Position(vn,pt!.obj))},x->Wrap(gp,2,x));
     end;
-
-    #shadline := function( line )
-    #    return List(Filtered(pts,x->inc(line!.obj,x)),y->Wrap(line!.geo,1,y));
-    #end;
 
     shadline := function( line )
         return List(vn{Adjacency(graph,Position(vn,line!.obj))},x->Wrap(gp,1,x));
@@ -273,8 +291,8 @@ InstallMethod( GeneralisedPolygonByElements,
         return Distance(graph,Position(vn,el1!.obj),Position(vn,el2!.obj));
     end;
     
-    gp := rec( points := pts, lines := lns, incidence := inc, shadowofpoint := shadpoint,
-            shadowofline := shadline, distance := dist );
+    gp := rec( points := pts, lines := lns, incidence := inc, listelements := listels, 
+				shadowofpoint := shadpoint, shadowofline := shadline, distance := dist );
 
     Objectify( ty, gp );
 	SetOrder(gp, [s,t] );
@@ -286,7 +304,6 @@ end );
 #############################################################################
 # View methods for GPs.
 #############################################################################
-
 
 InstallMethod( ViewObj, 
 	"for a projective plane in GP rep",
@@ -356,55 +373,14 @@ InstallMethod( ElementsOfIncidenceStructure,
 			sz := s^2 + s + 1;
 		elif IsGeneralisedQuadrangle(gp) then 
 			sz := (1+s)*(1+s*t);
+		elif IsGeneralisedHexagon(gp) then
+			sz := (1+s)*(1+s*t+s^2*t^2);
 		elif IsGeneralisedOctagon(gp) then
 			sz := (1+s)*(1+s*t+s^2*t^2+s^3*t^3);
 		fi;        
-		return Objectify( NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
-                                IsAllElementsOfGeneralisedPolygon and
-                                IsAllElementsOfGeneralisedPolygonRep),
+		return Objectify( NewType( ElementsCollFamily, IsElementsOfGeneralisedPolygon and
+                                IsElementsOfGeneralisedPolygonRep),
         rec( geometry := gp, type := j, size := sz )
-						);
-	end );
-
-#############################################################################
-#O  ElementsOfIncidenceStructure( <gp>, <j> )
-# returns the elements of <gp> of type <j>. <gp> is an EGQ by Kanto Family
-##
-InstallMethod( ElementsOfIncidenceStructure, 
-	"for a an EGB by Kantor Family and a positive integer",
-	[IsElationGQByKantorFamily, IsPosInt],
-	function( gp, j )
-		local s, t;
-		if j in [1,2] then 
-			s := Order(gp)[j]; t := Order(gp)[3-j];
-		else 
-			Error("Incorrect type value");
-		fi;
-		return Objectify( NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
-                                IsAllElementsOfKantorFamily and
-                                IsAllElementsOfGeneralisedPolygonRep),
-				rec( geometry := gp, type := j, size := (1+s)*(1+s*t) )
-						);
-	end );
-
-#############################################################################
-#O  ElementsOfIncidenceStructure( <gp>, <j> )
-# returns the elements of <gp> of type <j>. <gp> is an generalised hexagon.
-##
-InstallMethod( ElementsOfIncidenceStructure, 
-	"for a generalised hexagon and a positive integer",
-	[IsGeneralisedHexagon and IsGeneralisedPolygonRep, IsPosInt],
-	function( gp, j )	
-		local s, t, sz;
-		if j in [1,2] then 
-			s := Order(gp)[j]; t := Order(gp)[3-j];
-		else 
-			Error("Incorrect type value");
-		fi;
-		return Objectify( NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
-                                IsAllElementsOfGeneralisedHexagon and
-                                IsAllElementsOfGeneralisedPolygonRep),
-			rec( geometry := gp, type := j, size := (1+s)*(1+s*t+s^2*t^2) )
 						);
 	end );
 
@@ -436,7 +412,7 @@ InstallMethod( Lines,
 
 InstallMethod( ViewObj,
 	"for elements of a generalised polygon",
-	[ IsAllElementsOfGeneralisedPolygon and IsAllElementsOfGeneralisedPolygonRep ],
+	[ IsElementsOfGeneralisedPolygon and IsElementsOfGeneralisedPolygonRep ],
 	function( vs )
 		local l;
 		l := ["points","lines"];
@@ -447,7 +423,7 @@ InstallMethod( ViewObj,
 
 InstallMethod( PrintObj, 
 	"for elements of a generalised polygon",
-	[ IsAllElementsOfGeneralisedPolygon and IsAllElementsOfGeneralisedPolygonRep ],
+	[ IsElementsOfGeneralisedPolygon and IsElementsOfGeneralisedPolygonRep ],
 	function( vs )
 		Print("ElementsOfIncidenceStructure( ",vs!.geometry," , ",vs!.type,")");
 	end );
@@ -458,7 +434,7 @@ InstallMethod( PrintObj,
 ##
 InstallMethod(Size, 
 	"for elements of a generalised polygon",
-	[IsAllElementsOfGeneralisedPolygon], 
+	[IsElementsOfGeneralisedPolygon], 
 	vs -> vs!.size );
 
 #############################################################################
@@ -467,18 +443,15 @@ InstallMethod(Size,
 ##
 InstallMethod(Iterator, 
 	"for elements of a generalised polygon",
-	[IsAllElementsOfGeneralisedPolygon],
+	[IsElementsOfGeneralisedPolygon and IsElementsOfGeneralisedPolygonRep],
 	function( vs )
-		local ps, j, vars;
-		ps := vs!.geometry;
+		local gp, j, vars;
+		gp := vs!.geometry;
 		j := vs!.type;
-		if j = 1 then 
-			vars := List(ps!.points, x -> Wrap(ps, 1, x));
-			return IteratorList( vars );
-		elif j = 2 then 
-			vars := List(ps!.lines, x -> Wrap(ps, 2, x));
-			return IteratorList( vars );
-		else Error("Element type does not exist"); return;
+		if j in [1,2] then
+			return IteratorList(gp!.listelements(gp,j)); #looks a bit strange, but correct.
+		else 
+			Error("Element type does not exist");
 		fi;
 	end );
 
@@ -686,6 +659,49 @@ InstallMethod( IncidenceGraphOfGeneralisedPolygon,
 #
 #############################################################################
 
+#############################################################################
+#O  Wrap( <geo>, <type>, <o>  )
+# returns the element of <geo> represented by <o>
+##
+InstallMethod( Wrap, 
+	"for a generalised polygon and an object",
+	[IsGeneralisedHexagon and IsLieGeometry, IsPosInt, IsObject],
+	function( geo, type, o )
+		local w;
+		w := rec( geo := geo, type := type, obj := o );
+		Objectify( NewType( SoPSFamily, IsElementOfIncidenceStructureRep and IsElementOfGeneralisedPolygon 
+			and IsSubspaceOfClassicalPolarSpace ), w );
+		return w;
+  end );
+
+InstallGlobalFunction( SplitCayleyPointToPlane,
+	function(el)
+		local z, hyps, q, y, pg, planevec, basishyp, hyp, bs, invbasis, vec;
+		q := Size(BaseField(el));
+		y := Unpack(UnderlyingObject(el));
+		y[8] := -y[4];
+		pg := AmbientSpace(el);
+		z := [];
+		z[1] := [0,y[3],-y[2],y[5],y[8],0,0,0]*Z(q)^0;
+		z[2] := [-y[3],0,y[1],y[6],0,y[8],0,0]*Z(q)^0;
+		z[3] := [y[2],-y[1],0,y[7],0,0,y[8],0]*Z(q)^0;
+		z[4] := [0,0,0,-y[4],y[1],y[2],y[3],0]*Z(q)^0;
+		z[5] := [y[4],0,0,0,0,y[7],-y[6],y[1]]*Z(q)^0;
+		z[6] := [0,y[4],0,0,-y[7],0,y[5],y[2]]*Z(q)^0;
+		z[7] := [0,0,y[4],0,y[6],-y[5],0,y[3]]*Z(q)^0;
+		z[8] := [y[5],y[6],y[7],0,0,0,0,-y[8]]*Z(q)^0;
+		z := Filtered(z,x->not IsZero(x));
+		hyp := [0,0,0,1,0,0,0,1]*Z(q)^0;
+		Add(z,[0,0,0,1,0,0,0,1]*Z(q)^0);
+		planevec := NullspaceMat(TransposedMat(z));
+		basishyp := NullspaceMat(TransposedMat([hyp]));
+		bs := BaseSteinitzVectors(Basis(GF(q)^8), basishyp);
+		invbasis := Inverse(Concatenation(bs!.subspace, bs!.factorspace));
+		vec := planevec*invbasis;
+		return vec{[1..3]}{[1..7]};
+		#return VectorSpaceToElement(pg,vec{[1..3]}{[1..7]}); #vec will be a basis of a plane -> 3 rows.
+	end );
+
 # JB: A big change here. I've separated the CollineationGroup out to an
 # attribute, just like we do for polar spaces and the like. 19/06/2012
 
@@ -699,7 +715,7 @@ InstallMethod( SplitCayleyHexagon,
 	[ IsField and IsFinite ],
 	function( f )
     local geo, ty, repline, reppointvect, reppoint, replinevect,
-	    hvm, ps, hvmform, form, nonzerof, x, w;
+	    hvm, ps, hvmform, form, nonzerof, x, w, listels, shadpoint, shadline;
     if IsOddInt(Size(f)) then    
        ## the corresponding sesquilinear form here for 
        ## q odd is the matrix 
@@ -739,11 +755,32 @@ InstallMethod( SplitCayleyHexagon,
     fi;
 	#now comes the cmatrixification of the replinevect
 	replinevect := NewMatrix(IsCMatRep,f,Length(reppointvect),replinevect);
+	
+	listels := function(gp,j)
+		local coll,reps;
+		coll := CollineationGroup(gp);
+		reps := RepresentativesOfElements( gp );
+		return Enumerate(Orb(coll, reps[j], OnProjSubspaces));
+	end;
+	
+	shadpoint := function( pt )
+		local planevec, flag, plane, f;
+		f := BaseField( pt );
+		planevec := SplitCayleyPointToPlane( pt );
+		plane := VectorSpaceToElement(PG(6,f),planevec);
+		flag := FlagOfIncidenceStructure(PG(6,f),[pt,plane]);
+		return List(ShadowOfFlag(PG(6,f),flag,2),x->Wrap(pt!.geo,2,Unwrap(x)));
+	end;
+
+	shadline := function( l )
+		return List(Points(ElementToElement(AmbientSpace(l),l)),x->Wrap(l!.geo,1,x!.obj));
+	end;
 
 	#in the next line, we set the data fields for the geometry. We have to take into account that H(q) will also be
 	#a Lie geometry, so it needs more data fields than a GP. But we can derive this information from ps.
-	geo := rec( points := [], lines := [], incidence:= \*, basefield := BaseField(ps), 
-		dimension := Dimension(ps), vectorspace := UnderlyingVectorSpace(ps), polarspace := ps );
+	geo := rec( points := [], lines := [], incidence:= \*, listelements := listels, basefield := BaseField(ps), 
+		dimension := Dimension(ps), vectorspace := UnderlyingVectorSpace(ps), polarspace := ps, 
+		shadowofpoint := shadpoint, shadowofline := shadline);
     ty := NewType( GeometriesFamily,
              IsGeneralisedHexagon and IsGeneralisedPolygonRep and IsLieGeometry ); #change by jdb 7/12/11
     Objectify( ty, geo );
@@ -756,11 +793,11 @@ InstallMethod( SplitCayleyHexagon,
     #recall that reppointvect and replinevect are triangulized.
 	#we can not count here on VectorSpaceToElement (yet). Otherwise I could have left out the "replinevect := NewMatrix(Is..." part above.
     w := rec(geo := geo, type := 1, obj := reppointvect);
-    reppoint := Objectify( NewType( SoPSFamily, IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep and
-					            	IsElementOfGeneralisedPolygon and IsSubspaceOfClassicalPolarSpace ), w );
+    reppoint := Objectify( NewType( SoPSFamily,  IsElementOfGeneralisedPolygon and IsElementOfIncidenceStructureRep
+					            	and IsSubspaceOfClassicalPolarSpace ), w );
     w := rec(geo := geo, type := 2, obj := replinevect);
-    repline := Objectify( NewType( SoPSFamily, IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep and
-	       					     IsElementOfGeneralisedPolygon and IsSubspaceOfClassicalPolarSpace ), w );
+    repline := Objectify( NewType( SoPSFamily, IsElementOfGeneralisedPolygon and IsElementOfIncidenceStructureRep 
+					            	and IsSubspaceOfClassicalPolarSpace ), w );
     SetRepresentativesOfElements(geo, [reppoint, repline]);
     SetName(geo,Concatenation("Split Cayley Hexagon of order ", String(Size(f))));
     return geo;
@@ -776,6 +813,193 @@ InstallMethod( SplitCayleyHexagon,
 	function( q )
 		return SplitCayleyHexagon(GF(q));
 	end );
+
+#############################################################################
+#A  CollineationGroup( <hexagon> )
+# computes the collineation group of a (classical) generalised hexagon
+##
+
+InstallMethod( CollineationGroup,
+	"for a generalised hexagon",
+	[ IsGeneralisedHexagon ],
+  function( hexagon )
+    local f, q, pps, frob, sigma, m, mp, ml, nonzerof, nonzeroq, w, 
+          gens, newgens, x, coll, orblen, hom, domain, rep;
+
+    if Size(Set(Order(hexagon))) > 1 then
+       Info(InfoFinInG, 1, "for Twisted Triality Hexagon");
+       f := hexagon!.basefield;
+       ## field must be GF(q^3);
+       q := RootInt(Size(f), 3);
+	 if not q^3 = Size(f) then
+         Error("Field order must be a cube of a prime power");
+       fi;
+       pps := Characteristic(f);
+       frob := FrobeniusAutomorphism(f);
+       sigma := frob^LogInt(q,pps);    ## automorphism of order 3
+
+	 # The generators of 3D4(q) were taken from Hendrik 
+    	 # Van Maldeghem's book: "Generalized Polygons".
+
+
+       m:=[[ 0, 0, 0, 0, 0, 1, 0, 0],
+           [ 0, 0, 0, 0, 0, 0, 1, 0],
+           [ 0, 0, 0, 0, 1, 0, 0, 0],
+           [ 0, 0, 0, 0, 0, 0, 0, 1],   
+           [ 0, 1, 0, 0, 0, 0, 0, 0],
+           [ 0, 0, 1, 0, 0, 0, 0, 0],
+           [ 1, 0, 0, 0, 0, 0, 0, 0],
+           [ 0, 0, 0, 1, 0, 0, 0, 0]]*One(f);  
+       ConvertToMatrixRep(m, f);
+       mp:=d->[[1,  0,  0,  0,  0,  d,  0,  0],  
+               [0,  1,  0,  0, -d,  0,  0,  0],  
+               [0,  0,  1,  0,  0,  0,  0,  0],  
+               [0,  0,  -d^sigma,  1,  0,  0,  0,  0],
+               [0,  0,  0,  0,  1,  0,  0,  0],  
+               [0,  0,  0,  0,  0,  1,  0,  0],  
+               [0,0,d^sigma*d^(sigma^2),-d^(sigma^2),0,0,1,d^sigma],
+               [0,0,d^(sigma^2),0,0,0,0,1]]*One(f);   
+       ml:=d->[[1, -d,  0,  0,  0,  0,  0,  0],  
+               [0,  1,  0,  0,  0,  0,  0,  0],  
+               [0,  0,  1,  0,  0,  0,  0,  0],  
+               [0,  0,  0,  1,  0,  0,  0,  0],  
+               [0,  0,  0,  0,  1,  0,  0,  0],  
+               [0,  0,  0,  0,  d,  1,  0,  0],  
+               [0,  0,  0,  0,  0,  0,  1,  0],
+               [0,  0,  0,  0,  0,  0,  0,  1]]*One(f);
+
+       nonzerof := AsList(f){[2..Size(f)]};
+       nonzeroq := AsList(GF(q)){[2..q]};
+
+       gens := Union([m], List(nonzerof, mp), List(nonzeroq, ml));
+       for x in gens do
+           ConvertToMatrixRep(x, f);
+       od;
+       newgens := List(gens, x -> CollineationOfProjectiveSpace(x,f));
+       coll := GroupWithGenerators(newgens);
+
+       Info(InfoFinInG, 1, "Computing nice monomorphism...");
+       orblen := (q+1)*(q^8+q^4+1);
+       rep := RepresentativesOfElements(hexagon)[2];
+	   domain := Orb(coll, rep, OnProjSubspaces, 
+                    rec(orbsizelimit := orblen, hashlen := 2*orblen, storenumbers := true));
+       Enumerate(domain);
+       Info(InfoFinInG, 1, "Found permutation domain...");
+	   hom := OrbActionHomomorphism(coll, domain);   
+		
+       #hom := NiceMonomorphismByOrbit(coll, rep,
+	   #            OnProjSubspaces, orblen );
+	 
+ 	   SetIsBijective(hom, true);
+       ## for some reason, hom has not stored a prefun
+
+	   SetNiceObject(coll, Image(hom) );
+       SetNiceMonomorphism(coll, hom );
+       SetCollineationAction(coll, OnProjSubspaces);
+       SetName(coll, Concatenation("4D_3(",String(q),")") );
+   else 
+       Info(InfoFinInG, 1, "for Split Cayley Hexagon");
+
+      # The generators of G2(q) were taken from Hendrik 
+      # van Maldeghem's book: "Generalized Polygons".
+      # Lines with ** are where there are mistake's in
+      # Hendrik's book (see Alan Offer's thesis).
+      
+      f := hexagon!.basefield;
+      q := Size(f);
+      if IsOddInt(Size(f)) then
+         m:=[[ 0, 0, 0, 0, 0, 1, 0],
+             [ 0, 0, 0, 0, 0, 0, 1],
+             [ 0, 0, 0, 0, 1, 0, 0],
+             [ 0, 0, 0, -1, 0, 0, 0],               ## **
+             [ 0, 1, 0, 0, 0, 0, 0],
+             [ 0, 0, 1, 0, 0, 0, 0],
+             [ 1, 0, 0, 0, 0, 0, 0]]*One(f);  
+         ConvertToMatrixRep(m, f);
+         mp:=d->[[1,  0,  0,  0,  0,  d,  0],  
+             [0,  1,  0,  0, -d,  0,  0],  
+             [0,  0,  1,  0,  0,  0,  0],  
+             [0,  0,  2*d,  1,  0,  0,  0],         ## **
+             [0,  0,  0,  0,  1,  0,  0],  
+             [0,  0,  0,  0,  0,  1,  0],  
+             [0,  0,d^2,  d,  0,  0,  1]]*One(f);   ## **
+         ml:=d->[[1, -d,  0,  0,  0,  0,  0],  
+             [0,  1,  0,  0,  0,  0,  0],  
+             [0,  0,  1,  0,  0,  0,  0],  
+             [0,  0,  0,  1,  0,  0,  0],  
+             [0,  0,  0,  0,  1,  0,  0],  
+             [0,  0,  0,  0,  d,  1,  0],  
+             [0,  0,  0,  0,  0,  0,  1]]*One(f);
+  
+         nonzerof := AsList(f){[2..Size(f)]};
+         gens := Union([m], List(nonzerof, mp), List(nonzerof, ml));
+         for x in gens do
+            ConvertToMatrixRep(x, f);
+         od;
+         frob := FrobeniusAutomorphism(f); 
+         newgens := List(gens, x -> CollineationOfProjectiveSpace(x, f));  
+         if not IsPrimeInt(Size(f)) then 
+            Add(newgens, CollineationOfProjectiveSpace( IdentityMat(7,f), frob, f )); 
+         fi; 
+         coll := GroupWithGenerators(newgens);
+       else
+          ## Here we embed the hexagon in W(5,q)
+          m:=[[ 0, 0, 0, 0, 1, 0],
+              [ 0, 0, 0, 0, 0, 1],
+              [ 0, 0, 0, 1, 0, 0],
+              [ 0, 1, 0, 0, 0, 0],
+              [ 0, 0, 1, 0, 0, 0],
+              [ 1, 0, 0, 0, 0, 0]]*One(f);  
+            ConvertToMatrixRep( m );
+          mp:=d->[[1,  0,  0,  0,  d,  0],  
+              [0,  1,  0,  d,  0,  0],  
+              [0,  0,  1,  0,  0,  0],  
+              [0,  0,  0,  1,  0,  0],  
+              [0,  0,  0,  0,  1,  0],  
+              [0,  0,d^2,  0,  0,  1]]*One(f);  
+          ml:=d->[[1,  d,  0,  0,  0,  0],  
+              [0,  1,  0,  0,  0,  0],  
+              [0,  0,  1,  0,  0,  0],  
+              [0,  0,  0,  1,  0,  0],  
+              [0,  0,  0,  d,  1,  0],  
+              [0,  0,  0,  0,  0,  1]]*One(f);
+          nonzerof := AsList(f){[2..Size(f)]};
+          gens := Union([m], List(nonzerof,mp), List(nonzerof,ml));
+
+          for x in gens do
+             ConvertToMatrixRep(x,f);
+          od;
+          frob := FrobeniusAutomorphism(f); 
+          newgens := List(gens, x -> CollineationOfProjectiveSpace(x, f));  
+          if not IsPrimeInt(Size(f)) then 
+             Add(newgens, CollineationOfProjectiveSpace( IdentityMat(6,f), frob, f )); 
+          fi;
+          coll := GroupWithGenerators(newgens);
+
+       fi; 
+
+       Info(InfoFinInG, 1, "Computing nice monomorphism...");
+       orblen := (q+1)*(q^4+q^2+1);
+       rep := RepresentativesOfElements(hexagon)[1];
+       domain := Orb(coll, rep, OnProjSubspaces, 
+                  rec(orbsizelimit := orblen, hashlen := 2*orblen, storenumbers := true));
+       Enumerate(domain);
+       Info(InfoFinInG, 1, "Found permutation domain...");
+	 hom := OrbActionHomomorphism(coll, domain);    
+ 	 SetIsBijective(hom, true);
+	 SetNiceObject(coll, Image(hom) );
+       SetNiceMonomorphism(coll, hom );
+
+       SetCollineationAction(coll, OnProjSubspaces);
+       if IsPrime(Size(f)) then
+          SetName(coll, Concatenation("G_2(",String(Size(f)),")") );
+       else
+          SetName(coll, Concatenation("G_2(",String(Size(f)),").", String(Order(frob))) );
+       fi;
+
+   fi;
+   return coll;
+  end );
 
 
 
