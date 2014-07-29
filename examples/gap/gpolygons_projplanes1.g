@@ -7,5 +7,18 @@ blocks := [
   [ 3, 9, 12, 15, 18 ], [ 4, 6, 12, 17, 19 ], [ 4, 7, 13, 16, 18 ], 
   [ 4, 8, 10, 15, 21 ], [ 4, 9, 11, 14, 20 ], [ 5, 6, 13, 15, 20 ], 
   [ 5, 7, 12, 14, 21 ], [ 5, 8, 11, 17, 18 ], [ 5, 9, 10, 16, 19 ] ];;
-pp := ProjectivePlaneByBlocks( blocks );
+gp := GeneralisedPolygonByBlocks( blocks );
+
+pg := PG(2,2);
+pts := Set(Points(pg));
+lines := Set(Lines(pg));
+inc := \*;
+gp := GeneralisedPolygonByElements(pts,lines,inc);
+
+ps := ParabolicQuadric(4,3);
+pts := Set(Points(ps));
+lines := Set(Lines(ps));
+inc := \*;
+gp := GeneralisedPolygonByElements(pts,lines,inc);
+
 quit;

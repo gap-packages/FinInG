@@ -45,6 +45,35 @@ ZeroPointToOnePointsSpaceByTriality := function(el)
     return VectorSpaceToElement(pg,spacevec);
 end;
 
+SplitCayleyPointToPlane5 := function(el)
+    local z, hyps, q, y, pg, planevec, basishyp, hyp, bs, invbasis, vec, w;
+    q := Size(BaseField(el));
+    w := Unpack(UnderlyingObject(el));
+    y := w{[1..3]};
+    y{[5..7]} := w{[4..6]};
+    y[4] := (y[1]*y[5]+y[2]*y[6]+y[3]*y[7])^(q/2);
+    y[8] := -y[4];
+    pg := PG(5,q);
+    z := [];
+    z[1] := [0,y[3],-y[2],y[5],y[8],0,0,0]*Z(q)^0;
+    z[2] := [-y[3],0,y[1],y[6],0,y[8],0,0]*Z(q)^0;
+    z[3] := [y[2],-y[1],0,y[7],0,0,y[8],0]*Z(q)^0;
+    z[4] := [0,0,0,-y[4],y[1],y[2],y[3],0]*Z(q)^0;
+    z[5] := [y[4],0,0,0,0,y[7],-y[6],y[1]]*Z(q)^0;
+    z[6] := [0,y[4],0,0,-y[7],0,y[5],y[2]]*Z(q)^0;
+    z[7] := [0,0,y[4],0,y[6],-y[5],0,y[3]]*Z(q)^0;
+    z[8] := [y[5],y[6],y[7],0,0,0,0,-y[8]]*Z(q)^0;
+    z := Filtered(z,x->not IsZero(x));
+    hyp := [0,0,0,1,0,0,0,1]*Z(q)^0;
+	Add(z,[0,0,0,1,0,0,0,1]*Z(q)^0);
+	planevec := NullspaceMat(TransposedMat(z));
+	basishyp := NullspaceMat(TransposedMat([hyp]));
+	bs := BaseSteinitzVectors(Basis(GF(q)^8), basishyp);
+	invbasis := Inverse(Concatenation(bs!.subspace, bs!.factorspace));
+	vec := planevec*invbasis;
+	return VectorSpaceToElement(pg,vec{[1..3]}{[1,2,3,5,6,7]}); #vec will be a basis of a plane -> 3 rows.
+end;
+
 
 SplitCayleyPointToPlane := function(el)
     local z, hyps, q, y, pg, planevec, basishyp, hyp, bs, invbasis, vec;
@@ -80,16 +109,19 @@ hq := SplitCayleyHexagon(q);
 ps := AmbientPolarSpace(hq);
 pts6 := AsList(Points(ps));
 #planes6 := List(pts6,x->OnePointToPlane(x));
-planes6 := List(pts6,x->SplitCayleyPointToPlane(x));
+planes6 := List(pts6,x->SplitCayleyPointToPlane(x));;
+planes6 := List(pts6,x->SplitCayleyPointToPlane5(x));;
 
+pg := PG(6,q);
+pg := PG(5,q);
 
 flags := [];
 for i in [1..Length(pts6)] do
-flags[i] := FlagOfIncidenceStructure(PG(6,q),[pts6[i],planes6[i]]);
+flags[i] := FlagOfIncidenceStructure(pg,[pts6[i],planes6[i]]);
 od;
-shads6 := List(flags,x->ShadowOfFlag(PG(6,q),x,2));
-lines6 := List(shads6,x->List(x));
-lines6 := Union(lines6);
+shads6 := List(flags,x->ShadowOfFlag(pg,x,2));;
+lines6 := List(shads6,x->List(x));;
+lines6 := Union(lines6);;
 
 group := FiningSetwiseStabiliser(CollineationGroup(ps),lines6);
 
@@ -187,6 +219,44 @@ InstallMethod( VectorSpaceToElement,
 end );
 
 
+     mp:=d->[[1,  0,  0,  0,  0,  d,  0],
+             [0,  1,  0,  0, -d,  0,  0],  
+             [0,  0,  1,  0,  0,  0,  0],  
+             [0,  0,  2*d,  1,  0,  0,  0],         ## **
+             [0,  0,  0,  0,  1,  0,  0],  
+             [0,  0,  0,  0,  0,  1,  0],  
+             [0,  0,d^2,  d,  0,  0,  1]]*One(f);  ## **
+
+     ml:=d->[[1, -d,  0,  0,  0,  0,  0],
+             [0,  1,  0,  0,  0,  0,  0],  
+             [0,  0,  1,  0,  0,  0,  0],  
+             [0,  0,  0,  1,  0,  0,  0],  
+             [0,  0,  0,  0,  1,  0,  0],  
+             [0,  0,  0,  0,  d,  1,  0],  
+             [0,  0,  0,  0,  0,  0,  1]]*One(f);
+
+#hvm boek:
+
+     mp:=d->[[1,  0,  0,  0,  0,  d,  0],
+             [0,  1,  0,  0, -d,  0,  0],  
+             [0,  0,  1,  0,  0,  0,  0],  
+             [0,  0,  d,  1,  0,  0,  0],         ## **
+             [0,  0,  0,  0,  1,  0,  0],  
+             [0,  0,  0,  0,  0,  1,  0],  
+             [0,  0,d^2,  2*d,  0,  0,  1]]*One(f);  ## **
+
+#try 
+
+     mp:=d->[[1,  0,  0,  0,  0,  d,  0],
+             [0,  1,  0,  0, -d,  0,  0],
+             [0,  0,  1,  0,  0,  0,  0],  
+             [0,  0,  2*d,  1,  0,  0,  0],         ## **
+             [0,  0,  0,  0,  1,  0,  0],  
+             [0,  0,  0,  0,  0,  1,  0],  
+             [0,  0,d^2,  2*d,  0,  0,  1]]*One(f);  ## **
 
 
-
+nonzerof := Filtered(f,x->not IsZero(x));
+mats := List(nonzerof,x->mp(x));
+gens := List(mats,x->CollineationOfProjectiveSpace(PG(6,f),x));
+List(gens,x->x in group);

@@ -1816,16 +1816,26 @@ InstallMethod( PrintObj, [ IsElationGQ and HasOrder],
   end );
 
 InstallMethod( ViewObj, 
-	"for a projective plane that has an order",
-	[ IsProjectivePlane and HasOrder],
+	"for a projective plane in GP rep that maybe has no order",
+	[ IsProjectivePlane and IsGeneralisedPolygonRep],
+	function( p )
+		Print("<projective plane >");
+	end );
+
+
+InstallMethod( ViewObj,
+	"for a projective plane in GP rep that has an order",
+	[ IsProjectivePlane and IsGeneralisedPolygonRep and HasOrder],
 	function( p )
 		Print("<projective plane of order ",Order(p)[1],">");
 	end );
 
-InstallMethod( PrintObj, [ IsProjectivePlane and HasOrder ],
-  function( p )
-    Print("Projective plane of order ",Order(p)[1],
-     ", consisting of ", Size(p!.points), " points and ", Size(p!.lines)," lines");
+InstallMethod( PrintObj, 
+	"for a projective plane in GP rep that has an order",
+    [ IsProjectivePlane and IsGeneralisedPolygonRep and HasOrder ],
+    function( p )
+        Print("Projective plane of order ",Order(p)[1],
+        ", consisting of ", Size(p!.points), " points and ", Size(p!.lines)," lines");
   end );
 
 InstallMethod( ViewObj, [ IsGeneralisedQuadrangle and HasOrder],
@@ -2009,4 +2019,4 @@ InstallMethod( PrintObj,
 	function( v )
 		Print(v!.obj);
 	end );  
-
+    

@@ -674,13 +674,42 @@ InstallMethod( Wrap,
 		return w;
   end );
 
+InstallGlobalFunction( SplitCayleyPointToPlane5,
+    function(el)
+        local z, hyps, q, y, planevec, basishyp, hyp, bs, invbasis, vec, w;
+        q := Size(BaseField(el));
+        w := Unpack(UnderlyingObject(el));
+        y := w{[1..3]};
+        y{[5..7]} := w{[4..6]};
+        y[4] := (y[1]*y[5]+y[2]*y[6]+y[3]*y[7])^(q/2);
+        y[8] := -y[4];
+        z := [];
+        z[1] := [0,y[3],-y[2],y[5],y[8],0,0,0]*Z(q)^0;
+        z[2] := [-y[3],0,y[1],y[6],0,y[8],0,0]*Z(q)^0;
+        z[3] := [y[2],-y[1],0,y[7],0,0,y[8],0]*Z(q)^0;
+        z[4] := [0,0,0,-y[4],y[1],y[2],y[3],0]*Z(q)^0;
+        z[5] := [y[4],0,0,0,0,y[7],-y[6],y[1]]*Z(q)^0;
+        z[6] := [0,y[4],0,0,-y[7],0,y[5],y[2]]*Z(q)^0;
+        z[7] := [0,0,y[4],0,y[6],-y[5],0,y[3]]*Z(q)^0;
+        z[8] := [y[5],y[6],y[7],0,0,0,0,-y[8]]*Z(q)^0;
+        z := Filtered(z,x->not IsZero(x));
+        hyp := [0,0,0,1,0,0,0,1]*Z(q)^0;
+        Add(z,[0,0,0,1,0,0,0,1]*Z(q)^0);
+        planevec := NullspaceMat(TransposedMat(z));
+        basishyp := NullspaceMat(TransposedMat([hyp]));
+        bs := BaseSteinitzVectors(Basis(GF(q)^8), basishyp);
+        invbasis := Inverse(Concatenation(bs!.subspace, bs!.factorspace));
+        vec := planevec*invbasis;
+        return vec{[1..3]}{[1,2,3,5,6,7]};
+    end );
+
+
 InstallGlobalFunction( SplitCayleyPointToPlane,
 	function(el)
-		local z, hyps, q, y, pg, planevec, basishyp, hyp, bs, invbasis, vec;
+		local z, hyps, q, y, planevec, basishyp, hyp, bs, invbasis, vec;
 		q := Size(BaseField(el));
 		y := Unpack(UnderlyingObject(el));
 		y[8] := -y[4];
-		pg := AmbientSpace(el);
 		z := [];
 		z[1] := [0,y[3],-y[2],y[5],y[8],0,0,0]*Z(q)^0;
 		z[2] := [-y[3],0,y[1],y[6],0,y[8],0,0]*Z(q)^0;
@@ -699,7 +728,6 @@ InstallGlobalFunction( SplitCayleyPointToPlane,
 		invbasis := Inverse(Concatenation(bs!.subspace, bs!.factorspace));
 		vec := planevec*invbasis;
 		return vec{[1..3]}{[1..7]};
-		#return VectorSpaceToElement(pg,vec{[1..3]}{[1..7]}); #vec will be a basis of a plane -> 3 rows.
 	end );
 
 # JB: A big change here. I've separated the CollineationGroup out to an
@@ -737,6 +765,14 @@ InstallMethod( SplitCayleyHexagon,
 		replinevect := [[1,0,0,0,0,0,0], [0,0,0,0,0,0,1]] * One(f);
 		TriangulizeMat(replinevect);
 		#ConvertToMatrixRep(replinevect, f); #is useless now.
+        shadpoint := function( pt )
+            local planevec, flag, plane, f;
+            f := BaseField( pt );
+            planevec := SplitCayleyPointToPlane( pt );
+            plane := VectorSpaceToElement(PG(6,f),planevec);
+            flag := FlagOfIncidenceStructure(PG(6,f),[pt,plane]);
+            return List(ShadowOfFlag(PG(6,f),flag,2),x->Wrap(pt!.geo,2,Unwrap(x)));
+        end;
     else
        ## Here we embed the hexagon in W(5,q)
        ## Hendrik's form
@@ -752,6 +788,14 @@ InstallMethod( SplitCayleyHexagon,
 		replinevect := [[1,0,0,0,0,0], [0,0,0,0,0,1]] * One(f);
 		TriangulizeMat(replinevect);
 		#ConvertToMatrixRep(replinevect, f); #is useless now.
+        shadpoint := function( pt )
+            local planevec, flag, plane, f;
+            f := BaseField( pt );
+            planevec := SplitCayleyPointToPlane5( pt );
+            plane := VectorSpaceToElement(PG(5,f),planevec);
+            flag := FlagOfIncidenceStructure(PG(5,f),[pt,plane]);
+            return List(ShadowOfFlag(PG(5,f),flag,2),x->Wrap(pt!.geo,2,Unwrap(x)));
+        end;
     fi;
 	#now comes the cmatrixification of the replinevect
 	replinevect := NewMatrix(IsCMatRep,f,Length(reppointvect),replinevect);
@@ -763,15 +807,6 @@ InstallMethod( SplitCayleyHexagon,
 		return Enumerate(Orb(coll, reps[j], OnProjSubspaces));
 	end;
 	
-	shadpoint := function( pt )
-		local planevec, flag, plane, f;
-		f := BaseField( pt );
-		planevec := SplitCayleyPointToPlane( pt );
-		plane := VectorSpaceToElement(PG(6,f),planevec);
-		flag := FlagOfIncidenceStructure(PG(6,f),[pt,plane]);
-		return List(ShadowOfFlag(PG(6,f),flag,2),x->Wrap(pt!.geo,2,Unwrap(x)));
-	end;
-
 	shadline := function( l )
 		return List(Points(ElementToElement(AmbientSpace(l),l)),x->Wrap(l!.geo,1,x!.obj));
 	end;

@@ -87,6 +87,7 @@ DeclareAttribute( "AmbientPolarSpace", IsGeneralisedHexagon);
 DeclareGlobalFunction( "OnKantorFamily" );
 
 DeclareGlobalFunction( "SplitCayleyPointToPlane" );
+DeclareGlobalFunction( "SplitCayleyPointToPlane5" );
 
 DeclareOperation( "SplitCayleyHexagon", [IsField and IsFinite] );
 DeclareOperation( "SplitCayleyHexagon", [IsPosInt] );

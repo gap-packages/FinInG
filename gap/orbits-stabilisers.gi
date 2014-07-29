@@ -22,7 +22,7 @@
 ##
 ## 11/02/13 ml
 ## These methods have been tested on all projective spaces and classical polar spaces
-## The champion in ALL cases is FiningStabiliserEstimate ... BY FAR!!! using the ORB 
+## The champion in ALL cases is FiningStabiliserOrb ... BY FAR!!! using the ORB 
 ## package command ORB_EstimateOrbitSize.
 ## Next fastest method is the FiningStabiliser using the Stab method from the ORB package.
 ## There are small cases where the FiningStabiliserPerm (using permutation representation)

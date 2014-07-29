@@ -26,6 +26,9 @@
 # for gpolygons.
 #############################################################################
 
+# Important notice: in the next line, "points" and "lines" are the underlying objects (or a representative) 
+# of the real points and lines of the GP to be constructed.
+# "incidence" is a function that determines whether the wrapped elements with given underlying objects, are incident.
 DeclareRepresentation( "IsGeneralisedPolygonRep", IsGeneralisedPolygon, [ "incidence", "points", "lines" ]);
 
 DeclareCategory( "IsElementOfGeneralisedPolygon", IsElementOfIncidenceStructure );
@@ -55,6 +58,7 @@ DeclareRepresentation( "IsqClanRep", IsqClanObj, [ "matrices", "basefield" ] );
 BindGlobal( "qClanFamily", NewFamily( "qClanFamily" ) );
 
 
+DeclareOperation( "GeneralisedPolygonByBlocks", [ IsHomogeneousList ] );
 
 
 #############################################################################
@@ -76,8 +80,9 @@ DeclareAttribute( "AmbientPolarSpace", IsGeneralisedHexagon);
 # Operations and functions 
 #############################################################################
 
-
 #DeclareOperation("Span",[IsElementOfGeneralisedPolygon, IsElementOfGeneralisedPolygon]);
+
+DeclareOperation("VectorSpaceToElement",[IsGeneralisedHexagon, IsMatrix]);
 
 DeclareGlobalFunction( "OnKantorFamily" );
 

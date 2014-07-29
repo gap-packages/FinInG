@@ -96,10 +96,18 @@ InstallMethod( ProjectiveSpace, "for a proj dimension and a field",
     local geo, ty;
     geo := rec( dimension := d, basefield := f, 
                 vectorspace := FullRowSpace(f, d+1) );
-    ty := NewType( GeometriesFamily,
+    if d = 2 then
+        ty := NewType( GeometriesFamily,
+                  IsProjectiveSpace and IsProjectiveSpaceRep and IsProjectivePlane);
+    else
+        ty := NewType( GeometriesFamily,
                   IsProjectiveSpace and IsProjectiveSpaceRep );
+    fi;
     Objectify( ty, geo );
     SetAmbientSpace(geo,geo);
+    if d=2 then
+        SetOrder(geo,[Size(f),Size(f)]);
+    fi;
     return geo;
   end );
   
