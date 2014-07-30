@@ -23,7 +23,7 @@
 # Important notice: in the next line, "points" and "lines" are the underlying objects (or a representative) 
 # of the real points and lines of the GP to be constructed.
 # "incidence" is a function that determines whether the wrapped elements with given underlying objects, are incident.
-DeclareRepresentation( "IsGeneralisedPolygonRep", IsGeneralisedPolygon, [ "incidence", "points", "lines", "listelements", "shadpoint", "shadline", "distance" ]);
+DeclareRepresentation( "IsGeneralisedPolygonRep", IsGeneralisedPolygon, [ "incidence", "pointsobj", "linesobj", "listelements", "shadpoint", "shadline", "distance" ]);
 
 DeclareCategory( "IsElementOfGeneralisedPolygon", IsElementOfIncidenceGeometry );
 DeclareCategory( "IsElementsOfGeneralisedPolygon", IsElementsOfIncidenceGeometry );

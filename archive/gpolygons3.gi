@@ -27,6 +27,49 @@ Print(", gpolygons\c");
 # This section is generic, i.e. if someone constructs a GP and obeys the representation,
 # these methods will work.
 #############################################################################
+# about IsGeneralisedPolygonRep
+# objects belonging to IsGeneralisedPolygonRep should have several fields in their record:
+# pointsobj, linesobj, incidence, listelements, shadowofpoint, shadowofline, distance.
+#
+# pointsobj: a list containing the *underlying objects* for the points of the GP
+#
+# linesobj: a list containing the *underlying objects* for the lines of the GP
+#
+# incidence: a function, taking two *elements of the GP* as argument, returning true or false
+#
+# listelements: a function taking an integer as argument, returning 
+#	a list of all elements of the GP of the given type. This list will be turned into an iterator
+#	by the method installed for Iterator for elements of GPs.
+#
+# shadowofpoint: a function, taking a *point of a GP* and an integer as argument, returning a list
+#	of elements of given type incident with the given point.
+#
+# shadowofline: a function, taking a *line of a GP* and an integer as argument, returning a list
+#	of elements of given type incident with the given line. 
+#		The method for ShadowOfElement will pass the appropriate function to the method installed
+#		for Iterator for shadow objects.
+#
+# distance: a function taking two *elements of a GP* and returning their distance in the incidence graph.
+#
+# Note: - If an object belongs to IsGeneralisedPolygon, then the "generic operations" to explore the GP
+#			are *applicable* (does not imply that a specific method is installed or will be working).
+#		- If a GP is constructed using a "Generic method", the above fields are created as described, making
+#			all the methods for the "generic operations" working.
+#		- If a GP is created as an object in IsGeneralisedPolygon and IsGeneralisedPolygonRep, with some of
+#			these fields lacking or different, than separate methods need to be installed for certain operations
+#			This is not problematic. A typical example are the hexagons: they belong also to IsLieGeometry, 
+#			so it is easy to get the right methods selected. Furthermore, typical methods for Lie geometries become
+#			applicable (but might also need separate methods).
+#		- If a GP is constructed using the "generic construction methods", there is always an underlying graph (to
+#			check whether the user really constructs a GP. Creating the graph can be time consuming, but there is
+#			the possibility to use a group. There is no NC version. The computed graph is stored as a mutable
+#			attribute.
+#		- For the particular GPs: of course we know that they are a GP, so on construction, we do not compute
+#			the underlying graph.
+#		- The classical GQs belong to IsGeneralisedPolygon but *not* to IsGeneralisedPolygonRep. For them there is
+#			either an atrtibute set on creation (e.g. Order), or a seperate method for other generic operations.
+#
+#############################################################################
 
 #############################################################################
 #
@@ -116,7 +159,7 @@ InstallMethod( GeneralisedPolygonByBlocks,
             return Distance(graph,Position(vn,el1!.obj),Position(vn,el2!.obj));
         end;
 
-        gp := rec( points := pts, lines := blocks, incidence := i, listelements := listels, 
+        gp := rec( pointsobj := pts, linesobj := blocks, incidence := i, listelements := listels, 
 					shadowofpoint := shadpoint, shadowofline := shadline, distance := dist );
 
         Objectify( ty, gp );
@@ -216,7 +259,7 @@ InstallMethod( GeneralisedPolygonByElements,
         return Distance(graph,Position(vn,el1!.obj),Position(vn,el2!.obj));
     end;
     
-    gp := rec( points := pts, lines := lns, incidence := inc, listelements := listels, 
+    gp := rec( pointsobj := pts, linesobj := lns, incidence := inc, listelements := listels, 
 				shadowofpoint := shadpoint, shadowofline := shadline, distance := dist );
 
     Objectify( ty, gp );
@@ -291,7 +334,7 @@ InstallMethod( GeneralisedPolygonByElements,
         return Distance(graph,Position(vn,el1!.obj),Position(vn,el2!.obj));
     end;
     
-    gp := rec( points := pts, lines := lns, incidence := inc, listelements := listels, 
+    gp := rec( pointsobj := pts, linesobj := lns, incidence := inc, listelements := listels, 
 				shadowofpoint := shadpoint, shadowofline := shadline, distance := dist );
 
     Objectify( ty, gp );
@@ -830,7 +873,7 @@ InstallMethod( SplitCayleyHexagon,
 
 	#in the next line, we set the data fields for the geometry. We have to take into account that H(q) will also be
 	#a Lie geometry, so it needs more data fields than a GP. But we can derive this information from ps.
-	geo := rec( points := [], lines := [], incidence:= \*, listelements := listels, basefield := BaseField(ps), 
+	geo := rec( pointsobj := [], linesobj := [], incidence:= \*, listelements := listels, basefield := BaseField(ps), 
 		dimension := Dimension(ps), vectorspace := UnderlyingVectorSpace(ps), polarspace := ps, 
 		shadowofpoint := shadpoint, shadowofline := shadline);
     ty := NewType( GeometriesFamily,
