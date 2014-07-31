@@ -857,3 +857,44 @@ InstallMethod( ElementToElement,
 #	function(ps,el)
 #		el!.geo := ps;
 #	end );
+
+
+#############################################################################
+# elements of Lie geometries are always constructed using a spaning set for
+# the underlying sub vector space. OjectToElement for Lie geometries simply 
+# pipes the object to VectorSpaceToElement, which will check whether the
+# object is suitable or not.
+#############################################################################
+
+# Added 31/07/2014 jdb.
+#############################################################################
+#O  ObjectToElement( <geo>, <type>, <obj> )
+# returns the element VectorSpaceToElement(<geo>, <obj>)), and checks whether
+# the type is correct.
+#
+InstallMethod( ObjectToElement,
+	"for a Lie geometry, and integer, and an object",
+	[IsLieGeometry, IsPosInt, IsObject],
+	function(geom, type, obj)
+		local el;
+		el := VectorSpaceToElement(geom,obj);
+		if type <> el!.type then
+			Error("<obj> represents an element of a different type than requested");
+		else
+			return el;
+		fi;
+	end );
+
+# Added 31/07/2014 jdb.
+#############################################################################
+#O  ObjectToElement( <geo>, <obj> )
+# returns the element VectorSpaceToElement(<geo>, <obj>))
+#
+InstallMethod( ObjectToElement,
+	"for a Lie geometry, and integer, and an object",
+	[IsLieGeometry, IsObject],
+	function(geom, obj)
+		local el;
+		return VectorSpaceToElement(geom,obj);
+	end );
+

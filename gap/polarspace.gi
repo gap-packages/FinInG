@@ -2520,6 +2520,20 @@ InstallMethod( AbsolutePoints,
 		return Points(GeometryOfAbsolutePoints(polarity));
 	end );
 
+# added 31/07/2014 jdb
+#############################################################################
+#O TangentSpace( <polarspace>, <el> ) returns the collection of points of the 
+# geometry of absolute points of <polarity>
+##
+InstallMethod( AbsolutePoints,
+	"for a polarity of a projective space",
+	[ IsPolarityOfProjectiveSpace ],
+	function( polarity )
+		return Points(GeometryOfAbsolutePoints(polarity));
+	end );
+
+
+
 #I think the next method is obsolete. We have a method \in for a subspace of a projective space
 # and a polar space, and this does the job. I leave as is, comment out, and if there are no complains, 
 # it can be deleted.

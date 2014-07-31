@@ -544,6 +544,46 @@ InstallMethod( AffineSubspace,
 		fi;
   end ); 
 
+# added 31/7/2014 for reasons of consistency jdb
+#############################################################################
+#O  ObjecToElement( <geom>, <obj> )
+# returns the subspace of <geom>, with representative <v> and subspace at infinity
+# determined by <m> if and only if <obj> is the list [v,m].
+##
+InstallMethod( ObjectToElement,
+	"for an affine space and an object",
+	[ IsAffineSpace, IsList],
+	function(as, obj)
+		if Length(obj) = 2 then
+			return AffineSubspace(as, obj[1], obj[2]);
+		else
+			Error("<obj> does not determine a subspace of <as>");
+		fi;
+	end );
+			
+# added 31/7/2014 for reasons of consistency jdb
+#############################################################################
+#O  ObjecToElement( <geom>, <type>, <obj> )
+# returns the subspace of <geom>, with representative <v> and subspace at infinity
+# determined by <m> if and only if <obj> is the list [v,m].
+##
+InstallMethod( ObjectToElement,
+	"for an affine space and an object",
+	[ IsAffineSpace, IsPosInt, IsList],
+	function(as, t, obj)
+		local el;
+		if Length(obj) = 2 then
+			el :=  AffineSubspace(as, obj[1], obj[2]);
+		else
+			Error("<obj> does not determine a subspace of <as>");
+		fi;
+		if el!.type <> t then
+			Error("<obj> does not determine a subspace of <as> of given type <t>");
+		else
+			return el;
+		fi;
+	end );
+
 # CHECKED 13/03/12 jdb
 #############################################################################
 #O  RandomSubspace( <as>, <d> )

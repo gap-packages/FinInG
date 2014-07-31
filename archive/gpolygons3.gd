@@ -82,6 +82,9 @@ DeclareAttribute( "AmbientPolarSpace", IsGeneralisedHexagon);
 # Operations and functions 
 #############################################################################
 
+DeclareOperation("G2fining", [IsPosInt, IsField and IsFinite] );
+
+
 #DeclareOperation("Span",[IsElementOfGeneralisedPolygon, IsElementOfGeneralisedPolygon]);
 
 DeclareGlobalFunction( "OnKantorFamily" );
@@ -91,6 +94,7 @@ DeclareGlobalFunction( "SplitCayleyPointToPlane5" );
 
 DeclareOperation( "SplitCayleyHexagon", [IsField and IsFinite] );
 DeclareOperation( "SplitCayleyHexagon", [IsPosInt] );
+DeclareOperation( "SplitCayleyHexagon", [IsClassicalPolarSpace] );
 DeclareOperation( "TwistedTrialityHexagon", [IsField and IsFinite] );
 DeclareOperation( "TwistedTrialityHexagon", [IsPosInt] );
 

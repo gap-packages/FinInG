@@ -137,6 +137,169 @@ graph := Graph(group,Union(pts6,lines6),OnProjSubspaces,rel);;
 Diameter(graph);
 Girth(graph);
 
+### new tests
+### 1.
+q := 2;
+
+hq := SplitCayleyHexagon(q);
+pts := List(Points(hq));;
+ps := AmbientPolarSpace(hq);
+Collected(List(pts,x->x in ps));
+lines := Set(Lines(hq));;
+Collected(List(lines,x->x in ps));
+lines2 := Union(List(pts,x->List(Lines(x))));;
+lines = lines2;
+
+group1 := CollineationGroup(hq);
+group2 := FiningSetwiseStabiliser(CollineationGroup(ps),lines2);
+
+group1 = group2;
+
+ptsu := List(pts,x->ElementToElement(ps,x));;
+linesu := List(lines,x->ElementToElement(ps,x));;
+
+rel := function(x,y)
+if x!.type=y!.type then
+return false;
+else
+return x * y;
+fi;
+end;
+
+graph := Graph(group2,Union(ptsu,linesu),OnProjSubspaces,rel);;
+Diameter(graph);
+Girth(graph);
+
+
+#### 2
+q := 3;
+
+ps := ParabolicQuadric(6,q);
+hq := SplitCayleyHexagon(ps);
+pts := List(Points(hq));;
+Collected(List(pts,x->x in ps));
+lines := Set(Lines(hq));;
+Collected(List(lines,x->x in ps));
+lines2 := Union(List(pts,x->List(Lines(x))));;
+lines = lines2;
+
+group1 := CollineationGroup(hq);
+group2 := FiningSetwiseStabiliser(CollineationGroup(ps),lines2);
+
+group1 = group2;
+
+ptsu := List(pts,x->ElementToElement(ps,x));;
+linesu := List(lines,x->ElementToElement(ps,x));;
+
+rel := function(x,y)
+if x!.type=y!.type then
+return false;
+else
+return x * y;
+fi;
+end;
+
+graph := Graph(group1,Union(ptsu,linesu),OnProjSubspaces,rel);;
+Diameter(graph);
+Girth(graph);
+
+
+
+### 2bis
+mat := IdentityMat(7,GF(q));
+form := QuadraticFormByMatrix(mat,GF(q));
+ps := PolarSpace(form);
+hq := SplitCayleyHexagon(ps);
+pts := List(Points(hq));;
+Collected(List(pts,x->x in ps));
+lines := Set(Lines(hq));;
+Collected(List(lines,x->x in ps));
+lines2 := Union(List(pts,x->List(Lines(x))));;
+lines = lines2;
+
+group1 := CollineationGroup(hq);
+group2 := FiningSetwiseStabiliser(CollineationGroup(ps),lines2);
+
+group1 = group2;
+
+ptsu := List(pts,x->ElementToElement(ps,x));;
+linesu := List(lines,x->ElementToElement(ps,x));;
+
+rel := function(x,y)
+if x!.type=y!.type then
+return false;
+else
+return x * y;
+fi;
+end;
+
+graph := Graph(group1,Union(ptsu,linesu),OnProjSubspaces,rel);;
+Diameter(graph);
+Girth(graph);
+
+### 3.
+ps := SymplecticSpace(5,q);
+hq := SplitCayleyHexagon(ps);
+pts := List(Points(hq));;
+Collected(List(pts,x->x in ps));
+lines := Set(Lines(hq));;
+Collected(List(lines,x->x in ps));
+lines2 := Union(List(pts,x->List(Lines(x))));;
+lines = lines2;
+
+group1 := CollineationGroup(hq);
+group2 := FiningSetwiseStabiliser(CollineationGroup(ps),lines2);
+
+group1 = group2;
+
+ptsu := List(pts,x->ElementToElement(ps,x));;
+linesu := List(lines,x->ElementToElement(ps,x));;
+
+rel := function(x,y)
+if x!.type=y!.type then
+return false;
+else
+return x * y;
+fi;
+end;
+
+graph := Graph(group2,Union(ptsu,linesu),OnProjSubspaces,rel);;
+Diameter(graph);
+Girth(graph);
+
+### 4.
+mat := IdentityMat(6,GF(q)){[6,5,4,3,2,1]};
+form := BilinearFormByMatrix(mat,GF(q));
+ps := PolarSpace(form);
+hq := SplitCayleyHexagon(ps);
+pts := List(Points(hq));;
+Collected(List(pts,x->x in ps));
+lines := Set(Lines(hq));;
+Collected(List(lines,x->x in ps));
+lines2 := Union(List(pts,x->List(Lines(x))));;
+lines = lines2;
+
+group1 := CollineationGroup(hq);
+group2 := FiningSetwiseStabiliser(CollineationGroup(ps),lines2);
+
+group1 = group2;
+
+ptsu := List(pts,x->ElementToElement(ps,x));;
+linesu := List(lines,x->ElementToElement(ps,x));;
+
+rel := function(x,y)
+if x!.type=y!.type then
+return false;
+else
+return x * y;
+fi;
+end;
+
+graph := Graph(group1,Union(ptsu,linesu),OnProjSubspaces,rel);;
+Diameter(graph);
+Girth(graph);
+
+
 #############################################################################
 #O  VectorSpaceToElement( <geom>, <v> ) returns the element in <geom> determined
 # by the rowvector <v>. <geom> is a generalised hexagon, so an ambient polar space
@@ -295,3 +458,43 @@ mats := List(nonzerof,x->ml(x));
 gens := List(mats,x->CollineationOfProjectiveSpace(PG(6,f),x));
 List(gens,x->x in group);
 
+
+####### new tests of SplitCayleyHexagon
+
+q := 5;
+hq := SplitCayleyHexagon(q);
+pts6 := AsList(Points(hq));;
+lines1 := Union(List(pts6,x->List(Lines(x))));;
+lines2 := Set(Lines(hq));;
+lines1 = lines2;
+
+
+
+#planes6 := List(pts6,x->OnePointToPlane(x));
+planes6 := List(pts6,x->SplitCayleyPointToPlane(x));;
+planes6 := List(pts6,x->SplitCayleyPointToPlane5(x));;
+
+pg := PG(6,q);
+pg := PG(5,q);
+
+flags := [];
+for i in [1..Length(pts6)] do
+flags[i] := FlagOfIncidenceStructure(pg,[pts6[i],planes6[i]]);
+od;
+shads6 := List(flags,x->ShadowOfFlag(pg,x,2));;
+lines6 := List(shads6,x->List(x));;
+lines6 := Union(lines6);;
+
+group := FiningSetwiseStabiliser(CollineationGroup(ps),lines6);
+
+rel := function(x,y)
+if x!.type=y!.type then
+return false;
+else
+return x * y;
+fi;
+end;
+
+graph := Graph(group,Union(pts6,lines6),OnProjSubspaces,rel);;
+Diameter(graph);
+Girth(graph);

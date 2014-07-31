@@ -212,6 +212,18 @@ while <C>IsClassicalPolarSpace</C> is not a subcategory of <C>IsProjectiveSpace<
 </ManSection>
 
 <ManSection>
+<Oper Name="ObjectToElement" Arg="inc, type, obj"/>
+<Oper Name="ObjectToElement" Arg="inc, obj"/>
+<Returns>an element of the incidence structure <A>inc</A></Returns>
+<Description>
+If <A>obj</A> represents an element of <A>inc</A> of <A>type</A>, then the first
+flavor returs the element. If the type of the element can be determined from <A>obj</A>,
+then the second flavor returns the element. An error (or no method found error) is shown
+when <A>obj</A> does not represent an element (of type <A>type</A>). 
+</Description>
+</ManSection>
+
+<ManSection>
 <Heading>Main categories for collections of elements of incidence structures</Heading>
 <Filt Name="IsElementsOfIncidenceStructure" Type="Category"/>
 <Filt Name="IsElementsOfIncidenceGeometry" Type="Category"/>

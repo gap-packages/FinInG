@@ -91,6 +91,9 @@ DeclareOperation( "PolarSpace", [IsForm, IsField, IsGroup, IsFunction] );
 DeclareOperation( "PolarSpace", [IsForm] );
 DeclareOperation( "PolarMap", [IsClassicalPolarSpace] );
 
+DeclareOperation( "TangentSpace", [IsClassicalPolarSpace, IsSubspaceOfClassicalPolarSpace] );
+DeclareOperation( "Pole", [IsClassicalPolarSpace, IsSubspaceOfProjectiveSpace] );
+
 #DeclareOperation( "Polarisation", [IsQuadraticForm] ); #We can use now AssociatedBilinearForm
 #DeclareOperation( "IsTotallySingular", [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep,
 #                                         IsSubspaceOfProjectiveSpace ] );
