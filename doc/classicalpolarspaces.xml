@@ -556,6 +556,11 @@ an element is defined as the ambient space of the Lie geometry, i.e. a projectiv
 </Description>
 </ManSection>
 
+</Section>
+
+<Section>
+<Heading>Basic operations for polar spaces and subspaces of projective spaces</Heading>
+
 <ManSection>
 <Heading>Incidence and containment</Heading>
 <Oper Name="IsIncident" Arg="el1, el2"/>
@@ -611,9 +616,13 @@ planes chosen at random.
 <Oper Name="IsCollinear" Arg="ps,u,v"/>
 <Returns> Boolean </Returns>
 <Description>
-<A>u</A> and <A>v</A> are points of the polar space
-<A>ps</A>. This function returns True if <A>u</A> and <A>v</A> are incident 
-with a common line and False otherwise.
+<A>u</A> and <A>v</A> are points of the ambient space of the polar space
+<A>ps</A>. This function returns True if <A>u</A> and <A>v</A> are collinear
+in <A>ps</A>. Note that belonging to <A>ps</A> is a necessary condition for
+<A>u</A> and <A>v</A> to be collinear.
+<Example>
+<#Include SYSTEM "../examples/include/cps_iscollinear.include"> 
+</Example>
 </Description>
 </ManSection>
 
@@ -645,6 +654,34 @@ with the type of subspace: <Q>degenerate</Q>, <Q>symplectic</Q>, <Q>hermitian</Q
 <Q>elliptic</Q>, <Q>hyperbolic</Q> or <Q>parabolic</Q>. 
 <Example>
 <#Include SYSTEM "../examples/include/cps_typesubspace.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="TangentSpace" Arg="el"/>
+<Oper Name="TangentSpace" Arg="ps, el"/>
+<Returns>A subspace of a projective space</Returns>
+<Description>
+Let <A>el</A> be an element of a classical polar space. The first version
+returns the tangent space at <A>el</A> to this polar space. Let <A>el</A>
+be a subspace of the ambient space of the polar space <A>ps</A>. The second
+version checks whether <A>el</A> belongs to <A>ps</A> and returns the tangenspace
+at <A>el</A> to <A>ps</A>. Some obvious properties are demonstrated in the example.
+<Example>
+<#Include SYSTEM "../examples/include/cps_tangentspace.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="Pole" Arg="ps, el"/>
+<Returns>A subspace of a projective space</Returns>
+<Description>
+Let <A>el</A> be a subspace of the ambient space of the polar space <A>ps</A>. This operation
+returns the pole of <A>el</A> with relation to the polar space <A>ps</A>. 
+<Example>
+<#Include SYSTEM "../examples/include/cps_pole.include"> 
 </Example>
 </Description>
 </ManSection>

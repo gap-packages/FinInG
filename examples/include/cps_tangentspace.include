@@ -1,0 +1,32 @@
+gap&gt; ps := HermitianPolarSpace(3,4^2);
+H(3, 4^2)
+gap&gt; p := Random(Points(ps));
+&lt;a point in H(3, 4^2)&gt;
+gap&gt; plane := TangentSpace(p);
+&lt;a plane in ProjectiveSpace(3, 16)&gt;
+gap&gt; TypeOfSubspace(ps,plane);
+"degenerate"
+gap&gt; ps := ParabolicQuadric(6,4);
+Q(6, 4)
+gap&gt; p := VectorSpaceToElement(PG(6,4),[0,1,0,0,0,0,0]*Z(4)^0);
+&lt;a point in ProjectiveSpace(6, 4)&gt;
+gap&gt; hyp := TangentSpace(ps,p);
+&lt;a proj. 5-space in ProjectiveSpace(6, 4)&gt;
+gap&gt; NucleusOfParabolicQuadric(ps) in hyp;
+true
+gap&gt; ps := EllipticQuadric(5,2);
+Q-(5, 2)
+gap&gt; line := Random(Lines(ps));
+&lt;a line in Q-(5, 2)&gt;
+gap&gt; TangentSpace(line);
+&lt;a solid in ProjectiveSpace(5, 2)&gt;
+gap&gt; ps := HermitianPolarSpace(5,4);
+H(5, 2^2)
+gap&gt; plane := Random(Planes(ps));
+&lt;a plane in H(5, 2^2)&gt;
+gap&gt; tan := TangentSpace(plane);
+&lt;a plane in ProjectiveSpace(5, 4)&gt;
+gap&gt; tan in ps;
+true
+gap&gt; tan = plane;
+true

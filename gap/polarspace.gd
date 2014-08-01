@@ -89,9 +89,10 @@ DeclareProperty( "IsStandardPolarSpace", IsClassicalPolarSpace );
 DeclareOperation( "PolarSpaceStandard", [IsForm, IsBool] );
 DeclareOperation( "PolarSpace", [IsForm, IsField, IsGroup, IsFunction] );
 DeclareOperation( "PolarSpace", [IsForm] );
-DeclareOperation( "PolarMap", [IsClassicalPolarSpace] );
+DeclareOperation( "PolarMap", [IsClassicalPolarSpace] ); #only for internal use.
 
-DeclareOperation( "TangentSpace", [IsClassicalPolarSpace, IsSubspaceOfClassicalPolarSpace] );
+DeclareOperation( "TangentSpace", [IsSubspaceOfClassicalPolarSpace] );
+DeclareOperation( "TangentSpace", [IsClassicalPolarSpace, IsSubspaceOfProjectiveSpace] );
 DeclareOperation( "Pole", [IsClassicalPolarSpace, IsSubspaceOfProjectiveSpace] );
 
 #DeclareOperation( "Polarisation", [IsQuadraticForm] ); #We can use now AssociatedBilinearForm
@@ -104,7 +105,6 @@ DeclareOperation( "TypeOfSubspace", [ IsClassicalPolarSpace, IsSubspaceOfProject
 DeclareOperation( "CanonicalOrbitRepresentativeForSubspaces", [IsString, IsPosInt, IsField]);
 DeclareOperation( "RandomSubspace", [IsClassicalPolarSpace, IsPosInt]);
 DeclareOperation( "NumberOfTotallySingularSubspaces", [IsClassicalPolarSpace, IsPosInt]);
-
 
 DeclareOperation( "EllipticQuadric", [IsPosInt, IsField] );
 DeclareOperation( "EllipticQuadric", [IsPosInt, IsPosInt ]);

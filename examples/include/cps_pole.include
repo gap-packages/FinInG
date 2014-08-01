@@ -1,0 +1,14 @@
+gap&gt; conic := ParabolicQuadric(2,13);
+Q(2, 13)
+gap&gt; p := VectorSpaceToElement(PG(2,13),[1,0,0]*Z(13)^0);
+&lt;a point in ProjectiveSpace(2, 13)&gt;
+gap&gt; pole := Pole(conic,p);
+&lt;a line in ProjectiveSpace(2, 13)&gt;
+gap&gt; TypeOfSubspace(conic,pole);
+"hyperbolic"
+gap&gt; tangent_points := Filtered(Points(pole),x-&gt;x in conic);
+[ &lt;a point in ProjectiveSpace(2, 13)&gt;, &lt;a point in ProjectiveSpace(2, 13)&gt; ]
+gap&gt; tangent_lines_on_p := List(tangent_points,x-&gt;Span(x,p));
+[ &lt;a line in ProjectiveSpace(2, 13)&gt;, &lt;a line in ProjectiveSpace(2, 13)&gt; ]
+gap&gt; List(tangent_lines_on_p,x-&gt;Number(Points(x),y-&gt;y in conic));
+[ 1, 1 ]

@@ -59,7 +59,8 @@ classicalpolfiles := ["cps_polarspaceform", "cps_example", "cps_symplectic", "cp
 						"cps_element1", "cps_emptysubspace", "cps_projdimension_element", "cps_elements", 
 						"cps_ambientspaceelps", "cps_coordinates", "cps_incident", "cps_span", "cps_typesubspace", "cps_shadowofelement",
 						"cps_specialisometry", "cps_isometry", "cps_similarity", "cps_collineation", 
-						 "cps_enumerator", "cps_iterator", "cps_aslist", "cps_polarityofps" ];
+						 "cps_enumerator", "cps_iterator", "cps_aslist", "cps_polarityofps", "cps_iscollinear",
+						 "cps_tangentspace", "cps_pole" ];
 	   
 stab_orbsfiles := [ "stab_orbs_finingorbit1", "stab_orbs_finingorbit2", "stab_orbs_finingorbits1", "stab_orbs_example1", "stab_orbs_finingstabiliser", 
 					"stab_orbs_finingstabiliserorb", "stab_orbs_timing1", "stab_orbs_setwisegeneric", "stab_orbs_finingsetwisestabiliser", 

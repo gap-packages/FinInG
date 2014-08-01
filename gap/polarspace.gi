@@ -24,12 +24,8 @@
 #
 # Things To Do:
 #
-# - Documentation
-# - test
-# - make sure matrices are compressed.
-# - more work on the ViewObj/PrintObj/Display methods. done something, 1/10/11. maybe it is sufficient now.
-# - think about the IsClassicalGQ filter. At first sight, we can leave everything as
-#   is, since this will not affect correctness of the code.
+# - Documentation: is reasonable now.
+# - test: has been done rigourously
 # - important: find out when NiceMonomorphism is computed. This is e.g. the case if
 #   a random subspace is asked. OK for me, but it should be documented.
 # - to do: check if in constructors of standard polar spaces, the Wrap should be
@@ -2419,19 +2415,39 @@ InstallMethod( Size,
 #O IsCollinear( <ps>, <a>, <b> ) returns true if <a> and <b> are collinear in 
 # <ps>
 ##
-InstallMethod( IsCollinear, "for points of a polar space", 
-              [IsClassicalPolarSpace and IsClassicalPolarSpaceRep, IsElementOfIncidenceStructure, IsElementOfIncidenceStructure],
-  function( ps, a, b )
+#InstallMethod( IsCollinear, 
+#	"for points of a polar space", 
+#	[IsClassicalPolarSpace and IsClassicalPolarSpaceRep, 
+#		IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
+#	function( ps, a, b )
 #    local m;
 #    m := SesquilinearForm(ps)!.matrix;
 #    return Unwrap(a)*m*Unwrap(b)=Zero(ps!.basefield);
-
+#
    # JB: There was a bug here for Hermitian polar spaces
    # We may want to copy the code from \^ "for sesquilinear forms" to here
 
-    return IsZero( [Unwrap(a),Unwrap(b)]^SesquilinearForm(ps) );   
-  end);
+#    return IsZero( [Unwrap(a),Unwrap(b)]^SesquilinearForm(ps) );   
+#  end);
 
+# above method was wrong
+#############################################################################
+#O IsCollinear( <ps>, <a>, <b> ) returns true if <a> and <b> are collinear in 
+# <ps>
+##
+InstallMethod( IsCollinear, 
+	"for a polar space and two points of its ambient space", 
+	[IsClassicalPolarSpace and IsClassicalPolarSpaceRep, 
+		IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
+	function( ps, a, b )
+		if not a!.type=1 and b!.type=1 then
+			Error("<a> and <b> should be points");
+		elif not AmbientSpace(a) = AmbientSpace(ps) and AmbientSpace(b) = AmbientSpace(ps) then
+			Error("<a> and <b> should belong to the ambientspace of <ps>");
+		else
+			return (a in ps) and (b in ps) and IsZero( [Unwrap(a),Unwrap(b)]^SesquilinearForm(ps) );   
+		fi;
+	end );
 
 #############################################################################
 # Polarities and polar spaces. 
@@ -3039,6 +3055,11 @@ InstallMethod( DefiningListOfPolynomials,
 		return [EquationForPolarSpace(ps)];
 	end);
 
+#############################################################################
+# Elementary analytic geometry.
+#############################################################################
+
+
 #added 26/4/2014 jdb
 #############################################################################
 #A  NucleusOfParabolicQuadric( <ps> )
@@ -3056,3 +3077,77 @@ InstallMethod( NucleusOfParabolicQuadric,
 end);
 
 
+#added 01/08/2014 jdb
+#############################################################################
+#A  TangentSpace( <el> )
+# returns the tangent space at <el>, <el> must be a subspace of a polar space.
+## 
+InstallMethod( TangentSpace, 
+	"for a subspace of a polar space",
+	[ IsSubspaceOfClassicalPolarSpace ],
+	function( el )
+		local form, vec;
+		form := SesquilinearForm(el!.geo);
+		if not IsDegenerateForm(form) then
+			return el^PolarityOfProjectiveSpace(form);
+		else
+			vec := Unpack(el!.obj)*form!.matrix;
+			if el!.type = 1 then
+				return HyperplaneByDualCoordinates(AmbientSpace(el),vec);
+			else
+				return VectorSpaceToElement(AmbientSpace(el), NullspaceMat(TransposedMat(vec)));
+			fi;
+		fi;
+end);
+
+#added 01/08/2014 jdb
+#############################################################################
+#A  TangentSpace( <el> )
+# returns the tangent space at <el>, <el> must be a subspace of a polar space.
+## 
+InstallMethod( TangentSpace, 
+	"for a subspace of a polar space",
+	[ IsClassicalPolarSpace, IsSubspaceOfProjectiveSpace ],
+	function( ps, el )
+		local form, vec;
+		if not el in ps then
+			Error("<el> should lie in <ps>");
+		fi;
+		form := SesquilinearForm(ps);
+		if not IsDegenerateForm(form) then
+			return el^PolarityOfProjectiveSpace(form);
+		else
+			vec := Unpack(el!.obj)*form!.matrix;
+			if el!.type = 1 then
+				return HyperplaneByDualCoordinates(AmbientSpace(el),vec);
+			else
+				return VectorSpaceToElement(AmbientSpace(el), NullspaceMat(TransposedMat(vec)));
+			fi;
+		fi;
+end);
+
+#added 01/08/2014 jdb
+#############################################################################
+#A  Pole(<ps>, <el> )
+# returns the pole of <el> with respect to <ps>.
+## 
+InstallMethod( Pole, 
+	"for a subspace of a polar space",
+	[ IsClassicalPolarSpace, IsSubspaceOfProjectiveSpace ],
+	function( ps, el )
+		local form, vec;
+		if not el in AmbientSpace(ps) then
+			Error("<el> should lie in the ambient space of <ps>");
+		fi;
+		form := SesquilinearForm(ps);
+		if not IsDegenerateForm(form) then
+			return el^PolarityOfProjectiveSpace(form);
+		else
+			vec := Unpack(el!.obj)*form!.matrix;
+			if el!.type = 1 then
+				return HyperplaneByDualCoordinates(AmbientSpace(el),vec);
+			else
+				return VectorSpaceToElement(AmbientSpace(el), NullspaceMat(TransposedMat(vec)));
+			fi;
+		fi;
+end);

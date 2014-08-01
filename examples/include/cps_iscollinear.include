@@ -1,0 +1,38 @@
+gap&gt; ps := ParabolicQuadric(4,9);
+Q(4, 9)
+gap&gt; p := VectorSpaceToElement(PG(4,9),[0,1,0,0,0]*Z(9)^0);
+&lt;a point in ProjectiveSpace(4, 9)&gt;
+gap&gt; q := VectorSpaceToElement(PG(4,9),[0,0,1,0,0]*Z(9)^0);
+&lt;a point in ProjectiveSpace(4, 9)&gt;
+gap&gt; r := VectorSpaceToElement(PG(4,9),[0,0,0,1,0]*Z(9)^0);
+&lt;a point in ProjectiveSpace(4, 9)&gt;
+gap&gt; p in ps;
+true
+gap&gt; q in ps;
+true
+gap&gt; r in ps;
+true
+gap&gt; IsCollinear(ps,p,q);
+false
+gap&gt; IsCollinear(ps,p,r);
+true
+gap&gt; IsCollinear(ps,q,r);
+true
+gap&gt; ps := ParabolicQuadric(4,4);
+Q(4, 4)
+gap&gt; p := VectorSpaceToElement(PG(4,4),[1,0,0,0,0]*Z(2)^0);
+&lt;a point in ProjectiveSpace(4, 4)&gt;
+gap&gt; q := VectorSpaceToElement(PG(4,4),[0,1,0,0,0]*Z(2)^0);
+&lt;a point in ProjectiveSpace(4, 4)&gt;
+gap&gt; r := VectorSpaceToElement(PG(4,4),[0,0,0,1,0]*Z(2)^0);
+&lt;a point in ProjectiveSpace(4, 4)&gt;
+gap&gt; p in ps;
+false
+gap&gt; q in ps;
+true
+gap&gt; r in ps;
+true
+gap&gt; IsCollinear(ps,p,q);
+false
+gap&gt; IsCollinear(ps,q,r);
+true
