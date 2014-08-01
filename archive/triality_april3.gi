@@ -45,6 +45,117 @@ ZeroPointToOnePointsSpaceByTriality := function(el)
     return VectorSpaceToElement(pg,spacevec);
 end;
 
+OnePointToTwoPointsSpaceByTriality := function(el)
+# el is a point of T(q,q^3)
+    local y, hyps, n, z, pg, f, frob;
+    f := BaseField(el);
+    frob := FrobeniusAutomorphism(f);
+    if not Order(frob)=3 then
+        Error("No triality possible");
+    fi;
+    n := Zero(f);
+    z := Unpack(UnderlyingObject(el))^frob;
+    #z[8] := -z[4];
+    pg := AmbientSpace(el);
+    y := [];
+    y[1] := [n,-z[3],z[2],n,z[4],n,n,z[5]];
+    y[2] := [z[3],n,-z[1],n,n,z[4],n,z[6]];
+    y[3] := [-z[2],z[1],n,n,n,n,z[4],z[7]];
+    y[4] := [z[5],z[6],z[7],-z[4],n,n,n,n];
+    y[5] := [z[8],n,n,z[1],n,-z[7],z[6],n];
+    y[6] := [n,z[8],n,z[2],z[7],n,-z[5],n];
+    y[7] := [n,n,z[8],z[3],-z[6],z[5],n,n];
+    y[8] := [n,n,n,n,z[1],z[2],z[3],-z[8]];
+    y := Filtered(y,x->not IsZero(x));
+    hyps := List(y,x->HyperplaneByDualCoordinates(pg,x));
+    return Meet(hyps);
+end;
+
+OnePointToTwoPointsSpaceByTriality := function(el)
+# el is a point of T(q,q^3)
+    local y, spacevec, n, z, pg, f, frob;
+    f := BaseField(el);
+    frob := FrobeniusAutomorphism(f);
+    if not Order(frob)=3 then
+        Error("No triality possible");
+    fi;
+    n := Zero(f);
+    z := Unpack(UnderlyingObject(el))^frob;
+    pg := AmbientSpace(el);
+    y := [];
+    y[1] := [n,-z[3],z[2],n,z[4],n,n,z[5]];
+    y[2] := [z[3],n,-z[1],n,n,z[4],n,z[6]];
+    y[3] := [-z[2],z[1],n,n,n,n,z[4],z[7]];
+    y[4] := [z[5],z[6],z[7],-z[4],n,n,n,n];
+    y[5] := [z[8],n,n,z[1],n,-z[7],z[6],n];
+    y[6] := [n,z[8],n,z[2],z[7],n,-z[5],n];
+    y[7] := [n,n,z[8],z[3],-z[6],z[5],n,n];
+    y[8] := [n,n,n,n,z[1],z[2],z[3],-z[8]];
+    y := Filtered(y,x->not IsZero(x));
+	spacevec := NullspaceMat(TransposedMat(y));
+    return VectorSpaceToElement(pg,spacevec);
+end;
+
+
+
+g := CollineationOfProjectiveSpace(IdentityMat(8,GF(q^3)),frob,GF(q^3));
+
+p1 := pts[1];
+planes := List(pts,x->Meet(ZeroPointToOnePointsSpaceByTriality(x),OnePointToTwoPointsSpaceByTriality(x^g)));;
+
+List([1..Length(pts)],i->List(lines_pts[i],y->y in planes[i]));
+
+# now the function that gives the plane of Q+(7,q) containing the q+1 lines through a point.
+
+TwistedTrialityHexagonPointToPlaneByTwoTimesTriality := function(elvec,frob,f)
+# elvec represents a point of T(q,q^3)
+    local z, hyps, y, pg, spacevec1, spacevec2, n, vec;
+	n := Zero(f);
+    #y := Unpack(UnderlyingObject(el))^frob;
+    #y[8] := -y[4];
+    y := elvec^frob;
+	pg := PG(7,f);
+    z := [];
+    z[1] := [n,y[3],-y[2],y[5],y[8],n,n,n];
+    z[2] := [-y[3],n,y[1],y[6],n,y[8],n,n];
+    z[3] := [y[2],-y[1],n,y[7],n,n,y[8],n];
+    z[4] := [n,n,n,-y[4],y[1],y[2],y[3],n];
+    z[5] := [y[4],n,n,n,n,y[7],-y[6],y[1]];
+    z[6] := [n,y[4],n,n,-y[7],n,y[5],y[2]];
+    z[7] := [n,n,y[4],n,y[6],-y[5],n,y[3]];
+    z[8] := [y[5],y[6],y[7],n,n,n,n,-y[8]];
+    z := Filtered(z,x->not IsZero(x));
+	spacevec1 := NullspaceMat(TransposedMat(z));
+    z := y^frob;
+    y := [];
+    y[1] := [n,-z[3],z[2],n,z[4],n,n,z[5]];
+    y[2] := [z[3],n,-z[1],n,n,z[4],n,z[6]];
+    y[3] := [-z[2],z[1],n,n,n,n,z[4],z[7]];
+    y[4] := [z[5],z[6],z[7],-z[4],n,n,n,n];
+    y[5] := [z[8],n,n,z[1],n,-z[7],z[6],n];
+    y[6] := [n,z[8],n,z[2],z[7],n,-z[5],n];
+    y[7] := [n,n,z[8],z[3],-z[6],z[5],n,n];
+    y[8] := [n,n,n,n,z[1],z[2],z[3],-z[8]];
+    y := Filtered(y,x->not IsZero(x));
+	spacevec2 := NullspaceMat(TransposedMat(y));
+	vec :=  SumIntersectionMat(spacevec1, spacevec2)[2];
+	return VectorSpaceToElement(pg,vec);
+end;
+
+f := GF(8);
+frob := FrobeniusAutomorphism(f);
+planes := List(pts,x->TwistedTrialityHexagonPointToPlaneByTwoTimesTriality(Unpack(x!.obj),frob,f));;
+
+planes := List(pts,x->VectorSpaceToElement(PG(7,8),TwistedTrialityHexagonPointToPlaneByTwoTimesTriality(x!.obj,frob,f)));;
+
+List([1..Length(pts)],i->List(lines_pts[i],y->y in planes[i]));
+
+
+planespts := List(planes,x->List(Points(x)));;
+numbers := List(planespts,x->Length(Intersection(x,q6qpts)));;  
+numberssub := List(planespts,x->Length(Intersection(x,q6qsubpts)));;  
+
+
 SplitCayleyPointToPlane5 := function(el)
     local z, hyps, q, y, pg, planevec, basishyp, hyp, bs, invbasis, vec, w;
     q := Size(BaseField(el));
@@ -498,3 +609,12 @@ end;
 graph := Graph(group,Union(pts6,lines6),OnProjSubspaces,rel);;
 Diameter(graph);
 Girth(graph);
+
+
+######### twisted triality :-) ##########
+
+lines_pts := List(pts,x->Filtered(lines,y->x*y));;
+spans := List(lines_pts,x->Span(x));;
+frob := FrobeniusAutomorphism(GF(q^3));
+g := CollineationOfProjectiveSpace(IdentityMat(8,GF(q^3)),frob,GF(q^3));
+List(spans,x->Number(Points(x),y->y in ZeroPointToOnePointsSpaceByTriality(y)));

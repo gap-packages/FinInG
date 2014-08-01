@@ -87,7 +87,7 @@ InstallMethod( GeneralisedPolygonByBlocks,
     [ IsHomogeneousList ],
     function( blocks )
         local pts, gp, ty, i, graph, sz, adj, girth, shadpoint, shadline, s, t, dist, vn, 
-		listels;
+		listels, objs;
         pts := Union(blocks);
         s := Size(blocks[1]) - 1;
         if not ForAll(blocks, b -> Size(b) = s + 1 ) then
@@ -148,7 +148,7 @@ InstallMethod( GeneralisedPolygonByBlocks,
 		end;
 				
 		vn := VertexNames(graph);
-
+		
         shadpoint := function( pt )
             return List(Filtered(blocks,x->pt!.obj in x),y->Wrap(pt!.geo,2,y));
         end;
@@ -161,7 +161,15 @@ InstallMethod( GeneralisedPolygonByBlocks,
 		t := Length(Adjacency(graph,1)); # number of linbes on a point minus 1.
 
         dist := function( el1, el2 )
-            return Distance(graph,Position(vn,el1!.obj),Position(vn,el2!.obj));
+			if el1!.type=1 and el2!.type=1 then
+				return Distance(graph,Position(pts,el1!.obj),Position(pts,el2!.obj));
+			elif el1!.type=1 and el2!.type=2 then
+				return Distance(graph,Position(pts,el1!.obj),sz+Position(blocks,el2!.obj));
+			elif el1!.type=2 and el2!.type=1 then
+				return Distance(graph,sz+Position(blocks,el1!.obj),Position(pts,el2!.obj));
+			else 
+				return Distance(graph,sz+Position(blocks,el1!.obj),sz+Position(blocks,el2!.obj));
+			fi;
         end;
 
         gp := rec( pointsobj := pts, linesobj := blocks, incidence := i, listelements := listels, 
@@ -272,7 +280,8 @@ InstallMethod( GeneralisedPolygonByElements,
         return List(vn{Adjacency(graph,Position(vn,line!.obj))},x->Wrap(gp,1,x));
     end;
     
-    dist := function( el1, el2 )
+    vn := VertexNames(graph);
+	dist := function( el1, el2 )
         return Distance(graph,Position(vn,el1!.obj),Position(vn,el2!.obj));
     end;
     
@@ -287,7 +296,7 @@ InstallMethod( GeneralisedPolygonByElements,
 end );
 
 #############################################################################
-#O  GeneralisedPolygonByElements( <pts>, <lns>, <inc> )
+#O  GeneralisedPolygonByElements( <pts>, <lns>, <inc>, <group>, <act> )
 # <pts>: set of elements of some incidence structure, representing points of GP.
 # <lns>: set of elements of some incidence structure, representing points of GP.
 # <inc>: incidence function.
@@ -794,10 +803,8 @@ InstallMethod( Wrap,
 ##
 InstallGlobalFunction( SplitCayleyPointToPlane5,
     function(elvec, f)
-        #local z, hyps, q, y, spacevec, basishyp, hyp, bs, invbasis, vec, w, int;
         local z, hyps, q, y, spacevec, hyp, vec, w, int, n;
         q := Size(f);
-        #w := Unpack(UnderlyingObject(el));
         w := Unpack(elvec);
 		y := w{[1..3]};
         y{[5..7]} := w{[4..6]};
@@ -817,10 +824,6 @@ InstallGlobalFunction( SplitCayleyPointToPlane5,
         hyp := [0,0,0,1,0,0,0,1]*Z(q)^0;
         Add(z,[0,0,0,1,0,0,0,1]*Z(q)^0);
         spacevec := NullspaceMat(TransposedMat(z));
-        #basishyp := NullspaceMat(TransposedMat([hyp]));
-        #bs := BaseSteinitzVectors(Basis(GF(q)^8), basishyp);
-        #invbasis := Inverse(Concatenation(bs!.subspace, bs!.factorspace));
-        #vec := planevec*invbasis;
 		int := IdentityMat(8,f){[1..7]};
 		int[4][8] := -One(f); #could have been One(f) too or course since this is only used in even char...
 		vec := SumIntersectionMat(spacevec, int)[2];
@@ -834,10 +837,7 @@ InstallGlobalFunction( SplitCayleyPointToPlane5,
 ##
 InstallGlobalFunction( SplitCayleyPointToPlane,
 	function(elvec, f)
-		#local z, hyps, q, y, spacevec, basishyp, hyp, bs, invbasis, vec, int;
 		local z, hyps, y, spacevec, hyp, vec, int, n;
-		#q := Size(BaseField(el));
-		#y := Unpack(UnderlyingObject(el));
 		y := Unpack(elvec);
 		y[8] := -y[4];
 		z := [];
@@ -854,14 +854,48 @@ InstallGlobalFunction( SplitCayleyPointToPlane,
 		hyp := [0,0,0,1,0,0,0,1]*One(f);
 		Add(z,[0,0,0,1,0,0,0,1]*One(f));
 		spacevec := NullspaceMat(TransposedMat(z));
-		#basishyp := NullspaceMat(TransposedMat([hyp]));
-		#bs := BaseSteinitzVectors(Basis(f^8), basishyp);
-		#invbasis := Inverse(Concatenation(bs!.subspace, bs!.factorspace));
-		#vec := planevec*invbasis;
 		int := IdentityMat(8,f){[1..7]};
 		int[4][8] := -One(f);
 		vec := SumIntersectionMat(spacevec, int)[2];
 		return vec{[1..3]}{[1..7]};
+	end );
+
+#############################################################################
+#F  TwistedTrialityHexagonPointToPlaneByTwoTimesTriality( <elvec>, <frob>, <f> )
+# elvec represents a point of T(q^3,q). elvec^frob is a one point, elvec^frob^2
+# is a two point. This function computes a basis for the intersection of the
+# one and two point (which are actually generators of Q+(7,q)). There intersection
+# will be a plane containing the q+1 lines through elvec.
+##
+InstallGlobalFunction( TwistedTrialityHexagonPointToPlaneByTwoTimesTriality,
+	function(elvec,frob,f)
+		local z, hyps, y, pg, spacevec1, spacevec2, n;
+		n := Zero(f);
+		y := Unpack(elvec)^frob;
+		z := [];
+		z[1] := [n,y[3],-y[2],y[5],y[8],n,n,n];
+		z[2] := [-y[3],n,y[1],y[6],n,y[8],n,n];
+		z[3] := [y[2],-y[1],n,y[7],n,n,y[8],n];
+		z[4] := [n,n,n,-y[4],y[1],y[2],y[3],n];
+		z[5] := [y[4],n,n,n,n,y[7],-y[6],y[1]];
+		z[6] := [n,y[4],n,n,-y[7],n,y[5],y[2]];
+		z[7] := [n,n,y[4],n,y[6],-y[5],n,y[3]];
+		z[8] := [y[5],y[6],y[7],n,n,n,n,-y[8]];
+		z := Filtered(z,x->not IsZero(x));
+		spacevec1 := NullspaceMat(TransposedMat(z));
+		z := y^frob;
+		y := [];
+		y[1] := [n,-z[3],z[2],n,z[4],n,n,z[5]];
+		y[2] := [z[3],n,-z[1],n,n,z[4],n,z[6]];
+		y[3] := [-z[2],z[1],n,n,n,n,z[4],z[7]];
+		y[4] := [z[5],z[6],z[7],-z[4],n,n,n,n];
+		y[5] := [z[8],n,n,z[1],n,-z[7],z[6],n];
+		y[6] := [n,z[8],n,z[2],z[7],n,-z[5],n];
+		y[7] := [n,n,z[8],z[3],-z[6],z[5],n,n];
+		y[8] := [n,n,n,n,z[1],z[2],z[3],-z[8]];
+		y := Filtered(y,x->not IsZero(x));
+		spacevec2 := NullspaceMat(TransposedMat(y));
+		return SumIntersectionMat(spacevec1, spacevec2)[2];
 	end );
 
 # JB: A big change here. I've separated the CollineationGroup out to an
@@ -1179,19 +1213,90 @@ InstallMethod( G2fining,
   end );
 
 #############################################################################
+#O  3D4fining( <d>, <f> )
+##
+InstallMethod( 3D4fining,
+	"for a finite field",
+	[IsField and IsFinite],
+	function(f)
+		local q, pps, frob, sigma, m, mp, ml, nonzerof, nonzeroq, gens, g, newgens;
+		q := RootInt(Size(f), 3);
+		if not q^3 = Size(f) then
+			Error("Field order must be a cube of a prime power");
+		fi;
+		pps := Characteristic(f);
+		frob := FrobeniusAutomorphism(f);
+		sigma := frob^LogInt(q,pps); 
+		# The generators of 3D4(q) were taken from Hendrik 
+    	# Van Maldeghem's book: "Generalized Polygons".
+
+       m:=[[ 0, 0, 0, 0, 0, 1, 0, 0],
+           [ 0, 0, 0, 0, 0, 0, 1, 0],
+           [ 0, 0, 0, 0, 1, 0, 0, 0],
+           [ 0, 0, 0, 0, 0, 0, 0, 1],   
+           [ 0, 1, 0, 0, 0, 0, 0, 0],
+           [ 0, 0, 1, 0, 0, 0, 0, 0],
+           [ 1, 0, 0, 0, 0, 0, 0, 0],
+           [ 0, 0, 0, 1, 0, 0, 0, 0]]*One(f);  
+       ConvertToMatrixRep(m, f);
+       mp:=d->[[1,  0,  0,  0,  0,  d,  0,  0],  
+               [0,  1,  0,  0, -d,  0,  0,  0],  
+               [0,  0,  1,  0,  0,  0,  0,  0],  
+               [0,  0,  -d^sigma,  1,  0,  0,  0,  0],
+               [0,  0,  0,  0,  1,  0,  0,  0],  
+               [0,  0,  0,  0,  0,  1,  0,  0],  
+               [0,0,d^sigma*d^(sigma^2),-d^(sigma^2),0,0,1,d^sigma],
+               [0,0,d^(sigma^2),0,0,0,0,1]]*One(f);   
+       ml:=d->[[1, -d,  0,  0,  0,  0,  0,  0],  
+               [0,  1,  0,  0,  0,  0,  0,  0],  
+               [0,  0,  1,  0,  0,  0,  0,  0],  
+               [0,  0,  0,  1,  0,  0,  0,  0],  
+               [0,  0,  0,  0,  1,  0,  0,  0],  
+               [0,  0,  0,  0,  d,  1,  0,  0],  
+               [0,  0,  0,  0,  0,  0,  1,  0],
+               [0,  0,  0,  0,  0,  0,  0,  1]]*One(f);
+
+		nonzerof := AsList(f){[2..Size(f)]};
+		nonzeroq := AsList(GF(q)){[2..q]};
+		gens := Union([m], List(nonzerof, mp), List(nonzeroq, ml));
+		newgens := List(gens, x -> CollineationOfProjectiveSpace(x,f));
+		g := GroupWithGenerators(newgens);
+		SetName(g, Concatenation("3D_4(",String(Size(f)),")") );
+		return g;
+	end );
+
+#############################################################################
 #A  CollineationGroup( <hexagon> )
 # computes the collineation group of a (classical) generalised hexagon
 ##
 InstallMethod( CollineationGroup,
 	"for a generalised hexagon",
-	[ IsGeneralisedHexagon ],
+	[ IsGeneralisedHexagon and IsLieGeometry],
 	function( hexagon )
-		local group, coll, f, gens, newgens, change, d, q, rep, domain, orblen, hom, frob;
+		local group, coll, f, gens, newgens, change, d, q, rep, domain, orblen, hom, frob, t,
+		
+		pps, sigma, m, mp, ml, nonzerof, nonzeroq,  x;
 		f := hexagon!.basefield;
 		q := Size(f);
 		d := hexagon!.dimension;
 		if Size(Set(Order(hexagon))) > 1 then
-			Info(InfoFinInG, 1, "for Twisted Triality Hexagon");
+			f := hexagon!.basefield;
+       ## field must be GF(q^3);
+			coll := 3D4fining(f);
+			Info(InfoFinInG, 1, "Computing nice monomorphism...");
+       		t := RootInt(q, 3);
+			orblen := (t+1)*(t^8+t^4+1);
+			rep := RepresentativesOfElements(hexagon)[2];
+			domain := Orb(coll, rep, OnProjSubspaces, 
+                    rec(orbsizelimit := orblen, hashlen := 2*orblen, storenumbers := true));
+			Enumerate(domain);
+			Info(InfoFinInG, 1, "Found permutation domain...");
+			hom := OrbActionHomomorphism(coll, domain);   
+			SetIsBijective(hom, true);
+			SetNiceObject(coll, Image(hom) );
+			SetNiceMonomorphism(coll, hom );
+			SetCollineationAction(coll, OnProjSubspaces);
+			return coll;
 		else 
 			Info(InfoFinInG, 1, "for Split Cayley Hexagon");
 			group := G2fining(d,f);
@@ -1319,3 +1424,88 @@ InstallMethod( VectorSpaceToElement,
     fi;
 end );
 
+#############################################################################
+#O  TwistedTrialityHexagon( <q> )
+# shortcut to previous method.
+##
+InstallMethod( TwistedTrialityHexagon, 
+	"input is a prime power", 
+	[ IsPosInt ],
+	function( q )
+		return TwistedTrialityHexagon(GF(q));
+	end );
+
+
+# 24/3/2014. cmat changes. Same principle as SplitCayleyHexagon
+#############################################################################
+#O  TwistedTrialityHexagon( <f> )
+# returns the twisted triality hexagon over <f>
+##
+InstallMethod( TwistedTrialityHexagon, 
+	"input is a finite field", 
+    [ IsField and IsFinite ],
+	function( f )
+    local geo, ty, points, lines, repline, hvm, ps, orblen, hvmc, c, listels,
+          hvmform, form, q, pps, reppoint, reppointvect, replinevect, w, shadline;
+       ## Field must be GF(q^3);
+    q := RootInt(Size(f), 3);
+	if not q^3 = Size(f) then
+       Error("Field order must be a cube of a prime power");
+    fi;
+    pps := PrimePowersInt( Size(f) );
+
+       ## Hendrik's form
+    hvm := List([1..8], i -> [0,0,0,0,0,0,0,0]*One(f));
+    hvm{[1..4]}{[5..8]} := IdentityMat(4, f);
+    hvmform := QuadraticFormByMatrix(hvm, f);
+    ps := PolarSpace( hvmform );
+
+	## Hendrik's canonical point is <(1,0,0,0,0,0,0,0)>	
+    reppointvect := ([1,0,0,0,0,0,0,0] * One(f));
+    MultRowVector(reppointvect,Inverse( reppointvect[PositionNonZero(reppointvect)] ));
+	#ConvertToVectorRep(reppointvect, f); #useless now.
+
+	## Hendrik's canonical line is <(1,0,0,0,0,0,0,0), (0,0,0,0,0,0,1,0)>
+    replinevect := ([[1,0,0,0,0,0,0,0], [0,0,0,0,0,0,1,0]] * One(f));
+	#ConvertToMatrixRep(replinevect, f); #useless now.
+
+	listels := function(gp,j)
+		local coll,reps;
+		coll := CollineationGroup(gp);
+		reps := RepresentativesOfElements( gp );
+		return Enumerate(Orb(coll, reps[j], OnProjSubspaces));
+	end;
+
+	shadline := function( l )
+		return List(Points(ElementToElement(AmbientSpace(l),l)),x->Wrap(l!.geo,1,x!.obj));
+	end;
+	
+    geo := rec( pointsobj := [], linesobj := [], incidence:= \*, listelements := listels, shadowofline := shadline,
+		basefield := BaseField(ps), dimension := Dimension(ps), vectorspace := UnderlyingVectorSpace(ps), 
+		polarspace := ps );
+    ty := NewType( GeometriesFamily,
+             IsGeneralisedHexagon and IsGeneralisedPolygonRep and IsLieGeometry ); #change by jdb 7/12/11
+    Objectify( ty, geo );
+    SetAmbientSpace(geo, AmbientSpace(ps));
+    SetAmbientPolarSpace(geo,ps);
+
+	#now we are ready to pack the representatives of the elements, which are also elements of a polar space.
+	#recall that reppointvect and replinevect are triangulized.
+	#now come the cvec/cmat ing of reppointvect and repplinevect.
+   	
+	reppointvect := CVec(reppointvect,f);
+   	replinevect := NewMatrix(IsCMatRep,f,Length(reppointvect),replinevect);
+
+	w := rec(geo := geo, type := 1, obj := reppointvect);
+    reppoint := Objectify( NewType( SoPSFamily, IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep and
+							IsElementOfGeneralisedPolygon and IsSubspaceOfClassicalPolarSpace ), w );
+    w := rec(geo := geo, type := 2, obj := replinevect);
+    repline := Objectify( NewType( SoPSFamily, IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep and
+	 						IsElementOfGeneralisedPolygon and IsSubspaceOfClassicalPolarSpace ), w );
+
+    SetOrder(geo, [q^3, q]);
+    SetTypesOfElementsOfIncidenceStructure(geo, ["point","line"]);
+    SetRepresentativesOfElements(geo, [reppoint, repline]);
+    SetName(geo,Concatenation("Twisted Triality Hexagon of order ", String([q^3, q])));
+    return geo;
+  end );

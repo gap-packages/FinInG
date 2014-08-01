@@ -37,6 +37,27 @@ lns := Union(linesa,linesb);
 inc := \*;
 gp := GeneralisedPolygonByElements(pts,lns,inc,stab,\^);
 
+###### our best friend again #####
+q := 5;
+conic := Set(Points(ParabolicQuadric(2,q)));
+pg := PG(3,q);
+hyp :=  HyperplaneByDualCoordinates(pg,[1,0,0,0]*Z(q)^0);
+em := NaturalEmbeddingBySubspace(PG(2,q),pg,hyp);
+O := List(conic,x->x^em);
+group := CollineationGroup(pg);
+stab := FiningSetwiseStabiliser(group,O);
+points1 := Set(Filtered(Points(pg),x->not x in hyp));;
+tangents := List(conic,x->TangentSpace(x)^em);
+planes := List(tangents,x->Filtered(Planes(x),y->not y in hyp));
+points2 := Union(planes);
+points3 := [hyp];
+linesa := Union(List(O,x->Filtered(Lines(x),y->not y in hyp)));
+linesb := Set(O);
+pts := Union(points1,points2,points3);
+lns := Union(linesa,linesb);
+inc := \*;
+gp := GeneralisedPolygonByElements(pts,lns,inc,stab,\^);
+
 
 
 
