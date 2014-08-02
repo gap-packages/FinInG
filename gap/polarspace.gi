@@ -1026,51 +1026,6 @@ end );
 #############################################################################
 # methods for some attributes.
 #############################################################################
-
-#############################################################################
-#O  BaseField( <ps> )
-# returns the basefield of <ps>
-##
-InstallMethod( BaseField, "for a polar space", [IsClassicalPolarSpace],
-  ps -> ps!.basefield );
-
-# CHECKED 20/09/11 jdb
-#############################################################################
-#O  UnderlyingVectorSpace( <ps> )
-# returns the Underlying vectorspace of the polar space <ps>
-##
-InstallMethod( UnderlyingVectorSpace, 
-	"for a polar space",
-	[IsClassicalPolarSpace and IsClassicalPolarSpaceRep],
-	function(ps)
-		return ShallowCopy(ps!.vectorspace);
-	end);
-
-# CHECKED 20/09/11 jdb
-#############################################################################
-#A  ProjectiveDimension( <ps> )
-# returns the projective dimension of the polar space <ps>, i.e. the dimension
-# of the ambient projective space.
-##
-InstallMethod( ProjectiveDimension, 
-	"for a polar space",
-	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
-	function( ps )
-		return ps!.dimension;  
-	end );
-
-# CHECKED 20/09/11 jdb
-#############################################################################
-#A  Dimension( <ps> )
-# returns the projective dimension of the polar space <ps>, i.e. the dimension
-# of the ambient projective space.
-##
-InstallOtherMethod( Dimension, 
-	"for a polar space",
-	[ IsClassicalPolarSpace ],
-	function(ps)
-		return Dimension(AmbientSpace(ps));
-	end );
 	
 # CHECKED 25/09/11 jdb
 #############################################################################
@@ -1629,7 +1584,7 @@ InstallMethod( VectorSpaceToElement,
 	"for a polar space and a CMat",
 	[IsClassicalPolarSpace, IsCMatRep],
 	function( geom, v )
-	return VectorSpaceToElement(geom,Unpack(v));
+		return VectorSpaceToElement(geom,Unpack(v));
 	end );
 	
 # Added 20/3/14 jdb
@@ -1641,7 +1596,7 @@ InstallMethod( VectorSpaceToElement,
 	"for a polar space and a cvec",
 	[IsClassicalPolarSpace, IsCVecRep],
 	function( geom, v )
-	return VectorSpaceToElement(geom,Unpack(v));
+		return VectorSpaceToElement(geom,Unpack(v));
 	end );
 
 # CHECKED 21/09/11 jdb
@@ -1693,7 +1648,7 @@ InstallMethod( VectorSpaceToElement,
         ## check here that it is in the polar space. 
 		if HasQuadraticForm(geom) then
 			if not IsTotallySingularSubspace(QuadraticForm(geom),x) then
-			Error("<x> does not generate an element of <geom>");
+				Error("<x> does not generate an element of <geom>");
 			fi;
 		else
 			if not IsTotallyIsotropicSubspace(SesquilinearForm(geom),x) then

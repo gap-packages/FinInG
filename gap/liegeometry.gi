@@ -35,12 +35,58 @@ Print(", liegeometry\c");
 # General methods.
 #############################################################################
 
-# CHECKED 17/04/11 jdb
+# CHECKED 02/08/2014 (made general for Lie geometries) jdb
+#############################################################################
+#O  UnderlyingVectorSpace( <ps> )
+# returns the Underlying vectorspace of the projective space <ps>
+##
+InstallMethod( UnderlyingVectorSpace, 
+	"for a lie geometry",
+	[ IsLieGeometry],
+	function(ps)
+		return ShallowCopy(ps!.vectorspace);
+	end);
+
+# CHECKED 02/08/2014 (made general for Lie geometries) jdb
+#############################################################################
+#A  ProjectiveDimension( <ps> )
+# returns the projective dimension of <ps>
+##
+InstallMethod( ProjectiveDimension,
+	"for a lie space",
+	[ IsLieGeometry ],
+	geom -> geom!.dimension
+	);
+	
+# CHECKED 02/08/2014 (made general for Lie geometries) jdb
+#############################################################################
+#A  Dimension( <ps> )
+# returns the projective dimension of <ps>
+##
+InstallMethod( Dimension, 
+	"for a lie space",
+	[ IsLieGeometry ],
+	geom -> geom!.dimension
+	);
+
+# CHECKED 02/08/2014 (made general for Lie geometries) jdb
+#############################################################################
+#O  BaseField( <ps> )
+# returns the basefield of <ps>
+##
+InstallMethod( BaseField, 
+	"for a projective space", 
+	[ IsLieGeometry ],
+	geom -> geom!.basefield );
+
+# CHECKED 02/08/2014 jdb
 #############################################################################
 #O  Wrap( <geo>, <type>, <o> )
 # general method that just wraps the data (<o>) as an element of a Lie geometry.
 # does not do any checking. <geo> and <type> are obviously also arguments. 
-# Not for users, not documented.
+# Not for users, not documented. Note that currently, we have no geometries
+# that are in IsLieGeometry but not in a subcategory. So this method is never
+# used. 
 ##
 InstallMethod( Wrap, 
 	"for a Lie geometry and an object",
@@ -76,31 +122,6 @@ InstallMethod( AmbientSpace,
 	function(subspace)
 		return AmbientSpace(subspace!.geo);
 	end );
-
-#############################################################################
-# containment for Lie geometries:
-#############################################################################
-## overload "in" to mean inclusion.
-## in nice geometries like projective spaces and polar spaces, it makes sense
-## to install methods also for ElementsOfIncidenceStructure, IsEmptySubspace 
-## and maybe even the whole space.
-
-# CHECKED 17/04/11 jdb
-# this makes me unhappy now. \in is more general than IsIncident. 
-# commented out 20/09/2011. I must say that this method got installed twice now. 
-# what a shame of me... jdb. BTW: new method for \in decreases the unhappiness.
-#############################################################################
-#O  \in( <a>, <b> )
-# set theoretic containment for elements of a Lie geometry. 
-##
-#InstallMethod( \in, 
-#	"for two IsElementOfLieGeometry",
-#	[IsElementOfLieGeometry, IsElementOfLieGeometry],
-#	function( a, b )
-#		return IsIncident(b, a) and (a!.type <= b!.type); #made a little change here
-#	end );	#to let in correspond with set theoretic containment. jdb 8/2/9
-#			#During a nice afternoon in Vicenza back enabled. jdb and pc, 11/411
-
 
 #############################################################################
 # Viewing/Printing/Displaying methods.
@@ -187,40 +208,10 @@ InstallMethod( Solids, "for a Lie geometry",
 	end);
 
 #############################################################################
-# Generic methods for the emptysubspace of Lie geometries.
+# Generic method for the emptysubspace of Lie geometries.
 #############################################################################
 
-#InstallMethod( EmptySubspace, "for a projective space",
-# [IsProjectiveSpace],
-# function( pg )
-#   local  vs,x,w,ty;
-#	 vs:=UnderlyingVectorSpace(pg);
-#     x := ShallowCopy(Zero(vs));
-#	 w := rec( geo := pg, obj := x );
-#	 ty:= NewType( NewFamily("EmptySubspaceFamily"), IsEmptySubspace and IsEmptySubspaceRep );
-#    ObjectifyWithAttributes( w, ty, 
-#						AmbientSpace, pg,
-#						ProjectiveDimension, -1);
-#    return w;
-#end );
-
-#InstallMethod( EmptySubspace, "for a polar space",
-# [IsClassicalPolarSpace],
-# function( pg )
-#   local  vs,x,w,ty;
-#	 vs:=UnderlyingVectorSpace(pg);
-#     x := ShallowCopy(Zero(vs));
-#	 w := rec( geo := pg, obj := x );
-#	 ty:= NewType( NewFamily("EmptySubspaceFamily"), IsEmptySubspace and IsEmptySubspaceRep );
-#    ObjectifyWithAttributes( w, ty, 
-#						AmbientSpace, pg,
-#						ProjectiveDimension, -1);
-#    return w;
-#end );
-
-# CHECKED 7/09/2011 jdb
-# Changed 28/11/11 jdb+pc
-# Changed 18/03/14 jdb+ml
+# CHECKED 02/08/2014 jdb
 #############################################################################
 #O  EmptySubspace( <g> )
 # returns the empty subspace in the Lie geometry <g>

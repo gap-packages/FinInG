@@ -69,7 +69,6 @@ DeclareAttribute( "SpecialProjectivityGroup", IsProjectiveSpace );
 #DeclareAttribute( "ProjectiveDimension", IsSubspaceOfProjectiveSpace );
 #DeclareAttribute( "ProjectiveDimension", IsEmpty );
 
-DeclareAttribute( "Dimension", IsProjectiveSpace );
 DeclareAttribute( "Dimension", IsSubspaceOfProjectiveSpace );
 DeclareAttribute( "Dimension", IsEmpty );
 

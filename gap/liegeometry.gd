@@ -63,6 +63,8 @@ DeclareAttribute( "ProjectiveDimension", IsLieGeometry ); #next three: more gene
 DeclareAttribute( "ProjectiveDimension", IsElementOfLieGeometry );
 DeclareAttribute( "ProjectiveDimension", IsEmptySubspace );
 
+DeclareAttribute( "Dimension", IsLieGeometry );
+
 DeclareOperation( "VectorSpaceToElement", [IsLieGeometry, IsRowVector] );
 DeclareOperation( "VectorSpaceToElement", [IsLieGeometry, Is8BitVectorRep] );
 DeclareOperation( "VectorSpaceToElement", [IsLieGeometry, IsPlistRep] );

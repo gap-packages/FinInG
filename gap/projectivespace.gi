@@ -21,17 +21,14 @@
 #############################################################################
 
 ## To do
-#  - Use compressed matrices
-#  - Order functions in this file, and write more comments. (almost done, jdb).
-#  think about generic methods for dimension, projective dimension, basefield, underlying vector space
-#  for Lie geometries and their elements, to be placed in liegeometry.gi of course.
+#  - think about generic methods for dimension, projective dimension, basefield, underlying vector space
+#    for (Lie geometries and ((almost) done jdb) their elements, to be placed in liegeometry.gi of course.
 #  - Reconsider the function OnProjSubspaces. using this function for elements of a polar space e.g. and
 #    an ProjGrpElWithFrob, can cause to get back a subspace of a projective space which is not an element of 
 #    the polar space. No problem of course, but since Wrap is used (and that should be used for effeciency), 
 #    one can get up with an element of a projective space not belonging to the polar space, but which is displayed
 #    as being an element of the polar space. I kept it as is currently, but I would like to reconsider this when dealing
 #    with the polar space section. jdb 11/9/11
-#  - check wheter output of RepresentativesOfElements can be changed using the Flag stuff. 11/09/11 jdb.
 #  - make some tiny changes at Meet for lists, such that, when possible, the empty subspace is returned and not []. (this is a
 #    detail). 14/9/2011 jdb. (When a list with one element is given, it should return that element 26/05/12 ml)
 #  - think whether it makes sense that Span and Meet return [] when they receive []. (recall that [] used to represent the 
@@ -146,18 +143,6 @@ InstallMethod( Display, [ IsProjectiveSpace and IsProjectiveSpaceRep ],
 
 # CHECKED 6/09/11 jdb
 #############################################################################
-#O  UnderlyingVectorSpace( <ps> )
-# returns the Underlying vectorspace of the projective space <ps>
-##
-InstallMethod( UnderlyingVectorSpace, 
-	"for a projective space",
-	[IsProjectiveSpace and IsProjectiveSpaceRep],
-	function(ps)
-		return ShallowCopy(ps!.vectorspace);
-	end);
-
-# CHECKED 6/09/11 jdb
-#############################################################################
 #O  \=( <pg1>, <pg2> )
 ##
 InstallMethod( \=, 
@@ -169,28 +154,6 @@ InstallMethod( \=,
 
 # CHECKED 8/09/11 jdb
 #############################################################################
-#A  ProjectiveDimension( <ps> )
-# returns the projective dimension of <ps>
-##
-InstallMethod( ProjectiveDimension,
-	"for a projective space",
-	[ IsProjectiveSpace and IsProjectiveSpaceRep ],
-	ps -> ps!.dimension
-	);
-	
-# CHECKED 8/09/11 jdb
-#############################################################################
-#A  Dimension( <ps> )
-# returns the projective dimension of <ps>
-##
-InstallMethod( Dimension, 
-	"for a projective space",
-	[ IsProjectiveSpace and IsProjectiveSpaceRep ],
-	ps -> ps!.dimension
-	);
-
-# CHECKED 8/09/11 jdb
-#############################################################################
 #O  Rank( <ps> )
 # returns the projective dimension of <ps>
 ##
@@ -199,16 +162,6 @@ InstallMethod( Rank,
 	[ IsProjectiveSpace and IsProjectiveSpaceRep ],
 	ps -> ps!.dimension
 	);
-
-# CHECKED 8/09/11 jdb
-#############################################################################
-#O  BaseField( <ps> )
-# returns the basefield of <ps>
-##
-InstallMethod( BaseField, 
-	"for a projective space", 
-	[IsProjectiveSpace],
-	pg -> pg!.basefield );
 
 #############################################################################
 #O  BaseField( <sub> )
