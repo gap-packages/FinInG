@@ -107,27 +107,15 @@ DeclareCategory( "IsClassicalPolarSpace", IsLieGeometry );
 DeclareCategory( "IsProjectiveSpace", IsLieGeometry );
 DeclareCategory( "IsGeneralisedPolygon", IsIncidenceGeometry );
 
-# 26/9/08 the next six declarations come from gpolygon.gd. I've pasted them here
-# before discussing them, just to resolve the dependency of polarspace.gi from
-# gpolygon.gd. 
+# to resolve the dependency of projectivespace.gi and polarspace.gi from gpolygon.gd, the following particular
+# declarations are put here.
 DeclareCategory( "IsProjectivePlane", IsGeneralisedPolygon );
 DeclareCategory( "IsGeneralisedQuadrangle", IsGeneralisedPolygon );
 DeclareCategory( "IsGeneralisedHexagon", IsGeneralisedPolygon );
 DeclareCategory( "IsGeneralisedOctagon", IsGeneralisedPolygon );
 
-DeclareCategory( "IsElationGQ", IsGeneralisedQuadrangle );
-DeclareCategory( "IsElationGQByKantorFamily", IsElationGQ );
-#DeclareCategory( "IsClassicalGQ", IsElationGQ and IsClassicalPolarSpace ); #I don't see the 
-#point of this, a classical polar space that is a GQ, is a classical GQ. By over specifying 
-#it as a ElationGQ, it might cause trouble for methods that are specifycally meant for ElationGQs, which 
-# will have another representation than polar spaces. So I change it bravely :-) jdb. 28/9/2011.
-
 DeclareCategory( "IsClassicalGQ", IsGeneralisedQuadrangle and IsClassicalPolarSpace ); 
-
-
-# This is what we thought it could be, before realizing that these special GQs
-# where defined. To be discussed furthre. jdb.
-#DeclareCategory( "IsClassicalGeneralisedQuadrangle", IsClassicalPolarSpace and IsGeneralisedPolygon);
+DeclareCategory( "IsClassicalGeneralisedHexagon", IsGeneralisedHexagon and IsLieGeometry ); 
 
 #
 #############################################################################

@@ -26,6 +26,9 @@
 # for gpolygons.
 #############################################################################
 
+DeclareCategory( "IsElationGQ", IsGeneralisedQuadrangle );
+DeclareCategory( "IsElationGQByKantorFamily", IsElationGQ );
+
 # Important notice: in the next line, "points" and "lines" are the underlying objects (or a representative) 
 # of the real points and lines of the GP to be constructed.
 # "incidence" is a function that determines whether the wrapped elements with given underlying objects, are incident.

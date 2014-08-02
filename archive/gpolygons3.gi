@@ -62,8 +62,10 @@ Print(", gpolygons\c");
 #			applicable (but might also need separate methods).
 #		- If a GP is constructed using the "generic construction methods", there is always an underlying graph (to
 #			check whether the user really constructs a GP. Creating the graph can be time consuming, but there is
-#			the possibility to use a group. There is no NC version. The computed graph is stored as a mutable
-#			attribute.
+#			the possibility to use a group. There is no NC version, either you are a developper, and you want to make
+#			a particular GP (e.g. the hexagons) and then you know what you od and there is no need to check whether your
+#			developed GP is really a GP, or you are a user and must be protected against yourself. 
+#			The computed graph is stored as a mutable attribute.
 #		- For the particular GPs: of course we know that they are a GP, so on construction, we do not compute
 #			the underlying graph.
 #		- The classical GQs belong to IsGeneralisedPolygon but *not* to IsGeneralisedPolygonRep. For them there is
@@ -291,6 +293,7 @@ InstallMethod( GeneralisedPolygonByElements,
     Objectify( ty, gp );
 	SetOrder(gp, [s,t] );
     SetTypesOfElementsOfIncidenceStructure(gp, ["point","line"]);
+    SetRankAttr(gp, 2);
     Setter( IncidenceGraphOfGeneralisedPolygonAttr )( gp, graph );
     return gp;
 end );
@@ -377,6 +380,7 @@ InstallMethod( GeneralisedPolygonByElements,
     Objectify( ty, gp );
 	SetOrder(gp, [s,t] );
     SetTypesOfElementsOfIncidenceStructure(gp, ["point","line"]);
+    SetRankAttr(gp, 2);
     Setter( IncidenceGraphOfGeneralisedPolygonAttr )( gp, graph );
     return gp;
 end );
@@ -698,7 +702,7 @@ InstallMethod( Lines,
 	end );
 
 #############################################################################
-#O  Distance( <gp>, <el1>, <el2> )
+#O  DistanceBetweenElements( <gp>, <el1>, <el2> )
 # returns the distance in the incidence graph between two elements
 ## 
 InstallMethod( DistanceBetweenElements,
@@ -768,7 +772,7 @@ InstallMethod( IncidenceGraphOfGeneralisedPolygon,
 
 #############################################################################
 #
-#  Generalised Hexagons
+#  Classical Generalised Hexagons
 #  This section implements H(q) and T(q,q^3). In FinInG, these geometries 
 #  are nicely constructed inside polar spaces, but are also constructed
 #  formally as generalised polygons, which make typical operations available
@@ -787,7 +791,7 @@ InstallMethod( IncidenceGraphOfGeneralisedPolygon,
 ##
 InstallMethod( Wrap, 
 	"for a generalised polygon and an object",
-	[IsGeneralisedHexagon and IsLieGeometry, IsPosInt, IsObject],
+	[IsClassicalGeneralisedHexagon, IsPosInt, IsObject],
 	function( geo, type, o )
 		local w;
 		w := rec( geo := geo, type := type, obj := o );
@@ -799,13 +803,14 @@ InstallMethod( Wrap,
 #############################################################################
 #F  SplitCayleyPointToPlane5( <el> )
 # returns a list of vectors spanning the plane of W(5,q): ---, which is the
-# image of the point represented by <elvec> under the fixed triality
+# image of the point represented by <w> under the fixed triality
+#
 ##
 InstallGlobalFunction( SplitCayleyPointToPlane5,
-    function(elvec, f)
-        local z, hyps, q, y, spacevec, hyp, vec, w, int, n;
+    function(w, f)
+        local z, hyps, q, y, spacevec, hyp, vec, int, n;
         q := Size(f);
-        w := Unpack(elvec);
+        #w := Unpack(elvec);
 		y := w{[1..3]};
         y{[5..7]} := w{[4..6]};
         y[4] := (y[1]*y[5]+y[2]*y[6]+y[3]*y[7])^(q/2);
@@ -838,7 +843,7 @@ InstallGlobalFunction( SplitCayleyPointToPlane5,
 InstallGlobalFunction( SplitCayleyPointToPlane,
 	function(elvec, f)
 		local z, hyps, y, spacevec, hyp, vec, int, n;
-		y := Unpack(elvec);
+		y := ShallowCopy(elvec);
 		y[8] := -y[4];
 		z := [];
 		n := Zero(f);
@@ -858,6 +863,31 @@ InstallGlobalFunction( SplitCayleyPointToPlane,
 		int[4][8] := -One(f);
 		vec := SumIntersectionMat(spacevec, int)[2];
 		return vec{[1..3]}{[1..7]};
+	end );
+
+#############################################################################
+#F  ZeroPointToOnePointsSpaceByTriality( <elvec>, <frob>, <f> )
+# returns a list of vectors spanning the solid of Q+(7,q): ---, which is the
+# image of the point represented by <elvec> under the fixed triality
+##
+InstallGlobalFunction( ZeroPointToOnePointsSpaceByTriality,
+	function(elvec,frob,f)
+	# elvec represents a point of T(q,q^3)
+		local z, hyps, y, spacevec, n;
+		n := Zero(f);
+		y := elvec^frob;
+		z := [];
+		z[1] := [n,y[3],-y[2],y[5],y[8],n,n,n];
+		z[2] := [-y[3],n,y[1],y[6],n,y[8],n,n];
+		z[3] := [y[2],-y[1],n,y[7],n,n,y[8],n];
+		z[4] := [n,n,n,-y[4],y[1],y[2],y[3],n];
+		z[5] := [y[4],n,n,n,n,y[7],-y[6],y[1]];
+		z[6] := [n,y[4],n,n,-y[7],n,y[5],y[2]];
+		z[7] := [n,n,y[4],n,y[6],-y[5],n,y[3]];
+		z[8] := [y[5],y[6],y[7],n,n,n,n,-y[8]];
+		z := Filtered(z,x->not IsZero(x));
+		spacevec := NullspaceMat(TransposedMat(z));
+		return spacevec;
 	end );
 
 #############################################################################
@@ -936,7 +966,7 @@ InstallMethod( SplitCayleyHexagon,
         shadpoint := function( pt )
             local planevec, flag, plane, f;
             f := BaseField( pt );
-            planevec := SplitCayleyPointToPlane( pt!.obj, f );
+            planevec := SplitCayleyPointToPlane( Unpack(pt!.obj), f );
             plane := VectorSpaceToElement(PG(6,f),planevec);
             flag := FlagOfIncidenceStructure(PG(6,f),[pt,plane]);
             return List(ShadowOfFlag(PG(6,f),flag,2),x->Wrap(pt!.geo,2,Unwrap(x)));
@@ -959,7 +989,7 @@ InstallMethod( SplitCayleyHexagon,
         shadpoint := function( pt )
             local planevec, flag, plane, f;
             f := BaseField( pt );
-            planevec := SplitCayleyPointToPlane5( pt!.obj, f );
+            planevec := SplitCayleyPointToPlane5( Unpack(pt!.obj), f );
             plane := VectorSpaceToElement(PG(5,f),planevec);
             flag := FlagOfIncidenceStructure(PG(5,f),[pt,plane]);
             return List(ShadowOfFlag(PG(5,f),flag,2),x->Wrap(pt!.geo,2,Unwrap(x)));
@@ -984,13 +1014,13 @@ InstallMethod( SplitCayleyHexagon,
 	geo := rec( pointsobj := [], linesobj := [], incidence:= \*, listelements := listels, basefield := BaseField(ps), 
 		dimension := Dimension(ps), vectorspace := UnderlyingVectorSpace(ps), polarspace := ps, 
 		shadowofpoint := shadpoint, shadowofline := shadline);
-    ty := NewType( GeometriesFamily,
-             IsGeneralisedHexagon and IsGeneralisedPolygonRep and IsLieGeometry ); #change by jdb 7/12/11
+    ty := NewType( GeometriesFamily, IsClassicalGeneralisedHexagon and IsGeneralisedPolygonRep ); #change by jdb 7/12/11
     Objectify( ty, geo );
     SetAmbientSpace(geo, AmbientSpace(ps));
     SetAmbientPolarSpace(geo,ps);
     SetOrder(geo, [Size(f), Size(f)]);
     SetTypesOfElementsOfIncidenceStructure(geo, ["point","line"]);
+    SetRankAttr(geo, 2);
 
     #now we are ready to pack the representatives of the elements, which are also elements of a polar space.
     #recall that reppointvect and replinevect are triangulized.
@@ -1002,8 +1032,9 @@ InstallMethod( SplitCayleyHexagon,
     repline := Objectify( NewType( SoPSFamily, IsElementOfGeneralisedPolygon and IsElementOfIncidenceStructureRep 
 					            	and IsSubspaceOfClassicalPolarSpace ), w );
     SetRepresentativesOfElements(geo, [reppoint, repline]);
-    SetName(geo,Concatenation("Split Cayley Hexagon of order ", String(Size(f))));
-    return geo;
+    #SetName(geo,Concatenation("Split Cayley Hexagon of order ", String(Size(f))));
+	SetName(geo,Concatenation("H(",String(Size(f)),")"));
+	return geo;
   end );
 
 #############################################################################
@@ -1026,7 +1057,7 @@ InstallMethod( SplitCayleyHexagon,
 	"for a finite field", 
 	[ IsClassicalPolarSpace ],
 	function( ps )
-    local geo, ty, repline, reppointvect, reppoint, replinevect, f,
+    local geo, ty, repline, reppointvect, reppoint, replinevect, f, naampje, eq,
 	    hvm, hvmform, form, nonzerof, x, w, listels, shadpoint, shadline, change, c1, c2;
 		f := BaseField(ps);
 	if IsParabolicQuadric(ps) and Dimension(ps) = 6 then
@@ -1051,7 +1082,7 @@ InstallMethod( SplitCayleyHexagon,
         shadpoint := function( pt )
             local planevec, flag, plane, f;
             f := BaseField( pt );
-            planevec := SplitCayleyPointToPlane( pt!.obj * change^-1, f ) * change;
+            planevec := SplitCayleyPointToPlane( Unpack(pt!.obj) * change^-1, f ) * change;
             plane := VectorSpaceToElement(PG(6,f),planevec);
             flag := FlagOfIncidenceStructure(PG(6,f),[pt,plane]);
             return List(ShadowOfFlag(PG(6,f),flag,2),x->Wrap(pt!.geo,2,Unwrap(x)));
@@ -1082,7 +1113,7 @@ InstallMethod( SplitCayleyHexagon,
         shadpoint := function( pt )
             local planevec, flag, plane, f;
             f := BaseField( pt );
-            planevec := SplitCayleyPointToPlane5( pt!.obj * change^-1, f ) * change;
+            planevec := SplitCayleyPointToPlane5( Unpack(pt!.obj) * change^-1, f ) * change;
             plane := VectorSpaceToElement(PG(5,f),planevec);
             flag := FlagOfIncidenceStructure(PG(5,f),[pt,plane]);
             return List(ShadowOfFlag(PG(5,f),flag,2),x->Wrap(pt!.geo,2,Unwrap(x)));
@@ -1108,13 +1139,13 @@ InstallMethod( SplitCayleyHexagon,
 	geo := rec( pointsobj := [], linesobj := [], incidence:= \*, listelements := listels, basefield := BaseField(ps), 
 		dimension := Dimension(ps), vectorspace := UnderlyingVectorSpace(ps), polarspace := ps, 
 		shadowofpoint := shadpoint, shadowofline := shadline, basechange := change);
-    ty := NewType( GeometriesFamily,
-             IsGeneralisedHexagon and IsGeneralisedPolygonRep and IsLieGeometry ); #change by jdb 7/12/11
+    ty := NewType( GeometriesFamily, IsClassicalGeneralisedHexagon and IsGeneralisedPolygonRep ); #change by jdb 7/12/11
     Objectify( ty, geo );
     SetAmbientSpace(geo, AmbientSpace(ps));
     SetAmbientPolarSpace(geo,ps);
     SetOrder(geo, [Size(f), Size(f)]);
     SetTypesOfElementsOfIncidenceStructure(geo, ["point","line"]);
+    SetRankAttr(geo, 2);
 
     #now we are ready to pack the representatives of the elements, which are also elements of a polar space.
     #recall that reppointvect and replinevect are triangulized.
@@ -1126,8 +1157,19 @@ InstallMethod( SplitCayleyHexagon,
     repline := Objectify( NewType( SoPSFamily, IsElementOfGeneralisedPolygon and IsElementOfIncidenceStructureRep 
 					            	and IsSubspaceOfClassicalPolarSpace ), w );
     SetRepresentativesOfElements(geo, [reppoint, repline]);
-    SetName(geo,Concatenation("Split Cayley Hexagon of order ", String(Size(f))));
-    return geo;
+    #it looks a bit exagerated to do such an effort for the name, but polar spaces do have a Name attribute set...
+	if not IsCanonicalPolarSpace(ps) then
+		eq := Concatenation(": ",String(EquationForPolarSpace(ps)));
+	else
+		eq := "";
+	fi;
+	if ps!.dimension = 5 then
+		naampje := Concatenation("W(5, ",String(Size(f)),")");
+	else
+		naampje := Concatenation("Q(6, ",String(Size(f)),")");
+	fi;
+	SetName(geo,Concatenation("H(",String(Size(f)),")"," in ",naampje));
+	return geo;
   end );
 
 ##########
@@ -1143,7 +1185,7 @@ InstallMethod( SplitCayleyHexagon,
 ##
 InstallMethod( G2fining,
 	"for a dimension and a field",
-	[IsPosInt, IsField and IsFinite],
+	[ IsPosInt, IsField and IsFinite ],
 	function(d, f)
 	local m, mp, ml, g, gens, nonzerof, newgens;
 	if d=6 then
@@ -1217,7 +1259,7 @@ InstallMethod( G2fining,
 ##
 InstallMethod( 3D4fining,
 	"for a finite field",
-	[IsField and IsFinite],
+	[ IsField and IsFinite ],
 	function(f)
 		local q, pps, frob, sigma, m, mp, ml, nonzerof, nonzeroq, gens, g, newgens;
 		q := RootInt(Size(f), 3);
@@ -1271,7 +1313,7 @@ InstallMethod( 3D4fining,
 ##
 InstallMethod( CollineationGroup,
 	"for a generalised hexagon",
-	[ IsGeneralisedHexagon and IsLieGeometry],
+	[ IsClassicalGeneralisedHexagon],
 	function( hexagon )
 		local group, coll, f, gens, newgens, change, d, q, rep, domain, orblen, hom, frob, t,
 		
@@ -1341,90 +1383,6 @@ InstallMethod( CollineationGroup,
 	end );
 
 #############################################################################
-#O  VectorSpaceToElement( <geom>, <v> ) returns the element in <geom> determined
-# by the rowvector <v>. <geom> is a generalised hexagon, so an ambient polar space
-# ps is available. A point of geom is necessary a point of ps, but for T(q^3,q) we need
-# to check whether the point of Q+(7,q) is absolute.
-##
-InstallMethod( VectorSpaceToElement,
-    "for a generalised hexagon and a row vector",
-    [ IsLieGeometry and IsGeneralisedHexagon, IsRowVector ],
-    function(geom,vec)
-    local x,y, ps, el;
-    ps := AmbientPolarSpace(geom);
-    #first check wheter vec makes a point of ps
-    el := VectorSpaceToElement(ps,vec);
-    if IsEmptySubspace(el) then
-        return el;
-    fi;
-    if IsParabolicQuadric(ps) then
-        return Wrap(geom, 1, UnderlyingObject(el));
-    #elif IsHyperbolicQuadric(ps) then
-    #    if el in ZeroPointToOnePointsSpaceByTriality(el) then
-    #        return Wrap(geom, 1, UnderlyingObject(el));
-    #    else
-    #        Error(" <vec> represents a point of the ambient polar space not absolute with relation to its triality");
-    #    fi;
-    elif IsSymplecticSpace(ps) then
-        return Wrap(geom, 1, UnderlyingObject(el));
-    fi;
-end );
-
-#############################################################################
-#O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
-# by the rowvector <v>. <geom> is a generalised hexagong, so an ambient polar space
-# ps is available. A point of geom is necessary a point of ps, but for T(q^3,q) we need
-# to check whether the point of Q+(7,q) is absolute.
-##
-InstallMethod( VectorSpaceToElement,
-    "for a generalised hexagon and a row vector",
-    [ IsLieGeometry and IsGeneralisedHexagon, IsPlistRep ],
-    function(geom,vec)
-    local x,y, ps, el, p1, p2, pg, mat;
-    ps := AmbientPolarSpace(geom);
-    #first check wheter vec makes a point of ps
-    el := VectorSpaceToElement(ps,vec); #this might produce an error already. refine the message later.
-    if ProjectiveDimension(el) = 0 then
-        return VectorSpaceToElement(geom,UnderlyingObject(el));
-    elif ProjectiveDimension(el) <> 1 then
-        Error(" <mat> does not represent a point or line of <geom>");
-    fi;
-    if not ProjectiveDimension(el) = 1 then
-        Error("<vec> does not determine a line of <geom>");
-    fi;
-    if IsEmptySubspace(el) then
-        return el;
-    fi;
-    mat := UnderlyingObject(el);
-    pg := AmbientSpace(el);
-    p1 := VectorSpaceToElement(pg,mat[1]);
-    p2 := VectorSpaceToElement(pg,mat[2]);
-
-    if IsParabolicQuadric(ps) then
-        if p1 in Wrap(pg,3,SplitCayleyPointToPlane(p2)) then
-            return Wrap(geom, 2, UnderlyingObject(el));
-        else
-            Error("<vec> does not represent a line of <geom>");
-        fi;
-    #elif IsHyperbolicQuadric(ps) then
-    #    if p1 in ZeroPointToOnePointsSpaceByTriality(p1) and 
-    #            p2 in ZeroPointToOnePointsSpaceByTriality(p2) and
-    #            p1 in ZeroPointToOnePointsSpaceByTriality(p2)
-    #    then
-    #        return Wrap(geom, 2, UnderlyingObject(el));
-    #    else
-    #        Error("<mat> does not represent a line of <geom>");
-    #    fi;
-    elif IsSymplecticSpace(ps) then
-        if p1 in Wrap(pg,3,SplitCayleyPointToPlane5(p2)) then
-            return Wrap(geom, 2, UnderlyingObject(el));
-        else
-            Error("<vec> does not represent a line of <geom>");
-        fi;
-    fi;
-end );
-
-#############################################################################
 #O  TwistedTrialityHexagon( <q> )
 # shortcut to previous method.
 ##
@@ -1434,7 +1392,6 @@ InstallMethod( TwistedTrialityHexagon,
 	function( q )
 		return TwistedTrialityHexagon(GF(q));
 	end );
-
 
 # 24/3/2014. cmat changes. Same principle as SplitCayleyHexagon
 #############################################################################
@@ -1483,8 +1440,7 @@ InstallMethod( TwistedTrialityHexagon,
     geo := rec( pointsobj := [], linesobj := [], incidence:= \*, listelements := listels, shadowofline := shadline,
 		basefield := BaseField(ps), dimension := Dimension(ps), vectorspace := UnderlyingVectorSpace(ps), 
 		polarspace := ps );
-    ty := NewType( GeometriesFamily,
-             IsGeneralisedHexagon and IsGeneralisedPolygonRep and IsLieGeometry ); #change by jdb 7/12/11
+    ty := NewType( GeometriesFamily, IsClassicalGeneralisedHexagon and IsGeneralisedPolygonRep ); #change by jdb 7/12/11
     Objectify( ty, geo );
     SetAmbientSpace(geo, AmbientSpace(ps));
     SetAmbientPolarSpace(geo,ps);
@@ -1506,6 +1462,230 @@ InstallMethod( TwistedTrialityHexagon,
     SetOrder(geo, [q^3, q]);
     SetTypesOfElementsOfIncidenceStructure(geo, ["point","line"]);
     SetRepresentativesOfElements(geo, [reppoint, repline]);
-    SetName(geo,Concatenation("Twisted Triality Hexagon of order ", String([q^3, q])));
-    return geo;
+    #SetName(geo,Concatenation("Twisted Triality Hexagon of order ", String([q^3, q])));
+	SetName(geo,Concatenation("T(",String(q^3),", ",String(q),")"));
+   	return geo;
   end );
+
+# Added 02/08/2014 jdb
+#############################################################################
+#O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
+# by the vectorspace <v>. 
+##
+InstallMethod( VectorSpaceToElement, 
+	"for a polar space and a cvec",
+	[ IsClassicalGeneralisedHexagon, IsCVecRep],
+	function( geom, v )
+		return VectorSpaceToElement(geom,Unpack(v));
+	end );
+
+# Added 02/08/2014 jdb
+#############################################################################
+#O  VectorSpaceToElement( <geom>, <v> ) returns the element in <geom> determined
+# by the rowvector <v>. <geom> is a generalised hexagon, so an ambient polar space
+# ps is available. A point of geom is necessary a point of ps, but for T(q^3,q) we need
+# to check whether the point of Q+(7,q) is absolute. This method is base on VectorSpaceToElement
+# for polar spaces and a row vector.
+##
+InstallMethod( VectorSpaceToElement,
+    "for a generalised hexagon and a row vector",
+    [ IsClassicalGeneralisedHexagon, IsRowVector ],
+    function(geom,vec)
+		local x,y, ps, el, onespace, f, frob;
+		## dimension should be correct
+		if Length(vec) <> geom!.dimension + 1 then
+			Error("Dimensions are incompatible");
+		fi;
+		x := ShallowCopy(vec);
+		if IsZero(x) then
+			return EmptySubspace(geom);
+		fi;
+		MultRowVector(x,Inverse( x[PositionNonZero(x)] ));
+		y := NewMatrix(IsCMatRep,geom!.basefield,Length(x),[x]);
+		ps := AmbientPolarSpace(geom);
+		if geom!.dimension = 5 then
+			return Wrap(geom, 1, y);
+		elif geom!.dimension = 6 then
+			if not IsSingularVector(QuadraticForm(ps),x) then
+				Error("<v> does not generate an element of <geom>");
+			else
+				return Wrap(geom, 1, y);
+			fi;
+		else
+			if not IsSingularVector(QuadraticForm(ps),x) then
+				Error("<v> does not generate an element of <geom>");
+			fi;
+			el := VectorSpaceToElement(ps,y);
+			f := geom!.basefield;
+			frob := FrobeniusAutomorphism(f);
+			onespace := VectorSpaceToElement(AmbientSpace(ps), ZeroPointToOnePointsSpaceByTriality(x,frob,f));
+			if el in onespace then
+				return Wrap(geom,1,y);
+			else
+				Error("<v> generates an element of the ambient polar space but not of <geom>");
+			fi;
+		fi;
+end );
+
+# Added 02/08/2014 jdb
+#############################################################################
+#O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
+# by the rowvector <v>. Several checks are built in.
+##
+InstallMethod( VectorSpaceToElement, 
+	"for a polar space and an 8-bit vector",
+	[ IsClassicalGeneralisedHexagon, Is8BitVectorRep ],
+    function(geom,vec)
+		local x,y, ps, el, onespace, f, frob;
+		## dimension should be correct
+		if Length(vec) <> geom!.dimension + 1 then
+			Error("Dimensions are incompatible");
+		fi;
+		x := ShallowCopy(vec);
+		if IsZero(x) then
+			return EmptySubspace(geom);
+		fi;
+		MultRowVector(x,Inverse( x[PositionNonZero(x)] ));
+		y := NewMatrix(IsCMatRep,geom!.basefield,Length(x),[x]);
+		ps := AmbientPolarSpace(geom);
+		if geom!.dimension = 5 then
+			return Wrap(geom, 1, y);
+		elif geom!.dimension = 6 then
+			if not IsSingularVector(QuadraticForm(ps),x) then
+				Error("<v> does not generate an element of <geom>");
+			else
+				return Wrap(geom, 1, y);
+			fi;
+		else
+			if not IsSingularVector(QuadraticForm(ps),x) then
+				Error("<v> does not generate an element of <geom>");
+			fi;
+			el := VectorSpaceToElement(ps,y);
+			f := geom!.basefield;
+			frob := FrobeniusAutomorphism(f);
+			onespace := VectorSpaceToElement(AmbientSpace(ps), ZeroPointToOnePointsSpaceByTriality(x,frob,f));
+			if el in onespace then
+				return Wrap(geom,1,y);
+			else
+				Error("<v> generates an element of the ambient polar space but not of <geom>");
+			fi;
+		fi;
+end );
+
+# Added 02/08/2014 jdb
+#############################################################################
+#O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
+# by the vectorspace <v>. Code based on VectorSpaceToElement for polar spaces
+# and IsPlistRep.
+## 
+InstallMethod( VectorSpaceToElement, 
+	"for a polar space and a Plist",
+	[ IsClassicalGeneralisedHexagon, IsPlistRep],
+	function( geom, v )
+		local  x, n, i, y, ps, f, onespace1, onespace2, p1, p2, change, frob;
+		## when v is empty... 
+		if IsEmpty(v) then
+			Error("<v> does not represent any element");
+		fi;
+		x := MutableCopyMat(v);
+		TriangulizeMat(x);
+		## dimension should be correct
+		if Length(v[1]) <> geom!.dimension + 1 then
+			Error("Dimensions are incompatible");
+		fi;
+		## Remove zero rows. It is possible the the user
+		## has inputted a matrix which does not have full rank
+        n := Length(x);
+		i := 0;
+		while i < n and ForAll(x[n-i], IsZero) do
+			i := i+1; 
+		od;
+		if i = n then
+			return EmptySubspace(geom);
+		fi;
+		x := x{[1..n-i]};
+		ps := AmbientPolarSpace(geom);
+		y := NewMatrix(IsCMatRep,geom!.basefield,Length(x[1]),x);
+		f := geom!.basefield;
+		if IsBound(geom!.basechange) then
+			change := geom!.basechange;
+		else
+			change := IdentityMat(geom!.dimension+1,f);
+		fi;
+		if geom!.dimension = 5 then
+			if not IsTotallyIsotropicSubspace(SesquilinearForm(ps),x) then
+				Error("<x> does not generate an element of the ambient polar space of <geom>");
+			fi;
+			p1 := Wrap(AmbientSpace(ps),1,y[1]);
+			onespace1 := VectorSpaceToElement(AmbientSpace(ps),SplitCayleyPointToPlane5(x[2] * change^-1,f) * change);
+			if p1 in onespace1 then
+				return Wrap(geom,2,y);
+			else 
+				Error("<x> does not generate an element of <geom>");
+			fi;
+		elif geom!.dimension = 6 then
+			if not IsTotallySingularSubspace(QuadraticForm(ps),x) then
+				Error("<x> does not generate an element of the ambient polar space of <geom>");
+			fi;
+			p1 := Wrap(AmbientSpace(ps),1,y[1]);
+			onespace1 := VectorSpaceToElement(AmbientSpace(ps),SplitCayleyPointToPlane(x[2] * change^-1,f) * change);
+			if p1 in onespace1 then
+				return Wrap(geom,2,y);
+			else 
+				Error("<x> does not generate an element of <geom>");
+			fi;
+		else
+			frob := FrobeniusAutomorphism(f);
+			if not IsTotallySingularSubspace(QuadraticForm(ps),x) then
+				Error("<x> does not generate an element of the ambient polar space of <geom>");
+			fi;
+			p1 := Wrap(AmbientSpace(ps),1,y[1]);
+			onespace1 := VectorSpaceToElement(AmbientSpace(ps), 
+					ZeroPointToOnePointsSpaceByTriality(x[1] * change^-1,frob,f) * change);
+			p2 := Wrap(AmbientSpace(ps),1,y[2]);
+			onespace2 := VectorSpaceToElement(AmbientSpace(ps), 
+					ZeroPointToOnePointsSpaceByTriality(x[2] * change^-1,frob,f) * change);
+			if p1 in onespace1 and p2 in onespace2 and p2 in onespace1 then
+				return Wrap(geom,2,y);
+			else
+				Error("<x> does not generate an element of <geom>");
+			fi;
+		fi;
+	end );
+
+# Added 02/08/2014 jdb
+#############################################################################
+#O  VectorSpaceToElement( <geom>, <v> ) 
+# if mat is in IsGF2MatrixRep, then Unpack(mat) is in IsPlistRep.
+## 
+InstallMethod( VectorSpaceToElement, 
+	"for a polar space and a compressed GF(2)-matrix",
+	[ IsClassicalGeneralisedHexagon, IsGF2MatrixRep],
+	function(geom, mat)
+		return VectorSpaceToElement(geom,Unpack(mat));
+	end );
+	
+# Added 02/08/2014 jdb
+#############################################################################
+#O  VectorSpaceToElement( <geom>, <v> ) 
+# if mat is in Is8BitMatrixRep, then Unpack(mat) is in IsPlistRep.
+## 
+InstallMethod( VectorSpaceToElement, 
+	"for a polar space compressed basis of a vector subspace",
+	[ IsClassicalGeneralisedHexagon, Is8BitMatrixRep],
+	function(geom, mat)
+		return VectorSpaceToElement(geom,Unpack(mat));
+	end );
+
+# Added 02/08/2014 jdb
+#############################################################################
+#O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
+# by the vectorspace <v>. 
+##
+InstallMethod( VectorSpaceToElement, 
+	"for a polar space and a cmat",
+	[ IsClassicalGeneralisedHexagon, IsCMatRep],
+	function( geom, v )
+		return VectorSpaceToElement(geom,Unpack(v));
+	end );
+

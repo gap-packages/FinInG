@@ -20,6 +20,9 @@
 ##
 #############################################################################
 
+DeclareCategory( "IsElationGQ", IsGeneralisedQuadrangle );
+DeclareCategory( "IsElationGQByKantorFamily", IsElationGQ );
+
 # Important notice: in the next line, "points" and "lines" are the underlying objects (or a representative) 
 # of the real points and lines of the GP to be constructed.
 # "incidence" is a function that determines whether the wrapped elements with given underlying objects, are incident.
@@ -29,7 +32,7 @@ DeclareCategory( "IsElementOfGeneralisedPolygon", IsElementOfIncidenceGeometry )
 DeclareCategory( "IsElementsOfGeneralisedPolygon", IsElementsOfIncidenceGeometry );
 DeclareCategory( "IsAllElementsOfGeneralisedPolygon", IsAllElementsOfIncidenceGeometry );
 
-DeclareRepresentation( "IsElementsOfGeneralisedPolygonRep", IsElementsOfIncidenceStructureRep, [ "geometry", "type" ] );
+DeclareRepresentation( "IsElementsOfGeneralisedPolygonRep", IsElementsOfIncidenceStructureRep, [ "geometry", "type", "obj" ] );
 
 #DeclareCategory( "IsAllElementsOfProjectivePlane", IsAllElementsOfGeneralisedPolygon );
 #DeclareRepresentation( "IsAllElementsOfProjectivePlaneRep", IsAllElementsOfGeneralisedPolygonRep, [ "geometry", "type" ] );
@@ -41,9 +44,9 @@ DeclareRepresentation( "IsElementsOfGeneralisedPolygonRep", IsElementsOfIncidenc
 #DeclareCategory( "IsAllElementsOfGeneralisedHexagon", IsAllElementsOfGeneralisedPolygon );
 #DeclareRepresentation( "IsAllElementsOfGeneralisedHexagonRep", IsAllElementsOfGeneralisedPolygonRep, [ "geometry", "type" ] );
 
-#DeclareCategory( "IsElementOfKantorFamily", IsElementOfGeneralisedPolygon );
-#DeclareCategory( "IsAllElementsOfKantorFamily", IsAllElementsOfGeneralisedPolygon );
-#DeclareRepresentation( "IsElementOfKantorFamilyRep", IsElementOfKantorFamily, [ "geo", "type", "class", "obj" ]);
+DeclareCategory( "IsElementOfKantorFamily", IsElementOfGeneralisedPolygon );
+DeclareCategory( "IsAllElementsOfKantorFamily", IsAllElementsOfGeneralisedPolygon );
+DeclareRepresentation( "IsElementOfKantorFamilyRep", IsElementOfKantorFamily, [ "geo", "type", "class", "obj" ]);
 
 DeclareCategory( "IsShadowElementsOfGeneralisedPolygon", IsElementsOfIncidenceStructure );
 DeclareRepresentation( "IsShadowElementsOfGeneralisedPolygonRep", IsElementsOfIncidenceStructure, [ "geometry", "type", "element", "func" ]);
@@ -91,6 +94,7 @@ DeclareGlobalFunction( "OnKantorFamily" );
 
 DeclareGlobalFunction( "SplitCayleyPointToPlane" );
 DeclareGlobalFunction( "SplitCayleyPointToPlane5" );
+DeclareGlobalFunction( "ZeroPointToOnePointsSpaceByTriality" );
 DeclareGlobalFunction( "TwistedTrialityHexagonPointToPlaneByTwoTimesTriality" );
 
 DeclareOperation( "SplitCayleyHexagon", [IsField and IsFinite] );
