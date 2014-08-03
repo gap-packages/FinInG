@@ -1623,12 +1623,13 @@ InstallMethod( \in,
 # returns true if and only if <x> is incident with <y>. Relies on set theoretic
 # containment, which is implemented genericly for elements of Lie geometries.
 ##
-InstallMethod( IsIncident,  
-		[IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
-		# returns true if the subspace is contained in the projective space
-        function(x,y)
-                return x in y or y in x;
-        end );
+InstallMethod( IsIncident, 
+	"for two subspaces of the same projective space",
+	[IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
+	# returns true if the subspace is contained in the projective space
+    function(x,y)
+		return x in y or y in x;
+	end );
 
 #InstallMethod( IsIncident,  [IsProjectiveSpace,
 #        IsSubspaceOfProjectiveSpace],

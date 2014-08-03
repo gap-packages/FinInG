@@ -20,132 +20,49 @@
 ##
 #############################################################################
 
-DeclareCategory( "IsElationGQ", IsGeneralisedQuadrangle );
-DeclareCategory( "IsElationGQByKantorFamily", IsElationGQ );
 
-# Important notice: in the next line, "points" and "lines" are the underlying objects (or a representative) 
-# of the real points and lines of the GP to be constructed.
-# "incidence" is a function that determines whether the wrapped elements with given underlying objects, are incident.
+# see .gi file for comments on the representation.
 DeclareRepresentation( "IsGeneralisedPolygonRep", IsGeneralisedPolygon, [ "incidence", "pointsobj", "linesobj", "listelements", "shadpoint", "shadline", "distance" ]);
 
 DeclareCategory( "IsElementOfGeneralisedPolygon", IsElementOfIncidenceGeometry );
-DeclareCategory( "IsElementsOfGeneralisedPolygon", IsElementsOfIncidenceGeometry );
-DeclareCategory( "IsAllElementsOfGeneralisedPolygon", IsAllElementsOfIncidenceGeometry );
 
 DeclareRepresentation( "IsElementsOfGeneralisedPolygonRep", IsElementsOfIncidenceStructureRep, [ "geometry", "type", "obj" ] );
-
-#DeclareCategory( "IsAllElementsOfProjectivePlane", IsAllElementsOfGeneralisedPolygon );
-#DeclareRepresentation( "IsAllElementsOfProjectivePlaneRep", IsAllElementsOfGeneralisedPolygonRep, [ "geometry", "type" ] );
-
-#DeclareCategory( "IsAllElementsOfGeneralisedQuadrangle", IsAllElementsOfGeneralisedPolygon );
-#DeclareRepresentation( "IsAllElementsOfGeneralisedQuadrangleRep", IsAllElementsOfGeneralisedPolygonRep, [ "geometry", "type" ] );
-
-
-#DeclareCategory( "IsAllElementsOfGeneralisedHexagon", IsAllElementsOfGeneralisedPolygon );
-#DeclareRepresentation( "IsAllElementsOfGeneralisedHexagonRep", IsAllElementsOfGeneralisedPolygonRep, [ "geometry", "type" ] );
-
-DeclareCategory( "IsElementOfKantorFamily", IsElementOfGeneralisedPolygon );
-DeclareCategory( "IsAllElementsOfKantorFamily", IsAllElementsOfGeneralisedPolygon );
-DeclareRepresentation( "IsElementOfKantorFamilyRep", IsElementOfKantorFamily, [ "geo", "type", "class", "obj" ]);
+DeclareCategory( "IsElementsOfGeneralisedPolygon", IsElementsOfIncidenceGeometry );
+DeclareCategory( "IsAllElementsOfGeneralisedPolygon", IsAllElementsOfIncidenceGeometry );
 
 DeclareCategory( "IsShadowElementsOfGeneralisedPolygon", IsElementsOfIncidenceStructure );
 DeclareRepresentation( "IsShadowElementsOfGeneralisedPolygonRep", IsElementsOfIncidenceStructure, [ "geometry", "type", "element", "func" ]);
 
-### new stuff
+DeclareCategory( "IsElationGQ", IsGeneralisedQuadrangle );
+DeclareCategory( "IsElationGQByKantorFamily", IsElationGQ ); #needed?
 
-DeclareCategory( "IsqClanObj", IsComponentObjectRep and IsAttributeStoringRep );
-DeclareRepresentation( "IsqClanRep", IsqClanObj, [ "matrices", "basefield" ] ); 
-
-BindGlobal( "qClanFamily", NewFamily( "qClanFamily" ) );
-
+#############################################################################
+# Constructor operations:
+#############################################################################
 
 DeclareOperation( "GeneralisedPolygonByBlocks", [ IsHomogeneousList ] );
 DeclareOperation( "GeneralisedPolygonByIncidenceMatrix", [ IsMatrix ] );
 DeclareOperation( "GeneralisedPolygonByElements", [ IsSet, IsSet, IsFunction ] );
 DeclareOperation( "GeneralisedPolygonByElements", [ IsSet, IsSet, IsFunction, IsGroup, IsFunction ] );
 
+#############################################################################
+# Operations, Functions, Attributes 
+#############################################################################
+
 DeclareOperation( "DistanceBetweenElements", [IsElementOfGeneralisedPolygon, IsElementOfGeneralisedPolygon ] );
 
+DeclareAttribute( "CollineationAction", IsGroup);
+
 #############################################################################
-# Attributes:
+# Attributes
 #############################################################################
+
+# normal ones
 
 DeclareAttribute( "Order", IsGeneralisedPolygon);
-DeclareAttribute( "AmbientSpace", IsGeneralisedPolygon);
-DeclareAttribute( "CollineationAction", IsGroup);
-DeclareAttribute( "ElationGroup", IsElationGQ);
-DeclareAttribute( "BasePointOfEGQ", IsElationGQ);
 DeclareAttribute( "IncidenceMatrixOfGeneralisedPolygon", IsGeneralisedPolygon);
-DeclareAttribute( "IsLinearqClan", IsqClanObj );
 
-DeclareAttribute( "AmbientPolarSpace", IsGeneralisedHexagon);
-
-
-#############################################################################
-# Operations and functions 
-#############################################################################
-
-DeclareOperation("G2fining", [IsPosInt, IsField and IsFinite] );
-DeclareOperation("3D4fining", [IsField and IsFinite] );
-
-#DeclareOperation("Span",[IsElementOfGeneralisedPolygon, IsElementOfGeneralisedPolygon]);
-
-DeclareGlobalFunction( "OnKantorFamily" );
-
-DeclareGlobalFunction( "SplitCayleyPointToPlane" );
-DeclareGlobalFunction( "SplitCayleyPointToPlane5" );
-DeclareGlobalFunction( "ZeroPointToOnePointsSpaceByTriality" );
-DeclareGlobalFunction( "TwistedTrialityHexagonPointToPlaneByTwoTimesTriality" );
-
-DeclareOperation( "SplitCayleyHexagon", [IsField and IsFinite] );
-DeclareOperation( "SplitCayleyHexagon", [IsPosInt] );
-DeclareOperation( "SplitCayleyHexagon", [IsClassicalPolarSpace] );
-DeclareOperation( "TwistedTrialityHexagon", [IsField and IsFinite] );
-DeclareOperation( "TwistedTrialityHexagon", [IsPosInt] );
-
-## q-clans
-DeclareOperation( "IsAnisotropic", [IsFFECollColl,  IsField and IsFinite]);
-DeclareOperation( "IsqClan", [ IsFFECollCollColl, IsField and IsFinite ]);
-DeclareOperation( "qClan", [ IsFFECollCollColl, IsField ] );
-DeclareOperation( "LinearqClan", [ IsPosInt ] );
-DeclareOperation( "FisherThasWalkerKantorBettenqClan", [ IsPosInt ] );
-DeclareOperation( "KantorMonomialqClan", [ IsPosInt ] );
-DeclareOperation( "KantorKnuthqClan", [ IsPosInt ] );
-DeclareOperation( "FisherqClan", [ IsPosInt ] );
-
-## Elation Generalised Quadrangles
-
-DeclareOperation( "EGQByKantorFamily", [IsGroup, IsList, IsList] );
-DeclareOperation( "Wrap", [IsElationGQByKantorFamily, IsPosInt, IsPosInt, IsObject] );
-DeclareOperation( "IsKantorFamily", [IsGroup, IsList, IsList]);
-
-#---------------------
-## obselete operations
-# DeclareOperation( "EGQByqClan", [ IsFFECollCollColl, IsField and IsFinite ]);
-# DeclareOperation( "KantorFamilyByqClan", [ IsFFECollCollColl, IsField and IsFinite ]); 
-# DeclareOperation( "BLTSetByqClan", [ IsFFECollCollColl, IsField and IsFinite ]);
-#---------------------
-
-DeclareOperation( "EGQByBLTSet", [IsList, IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace] );
-DeclareOperation( "EGQByBLTSet", [IsList] );
-
-
-DeclareOperation( "FlockGQByqClan", [ IsqClanObj ] );
-DeclareOperation( "BLTSetByqClan", [ IsqClanObj and IsqClanRep ] );
-DeclareOperation( "KantorFamilyByqClan", [ IsqClanObj and IsqClanRep ] );
-DeclareOperation( "EGQByqClan", [ IsqClanObj and IsqClanRep ] );
-
-
-#############################################################################
-# Operations and functions for projective planes
-#############################################################################
-
-#DeclareOperation( "ProjectivePlaneByBlocks", [ IsHomogeneousList ] );
-#DeclareOperation( "ProjectivePlaneByIncidenceMatrix", [ IsMatrix ] );
-
-#############################################################################
-# Mutable attributes
-#############################################################################
+# mutable attributes
 
 if not IsBound( BlockDesign ) then 
    BlockDesign := function(arg) return 1; end;
@@ -159,3 +76,154 @@ IncidenceGraphOfGeneralisedPolygonAttr := NewAttribute( "IncidenceGraphOfGeneral
 
 DeclareOperation( "BlockDesignOfGeneralisedPolygon", [ IsGeneralisedPolygon ] );
 DeclareOperation( "IncidenceGraphOfGeneralisedPolygon", [ IsGeneralisedPolygon ]);
+
+#############################################################################
+# Classical Generalised Hexagons
+#############################################################################
+
+# helper functions for triality
+
+DeclareGlobalFunction( "SplitCayleyPointToPlane" );
+DeclareGlobalFunction( "SplitCayleyPointToPlane5" );
+DeclareGlobalFunction( "ZeroPointToOnePointsSpaceByTriality" );
+DeclareGlobalFunction( "TwistedTrialityHexagonPointToPlaneByTwoTimesTriality" );
+
+# constructor operations for the hexagons
+
+DeclareOperation( "SplitCayleyHexagon", [IsField and IsFinite] );
+DeclareOperation( "SplitCayleyHexagon", [IsPosInt] );
+DeclareOperation( "SplitCayleyHexagon", [IsClassicalPolarSpace] );
+DeclareOperation( "TwistedTrialityHexagon", [IsField and IsFinite] );
+DeclareOperation( "TwistedTrialityHexagon", [IsPosInt] );
+
+# attributes
+
+DeclareAttribute( "AmbientPolarSpace", IsGeneralisedHexagon);
+
+# groups
+
+DeclareOperation("G2fining", [IsPosInt, IsField and IsFinite] );
+DeclareOperation("3D4fining", [IsField and IsFinite] );
+
+
+#############################################################################
+# Elation Generalised Quadrangles
+#############################################################################
+
+# Kantor families
+
+DeclareOperation( "IsKantorFamily", [IsGroup, IsList, IsList]);
+
+DeclareCategory( "IsElementOfKantorFamily", IsElementOfGeneralisedPolygon );
+DeclareRepresentation( "IsElementOfKantorFamilyRep", IsElementOfKantorFamily, [ "geo", "type", "class", "obj" ]);
+
+DeclareGlobalFunction( "OnKantorFamily" );
+
+DeclareOperation( "EGQByKantorFamily", [IsGroup, IsList, IsList] );
+DeclareOperation( "Wrap", [IsElationGQByKantorFamily, IsPosInt, IsPosInt, IsObject] );
+
+# q-clans
+
+DeclareCategory( "IsqClanObj", IsComponentObjectRep and IsAttributeStoringRep );
+DeclareRepresentation( "IsqClanRep", IsqClanObj, [ "matrices", "basefield" ] ); 
+
+BindGlobal( "qClanFamily", NewFamily( "qClanFamily" ) );
+
+DeclareAttribute( "IsLinearqClan", IsqClanObj );
+
+#particular q-clans
+
+DeclareOperation( "IsAnisotropic", [IsFFECollColl,  IsField and IsFinite]);
+DeclareOperation( "IsqClan", [ IsFFECollCollColl, IsField and IsFinite ]);
+DeclareOperation( "qClan", [ IsFFECollCollColl, IsField ] );
+DeclareOperation( "LinearqClan", [ IsPosInt ] );
+DeclareOperation( "FisherThasWalkerKantorBettenqClan", [ IsPosInt ] );
+DeclareOperation( "KantorMonomialqClan", [ IsPosInt ] );
+DeclareOperation( "KantorKnuthqClan", [ IsPosInt ] );
+DeclareOperation( "FisherqClan", [ IsPosInt ] );
+
+# switching between q-clans, Kantor families and BLT sets
+
+DeclareOperation( "BLTSetByqClan", [ IsqClanObj and IsqClanRep ] );
+DeclareOperation( "KantorFamilyByqClan", [ IsqClanObj and IsqClanRep ] );
+DeclareOperation( "EGQByqClan", [ IsqClanObj and IsqClanRep ] );
+
+# constructor operations
+
+DeclareOperation( "EGQByBLTSet", [IsList, IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace] );
+DeclareOperation( "EGQByBLTSet", [IsList] );
+
+DeclareOperation( "FlockGQByqClan", [ IsqClanObj ] );
+
+DeclareAttribute( "ElationGroup", IsElationGQ);
+DeclareAttribute( "BasePointOfEGQ", IsElationGQ);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#DeclareCategory( "IsAllElementsOfProjectivePlane", IsAllElementsOfGeneralisedPolygon );
+#DeclareRepresentation( "IsAllElementsOfProjectivePlaneRep", IsAllElementsOfGeneralisedPolygonRep, [ "geometry", "type" ] );
+
+#DeclareCategory( "IsAllElementsOfGeneralisedQuadrangle", IsAllElementsOfGeneralisedPolygon );
+#DeclareRepresentation( "IsAllElementsOfGeneralisedQuadrangleRep", IsAllElementsOfGeneralisedPolygonRep, [ "geometry", "type" ] );
+
+
+#DeclareCategory( "IsAllElementsOfGeneralisedHexagon", IsAllElementsOfGeneralisedPolygon );
+#DeclareRepresentation( "IsAllElementsOfGeneralisedHexagonRep", IsAllElementsOfGeneralisedPolygonRep, [ "geometry", "type" ] );
+
+#DeclareCategory( "IsAllElementsOfKantorFamily", IsAllElementsOfGeneralisedPolygon );
+
+### new stuff
+
+
+
+
+
+#############################################################################
+# Attributes:
+#############################################################################
+
+#DeclareAttribute( "AmbientSpace", IsGeneralisedPolygon);
+
+
+
+#############################################################################
+# Operations and functions 
+#############################################################################
+
+
+#DeclareOperation("Span",[IsElementOfGeneralisedPolygon, IsElementOfGeneralisedPolygon]);
+
+
+
+
+## q-clans
+
+## Elation Generalised Quadrangles
+
+
+#---------------------
+## obselete operations
+# DeclareOperation( "EGQByqClan", [ IsFFECollCollColl, IsField and IsFinite ]);
+# DeclareOperation( "KantorFamilyByqClan", [ IsFFECollCollColl, IsField and IsFinite ]); 
+# DeclareOperation( "BLTSetByqClan", [ IsFFECollCollColl, IsField and IsFinite ]);
+#---------------------
+
+#############################################################################
+# Operations and functions for projective planes
+#############################################################################
+
+#DeclareOperation( "ProjectivePlaneByBlocks", [ IsHomogeneousList ] );
+#DeclareOperation( "ProjectivePlaneByIncidenceMatrix", [ IsMatrix ] );
+

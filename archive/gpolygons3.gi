@@ -36,18 +36,20 @@ Print(", gpolygons\c");
 # linesobj: a list containing the *underlying objects* for the lines of the GP
 #
 # incidence: a function, taking two *elements of the GP* as argument, returning true or false
+#			 we assume that the elements that are argument of this built in function, belong
+#			 to the same geometry. See generic method IsIncident.
 #
 # listelements: a function taking an integer as argument, returning 
 #	a list of all elements of the GP of the given type. This list will be turned into an iterator
 #	by the method installed for Iterator for elements of GPs.
 #
-# shadowofpoint: a function, taking a *point of a GP* and an integer as argument, returning a list
-#	of elements of given type incident with the given point.
+# shadowofpoint: a function, taking a *point of a GP* as argument, returning a list
+#	of lines incident with the given point.
 #
-# shadowofline: a function, taking a *line of a GP* and an integer as argument, returning a list
-#	of elements of given type incident with the given line. 
-#		The method for ShadowOfElement will pass the appropriate function to the method installed
-#		for Iterator for shadow objects.
+# shadowofline: a function, taking a *line of a GP* as argument, returning a list
+#	of points incident with the given line. 
+#		The method for ShadowOfElement should do the necessary checks and pass the appropriate 
+#		function to the method installed for Iterator for shadow objects.
 #
 # distance: a function taking two *elements of a GP* and returning their distance in the incidence graph.
 #
@@ -97,10 +99,10 @@ InstallMethod( GeneralisedPolygonByBlocks,
         fi;
         
         i := function( x, y )
-        if IsSet( x ) and not IsSet( y ) then
-            return y in x;
-        elif IsSet( y ) and not IsSet( x ) then
-            return x in y;
+        if IsSet( x!.obj ) and not IsSet( y!.obj ) then
+            return y!.obj in x!.obj;
+        elif IsSet( y!.obj ) and not IsSet( x!.obj ) then
+            return x!.obj in y!.obj;
         else
             return false;
         fi;
@@ -223,7 +225,7 @@ InstallMethod( GeneralisedPolygonByElements,
     [ IsSet, IsSet, IsFunction ],
     function( pts, lns, inc )
     local adj, act, graph, ty, girth, shadpoint, shadline, s, t, 
-	gp, vn, dist, listels;
+	gp, vn, dist, listels, wrapped_incidence;
 
     adj := function(x,y)
     if x in pts and y in pts then
@@ -266,6 +268,13 @@ InstallMethod( GeneralisedPolygonByElements,
 	s := Length(Adjacency(graph,Size(pts)+1))-1; # number of points on a line minus 1.
 	t := Length(Adjacency(graph,1))-1; # number of linbes on a point minus 1.
 
+	# inc takes in fact underlying objects as arguments. So we must make a new function that takes
+	# as arguments elements of this geometry and pipes the underlying objects to inc.
+
+	wrapped_incidence := function(x,y)
+		return inc(x!.obj,y!.obj);
+	end;
+	
     listels := function( geom, i )
 		if i = 1 then
 			return List(pts,x->Wrap(geom,i,x));
@@ -287,7 +296,7 @@ InstallMethod( GeneralisedPolygonByElements,
         return Distance(graph,Position(vn,el1!.obj),Position(vn,el2!.obj));
     end;
     
-    gp := rec( pointsobj := pts, linesobj := lns, incidence := inc, listelements := listels, 
+    gp := rec( pointsobj := pts, linesobj := lns, incidence := wrapped_incidence, listelements := listels, 
 				shadowofpoint := shadpoint, shadowofline := shadline, distance := dist );
 
     Objectify( ty, gp );
@@ -314,7 +323,7 @@ InstallMethod( GeneralisedPolygonByElements,
     [ IsSet, IsSet, IsFunction, IsGroup, IsFunction ],
     function( pts, lns, inc, group, act )
     local adj, graph, ty, girth, shadpoint, shadline, s, t, gp, vn, 
-	dist, listels;
+	dist, listels, wrapped_incidence;
 
     adj := function(x,y)
     if x in pts and y in pts then
@@ -353,6 +362,13 @@ InstallMethod( GeneralisedPolygonByElements,
 	t := Length(Adjacency(graph,1))-1; # number of linbes on a point minus 1.
     
     vn := VertexNames(graph);
+
+	# inc takes in fact underlying objects as arguments. So we must make a new function that takes
+	# as arguments elements of this geometry and pipes the underlying objects to inc.
+
+	wrapped_incidence := function(x,y)
+		return inc(x!.obj,y!.obj);
+	end;
 
     listels := function( geom, i )
 		if i = 1 then
@@ -584,16 +600,21 @@ InstallMethod(Iterator,
 	end );
 
 #############################################################################
-#O  IsIncident( <vs>  )
+#O  IsIncident( <x>, <y>  )
 # simply uses the incidence relation that is built in in the gp.
+# caveat: check here that elements belong to the same geometry! 
 ##
 InstallMethod( IsIncident, 
 	"for elements of a generalised polygon", 
     [IsElementOfGeneralisedPolygon, IsElementOfGeneralisedPolygon],
 	function( x, y )
 		local inc;
-		inc := x!.geo!.incidence;
-		return inc(x!.obj, y!.obj);
+		if not x!.geo = y!.geo then
+			Error("The elements <x> and <y> do not belong to the same geometry");
+		else
+			inc := x!.geo!.incidence;
+			return inc(x, y);
+		fi;
 	end );
 
 #############################################################################
@@ -763,6 +784,27 @@ InstallMethod( IncidenceGraphOfGeneralisedPolygon,
     Setter( IncidenceGraphOfGeneralisedPolygonAttr )( gp, graph );
     return graph;
   end );
+
+InstallMethod( CollineationGroup, "for a projective plane", 
+             [ IsProjectivePlane and IsGeneralisedPolygonRep ],
+  function( plane )
+    local graph, aut, act, stab, coll;
+    graph := IncidenceGraphOfGeneralisedPolygon( plane );
+    aut := AutomorphismGroup( graph );
+    stab := Stabilizer(aut, plane!.points, OnSets);
+    coll := Action(stab, plane!.points, OnPoints);
+    act := function( x, g )
+             if x!.type = 1 then
+                return Wrap(plane, 1, OnPoints(x!.obj, g));
+             elif x!.type = 2 then
+                return Wrap(plane, 2, OnSets(x!.obj, g));
+             fi;
+           end;
+    SetCollineationAction( coll, act );
+    return coll;   
+  end );
+
+
 
 #############################################################################
 #

@@ -1,5 +1,3 @@
-Print("godmiljaardedju\n");
-
 #############################################################################
 #
 #  Kantor Families and associated EGQ's
@@ -15,8 +13,10 @@ InstallMethod( ViewObj,
 	"for an element of a Kantor family",
 	[ IsElementOfKantorFamily ],
 	function( v )
-		if v!.type = 1 then Print("<a point of a Kantor family>");
-		else Print("<a line of a Kantor family>");
+		if v!.type = 1 then
+			Print("<a point of class ", v!.class," of a Kantor family>");
+		else 
+			Print("<a line of class ", v!.class," of a Kantor family>");
 		fi;
 	end );
 
@@ -24,6 +24,11 @@ InstallMethod( PrintObj,
 	"for an element of a Kantor family",
 	[ IsElementOfKantorFamily ],
 	function( v )
+		if v!.type = 1 then
+			Print("<a point of class ", v!.class," of a Kantor family>\n");
+		else
+			Print("<a line of class ", v!.class," of a Kantor family>\n");
+		fi;
 		Print(v!.obj);
 	end );
 
@@ -142,12 +147,13 @@ InstallGlobalFunction( OnKantorFamily,
 #############################################################################
 #O  EGQByKantorFamily(<g>, <f>, <fstar>)
 # for a group and two lists.
+# Note: for this model, the underlying objects are IsElementOfKantorFamily.
 ##
 InstallMethod( EGQByKantorFamily, 
 	"for a group, a list and a list",
 	[IsGroup, IsList, IsList],
 	function( g, f, fstar)
-    local pts1, pts2, pts3, ls1, ls2, inc, listels,
+    local pts1, pts2, pts3, ls1, ls2, inc, listels, shadpoint, shadline,
           x, y, geo, ty, points, lines, pointreps, linereps;
     ## Some checks first.
     ## We do not check if it's a Kantor family though (this can be rather slow)
@@ -212,14 +218,23 @@ InstallMethod( EGQByKantorFamily,
     
 	listels := function(gp,i)
 		if i = 1 then
-			return points;
+			return gp!.points; #saves memory :-)
 		else
-			return lines;
+			return gp!.lines;
 		fi;
 	end;
 	
-	geo!.listelements := listels;
+	shadpoint := function(pt)
+		return Filtered(lines,x->inc(pt,x));
+	end;
 	
+	shadline := function(line)
+		return Filtered(points,x->inc(line,x));
+	end;
+	
+	geo!.listelements := listels;
+	geo!.shadowofpoint := shadpoint;
+	geo!.shadowofline := shadline;
 	SetBasePointOfEGQ( geo, pts3[1] );
     SetAmbientSpace(geo, geo);
     SetOrder(geo, [Index(g,fstar[1]), Size(f)-1]);
@@ -232,53 +247,7 @@ InstallMethod( EGQByKantorFamily,
 	return geo;
   end );
 
-
-
-
-
-
-
-
-#############################################################################
-#O  Iterator( <vs>  )
-# returns an iterator for the elements of an EGQ defined by a Kantor family.
-##
-#InstallMethod(Iterator, 
-#	"for elements of an EGQ defined by a Kantor family",
-#	[IsAllElementsOfKantorFamily],
-
-##  We can do much better here.
-##  Perhaps we need to think about implementing enumerators/iterators
-##  for Kantor families. One day there might be enumerators for cosets?
-
-#  function( vs )
-#    local ps, j, vars;
-#    ps := vs!.geometry;
-#    j := vs!.type;
-#    if j = 1 then 
-#       vars := ps!.points;
-#       return IteratorList( vars );
-#    elif j = 2 then 
-#       vars := ps!.lines;
-#       return IteratorList( vars );
-#    else Error("Element type does not exist"); return;
-#    fi;
-#  end );
-
-#############################################################################
-#O  IsIncident( <vs>  )
-# simply uses the incidence relation that is built in in the gp.
-##
-#InstallMethod( IsIncident, 
-#	"for elements of a Kantor family",
-#    [IsElementOfKantorFamily, IsElementOfKantorFamily],
-#	function( x, y )
-#		local inc;
-#		inc := x!.geo!.incidence;
-#		return inc(x, y);
-#	end );
-
-
+#Iterator and IsIncident: replaced by generic methods now.
 
 #############################################################################
 #
@@ -615,6 +584,114 @@ InstallMethod( BLTSetByqClan,
     return List(blt, x -> VectorSpaceToElement(ps, x)); 
 end );
 
+
+
+#############################################################################
+#O  EGQByBLTSet( <blt>, <p>, <solid> )
+# not documented yet.
+##
+InstallMethod( EGQByBLTSet, 
+	"constructs an EGQ from a BLT-set of lines of W(3,q) via the Knarr construction",
+	[IsList, IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
+	function( blt, p, solid)
+	## The point p is a point of W(5,q).
+	## "solid" is a 3-space contained in P^perp
+	## blt is a BLT-set of lines of W(3,q)
+
+	local w3q, f, q, w5q, perp, pperp, res, x, pg5, gqpoints, gqpoints2,
+         projpoints, gqlines, gqlines2, em, blt2, pis, info,
+         geo, points, lines, ty, listels, inc, shadpoint, shadline;
+
+	w3q := blt[1]!.geo;
+	f := w3q!.basefield;
+	q := Size(f);
+	w5q := SymplecticSpace(5, f);
+	perp := PolarMap(w5q);
+	pperp := perp(p);
+   
+	## check everything is kosher
+	if not solid in pperp then
+		Error("Solid is not contained in perp of point");
+	fi;
+	if p in solid then
+		Error("Chosen point is contained in the chosen solid");
+	fi;
+
+	pg5 := AmbientSpace( w5q );
+	projpoints := ElementsOfIncidenceStructure(pg5, 1);
+   
+	Info(InfoFinInG, 1, "Computing points(1) of Knarr construction...");
+   
+	gqpoints := Filtered(projpoints, x -> not x in pperp);;
+	Add(gqpoints, p);
+
+	em := NaturalEmbeddingBySubspace(w3q, w5q, solid);
+	blt2 := List(blt,t->t^em);
+
+	Info(InfoFinInG, 1, "Computing lines(1) of Knarr construction...");
+  
+	pis := List(blt2, l -> Span(p, l));
+	gqlines := pis;
+	gqpoints2 := [];
+
+	Info(InfoFinInG, 1, "Computing points(2) of Knarr construction...");
+
+	for x in pis do
+		res := ShadowOfElement(pg5, x, 2);
+		res := Filtered(res, t -> not p in t);
+		Append(gqpoints2, res);
+	od;
+	gqpoints2 := Set(gqpoints2); 
+
+	Info(InfoFinInG, 1, "Computing lines(2) of Knarr construction... please wait");
+
+	gqlines2 := [];
+	#info := InfoLevel( InfoFinInG );
+	#SetInfoLevel(InfoFinInG, 0);
+
+	for x in gqpoints2 do
+		res := Planes(w5q, x);
+		res := Filtered(res, t -> not t in pperp);
+		Append(gqlines2, res); 
+	od;
+	#SetInfoLevel(InfoFinInG, info);
+ 
+	points := Concatenation(gqpoints, gqpoints2);
+	lines := Concatenation(gqlines, gqlines2);
+	
+	inc := function(x,y)
+		return IsIncident(x!.obj,y!.obj); #underlying objects are elements of a projective space
+	end;
+	
+	listels := function(gp,i)
+		if i = 1 then
+			return List(gp!.pointsobj,x->Wrap(gp,i,x)); #saves memory :-)
+		else
+			return List(gp!.linesobj,x->Wrap(gp,i,x));
+		fi;
+	end;
+
+	shadpoint := function(pt)
+		return List(Filtered(lines,x->IsIncident(pt!.obj,x)),y->Wrap(pt!.geo,2,y));
+	end;
+	
+	shadline := function(line)
+		return List(Filtered(points,x->IsIncident(line!.obj,x)),y->Wrap(line!.geo,1,y));
+	end;
+
+	geo := rec( pointsobj := points, linesobj := lines, incidence := inc, listelements := listels, 
+				shadowofpoint := shadpoint, shadowofline := shadline );
+	ty := NewType( GeometriesFamily, IsElationGQ and IsGeneralisedPolygonRep);
+	Objectify( ty, geo );
+
+	SetBasePointOfEGQ( geo, Wrap(geo, 1, p) );  
+	#SetAmbientSpace(geo, geo);
+	SetOrder(geo, [q^2, q]);
+	SetTypesOfElementsOfIncidenceStructure(geo, ["point","line"]);
+    SetName(geo,Concatenation("<EGQ of order ",String([q^2,q])," and basepoint in W(5, ",String(q)," ) >"));
+	return geo;
+end );
+
 #############################################################################
 #O  EGQByBLTSet( <blt> )
 ##
@@ -807,88 +884,3 @@ InstallMethod( FlockGQByqClan, [ IsqClanObj ],
   return geo;
 end );
 
-#############################################################################
-#O  EGQByBLTSet( <clan> )
-# not documented yet.
-##
-InstallMethod( EGQByBLTSet, 
-         "constructs an EGQ from a BLT-set of lines of W(3,q) via the Knarr construction",
-     [IsList, IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
-
-  function( blt, p, solid)
-   ## The point p is a point of W(5,q).
-   ## "solid" is a 3-space contained in P^perp
-   ## blt is a BLT-set of lines of W(3,q)
-
-   local w3q, f, q, w5q, perp, pperp, res, x, pg5, gqpoints, gqpoints2,
-         projpoints, gqlines, gqlines2, em, blt2, pis, info,
-         geo, points, lines, ty;
-
-   w3q := blt[1]!.geo;
-   f := w3q!.basefield;
-   q := Size(f);
-   w5q := SymplecticSpace(5, f);
-   perp := PolarMap(w5q);
-   pperp := perp(p);
-   
-   ## check everything is kosher
-   if not solid in pperp then
-      Error("Solid is not contained in perp of point");
-   fi;
-   if p in solid then
-      Error("Chosen point is contained in the chosen solid");
-   fi;
-
-   pg5 := AmbientSpace( w5q );
-   projpoints := ElementsOfIncidenceStructure(pg5, 1);
-   
-   Info(InfoFinInG, 1, "Computing points(1) of Knarr construction...");
-   
-   gqpoints := Filtered(projpoints, x -> not x in pperp);;
-   Add(gqpoints, p);
-
-   em := NaturalEmbeddingBySubspace(w3q, w5q, solid);
-   blt2 := List(blt,t->t^em);
-
-   Info(InfoFinInG, 1, "Computing lines(1) of Knarr construction...");
-  
-   pis := List(blt2, l -> Span(p, l));
-   gqlines := pis;
-   gqpoints2 := [];
-
-   Info(InfoFinInG, 1, "Computing points(2) of Knarr construction...");
-
-   for x in pis do
-       res := ShadowOfElement(pg5, x, 2);
-       res := Filtered(res, t -> not p in t);
-       Append(gqpoints2, res);
-   od;
-   gqpoints2 := Set(gqpoints2); 
-
-   Info(InfoFinInG, 1, "Computing lines(2) of Knarr construction... please wait");
-
-   gqlines2 := [];
-   info := InfoLevel( InfoFinInG );
-   SetInfoLevel(InfoFinInG, 0);
-
-   for x in gqpoints2 do
-       res := Planes(w5q, x);
-       res := Filtered(res, t -> not t in pperp);
-       Append(gqlines2, res); 
-   od;
-   SetInfoLevel(InfoFinInG, info);
- 
-   points := Concatenation(gqpoints, gqpoints2);
-   lines := Concatenation(gqlines, gqlines2);
-
-   geo := rec( points := points, lines := lines, 
-                incidence := IsIncident);
-   ty := NewType( GeometriesFamily, IsElationGQ and IsGeneralisedPolygonRep);
-   Objectify( ty, geo );
-
-   SetBasePointOfEGQ( geo, Wrap(geo, 1, p) );  
-   SetAmbientSpace(geo, geo);
-   SetOrder(geo, [q^2, q]);
-   SetTypesOfElementsOfIncidenceStructure(geo, ["point","line"]);
-   return geo;
- end );
