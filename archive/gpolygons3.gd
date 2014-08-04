@@ -95,6 +95,7 @@ DeclareOperation( "SplitCayleyHexagon", [IsPosInt] );
 DeclareOperation( "SplitCayleyHexagon", [IsClassicalPolarSpace] );
 DeclareOperation( "TwistedTrialityHexagon", [IsField and IsFinite] );
 DeclareOperation( "TwistedTrialityHexagon", [IsPosInt] );
+DeclareOperation( "TwistedTrialityHexagon", [IsClassicalPolarSpace] );
 
 # attributes
 

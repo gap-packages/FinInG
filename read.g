@@ -52,7 +52,8 @@ ReadPackage("fining","gap/varieties.gi");
 ReadPackage("fining","gap/affinespace.gi");
 ReadPackage("fining","gap/affinegroup.gi");
 
-ReadPackage("fining","gap/gpolygons.gi");
+ReadPackage("fining","gap/gpolygons3.gi");
+ReadPackage("fining","gap/gpolygons4.gi");
 
 ReadPackage("fining","gap/genss_patch.g");
 

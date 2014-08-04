@@ -740,8 +740,7 @@ InstallMethod( DistanceBetweenElements,
 
 #############################################################################
 #O  IncidenceGraphOfGeneralisedPolygon( <gp> )
-#
-##
+###
 InstallMethod( IncidenceGraphOfGeneralisedPolygon,
     "for a generalised polygon (in all possible representations",
     [ IsGeneralisedPolygon ],
@@ -785,26 +784,29 @@ InstallMethod( IncidenceGraphOfGeneralisedPolygon,
     return graph;
   end );
 
-InstallMethod( CollineationGroup, "for a projective plane", 
-             [ IsProjectivePlane and IsGeneralisedPolygonRep ],
-  function( plane )
-    local graph, aut, act, stab, coll;
-    graph := IncidenceGraphOfGeneralisedPolygon( plane );
-    aut := AutomorphismGroup( graph );
-    stab := Stabilizer(aut, plane!.points, OnSets);
-    coll := Action(stab, plane!.points, OnPoints);
-    act := function( x, g )
-             if x!.type = 1 then
-                return Wrap(plane, 1, OnPoints(x!.obj, g));
-             elif x!.type = 2 then
-                return Wrap(plane, 2, OnSets(x!.obj, g));
-             fi;
-           end;
-    SetCollineationAction( coll, act );
-    return coll;   
-  end );
-
-
+#############################################################################
+#O  CollineationGroup( <gp> )
+###
+InstallMethod( CollineationGroup, 
+    "for a generalised polygon",
+    [ IsGeneralisedPolygon and IsGeneralisedPolygonRep ],
+    function( gp )
+        local graph, aut, act, stab, coll, ptsn;
+        graph := IncidenceGraphOfGeneralisedPolygon( gp );
+        aut := AutomorphismGroup( graph );
+        ptsn := Set(gp!.pointsobj,x->Position(VertexNames(graph),x));
+        stab := Stabilizer(aut, ptsn, OnSets);
+        coll := Action(stab, ptsn, OnPoints);
+        #act := function( x, g )
+        #     if x!.type = 1 then
+        #        return Wrap(plane, 1, OnPoints(x!.obj, g));
+        #     elif x!.type = 2 then
+        #        return Wrap(plane, 2, OnSets(x!.obj, g));
+        #     fi;
+        #end;
+        #SetCollineationAction( coll, act );
+        return coll;
+    end );
 
 #############################################################################
 #
@@ -843,11 +845,14 @@ InstallMethod( Wrap,
   end );
 
 #############################################################################
+# The fixed, hard-coded triality :-)
+#############################################################################
+
+#############################################################################
 #F  SplitCayleyPointToPlane5( <el> )
 # returns a list of vectors spanning the plane of W(5,q): ---, which is the
 # image of the point represented by <w> under the fixed triality
-#
-##
+###
 InstallGlobalFunction( SplitCayleyPointToPlane5,
     function(w, f)
         local z, hyps, q, y, spacevec, hyp, vec, int, n;
@@ -943,7 +948,8 @@ InstallGlobalFunction( TwistedTrialityHexagonPointToPlaneByTwoTimesTriality,
 	function(elvec,frob,f)
 		local z, hyps, y, pg, spacevec1, spacevec2, n;
 		n := Zero(f);
-		y := Unpack(elvec)^frob;
+		#y := Unpack(elvec)^frob;
+		y := elvec^frob;
 		z := [];
 		z[1] := [n,y[3],-y[2],y[5],y[8],n,n,n];
 		z[2] := [-y[3],n,y[1],y[6],n,y[8],n,n];
@@ -969,6 +975,10 @@ InstallGlobalFunction( TwistedTrialityHexagonPointToPlaneByTwoTimesTriality,
 		spacevec2 := NullspaceMat(TransposedMat(y));
 		return SumIntersectionMat(spacevec1, spacevec2)[2];
 	end );
+
+#############################################################################
+# Constructor operations for the Classical Generalised Hexagons.
+#############################################################################
 
 # JB: A big change here. I've separated the CollineationGroup out to an
 # attribute, just like we do for polar spaces and the like. 19/06/2012
@@ -1096,7 +1106,7 @@ InstallMethod( SplitCayleyHexagon,
 # returns the split cayley hexagon over <f>
 ##
 InstallMethod( SplitCayleyHexagon, 
-	"for a finite field", 
+	"for a classical polar space", 
 	[ IsClassicalPolarSpace ],
 	function( ps )
     local geo, ty, repline, reppointvect, reppoint, replinevect, f, naampje, eq,
@@ -1160,6 +1170,8 @@ InstallMethod( SplitCayleyHexagon,
             flag := FlagOfIncidenceStructure(PG(5,f),[pt,plane]);
             return List(ShadowOfFlag(PG(5,f),flag,2),x->Wrap(pt!.geo,2,Unwrap(x)));
         end;
+    else
+        Error("No embedding of split Cayley hexagon possible in <ps>");
     fi;
 	#now comes the cmatrixification of the reppointvect and replinevect
 	reppointvect :=  NewMatrix(IsCMatRep,f,Length(reppointvect),[reppointvect])[1];
@@ -1206,17 +1218,227 @@ InstallMethod( SplitCayleyHexagon,
 		eq := "";
 	fi;
 	if ps!.dimension = 5 then
-		naampje := Concatenation("W(5, ",String(Size(f)),")");
+		naampje := Concatenation("W(5, ",String(Size(f)),")",eq);
 	else
-		naampje := Concatenation("Q(6, ",String(Size(f)),")");
+		naampje := Concatenation("Q(6, ",String(Size(f)),")",eq);
 	fi;
 	SetName(geo,Concatenation("H(",String(Size(f)),")"," in ",naampje));
 	return geo;
   end );
 
-##########
-# groups 
-##########
+# 24/3/2014. cmat changes. Same principle as SplitCayleyHexagon
+#############################################################################
+#O  TwistedTrialityHexagon( <f> )
+# returns the twisted triality hexagon over <f>
+##
+InstallMethod( TwistedTrialityHexagon, 
+	"input is a finite field", 
+    [ IsField and IsFinite ],
+	function( f )
+    local geo, ty, points, lines, repline, hvm, ps, orblen, hvmc, c, listels,
+          hvmform, form, q, pps, reppoint, reppointvect, replinevect, w, shadline, 
+          shadpoint;
+       ## Field must be GF(q^3);
+    q := RootInt(Size(f), 3);
+	if not q^3 = Size(f) then
+       Error("Field order must be a cube of a prime power");
+    fi;
+    pps := PrimePowersInt( Size(f) );
+
+       ## Hendrik's form
+    hvm := List([1..8], i -> [0,0,0,0,0,0,0,0]*One(f));
+    hvm{[1..4]}{[5..8]} := IdentityMat(4, f);
+    hvmform := QuadraticFormByMatrix(hvm, f);
+    ps := PolarSpace( hvmform );
+
+	## Hendrik's canonical point is <(1,0,0,0,0,0,0,0)>	
+    reppointvect := ([1,0,0,0,0,0,0,0] * One(f));
+    MultRowVector(reppointvect,Inverse( reppointvect[PositionNonZero(reppointvect)] ));
+	#ConvertToVectorRep(reppointvect, f); #useless now.
+
+	## Hendrik's canonical line is <(1,0,0,0,0,0,0,0), (0,0,0,0,0,0,1,0)>
+    replinevect := ([[1,0,0,0,0,0,0,0], [0,0,0,0,0,0,1,0]] * One(f));
+	#ConvertToMatrixRep(replinevect, f); #useless now.
+
+	listels := function(gp,j)
+		local coll,reps;
+		coll := CollineationGroup(gp);
+		reps := RepresentativesOfElements( gp );
+		return Enumerate(Orb(coll, reps[j], OnProjSubspaces));
+	end;
+
+	shadline := function( l )
+		return List(Points(ElementToElement(AmbientSpace(l),l)),x->Wrap(l!.geo,1,x!.obj));
+	end;
+
+    shadpoint := function( pt )
+        local planevec, flag, plane, f, frob;
+        f := BaseField( pt );
+        frob := FrobeniusAutomorphism(f);
+        planevec := TwistedTrialityHexagonPointToPlaneByTwoTimesTriality( Unpack(pt!.obj), frob, f );
+        plane := VectorSpaceToElement(PG(7,f),planevec);
+        flag := FlagOfIncidenceStructure(PG(7,f),[pt,plane]);
+        # we have q^3+1 lines and have to select q+1 from them. Following can probably done more efficient,
+        # but I need more mathematics then.
+        return List(Filtered(ShadowOfFlag(PG(7,f),flag,2),x->x in pt!.geo), y-> Wrap(pt!.geo,2,Unwrap(y)));
+    end;
+
+    geo := rec( pointsobj := [], linesobj := [], incidence:= \*, listelements := listels, shadowofpoint := shadpoint, 
+        shadowofline := shadline, basefield := BaseField(ps), dimension := Dimension(ps),
+        vectorspace := UnderlyingVectorSpace(ps), polarspace := ps );
+    ty := NewType( GeometriesFamily, IsClassicalGeneralisedHexagon and IsGeneralisedPolygonRep ); #change by jdb 7/12/11
+    Objectify( ty, geo );
+    SetAmbientSpace(geo, AmbientSpace(ps));
+    SetAmbientPolarSpace(geo,ps);
+
+	#now we are ready to pack the representatives of the elements, which are also elements of a polar space.
+	#recall that reppointvect and replinevect are triangulized.
+	#now come the cvec/cmat ing of reppointvect and repplinevect.
+   	
+	reppointvect := CVec(reppointvect,f);
+   	replinevect := NewMatrix(IsCMatRep,f,Length(reppointvect),replinevect);
+
+	w := rec(geo := geo, type := 1, obj := reppointvect);
+    reppoint := Objectify( NewType( SoPSFamily, IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep and
+							IsElementOfGeneralisedPolygon and IsSubspaceOfClassicalPolarSpace ), w );
+    w := rec(geo := geo, type := 2, obj := replinevect);
+    repline := Objectify( NewType( SoPSFamily, IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep and
+	 						IsElementOfGeneralisedPolygon and IsSubspaceOfClassicalPolarSpace ), w );
+
+    SetOrder(geo, [q^3, q]);
+    SetTypesOfElementsOfIncidenceStructure(geo, ["point","line"]);
+    SetRankAttr(geo, 2);
+    SetRepresentativesOfElements(geo, [reppoint, repline]);
+    #SetName(geo,Concatenation("Twisted Triality Hexagon of order ", String([q^3, q])));
+	SetName(geo,Concatenation("T(",String(q^3),", ",String(q),")"));
+   	return geo;
+  end );
+
+#############################################################################
+#O  TwistedTrialityHexagon( <q> )
+# shortcut to previous method.
+##
+InstallMethod( TwistedTrialityHexagon, 
+	"input is a prime power", 
+	[ IsPosInt ],
+	function( q )
+		return TwistedTrialityHexagon(GF(q));
+	end );
+
+# 24/3/2014. cmat changes. Same principle as SplitCayleyHexagon
+#############################################################################
+#O  TwistedTrialityHexagon( <ps> )
+# returns the twisted triality hexagon over <f>
+##
+InstallMethod( TwistedTrialityHexagon, 
+	"for a classical polar space",
+	[ IsClassicalPolarSpace ],
+	function( ps )
+    local geo, ty, points, lines, repline, hvm, orblen, hvmc, c, listels, eq, naampje,
+          hvmform, form, q, pps, reppoint, reppointvect, replinevect, w, shadline, f,
+          shadpoint, c1, c2, change;
+       ## Field must be GF(q^3);
+    if not (IsHyperbolicQuadric(ps) and ps!.dimension = 7) then
+        Error("No embedding of twisted triality hexagon possible in <ps>");
+    fi;
+    f := BaseField(ps);
+    q := RootInt(Size(f), 3);
+	if not q^3 = Size(f) then
+       Error("Field order must be a cube of a prime power");
+    fi;
+    pps := PrimePowersInt( Size(f) );
+
+       ## Hendrik's form
+    hvm := List([1..8], i -> [0,0,0,0,0,0,0,0]*One(f));
+    hvm{[1..4]}{[5..8]} := IdentityMat(4, f);
+    hvmform := QuadraticFormByMatrix(hvm, f);
+    hvm := PolarSpace(hvmform);
+	c1 := BaseChangeToCanonical(hvmform);
+	if not IsCanonicalPolarSpace(ps) then
+		c2 := BaseChangeToCanonical(QuadraticForm(ps));
+		change := c1^-1*c2;
+	else
+		change := c1^-1;
+	fi;
+
+	## Hendrik's canonical point is <(1,0,0,0,0,0,0,0)>	
+    reppointvect := ([1,0,0,0,0,0,0,0] * One(f)) * change;
+    MultRowVector(reppointvect,Inverse( reppointvect[PositionNonZero(reppointvect)] ));
+	#ConvertToVectorRep(reppointvect, f); #useless now.
+
+	## Hendrik's canonical line is <(1,0,0,0,0,0,0,0), (0,0,0,0,0,0,1,0)>
+    replinevect := ([[1,0,0,0,0,0,0,0], [0,0,0,0,0,0,1,0]] * One(f)) * change;
+	TriangulizeMat(replinevect);
+
+	#ConvertToMatrixRep(replinevect, f); #useless now.
+
+	listels := function(gp,j)
+		local coll,reps;
+		coll := CollineationGroup(gp);
+		reps := RepresentativesOfElements( gp );
+		return Enumerate(Orb(coll, reps[j], OnProjSubspaces));
+	end;
+
+	shadline := function( l )
+		return List(Points(ElementToElement(AmbientSpace(l),l)),x->Wrap(l!.geo,1,x!.obj));
+	end;
+
+    shadpoint := function( pt )
+        local planevec, flag, plane, f, frob;
+        f := BaseField( pt );
+        frob := FrobeniusAutomorphism(f);
+        planevec := TwistedTrialityHexagonPointToPlaneByTwoTimesTriality( Unpack(pt!.obj) * change^-1, frob, f ) * change;
+        plane := VectorSpaceToElement(PG(7,f),planevec);
+        flag := FlagOfIncidenceStructure(PG(7,f),[pt,plane]);
+        # we have q^3+1 lines and have to select q+1 from them. Following can probably done more efficient,
+        # but I need more mathematics then.
+        return List(Filtered(ShadowOfFlag(PG(7,f),flag,2),x->x in pt!.geo), y-> Wrap(pt!.geo,2,Unwrap(y)));
+    end;
+
+    geo := rec( pointsobj := [], linesobj := [], incidence:= \*, listelements := listels, shadowofpoint := shadpoint, 
+        shadowofline := shadline, basefield := BaseField(ps), dimension := Dimension(ps), basechange := change,
+        vectorspace := UnderlyingVectorSpace(ps), polarspace := ps );
+    ty := NewType( GeometriesFamily, IsClassicalGeneralisedHexagon and IsGeneralisedPolygonRep ); #change by jdb 7/12/11
+    Objectify( ty, geo );
+    SetAmbientSpace(geo, AmbientSpace(ps));
+    SetAmbientPolarSpace(geo,ps);
+
+	#now we are ready to pack the representatives of the elements, which are also elements of a polar space.
+	#recall that reppointvect and replinevect are triangulized.
+	#now come the cvec/cmat ing of reppointvect and repplinevect.
+   	
+	#reppointvect := CVec(reppointvect,f);
+	reppointvect :=  NewMatrix(IsCMatRep,f,Length(reppointvect),[reppointvect])[1];
+    replinevect := NewMatrix(IsCMatRep,f,Length(reppointvect),replinevect);
+
+	w := rec(geo := geo, type := 1, obj := reppointvect);
+    reppoint := Objectify( NewType( SoPSFamily, IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep and
+							IsElementOfGeneralisedPolygon and IsSubspaceOfClassicalPolarSpace ), w );
+    w := rec(geo := geo, type := 2, obj := replinevect);
+    repline := Objectify( NewType( SoPSFamily, IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep and
+	 						IsElementOfGeneralisedPolygon and IsSubspaceOfClassicalPolarSpace ), w );
+
+    SetOrder(geo, [q^3, q]);
+    SetTypesOfElementsOfIncidenceStructure(geo, ["point","line"]);
+    SetRepresentativesOfElements(geo, [reppoint, repline]);
+    SetRankAttr(geo, 2);
+    #SetName(geo,Concatenation("Twisted Triality Hexagon of order ", String([q^3, q])));
+	#SetName(geo,Concatenation("T(",String(q^3),", ",String(q),")"));
+   	if not IsCanonicalPolarSpace(ps) then
+		eq := Concatenation(": ",String(EquationForPolarSpace(ps)));
+	else
+		eq := "";
+	fi;
+	naampje := Concatenation("Q+(7, ",String(Size(f)),")",eq);
+	SetName(geo,Concatenation("T(",String(q^3),", ",String(q),")", " in ",naampje));
+    return geo;
+  end );
+
+##################################################################################
+# Groups: we follow the same approach as for polar spaces. There is an operation
+# that returns the groups as fining groups, which is used when needed by e.g.
+# CollineationGroup( <gh> )
+##################################################################################
 
 #############################################################################
 #O  G2fining( <d>, <f> )
@@ -1366,7 +1588,16 @@ InstallMethod( CollineationGroup,
 		if Size(Set(Order(hexagon))) > 1 then
 			f := hexagon!.basefield;
        ## field must be GF(q^3);
-			coll := 3D4fining(f);
+			group := 3D4fining(f);
+            if IsBound(hexagon!.basechange) then
+				change := hexagon!.basechange;
+				gens := List(GeneratorsOfGroup(group),x->Unpack(x!.mat));
+				newgens := List(gens,x->CollineationOfProjectiveSpace(change^-1 * x * change,f));
+            else
+				gens := GeneratorsOfGroup(group);
+				newgens := ShallowCopy(gens);
+            fi;
+			coll := GroupWithGenerators(newgens);
 			Info(InfoFinInG, 1, "Computing nice monomorphism...");
        		t := RootInt(q, 3);
 			orblen := (t+1)*(t^8+t^4+1);
@@ -1425,89 +1656,8 @@ InstallMethod( CollineationGroup,
 	end );
 
 #############################################################################
-#O  TwistedTrialityHexagon( <q> )
-# shortcut to previous method.
-##
-InstallMethod( TwistedTrialityHexagon, 
-	"input is a prime power", 
-	[ IsPosInt ],
-	function( q )
-		return TwistedTrialityHexagon(GF(q));
-	end );
-
-# 24/3/2014. cmat changes. Same principle as SplitCayleyHexagon
+# Dealing with elements: constructor operations and membership test.
 #############################################################################
-#O  TwistedTrialityHexagon( <f> )
-# returns the twisted triality hexagon over <f>
-##
-InstallMethod( TwistedTrialityHexagon, 
-	"input is a finite field", 
-    [ IsField and IsFinite ],
-	function( f )
-    local geo, ty, points, lines, repline, hvm, ps, orblen, hvmc, c, listels,
-          hvmform, form, q, pps, reppoint, reppointvect, replinevect, w, shadline;
-       ## Field must be GF(q^3);
-    q := RootInt(Size(f), 3);
-	if not q^3 = Size(f) then
-       Error("Field order must be a cube of a prime power");
-    fi;
-    pps := PrimePowersInt( Size(f) );
-
-       ## Hendrik's form
-    hvm := List([1..8], i -> [0,0,0,0,0,0,0,0]*One(f));
-    hvm{[1..4]}{[5..8]} := IdentityMat(4, f);
-    hvmform := QuadraticFormByMatrix(hvm, f);
-    ps := PolarSpace( hvmform );
-
-	## Hendrik's canonical point is <(1,0,0,0,0,0,0,0)>	
-    reppointvect := ([1,0,0,0,0,0,0,0] * One(f));
-    MultRowVector(reppointvect,Inverse( reppointvect[PositionNonZero(reppointvect)] ));
-	#ConvertToVectorRep(reppointvect, f); #useless now.
-
-	## Hendrik's canonical line is <(1,0,0,0,0,0,0,0), (0,0,0,0,0,0,1,0)>
-    replinevect := ([[1,0,0,0,0,0,0,0], [0,0,0,0,0,0,1,0]] * One(f));
-	#ConvertToMatrixRep(replinevect, f); #useless now.
-
-	listels := function(gp,j)
-		local coll,reps;
-		coll := CollineationGroup(gp);
-		reps := RepresentativesOfElements( gp );
-		return Enumerate(Orb(coll, reps[j], OnProjSubspaces));
-	end;
-
-	shadline := function( l )
-		return List(Points(ElementToElement(AmbientSpace(l),l)),x->Wrap(l!.geo,1,x!.obj));
-	end;
-	
-    geo := rec( pointsobj := [], linesobj := [], incidence:= \*, listelements := listels, shadowofline := shadline,
-		basefield := BaseField(ps), dimension := Dimension(ps), vectorspace := UnderlyingVectorSpace(ps), 
-		polarspace := ps );
-    ty := NewType( GeometriesFamily, IsClassicalGeneralisedHexagon and IsGeneralisedPolygonRep ); #change by jdb 7/12/11
-    Objectify( ty, geo );
-    SetAmbientSpace(geo, AmbientSpace(ps));
-    SetAmbientPolarSpace(geo,ps);
-
-	#now we are ready to pack the representatives of the elements, which are also elements of a polar space.
-	#recall that reppointvect and replinevect are triangulized.
-	#now come the cvec/cmat ing of reppointvect and repplinevect.
-   	
-	reppointvect := CVec(reppointvect,f);
-   	replinevect := NewMatrix(IsCMatRep,f,Length(reppointvect),replinevect);
-
-	w := rec(geo := geo, type := 1, obj := reppointvect);
-    reppoint := Objectify( NewType( SoPSFamily, IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep and
-							IsElementOfGeneralisedPolygon and IsSubspaceOfClassicalPolarSpace ), w );
-    w := rec(geo := geo, type := 2, obj := replinevect);
-    repline := Objectify( NewType( SoPSFamily, IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep and
-	 						IsElementOfGeneralisedPolygon and IsSubspaceOfClassicalPolarSpace ), w );
-
-    SetOrder(geo, [q^3, q]);
-    SetTypesOfElementsOfIncidenceStructure(geo, ["point","line"]);
-    SetRepresentativesOfElements(geo, [reppoint, repline]);
-    #SetName(geo,Concatenation("Twisted Triality Hexagon of order ", String([q^3, q])));
-	SetName(geo,Concatenation("T(",String(q^3),", ",String(q),")"));
-   	return geo;
-  end );
 
 # Added 02/08/2014 jdb
 #############################################################################
@@ -1646,6 +1796,9 @@ InstallMethod( VectorSpaceToElement,
 			return EmptySubspace(geom);
 		fi;
 		x := x{[1..n-i]};
+        if Length(x) = 1 then
+            return VectorSpaceToElement(geom, x[1]);
+        fi;
 		ps := AmbientPolarSpace(geom);
 		y := NewMatrix(IsCMatRep,geom!.basefield,Length(x[1]),x);
 		f := geom!.basefield;
@@ -1730,4 +1883,92 @@ InstallMethod( VectorSpaceToElement,
 	function( geom, v )
 		return VectorSpaceToElement(geom,Unpack(v));
 	end );
+
+#############################################################################
+#O  \in( <w>, <gp> ) true if the element <w> is contained in <gp>
+# We can base this method on VectorSpaceToElement, some checks can be avoided since we
+# start from an element already.
+InstallMethod( \in,
+	"for an element of an incidencestructure a classical generalised hexagon",
+	[ IsElementOfIncidenceStructure, IsClassicalGeneralisedHexagon ],
+	function( el, gp )
+        local vec, onespace, f, frob, p1, p2, onespace1, onespace2, change;
+        vec := Unpack(UnderlyingObject(el));
+        if not AmbientSpace(el) = AmbientSpace(gp) then
+            return false;
+        fi;
+        if el!.type = 1 then #dealing with a point
+            if gp!.dimension = 5 then
+                return true;
+            elif gp!.dimension = 6 then
+                if not IsSingularVector(QuadraticForm(AmbientPolarSpace(gp)),vec) then
+                    return false;
+                else
+                    return true;
+                fi;
+            else
+                if not IsSingularVector(QuadraticForm(AmbientPolarSpace(gp)),vec) then
+                    return false;
+                fi;
+                f := gp!.basefield;
+                frob := FrobeniusAutomorphism(f);
+                onespace := VectorSpaceToElement(AmbientSpace(gp), ZeroPointToOnePointsSpaceByTriality(vec,frob,f));
+                if el in onespace then
+                    return true;
+                else
+                    return false;
+                fi;
+            fi;
+        elif el!.type = 2 then #dealing with a line
+            f := gp!.basefield;
+            if IsBound(gp!.basechange) then
+                change := gp!.basechange;
+            else
+                change := IdentityMat(gp!.dimension+1,f);
+            fi;
+            if gp!.dimension = 5 then
+                if not IsTotallyIsotropicSubspace(SesquilinearForm(AmbientPolarSpace(gp)),vec) then
+                    return false;
+                fi;
+                p1 := VectorSpaceToElement(AmbientSpace(gp),vec[1]);
+                onespace1 := VectorSpaceToElement(AmbientSpace(gp),SplitCayleyPointToPlane5(vec[2] * change^-1,f) * change);
+                if el in onespace1 then
+                    return true;
+                else
+                    return false;
+                fi;
+            elif gp!.dimension = 6 then
+                if not IsTotallySingularSubspace(QuadraticForm(AmbientPolarSpace(gp)),vec) then
+                    return false;
+                fi;
+                p1 := VectorSpaceToElement(AmbientSpace(gp),vec[1]);
+                onespace1 := VectorSpaceToElement(AmbientSpace(gp),SplitCayleyPointToPlane(vec[2] * change^-1,f) * change);
+                if p1 in onespace1 then
+                    return true;
+                else
+                    return false;
+                fi;
+            else
+                frob := FrobeniusAutomorphism(f);
+                if not IsTotallySingularSubspace(QuadraticForm(AmbientPolarSpace(gp)),vec) then
+                    return false;
+                fi;
+                p1 := VectorSpaceToElement(AmbientSpace(gp),vec[1]);
+                onespace1 := VectorSpaceToElement(AmbientSpace(gp),
+					ZeroPointToOnePointsSpaceByTriality(vec[1] * change^-1,frob,f) * change);
+                p2 := VectorSpaceToElement(AmbientSpace(gp),vec[2]);
+                onespace2 := VectorSpaceToElement(AmbientSpace(gp),
+					ZeroPointToOnePointsSpaceByTriality(vec[2] * change^-1,frob,f) * change);
+                if p1 in onespace1 and p2 in onespace2 and p2 in onespace1 then
+                    return true;
+                else
+                    return false;
+                fi;
+            fi;
+        else
+            return false;
+        fi;
+    end );
+
+        
 
