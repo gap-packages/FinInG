@@ -61,70 +61,103 @@ gp := GeneralisedPolygonByElements(pts,lns,inc,stab,\^);
 
 
 
-########## old stuff
-
-InstallMethod( GeneralisedPolygonByElements2,
-    "for two sets (points and lines), and an incidence function",
-    [ IsSet, IsSet, IsFunction, IsGroup, IsFunction ],
-    function( pts, lns, inc, group, act )
-    local adj, graph, ty, girth, shadpoint, shadline, s, t, gp, permaction, sp, sl;
-
-    sp := Size(pts);
-    sl := Size(lns);
-    adj := function(x,y)
-    if x in [1..sp] and y in [1..sp] then
-        return false;
-    elif x in [sp+1..sl+sp] and y in [sp+1..sl+sp] then
-        return false;
-    elif x in [1..sp] then
-        return inc(pts[x],lns[y-sp]);
-    elif y in [1..sp] then
-        return inc(lns[x-sp],pts[y]);
-    fi;
-    end;
-
-    permaction := Action(group,Union(pts,lns),act);
-
-    graph := Graph(permaction, [1..sp+sl], OnPoints, adj, true );
-    girth := Girth(graph);
-
-    if IsBipartite(graph) then
-        if not girth = 2*Diameter(graph) then
-            Error("<blocks> are not defining a generalised polygon");
+InstallMethod( GeneralisedPolygonByBlocks,
+    "for a homogeneous list",
+    [ IsHomogeneousList ],
+    function( blocks )
+        local pts, gp, ty, i, graph, sz, adj, girth, shadpoint, shadline, s, t, dist, vn, 
+		listels, objs;
+        pts := Union(blocks);
+        s := Size(blocks[1]) - 1;
+        if not ForAll(blocks, b -> Size(b) = s + 1 ) then
+            Error("Not every block has size ", s + 1);
         fi;
-    else
-        Error("elements are not defining a generalised polygon");
-    fi;
         
-    if girth = 6 then
-        ty := NewType( GeometriesFamily, IsProjectivePlane and IsGeneralisedPolygonRep );
-    elif girth = 8 then
-        ty := NewType( GeometriesFamily, IsGeneralisedQuadrangle and IsGeneralisedPolygonRep );
-    elif girth = 12 then
-        ty := NewType( GeometriesFamily, IsGeneralisedHexagon and IsGeneralisedPolygonRep );
-    elif girth = 16 then
-        ty := NewType( GeometriesFamily, IsGeneralisedOctagon and IsGeneralisedPolygonRep );
-    else
-        Error("<points>, <lines> and <inc> do not define a thick finite generalised polygon");
-    fi;
+        i := function( x, y )
+        if IsSet( x!.obj ) and not IsSet( y!.obj ) then
+            return y!.obj in x!.obj;
+        elif IsSet( y!.obj ) and not IsSet( x!.obj ) then
+            return x!.obj in y!.obj;
+        else
+            return false;
+        fi;
+        end;
+        
+        sz := Size(pts);
+        
+        adj := function(x,y)
+             if x <= sz and y > sz then
+                return x in blocks[y-sz];
+             elif y <= sz and x > sz then
+                return y in blocks[x-sz];
+             else
+                return false;
+             fi;
+        end;
 
-	s := Length(Adjacency(graph,sp+1))-1; # number of points on a line minus 1.
-	t := Length(Adjacency(graph,1))-1; # number of linbes on a point minus 1.
-    
-    shadpoint := function( pt )
-        return List(Filtered(lns,x->inc(pt!.obj,x)),y->Wrap(pt!.geo,2,y));
-    end;
+        graph := Graph(Group(()), [1..sz+Size(blocks)], OnPoints, adj );
+        girth := Girth(graph);
 
-    shadline := function( line )
-        return List(Filtered(pts,x->inc(line!.obj,x)),y->Wrap(line!.geo,1,y));
-    end;
+        if IsBipartite(graph) then
+            if not girth = 2*Diameter(graph) then
+                Error("<blocks> are not defining a generalised polygon");
+            fi;
+        else
+            Error("<blocks are not defining a generalised polygon");
+        fi;
+        
+        if girth = 6 then
+            ty := NewType( GeometriesFamily, IsProjectivePlane and IsGeneralisedPolygonRep );
+        elif girth = 8 then
+            ty := NewType( GeometriesFamily, IsGeneralisedQuadrangle and IsGeneralisedPolygonRep );
+        elif girth = 12 then
+            ty := NewType( GeometriesFamily, IsGeneralisedHexagon and IsGeneralisedPolygonRep );
+        elif girth = 16 then
+            ty := NewType( GeometriesFamily, IsGeneralisedOctagon and IsGeneralisedPolygonRep );
+        else
+            Error("<blocks> do not define a thick finite generalised polygon");
+        fi;
+        
+        listels := function( geom, i )
+			if i = 1 then
+				return List(pts,x->Wrap(geom,i,x));
+			else
+				return List(blocks,x->Wrap(geom,i,x));
+			fi;
+		end;
+				
+		vn := VertexNames(graph);
+		
+        shadpoint := function( pt )
+            return List(Filtered(blocks,x->pt!.obj in x),y->Wrap(pt!.geo,2,y));
+        end;
+        
+        shadline := function( line )
+            return List(line!.obj,x->Wrap(line!.geo,1,x));
+        end;
+		
+		#we have the graph now, the following is efficient.
+		t := Length(Adjacency(graph,1)); # number of linbes on a point minus 1.
 
-    gp := rec( points := pts, lines := lns, incidence := inc, shadowofpoint := shadpoint,
-            shadowofline := shadline );
+        dist := function( el1, el2 )
+			if el1!.type=1 and el2!.type=1 then
+				return Distance(graph,Position(pts,el1!.obj),Position(pts,el2!.obj));
+			elif el1!.type=1 and el2!.type=2 then
+				return Distance(graph,Position(pts,el1!.obj),sz+Position(blocks,el2!.obj));
+			elif el1!.type=2 and el2!.type=1 then
+				return Distance(graph,sz+Position(blocks,el1!.obj),Position(pts,el2!.obj));
+			else 
+				return Distance(graph,sz+Position(blocks,el1!.obj),sz+Position(blocks,el2!.obj));
+			fi;
+        end;
 
-    Objectify( ty, gp );
-	SetOrder(gp, [s,t] );
-    SetTypesOfElementsOfIncidenceStructure(gp, ["point","line"]);
-    Setter( IncidenceGraphOfGeneralisedPolygonAttr )( gp, graph );
-    return gp;
-end );
+        gp := rec( pointsobj := pts, linesobj := blocks, incidence := i, listelements := listels, 
+					shadowofpoint := shadpoint, shadowofline := shadline, distance := dist );
+
+        Objectify( ty, gp );
+        SetTypesOfElementsOfIncidenceStructure(gp, ["point","line"]);
+        SetOrder(gp, [s, t]);
+        SetRankAttr(gp, 2);
+        Setter( IncidenceGraphOfGeneralisedPolygonAttr )( gp, graph );
+        return gp;
+  end );

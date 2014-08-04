@@ -53,6 +53,8 @@ Print(", gpolygons\c");
 #
 # distance: a function taking two *elements of a GP* and returning their distance in the incidence graph.
 #
+# action: a function describing an action on the *underlying objects*.
+#
 # Note: - If an object belongs to IsGeneralisedPolygon, then the "generic operations" to explore the GP
 #			are *applicable* (does not imply that a specific method is installed or will be working).
 #		- If a GP is constructed using a "Generic method", the above fields are created as described, making
@@ -91,7 +93,7 @@ InstallMethod( GeneralisedPolygonByBlocks,
     [ IsHomogeneousList ],
     function( blocks )
         local pts, gp, ty, i, graph, sz, adj, girth, shadpoint, shadline, s, t, dist, vn, 
-		listels, objs;
+		listels, objs, act;
         pts := Union(blocks);
         s := Size(blocks[1]) - 1;
         if not ForAll(blocks, b -> Size(b) = s + 1 ) then
@@ -104,23 +106,27 @@ InstallMethod( GeneralisedPolygonByBlocks,
         elif IsSet( y!.obj ) and not IsSet( x!.obj ) then
             return x!.obj in y!.obj;
         else
-            return false;
+            return x!.obj = y!.obj;
         fi;
         end;
         
         sz := Size(pts);
-        
-        adj := function(x,y)
-             if x <= sz and y > sz then
-                return x in blocks[y-sz];
-             elif y <= sz and x > sz then
-                return y in blocks[x-sz];
-             else
-                return false;
-             fi;
-        end;
+		
+		adj := function(x,y)
+			if IsSet(x) and not IsSet(y) then
+				return y in x;
+			elif IsSet(y) and not IsSet(x) then	
+				return x in y;
+			else
+				return false;
+			fi;
+		end;
 
-        graph := Graph(Group(()), [1..sz+Size(blocks)], OnPoints, adj );
+		act := function(x,g)
+			return x;
+		end;
+			
+        graph := Graph(Group(()), Concatenation(pts,blocks), act, adj );
         girth := Girth(graph);
 
         if IsBipartite(graph) then
@@ -164,17 +170,9 @@ InstallMethod( GeneralisedPolygonByBlocks,
 		#we have the graph now, the following is efficient.
 		t := Length(Adjacency(graph,1)); # number of linbes on a point minus 1.
 
-        dist := function( el1, el2 )
-			if el1!.type=1 and el2!.type=1 then
-				return Distance(graph,Position(pts,el1!.obj),Position(pts,el2!.obj));
-			elif el1!.type=1 and el2!.type=2 then
-				return Distance(graph,Position(pts,el1!.obj),sz+Position(blocks,el2!.obj));
-			elif el1!.type=2 and el2!.type=1 then
-				return Distance(graph,sz+Position(blocks,el1!.obj),Position(pts,el2!.obj));
-			else 
-				return Distance(graph,sz+Position(blocks,el1!.obj),sz+Position(blocks,el2!.obj));
-			fi;
-        end;
+		dist := function( el1, el2 )
+			return Distance(graph,Position(vn,el1!.obj),Position(vn,el2!.obj));
+		end;
 
         gp := rec( pointsobj := pts, linesobj := blocks, incidence := i, listelements := listels, 
 					shadowofpoint := shadpoint, shadowofline := shadline, distance := dist );
@@ -242,7 +240,7 @@ InstallMethod( GeneralisedPolygonByElements,
         return x;
     end;
 
-    graph := Graph(Group(()), Union(pts,lns), act, adj, true );
+    graph := Graph(Group(()), Concatenation(pts,lns), act, adj, true );
     girth := Girth(graph);
 
     if IsBipartite(graph) then
@@ -335,7 +333,7 @@ InstallMethod( GeneralisedPolygonByElements,
     fi;
     end;
 
-    graph := Graph(group, Union(pts,lns), act, adj, true );
+    graph := Graph(group, Concatenation(pts,lns), act, adj, true );
     girth := Girth(graph);
 
     if IsBipartite(graph) then
@@ -390,8 +388,8 @@ InstallMethod( GeneralisedPolygonByElements,
         return Distance(graph,Position(vn,el1!.obj),Position(vn,el2!.obj));
     end;
     
-    gp := rec( pointsobj := pts, linesobj := lns, incidence := inc, listelements := listels, 
-				shadowofpoint := shadpoint, shadowofline := shadline, distance := dist );
+    gp := rec( pointsobj := pts, linesobj := lns, incidence := wrapped_incidence, listelements := listels, 
+				shadowofpoint := shadpoint, shadowofline := shadline, distance := dist, action := act );
 
     Objectify( ty, gp );
 	SetOrder(gp, [s,t] );
@@ -752,11 +750,20 @@ InstallMethod( IncidenceGraphOfGeneralisedPolygon,
     if IsBound(gp!.IncidenceGraphOfGeneralisedPolygonAttr) then
        return gp!.IncidenceGraphOfGeneralisedPolygonAttr;
     fi;
-    points := AsList( Points( gp ) );;  
-    lines := AsList( Lines( gp ) );;    
+    points := AsList(Points(gp));  
+    lines := AsList(Lines(gp));   
 
     Info(InfoFinInG, 1, "Computing incidence graph of generalised polygon...");
     
+	adj := function(x,y)
+		if x!.type <> y!.type then
+			return IsIncident(x,y);
+		else
+			return false;
+		fi;
+	end;
+	
+	
     sz := Size(points);
     adj := function(i,j)
              if i <= sz and j > sz then
@@ -797,15 +804,20 @@ InstallMethod( CollineationGroup,
         ptsn := Set(gp!.pointsobj,x->Position(VertexNames(graph),x));
         stab := Stabilizer(aut, ptsn, OnSets);
         coll := Action(stab, ptsn, OnPoints);
-        #act := function( x, g )
-        #     if x!.type = 1 then
-        #        return Wrap(plane, 1, OnPoints(x!.obj, g));
-        #     elif x!.type = 2 then
-        #        return Wrap(plane, 2, OnSets(x!.obj, g));
-        #     fi;
-        #end;
-        #SetCollineationAction( coll, act );
-        return coll;
+		act := function(el,g)
+			local src,img;
+			if el!.type = 1 then
+				src := Position(VertexNames(graph),el!.obj);
+				img := src^g;
+				return Wrap(gp,1,VertexNames(graph)[img]);
+			elif el!.type = 2 then
+				src := Position(VertexNames(graph),el!.obj);
+				img := src^g;
+				return Wrap(gp,2,VertexNames(graph)[img]);
+			fi;
+		end;
+        SetCollineationAction( coll, act );
+		return coll;
     end );
 
 #############################################################################
@@ -1970,5 +1982,73 @@ InstallMethod( \in,
         fi;
     end );
 
-        
+#############################################################################
+#O  IncidenceGraphOfGeneralisedPolygon( <gp> )
+###
+InstallMethod( IncidenceGraphOfGeneralisedPolygon,
+    "for an ElationGQ in generic representation",
+    [ IsElationGQ and IsGeneralisedPolygonRep ],
+    function( gp )
+    local points, lines, graph, adj, elationgroup, coll, act,sz;
+    if not "grape" in RecNames(GAPInfo.PackagesLoaded) then
+       Error("You must load the GRAPE package\n");
+    fi;
+    if IsBound(gp!.IncidenceGraphOfGeneralisedPolygonAttr) then
+       return gp!.IncidenceGraphOfGeneralisedPolygonAttr;
+    fi;
+    points := AsList(Points(gp));  
+    lines := AsList(Lines(gp));   
+
+    Info(InfoFinInG, 1, "Computing incidence graph of generalised polygon...");
+    
+	adj := function(x,y)
+		if x!.type <> y!.type then
+			return IsIncident(x,y);
+		else
+			return false;
+		fi;
+	end;
+    sz := Size(points);
+
+	if HasElationGroup(gp) then
+		elationgroup := ElationGroup(gp);
+		act := CollineationAction(elationgroup);
+		graph := Graph(elationgroup,Concatenation(points,lines),act,adj,true);
+	else
+	   graph := Graph( Group(()), [1..sz+Size(lines)], OnPoints, adj );  
+	fi;
+
+    Setter( IncidenceGraphOfGeneralisedPolygonAttr )( gp, graph );
+    return graph;
+  end );
+
+#############################################################################
+#O  CollineationGroup( <gp> )
+###
+InstallMethod( CollineationGroup, 
+    "for a generalised polygon",
+    [ IsElationGQ and IsGeneralisedPolygonRep ],
+    function( gp )
+        local graph, aut, act, stab, coll, ptsn;
+        graph := IncidenceGraphOfGeneralisedPolygon( gp );
+        aut := AutomorphismGroup( graph );
+        ptsn := Set(gp!.pointsobj,x->Position(VertexNames(graph),x));
+        stab := Stabilizer(aut, ptsn, OnSets);
+        coll := Action(stab, ptsn, OnPoints);
+		act := function(el,g)
+			local src,img;
+			if el!.type = 1 then
+				src := Position(VertexNames(graph),el); #change wrt generic function which would be el!.obj
+				img := src^g;
+				return VertexNames(graph)[img];
+			elif el!.type = 2 then
+				src := Position(VertexNames(graph),el); #change wrt generic funciton ... 
+				img := src^g;
+				return VertexNames(graph)[img];
+			fi;
+		end;
+        SetCollineationAction( coll, act );
+		return coll;
+    end );
+
 
