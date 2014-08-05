@@ -27,7 +27,7 @@ linesb := Set(O);;
 pts := Union(points1,points2,points3);;
 lns := Union(linesa,linesb);;
 inc := \*;
-gp := GeneralisedPolygonByElements(pts,lns,inc,stab,act);
+gp := GeneralisedPolygonByElements(pts,lns,inc,stab,\^);
 time;
 quit;
 

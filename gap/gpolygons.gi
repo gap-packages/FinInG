@@ -2779,13 +2779,16 @@ InstallMethod( BLTSetByqClan,
     ##
     ## The q-clan must consist only of symmetric matrices
     ##
-    local q, i, f,  blt, m, sesq, c1, c2, change, w, ps;
+    local q, i, f,  blt, m, sesq, c1, c2, change, w, ps, x;
     f := clan!.basefield;
     q := Size(f);
     i := One(f); 
     blt := List(clan!.matrices, t -> [i, t[2][2], -t[1][2], t[1][1],  t[1][2]^2 -t[1][1]*t[2][2]]);
     Add(blt, [0,0,0,0,1]*i);  ## last point is distinguished point.
-      
+    for x in blt do
+		ConvertToVectorRepNC(x,f);
+	od;
+	
     ## This BLT-set is in Q(4,q) defined by Gram matrix
     w := PrimitiveRoot(f);
     m := [[0,0,0,0,1],[0,0,0,1,0],[0,0,w^((q+1)/2),0,0],[0,1,0,0,0],[1,0,0,0,0]]*i;
@@ -2974,7 +2977,7 @@ InstallMethod( FlockGQByqClan, [ IsqClanObj ],
  function( qclan )
   local f, q, mat, form, w5, p, blt, x, perp, pperp, pg5, a, bas, gens, zero, elations, action,
         projpoints, gqpoints, gqlines, gqpoints2, gqlines2, res, geo, ty, points, lines, clan,
-		pgammasp, stabp, stabblt, hom, omega, imgs;
+		pgammasp, stabp, stabblt, hom, omega, imgs, bltvecs;
   f := qclan!.basefield;
   clan := qclan!.matrices; 
   q := Size(f);
@@ -2989,9 +2992,19 @@ InstallMethod( FlockGQByqClan, [ IsqClanObj ],
   p := VectorSpaceToElement(w5, [1,0,0,0,0,0] * Z(q)^0);
 
   blt := [ VectorSpaceToElement(w5, [[1,0,0,0,0,0], [0,0,0,1,0,0],[0,0,0,0,1,0]]*One(f)) ];
-  for x in clan do
-      Add(blt, VectorSpaceToElement(w5, [[1,0,0,0,0,0], [0,1,0,x[1][2],x[1][1],0], [0,0,1,x[2][2],x[1][2],0]] * One(f)));
-  od;
+  
+	bltvecs := List(clan,x->[[1,0,0,0,0,0], [0,1,0,x[1][2],x[1][1],0], [0,0,1,x[2][2],x[1][2],0]] * One(f));
+	for x in bltvecs do
+		ConvertToMatrixRepNC(x,f);
+	od;
+  
+  #for x in clan do
+  #    Add(blt, VectorSpaceToElement(w5, [[1,0,0,0,0,0], [0,1,0,x[1][2],x[1][1],0], [0,0,1,x[2][2],x[1][2],0]] * One(f)));
+  #od;
+		
+	for x in bltvecs do
+		Add(blt,VectorSpaceToElement(w5,x));
+	od;
     Info(InfoFinInG, 1, "Making flock GQ...");
 
   perp := PolarMap(w5);;

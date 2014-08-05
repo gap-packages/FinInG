@@ -206,3 +206,50 @@ act := CollineationAction(coll);
 act(p,g);
 act(l,g);
 
+
+#### nice blt example.
+next example: q=5 is feasable and shows interesting timing differences.
+q := 5;
+qc := LinearqClan(q);
+egq1 := EGQByqClan(qc);
+time;
+coll1 := CollineationGroup(egq1);
+time;
+Order(coll1);
+Order(CollineationGroup(HermitianPolarSpace(3,q^2)));
+blt1 := BLTSetByqClan(qc);
+time;
+egq2 := EGQByBLTSet(blt1);
+time;
+coll2 := CollineationGroup(egq2);
+
+next example: q=5 is feasable in second test case. Interesting non classical GQ of order 25,5
+q := 5;
+qc := FisherThasWalkerKantorBettenqClan(q);
+egq1 := EGQByqClan(qc);
+time;
+coll1 := CollineationGroup(egq1);
+time;
+Order(coll1);
+Order(CollineationGroup(HermitianPolarSpace(3,q^2)));
+blt1 := BLTSetByqClan(qc);
+time;
+egq2 := EGQByBLTSet(blt1);
+time;
+coll2 := CollineationGroup(egq2);
+
+q := 5;
+qc := FisherqClan(q);
+egq1 := EGQByqClan(qc);
+time;
+coll1 := CollineationGroup(egq1);
+time;
+Order(coll1);
+Order(CollineationGroup(HermitianPolarSpace(3,q^2)));
+blt1 := BLTSetByqClan(qc);
+time;
+egq2 := EGQByBLTSet(blt1);
+time;
+coll2 := CollineationGroup(egq2);
+
+
