@@ -161,3 +161,48 @@ InstallMethod( GeneralisedPolygonByBlocks,
         Setter( IncidenceGraphOfGeneralisedPolygonAttr )( gp, graph );
         return gp;
   end );
+
+############
+
+
+#############################################################################
+#O  CollineationGroup( <gp> )
+###
+InstallMethod( CollineationGroup, 
+    "for a generalised polygon",
+    [ IsElationGQ and IsGeneralisedPolygonRep ],
+    function( gp )
+        local graph, aut, act, stab, coll, ptsn;
+        graph := IncidenceGraphOfGeneralisedPolygon( gp );
+        aut := AutomorphismGroup( graph );
+        ptsn := Set(gp!.pointsobj,x->Position(VertexNames(graph),x));
+        stab := Stabilizer(aut, ptsn, OnSets);
+        coll := Action(stab, ptsn, OnPoints);
+		act := function(el,g)
+			local src,img;
+			if el!.type = 1 then
+				src := Position(VertexNames(graph),el); #change wrt generic function which would be el!.obj
+				img := src^g;
+				return VertexNames(graph)[img];
+			elif el!.type = 2 then
+				src := Position(VertexNames(graph),el); #change wrt generic funciton ... 
+				img := src^g;
+				return VertexNames(graph)[img];
+			fi;
+		end;
+        SetCollineationAction( coll, act );
+		return coll;
+    end );
+############
+
+
+
+gp := egq;
+coll := CollineationGroup(gp);
+p := Random(Points(gp));
+l := Random(Lines(gp));
+g := Random(coll);
+act := CollineationAction(coll);
+act(p,g);
+act(l,g);
+
