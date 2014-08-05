@@ -168,7 +168,7 @@ InstallMethod( GeneralisedPolygonByBlocks,
         end;
 		
 		#we have the graph now, the following is efficient.
-		t := Length(Adjacency(graph,1)); # number of linbes on a point minus 1.
+		t := Length(Adjacency(graph,1))-1; # number of lines on a point minus 1.
 
 		dist := function( el1, el2 )
 			return Distance(graph,Position(vn,el1!.obj),Position(vn,el2!.obj));
@@ -452,7 +452,7 @@ InstallMethod( ViewObj,
 
 #############################################################################
 #
-# Basic methods to construct elements and iterators
+# Basic methods for elements (including construction and iterator).
 #
 #############################################################################
 
@@ -462,7 +462,7 @@ InstallMethod( ViewObj,
 # determined by <m> if and only if <obj> is the list [v,m].
 ##
 InstallMethod( ObjectToElement,
-	"for an affine space and an object",
+	"for ageneralised polygon, an integer and an object",
 	[ IsGeneralisedPolygon and IsGeneralisedPolygonRep, IsPosInt, IsObject],
 	function(gp, t, obj)
 		if t=1 then
@@ -475,7 +475,7 @@ InstallMethod( ObjectToElement,
 			if obj in gp!.linesobj then
 				return Wrap(gp,t,obj);
 			else
-				Error("<obj> does not represent a point of <gp>");
+				Error("<obj> does not represent a line of <gp>");
 			fi;
 		else
 			Error("<gp> is a point-line geometry not containing elements of type ",t);
@@ -488,7 +488,7 @@ InstallMethod( ObjectToElement,
 # determined by <m> if and only if <obj> is the list [v,m].
 ##
 InstallMethod( ObjectToElement,
-	"for an affine space and an object",
+	"for ageneralised polygon and an object",
 	[ IsGeneralisedPolygon and IsGeneralisedPolygonRep, IsObject],
 	function(gp, obj)
 		if obj in gp!.pointsobj then
@@ -671,6 +671,9 @@ InstallMethod( ShadowOfElement,
 						);
 	end);
 
+#############################################################################
+# View methods for shadow objects.
+#############################################################################
 
 InstallMethod( ViewObj,
 	"for shadow elements of a generalised polygon",
@@ -680,7 +683,7 @@ InstallMethod( ViewObj,
 		ViewObj(vs!.geometry);
 		Print(">");
 	end );
-    
+ 
 InstallMethod( Iterator, 
 	"for shadow elements of a generalised polygon",
 	[IsShadowElementsOfGeneralisedPolygon and IsShadowElementsOfGeneralisedPolygonRep ],
@@ -741,6 +744,11 @@ InstallMethod( DistanceBetweenElements,
 
 #############################################################################
 #O  IncidenceGraphOfGeneralisedPolygon( <gp> )
+# We could install a generic method. But currently, our particular GPs (hexagons, 
+# elation GQs, and classical GQs) have a particular method for good reasons. All other GPs
+# currently possible to construct, have their incidence graph computed upon construction.
+# So we may restrict here to checking whether this attribute is bounded, and return it,
+# or print an error message. Note that we deal here with a mutable attribute.
 ###
 InstallMethod( IncidenceGraphOfGeneralisedPolygon,
     "for a generalised polygon (in all possible representations",
@@ -757,26 +765,41 @@ InstallMethod( IncidenceGraphOfGeneralisedPolygon,
     fi;
     end );
 
-
+#############################################################################
+#O  IncidenceMatrixOfGeneralisedPolygon( <gp> )
+#
 InstallMethod( IncidenceMatrixOfGeneralisedPolygon,
-             [ IsGeneralisedPolygon ],
-  function( gp )
-    local graph, mat, incmat, szpoints, szlines;
-    graph := IncidenceGraphOfGeneralisedPolygon( gp );
-    mat := CollapsedAdjacencyMat(Group(()), graph);
+	"for a generalised polygon",
+	[ IsGeneralisedPolygon ],
+	function( gp )
+		local graph, mat, incmat, szpoints, szlines;
+		graph := IncidenceGraphOfGeneralisedPolygon( gp );
+		mat := CollapsedAdjacencyMat(Group(()), graph);
 
     ## The matrix above is the adjacency matrix of the
     ## bipartite incidence graph.
     
-    szpoints := Size(Points(gp));
-    szlines := Size(Lines(gp));
+		szpoints := Size(Points(gp));
+		szlines := Size(Lines(gp));
 
-    incmat := mat{[1..szpoints]}{[szpoints+1..szpoints+szlines]};
-    return incmat;
-  end );
+		incmat := mat{[1..szpoints]}{[szpoints+1..szpoints+szlines]};
+		return incmat;
+	end );
 
 #############################################################################
 #O  CollineationGroup( <gp> )
+# This method is generic. Note that:
+# - for classical GQs, we have completely different methods to compute their
+#	collineation group, of course for good reasons;
+# - for classical generalised hexagons, the same remark applies;
+# - when a GP is constructed through generic methods, the underlying graph is
+#	always computed, since this is the only way to check if the input is not rubbish.
+#	But then the VertexNames of the constructed graph are the underlying objects.
+#	For particular GQs, the underlying graph is not computed upon construction, since
+#	the developpers know what they are doing (?). But computing a graph afterwards, is
+#	very naturally done with the elements themselves as VertexNames. This has some technical
+#	consequences to compute the collineation group and to define the CollineationAction of it.
+#	To distinguish in this method, we introduced the property HasGraphWithUnderlyingObjectsAsVertices.
 ###
 InstallMethod( CollineationGroup, 
     "for a generalised polygon",
@@ -824,6 +847,8 @@ InstallMethod( CollineationGroup,
         SetCollineationAction( coll, act );
 		return coll;
     end );
+
+
 
 InstallMethod( BlockDesignOfGeneralisedPolygon,
              [ IsProjectivePlane and IsGeneralisedPolygonRep ], 
@@ -2134,6 +2159,17 @@ InstallMethod( \in,
 #############################################################################
 #
 #  Kantor Families and associated EGQ's
+#  
+#  The setup is a bit different than the standard one. 
+#  IsElationGQ is a subcategory of IsGeneralisedQuadrangle. IsElationGQByKantorFamily
+#  is a subcategory of IsElationGQ. For historical (?) reasons, the elements of a 
+#  IsElationGQByKantorFamily-GP are in a category called IsElementOfKantorFamily,
+#  which is a subcategory of IsElementOfGeneralisedPolygon. Contrary to all other
+#  instances of elements of an incidence geometry, an IsElementOfKantorFamily contains
+#  also its class (and of course its embient geometry, type and underlying object). 
+#  This makes typical operations like Wrap different. For IsElationGQByKantorFamily,
+#  there is currently also no ObjectToElement and UnderlyingObject method available.
+#  
 #
 #############################################################################
 
@@ -2146,9 +2182,9 @@ InstallMethod( ViewObj,
 	[ IsElementOfKantorFamily ],
 	function( v )
 		if v!.type = 1 then
-			Print("<a point of class ", v!.class," of a Kantor family>");
+			Print("<a point of class ", v!.class," of ",v!.geo,">");
 		else 
-			Print("<a line of class ", v!.class," of a Kantor family>");
+			Print("<a line of class ", v!.class," of ",v!.geo,">");
 		fi;
 	end );
 
@@ -2157,15 +2193,15 @@ InstallMethod( PrintObj,
 	[ IsElementOfKantorFamily ],
 	function( v )
 		if v!.type = 1 then
-			Print("<a point of class ", v!.class," of a Kantor family>\n");
+			Print("<a point of class ", v!.class," of ",v!.geo,">\n");
 		else
-			Print("<a line of class ", v!.class," of a Kantor family>\n");
+			Print("<a line of class ", v!.class," of ",v!.geo,">\n");
 		fi;
 		Print(v!.obj);
 	end );
 
 #############################################################################
-#O  Wrap( <geo>, <type>, <o>  )
+#O  Wrap( <geo>, <type>, <class>, <o>  )
 # returns the element of <geo> represented by <o>
 ##
 InstallMethod( Wrap, 
@@ -2258,7 +2294,7 @@ InstallMethod( IsKantorFamily,
 	end );
 
 #############################################################################
-#F  OnKantorFamily
+#F  OnKantorFamily( <v>, <el> ): action function for elation groups on elements.
 ##
 InstallGlobalFunction( OnKantorFamily,
   function( v, el )

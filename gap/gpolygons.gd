@@ -26,7 +26,9 @@ DeclareRepresentation( "IsGeneralisedPolygonRep", IsGeneralisedPolygon, [ "incid
 
 DeclareCategory( "IsElementOfGeneralisedPolygon", IsElementOfIncidenceGeometry );
 
-DeclareRepresentation( "IsElementsOfGeneralisedPolygonRep", IsElementsOfIncidenceStructureRep, [ "geometry", "type", "obj" ] );
+DeclareRepresentation( "IsElementOfGeneralisedPolygonRep", IsElementOfIncidenceStructureRep, [ "geometry", "type", "obj" ] );
+
+DeclareRepresentation( "IsElementsOfGeneralisedPolygonRep", IsElementsOfIncidenceStructureRep, [ "geometry", "type" ] );
 DeclareCategory( "IsElementsOfGeneralisedPolygon", IsElementsOfIncidenceGeometry );
 DeclareCategory( "IsAllElementsOfGeneralisedPolygon", IsAllElementsOfIncidenceGeometry );
 
@@ -118,7 +120,7 @@ DeclareOperation("3D4fining", [IsField and IsFinite] );
 DeclareOperation( "IsKantorFamily", [IsGroup, IsList, IsList]);
 
 DeclareCategory( "IsElementOfKantorFamily", IsElementOfGeneralisedPolygon );
-DeclareRepresentation( "IsElementOfKantorFamilyRep", IsElementOfKantorFamily, [ "geo", "type", "class", "obj" ]);
+DeclareRepresentation( "IsElementOfKantorFamilyRep", IsElementOfKantorFamily and IsElementOfIncidenceStructureRep, [ "geo", "type", "class", "obj" ]);
 
 DeclareGlobalFunction( "OnKantorFamily" );
 

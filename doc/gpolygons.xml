@@ -2,19 +2,18 @@
 
   gpolygons.xml    FinInG package documentation
                                                                    John Bamberg
-                                                              and Philippe Cara
-                                                               and Jan De Beule
-                                                             and Michel Lavrauw
-                                                                  and Maska Law
-                                                             and Michael Pauley
+                                                                   Anton Betten
+                                                                   Jan De Beule
+                                                                  Philippe Cara
+                                                                 Michel Lavrauw
                                                             and Max Neunhoeffer
-                                                              and Sven Reichard
 
-  Copyright 2009 University of Western Australia, Perth
-                 Lehrstuhl D fuer Mathematik, RWTH Aachen
-                 Ghent University
-                 Colorado State University
-                 Vrije Universiteit Brussel
+Copyright (C) 2014,         Colorado State University
+                            Università degli Studi di Padova
+                            Universiteit Gent
+                            University of St. Andrews
+                            University of Western Australia     
+                            Vrije Universiteit Brussel
 
 This is the chapter of the documentation describing generalised polygons.
 -->
@@ -277,7 +276,17 @@ and <F>Lines</F> are the usual shortcuts.
 </ManSection>
 
 <ManSection>
-<Attr Name="ObjectToElement" Arg="gp, obj"/>
+<Oper Name="Size" Arg="els"/>
+<Returns>a number</Returns>
+<Description>
+<A>els</A> is a collection of elements of a generalised polygon. This operation returns
+the number of element in <A>els</A>.
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="ObjectToElement" Arg="gp, obj"/>
+<Oper Name="ObjectToElement" Arg="gp, obj"/>
 <Returns>a collection of elements of a generalised polygon</Returns>
 <Description>
 To create particular objects.
@@ -286,7 +295,38 @@ To create particular objects.
 </Description>
 </ManSection>
 
+<ManSection>
+<Oper Name="IsIncident" Arg="v,w"/>
+<Returns>true or false</Returns>
+<Description>
+Let <A>v</A> and <A>w</A> be two elements of a generalised polygon. It is checked if
+the ambient geometry of the two elements are identical, and true is returned if and only if
+the two elements are incident in their ambient geometry.
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="DistanceBetweenElements" Arg="v,w"/>
+<Returns>a number</Returns>
+<Description>
+Let <A>v</A> and <A>w</A> be two elements of a generalised polygon. It is checked if
+the ambient geometry of the two elements are identical, and the distance between the two
+elements in the incidence graph of their ambient geometry is returned.
+</Description>
+</ManSection>
+
 </Section>
+
+<Section>
+<Heading>The classical generalised hexagons</Heading>
+
+</Section>
+
+<Section>
+<Heading>Elation generalised quadrangles</Heading>
+
+</Section>
+
 
 </Chapter>
 
