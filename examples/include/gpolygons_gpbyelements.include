@@ -1,0 +1,55 @@
+gap&gt; pg := PG(2,25);
+ProjectiveSpace(2, 25)
+gap&gt; pts := Set(Points(pg));;
+gap&gt; lns := Set(Lines(pg));;
+gap&gt; inc := \*;
+&lt;Operation "*"&gt;
+gap&gt; gp := GeneralisedPolygonByElements(pts,lns,inc);
+&lt;projective plane order 25&gt;
+gap&gt; time;
+20136
+gap&gt; grp := CollineationGroup(pg);
+The FinInG collineation group PGammaL(3,25)
+gap&gt; act := OnProjSubspaces;
+function( var, el ) ... end
+gap&gt; gp := GeneralisedPolygonByElements(pts,lns,inc,grp,act);
+&lt;projective plane order 25&gt;
+gap&gt; time;
+77
+gap&gt; q := 4;
+4
+gap&gt; conic := Set(Points(ParabolicQuadric(2,q)));
+[ &lt;a point in Q(2, 4)&gt;, &lt;a point in Q(2, 4)&gt;, &lt;a point in Q(2, 4)&gt;, 
+  &lt;a point in Q(2, 4)&gt;, &lt;a point in Q(2, 4)&gt; ]
+gap&gt; pg := PG(3,q);
+ProjectiveSpace(3, 4)
+gap&gt; hyp :=  HyperplaneByDualCoordinates(pg,[1,0,0,0]*Z(q)^0);
+&lt;a plane in ProjectiveSpace(3, 4)&gt;
+gap&gt; em := NaturalEmbeddingBySubspace(PG(2,q),pg,hyp);
+&lt;geometry morphism from &lt;All elements of ProjectiveSpace(2, 
+4)&gt; to &lt;All elements of ProjectiveSpace(3, 4)&gt;&gt;
+gap&gt; O := List(conic,x-&gt;x^em);;
+gap&gt; group := CollineationGroup(pg);
+The FinInG collineation group PGammaL(4,4)
+gap&gt; stab := FiningSetwiseStabiliser(group,O);
+#I  Computing adjusted stabilizer chain...
+&lt;projective collineation group with 6 generators&gt;
+gap&gt; points1 := Set(Filtered(Points(pg),x-&gt;not x in hyp));;
+gap&gt; tangents := List(conic,x-&gt;TangentSpace(x)^em);
+[ &lt;a line in ProjectiveSpace(3, 4)&gt;, &lt;a line in ProjectiveSpace(3, 4)&gt;, 
+  &lt;a line in ProjectiveSpace(3, 4)&gt;, &lt;a line in ProjectiveSpace(3, 4)&gt;, 
+  &lt;a line in ProjectiveSpace(3, 4)&gt; ]
+gap&gt; planes := List(tangents,x-&gt;Filtered(Planes(x),y-&gt;not y in hyp));;
+gap&gt; points2 := Union(planes);;
+gap&gt; points3 := [hyp];
+[ &lt;a plane in ProjectiveSpace(3, 4)&gt; ]
+gap&gt; linesa := Union(List(O,x-&gt;Filtered(Lines(x),y-&gt;not y in hyp)));;
+gap&gt; linesb := Set(O);;
+gap&gt; pts := Union(points1,points2,points3);;
+gap&gt; lns := Union(linesa,linesb);;
+gap&gt; inc := \*;
+&lt;Operation "*"&gt;
+gap&gt; gp := GeneralisedPolygonByElements(pts,lns,inc,stab,\^);
+&lt;generalised quadrangle of order [ 4, 4 ]&gt;
+gap&gt; time;
+31

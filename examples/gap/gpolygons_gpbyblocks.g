@@ -1,4 +1,4 @@
-## gpolygons_projplanes1.g
+## gpolygons_gpbyblocks.g
 blocks := [ 
   [ 1, 2, 3, 4, 5 ], [ 1, 6, 7, 8, 9 ], [ 1, 10, 11, 12, 13 ],
   [ 1, 14, 15, 16, 17 ], [ 1, 18, 19, 20, 21 ], [ 2, 6, 10, 14, 18 ], 
@@ -8,17 +8,4 @@ blocks := [
   [ 4, 8, 10, 15, 21 ], [ 4, 9, 11, 14, 20 ], [ 5, 6, 13, 15, 20 ], 
   [ 5, 7, 12, 14, 21 ], [ 5, 8, 11, 17, 18 ], [ 5, 9, 10, 16, 19 ] ];;
 gp := GeneralisedPolygonByBlocks( blocks );
-
-pg := PG(2,2);
-pts := Set(Points(pg));
-lines := Set(Lines(pg));
-inc := \*;
-gp := GeneralisedPolygonByElements(pts,lines,inc);
-
-ps := ParabolicQuadric(4,3);
-pts := Set(Points(ps));
-lines := Set(Lines(ps));
-inc := \*;
-gp := GeneralisedPolygonByElements(pts,lines,inc);
-
 quit;

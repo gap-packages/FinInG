@@ -757,6 +757,24 @@ InstallMethod( IncidenceGraphOfGeneralisedPolygon,
     fi;
     end );
 
+
+InstallMethod( IncidenceMatrixOfGeneralisedPolygon,
+             [ IsGeneralisedPolygon ],
+  function( gp )
+    local graph, mat, incmat, szpoints, szlines;
+    graph := IncidenceGraphOfGeneralisedPolygon( gp );
+    mat := CollapsedAdjacencyMat(Group(()), graph);
+
+    ## The matrix above is the adjacency matrix of the
+    ## bipartite incidence graph.
+    
+    szpoints := Size(Points(gp));
+    szlines := Size(Lines(gp));
+
+    incmat := mat{[1..szpoints]}{[szpoints+1..szpoints+szlines]};
+    return incmat;
+  end );
+
 #############################################################################
 #O  CollineationGroup( <gp> )
 ###
@@ -807,11 +825,113 @@ InstallMethod( CollineationGroup,
 		return coll;
     end );
 
+InstallMethod( BlockDesignOfGeneralisedPolygon,
+             [ IsProjectivePlane and IsGeneralisedPolygonRep ], 
+  function( gp )
+    local points, lines, des;
+    if not "design" in RecNames(GAPInfo.PackagesLoaded) then
+       Error("You must load the DESIGN package\n");
+    fi;
+    if IsBound(gp!.BlockDesignOfGeneralisedPolygonAttr) then
+       return gp!.BlockDesignOfGeneralisedPolygonAttr;
+    fi;
+    points := gp!.points;
+    lines := gp!.lines;
+    Info(InfoFinInG, 1, "Computing block design of generalised polygon...");
+    des := BlockDesign(Size(points), Set(lines, AsSet));
+    Setter( BlockDesignOfGeneralisedPolygonAttr )( gp, des );
+    return des;
+  end );
+
+InstallMethod( BlockDesignOfGeneralisedPolygon,
+             [ IsGeneralisedPolygon and IsGeneralisedPolygonRep ], 
+  function( gp )
+    local points, lines, des, blocks, l, b, elations, gg, orbs;
+    if not "design" in RecNames(GAPInfo.PackagesLoaded) then
+       Error("You must load the DESIGN package\n");
+    fi;
+    if IsBound(gp!.BlockDesignOfGeneralisedPolygonAttr) then
+       return gp!.BlockDesignOfGeneralisedPolygonAttr;
+    fi;
+    points := AsList(Points(gp));;
+    lines := AsList(Lines(gp));;    
+
+
+    if IsElationGQ(gp) and HasElationGroup( gp ) then
+	   elations := ElationGroup(gp);
+          Info(InfoFinInG, 1, "Computing orbits on lines of gen. polygon...");
+	   orbs := List( Orbits(elations, lines, CollineationAction(elations)), Representative);
+	   orbs := List(orbs, l -> Filtered([1..Size(points)], i -> points[i] * l));
+	   gg := Action(elations, points, CollineationAction( elations ) );
+          Info(InfoFinInG, 1, "Computing block design of generalised polygon...");    
+	   des := BlockDesign(Size(points), orbs, gg ); 
+	elif HasCollineationGroup(gp) then
+	   gg := CollineationGroup(gp);
+	   orbs := List( Orbits(gg, lines, CollineationAction(gg)), Representative);
+	   orbs := List(orbs, l -> Filtered([1..Size(points)], i -> points[i] * l));
+	   gg := Action(gg, points, CollineationAction( elations ) );
+	   des := BlockDesign(Size(points), orbs, gg );
+	else
+  	   blocks := [];
+       for l in lines do
+          b := Filtered([1..Size(points)], i -> points[i] * l);
+          Add(blocks, b);
+       od;   
+       des := BlockDesign(Size(points), Set(blocks));
+	fi;
+
+    Setter( BlockDesignOfGeneralisedPolygonAttr )( gp, des );
+    return des;
+  end );
+
 #############################################################################
 #
 # Part II: particular models of GPs.
 #
 #############################################################################
+
+#############################################################################
+#
+# Classical GQs: only need a method for IncidenceGraphOfGeneralisedPolygon
+#
+#############################################################################
+
+#############################################################################
+#O  IncidenceGraphOfGeneralisedPolygon( <gp> )
+###
+InstallMethod( IncidenceGraphOfGeneralisedPolygon,
+    "for a generalised polygon (in all possible representations",
+    [ IsClassicalGQ ],
+    function( gp )
+        local points, lines, graph, adj, group, coll, sz;
+        if not "grape" in RecNames(GAPInfo.PackagesLoaded) then
+            Error("You must load the GRAPE package\n");
+        fi;
+        if IsBound(gp!.IncidenceGraphOfGeneralisedPolygonAttr) then
+            return gp!.IncidenceGraphOfGeneralisedPolygonAttr;
+        fi;
+        if not HasCollineationGroup(gp) then
+            Error("No collineation group computed. Please compute collineation group before computing incidence graph\,n");
+        else
+            points := AsList(Points(gp));
+            lines := AsList(Lines(gp));
+            Setter( HasGraphWithUnderlyingObjectsAsVertices )( gp, false );
+
+            Info(InfoFinInG, 1, "Computing incidence graph of generalised polygon...");
+    
+            adj := function(x,y)
+                if x!.type <> y!.type then
+                    return IsIncident(x,y);
+                else
+                    return false;
+                fi;
+            end;
+            group := CollineationGroup(gp);
+            graph := Graph(group,Concatenation(points,lines),OnProjSubspaces,adj,true);
+            Setter( IncidenceGraphOfGeneralisedPolygonAttr )( gp, graph );
+            return graph;
+        fi;
+  end );
 
 #############################################################################
 #
