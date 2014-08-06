@@ -1136,7 +1136,7 @@ InstallMethod( SplitCayleyHexagon,
 	"for a finite field", 
 	[ IsField and IsFinite ],
 	function( f )
-    local geo, ty, repline, reppointvect, reppoint, replinevect,
+    local geo, ty, repline, reppointvect, reppoint, replinevect, dist,
 	    hvm, ps, hvmform, form, nonzerof, x, w, listels, shadpoint, shadline;
     if IsOddInt(Size(f)) then    
        ## the corresponding sesquilinear form here for 
@@ -1167,6 +1167,48 @@ InstallMethod( SplitCayleyHexagon,
             flag := FlagOfIncidenceStructure(PG(6,f),[pt,plane]);
             return List(ShadowOfFlag(PG(6,f),flag,2),x->Wrap(pt!.geo,2,Unwrap(x)));
         end;
+        
+        dist := function(el1,el2)
+            local x,y;
+            if el1=el2 then
+                return 0;
+            elif el1!.type = 1 and el2!.type = 1 then
+                y := VectorSpaceToElement(PG(6,f), SplitCayleyPointToPlane(Unpack(el2!.obj),f)); #PG(5,f): avoids some unnecessary checks
+                if el1 in y then
+                    return 2;
+                else
+                    x := VectorSpaceToElement(PG(6,f), SplitCayleyPointToPlane(Unpack(el1!.obj),f));
+                    if ProjectiveDimension(Meet(x,y)) = 0 then
+                        return 4;
+                    else
+                        return 6;
+                    fi;
+                fi;
+            elif el1!.type = 2 and el2!.type = 2 then
+                if ProjectiveDimension(Meet(el1,el2)) = 0 then
+                    return 2;
+                fi;
+                x := TangentSpace(ps,el1);
+                if ProjectiveDimension(Meet(x,el2)) = 0 then
+                    return 4;
+                else
+                    return 6;
+                fi;
+            elif el1!.type = 1 and el2!.type = 2 then
+                if el1 in el2 then
+                    return 1;
+                fi;
+                x := VectorSpaceToElement(PG(6,f), SplitCayleyPointToPlane(Unpack(el1!.obj),f));
+                if ProjectiveDimension(Meet(x,el2)) = 0 then
+                    return 3;
+                else
+                    return 5;
+                fi;
+            else
+                return dist(el2,el1);
+            fi;
+        end;
+
     else
        ## Here we embed the hexagon in W(5,q)
        ## Hendrik's form
@@ -1190,6 +1232,48 @@ InstallMethod( SplitCayleyHexagon,
             flag := FlagOfIncidenceStructure(PG(5,f),[pt,plane]);
             return List(ShadowOfFlag(PG(5,f),flag,2),x->Wrap(pt!.geo,2,Unwrap(x)));
         end;
+        
+        dist := function(el1,el2)
+            local x,y;
+            if el1=el2 then
+                return 0;
+            elif el1!.type = 1 and el2!.type = 1 then
+                y := VectorSpaceToElement(PG(5,f), SplitCayleyPointToPlane5(Unpack(el2!.obj),f)); #PG(5,f): avoids some unnecessary checks
+                if el1 in y then
+                    return 2;
+                else
+                    x := VectorSpaceToElement(PG(5,f), SplitCayleyPointToPlane5(Unpack(el1!.obj),f));
+                    if ProjectiveDimension(Meet(x,y)) = 0 then
+                        return 4;
+                    else
+                        return 6;
+                    fi;
+                fi;
+            elif el1!.type = 2 and el2!.type = 2 then
+                if ProjectiveDimension(Meet(el1,el2)) = 0 then
+                    return 2;
+                fi;
+                x := TangentSpace(ps,el1);
+                if ProjectiveDimension(Meet(x,el2)) = 0 then
+                    return 4;
+                else
+                    return 6;
+                fi;
+            elif el1!.type = 1 and el2!.type = 2 then
+                if el1 in el2 then
+                    return 1;
+                fi;
+                x := VectorSpaceToElement(PG(5,f), SplitCayleyPointToPlane5(Unpack(el1!.obj),f));
+                if ProjectiveDimension(Meet(x,el2)) = 0 then
+                    return 3;
+                else
+                    return 5;
+                fi;
+            else
+                return dist(el2,el1);
+            fi;
+        end;
+
     fi;
 	#now comes the cmatrixification of the replinevect
 	replinevect := NewMatrix(IsCMatRep,f,Length(reppointvect),replinevect);
@@ -1209,7 +1293,7 @@ InstallMethod( SplitCayleyHexagon,
 	#a Lie geometry, so it needs more data fields than a GP. But we can derive this information from ps.
 	geo := rec( pointsobj := [], linesobj := [], incidence:= \*, listelements := listels, basefield := BaseField(ps), 
 		dimension := Dimension(ps), vectorspace := UnderlyingVectorSpace(ps), polarspace := ps, 
-		shadowofpoint := shadpoint, shadowofline := shadline);
+		shadowofpoint := shadpoint, shadowofline := shadline, distance := dist);
     ty := NewType( GeometriesFamily, IsClassicalGeneralisedHexagon and IsGeneralisedPolygonRep ); #change by jdb 7/12/11
     Objectify( ty, geo );
     SetAmbientSpace(geo, AmbientSpace(ps));
@@ -1253,7 +1337,7 @@ InstallMethod( SplitCayleyHexagon,
 	"for a classical polar space", 
 	[ IsClassicalPolarSpace ],
 	function( ps )
-    local geo, ty, repline, reppointvect, reppoint, replinevect, f, naampje, eq,
+    local geo, ty, repline, reppointvect, reppoint, replinevect, f, naampje, eq, dist,
 	    hvm, hvmform, form, nonzerof, x, w, listels, shadpoint, shadline, change, c1, c2;
 		f := BaseField(ps);
 	if IsParabolicQuadric(ps) and Dimension(ps) = 6 then
@@ -1282,6 +1366,46 @@ InstallMethod( SplitCayleyHexagon,
             plane := VectorSpaceToElement(PG(6,f),planevec);
             flag := FlagOfIncidenceStructure(PG(6,f),[pt,plane]);
             return List(ShadowOfFlag(PG(6,f),flag,2),x->Wrap(pt!.geo,2,Unwrap(x)));
+        end;
+        dist := function(el1,el2)
+            local x,y;
+            if el1=el2 then
+                return 0;
+            elif el1!.type = 1 and el2!.type = 1 then
+                y := VectorSpaceToElement(PG(6,f), change * SplitCayleyPointToPlane(Unpack(el2!.obj) * change^-1,f)); #PG(5,f): avoids some unnecessary checks
+                if el1 in y then
+                    return 2;
+                else
+                    x := VectorSpaceToElement(PG(6,f), change * SplitCayleyPointToPlane(Unpack(el1!.obj) * change^-1,f));
+                    if ProjectiveDimension(Meet(x,y)) = 0 then
+                        return 4;
+                    else
+                        return 6;
+                    fi;
+                fi;
+            elif el1!.type = 2 and el2!.type = 2 then
+                if ProjectiveDimension(Meet(el1,el2)) = 0 then
+                    return 2;
+                fi;
+                x := TangentSpace(ps,el1);
+                if ProjectiveDimension(Meet(x,el2)) = 0 then
+                    return 4;
+                else
+                    return 6;
+                fi;
+            elif el1!.type = 1 and el2!.type = 2 then
+                if el1 in el2 then
+                    return 1;
+                fi;
+                x := VectorSpaceToElement(PG(6,f), change * SplitCayleyPointToPlane(Unpack(el1!.obj) * change^-1,f));
+                if ProjectiveDimension(Meet(x,el2)) = 0 then
+                    return 3;
+                else
+                    return 5;
+                fi;
+            else
+                return dist(el2,el1);
+            fi;
         end;
     elif IsSymplecticSpace(ps) and Dimension(ps) = 5 then
        ## Here we embed the hexagon in W(5,q)
@@ -1314,6 +1438,46 @@ InstallMethod( SplitCayleyHexagon,
             flag := FlagOfIncidenceStructure(PG(5,f),[pt,plane]);
             return List(ShadowOfFlag(PG(5,f),flag,2),x->Wrap(pt!.geo,2,Unwrap(x)));
         end;
+        dist := function(el1,el2)
+            local x,y;
+            if el1=el2 then
+                return 0;
+            elif el1!.type = 1 and el2!.type = 1 then
+                y := VectorSpaceToElement(PG(5,f), change * SplitCayleyPointToPlane5(Unpack(el2!.obj) * change^-1,f)); #PG(5,f): avoids some unnecessary checks
+                if el1 in y then
+                    return 2;
+                else
+                    x := VectorSpaceToElement(PG(5,f), change * SplitCayleyPointToPlane5(Unpack(el1!.obj) * change^-1,f));
+                    if ProjectiveDimension(Meet(x,y)) = 0 then
+                        return 4;
+                    else
+                        return 6;
+                    fi;
+                fi;
+            elif el1!.type = 2 and el2!.type = 2 then
+                if ProjectiveDimension(Meet(el1,el2)) = 0 then
+                    return 2;
+                fi;
+                x := TangentSpace(ps,el1);
+                if ProjectiveDimension(Meet(x,el2)) = 0 then
+                    return 4;
+                else
+                    return 6;
+                fi;
+            elif el1!.type = 1 and el2!.type = 2 then
+                if el1 in el2 then
+                    return 1;
+                fi;
+                x := VectorSpaceToElement(PG(5,f), change * SplitCayleyPointToPlane5(Unpack(el1!.obj) * change^-1,f));
+                if ProjectiveDimension(Meet(x,el2)) = 0 then
+                    return 3;
+                else
+                    return 5;
+                fi;
+            else
+                return dist(el2,el1);
+            fi;
+        end;
     else
         Error("No embedding of split Cayley hexagon possible in <ps>");
     fi;
@@ -1336,7 +1500,7 @@ InstallMethod( SplitCayleyHexagon,
 	#a Lie geometry, so it needs more data fields than a GP. But we can derive this information from ps.
 	geo := rec( pointsobj := [], linesobj := [], incidence:= \*, listelements := listels, basefield := BaseField(ps), 
 		dimension := Dimension(ps), vectorspace := UnderlyingVectorSpace(ps), polarspace := ps, 
-		shadowofpoint := shadpoint, shadowofline := shadline, basechange := change);
+		shadowofpoint := shadpoint, shadowofline := shadline, distance := dist, basechange := change);
     ty := NewType( GeometriesFamily, IsClassicalGeneralisedHexagon and IsGeneralisedPolygonRep ); #change by jdb 7/12/11
     Objectify( ty, geo );
     SetAmbientSpace(geo, AmbientSpace(ps));
