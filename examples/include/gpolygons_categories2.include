@@ -1,0 +1,10 @@
+gap&gt; gp := SplitCayleyHexagon(3);
+H(3)
+gap&gt; IsGeneralisedHexagon(gp);
+true
+gap&gt; IsClassicalGeneralisedHexagon(gp);
+true
+gap&gt; IsLieGeometry(gp);
+true
+gap&gt; IsGeneralisedPolygonRep(gp);
+true

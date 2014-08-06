@@ -95,7 +95,7 @@ InstallMethod( ProjectiveSpace, "for a proj dimension and a field",
                 vectorspace := FullRowSpace(f, d+1) );
     if d = 2 then
         ty := NewType( GeometriesFamily,
-                  IsProjectiveSpace and IsProjectiveSpaceRep and IsProjectivePlane);
+                  IsProjectiveSpace and IsProjectiveSpaceRep and IsDesarguesianPlane);
     else
         ty := NewType( GeometriesFamily,
                   IsProjectiveSpace and IsProjectiveSpaceRep );

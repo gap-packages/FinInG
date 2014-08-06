@@ -1,30 +1,49 @@
-gap> blocks := [ 
->    [ 1, 2, 3, 4, 5 ], [ 1, 6, 7, 8, 9 ], [ 1, 10, 11, 12, 13 ],
->    [ 1, 14, 15, 16, 17 ], [ 1, 18, 19, 20, 21 ], [ 2, 6, 10, 14, 18 ], 
->    [ 2, 7, 11, 15, 19 ], [ 2, 8, 12, 16, 20 ], [ 2, 9, 13, 17, 21 ], 
->    [ 3, 6, 11, 16, 21 ], [ 3, 7, 10, 17, 20 ], [ 3, 8, 13, 14, 19 ], 
->    [ 3, 9, 12, 15, 18 ], [ 4, 6, 12, 17, 19 ], [ 4, 7, 13, 16, 18 ], 
->    [ 4, 8, 10, 15, 21 ], [ 4, 9, 11, 14, 20 ], [ 5, 6, 13, 15, 20 ], 
->    [ 5, 7, 12, 14, 21 ], [ 5, 8, 11, 17, 18 ], [ 5, 9, 10, 16, 19 ] ];;
-gap> pp := ProjectivePlaneByBlocks( blocks );
-&lt;projective plane of order 4>
-gap> incgraph := IncidenceGraphOfGeneralisedPolygon( pp );;
-gap> Diameter( incgraph );
+gap&gt; blocks := [ 
+&gt;    [ 1, 2, 3, 4, 5 ], [ 1, 6, 7, 8, 9 ], [ 1, 10, 11, 12, 13 ],
+&gt;    [ 1, 14, 15, 16, 17 ], [ 1, 18, 19, 20, 21 ], [ 2, 6, 10, 14, 18 ], 
+&gt;    [ 2, 7, 11, 15, 19 ], [ 2, 8, 12, 16, 20 ], [ 2, 9, 13, 17, 21 ], 
+&gt;    [ 3, 6, 11, 16, 21 ], [ 3, 7, 10, 17, 20 ], [ 3, 8, 13, 14, 19 ], 
+&gt;    [ 3, 9, 12, 15, 18 ], [ 4, 6, 12, 17, 19 ], [ 4, 7, 13, 16, 18 ], 
+&gt;    [ 4, 8, 10, 15, 21 ], [ 4, 9, 11, 14, 20 ], [ 5, 6, 13, 15, 20 ], 
+&gt;    [ 5, 7, 12, 14, 21 ], [ 5, 8, 11, 17, 18 ], [ 5, 9, 10, 16, 19 ] ];;
+gap&gt; gp := GeneralisedPolygonByBlocks( blocks );
+&lt;projective plane order 4&gt;
+gap&gt; incgraph := IncidenceGraphOfGeneralisedPolygon( gp );;
+gap&gt; Diameter( incgraph );
 3
-gap> Girth( incgraph );
+gap&gt; Girth( incgraph );
 6
-gap> VertexDegrees( incgraph );
+gap&gt; VertexDegrees( incgraph );
 [ 5 ]
-gap> aut := AutGroupGraph( incgraph );
-&lt;permutation group with 9 generators>
-gap> DisplayCompositionSeries(aut);
+gap&gt; aut := AutGroupGraph( incgraph );
+&lt;permutation group with 9 generators&gt;
+gap&gt; DisplayCompositionSeries(aut);
 G (9 gens, size 241920)
  | Z(2)
-S (3 gens, size 120960)
+S (5 gens, size 120960)
  | Z(2)
-S (3 gens, size 60480)
+S (5 gens, size 60480)
  | Z(3)
-S (2 gens, size 20160)
+S (4 gens, size 20160)
  | A(2,4) = L(3,4)
 1 (0 gens, size 1)
-
+gap&gt; gp := ParabolicQuadric(4,4);
+Q(4, 4)
+gap&gt; incgraph := IncidenceGraphOfGeneralisedPolygon( gp );;
+Error, No collineation group computed. Please compute collineation group before compu
+ting incidence graph,n called from
+&lt;function "unknown"&gt;( &lt;arguments&gt; )
+ called from read-eval loop at line 24 of *stdin*
+you can 'quit;' to quit to outer loop, or
+you can 'return;' to continue
+brk&gt; quit;
+gap&gt; CollineationGroup(gp);
+PGammaO(5,4)
+gap&gt; Order(last);
+1958400
+gap&gt; incgraph := IncidenceGraphOfGeneralisedPolygon( gp );;
+#I  Computing incidence graph of generalised polygon...
+gap&gt; aut := AutGroupGraph( incgraph );
+&lt;permutation group with 10 generators&gt;
+gap&gt; Order(aut);
+3916800

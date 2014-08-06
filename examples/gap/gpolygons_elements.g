@@ -1,2 +1,2 @@
-# elements of gp
+# elements
 

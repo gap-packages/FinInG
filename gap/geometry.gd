@@ -114,6 +114,7 @@ DeclareCategory( "IsGeneralisedQuadrangle", IsGeneralisedPolygon );
 DeclareCategory( "IsGeneralisedHexagon", IsGeneralisedPolygon );
 DeclareCategory( "IsGeneralisedOctagon", IsGeneralisedPolygon );
 
+DeclareCategory( "IsDesarguesianPlane", IsProjectivePlane and IsProjectiveSpace ); 
 DeclareCategory( "IsClassicalGQ", IsGeneralisedQuadrangle and IsClassicalPolarSpace ); 
 DeclareCategory( "IsClassicalGeneralisedHexagon", IsGeneralisedHexagon and IsLieGeometry ); 
 

@@ -76,6 +76,7 @@ to <C>IsGeneralisedPolygonRep</C>.
 </ManSection>
 
 <ManSection>
+<Heading>Subcategories in <C>IsGeneralisedPolygon</C></Heading>
 <Filt Name="IsProjectivePlane" Type="Category"/>
 <Filt Name="IsGeneralisedQuadrangle" Type="Category"/>
 <Filt Name="IsGeneralisedHexagon" Type="Category"/>
@@ -87,6 +88,48 @@ classical generalised quadrangles (which are the classical polar spaces of rank 
 also to <C>IsGeneralisedQuadrangle</C> and that the desarguesian projective planes (which are the projective
 spaces of dimension 2) also belong to <C>IsProjectivePlane</C>, but both do not belong
 to <C>IsGeneralisedPolygonRep</C>.
+</Description>
+</ManSection>
+
+<ManSection>
+<Heading>Subcategories in <C>IsProjectivePlane</C></Heading>
+<Filt Name="IsDesarguesianPlane" Type="Category"/>
+<Description>
+<C>IsDesarguesianPlane</C> is declared as a subcategory of <C>IsProjectivePlane</C> and 
+<C>IsProjecticeSpace</C>. Projective spaces of dimension 2 constructed using <F>ProjectiveSpace</F>
+belong to <C>IsDesarguesianPlane</C>.
+</Description>
+</ManSection>
+
+<ManSection>
+<Heading>Subcategories in <C>IsGeneralisedQuadrangle</C></Heading>
+<Filt Name="IsClassicalGQ" Type="Category"/>
+<Filt Name="IsElationGQ" Type="Category"/>
+<Description>
+<C>IsClassicalGQ</C> is declared as a subcategory of <C>IsGeneralisedQuadrangle</C> and 
+<C>IsClassicalPolarSpace</C>. All classical polar spaces of rank 2 belong to <C>IsClassicalGQ</C>.
+<C>IsElationGQ</C> is declared as subcategory of <C>IsGeneralisedQuadrangle</C>. Elation GQs will be 
+discusedd in detail in Section <Ref Sect="EGQ"/>
+<Example>
+<#Include SYSTEM "../examples/include/gpolygons_categories1.include">
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Filt Name="IsClassicalGeneralisedHexagon" Type="Category"/>
+<Description>
+<C>IsClassicalGeneralisedHexagon</C> is declared as subcategory of <C>IsGeneralisedHexagon</C> and <C>IsLieGeometry</C>.
+The so called classical generalised hexagons are the hexagons that come from the triality of the hyperbolic quadric 
+<Alt Only="LaTeX"><M>Q^+(7,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>(7,q)</Alt>.
+The Split Cayley hexagon is embedded in the parabolic quadric <M>Q(6,q)</M>. The twisted triality hexagon
+is embedded in the hyperbolic quadric <Alt Only="LaTeX"><M>Q^+(7,q)</M></Alt>
+<Alt Only="HTML">Q&lt;sup>+&lt;/sup>(7,q)</Alt>. The constuction of these hexagons in a subcategoy 
+of <C>IsLieGeometry</C>makes typical operations for Lie geometries applicable. The classical 
+generalised hexagons are in detail discussed in Section <Ref Sect="CGH"/>
+<Example>
+<#Include SYSTEM "../examples/include/gpolygons_categories2.include">
+</Example>
 </Description>
 </ManSection>
 
@@ -165,25 +208,39 @@ All operations described in this section are applicable on objects in the catego
 This method returns the parameters <M>(s,t)</M> of the generalised polygon <A>gp</A>. That is,
 <M>s+1</M> is the number of points on any line of <A>gp</A>, and <M>t+1</M> is the number
 of lines incident with any point of <A>gp</A>.
+<Example>
+<#Include SYSTEM "../examples/include/gpolygons_order.include">
+</Example>
 </Description>
 </ManSection>
 
 <ManSection>
-<Attr Name="IncidenceGraphOfGeneralisedPolygon" Arg="gp"/>
+<Attr Name="IncidenceGraphOfGeneralisedPolygonAttr" Arg="gp"/>
+<Description>
+This attribute is declared for objects in <C>IsGeneralisedPolygon</C>. It is a mutable
+attribute and can be accesed by the operation <F>IncidenceGraphOfGeneralisedPolygon</F>.
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="IncidenceGraphOfGeneralisedPolygon" Arg="gp"/>
 <Returns>a graph</Returns>
 <Description>
-This method allows one to use the GAP package <Package>GRAPE</Package> 
-to analyse a generalised polygon, so the user must first load this package.
-The argument <A>gp</A> is a generalised polygon, and if it has a collineation group,
-then the incidence graph is computed with this extra information and thus the resulting
-graph is easier to work with. Likewise, if <A>gp</A> is an elation
-generalised quadrangle and it has an elation group, then we use the elation group's action
-to efficiently compute the incidence graph.
-
+The argument <A>gp</A> is a generalised polygon. This operation returns the incidence graph of
+<A>gp</A>. If <A>gp</A> is constructed using <F>GeneralisedPolygonByBlocks</F>, <F>GeneralisedPolygonByElements</F>
+or <F>GeneralisedPolygonByIncidenceMatrix</F>, an incidence graph is computed to check the input, and is stored 
+as an attribute. For the particular generalised polygons available in <Package>Fining</Package>, there is
+no precomputed incidence graph. Note that computing an incidence graph may require some time, especially when
+the <A>gp</A> has no collineation group computed. Therefore, this operation will return an error when <A>gp</A>
+has no collineation group computed. As <F>CollineationGroup</F> is an attribute for objects in 
+<C>IsGeneralisedPolygon</C>, the user should computed the collineation group and then reissue the command to compute
+the incidence graph.<P/>
 We should also point out that this method returns a <E>mutable</E> attribute
 of <A>gp</A>, so that accquired information about the incidence graph can be added. For example,
 the automorphism group of the incidence graph may be computed and stored as a record component 
-after the incidence graph is stored as an attribute of <A>gp</A>. Normally, attributes of GAP objects are immutable.
+after the incidence graph is stored as an attribute of <A>gp</A>. Normally, attributes of GAP objects are immutable.<P/>
+Note that the factor 2 as difference in the order of the collineation group of <M>Q(4,4)</M> and the order of the
+automorphism group of its incidence graph is easily explained by the fact that the <M>Q(4,4)</M> is self dual.
 <Example>
 <#Include SYSTEM "../examples/include/gpolygons_incgraph.include"> 
 </Example>
@@ -198,6 +255,8 @@ This method returns the incidence matrix of the generalised polygon via
 the operation <C>CollapsedAdjacencyMat</C> in the <Package>GRAPE</Package>
 package (so you need to load this package first). The rows of the matrix
 correspond to the points of <A>gp</A>, and the columns correspond to the lines.
+Note that since this operation relies on <F>IncidenceGraphOfGeneralisedPolygon</F>,
+for some generalised polygons, it is necessary to compute a collineation group first.
 <Example>
 <#Include SYSTEM "../examples/include/gpolygons_incmatrix.include"> 
 </Example>
@@ -208,28 +267,44 @@ correspond to the points of <A>gp</A>, and the columns correspond to the lines.
 <Attr Name="CollineationGroup" Arg="gp"/>
 <Returns>a group</Returns>
 <Description>
-Some of our generalised polygons come equipped automatically with a collineation group.
-For example, the generalised hexagons have their collineation groups already installed,
-and so do the classical generalised quadrangles. However, the collineation group
-of a projective plane is calculated using the package <Package>Grape</Package>.
-We refer to <Ref Oper="CollineationAction"/> for an example.
+This attribute returns the full collineation group of the generalised polygon <A>gp</A>. 
+For some particular generalised polygons, a (subgroup) of the full collineation group
+can be computed efficiently without computing the incidence graph of <A>gp</A>: the full 
+collienation group of classical generalised quadrangles and classical generalised hexagons;
+and an elation group with relation to a basepoint of an elation generalised quadrangle. For 
+generalised polygons constructed by the operations <F>GeneralisedPolygonByBlocks</F>, 
+<F>GeneralisedPolygonByElements</F> or <F>GeneralisedPolygonByIncidenceMatrix</F>, the 
+full collineation group is computed using the full automorphism group of the underlying
+incidence graph, the latter being computed by the package <Package>GRAPE</Package>.<P/>
+The collineation groups computed for classical generalised quadrangles and classical 
+generalised hexagons are collineation groups in the sense of <Package>FinInG</Package>, and
+come equipped with a NiceMonomorphism. The collineation groups computed in all other cases 
+are permutations groups, acting on the vertices of the underlying incidence graph. 
+<Example>
+<#Include SYSTEM "../examples/include/gpolygons_collineationgroup.include"> 
+</Example>
 </Description>
 </ManSection>
 
 <ManSection>
-<Attr Name="CollineationAction" Arg="gp"/>
+<Attr Name="CollineationAction" Arg="group"/>
 <Returns>a function</Returns>
 <Description>
-Unlike some of the other geometries in <Package>FinInG</Package>, the collineations of
-generalised polygons to not have a uniform representation. Thus depending on the generalised
-polygon we are working with, a group element and its action could be very different. For example,
-we use ordinary permutations when acting on the elements of a projective plane (modulo some
-wrapping), whereas elation generalised quadrangles arising from Kantor families must
-employ a completely different group action. So our collineation groups come equipped with
-the attribute <C>CollineationAction</C>, which is a function with input a pair <A>(x,g)</A> 
-where <A>x</A> is an element of <A>gp</A>, and <A>g</A> is a collineation.
+<A>group</A> is a collineation group of a generalised polygon, computed using
+<F>CollineationGroup</F>. Unlike some of the other geometries in <Package>FinInG</Package>, 
+the collineations of generalised polygons to not have a uniform representation. 
+Thus depending on the generalised polygon we are working with, a group element and its 
+action could be very different. If the underlying incidence graph is used to compute the 
+collineation group, it is naturally a permutation group, while the underlying objects of the elements can
+be of very different nature. Elation generalised quadrangles arising from Kantor families must
+are based on abstract objects and employ a completely different group action.<P/>
+To make the collineation group of a generalised polygon usable in a natural way, for such a group,
+and action function for the elements of the generalised polygon can be computed in a generic way
+through <F>CollineationAction</F>. The result is a function with input a pair <A>(x,g)</A> 
+where <A>x</A> is an element of the generalised polygon, and <A>g</A> is a collineation of the generalised polygon,
+so an element of <A>group</A>
 <Example>
-<#Include SYSTEM "../examples/include/gpolygons_collineations.include"> 
+<!--<#Include SYSTEM "../examples/include/gpolygons_collineations.include">-->
 </Example>
 </Description>
 </ManSection>
@@ -251,7 +326,7 @@ of <A>gp</A>, so that accquired information about the block design can be added.
 the automorphism group of the block design may be computed after the design is stored
 as an attribute of <A>gp</A>. Normally, attributes of GAP objects are immutable.
 <Example>
-<#Include SYSTEM "../examples/include/gpolygons_blockdesign.include"> 
+<!--<#Include SYSTEM "../examples/include/gpolygons_blockdesign.include">-->
 </Example>
 </Description>
 </ManSection>
@@ -286,7 +361,8 @@ the number of element in <A>els</A>.
 
 <ManSection>
 <Oper Name="ObjectToElement" Arg="gp, obj"/>
-<Oper Name="ObjectToElement" Arg="gp, obj"/>
+<Oper Name="ObjectToElement" Arg="gp, type, obj"/>
+<Oper Name="UnderlyingObject" Arg="gp, type, obj"/>
 <Returns>a collection of elements of a generalised polygon</Returns>
 <Description>
 To create particular objects.
@@ -317,12 +393,12 @@ elements in the incidence graph of their ambient geometry is returned.
 
 </Section>
 
-<Section>
+<Section Label="CGH">
 <Heading>The classical generalised hexagons</Heading>
 
 </Section>
 
-<Section>
+<Section Label="EGQ">
 <Heading>Elation generalised quadrangles</Heading>
 
 </Section>

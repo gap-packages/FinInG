@@ -917,6 +917,50 @@ InstallMethod( BlockDesignOfGeneralisedPolygon,
 
 #############################################################################
 #
+# Desarguesian projective planes: only need a method for 
+# IncidenceGraphOfGeneralisedPolygon
+#
+#############################################################################
+
+#############################################################################
+#O  IncidenceGraphOfGeneralisedPolygon( <gp> )
+###
+InstallMethod( IncidenceGraphOfGeneralisedPolygon,
+    "for a generalised polygon (in all possible representations",
+    [ IsDesarguesianPlane ],
+    function( gp )
+        local points, lines, graph, adj, group, coll, sz;
+        if not "grape" in RecNames(GAPInfo.PackagesLoaded) then
+            Error("You must load the GRAPE package\n");
+        fi;
+        if IsBound(gp!.IncidenceGraphOfGeneralisedPolygonAttr) then
+            return gp!.IncidenceGraphOfGeneralisedPolygonAttr;
+        fi;
+        if not HasCollineationGroup(gp) then
+            Error("No collineation group computed. Please compute collineation group before computing incidence graph\,n");
+        else
+            points := AsList(Points(gp));
+            lines := AsList(Lines(gp));
+            Setter( HasGraphWithUnderlyingObjectsAsVertices )( gp, false );
+
+            Info(InfoFinInG, 1, "Computing incidence graph of generalised polygon...");
+    
+            adj := function(x,y)
+                if x!.type <> y!.type then
+                    return IsIncident(x,y);
+                else
+                    return false;
+                fi;
+            end;
+            group := CollineationGroup(gp);
+            graph := Graph(group,Concatenation(points,lines),OnProjSubspaces,adj,true);
+            Setter( IncidenceGraphOfGeneralisedPolygonAttr )( gp, graph );
+            return graph;
+        fi;
+  end );
+
+#############################################################################
+#
 # Classical GQs: only need a method for IncidenceGraphOfGeneralisedPolygon
 #
 #############################################################################
@@ -1372,11 +1416,11 @@ InstallMethod( SplitCayleyHexagon,
             if el1=el2 then
                 return 0;
             elif el1!.type = 1 and el2!.type = 1 then
-                y := VectorSpaceToElement(PG(6,f), change * SplitCayleyPointToPlane(Unpack(el2!.obj) * change^-1,f)); #PG(5,f): avoids some unnecessary checks
+                y := VectorSpaceToElement(PG(6,f), SplitCayleyPointToPlane(Unpack(el2!.obj) * change^-1,f) * change); #PG(6,f): avoids some unnecessary checks
                 if el1 in y then
                     return 2;
                 else
-                    x := VectorSpaceToElement(PG(6,f), change * SplitCayleyPointToPlane(Unpack(el1!.obj) * change^-1,f));
+                    x := VectorSpaceToElement(PG(6,f), SplitCayleyPointToPlane(Unpack(el1!.obj) * change^-1,f) * change);
                     if ProjectiveDimension(Meet(x,y)) = 0 then
                         return 4;
                     else
@@ -1397,7 +1441,7 @@ InstallMethod( SplitCayleyHexagon,
                 if el1 in el2 then
                     return 1;
                 fi;
-                x := VectorSpaceToElement(PG(6,f), change * SplitCayleyPointToPlane(Unpack(el1!.obj) * change^-1,f));
+                x := VectorSpaceToElement(PG(6,f), SplitCayleyPointToPlane(Unpack(el1!.obj) * change^-1,f) * change);
                 if ProjectiveDimension(Meet(x,el2)) = 0 then
                     return 3;
                 else
@@ -1443,11 +1487,11 @@ InstallMethod( SplitCayleyHexagon,
             if el1=el2 then
                 return 0;
             elif el1!.type = 1 and el2!.type = 1 then
-                y := VectorSpaceToElement(PG(5,f), change * SplitCayleyPointToPlane5(Unpack(el2!.obj) * change^-1,f)); #PG(5,f): avoids some unnecessary checks
+                y := VectorSpaceToElement(PG(5,f), SplitCayleyPointToPlane5(Unpack(el2!.obj) * change^-1,f) * change); #PG(5,f): avoids some unnecessary checks
                 if el1 in y then
                     return 2;
                 else
-                    x := VectorSpaceToElement(PG(5,f), change * SplitCayleyPointToPlane5(Unpack(el1!.obj) * change^-1,f));
+                    x := VectorSpaceToElement(PG(5,f), SplitCayleyPointToPlane5(Unpack(el1!.obj) * change^-1,f) * change);
                     if ProjectiveDimension(Meet(x,y)) = 0 then
                         return 4;
                     else
@@ -1468,7 +1512,7 @@ InstallMethod( SplitCayleyHexagon,
                 if el1 in el2 then
                     return 1;
                 fi;
-                x := VectorSpaceToElement(PG(5,f), change * SplitCayleyPointToPlane5(Unpack(el1!.obj) * change^-1,f));
+                x := VectorSpaceToElement(PG(5,f), SplitCayleyPointToPlane5(Unpack(el1!.obj) * change^-1,f) * change);
                 if ProjectiveDimension(Meet(x,el2)) = 0 then
                     return 3;
                 else
@@ -1543,10 +1587,11 @@ InstallMethod( TwistedTrialityHexagon,
 	"input is a finite field", 
     [ IsField and IsFinite ],
 	function( f )
-    local geo, ty, points, lines, repline, hvm, ps, orblen, hvmc, c, listels,
+    local geo, ty, points, lines, repline, hvm, ps, orblen, hvmc, c, listels, dist,
           hvmform, form, q, pps, reppoint, reppointvect, replinevect, w, shadline, 
-          shadpoint;
+          shadpoint, frob;
        ## Field must be GF(q^3);
+	frob := FrobeniusAutomorphism(f);
     q := RootInt(Size(f), 3);
 	if not q^3 = Size(f) then
        Error("Field order must be a cube of a prime power");
@@ -1591,9 +1636,53 @@ InstallMethod( TwistedTrialityHexagon,
         return List(Filtered(ShadowOfFlag(PG(7,f),flag,2),x->x in pt!.geo), y-> Wrap(pt!.geo,2,Unwrap(y)));
     end;
 
+    dist := function(el1,el2)
+		local x,y;
+        if el1 = el2 then
+			return 0;
+		elif el1!.type = 1 and el2!.type = 1 then
+			y := VectorSpaceToElement(PG(7,f), 
+				TwistedTrialityHexagonPointToPlaneByTwoTimesTriality(Unpack(el2!.obj),frob,f)); #PG(7,f): avoids some unnecessary checks
+			if el1 in y then
+				return 2;
+			else
+				x := VectorSpaceToElement(PG(7,f), 
+					TwistedTrialityHexagonPointToPlaneByTwoTimesTriality(Unpack(el1!.obj),frob,f));
+				if ProjectiveDimension(Meet(x,y)) = 0 then
+					return 4;
+				else
+					return 6;
+				fi;
+			fi;
+		elif el1!.type = 2 and el2!.type = 2 then
+			if ProjectiveDimension(Meet(el1,el2)) = 0 then
+				return 2;
+			fi;
+			x := TangentSpace(ps,el1);
+			if ProjectiveDimension(Meet(x,el2)) = 0 then
+				return 4;
+			else
+				return 6;
+			fi;
+		elif el1!.type = 1 and el2!.type = 2 then
+			if el1 in el2 then
+				return 1;
+			fi;
+			x := VectorSpaceToElement(PG(7,f), 
+				TwistedTrialityHexagonPointToPlaneByTwoTimesTriality(Unpack(el1!.obj),frob,f));
+			if ProjectiveDimension(Meet(x,el2)) = 0 then
+				return 3;
+			else
+				return 5;
+			fi;
+		else
+			return dist(el2,el1);
+		fi;
+	end;
+
     geo := rec( pointsobj := [], linesobj := [], incidence:= \*, listelements := listels, shadowofpoint := shadpoint, 
         shadowofline := shadline, basefield := BaseField(ps), dimension := Dimension(ps),
-        vectorspace := UnderlyingVectorSpace(ps), polarspace := ps );
+        vectorspace := UnderlyingVectorSpace(ps), polarspace := ps, distance := dist );
     ty := NewType( GeometriesFamily, IsClassicalGeneralisedHexagon and IsGeneralisedPolygonRep ); #change by jdb 7/12/11
     Objectify( ty, geo );
     SetAmbientSpace(geo, AmbientSpace(ps));
@@ -1644,12 +1733,13 @@ InstallMethod( TwistedTrialityHexagon,
 	function( ps )
     local geo, ty, points, lines, repline, hvm, orblen, hvmc, c, listels, eq, naampje,
           hvmform, form, q, pps, reppoint, reppointvect, replinevect, w, shadline, f,
-          shadpoint, c1, c2, change;
+          shadpoint, c1, c2, change, dist, frob;
        ## Field must be GF(q^3);
     if not (IsHyperbolicQuadric(ps) and ps!.dimension = 7) then
         Error("No embedding of twisted triality hexagon possible in <ps>");
     fi;
     f := BaseField(ps);
+	frob := FrobeniusAutomorphism(f);
     q := RootInt(Size(f), 3);
 	if not q^3 = Size(f) then
        Error("Field order must be a cube of a prime power");
@@ -1702,10 +1792,54 @@ InstallMethod( TwistedTrialityHexagon,
         # but I need more mathematics then.
         return List(Filtered(ShadowOfFlag(PG(7,f),flag,2),x->x in pt!.geo), y-> Wrap(pt!.geo,2,Unwrap(y)));
     end;
+    
+	dist := function(el1,el2)
+		local x,y;
+        if el1 = el2 then
+			return 0;
+		elif el1!.type = 1 and el2!.type = 1 then
+			y := VectorSpaceToElement(PG(7,f), TwistedTrialityHexagonPointToPlaneByTwoTimesTriality(
+				Unpack(el2!.obj) * change^-1,frob,f) * change); #PG(7,f): avoids some unnecessary checks
+			if el1 in y then
+				return 2;
+			else
+				x := VectorSpaceToElement(PG(7,f), TwistedTrialityHexagonPointToPlaneByTwoTimesTriality(
+					Unpack(el1!.obj) * change^-1,frob,f) * change);
+				if ProjectiveDimension(Meet(x,y)) = 0 then
+					return 4;
+				else
+					return 6;
+				fi;
+			fi;
+		elif el1!.type = 2 and el2!.type = 2 then
+			if ProjectiveDimension(Meet(el1,el2)) = 0 then
+				return 2;
+			fi;
+			x := TangentSpace(ps,el1);
+			if ProjectiveDimension(Meet(x,el2)) = 0 then
+				return 4;
+			else
+				return 6;
+			fi;
+		elif el1!.type = 1 and el2!.type = 2 then
+			if el1 in el2 then
+				return 1;
+			fi;
+			x := VectorSpaceToElement(PG(7,f), TwistedTrialityHexagonPointToPlaneByTwoTimesTriality(
+				Unpack(el1!.obj) * change^-1,frob,f) * change);
+			if ProjectiveDimension(Meet(x,el2)) = 0 then
+				return 3;
+			else
+				return 5;
+			fi;
+		else
+			return dist(el2,el1);
+		fi;
+	end;
 
     geo := rec( pointsobj := [], linesobj := [], incidence:= \*, listelements := listels, shadowofpoint := shadpoint, 
         shadowofline := shadline, basefield := BaseField(ps), dimension := Dimension(ps), basechange := change,
-        vectorspace := UnderlyingVectorSpace(ps), polarspace := ps );
+        vectorspace := UnderlyingVectorSpace(ps), polarspace := ps, distance := dist );
     ty := NewType( GeometriesFamily, IsClassicalGeneralisedHexagon and IsGeneralisedPolygonRep ); #change by jdb 7/12/11
     Objectify( ty, geo );
     SetAmbientSpace(geo, AmbientSpace(ps));

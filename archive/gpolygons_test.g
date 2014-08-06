@@ -58,6 +58,32 @@ lns := Union(linesa,linesb);
 inc := \*;
 gp := GeneralisedPolygonByElements(pts,lns,inc,stab,\^);
 
+###### our best friend again and again#####
+q := 8;
+f := GF(q);
+vecs := Union(List(f,t->List(f,s->[One(f),t,t^4])));
+Add(vecs,[0,0,1]*One(f));
+oval := List(vecs,x->VectorSpaceToElement(PG(2,q),x));;
+tangents := Union(List(oval,x->Filtered(Lines(x),x->Number(oval,y->y in x)=1)));;
+pg := PG(3,q);
+hyp :=  HyperplaneByDualCoordinates(pg,[1,0,0,0]*Z(q)^0);
+em := NaturalEmbeddingBySubspace(PG(2,q),pg,hyp);
+O := List(oval,x->x^em);
+tangents := List(tangents,x->x^em);
+group := CollineationGroup(pg);
+stab := FiningSetwiseStabiliser(group,O);
+points1 := Set(Filtered(Points(pg),x->not x in hyp));;
+tangents := List(conic,x->TangentSpace(x)^em);
+planes := List(tangents,x->Filtered(Planes(x),y->not y in hyp));
+points2 := Union(planes);
+points3 := [hyp];
+linesa := Union(List(O,x->Filtered(Lines(x),y->not y in hyp)));
+linesb := Set(O);
+pts := Union(points1,points2,points3);
+lns := Union(linesa,linesb);
+inc := \*;
+gp := GeneralisedPolygonByElements(pts,lns,inc,stab,\^);
+time;
 
 
 
@@ -251,5 +277,110 @@ time;
 egq2 := EGQByBLTSet(blt1);
 time;
 coll2 := CollineationGroup(egq2);
+
+
+########### distances in GHs.
+
+q := 3;
+hq := SplitCayleyHexagon(q);
+#ps := ParabolicQuadric(6,q);
+#ps := SymplecticSpace(5,q);
+#hq := SplitCayleyHexagon(ps);
+#ps := HyperbolicQuadric(7,2^3);
+#hq := TwistedTrialityHexagon(2^3);
+#hq := TwistedTrialityHexagon(ps);
+
+coll := CollineationGroup(hq);
+graph := IncidenceGraphOfGeneralisedPolygon(hq);;
+vn := VertexNames(graph);;
+p := Random(Points(hq));
+pn := Position(vn,p);
+two := Filtered(Points(hq),x->DistanceBetweenElements(p,x)=2);;
+four := Filtered(Points(hq),x->DistanceBetweenElements(p,x)=4);;
+six := Filtered(Points(hq),x->DistanceBetweenElements(p,x)=6);;
+twon := Filtered(Vertices(graph),x->Distance(graph,pn,x)=2);;
+fourn := Filtered(Vertices(graph),x->Distance(graph,pn,x)=4);;
+sixn := Filtered(Vertices(graph),x->Distance(graph,pn,x)=6);;
+Length(two)=Length(twon);
+Length(four)=Length(fourn);
+Length(six)=Length(sixn);
+Set(two)=Set(vn{twon});
+Set(four)=Set(vn{fourn});
+Set(six)=Set(vn{sixn});
+
+p := Random(Lines(hq));
+pn := Position(vn,p);
+two := Filtered(Lines(hq),x->DistanceBetweenElements(p,x)=2);;
+four := Filtered(Lines(hq),x->DistanceBetweenElements(p,x)=4);;
+six := Filtered(Lines(hq),x->DistanceBetweenElements(p,x)=6);;
+twon := Filtered(Vertices(graph),x->Distance(graph,pn,x)=2);;
+fourn := Filtered(Vertices(graph),x->Distance(graph,pn,x)=4);;
+sixn := Filtered(Vertices(graph),x->Distance(graph,pn,x)=6);;
+Length(two)=Length(twon);
+Length(four)=Length(fourn);
+Length(six)=Length(sixn);
+Set(two)=Set(vn{twon});
+Set(four)=Set(vn{fourn});
+Set(six)=Set(vn{sixn});
+
+p := Random(Points(hq));
+pn := Position(vn,p);
+one := Filtered(Lines(hq),x->DistanceBetweenElements(p,x)=1);;
+three := Filtered(Lines(hq),x->DistanceBetweenElements(p,x)=3);;
+five := Filtered(Lines(hq),x->DistanceBetweenElements(p,x)=5);;
+onen := Filtered(Vertices(graph),x->Distance(graph,pn,x)=1);;
+threen := Filtered(Vertices(graph),x->Distance(graph,pn,x)=3);;
+fiven := Filtered(Vertices(graph),x->Distance(graph,pn,x)=5);;
+Length(one)=Length(onen);
+Length(three)=Length(threen);
+Length(five)=Length(fiven);
+Set(one)=Set(vn{onen});
+Set(three)=Set(vn{threen});
+Set(five)=Set(vn{fiven});
+
+p := Random(Lines(hq));
+pn := Position(vn,p);
+one := Filtered(Points(hq),x->DistanceBetweenElements(p,x)=1);;
+three := Filtered(Points(hq),x->DistanceBetweenElements(p,x)=3);;
+five := Filtered(Points(hq),x->DistanceBetweenElements(p,x)=5);;
+onen := Filtered(Vertices(graph),x->Distance(graph,pn,x)=1);;
+threen := Filtered(Vertices(graph),x->Distance(graph,pn,x)=3);;
+fiven := Filtered(Vertices(graph),x->Distance(graph,pn,x)=5);;
+Length(one)=Length(onen);
+Length(three)=Length(threen);
+Length(five)=Length(fiven);
+Set(one)=Set(vn{onen});
+Set(three)=Set(vn{threen});
+Set(five)=Set(vn{fiven});
+
+
+########## T_3(O) ########## kijken wat dit geeft....
+f := GF(8);
+vecs := Union(List(f,t->List(f,s->[t^4+s*t+s^6,One(f),s,t])));
+Add(vecs,[1,0,0,0]*One(f));
+ovoid := List(vecs,x->VectorSpaceToElement(PG(3,f),x));;
+tangents := Union(List(ovoid,x->Filtered(Planes(x),x->Number(ovoid,y->y in x)=1)));;
+pg := PG(4,f);
+hyp :=  HyperplaneByDualCoordinates(pg,[1,0,0,0,0]*One(f));
+em := NaturalEmbeddingBySubspace(PG(3,f),pg,hyp);
+O := List(ovoid,x->x^em);
+tangents := List(tangents,x->x^em);;
+group := CollineationGroup(pg);
+stabhyp := FiningStabiliser(group,hyp);
+stab := FiningSetwiseStabiliser(stabhyp,O);
+time; #pm 235 seconds.
+solids := List(tangents,x->Filtered(Solids(x),y->not y in hyp));;
+points1 := Set(Filtered(Points(pg),x->not x in hyp));;
+points2 := Union(solids);;
+points3 := [hyp];
+linesa := Union(List(O,x->Filtered(Lines(x),y->not y in hyp)));;
+linesb := Set(O);
+pts := Union(points1,points2,points3);;
+lns := Union(linesa,linesb);;
+inc := \*;
+gp := GeneralisedPolygonByElements(pts,lns,inc,stab,\^);
+time; #pm 31 seconds
+coll := CollineationGroup(gp);
+time;
 
 

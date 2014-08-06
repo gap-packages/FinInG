@@ -1,0 +1,10 @@
+gap&gt; gp := SymplecticSpace(3,2);
+W(3, 2)
+gap&gt; IsGeneralisedPolygon(gp);
+true
+gap&gt; IsGeneralisedQuadrangle(gp);
+true
+gap&gt; IsClassicalGQ(gp);
+true
+gap&gt; IsGeneralisedPolygonRep(gp);
+false
