@@ -56,7 +56,7 @@ This package requires the GAP packages <Package>GAPDoc</Package>, version 0.99 o
 Currently, one function will use the <Package>Design</Package> package, but this package is not required to
 load <Package>FinInG</Package>. The package <Package>GenSS</Package> requires the package <Package>IO</Package>.
 
-The packages required by <Package>FinInG</Package> are all part of the standard GAP distribution.
+The packages required by <Package>FinInG</Package> are all part of the standard GAP distribution but some of them have to be compiled. Make sure (at least) <Package>IO</Package>, <Package>orb</Package> and <Package>cvec</Package> have been compiled before trying to load <Package>FinInG</Package>. You can find instructions on how to compile packages for your operating system on the <Package>GAP</Package> webpage.
 
 The recent development stage of <Package>FinInG</Package> is based on GAP4r5. We have done testing using GAP4r7,
 and no installation differences occured. In this section, we describe in detail the installation procedure
@@ -114,8 +114,7 @@ To load <Package>FinInG</Package>, issue
 LoadPackage("fining");
 </Display>
 If this fails, in most cases, the reason is that either GAP does not
-find the directory in which <Package>FinInG</Package> is installed, or one of the required packages for <Package>FinInG</Package> is not installed.
-The easiest way to find out
+find the directory in which <Package>FinInG</Package> is installed, or one of the required packages for <Package>FinInG</Package> is not installed or not compiled. Make sure (at least) <Package>IO</Package>, <Package>orb</Package> and <Package>cvec</Package> have been compiled before trying to load <Package>FinInG</Package>. The easiest way to find out what goes wrong 
 is to load each required package before issuing the LoadPackage command to load <Package>FinInG</Package>. The example below shows this situation, the packages
 <Package>Forms</Package> and <Package>FinInG</Package> itself are installed in a local pkg directory, the other packages are installed
 centrally. Starting up gap not pointing to the local pkg directory, causes the locally installed packages to be unloadable.
