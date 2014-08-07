@@ -85,6 +85,22 @@ inc := \*;
 gp := GeneralisedPolygonByElements(pts,lns,inc,stab,\^);
 time;
 
+###### T_2(O)* #####
+q := 4;
+conic := ParabolicQuadric(2,q);
+nucleus := NucleusOfParabolicQuadric(conic);
+hyperoval := Union(List(Points(conic)),[nucleus]);
+pg := PG(3,q);
+hyp :=  HyperplaneByDualCoordinates(pg,[1,0,0,0]*Z(q)^0);
+em := NaturalEmbeddingBySubspace(PG(2,q),pg,hyp);
+O := List(hyperoval,x->x^em);
+group := CollineationGroup(pg);
+stab := FiningSetwiseStabiliser(group,O);
+points := Set(Filtered(Points(pg),x->not x in hyp));;
+lines := Union(List(O,x->Filtered(Lines(x),y->not y in hyp)));
+inc := \*;
+gp := GeneralisedPolygonByElements(points,lines,inc);
+gp := GeneralisedPolygonByElements(points,lines,inc,stab,\^);
 
 
 InstallMethod( GeneralisedPolygonByBlocks,
@@ -383,4 +399,15 @@ time; #pm 31 seconds
 coll := CollineationGroup(gp);
 time;
 
+#### GP By Elements (new version)? #####
+
+    adj2 := function(x,y)
+    if els[x] in pts and els[y] in pts then
+        return false;
+    elif els[x] in lns and els[y] in lns then
+        return false;
+    else
+        return inc(els[x],els[y]);
+    fi;
+    end;
 

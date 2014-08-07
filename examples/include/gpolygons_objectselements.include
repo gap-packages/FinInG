@@ -1,0 +1,35 @@
+gap&gt; mat := [ [ 1, 1, 0, 0, 0, 1, 0 ], [ 1, 0, 0, 1, 1, 0, 0 ],
+&gt;          [ 1, 0, 1, 0, 0, 0, 1 ], [ 0, 1, 1, 1, 0, 0, 0 ],
+&gt;          [ 0, 1, 0, 0, 1, 0, 1 ], [ 0, 0, 0, 1, 0, 1, 1 ],
+&gt;          [ 0, 0, 1, 0, 1, 1, 0 ] ];
+[ [ 1, 1, 0, 0, 0, 1, 0 ], [ 1, 0, 0, 1, 1, 0, 0 ], [ 1, 0, 1, 0, 0, 0, 1 ], 
+  [ 0, 1, 1, 1, 0, 0, 0 ], [ 0, 1, 0, 0, 1, 0, 1 ], [ 0, 0, 0, 1, 0, 1, 1 ], 
+  [ 0, 0, 1, 0, 1, 1, 0 ] ]
+gap&gt; gp := GeneralisedPolygonByIncidenceMatrix(mat);
+&lt;projective plane order 2&gt;
+gap&gt; p := Random(Points(gp));
+&lt;a point in &lt;projective plane order 2&gt;&gt;
+gap&gt; UnderlyingObject(p);
+7
+gap&gt; l := Random(Lines(gp));
+&lt;a line in &lt;projective plane order 2&gt;&gt;
+gap&gt; UnderlyingObject(l);
+[ 4, 6, 7 ]
+gap&gt; ObjectToElement(gp,1,4);
+&lt;a point in &lt;projective plane order 2&gt;&gt;
+gap&gt; ObjectToElement(gp,2,5);
+Error, &lt;obj&gt; does not represent a line of &lt;gp&gt; called from
+&lt;function "unknown"&gt;( &lt;arguments&gt; )
+ called from read-eval loop at line 18 of *stdin*
+you can 'quit;' to quit to outer loop, or
+you can 'return;' to continue
+brk&gt; quit;
+gap&gt; ObjectToElement(gp,2,[1,2,3]);
+Error, &lt;obj&gt; does not represent a line of &lt;gp&gt; called from
+&lt;function "unknown"&gt;( &lt;arguments&gt; )
+ called from read-eval loop at line 18 of *stdin*
+you can 'quit;' to quit to outer loop, or
+you can 'return;' to continue
+brk&gt; quit;
+gap&gt; ObjectToElement(gp,[1,2,6]);
+&lt;a line in &lt;projective plane order 2&gt;&gt;

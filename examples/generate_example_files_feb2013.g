@@ -78,10 +78,10 @@ morphismsfiles := ["morphisms_filters", "morphisms_isopolar", "morphisms_embeddi
 					"morphisms_subfield2", "morphisms_projection", "morphisms_klein", "morphisms_klein2", "morphisms_klein3", "morphisms_duality", "morphisms_selfduality",
                     "morphisms_completion","morphisms_plucker", "morphisms_blownupsubspace", "morphisms_fieldreducpolar3" ];
 
-gpolygonfiles := [ "gpolygons_gpbyblocks", "gpolygons_gpbyincmat", "gpolygons_gpelements", "gpolygons_iskantorfamily", "gpolygons_isqclan",
-				   "gpolygons_qclan", "gpolygons_EGQByqClan", "gpolygons_kantorfamilybyqclan", "gpolygons_categories1",
+gpolygonfiles := [ "gpolygons_gpbyblocks", "gpolygons_gpbyincmat", "gpolygons_gpelements", "gpolygons_iskantorfamily", "gpolygons_isqclan", "gpolygons_objectselements",
+				   "gpolygons_qclan", "gpolygons_EGQByqClan", "gpolygons_kantorfamilybyqclan", "gpolygons_categories1", "gpolygons_collineationgroup1",
 				   "gpolygons_EGQByKantorFamily", "gpolygons_particularqclans", "gpolygons_bltsetbyqclan", "gpolygons_categories2",
-				   "gpolygons_EGQByBLTSet", "gpolygons_elationgroup", "gpolygons_basepointofegq",
+				   "gpolygons_EGQByBLTSet", "gpolygons_elationgroup", "gpolygons_basepointofegq", "gpolygons_collineationgroup2", "gpolygons_collineationgroup3",
 				   "gpolygons_collineations", "gpolygons_SplitCayleyHexagon", "gpolygons_ambientpolarspace"];
 
 

@@ -1,0 +1,53 @@
+gap&gt; q := 8;
+8
+gap&gt; conic := ParabolicQuadric(2,q);
+Q(2, 8)
+gap&gt; nucleus := NucleusOfParabolicQuadric(conic);
+&lt;a point in ProjectiveSpace(2, 8)&gt;
+gap&gt; hyperoval := Union(List(Points(conic)),[nucleus]);
+[ &lt;a point in ProjectiveSpace(2, 8)&gt;, &lt;a point in Q(2, 8)&gt;, 
+  &lt;a point in Q(2, 8)&gt;, &lt;a point in Q(2, 8)&gt;, &lt;a point in Q(2, 8)&gt;, 
+  &lt;a point in Q(2, 8)&gt;, &lt;a point in Q(2, 8)&gt;, &lt;a point in Q(2, 8)&gt;, 
+  &lt;a point in Q(2, 8)&gt;, &lt;a point in Q(2, 8)&gt; ]
+gap&gt; pg := PG(3,q);
+ProjectiveSpace(3, 8)
+gap&gt; hyp :=  HyperplaneByDualCoordinates(pg,[1,0,0,0]*Z(q)^0);
+&lt;a plane in ProjectiveSpace(3, 8)&gt;
+gap&gt; em := NaturalEmbeddingBySubspace(PG(2,q),pg,hyp);
+&lt;geometry morphism from &lt;All elements of ProjectiveSpace(2, 
+8)&gt; to &lt;All elements of ProjectiveSpace(3, 8)&gt;&gt;
+gap&gt; O := List(hyperoval,x-&gt;x^em);
+[ &lt;a point in ProjectiveSpace(3, 8)&gt;, &lt;a point in ProjectiveSpace(3, 8)&gt;, 
+  &lt;a point in ProjectiveSpace(3, 8)&gt;, &lt;a point in ProjectiveSpace(3, 8)&gt;, 
+  &lt;a point in ProjectiveSpace(3, 8)&gt;, &lt;a point in ProjectiveSpace(3, 8)&gt;, 
+  &lt;a point in ProjectiveSpace(3, 8)&gt;, &lt;a point in ProjectiveSpace(3, 8)&gt;, 
+  &lt;a point in ProjectiveSpace(3, 8)&gt;, &lt;a point in ProjectiveSpace(3, 8)&gt; ]
+gap&gt; points := Set(Filtered(Points(pg),x-&gt;not x in hyp));;
+gap&gt; lines := Union(List(O,x-&gt;Filtered(Lines(x),y-&gt;not y in hyp)));;
+gap&gt; inc := \*;
+&lt;Operation "*"&gt;
+gap&gt; gp := GeneralisedPolygonByElements(points,lines,inc);
+&lt;generalised quadrangle of order [ 7, 9 ]&gt;
+gap&gt; time;
+15009
+gap&gt; coll := CollineationGroup(gp);
+&lt;permutation group with 9 generators&gt;
+gap&gt; time;
+66
+gap&gt; group := CollineationGroup(pg);
+The FinInG collineation group PGammaL(4,8)
+gap&gt; stab := FiningSetwiseStabiliser(group,O);
+#I  Computing adjusted stabilizer chain...
+&lt;projective collineation group with 11 generators&gt;
+gap&gt; time;
+1749
+gap&gt; gp := GeneralisedPolygonByElements(points,lines,inc,stab,\^);
+&lt;generalised quadrangle of order [ 7, 9 ]&gt;
+gap&gt; time;
+320
+gap&gt; coll := CollineationGroup(gp);
+&lt;permutation group with 9 generators&gt;
+gap&gt; Order(coll);
+5419008
+gap&gt; Order(stab);
+5419008

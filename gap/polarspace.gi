@@ -2768,8 +2768,12 @@ InstallMethod( CollineationGroup,
             SetNiceMonomorphism(g, hom );
 	      fi;
  	   fi;	
-
-		return g;
+        
+        # only for making generalised polygons section more generic:
+        if IsClassicalGQ(ps) then
+            SetCollineationAction(g,OnProjSubspaces);
+        fi;
+        return g;
 	end );
 
 #############################################################################

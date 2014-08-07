@@ -242,10 +242,10 @@ DeclareOperation( "Wrap", [IsIncidenceGeometry, IsPosInt, IsObject] );
 DeclareOperation( "Unwrap", [IsElementOfIncidenceStructure] );
 DeclareOperation( "\^", [IsElementOfIncidenceStructure, IsUnwrapper ] ); 
 
-# two general operations. Methods to be installed for several filters.
+# three general operations. Methods to be installed for several filters.
 DeclareOperation( "ObjectToElement", [IsIncidenceGeometry, IsPosInt, IsObject] );
 DeclareOperation( "ObjectToElement", [IsIncidenceGeometry, IsObject] );
-
+DeclareOperation( "UnderlyingObject", [IsElementOfIncidenceStructure] );
 
 DeclareGlobalFunction( "HashFuncForElements" );
 # commenting this out had not effect, presumably...
@@ -296,4 +296,13 @@ DeclareOperation( "Hyperplanes", [ IsIncidenceStructure, IsElementOfIncidenceStr
 DeclareProperty( "IsConfiguration", IsIncidenceStructure );
 DeclareProperty( "IsConstellation", IsIncidenceStructure );
 
+#############################################################################
+#
+# The representation of a collineation group of a geometry could be, 
+# in a natural way, incompatible with the elements of the geometry. In such 
+# cases, this attribute can be installed returning an appropriate action
+# function.
+#
+#############################################################################
 
+DeclareAttribute( "CollineationAction", IsGroup);

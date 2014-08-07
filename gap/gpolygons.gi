@@ -457,6 +457,16 @@ InstallMethod( ViewObj,
 #############################################################################
 
 #############################################################################
+#O  UnderlyingObject( <x> )
+##
+InstallMethod( UnderlyingObject, 
+	"for an element of a LieGeometry",
+	[ IsElementOfGeneralisedPolygon ],
+	function( x )
+		return x!.obj;
+	end );
+
+#############################################################################
 #O  ObjectToElement( <geom>, <type>, <obj> )
 # returns the subspace of <geom>, with representative <v> and subspace at infinity
 # determined by <m> if and only if <obj> is the list [v,m].

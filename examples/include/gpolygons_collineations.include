@@ -1,60 +1,45 @@
-gap&gt; LoadPackage("grape");
-true
-gap&gt; Print("Collineations of projective planes...\n");
-Collineations of projective planes...
-gap&gt; blocks := [ 
-&gt;    [ 1, 2, 3, 4, 5 ], [ 1, 6, 7, 8, 9 ], [ 1, 10, 11, 12, 13 ],
-&gt;    [ 1, 14, 15, 16, 17 ], [ 1, 18, 19, 20, 21 ], [ 2, 6, 10, 14, 18 ], 
-&gt;    [ 2, 7, 11, 15, 19 ], [ 2, 8, 12, 16, 20 ], [ 2, 9, 13, 17, 21 ], 
-&gt;    [ 3, 6, 11, 16, 21 ], [ 3, 7, 10, 17, 20 ], [ 3, 8, 13, 14, 19 ], 
-&gt;    [ 3, 9, 12, 15, 18 ], [ 4, 6, 12, 17, 19 ], [ 4, 7, 13, 16, 18 ], 
-&gt;    [ 4, 8, 10, 15, 21 ], [ 4, 9, 11, 14, 20 ], [ 5, 6, 13, 15, 20 ], 
-&gt;    [ 5, 7, 12, 14, 21 ], [ 5, 8, 11, 17, 18 ], [ 5, 9, 10, 16, 19 ] ];;
-gap&gt; pp := ProjectivePlaneByBlocks( blocks );
-&lt;projective plane of order 4&gt;
-gap&gt; coll := CollineationGroup( pp );
-#I  Computing incidence graph of projective plane...
+gap&gt; q := 4;
+4
+gap&gt; conic := ParabolicQuadric(2,q);
+Q(2, 4)
+gap&gt; nucleus := NucleusOfParabolicQuadric(conic);
+&lt;a point in ProjectiveSpace(2, 4)&gt;
+gap&gt; hyperoval := Union(List(Points(conic)),[nucleus]);
+[ &lt;a point in ProjectiveSpace(2, 4)&gt;, &lt;a point in Q(2, 4)&gt;, 
+  &lt;a point in Q(2, 4)&gt;, &lt;a point in Q(2, 4)&gt;, &lt;a point in Q(2, 4)&gt;, 
+  &lt;a point in Q(2, 4)&gt; ]
+gap&gt; pg := PG(3,q);
+ProjectiveSpace(3, 4)
+gap&gt; hyp :=  HyperplaneByDualCoordinates(pg,[1,0,0,0]*Z(q)^0);
+&lt;a plane in ProjectiveSpace(3, 4)&gt;
+gap&gt; em := NaturalEmbeddingBySubspace(PG(2,q),pg,hyp);
+&lt;geometry morphism from &lt;All elements of ProjectiveSpace(2, 
+4)&gt; to &lt;All elements of ProjectiveSpace(3, 4)&gt;&gt;
+gap&gt; O := List(hyperoval,x-&gt;x^em);
+[ &lt;a point in ProjectiveSpace(3, 4)&gt;, &lt;a point in ProjectiveSpace(3, 4)&gt;, 
+  &lt;a point in ProjectiveSpace(3, 4)&gt;, &lt;a point in ProjectiveSpace(3, 4)&gt;, 
+  &lt;a point in ProjectiveSpace(3, 4)&gt;, &lt;a point in ProjectiveSpace(3, 4)&gt; ]
+gap&gt; points := Set(Filtered(Points(pg),x-&gt;not x in hyp));;
+gap&gt; lines := Union(List(O,x-&gt;Filtered(Lines(x),y-&gt;not y in hyp)));;
+gap&gt; inc := \*;
+&lt;Operation "*"&gt;
+gap&gt; gp := GeneralisedPolygonByElements(points,lines,inc);
+&lt;generalised quadrangle of order [ 3, 5 ]&gt;
+gap&gt; coll := CollineationGroup(gp);
 &lt;permutation group with 8 generators&gt;
-gap&gt; DisplayCompositionSeries( coll );
-G (8 gens, size 120960)
- | Z(2)
-S (4 gens, size 60480)
- | Z(3)
-S (3 gens, size 20160)
- | A(2,4) = L(3,4)
-1 (0 gens, size 1)
-gap&gt; Display( CollineationAction(coll) );
-function ( x, g )
-    if x!.type = 1  then
-        return Wrap( plane, 1, OnPoints( x!.obj, g ) );
-    elif x!.type = 2  then
-        return Wrap( plane, 2, OnSets( x!.obj, g ) );
-    fi;
-    return;
-end
-gap&gt; 
-gap&gt; Print("Collineations of generalised hexagons...\n");
-Collineations of generalised hexagons...
-gap&gt; hex := SplitCayleyHexagon( 5 );
-Split Cayley Hexagon of order 5
-gap&gt; coll := CollineationGroup( hex );
-G_2(5)
-gap&gt; CollineationAction(coll) = OnProjSubspaces;
-true
-gap&gt; Print("Collineations of elation generalised quadrangles...\n");
-Collineations of elation generalised quadrangles...
-gap&gt; g := ElementaryAbelianGroup(27);
-&lt;pc group of size 27 with 3 generators&gt;
-gap&gt; flist1 := [ Group(g.1), Group(g.2), Group(g.3), Group(g.1*g.2*g.3) ];;
-gap&gt; flist2 := [ Group([g.1, g.2^2*g.3]), Group([g.2, g.1^2*g.3 ]), 
-&gt;             Group([g.3, g.1^2*g.2]), Group([g.1^2*g.2, g.1^2*g.3 ]) ];; 
-gap&gt; egq := EGQByKantorFamily(g, flist1, flist2);
-#I  Computing points from Kantor family...
-#I  Computing lines from Kantor family...
-&lt;EGQ of order [ 3, 3 ] and basepoint 0&gt;
-gap&gt; elations := ElationGroup( egq );
-&lt;pc group of size 27 with 3 generators&gt;
-gap&gt; CollineationAction(elations) = OnKantorFamily;
-true
-gap&gt; HasCollineationGroup( egq );
-false
+gap&gt; act := CollineationAction(coll);
+function( el, g ) ... end
+gap&gt; g := Random(coll);
+(1,37,29,42,14,54)(2,58,13,41,17,38)(3,46,51,44,5,28)(4,49,35,43,26,12)(6,7,
+19,45,48,60)(8,16,61,47,39,22)(9,24,15,34,63,40)(10,11,31,33,36,56)(18,57)(20,
+50,64,59,25,23)(21,27,32,62,52,55)(30,53)
+gap&gt; l := Random(Lines(gp));
+&lt;a line in &lt;generalised quadrangle of order [ 3, 5 ]&gt;&gt;
+gap&gt; act(l,g);
+&lt;a line in &lt;generalised quadrangle of order [ 3, 5 ]&gt;&gt;
+gap&gt; p := Random(Points(gp));
+&lt;a point in &lt;generalised quadrangle of order [ 3, 5 ]&gt;&gt;
+gap&gt; act(p,g);
+&lt;a point in &lt;generalised quadrangle of order [ 3, 5 ]&gt;&gt;
+gap&gt; stab := Stabilizer(coll,p,act);
+&lt;permutation group of size 2160 with 3 generators&gt;

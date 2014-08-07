@@ -1053,7 +1053,11 @@ InstallMethod( CollineationGroup,
 			SetName( coll, Concatenation("The FinInG collineation group PGL(",String(d+1),",",String(q),")") );
 			# Remark that in the prime case, PGL is returned as a FinInG collineation group with associated automorphism F^0.
 		fi;	
-		SetSize( coll, s );    
+		SetSize( coll, s );
+        # only for making generalised polygons section more generic:
+        if d = 2 then
+            SetCollineationAction(coll,OnProjSubspaces);
+        fi;
 		return coll;
 	end );
 

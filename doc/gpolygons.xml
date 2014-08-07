@@ -279,9 +279,29 @@ incidence graph, the latter being computed by the package <Package>GRAPE</Packag
 The collineation groups computed for classical generalised quadrangles and classical 
 generalised hexagons are collineation groups in the sense of <Package>FinInG</Package>, and
 come equipped with a NiceMonomorphism. The collineation groups computed in all other cases 
-are permutations groups, acting on the vertices of the underlying incidence graph. 
+are permutations groups, acting on the vertices of the underlying incidence graph.<P/>
+Note that the computation of the automorphism group of the underlying graph can be time
+consuming, also if the complete collineation group of the generalised polygon has been
+used as an argument in e.g. <F>GeneralisedPolygonByElements</F>.<P/>
+The first example illustrates that <F>CollineationGroup</F> is of course applicable to
+all classical generalised Polygons.
 <Example>
-<#Include SYSTEM "../examples/include/gpolygons_collineationgroup.include"> 
+<#Include SYSTEM "../examples/include/gpolygons_collineationgroup1.include">
+</Example>
+The second example illustrates the computation of collineation groups generalised polygons constructed
+using different objects. The thrid generalised polygon is known as <M>T_2(O)^</M>.
+<Example>
+<#Include SYSTEM "../examples/include/gpolygons_collineationgroup2.include">
+</Example>
+In the third example, the use of an precomputed automorphism group is illustrated. It speeds up
+the construction of the underlying graph and the computation of the automorphism group of the
+underlying graph. However, as is also illustrated in the example, despite that the precomputed
+automorhism group of the generalised polygon is actually the full collineation group, still some
+time is needed to compute the automorhism group of the underlying graph. The timings after both
+<F>CollineationGroup</F> commands are wrong. This is because <Package>GRAPE</Package> relies on
+an external binary to computed the automorhism group of a graph.
+<Example>
+<#Include SYSTEM "../examples/include/gpolygons_collineationgroup3.include">
 </Example>
 </Description>
 </ManSection>
@@ -291,20 +311,15 @@ are permutations groups, acting on the vertices of the underlying incidence grap
 <Returns>a function</Returns>
 <Description>
 <A>group</A> is a collineation group of a generalised polygon, computed using
-<F>CollineationGroup</F>. Unlike some of the other geometries in <Package>FinInG</Package>, 
-the collineations of generalised polygons to not have a uniform representation. 
-Thus depending on the generalised polygon we are working with, a group element and its 
-action could be very different. If the underlying incidence graph is used to compute the 
-collineation group, it is naturally a permutation group, while the underlying objects of the elements can
-be of very different nature. Elation generalised quadrangles arising from Kantor families must
-are based on abstract objects and employ a completely different group action.<P/>
-To make the collineation group of a generalised polygon usable in a natural way, for such a group,
-and action function for the elements of the generalised polygon can be computed in a generic way
-through <F>CollineationAction</F>. The result is a function with input a pair <A>(x,g)</A> 
-where <A>x</A> is an element of the generalised polygon, and <A>g</A> is a collineation of the generalised polygon,
-so an element of <A>group</A>
+<F>CollineationGroup</F>. The collineation group of classical generalised polygons
+will be a collineation group in the sense of <Package>FinInG</Package>. The natural action
+is <F>OnProjectiveSubspaces</F>. The collineation group of any other generalised polygons
+will be a permutation group. The result of <F>CollineationAction</F> for such a group
+is a function with input a pair <A>(x,g)</A> where <A>x</A> is an element of
+the generalised polygon, and <A>g</A> is a collineation of the generalised polygon,
+so an element of <A>group</A>. The example illustrates the use in the generalised quadrangle.
 <Example>
-<!--<#Include SYSTEM "../examples/include/gpolygons_collineations.include">-->
+<#Include SYSTEM "../examples/include/gpolygons_collineations.include">
 </Example>
 </Description>
 </ManSection>
@@ -337,6 +352,7 @@ as an attribute of <A>gp</A>. Normally, attributes of GAP objects are immutable.
 <Heading>Elements of generalised polygons</Heading>
 
 <ManSection>
+<Heading>Collections of elements of generalised polygons</Heading>
 <Attr Name="ElementsOfIncidencStructure" Arg="gp, i"/>
 <Attr Name="Points" Arg="gp"/>
 <Attr Name="Lines" Arg="gp"/>
@@ -360,13 +376,18 @@ the number of element in <A>els</A>.
 </ManSection>
 
 <ManSection>
+<Heading>Creating elements from objects and retrieving objects from elements</Heading>
 <Oper Name="ObjectToElement" Arg="gp, obj"/>
 <Oper Name="ObjectToElement" Arg="gp, type, obj"/>
-<Oper Name="UnderlyingObject" Arg="gp, type, obj"/>
+<Oper Name="UnderlyingObject" Arg="el"/>
 <Returns>a collection of elements of a generalised polygon</Returns>
 <Description>
-To create particular objects.
+To create elements in <A>gp</A> (of type <A>type</A>), one of the versions of
+<F>ObjectToElement</F> can be used. It is checked wheter <A>obj</A> represents an elements
+(of type <A>type</A>). To retrieve an underlying object of an element <A>el</A>, <F>UnderlyingObject</F>
+can be used.
 <Example>
+<#Include SYSTEM "../examples/include/gpolygons_objectselements.include">
 </Example>
 </Description>
 </ManSection>

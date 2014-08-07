@@ -1,0 +1,71 @@
+gap&gt; mat := [ [ 1, 1, 0, 0, 0, 1, 0 ], [ 1, 0, 0, 1, 1, 0, 0 ],
+&gt;          [ 1, 0, 1, 0, 0, 0, 1 ], [ 0, 1, 1, 1, 0, 0, 0 ],
+&gt;          [ 0, 1, 0, 0, 1, 0, 1 ], [ 0, 0, 0, 1, 0, 1, 1 ],
+&gt;          [ 0, 0, 1, 0, 1, 1, 0 ] ];
+[ [ 1, 1, 0, 0, 0, 1, 0 ], [ 1, 0, 0, 1, 1, 0, 0 ], [ 1, 0, 1, 0, 0, 0, 1 ], 
+  [ 0, 1, 1, 1, 0, 0, 0 ], [ 0, 1, 0, 0, 1, 0, 1 ], [ 0, 0, 0, 1, 0, 1, 1 ], 
+  [ 0, 0, 1, 0, 1, 1, 0 ] ]
+gap&gt; gp := GeneralisedPolygonByIncidenceMatrix(mat);
+&lt;projective plane order 2&gt;
+gap&gt; group := CollineationGroup(gp);
+Group([ (1,2)(4,7), (2,3)(6,7), (2,6)(4,5), (3,4)(5,7), (3,7)(4,5) ])
+gap&gt; gp := EGQByqClan(FisherqClan(3));
+#I  Computed Kantor family. Now computing EGQ...
+#I  Computing points from Kantor family...
+#I  Computing lines from Kantor family...
+&lt;EGQ of order [ 9, 3 ] and basepoint 0&gt;
+gap&gt; group := CollineationGroup(gp);
+#I  Computing incidence graph of generalised polygon...
+&lt;permutation group with 8 generators&gt;
+gap&gt; Order(group);
+26127360
+gap&gt; Random(group);
+(1,225,220,22,123,138,189,102,155,52)(2,142,31,238,177,57,162,256,154,160)(3,
+243,166,157,252)(4,103,69,165,135,176,132,187,11,257)(5,222,193,49,15,30,248,
+93,136,106)(6,156,58,211,96,246,81,164,61,133)(7,255,26,201,242,174,167,19,59,
+29)(8,226,112,76,42,219,27,179,260,25)(9,97,140,175,276,18,21,212,134,147)(10,
+113,74,128,28,82,44,80,120,197)(12,124,188,247,278,72,32,23,33,215)(13,279,
+126,16,158)(14,213,85,249,150,192,108,171,141,214)(17,77,75,170,199,205,63,
+121,273,207)(20,224,244,130,231,111,216,168,152,241)(24,259,38,161,39,95,78,
+86,119,230)(34,41,186,101,65,217,182,100,55,191)(35,172,127,254,110,88,46,71,
+137,223)(36,89,37,53,228,48,183,194,206,144)(40,274,45,60,104,181,73,56,250,
+196)(43,265,202,280,180,269,131,270,195,267)( [...] )
+gap&gt; q := 4;
+4
+gap&gt; conic := ParabolicQuadric(2,q);
+Q(2, 4)
+gap&gt; nucleus := NucleusOfParabolicQuadric(conic);
+&lt;a point in ProjectiveSpace(2, 4)&gt;
+gap&gt; conic := ParabolicQuadric(2,q);
+Q(2, 4)
+gap&gt; nucleus := NucleusOfParabolicQuadric(conic);
+&lt;a point in ProjectiveSpace(2, 4)&gt;
+gap&gt; hyperoval := Union(List(Points(conic)),[nucleus]);
+[ &lt;a point in ProjectiveSpace(2, 4)&gt;, &lt;a point in Q(2, 4)&gt;, 
+  &lt;a point in Q(2, 4)&gt;, &lt;a point in Q(2, 4)&gt;, &lt;a point in Q(2, 4)&gt;, 
+  &lt;a point in Q(2, 4)&gt; ]
+gap&gt; pg := PG(3,q);
+ProjectiveSpace(3, 4)
+gap&gt; hyp :=  HyperplaneByDualCoordinates(pg,[1,0,0,0]*Z(q)^0);
+&lt;a plane in ProjectiveSpace(3, 4)&gt;
+gap&gt; em := NaturalEmbeddingBySubspace(PG(2,q),pg,hyp);
+&lt;geometry morphism from &lt;All elements of ProjectiveSpace(2, 
+4)&gt; to &lt;All elements of ProjectiveSpace(3, 4)&gt;&gt;
+gap&gt; O := List(hyperoval,x-&gt;x^em);
+[ &lt;a point in ProjectiveSpace(3, 4)&gt;, &lt;a point in ProjectiveSpace(3, 4)&gt;, 
+  &lt;a point in ProjectiveSpace(3, 4)&gt;, &lt;a point in ProjectiveSpace(3, 4)&gt;, 
+  &lt;a point in ProjectiveSpace(3, 4)&gt;, &lt;a point in ProjectiveSpace(3, 4)&gt; ]
+gap&gt; points := Set(Filtered(Points(pg),x-&gt;not x in hyp));;
+gap&gt; lines := Union(List(O,x-&gt;Filtered(Lines(x),y-&gt;not y in hyp)));;
+gap&gt; inc := \*;
+&lt;Operation "*"&gt;
+gap&gt; gp := GeneralisedPolygonByElements(points,lines,inc);
+&lt;generalised quadrangle of order [ 3, 5 ]&gt;
+gap&gt; coll := CollineationGroup(gp);
+&lt;permutation group with 8 generators&gt;
+gap&gt; Order(coll);
+138240
+gap&gt; Random(coll);
+(1,9)(3,23,8,60)(4,32,7,51)(5,45)(6,38)(11,31,16,52)(12,24,15,59)(13,37)(14,
+46)(17,62,57,22)(18,53,58,29)(19,36,64,39)(20,43,63,48)(21,26,61,50)(25,54,49,
+30)(27,44,56,47)(28,35,55,40)(33,41)

@@ -53,8 +53,6 @@ DeclareOperation( "GeneralisedPolygonByElements", [ IsSet, IsSet, IsFunction, Is
 
 DeclareOperation( "DistanceBetweenElements", [IsElementOfGeneralisedPolygon, IsElementOfGeneralisedPolygon ] );
 
-DeclareAttribute( "CollineationAction", IsGroup);
-
 DeclareProperty( "HasGraphWithUnderlyingObjectsAsVertices", IsGeneralisedPolygon);
 
 #############################################################################
