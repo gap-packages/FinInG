@@ -51,7 +51,11 @@ DeclareOperation( "GeneralisedPolygonByElements", [ IsSet, IsSet, IsFunction, Is
 # Operations, Functions, Attributes 
 #############################################################################
 
+# distance between elements: second and third declaration are necessary for elements
+# of desarguesian projective planes and classical GQs.
 DeclareOperation( "DistanceBetweenElements", [IsElementOfGeneralisedPolygon, IsElementOfGeneralisedPolygon ] );
+DeclareOperation( "DistanceBetweenElements", [IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace ] );
+DeclareOperation( "DistanceBetweenElements", [IsSubspaceOfClassicalPolarSpace, IsSubspaceOfClassicalPolarSpace ] );
 
 DeclareProperty( "HasGraphWithUnderlyingObjectsAsVertices", IsGeneralisedPolygon);
 
@@ -81,6 +85,7 @@ IncidenceGraphOfGeneralisedPolygonAttr := NewAttribute( "IncidenceGraphOfGeneral
 
 DeclareOperation( "BlockDesignOfGeneralisedPolygon", [ IsGeneralisedPolygon ] );
 DeclareOperation( "IncidenceGraphOfGeneralisedPolygon", [ IsGeneralisedPolygon ]);
+
 
 #############################################################################
 # Classical Generalised Hexagons

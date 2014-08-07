@@ -1014,6 +1014,43 @@ InstallMethod( BlockDesignOfGeneralisedPolygon,
 #############################################################################
 
 #############################################################################
+#O  DistanceBetweenElements( <v>, <w> )
+# It is possible to create points and lines of PG(2,q) in the category 
+# IsElementsOfGeneralisedPolygon (or even more specified). But this would increase
+# the dependency of projectivespace.gi on gpolygons.gd, which I want to avoid.
+###
+InstallMethod( DistanceBetweenElements,
+    "for subspaces of a projective space",
+    [ IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace ],
+    function( v, w )
+        if not IsDesarguesianPlane(v!.geo) then
+            Error( "Elements must have a generalised polygon as ambient geometry" );
+        fi;
+        if not v!.geo = w!.geo then
+            Error( "Elements must belong to the same generalised polygon ");
+        fi;
+        if v = w then
+            return 0;
+        elif v!.type = 1 and w!.type = 1 then
+            return 2;
+        elif v!.type = 1 and w!.type = 2 then
+            if v in w then
+                return 1;
+            else
+                return 3;
+            fi;
+        elif v!.type = 2 and w!.type = 2 then
+            return 2;
+        elif v!.type = 2 and w!.type = 1 then
+            if w in v then
+                return 1;
+            else
+                return 3;
+            fi;
+        fi;
+    end );
+
+#############################################################################
 #O  IncidenceGraphOfGeneralisedPolygon( <gp> )
 ###
 InstallMethod( IncidenceGraphOfGeneralisedPolygon,
