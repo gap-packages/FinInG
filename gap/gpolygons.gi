@@ -1008,8 +1008,9 @@ InstallMethod( BlockDesignOfGeneralisedPolygon,
 
 #############################################################################
 #
-# Desarguesian projective planes: only need a method for 
-# IncidenceGraphOfGeneralisedPolygon
+# Desarguesian projective planes. Methods needed:
+#	- DistanceBetweenElements
+#	- IncidenceGraphOfGeneralisedPolygon
 #
 #############################################################################
 
@@ -1031,24 +1032,16 @@ InstallMethod( DistanceBetweenElements,
         fi;
         if v = w then
             return 0;
-        elif v!.type = 1 and w!.type = 1 then
-            return 2;
-        elif v!.type = 1 and w!.type = 2 then
-            if v in w then
-                return 1;
-            else
-                return 3;
-            fi;
-        elif v!.type = 2 and w!.type = 2 then
-            return 2;
-        elif v!.type = 2 and w!.type = 1 then
-            if w in v then
-                return 1;
-            else
-                return 3;
-            fi;
-        fi;
-    end );
+        elif v!.type <> w!.type then
+			if IsIncident(v,w) then
+				return 1;
+			else
+				return 3;
+			fi;
+		else
+			return 2;
+		fi;
+	end );
 
 #############################################################################
 #O  IncidenceGraphOfGeneralisedPolygon( <gp> )
@@ -1089,9 +1082,52 @@ InstallMethod( IncidenceGraphOfGeneralisedPolygon,
 
 #############################################################################
 #
-# Classical GQs: only need a method for IncidenceGraphOfGeneralisedPolygon
+# Classical GQs. Methods needed:
+#	- DistanceBetweenElements
+#	- IncidenceGraphOfGeneralisedPolygon
 #
 #############################################################################
+
+#############################################################################
+#O  DistanceBetweenElements( <v>, <w> )
+# It is possible to create points and lines of PG(2,q) in the category 
+# IsElementsOfGeneralisedPolygon (or even more specified). But this would increase
+# the dependency of projectivespace.gi on gpolygons.gd, which I want to avoid.
+###
+InstallMethod( DistanceBetweenElements,
+    "for subspaces of a projective space",
+    [ IsSubspaceOfClassicalPolarSpace, IsSubspaceOfClassicalPolarSpace ],
+    function( v, w )
+        if not IsClassicalGQ(v!.geo) then
+            Error( "Elements must have a generalised polygon as ambient geometry" );
+        fi;
+        if not v!.geo = w!.geo then
+            Error( "Elements must belong to the same generalised polygon ");
+        fi;
+        if v = w then
+            return 0;
+        elif v!.type <> w!.type then
+			if IsIncident(v,w) then
+				return 1;
+			else
+				return 3;
+			fi;
+		else 
+			if v!.type = 1 then
+				if Span(v,w) in v!.geo then
+					return 2;
+				else
+					return 4;
+				fi;
+			else
+				if ProjectiveDimension(Meet(v,w)) = 0 then
+					return 2;
+				else
+					return 4;
+				fi;
+			fi;
+		fi;
+	end );
 
 #############################################################################
 #O  IncidenceGraphOfGeneralisedPolygon( <gp> )
@@ -2748,7 +2784,7 @@ InstallMethod( EGQByKantorFamily,
 	[IsGroup, IsList, IsList],
 	function( g, f, fstar)
     local pts1, pts2, pts3, ls1, ls2, inc, listels, shadpoint, shadline,
-          x, y, geo, ty, points, lines, pointreps, linereps;
+          x, y, geo, ty, points, lines, pointreps, linereps, dist, span;
     ## Some checks first.
     ## We do not check if it's a Kantor family though (this can be rather slow)
 

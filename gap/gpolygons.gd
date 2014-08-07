@@ -55,7 +55,6 @@ DeclareOperation( "GeneralisedPolygonByElements", [ IsSet, IsSet, IsFunction, Is
 # of desarguesian projective planes and classical GQs.
 DeclareOperation( "DistanceBetweenElements", [IsElementOfGeneralisedPolygon, IsElementOfGeneralisedPolygon ] );
 DeclareOperation( "DistanceBetweenElements", [IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace ] );
-DeclareOperation( "DistanceBetweenElements", [IsSubspaceOfClassicalPolarSpace, IsSubspaceOfClassicalPolarSpace ] );
 
 DeclareProperty( "HasGraphWithUnderlyingObjectsAsVertices", IsGeneralisedPolygon);
 
