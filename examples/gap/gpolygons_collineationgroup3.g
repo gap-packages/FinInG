@@ -1,0 +1,26 @@
+#collineation groups 3
+q := 8;
+conic := ParabolicQuadric(2,q);
+nucleus := NucleusOfParabolicQuadric(conic);
+hyperoval := Union(List(Points(conic)),[nucleus]);
+pg := PG(3,q);
+hyp :=  HyperplaneByDualCoordinates(pg,[1,0,0,0]*Z(q)^0);
+em := NaturalEmbeddingBySubspace(PG(2,q),pg,hyp);
+O := List(hyperoval,x->x^em);
+points := Set(Filtered(Points(pg),x->not x in hyp));;
+lines := Union(List(O,x->Filtered(Lines(x),y->not y in hyp)));;
+inc := \*;
+gp := GeneralisedPolygonByElements(points,lines,inc);
+time;
+coll := CollineationGroup(gp);
+time;
+group := CollineationGroup(pg);
+stab := FiningSetwiseStabiliser(group,O);
+time;
+gp := GeneralisedPolygonByElements(points,lines,inc,stab,\^);
+time;
+coll := CollineationGroup(gp);
+time;
+Order(coll);
+Order(stab);
+quit;

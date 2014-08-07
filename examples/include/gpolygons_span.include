@@ -1,0 +1,26 @@
+gap&gt; mat := [ [ 1, 1, 0, 0, 0, 1, 0 ], [ 1, 0, 0, 1, 1, 0, 0 ],
+&gt;          [ 1, 0, 1, 0, 0, 0, 1 ], [ 0, 1, 1, 1, 0, 0, 0 ],
+&gt;          [ 0, 1, 0, 0, 1, 0, 1 ], [ 0, 0, 0, 1, 0, 1, 1 ],
+&gt;          [ 0, 0, 1, 0, 1, 1, 0 ] ];
+[ [ 1, 1, 0, 0, 0, 1, 0 ], [ 1, 0, 0, 1, 1, 0, 0 ], [ 1, 0, 1, 0, 0, 0, 1 ], 
+  [ 0, 1, 1, 1, 0, 0, 0 ], [ 0, 1, 0, 0, 1, 0, 1 ], [ 0, 0, 0, 1, 0, 1, 1 ], 
+  [ 0, 0, 1, 0, 1, 1, 0 ] ]
+gap&gt; gp := GeneralisedPolygonByIncidenceMatrix(mat);
+&lt;projective plane order 2&gt;
+gap&gt; p := Random(Points(gp));
+&lt;a point in &lt;projective plane order 2&gt;&gt;
+gap&gt; q := Random(Points(gp));
+&lt;a point in &lt;projective plane order 2&gt;&gt;
+gap&gt; Span(p,q);
+&lt;a line in &lt;projective plane order 2&gt;&gt;
+gap&gt; ps := ParabolicQuadric(4,3);
+Q(4, 3)
+gap&gt; gp := GeneralisedPolygonByElements(Set(Points(ps)),Set(Lines(ps)),\*);
+&lt;generalised quadrangle of order [ 3, 3 ]&gt;
+gap&gt; p := Random(Points(gp));
+&lt;a point in &lt;generalised quadrangle of order [ 3, 3 ]&gt;&gt;
+gap&gt; q := Random(Points(gp));
+&lt;a point in &lt;generalised quadrangle of order [ 3, 3 ]&gt;&gt;
+gap&gt; Span(p,q);
+#I  &lt;x&gt; and &lt;y&gt; do not span a line of gp
+fail

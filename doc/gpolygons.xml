@@ -393,12 +393,48 @@ can be used.
 </ManSection>
 
 <ManSection>
+<Heading>Incidence</Heading>
 <Oper Name="IsIncident" Arg="v,w"/>
+<Oper Name="\*" Arg="v,w"/>
 <Returns>true or false</Returns>
 <Description>
 Let <A>v</A> and <A>w</A> be two elements of a generalised polygon. It is checked if
 the ambient geometry of the two elements are identical, and true is returned if and only if
 the two elements are incident in their ambient geometry.
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="Span" Arg="v,w"/>
+<Returns>a line of a generalised polygon or fail</Returns>
+<Description>
+Let <A>v</A> and <A>w</A> be two elements of a generalised polygon. It is checked if
+the ambient geometries of the two elements are identical, and if the two elements are points.
+If <A>v</A> and <A>w</A> are incidence with a common line, this line is returned. Otherwise
+<K>fail</K> is returned. For generalised polygons constructed with <C>GeneralisedPolygonByBlocks</C>,
+<C>GeneralisedPolygonByElements</C> an <C>GeneralisedPolygonByInidenceMatrix</C>, the underlying graph
+is used. Note that the behavior of <F>Span</F> is different for elements of
+generalised polygongs that belong to <C>IsLieGeometry</C>, see <Ref Label="liespan"/>.
+<Example>
+<#Include SYSTEM "../examples/include/gpolygons_span.include">
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="Meet" Arg="v,w"/>
+<Returns>a point of a generalised polygon or fail</Returns>
+<Description>
+Let <A>v</A> and <A>w</A> be two elements of a generalised polygon. It is checked if
+the ambient geometries of the two elements are identical, and if the two elements are lines.
+If <A>v</A> and <A>w</A> are incidence with a common point, this point is returned. Otherwise
+<K>fail</K> is returned. For generalised polygons constructed with <C>GeneralisedPolygonByBlocks</C>,
+<C>GeneralisedPolygonByElements</C> an <C>GeneralisedPolygonByInidenceMatrix</C>, the underlying graph
+is used. Note that the behavior of <F>Meet</F> is different for elements of
+generalised polygongs that belong to <C>IsLieGeometry</C>, see <Ref Label="liemeet"/>
+<Example>
+<#Include SYSTEM "../examples/include/gpolygons_meet.include">
+</Example>
 </Description>
 </ManSection>
 

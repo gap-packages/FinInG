@@ -55,6 +55,9 @@ DeclareOperation( "DistanceBetweenElements", [IsElementOfGeneralisedPolygon, IsE
 
 DeclareProperty( "HasGraphWithUnderlyingObjectsAsVertices", IsGeneralisedPolygon);
 
+#DeclareOperation("Span",[IsElementOfGeneralisedPolygon, IsElementOfGeneralisedPolygon]);
+#DeclareOperation("Meet",[IsElementOfGeneralisedPolygon, IsElementOfGeneralisedPolygon]);
+
 #############################################################################
 # Attributes
 #############################################################################
