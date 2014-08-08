@@ -908,8 +908,7 @@ InstallMethod( CollineationGroup,
         else
             ptsn := Set(points,x->Position(VertexNames(graph),x));
         fi;
-        stab := Stabilizer(aut, ptsn, OnSets);
-        coll := Action(stab, ptsn, OnPoints);
+        coll := Stabilizer(aut, ptsn, OnSets);
         if HasGraphWithUnderlyingObjectsAsVertices(gp) then
             act := function(el,g)
                 local src,img;
