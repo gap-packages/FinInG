@@ -325,9 +325,14 @@ elif p!.class = 1 and q!.class = 2 then
     fi;
 elif p!.class = 1 and q!.class = 3 then
     return fail;
+elif p!.class = 2 and q!.class = 2 then
+    if p!.obj[1] = q!.obj[1] then
+        return Wrap(p!.geo,2,2,p!.obj[1]);
+    else
+        return fail;
+    fi;
 elif p!.class = 2 and q!.class = 3 then
-    S := First(f,x->IsSubgroup(p!.obj[1],x));
-    return Wrap(p!.geo,2,2,S);
+    return Wrap(p!.geo,2,2,p!.obj[1]);
 else
     return span(q,p);
 fi;
@@ -345,7 +350,7 @@ if l!.class = 1 and m!.class = 1 then
     Sl := l!.obj[1];
     Sm := m!.obj[1];
     if Sl = Sm then
-        S := First(fstar, x->IsSubgroup(x,Sl);
+        S := First(fstar, x->IsSubgroup(x,Sl));
         coset := RightCoset(S,l!.obj[2]);
         r := CanonicalRightCosetElement(S,Representative(coset));
         return Wrap(l!.geo,1,2,[S,r]);
@@ -360,13 +365,15 @@ if l!.class = 1 and m!.class = 1 then
         fi;
     fi;
 elif l!.class = 1 and m!.class = 2 then
-    if l!.obj[1] = m!.obj then
-        return 1; #weer zo'n nevenklasse Si* g
+    if IsSubgroup(m!.obj,l!.obj[1]) then
+        coset := RightCoset(m!.obj,l!.obj[2]);
+        r := CanonicalRightCosetElement(m!.obj,Representative(coset));
+        return Wrap(l!.geo,1,2,[m!.obj,r]);
     else
         return fail;
     fi;
 elif l!.class = 2 and m!.class = 2 then
-    return basepoint; #hier kennen we het basepoint van de egq.
+    return Wrap(l!.geo,1,3,0);
 fi;
 end;
 
