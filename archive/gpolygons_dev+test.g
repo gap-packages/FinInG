@@ -294,3 +294,94 @@ InstallMethod( CollineationGroup,
    return coll;
   end );
 
+
+
+
+span := function(p,q)
+local class, obj, geo, list, S, coset, r;
+if not p!.geo = q!.geo then
+    Error("<p> and <q> should belong to the same ambient geometry");
+fi;
+if p = q then
+    return fail;
+fi;
+if p!.class = 1 and q!.class = 1 then
+    S := First(f,x->p!.obj*q!.obj^-1 in x);
+    if S = fail then
+        return fail;
+    else
+        coset := RightCoset(S,p!.obj);
+        r := CanonicalRightCosetElement(S,Representative(coset));
+        return Wrap(p!.geo,2,1,[S,r]);
+    fi;
+elif p!.class = 1 and q!.class = 2 then
+    if p!.obj in RightCoset(q!.obj[1],q!.obj[2]) then
+        S := First(f,x->IsSubgroup(q!.obj[1],x));
+        coset := RightCoset(S,p!.obj);
+        r := CanonicalRightCosetElement(S,Representative(coset));
+        return Wrap(p!.geo,2,1,[S,r]);
+    else
+        return fail;
+    fi;
+elif p!.class = 1 and q!.class = 3 then
+    return fail;
+elif p!.class = 2 and q!.class = 3 then
+    S := First(f,x->IsSubgroup(p!.obj[1],x));
+    return Wrap(p!.geo,2,2,S);
+else
+    return span(q,p);
+fi;
+end;
+
+meet := function(l,m)
+local class, obj, geo, Sl, Sm, S, coset, r, prod, g, h;
+if not l!.geo = m!.geo then
+    Error("<l> and <m> should belong to the same ambient geometry");
+fi;
+if l = m then
+    return fail;
+fi;
+if l!.class = 1 and m!.class = 1 then
+    Sl := l!.obj[1];
+    Sm := m!.obj[1];
+    if Sl = Sm then
+        S := First(fstar, x->IsSubgroup(x,Sl);
+        coset := RightCoset(S,l!.obj[2]);
+        r := CanonicalRightCosetElement(S,Representative(coset));
+        return Wrap(l!.geo,1,2,[S,r]);
+    else
+        prod := Group(Concatenation(GeneratorsOfGroup(Sl),GeneratorsOfGroup(Sm)));
+        g := l!.obj[2];
+        h := m!.obj[2];
+        if not g*h^-1 in prod then
+            return fail;
+        else
+            return 0;
+        fi;
+    fi;
+elif l!.class = 1 and m!.class = 2 then
+    if l!.obj[1] = m!.obj then
+        return 1; #weer zo'n nevenklasse Si* g
+    else
+        return fail;
+    fi;
+elif l!.class = 2 and m!.class = 2 then
+    return basepoint; #hier kennen we het basepoint van de egq.
+fi;
+end;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

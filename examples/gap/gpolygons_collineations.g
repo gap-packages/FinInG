@@ -19,4 +19,6 @@ act(l,g);
 p := Random(Points(gp));
 act(p,g);
 stab := Stabilizer(coll,p,act);
+List(Orbits(stab,List(Points(gp)),act),x->Length(x));
+List(Orbits(stab,List(Lines(gp)),act),x->Length(x));
 quit;
