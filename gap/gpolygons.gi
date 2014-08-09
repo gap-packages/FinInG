@@ -51,6 +51,10 @@ Print(", gpolygons\c");
 #		The method for ShadowOfElement should do the necessary checks and pass the appropriate 
 #		function to the method installed for Iterator for shadow objects.
 #
+# span: a function taking two *points of a GP* returning fail or the unique line incident with the two points.
+#
+# meet: a function taking two *lines of a GP* returning fail or the unique point incident with the two lines.
+#
 # distance: a function taking two *elements of a GP* and returning their distance in the incidence graph.
 #
 # action: a function describing an action on the *underlying objects*.
@@ -2783,7 +2787,7 @@ InstallMethod( EGQByKantorFamily,
 	[IsGroup, IsList, IsList],
 	function( g, f, fstar)
     local pts1, pts2, pts3, ls1, ls2, inc, listels, shadpoint, shadline,
-          x, y, geo, ty, points, lines, pointreps, linereps, dist, span;
+          x, y, geo, ty, points, lines, pointreps, linereps, dist, spanpts, meetlns;
     ## Some checks first.
     ## We do not check if it's a Kantor family though (this can be rather slow)
 
@@ -2860,10 +2864,118 @@ InstallMethod( EGQByKantorFamily,
 	shadline := function(line)
 		return Filtered(points,x->inc(line,x));
 	end;
+    
+    spanpts := function(p,q)
+        local class, obj, geo, list, S, coset, r;
+        if not p!.geo = q!.geo then
+            Error("<p> and <q> should belong to the same ambient geometry");
+        fi;
+        if p = q then
+            return fail;
+        fi;
+        if p!.class = 1 and q!.class = 1 then
+            S := First(f,x->p!.obj*q!.obj^-1 in x);
+            if S = fail then
+                return fail;
+            else
+                coset := RightCoset(S,p!.obj);
+                r := CanonicalRightCosetElement(S,Representative(coset));
+                return Wrap(p!.geo,2,1,[S,r]);
+            fi;
+        elif p!.class = 1 and q!.class = 2 then
+            if p!.obj in RightCoset(q!.obj[1],q!.obj[2]) then
+                S := First(f,x->IsSubgroup(q!.obj[1],x));
+                coset := RightCoset(S,p!.obj);
+                r := CanonicalRightCosetElement(S,Representative(coset));
+                return Wrap(p!.geo,2,1,[S,r]);
+            else
+                return fail;
+            fi;
+        elif p!.class = 1 and q!.class = 3 then
+            return fail;
+        elif p!.class = 2 and q!.class = 2 then
+            if p!.obj[1] = q!.obj[1] then
+                return Wrap(p!.geo,2,2,p!.obj[1]);
+            else
+                return fail;
+            fi;
+        elif p!.class = 2 and q!.class = 3 then
+            return Wrap(p!.geo,2,2,p!.obj[1]);
+        else
+            return spanpts(q,p);
+        fi;
+    end;
+
+    meetlns := function(l,m)
+        local class, obj, geo, Sl, Sm, S, coset, r, prod, g, h;
+        if not l!.geo = m!.geo then
+            Error("<l> and <m> should belong to the same ambient geometry");
+        fi;
+        if l = m then
+            return fail;
+        fi;
+        if l!.class = 1 and m!.class = 1 then
+            Sl := l!.obj[1];
+            Sm := m!.obj[1];
+            if Sl = Sm then
+                S := First(fstar, x->IsSubgroup(x,Sl));
+                coset := RightCoset(S,l!.obj[2]);
+                r := CanonicalRightCosetElement(S,Representative(coset));
+                return Wrap(l!.geo,1,2,[S,r]);
+            else
+                prod := Group(Concatenation(GeneratorsOfGroup(Sl),GeneratorsOfGroup(Sm)));
+                g := l!.obj[2];
+                h := m!.obj[2];
+                if not g*h^-1 in prod then
+                    return fail;
+                else
+                    r := Intersection(RightCoset(Sl,g),RightCoset(Sm,h));
+                    return Wrap(l!.geo,1,1,r[1]);
+                fi;
+            fi;
+        elif l!.class = 1 and m!.class = 2 then
+            if IsSubgroup(m!.obj,l!.obj[1]) then
+                coset := RightCoset(m!.obj,l!.obj[2]);
+                r := CanonicalRightCosetElement(m!.obj,Representative(coset));
+                return Wrap(l!.geo,1,2,[m!.obj,r]);
+            else
+                return fail;
+            fi;
+        elif l!.class = 2 and m!.class = 2 then
+            return Wrap(l!.geo,1,3,0);
+        else
+            return meetlns(m,l);
+        fi;
+    end;
 	
+    dist := function(x,y)
+        if x!.type <> y!.type then
+            if inc(x,y) then
+                return 1;
+            else
+                return 3;
+            fi;
+        elif x!.type = 1 then
+            if spanpts(x,y) = fail then
+                return 4;
+            else
+                return 2;
+            fi;
+        else
+            if meetlns(x,y) = fail then
+                return 4;
+            else
+                return 2;
+            fi;
+        fi;
+    end;
+
 	geo!.listelements := listels;
 	geo!.shadowofpoint := shadpoint;
 	geo!.shadowofline := shadline;
+    geo!.span := spanpts;
+    geo!.meet := meetlns;
+    geo!.distance := dist;
 	SetBasePointOfEGQ( geo, pts3[1] );
     SetAmbientSpace(geo, geo);
     SetOrder(geo, [Index(g,fstar[1]), Size(f)-1]);
