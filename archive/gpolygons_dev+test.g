@@ -361,7 +361,8 @@ if l!.class = 1 and m!.class = 1 then
         if not g*h^-1 in prod then
             return fail;
         else
-            return 0;
+			r := Intersection(RightCoset(Sl,g),RightCoset(Sm,h));
+			return Wrap(l!.geo,1,1,r[1]);
         fi;
     fi;
 elif l!.class = 1 and m!.class = 2 then
@@ -374,6 +375,8 @@ elif l!.class = 1 and m!.class = 2 then
     fi;
 elif l!.class = 2 and m!.class = 2 then
     return Wrap(l!.geo,1,3,0);
+else
+	return meet(m,l);
 fi;
 end;
 
