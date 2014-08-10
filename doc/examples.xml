@@ -31,9 +31,9 @@ In this chapter we provide some simple examples of the use of
 
 In this example, we consider a hyperoval of the projective
 plane <M>PG(2,4)</M>, that is, six points no three collinear.
-We will construct such a hyperoval by exploring a bit the particular
+We will construct such a hyperoval by some basic explorations into particular
 properties of the projective plane <M>PG(2,4)</M>. The projective
-plane is initalised, its points are computed and listed; then a standard
+plane is initialised, its points are computed and listed; then a standard
 frame is constructed, of which we may assume that it is a subset
 of the hyperoval. Finally, the stabiliser group of the hyperoval is
 computed, and it is checked that this group is isomorphic with the 

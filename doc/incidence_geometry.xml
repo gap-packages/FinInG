@@ -29,16 +29,16 @@ a symmetric relation on the elements and a type function from the set of
 elements to an index set (i.e., every element has a ``type''). It satisfies
 the following axiom: <E>(i) no two elements of the same type are incident.</E>
 An incidence structure without type function is in fact a multipartite graph where
-the adjacency is the incidence (so with a loop in each vertex). 
+the adjacency is the incidence (so with a loop on each vertex). 
 
-The term geometry, or incidence geometry, is interpreted braodly in this package.
+The term geometry, or incidence geometry, is interpreted broadly in this package.
 Particularly, an <E>incidence geometry</E> is an incidence structure satisfying 
-the following axiom: <E>(ii)every maximal flag contains an element of each type</E>.
+the following axiom: <E>(ii) every maximal flag contains an element of each type</E>.
 In graph terminology, this means that every maximal clique contains an element of each type.
 
 Thus, a projective 5-space is an incidence geometry with five types of elements: points, lines, 
 planes, solids, and hyperplanes. A finite classical polar space of rank 3 is an incidence geometry
-with three types of elements: points, lines, and planes. Depending on the viewpoint, the Grassman variety
+with three types of elements: points, lines, and planes. Depending on the viewpoint, the Grassmann variety
 of the lines of a projective 4-space, is an incidence structure that is not an incidence geometry.<P/>
 
 <Package>FinInG</Package> concerns itself primarily with the most
@@ -51,15 +51,15 @@ see Chapter <Ref Chap="projective_spaces"/>.<P/>
 
 In this chapter we describe functionality that is <B>declared</B> for 
 incidence structures, which does not imply that operations described here will work
-for arbitrarily user constructed incidence structures. Its aim is furthermore to allow
-the user to become a bit familiar with the general philosophy of the package, using examples
+for arbitrary user-constructed incidence structures. Its aim is furthermore to allow
+the user to become familiar with the general philosophy of the package, using examples
 that are self-explanatory. Not all details of the commands used in the examples will
-be explained in this chapter, therefore we refer to the relevant chapter of the commands. These can easily be found using the index.
+be explained in this chapter, therefore we refer to the relevant chapter for the commands. These can easily be found using the index.
 
 <Section>
 <Heading>Incidence structures</Heading>
 
-Incidence structures can be more general than incidence geometries, e.g. if they do not satisfy 
+Incidence structures can be more general than incidence geometries, e.g., if they do not satisfy 
 axiom (ii) mentioned above. We allow the construction of such objects. This explains one of the top level categories in 
 <Package>FinInG</Package>.
 
@@ -95,7 +95,7 @@ Category for all objects representing an incidence geometry.
 </Description>
 </ManSection>
 
-Lie Geometries, i.e. geometries with a projective space as ambient space, affine spaces and 
+Lie Geometries, i.e., geometries with a projective space as ambient space, affine spaces and 
 generalised polygons have their category, as a subcategory of <C>IsIncidenceGeometry</C>.
 <ManSection>
 <Heading>Main categories in <C>IsIncidenceGeometry</C></Heading>
@@ -110,7 +110,7 @@ generalised polygons have their category, as a subcategory of <C>IsIncidenceGeom
 <Filt Name="IsProjectiveSpace" Type="Category"/>
 <Filt Name="IsClassicalPolarSpace" Type="Category"/>
 <Description>
-Lie geometries bundle projective spaces and classical polar spaces. In
+Lie geometries bundle projective spaces and classical polar spaces together. In
 the future, more subcategories could be added since the term ``Lie
 geometry'' refers to a geometry whose automorphism group lies in some
 group of Lie type. Both classes of geometries have their category, as
@@ -126,7 +126,7 @@ The following categories for geometries are not considered as main categories.
 <Filt Name="IsGeneralisedOctagon" Type="Category"/>
 <Description>
 Within <C>IsGeneralisedPolygon</C>, categories are declared for generalised quadrangles,
-generalised hexagons, and generalised octogons.
+generalised hexagons, and generalised octagons.
 </Description>
 </ManSection>
 
@@ -216,9 +216,9 @@ while <C>IsClassicalPolarSpace</C> is not a subcategory of <C>IsProjectiveSpace<
 <Oper Name="ObjectToElement" Arg="inc, obj"/>
 <Returns>an element of the incidence structure <A>inc</A></Returns>
 <Description>
-If <A>obj</A> represents an element of <A>inc</A> of <A>type</A>, then the first
-flavor returs the element. If the type of the element can be determined from <A>obj</A>,
-then the second flavor returns the element. An error (or no method found error) is shown
+If <A>obj</A> represents an element of <A>inc</A> of type <A>type</A>, then the three-argument
+version of this operation returns the element. If the type of the element can be determined from <A>obj</A>,
+then only two arguments are necessary. An error (or no method found error) is shown
 when <A>obj</A> does not represent an element (of type <A>type</A>). 
 </Description>
 </ManSection>
@@ -318,11 +318,11 @@ This function returns true if and only if <A>u</A> is incident with <A>v</A>. Re
 <Oper Name="Random" Arg="C"/>
 <Returns>an element in the collection <A>C</A></Returns>
 <Description>
-<A>C</A> is a collection of elements of an incidence structure, i.e. an object in the
+<A>C</A> is a collection of elements of an incidence structure, i.e., an object in the
 category <C>IsElementsOfIncidenceStructure</C>. <F>Random(C)</F> will return a random element
 in <A>C</A> provided there is a method installed. Our methods may refer to methods for random
 selection of e.g. subspaces of the underlying vector space, as in the example here, or refer
-to the use of a psuedo random element of an appropriate group, as is the case for subspaces
+to the use of a pseudo-random element of an appropriate group, as is the case for subspaces
 of classical polar spaces.
 <Example>
 <#Include SYSTEM "../examples/include/incgeom_random.include"> 
@@ -336,7 +336,7 @@ of classical polar spaces.
 <Description>
 If <A>v</A> is an element of an incidence geometry currently implemented
 in <Package>FinInG</Package>, then this operation returns the ambient geometry of <A>v</A>, 
-i.e. in general the geometry in which <A>v</A> was created. If an incidence structure is created with 
+i.e., in general the geometry in which <A>v</A> was created. If an incidence structure is created with 
 elements that are a subset of elements of another incidence structure, the ambient geometry
 might stay unchanged.
 <Example>
@@ -394,7 +394,7 @@ be a string which is <B>the plural</B> of the name of one of the types of the el
 second variant, <A>j</A> is an integer representing one of the types of the elements of <A>inc</A>.
 This first variant relies on <F>TypesOfElementsOfIncidenceStructurePlural</F> and on a particular 
 method installed for the second variant for particular incidence structures.
-The use of the argument <A>inc</A> makes it flexible, i.e. if the element
+The use of the argument <A>inc</A> makes it flexible, i.e., if the element
 <A>v</A> can belong to different incidence structures, its shadow can be different, as the second example shows.
 <Example>
 <#Include SYSTEM "../examples/include/incgeom_shadowofelement.include">
@@ -503,7 +503,7 @@ elements without repetition. Only three operations are applicable on an iterator
 </ManSection>
 
 For a collection of elements of a given type of certain incidence structures, <Package>FinInG</Package> also provides
-methods to compute an enumerator. In its simpliest form, an enumerator is just a list containing all the elements of the
+methods to compute an enumerator. In its simplest form, an enumerator is just a list containing all the elements of the
 collection. Given any object in the list, it is possible to retrieve its number in the list (which is then just its position). 
 Also, given any number between 1 and the length of the list, it is possible to get the corresponding element. For some
 collections of elements of particular incidence structures, a more advanced version of enumerators is implemented. Such
@@ -646,7 +646,7 @@ the elements of type one less than the type of <A>v</A> are asked. <A>v</A> is a
 <Section>
 <Heading>Hard wired embeddings and converting elements</Heading>
 
-A Lie geometry, i.e. an object in the category <C>IsLieGeometry</C>, is naturally embedded 
+A Lie geometry, i.e., an object in the category <C>IsLieGeometry</C>, is naturally embedded 
 in a projective space. This is of course in a mathematical sense. In <Package>FinInG</Package>, certain
 embeddings are implemented by providing a mapping between geometries. The Lie geometries are 
 <E>hard wired</E> embedded, just simply because a category containing elements of a Lie geometry, is
