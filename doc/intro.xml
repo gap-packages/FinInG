@@ -27,12 +27,20 @@ behind the package.
 <Section Label="philosophy">
 <Heading>Philosophy</Heading>
 
-<Package>FinInG</Package> (pronounciation: [<Alt Only="LaTeX">\textipa{f\;I{}n\;I{}N}</Alt><Alt Only="HTML">f&#618;n&#618;&#331;</Alt>]) is a package for computation in
+<Package>FinInG</Package> (pronounciation: [<Alt Only="LaTeX">\textipa{f\;I{}n\;I{}N}</Alt>
+<Alt Only="HTML">f&#618;n&#618;&#331;</Alt>]) is a package for computation in
 Finite Incidence Geometry. It provides users with the basic tools to
 work in various areas of finite geometry from the realms of
 projective spaces to the flat lands of generalised polygons. 
 The algebraic power of GAP is employed, particularly in its 
-facility with matrix and permutation groups.
+facility with matrix and permutation groups.<P/>
+
+<Alt Only="HTML">A sample making FinInG's pronounciation crystal clear can be found &lt;a href="fining1.m4a">here&lt;/a>. 
+&lt;p>&lt;audio controls>
+&lt;source src="fining1.m4a" type="audio/mpeg"/>
+&lt;embed height="50" width="100" src="fining1.m4a"/>
+&lt;/audio>
+</Alt>
 
 </Section>
 

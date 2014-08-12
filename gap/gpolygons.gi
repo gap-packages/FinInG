@@ -2910,13 +2910,46 @@ InstallMethod( EGQByKantorFamily,
 	end;
 	
 	shadpoint := function(pt)
-		return Filtered(lines,x->inc(pt,x));
+		local cosets, objs, Ss, S, g, lns;
+		if pt!.class = 1 then
+			cosets := List(f,x->RightCoset(x,pt!.obj));
+			objs := List(cosets,x->[ActingDomain(x),CanonicalRightCosetElement(ActingDomain(x),Representative(x))]);
+			return List(objs,x->Wrap(pt!.geo,2,1,x));
+		elif pt!.class = 2 then
+			Ss := pt!.obj[1];
+			g := pt!.obj[2];
+			S := f[Position(fstar,Ss)];
+			cosets := RightCosets(Ss,S);
+			objs := List(cosets,x->[ActingDomain(x),CanonicalRightCosetElement(ActingDomain(x),Representative(x))]);
+			cosets := List(objs,x->RightCoset(x[1],x[2]*g));
+			objs := List(cosets,x->[ActingDomain(x),CanonicalRightCosetElement(ActingDomain(x),Representative(x))]);
+			lns := List(objs,x->Wrap(pt!.geo,2,1,x));
+			Add(lns,Wrap(pt!.geo,2,2,Ss));
+			return lns;
+		else
+			return List(fstar,x->Wrap(pt!.geo,2,2,x));
+		fi;
+	end;
+	    
+	shadline := function(line)
+		local coset,cosets,Ss,pts;
+		if line!.class = 1 then
+			coset := RightCoset(line!.obj[1],line!.obj[2]);
+			pts := List(List(coset),x->Wrap(line!.geo,1,1,x));
+			Ss := fstar[Position(f,line!.obj[1])];
+			coset := RightCoset(Ss,line!.obj[2]);
+			Add(pts,Wrap(line!.geo,1,2,
+						[ActingDomain(coset),CanonicalRightCosetElement(ActingDomain(coset),Representative(coset))]));
+			return pts;
+		elif line!.class = 2 then
+			cosets := RightCosets(g,line!.obj);
+			objs := List(cosets,x->[ActingDomain(x),CanonicalRightCosetElement(ActingDomain(x),Representative(x))]);
+			pts := List(objs,x->Wrap(line!.geo,1,2,x));
+			Add(pts,BasePointOfEGQ(line!.geo));
+			return pts;
+		fi;
 	end;
 	
-	shadline := function(line)
-		return Filtered(points,x->inc(line,x));
-	end;
-    
     spanpts := function(p,q)
         local class, obj, geo, list, S, coset, r;
         if not p!.geo = q!.geo then

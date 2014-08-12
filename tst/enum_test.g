@@ -168,3 +168,11 @@ enum := Enumerator(els);
 s := Size(enum);
 Add(tests,Collected(List([1..s],x->enum!.NumberElement(s,enum!.ElementNumber(s,x))=x)));
 od;
+
+
+q := 3;
+d := 6;
+ps := ParabolicQuadric(d,q);
+s := Size(Points(ps));
+elements := List([1..s],n->VectorSpaceToElement(ps, QElementNumber(d, q, n)));
+Set(last) = Set(AsList(Points(ps)));

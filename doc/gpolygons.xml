@@ -458,6 +458,47 @@ elements in the incidence graph of their ambient geometry is returned.
 <Section Label="EGQ">
 <Heading>Elation generalised quadrangles</Heading>
 
+Suppose we have a generalised quadrangle of order <M>(s,t)</M> for which
+there exists a point <M>P</M> and a group of collineations <M>G</M> fixing 
+<M>P</M> and each line through <M>P</M>, with the extra property that
+<M>G</M> acts regularly on the points not collinear with <M>P</M>. Then
+we have an <E>elation generalised quadrangle</E> with base point <M>P</M>
+and elation group <M>G</M>. Such an elation generalised quadrangle is equivalent
+to a <E>Kantor family</E> of subgroups of <M>G</M>: a set of <M>t+1</M> subgroups
+<M>F</M> of order <M>s</M> and a set of <M>t+1</M> subgroups <Alt Not="HTML"><M>F^*</M></Alt>
+<Alt Only="HTML">F&lt;sup>*&lt;/sup></Alt> of order
+<M>st</M> such that (i) each element of <M>F</M> is a subgroup of one element of 
+<Alt Not="HTML"><M>F^*</M></Alt><Alt Only="HTML">F&lt;sup>*&lt;/sup></Alt>
+and intersects the other elements of <Alt Not="HTML"><M>F^*</M></Alt>
+<Alt Only="HTML">F&lt;sup>*&lt;/sup></Alt> trivially, and (ii) any three elements
+<M>A,B,C</M> of <M>F</M> satisfy <Alt Not="HTML"><M>AB \cap C = 1</M></Alt>
+<Alt Only="HTML">AB &#8745; C = 1</Alt>. <P/>
+Noteworthy, there is a way of constructing generalised quadrangles starting from a
+Kantor family <M>(G,F,Fs)</M> as follows. Points are defined as follows.<P/>
+(i) Points of type 1 are the elements of <M>G</M>;<P/>
+(ii) points of of type 2 are the right cosets <M>Sg</M>, <M>S \in Fstar</M>;<P/>
+(iii) the unique point of type (iii) is the symbol infinity.<P/>
+(a) Lines of type (a) are the right cosets <M>Sg</M>, <M>S \in F</M>;<P/>
+(b) Lines of type (b) are the groups <M>S \in F</M>.<P/>
+Incidence is defined as follows. A point <M>g</M> of type (i) is incident with the
+lines of type (a) represented by the cosets <M>Sg</M>, <M>S \in F</M>. A point
+<M>Ssg</M> of type (ii) is incident with a line ...
+
+For more information, we refer to the standard
+work in this field of Payne and Thas <Cite Key="FGQ"/>.
+
+<ManSection>
+<Oper Name="EGQByKantorFamily" Arg="g,f,fstar"/>
+<Returns>a generalised quadrangle</Returns>
+</ManSection>
+
+<ManSection>
+<Oper Name="OnKantorFamily" Arg="g,el"/>
+<Returns>an element of an elation GQ</Returns>
+</ManSection>
+
+
+
 </Section>
 
 
