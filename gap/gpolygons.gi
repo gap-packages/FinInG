@@ -97,7 +97,7 @@ InstallMethod( GeneralisedPolygonByBlocks,
     [ IsHomogeneousList ],
     function( blocks )
         local pts, gp, ty, i, graph, sz, adj, girth, shadpoint, shadline, s, t, dist, vn, 
-		listels, objs, act;
+		listels, objs, act, spanoftwopoints, meetoftwolines;
         pts := Union(blocks);
         s := Size(blocks[1]) - 1;
         if not ForAll(blocks, b -> Size(b) = s + 1 ) then
@@ -178,8 +178,37 @@ InstallMethod( GeneralisedPolygonByBlocks,
 			return Distance(graph,Position(vn,el1!.obj),Position(vn,el2!.obj));
 		end;
 
+        spanoftwopoints := function(x,y) #x and y are elements
+            local i,j,span,el;
+            i := Position(vn,x!.obj);
+            j := Position(vn,y!.obj);
+            el := Intersection(DistanceSet(graph,[1],i), DistanceSet(graph,[1],j));
+            if not Length(el) = 0 then
+                span := vn{el};
+                return Wrap(x!.geo,2,span[1]);
+            else
+                Info(InfoFinInG, 1, "<x> and <y> do not span a line of gp");
+                return fail;
+            fi;
+        end;
+
+        meetoftwolines := function(x,y) #x and y are elements
+            local i,j,meet,el;
+            i := Position(vn,x!.obj);
+            j := Position(vn,y!.obj);
+            el := Intersection(DistanceSet(graph,[1],i), DistanceSet(graph,[1],j));
+            if not Length(el) = 0 then
+                meet := vn{el};
+                return Wrap(x!.geo,1,meet[1]);
+            else
+                Info(InfoFinInG, 1, "<x> and <y> do meet in a common point of gp");
+                return fail;
+            fi;
+        end;
+
         gp := rec( pointsobj := pts, linesobj := blocks, incidence := i, listelements := listels, 
-					shadowofpoint := shadpoint, shadowofline := shadline, distance := dist );
+					shadowofpoint := shadpoint, shadowofline := shadline, distance := dist, 
+                    span := spanoftwopoints, meet := meetoftwolines );
 
         Objectify( ty, gp );
         SetTypesOfElementsOfIncidenceStructure(gp, ["point","line"]);
@@ -228,7 +257,7 @@ InstallMethod( GeneralisedPolygonByElements,
     [ IsSet, IsSet, IsFunction ],
     function( pts, lns, inc )
     local adj, act, graph, ty, girth, shadpoint, shadline, s, t, 
-	gp, vn, dist, listels, wrapped_incidence;
+	gp, vn, dist, listels, wrapped_incidence, spanoftwopoints, meetoftwolines;
 
     adj := function(x,y)
     if x in pts and y in pts then
@@ -298,9 +327,38 @@ InstallMethod( GeneralisedPolygonByElements,
 	dist := function( el1, el2 )
         return Distance(graph,Position(vn,el1!.obj),Position(vn,el2!.obj));
     end;
-    
-    gp := rec( pointsobj := pts, linesobj := lns, incidence := wrapped_incidence, listelements := listels, 
-				shadowofpoint := shadpoint, shadowofline := shadline, distance := dist );
+
+    spanoftwopoints := function(x,y) #x and y are elements
+        local i,j,span,el;
+        i := Position(vn,x!.obj);
+        j := Position(vn,y!.obj);
+        el := Intersection(DistanceSet(graph,[1],i), DistanceSet(graph,[1],j));
+        if not Length(el) = 0 then
+            span := vn{el};
+            return Wrap(x!.geo,2,span[1]);
+        else
+            Info(InfoFinInG, 1, "<x> and <y> do not span a line of gp");
+            return fail;
+        fi;
+    end;
+
+    meetoftwolines := function(x,y) #x and y are elements
+        local i,j,meet,el;
+        i := Position(vn,x!.obj);
+        j := Position(vn,y!.obj);
+        el := Intersection(DistanceSet(graph,[1],i), DistanceSet(graph,[1],j));
+        if not Length(el) = 0 then
+            meet := vn{el};
+            return Wrap(x!.geo,1,meet[1]);
+        else
+            Info(InfoFinInG, 1, "<x> and <y> do meet in a common point of gp");
+            return fail;
+        fi;
+    end;
+
+    gp := rec( pointsobj := pts, linesobj := lns, incidence := wrapped_incidence, listelements := listels,
+				shadowofpoint := shadpoint, shadowofline := shadline, distance := dist, 
+                span := spanoftwopoints, meet := meetoftwolines );
 
     Objectify( ty, gp );
 	SetOrder(gp, [s,t] );
@@ -327,7 +385,7 @@ InstallMethod( GeneralisedPolygonByElements,
     [ IsSet, IsSet, IsFunction, IsGroup, IsFunction ],
     function( pts, lns, inc, group, act )
     local adj, graph, ty, girth, shadpoint, shadline, s, t, gp, vn, 
-	dist, listels, wrapped_incidence;
+	dist, listels, wrapped_incidence, spanoftwopoints, meetoftwolines;
 
     adj := function(x,y)
     if x in pts and y in pts then
@@ -393,9 +451,38 @@ InstallMethod( GeneralisedPolygonByElements,
     dist := function( el1, el2 )
         return Distance(graph,Position(vn,el1!.obj),Position(vn,el2!.obj));
     end;
-    
+
+    spanoftwopoints := function(x,y) #x and y are elements
+        local i,j,span,el;
+        i := Position(vn,x!.obj);
+        j := Position(vn,y!.obj);
+        el := Intersection(DistanceSet(graph,[1],i), DistanceSet(graph,[1],j));
+        if not Length(el) = 0 then
+            span := vn{el};
+            return Wrap(x!.geo,2,span[1]);
+        else
+            Info(InfoFinInG, 1, "<x> and <y> do not span a line of gp");
+            return fail;
+        fi;
+    end;
+
+    meetoftwolines := function(x,y) #x and y are elements
+        local i,j,meet,el;
+        i := Position(vn,x!.obj);
+        j := Position(vn,y!.obj);
+        el := Intersection(DistanceSet(graph,[1],i), DistanceSet(graph,[1],j));
+        if not Length(el) = 0 then
+            meet := vn{el};
+            return Wrap(x!.geo,1,meet[1]);
+        else
+            Info(InfoFinInG, 1, "<x> and <y> do meet in a common point of gp");
+            return fail;
+        fi;
+    end;
+
     gp := rec( pointsobj := pts, linesobj := lns, incidence := wrapped_incidence, listelements := listels, 
-				shadowofpoint := shadpoint, shadowofline := shadline, distance := dist, action := act );
+				shadowofpoint := shadpoint, shadowofline := shadline, distance := dist, span := spanoftwopoints, 
+                meet := meetoftwolines, action := act );
 
     Objectify( ty, gp );
 	SetOrder(gp, [s,t] );
@@ -646,31 +733,7 @@ InstallMethod( Span,
         elif not x!.geo = y!.geo then
             Error("<x> and <y> must belong to the same generalised polygon");
         fi;
-        graph := IncidenceGraphOfGeneralisedPolygon(x!.geo);
-        vn := VertexNames(graph);
-        if HasGraphWithUnderlyingObjectsAsVertices(x!.geo) then
-            i := Position(vn,x!.obj);
-            j := Position(vn,y!.obj);
-            el := Intersection(DistanceSet(graph,[1],i), DistanceSet(graph,[1],j));
-            if not Length(el) = 0 then
-                span := vn{el};
-                return Wrap(x!.geo,2,span[1]);
-            else
-                Info(InfoFinInG, 1, "<x> and <y> do not span a line of gp");
-                return fail;
-            fi;
-        else
-            i := Position(vn,x);
-            j := Position(vn,y);
-            el := Intersection(DistanceSet(graph,[1],i), DistanceSet(graph,[1],j));
-            if not Length(el) = 0 then
-                span := vn{el};
-                return span[1];
-            else
-                Info(InfoFinInG, 1, "<x> and <y> do not span a line of gp");
-                return fail;
-            fi;
-        fi;
+        return x!.geo!.span(x,y);
     end );
 
 #############################################################################
@@ -687,33 +750,8 @@ InstallMethod( Meet,
         elif not x!.geo = y!.geo then
             Error("<x> and <y> must belong to the same generalised polygon");
         fi;
-        graph := IncidenceGraphOfGeneralisedPolygon(x!.geo);
-        vn := VertexNames(graph);
-        if HasGraphWithUnderlyingObjectsAsVertices(x!.geo) then
-            i := Position(vn,x!.obj);
-            j := Position(vn,y!.obj);
-            el := Intersection(DistanceSet(graph,[1],i), DistanceSet(graph,[1],j));
-            if not Length(el) = 0 then
-                meet := vn{el};
-                return Wrap(x!.geo,2,meet   [1]);
-            else
-                Info(InfoFinInG, 1, "<x> and <y> do meet in a common point of gp");
-                return fail;
-            fi;
-        else
-            i := Position(vn,x);
-            j := Position(vn,y);
-            el := Intersection(DistanceSet(graph,[1],i), DistanceSet(graph,[1],j));
-            if not Length(el) = 0 then
-                meet := vn{el};
-                return meet[1];
-            else
-                Info(InfoFinInG, 1, "<x> and <y> do meet in a common point of gp");
-                return fail;
-            fi;
-        fi;
+        return x!.geo!.meet(x,y);
     end );
-
 
 #############################################################################
 #O  Wrap( <geo>, <type>, <o>  )
@@ -826,10 +864,22 @@ InstallMethod( Lines,
 #############################################################################
 #O  DistanceBetweenElements( <gp>, <el1>, <el2> )
 # returns the distance in the incidence graph between two elements
-## 
+# Important notice: the '5' before the function increases the priority of this 
+# method for a pair of points satisfying the filters. The only situation where 
+# this is relevant is to compute the distance between elements of the Classical 
+# hexagons. Elements of these are also IsSubspaceOfClassicalPolarSpace. For
+# elements of classical GQs, the above method for IsSubspaceOfClassicalPolarSpace
+# must be applied. For elements of classical GHs, the generic method here must be
+# used. But elements of classical GHs satisfy both filters, so the rank of the filters
+# is used to select the method. As the rank of IsSubspaceOfClassicalPolarSpace is
+# larger than the rank of IsElementOfGeneralisedPolygon, the wrong method gets
+# selected for elements of GHs. The difference in rank is currently 2, times 2 makes
+# 4, so adding 5 here should do the job, and it does.
+##
 InstallMethod( DistanceBetweenElements,
     "for a gp in gpRep and two of its elements",
 	[ IsElementOfGeneralisedPolygon, IsElementOfGeneralisedPolygon],
+    5,
 	function( p, q )
 		local geo;
         geo := p!.geo;
@@ -2632,9 +2682,11 @@ InstallMethod( \in,
 #  which is a subcategory of IsElementOfGeneralisedPolygon. Contrary to all other
 #  instances of elements of an incidence geometry, an IsElementOfKantorFamily contains
 #  also its class (and of course its embient geometry, type and underlying object). 
-#  This makes typical operations like Wrap different. For IsElationGQByKantorFamily,
-#  there is currently also no ObjectToElement and UnderlyingObject method available.
-#  
+#  This makes typical operations like Wrap different. The same applies to UnderlyingObject
+#  and ObjectToElement for IsElationGQByKantorFamily
+#
+#   componenets in the EGQByKantor:
+#
 #
 #############################################################################
 
@@ -2801,23 +2853,23 @@ InstallMethod( EGQByKantorFamily,
     fi;
 
     inc := function(x, y)
-             if x!.type = y!.type then
-                return x = y;
-             elif x!.type = 1 and y!.type = 2 then
-                if x!.class = 1 and y!.class = 1 then
-                   return x!.obj*y!.obj[2]^-1 in y!.obj[1];
-                elif x!.class = 2 and y!.class = 1 then
-                   return IsSubset(x!.obj[1], RightCoset(y!.obj[1], y!.obj[2]*x!.obj[2]^-1));
-                elif x!.class = 2 and y!.class = 2 then
-                   return x!.obj[1] = y!.obj; 
-                elif x!.class = 3 and y!.class = 2 then
-                   return true;
-                else return false;
-                fi;
-             else 
-                return inc(y, x);
-             fi;   
-           end;
+        if x!.type = y!.type then
+            return x = y;
+        elif x!.type = 1 and y!.type = 2 then
+            if x!.class = 1 and y!.class = 1 then
+                return x!.obj*y!.obj[2]^-1 in y!.obj[1];
+            elif x!.class = 2 and y!.class = 1 then
+                return IsSubset(x!.obj[1], RightCoset(y!.obj[1], y!.obj[2]*x!.obj[2]^-1));
+            elif x!.class = 2 and y!.class = 2 then
+                return x!.obj[1] = y!.obj;
+            elif x!.class = 3 and y!.class = 2 then
+                return true;
+            else return false;
+            fi;
+        else
+            return inc(y, x);
+        fi;
+    end;
 
     geo := rec( pointsobj := [], linesobj := [], incidence := inc );
     ty := NewType( GeometriesFamily, IsElationGQByKantorFamily and IsGeneralisedPolygonRep );  
@@ -2907,7 +2959,7 @@ InstallMethod( EGQByKantorFamily,
     end;
 
     meetlns := function(l,m)
-        local class, obj, geo, Sl, Sm, S, coset, r, prod, g, h;
+        local class, obj, geo, Sl, Sm, S, coset, r, g, h;
         if not l!.geo = m!.geo then
             Error("<l> and <m> should belong to the same ambient geometry");
         fi;
@@ -2923,13 +2975,12 @@ InstallMethod( EGQByKantorFamily,
                 r := CanonicalRightCosetElement(S,Representative(coset));
                 return Wrap(l!.geo,1,2,[S,r]);
             else
-                prod := Group(Concatenation(GeneratorsOfGroup(Sl),GeneratorsOfGroup(Sm)));
                 g := l!.obj[2];
                 h := m!.obj[2];
-                if not g*h^-1 in prod then
+                r := Intersection(RightCoset(Sl,g),RightCoset(Sm,h));
+                if Length(r) = 0 then
                     return fail;
-                else
-                    r := Intersection(RightCoset(Sl,g),RightCoset(Sm,h));
+                else 
                     return Wrap(l!.geo,1,1,r[1]);
                 fi;
             fi;
@@ -2976,6 +3027,9 @@ InstallMethod( EGQByKantorFamily,
     geo!.span := spanpts;
     geo!.meet := meetlns;
     geo!.distance := dist;
+    geo!.group := g;
+    geo!.S := f;
+    geo!.Sstar := fstar;
 	SetBasePointOfEGQ( geo, pts3[1] );
     SetAmbientSpace(geo, geo);
     SetOrder(geo, [Index(g,fstar[1]), Size(f)-1]);
@@ -2989,6 +3043,137 @@ InstallMethod( EGQByKantorFamily,
   end );
 
 #Iterator and IsIncident: replaced by generic methods now.
+
+#############################################################################
+#O  UnderlyingObject( <el>)
+# for IsElementOfKantorFamily.
+##
+InstallMethod( UnderlyingObject,
+    "for an element of a Kantor family",
+    [ IsElementOfKantorFamily ],
+    function( el )
+        if el!.type = 1 then
+            if el!.class = 2 then
+                return RightCoset(el!.obj[1],el!.obj[2]);
+            else
+                return el!.obj;
+            fi;
+        else
+            if el!.class = 1 then
+                return RightCoset(el!.obj[1],el!.obj[2]);
+            else
+                return el!.obj;
+            fi;
+        fi;
+    end );
+
+#############################################################################
+#O  ObjectToElement( <egq>, <t>, <obj>)
+#  for an EGQByKantorFamily, a type and a right coset
+##
+InstallMethod( ObjectToElement,
+    "for an EGQByKantorFamily, a type and a right coset",
+    [ IsElationGQByKantorFamily, IsPosInt, IsRightCoset ],
+    function( geo, t, obj )
+        local S,r;
+        S := ActingDomain(obj);
+        r := CanonicalRightCosetElement(S,Representative(obj));
+        if t = 1 then
+            if not S in geo!.Sstar then
+                Error(" <obj> does not represent a point of <geo>");
+            else
+                return Wrap(geo,t,2,[S,r]);
+            fi;
+        elif t = 2 then
+            if not S in geo!.S then
+                Error(" <obj> does not represent a line of <geo>");
+            else
+                return Wrap(geo,t,1,[S,r]);
+            fi;
+        else
+            Error("<geo> has no elements other than points and lines");
+        fi;
+    end );
+
+#############################################################################
+#O  ObjectToElement( <egq>, <t>, <obj>)
+#  for an EGQByKantorFamily, a type and a right coset
+##
+InstallMethod( ObjectToElement,
+    "for an EGQByKantorFamily, a type and a right coset",
+    [ IsElationGQByKantorFamily, IsRightCoset ],
+    function( geo, obj )
+        local S,r;
+        S := ActingDomain(obj);
+        r := CanonicalRightCosetElement(S,Representative(obj));
+        if S in geo!.Sstar then
+            return Wrap(geo,1,2,[S,r]);
+        elif S in geo!.S then
+            return Wrap(geo,2,1,[S,r]);
+        else
+            Error("<obj> does not represent any element of <geo>");
+        fi;
+    end );
+
+#############################################################################
+#O  ObjectToElement( <egq>, <t>, <obj>)
+#  for an EGQByKantorFamily, a type and a group element
+##
+InstallMethod( ObjectToElement,
+    "for an EGQByKantorFamily, a type and a group element",
+    [ IsElationGQByKantorFamily, IsPosInt, IsMultiplicativeElementWithInverse ],
+    function( geo, t, obj )
+        if not t = 1 or not obj in geo!.group then
+            Error("<obj> does not represent a point");
+        else
+            return Wrap(geo,1,1,obj);
+        fi;
+    end );
+
+#############################################################################
+#O  ObjectToElement( <egq>, <obj>)
+#  for an EGQByKantorFamily and a group element
+##
+InstallMethod( ObjectToElement,
+    "for an EGQByKantorFamily and a group element",
+    [ IsElationGQByKantorFamily, IsMultiplicativeElementWithInverse ],
+    function( geo, obj )
+        if not obj in geo!.group then
+            Error("<obj> does not represent a point");
+        else
+            return Wrap(geo,1,1,obj);
+        fi;
+    end );
+
+#############################################################################
+#O  ObjectToElement( <egq>, <t>, <obj>)
+#  for an EGQByKantorFamily, a type and a group element
+##
+InstallMethod( ObjectToElement,
+    "for an EGQByKantorFamily, a type and a group",
+    [ IsElationGQByKantorFamily, IsPosInt, IsMagmaWithInverses ],
+    function( geo, t, obj )
+        if not t = 2 or not obj in geo!.Sstar then
+            Error("<obj> does not represent a line");
+        else
+            return Wrap(geo,2,2,obj);
+        fi;
+    end );
+
+#############################################################################
+#O  ObjectToElement( <egq>, <obj>)
+#  for an EGQByKantorFamily and a group element
+##
+InstallMethod( ObjectToElement,
+    "for an EGQByKantorFamily and a group",
+    [ IsElationGQByKantorFamily, IsMagmaWithInverses ],
+    function( geo, obj )
+        if not obj in geo!.Sstar then
+            Error("<obj> does not represent a line");
+        else
+            return Wrap(geo,2,2,obj);
+        fi;
+    end );
 
 #############################################################################
 #

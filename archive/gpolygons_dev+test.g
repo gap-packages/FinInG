@@ -382,6 +382,88 @@ end;
 
 
 
+#############################################################################
+#O  Span( <x>, <y>  )
+# return the line spanned by <x> and <y>, if they span a line at all.
+##
+#InstallMethod( Span,
+#    "for two elements of a generalised polygon",
+#    [ IsElementOfGeneralisedPolygon, IsElementOfGeneralisedPolygon ],
+#    function( x, y )
+#        local graph, vn, el, i, j, span;
+#        if not x!.type = 1 and y!.type = 1 then
+#            Error("<x> and <y> must be points of a generalised polygon");
+#        elif not x!.geo = y!.geo then
+#            Error("<x> and <y> must belong to the same generalised polygon");
+#        fi;
+#        graph := IncidenceGraphOfGeneralisedPolygon(x!.geo);
+#        vn := VertexNames(graph);
+#        if HasGraphWithUnderlyingObjectsAsVertices(x!.geo) then
+#            i := Position(vn,x!.obj);
+#            j := Position(vn,y!.obj);
+#            el := Intersection(DistanceSet(graph,[1],i), DistanceSet(graph,[1],j));
+#            if not Length(el) = 0 then
+#                span := vn{el};
+#                return Wrap(x!.geo,2,span[1]);
+#            else
+#                Info(InfoFinInG, 1, "<x> and <y> do not span a line of gp");
+#                return fail;
+#            fi;
+#        else
+#            i := Position(vn,x);
+#            j := Position(vn,y);
+#            el := Intersection(DistanceSet(graph,[1],i), DistanceSet(graph,[1],j));
+#            if not Length(el) = 0 then
+#                span := vn{el};
+#                return span[1];
+#            else
+#                Info(InfoFinInG, 1, "<x> and <y> do not span a line of gp");
+#                return fail;
+#            fi;
+#        fi;
+#    end );
+
+
+#############################################################################
+#O  Meet( <x>, <y>  )
+# return the line spanned by <x> and <y>, if they span a line at all.
+##
+#InstallMethod( Meet,
+#    "for two elements of a generalised polygon",
+#    [ IsElementOfGeneralisedPolygon, IsElementOfGeneralisedPolygon ],
+#    function( x, y )
+#        local graph, vn, el, i, j, meet;
+#        if not x!.type = 2 and y!.type = 2 then
+#            Error("<x> and <y> must be lines of a generalised polygon");
+#        elif not x!.geo = y!.geo then
+#            Error("<x> and <y> must belong to the same generalised polygon");
+#        fi;
+#        graph := IncidenceGraphOfGeneralisedPolygon(x!.geo);
+#        vn := VertexNames(graph);
+#        if HasGraphWithUnderlyingObjectsAsVertices(x!.geo) then
+#            i := Position(vn,x!.obj);
+#            j := Position(vn,y!.obj);
+#            el := Intersection(DistanceSet(graph,[1],i), DistanceSet(graph,[1],j));
+#            if not Length(el) = 0 then
+#                meet := vn{el};
+#                return Wrap(x!.geo,2,meet   [1]);
+#            else
+#                Info(InfoFinInG, 1, "<x> and <y> do meet in a common point of gp");
+#                return fail;
+#            fi;
+#        else
+#            i := Position(vn,x);
+#            j := Position(vn,y);
+#            el := Intersection(DistanceSet(graph,[1],i), DistanceSet(graph,[1],j));
+#            if not Length(el) = 0 then
+#                meet := vn{el};
+#                return meet[1];
+#            else
+#                Info(InfoFinInG, 1, "<x> and <y> do meet in a common point of gp");
+#                return fail;
+#            fi;
+#        fi;
+#    end );
 
 
 
