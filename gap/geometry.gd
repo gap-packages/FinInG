@@ -52,7 +52,6 @@ DeclareCategory( "IsIncidenceStructure", IsComponentObjectRep and IsAttributeSto
 
 DeclareCategory( "IsElementOfIncidenceStructure", IsComponentObjectRep and IsAttributeStoringRep
 											and CanEasilyCompareElements and CanEasilySortElements );
-DeclareCategoryCollections("IsElementOfIncidenceStructure");
 
 #DeclareCategory( "IsElementsOfIncidenceStructure", IsDomain and IsCollection and IsComponentObjectRep );
 #DeclareCategory( "IsAllElementsOfIncidenceStructure", IsDomain and IsCollection and IsComponentObjectRep);
@@ -86,7 +85,7 @@ DeclareCategory( "IsIncidenceGeometry", IsIncidenceStructure );
 # categories for elements of incidence geometries.
 
 DeclareCategory( "IsElementOfIncidenceGeometry", IsElementOfIncidenceStructure );
-DeclareCategoryCollections("IsElementOfIncidenceGeometry");
+DeclareCategoryCollections("IsElementOfIncidenceStructure");
 
 DeclareCategory( "IsElementsOfIncidenceGeometry", IsElementsOfIncidenceStructure );
 DeclareCategory( "IsAllElementsOfIncidenceGeometry", IsAllElementsOfIncidenceStructure );
@@ -171,6 +170,7 @@ BindGlobal( "IsFlagOfIncidenceStructureType", NewType( FlagsOfIncidenceStructure
 #############################################################################
 
 DeclareOperation( "IncidenceStructure", [ IsList, IsFunction, IsFunction, IsList ]);
+DeclareOperation( "ResidueOfFlag", [IsFlagOfIncidenceStructure]);
 
 #############################################################################
 #
@@ -201,6 +201,7 @@ DeclareAttribute( "CorrelationAction", IsIncidenceStructure );
 DeclareAttribute( "RepresentativesOfElements", IsIncidenceStructure );
 
 DeclareAttribute( "AmbientGeometry", IsIncidenceStructure );
+DeclareAttribute( "AmbientGeometry", IsFlagOfIncidenceStructure );
 
 #############################################################################
 #
@@ -216,8 +217,11 @@ DeclareOperation( "FlagOfIncidenceStructure", [ IsIncidenceStructure, IsList and
 DeclareOperation( "ChamberOfIncidenceStructure", [ IsElementOfIncidenceStructureCollection ]);
 
 DeclareOperation( "ElementsOfFlag", [ IsFlagOfIncidenceStructure ]);
+DeclareAttribute( "Size", IsFlagOfIncidenceStructure );
 
 DeclareOperation( "IsIncident", [IsElementOfIncidenceStructure, IsElementOfIncidenceStructure] );
+DeclareOperation( "IsIncident", [IsElementOfIncidenceStructure, IsFlagOfIncidenceStructure] );
+DeclareOperation( "ShadowOfFlag", [IsFlagOfIncidenceStructure, IsPosInt] );
 DeclareOperation( "IsCollinear", [IsIncidenceStructure, IsElementOfIncidenceStructure, IsElementOfIncidenceStructure]);
 DeclareOperation( "Span", [IsElementOfIncidenceStructure, IsElementOfIncidenceStructure]);
 DeclareOperation( "Meet", [IsElementOfIncidenceStructure, IsElementOfIncidenceStructure]);
@@ -238,7 +242,7 @@ DeclareFilter( "IsUnwrapper" );
 DeclareGlobalVariable( "_" );
 InstallValue( _, Objectify( NewType( NewFamily( "UnwrapperFamily" ), IsUnwrapper ), rec() ));
 
-DeclareOperation( "Wrap", [IsIncidenceGeometry, IsPosInt, IsObject] );
+DeclareOperation( "Wrap", [IsIncidenceStructure, IsPosInt, IsObject] );
 DeclareOperation( "Unwrap", [IsElementOfIncidenceStructure] );
 DeclareOperation( "\^", [IsElementOfIncidenceStructure, IsUnwrapper ] ); 
 

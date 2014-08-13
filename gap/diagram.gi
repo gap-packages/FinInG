@@ -781,17 +781,18 @@ InstallMethod( CanonicalResidueOfFlag, "for coset geometries",
 #  
 # 
 ##
-InstallMethod( ResidueOfFlag, "for coset geometries",
-               [ IsCosetGeometry, IsFlagOfCosetGeometry ],
+InstallOtherMethod( ResidueOfFlag, "for coset geometries",
+               [ IsFlagOfCosetGeometry ],
 
-  function( cg, flag )
+  function( flag )
 
     ## return all right cosets of parabolics which
     ## have non-empty intersection with all of the elements
     ## of flag
 
-    local typesflag, types, r, parabolics, i, resg, respabs;
+    local cg, typesflag, types, r, parabolics, i, resg, respabs;
 
+    cg:=flag!.geo;
     if IsFlagTransitiveGeometry( cg ) then
        typesflag := Set(flag!.types);
        if IsEmpty( typesflag ) then

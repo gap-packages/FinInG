@@ -131,7 +131,7 @@ DeclareOperation( "CosetGeometry", [ IsGroup, IsHomogeneousList ] );
 DeclareOperation( "ParabolicSubgroups", [ IsCosetGeometry ] );
 DeclareOperation( "AmbientGroup", [ IsCosetGeometry ] );
 DeclareOperation( "FlagToStandardFlag", [ IsCosetGeometry, IsFlagOfCosetGeometry ] );
-DeclareOperation( "ResidueOfFlag", [ IsCosetGeometry, IsFlagOfCosetGeometry ] );
+DeclareOperation( "ResidueOfFlag", [ IsFlagOfCosetGeometry ] );
 DeclareOperation( "CanonicalResidueOfFlag", [ IsCosetGeometry, IsFlagOfCosetGeometry ] );
 DeclareOperation( "FlagOfIncidenceStructure", [ IsCosetGeometry, IsHomogeneousList ] );
 DeclareOperation( "\=", [ IsFlagOfCosetGeometry, IsFlagOfCosetGeometry ]);
