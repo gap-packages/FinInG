@@ -439,12 +439,35 @@ generalised polygongs that belong to <C>IsLieGeometry</C>, see <Ref Label="lieme
 </ManSection>
 
 <ManSection>
+<Heading>Shadow elements</Heading>
+<Oper Name="ShadowOfElement" Arg="geo, v, j"/>
+<Oper Name="Points" Arg="el"/>
+<Oper Name="Lines" Arg="el"/>
+<Oper Name="ElementsIncidentWithElementOfIncidenceStructure" Arg="el, i"/>
+<Returns> A collection of elements</Returns>
+<Description>
+<A>geo</A> is a generalised olygon, <A>v</A> must be an element of <A>geo</A>,
+<A>j</A> is an integer equal to 1 or 2, since <A>geo</A> is a rank two geometry.
+The operation <F>ShadowOfElement</F> returns the collection of elements of <A>geo</A> of type
+<A>j</A>, incident with the element <A>v</A>. The operations <F>Points</F> and <F>Lines</F> with argument
+are the usual shortcuts to <F>ShadowOfElement</F> with <A>j</A> respectively equal to 1, 2. The operation
+<F>ElementsIncidentWithElementOfIncidenceStructure</F> is the usual shortcut to <F>ShadowOfElement</F>.
+<Example>
+<#Include SYSTEM "../examples/include/gpolygons_shadow.include">
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
 <Oper Name="DistanceBetweenElements" Arg="v,w"/>
 <Returns>a number</Returns>
 <Description>
 Let <A>v</A> and <A>w</A> be two elements of a generalised polygon. It is checked if
 the ambient geometry of the two elements are identical, and the distance between the two
 elements in the incidence graph of their ambient geometry is returned.
+<Example>
+<#Include SYSTEM "../examples/include/gpolygons_distance.include">
+</Example>
 </Description>
 </ManSection>
 
@@ -486,6 +509,14 @@ lines of type (a) represented by the cosets <M>Sg</M>, <M>S \in F</M>. A point
 
 For more information, we refer to the standard
 work in this field of Payne and Thas <Cite Key="FGQ"/>.
+
+<ManSection>
+<Filt Name="IsEGQByKantorFamily" Type="Category"/>
+<Description>
+This category contains all elation generalised quadrangles that are constructed from
+a Kantor family.
+</Description>
+</ManSection>
 
 <ManSection>
 <Oper Name="EGQByKantorFamily" Arg="g,f,fstar"/>

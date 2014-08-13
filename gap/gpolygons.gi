@@ -2932,7 +2932,7 @@ InstallMethod( EGQByKantorFamily,
 	end;
 	    
 	shadline := function(line)
-		local coset,cosets,Ss,pts;
+		local coset,cosets,Ss,pts,objs;
 		if line!.class = 1 then
 			coset := RightCoset(line!.obj[1],line!.obj[2]);
 			pts := List(List(coset),x->Wrap(line!.geo,1,1,x));

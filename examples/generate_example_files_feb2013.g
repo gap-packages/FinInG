@@ -80,7 +80,7 @@ morphismsfiles := ["morphisms_filters", "morphisms_isopolar", "morphisms_embeddi
 
 gpolygonfiles := [ "gpolygons_gpbyblocks", "gpolygons_gpbyincmat", "gpolygons_gpelements", "gpolygons_iskantorfamily", "gpolygons_isqclan", "gpolygons_objectselements",
 				   "gpolygons_qclan", "gpolygons_EGQByqClan", "gpolygons_kantorfamilybyqclan", "gpolygons_categories1", "gpolygons_collineationgroup1",
-				   "gpolygons_EGQByKantorFamily", "gpolygons_particularqclans", "gpolygons_bltsetbyqclan", "gpolygons_categories2",
+				   "gpolygons_EGQByKantorFamily", "gpolygons_particularqclans", "gpolygons_bltsetbyqclan", "gpolygons_categories2", "gpolygons_shadow",
 				   "gpolygons_EGQByBLTSet", "gpolygons_elationgroup", "gpolygons_basepointofegq", "gpolygons_collineationgroup2", "gpolygons_collineationgroup3",
 				   "gpolygons_collineations", "gpolygons_SplitCayleyHexagon", "gpolygons_ambientpolarspace", "gpolygons_span", "gpolygons_meet"];
 
