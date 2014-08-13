@@ -1,15 +1,20 @@
 gap&gt; hexagon := SplitCayleyHexagon( 3 );
-Split Cayley Hexagon of order 3
-gap&gt; points := Points( hexagon );
-&lt;points of Split Cayley Hexagon of order 3&gt;
-gap&gt; lines := AsList( Lines(hexagon) );;
-gap&gt; lines[1];
-&lt;a line of Split Cayley Hexagon of order 3&gt;
-gap&gt; AmbientSpace( hexagon );
-ProjectiveSpace(6, 3)
-gap&gt; coll := CollineationGroup( hexagon );
-G_2(3)
-gap&gt; DisplayCompositionSeries( coll );
-G (size 4245696)
- | G(2,3)
-1 (size 1)
+H(3)
+gap&gt; AmbientPolarSpace(hexagon);
+Q(6, 3): -x_1*x_5-x_2*x_6-x_3*x_7+x_4^2=0
+gap&gt; ps := ParabolicQuadric(6,3);
+Q(6, 3)
+gap&gt; hexagon := SplitCayleyHexagon( ps );
+H(3) in Q(6, 3)
+gap&gt; AmbientPolarSpace(hexagon);
+Q(6, 3)
+gap&gt; hexagon := SplitCayleyHexagon( 4 );
+H(4)
+gap&gt; AmbientPolarSpace(hexagon);
+W(5, 4): x1*y4+x2*y5+x3*y6+x4*y1+x5*y2+x6*y3=0
+gap&gt; ps := ParabolicQuadric(6,4);
+Q(6, 4)
+gap&gt; hexagon := SplitCayleyHexagon( 4 );
+H(4)
+gap&gt; AmbientPolarSpace(hexagon);
+W(5, 4): x1*y4+x2*y5+x3*y6+x4*y1+x5*y2+x6*y3=0

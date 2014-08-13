@@ -1,11 +1,13 @@
 ## gpolygons_SplitCayleyHexagon.g
 hexagon := SplitCayleyHexagon( 3 );
-ó
-points := Points( hexagon );
-lines := AsList( Lines(hexagon) );;
-lines[1];
-AmbientSpace( hexagon );
-coll := CollineationGroup( hexagon );
-DisplayCompositionSeries( coll );
+AmbientPolarSpace(hexagon);
+ps := ParabolicQuadric(6,3);
+hexagon := SplitCayleyHexagon( ps );
+AmbientPolarSpace(hexagon);
+hexagon := SplitCayleyHexagon( 4 );
+AmbientPolarSpace(hexagon);
+ps := ParabolicQuadric(6,4);
+hexagon := SplitCayleyHexagon( 4 );
+AmbientPolarSpace(hexagon);
 quit;
 

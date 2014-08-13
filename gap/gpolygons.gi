@@ -994,63 +994,64 @@ InstallMethod( CollineationGroup,
 		return coll;
     end );
 
+#InstallMethod( BlockDesignOfGeneralisedPolygon,
+#             [ IsProjectivePlane and IsGeneralisedPolygonRep ],
+#  function( gp )
+#    local points, lines, des;
+#    if not "design" in RecNames(GAPInfo.PackagesLoaded) then
+#       Error("You must load the DESIGN package\n");
+#   fi;
+#    if IsBound(gp!.BlockDesignOfGeneralisedPolygonAttr) then
+#       return gp!.BlockDesignOfGeneralisedPolygonAttr;
+#    fi;
+#    points := gp!.points;
+#    lines := gp!.lines;
+#    Info(InfoFinInG, 1, "Computing block design of generalised polygon...");
+#    des := BlockDesign(Size(points), Set(lines, AsSet));
+#    Setter( BlockDesignOfGeneralisedPolygonAttr )( gp, des );
+#    return des;
+#  end );
+
+#############################################################################
+#O  BlockDesignOfGeneralisedPolygon( <gp> )
+#
 InstallMethod( BlockDesignOfGeneralisedPolygon,
-             [ IsProjectivePlane and IsGeneralisedPolygonRep ], 
-  function( gp )
-    local points, lines, des;
-    if not "design" in RecNames(GAPInfo.PackagesLoaded) then
-       Error("You must load the DESIGN package\n");
-    fi;
-    if IsBound(gp!.BlockDesignOfGeneralisedPolygonAttr) then
-       return gp!.BlockDesignOfGeneralisedPolygonAttr;
-    fi;
-    points := gp!.points;
-    lines := gp!.lines;
-    Info(InfoFinInG, 1, "Computing block design of generalised polygon...");
-    des := BlockDesign(Size(points), Set(lines, AsSet));
-    Setter( BlockDesignOfGeneralisedPolygonAttr )( gp, des );
-    return des;
-  end );
-
-InstallMethod( BlockDesignOfGeneralisedPolygon,
-             [ IsGeneralisedPolygon and IsGeneralisedPolygonRep ], 
-  function( gp )
-    local points, lines, des, blocks, l, b, elations, gg, orbs;
-    if not "design" in RecNames(GAPInfo.PackagesLoaded) then
-       Error("You must load the DESIGN package\n");
-    fi;
-    if IsBound(gp!.BlockDesignOfGeneralisedPolygonAttr) then
-       return gp!.BlockDesignOfGeneralisedPolygonAttr;
-    fi;
-    points := AsList(Points(gp));;
-    lines := AsList(Lines(gp));;    
-
-
-    if IsElationGQ(gp) and HasElationGroup( gp ) then
-	   elations := ElationGroup(gp);
-          Info(InfoFinInG, 1, "Computing orbits on lines of gen. polygon...");
-	   orbs := List( Orbits(elations, lines, CollineationAction(elations)), Representative);
-	   orbs := List(orbs, l -> Filtered([1..Size(points)], i -> points[i] * l));
-	   gg := Action(elations, points, CollineationAction( elations ) );
-          Info(InfoFinInG, 1, "Computing block design of generalised polygon...");    
-	   des := BlockDesign(Size(points), orbs, gg ); 
-	elif HasCollineationGroup(gp) then
-	   gg := CollineationGroup(gp);
-	   orbs := List( Orbits(gg, lines, CollineationAction(gg)), Representative);
-	   orbs := List(orbs, l -> Filtered([1..Size(points)], i -> points[i] * l));
-	   gg := Action(gg, points, CollineationAction( elations ) );
-	   des := BlockDesign(Size(points), orbs, gg );
-	else
-  	   blocks := [];
-       for l in lines do
-          b := Filtered([1..Size(points)], i -> points[i] * l);
-          Add(blocks, b);
-       od;   
-       des := BlockDesign(Size(points), Set(blocks));
-	fi;
-
-    Setter( BlockDesignOfGeneralisedPolygonAttr )( gp, des );
-    return des;
+    "for a generalised polygon",
+    [ IsGeneralisedPolygon and IsGeneralisedPolygonRep ],
+    function( gp )
+        local points, lines, des, blocks, l, b, elations, gg, orbs;
+        if not "design" in RecNames(GAPInfo.PackagesLoaded) then
+            Error("You must load the DESIGN package\n");
+        fi;
+        if IsBound(gp!.BlockDesignOfGeneralisedPolygonAttr) then
+            return gp!.BlockDesignOfGeneralisedPolygonAttr;
+        fi;
+        points := AsList(Points(gp));;
+        lines := AsList(Lines(gp));;
+        if IsElationGQ(gp) and HasElationGroup( gp ) then
+            elations := ElationGroup(gp);
+            Info(InfoFinInG, 1, "Computing orbits on lines of gen. polygon...");
+            orbs := List( Orbits(elations, lines, CollineationAction(elations)), Representative);
+            orbs := List(orbs, l -> Filtered([1..Size(points)], i -> points[i] * l));
+            gg := Action(elations, points, CollineationAction( elations ) );
+            Info(InfoFinInG, 1, "Computing block design of generalised polygon...");
+            des := BlockDesign(Size(points), orbs, gg );
+        elif HasCollineationGroup(gp) then
+            gg := CollineationGroup(gp);
+            orbs := List( Orbits(gg, lines, CollineationAction(gg)), Representative);
+            orbs := List(orbs, l -> Filtered([1..Size(points)], i -> points[i] * l));
+            gg := Action(gg, points, CollineationAction( gg ) );
+            des := BlockDesign(Size(points), orbs, gg );
+        else
+            blocks := [];
+            for l in lines do
+                b := Filtered([1..Size(points)], i -> points[i] * l);
+                Add(blocks, b);
+            od;
+            des := BlockDesign(Size(points), Set(blocks));
+        fi;
+        Setter( BlockDesignOfGeneralisedPolygonAttr )( gp, des );
+        return des;
   end );
 
 #############################################################################

@@ -1,5 +1,8 @@
 # gpolygons_blockdesign.g
 LoadPackage("design");
+gh := SplitCayleyHexagon(2);
+CollineationGroup(gh);
+des := BlockDesignOfGeneralisedPolygon(gh);
 f := GF(3);
 id := IdentityMat(2, f);;
 clan := List( f, t -> t*id );;

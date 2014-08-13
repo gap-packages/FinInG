@@ -1,0 +1,11 @@
+gap&gt; hexagon := TwistedTrialityHexagon(2^3);
+T(8, 2)
+gap&gt; AmbientPolarSpace(hexagon);
+&lt;polar space in ProjectiveSpace(
+7,GF(2^3)): x_1*x_5+x_2*x_6+x_3*x_7+x_4*x_8=0 &gt;
+gap&gt; ps := HyperbolicQuadric(7,2^3);
+Q+(7, 8)
+gap&gt; hexagon := TwistedTrialityHexagon(ps);
+T(8, 2) in Q+(7, 8)
+gap&gt; AmbientPolarSpace(hexagon);
+Q+(7, 8)

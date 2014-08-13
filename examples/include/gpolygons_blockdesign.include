@@ -1,10 +1,37 @@
 gap&gt; LoadPackage("design");
------------------------------------------------------------------------------
-Loading  DESIGN 1.4 (The Design Package for GAP)
-by Leonard H. Soicher (http://www.maths.qmul.ac.uk/~leonard/).
------------------------------------------------------------------------------
 #W BIND_GLOBAL: variable `BlockDesign' already has a value
+-----------------------------------------------------------------------------
+Loading  DESIGN 1.6 (The Design Package for GAP)
+by Leonard H. Soicher (http://www.maths.qmul.ac.uk/~leonard/).
+Homepage: http://www.designtheory.org/software/gap_design/
+-----------------------------------------------------------------------------
 true
+gap&gt; gh := SplitCayleyHexagon(2);
+H(2)
+gap&gt; CollineationGroup(gh);
+#I  for Split Cayley Hexagon
+#I  Computing nice monomorphism...
+#I  Found permutation domain...
+G_2(2)
+gap&gt; des := BlockDesignOfGeneralisedPolygon(gh);
+rec( autSubgroup := &lt;permutation group with 3 generators&gt;, 
+  blocks := [ [ 1, 29, 52 ], [ 1, 34, 36 ], [ 1, 37, 48 ], [ 2, 13, 60 ], 
+      [ 2, 44, 53 ], [ 2, 45, 52 ], [ 3, 17, 35 ], [ 3, 22, 51 ], 
+      [ 3, 23, 48 ], [ 4, 16, 57 ], [ 4, 19, 36 ], [ 4, 54, 56 ], 
+      [ 5, 22, 63 ], [ 5, 31, 57 ], [ 5, 49, 52 ], [ 6, 7, 60 ], 
+      [ 6, 28, 57 ], [ 6, 35, 43 ], [ 7, 26, 27 ], [ 7, 33, 34 ], 
+      [ 8, 9, 53 ], [ 8, 22, 33 ], [ 8, 38, 56 ], [ 9, 25, 61 ], 
+      [ 9, 28, 37 ], [ 10, 18, 53 ], [ 10, 32, 35 ], [ 10, 36, 62 ], 
+      [ 11, 12, 63 ], [ 11, 26, 54 ], [ 11, 37, 42 ], [ 12, 41, 43 ], 
+      [ 12, 44, 50 ], [ 13, 15, 42 ], [ 13, 19, 51 ], [ 14, 15, 31 ], 
+      [ 14, 17, 61 ], [ 14, 34, 50 ], [ 15, 20, 38 ], [ 16, 23, 44 ], 
+      [ 16, 40, 59 ], [ 17, 45, 54 ], [ 18, 24, 26 ], [ 18, 30, 31 ], 
+      [ 19, 25, 41 ], [ 20, 21, 62 ], [ 20, 23, 27 ], [ 21, 28, 55 ], 
+      [ 21, 39, 45 ], [ 24, 29, 59 ], [ 24, 51, 55 ], [ 25, 27, 49 ], 
+      [ 29, 38, 43 ], [ 30, 39, 41 ], [ 30, 46, 48 ], [ 32, 40, 42 ], 
+      [ 32, 47, 49 ], [ 33, 39, 40 ], [ 46, 47, 56 ], [ 46, 58, 60 ], 
+      [ 47, 50, 55 ], [ 58, 59, 61 ], [ 58, 62, 63 ] ], isBlockDesign := true,
+  v := 63 )
 gap&gt; f := GF(3);
 GF(3)
 gap&gt; id := IdentityMat(2, f);;
@@ -13,8 +40,6 @@ gap&gt; clan := qClan(clan,f);
 &lt;q-clan over GF(3)&gt;
 gap&gt; egq := EGQByqClan( clan );
 #I  Computed Kantor family. Now computing EGQ...
-#I  Computing points from Kantor family...
-#I  Computing lines from Kantor family...
 &lt;EGQ of order [ 9, 3 ] and basepoint 0&gt;
 gap&gt; HasElationGroup( egq );
 true
@@ -22,18 +47,18 @@ gap&gt; design := BlockDesignOfGeneralisedPolygon( egq );;
 #I  Computing orbits on lines of gen. polygon...
 #I  Computing block design of generalised polygon...
 gap&gt; aut := AutGroupBlockDesign( design );
-&lt;permutation group with 5 generators&gt;
+&lt;permutation group with 6 generators&gt;
 gap&gt; NrBlockDesignPoints( design );
 280
 gap&gt; NrBlockDesignBlocks( design );
 112
 gap&gt; DisplayCompositionSeries(aut);
-G (5 gens, size 26127360)
+G (6 gens, size 26127360)
  | Z(2)
-S (4 gens, size 13063680)
+S (5 gens, size 13063680)
  | Z(2)
-S (4 gens, size 6531840)
+S (5 gens, size 6531840)
  | Z(2)
-S (3 gens, size 3265920)
+S (4 gens, size 3265920)
  | 2A(3,3) = U(4,3) ~ 2D(3,3) = O-(6,3)
 1 (0 gens, size 1)

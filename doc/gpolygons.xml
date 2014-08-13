@@ -331,8 +331,8 @@ so an element of <A>group</A>. The example illustrates the use in the generalise
 This method allows one to use the GAP package <Package>DESIGN</Package> 
 to analyse a generalised polygon, so the user must first load this package.
 The argument <A>gp</A> is a generalised polygon, and if it has a collineation group,
-then the block design is computed with this extra information and thus the resulting
-design is easier to work with. Likewise, if <A>gp</A> is an elation
+the block design is computed with this extra information and
+thus the resulting design is easier to work with. Likewise, if <A>gp</A> is an elation
 generalised quadrangle and it has an elation group, then we use the elation group's action
 to efficiently compute the block design.
 
@@ -341,7 +341,7 @@ of <A>gp</A>, so that accquired information about the block design can be added.
 the automorphism group of the block design may be computed after the design is stored
 as an attribute of <A>gp</A>. Normally, attributes of GAP objects are immutable.
 <Example>
-<!--<#Include SYSTEM "../examples/include/gpolygons_blockdesign.include">-->
+<#Include SYSTEM "../examples/include/gpolygons_blockdesign.include">
 </Example>
 </Description>
 </ManSection>
@@ -487,8 +487,8 @@ elements in the incidence graph of their ambient geometry is returned.
 <Oper Name="SplitCayleyHexagon" Arg="ps"/>
 <Returns>a generalised hexagon</Returns>
 <Description>
-
 <Example>
+<#Include SYSTEM "../examples/include/gpolygons_SplitCayleyHexagon.include">
 </Example>
 </Description>
 </ManSection>
@@ -499,8 +499,8 @@ elements in the incidence graph of their ambient geometry is returned.
 <Oper Name="TwistedTrialityHexagon" Arg="ps"/>
 <Returns>a generalised hexagon</Returns>
 <Description>
-
 <Example>
+<#Include SYSTEM "../examples/include/gpolygons_TwistedTrialityHexagon.include">
 </Example>
 </Description>
 </ManSection>
@@ -509,6 +509,34 @@ elements in the incidence graph of their ambient geometry is returned.
 <Oper Name="VectorSpaceToElement" Arg="gh, vec"/>
 <Returns>an element of a classical generlised hexagon</Returns>
 <Description>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="\in" Arg="x, gh"/>
+<Returns>true or false</Returns>
+<Description>
+</Description>
+</ManSection>
+
+<ManSection>
+<Heading>Span and meet of elements</Heading>
+<Oper Name="Span" Arg="x, y"/>
+<Oper Name="Meet" Arg="x, y"/>
+<Returns>a subspace of a projective space</Returns>
+<Description>
+<Example>
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="CollineationGroup" Arg="gh"/>
+<Returns>a group of collineations</Returns>
+<Description>
+give some nice examples.
+<Example>
+</Example>
 </Description>
 </ManSection>
 
