@@ -788,7 +788,7 @@ InstallMethod( HermitianPolarSpace,
 	"for an integer and a field",	
 	[ IsPosInt, IsField ],
 	function( d, f )
-		local h,m,types,max,reps,q,creps;
+		local h,m,types,max,reps,q,creps,degree;
 		if PrimePowersInt(Size(f))[2] mod 2 <> 0 then
 			Error("field order must be a square");
 			return;
@@ -835,7 +835,13 @@ InstallMethod( HermitianPolarSpace,
     ## Wrap 'em up
 		reps := List([1..RankAttr(h)], j -> Wrap(h, j, creps[j]) ); #one more small change :-)
 		SetRepresentativesOfElements(h, reps);
-		SetClassicalGroupInfo( h, rec(  degree := (q^d-(-1)^d)*(q^(d+1)-(-1)^(d+1))/(q^2-1)) );
+		if d = 3 then
+            degree := (q^3+1)*(q+1);
+        else
+            degree := (q^d-(-1)^d)*(q^(d+1)-(-1)^(d+1))/(q^2-1);
+        fi;
+        #SetClassicalGroupInfo( h, rec(  degree := (q^d-(-1)^d)*(q^(d+1)-(-1)^(d+1))/(q^2-1)) );
+        SetClassicalGroupInfo( h, rec(  degree := degree ));
 		return h;
 	end );
 
@@ -927,7 +933,11 @@ InstallMethod( IsCanonicalPolarSpace,
 	elif type = "hermitian" then
 		SetIsHermitianPolarSpace(ps,true);
 		q := Sqrt(q);
-		order := (q^d-(-1)^d)*(q^(d+1)-(-1)^(d+1))/(q^2-1);
+        if d=3 then
+            order := (q^3+1)*(q+1);
+        else
+            order := (q^d-(-1)^d)*(q^(d+1)-(-1)^(d+1))/(q^2-1);
+        fi;
 	fi;
 	c1 := First(gram[1],x->not IsZero(x));
 	if c1 = fail then
@@ -2716,7 +2726,7 @@ InstallMethod( CollineationGroup,
 	"for a polar space",
 	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
 	function( ps )
-		local iso, twiner, g, info, x, points, hom, d, f, coll, type;
+		local iso, twiner, g, info, x, points, hom, d, f, coll, type, act;
 		d := ps!.dimension + 1; 
 		f := ps!.basefield;
 		if HasIsCanonicalPolarSpace(ps) and IsCanonicalPolarSpace(ps) then
@@ -2753,12 +2763,15 @@ InstallMethod( CollineationGroup,
           Info(InfoFinInG, 1, "No nice monomorphism computed.");
  	   else
 	      if not IsEmpty(x) then
-	   	     x := x[1];
-#	         if type = "hermitian" and d in [4, 5] then
-#				x := x[2];
-#			 fi;
+            if type = "hermitian" and d=4 then
+                x := x[2];
+                act := OnProjSubspacesWithFrob;
+            else
+                x := x[1];
+                act := OnProjPointsWithFrob;
+            fi;
 		     if FINING.Fast then
-	               hom := NiceMonomorphismByOrbit( g, x!.obj, OnProjPointsWithFrob, info!.degree);
+	               hom := NiceMonomorphismByOrbit( g, x!.obj, act, info!.degree);
 			 else 
 		           points := Orbit(g, x, OnProjSubspaces);
 		           hom := ActionHomomorphism(g, points, OnProjSubspaces, "surjective");    
