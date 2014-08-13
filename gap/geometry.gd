@@ -236,6 +236,7 @@ DeclareOperation( "RandomChamber", [IsIncidenceStructure]);
 
 DeclareOperation( "Type", [ IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep ] );
 DeclareOperation( "Type", [ IsElementsOfIncidenceStructure and IsElementsOfIncidenceStructureRep ] );
+DeclareOperation( "Type", [ IsFlagOfIncidenceStructure and IsFlagOfIncidenceStructureRep ] );
 
 
 DeclareFilter( "IsUnwrapper" );

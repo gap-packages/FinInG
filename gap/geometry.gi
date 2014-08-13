@@ -141,6 +141,17 @@ InstallMethod( Type,
 	[IsElementsOfIncidenceStructure and IsElementsOfIncidenceStructureRep], 
 	x -> x!.type );
 
+# Added 140813, pc
+#############################################################################
+#O  Type( <x> )
+# general method that returns the type of a flag
+##
+InstallMethod( Type,
+        "for IsElementsOfIncidenceStructure(Rep)",
+        [IsFlagOfIncidenceStructure and IsFlagOfIncidenceStructureRep],
+        x -> Set(x!.els,Type) );
+
+
 # CHECKED 18/4/2011 jdb
 #############################################################################
 #O  Rank( <i> )
@@ -257,7 +268,7 @@ List([i..Length(list)], j -> IsIncident(list[i], list[j])))));
                 fi;
                 flag := rec(geo := incgeo, types := List(list,x->x!.type), 
 els := list);
-                ObjectifyWithAttributes(flag, IsFlagOfIncidenceStructure, IsEmptyFlag, false);
+                ObjectifyWithAttributes(flag, IsFlagOfIncidenceStructureType, IsEmptyFlag, false);
                 return flag;
         end);
 
@@ -313,6 +324,16 @@ InstallMethod( ViewObj,
 		ViewObj(v!.geo);
 		Print(">");
 	end );
+
+InstallMethod( ViewObj,
+        "for IsFlagOfIncidenceStructure",
+        [ IsFlagOfIncidenceStructure and 
+IsFlagOfIncidenceStructureRep ],
+        function( v )
+                Print("<a flag of ");
+                ViewObj(v!.geo);
+                Print(">");
+        end );
 
 InstallMethod( PrintObj, 
 	"for IsElementOfIncidenceStructure",
@@ -589,7 +610,8 @@ InstallMethod( ElementsOfIncidenceStructure,
                 local elements, wrapped;
 		elements:=Filtered(incstr!.elements, e -> 
 Position(incstr!.typeset,incstr!.typefun(e))=j);
-		wrapped:=List(elements, e -> Wrap(incstr, j, e));
+		wrapped:=List(elements, e -> Wrap(incstr, 
+incstr!.typeset[j], e));
 		return wrapped;
         end );
 
@@ -603,21 +625,22 @@ InstallMethod( ResidueOfFlag,
         "for a flag",
         [ IsFlagOfIncidenceStructure ],
         function( flag )
-                local geo, typfun, typset, resrank, eles, inc;
-		typset:=Type(flag);
-		resrank:=Rank(AmbientGeometry(flag))-Size(typset);
+                local ambigeo, geo, typfun, typset, resrank, eles, inc;
+		ambigeo:=AmbientGeometry(flag);
+		typset:=Difference([1..Rank(ambigeo)], Type(flag));
+		resrank:=Size(typset);
 		typfun:=function(ele)
 			return Position(typset, Type(ele));
 		end;
-		eles:=Union(Difference([1..Rank(AmbientGeometry(flag))], 
-typset), j -> ShadowOfFlag(flag,j));
+		eles:=List(typset, j -> ShadowOfFlag(flag,j));
+
 		inc:=function(x,y)
-			return x*y;
+			return ambigeo!.increl(x,y);
 		end;
 
-                geo := IncidenceStructure(eles, inc, typfun, 
+                geo := IncidenceStructure(Union(eles), inc, typfun, 
 [1..resrank]);
-                SetAmbientGeometry(geo,AmbientGeometry(flag));
+                SetAmbientGeometry(geo,ambigeo);
                 #Objectify(ty,geo);
                 return geo;
         end );
