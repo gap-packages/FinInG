@@ -552,6 +552,7 @@ InstallOtherMethod( Intersection2,
 	
 
 # CHECKED 14/11/2011 jdb
+# 140813 modified by pc : TypesOfIncidenceStructure
 #############################################################################
 #O  IncidenceStructure( <eles>, <inc>, <typ>, <typeset> )
 # method for IncidenceStructure.
@@ -560,13 +561,17 @@ InstallMethod( IncidenceStructure,
 	"for a set, incidence, type function and type set",
 	[ IsList, IsFunction, IsFunction, IsList ],
 	function( eles, inc, typ, typeset )
-		local geo, ty;
+		local geo, ty, t, typesetstrings;
 		geo := rec( elements := eles, increl := inc, 
 					typefun := typ, typeset := typeset );
 		ty := NewType( GeometriesFamily,
 					IsIncidenceStructure and IsIncidenceStructureRep );
+		typesetstrings:=[];
+		for t in typeset do
+			Add(typesetstrings, Concatenation("element of type ", String(t)));
+		od;
 		ObjectifyWithAttributes( geo, ty, RankAttr, 
-Size(typeset), TypesOfElementsOfIncidenceStructure, typeset);
+Size(typeset), TypesOfElementsOfIncidenceStructure, typesetstrings);
 		#SetAmbientSpace(geo,geo);
 		#Objectify(ty,geo);
 		return geo;
@@ -583,7 +588,7 @@ InstallMethod( ElementsOfIncidenceStructure,
         function( incstr, j )
                 local elements, wrapped;
 		elements:=Filtered(incstr!.elements, e -> 
-incstr!.typefun(e)=j);
+Position(incstr!.typeset,incstr!.typefun(e))=j);
 		wrapped:=List(elements, e -> Wrap(incstr, j, e));
 		return wrapped;
         end );
