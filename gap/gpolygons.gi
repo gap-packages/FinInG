@@ -3213,7 +3213,7 @@ InstallMethod( IsAnisotropic,
 	end );
 
 #############################################################################
-#O  IsAnisotropic( <clan>, <f> )
+#O  IsqClan( <list>, <f> )
 # simply checks if all differences of elements in a set of 2 x 2 matrices is are
 # anisotropic.
 ##

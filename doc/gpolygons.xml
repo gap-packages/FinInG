@@ -476,6 +476,42 @@ elements in the incidence graph of their ambient geometry is returned.
 <Section Label="CGH">
 <Heading>The classical generalised hexagons</Heading>
 
+<Subsection>
+<Heading>mathematical backgroup</Heading>
+
+</Subsection>
+
+<ManSection>
+<Oper Name="SplitCayleyHexagon" Arg="q"/>
+<Oper Name="SplitCayleyHexagon" Arg="f"/>
+<Oper Name="SplitCayleyHexagon" Arg="ps"/>
+<Returns>a generalised hexagon</Returns>
+<Description>
+
+<Example>
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="TwistedTrialityHexagon" Arg="q"/>
+<Oper Name="TwistedTrialityHexagon" Arg="f"/>
+<Oper Name="TwistedTrialityHexagon" Arg="ps"/>
+<Returns>a generalised hexagon</Returns>
+<Description>
+
+<Example>
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="VectorSpaceToElement" Arg="gh, vec"/>
+<Returns>an element of a classical generlised hexagon</Returns>
+<Description>
+</Description>
+</ManSection>
+
 </Section>
 
 <Section Label="EGQ">
@@ -618,10 +654,113 @@ generalised quadrangle constructed from a Kantor family, the attribute <F>Collin
 <Subsection>
 <Heading>Kantor families, q-clans, and elation generalised quadrangles</Heading>
 
+Here comes a short mathematical description of how to find Kantor families from q-clans.
+
 </Subsection>
+
+<ManSection>
+<Oper Name="qClan" Arg="list, f"/>
+<Returns>
+a q-clan.
+</Returns>
+<Description>
+<Example>
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Heading>Built in q-clas</Heading>
+<Oper Name="LinearqClan" Arg="q"/>
+<Oper Name="FisherThasWalkerKantorBettenqClan" Arg="q"/>
+<Oper Name="KantorMonomialqClan" Arg="q"/>
+<Oper Name="KantorKnuthqClan" Arg="q"/>
+<Oper Name="FisherqClan" Arg="q"/>
+<Returns>
+a q-clan.
+</Returns>
+<Description>
+<Example>
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="KantorFamilyByqClan" Arg="clan"/>
+<Returns>
+A Kantor family.
+</Returns>
+<Description>
+<Example>
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="EGQByqClan" Arg="clan"/>
+<Returns>
+An elation generalised quadrangle constructed from a q-clan.
+</Returns>
+<Description>
+<Example>
+</Example>
+</Description>
+</ManSection>
+
+<Subsection>
+<Heading>BLT-sets, q-clans, and elation generalised quadrangles</Heading>
+
+Here comes a short mathematical description of how to find a blt set from a q-clan, and how to define a GQ (which is a EGQ) from a blt set.
+Noteworthy are the completely different representation of these GPs.
+
+</Subsection>
+
+<ManSection>
+<Oper Name="BLTSetByqClan" Arg="clan"/>
+<Returns>
+A BLT-set.
+</Returns>
+<Description>
+<Example>
+</Example>
+</Description>
+</ManSection>
+
+
+<ManSection>
+<Oper Name="EGQByBLTSet" Arg="clan"/>
+<Returns>
+An elation generalised quadrangle.
+</Returns>
+<Description>
+<Example>
+</Example>
+</Description>
+</ManSection>
+
+
+<Subsection>
+<Heading>Flocks, BLT-sets and elation generalised quadrangles.</Heading>
+
+The final subsection. The necesary mathematics.
+</Subsection>
+
+<ManSection>
+<Oper Name="FlockGQByqClan" Arg="clan"/>
+<Returns>
+An elation generalised quadrangle.
+</Returns>
+<Description>
+<Example>
+</Example>
+</Description>
+</ManSection>
+
 
 
 </Section>
+
+
 
 
 </Chapter>

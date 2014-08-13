@@ -150,7 +150,7 @@ DeclareRepresentation( "IsFlagOfIncidenceStructureRep", IsFlagOfIncidenceStructu
 # Families
 
 BindGlobal( "GeometriesFamily", NewFamily( "GeometriesFamily" ) );
-BindGlobal( "ElementsOfIncidenceStructureFamily", NewFamily( "ElementsOfIncidenceStructureFamily", IsObject ));   
+BindGlobal( "ElementsOfIncidenceStructureFamily", NewFamily( "ElementsOfIncidenceStructureFamily", IsElementOfIncidenceStructure ));
 BindGlobal( "ElementsCollFamily", CollectionsFamily(ElementsOfIncidenceStructureFamily) );
 
 BindGlobal( "FlagsOfIncidenceStructureFamily", NewFamily( "FlagsOfIncidenceStructureFamily", IsObject ));   

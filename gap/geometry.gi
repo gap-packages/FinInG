@@ -58,7 +58,7 @@ InstallMethod( Wrap,
 	function( geo, type, o )
 		local w;
 		w := rec( geo := geo, type := type, obj := o );
-		Objectify( NewType( ElementsOfIncidenceStructureFamily, IsElementOfIncidenceStructureRep ), w );
+		Objectify( NewType( ElementsOfIncidenceStructureFamily, IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep ), w );
 		return w;	
 	end );
 
