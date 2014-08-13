@@ -2838,7 +2838,7 @@ InstallMethod( EGQByKantorFamily,
 	"for a group, a list and a list",
 	[IsGroup, IsList, IsList],
 	function( g, f, fstar)
-    local pts1, pts2, pts3, ls1, ls2, inc, listels, shadpoint, shadline,
+    local basepoint, inc, listels, shadpoint, shadline,
           x, y, geo, ty, points, lines, pointreps, linereps, dist, spanpts, meetlns;
     ## Some checks first.
     ## We do not check if it's a Kantor family though (this can be rather slow)
@@ -2871,44 +2871,40 @@ InstallMethod( EGQByKantorFamily,
         fi;
     end;
 
-    geo := rec( pointsobj := [], linesobj := [], incidence := inc );
-    ty := NewType( GeometriesFamily, IsElationGQByKantorFamily and IsGeneralisedPolygonRep );  
+    geo := rec( pointsobj := [], linesobj := [], incidence := inc, group := g, S := f, Sstar := fstar );
+    ty := NewType( GeometriesFamily, IsElationGQByKantorFamily and IsGeneralisedPolygonRep );
     Objectify( ty, geo );
 
-    Info(InfoFinInG, 1, "Computing points from Kantor family...");
+	#obvious information on this gp:
+    basepoint := Wrap(geo, 1, 3, 0);
+    SetBasePointOfEGQ( geo, basepoint );
+    SetOrder(geo, [Index(g,fstar[1]), Size(f)-1]);
+    SetCollineationAction(g, OnKantorFamily);
+    SetElationGroup(geo, g);
+    SetTypesOfElementsOfIncidenceStructure(geo, ["point","line"]);
+    pointreps := Concatenation( [Wrap(geo,1,1,One(g))], Set(fstar, b -> Wrap(geo,1,2,[b, One(b)])), [basepoint]);
+    linereps := Concatenation(Set(f, a -> Wrap(geo,2,1,[a, One(g)])), Set(fstar, x -> Wrap(geo, 2, 2, x)));
+    SetRepresentativesOfElements(geo, Concatenation(pointreps,linereps));
+    SetName(geo,Concatenation("<EGQ of order ",String([Index(g,fstar[1]), Size(f)-1])," and basepoint 0>"));
 
-    ## wrapping
-    pts1 := List(g, x -> Wrap(geo,1,1,x));
-    pts2 := Set(fstar, b -> Set(RightCosets(g,b),x->[b,CanonicalRightCosetElement(b, Representative(x))]));
-    pts2 := Concatenation(pts2);
-    pts2 := List(pts2, x -> Wrap(geo,1,2,x));
+    listels := function(gp,i)
+        local pts1,pts2,pts3,ls1,ls2;
+        if i=1 then
+            pts1 := List(gp!.group, x -> Wrap(geo,1,1,x));
+            pts2 := Set(gp!.Sstar, b -> Set(RightCosets(g,b),x->[b,CanonicalRightCosetElement(b, Representative(x))]));
+            pts2 := Concatenation(pts2);
+            pts2 := List(pts2, x -> Wrap(geo,1,2,x));
+            pts3 := BasePointOfEGQ(gp);
+            return Concatenation(pts1,pts2,[pts3]);
+        elif i=2 then
+            ls1 := Set(gp!.S, a -> Set(RightCosets(g,a), x -> [a,CanonicalRightCosetElement(a, Representative(x))]));
+            ls1 := Concatenation(ls1);
+            ls1 := List(ls1, x -> Wrap(geo,2,1,x)); ## this is a strictly sorted list
+            ls2 := Set(gp!.Sstar, x -> Wrap(geo, 2, 2, x));
+            return Concatenation(ls1, ls2);
+        fi;
+    end;
 
-    Info(InfoFinInG, 1, "Computing lines from Kantor family...");
-
-    ls1 := Set(f, a -> Set(RightCosets(g,a), x -> [a,CanonicalRightCosetElement(a, Representative(x))]));
-    ls1 := Concatenation(ls1); 
-    ls1 := List(ls1, x -> Wrap(geo,2,1,x)); ## this is a strictly sorted list
-
-    ## symbols (note that we're making incidence easier here)
-    ls2 := Set(fstar, x -> Wrap(geo, 2, 2, x)); 
-    pts3 := [ Wrap(geo, 1, 3, 0) ];
-
-    points := Concatenation(pts1,pts2,pts3); 
-    lines := Concatenation(ls1, ls2);
-    pointreps := Concatenation( [pts1[1]], Set(fstar, b -> Wrap(geo,1,2,[b, One(b)])), pts3);
-    linereps := Concatenation(Set(f, a -> Wrap(geo,2,1,[a, One(g)])), ls2);
-    
-    geo!.points := points;
-    geo!.lines := lines;
-    
-	listels := function(gp,i)
-		if i = 1 then
-			return gp!.points; #saves memory :-)
-		else
-			return gp!.lines;
-		fi;
-	end;
-	
 	shadpoint := function(pt)
 		local cosets, objs, Ss, S, g, lns;
 		if pt!.class = 1 then
@@ -3060,18 +3056,6 @@ InstallMethod( EGQByKantorFamily,
     geo!.span := spanpts;
     geo!.meet := meetlns;
     geo!.distance := dist;
-    geo!.group := g;
-    geo!.S := f;
-    geo!.Sstar := fstar;
-	SetBasePointOfEGQ( geo, pts3[1] );
-    SetAmbientSpace(geo, geo);
-    SetOrder(geo, [Index(g,fstar[1]), Size(f)-1]);
-    SetCollineationAction(g, OnKantorFamily);
-    SetElationGroup(geo, g);
-    SetTypesOfElementsOfIncidenceStructure(geo, ["point","line"]);
-    ## Orbit reps:
-    SetRepresentativesOfElements(geo, Concatenation(pointreps,linereps));
-    SetName(geo,Concatenation("<EGQ of order ",String([Index(g,fstar[1]), Size(f)-1])," and basepoint 0>"));
 	return geo;
   end );
 

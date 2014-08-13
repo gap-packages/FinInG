@@ -1,0 +1,44 @@
+gap&gt; g := ElementaryAbelianGroup(27);
+&lt;pc group of size 27 with 3 generators&gt;
+gap&gt; flist1 := [ Group(g.1), Group(g.2), Group(g.3), Group(g.1*g.2*g.3) ];;
+gap&gt; flist2 := [ Group([g.1, g.2^2*g.3]), Group([g.2, g.1^2*g.3 ]),
+&gt;             Group([g.3, g.1^2*g.2]), Group([g.1^2*g.2, g.1^2*g.3 ]) ];;
+gap&gt; egq := EGQByKantorFamily(g, flist1, flist2);
+&lt;EGQ of order [ 3, 3 ] and basepoint 0&gt;
+gap&gt; h := Random(g);
+f1*f2^2
+gap&gt; p := ObjectToElement(egq,h);
+&lt;a point of class 1 of &lt;EGQ of order [ 3, 3 ] and basepoint 0&gt;&gt;
+gap&gt; coset := RightCoset(flist1[1],h);
+RightCoset(Group( [ f1 ] ),f1*f2^2)
+gap&gt; l := ObjectToElement(egq,coset);
+&lt;a line of class 1 of &lt;EGQ of order [ 3, 3 ] and basepoint 0&gt;&gt;
+gap&gt; p * l;
+true
+gap&gt; S := flist2[2];
+&lt;pc group of size 9 with 2 generators&gt;
+gap&gt; m := ObjectToElement(egq,S);
+&lt;a line of class 2 of &lt;EGQ of order [ 3, 3 ] and basepoint 0&gt;&gt;
+gap&gt; q := BasePointOfEGQ(egq);
+&lt;a point of class 3 of &lt;EGQ of order [ 3, 3 ] and basepoint 0&gt;&gt;
+gap&gt; m * q;
+true
+gap&gt; lines := List(Lines(p));
+[ &lt;a line of class 1 of &lt;EGQ of order [ 3, 3 ] and basepoint 0&gt;&gt;, 
+  &lt;a line of class 1 of &lt;EGQ of order [ 3, 3 ] and basepoint 0&gt;&gt;, 
+  &lt;a line of class 1 of &lt;EGQ of order [ 3, 3 ] and basepoint 0&gt;&gt;, 
+  &lt;a line of class 1 of &lt;EGQ of order [ 3, 3 ] and basepoint 0&gt;&gt; ]
+gap&gt; pts1 := List(Points(m));
+[ &lt;a point of class 2 of &lt;EGQ of order [ 3, 3 ] and basepoint 0&gt;&gt;, 
+  &lt;a point of class 2 of &lt;EGQ of order [ 3, 3 ] and basepoint 0&gt;&gt;, 
+  &lt;a point of class 2 of &lt;EGQ of order [ 3, 3 ] and basepoint 0&gt;&gt;, 
+  &lt;a point of class 3 of &lt;EGQ of order [ 3, 3 ] and basepoint 0&gt;&gt; ]
+gap&gt; pts2 := List(Points(l));
+[ &lt;a point of class 1 of &lt;EGQ of order [ 3, 3 ] and basepoint 0&gt;&gt;, 
+  &lt;a point of class 1 of &lt;EGQ of order [ 3, 3 ] and basepoint 0&gt;&gt;, 
+  &lt;a point of class 1 of &lt;EGQ of order [ 3, 3 ] and basepoint 0&gt;&gt;, 
+  &lt;a point of class 2 of &lt;EGQ of order [ 3, 3 ] and basepoint 0&gt;&gt; ]
+gap&gt; List(pts2,x-&gt;UnderlyingObject(x));
+[ f2^2, f1*f2^2, f1^2*f2^2, RightCoset(Group( [ f1, f2^2*f3 ] ),f3^2) ]
+gap&gt; UnderlyingObject(q);
+0

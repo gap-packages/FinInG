@@ -8,6 +8,12 @@ gap&gt; IsKantorFamily( g, flist1, flist2 );
 #I  Checking triple condition...
 true
 gap&gt; egq := EGQByKantorFamily(g, flist1, flist2);
-#I  Computing points from Kantor family...
-#I  Computing lines from Kantor family...
 &lt;EGQ of order [ 3, 3 ] and basepoint 0&gt;
+gap&gt; CategoriesOfObject(egq);
+[ "IsIncidenceStructure", "IsIncidenceGeometry", "IsGeneralisedPolygon", 
+  "IsGeneralisedQuadrangle", "IsElationGQ", "IsElationGQByKantorFamily" ]
+gap&gt; p := Random(Points(egq));
+&lt;a point of class 2 of &lt;EGQ of order [ 3, 3 ] and basepoint 0&gt;&gt;
+gap&gt; CategoriesOfObject(p);
+[ "IsElementOfIncidenceStructure", "IsElementOfIncidenceGeometry", 
+  "IsElementOfGeneralisedPolygon", "IsElementOfKantorFamily" ]

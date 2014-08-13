@@ -196,7 +196,7 @@ shows the construction of the generalised quadrangle <M>T_2(O)</M>.
 
 </Section>
 
-<Section>
+<Section Label="gp:operations">
 <Heading>Attributes and operations for generalised polygons</Heading>
 
 All operations described in this section are applicable on objects in the category <C>IsGeneralisedPolygon</C>.
@@ -348,7 +348,7 @@ as an attribute of <A>gp</A>. Normally, attributes of GAP objects are immutable.
 
 </Section>
 
-<Section>
+<Section Label="gp:elements">
 <Heading>Elements of generalised polygons</Heading>
 
 <ManSection>
@@ -481,53 +481,144 @@ elements in the incidence graph of their ambient geometry is returned.
 <Section Label="EGQ">
 <Heading>Elation generalised quadrangles</Heading>
 
-Suppose we have a generalised quadrangle of order <M>(s,t)</M> for which
-there exists a point <M>P</M> and a group of collineations <M>G</M> fixing 
-<M>P</M> and each line through <M>P</M>, with the extra property that
-<M>G</M> acts regularly on the points not collinear with <M>P</M>. Then
-we have an <E>elation generalised quadrangle</E> with base point <M>P</M>
-and elation group <M>G</M>. Such an elation generalised quadrangle is equivalent
-to a <E>Kantor family</E> of subgroups of <M>G</M>: a set of <M>t+1</M> subgroups
-<M>F</M> of order <M>s</M> and a set of <M>t+1</M> subgroups <Alt Not="HTML"><M>F^*</M></Alt>
-<Alt Only="HTML">F&lt;sup>*&lt;/sup></Alt> of order
-<M>st</M> such that (i) each element of <M>F</M> is a subgroup of one element of 
-<Alt Not="HTML"><M>F^*</M></Alt><Alt Only="HTML">F&lt;sup>*&lt;/sup></Alt>
-and intersects the other elements of <Alt Not="HTML"><M>F^*</M></Alt>
-<Alt Only="HTML">F&lt;sup>*&lt;/sup></Alt> trivially, and (ii) any three elements
-<M>A,B,C</M> of <M>F</M> satisfy <Alt Not="HTML"><M>AB \cap C = 1</M></Alt>
-<Alt Only="HTML">AB &#8745; C = 1</Alt>. <P/>
-Noteworthy, there is a way of constructing generalised quadrangles starting from a
-Kantor family <M>(G,F,Fs)</M> as follows. Points are defined as follows.<P/>
-(i) Points of type 1 are the elements of <M>G</M>;<P/>
-(ii) points of of type 2 are the right cosets <M>Sg</M>, <M>S \in Fstar</M>;<P/>
-(iii) the unique point of type (iii) is the symbol infinity.<P/>
-(a) Lines of type (a) are the right cosets <M>Sg</M>, <M>S \in F</M>;<P/>
-(b) Lines of type (b) are the groups <M>S \in F</M>.<P/>
-Incidence is defined as follows. A point <M>g</M> of type (i) is incident with the
-lines of type (a) represented by the cosets <M>Sg</M>, <M>S \in F</M>. A point
-<M>Ssg</M> of type (ii) is incident with a line ...
+<Subsection>
+<Heading>Elation generalised quadrangles and Kantor families</Heading>
 
-For more information, we refer to the standard
-work in this field of Payne and Thas <Cite Key="FGQ"/>.
+Suppose <M>S=(P,B,I)</M> is a generalised quadrangle of order <M>(s,t)</M> for which
+there exists a point <M>p</M> and a group of collineations <M>G</M> fixing
+<M>P</M> and each line through <M>P</M>, with the extra property that
+<M>G</M> acts regularly on the points not collinear with <M>p</M>. Then
+<M>S</M> is called an <E>elation generalised quadrangle</E> with base point <M>P</M>
+and elation group <M>G</M>, and <M>G</M> has order <Alt Not="HTML"><M>s^2t</M></Alt><Alt Only="HTML">s&lt;sup>2&lt;/sup>t</Alt>.
+Let <M>y</M> be a fixed point of <M>S</M>, not collinear with <M>p</M>. Denote the <M>t+1</M>
+lines incident with <M>p</M> as <Alt Not="HTML"><M>L_i, i=0 \ldots t</M></Alt>
+<Alt Only="HTML">L&lt;sub>i&lt;/sub>, i=0 ... t</Alt>. Define for each line
+<Alt Not="HTML"><M>L_i</M></Alt><Alt Only="HTML">L&lt;sub>i&lt;/sub></Alt> the unique
+point-line pair <Alt Not="HTML"><M>(z_i,M_i)</M></Alt><Alt Only="HTML">(z&lt;sub>i&lt;/sub>,M&lt;sub>i&lt;/sub>)</Alt>
+such that <Alt Not="HTML"><M>L_i I z_i I M_i I y</M></Alt>
+<Alt Only="HTML">L&lt;sub>i&lt;/sub> I z&lt;sub>i&lt;/sub> I M&lt;sub>i&lt;/sub> I y</Alt>. Define the groups
+<Alt Not="HTML"><M>S_i</M></Alt><Alt Only="HTML">S&lt;sub>i&lt;/sub></Alt> as the subgroups of <M>G</M> fixing the lines
+<Alt Not="HTML"><M>M_i</M></Alt><Alt Only="HTML">M&lt;sub>i&lt;/sub></Alt>, and define the groups
+<Alt Not="HTML"><M>S_i^*</M></Alt><Alt Only="HTML">S&lt;sub>i&lt;/sub>&lt;sup>*&lt;/sup></Alt> as the subgroups of
+<M>G</M> fixing the point <Alt Not="HTML"><M>z_i</M></Alt><Alt Only="HTML">z&lt;sub>i&lt;/sub></Alt>.
+Define the set <Alt Not="HTML"><M>J = \{S_i: i=0 \ldots t\}</M></Alt><Alt Only="HTML">J = {S&lt;sub>i&lt;/sub>: i=0 ... t}</Alt>,
+and the set <Alt Not="HTML"><M>J^* = \{S_i: i=0 \ldots t\}</M></Alt>
+<Alt Only="HTML">J&lt;sup>*&lt;/sup> = {S&lt;sub>i&lt;/sub>&lt;sup>*&lt;/sup>: i=0 ... t}</Alt>. Since <M>S</M> is an elation generalised quadrangle,
+<M>J</M> is a collection of <M>t+1</M> subgroups of <M>G</M> of order <M>s</M>, and each <Alt Not="HTML"><M>S_i^*</M></Alt>
+<Alt Only="HTML">S&lt;sub>i&lt;/sub>&lt;sup>*&lt;/sup></Alt> contains has order <M>st</M> and contains <Alt Not="HTML"><M>S_i</M></Alt>
+<Alt Only="HTML">S&lt;sub>i&lt;/sub></Alt> as a subgroup. Furthermore, the following two conditions are satisfied.<P/>
+(K1) <Alt Not="HTML"><M>S_iS_j \cap S_k = \{1\}</M></Alt>
+<Alt Only="HTML">S&lt;sub>i&lt;/sub> S&lt;sub>j&lt;/sub> <M>\cap</M>S&lt;sub>k&lt;/sub> = {1}</Alt>, for distinct <M>i,j,k</M>.<P/>
+(K2) <Alt Not="HTML"><M>S_i \cap S_j^* = \{1\}</M></Alt>
+<Alt Only="HTML">S&lt;sub>i&lt;/sub>&lt;sup>*&lt;/sup> <M>\cap</M>S&lt;sub>j&lt;/sub> = {1}</Alt>, for distinct <M>i,j</M>.<P/>
+The pair <Alt Not="HTML"><M>(J,J^*)</M></Alt><Alt Only="HTML">(J,J&lt;sup>*&lt;/sup>)</Alt> is called a <E>4-gonal family</E> or
+<E>Kantor family</E> in <M>G</M>.<P/>
+Noteworthy, each Kantor family in a group of order <Alt Not="HTML"><M>s^2t</M></Alt><Alt Only="HTML">s&lt;sup>2&lt;/sup>t</Alt>
+gives rise to an elation generalised quadrangle. Kantor families and elation generalised quadrangles are equivalent objects,
+and one of the motivations to study Kantor families in groups was to find examples of non-classical elation generalised quadrangles.<P/>
+Given a group <M>G</M>, together with a Kantor family <Alt Not="HTML"><M>(J,J^*)</M></Alt><Alt Only="HTML">(J,J&lt;sup>*&lt;/sup>)</Alt>,
+a generalised quadrangle is defined as follows.<P/>
+The points are of three types:<P/>
+(i) points of type 1 are the elements of <M>G</M>;<P/>
+(ii) points of of type 2 are the right cosets <Alt Not="HTML"><M>S^*g, s^* \in J^*</M></Alt>
+<Alt Only="HTML">S&lt;sup>*&lt;/sup>g, S&lt;sup>*&lt;/sup><M>\in</M> J&lt;sup>*&lt;/sup></Alt><P/>
+(iii) the unique point of type (iii) is the symbol infinity.<P/>
+The lines are of two types:<P/>
+(a) lines of type (a) are the right cosets <M>Sg</M>, <M>S \in J</M>;<P/>
+(b) Lines of type (b) are the symbols <M>[S], S \in J</M>.<P/>
+Incidence is defined as follows. A point <M>g</M> of type (i) is incident with each
+line <M>Sg, S \in J</M> of type (a). A point of type (ii) <Alt Not="HTML"><M>S^*g</M></Alt>
+<Alt Only="HTML">S&lt;sup>*&lt;/sup>g</Alt> is incident the line <M>[S]</M> of type (b)
+and the <M>t</M> lines of type (a) for which <Alt Not="HTML"><M>Sh \subset S^*g</M></Alt>
+<Alt Only="HTML">Sh <M>\subset</M> S&lt;sup>*&lt;/sup>g</Alt>. Finally, the unique point of type (iii)
+is incident with the lines of type (b), and there are no further incidences.<P/>
+It is shown, see e.g. the standard work in this field of Payne and Thas <Cite Key="FGQ"/>, that this
+point-line geoemtry is a generalised quadrangle of order <M>(s,t)</M>.<P/>
+<Package>FinInG</Package> provides functions to construct elation generalised quadrangles
+directly from a Kantor family. The constructed generalised quadrangles are generalised polygons in the
+sense of <Package>FinInG</Package>, i.e. all generic operations described in Sections <Ref Sect="gp:operations"/> and
+<Ref Sect="gp:elements"/>.
+
+</Subsection>
 
 <ManSection>
+<Heading>Categories</Heading>
 <Filt Name="IsEGQByKantorFamily" Type="Category"/>
+<Filt Name="IsElementOfKantorFamily" Type="Category"/>
 <Description>
-This category contains all elation generalised quadrangles that are constructed from
-a Kantor family.
+<C>IsEGQByKantorFamily</C> is a subcategory of <C>IsElationGQ</C>. It contains all elations generalised quadrangles
+that are constructed from a Kantor family. <C>IsElementOfKantorFamily</C> is a subcategory of <C>IsElementOfGeneralisedPolygon</C>.
+It contains the elements from generalised quadrangles in the category <C>IsEGQByKantorFamily</C>.
+</Description>
+</ManSection>
+
+<ManSection>
+<Heading>Kantor families</Heading>
+<Oper Name="IsKantorFamily" Arg="g,f,fstar"/>
+<Returns>true or false</Returns>
+<Description>
+There is no specific way to construct a Kantor family in <Package>FinInG</Package>. However, given a group <M>G</M> and
+two collections of subgroups, <F>IsKantorFamily</F> will check whether the input satisfies the conditions of a Kantor family.
+If so, the input can be used directly for the operation <F>EGQByKantorFamily</F>.
 </Description>
 </ManSection>
 
 <ManSection>
 <Oper Name="EGQByKantorFamily" Arg="g,f,fstar"/>
 <Returns>a generalised quadrangle</Returns>
+<Description>
+Let <A>g</A> be a group and <A>f</A> and <A>fstar</A> two collections of subgroups, satisfying the conditions of a Kantor
+family. This operation returs the corresponding elation generalised quadrangle. Note that this operation <E>does not</E> check
+if the input satisfies the conditions to be a Kantor family, it only checks wheter the group <A>f[i]</A> is a subgroup of the group
+<A>fstar[i]</A>. In the example below, the use of <F>IsKantorFamily</F> is also
+demonstrated, and some categories are displayed.
+<Example>
+<#Include SYSTEM "../examples/include/gpolygons_EGQByKantorFamily.include">
+</Example>
+</Description>
 </ManSection>
 
 <ManSection>
-<Oper Name="OnKantorFamily" Arg="g,el"/>
-<Returns>an element of an elation GQ</Returns>
+<Heading>Representation of elements and underlying objects</Heading>
+<Oper Name="ObjectToElement" Arg="egq, t, obj"/>
+<Oper Name="ObjectToElement" Arg="egq, obj"/>
+<Oper Name="BasePointOfEGQ" Arg="egq"/>
+<Oper Name="UnderlyingObject" Arg="egq, obj"/>
+<Description>
+For technical reasons, the underlying objects of the elements of an elation generalised quadrangle constructed from a Kantor family,
+are not exactly the mathematical objects from the defintion. However, these technicalities are almost completely hidden for the user, except
+for the representation of lines of type (b), which are represented in <Package>FinInG</Package> by the elements of the collection
+<Alt Not="HTML"><M>J^*</M></Alt><Alt Only="HTML">J&lt;sup>*&lt;/sup></Alt> (instead of the elements of the collection <M>J</M>). This change
+from the original definition has not mathematical implications, since there is a bijective correspondence between the elements of
+<Alt Not="HTML"><M>J^*</M></Alt><Alt Only="HTML">J&lt;sup>*&lt;/sup></Alt> and <M>J</M>. Notice also that it is only possible to obtain
+the basepoint of an elation generalised quadrangle constructed from a Kantor family through calling the attribute <F>BasePointOfEGQ</F>.
+<Example>
+<#Include SYSTEM "../examples/include/gpolygons_objectselementsofegq.include">
+</Example>
+</Description>
 </ManSection>
 
+<ManSection>
+<Heading>Elation group and natural action on elements</Heading>
+<Attr Name="ElationGroup" Arg="egq"/>
+<Func Name="OnKantorFamily" Arg="g,el"/>
+<Attr Name="CollineationAction" Arg="g"/>
+<Description>
+The attribute <F>ElationGroup</F> is naturally set upon creation of an elation generalised quadrangle from a Kantor
+family. This elements of the elation group acts "naturally" on the elements of the elation generalised quadrangle. This
+natural action is implements in the action function <F>OnKantorFamily</F>. When <A>g</A> is the elation group of an elation
+generalised quadrangle constructed from a Kantor family, the attribute <F>CollineationAction</F> will return the action function
+<F>OnKantorFamily</F>. The action function makes a use of generic GAP operations possible, as is demonstrated in the example.
+<Example>
+<#Include SYSTEM "../examples/include/gpolygons_elationgroup.include">
+</Example>
+</Description>
+</ManSection>
+
+<Subsection>
+<Heading>Kantor families, q-clans, and elation generalised quadrangles</Heading>
+
+</Subsection>
 
 
 </Section>
