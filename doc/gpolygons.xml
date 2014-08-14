@@ -513,6 +513,20 @@ elements in the incidence graph of their ambient geometry is returned.
 </ManSection>
 
 <ManSection>
+<Oper Name="ObjectToElement" Arg="gh, obj"/>
+<Returns>an element of a classical generlised hexagon</Returns>
+<Description>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="UnderlyingObject" Arg="gh, obj"/>
+<Returns>an element of a classical generlised hexagon</Returns>
+<Description>
+</Description>
+</ManSection>
+
+<ManSection>
 <Oper Name="\in" Arg="x, gh"/>
 <Returns>true or false</Returns>
 <Description>

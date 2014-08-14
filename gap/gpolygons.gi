@@ -2385,7 +2385,7 @@ InstallMethod( VectorSpaceToElement,
     "for a generalised hexagon and a row vector",
     [ IsClassicalGeneralisedHexagon, IsRowVector ],
     function(geom,vec)
-		local x,y, ps, el, onespace, f, frob;
+		local x,y, ps, el, onespace, f, frob, change;
 		## dimension should be correct
 		if Length(vec) <> geom!.dimension + 1 then
 			Error("Dimensions are incompatible");
@@ -2409,10 +2409,15 @@ InstallMethod( VectorSpaceToElement,
 			if not IsSingularVector(QuadraticForm(ps),x) then
 				Error("<v> does not generate an element of <geom>");
 			fi;
+       		if IsBound(geom!.basechange) then
+                change := geom!.basechange;
+            else
+                change := IdentityMat(geom!.dimension+1,f);
+            fi;
 			el := VectorSpaceToElement(ps,y);
 			f := geom!.basefield;
 			frob := FrobeniusAutomorphism(f);
-			onespace := VectorSpaceToElement(AmbientSpace(ps), ZeroPointToOnePointsSpaceByTriality(x,frob,f));
+			onespace := VectorSpaceToElement(AmbientSpace(ps), ZeroPointToOnePointsSpaceByTriality(x * change^-1,frob,f) * change);
 			if el in onespace then
 				return Wrap(geom,1,y);
 			else
@@ -2430,7 +2435,7 @@ InstallMethod( VectorSpaceToElement,
 	"for a polar space and an 8-bit vector",
 	[ IsClassicalGeneralisedHexagon, Is8BitVectorRep ],
     function(geom,vec)
-		local x,y, ps, el, onespace, f, frob;
+		local x,y, ps, el, onespace, f, frob, change;
 		## dimension should be correct
 		if Length(vec) <> geom!.dimension + 1 then
 			Error("Dimensions are incompatible");
@@ -2457,7 +2462,7 @@ InstallMethod( VectorSpaceToElement,
 			el := VectorSpaceToElement(ps,y);
 			f := geom!.basefield;
 			frob := FrobeniusAutomorphism(f);
-			onespace := VectorSpaceToElement(AmbientSpace(ps), ZeroPointToOnePointsSpaceByTriality(x,frob,f));
+			onespace := VectorSpaceToElement(AmbientSpace(ps), ZeroPointToOnePointsSpaceByTriality(x * change^-1,frob,f) * change);
 			if el in onespace then
 				return Wrap(geom,1,y);
 			else
@@ -2612,9 +2617,15 @@ InstallMethod( \in,
                 if not IsSingularVector(QuadraticForm(AmbientPolarSpace(gp)),vec) then
                     return false;
                 fi;
+                if IsBound(gp!.basechange) then
+                    change := gp!.basechange;
+                else
+                    change := IdentityMat(gp!.dimension+1,f);
+                fi;
                 f := gp!.basefield;
                 frob := FrobeniusAutomorphism(f);
-                onespace := VectorSpaceToElement(AmbientSpace(gp), ZeroPointToOnePointsSpaceByTriality(vec,frob,f));
+                #onespace := VectorSpaceToElement(AmbientSpace(gp), ZeroPointToOnePointsSpaceByTriality(vec,frob,f));
+                onespace := VectorSpaceToElement(AmbientSpace(ps), ZeroPointToOnePointsSpaceByTriality(vec * change^-1,frob,f) * change);
                 if el in onespace then
                     return true;
                 else
@@ -2671,6 +2682,18 @@ InstallMethod( \in,
             return false;
         fi;
     end );
+
+# Added 13/08/2014 jdb
+#############################################################################
+#O  ObjectToElement( <geom>, <v> ) returns the elements in <geom> determined
+# by the object <obj>. This is of course just a shortcut to VectorSpaceToElement. 
+##
+InstallMethod( VectorSpaceToElement, 
+	"for a polar space and a cmat",
+	[ IsClassicalGeneralisedHexagon, IsObject],
+	function( geom, obj )
+		return VectorSpaceToElement(geom,obj);
+	end );
 
 #############################################################################
 #
