@@ -2697,6 +2697,12 @@ InstallMethod( ObjectToElement,
 
 #############################################################################
 #
+# Elation generalies quadrangles. 
+#
+#############################################################################
+
+#############################################################################
+#
 #  Kantor Families and associated EGQ's
 #  
 #  The setup is a bit different than the standard one. 
@@ -2908,7 +2914,7 @@ InstallMethod( EGQByKantorFamily,
     SetTypesOfElementsOfIncidenceStructure(geo, ["point","line"]);
     pointreps := Concatenation( [Wrap(geo,1,1,One(g))], Set(fstar, b -> Wrap(geo,1,2,[b, One(b)])), [basepoint]);
     linereps := Concatenation(Set(f, a -> Wrap(geo,2,1,[a, One(g)])), Set(fstar, x -> Wrap(geo, 2, 2, x)));
-    SetRepresentativesOfElements(geo, Concatenation(pointreps,linereps));
+    SetRepresentativesOfElements(geo, [pointreps,linereps]);
     SetName(geo,Concatenation("<EGQ of order ",String([Index(g,fstar[1]), Size(f)-1])," and basepoint 0>"));
 
     listels := function(gp,i)
@@ -3560,7 +3566,6 @@ InstallMethod( IncidenceGraphOfGeneralisedPolygon,
     return graph;
   end );
 
-
 #############################################################################
 #
 #	BLT sets and q-Clans.
@@ -3598,7 +3603,16 @@ end );
 
 #############################################################################
 #O  EGQByBLTSet( <blt>, <p>, <solid> )
-# not documented yet.
+# helper operation to be called from EGBByBLTSet( <bltset> ), where the latter
+# is a BLT set of points in Q(4,q). 
+# Note: points and lines are always elements of W(5,q). Since we will use shadows
+# it is better to wrap them really as elements of W(5,q) rather then leaving them
+# an element of PG(5,q). E.g. Planes(x) makes a huge difference when x is a W(5,q)
+# line than when x is a PG(5,q) line, and I am to lazy to type Planes(w5q,x) :-)
+# extra fields in geo record:
+# - planes: contains the planes spanned by the basepoint and the blt lines in W(5,q).
+# - basepoint: base point p
+# - basepointperp: image of p under the polarity associated with W(5,q).
 ##
 InstallMethod( EGQByBLTSet, 
 	"constructs an EGQ from a BLT-set of lines of W(3,q) via the Knarr construction",
@@ -3608,9 +3622,9 @@ InstallMethod( EGQByBLTSet,
 	## "solid" is a 3-space contained in P^perp
 	## blt is a BLT-set of lines of W(3,q)
 
-	local w3q, f, q, w5q, perp, pperp, res, x, pg5, gqpoints, gqpoints2,
-         projpoints, gqlines, gqlines2, em, blt2, pis, info,
-         geo, points, lines, ty, listels, inc, shadpoint, shadline;
+	local w3q, f, q, w5q, perp, pperp, x,em, blt2, pis, pointreps, linereps, reps, lines2,
+         geo, points, lines, ty, listels, inc, shadpoint, shadline, vec, r, spanpts, 
+		 dist, meetlns;
 
 	w3q := blt[1]!.geo;
 	f := w3q!.basefield;
@@ -3618,7 +3632,11 @@ InstallMethod( EGQByBLTSet,
 	w5q := SymplecticSpace(5, f);
 	perp := PolarMap(w5q);
 	pperp := perp(p);
-   
+	em := NaturalEmbeddingBySubspace(w3q, w5q, solid);
+	blt2 := List(blt,t->t^em);
+	pis := List(blt2, l -> Span(p, l));
+	# next one is dirty, see note above.
+	pis := List(pis,x->Wrap(w5q,3,UnderlyingObject(x))); 
 	## check everything is kosher
 	if not solid in pperp then
 		Error("Solid is not contained in perp of point");
@@ -3626,76 +3644,212 @@ InstallMethod( EGQByBLTSet,
 	if p in solid then
 		Error("Chosen point is contained in the chosen solid");
 	fi;
-
-	pg5 := AmbientSpace( w5q );
-	projpoints := ElementsOfIncidenceStructure(pg5, 1);
-   
-	Info(InfoFinInG, 1, "Computing points(1) of Knarr construction...");
-   
-	gqpoints := Filtered(projpoints, x -> not x in pperp);;
-	Add(gqpoints, p);
-
-	em := NaturalEmbeddingBySubspace(w3q, w5q, solid);
-	blt2 := List(blt,t->t^em);
-
-	Info(InfoFinInG, 1, "Computing lines(1) of Knarr construction...");
-  
-	pis := List(blt2, l -> Span(p, l));
-	gqlines := pis;
-	gqpoints2 := [];
-
-	Info(InfoFinInG, 1, "Computing points(2) of Knarr construction...");
-
-	for x in pis do
-		res := ShadowOfElement(pg5, x, 2);
-		res := Filtered(res, t -> not p in t);
-		Append(gqpoints2, res);
-	od;
-	gqpoints2 := Set(gqpoints2); 
-
-	Info(InfoFinInG, 1, "Computing lines(2) of Knarr construction... please wait");
-
-	gqlines2 := [];
-	#info := InfoLevel( InfoFinInG );
-	#SetInfoLevel(InfoFinInG, 0);
-
-	for x in gqpoints2 do
-		res := Planes(w5q, x);
-		res := Filtered(res, t -> not t in pperp);
-		Append(gqlines2, res); 
-	od;
-	#SetInfoLevel(InfoFinInG, info);
- 
-	points := Concatenation(gqpoints, gqpoints2);
-	lines := Concatenation(gqlines, gqlines2);
+	vec := ComplementSpace(f^6,Unpack(UnderlyingObject(pperp)));
+	r := VectorSpaceToElement(w5q,BasisVectors(Basis(vec)));
+	pointreps := Concatenation([r],blt2,[p]);
 	
+	linereps := List(pis,x->Span(r,Meet(x,perp(r))));
+	#dirty wrapping
+	linereps := List(linereps,x->Wrap(w5q,3,UnderlyingObject(x)));
+	lines2 := List(blt2,x->Span(p,x));
+	lines2 := List(lines2,x->Wrap(w5q,3,UnderlyingObject(x)));
+	linereps := Concatenation(linereps,lines2);
+
+	listels := function(gp, i)
+		local pts,lines,x,points2;
+		if i=1 then 
+			Info(InfoFinInG, 1, "Computing points(1) of Knarr construction...");
+			pts := Filtered(Points(gp!.polarspace),x->not x in gp!.basepointperp);
+			Add(pts,gp!.basepointobj);
+			Info(InfoFinInG, 1, "Computing points(2) of Knarr construction...");
+			if IsBound(gp!.points2) then
+				Info(InfoFinInG, 1, "...which were computed already");
+				Append(pts,gp!.points2);
+			else
+				points2 := [];
+				for x in gp!.planes do
+					Append(points2,Filtered(Lines(x),t->not gp!.basepointobj in t));
+				od;
+				points2 := List(points2,x->Wrap(w5q,2,UnderlyingObject(x))); #dirty, see note above.
+				gp!.points2 := ShallowCopy(points2);
+				Append(pts,points2);
+			fi;
+			return List(pts,x->Wrap(gp,1,x));
+		elif i=2 then
+			Info(InfoFinInG, 1, "Lines(1) of Knarr construction are known...");
+			lines := ShallowCopy(gp!.planes);
+			if IsBound(gp!.points2) then
+				points2 := gp!.points2;
+				Info(InfoFinInG, 1, "Taking points(2) of Knarr construction which were computed already...");
+			else
+				Info(InfoFinInG, 1, "Computing points(2) of Knarr construction (and saving them)...");
+				points2 := [];
+				for x in gp!.planes do
+					Append(points2,Filtered(Lines(x),t->not gp!.basepointobj in t));
+				od;
+				points2 := List(points2,x->Wrap(w5q,2,UnderlyingObject(x))); #dirty, see note above.
+				gp!.points2 := ShallowCopy(points2);
+			fi;
+			Info(InfoFinInG, 1, "Computing lines(2) of Knarr construction... please wait");
+			for x in points2 do
+				Append(lines,Filtered(Planes(x), t -> not t in gp!.basepointperp));
+			od;
+			return List(lines,x->Wrap(gp,2,x));
+		fi;
+	end;
+		
 	inc := function(x,y)
 		return IsIncident(x!.obj,y!.obj); #underlying objects are elements of a projective space
 	end;
-	
-	listels := function(gp,i)
-		if i = 1 then
-			return List(gp!.pointsobj,x->Wrap(gp,i,x)); #saves memory :-)
-		else
-			return List(gp!.linesobj,x->Wrap(gp,i,x));
-		fi;
-	end;
 
 	shadpoint := function(pt)
-		return List(Filtered(lines,x->IsIncident(pt!.obj,x)),y->Wrap(pt!.geo,2,y));
+		local obj,planes,objs,geo,w5q;
+		obj := pt!.obj;
+		geo := pt!.geo;
+		w5q := geo!.polarspace;
+		if ProjectiveDimension(obj) = 1 then
+			return List(Planes(w5q,obj),x->Wrap(geo,2,x));
+		elif pt=BasePointOfEGQ(geo) then
+			return List(geo!.planes,x->Wrap(geo,2,x));
+		else
+			objs := List(geo!.planes,x->Meet(PolarMap(w5q)(obj),x));
+			objs := List(objs,x->Span(obj,x));
+			objs := List(objs,x->Wrap(w5q,3,UnderlyingObject(x)));
+			return List(objs,x->Wrap(geo,2,x));
+		fi;
 	end;
 	
 	shadline := function(line)
-		return List(Filtered(points,x->IsIncident(line!.obj,x)),y->Wrap(line!.geo,1,y));
+		local obj,geo,p,pts,meet,objs;
+		obj := line!.obj;
+		geo := line!.geo;
+		p := BasePointOfEGQ(geo);
+		if p!.obj in obj then
+			pts := List(Filtered(Lines(obj), t -> not p!.obj in t),x->Wrap(geo,1,x));
+			Add(pts,p);
+			return pts;
+		else
+			meet := Meet(obj,PolarMap(w5q)(p!.obj));
+			pts := List(Points(meet));
+			objs := Difference(List(Points(obj)),pts);
+			pts := List(objs,x->Wrap(geo,1,x));
+			Add(pts,Wrap(geo,1,meet));
+			return pts;
+		fi;
+	end;
+	
+	spanpts := function(p,q)
+		local gp,obj,l,perp,lperp,m;
+		gp := p!.geo;
+		if p = q then
+			return fail;
+		elif p = BasePointOfEGQ(gp) then
+			return spanpts(q,p);
+		elif ProjectiveDimension(p!.obj) = 0 then
+			if q = BasePointOfEGQ(gp) then
+				return fail;
+			elif ProjectiveDimension(q!.obj) = 1 then
+				obj := Span(p!.obj,q!.obj);
+				if obj in gp!.polarspace then
+					obj := Wrap(gp!.polarspace,3,UnderlyingObject(obj));
+					return Wrap(gp,2,obj);
+				else
+					return fail;
+				fi;
+			elif ProjectiveDimension(q!.obj) = 0 then
+				l := Span(p!.obj,q!.obj);
+				perp := PolarMap(gp!.polarspace);
+				lperp := perp(l);
+				m := List(gp!.planes,x->Meet(x,lperp));
+				m := First(m,x->ProjectiveDimension(x)=1);
+				if m=fail then
+					return fail;
+				else
+					l := Span(m,p!.obj);
+					l := Wrap(gp!.polarspace,3,UnderlyingObject(l));
+					return Wrap(gp,2,l);
+				fi;
+			fi;
+		elif ProjectiveDimension(p!.obj) = 1 then
+			if q = BasePointOfEGQ(gp) then
+				obj := Span(p!.obj,q!.obj);
+				obj := Wrap(gp!.polarspace,3,UnderlyingObject(obj));
+				return Wrap(gp,2,obj);
+			elif ProjectiveDimension(q!.obj) = 1 then
+				obj := Span(p!.obj,q!.obj);
+				if ProjectiveDimension(obj) = 2 then
+					obj := Wrap(gp!.polarspace,3,UnderlyingObject(obj));
+					return Wrap(gp,2,obj);
+				else
+					return fail;
+				fi;
+			fi;
+		else
+			return spanpts(q,p);
+		fi;
+	end;
+	
+	meetlns := function(l,m)
+		local gp,obj;
+		gp := l!.geo;
+		if l = m then
+			return fail;
+		fi;
+		if not gp!.basepointobj in l!.obj then
+			obj := Meet(l!.obj,m!.obj);
+			if not gp!.basepointobj in m!.obj then
+				if ProjectiveDimension(obj) = 0 and not obj in gp!.basepointperp then
+					return Wrap(gp,1,obj);
+				else
+					return fail;
+				fi;
+			else
+				if ProjectiveDimension(obj) = 1 then
+					return Wrap(gp,1,obj);
+				else
+					return fail;
+				fi;
+			fi;
+		else
+			if gp!.basepointobj in m!.obj then
+				return BasePointOfEGQ(gp);
+			else
+				return meetlns(m,l);
+			fi;
+		fi;
 	end;
 
-	geo := rec( pointsobj := points, linesobj := lines, incidence := inc, listelements := listels, 
-				shadowofpoint := shadpoint, shadowofline := shadline );
+    dist := function(x,y)
+        if x!.type <> y!.type then
+            if inc(x,y) then
+                return 1;
+            else
+                return 3;
+            fi;
+        elif x!.type = 1 then
+            if spanpts(x,y) = fail then
+                return 4;
+            else
+                return 2;
+            fi;
+        else
+            if meetlns(x,y) = fail then
+                return 4;
+            else
+                return 2;
+            fi;
+        fi;
+    end;
+		
+	geo := rec( pointsobj := [], linesobj := [], incidence := inc, planes := pis, polarspace := w5q, 
+				basepointobj := p, basepointperp := pperp, listelements := listels, shadowofpoint := shadpoint, 
+				shadowofline := shadline, span := spanpts, meet := meetlns, distance := dist );
 	ty := NewType( GeometriesFamily, IsElationGQ and IsGeneralisedPolygonRep);
 	Objectify( ty, geo );
-
+	pointreps := List(pointreps,x->Wrap(geo,1,x));
+	linereps := List(linereps,x->Wrap(geo,2,x));
+	SetRepresentativesOfElements(geo,[pointreps,linereps]);
 	SetBasePointOfEGQ( geo, Wrap(geo, 1, p) );  
-	#SetAmbientSpace(geo, geo);
 	SetOrder(geo, [q^2, q]);
 	SetTypesOfElementsOfIncidenceStructure(geo, ["point","line"]);
     SetName(geo,Concatenation("<EGQ of order ",String([q^2,q])," and basepoint in W(5, ",String(q)," ) >"));
@@ -3704,68 +3858,79 @@ end );
 
 #############################################################################
 #O  EGQByBLTSet( <blt> )
+# User method to construct the EGQ including the elation group.
 ##
 InstallMethod( EGQByBLTSet, 
-     "constructs an EGQ from a BLT-set of points of Q(4,q) via the Knarr construction",
-     [ IsList ], 
-  function( blt )   
-   local q4q, f, w3q, duality, w5q, p, pg5, solid, 
-         q4qcanonical, iso, bltdual, geo, bas, 
+	"constructs an EGQ from a BLT-set of points of Q(4,q) via the Knarr construction",
+	[ IsList ], 
+	function( blt )   
+	local q4q, f, w3q, duality, w5q, p, pg5, solid, 
+         q4qcanonical, iso, bltdual, geo, bas, listels,
          mat, elations, a, gens, zero, action, b;
-   q4q := AmbientGeometry( blt[1] );
-   f := q4q!.basefield;
-   w3q := SymplecticSpace(3, f);
-   duality := NaturalDuality( w3q );
-   w5q := SymplecticSpace(5, f);
-   p := VectorSpaceToElement(w5q, [1,0,0,0,0,0] * One(f));
-   pg5 := AmbientSpace( w5q );
-   solid := VectorSpaceToElement(pg5, [[1,0,0,0,0,1],[0,0,1,0,0,0],
+	q4q := AmbientGeometry( blt[1] );
+	f := q4q!.basefield;
+	w3q := SymplecticSpace(3, f);
+	duality := NaturalDuality( w3q );
+	w5q := SymplecticSpace(5, f);
+	p := VectorSpaceToElement(w5q, [1,0,0,0,0,0] * One(f));
+	pg5 := AmbientSpace( w5q );
+	solid := VectorSpaceToElement(pg5, [[1,0,0,0,0,1],[0,0,1,0,0,0],
                                        [0,0,0,1,0,0],[0,0,0,0,1,0]]*One(f));
-   q4qcanonical := Range(duality)!.geometry;                 
-   iso := IsomorphismPolarSpaces(q4q, q4qcanonical);
-   bltdual := PreImagesSet(duality, ImagesSet(iso, blt));
+	q4qcanonical := Range(duality)!.geometry;                 
+	iso := IsomorphismPolarSpaces(q4q, q4qcanonical);
+	bltdual := PreImagesSet(duality, ImagesSet(iso, blt));
 
-   Info(InfoFinInG, 1, "Now embedding dual BLT-set into W(5,q)...");
+	Info(InfoFinInG, 1, "Now embedding dual BLT-set into W(5,q)...");
 
-   geo := EGQByBLTSet( bltdual, p, solid);
+	geo := EGQByBLTSet( bltdual, p, solid);
 
-   ## Now we construct the elation group. See Maska Law's Thesis for details 
-   ## (we have a different form though, so we need to apply a base change).
+	## Now we construct the elation group. See Maska Law's Thesis for details 
+	## (we have a different form though, so we need to apply a base change).
 
-   Info(InfoFinInG, 1, "Computing elation group...");
+	Info(InfoFinInG, 1, "Computing elation group...");
 
-   mat := function(a,b,c,d,e)
+	mat := function(a,b,c,d,e)
             local m;
             m := IdentityMat(6, f);
             m[6]{[1..5]} := [e,d,c,-b,-a];
             m[2][1] := a; m[3][1] := b; m[4][1] := c; m[5][1] := d;
             return m;
           end;
-   bas := AsList(Basis(f));
-   gens := [];
-   zero := Zero(f);
-   for a in bas do
-       Add(gens, mat(a,zero,zero,zero,zero) );
-       Add(gens, mat(zero,a,zero,zero,zero) );
-       Add(gens, mat(zero,zero,a,zero,zero) );
-       Add(gens, mat(zero,zero,zero,a,zero) );
-       Add(gens, mat(zero,zero,zero,zero,a) );
-   od;
-   ## base change 
-   b := [ [ 1, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 1 ], 
-          [ 0, 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 1, 0 ], 
-          [ 0, 0, 1, 0, 0, 0 ], [ 0, 0, 0, 1, 0, 0 ] ];
-   gens := List(gens, t-> b*t*b^-1);
-   gens := List(gens, t -> CollineationOfProjectiveSpace(t,f));
-   elations := Group( gens ); 
-   SetElationGroup( geo, elations );
+	bas := AsList(Basis(f));
+	gens := [];
+	zero := Zero(f);
+	for a in bas do
+		Add(gens, mat(a,zero,zero,zero,zero) );
+		Add(gens, mat(zero,a,zero,zero,zero) );
+		Add(gens, mat(zero,zero,a,zero,zero) );
+		Add(gens, mat(zero,zero,zero,a,zero) );
+		Add(gens, mat(zero,zero,zero,zero,a) );
+	od;
+	## base change 
+	b := [ [ 1, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 1 ], 
+		 [ 0, 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 1, 0 ], 
+         [ 0, 0, 1, 0, 0, 0 ], [ 0, 0, 0, 1, 0, 0 ] ];
+	gens := List(gens, t-> b*t*b^-1);
+	gens := List(gens, t -> CollineationOfProjectiveSpace(t,f));
+	elations := Group( gens ); 
+	SetElationGroup( geo, elations );
 
-   action := function(el, x)
-               return Wrap( geo, el!.type, OnProjSubspaces(el!.obj, x));
-             end;
-   SetCollineationAction( elations, action );
-   return geo;
- end );
+	action := function(el, x)
+		return Wrap( geo, el!.type, OnProjSubspaces(el!.obj, x));
+	end;
+	SetCollineationAction( elations, action );
+	
+	listels := function(gp,i)
+		local reps,group,act;
+		Info(InfoFinInG, 1, "Using elation group to enumerate elements");
+		group := ElationGroup(gp);
+		act := CollineationAction(group);
+		reps := RepresentativesOfElements(gp)[i];
+		return Union(List(reps,x->List(Enumerate(Orb(group,x,act)))));	
+	end;
+	geo!.listelements := listels; 
+	return geo;
+	end );
 
 #############################################################################
 #O  FlockGQByqClan( <clan> )
