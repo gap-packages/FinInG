@@ -2625,7 +2625,7 @@ InstallMethod( \in,
                 f := gp!.basefield;
                 frob := FrobeniusAutomorphism(f);
                 #onespace := VectorSpaceToElement(AmbientSpace(gp), ZeroPointToOnePointsSpaceByTriality(vec,frob,f));
-                onespace := VectorSpaceToElement(AmbientSpace(ps), ZeroPointToOnePointsSpaceByTriality(vec * change^-1,frob,f) * change);
+                onespace := VectorSpaceToElement(AmbientSpace(gp), ZeroPointToOnePointsSpaceByTriality(vec * change^-1,frob,f) * change);
                 if el in onespace then
                     return true;
                 else
@@ -2688,7 +2688,7 @@ InstallMethod( \in,
 #O  ObjectToElement( <geom>, <v> ) returns the elements in <geom> determined
 # by the object <obj>. This is of course just a shortcut to VectorSpaceToElement. 
 ##
-InstallMethod( VectorSpaceToElement, 
+InstallMethod( ObjectToElement, 
 	"for a polar space and a cmat",
 	[ IsClassicalGeneralisedHexagon, IsObject],
 	function( geom, obj )
