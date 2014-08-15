@@ -223,6 +223,8 @@ InstallMethod( GeneralisedPolygonByBlocks,
 #O  GeneralisedPolygonByIncidenceMatrix( <matrix> )
 # returns a GP. points are [1..Size(matrix)], blocks are sets of entries equal to one.
 # Blocks are then used through GeneralisedPolygonByBlocks.
+# the commented out check dates from the times that this was only use to construct 
+# projective planes.
 ##
 InstallMethod( GeneralisedPolygonByIncidenceMatrix,
     "for a matrix",
@@ -231,9 +233,9 @@ InstallMethod( GeneralisedPolygonByIncidenceMatrix,
     ## Rows represent blocks and columns represent points...  
     local v, q, row, blocks, gp;
     v := Size(mat);
-    if not ForAll(mat, t->Size(t)=v) then
-       Error("Matrix is not square");
-    fi;
+    #if not ForAll(mat, t->Size(t)=v) then
+    #   Error("Matrix is not square");
+    #fi;
 
     blocks := [];
     for row in mat do
@@ -2715,8 +2717,10 @@ InstallMethod( ObjectToElement,
 #  This makes typical operations like Wrap different. The same applies to UnderlyingObject
 #  and ObjectToElement for IsElationGQByKantorFamily
 #
-#   componenets in the EGQByKantor:
-#
+#   components in the EGQByKantor (different from the standard ones for GPs);
+#	pointsobj, linesobj = [] 
+#	group: contains the elation group.
+#	S, Sstar: contains the two collections of subgroups. Note that g,S,Sstar determine the EGQ. 
 #
 #############################################################################
 
@@ -3554,7 +3558,13 @@ InstallMethod( IncidenceGraphOfGeneralisedPolygon,
 	end;
     sz := Size(points);
 
-	if HasElationGroup(gp) then
+	if HasCollineationSubgroup(gp) then
+		Info(InfoFinInG, 1, "Using subgroup of the collineation group...");
+		coll := CollineationSubgroup(gp);
+		act := CollineationAction(coll);
+		graph := Graph(coll,Concatenation(points,lines),act,adj,true);
+	elif HasElationGroup(gp) then
+		Info(InfoFinInG, 1, "Using elation of the collineation group...");
 		elationgroup := ElationGroup(gp);
 		act := CollineationAction(elationgroup);
 		graph := Graph(elationgroup,Concatenation(points,lines),act,adj,true);
@@ -3844,7 +3854,7 @@ InstallMethod( EGQByBLTSet,
 	geo := rec( pointsobj := [], linesobj := [], incidence := inc, planes := pis, polarspace := w5q, 
 				basepointobj := p, basepointperp := pperp, listelements := listels, shadowofpoint := shadpoint, 
 				shadowofline := shadline, span := spanpts, meet := meetlns, distance := dist );
-	ty := NewType( GeometriesFamily, IsElationGQ and IsGeneralisedPolygonRep);
+	ty := NewType( GeometriesFamily, IsElationGQByBLTSet and IsGeneralisedPolygonRep);
 	Objectify( ty, geo );
 	pointreps := List(pointreps,x->Wrap(geo,1,x));
 	linereps := List(linereps,x->Wrap(geo,2,x));
@@ -3931,6 +3941,121 @@ InstallMethod( EGQByBLTSet,
 	geo!.listelements := listels; 
 	return geo;
 	end );
+
+#############################################################################
+#O  DefiningPlanes( <egq> )
+#  for an EGQByBLTSet
+##
+InstallMethod( DefiningPlanes,
+    "for an EGQByBLTSet",
+    [ IsElationGQByBLTSet ],
+    function( egq )
+		return egq!.planes;
+	end );
+
+#############################################################################
+#O  ObjectToElement( <egq>, <type>, <el> )
+# 
+##
+InstallMethod( ObjectToElement,
+	"for an egq byt blt, an integer and a subspace of a polar space",
+	[ IsElationGQByBLTSet, IsPosInt, IsSubspaceOfClassicalPolarSpace],
+	function(egq, t, el)
+		local p,planes;
+		if not el in egq!.polarspace then
+			Error("<el> does not represent an element of <egq>");
+		fi;
+		planes := egq!.planes;
+		if t=1 then
+			p := egq!.basepointobj;
+			if ProjectiveDimension(el) = 0 then
+				if el = p then
+					return BasePointOfEGQ(egq);
+				elif not IsCollinear(egq!.polarspace,p,el) then
+					return Wrap(egq,1,el);
+				else
+					Error("<el> does not represent a point of <egq>");
+				fi;
+			elif ProjectiveDimension(el) = 1 then
+				if Span(p,el) in planes then
+					return Wrap(egq,1,el);
+				fi;
+			else
+				Error("<el> does not represent a point of <egq>");
+			fi;
+		elif t=2 then
+			if el in planes then
+				return Wrap(egq,2,el);
+			elif Number(planes,x->ProjectiveDimension(Meet(x,el))=1)=1 then
+				return Wrap(egq,2,el);
+			else
+				Error("<el> does not represent a line of <egq>");
+			fi;
+		else
+			Error("<egq> is a point-line geometry not containing elements of type ",t);
+		fi;
+	end );
+
+#############################################################################
+#O  ObjectToElement( <egq>, <el> )
+# 
+##
+InstallMethod( ObjectToElement,
+	"for an egq byt blt, and a subspace of a polar space",
+	[ IsElationGQByBLTSet, IsSubspaceOfClassicalPolarSpace],
+	function(egq, el)
+		local p,planes;
+		if not el in egq!.polarspace then
+			Error("<el> does not represent an element of <egq>");
+		fi;
+		planes := egq!.planes;
+		p := egq!.basepointobj;
+		if ProjectiveDimension(el) = 2 then
+			if el in planes then
+				return Wrap(egq,2,el);
+			elif Number(planes,x->ProjectiveDimension(Meet(x,el))=1)=1 then
+				return Wrap(egq,2,el);
+			else
+				Error("<el> does not represent an element of <egq>");
+			fi;
+		elif ProjectiveDimension(el) = 1 then
+			if Span(p,el) in planes then
+					return Wrap(egq,1,el);
+			else
+				Error("3<el> does not represent an element of <egq>");
+			fi;
+		elif ProjectiveDimension(el) = 0 then
+			if el = p then
+				return BasePointOfEGQ(egq);
+			elif not IsCollinear(egq!.polarspace,p,el) then
+				return Wrap(egq,1,el);
+			else
+				Error("<el> does not represent an element of <egq>");
+			fi;
+		else
+			Error("<el> does not represent an element of <egq>");
+		fi;
+	end );
+
+#############################################################################
+#O  CollineationSubgroup( <egq> )
+# The setwise stabiliser of the BLT lines is a sub group of the Collineation
+# group of the egq-by-blt. This subgroup is of course not the complete
+# collineation group, but might be useful, and can be computed much quicker
+# than the full collineation group.
+##
+InstallMethod( CollineationSubgroup,
+	"for a generalised polygon, an integer and an object",
+	[ IsElationGQByBLTSet ],
+	function(egq)
+		local ps, stabp, coll;
+		ps := egq!.polarspace;
+		stabp := FiningStabiliser(CollineationGroup(ps),egq!.basepointobj);
+		coll := FiningSetwiseStabiliser(stabp,egq!.planes);
+		SetCollineationAction(coll,CollineationAction(ElationGroup(egq)));
+		return coll;
+	end );
+
 
 #############################################################################
 #O  FlockGQByqClan( <clan> )

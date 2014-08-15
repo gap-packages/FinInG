@@ -6,8 +6,6 @@ gap&gt; clan := qClan(list,f);
 &lt;q-clan over GF(3)&gt;
 gap&gt; egq := EGQByqClan(clan);
 #I  Computed Kantor family. Now computing EGQ...
-#I  Computing points from Kantor family...
-#I  Computing lines from Kantor family...
 &lt;EGQ of order [ 9, 3 ] and basepoint 0&gt;
 gap&gt; incgraph := IncidenceGraphOfGeneralisedPolygon(egq);;
 #I  Computing incidence graph of generalised polygon...
@@ -16,5 +14,11 @@ gap&gt; group := AutomorphismGroup(incgraph);
 gap&gt; Order(group);
 26127360
 gap&gt; Order(CollineationGroup(HermitianPolarSpace(3,9)));
-#I  Computing nice monomorphism...
 26127360
+gap&gt; clan := KantorKnuthqClan(9);
+&lt;q-clan over GF(3^2)&gt;
+gap&gt; egq := EGQByqClan(clan);
+#I  Computed Kantor family. Now computing EGQ...
+&lt;EGQ of order [ 81, 9 ] and basepoint 0&gt;
+gap&gt; clan := FisherThasWalkerKantorBettenqClan(11);
+&lt;q-clan over GF(11)&gt;

@@ -36,7 +36,8 @@ DeclareCategory( "IsShadowElementsOfGeneralisedPolygon", IsElementsOfIncidenceSt
 DeclareRepresentation( "IsShadowElementsOfGeneralisedPolygonRep", IsElementsOfIncidenceStructure, [ "geometry", "type", "element", "func" ]);
 
 DeclareCategory( "IsElationGQ", IsGeneralisedQuadrangle );
-DeclareCategory( "IsElationGQByKantorFamily", IsElationGQ ); #needed?
+DeclareCategory( "IsElationGQByKantorFamily", IsElationGQ ); #needed? yes!
+DeclareCategory( "IsElationGQByBLTSet", IsElationGQ ); #needed? yes!
 
 #############################################################################
 # Constructor operations:
@@ -120,6 +121,11 @@ DeclareOperation("3D4fining", [IsField and IsFinite] );
 # Elation Generalised Quadrangles
 #############################################################################
 
+# two general attributes
+
+DeclareAttribute( "ElationGroup", IsElationGQ);
+DeclareAttribute( "BasePointOfEGQ", IsElationGQ);
+
 # Kantor families
 
 DeclareOperation( "IsKantorFamily", [IsGroup, IsList, IsList]);
@@ -163,10 +169,11 @@ DeclareOperation( "EGQByqClan", [ IsqClanObj and IsqClanRep ] );
 DeclareOperation( "EGQByBLTSet", [IsList, IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace] );
 DeclareOperation( "EGQByBLTSet", [IsList] );
 
+DeclareAttribute( "DefiningPlanes", IsElationGQByBLTSet);
+DeclareAttribute( "CollineationSubgroup", IsElationGQByBLTSet);
+
 DeclareOperation( "FlockGQByqClan", [ IsqClanObj ] );
 
-DeclareAttribute( "ElationGroup", IsElationGQ);
-DeclareAttribute( "BasePointOfEGQ", IsElationGQ);
 
 
 

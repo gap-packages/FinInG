@@ -5,28 +5,36 @@ gap&gt; bltset := BLTSetByqClan( clan);
   &lt;a point in Q(4, 3): -x_1*x_5-x_2*x_4+x_3^2=0&gt;, 
   &lt;a point in Q(4, 3): -x_1*x_5-x_2*x_4+x_3^2=0&gt;, 
   &lt;a point in Q(4, 3): -x_1*x_5-x_2*x_4+x_3^2=0&gt; ]
-gap&gt; geo := AmbientGeometry( bltset[1] );
-Q(4, 3): -x_1*x_5-x_2*x_4+x_3^2=0
-gap&gt; Display( geo );
-Q(4, 3)
-Non-degenerate parabolic bilinear form
-Gram Matrix:
- . . . . 1
- . . . 1 .
- . . 1 . .
- . 1 . . .
- 1 . . . .
-Polynomial: -x_1*x_5-x_2*x_4+x_3^2
-Witt Index: 2
 gap&gt; egq := EGQByBLTSet( bltset );
-#I  No intertwiner computed. One of the polar spaces must have a collineation 
-group computed
-#I  Computing nice monomorphism...
 #I  Now embedding dual BLT-set into W(5,q)...
-#I  Computing points(1) of Knarr construction...
-#I  Computing lines(1) of Knarr construction...
-#I  Computing points(2) of Knarr construction...
-#I  Computing lines(2) of Knarr construction...please wait
 #I  Computing elation group...
-&lt;EGQ of order [ 9, 3 ] and basepoint [ Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3),
-  0*Z(3) ]&gt;
+&lt;EGQ of order [ 9, 3 ] and basepoint in W(5, 3 ) &gt;
+gap&gt; p := BasePointOfEGQ(egq);
+&lt;a point in &lt;EGQ of order [ 9, 3 ] and basepoint in W(5, 3 ) &gt;&gt;
+gap&gt; UnderlyingObject(p);
+&lt;a point in W(5, 3)&gt;
+gap&gt; l := Random(Lines(egq));
+#I  Using elation group to enumerate elements
+&lt;a line in &lt;EGQ of order [ 9, 3 ] and basepoint in W(5, 3 ) &gt;&gt;
+gap&gt; UnderlyingObject(l);
+&lt;a plane in W(5, 3)&gt;
+gap&gt; group := ElationGroup(egq);
+&lt;projective collineation group with 5 generators&gt;
+gap&gt; Order(group);
+243
+gap&gt; CollineationGroup(egq);
+#I  Using elation group to enumerate elements
+#I  Using elation group to enumerate elements
+#I  Computing incidence graph of generalised polygon...
+#I  Using elation group to enumerate elements
+&lt;permutation group of size 26127360 with 7 generators&gt;
+gap&gt; time;
+210
+gap&gt; egq := EGQByqClan(clan);
+#I  Computed Kantor family. Now computing EGQ...
+&lt;EGQ of order [ 9, 3 ] and basepoint 0&gt;
+gap&gt; CollineationGroup(egq);
+#I  Computing incidence graph of generalised polygon...
+&lt;permutation group of size 26127360 with 6 generators&gt;
+gap&gt; time;
+1489

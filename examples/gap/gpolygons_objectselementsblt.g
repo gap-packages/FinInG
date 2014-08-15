@@ -1,0 +1,20 @@
+#object/elements for EGQByBLTSet
+clan := FisherThasWalkerKantorBettenqClan(11);
+blt := BLTSetByqClan(clan);
+egq := EGQByBLTSet(blt);
+planes := DefiningPlanes(egq);
+p := BasePointOfEGQ(egq);
+up := UnderlyingObject(p);
+ps := SymplecticSpace(5,11);
+uq := VectorSpaceToElement(ps,[1,1,0,0,0,0]*Z(11)^0);
+q := ObjectToElement(egq,1,uq);
+DistanceBetweenElements(p,q);
+l := ObjectToElement(egq,2,planes[1]);
+DistanceBetweenElements(p,l);
+DistanceBetweenElements(q,l);
+um := VectorSpaceToElement(ps,[[1,0,0,0,1,1],[0,1,0,9,1,0],[0,0,1,9,9,9]]*Z(11)^0);
+m := ObjectToElement(egq,2,um);
+DistanceBetweenElements(p,m);
+DistanceBetweenElements(q,m);
+DistanceBetweenElements(l,m);
+quit;

@@ -1,0 +1,30 @@
+gap&gt; clan := FisherThasWalkerKantorBettenqClan(5);
+&lt;q-clan over GF(5)&gt;
+gap&gt; blt := BLTSetByqClan(clan);
+[ &lt;a point in Q(4, 5): Z(5)*x_1*x_5+Z(5)*x_2*x_4+Z(5)^3*x_3^2=0&gt;, 
+  &lt;a point in Q(4, 5): Z(5)*x_1*x_5+Z(5)*x_2*x_4+Z(5)^3*x_3^2=0&gt;, 
+  &lt;a point in Q(4, 5): Z(5)*x_1*x_5+Z(5)*x_2*x_4+Z(5)^3*x_3^2=0&gt;, 
+  &lt;a point in Q(4, 5): Z(5)*x_1*x_5+Z(5)*x_2*x_4+Z(5)^3*x_3^2=0&gt;, 
+  &lt;a point in Q(4, 5): Z(5)*x_1*x_5+Z(5)*x_2*x_4+Z(5)^3*x_3^2=0&gt;, 
+  &lt;a point in Q(4, 5): Z(5)*x_1*x_5+Z(5)*x_2*x_4+Z(5)^3*x_3^2=0&gt; ]
+gap&gt; egq := EGQByBLTSet(blt);
+#I  Now embedding dual BLT-set into W(5,q)...
+#I  Computing elation group...
+&lt;EGQ of order [ 25, 5 ] and basepoint in W(5, 5 ) &gt;
+gap&gt; coll := CollineationSubgroup(egq);
+#I  Computing adjusted stabilizer chain...
+&lt;projective collineation group with 13 generators&gt;
+gap&gt; Order(coll);
+9000000
+gap&gt; act := CollineationAction(coll);
+function( el, x ) ... end
+gap&gt; orbs := Orbits(coll,Points(egq),act);;
+#I  Using elation group to enumerate elements
+gap&gt; List(orbs,x-&gt;Length(x));
+[ 1, 3125, 150 ]
+gap&gt; el := ElationGroup(egq);
+&lt;projective collineation group with 5 generators&gt;
+gap&gt; orbs := Orbits(el,Points(egq),act);;
+#I  Using elation group to enumerate elements
+gap&gt; List(orbs,x-&gt;Length(x));
+[ 1, 3125, 25, 25, 25, 25, 25, 25 ]

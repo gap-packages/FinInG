@@ -8,4 +8,7 @@ incgraph := IncidenceGraphOfGeneralisedPolygon(egq);;
 group := AutomorphismGroup(incgraph);
 Order(group);
 Order(CollineationGroup(HermitianPolarSpace(3,9)));
+clan := KantorKnuthqClan(9);
+egq := EGQByqClan(clan);
+clan := FisherThasWalkerKantorBettenqClan(11);
 quit;

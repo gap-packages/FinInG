@@ -600,7 +600,7 @@ The points are of three types:<P/>
 (i) points of type 1 are the elements of <M>G</M>;<P/>
 (ii) points of of type 2 are the right cosets <Alt Not="HTML"><M>S^*g, s^* \in J^*</M></Alt>
 <Alt Only="HTML">S&lt;sup>*&lt;/sup>g, S&lt;sup>*&lt;/sup><M>\in</M> J&lt;sup>*&lt;/sup></Alt><P/>
-(iii) the unique point of type (iii) is the symbol infinity.<P/>
+(iii) the unique point of type (iii) is the symbol <Alt Not="HTML"><M>(\infty)</M></Alt><Alt Only="HTML">(&#8734;)</Alt>.<P/>
 The lines are of two types:<P/>
 (a) lines of type (a) are the right cosets <M>Sg</M>, <M>S \in J</M>;<P/>
 (b) Lines of type (b) are the symbols <M>[S], S \in J</M>.<P/>
@@ -661,7 +661,7 @@ demonstrated, and some categories are displayed.
 <Oper Name="ObjectToElement" Arg="egq, t, obj"/>
 <Oper Name="ObjectToElement" Arg="egq, obj"/>
 <Oper Name="BasePointOfEGQ" Arg="egq"/>
-<Oper Name="UnderlyingObject" Arg="egq, obj"/>
+<Oper Name="UnderlyingObject" Arg="el"/>
 <Description>
 For technical reasons, the underlying objects of the elements of an elation generalised quadrangle constructed from a Kantor family,
 are not exactly the mathematical objects from the defintion. However, these technicalities are almost completely hidden for the user, except
@@ -696,32 +696,63 @@ generalised quadrangle constructed from a Kantor family, the attribute <F>Collin
 <Subsection>
 <Heading>Kantor families, q-clans, and elation generalised quadrangles</Heading>
 
-Here comes a short mathematical description of how to find Kantor families from q-clans.
-
+Let <Alt Not="HTML"><M>C=\{A_i: i=1 \ldots q\}</M></Alt><Alt Only="HTML">C = {A&lt;sub>i&lt;/sub>: i=1 ... q}</Alt>
+ be a set of <M>q</M> distinct upper triangle <M>2 \times 2</M> 
+matrices over the finite field <M>GF(q)</M>. Then <M>C</M> is called a <E>q-clan</E> if 
+<Alt Not="HTML"><M>A_r - A_t</M></Alt><Alt Only="HTML">A&lt;sub>r&lt;/sub> - A&lt;sub>t&lt;/sub></Alt> 
+is anistropic for <M>r \neq t</M>.<P/> Define 
+<Alt Not="HTML"><M>G = \{(\alpha,c,\beta): \alpha,\beta \in GF(q)^2, c \in GF(q)\}</M></Alt>
+<Alt Only="HTML">G = {(&#945;,c,&#946;): &#945;,&#946; &#8712; GF(q)&lt;sup>2&lt;/sup>, c &#8712; GF(q) }</Alt>, 
+and define the binary operator <M>\times</M> as 
+<Alt Not="HTML"><M>(\alpha,c,\beta) \times (\alpha',c',\beta') = 
+(\alpha + \alpha',c+c'+\beta \cdot \alpha'^{T},\beta + \beta')</M></Alt><Alt Only="HTML">(&#945;,c,&#946;) <M>\times</M>
+(&#945;',c',&#946;') = (&#945;+&#945;',c+c'+&#946;&#945;'&lt;sup>T&lt;/sup>,&#946;+&#946;')</Alt>. Then <M>G,\times</M>
+is a group with center <M>Z(G)=\{(0,c,0): c \in GF(q)\}</M>. Consider a q-clan 
+<Alt Not="HTML"><M>C=\{A_i: i=1 \ldots q\}</M></Alt><Alt Only="HTML">C = {A&lt;sub>i&lt;/sub>: i=1 ... q}</Alt>, define
+<Alt Not="HTML"><M>K_i = A_i+A_i^T</M></Alt><Alt Only="HTML">K&lt;sub>i&lt;/sub> = A&lt;sub>i&lt;/sub> + 
+A&lt;sub>i&lt;/sub>&lt;sup>T&lt;/sup></Alt>. Now define the following subgroups of <M>G</M><P/>
+<Alt Not="HTML"><M>A(i) = \{(\alpha,\alpha A_t,\alpha K_t): \alpha \in GF(q)^2, i=1\ldots q\}</M></Alt>
+<Alt Only="HTML">A(i)= {(&#945;,&#945;A&lt;sub>i&lt;/sub>,&#945;K&lt;sub>i&lt;/sub>): &#945; &#8712; GF(q)&lt;sup>2&lt;/sup>, i=1..q }</Alt> and
+<Alt Not="HTML"><M>A(\infty) = \(0,0,\gamma): \gamma \in GF(q)^2\}</M></Alt>
+<Alt Only="HTML">A(&#8734;)= {(0,0,&#947;) &#947; &#8712; GF(q)&lt;sup>2&lt;/sup> }</Alt>, and<P/>
+<Alt Not="HTML"><M>A^*(i) = \{(\alpha,\b,\alpha K_t): \alpha \in GF(q)^2, b \in GF(q), i=1\ldots q\}</M></Alt>
+<Alt Only="HTML">A&lt;sup>*&lt;/sup>(i)= {(&#945;,b,&#945;K&lt;sub>i&lt;/sub>): &#945; &#8712; GF(q)&lt;sup>2&lt;/sup>, b &#8712; GF(q), i=1..q }</Alt> and
+<Alt Not="HTML"><M>A^*(\infty) = \{(0,b,\gamma): \gamma \in GF(q)^2, b \in GF(q)\}</M></Alt>
+<Alt Only="HTML">A&lt;sup>*&lt;/sup>(&#8734;) = {(0,b,&#947;): &#947; &#8712; GF(q)&lt;sup>2&lt;/sup>, b &#8712; GF(q)}</Alt><P/>
+Define <Alt Not="HTML"><M>J=\{A(i):i=1\ldots q\} \cup \{A(\infty)\}</M></Alt>
+<Alt Only="HTML">J = {A(i): i= 1 ... q} &#8746; {A(&#8734;)}</Alt> and 
+<Alt Not="HTML"><M>J^*=\{A^*(i):i=1\ldots q\} \cup \{A^*(\infty)\}</M></Alt>
+<Alt Only="HTML">J&lt;sup>*&lt;/sup> = {A&lt;sup>*&lt;/sup>(i): i= 1 ... q} &#8746; {A&lt;sup>*&lt;/sup>(&#8734;)}</Alt><P/>
+A combination of results of Payne and Kantor yield the famous theorem that <Alt Not="HTML">(J,J^*)</Alt>
+<Alt Only="HTML">(J,J&lt;sup>*&lt;/sup>)</Alt> is a Kantor family in <M>G</M> if and only if <M>C</M> is a q-clan. 
+<Package>FinInG</Package> provides functionality to construct q-clans and to construct the corresponding Kantor family.
+As such, elation generalised quadrangles can directly constructed from q-clans.
 </Subsection>
 
 <ManSection>
 <Oper Name="qClan" Arg="list, f"/>
-<Returns>
-a q-clan.
-</Returns>
+<Returns>a q-clan.</Returns>
 <Description>
+Given a list <A>list</A> of <M>2 \times</M> matrices over the field <A>f</A>,
+it is checked if the matrices in the list satisfy the condition to constitute a q-clan
+over <M>f</M>. If so, the q-clan is returned.
 <Example>
 </Example>
 </Description>
 </ManSection>
 
 <ManSection>
-<Heading>Built in q-clas</Heading>
+<Heading>Particular q-clans</Heading>
 <Oper Name="LinearqClan" Arg="q"/>
 <Oper Name="FisherThasWalkerKantorBettenqClan" Arg="q"/>
 <Oper Name="KantorMonomialqClan" Arg="q"/>
 <Oper Name="KantorKnuthqClan" Arg="q"/>
 <Oper Name="FisherqClan" Arg="q"/>
 <Returns>
-a q-clan.
+a q-clan
 </Returns>
 <Description>
+Some famous q-clans are built in. We refer to ... for more information on these.
 <Example>
 </Example>
 </Description>
@@ -733,6 +764,9 @@ a q-clan.
 A Kantor family.
 </Returns>
 <Description>
+The Kantor family constructed from a q-clan will be a matrix group together with the
+corresponding collections <M>J</M> and <Alt Not="HTML">J^*</Alt>
+<Alt Only="HTML">J&lt;sup>*&lt;/sup></Alt>.
 <Example>
 </Example>
 </Description>
@@ -744,18 +778,55 @@ A Kantor family.
 An elation generalised quadrangle constructed from a q-clan.
 </Returns>
 <Description>
+Given a q-clan <A>clan</A>, the operation <F>KantorFamilyByqClan</F> will be used to construct the Kantor family 
+from <A>clan</A>, followed by the construction of the elation generalised quadrangle using the operation 
+<F>EGQByKantorFamily</F>. The first example shows also the use of <F>qClan</F>, and shows that a linear q clan 
+yields a classical generalised quadrangle. 
 <Example>
+<#Include SYSTEM "../examples/include/gpolygons_EGQByqClan.include">
 </Example>
 </Description>
 </ManSection>
 
 <Subsection>
-<Heading>BLT-sets, q-clans, and elation generalised quadrangles</Heading>
+<Heading>BLT-sets, flocks, q-clans, and elation generalised quadrangles</Heading>
 
-Here comes a short mathematical description of how to find a blt set from a q-clan, and how to define a GQ (which is a EGQ) from a blt set.
-Noteworthy are the completely different representation of these GPs.
-
+A <E>flock</E> is a partition of the points of a quadratic cone in <M>PG(3,q)</M> 
+minus its vertex into conics. Each conic is determined by a plane, and each plane is determined
+uniquely by a triple of elements of the field <M>GF(q)</M>. So a flock is determind by <M>q</M> such 
+triples. Remarkably, as was shown by J.A. Thas, the conditions for these triples to constitute a flock,
+are exactly the same conditions for these triples to constitute <M>q</M> upper triangle matrices making
+a q-clan over <M>GF(q)</M>. Hence, q-clans and flocks, and thus flocs and elation generalised quadrangles,
+are equivalent objects.<P/>
+The quadratic cone can be embedded as a hyperplane section into the parabolic quadric <M>Q(4,q)</M>. L. Bader,
+G. Lunardon and J.A. Thas observed that a set of <M>q</M> points of <M>Q(4,q)</M> can be constructed from 
+the <M>q</M> plane determining the flock, and this set of points satisfies certain geometric conditions. Such
+a set is called a <E>BLT-set</E>. Dually, a BLT-set corresponds to a set of lines of <M>W(3,q)</M>. Furthermore,
+from this BLT-set of lines, it is possible to construct directly an elation generalised quadrangle from carefully
+selecting points and lines from the symplectic space <M>W(5,q)</M>. This construction is called the Knarr construction.<P/>
+Consider the symplectic polar space <M>W(5,q)</M> and choose a point <M>P \in W(5,q)</M>. Its tangent space is
+a <M>4</M>-dimensional space <M>F</M>. Embed <M>W(3,q)</M> in a solid of <M>F</M> not on the point <M>p</M>, and 
+let <M>L</M> be the set of BLT lines. Each line spans with <M>P</M> a plane of <M>W(5,q)</M>, call these <M>q</M> planes
+the <E>BLT-planes</E>. Now we can define the points an lines of the elation generalised quadrangle as follows.<P/>
+Points of type (i) are the points of <M>W(5,q) \setminus F</M>, points of type (ii) are the lines of each BLT-plane
+not on <M>P</M> and the unique point of type (iii) is the point <M>P</M>. Lines of type (a) are the
+planes of <M>W(5,q)</M> meeting a BLT-plane in a line. Note that no plane of <M>W(5,q)</M> meeting two BLT planes in a
+line can exist. Lines of type (b) are the BLT-planes. Incidence is the natural incidence (so the incidence inherited)
+from the polar space <M>W(5,q)</M>, and this geometry is a elation generalised quadrangle with basepoint <M>P</M> and
+of order <Alt Only="HTML">(q&lt;sup>2&lt;/sup>,q)</Alt><Alt Not="HTML"><M>(q^2,q)</M></Alt>.<P/>
+<Package>FinInG</Package> provides functions to construct elation generalised quadrangles using this model from
+BLT-sets, and provides a function to compute a BLT set from a q-clan directly. The advantage of constructing 
+a elation generalised from elements of Lie geometries is the availability of the underlying projective groups and
+their action on elements of Lie geometries. 
 </Subsection>
+
+<ManSection>
+<Filt Name="IsEGQByBLTSet" Type="Category"/>
+<Description>
+<C>IsEGQByBLTSet</C> is a subcategory of <C>IsElationGQ</C>. It contains all elations generalised quadrangles
+that are constructed from a BLTblt set. 
+</Description>
+</ManSection>
 
 <ManSection>
 <Oper Name="BLTSetByqClan" Arg="clan"/>
@@ -763,25 +834,76 @@ Noteworthy are the completely different representation of these GPs.
 A BLT-set.
 </Returns>
 <Description>
+The BLT-set is a set of points of the parabolic quadric in <M>PG(4,q)</M> with particular
+equation <Alt Not="HTML"><M>2X_1x_5+2X_2X_4+w^{(q+1)/2}=0</M></Alt><Alt Only="HTML">X&lt;sub>1&lt;/sub>X&lt;sub>5&lt;/sub>+
+X&lt;sub>2&lt;/sub>X&lt;sub>4&lt;/sub>+w&lt;sup>(q+1)/2&lt;/sup>X&lt;sub>3&lt;/sub>&lt;sup>2&lt;/sup>=0</Alt>, <M>w</M>
+a primitive element of the underlying field of <A>clan</A>
 <Example>
+<#Include SYSTEM "../examples/include/gpolygons_bltsetbyqclan.include">
 </Example>
 </Description>
 </ManSection>
 
-
 <ManSection>
-<Oper Name="EGQByBLTSet" Arg="clan"/>
+<Oper Name="EGQByBLTSet" Arg="blt"/>
 <Returns>
 An elation generalised quadrangle.
 </Returns>
 <Description>
+<A>blt</A> is a blt set, this operation returns an elation generalised quadrangle constructed
+as described above consisting of elements of <M>W(5,q)</M>. Notice in the example that computing the
+full collineation group of the GQ constructed directly from the q-clan (hence a group coset geometry) is
+substantially slower than computing the full collineation group of the GQ constructed from the BLT set.
 <Example>
+<#Include SYSTEM "../examples/include/gpolygons_EGQByBLTSet.include">
 </Example>
 </Description>
 </ManSection>
 
+<ManSection>
+<Attr Name="DefiningPlanes" Arg="egq"/>
+<Description>
+For an elation generalised quadrangle in the category <C>IsEGQByBLTSet</C> (constructed from a BLT set), 
+the planes of the polar space <M>W(5,q)</M>, as described in the introduction, determine the generalised quadrangle
+completely. This attribute returns these <M>q</M> planes of <M>W(5,q)</M>. 
+<Example>
+<#Include SYSTEM "../examples/include/gpolygons_definingplanes.include">
+</Example>
+</Description>
+</ManSection>
 
-<Subsection>
+<ManSection>
+<Heading>Representation of elements and underlying objects</Heading>
+<Oper Name="ObjectToElement" Arg="egq, t, obj"/>
+<Oper Name="ObjectToElement" Arg="egq, obj"/>
+<Oper Name="UnderlyingObject" Arg="el"/>
+<Description>
+The underlying objects of the elements of an elation generalised quadrangle in the category <C>IsEGQByBLTSet</C> 
+are elements of the polar space <M>W(5,q)</M> in its standard representation. These elements can be used as underlying
+object to construct elements of <A>egq</A>. The example also demonstrates the use of <F>DistanceBetweenElements</F>.
+<Example>
+<#Include SYSTEM "../examples/include/gpolygons_objectselementsblt.include">
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Attr Name="CollineationSubgroup" Arg="egq"/>
+<Description>
+For an elation generalised quadrangle in the category <C>IsEGQByBLTSet</C> (constructed from a BLT set), 
+the planes of the polar space <M>W(5,q)</M>, as described in the introduction, determine the generalised quadrangle
+completely. The setwise stabiliser of these planes in the collineation group of <M>W(5,q)</M> is a subgroup of the
+completely collineation group of the elation generalised quadrangle, and can be computed much faster than the 
+complete collineation group. This attribute returns this setwise stabiliser. The returned group is equipped
+with the <F>CollineationACtion</F> attribute. If <F>CollineationSubgroup</F> is computed, this group will be used
+instead of the elation group to compute the incidence graph.
+<Example>
+<#Include SYSTEM "../examples/include/gpolygons_collineationsubgroup.include">
+</Example>
+</Description>
+</ManSection>
+
+<!--<Subsection>
 <Heading>Flocks, BLT-sets and elation generalised quadrangles.</Heading>
 
 The final subsection. The necesary mathematics.
@@ -796,14 +918,9 @@ An elation generalised quadrangle.
 <Example>
 </Example>
 </Description>
-</ManSection>
-
-
+</ManSection>-->
 
 </Section>
-
-
-
 
 </Chapter>
 
