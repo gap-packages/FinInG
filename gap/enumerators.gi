@@ -1385,21 +1385,23 @@ end );
 ##
 InstallGlobalFunction( QNumberElement,
   function(d, q, var)
-    local wittindex, x, a, b, v, i, cyc;
-    v := StructuralCopy(var!.obj);
+    local wittindex, x, a, b, v, i, cyc; 
+    cyc := PermList( Concatenation([2..d+1], [1]));
+
+    v := Permuted(StructuralCopy(var!.obj), cyc^-1);
     wittindex := d/2; 
     x := FG_nb_pts_Sbar(wittindex, q);
     if IsZero(v[2 * wittindex + 1]) then
 	 a := FG_Sbar_rank(q, v, 1, wittindex);
-	 return a;
+	 return a + 1;
     fi;
     a := x;
     if not IsOne(v[1 + 2 * wittindex]) then
-	 PG_element_normalize(v, 1, d + 1);
+	 	PG_element_normalize(v, 1, d + 1);
     fi;  
     if IsOddInt(q) then
-	   for i in [1..wittindex] do
-	       v[2 * i] := -v[2 * i];
+	   for i in [0..d/2-1] do
+	       v[2 * i+1] := -v[2 * i+1];
 	   od;
     fi;
     b := FG_N1_rank(q, v, 1, wittindex);
