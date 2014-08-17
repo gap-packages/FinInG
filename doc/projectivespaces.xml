@@ -29,19 +29,15 @@ with finite projective spaces.
 <Heading>Projective Spaces and basic operations</Heading>
 
 A <E>projective space</E> is a point-line incidence geometry, satisfying a few well known axioms. 
-An axiomatic treatment can e.g. be found in <Cite Key="VY65a"/> and <Cite Key="VY65b"/>. 
-Projective spaces are axiomatically point-line geometries, but
-may contain higher dimensional projective subspaces too. <P/>
-
+An axiomatic treatment can be found in <Cite Key="VY65a"/> and <Cite Key="VY65b"/>. 
 In <Package>FinInG</Package>, we deal with <E>finite Desarguesian projective
 spaces</E>. It is well known that these geometries can be described completely using
 vector spaces over finite fields. The elements of the projective space are all nontrivial subspaces of the vector space.
-So the projective points correspond with the vectorlines, the projective lines correspond with the vectorplanes, etc.
+So the projective points are the one-dimensional subspaces, the projective lines are the two-dimensional subspaces, and so on.
 From the axiomatic point of view, a projective space is a point-line geometry, 
 and has rank at least 2. But a projective line is obtained if we start with a two dimensional vector space. Starting with a
 one dimensional vector space yields a single projective point. Both examples are not a projective space in the axiomatic point of 
-view, but are in <Package>FinInG</Package> considered as projective spaces. This abuses the terminology a bit, if one asks that projective
-spaces have rank at least 2.
+view, but are in <Package>FinInG</Package> they are considered as projective spaces. 
 
 <ManSection>
 <Filt Name="IsProjectiveSpace" Type="Category"/>
@@ -120,10 +116,10 @@ Hence, simply <A>ps</A> will be returned.
 <Heading>Subspaces of projective spaces</Heading>
 
 The elements of a projective space <M>PG(n,q)</M> are the subspaces of a suitable dimension. The 
-empty subspace, also called the trivial subspace, has dimenion <M>-1</M> and corresponds to the zero dimensional 
+empty subspace, also called the trivial subspace, has dimension <M>-1</M> and corresponds to the zero dimensional 
 vector subspace of the underlying vector space of <M>PG(n,q)</M>, and is hence represented by the zero vector
-of lenght <M>n+1</M> over the underlying field <M>GF(q)</M>. The trivial subspace and the whole projective 
-space are mathematically considerd as a subspace of the projective geometry, but not as elements of the 
+of length <M>n+1</M> over the underlying field <M>GF(q)</M>. The trivial subspace and the whole projective 
+space are mathematically considered as a subspace of the projective geometry, but not as elements of the 
 incidence geometry, and hence do in <Package>FinInG</Package>
 <B>not</B> belong to the category <C>IsSubspaceOfProjectiveSpace</C>.
 
@@ -168,12 +164,12 @@ is also applicable on the EmptySubspace.
 </ManSection>
 
 <ManSection>
-<Oper Name="ElmentsOfIncidenceStructure" Arg="ps, j"/>
+<Oper Name="ElementsOfIncidenceStructure" Arg="ps, j"/>
 <Returns>the collection of elements of the projective space <A>ps</A> of type <A>j</A></Returns>
 <Description>
-For the projective space <A>ps</A> of dimension <M>d</M> and the type <A>j</A>, <M>1 &#8804; j &#8804; d</M>
+For the projective space <A>ps</A> of dimension <M>d</M> and the type <A>j</A> (where <M>1 &#8804; j &#8804; d</M>),
 this operation returns the collection of <M>j-1</M> dimensional subspaces. 
-An error message is produced when the projective space <A>as</A> has no elements of the required type.<Example>
+An error message is produced when the projective space <A>ps</A> has no elements of the required type.<Example>
 <#Include SYSTEM "../examples/include/projsp_elements.include"> 
 </Example>
 </Description>
@@ -181,12 +177,12 @@ An error message is produced when the projective space <A>as</A> has no elements
 
 <ManSection>
 <Heading>Short names for ElementsOfIncidenceStructure</Heading>
-<Oper Name="Points" Arg="as"/>
-<Oper Name="Lines" Arg="as"/>
-<Oper Name="Planes" Arg="as"/>
-<Oper Name="Solids" Arg="as"/>
-<Oper Name="Hyperplanes" Arg="as"/>
-<Returns>The elements of <A>as</A> of respective type 1, 2, 3, 4, and the hyperplanes</Returns>
+<Oper Name="Points" Arg="ps"/>
+<Oper Name="Lines" Arg="ps"/>
+<Oper Name="Planes" Arg="ps"/>
+<Oper Name="Solids" Arg="ps"/>
+<Oper Name="Hyperplanes" Arg="ps"/>
+<Returns>The elements of <A>ps</A> of respective type 1, 2, 3, 4, and the hyperplanes</Returns>
 <Description>
 An error message is produced when the projective space <A>ps</A> has no elements of a required type.
 <Example>
@@ -213,7 +209,7 @@ of the geometry, but both the empty subspace and the whole projective space are 
 
 <ManSection>
 <Oper Name="StandardFrame" Arg="ps"/>
-<Returns>the standard frame of the projetive space <A>ps</A></Returns>
+<Returns>the standard frame of the projective space <A>ps</A></Returns>
 <Description>
 <Example>
 <#Include SYSTEM "../examples/include/projsp_standardframe.include"> 
@@ -313,14 +309,14 @@ The second variant returns a random element of a random type of the projective s
 <Oper Name="Span" Arg="list"/>
 <Returns> an element or the empty subspace or the whole space</Returns>
 <Description>
-When <A>u</A> and <A>v</A> are elements of a projective.
+When <A>u</A> and <A>v</A> are elements of a projective space.
 This function returns the span of the two elements. When <A>list</A> is 
 a list of elements of the same projective space, then this function returns
 the span of all elements in <A>list</A>. It is checked whether the elements 
 <A>u</A> and <A>v</A> are elements of the same projective space. Although 
 the trivial subspace and the whole projective space are not objects in
 the category <C>IsSubspaceOfProjectiveSpace</C>, they are allowed as 
-argument for this operation, also as member of the argument of the second
+arguments for this operation, and also for the second
 variant of this operation.
 <Example>
 <#Include SYSTEM "../examples/include/projsp_span.include"> 
@@ -340,7 +336,7 @@ the intersection of all elements in <A>list</A>. It is checked whether the eleme
 <A>u</A> and <A>v</A> are elements of the same projective space. Although 
 the trivial subspace and the whole projective space are not objects in
 the category <C>IsSubspaceOfProjectiveSpace</C>, they are allowed as 
-argument for this operation, also as member of the argument of the second
+arguments for this operation, and also for the second
 variant of this operation. We remark that the result of a <F>Meet</F> operation can be the empty subspace.
 <Example>
 <#Include SYSTEM "../examples/include/projsp_meet.include"> 
@@ -350,7 +346,7 @@ variant of this operation. We remark that the result of a <F>Meet</F> operation 
 
 <ManSection>
 <Oper Name="FlagOfIncidenceStructure" Arg="ps, els"/>
-<Returns>the flag of the projetive space <A>ps</A>, determined by
+<Returns>the flag of the projetcive space <A>ps</A>, determined by
 the subspaces of <A>ps</A> in the list <A>els</A>. When <A>els</A> is empty,
 the empty flag is returned.</Returns>
 <Description>

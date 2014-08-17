@@ -36,9 +36,9 @@ and use of polarities of projective spaces in <Package>FinInG</Package>.
 <Heading>Creating polarities of projective spaces</Heading>
 
 Since polarities of a projective space necessarily have an involutory field
-automorphism as companion automorphism and the standardduality of the projective
+automorphism as companion automorphism and the standard duality of the projective
 space as the companion projective space isomorphism, a polarity of a projective
-space is determined completely by a suitable matrix <M>A</M>. Every polaritiy of
+space is determined completely by a suitable matrix <M>A</M>. Every polarity of
 a projective space <M>PG(n,q)</M> is listed in the following table, including
 the conditions on the matrix <M>A</M>.  
 <Table Align="|l|l|l|">
@@ -80,7 +80,7 @@ element with underlying subspace by <Alt
 Not="HTML"><M>\alpha</M></Alt><Alt Only="HTML">&#945;</Alt> is mapped to the
 element with underlying subspace <Alt Not="HTML"><M>\alpha^\perp</M></Alt><Alt
 Only="HTML">&#945;&lt;sup>&#8869;&lt;/sup></Alt>, i.e. the subspace of
-<M>V(n+1,q)</M> orhtogonal to <Alt Not="HTML"><M>\alpha</M></Alt><Alt
+<M>V(n+1,q)</M> orthogonal to <Alt Not="HTML"><M>\alpha</M></Alt><Alt
 Only="HTML">&#945;</Alt> with relation to the form <M>f</M>. It is clear that
 this induced map is a polarity of <M>PG(n,q)</M>. Also the converse is true,
 with any polarity of <M>PG(n,q)</M> corresponds a sesquilinear form on
@@ -89,7 +89,7 @@ from the classification of sesquilinear forms on <M>V(n+1,q)</M>. For more
 information, we refer to <Cite Key="HirschfeldThas"/> and <Cite
 Key="KleidmanLiebeck"/>. We mention that the implementation of the action of
 correlations on projective points (see <Ref Sect="projgroup_actions"/>)
-garantuees that a sesquilinear form with matrix <M>M</M> and field automorphism <Alt
+guarantees that a sesquilinear form with matrix <M>M</M> and field automorphism <Alt
 Not="HTML"><M>\theta</M></Alt><Alt Only="HTML">&#952;</Alt> corresponds to a
 polarity with matrix <M>M</M> and field automorphism <Alt
 Not="HTML"><M>\theta</M></Alt><Alt Only="HTML">&#952;</Alt> and vice versa.<P/>
@@ -103,9 +103,9 @@ subcategory of the category <C>IsProjGrpElWithFrobWithPSIsom</C>.
 <Returns>a polarity of a projective space</Returns>
 <Description>the underlying correlation of
 the projective space is constructed using <A>mat</A>, <A>f</A>, the identity
-mapping as field automorphism and the standardduality of the projective space.
+mapping as field automorphism and the standard duality of the projective space.
 It is checked whether the <A>mat</A> satisfies the necessary conditions to
-induce a polaritiy.
+induce a polarity.
 <Example>
 <#Include SYSTEM "../examples/include/polarities_construct1.include"> 
 </Example>
@@ -118,9 +118,9 @@ induce a polaritiy.
 <Returns>a polarity of a projective space</Returns>
 <Description>the underlying correlation of
 the projective space is constructed using <A>mat</A>, <A>frob</A>, <A>f</A> as matrix,
-field automorphism, field, and the standardduality of the projective space. It is
+field automorphism, field, and the standard duality of the projective space. It is
 checked whether the <A>mat</A> satisfies the necessary conditions to 
-induce a polaritiy, and whether <A>frob</A> is a non-trivial involutory field
+induce a polarity, and whether <A>frob</A> is a non-trivial involutory field
 automorphism. The second operation only needs the arguments <A>mat</A> and
 <A>f</A> to construct a hermitian polarity of a projective space, provided the
 field <A>f</A> allows an involutory field automorphism and <A>mat</A> satisfies
@@ -163,7 +163,7 @@ error message is returned.
 </Section>
 
 <Section>
-<Heading>Operations, attributes and properties for polarties of projective spaces</Heading>
+<Heading>Operations, attributes and properties for polarities of projective spaces</Heading>
 
 <ManSection>
 <Attr Name="SesquilinearForm" Arg="f"/>
@@ -179,7 +179,7 @@ returned.
 <ManSection>
 <Attr Name="BaseField" Arg="f"/>
 <Returns>a field</Returns>
-<Description>the basefield over which the polarity was constructed.
+<Description>the base field over which the polarity was constructed.
 <Example>
 <#Include SYSTEM "../examples/include/polarities_basefield.include"> 
 </Example>
@@ -199,7 +199,7 @@ returned.
 <ManSection>
 <Attr Name="CompanionAutomorphism" Arg="f"/>
 <Returns>a field automorphism</Returns>
-<Description>the involutory fieldautomorphism accompanying the polarity
+<Description>the involutory field automorphism accompanying the polarity
 <Example>
 <#Include SYSTEM "../examples/include/polarities_automorphism.include"> 
 </Example>
@@ -243,7 +243,7 @@ field is odd.
 <ManSection>
 <Prop Name="IsPseudoPolarityOfProjectiveSpace" Arg="f"/>
 <Returns>true or false</Returns>
-<Description>The polarity <A>f</A> is a pseudo polarity of a projective space if
+<Description>The polarity <A>f</A> is a pseudo-polarity of a projective space if
 and only if the underlying matrix is symmetric, not all elements on the main
 diagonal are zero and the characteristic of the field is even.
 <Example>
@@ -272,11 +272,11 @@ Not="HTML"><M>\alpha</M></Alt><Alt Only="HTML">&#945;</Alt> is incident with
 Only="HTML">&#945;&lt;sup>&#966;&lt;/sup></Alt>. An absolute element that is a
 point, is also called an <E>absolute point</E> or an <E>isotropic point</E>. It
 is clear that an element of <M>PG(n,q)</M> is absolute if and only if the
-underlying vectorspace is totally isotropic with relation to the sesquilinear
+underlying vector space is totally isotropic with relation to the sesquilinear
 form equivalent to <Alt Not="HTML"><M>\phi</M></Alt><Alt
 Only="HTML">&#966;</Alt>. Hence the absolute elements induce a <E>finite classical polar space</E>, the
 same that is induced by the equivalent sesquilinear form. When <Alt
-Not="HTML"><M>\phi</M></Alt><Alt Only="HTML">&#966;</Alt> is a speudo polarity,
+Not="HTML"><M>\phi</M></Alt><Alt Only="HTML">&#966;</Alt> is a pseudo-polarity,
 the set of absolute elements are the elements of a hyperplane of <M>PG(n,q)</M>.
 <P/>
 We restrict our introduction to finite classical polar spaces in this section to the following examples.
@@ -284,8 +284,8 @@ Many aspects of these geometries are extensively described in Chapter <Ref Chap=
 <ManSection>
 <Oper Name="GeometryOfAbsolutePoints" Arg="f"/>
 <Returns>a polar space or a hyperplane</Returns>
-<Description>When <A>f</A> is not a pseudo polarity, this operation returns the
-polar space induced by <A>f</A>. When <A>f</A> is a pseudo polartiy, this
+<Description>When <A>f</A> is not a pseudo-polarity, this operation returns the
+polar space induced by <A>f</A>. When <A>f</A> is a pseudo-polarity, this
 operation returns the hyperplane containing all absolute elements.
 <Example>
 <#Include SYSTEM "../examples/include/polarities_geometryofabsolutepoints.include"> 
@@ -307,7 +307,7 @@ to <A>f</A>.
 <ManSection>
 <Oper Name="PolarSpace" Arg="f"/>
 <Returns>a polar space </Returns>
-<Description>When <A>f</A> is not a pseudo polarity, this operation returns the
+<Description>When <A>f</A> is not a pseudo-polarity, this operation returns the
 polar space induced by <A>f</A>.
 <Example>
 <#Include SYSTEM "../examples/include/polarities_polarspace.include"> 
@@ -320,7 +320,7 @@ polar space induced by <A>f</A>.
 <Section>
 <Heading>Commuting polarities</Heading>
 
-<Package>FinInG</Package> constructs polarites of projective spaces as correlations. This allows polarities to be multiplied
+<Package>FinInG</Package> constructs polarities of projective spaces as correlations. This allows polarities to be multiplied
 easily, resulting in a collineation. The resulting collineation is constructed in the correlation group
 but can be mapped onto its unique representative in the collineation group. We provide an example with two commuting polarities.
 

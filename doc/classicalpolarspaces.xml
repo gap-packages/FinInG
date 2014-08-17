@@ -49,10 +49,10 @@ geometry consists only of projective points, and is then in the axiomatic treatm
 However, as is the case for projective spaces, we will consider the rank one geometries associated to
 forms of Witt index 1 as examples of classical polar spaces. Even the elliptic quadric on the projective line,
 a <E>geometry</E> associated to an elliptic quadratic form on a two dimensional vector space over a finite field, is
-considered as a classical polar space. The reason for this treatment is that most, if not all, methods for 
+considered as a classical polar space, though it has no singular subspaces. The reason for this treatment is that most, if not all, methods for 
 operations applicable on these geometries, rely on the same algebraic methodology. So, in <Package>FinInG</Package>, 
 a classical polar space (sometimes abbreviated to polar space), is the geometry associated with a sesquilinear or quadratic
-form on a fininte dimensional vector space over a finite field.
+form on a finite dimensional vector space over a finite field.
 
 <ManSection>
 <Filt Name="IsClassicalPolarSpace" Type="Category"/>
@@ -63,7 +63,7 @@ sesquilinear or quadratic form.
 </ManSection>
 
 The underlying vector space and matrix
-group are to our advantage in the treament of classical polar spaces.
+group are to our advantage in the treatment of classical polar spaces.
 We refer the reader to <Cite Key="HirschfeldThas"/>
 and <Cite Key="Cameron"/> for the necessary background theory (if it is not
 otherwise provided), and we follow the approach of <Cite Key="Cameron"/> to
@@ -71,7 +71,7 @@ introduce all different flavours.<P/>
 
 Consider the projective space <M>PG(n,q)</M> with underlying vector space
 <M>V(n+1,q)</M>. Consider a non-degenerate sesquilinear form <M>f</M>. Then
-<M>f</M> is either Hermitian, alternating or symmetric. When the characteristic
+<M>f</M> is Hermitian, alternating or symmetric. When the characteristic
 of the field is odd, respectively even, a symmetric bilinear form is called
 orthogonal, respectively, pseudo. We do not consider the pseudo case, so we
 suppose that <M>f</M> is Hermitian, symplectic or orthogonal. The classical
@@ -115,7 +115,7 @@ the connection between polarities and forms.
 
 <Package>FinInG</Package> relies on the package <Package>Forms</Package> for its facility
 with sesquilinear and quadratic forms. One can specify a polar space with a user-defined
-form, and we refer to the documention for <Package>forms</Package> for information
+form, and we refer to the documentation for <Package>Forms</Package> for information
 on how one can create and use forms. Here we just display a worked example.
 
 <Example>
@@ -132,8 +132,8 @@ the underlying forms in similarity classes. We follow mostly the approach and
 terminology of <Cite Key="KleidmanLiebeck"/>, as we did in the manual of the package
 <Package>Forms</Package>.<P/>
 
-Consider a vector space <M>V=V(n+1,q)</M> and a sequilinear form <M>f</M> on
-<M>V</M>. The couple <M>(V,f)</M> is called a formed space. Consider now two
+Consider a vector space <M>V=V(n+1,q)</M> and a sesquilinear form <M>f</M> on
+<M>V</M>. The pair <M>(V,f)</M> is called a formed space. Consider now two
 formed spaces <M>(V,f)</M> and <M>(V,f')</M>, where <M>f</M> and <M>f'</M> are
 two sesquilinear forms on <M>V</M>. A non-singular linear map <Alt
 Not="HTML"><M>\phi</M></Alt> <Alt Only="HTML">&#966;</Alt> from <M>V</M> to itself
@@ -151,7 +151,7 @@ even dimension, there are two similarity classes, and non-degenerate forms are
 either elliptic (bilinear) forms or hyperbolic (bilinear) forms.<P/>
 
 Consider now a vector space <M>V</M> and a quadratic form <M>q</M> on <M>V</M>.
-The couple <M>(V,q)</M> is called a formed space. Consider now two formed spaces
+The pair <M>(V,q)</M> is called a formed space. Consider now two formed spaces
 <M>(V,q)</M> and <M>(V,q')</M>, where <M>q</M> and <M>q'</M> are two quadratic
 forms on <M>V</M>. A non-degenerate linear map <Alt Not="HTML"><M>\phi</M></Alt>
 <Alt Only="HTML">&#966;</Alt> from <M>V</M> to itself induces a
@@ -169,8 +169,8 @@ If <Alt Not="HTML"><M>\phi</M></Alt><Alt Only="HTML">&#966;</Alt> induces a simi
 a formed vector space such that <Alt Not="HTML"><M>\lambda = 1</M></Alt>
 <Alt Only="HTML">&#955;=1</Alt>, then the similarity is called an <E>isometry</E> of the
 formed vector space. In almost all cases, each similarity class contains exactly one 
-isometry class. Only the orthogonal sesquilinear forms (hence in odd characteristic) come
-into two isometry classes. Consequently, if an isometry exists between formed vector spaces,
+isometry class. Only the orthogonal sesquilinear forms (in odd characteristic) have
+two isometry classes. Consequently, if an isometry exists between formed vector spaces,
 they are called <E>isometric</E>.
 
 Projectively, a formed vector space becomes a classical polar space embedded in a 
@@ -180,12 +180,12 @@ a classical polar space determines a form up to a constant factor, i.e. it deter
 a similarity class of forms. In <Package>FinInG</Package>, the word <E>canonical</E>
 is used in the mathematical sense, i.e. a classical polar space is <E>canonical</E>
 if its determining form belongs to a fixed similarity class. A classical polar space
-is called <E>standard</E> if its determining form is the fixed representant of the
+is called <E>standard</E> if its determining form is the fixed representative of the
 canonical similarity class. Hence a <E>standard</E> classical polar space is 
 always a <E>canonical</E> classical polar space, a canonical polar space is determined
-by a standard form upto a constant factor.
+by a standard form up to a constant factor.
 
-In the following table, we summerize the above information on polar spaces,
+In the following table, we summerise the above information on polar spaces,
 together with the standard forms that are chosen in
 <Package>FinInG</Package>. Note that <M>Tr</M> refers to the absolute Trace.
 
@@ -262,11 +262,10 @@ together with the standard forms that are chosen in
 </Table>
 We refer to Appendix <Ref Chap="groups_app"/> for information on the operations that construct gram matrices that are used to
 obtain the above standard forms.<P/>
-The <Package>FinInG</Package> provides a lot of flexibility to construct polar spaces. The user may choose a particular quadratic
+The <Package>FinInG</Package> provides a wealth of flexibility in constructing polar spaces. The user may choose a particular quadratic
 or sesquilinear form, but may also chose to construct polars spaces that have one of the above mentioned forms as underlying form.
-Furthermore, <Package>FinInG</Package> will detect when necessary if the user constructed polar space is canonical. This mechanism 
-gives the user complete flexibility while avoiding unecessary computations when e.g. constructing the collineation group of a user
-defined polar space.<P/>
+Furthermore, <Package>FinInG</Package> will detect when necessary if the user-constructed polar space is canonical. This mechanism 
+gives the user complete flexibility while avoiding unnecessary computations when, for example, constructing the collineation group of a user-defined polar space.<P/>
 
 The following five operations always return polar spaces induced by one of the above standard forms.
 
@@ -472,10 +471,10 @@ the Witt index of the defining sesquilinear or quadratic form.
 <Heading>Subspaces of finite classical polar spaces</Heading>
 
 The elements of a finite classical polar space <M>P</M> are the subspaces of the ambient projective space
-that are totally isotropic with relation to the sequilinear or quadratic form that defines <M>P</M>. Constructing
+that are totally isotropic with relation to the sesquilinear or quadratic form that defines <M>P</M>. Constructing
 subspaces of finite classical polar spaces is done as in the projective space case, except that additional 
 checks are implemented in the methods to check that the subspace of the vector space is totally isotropic.
-The empty subspace, also called the trivial subspace, which has dimenion -1, corresponds with the zero dimensional 
+The empty subspace, also called the trivial subspace, which has dimension -1, corresponds with the zero dimensional 
 vector space of the underlying vector space of the ambient projective space of <M>P</M>, and is of course 
 totally isotropic. As such, is is considered as a subspace of a finite classical polar space in the mathematical 
 sense, but not as an element of the incidence geometry, and hence do in <Package>FinInG</Package>
@@ -523,7 +522,7 @@ is also applicable on the EmptySubspace
 </ManSection>
 
 <ManSection>
-<Oper Name="ElmentsOfIncidenceStructure" Arg="ps, j"/>
+<Oper Name="ElementsOfIncidenceStructure" Arg="ps, j"/>
 <Returns>the collection of elements of the projective space <A>ps</A> of type <A>j</A></Returns>
 <Description>
 For the projective space <A>ps</A> of dimension <M>d</M> and the type <A>j</A>, <M>1 \leq j \leq d</M>
@@ -666,7 +665,7 @@ with the type of subspace: <Q>degenerate</Q>, <Q>symplectic</Q>, <Q>hermitian</Q
 Let <A>el</A> be an element of a classical polar space. The first version
 returns the tangent space at <A>el</A> to this polar space. Let <A>el</A>
 be a subspace of the ambient space of the polar space <A>ps</A>. The second
-version checks whether <A>el</A> belongs to <A>ps</A> and returns the tangenspace
+version checks whether <A>el</A> belongs to <A>ps</A> and returns the tangent space
 at <A>el</A> to <A>ps</A>. Some obvious properties are demonstrated in the example.
 <Example>
 <#Include SYSTEM "../examples/include/cps_tangentspace.include"> 

@@ -659,11 +659,11 @@ vector <Alt Not="HTML"><M>(y_0,y_1,\ldots,y_n)
 Only="HTML">(y&lt;sub>0&lt;/sub>,y&lt;sub>1&lt;/sub>,...,y&lt;sub>n&lt;/sub>) =
 ((x&lt;sub>0&lt;/sub>,x&lt;sub>1&lt;/sub>,...,x&lt;sub>n&lt;/sub>)A)&lt;sup>&#952;&lt;/sup>
 </Alt>. When <Alt Not="HTML"><M>\phi</M></Alt><Alt Only="HTML">&#966;</Alt> is a
-collineation, then <Alt Not="HTML"><M>p^{\phi}</M></Alt><Alt
+collineation, <Alt Not="HTML"><M>p^{\phi}</M></Alt><Alt
 Only="HTML">p&lt;sup>&#966;&lt;/sup></Alt> is the point with underlying row
 vector <Alt Not="HTML"><M>(y_0,y_1,\ldots,y_n)</M></Alt><Alt
-Only="HTML">(y&lt;sub>0&lt;/sub>,y&lt;sub>1&lt;/sub>,...,y&lt;sub>n&lt;/sub>)</Alt>, when <Alt Not="HTML"><M>\phi</M></Alt><Alt Only="HTML">&#966;</Alt> is a
-correlation then <Alt Only="HTML">p&lt;sup>&#966;&lt;/sup></Alt> is a hyperplane
+Only="HTML">(y&lt;sub>0&lt;/sub>,y&lt;sub>1&lt;/sub>,...,y&lt;sub>n&lt;/sub>)</Alt>. When <Alt Not="HTML"><M>\phi</M></Alt><Alt Only="HTML">&#966;</Alt> is a
+correlation, <Alt Only="HTML">p&lt;sup>&#966;&lt;/sup></Alt> is a hyperplane
 of <M>PG(n,q)</M> with equation <Alt Not="HTML"><M>y_0X_0 + y_1X_1 + \ldots + y_nX_n</M></Alt><Alt
 Only="HTML">y&lt;sub>0&lt;/sub>X&lt;sub>0&lt;/sub> + y&lt;sub>1&lt;/sub>X&lt;sub>1&lt;/sub> + ...
 y&lt;sub>n&lt;/sub>X&lt;sub>n&lt;/sub> = 0</Alt>. The action of collineations or
