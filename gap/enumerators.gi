@@ -1026,6 +1026,7 @@ InstallGlobalFunction( FG_S_rank,
      a := a + FG_pos(q, v[offset + 1]);
      return a;
    fi;
+
    x := FG_nb_pts_S(1, q);
    y := FG_nb_pts_S(n - 1, q);
    l := x * y;
@@ -1036,16 +1037,18 @@ InstallGlobalFunction( FG_S_rank,
       a := i * y + j;
       return a;
    fi;
+		## problem is here
    a := l;
    x := FG_nb_pts_N(1, q);
    y := FG_nb_pts_N1(n - 1, q);
-   i := FG_N_rank(q, v, offset + 2 * (n - 1), 1);
+   i := FG_N_rank(q, v, offset + 2 * (n - 1), 1);		# problem with this
    beta := -alpha;
-   delta := -beta;
+   delta := beta^-1;			# JB 18/08/2014: Found a bug here and fixed it
    for u in [0..n-2] do
        v[offset + 2 * u] := delta * v[offset + 2 * u];
    od;
-   j := FG_N1_rank(q, v, offset, n - 1);
+   j := FG_N1_rank(q, v, offset, n - 1);		
+		Print("S_rank at the end: ", [a,i,y,j],"\n");
    a := a + i * y + j;
    return a;
 end );
@@ -1057,16 +1060,19 @@ end );
 InstallGlobalFunction( FG_N_rank,
   function(q, v, offset, n)
   local a, l, i, j, k, x, y, z, yz, u, alpha, beta, one,
-            gamma, delta, epsilon, gamma2, epsilon_inv;
+            gamma, delta, epsilon, gamma2, epsilon_inv;		
   one := Z(q)^0;
   if n = 1 then
-     x := q - 1;
+     # x := q - 1;	# not used
      y := q - 1;
      j := v[offset + 0] - one;
      i := v[offset + 1] - one;
-     a := FG_ffenumber(q, i * y + j); 
+######     a := FG_ffenumber(q, i * y + j); # JB: 18/08/2014, found the bug here ####
+	 a := FG_pos(q, i) * y + FG_pos(q,j); 	# it was hard to find!
+		Print("called FG_N_rank with n = 1 ... ", [i, j, y,a]   ,"\n");
      return a;
   fi;
+
   gamma := v[offset + 2 * (n - 1)] * v[offset + 2 * (n - 1) + 1];
   x := FG_nb_pts_S(1, q);
   y := FG_nb_pts_N(n - 1, q);
@@ -1198,10 +1204,10 @@ InstallGlobalFunction( FG_Sbar_rank,
   x := FG_nb_pts_Sbar(1, q);
   y := FG_nb_pts_S(n - 1, q);
   l := x * y;
-  if IsZero(alpha) then
-     i := FG_Sbar_rank(q, v, offset + 2 * (n - 1), 1);
-     j := FG_S_rank(q, v, offset, n - 1);
-     a := a + i * y + j;
+  if IsZero(alpha) then		
+     i := FG_Sbar_rank(q, v, offset + 2 * (n - 1), 1);	
+     j := FG_S_rank(q, v, offset, n - 1);	
+     a := a + i * y + j;	
      return a;
   fi; 
   a := a + l;
@@ -1414,7 +1420,7 @@ end );
 ##
 InstallGlobalFunction( QplusNumberElement,
   function(d, q, var)
-    local wittindex, a, v;
+    local wittindex, a, v; 
     v := StructuralCopy(var!.obj);        
     wittindex := (d+1)/2;
     a := FG_Sbar_rank(q, v, 1, wittindex);
