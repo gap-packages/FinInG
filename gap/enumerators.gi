@@ -704,7 +704,6 @@ InstallGlobalFunction( FG_herm_N_unrank,
   nb := FG_herm_nb_pts_N(n - 1, q);
 
   if a < A * nb then
-	#Print("case 1\n");
     coset := FG_div(a, nb);
 	rk1 := a mod nb;
     FG_herm_N_unrank(q, v, offset, n - 1, rk1);
@@ -1023,7 +1022,7 @@ InstallGlobalFunction( FG_S_rank,
         return a;
      fi;
      a := q - 1;
-     a := a + FG_pos(q, v[offset + 1]);
+     a := a + FG_pos(q, v[offset + 1]);	
      return a;
    fi;
 
@@ -1037,19 +1036,16 @@ InstallGlobalFunction( FG_S_rank,
       a := i * y + j;
       return a;
    fi;
-		## problem is here
    a := l;
-   x := FG_nb_pts_N(1, q);
    y := FG_nb_pts_N1(n - 1, q);
-   i := FG_N_rank(q, v, offset + 2 * (n - 1), 1);		# problem with this
+   i := FG_N_rank(q, v, offset + 2 * (n - 1), 1);	
    beta := -alpha;
    delta := beta^-1;			# JB 18/08/2014: Found a bug here and fixed it
    for u in [0..n-2] do
        v[offset + 2 * u] := delta * v[offset + 2 * u];
    od;
    j := FG_N1_rank(q, v, offset, n - 1);		
-		Print("S_rank at the end: ", [a,i,y,j],"\n");
-   a := a + i * y + j;
+   a := a + i * y + j;	
    return a;
 end );
 
@@ -1062,14 +1058,13 @@ InstallGlobalFunction( FG_N_rank,
   local a, l, i, j, k, x, y, z, yz, u, alpha, beta, one,
             gamma, delta, epsilon, gamma2, epsilon_inv;		
   one := Z(q)^0;
-  if n = 1 then
-     # x := q - 1;	# not used
+  if n = 1 then	#Print("called this\n");
      y := q - 1;
-     j := v[offset + 0] - one;
-     i := v[offset + 1] - one;
+     j := FG_pos(q,v[offset + 0]) - 1;
+     i := FG_pos(q, v[offset + 1]) - 1;
 ######     a := FG_ffenumber(q, i * y + j); # JB: 18/08/2014, found the bug here ####
-	 a := FG_pos(q, i) * y + FG_pos(q,j); 	# it was hard to find!
-		Print("called FG_N_rank with n = 1 ... ", [i, j, y,a]   ,"\n");
+	 a := i * y + j; 	# it was hard to find!
+	#Print([y,i,j,a],"\n");
      return a;
   fi;
 
@@ -1871,13 +1866,11 @@ InstallGlobalFunction( FG_enum_orthogonal,
              if x in hyp then
                 numinhyp := Size(enum2) * ressize;
                 prew := em!.prefun(x);
-				#Print("if \c");
                 return numinhyp + Position(enumextra, prew);
              else            
                 w := Meet(hyp, x);        
                 prew := em!.prefun(w);    
 				k := Position(enum2, prew);   
-				#Print(k," \c"); 
                 enumres := FG_specialresidual(vs!.geometry, w, hyp); 
                 l := Position(enumres, x);
                 return (k-1)*ressize + l;
@@ -1915,9 +1908,8 @@ InstallGlobalFunction( FG_enum_hermitian,
          ## incident with a j-1 space contained in hyp. 
 
      ps2 := HermitianPolarSpace(d-1, f);
-     #Print(ps2,"\n");
 	 ressize := Size(ElementsOfIncidenceStructure(HermitianPolarSpace(d+2-2*j, f), 1)); 
-     #if j < WittIndex( SesquilinearForm(ps2) ) then
+
      if j <= WittIndex( SesquilinearForm(ps2) ) then
         ressize := ressize - Size(ElementsOfIncidenceStructure(HermitianPolarSpace(d+1-2*j, f), 1));
         varsps2j := ElementsOfIncidenceStructure( ps2, j );
@@ -2117,7 +2109,6 @@ InstallMethod( Enumerator,
      ## in using the enum_* commands before an isomorphism was made. Fixed now. John 02/06/2010
 
      if HasIsCanonicalPolarSpace( ps ) and IsCanonicalPolarSpace( ps ) then     
-          #Print("scheisse 1\n");
 
 		if type in [ "hyperbolic", "elliptic", "parabolic" ] then
            e := FG_enum_orthogonal(ps, j);
@@ -2144,7 +2135,7 @@ InstallMethod( Enumerator,
                 ) );
      else
         ## The following is an isomorphism from the canonical polar space TO ps
-  #Print("scheisse \n");
+  
         iso := IsomorphismCanonicalPolarSpace( ps );
         pscanonical := Source(iso)!.geometry;     
 
