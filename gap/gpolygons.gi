@@ -3923,6 +3923,7 @@ InstallMethod( EGQByBLTSet,
 	gens := List(gens, t-> b*t*b^-1);
 	gens := List(gens, t -> CollineationOfProjectiveSpace(t,f));
 	elations := Group( gens ); 
+    #SetOrder
 	SetElationGroup( geo, elations );
 
 	action := function(el, x)

@@ -477,7 +477,149 @@ elements in the incidence graph of their ambient geometry is returned.
 <Heading>The classical generalised hexagons</Heading>
 
 <Subsection>
-<Heading>mathematical backgroup</Heading>
+<Heading>Trialities of the hyperbolic quadric and generalised hexagons</Heading>
+
+Consider the hyperbolic quadric <Alt Not="HTML"><M>Q+(7,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>(7,q)</Alt>.
+This is a polar space of rank 4. It is well known that
+its generators fall apart into two systems. Each system contains exactly <Alt Not="HTML"><M>(q^3+q^2+q+1)(q^2+q+1)</M></Alt>
+<Alt Only="HTML">(q&lt;sup>3&lt;/sup>+q&lt;sup>2&lt;/sup>+q+1)(q&lt;sup>2&lt;/sup>+q+1)</Alt>
+generators, which is equal to the number of points of <Alt Not="HTML"><M>Q+(7,q)</M></Alt>
+<Alt Only="HTML">Q&lt;sup>+&lt;/sup>(7,q)</Alt>. Generators from the
+same system meet each other in an empty subspace or in a line, Generators from a different system
+meet each other in a point of a plane. One defines the rank <M>4</M> geometry <Alt Not="HTML"><M>\Omega(7,q)</M></Alt><Alt Only="HTML">&#937;(7,q)</Alt> as follows.
+The 0-points are the points of <Alt Not="HTML"><M>Q+(7,q)</M></Alt>
+<Alt Only="HTML">Q&lt;sup>+&lt;/sup>(7,q)</Alt>, the 1-points are the generators of the first system, the 2-points
+are the generators of the second system, and the lines are the lines of <Alt Not="HTML"><M>Q+(7,q)</M></Alt>
+<Alt Only="HTML">Q&lt;sup>+&lt;/sup>(7,q)</Alt>. The incidence is the
+natural incidence of the underlying projective space. Denote the set of <M>i</M>-points as <Alt Not="HTML"><M>P^{(i)}</M></Alt>
+<Alt Only="HTML">P&lt;sup>(i)&lt;/sup></Alt>, <M>i=0,1,2</M>.<P/>
+A triality of <Alt Not="HTML"><M>\Omega(7,q)</M></Alt><Alt Only="HTML">&#937;(7,q)</Alt> is a map
+<Alt Not="HTML"><M>\tau: P^{(i)} \rightarrow P^{(i+1)}</M></Alt><Alt Only="HTML"><M>\tau</M>:P&lt;sup>(i)&lt;/sup>&#8594;P&lt;sup>(i+1)&lt;/sup></Alt>
+(where <M>i+1</M> is computed modulo 3) preserving the incidence and for which <Alt Not="HTML"><M>\tau^3 = 1</M></Alt>
+<Alt Only="HTML"><M>\tau</M>&lt;sup>3&lt;/sup>=1</Alt>. Note that the image of a line under <M>tau</M> is
+determined by the image of the points incident with the line.<P/> An <M>i</M>-point is absolute with
+respect to a fixed triality if it is incident with its image under the triality. Consequently, a line is absolute
+with respect if it is fixed by the triality.<P/>
+A generlised hexagon might be obtained as geometry of absolute points of one kind and absolute lines with relation to
+a fixed triality. Note that not all trialities yield (thick) generlised quadangles. There are different
+types of trialities, for some of them the absolute geometry is degenerate.<P/>
+The triality used in <Package>FinInG</Package> to construct the classical generlised hexagons is fixed. It is
+described exaplicitely in <Cite Key="HVM"/>. To describe the triality, a trilinear form expressing the incidence
+between <M>i</M>-points of <M>\Omega(7,q)</M> is used. Given the fact that, because of the existence of a triality,
+the role of the 0, 1 and 2 points are the same, each of the 1 and 2 points can be labelled the same way as the 0-points,
+which are effectively labelled by 8-tuples <M>(x_0,\ldots,x_7) \in V(8,q)=V</M> where each 8-tuples represents a projective point
+of <Alt Not="HTML"><M>Q+(7,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>(7,q)</Alt>.<P/>
+Consider the hyperbolic quadric determined by the quadratic form
+<Alt Not="HTML"><M>X_0X_4+X_1X_5+X_2X_6+X_3X_7</M></Alt>
+<Alt Only="HTML">X&lt;sub>0&lt;/sub>X&lt;sub>4&lt;/sub>+X&lt;sub>1&lt;/sub>X&lt;sub>5&lt;/sub>+X&lt;sub>2&lt;/sub>X&lt;sub>6&lt;/sub>+X&lt;sub>3&lt;/sub>X&lt;sub>7&lt;/sub></Alt>.
+Consider the trilinear map <M>T</M>,<P/>
+<Alt Not="HTML"><M>T(x,y,z) = \left|\begin{array}{ccc}
+x_0 &amp; x_1 &amp; x_2 \\
+y_0 &amp; y_1 &amp; y_2 \\
+z_0 &amp; z_1 &amp; z_2 \\
+\end{array}\right| + 
+\left|\begin{array}{ccc}
+x_4 &amp; x_5 &amp; x_6 \\
+y_4 &amp; y_5 &amp; y_6 \\
+z_4 &amp; z_5 &amp; z_6 \\
+\end{array}\right| + 
+x_3(z_0y_4+z_1y_5+z_2y_6) + x_7(y_0z_4+y_1z_5+y_2z_6) + 
+y_3(x_0z_4+x_1z_5+x_2z_6) + y_7(z_0x_4+z_1x_5+z_2x_6) + 
+z_3(y_0x_4+y_1x_5+y_2x_6) + z_7(x_0y_4+x_1y_5+x_2y_6) - 
+x_3y_3z_3 - x_7y_7z_7</M></Alt><Alt Only="HTML">
+<!-- matrix expression begin -->
+&lt;table style="display: inline-block; color:#000">&lt;tr>
+&lt;td>&lt;table border=0 cellpadding=0 cellspacing=0px style="border-left:1px solid #000; border-right:1px solid #000; color:#000">&lt;tr>
+&lt;tr>
+&lt;td align="center" valign="center" width=30> x&lt;sub>0&lt;/sub> &lt;/td>
+&lt;td align="center" valign="center" width=30> x&lt;sub>1&lt;/sub> &lt;/td>
+&lt;td align="center" valign="center" width=30> x&lt;sub>2&lt;/sub> &lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td align="center" valign="center" width=30> x&lt;sub>0&lt;/sub> &lt;/td>
+&lt;td align="center" valign="center" width=30> x&lt;sub>1&lt;/sub> &lt;/td>
+&lt;td align="center" valign="center" width=30> x&lt;sub>2&lt;/sub> &lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td align="center" valign="center" width=30> x&lt;sub>0&lt;/sub> &lt;/td>
+&lt;td align="center" valign="center" width=30> x&lt;sub>1&lt;/sub> &lt;/td>
+&lt;td align="center" valign="center" width=30> x&lt;sub>2&lt;/sub> &lt;/td>
+&lt;/tr>
+&lt;/table>&lt;/td>&lt;td style ="border-top:1px solid #000; border-bottom:1px solid #000;">&nbsp;&lt;/td>&lt;/tr>&lt;/table>&lt;/td>
+&lt;/tr>&lt;/table> +
+&lt;table style="display: inline-block; color:#000">&lt;tr>
+&lt;td>&lt;table border=0 cellpadding=0 cellspacing=0px style="border-left:1px solid #000; border-right:1px solid #000; color:#000">&lt;tr>
+&lt;tr>
+&lt;td align="center" valign="center" width=30> x&lt;sub>4&lt;/sub> &lt;/td>
+&lt;td align="center" valign="center" width=30> x&lt;sub>5&lt;/sub> &lt;/td>
+&lt;td align="center" valign="center" width=30> x&lt;sub>6&lt;/sub> &lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td align="center" valign="center" width=30> x&lt;sub>4&lt;/sub> &lt;/td>
+&lt;td align="center" valign="center" width=30> x&lt;sub>5&lt;/sub> &lt;/td>
+&lt;td align="center" valign="center" width=30> x&lt;sub>6&lt;/sub> &lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td align="center" valign="center" width=30> x&lt;sub>4&lt;/sub> &lt;/td>
+&lt;td align="center" valign="center" width=30> x&lt;sub>5&lt;/sub> &lt;/td>
+&lt;td align="center" valign="center" width=30> x&lt;sub>6&lt;/sub> &lt;/td>
+&lt;/tr>
+&lt;/table>&lt;/td>&lt;td style ="border-top:1px solid #000; border-bottom:1px solid #000;">&nbsp;&lt;/td>&lt;/tr>&lt;/table>&lt;/td>
+&lt;/tr>&lt;/table>
+<!-- matrix expression end -->
+   +
+x&lt;sub>3&lt;/sub>(z&lt;sub>0&lt;/sub>y&lt;sub>4&lt;/sub>+z&lt;sub>1&lt;/sub>y&lt;sub>5&lt;/sub>+z&lt;sub>2&lt;/sub>y&lt;sub>6&lt;/sub>) + x&lt;sub>7&lt;/sub>(y&lt;sub>0&lt;/sub>z&lt;sub>4&lt;/sub>+y&lt;sub>1&lt;/sub>z&lt;sub>5&lt;/sub>+y&lt;sub>2&lt;/sub>z&lt;sub>6&lt;/sub>) + 
+y&lt;sub>3&lt;/sub>(x&lt;sub>0&lt;/sub>z&lt;sub>4&lt;/sub>+x&lt;sub>1&lt;/sub>z&lt;sub>5&lt;/sub>+x&lt;sub>2&lt;/sub>z&lt;sub>6&lt;/sub>) + y&lt;sub>7&lt;/sub>(z&lt;sub>0&lt;/sub>x&lt;sub>4&lt;/sub>+z&lt;sub>1&lt;/sub>x&lt;sub>5&lt;/sub>+z&lt;sub>2&lt;/sub>x&lt;sub>6&lt;/sub>) + 
+z&lt;sub>3&lt;/sub>(y&lt;sub>0&lt;/sub>x&lt;sub>4&lt;/sub>+y&lt;sub>1&lt;/sub>x&lt;sub>5&lt;/sub>+y&lt;sub>2&lt;/sub>x&lt;sub>6&lt;/sub>) + z&lt;sub>7&lt;/sub>(x&lt;sub>0&lt;/sub>y&lt;sub>4&lt;/sub>+x&lt;sub>1&lt;/sub>y&lt;sub>5&lt;/sub>+x&lt;sub>2&lt;/sub>y&lt;sub>6&lt;/sub>) &lt;font face=symbol>-&lt;/font> 
+x&lt;sub>3&lt;/sub>y&lt;sub>3&lt;/sub>z&lt;sub>3&lt;/sub> &lt;font face=symbol>-&lt;/font> x&lt;sub>7&lt;/sub>y&lt;sub>7&lt;/sub>z&lt;sub>7&lt;/sub></Alt>.<P/>
+
+
+Now a pair <M>(x,y) \in V \times V</M> represents an incidence 0-1 pair of points if and only if <M>T(x,y,z)</M> vanishes in the variable
+<M>z</M>, and similarly for any cyclic permutation of the letters <M>x,y,z</M>.  So given a <M>1</M>-point <M>y</M>, <M>T(x,y,z) = 0</M>,
+where <M>z</M> is a variable, and <M>x</M> is an unknown, gives a set of equations representing a generator of
+<Alt Not="HTML"><M>Q+(7,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>(7,q)</Alt>, this the generator of
+<Alt Not="HTML"><M>Q+(7,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>(7,q)</Alt> represented by <M>y</M> as label
+of a <M>1</M>-point.<P/>
+Let <M>\sigma</M> be an automorphism of <M>GF(q)</M> of order <M>3</M>, or the identity. Consider the map<P/>
+<Alt Only="HTML">       &#964;&lt;sub>&#963;&lt;/sub>: P&lt;sup>(i)&lt;/sup>&#8594;P&lt;sup>(i+1)&lt;/sup></Alt>
+<Alt Not="HTML"><M>\tau_{\sigma}: P^{(i)} \rightarrow P^{(i+1)}</M></Alt><P/>
+<Alt Not="HTML"><M>(x_j) \mapsto (x_j^{\sigma})</M>, <M>j=0\ldots 7</M></Alt>
+<Alt Only="HTML">       (x&lt;sub>j&lt;/sub>) &#8594; (x&lt;sub>j&lt;/sub>&lt;sup>&#963;&lt;/sup>), j=0...7</Alt>.<P/>
+This map clearly preserves <M>T(x,y,z)</M>, so preserves the incidence, and has order three, so it is a triality of
+<Alt Not="HTML"><M>\Omega(7,q)</M></Alt><Alt Only="HTML">&#937;(7,q)</Alt>. We call an element <M>p</M> absolute with
+respect to a triality <M>\tau</M> if and only if <M>p I p^\tau</M>. Consequently, a line is absolute if and only if it
+is fixed by the triality. Denote the set of <M>i</M>-points that are absolute with respect to the triality as
+<Alt Not="HTML"><M>P_{\mathrm{abs}}^{(i)}</M></Alt><Alt Only="HTML">P&lt;sup>(i)&lt;/sup>&lt;sub>abs&lt;/sub></Alt>, and
+set of absolute lines with respect to the triality as <Alt Not="HTML"><M>L_{\mathrm{abs}}</M></Alt><Alt Only="HTML">L&lt;sub>abs&lt;/sub></Alt>.
+Then a famous theorem of Tits says that with for the triality <Alt Only="HTML">&#964;&lt;sub>&#963;&lt;/sub></Alt><Alt Not="HTML"><M>\tau_{\sigma}</M></Alt>
+the point-line geometry <Alt Not="HTML"><M>\Gamma^{(i)} = (P^{(i)}_{\mathrm{abs}},L_{\mathrm{abs}}),I)</M></Alt>
+<Alt Only="HTML">&#915;&lt;sup>(i)&lt;/sup> = (P&lt;sup>(i)&lt;/sup>&lt;sub>abs&lt;/sub>, L&lt;sub>abs&lt;/sub>, I)</Alt>
+is a generalised hexagon of order <M>(|K|,|L|)</M>, <M>K=GF(q)</M> and <M>L</M> the subfield of invariant elements of <M>K</M>
+under the field automorphism <M>\sigma</M>. Note that a finite field has a field automorphism of order three if and only if its
+order equals <Alt Not="HTML"><M>q^3</M></Alt><Alt Only="HTML">q&lt;sup>3&lt;/sup></Alt>. So, for <M>K=GF(q)</M> and
+<M>\sigma=1</M>, <Alt Only="HTML">&#915;&lt;sup>(i)&lt;/sup></Alt><Alt Not="HTML"><M>\Gamma^{(i)}</M></Alt> is a generalised hexagon
+of order <M>q</M>, which is called the <E>split Cayley hexagon of order <M>q</M></E>, denoted <M>H(q)</M>.
+For <Alt Not="HTML"><M>K=GF(q^3)</M></Alt><Alt Only="HTML">K=GF(q&lt;sup>3&lt;/sup>)</Alt>, and
+<M>\sigma</M> a non-trival field automorphism of order <M>3</M>, <Alt Only="HTML">&#915;&lt;sup>(i)&lt;/sup></Alt>
+<Alt Not="HTML"><M>\Gamma^{(i)}</M></Alt> is a generalised hexagon of order <Alt Not="HTML"><M>(q^3,q)</M></Alt>
+<Alt Only="HTML">(q&lt;sup>3&lt;/sup>,q)</Alt>, which is called the <E>twisted triality hexagon of order <Alt Not="HTML"><M>(q^3,q)</M></Alt>
+<Alt Only="HTML">(q&lt;sup>3&lt;/sup>,q)</Alt></E>, denoted <Alt Not="HTML"><M>T(q^3,q)</M></Alt>
+<Alt Only="HTML">T(q&lt;sup>3&lt;/sup>,q)</Alt>. Note that for a given triality, each hexagon <Alt Only="HTML">&#915;&lt;sup>(i)&lt;/sup></Alt>
+<Alt Not="HTML"><M>\Gamma^{(i)}</M></Alt>, <M>i=0,1,2</M> are isomorphic. Consequently, <Alt Only="HTML">&#915;&lt;sup>(0)&lt;/sup></Alt>
+<Alt Not="HTML"><M>\Gamma^{(0)}</M></Alt> is a point-line geometry of which the point set, line set respectively, is a subset
+of the points, lines respectively of <Alt Not="HTML"><M>Q+(7,q)</M></Alt>
+<Alt Only="HTML">Q&lt;sup>+&lt;/sup>(7,q)</Alt>. Finally, we mention the following importan theorem, which was shown by Tits:
+the split Cayley hexagon, obtained by the triliaty with <M>\sigma=1</M>, is contained in the hyperplane with equation
+<Alt Not="HTML"><M>X_3+X_7=0</M></Alt><Alt Only="HTML">X&lt;sub>3&lt;/sub> + X&lt;sub>7&lt;/sub></Alt>, which interects
+the hyperbolc quadric in the parabolic quadric <M>Q(6,q)</M>. The points of the split Cayley hexagon are the points
+of <M>Q(6,q)</M>.<P/>
+This above description of the triality and the associated generalised hexagons, contains sufficient analytical information
+to implement the split Cayley hexagon and the twisted triality heagon in an efficient way. The user is allowed to choose
+a representation for the ambient polar space. For <Alt Not="HTML"><M>q=2^h</M></Alt><Alt Only="HTML">q=2&lt;sup>h&lt;/sup></Alt>
+the polar spaces <M>Q(6,q)</M> and <M>W(5,q)</M> are isomorphic. Consequently, the user may choose <M>W(5,q)</M> as embient polar
+space for the split Cayley hexgon of even order. This embedding in <M>W(5,q)</M> is called the perfect symplectic embedding of
+the split Cayley hexagon. Finally, <Cite Key="HVM"/> contains an explicit description of the generators of the collineation groups
+of both generalised hexagons.
 
 </Subsection>
 

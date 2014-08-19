@@ -176,3 +176,15 @@ ps := ParabolicQuadric(d,q);
 s := Size(Points(ps));
 elements := List([1..s],n->VectorSpaceToElement(ps, QElementNumber(d, q, n)));
 Set(last) = Set(AsList(Points(ps)));
+
+
+tests := [];
+for q in [2,3,4,5,7,8,9,11,13] do
+ps := EllipticQuadric(7,q);
+els := Points(ps);
+enum := Enumerator(els);
+s := Size(enum);
+Add(tests,Collected(List([1..s],x->enum!.NumberElement(s,enum!.ElementNumber(s,x))=x)));
+od;
+time;
+
