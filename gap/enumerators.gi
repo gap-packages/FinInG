@@ -1016,16 +1016,15 @@ end );
 InstallGlobalFunction( FG_S_rank,
   function(q, v, offset, n)
   local a, l, i, j, x, y, u, alpha, beta, gamma, delta, epsilon;
-  if n = 1 then
+  if n = 1 then				
      if IsZero(v[offset + 1]) then
         a := FG_pos(q, v[offset + 0]);
         return a;
-     fi;
-     a := q - 1;
+     fi;	
+     a := q - 1;		
      a := a + FG_pos(q, v[offset + 1]);	
      return a;
    fi;
-
    x := FG_nb_pts_S(1, q);
    y := FG_nb_pts_S(n - 1, q);
    l := x * y;
@@ -1035,7 +1034,7 @@ InstallGlobalFunction( FG_S_rank,
       j := FG_S_rank(q, v, offset, n - 1);
       a := i * y + j;
       return a;
-   fi;
+   fi;				
    a := l;
    y := FG_nb_pts_N1(n - 1, q);
    i := FG_N_rank(q, v, offset + 2 * (n - 1), 1);	
@@ -1044,7 +1043,7 @@ InstallGlobalFunction( FG_S_rank,
    for u in [0..n-2] do
        v[offset + 2 * u] := delta * v[offset + 2 * u];
    od;
-   j := FG_N1_rank(q, v, offset, n - 1);		
+   j := FG_N1_rank(q, v, offset, n - 1);	
    a := a + i * y + j;	
    return a;
 end );
@@ -1058,13 +1057,12 @@ InstallGlobalFunction( FG_N_rank,
   local a, l, i, j, k, x, y, z, yz, u, alpha, beta, one,
             gamma, delta, epsilon, gamma2, epsilon_inv;		
   one := Z(q)^0;
-  if n = 1 then	#Print("called this\n");
+  if n = 1 then	
      y := q - 1;
      j := FG_pos(q,v[offset + 0]) - 1;
      i := FG_pos(q, v[offset + 1]) - 1;
 ######     a := FG_ffenumber(q, i * y + j); # JB: 18/08/2014, found the bug here ####
 	 a := i * y + j; 	# it was hard to find!
-	#Print([y,i,j,a],"\n");
      return a;
   fi;
 
@@ -1122,9 +1120,9 @@ InstallGlobalFunction( FG_N1_rank,
         alpha_inv, beta, gamma, gamma2, gamma_inv;
   if n = 1 then
      alpha := v[offset + 0];
-    # beta := v[offset + 1];
-    # gamma := alpha^-1;
-     a := FG_pos(q, alpha) - 1;  
+     # beta := v[offset + 1];
+     # gamma := alpha^-1;
+     a := FG_pos(q, alpha) - 1;  	
      return a;
   fi;
   a := 0;
@@ -1133,9 +1131,9 @@ InstallGlobalFunction( FG_N1_rank,
   y := FG_nb_pts_N1(n - 1, q);
   l := x * y;
   if IsZero(alpha) then
-     i := FG_S_rank(q, v, offset + 2 * (n - 1), 1);
+     i := FG_S_rank(q, v, offset + 2 * (n - 1), 1);		
      j := FG_N1_rank(q, v, offset, n - 1);
-     a := i * y + j;
+     a := i * y + j; 			
      return a;
   fi;
   a := a + l;
@@ -1145,8 +1143,8 @@ InstallGlobalFunction( FG_N1_rank,
   l := x * y;
   if IsZero(gamma2) then
      i := FG_N1_rank(q, v, offset + 2 * (n - 1), 1);
-     j := FG_S_rank(q, v, offset, n - 1);
-     a := a + i * y + j;
+     j := FG_S_rank(q, v, offset, n - 1);	
+     a := a + i * y + j;		
      return a;
   fi;
   a := a + l;
@@ -1166,6 +1164,7 @@ InstallGlobalFunction( FG_N1_rank,
       v[offset + 2 * u] := gamma_inv * v[offset + 2 * u];
   od;
   k := FG_N1_rank(q, v, offset, n - 1);
+
   a := a + i * yz + j * z + k;
   return a;
 end );
@@ -1359,16 +1358,14 @@ InstallGlobalFunction( QminusElementNumber,
     v[1 + 2 * n] := x1;
     v[1 + 2 * n + 1] := x2; 
     u := x1 * x1;
-    u := c1 * u;
+    u := c1 * u;	# different to Anton's code
     vv := x1 * x2;
     vv := c2 * vv;
     w := x2 * x2;
     w := c3 * w;
     z := u + vv;
     z := z + w;
-    if IsZero(z) then
-	 Error("Error in Qminus_unrank: form is not irreducible\n");
-    fi;
+
     FG_N1_unrank(q, v, 1, n, c);
     minusz := -z;
     if not IsOne(minusz) then
@@ -1463,36 +1460,36 @@ InstallGlobalFunction( QminusNumberElement,
     a := FG_nb_pts_Sbar(wittindex, q);
 
     if IsOne( x1 ) and IsZero( x2 ) then
-	 b := 0;
+	 	b := 0;
     else 
-	 if not IsOne( x2 ) then
-	    Error("ERROR in Qminus_rank x2 <> 1");
-	 fi;
-	 b := FG_pos(q, x1) + 1;  
+	 	if not IsOne( x2 ) then
+	    	Error("ERROR in Qminus_rank x2 <> 1");
+	 	fi;
+	 	b := FG_pos(q, x1) + 1;  
     fi;
 
     x := FG_nb_pts_N1(wittindex, q);
-    u := x1 * x1; 
-    u := c1 * u;  
-    vv := x1 * x2;
-    vv := c2 * vv;
-    w := x2 * x2; 
-    w := c3 * w;  
+    u := c1 * x1 * x1; 	
+    vv := c2 * x1 * x2;
+    w := c3 * x2 * x2;  
     z := u + vv;  
     z := z + w;   
-
-    if IsZero( z ) then
-       Error("ERROR Qminus_rank z = 0");
-    fi;
+	if IsZero(z) then
+		Error("ERROR Qminus_rank z = 0");
+	fi;
 
     minusz := -z; 
     minuszv := minusz^-1; 
 
+	# JB (19/08/2014): Found the bug and it was that only the odd places need to be multiplied
     if not IsOne( minusz ) then
-       v := minuszv * v;
+		for i in [0..wittindex-1] do
+			v[1 + 2 * i] := minuszv * v[1 + 2 * i];
+		od;
+        #v := minuszv * v;
     fi;
-
     c := FG_N1_rank(q, v, 1, wittindex);
+
     return a + b * x + c + 1;  ## adjustment for lists beginning at 1
 end );
 
