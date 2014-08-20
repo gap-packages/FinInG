@@ -18,28 +18,6 @@ Copyright (C) 2014,         Colorado State University
 This is the chapter of the documentation describing generalised polygons.
 -->
 
-
-<!--
-Documentaion check-list:
-- Projective planes
-  - ProjectivePlaneByBlocks (done)
-  - ProjectivePlaneByIncidenceMatrix (done)
-- Generalised Quadrangles
-  - Kantor families (done)
-  - q Clans and BLT sets (done)
-- Generalised Hexagons (done)
-- General operations
-  - Order (done)
-  - AmbientSpace (done)
-  - CollineationGroup (done)
-  - CollineationAction (done)
-  - BlockDesignOfGeneralisedPolygon
-  - IncidenceGraphOfGeneralisedPolygon
-  - IncidenceMatrixOfGeneralisedPolygon
-
--->
-
-
 <Chapter Label="gpolygons">
 <Heading>Generalised Polygons</Heading>
 
