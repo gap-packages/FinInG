@@ -84,7 +84,7 @@ gpolygonfiles := [ "gpolygons_gpbyblocks", "gpolygons_gpbyincmat", "gpolygons_gp
 				   "gpolygons_EGQByBLTSet", "gpolygons_elationgroup", "gpolygons_basepointofegq", "gpolygons_collineationgroup2", "gpolygons_collineationgroup3",
 				   "gpolygons_collineations", "gpolygons_SplitCayleyHexagon", "gpolygons_ambientpolarspace", "gpolygons_span", "gpolygons_meet", 
                    "gpolygons_objectselementsofegq", "gpolygons_blockdesign", "gpolygons_objectselementsblt", "gpolygons_definingplanes",
-				   "gpolygons_collineationsubgroup"];
+				   "gpolygons_collineationsubgroup", "gpolygons_cghvectorspacetoelement", "gpolygons_cghobjecttoelement"];
 
 
 varieties_files := ["varieties_general", "varieties_polarspace", "varieties_veronese", "varieties_segre", "varieties_hermitian", "varieties_quadratic", "varieties_grassmann" ];

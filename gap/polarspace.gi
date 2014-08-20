@@ -2250,6 +2250,7 @@ InstallMethod( Display, "for a flag of a projective space",
 
 
 # CHECKED 22/09/2011 jdb.
+# CAHNGED 20/08/2014 jdb.
 #############################################################################
 #O  RandomSubspace( <ps>, <d> )
 # returns a random subspace of projective dimension <d> in the polar space <ps>
@@ -2258,12 +2259,16 @@ InstallMethod( RandomSubspace,
 	"for a polar space and a projective dimension",
 	[ IsClassicalPolarSpace, IsPosInt ],                                             
 	function( ps, d )
-		local x, rep;
-		x := PseudoRandom( CollineationGroup(ps) );
-		rep := RepresentativesOfElements(ps)[d+1];    
-		return OnProjSubspaces(rep, x);
+		local x, rep, enum;
+		if HasCollineationGroup(ps) then
+            x := PseudoRandom( CollineationGroup(ps) );
+            rep := RepresentativesOfElements(ps)[d+1];
+            return OnProjSubspaces(rep, x);
+        else
+            enum := Enumerator(ElementsOfIncidenceStructure(ps,d));
+            return Random(enum);
+        fi;
   end );
-
 
 # CHECKED 22/09/2011 jdb 
 #############################################################################
@@ -2274,11 +2279,16 @@ InstallMethod( Random,
 	"for a collection of subspaces of a polar space",
     [ IsSubspacesOfClassicalPolarSpace ],
 	function( subs )
-		local ps, x, rep;
+		local ps, x, rep, enum;
 		ps := subs!.geometry;
-		x := PseudoRandom( CollineationGroup(ps) );
-		rep := RepresentativesOfElements(ps)[subs!.type];    
-		return OnProjSubspaces(rep, x);
+		if HasCollineationGroup(ps) then
+            x := PseudoRandom( CollineationGroup(ps) );
+            rep := RepresentativesOfElements(ps)[subs!.type];
+            return OnProjSubspaces(rep, x);
+        else
+            enum := Enumerator(subs);
+            return Random(enum);
+        fi;
 	end );
   
 # CHECKED 16/12/2011 jdb + ml CHECKED and CORRECTED 

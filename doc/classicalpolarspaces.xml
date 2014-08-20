@@ -576,7 +576,7 @@ of the geometry, but both the empty subspace and the whole projective space are 
 </Description>
 </ManSection>
 
-<ManSection>
+<ManSection Label="polar:span">
 <Oper Name="Span" Arg="u,v"/>
 <Returns> an element </Returns>
 <Description>
@@ -589,7 +589,7 @@ of the two subspaces.
 </Description>
 </ManSection>
 
-<ManSection>
+<ManSection Label="polar:meet">
 <Oper Name="Meet" Arg="u,v"/>
 <Returns>an element</Returns>
 <Description>

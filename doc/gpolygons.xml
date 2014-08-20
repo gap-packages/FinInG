@@ -527,54 +527,11 @@ x_3(z_0y_4+z_1y_5+z_2y_6) + x_7(y_0z_4+y_1z_5+y_2z_6) +
 y_3(x_0z_4+x_1z_5+x_2z_6) + y_7(z_0x_4+z_1x_5+z_2x_6) + 
 z_3(y_0x_4+y_1x_5+y_2x_6) + z_7(x_0y_4+x_1y_5+x_2y_6) - 
 x_3y_3z_3 - x_7y_7z_7</M></Alt><Alt Only="HTML">
-<!-- matrix expression begin -->
-&lt;table style="display: inline-block; color:#000">&lt;tr>
-&lt;td>&lt;table border=0 cellpadding=0 cellspacing=0px style="border-left:1px solid #000; border-right:1px solid #000; color:#000">&lt;tr>
-&lt;tr>
-&lt;td align="center" valign="center" width=30> x&lt;sub>0&lt;/sub> &lt;/td>
-&lt;td align="center" valign="center" width=30> x&lt;sub>1&lt;/sub> &lt;/td>
-&lt;td align="center" valign="center" width=30> x&lt;sub>2&lt;/sub> &lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td align="center" valign="center" width=30> x&lt;sub>0&lt;/sub> &lt;/td>
-&lt;td align="center" valign="center" width=30> x&lt;sub>1&lt;/sub> &lt;/td>
-&lt;td align="center" valign="center" width=30> x&lt;sub>2&lt;/sub> &lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td align="center" valign="center" width=30> x&lt;sub>0&lt;/sub> &lt;/td>
-&lt;td align="center" valign="center" width=30> x&lt;sub>1&lt;/sub> &lt;/td>
-&lt;td align="center" valign="center" width=30> x&lt;sub>2&lt;/sub> &lt;/td>
-&lt;/tr>
-&lt;/table>&lt;/td>&lt;td style ="border-top:1px solid #000; border-bottom:1px solid #000;">&nbsp;&lt;/td>&lt;/tr>&lt;/table>&lt;/td>
-&lt;/tr>&lt;/table> +
-&lt;table style="display: inline-block; color:#000">&lt;tr>
-&lt;td>&lt;table border=0 cellpadding=0 cellspacing=0px style="border-left:1px solid #000; border-right:1px solid #000; color:#000">&lt;tr>
-&lt;tr>
-&lt;td align="center" valign="center" width=30> x&lt;sub>4&lt;/sub> &lt;/td>
-&lt;td align="center" valign="center" width=30> x&lt;sub>5&lt;/sub> &lt;/td>
-&lt;td align="center" valign="center" width=30> x&lt;sub>6&lt;/sub> &lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td align="center" valign="center" width=30> x&lt;sub>4&lt;/sub> &lt;/td>
-&lt;td align="center" valign="center" width=30> x&lt;sub>5&lt;/sub> &lt;/td>
-&lt;td align="center" valign="center" width=30> x&lt;sub>6&lt;/sub> &lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td align="center" valign="center" width=30> x&lt;sub>4&lt;/sub> &lt;/td>
-&lt;td align="center" valign="center" width=30> x&lt;sub>5&lt;/sub> &lt;/td>
-&lt;td align="center" valign="center" width=30> x&lt;sub>6&lt;/sub> &lt;/td>
-&lt;/tr>
-&lt;/table>&lt;/td>&lt;td style ="border-top:1px solid #000; border-bottom:1px solid #000;">&nbsp;&lt;/td>&lt;/tr>&lt;/table>&lt;/td>
-&lt;/tr>&lt;/table>
-<!-- matrix expression end -->
-   +
-x&lt;sub>3&lt;/sub>(z&lt;sub>0&lt;/sub>y&lt;sub>4&lt;/sub>+z&lt;sub>1&lt;/sub>y&lt;sub>5&lt;/sub>+z&lt;sub>2&lt;/sub>y&lt;sub>6&lt;/sub>) + x&lt;sub>7&lt;/sub>(y&lt;sub>0&lt;/sub>z&lt;sub>4&lt;/sub>+y&lt;sub>1&lt;/sub>z&lt;sub>5&lt;/sub>+y&lt;sub>2&lt;/sub>z&lt;sub>6&lt;/sub>) + 
-y&lt;sub>3&lt;/sub>(x&lt;sub>0&lt;/sub>z&lt;sub>4&lt;/sub>+x&lt;sub>1&lt;/sub>z&lt;sub>5&lt;/sub>+x&lt;sub>2&lt;/sub>z&lt;sub>6&lt;/sub>) + y&lt;sub>7&lt;/sub>(z&lt;sub>0&lt;/sub>x&lt;sub>4&lt;/sub>+z&lt;sub>1&lt;/sub>x&lt;sub>5&lt;/sub>+z&lt;sub>2&lt;/sub>x&lt;sub>6&lt;/sub>) + 
-z&lt;sub>3&lt;/sub>(y&lt;sub>0&lt;/sub>x&lt;sub>4&lt;/sub>+y&lt;sub>1&lt;/sub>x&lt;sub>5&lt;/sub>+y&lt;sub>2&lt;/sub>x&lt;sub>6&lt;/sub>) + z&lt;sub>7&lt;/sub>(x&lt;sub>0&lt;/sub>y&lt;sub>4&lt;/sub>+x&lt;sub>1&lt;/sub>y&lt;sub>5&lt;/sub>+x&lt;sub>2&lt;/sub>y&lt;sub>6&lt;/sub>) &lt;font face=symbol>-&lt;/font> 
-x&lt;sub>3&lt;/sub>y&lt;sub>3&lt;/sub>z&lt;sub>3&lt;/sub> &lt;font face=symbol>-&lt;/font> x&lt;sub>7&lt;/sub>y&lt;sub>7&lt;/sub>z&lt;sub>7&lt;/sub></Alt>.<P/>
+<#Include SYSTEM "./beautiful_formula_in_ugly_html.xml">
+</Alt>.<P/>
 
 
-Now a pair <M>(x,y) \in V \times V</M> represents an incidence 0-1 pair of points if and only if <M>T(x,y,z)</M> vanishes in the variable
+Now a pair <M>(x,y) \in V \times V</M> represents an incident 0-1 pair of points if and only if <M>T(x,y,z)</M> vanishes in the variable
 <M>z</M>, and similarly for any cyclic permutation of the letters <M>x,y,z</M>.  So given a <M>1</M>-point <M>y</M>, <M>T(x,y,z) = 0</M>,
 where <M>z</M> is a variable, and <M>x</M> is an unknown, gives a set of equations representing a generator of
 <Alt Not="HTML"><M>Q+(7,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>(7,q)</Alt>, this the generator of
@@ -587,11 +544,13 @@ Let <M>\sigma</M> be an automorphism of <M>GF(q)</M> of order <M>3</M>, or the i
 <Alt Only="HTML">       (x&lt;sub>j&lt;/sub>) &#8594; (x&lt;sub>j&lt;/sub>&lt;sup>&#963;&lt;/sup>), j=0...7</Alt>.<P/>
 This map clearly preserves <M>T(x,y,z)</M>, so preserves the incidence, and has order three, so it is a triality of
 <Alt Not="HTML"><M>\Omega(7,q)</M></Alt><Alt Only="HTML">&#937;(7,q)</Alt>. We call an element <M>p</M> absolute with
-respect to a triality <M>\tau</M> if and only if <M>p I p^\tau</M>. Consequently, a line is absolute if and only if it
+respect to a triality <M>\tau</M> if and only if <Alt Not="HTML"><M>p I p^\tau</M></Alt>
+<Alt Only="HTML">p I p&lt;sup>&#964;&lt;/sup></Alt>. Consequently, a line is absolute if and only if it
 is fixed by the triality. Denote the set of <M>i</M>-points that are absolute with respect to the triality as
 <Alt Not="HTML"><M>P_{\mathrm{abs}}^{(i)}</M></Alt><Alt Only="HTML">P&lt;sup>(i)&lt;/sup>&lt;sub>abs&lt;/sub></Alt>, and
 set of absolute lines with respect to the triality as <Alt Not="HTML"><M>L_{\mathrm{abs}}</M></Alt><Alt Only="HTML">L&lt;sub>abs&lt;/sub></Alt>.
-Then a famous theorem of Tits says that with for the triality <Alt Only="HTML">&#964;&lt;sub>&#963;&lt;/sub></Alt><Alt Not="HTML"><M>\tau_{\sigma}</M></Alt>
+Then a famous theorem of Tits (<Cite Key="Tits1959"/>) says that with for the triality
+<Alt Only="HTML">&#964;&lt;sub>&#963;&lt;/sub></Alt><Alt Not="HTML"><M>\tau_{\sigma}</M></Alt>
 the point-line geometry <Alt Not="HTML"><M>\Gamma^{(i)} = (P^{(i)}_{\mathrm{abs}},L_{\mathrm{abs}}),I)</M></Alt>
 <Alt Only="HTML">&#915;&lt;sup>(i)&lt;/sup> = (P&lt;sup>(i)&lt;/sup>&lt;sub>abs&lt;/sub>, L&lt;sub>abs&lt;/sub>, I)</Alt>
 is a generalised hexagon of order <M>(|K|,|L|)</M>, <M>K=GF(q)</M> and <M>L</M> the subfield of invariant elements of <M>K</M>
@@ -604,11 +563,11 @@ For <Alt Not="HTML"><M>K=GF(q^3)</M></Alt><Alt Only="HTML">K=GF(q&lt;sup>3&lt;/s
 <Alt Not="HTML"><M>\Gamma^{(i)}</M></Alt> is a generalised hexagon of order <Alt Not="HTML"><M>(q^3,q)</M></Alt>
 <Alt Only="HTML">(q&lt;sup>3&lt;/sup>,q)</Alt>, which is called the <E>twisted triality hexagon of order <Alt Not="HTML"><M>(q^3,q)</M></Alt>
 <Alt Only="HTML">(q&lt;sup>3&lt;/sup>,q)</Alt></E>, denoted <Alt Not="HTML"><M>T(q^3,q)</M></Alt>
-<Alt Only="HTML">T(q&lt;sup>3&lt;/sup>,q)</Alt>. Note that for a given triality, each hexagon <Alt Only="HTML">&#915;&lt;sup>(i)&lt;/sup></Alt>
+<Alt Only="HTML">T(q&lt;sup>3&lt;/sup>,q)</Alt>. Note that for a given triality, the hexagons <Alt Only="HTML">&#915;&lt;sup>(i)&lt;/sup></Alt>
 <Alt Not="HTML"><M>\Gamma^{(i)}</M></Alt>, <M>i=0,1,2</M> are isomorphic. Consequently, <Alt Only="HTML">&#915;&lt;sup>(0)&lt;/sup></Alt>
 <Alt Not="HTML"><M>\Gamma^{(0)}</M></Alt> is a point-line geometry of which the point set, line set respectively, is a subset
 of the points, lines respectively of <Alt Not="HTML"><M>Q+(7,q)</M></Alt>
-<Alt Only="HTML">Q&lt;sup>+&lt;/sup>(7,q)</Alt>. Finally, we mention the following importan theorem, which was shown by Tits:
+<Alt Only="HTML">Q&lt;sup>+&lt;/sup>(7,q)</Alt>. Finally, we mention the following importan theorem, which was shown by Tits (<Cite Key="Tits1959"/>):
 the split Cayley hexagon, obtained by the triliaty with <M>\sigma=1</M>, is contained in the hyperplane with equation
 <Alt Not="HTML"><M>X_3+X_7=0</M></Alt><Alt Only="HTML">X&lt;sub>3&lt;/sub> + X&lt;sub>7&lt;/sub></Alt>, which interects
 the hyperbolc quadric in the parabolic quadric <M>Q(6,q)</M>. The points of the split Cayley hexagon are the points
@@ -622,6 +581,14 @@ the split Cayley hexagon. Finally, <Cite Key="HVM"/> contains an explicit descri
 of both generalised hexagons.
 
 </Subsection>
+
+<ManSection>
+<Filt Name="IsLieGeometry" Type="Category"/>
+<Description>
+Recall that the classical generalised hexagons are constructed as an object in <F>IsLieGeometry</F>. This makes most operations
+described in the appropriate chapters on Lie geometries, projective spaces and polar spaces applicable.
+</Description>
+</ManSection>
 
 <ManSection>
 <Oper Name="SplitCayleyHexagon" Arg="q"/>
@@ -651,6 +618,12 @@ of both generalised hexagons.
 <Oper Name="VectorSpaceToElement" Arg="gh, vec"/>
 <Returns>an element of a classical generlised hexagon</Returns>
 <Description>
+The argument <A>vec</A> is one vector or a list of vectors from the underlying vectorspace of <A>gh</A>.
+This operation checks whether <A>vec</A> represents a point or a line of <A>gh</A>. Note that
+vectors and matrices in different representations are allowed as argument.
+<Example>
+<#Include SYSTEM "../examples/include/gpolygons_cghvectorspacetoelement.include">
+</Example>
 </Description>
 </ManSection>
 
@@ -658,12 +631,18 @@ of both generalised hexagons.
 <Oper Name="ObjectToElement" Arg="gh, obj"/>
 <Returns>an element of a classical generlised hexagon</Returns>
 <Description>
+The argument <A>obj</A> is one vector or a list of vectors from the underlying vectorspace of <A>gh</A>.
+This operation checks whether <A>obj</A> represents a point or a line of <A>gh</A>. Note that
+vectors and matrices in different representations are allowed as argument.
+<Example>
+<#Include SYSTEM "../examples/include/gpolygons_cghobjecttoelement.include">
+</Example>
 </Description>
 </ManSection>
 
 <ManSection>
 <Oper Name="UnderlyingObject" Arg="gh, obj"/>
-<Returns>an element of a classical generlised hexagon</Returns>
+<Returns>a vector or a matrix</Returns>
 <Description>
 </Description>
 </ManSection>
@@ -672,6 +651,9 @@ of both generalised hexagons.
 <Oper Name="\in" Arg="x, gh"/>
 <Returns>true or false</Returns>
 <Description>
+<Example>
+<#Include SYSTEM "../examples/include/gpolygons_cghin.include">
+</Example>
 </Description>
 </ManSection>
 
@@ -681,17 +663,23 @@ of both generalised hexagons.
 <Oper Name="Meet" Arg="x, y"/>
 <Returns>a subspace of a projective space</Returns>
 <Description>
+<A>x</A> and <A>y</A> are two elements of a classical generalised hexagon. The opertaion <F>Span</F> returns the projective
+line spanned by <A>x</A> and <A>y</A>. The operation <F>Meet</F> returns the intersection of the elements <A>x</A> and <A>y</A>.
+Note that the classical generalised hexagons are Lie geometries, so their elements belong to a subcategory of <C>IsSubspaceOfProjectiveSpace</C>. Therefore,
+the operations <F>Span</F> and <F>Meet</F> behave as described in <Ref Sect="polar:span"/> and <Ref Sect="polar:meet"/>.
 <Example>
+<#Include SYSTEM "../examples/include/gpolygons_spanmeet.include">
 </Example>
 </Description>
 </ManSection>
 
 <ManSection>
-<Oper Name="CollineationGroup" Arg="gh"/>
+<Attr Name="CollineationGroup" Arg="gh"/>
 <Returns>a group of collineations</Returns>
 <Description>
-give some nice examples.
+<A>gh</A> is a classical generalised hexagon. This attribute returns the full collineation group, equipped with a nice monomorphism.
 <Example>
+<#Include SYSTEM "../examples/include/gpolygons_collineationgroup4.include">
 </Example>
 </Description>
 </ManSection>

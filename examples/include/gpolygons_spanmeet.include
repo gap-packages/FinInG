@@ -1,0 +1,32 @@
+gap&gt; ps := SymplecticSpace(5,8);
+W(5, 8)
+gap&gt; gh := SplitCayleyHexagon(ps);
+H(8) in W(5, 8)
+gap&gt; vec := [ Z(2)^0, Z(2^3)^6, Z(2^3)^5, Z(2^3)^6, Z(2)^0, Z(2^3) ];
+[ Z(2)^0, Z(2^3)^6, Z(2^3)^5, Z(2^3)^6, Z(2)^0, Z(2^3) ]
+gap&gt; p := VectorSpaceToElement(gh,vec);
+&lt;a point in H(8) in W(5, 8)&gt;
+gap&gt; vec := [ Z(2)^0, Z(2^3)^2, Z(2^3), Z(2^3)^3, Z(2^3)^5, Z(2^3)^5 ];
+[ Z(2)^0, Z(2^3)^2, Z(2^3), Z(2^3)^3, Z(2^3)^5, Z(2^3)^5 ]
+gap&gt; q := VectorSpaceToElement(gh,vec);
+&lt;a point in H(8) in W(5, 8)&gt;
+gap&gt; span := Span(p,q);
+&lt;a line in ProjectiveSpace(5, 8)&gt;
+gap&gt; ElementToElement(gh,span);
+&lt;a line in H(8) in W(5, 8)&gt;
+gap&gt; vec := [ [ Z(2)^0, 0*Z(2), Z(2^3)^6, Z(2)^0, 0*Z(2), Z(2^3) ], 
+&gt;   [ 0*Z(2), Z(2)^0, Z(2^3)^6, Z(2^3)^4, Z(2^3)^4, 0*Z(2) ] ];
+[ [ Z(2)^0, 0*Z(2), Z(2^3)^6, Z(2)^0, 0*Z(2), Z(2^3) ], 
+  [ 0*Z(2), Z(2)^0, Z(2^3)^6, Z(2^3)^4, Z(2^3)^4, 0*Z(2) ] ]
+gap&gt; l := VectorSpaceToElement(gh,vec);
+&lt;a line in H(8) in W(5, 8)&gt;
+gap&gt; vec := [ [ Z(2)^0, 0*Z(2), Z(2)^0, Z(2^3), 0*Z(2), Z(2^3) ], 
+&gt;   [ 0*Z(2), Z(2)^0, Z(2)^0, Z(2^3)^2, Z(2^3)^4, Z(2^3)^4 ] ];
+[ [ Z(2)^0, 0*Z(2), Z(2)^0, Z(2^3), 0*Z(2), Z(2^3) ], 
+  [ 0*Z(2), Z(2)^0, Z(2)^0, Z(2^3)^2, Z(2^3)^4, Z(2^3)^4 ] ]
+gap&gt; m := VectorSpaceToElement(gh,vec);
+&lt;a line in H(8) in W(5, 8)&gt;
+gap&gt; Meet(l,m);
+&lt; empty subspace &gt;
+gap&gt; DistanceBetweenElements(l,m);
+6

@@ -1,0 +1,85 @@
+<!-- This typesetting is trivial in LaTeX. It is a pain in the ass in html.
+I sincerely hope that someone ever finds out to change GAPDoc in such a way the
+typsetting beautiful mathematics can be done in LaTeX only -->
+&lt;table style="display: inline-block; color:#000">&lt;tr>
+&lt;tr>
+&lt;td align="center" valign="center" width=80>&lt;font color="white">d&lt;/font>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td align="center" valign="center" width=80>T(x,y,z) := &lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td align="center" valign="center" width=80>&lt;font color="white">d&lt;/font>&lt;/td>
+&lt;/tr>
+&lt;/tr>&lt;/table>
+
+&lt;table style="display: inline-block; color:#000">&lt;tr>
+&lt;td>&lt;table border=0 cellpadding=0 cellspacing=0px style="border-left:1px solid #000; border-right:1px solid #000; color:#000">&lt;tr>
+&lt;tr>
+&lt;td align="center" valign="center" width=30> x&lt;sub>0&lt;/sub> &lt;/td>
+&lt;td align="center" valign="center" width=30> x&lt;sub>1&lt;/sub> &lt;/td>
+&lt;td align="center" valign="center" width=30> x&lt;sub>2&lt;/sub> &lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td align="center" valign="center" width=30> x&lt;sub>0&lt;/sub> &lt;/td>
+&lt;td align="center" valign="center" width=30> x&lt;sub>1&lt;/sub> &lt;/td>
+&lt;td align="center" valign="center" width=30> x&lt;sub>2&lt;/sub> &lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td align="center" valign="center" width=30> x&lt;sub>0&lt;/sub> &lt;/td>
+&lt;td align="center" valign="center" width=30> x&lt;sub>1&lt;/sub> &lt;/td>
+&lt;td align="center" valign="center" width=30> x&lt;sub>2&lt;/sub> &lt;/td>
+&lt;/tr>
+&lt;/table>&lt;/td>&lt;td style ="border-top:1px solid #000; border-bottom:1px solid #000;">&nbsp;&lt;/td>&lt;/tr>&lt;/table>&lt;/td>
+&lt;/tr>&lt;/table>
+
+&lt;table style="display: inline-block; color:#000">&lt;tr>
+&lt;tr>
+&lt;td align="center" valign="center" width=10>&lt;font color="white">d&lt;/font>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td align="center" valign="center" width=10>+&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td align="center" valign="center" width=10>&lt;font color="white">d&lt;/font>&lt;/td>
+&lt;/tr>
+&lt;/tr>&lt;/table>
+
+&lt;table style="display: inline-block; color:#000">&lt;tr>
+&lt;td>&lt;table border=0 cellpadding=0 cellspacing=0px style="border-left:1px solid #000; border-right:1px solid #000; color:#000">&lt;tr>
+&lt;tr>
+&lt;td align="center" valign="center" width=30> x&lt;sub>4&lt;/sub> &lt;/td>
+&lt;td align="center" valign="center" width=30> x&lt;sub>5&lt;/sub> &lt;/td>
+&lt;td align="center" valign="center" width=30> x&lt;sub>6&lt;/sub> &lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td align="center" valign="center" width=30> x&lt;sub>4&lt;/sub> &lt;/td>
+&lt;td align="center" valign="center" width=30> x&lt;sub>5&lt;/sub> &lt;/td>
+&lt;td align="center" valign="center" width=30> x&lt;sub>6&lt;/sub> &lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td align="center" valign="center" width=30> x&lt;sub>4&lt;/sub> &lt;/td>
+&lt;td align="center" valign="center" width=30> x&lt;sub>5&lt;/sub> &lt;/td>
+&lt;td align="center" valign="center" width=30> x&lt;sub>6&lt;/sub> &lt;/td>
+&lt;/tr>
+&lt;/table>&lt;/td>&lt;td style ="border-top:1px solid #000; border-bottom:1px solid #000;">&nbsp;&lt;/td>&lt;/tr>&lt;/table>&lt;/td>
+&lt;/tr>&lt;/table>
+<!-- matrix expression end -->
+
+&lt;table style="display: inline-block; color:#000">&lt;tr>
+&lt;tr>
+&lt;td align="center" valign="center" width=350>&lt;font color="white">d&lt;/font>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td align="center" valign="center" width=350> +
+x&lt;sub>3&lt;/sub>(z&lt;sub>0&lt;/sub>y&lt;sub>4&lt;/sub>+z&lt;sub>1&lt;/sub>y&lt;sub>5&lt;/sub>+z&lt;sub>2&lt;/sub>y&lt;sub>6&lt;/sub>) +
+x&lt;sub>7&lt;/sub>(y&lt;sub>0&lt;/sub>z&lt;sub>4&lt;/sub>+y&lt;sub>1&lt;/sub>z&lt;sub>5&lt;/sub>+y&lt;sub>2&lt;/sub>z&lt;sub>6&lt;/sub>) +&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td align="center" valign="center" width=350>&lt;font color="white">d&lt;/font>&lt;/td>
+&lt;/tr>
+&lt;/tr>&lt;/table><P/>
++
+y&lt;sub>3&lt;/sub>(x&lt;sub>0&lt;/sub>z&lt;sub>4&lt;/sub>+x&lt;sub>1&lt;/sub>z&lt;sub>5&lt;/sub>+x&lt;sub>2&lt;/sub>z&lt;sub>6&lt;/sub>) + y&lt;sub>7&lt;/sub>(z&lt;sub>0&lt;/sub>x&lt;sub>4&lt;/sub>+z&lt;sub>1&lt;/sub>x&lt;sub>5&lt;/sub>+z&lt;sub>2&lt;/sub>x&lt;sub>6&lt;/sub>) + 
+z&lt;sub>3&lt;/sub>(y&lt;sub>0&lt;/sub>x&lt;sub>4&lt;/sub>+y&lt;sub>1&lt;/sub>x&lt;sub>5&lt;/sub>+y&lt;sub>2&lt;/sub>x&lt;sub>6&lt;/sub>) + z&lt;sub>7&lt;/sub>(x&lt;sub>0&lt;/sub>y&lt;sub>4&lt;/sub>+x&lt;sub>1&lt;/sub>y&lt;sub>5&lt;/sub>+x&lt;sub>2&lt;/sub>y&lt;sub>6&lt;/sub>) &lt;font face=symbol>-&lt;/font> 
+x&lt;sub>3&lt;/sub>y&lt;sub>3&lt;/sub>z&lt;sub>3&lt;/sub> &lt;font face=symbol>-&lt;/font> x&lt;sub>7&lt;/sub>y&lt;sub>7&lt;/sub>z&lt;sub>7&lt;/sub>

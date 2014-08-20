@@ -1,0 +1,19 @@
+gap&gt; ps := HyperbolicQuadric(7,5^3);
+Q+(7, 125)
+gap&gt; gh := TwistedTrialityHexagon(ps);
+T(125, 5) in Q+(7, 125)
+gap&gt; repeat
+&gt; p := Random(Points(ps));
+&gt; until p in gh;
+gap&gt; time;
+15156
+gap&gt; p in gh;
+true
+gap&gt; q := ElementToElement(gh,p);
+&lt;a point in T(125, 5) in Q+(7, 125)&gt;
+gap&gt; l := Random(Lines(p));
+&lt;a line in Q+(7, 125)&gt;
+gap&gt; l in gh;
+false
+gap&gt; List(Lines(q),x-&gt;x in gh);
+[ true, true, true, true, true, true ]

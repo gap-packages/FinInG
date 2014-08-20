@@ -1,5 +1,5 @@
-ps := ParabolicQuadric(6,2);
-els := Points(ps);
+ps := ParabolicQuadric(6,3);
+els := Lines(ps);
 enum := Enumerator(els);
 s := Size(enum);
 elements := List([1..s],x->enum!.ElementNumber(s,x));
@@ -86,6 +86,34 @@ els := Planes(ps);
 enum := Enumerator(els);
 s := Size(enum);
 Add(tests2,Collected(List([1..s],x->enum!.NumberElement(s,enum!.ElementNumber(s,x))=x)));
+od;
+
+
+tests := [];
+for q in [2,3,4,5,7,8,9,11] do #16s
+ps := ParabolicQuadric(6,q);
+els := Points(ps);
+enum := Enumerator(els);
+s := Size(enum);
+Add(tests,Collected(List([1..s],x->enum!.NumberElement(s,enum!.ElementNumber(s,x))=x)));
+od;
+
+tests := [];
+for q in [2,3,4,5,7] do #86
+ps := ParabolicQuadric(8,q);
+els := Points(ps);
+enum := Enumerator(els);
+s := Size(enum);
+Add(tests,Collected(List([1..s],x->enum!.NumberElement(s,enum!.ElementNumber(s,x))=x)));
+od;
+
+tests := [];
+for q in [2,3,4] do #51 s
+ps := ParabolicQuadric(10,q);
+els := Points(ps);
+enum := Enumerator(els);
+s := Size(enum);
+Add(tests,Collected(List([1..s],x->enum!.NumberElement(s,enum!.ElementNumber(s,x))=x)));
 od;
 
 
@@ -179,12 +207,59 @@ Set(last) = Set(AsList(Points(ps)));
 
 
 tests := [];
-for q in [2,3,4,5,7,8,9,11,13] do
-ps := EllipticQuadric(7,q);
+for q in [2,3,4,5,7,8,9,11,13,16,17,19,23,25,27,29,31,37,41,49] do
+ps := HyperbolicQuadric(7,q);
+els := Solids(ps);
+enum := Enumerator(els);
+s := Size(enum);
+Print(q,", ",s,", ",Type(els)," \c");
+c := [];
+for x in [1..s] do
+Add(c,enum!.NumberElement(s,enum!.ElementNumber(s,x))=x);
+od;
+#c := Collected(List([1..s],x->enum!.NumberElement(s,enum!.ElementNumber(s,x))=x));
+c := Collected(c);
+Print(c,"\n");
+Add(tests,c);
+od;
+
+
+
+for q in [2,3,4,5,7,8,9,11,13,16,17,19,23,25,27,29,31,37,41,49] do
+
+
+tests := [];
+for q in [2,3,4,5,7] do
+ps := HermitianPolarSpace(5,q^2);
+els := Lines(ps);
+enum := Enumerator(els);
+s := Size(enum);
+Print(q,", ",s,", ",Type(els)," \c");
+c := [];
+for x in [1..s] do
+Add(c,enum!.NumberElement(s,enum!.ElementNumber(s,x))=x);
+od;
+#c := Collected(List([1..s],x->enum!.NumberElement(s,enum!.ElementNumber(s,x))=x));
+c := Collected(c);
+Print(c,"\n");
+Add(tests,c);
+od;
+
+tests := [];
+for q in [2,3,4,5] do
+ps := SymplecticSpace(7,q);
 els := Points(ps);
 enum := Enumerator(els);
 s := Size(enum);
-Add(tests,Collected(List([1..s],x->enum!.NumberElement(s,enum!.ElementNumber(s,x))=x)));
+Print(q,", ",s,", ",Type(els)," \c");
+c := [];
+for x in [1..s] do
+Add(c,enum!.NumberElement(s,enum!.ElementNumber(s,x))=x);
 od;
-time;
+#c := Collected(List([1..s],x->enum!.NumberElement(s,enum!.ElementNumber(s,x))=x));
+c := Collected(c);
+Print(c,"\n");
+Add(tests,c);
+od;
+
 

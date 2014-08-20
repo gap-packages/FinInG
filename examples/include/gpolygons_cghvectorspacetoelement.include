@@ -1,0 +1,19 @@
+gap&gt; ps := ParabolicQuadric(6,9);
+Q(6, 9)
+gap&gt; gh := SplitCayleyHexagon(ps);
+H(9) in Q(6, 9)
+gap&gt; vec := [ Z(3)^0, Z(3^2), 0*Z(3), Z(3^2), Z(3^2)^3, Z(3^2)^5, 0*Z(3) ];
+[ Z(3)^0, Z(3^2), 0*Z(3), Z(3^2), Z(3^2)^3, Z(3^2)^5, 0*Z(3) ]
+gap&gt; p := VectorSpaceToElement(gh,vec);
+&lt;a point in H(9) in Q(6, 9)&gt;
+gap&gt; vec := [ [ Z(3)^0, 0*Z(3), Z(3^2)^7, 0*Z(3), Z(3)^0, Z(3^2)^2, Z(3^2)^2 ], 
+&gt;   [ 0*Z(3), Z(3)^0, 0*Z(3), Z(3)^0, 0*Z(3), Z(3^2)^3, 0*Z(3) ] ];
+[ [ Z(3)^0, 0*Z(3), Z(3^2)^7, 0*Z(3), Z(3)^0, Z(3^2)^2, Z(3^2)^2 ], 
+  [ 0*Z(3), Z(3)^0, 0*Z(3), Z(3)^0, 0*Z(3), Z(3^2)^3, 0*Z(3) ] ]
+gap&gt; line := VectorSpaceToElement(gh,vec);
+Error, &lt;x&gt; does not generate an element of &lt;geom&gt; called from
+&lt;function "unknown"&gt;( &lt;arguments&gt; )
+ called from read-eval loop at line 14 of *stdin*
+you can 'quit;' to quit to outer loop, or
+you can 'return;' to continue
+brk&gt; quit;

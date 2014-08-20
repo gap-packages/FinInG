@@ -1,0 +1,27 @@
+gap&gt; mat := IdentityMat(8,GF(5^3));
+&lt; mutable compressed matrix 8x8 over GF(125) &gt;
+gap&gt; form := BilinearFormByMatrix(mat,GF(5^3));
+&lt; bilinear form &gt;
+gap&gt; ps := PolarSpace(form);
+&lt;polar space in ProjectiveSpace(
+7,GF(5^3)): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2+x_7^2+x_8^2=0 &gt;
+gap&gt; gh := TwistedTrialityHexagon(ps);
+T(125, 5) in Q+(7, 125): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2+x_7^2+x_8^2
+gap&gt; vec := [ Z(5)^0, Z(5^3)^55, Z(5^3)^99, Z(5^3)^107, Z(5^3)^8, Z(5^3)^35, Z(5^3)^73, 
+&gt;   Z(5^3)^115 ];
+[ Z(5)^0, Z(5^3)^55, Z(5^3)^99, Z(5^3)^107, Z(5^3)^8, Z(5^3)^35, Z(5^3)^73, 
+  Z(5^3)^115 ]
+gap&gt; p := ObjectToElement(gh,vec);
+&lt;a point in T(125, 5) in Q+(7, 125): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2+x_7^2
++x_8^2&gt;
+gap&gt; vec := [ [ Z(5)^0, 0*Z(5), Z(5^3)^76, Z(5^3)^117, Z(5^3)^80, Z(5^3)^19, Z(5^3)^48, 
+&gt;       Z(5^3)^100 ], 
+&gt;   [ 0*Z(5), Z(5)^0, Z(5^3)^115, Z(5^3)^14, Z(5^3)^40, Z(5^3)^67, Z(5^3)^123, 
+&gt;       Z(5^3)^3 ] ];
+[ [ Z(5)^0, 0*Z(5), Z(5^3)^76, Z(5^3)^117, Z(5^3)^80, Z(5^3)^19, Z(5^3)^48, 
+      Z(5^3)^100 ], 
+  [ 0*Z(5), Z(5)^0, Z(5^3)^115, Z(5^3)^14, Z(5^3)^40, Z(5^3)^67, Z(5^3)^123, 
+      Z(5^3)^3 ] ]
+gap&gt; line := ObjectToElement(gh,vec);
+&lt;a line in T(125, 5) in Q+(7, 125): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2+x_7^2+
+x_8^2&gt;

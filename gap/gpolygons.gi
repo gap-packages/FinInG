@@ -2273,6 +2273,9 @@ InstallMethod( CollineationGroup,
 			SetNiceObject(coll, Image(hom) );
 			SetNiceMonomorphism(coll, hom );
 			SetCollineationAction(coll, OnProjSubspaces);
+			if not IsBound(hexagon!.basechange) then
+				SetName(coll, Concatenation("3D_4(",String(Size(f)),")") );
+            fi;
 			return coll;
 		else 
 			Info(InfoFinInG, 1, "for Split Cayley Hexagon");
@@ -2397,7 +2400,7 @@ InstallMethod( VectorSpaceToElement,
 			return EmptySubspace(geom);
 		fi;
 		MultRowVector(x,Inverse( x[PositionNonZero(x)] ));
-		y := NewMatrix(IsCMatRep,geom!.basefield,Length(x),[x]);
+		y := NewMatrix(IsCMatRep,geom!.basefield,Length(x),[x])[1];
 		ps := AmbientPolarSpace(geom);
 		if geom!.dimension = 5 then
 			return Wrap(geom, 1, y);
@@ -2447,7 +2450,7 @@ InstallMethod( VectorSpaceToElement,
 			return EmptySubspace(geom);
 		fi;
 		MultRowVector(x,Inverse( x[PositionNonZero(x)] ));
-		y := NewMatrix(IsCMatRep,geom!.basefield,Length(x),[x]);
+		y := NewMatrix(IsCMatRep,geom!.basefield,Length(x),[x])[1];
 		ps := AmbientPolarSpace(geom);
 		if geom!.dimension = 5 then
 			return Wrap(geom, 1, y);
