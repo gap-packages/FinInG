@@ -467,12 +467,35 @@ end;
 
 
 
-
-
-
-
-
-
+q := 3;
+o := One(GF(q));
+pg := PG(20,q);
+vec := List([1..21],x->Zero(GF(q)));
+vec1 := ShallowCopy(vec);
+vec1[7] := o;
+vec1[16] := -o;
+vec2 := ShallowCopy(vec);
+vec2[3] := o;
+vec2[21] := -o;
+vec3 := ShallowCopy(vec);
+vec3[12] := o;
+vec3[19] := -o;
+vec4 := ShallowCopy(vec);
+vec4[1] := o;
+vec4[18] := -o;
+vec5 := ShallowCopy(vec);
+vec5[2] := o;
+vec5[17] := o;
+vec6 := ShallowCopy(vec);
+vec6[8] := o;
+vec6[20] := o;
+hyp1 := HyperplaneByDualCoordinates(pg,vec1);
+hyp2 := HyperplaneByDualCoordinates(pg,vec2);
+hyp3 := HyperplaneByDualCoordinates(pg,vec3);
+hyp4 := HyperplaneByDualCoordinates(pg,vec4);
+hyp5 := HyperplaneByDualCoordinates(pg,vec5);
+hyp6 := HyperplaneByDualCoordinates(pg,vec6);
+Meet([hyp1,hyp2,hyp3,hyp4,hyp5,hyp6]);
 
 
 

@@ -5,6 +5,13 @@ s := Size(enum);
 elements := List([1..s],x->enum!.ElementNumber(s,x));
 List(elements,x->enum!.NumberElement(s,x));
 
+for i in [1..Length(elements)] do
+	Print(i,"\n");
+	enum!.NumberElement(s,elements[i]);
+od;
+
+	
+	
 tests := [];
 for q in [2,3,4,5,7,8,9,11,13,16,17] do
 ps := ParabolicQuadric(2,q);
@@ -42,7 +49,7 @@ Add(tests,Collected(List([1..s],x->enum!.NumberElement(s,enum!.ElementNumber(s,x
 od;
 
 tests := [];
-for q in [2,3,4,5,7,8,9,11,13,16,17] do
+for q in [2,3,4,5,7,8,9,11,13,16,17,19,23,25,27,31,37,41,43,47,49] do
 ps := ParabolicQuadric(4,q);
 els := Points(ps);
 enum := Enumerator(els);
@@ -73,6 +80,42 @@ s := Size(enum);
 Add(tests2,Collected(List([1..s],x->enum!.NumberElement(s,enum!.ElementNumber(s,x))=x)));
 od;
 time; #15 s
+
+tests1 := [];
+for q in [2,3,4,5,7] do
+ps := EllipticQuadric(5,q);
+els := Points(ps);
+enum := Enumerator(els);
+s := Size(enum);
+Add(tests1,Collected(List([1..s],x->enum!.NumberElement(s,enum!.ElementNumber(s,x))=x)));
+od;
+time;
+tests1;
+time; #15 s
+
+tests1 := [];
+for q in [2,3,4,5,7] do
+ps := HyperbolicQuadric(5,q);
+els := Points(ps);
+enum := Enumerator(els);
+s := Size(enum);
+Add(tests1,Collected(List([1..s],x->enum!.NumberElement(s,enum!.ElementNumber(s,x))=x)));
+od;
+time;
+tests1;
+
+
+
+tests1 := [];
+tests2 := [];
+ps := EllipticQuadric(5,q);
+els := Points(ps);
+enum := Enumerator(els);
+s := Size(enum);
+tests1 := Filtered([1..s],x->enum!.NumberElement(s,enum!.ElementNumber(s,x))=x);
+tests2 := Filtered([1..s],x->enum!.NumberElement(s,enum!.ElementNumber(s,x))<>x);
+
+
 
 tests1 := [];
 tests2 := [];
@@ -120,6 +163,17 @@ od;
 
 elements := List([1..s],x->enum!.ElementNumber(s,x));;
 List(elements,x->enum!.NumberElement(s,x));
+
+
+tests := [];
+for q in [3] do
+ps := ParabolicQuadric(8,q);
+els := Points(ps);
+enum := Enumerator(els);
+s := Size(enum);
+Add(tests,Collected(List([1..s],x->enum!.NumberElement(s,enum!.ElementNumber(s,x))=x)));
+od;
+
 
 
 
@@ -208,8 +262,8 @@ Set(last) = Set(AsList(Points(ps)));
 
 tests := [];
 for q in [2,3,4,5,7,8,9,11,13,16,17,19,23,25,27,29,31,37,41,49] do
-ps := HyperbolicQuadric(7,q);
-els := Solids(ps);
+ps := EllipticQuadric(9,q);
+els := Points(ps);
 enum := Enumerator(els);
 s := Size(enum);
 Print(q,", ",s,", ",Type(els)," \c");
