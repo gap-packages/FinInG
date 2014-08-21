@@ -670,7 +670,7 @@ y&lt;sub>n&lt;/sub>X&lt;sub>n&lt;/sub> = 0</Alt>. The action of collineations or
 correlations on points determines the action on subspaces of arbitrary
 dimension completely.
 
-<ManSection>
+<ManSection Label="proj:onprojsubspaces">
 <Func Name="OnProjSubspaces" Arg="subspace, el"/>
 <Returns>a subspace of a projective space</Returns>
 <Description>
@@ -694,7 +694,7 @@ for the action to be easy to calculate.
 </Description>
 </ManSection>
 
-<ManSection>
+<ManSection Label="proj:onprojsubspacesextended">
 <Func Name="OnProjSubspacesExtended" Arg="subspace, el"/>
 <Returns>a subspace of a projective space</Returns>
 <Description>

@@ -147,9 +147,65 @@ A small example shows the difference in computing time.
 <Section>
 <Heading>Actions and nice monomorphisms revisited</Heading>
 
+GAP provides generic functions to compute action homomorphisms and their images for arbitrary groups. These
+functions are applicable on the projective groups implemented in <Package>FinInG</Package>.
 
+<ManSection>
+<Heading>Action functinos</Heading>
+<Func Name="OnProjSubspaces" Arg="el, g"/>
+<Func Name="OnProjSubspacesExtended" Arg="el, g"/>
+<Func Name="OnSetsProjSubspaces" Arg="set, g"/>
+<Returns>a element of a Lie geometry</Returns>
+<Description>
+Let <A>el</A> be an element of any Lie geometry, and <A>g</A> an element of a projective group
+acting on the elements of the ambient Lie geometry of <A>el</A>. Then then <F>OnProjSubspaces</F>
+will return simply the image of <A>el</A> under <A>g</A>. When <A>g</A> is an element of the correlationcollineation group
+of a projective space, <F>OnProjSubspacesExtended</F> returns the image of <A>el</A> under <A>g</A>. Finally,
+when <A>set</A> is a set of elements of a Lie geometry, <F>OnSetsProjSubspaces</F> returns the set of images
+under <A>g</A>. <F>OnProjSubspaces</F> is also explained in <Ref Sect="proj:onprojsubspaces"/>,
+<F>OnProjSubspacesExtended</F> is also explained in <Ref Sect="proj:onprojsubspacesextended"/>.
+</Description>
+</ManSection>
+
+<ManSection>
+<Heading>Generic GAP functions</Heading>
+<Oper Name="ActionHomomorphism" Arg="g, S, act"/>
+<Oper Name="Action" Arg="g, S, act"/>
+<Description><A>g</A> is a projective group, <A>S</A> is a set or a collection of elements, <A>act</A>
+is an action function. <F>Action</F> simply returns <F>Image(hom)</F>, if <A>hom</A> is the result
+of <F>ActionHomomorphism</F>. The examples are self-explanatory.
+<Example>
+<#Include SYSTEM "../examples/include/stab_orbs_action1.include">
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Attr Name="NiceMonomorphism" Arg="group"/>
+<Returns>A group homomorphism</Returns>
+<Description>
+
+</Description>
+</ManSection>
+
+<ManSection>
+<Attr Name="NiceObject" Arg="group"/>
+<Returns>A group homomorphism</Returns>
+<Description>
+
+</Description>
+</ManSection>
+
+<ManSection>
+<Attr Name="IsHandledByNiceMonomorphism" Arg="group"/>
+<Returns>A group homomorphism</Returns>
+<Description>
+
+</Description>
+</ManSection>
+
+Some more examples, also explaining <F>SetParent</F>.
 
 </Section>
-
 
 </Chapter>
