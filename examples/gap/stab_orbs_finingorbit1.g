@@ -1,3 +1,4 @@
+#fining orbit (1)
 ps := ParabolicQuadric(6,3);
 g := CollineationGroup(ps);
 pg := PG(6,3);

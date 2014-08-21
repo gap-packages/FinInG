@@ -1,3 +1,4 @@
+gap&gt; ps := ParabolicQuadric(6,3);
 Q(6, 3)
 gap&gt; g := CollineationGroup(ps);
 PGammaO(7,3)
@@ -8,4 +9,4 @@ gap&gt; s := First(Solids(pg),t -&gt; TypeOfSubspace(ps,t) = "elliptic" );
 gap&gt; orbit := FiningOrbit(g,s,OnProjSubspaces);
 &lt;closed orbit, 265356 points&gt;
 gap&gt; time;
-46254
+50555

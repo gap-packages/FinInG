@@ -1,3 +1,4 @@
+gap&gt; ps := ParabolicQuadric(4,3);
 Q(4, 3)
 gap&gt; g := CollineationGroup(ps);
 PGammaO(5,3)
@@ -18,4 +19,4 @@ gap&gt; spts := Filtered(Points(s),s-&gt;s in ps);
 gap&gt; orbit2 := FiningOrbit(g,Set(spts),OnSetsProjSubspaces);
 &lt;closed orbit, 36 points&gt;
 gap&gt; time;
-15
+13
