@@ -1,0 +1,24 @@
+gap&gt; pg := PG(2,3);
+ProjectiveSpace(2, 3)
+gap&gt; conic := Set(Points(ParabolicQuadric(2,3)));;
+gap&gt; coll := CollineationGroup(pg);
+The FinInG collineation group PGL(3,3)
+gap&gt; orb := Orbit(coll,conic,OnSetsProjSubspaces);;
+gap&gt; Length(orb);
+234
+gap&gt; hom := ActionHomomorphism(coll,orb,OnSetsProjSubspaces);
+&lt;action homomorphism&gt;
+gap&gt; perm := Image(hom);
+&lt;permutation group with 2 generators&gt;
+gap&gt; Order(perm);
+5616
+gap&gt; NrMovedPoints(perm);
+234
+gap&gt; ps := SymplecticSpace(5,2);
+W(5, 2)
+gap&gt; coll := CollineationGroup(ps);
+PGammaSp(6,2)
+gap&gt; perm := Action(coll,Lines(ps),OnProjSubspaces);
+&lt;permutation group with 4 generators&gt;
+gap&gt; NrMovedPoints(perm);
+315
