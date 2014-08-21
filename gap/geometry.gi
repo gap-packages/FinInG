@@ -635,7 +635,7 @@ InstallMethod( ResidueOfFlag,
 		eles:=List(typset, j -> ShadowOfFlag(flag,j));
 
 		inc:=function(x,y)
-			return ambigeo!.increl(x,y);
+			return IsIncident(x,y);
 		end;
 
                 geo := IncidenceStructure(Union(eles), inc, typfun, 

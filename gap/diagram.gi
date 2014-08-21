@@ -309,7 +309,7 @@ InstallOtherMethod( RandomFlag,
 		return FlagOfIncidenceStructure(cg,flag);
 	end );
 
-# 
+# 140806 Not needed! Already defined generically 
 #############################################################################
 #O  ElementsOfFlag( <flag> )
 # returns elements of a flag 
