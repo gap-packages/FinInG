@@ -56,11 +56,6 @@ ReadPackage("fining","gap/gpolygons.gi");
 
 ReadPackage("fining","gap/genss_patch.g");
 
-
-#ReadPackage("fining","gap/emptysubspace.gi");
-#ReadPackage("fining","gap/linearalgebra_patch.g");
-##ReadPackage("fining","gap/polaritiesps.gi"); #obsolete.
-
 ReadPackage("fining","gap/orbits-stabilisers.gi"); # added 11/02/13 ml
 
 Print("\n");

@@ -44,9 +44,4 @@ ReadPackage("fining","gap/affinegroup.gd");
 
 ReadPackage("fining","gap/gpolygons.gd");
 
-##ReadPackage("fining","gap/emptysubspace.gd"); #changed 7/9/2011, while merging emptysubspace.g* files in projectivespace.g and liegeometry.g* files.
-##ReadPackage("fining","gap/group2.gd"); #obsolete.
-##ReadPackage("fining","gap/polaritiesps.gd"); #obsolete
-
-
 ReadPackage("fining","gap/orbits-stabilisers.gd"); # added 11/02/13 ml

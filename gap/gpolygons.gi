@@ -689,9 +689,9 @@ InstallMethod(Size,
 #O  Iterator( <vs>  )
 # returns an iterator for the elements of a gp
 ##
-InstallMethod(Iterator, 
+InstallMethod( Iterator, 
 	"for elements of a generalised polygon",
-	[IsElementsOfGeneralisedPolygon and IsElementsOfGeneralisedPolygonRep],
+	[ IsElementsOfGeneralisedPolygon and IsElementsOfGeneralisedPolygonRep],
 	function( vs )
 		local gp, j, vars;
 		gp := vs!.geometry;
@@ -700,6 +700,37 @@ InstallMethod(Iterator,
 			return IteratorList(gp!.listelements(gp,j)); #looks a bit strange, but correct.
 		else 
 			Error("Element type does not exist");
+		fi;
+	end );
+
+#############################################################################
+#O  Random( <vs>  )
+#	In general, the list of elements might be stored in the GP itself. Then
+#	the standard method uses the Iterator. This standard method will be called
+#	also if our particular GPs do not have a collienation/elation group, the 
+#	iterator will be used, which causes the computation of the collineation 
+#   group including a nice monomorphism. The next time Random is used, this
+#	group is used.
+##
+InstallMethod( Random,
+	"for a collection of elements of a generalised polygon",
+	[ IsElementsOfGeneralisedPolygon and IsElementsOfGeneralisedPolygonRep ],
+	function( vs )
+		local geo, type, class, group, rep, act;
+		geo := vs!.geometry;
+		type := vs!.type;
+		if IsClassicalGeneralisedHexagon(geo) and HasCollineationGroup(geo) then
+			group := CollineationGroup(geo);
+			act := CollineationAction(group);
+			rep := RepresentativesOfElements(geo)[type];
+			return act(rep,Random(group));
+		elif HasElationGroup(geo) then
+			group := ElationGroup(geo);
+			act := CollineationAction(group);
+			rep := RepresentativesOfElements(geo)[type];
+			return act(Random(rep),Random(group));
+		else
+			TryNextMethod();
 		fi;
 	end );
 
@@ -981,38 +1012,14 @@ InstallMethod( CollineationGroup,
         else
             act := function(el,g)
                 local src,img;
-                if el!.type = 1 then
-                    src := Position(VertexNames(graph),el); #change wrt generic function which would be el!.obj
-                    img := src^g;
-                    return VertexNames(graph)[img];
-                elif el!.type = 2 then
-                    src := Position(VertexNames(graph),el); #change wrt generic funciton ...
-                    img := src^g;
-                    return VertexNames(graph)[img];
-                fi;
+				src := Position(VertexNames(graph),el); #change wrt generic function which would be el!.obj
+				img := src^g;
+				return VertexNames(graph)[img];
             end;
         fi;
         SetCollineationAction( coll, act );
 		return coll;
     end );
-
-#InstallMethod( BlockDesignOfGeneralisedPolygon,
-#             [ IsProjectivePlane and IsGeneralisedPolygonRep ],
-#  function( gp )
-#    local points, lines, des;
-#    if not "design" in RecNames(GAPInfo.PackagesLoaded) then
-#       Error("You must load the DESIGN package\n");
-#   fi;
-#    if IsBound(gp!.BlockDesignOfGeneralisedPolygonAttr) then
-#       return gp!.BlockDesignOfGeneralisedPolygonAttr;
-#    fi;
-#    points := gp!.points;
-#    lines := gp!.lines;
-#    Info(InfoFinInG, 1, "Computing block design of generalised polygon...");
-#    des := BlockDesign(Size(points), Set(lines, AsSet));
-#    Setter( BlockDesignOfGeneralisedPolygonAttr )( gp, des );
-#    return des;
-#  end );
 
 #############################################################################
 #O  BlockDesignOfGeneralisedPolygon( <gp> )
