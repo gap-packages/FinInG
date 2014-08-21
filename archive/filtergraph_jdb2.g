@@ -1,6 +1,6 @@
 files := ["geometry.gd", "liegeometry.gd", "group.gd", "projectivespace.gd", "correlations.gd", 
 		"polarspace.gd", "morphisms.gd", "enumerators.gd", "diagram.gd", "varieties.gd", "affinespace.gd",
-		"affinegroup.gd", "gpolygons.gd" ];
+		"affinegroup.gd", "gpolygons.gd", "orbits-stabilisers.gd" ];
 
 packagefilters:=[];
 impliedfilters:=[];

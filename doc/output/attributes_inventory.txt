@@ -13,9 +13,12 @@ A: CollineationAction: IsIncidenceStructure
 A: CorrelationAction: IsIncidenceStructure
 A: RepresentativesOfElements: IsIncidenceStructure
 A: AmbientGeometry: IsIncidenceStructure
+A: AmbientGeometry: IsFlagOfIncidenceStructure
+A: Size: IsFlagOfIncidenceStructure
 A: AmbientGeometry: IsElementOfIncidenceStructureandIsElementOfIncidenceStructureRep
 A: AmbientGeometry: IsElementsOfIncidenceStructureandIsElementsOfIncidenceStructureRep
 A: AmbientGeometry: IsAllElementsOfIncidenceStructure
+A: CollineationAction: IsGroup
 
 liegeometry.gd: attributes
 
@@ -24,6 +27,7 @@ A: AmbientSpace: IsElementOfLieGeometry
 A: ProjectiveDimension: IsLieGeometry
 A: ProjectiveDimension: IsElementOfLieGeometry
 A: ProjectiveDimension: IsEmptySubspace
+A: Dimension: IsLieGeometry
 
 group.gd: attributes
 
@@ -33,7 +37,6 @@ projectivespace.gd: attributes
 
 A: ProjectivityGroup: IsProjectiveSpace
 A: SpecialProjectivityGroup: IsProjectiveSpace
-A: Dimension: IsProjectiveSpace
 A: Dimension: IsSubspaceOfProjectiveSpace
 A: Dimension: IsEmpty
 A: Coordinates: IsSubspaceOfProjectiveSpace
@@ -117,11 +120,11 @@ A: AffineGroup: IsAffineSpace
 gpolygons.gd: attributes
 
 A: Order: IsGeneralisedPolygon
-A: AmbientSpace: IsGeneralisedPolygon
-A: CollineationAction: IsGroup
+A: IncidenceMatrixOfGeneralisedPolygon: IsGeneralisedPolygon
+A: AmbientPolarSpace: IsGeneralisedHexagon
 A: ElationGroup: IsElationGQ
 A: BasePointOfEGQ: IsElationGQ
-A: IncidenceMatrixOfGeneralisedPolygon: IsGeneralisedPolygon
 A: IsLinearqClan: IsqClanObj
-A: AmbientPolarSpace: IsGeneralisedHexagon
+A: DefiningPlanes: IsElationGQByBLTSet
+A: CollineationSubgroup: IsElationGQByBLTSet
 

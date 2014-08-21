@@ -1,23 +1,21 @@
 <!-- 
 
   groups_app.xml    FinInG package documentation
-                                                                   John Bamberg
-                                                                   Anton Betten
-                                                                   Jan De Beule
-                                                                  Philippe Cara
-                                                                 Michel Lavrauw
-                                                                  and Maska Law
-                                                             and Michael Pauley
-                                                            and Max Neunhoeffer
-                                                              and Sven Reichard
+ 
+                                                                John Bamberg
+                                                                Anton Betten
+                                                               Philippe Cara
+                                                                Jan De Beule
+                                                              Michel Lavrauw
+                                                             Max Neunhoeffer
+ 
+ Copyright (C) 2014, University of Western Australia
+                     Colorado State University
+                     Vrije Universiteit Brussel
+                     Ghent University
+                     Università degli Studi di Padova
 
-  Copyright (C) 2009, University of Western Australia
-                      Colorado State University
-                      Lehrstuhl D fuer Mathematik
-                      Ghent University
-                      Vrije Universiteit Brussel
-
-This appendix gives more (technical) information on the filter graph of Fining.
+This appendix gives more (technical) information on structure of FinInG.
 
 -->
 
@@ -73,6 +71,9 @@ own declarations and the ones before.
 </Section>
 <Section>
 <Heading>The filter graph(s)</Heading>
+
+<Alt Only="HTML">&lt;img src="filtergraph.png">&lt;/img></Alt>
+<Alt Only="LaTeX">\includegraphics[width=18cm]{filtergraph.png}</Alt><P/>
 
 </Section>
 </Appendix>

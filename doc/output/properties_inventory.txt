@@ -69,4 +69,5 @@ affinegroup.gd: properties
 
 gpolygons.gd: properties
 
+P: HasGraphWithUnderlyingObjectsAsVertices: IsGeneralisedPolygon
 

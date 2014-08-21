@@ -111,5 +111,12 @@ F: OnAffineSubspaces
 
 gpolygons.gi: global functions
 
+F: SplitCayleyPointToPlane5
+F: SplitCayleyPointToPlane
+F: ZeroPointToOnePointsSpaceByTriality
+F: TwistedTrialityHexagonPointToPlaneByTwoTimesTriality
 F: OnKantorFamily
+
+orbits-stabilisers.gi: global functions
+
 

@@ -7,7 +7,7 @@
 #
 ###################################################
 
-
+Print("patching: genss\c ");
 
 InstallMethod( Stab, "by Orb orbit enumeration",
   [IsGroup, IsObject, IsFunction, IsRecord],

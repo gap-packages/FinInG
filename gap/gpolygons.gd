@@ -36,8 +36,8 @@ DeclareCategory( "IsShadowElementsOfGeneralisedPolygon", IsElementsOfIncidenceSt
 DeclareRepresentation( "IsShadowElementsOfGeneralisedPolygonRep", IsElementsOfIncidenceStructure, [ "geometry", "type", "element", "func" ]);
 
 DeclareCategory( "IsElationGQ", IsGeneralisedQuadrangle );
-DeclareCategory( "IsElationGQByKantorFamily", IsElationGQ ); #needed? yes!
-DeclareCategory( "IsElationGQByBLTSet", IsElationGQ ); #needed? yes!
+DeclareCategory( "IsElationGQByKantorFamily", IsElationGQ );
+DeclareCategory( "IsElationGQByBLTSet", IsElationGQ );
 
 #############################################################################
 # Constructor operations:

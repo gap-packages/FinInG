@@ -30,6 +30,8 @@ if InstalledPackageVersion("forms") <= "1.2.2" then
    ReadPackage("fining","gap/forms_patch.gi"); 
 fi;
 
+ReadPackage("fining","gap/genss_patch.g");
+
 ReadPackage("fining","gap/geometry.gi");
 
 ReadPackage("fining","gap/liegeometry.gi"); 
@@ -53,8 +55,6 @@ ReadPackage("fining","gap/affinespace.gi");
 ReadPackage("fining","gap/affinegroup.gi");
 
 ReadPackage("fining","gap/gpolygons.gi");
-
-ReadPackage("fining","gap/genss_patch.g");
 
 ReadPackage("fining","gap/orbits-stabilisers.gi"); # added 11/02/13 ml
 

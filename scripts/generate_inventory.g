@@ -3,7 +3,7 @@
 
 files := ["geometry.gi", "liegeometry.gi", "group.gi", "projectivespace.gi", "correlations.gi", 
 		"polarspace.gi", "morphisms.gi", "enumerators.gi", "diagram.gi", "varieties.gi", "affinespace.gi",
-		"affinegroup.gi", "gpolygons.gi" ];
+		"affinegroup.gi", "gpolygons.gi", "orbits-stabilisers.gi" ];
 		
 #initialize directorynames
 #exampledir = dir where .g files are located : ".../pkg/fining/examples/gap"
