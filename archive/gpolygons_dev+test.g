@@ -473,30 +473,97 @@ pg := PG(20,q);
 vec := List([1..21],x->Zero(GF(q)));
 vec1 := ShallowCopy(vec);
 vec1[7] := o;
-vec1[16] := -o;
+vec1[16] := o;
 vec2 := ShallowCopy(vec);
 vec2[3] := o;
-vec2[21] := -o;
+vec2[21] := o;
 vec3 := ShallowCopy(vec);
 vec3[12] := o;
-vec3[19] := -o;
+vec3[19] := o;
 vec4 := ShallowCopy(vec);
 vec4[1] := o;
-vec4[18] := -o;
+vec4[18] := o;
 vec5 := ShallowCopy(vec);
 vec5[2] := o;
-vec5[17] := o;
+vec5[17] := -o;
 vec6 := ShallowCopy(vec);
 vec6[8] := o;
-vec6[20] := o;
+vec6[20] := -o;
 hyp1 := HyperplaneByDualCoordinates(pg,vec1);
 hyp2 := HyperplaneByDualCoordinates(pg,vec2);
 hyp3 := HyperplaneByDualCoordinates(pg,vec3);
 hyp4 := HyperplaneByDualCoordinates(pg,vec4);
 hyp5 := HyperplaneByDualCoordinates(pg,vec5);
 hyp6 := HyperplaneByDualCoordinates(pg,vec6);
-Meet([hyp1,hyp2,hyp3,hyp4,hyp5,hyp6]);
+sub := Meet([hyp1,hyp2,hyp3,hyp4,hyp5,hyp6]);
+
+gram := List([1..7],x->List([1..7],y->Zero(GF(q))));
+gram[1][5] := o;
+gram[2][6] := o;
+gram[3][7] := o;
+gram[4][4] := -o;
+form := QuadraticFormByMatrix(gram,GF(q));
+ps := PolarSpace(form);
+lines := AsList(Lines(ps));
+
+gras := GrassmannMap(1,PG(6,q));
+hqlines := Filtered(lines,x->x^gras in sub);;
+hqpts := AsList(Points(ps));;
+group := CollineationGroup(ps);
+stab := FiningSetwiseStabiliser(group,hqlines);
+
+gp := GeneralisedPolygonByElements(Set(hqpts),Set(hqlines),\*,stab,OnProjSubspaces);
+CollineationGroup(gp);
+time; #few minutes for q=5.
+
+hq := SplitCayleyHexagon(q);
+lines := List(Lines(hq));;
+gras := GrassmannMap(1,PG(6,q));
+pts := List(lines,x->x^gras);;
+
+#HAll plane of order q^2.
+
+q := 4;
+pg1 := PG(1,q^2);
+em := NaturalEmbeddingByFieldReduction(pg1,GF(q));
+spread := List(Points(pg1),x->x^em);
+klein := KleinCorrespondence(q);
+ps := AmbientGeometry(Range(klein));
+plane := Span([spread[1]^klein,spread[2]^klein,spread[3]^klein]);
+conic := Filtered(Points(plane),x->x in ps);
+plane2 := plane^PolarityOfProjectiveSpace(ps);
+conic2 := Filtered(Points(plane2),x->x in ps);
+regulus := List(conic,x->PreImageElm(klein,x));
+switch := List(conic2,x->PreImageElm(klein,x));
+hall_spread := Union(Difference(spread,regulus),switch);
+pg := PG(4,q);
+inf := HyperplaneByDualCoordinates(pg,[1,0,0,0,0]*Z(q)^0);
+em2 := NaturalEmbeddingBySubspace(PG(3,q),pg,inf);
+inf_pts := List(hall_spread,x->x^em2);
+stab1 := FiningStabiliser(CollineationGroup(pg),inf);
+stab2 := FiningSetwiseStabiliser(stab1,inf_pts);
+affine_pts := Filtered(Points(pg),x->not x in inf);;
+pts := Union(affine_pts,inf_pts);;
+affine_lines := Union(List(inf_pts,x->Filtered(Planes(x),y->not y in inf)));;
+lines := Union(affine_lines,[inf]);;
+gp := GeneralisedPolygonByElements(pts,lines,\*,stab2,OnProjSubspaces);
+CollineationGroup(gp); #pm 90 minutes on mac book air.
 
 
+# an octagon?
 
-
+ps := SymplecticSpace(3,2);
+pts := List(Points(ps));
+lines := List(Lines(ps));
+flags := Union(List(pts,x->List(Lines(x),y->[x,y])));
+inc := function(x,y)
+if x = y then
+    return true;
+elif IsList(x) then
+    return y in x;
+else
+    return x in y;
+fi;
+end;
+apts := Union(pts,lines);
+gp := GeneralisedPolygonByElements(apts,flags,inc);

@@ -2421,13 +2421,13 @@ InstallMethod( VectorSpaceToElement,
 			if not IsSingularVector(QuadraticForm(ps),x) then
 				Error("<v> does not generate an element of <geom>");
 			fi;
+			f := geom!.basefield;
        		if IsBound(geom!.basechange) then
                 change := geom!.basechange;
             else
                 change := IdentityMat(geom!.dimension+1,f);
             fi;
 			el := VectorSpaceToElement(ps,y);
-			f := geom!.basefield;
 			frob := FrobeniusAutomorphism(f);
 			onespace := VectorSpaceToElement(AmbientSpace(ps), ZeroPointToOnePointsSpaceByTriality(x * change^-1,frob,f) * change);
 			if el in onespace then
@@ -2629,12 +2629,12 @@ InstallMethod( \in,
                 if not IsSingularVector(QuadraticForm(AmbientPolarSpace(gp)),vec) then
                     return false;
                 fi;
+                f := gp!.basefield;
                 if IsBound(gp!.basechange) then
                     change := gp!.basechange;
                 else
                     change := IdentityMat(gp!.dimension+1,f);
                 fi;
-                f := gp!.basefield;
                 frob := FrobeniusAutomorphism(f);
                 #onespace := VectorSpaceToElement(AmbientSpace(gp), ZeroPointToOnePointsSpaceByTriality(vec,frob,f));
                 onespace := VectorSpaceToElement(AmbientSpace(gp), ZeroPointToOnePointsSpaceByTriality(vec * change^-1,frob,f) * change);
