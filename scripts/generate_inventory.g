@@ -133,27 +133,4 @@ for file in files do
 	AppendTo(outputfile_operations,"\n");
 	AppendTo(outputfile_attributes,"\n");
 	AppendTo(outputfile_properties,"\n");
-od;	
-
-ReadLineWithoutHash := function(stream)
-	local r;
-	r := ReadLine(stream);
-	if r = fail then
-		return r;
-	fi;
-	while r <> fail do
-		r := ReadLine(stream);
-		if r = fail then
-			return r;
-		fi;
-		r := NormalizedWhitespace(r);
-		if Length(r) = 0 then
-			return r;
-		fi;
-		if r[1] = '#' then
-			r := ReadLine(stream);
-		else
-			return r;
-		fi;
-	od;
-end;
+od;

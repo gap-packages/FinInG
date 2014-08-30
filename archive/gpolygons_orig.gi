@@ -1939,7 +1939,7 @@ InstallMethod( ViewObj,
 		Print("<generalised hexagon of order ",Order(p), ">");
 	end );
 
-InstallMethod( PrintObj, 
+InstallMethod( Display, 
 	"for a generalised hexagon with an order",	
 	[ IsGeneralisedHexagon and HasOrder ],
 	function( p )

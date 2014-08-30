@@ -523,7 +523,7 @@ pts := List(lines,x->x^gras);;
 
 #HAll plane of order q^2.
 
-q := 4;
+q := 3;
 pg1 := PG(1,q^2);
 em := NaturalEmbeddingByFieldReduction(pg1,GF(q));
 spread := List(Points(pg1),x->x^em);

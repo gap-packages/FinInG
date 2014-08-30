@@ -71,7 +71,7 @@ Print(", gpolygons\c");
 #		- If a GP is constructed using the "generic construction methods", there is always an underlying graph (to
 #			check whether the user really constructs a GP. Creating the graph can be time consuming, but there is
 #			the possibility to use a group. There is no NC version, either you are a developper, and you want to make
-#			a particular GP (e.g. the hexagons) and then you know what you od and there is no need to check whether your
+#			a particular GP (e.g. the hexagons) and then you know what you do and there is no need to check whether your
 #			developed GP is really a GP, or you are a user and must be protected against yourself. 
 #			The computed graph is stored as a mutable attribute.
 #		- For the particular GPs: of course we know that they are a GP, so on construction, we do not compute
@@ -2103,6 +2103,23 @@ InstallMethod( TwistedTrialityHexagon,
     return geo;
   end );
 
+#############################################################################
+#O  Display( <egq> )
+#  for a classical generalised hexagon
+##
+InstallMethod( Display,
+	"for a classical generalised hexagon",
+	[ IsGeneralisedHexagon and IsLieGeometry ],
+	function( gp )
+		if IsHyperbolicQuadric(AmbientPolarSpace(gp)) then
+            Print("Twisted triality hexagon of order ",String(Order(gp)),"\n",
+                "with ambient polar space\n", AmbientPolarSpace(gp));
+        else
+            Print("Split Cayley hexagon of order ",String(Order(gp)),"\n",
+                "with ambient polar space\n", AmbientPolarSpace(gp));
+        fi;
+    end );
+
 ##################################################################################
 # Groups: we follow the same approach as for polar spaces. There is an operation
 # that returns the groups as fining groups, which is used when needed by e.g.
@@ -2709,7 +2726,7 @@ InstallMethod( ObjectToElement,
 
 #############################################################################
 #
-# Elation generalies quadrangles. 
+# Elation generalised quadrangles.
 #
 #############################################################################
 
@@ -3104,6 +3121,19 @@ InstallMethod( EGQByKantorFamily,
   end );
 
 #Iterator and IsIncident: replaced by generic methods now.
+
+#############################################################################
+#O  Display( <egq> )
+#  for an elation GQ by Kantor family
+##
+InstallMethod( Display,
+	"for an elation GQ by Kantor family",
+	[ IsElationGQByKantorFamily ],
+	function( gp )
+        Print("Elation generalised quadrangle of order ",String(Order(gp)),"\n",
+                "with elation group\n");
+        View(egq!.group);
+    end );
 
 #############################################################################
 #O  UnderlyingObject( <el>)
@@ -3952,6 +3982,21 @@ InstallMethod( EGQByBLTSet,
 	geo!.listelements := listels; 
 	return geo;
 	end );
+
+#############################################################################
+#O  Display( <egq> )
+#  for an EGQByBLTSet
+##
+InstallMethod( Display,
+	"for an elation GQ by BLT set",
+	[ IsElationGQByBLTSet ],
+	function( gp )
+        Print("Elation generalised quadrangle of order ",String(Order(gp)),"\n",
+                "with defining planes\n");
+        View(egq!.planes);
+        Print("\nand base point with underlyig object\n");
+        View(egq!.basepointobj);
+    end );
 
 #############################################################################
 #O  DefiningPlanes( <egq> )
