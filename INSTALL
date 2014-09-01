@@ -7,11 +7,12 @@ accepted/deposited packages.
 
 2. Install GAP the way you like it.  At the end you should have a working GAP
 distribution. You will now have to install seperate packages for GAP. This can
-be done in two ways: using the central 'pkg' directory in the /gap4r5/ tree, or
+be done in two ways: using the central 'pkg' directory in the /gap4r7/ 
+tree, or
 using a 'pkg' directory in your homedirectory, or even using both.  Don't
 forget that when you don't use the central directory, you have to either change or
 create a gaprc file or start gap in such a way that it also looks for packages
-in your local 'pkg' dir, e.g.: gap4r4 -l "/Users/alice/pkg/;/opt/gap4r4".
+in your local 'pkg' dir, e.g.: gap4r7 -l "/Users/alice/pkg/;/opt/gap4r7".
 This is an example: here the local pkg directory is just a directory in 
 /Users/alice, and the GAP-tarball is unpacked in the
 directory /opt/. The 'gap' command is just a small shell script that was

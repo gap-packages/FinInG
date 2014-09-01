@@ -179,6 +179,7 @@ DeclareOperation( "ResidueOfFlag", [IsFlagOfIncidenceStructure]);
 #############################################################################
 
 DeclareAttribute( "RankAttr", IsIncidenceStructure );
+DeclareAttribute( "RankAttr", IsFlagOfIncidenceStructure );
 DeclareAttribute( "TypesOfElementsOfIncidenceStructure", IsIncidenceStructure );
 DeclareAttribute( "TypesOfElementsOfIncidenceStructurePlural", IsIncidenceStructure );
 
@@ -188,6 +189,8 @@ DeclareOperation( "ElementsOfIncidenceStructure", [IsIncidenceStructure, IsStrin
 
 DeclareOperation( "NrElementsOfIncidenceStructure", [IsIncidenceStructure, IsPosInt] );
 DeclareOperation( "NrElementsOfIncidenceStructure", [IsIncidenceStructure, IsString] );
+
+DeclareOperation( "IncidenceGraph", [ IsIncidenceStructure ] );
 
 DeclareOperation( "Points", [IsIncidenceStructure] );
 DeclareOperation( "Lines", [IsIncidenceStructure] );
@@ -222,6 +225,7 @@ DeclareAttribute( "Size", IsFlagOfIncidenceStructure );
 DeclareOperation( "IsIncident", [IsElementOfIncidenceStructure, IsElementOfIncidenceStructure] );
 DeclareOperation( "IsIncident", [IsElementOfIncidenceStructure, IsFlagOfIncidenceStructure] );
 DeclareOperation( "ShadowOfFlag", [IsFlagOfIncidenceStructure, IsPosInt] );
+DeclareOperation( "ShadowOfElement", [IsElementOfIncidenceStructure, IsPosInt] );
 DeclareOperation( "IsCollinear", [IsIncidenceStructure, IsElementOfIncidenceStructure, IsElementOfIncidenceStructure]);
 DeclareOperation( "Span", [IsElementOfIncidenceStructure, IsElementOfIncidenceStructure]);
 DeclareOperation( "Meet", [IsElementOfIncidenceStructure, IsElementOfIncidenceStructure]);

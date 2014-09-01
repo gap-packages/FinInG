@@ -118,7 +118,7 @@ InstallMethod( AmbientGeometry,
 # general method that returns the ambient geometry of a flag
 ##
 InstallMethod( AmbientGeometry,
-        [ IsFlagOfIncidenceStructure ],
+        [ IsFlagOfIncidenceStructure and IsFlagOfIncidenceStructureRep],
         x -> x!.geo );
 
 
@@ -217,7 +217,7 @@ InstallMethod( IsIncident,
         [IsElementOfIncidenceStructure, IsElementOfIncidenceStructure],
         function( x, y )
 		local geo;
-		if AmbientGeometry(x) <> AmbientGeometry(x) then
+		if AmbientGeometry(x) <> AmbientGeometry(y) then
 			Error("Elements must have the same ambient geometry.");
 		fi;
 		geo:=AmbientGeometry(x);
@@ -245,7 +245,7 @@ InstallMethod( IsIncident,
 		return inc;
         end );
 
-# added by pc 180813
+# added by pc 140813
 #############################################################################
 #O  FlagOfIncidenceStructure( <incgeo>, <els> )
 # returns the flag of the incidence structure <incgeo> with elements in 
@@ -268,9 +268,28 @@ List([i..Length(list)], j -> IsIncident(list[i], list[j])))));
                 fi;
                 flag := rec(geo := incgeo, types := List(list,x->x!.type), 
 els := list);
-                ObjectifyWithAttributes(flag, IsFlagOfIncidenceStructureType, IsEmptyFlag, false);
+                ObjectifyWithAttributes(flag, 
+IsFlagOfIncidenceStructureType, IsEmptyFlag, false, RankAttr, 
+Size(list));
                 return flag;
         end);
+
+# added by pc 140901
+#############################################################################
+#O  FlagOfIncidenceStructure( <incgeo>, <els> )
+# returns the empty flag of incidence sturcture <incgeo>.
+##
+InstallMethod( FlagOfIncidenceStructure,
+        "for an incidence structure and an empty list",
+        [ IsIncidenceStructure, IsList and IsEmpty ],
+        function(incgeo,els)
+                local flag;
+                flag := rec(geo := incgeo, types := [], els := []);
+                ObjectifyWithAttributes(flag, 
+IsFlagOfIncidenceStructureType, IsEmptyFlag, true, RankAttr, 0);
+                return flag;
+        end);
+
 
 
 # added by pc 140813
@@ -286,12 +305,36 @@ InstallMethod( ShadowOfFlag,
         function( f, j )
                 local iter, shad, x;
 		if j in Type(f) then
-			return f!.els[Position(Type(f),j)];
+			return [f!.els[Position(Type(f),j)]];
 		fi;
                 iter:=Iterator(ElementsOfIncidenceStructure(f!.geo,j));
                 shad:=[];
                 for x in iter do
                         if IsIncident(x,f) then Add(shad,x); fi;
+                od;
+                return shad;
+        end );
+
+
+# added by pc 140901
+############################################################################
+#O  ShadowOfElement( <e,j> )
+# Completely generic shadow computation
+# For an element of an incidence structure and a type j
+# Returns all elements of type j which are incident to e
+##
+InstallMethod( ShadowOfElement,
+        "for an element of an incidence structure and a type",
+        [IsElementOfIncidenceStructure, IsPosInt],
+        function( e, j )
+                local iter, shad, x;
+                if j = Type(e) then
+                        return [e];
+                fi;
+                iter:=Iterator(ElementsOfIncidenceStructure(e!.geo,j));
+                shad:=[];
+                for x in iter do
+                        if IsIncident(x,e) then Add(shad,x); fi;
                 od;
                 return shad;
         end );
@@ -469,6 +512,17 @@ InstallMethod( Size,
                 return Size(ElementsOfFlag(flag));
         end );
 
+# added by pc, 140901
+#############################################################################
+#O  Rank( <flag> )
+# returns rank of a flag
+#
+##
+InstallMethod( Rank,
+        "for IsFlagOfIncidenceStructure",
+        [IsFlagOfIncidenceStructure],
+        i -> RankAttr(i) );
+
 
 # CHECKED 18/4/2011 jdb
 #############################################################################
@@ -644,6 +698,33 @@ InstallMethod( ResidueOfFlag,
                 #Objectify(ty,geo);
                 return geo;
         end );
+
+# added 140901, pc
+#############################################################################
+#O  IncidenceGraph( <incstr> )
+# Generic method for incidence graph, with trivial group
+##
+InstallMethod( IncidenceGraph,
+        "for an incidence structure",
+        [ IsIncidenceStructure ],
+        function( incstr )
+                local all, adj, gamma;
+		all:=List([1..Rank(incstr)], i -> 
+AsSet(ElementsOfIncidenceStructure(incstr,i)));
+		all:=Union(all);
+
+		adj:=function(i,j)
+		 if i=j then return false; # Otherwise problem with loops
+		 else return IsIncident(all[i],all[j]);
+		 fi;
+		end;
+
+		gamma := Graph( Group(()), [1..Size(all)], OnPoints, 
+adj, true);
+		return gamma;
+        end );
+
+
 
 
 #############################################################################
