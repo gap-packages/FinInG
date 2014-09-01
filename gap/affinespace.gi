@@ -1148,14 +1148,14 @@ InstallMethod( Span,
 
 #############################################################################
 #O  Meet( <x>, <y> )
-# cvec/cmat: I took no risk and unpackked everything to do linear algebra.
+# cvec/cmat: I took no risk and unpacked everything to do linear algebra.
 ##
 InstallMethod( Meet, 
 	"for two affine subspaces",
 	[IsSubspaceOfAffineSpace, IsSubspaceOfAffineSpace],
 	function( x, y )
 		local ag, ux1, uy1, ux2, uy2, typx, typy, int, 
-          rep, t, f, vec, rk, trans,ambx,amby;
+          rep, t, f, vec, rk, trans, ambx, amby, m;
 		ag := x!.geo;
 		ambx := AmbientSpace(x);
 		amby := AmbientSpace(x);
@@ -1175,12 +1175,33 @@ InstallMethod( Meet,
   ## dimension dim(A int B), or empty
   ## (iv) A empty or B empty => equal or empty 
 
-      
 	## redundant cases 
-		if x = y then 
-			return x;
+		if typx = 1 and typy = 1 then
+		 	if x = y then 
+				return x;
+			else 
+				return [];
+			fi;
 		elif (typx = 1 or typy = 1) then
-			return [];
+			if typx = 1 then
+				ux1 := Unpack(x!.obj); 
+			else
+				ux1 := Unpack(x!.obj[1]); 
+				mat := Unpack(x!.obj[2]);
+			fi;
+			if typy = 1 then
+				uy1 := Unpack(y!.obj);
+				mat := [ ]; 
+			else
+				uy1 := Unpack(y!.obj[1]); 
+				mat := Unpack(y!.obj[2]);
+			fi;
+						
+			if IsZero( VectorSpaceTransversalElement( vec, mat, ux1 - uy1) ) then
+				return Minimum(x, y);
+			else 
+			    return [];
+			fi;
 		fi;
 
 		ux1 := Unpack(x!.obj[1]); 
