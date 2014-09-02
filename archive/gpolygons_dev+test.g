@@ -571,7 +571,7 @@ gp := GeneralisedPolygonByElements(apts,flags,inc);
 ps := SymplecticSpace(3,2);
 pts := List(Points(ps));
 lines := List(Lines(ps));
-flags := List(pts,x->List(Lines(x),y->FlagOfIncidenceStructure(ps,[x,y])));
+flags := Union(List(pts,x->List(Lines(x),y->FlagOfIncidenceStructure(ps,[x,y]))));
 inc := function(x,y)
 if x = y then
     return true;

@@ -327,6 +327,20 @@ InstallMethod( IsIncident,
 		return inc;
         end );
 
+#############################################################################
+#O  \in( <x>, <y> )
+# x: an element of an incidence structure, y a flag of that incidence structure
+##
+InstallOtherMethod( \in, 
+	"for an element and a flag of an incidence structure",
+	[ IsElementOfIncidenceStructure, IsFlagOfIncidenceStructure ],
+	function( x, y )
+		if x!.geo <> y!.geo then
+			Error( "<x> and <y> have not the same ambient geometry" );
+		else
+            return x in y!.els;
+        fi;
+	end );
 
 # added by pc 140813
 #############################################################################
