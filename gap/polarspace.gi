@@ -2191,7 +2191,7 @@ InstallMethod( FlagOfIncidenceStructure,
 		  Error("<els> does not determine a flag>");
 		fi;
 		flag := rec(geo := ps, types := List(list,x->x!.type), els := list, vectorspace := ps!.vectorspace );
-		ObjectifyWithAttributes(flag, IsFlagOfCPSType, IsEmptyFlag, false );
+		ObjectifyWithAttributes(flag, IsFlagOfCPSType, IsEmptyFlag, false, RankAttr, Size(list) );
 		return flag;
 	end);
 
@@ -2206,7 +2206,7 @@ InstallMethod( FlagOfIncidenceStructure,
 	function(ps,els)
 		local flag;
 		flag := rec(geo := ps, types := [], els := [], vectorspace := ps!.vectorspace );
-		ObjectifyWithAttributes(flag, IsFlagOfCPSType, IsEmptyFlag, true );
+		ObjectifyWithAttributes(flag, IsFlagOfCPSType, IsEmptyFlag, true, RankAttr, 0 );
 		return flag;
 	end);
 

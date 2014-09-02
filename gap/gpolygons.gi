@@ -3132,7 +3132,7 @@ InstallMethod( Display,
 	function( gp )
         Print("Elation generalised quadrangle of order ",String(Order(gp)),"\n",
                 "with elation group\n");
-        View(egq!.group);
+        View(gp!.group);
     end );
 
 #############################################################################
@@ -3993,9 +3993,9 @@ InstallMethod( Display,
 	function( gp )
         Print("Elation generalised quadrangle of order ",String(Order(gp)),"\n",
                 "with defining planes\n");
-        View(egq!.planes);
+        View(gp!.planes);
         Print("\nand base point with underlyig object\n");
-        View(egq!.basepointobj);
+        View(gp!.basepointobj);
     end );
 
 #############################################################################

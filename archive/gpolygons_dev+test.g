@@ -567,3 +567,150 @@ fi;
 end;
 apts := Union(pts,lines);
 gp := GeneralisedPolygonByElements(apts,flags,inc);
+
+ps := SymplecticSpace(3,2);
+pts := List(Points(ps));
+lines := List(Lines(ps));
+flags := List(pts,x->List(Lines(x),y->FlagOfIncidenceStructure(ps,[x,y])));
+inc := function(x,y)
+if x = y then
+    return true;
+elif IsFlagOfIncidenceStructure(x) and IsElementOfIncidenceStructure(y) then
+    return IsIncident(x,y);
+elif IsElementOfIncidenceStructure(x) and IsElementOfIncidenceStructure(y) then
+    return false;
+elif IsFlagOfIncidenceStructure(x) and IsFlagOfIncidenceStructure(y) then   
+    return false;
+else 
+    return inc(y,x);
+fi;
+end;
+apts := Union(pts,lines);
+gp := GeneralisedPolygonByElements(apts,flags,inc);
+
+
+##### voorbeeldje Philippe
+
+twos:=[];
+Orbit(Group((1,2,3,4)),[2,0,0,0], Permuted);
+Perform(last, function(i) Append(twos,[i, -1*i]); end);
+
+cell:=function(v)
+local n, cellset;
+ cellset:=[];
+ for n in Difference(twos, [v,-1*v]) do
+   Add(cellset, (n+v)/2);
+ od;
+ return cellset;
+end;
+
+eles:=List(twos, cell);;
+type1:=Union(eles));;
+type1:= List(type1, v -> [v]);;
+
+tetra:=Tuples([0,1],4);;
+tcells:=List(tetra, t -> twos{[t[1]+1,3+t[2],5+t[3],7+t[4]]});;
+
+List(tcells, tc -> List(Combinations(tc,2), e-> Sum(e)/2));;
+Append(eles, last);;
+
+prefaces:=List(Combinations(eles,2), Intersection);;
+type3:=Filtered(prefaces, p -> Size(p)=3);;
+Append(eles, Union(List(type3, f -> Combinations(f,2))));;
+Append(eles, type3);;
+Append(eles, type1);;
+
+therelation:= function(x,y)
+ return (IsSubset(x,y) or IsSubset(y,x));
+end;
+
+thetype:=function(x)
+ return Dimension(VectorSpace(Rationals, x));
+end;
+
+struc:=IncidenceStructure(eles, therelation, thetype, [1,2,3,4]);
+
+# Now I have a (combinatorial) incidence structure
+
+ElementsOfIncidenceStructure(struc, 3);;
+f:=Random(last);
+ShadowOfElement(struc,f,1);
+ShadowOfElement(struc,f,2);
+e:=Random(last);;
+ShadowOfElement(struc,f,3); # shadow on its own type is itself of course
+f = Random(last);
+ShadowOfElement(struc,f,4);
+
+flag:=FlagOfIncidenceStructure(struc, [f,e]);
+Type(flag);
+ShadowOfFlag(struc,flag,1);
+g := Random(last);
+IsIncident(g, flag);
+ShadowOfFlag(struc,flag,2);
+last = Filtered(ElementsOfFlag(flag), e -> Type(e)=2);
+AmbientGeometry(flag);
+struc = last;
+
+IsIncident(ElementsOfFlag(flag)[1], ElementsOfFlag(flag)[2]);
+
+resi:=ResidueOfFlag(flag);
+
+List(Cartesian(ElementsOfIncidenceStructure(resi,1),
+ ElementsOfIncidenceStructure(resi,2)), x -> IsIncident(x[1],x[2]));  
+
+# Great! We have a generalized digon
+
+emptyflag:=FlagOfIncidenceStructure(struc,[]);
+ElementsOfFlag(emptyflag);
+AmbientGeometry(emptyflag);
+Type(emptyflag);
+Rank(emptyflag);
+Rank(flag);
+
+gr:=IncidenceGraph(resi);;
+LocalInfo(gr, 1);
+
+#Try all residues
+combis:=Combinations([1..4],2);;
+for pair in combis do
+  fl:=[Random(ElementsOfIncidenceStructure(struc,pair[1]))];
+  Add(fl, Random(ShadowOfElement(struc,fl[1], pair[2])));
+  res:=ResidueOfFlag(FlagOfIncidenceStructure(struc,fl));
+  ig:=IncidenceGraph(res);
+  np:=NrElementsOfIncidenceStructure(res,1);
+  locp:=LocalInfo(ig,1);
+  locl:=LocalInfo(ig,np+1); # first line
+  Print("edge ", pair,": g = ", locp.localGirth/2,", dp = ", 
+locp.localDiameter, ", dl = ", locl.localDiameter, "\n");
+od;
+
+
+gamma:=IncidenceGraph(struc);;
+aut:=AutomorphismGroup(gamma); 
+
+pabs:=[Stabilizer(aut, 1)];
+Append(pabs, List([1..Rank(struc)-1], i -> Stabilizer(aut, Sum([1..i],
+j -> NrElementsOfIncidenceStructure(struc, j))+1)));;
+
+cos:=CosetGeometry(aut, pabs);;
+diag:=DiagramOfGeometry(cos);;
+
+DrawDiagram(diag, "rara");
+
+Exec("gv rara.ps");
+
+# To show how generic we are...
+
+pp:=PG(2,5);
+ig:=IncidenceGraph(pp);; # Could make a much faster method here since we know the group
+LocalInfo(ig,1); # a point
+LocalInfo(ig,32); # a line
+
+# Generalised triangle!
+
+gp:=SplitCayleyHexagon(5);  
+incgr:=IncidenceGraph(gp);;  # Have a coffee or two...
+LocalInfo(incgr, 1);  
+NrElementsOfIncidenceStructure(gp,1);
+LocalInfo(incgr, 3907);
+

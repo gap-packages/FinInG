@@ -934,7 +934,9 @@ InstallMethod( ShadowOfElement,
 	# useful to compute with the shadows, e.g. iterator
 	function( ps, v, j )
 		local localinner, localouter, localfactorspace;
-		if j < v!.type then
+        if j > ps!.dimension then
+            Error("<ps> has no elements of type <j>");
+        elif j < v!.type then
 			localinner := [];
 			localouter := Unpack(v!.obj);
 		elif j = v!.type then
@@ -1356,7 +1358,7 @@ InstallMethod( FlagOfIncidenceStructure,
 		  Error("<els> does not determine a flag>");
 		fi;
 		flag := rec(geo := ps, types := List(list,x->x!.type), els := list, vectorspace := ps!.vectorspace );
-		ObjectifyWithAttributes(flag, IsFlagOfPSType, IsEmptyFlag, false );
+		ObjectifyWithAttributes(flag, IsFlagOfPSType, IsEmptyFlag, false, RankAttr, Size(list) );
 		return flag;
 	end);
 
@@ -1371,7 +1373,7 @@ InstallMethod( FlagOfIncidenceStructure,
 	function(ps,els)
 		local flag;
 		flag := rec(geo := ps, types := [], els := [], vectorspace := ps!.vectorspace );
-		ObjectifyWithAttributes(flag, IsFlagOfPSType, IsEmptyFlag, true );
+		ObjectifyWithAttributes(flag, IsFlagOfPSType, IsEmptyFlag, true, RankAttr, 0 );
 		return flag;
 	end);
 
@@ -1435,7 +1437,9 @@ InstallMethod( ShadowOfFlag,
 	[IsProjectiveSpace, IsFlagOfProjectiveSpace, IsPosInt],
 	function( ps, flag, j )
     local localinner, localouter, localfactorspace, v, smallertypes, biggertypes, ceiling, floor;
-    
+    if j > ps!.dimension then
+        Error("<ps> has no elements of type <j>");
+    fi;
     #empty flag - return all subspaces of the right type
     if IsEmptyFlag(flag) then
       return ElementsOfIncidenceStructure(ps, j);

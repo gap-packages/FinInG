@@ -1155,7 +1155,7 @@ InstallMethod( Meet,
 	[IsSubspaceOfAffineSpace, IsSubspaceOfAffineSpace],
 	function( x, y )
 		local ag, ux1, uy1, ux2, uy2, typx, typy, int, 
-          rep, t, f, vec, rk, trans, ambx, amby, m;
+          rep, t, f, vec, rk, trans, ambx, amby, m, mat;
 		ag := x!.geo;
 		ambx := AmbientSpace(x);
 		amby := AmbientSpace(x);

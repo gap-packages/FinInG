@@ -224,7 +224,8 @@ DeclareAttribute( "Size", IsFlagOfIncidenceStructure );
 
 DeclareOperation( "IsIncident", [IsElementOfIncidenceStructure, IsElementOfIncidenceStructure] );
 DeclareOperation( "IsIncident", [IsElementOfIncidenceStructure, IsFlagOfIncidenceStructure] );
-DeclareOperation( "ShadowOfFlag", [IsFlagOfIncidenceStructure, IsPosInt] );
+DeclareOperation( "IsIncident", [IsFlagOfIncidenceStructure, IsElementOfIncidenceStructure] );
+#DeclareOperation( "ShadowOfFlag", [IsFlagOfIncidenceStructure, IsPosInt] );
 DeclareOperation( "ShadowOfElement", [IsElementOfIncidenceStructure, IsPosInt] );
 DeclareOperation( "IsCollinear", [IsIncidenceStructure, IsElementOfIncidenceStructure, IsElementOfIncidenceStructure]);
 DeclareOperation( "Span", [IsElementOfIncidenceStructure, IsElementOfIncidenceStructure]);
@@ -271,20 +272,13 @@ DeclareGlobalFunction( "HashFuncForElements" );
 #new on 19/4/2011
 DeclareCategory( "IsShadowElementsOfIncidenceStructure", IsElementsOfIncidenceStructure );
 
-DeclareOperation( "ShadowOfElement",
-  [IsIncidenceStructure, IsElementOfIncidenceStructure, IsPosInt] );
-DeclareOperation( "ShadowOfElement",
-  [IsIncidenceStructure, IsElementOfIncidenceStructure, IsString] );
+DeclareOperation( "ShadowOfElement", [IsIncidenceStructure, IsElementOfIncidenceStructure, IsPosInt] );
+DeclareOperation( "ShadowOfElement", [IsIncidenceStructure, IsElementOfIncidenceStructure, IsString] );
 
-DeclareOperation( "ShadowOfFlag",
-  [IsIncidenceStructure, IsFlagOfIncidenceStructure, IsPosInt] );
-DeclareOperation( "ShadowOfFlag",
-  [IsIncidenceStructure, IsFlagOfIncidenceStructure, IsString] );  
-DeclareOperation( "ShadowOfFlag",
-  [IsIncidenceStructure, IsList, IsPosInt] );
-DeclareOperation( "ShadowOfFlag",
-  [IsIncidenceStructure, IsList, IsString] );  
-
+DeclareOperation( "ShadowOfFlag", [IsIncidenceStructure, IsFlagOfIncidenceStructure, IsPosInt] );
+DeclareOperation( "ShadowOfFlag", [IsIncidenceStructure, IsFlagOfIncidenceStructure, IsString] );
+DeclareOperation( "ShadowOfFlag", [IsIncidenceStructure, IsList, IsPosInt] );
+DeclareOperation( "ShadowOfFlag", [IsIncidenceStructure, IsList, IsString] );
 
 #now a very general operation. 
 DeclareOperation( "ElementsIncidentWithElementOfIncidenceStructure", [ IsElementOfIncidenceStructure, IsPosInt ] );

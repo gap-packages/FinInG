@@ -175,6 +175,19 @@ InstallMethod( \=,
 	function( a, b ) 
 		return a!.obj = b!.obj; 
 	end );
+    
+# added 2/9/14 pc+jdb
+#############################################################################
+#O  \=( <a>, <b> )
+# test equality method for flags of an incidence structure
+# relies to testing equality of underlying 'obj' fields of the arguments.
+## 
+InstallMethod( \=, 
+	"for two IsElementOfIncidenceStructure",	
+	[IsFlagOfIncidenceStructure, IsFlagOfIncidenceStructure],
+	function( a, b )
+		return Set(a!.els) = Set(b!.els);
+	end );
 
 # CHECKED 18/4/2011 jdb, but also changed 18/4/2011. Volunteers to check again?
 #############################################################################
@@ -186,12 +199,61 @@ InstallMethod( \=,
 InstallMethod( \<, "for two IsElementOfIncidenceStructure",
 	[IsElementOfIncidenceStructure, IsElementOfIncidenceStructure], 
 	function( a, b ) 
-		if a!.type = b!.type then 
+		if a!.type = b!.type then
 			return a!.obj < b!.obj;
 		else
 			return a!.type < b!.type;
 		fi;
 	end );
+
+# added 2/9/14 pc+jdb
+#############################################################################
+#O  \<( <a>, <b> )
+# LT for two flags of an incidence structure.
+# first compares types of elements, in case of equality, 
+# relies to comparing underlying 'obj' fields of the arguments.
+## 
+InstallMethod( \<, "for two IsFlagOfIncidenceStructure",
+	[IsFlagOfIncidenceStructure, IsFlagOfIncidenceStructure],
+	function( a, b ) 
+		if a!.types = b!.types then
+			return a!.els < b!.els;
+		else
+			return a!.types < b!.types;
+		fi;
+	end );
+
+# added 2/9/14 pc+jdb
+#############################################################################
+#O  \<( <a>, <b> )
+# LT for a flag and an element.
+# first compares types of elements, in case of equality, 
+# relies to comparing underlying 'obj' fields of the arguments.
+## 
+InstallMethod( \<, "for two IsElementOfIncidenceStructure",
+	[IsFlagOfIncidenceStructure, IsElementOfIncidenceStructure],
+	function( a, b ) 
+        if a!.geo <> b!.geo then
+            Error("<flag> and <element> do not belong to the same geometry");
+        fi;
+        return false;
+    end );
+
+# added 2/9/14 pc+jdb
+#############################################################################
+#O  \<( <a>, <b> )
+# LT for two flags of an incidence structure.
+# first compares types of elements, in case of equality, 
+# relies to comparing underlying 'obj' fields of the arguments.
+## 
+InstallMethod( \<, "for two IsElementOfIncidenceStructure",
+	[IsElementOfIncidenceStructure, IsFlagOfIncidenceStructure],
+	function( a, b )
+        if a!.geo <> b!.geo then
+            Error("<element> and <flag> do not belong to the same geometry");
+        fi;
+        return true;
+    end );
 
 # CHECKED 17/04/11 jdb
 #############################################################################
@@ -244,6 +306,27 @@ InstallMethod( IsIncident,
 		od;
 		return inc;
         end );
+        
+# added by pc 140813
+############################################################################
+#O  IsIncident( <x,F> )
+# For an element and a flag of an incidence structure
+# An element is incident with a flag if it is incident with all elements 
+# of the flag.
+##
+InstallMethod( IsIncident,
+        "for an element and a flag of an incidence structure",
+        [IsFlagOfIncidenceStructure, IsElementOfIncidenceStructure],
+        function( f, x )
+		local iter, inc;
+		iter:=Iterator(ElementsOfFlag(f));
+		inc:=true;
+                while inc and not(IsDoneIterator(iter)) do
+			inc:=IsIncident(x,NextIterator(iter));
+		od;
+		return inc;
+        end );
+
 
 # added by pc 140813
 #############################################################################
@@ -262,15 +345,15 @@ InstallMethod( FlagOfIncidenceStructure,
                   Error("A flag can contain at most Rank(<incstr>) elements");
                 fi;
                 test := Set(Flat(List([1..Length(list)-1],i -> 
-List([i..Length(list)], j -> IsIncident(list[i], list[j])))));
+                    List([i..Length(list)], j -> IsIncident(list[i], list[j])))));
                 if (test <> [ true ] and test <> []) then
                   Error("<els> does not determine a flag>");
                 fi;
                 flag := rec(geo := incgeo, types := List(list,x->x!.type), 
-els := list);
+                        els := list);
                 ObjectifyWithAttributes(flag, 
-IsFlagOfIncidenceStructureType, IsEmptyFlag, false, RankAttr, 
-Size(list));
+                    IsFlagOfIncidenceStructureType, IsEmptyFlag, false, RankAttr,
+                        Size(list));
                 return flag;
         end);
 
@@ -286,11 +369,9 @@ InstallMethod( FlagOfIncidenceStructure,
                 local flag;
                 flag := rec(geo := incgeo, types := [], els := []);
                 ObjectifyWithAttributes(flag, 
-IsFlagOfIncidenceStructureType, IsEmptyFlag, true, RankAttr, 0);
+                    IsFlagOfIncidenceStructureType, IsEmptyFlag, true, RankAttr, 0);
                 return flag;
         end);
-
-
 
 # added by pc 140813
 ############################################################################
@@ -300,21 +381,17 @@ IsFlagOfIncidenceStructureType, IsEmptyFlag, true, RankAttr, 0);
 # Returns all elements of type j which are incident to the flag F
 ##
 InstallMethod( ShadowOfFlag,
-        "for a flag of an incidence structure and a type",
-        [IsFlagOfIncidenceStructure, IsPosInt],
-        function( f, j )
-                local iter, shad, x;
-		if j in Type(f) then
-			return [f!.els[Position(Type(f),j)]];
-		fi;
-                iter:=Iterator(ElementsOfIncidenceStructure(f!.geo,j));
-                shad:=[];
-                for x in iter do
-                        if IsIncident(x,f) then Add(shad,x); fi;
-                od;
-                return shad;
+        "for an incidence structure, flag of an incidence structure and a type",
+        [IsIncidenceStructure, IsFlagOfIncidenceStructure, IsPosInt],
+        function( inc, f, j )
+            local iter, shad, x;
+            return Objectify( NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and 
+                                    IsShadowElementsOfIncidenceStructure),
+                rec( geometry := inc,
+                     type := j,
+                     parentflag := f )
+                );
         end );
-
 
 # added by pc 140901
 ############################################################################
@@ -325,20 +402,39 @@ InstallMethod( ShadowOfFlag,
 ##
 InstallMethod( ShadowOfElement,
         "for an element of an incidence structure and a type",
-        [IsElementOfIncidenceStructure, IsPosInt],
-        function( e, j )
-                local iter, shad, x;
-                if j = Type(e) then
-                        return [e];
-                fi;
-                iter:=Iterator(ElementsOfIncidenceStructure(e!.geo,j));
-                shad:=[];
-                for x in iter do
-                        if IsIncident(x,e) then Add(shad,x); fi;
-                od;
-                return shad;
+        [IsIncidenceStructure, IsElementOfIncidenceStructure, IsPosInt],
+        function( inc, f, j )
+            local iter, shad, x;
+            return Objectify( NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and 
+                                    IsShadowElementsOfIncidenceStructure),
+                rec( geometry := inc,
+                     type := j,
+                     parentflag := FlagOfIncidenceStructure(inc,[f]) )
+                );
         end );
 
+# added by pc 140901
+#############################################################################
+#O  Iterator( <vs>) 
+# returns an iterator for <vs>, a collection of shadow elemenst of an incidence structure
+##
+InstallMethod( Iterator, 
+	"for shadow elements of an incidence structure",
+	[ IsShadowElementsOfIncidenceStructure ],
+	function( vs )
+        local j, f, shad, x, iter;
+        f := vs!.parentflag;
+        j := vs!.type;
+		if j in Type(f) then
+			return IteratorList([f!.els[Position(Type(f),j)]]);
+		fi;
+        iter:=Iterator(ElementsOfIncidenceStructure(vs!.geometry,j));
+        shad:=[];
+            for x in iter do
+                    if IsIncident(x,f) then Add(shad,x); fi;
+            od;
+        return IteratorList(shad);
+    end );
 
 InstallGlobalFunction( HashFuncForElements,
 	function( v, data )
@@ -414,6 +510,17 @@ InstallMethod( PrintObj,
 	[ IsAllElementsOfIncidenceStructure ],
 	function( vs )
 		Print("ElementsOfIncidenceStructure( ",vs!.geometry," )");
+	end );
+
+# Finally a generic ViewObj method for shadow elements.
+#############################################################################
+InstallMethod( ViewObj,
+	"for shadow elements of a Lie geometry", 
+	[ IsShadowElementsOfIncidenceStructure ],
+	function( vs )
+		Print("<shadow elements of type ", vs!.type," in ");
+		ViewObj(vs!.geometry);
+		Print(">");
 	end );
 
 ######################################################################
@@ -645,10 +752,8 @@ InstallMethod( IncidenceStructure,
 		for t in typeset do
 			Add(typesetstrings, Concatenation("element of type ", String(t)));
 		od;
-		ObjectifyWithAttributes( geo, ty, RankAttr, 
-Size(typeset), TypesOfElementsOfIncidenceStructure, typesetstrings);
-		#SetAmbientSpace(geo,geo);
-		#Objectify(ty,geo);
+		ObjectifyWithAttributes( geo, ty, RankAttr, Size(typeset), 
+            TypesOfElementsOfIncidenceStructure, typesetstrings);
 		return geo;
 	end );
 
@@ -661,14 +766,12 @@ InstallMethod( ElementsOfIncidenceStructure,
         "for an incidence structure and a type",
         [ IsIncidenceStructure, IsPosInt ],
         function( incstr, j )
-                local elements, wrapped;
-		elements:=Filtered(incstr!.elements, e -> 
-Position(incstr!.typeset,incstr!.typefun(e))=j);
-		wrapped:=List(elements, e -> Wrap(incstr, 
-incstr!.typeset[j], e));
-		return wrapped;
+            local elements, wrapped;
+            elements:=Filtered(incstr!.elements, e -> Position(incstr!.typeset,incstr!.typefun(e))=j);
+            wrapped:=List(elements, e -> Wrap(incstr,
+            incstr!.typeset[j], e));
+            return wrapped;
         end );
-
 
 # added 140813, pc
 #############################################################################
@@ -686,14 +789,13 @@ InstallMethod( ResidueOfFlag,
 		typfun:=function(ele)
 			return Position(typset, Type(ele));
 		end;
-		eles:=List(typset, j -> ShadowOfFlag(flag,j));
+		eles:=List(typset, j -> List(ShadowOfFlag(ambigeo,flag,j)));
 
 		inc:=function(x,y)
 			return IsIncident(x,y);
 		end;
 
-                geo := IncidenceStructure(Union(eles), inc, typfun, 
-[1..resrank]);
+        geo := IncidenceStructure(Union(eles), inc, typfun, [1..resrank]);
                 SetAmbientGeometry(geo,ambigeo);
                 #Objectify(ty,geo);
                 return geo;

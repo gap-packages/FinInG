@@ -177,7 +177,6 @@ InstallMethod( Type,
 		return Set(List(flag!.els,Type));
 	end );
 
-
 # CHECKED 24/3/2014 PhC
 #############################################################################
 #O  FlagOfIncidenceStructure( <cg>, <els> )
@@ -186,7 +185,7 @@ InstallMethod( Type,
 ##
 InstallMethod( FlagOfIncidenceStructure,
 	"for a coset geometry and a list of pairwise incident elements",
-	[ IsCosetGeometry, IsHomogeneousList ],
+	[ IsCosetGeometry, IsElementOfIncidenceStructureCollection ],
 	function(cg,els)
 		local list,i,test,type,flag;
 		list := Set(ShallowCopy(els));
@@ -198,7 +197,21 @@ InstallMethod( FlagOfIncidenceStructure,
 		  Error("<els> does not determine a flag.\n");
 		fi;
 		flag := rec(geo := cg, types := List(list,x->x!.type), els := list);
-		ObjectifyWithAttributes(flag, IsFlagOfCGType, IsEmptyFlag, false);
+		ObjectifyWithAttributes(flag, IsFlagOfCGType, IsEmptyFlag, false, RankAttr, Size(list));
+		return flag;
+	end);
+
+#############################################################################
+#O  FlagOfIncidenceStructure( <ps>, <els> )
+# returns the empty flag of the projective space <ps>.
+##
+InstallMethod( FlagOfIncidenceStructure,
+	"for a coset geometry and an empty list",
+	[ IsCosetGeometry, IsList and IsEmpty ],
+	function(cg,els)
+		local flag;
+		flag := rec(geo := cg, types := [], els := []  );
+		ObjectifyWithAttributes(flag, IsFlagOfCGType, IsEmptyFlag, true, RankAttr, 0 );
 		return flag;
 	end);
 
