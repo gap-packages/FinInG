@@ -708,7 +708,7 @@ LocalInfo(ig,32); # a line
 
 # Generalised triangle!
 
-gp:=SplitCayleyHexagon(5);  
+gp:=SplitCayleyHexagon(3);  
 incgr:=IncidenceGraph(gp);;  # Have a coffee or two...
 LocalInfo(incgr, 1);  
 NrElementsOfIncidenceStructure(gp,1);

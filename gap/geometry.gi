@@ -824,24 +824,19 @@ InstallMethod( IncidenceGraph,
         "for an incidence structure",
         [ IsIncidenceStructure ],
         function( incstr )
-                local all, adj, gamma;
-		all:=List([1..Rank(incstr)], i -> 
-AsSet(ElementsOfIncidenceStructure(incstr,i)));
-		all:=Union(all);
-
-		adj:=function(i,j)
-		 if i=j then return false; # Otherwise problem with loops
-		 else return IsIncident(all[i],all[j]);
-		 fi;
-		end;
-
-		gamma := Graph( Group(()), [1..Size(all)], OnPoints, 
-adj, true);
-		return gamma;
+			local all, adj, gamma;
+			all:=List([1..Rank(incstr)], i -> AsSet(ElementsOfIncidenceStructure(incstr,i)));
+			all:=Union(all);
+			adj:=function(i,j)
+				if i=j then 
+					return false; # Otherwise problem with loops
+				else 
+					return IsIncident(all[i],all[j]);
+				fi;
+			end;
+			gamma := Graph( Group(()), [1..Size(all)], OnPoints, adj, true);
+			return gamma;
         end );
-
-
-
 
 #############################################################################
 # Display methods:

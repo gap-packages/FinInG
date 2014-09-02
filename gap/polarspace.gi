@@ -1113,15 +1113,22 @@ InstallMethod( CompanionAutomorphism,
 	end );
 
 #############################################################################
-# jdb and ml will change ViewObj/PrintObj/Display methods now.
+# jdb and ml will change ViewObj/PrintObj/Display methods now.`
+# The ViewString is used e.g. in the ViewObj for flags.
 #############################################################################
 
 InstallMethod( ViewObj, 
 	"for a polar space",
 	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
 	function( p )
-		#Print("<polar space over ",p!.basefield,">");
 		Print("<polar space in ",AmbientSpace(p),": ",EquationForPolarSpace(p),"=0 >");
+	end );
+
+InstallMethod( ViewString, 
+	"for a polar space",
+	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
+	function( p )
+		return Concatenation("<polar space in ",ViewString(AmbientSpace(p)),": ",String(EquationForPolarSpace(p)),"=0 >");
 	end );
 
 InstallMethod( ViewObj,
@@ -1136,6 +1143,21 @@ InstallMethod( ViewObj,
 	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsEllipticQuadric and IsStandardPolarSpace],
 	function( p )
 		Print("Q-(",p!.dimension,", ",Size(p!.basefield),")");
+	end );
+	
+InstallMethod( ViewString, 
+	"for a standard elliptic quadric",
+	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsEllipticQuadric and IsStandardPolarSpace],
+	function( p )
+		return Concatenation("Q-(",String(p!.dimension),", ",String(Size(p!.basefield)),")");
+	end );
+
+InstallMethod( ViewString, 
+	"for an elliptic quadric",
+	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsEllipticQuadric],
+	function( p )
+		return Concatenation("Q-(",String(p!.dimension),", ",
+				String(Size(p!.basefield)),"): ",String(EquationForPolarSpace(p)),"=0");
 	end );
 
 InstallMethod( ViewObj,
@@ -1152,6 +1174,21 @@ InstallMethod( ViewObj,
 		Print("W(",p!.dimension,", ",Size(p!.basefield),")");
 	end );
 
+InstallMethod( ViewString, 
+	"for a standard symplectic space",
+	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsSymplecticSpace and IsStandardPolarSpace],
+	function( p )
+		return Concatenation("W(",String(p!.dimension),", ",String(Size(p!.basefield)),")");
+	end );
+
+InstallMethod( ViewString, 
+	"for a symplectic space",
+	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsSymplecticSpace],
+	function( p )
+		return Concatenation("W(",String(p!.dimension),", ",String(Size(p!.basefield)),"): ",
+				EquationForPolarSpace(p),"=0");
+	end );
+
 InstallMethod( ViewObj,
 	"for a parabolic quadric",
 	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsParabolicQuadric ],
@@ -1164,6 +1201,28 @@ InstallMethod( ViewObj,
 	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsParabolicQuadric and IsStandardPolarSpace ],
     function( p )
 		Print("Q(",p!.dimension,", ",Size(p!.basefield),")");
+	end);
+
+InstallMethod( ViewString, 
+	"for a standard parabolic quadric",
+	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsParabolicQuadric and IsStandardPolarSpace ],
+	function( p )
+		return Concatenation("Q(",String(p!.dimension),", ",String(Size(p!.basefield)),")");
+	end );
+
+InstallMethod( ViewString, 
+	"for a standard parabolic quadric",
+	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsParabolicQuadric ],
+	function( p )
+		return Concatenation("Q(",String(p!.dimension),", ",String(Size(p!.basefield)),"): ",
+			String(EquationForPolarSpace(p)),"=0");
+	end );
+
+InstallMethod( ViewObj,
+	"for a parabolic quadric",
+	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsParabolicQuadric ],
+    function( p )
+		Print("Q(",p!.dimension,", ",Size(p!.basefield),"): ",EquationForPolarSpace(p),"=0");
 	end);
 
 InstallMethod( ViewObj,
@@ -1180,6 +1239,21 @@ InstallMethod( ViewObj,
 		Print("Q+(",p!.dimension,", ",Size(p!.basefield),")");
 	end);
 
+InstallMethod( ViewString, 
+	"for a standard hyperbolic quadric",
+	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsHyperbolicQuadric and IsStandardPolarSpace],
+	function( p )
+		return Concatenation("Q+(",String(p!.dimension),", ",String(Size(p!.basefield)),")");
+	end );
+
+InstallMethod( ViewString, 
+	"for a hyperbolic quadric",
+	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsHyperbolicQuadric],
+	function( p )
+		return Concatenation("Q+(",String(p!.dimension),", ",
+				String(Size(p!.basefield)),"): ",String(EquationForPolarSpace(p)),"=0");
+	end );
+
 InstallMethod( ViewObj,
 	"for a hermitian variety",
 	[IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsHermitianPolarSpace ],
@@ -1193,6 +1267,21 @@ InstallMethod( ViewObj,
     function( p )
 		Print("H(",p!.dimension,", ",Sqrt(Size(p!.basefield)),"^2)");
     end);
+
+InstallMethod( ViewString, 
+	"for a standard hermitian quadric",
+	[IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsHermitianPolarSpace and IsStandardPolarSpace],
+	function( p )
+		return Concatenation("H(",String(p!.dimension),", ",String(Sqrt(Size(p!.basefield))),"^2)");
+	end );
+
+InstallMethod( ViewString, 
+	"for a hermitian quadric",
+	[IsClassicalPolarSpace and IsClassicalPolarSpaceRep and IsHermitianPolarSpace],
+	function( p )
+		return Concatenation("H(",String(p!.dimension),", ",String(Sqrt(Size(p!.basefield))),"^2): ",
+			EquationForPolarSpace(p),"=0");
+	end );
 
 InstallMethod( PrintObj, [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
   function( p )
@@ -2218,7 +2307,7 @@ InstallMethod( FlagOfIncidenceStructure,
 InstallMethod( ViewObj, "for a flag of a polar space",
 	[ IsFlagOfClassicalPolarSpace and IsFlagOfIncidenceStructureRep ],
 	function( flag )
-		Print("<a flag of ",flag!.geo," >");
+		Print("<a flag of ",ViewString(flag!.geo)," >");
 	end );
 
 InstallMethod( PrintObj, "for a flag of a projective space",
@@ -2327,7 +2416,9 @@ InstallMethod( ShadowOfElement,
 		psdim := ps!.dimension;
 		f := ps!.basefield;
 		vdim := v!.type;  
-        if j < vdim then
+        if j > Rank(ps) then
+            Error("<ps> has no elements of type <j>");
+		elif j < vdim then
 			localinner := [];
 			localouter := Unpack(v!.obj);
 			if IsVector(localouter) and not IsMatrix(localouter) then

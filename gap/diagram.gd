@@ -174,8 +174,8 @@ DeclareAttribute( "GeometryOfDiagram", IsDiagram );
 
 ## Special attribute for incidence graphs
 
-DeclareOperation( "IncidenceGraph", [ IsCosetGeometry ] );
-IncidenceGraphAttr := NewAttribute( "IncidenceGraph", IsIncidenceGeometry, "mutable" );
+#DeclareOperation( "IncidenceGraph", [ IsCosetGeometry ] );
+#IncidenceGraphAttr := NewAttribute( "IncidenceGraph", IsIncidenceGeometry, "mutable" );
 
 DeclareOperation( "Rank2Residues", [ IsIncidenceGeometry ] );
 Rank2ResiduesAttr := NewAttribute( "Rank2Residues", IsIncidenceGeometry, "mutable" );

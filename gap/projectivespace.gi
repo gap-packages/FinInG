@@ -128,6 +128,13 @@ InstallMethod( ViewObj, [ IsProjectiveSpace and IsProjectiveSpaceRep ],
     Print("ProjectiveSpace(",p!.dimension,", ",Size(p!.basefield),")");
   end );
 
+InstallMethod( ViewString, 
+	"for a projective space",
+	[ IsProjectiveSpace and IsProjectiveSpaceRep ],
+	function( p )
+		return Concatenation("ProjectiveSpace(",String(p!.dimension),", ",String(Size(p!.basefield)),")");
+	end );
+
 InstallMethod( PrintObj, [ IsProjectiveSpace and IsProjectiveSpaceRep ],
   function( p )
           Print("ProjectiveSpace(",p!.dimension,",",p!.basefield,")");
