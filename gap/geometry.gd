@@ -254,8 +254,8 @@ DeclareOperation( "Unwrap", [IsElementOfIncidenceStructure] );
 DeclareOperation( "\^", [IsElementOfIncidenceStructure, IsUnwrapper ] ); 
 
 # three general operations. Methods to be installed for several filters.
-DeclareOperation( "ObjectToElement", [IsIncidenceGeometry, IsPosInt, IsObject] );
-DeclareOperation( "ObjectToElement", [IsIncidenceGeometry, IsObject] );
+DeclareOperation( "ObjectToElement", [IsIncidenceStructure, IsPosInt, IsObject] );
+DeclareOperation( "ObjectToElement", [IsIncidenceStructure, IsObject] );
 DeclareOperation( "UnderlyingObject", [IsElementOfIncidenceStructure] );
 
 DeclareGlobalFunction( "HashFuncForElements" );

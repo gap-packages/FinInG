@@ -83,6 +83,39 @@ InstallMethod( \^,
 		return x!.obj;
 	end );
 
+# added 3/9/14 jdb
+#############################################################################
+#O  UnderlyingObject( <x> )
+# general method that returns the ambient geometry of a particular element.
+## 
+InstallMethod( UnderlyingObject,
+    "for an element of an incidence structure",
+	[ IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep ], 
+	x -> x!.obj );
+
+# added 3/9/14 jdb
+#############################################################################
+#O  ObjectToElement( <inc>, <type>, <obj> )
+# general method that returns the element of type represtented by obj.
+## 
+InstallMethod( ObjectToElement,
+    "for an incidence structure, a type, and an object",
+	[ IsIncidenceStructure, IsPosInt, IsObject ],
+	function(inc,t,obj)
+        local typeset;
+        typeset := inc!.typeset;
+        if not t in typeset then
+            Error("<t> is not a type of elements of <inc>");
+        elif not obj in inc!.elements then
+            Error("<t> does not represent any element of <inc>");
+        elif not inc!.typefun(obj) = t then
+            Error("<obj> does not represent an element of type <t>");
+        else
+            return Wrap(inc,t,obj);
+        fi;
+    end );
+
+
 # CHECKED 18/04/11 jdb
 #############################################################################
 #O  AmbientGeometry( <x> )
@@ -771,20 +804,60 @@ InstallMethod( IncidenceStructure,
 		return geo;
 	end );
 
+#############################################################################
+#O  ElementsOfIncidenceStructure( <inc>, <j> )
+# returns the elements of the incidence structure <inc> of type <j>
+## 
+InstallMethod( ElementsOfIncidenceStructure, 
+    "for an incidence structure and a type",
+	[IsIncidenceStructure, IsPosInt],
+	function( inc, j )
+		local r;
+		r := Rank(inc);
+		if j > r then
+			Error("<inc> has no elements of type <j>");
+		else
+			return Objectify(
+			NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and IsElementsOfIncidenceStructureRep ),
+				rec( geometry := inc,
+					type := j					)
+					);
+		fi;
+	end);
+
+InstallMethod( ViewObj, 
+	"for IsElementsOfIncidenceStructure",
+	[ IsElementsOfIncidenceStructure ],
+	function( vs )
+		Print("<Elements of type ", vs!.type," of ");
+		ViewObj(vs!.geometry);
+		Print(">");
+	end );
+
+InstallMethod( PrintObj, 
+	"for IsElementsOfIncidenceStructure",
+	[ IsElementsOfIncidenceStructure ],
+	function( vs )
+		Print("ElementsOfIncidenceStructure( ",vs!.geometry," ) of type ",vs!.type);
+	end );
+
+
+
 # added 140813, pc
 #############################################################################
-#O  ElementsOfIncidenceStructure( <incstr>, <type> )
-# Generic method to return all elements of type <type>
+#O  Iterator( <vs> )
+# Iterator for ElementsOfIncidenceStructure of a given type.
 ##
-InstallMethod( ElementsOfIncidenceStructure,
-        "for an incidence structure and a type",
-        [ IsIncidenceStructure, IsPosInt ],
-        function( incstr, j )
-            local elements, wrapped;
-            elements:=Filtered(incstr!.elements, e -> Position(incstr!.typeset,incstr!.typefun(e))=j);
-            wrapped:=List(elements, e -> Wrap(incstr,
-            incstr!.typeset[j], e));
-            return wrapped;
+InstallMethod( Iterator,
+        "for IsElementsOfIncidenceStructure",
+        [ IsElementsOfIncidenceStructure ],
+        function( vs )
+            local incstr, elements, wrapped, type;
+            incstr := vs!.geometry;
+            type := vs!.type;
+            elements:=Filtered(incstr!.elements, e -> Position(incstr!.typeset,incstr!.typefun(e)) = type);
+            wrapped:=List(elements, e -> Wrap(incstr, type, e));
+            return IteratorList(wrapped);
         end );
 
 # added 140813, pc
