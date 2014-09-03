@@ -255,7 +255,7 @@ structures constructed using <F>Incidence Structure</F>.
 <Description>
 For geometries in <C>IsLieGeometry</C>, <C>IsAffineSpace</C>, and <C>IsGeneralisedPolygon</C>,
 the elements of type 1,2,3,4 respectively are called usually points, lines, planes, solids, respectively.
-These methods are, for such geometries, shortcurs to <F>ElementsOfIncidenceStructure(inc,j)</F>, with <A>j</A>
+These methods are, for such geometries, are shortcuts to <F>ElementsOfIncidenceStructure(inc,j)</F>, with <A>j</A>
 equal to 1,2,3,4, respectively.
 <Example>
 <#Include SYSTEM "../examples/include/incgeom_short.include"> 
@@ -284,9 +284,23 @@ for these geometries, this operation requires no computing time.
 </ManSection>
 
 <ManSection>
+<Oper Name="Random" Arg="C"/>
+<Returns>an element in the collection <A>C</A></Returns>
+<Description>
+<A>C</A> is a collection of elements of an incidence structure, i.e., an object in the
+category <C>IsElementsOfIncidenceStructure</C>. <F>Random(C)</F> will return a random element
+in <A>C</A> provided there is a method installed. The generic method will compute all elements
+in <A>C</A> and return a random member from the list. For e.g. Lie geometries, more efficient
+methods are installed. 
+<Example>
+<#Include SYSTEM "../examples/include/incgeom_random.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
 <Oper Name="IsIncident" Arg="u,v"/>
 <Oper Name="\*" Arg="u,v"/>
-<Oper Name="\in" Arg="u,v"/>
 <Returns>true or false</Returns>
 <Description>
 <A>u</A> and <A>v</A> must be elements of an incidence structure.
@@ -298,21 +312,6 @@ This function returns true if and only if <A>u</A> is incident with <A>v</A>. Re
 </Description>
 </ManSection>
 
-<ManSection>
-<Oper Name="Random" Arg="C"/>
-<Returns>an element in the collection <A>C</A></Returns>
-<Description>
-<A>C</A> is a collection of elements of an incidence structure, i.e., an object in the
-category <C>IsElementsOfIncidenceStructure</C>. <F>Random(C)</F> will return a random element
-in <A>C</A> provided there is a method installed. Our methods may refer to methods for random
-selection of e.g. subspaces of the underlying vector space, as in the example here, or refer
-to the use of a pseudo-random element of an appropriate group, as is the case for subspaces
-of classical polar spaces.
-<Example>
-<#Include SYSTEM "../examples/include/incgeom_random.include"> 
-</Example>
-</Description>
-</ManSection>
 
 <ManSection>
 <Oper Name="AmbientGeometry" Arg="v"/>
@@ -388,6 +387,15 @@ The use of the argument <A>inc</A> makes it flexible, i.e., if the element
 </ManSection>
 
 <ManSection>
+<Oper Name="ElementsIncidentWithElementOfIncidenceStructure" Arg="v, j"/>
+<Returns> The collection of elements of type <A>j</A> incident with <A>v</A></Returns>
+<Description>
+This operation is applicable for objects <A>v</A> belonging to <C>IsElementOfIncidenceStructure</C>,
+and is a shortcut to <F>ShadowOfElement(AmbientGeometry(v),v,j)</F>.
+</Description>
+</ManSection>
+
+<ManSection>
 <Oper Name="ShadowOfFlag" Arg="inc, flag, str"/>
 <Oper Name="ShadowOfFlag" Arg="inc, list, str"/>
 <Oper Name="ShadowOfFlag" Arg="inc, flag, j"/>
@@ -404,16 +412,6 @@ for the particular incidence structure <A>inc</A>.
 </Description>
 </ManSection>
 
-<ManSection>
-<Oper Name="ElementsIncidentWithElementOfIncidenceStructure" Arg="v, j"/>
-<Returns> The collection of elements of type <A>j</A> incident with <A>v</A></Returns>
-<Description>
-This operation is declared for objects <A>v</A> belonging to <C>IsElementOfIncidenceStructure</C>, 
-but relies on particular methods installed for particular incidence structures, and refers always to
-<F>ShadowOfElement</F>, where the ambient geometry is derived from the element <A>v</A>, and using the
-integer <A>j</A>.
-</Description>
-</ManSection>
 
 <ManSection>
 <Heading>Short names for ElementsIncidentWithElementOfIncidenceStructure</Heading>
@@ -599,10 +597,11 @@ argument.
 </ManSection>
 
 <ManSection>
-<Oper Name="ElementToVectorSpace" Arg="v"/>
+<Oper Name="UnderlyinObject" Arg="v"/>
 <Returns>the vector or list of vectors representing the element <A>v</A></Returns>
 <Description>
-The argument <A>v</A> must be an element, so it is not allowed that <A>v</A> is the empty subspace, or just a projective space.
+The argument <A>v</A> must be an element, so it is not allowed that <A>v</A> is the empty subspace, 
+or just a projective space.
 <Example>
 <#Include SYSTEM "../examples/include/incgeom_lie_elementtovectorspace.include"> 
 </Example>

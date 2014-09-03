@@ -1,23 +1,16 @@
-gap&gt; ps := ProjectiveSpace(4,7);
-ProjectiveSpace(4, 7)
-gap&gt; p := VectorSpaceToElement(ps,[1,0,1,0,1]*Z(7)^0);
-&lt;a point in ProjectiveSpace(4, 7)&gt;
-gap&gt; l := VectorSpaceToElement(ps,[[0,0,1,0,0],[1,0,0,0,1]]*Z(7)^0);
-&lt;a line in ProjectiveSpace(4, 7)&gt;
-gap&gt; pl := VectorSpaceToElement(ps,[[1,1,1,0,0],[0,1,0,0,0],
-&gt;                                [0,-1,0,0,1]]*Z(7)^0);
-&lt;a plane in ProjectiveSpace(4, 7)&gt;
-gap&gt; p in l;
-true
-gap&gt; l in pl;
-false
-gap&gt; p in pl;
-true
+gap&gt; p := Random(Points(PG(5,4)));
+&lt;a point in ProjectiveSpace(5, 4)&gt;
+gap&gt; l := Random(Lines(p));
+&lt;a line in ProjectiveSpace(5, 4)&gt;
 gap&gt; IsIncident(p,l);
 true
 gap&gt; IsIncident(l,p);
 true
-gap&gt; IsIncident(pl,p);
+gap&gt; p * l;
 true
-gap&gt; pl in p;
-false
+gap&gt; l * p;
+true
+gap&gt; p * p;
+true
+gap&gt; l * l;
+true

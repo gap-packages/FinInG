@@ -1,2 +1,4 @@
-gap&gt; Random(Hyperplanes(PG(5,7)));
+gap&gt; coll := Hyperplanes(PG(5,7));
+&lt;proj. 4-subspaces of ProjectiveSpace(5, 7)&gt;
+gap&gt; Random(coll);
 &lt;a proj. 4-space in ProjectiveSpace(5, 7)&gt;

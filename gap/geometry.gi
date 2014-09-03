@@ -460,6 +460,19 @@ InstallMethod( ShadowOfElement,
                 );
         end );
 
+# CHECKED 19/4/2011 jdb
+# moved to geometry.gi and made generic 3/9/14
+#############################################################################
+#O  ElementsIncidentWithElementOfIncidenceStructure( <el>, <i> )
+# returns the elements of type <i> in <el>, relying on ShadowOfElement 
+# for particular <el>.
+## 
+InstallMethod( ElementsIncidentWithElementOfIncidenceStructure, "for IsElementOfLieGeometry",
+	[ IsElementOfIncidenceStructure, IsPosInt],
+	function( el, i )
+		return ShadowOfElement(el!.geo, el, i);
+	end );
+
 # added by pc 140901
 #############################################################################
 #O  Iterator( <vs>) 

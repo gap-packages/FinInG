@@ -4,6 +4,6 @@ gap&gt; Enumerator(Lines(HermitianPolarSpace(4,4)));
 EnumeratorOfSubspacesOfClassicalPolarSpace( &lt;lines of H(4, 2^2)&gt; )
 gap&gt; planes := List(Planes(HermitianPolarSpace(5,4)));;
 gap&gt; time;
-13605
+15226
 gap&gt; Length(planes);
 891

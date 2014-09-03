@@ -2382,17 +2382,11 @@ InstallMethod( Random,
   
 # CHECKED 16/12/2011 jdb + ml CHECKED and CORRECTED 
 #############################################################################
-#O
-
-# MAYBE just return IteratorList(Enumerator(vs));
-
-InstallMethod(Iterator,  "for subspaces of a polar space",
-        [IsSubspacesOfClassicalPolarSpace],
-        function( vs )
-		
-		return IteratorList(Enumerator(vs));
-		
-end );
+#O just return IteratorList(Enumerator(vs));
+InstallMethod(Iterator,  
+	"for subspaces of a polar space",
+	[IsSubspacesOfClassicalPolarSpace],
+	vs -> IteratorList(Enumerator(vs)) );
 
 
 #############################################################################
@@ -2465,6 +2459,19 @@ InstallMethod( ShadowOfElement,
 					)
 				);
 	end );
+
+# added 3/9/14. This was necessary since there is a generic method now
+# for Iterator of shadow elements of a generic incidence structure which 
+# is too generic for particular incidence geometries. The method here 
+# is based on the standard GAP method that was used before we introduce the
+# generic method.
+#############################################################################
+#O just return IteratorList(Enumerator(vs));
+InstallMethod(Iterator,  
+	"for shadow subspaces of a polar space",
+	[ IsShadowSubspacesOfClassicalPolarSpace ],
+	vs -> IteratorList(Enumerator(vs)) );
+
 
 # CHECKED 22/09/11 jdb
 #############################################################################

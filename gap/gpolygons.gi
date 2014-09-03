@@ -863,12 +863,12 @@ InstallMethod( Iterator,
 #O  ElementsIncidentWithElementOfIncidenceStructure( <el>, <i> )
 # returns the elements of type <i> in <el>, relying on ShadowOfElement 
 # for particular <el>.
-## 
-InstallMethod( ElementsIncidentWithElementOfIncidenceStructure, "for IsElementOfLieGeometry",
-	[ IsElementOfGeneralisedPolygon, IsPosInt],
-	function( el, i )
-		return ShadowOfElement(el!.geo, el, i);
-	end );
+## generic version is now in geometry.gi 
+#InstallMethod( ElementsIncidentWithElementOfIncidenceStructure, "for IsElementOfLieGeometry",
+#	[ IsElementOfGeneralisedPolygon, IsPosInt],
+#	function( el, i )
+#		return ShadowOfElement(el!.geo, el, i);
+#	end );
 
 #############################################################################
 #O  Points( <el> )

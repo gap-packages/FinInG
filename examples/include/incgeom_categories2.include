@@ -1,8 +1,8 @@
 gap&gt; Random(Lines(SplitCayleyHexagon(3)));
 #I  for Split Cayley Hexagon
 #I  Computing nice monomorphism...
-#I  Found permutation domain…
-&lt;a line of Split Cayley Hexagon of order 3&gt;
+#I  Found permutation domain...
+&lt;a line in H(3)&gt;
 gap&gt; CategoriesOfObject(last);
 [ "IsElementOfIncidenceStructure", "IsElementOfIncidenceGeometry", 
   "IsElementOfLieGeometry", "IsSubspaceOfProjectiveSpace", 

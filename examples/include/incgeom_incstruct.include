@@ -20,3 +20,5 @@ gap&gt; inc_rel := \*;
 &lt;Operation "*"&gt;
 gap&gt; inc := IncidenceStructure(elements,inc_rel,type,[1,2,3,4]);
 Incidence structure of rank 4
+gap&gt; Rank(inc);
+4

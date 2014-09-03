@@ -4,3 +4,5 @@ gap&gt; Lines(EllipticQuadric(5,2));
 &lt;lines of Q-(5, 2)&gt;
 gap&gt; Planes(SymplecticSpace(7,3));
 &lt;planes of W(7, 3)&gt;
+gap&gt; Lines(TwistedTrialityHexagon(2^3));
+&lt;lines of T(8, 2)&gt;

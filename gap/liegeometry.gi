@@ -502,18 +502,6 @@ InstallMethod( Meet,
 
 # CHECKED 19/4/2011 jdb
 #############################################################################
-#O  ElementsIncidentWithElementOfIncidenceStructure( <el>, <i> )
-# returns the elements of type <i> in <el>, relying on ShadowOfElement 
-# for particular <el>.
-## 
-InstallMethod( ElementsIncidentWithElementOfIncidenceStructure, "for IsElementOfLieGeometry",
-	[ IsElementOfLieGeometry, IsPosInt],
-	function( el, i )
-		return ShadowOfElement(el!.geo, el, i);
-	end );
-
-# CHECKED 19/4/2011 jdb
-#############################################################################
 #O  Points( <el> )
 # returns the points, i.e. elements of type <1> in <el>, relying on ShadowOfElement 
 # for particular <el>.

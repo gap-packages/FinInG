@@ -4,10 +4,11 @@ gap&gt; StandardFrame(PG(5,4));
   &lt;a point in ProjectiveSpace(5, 4)&gt;, &lt;a point in ProjectiveSpace(5, 4)&gt;, 
   &lt;a point in ProjectiveSpace(5, 4)&gt; ]
 gap&gt; Display(last);
-[ [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ], 
-  [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ], 
-  [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ], 
-  [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ], 
-  [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2) ], 
-  [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ], 
-  [ Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0 ] ]
+[ NewRowVector(IsCVecRep,GF(2,2),[Z(2)^0,0*Z(2),0*Z(2),0*Z(2),0*Z(2),0*Z(2),])
+    , NewRowVector(IsCVecRep,GF(2,2),[0*Z(2),Z(2)^0,0*Z(2),0*Z(2),0*Z(2),
+    0*Z(2),]), NewRowVector(IsCVecRep,GF(2,2),[0*Z(2),0*Z(2),Z(2)^0,0*Z(2),
+    0*Z(2),0*Z(2),]), NewRowVector(IsCVecRep,GF(2,2),[0*Z(2),0*Z(2),0*Z(2),
+    Z(2)^0,0*Z(2),0*Z(2),]), NewRowVector(IsCVecRep,GF(2,2),[0*Z(2),0*Z(2),
+    0*Z(2),0*Z(2),Z(2)^0,0*Z(2),]), NewRowVector(IsCVecRep,GF(2,2),[0*Z(2),
+    0*Z(2),0*Z(2),0*Z(2),0*Z(2),Z(2)^0,]), NewRowVector(IsCVecRep,GF(2,2),[
+    Z(2)^0,Z(2)^0,Z(2)^0,Z(2)^0,Z(2)^0,Z(2)^0,]) ]
