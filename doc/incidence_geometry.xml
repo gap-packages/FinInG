@@ -151,6 +151,15 @@ is set.
 </Description>
 </ManSection>
 
+<ManSection>
+<Attr Name="IncidenceGraph" Arg="inc"/>
+<Returns>a graph</Returns>
+<Description>
+<Example>
+</Example>
+</Description>
+</ManSection>
+
 </Section>
 
 <Section>
@@ -362,6 +371,61 @@ The incidence structure is determined by the elements.
 </Description>
 </ManSection>
 
+<ManSection>
+<Oper Name="ElementsOfFlag" Arg="flag"/>
+<Returns>a list of elements</Returns>
+<Description>
+<Example>
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Attr Name="Rank" Arg="flag"/>
+<Returns>an integer</Returns>
+<Description>
+<Example>
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Attr Name="Size" Arg="flag"/>
+<Returns>an integer</Returns>
+<Description>
+<Example>
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Attr Name="AmbientGeometry" Arg="flag"/>
+<Returns>an incidence structure</Returns>
+<Description>
+<Example>
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="Type" Arg="flag"/>
+<Returns>an list of integers</Returns>
+<Description>
+<Example>
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="IsIncident" Arg="el, flag"/>
+<Oper Name="IsIncident" Arg="flag, el"/>
+<Returns>true or false</Returns>
+<Description>
+<Example>
+</Example>
+</Description>
+</ManSection>
+
 </Section>
 
 <Section Label="inc_geom:shadows">
@@ -412,6 +476,14 @@ for the particular incidence structure <A>inc</A>.
 </Description>
 </ManSection>
 
+<ManSection>
+<Oper Name="ResidueOfFlag" Arg="flag"/>
+<Returns>an incidence structure</Returns>
+<Description>
+<Example>
+</Example>
+</Description>
+</ManSection>
 
 <ManSection>
 <Heading>Short names for ElementsIncidentWithElementOfIncidenceStructure</Heading>
