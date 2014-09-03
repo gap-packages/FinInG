@@ -790,17 +790,19 @@ InstallMethod( IncidenceStructure,
 	"for a set, incidence, type function and type set",
 	[ IsList, IsFunction, IsFunction, IsList ],
 	function( eles, inc, typ, typeset )
-		local geo, ty, t, typesetstrings;
+		local geo, ty, t, typesetstrings, typesetstringsplural;
 		geo := rec( elements := eles, increl := inc, 
 					typefun := typ, typeset := typeset );
 		ty := NewType( GeometriesFamily,
 					IsIncidenceStructure and IsIncidenceStructureRep );
 		typesetstrings:=[];
+   		typesetstringsplural:=[];
 		for t in typeset do
 			Add(typesetstrings, Concatenation("element of type ", String(t)));
+   			Add(typesetstringsplural, Concatenation("elements of type ", String(t)));
 		od;
-		ObjectifyWithAttributes( geo, ty, RankAttr, Size(typeset), 
-            TypesOfElementsOfIncidenceStructure, typesetstrings);
+		ObjectifyWithAttributes( geo, ty, RankAttr, Size(typeset), TypesOfElementsOfIncidenceStructure, 
+            typesetstrings, TypesOfElementsOfIncidenceStructurePlural, typesetstringsplural);
 		return geo;
 	end );
 

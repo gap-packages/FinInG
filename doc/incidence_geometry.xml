@@ -73,7 +73,7 @@ Top level category for all objects representing an incidence structure.
 In the following example we define an incidence structure that is not an incidence geometry. The
 example used is the incidence structure with elements the subspaces contained in the line Grassmannian
 of PG(4,2). This example is not meant to create this incidence structure in an efficient way, but just
-to demonstrate the general philiosophy.
+to demonstrate the general philosophy.
 
 <ManSection>
 <Oper Name="IncidenceStructure" Arg="eles, inc_rel, type, typeset"/>
@@ -96,52 +96,16 @@ Category for all objects representing an incidence geometry.
 </ManSection>
 
 Lie Geometries, i.e., geometries with a projective space as ambient space, affine spaces and 
-generalised polygons have their category, as a subcategory of <C>IsIncidenceGeometry</C>.
+generalised polygons have their own category, which is a subcategory of <C>IsIncidenceGeometry</C>.
 <ManSection>
 <Heading>Main categories in <C>IsIncidenceGeometry</C></Heading>
 <Filt Name="IsLieGeometry" Type="Category"/>
 <Filt Name="IsAffineSpace" Type="Category"/>
 <Filt Name="IsGeneralisedPolygon" Type="Category"/>
 <Filt Name="IsCosetGeometry" Type="Category"/>
-</ManSection>
-
-<ManSection>
-<Heading>Main categories in <C>IsLieGeometry</C></Heading>
-<Filt Name="IsProjectiveSpace" Type="Category"/>
-<Filt Name="IsClassicalPolarSpace" Type="Category"/>
 <Description>
-Lie geometries bundle projective spaces and classical polar spaces together. In
-the future, more subcategories could be added since the term ``Lie
-geometry'' refers to a geometry whose automorphism group lies in some
-group of Lie type. Both classes of geometries have their category, as
-a subcategory of <C>IsLieGeometry</C>. 
-</Description>
-</ManSection>
-
-The following categories for geometries are not considered as main categories.
-<ManSection>
-<Heading>Categories in <C>IsGeneralisedPolygon</C></Heading>
-<Filt Name="IsGeneralisedQuadrangle" Type="Category"/>
-<Filt Name="IsGeneralisedHexagon" Type="Category"/>
-<Filt Name="IsGeneralisedOctagon" Type="Category"/>
-<Description>
-Within <C>IsGeneralisedPolygon</C>, categories are declared for generalised quadrangles,
-generalised hexagons, and generalised octagons.
-</Description>
-</ManSection>
-
-<ManSection>
-<Filt Name="IsElationGQ" Type="Category"/>
-<Description>
-Within <C>IsGeneralisedQuadrangle</C>, this category is declared to construct 
-elation generalised quadrangles.
-</Description>
-</ManSection>
-
-<ManSection>
-<Filt Name="IsClassicalGQ" Type="Category"/>
-<Description>
-This category lies in both <C>IsElationGQ</C> and <C>IsClassicalPolarSpace</C>.
+Within each category, several subcategories are declared. Subcategories of <C>IsLieGeometry</C> are discussed
+in Section <Ref Sect="liegeometries1"/> and subcategories of <C>IsGeneralisedPolygon</C> are discussed in Chapter <Ref Chap="gpolygons"/>
 </Description>
 </ManSection>
 
@@ -159,12 +123,13 @@ This category lies in both <C>IsElationGQ</C> and <C>IsClassicalPolarSpace</C>.
 <Attr Name="TypesOfElementsOfIncidenceStructurePlural" Arg="inc"/>
 <Returns>a list of strings or integers</Returns>
 <Description>
-Both attributes are declared for objects in the category <C>IsIncidenceStructure</C>, but 
-only methods are installed for the geometries that are built in <Package>FinInG</Package>.
-Any incidence structure contains a set of types. This set is usually
-just the list <C>[1..n]</C>. If specific names are 
-given to each type, this attribute returns the names for the
-particular incidence structure <A>inc</A>. The second variant returns the list of plurals of these names. If no specific names are known, the list <C>[1..n]</C> is returned, where <C>n</C> equals the rank of the incidence structure.
+Both attributes are declared for objects in the category <C>IsIncidenceStructure</C>.
+Any incidence structure has a set of types, which is usually
+just the list <M>{1..n}</M>. If specific names are
+given to each type, like points, lines, etc., this attribute returns the names for the
+particular incidence structure <A>inc</A>. The second variant returns the list of plurals
+of these names. For genericly constructed incidence structures, the names of the Elements
+are also generic: elements of type 1, elements of type 2, etc.
 <Example>
 <#Include SYSTEM "../examples/include/incgeom_typesofels.include"> 
 </Example>
@@ -200,11 +165,13 @@ is set.
 <Filt Name="IsElementOfCosetGeometry" Type="Category"/>
 <Filt Name="IsSubspaceOfProjectiveSpace" Type="Category"/>
 <Filt Name="IsSubspaceOfClassicalPolarSpace" Type="Category"/>
+<Filt Name="IsElementOfGeneralisedPolygon" Type="Category"/>
 <Description>
-In general a category <C>IsElementOfIncStr</C> is declared for the individual elements of an incidence structure in the category <C>IsIncStr</C>, except for 
-projective spaces and classical polar spaces. The inclusion for different categories of geometries is followed for their elements,
-with an exception for <C>IsSubspaceOfClassicalPolarSpace</C>, which is a subcategory of <C>IsSubspaceOfProjectiveSpace</C>, 
-while <C>IsClassicalPolarSpace</C> is not a subcategory of <C>IsProjectiveSpace</C>. 
+In general, elements of an incidence structure belonging to <C>IsIncStr</C>, are in the category
+<C>IsElementOfIncStr</C>. The inclusion for different categories of geometries is followed for their elements,
+with an exception for <C>IsSubspaceOfClassicalPolarSpace</C>, which is a subcategory of
+<C>IsSubspaceOfProjectiveSpace</C>, while <C>IsClassicalPolarSpace</C> is not a subcategory of
+<C>IsProjectiveSpace</C>.
 <Example>
 <#Include SYSTEM "../examples/include/incgeom_categories2.include"> 
 </Example>
@@ -212,44 +179,45 @@ while <C>IsClassicalPolarSpace</C> is not a subcategory of <C>IsProjectiveSpace<
 </ManSection>
 
 <ManSection>
-<Oper Name="ObjectToElement" Arg="inc, type, obj"/>
-<Oper Name="ObjectToElement" Arg="inc, obj"/>
+<Oper Name="ObjectToElement" Arg="inc, t, obj"/>
 <Returns>an element of the incidence structure <A>inc</A></Returns>
 <Description>
-If <A>obj</A> represents an element of <A>inc</A> of type <A>type</A>, then the three-argument
-version of this operation returns the element. If the type of the element can be determined from <A>obj</A>,
-then only two arguments are necessary. An error (or no method found error) is shown
-when <A>obj</A> does not represent an element (of type <A>type</A>). 
+If <A>obj</A> represents an element of <A>inc</A> of type <A>t</A>, this operation
+returns the element. An error (or no method found error) is shown
+when <A>obj</A> does not represent an element of type <A>t</A>. Note that <F>ObjectToElement</F>
+is a generic operation. Versions with a different argument set and even alternative operations
+exist for some particular geometries to construct particular elements.
 </Description>
 </ManSection>
 
 <ManSection>
-<Heading>Main categories for collections of elements of incidence structures</Heading>
+<Heading>Main categories for collections of all the elements of a given type of an incidence structure</Heading>
 <Filt Name="IsElementsOfIncidenceStructure" Type="Category"/>
 <Filt Name="IsElementsOfIncidenceGeometry" Type="Category"/>
 <Filt Name="IsElementsOfLieGeometry" Type="Category"/>
-<Filt Name="IsElemenstOfAffineSpace" Type="Category"/>
-<Filt Name="IsElemenstOfCosetGeometry" Type="Category"/>
+<Filt Name="IsElementsOfAffineSpace" Type="Category"/>
+<Filt Name="IsElementsOfCosetGeometry" Type="Category"/>
 <Filt Name="IsSubspacesOfProjectiveSpace" Type="Category"/>
 <Filt Name="IsSubspacesOfClassicalPolarSpace" Type="Category"/>
 <Description>
-In general, a category <C>IsElementsOfIncStr</C> is declared for objects representing a set of elements of an incidence structure in 
-the category <C>IsIncStr</C>, with an exception for projective spaces and polar spaces. The inclusion for 
-different categories of geometries is followed for their collection of elements,
-except for <C>IsSubspaceOfClassicalPolarSpace</C>, which is a subcategory of <C>IsSubspaceOfProjectiveSpace</C>, 
-while <C>IsClassicalPolarSpace</C> is not a subcategory of <C>IsProjectiveSpace</C>. 
+For a given incidence structure, the collection of elements of a given type can be constructed. constructed
+here means that an object is returned that represents all the elements of a given type, rather than listing
+them immediately, to avoid long computation times. Such an abstract object is e.g. used as a range for
+In general, the collection of elements of a given type of an incidence structure belonging to <C>IsIncStr</C>,
+is in the category <C>IsElementsOfIncStr</C>. The inclusion for different categories of geometries is
+followed for their collection of elements of a given type, with an exception for <C>IsSubspaceOfClassicalPolarSpace</C>,
+which is a subcategory of <C>IsSubspaceOfProjectiveSpace</C>, while <C>IsClassicalPolarSpace</C> is not a subcategory of
+<C>IsProjectiveSpace</C>.
 </Description>
 </ManSection>
 
 The object representing the set of elements of a given type can be computed using 
-the general operation <F>ElementsOfIncidenceStructure</F>, of course assuming that
-a method is installed for the particular incidence structure.
+the general operation <F>ElementsOfIncidenceStructure</F>.
 
 <ManSection>
-<Oper Name="ElementsOfIncidenceStructure" Arg="inc"/>
 <Oper Name="ElementsOfIncidenceStructure" Arg="inc, j"/>
 <Oper Name="ElementsOfIncidenceStructure" Arg="inc, str"/>
-<Returns>a list of elements</Returns>
+<Returns>a collection of elements</Returns>
 <Description><A>inc</A> must be an incidence structure, <A>j</A> must be
 a type of element of <A>inc</A>. This function returns all elements
 of <A>inc</A> of type <A>j</A>, and an error is displayed if <A>inc</A> has no 
@@ -257,13 +225,23 @@ elements of type <A>j</A>. Calling the elements (of a given type) of <A>inc</A>
 yields an object in the category <C>IsElementsOfIncidenceStructure</C> (or the appropriate category
 for projective spaces and classical polar spaces), which does not imply that
 all elements are computed and stored. In an alternative form of this function
-<A>str</A> can be one of ``points", ``lines", ``planes" or ``solids" and the
-function returns the elements of type 1, 2, 3 or 4 respectively, of course
-if <A>inc</A> has elements of the deduced type. When no type is
-specified all elements of <A>inc</A> are returned.
-<Example>
+<A>str</A> can be one of the strings found in the list obtained by calling
+<F>TypesOfElementsOfIncidenceStructurePlural(inc)</F>. E.g. for projective spaces,
+``points", ``lines", ``planes" or ``solids" are the names for elements of type
+1,2,3 or 4, respectively, of course
+if <A>inc</A> has elements of the deduced type. <Example>
 <#Include SYSTEM "../examples/include/incgeom_elementsj.include"> 
 </Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="ElementsOfIncidenceStructure" Arg="inc"/>
+<Returns>a collection of elements</Returns>
+<Description><A>inc</A> must be an incidence structure, then this operation returns
+the collection of all elements of <A>inc</A>. Such a collection can e.g. be the range
+of a geometry morphism. Note that this operation has no method for generic incidence
+structures constructed using <F>Incidence Structure</F>.
 </Description>
 </ManSection>
 
@@ -273,10 +251,12 @@ specified all elements of <A>inc</A> are returned.
 <Oper Name="Lines" Arg="inc"/>
 <Oper Name="Planes" Arg="inc"/>
 <Oper Name="Solids" Arg="inc"/>
-<Returns>The elements of <A>inc</A> of type 1, 2, 3, and 4.</Returns>
+<Returns>The points, lines, planes, solids, respectively of <A>inc</A></Returns>
 <Description>
-It is possible that <A>inc</A> is an incidence structure where the elements of type 1, 2, 3, and 4 are not called "points", "lines", "planes", and "solids", respectively. The methods don't
-check if names are given, and are just shortcuts to the operation <F>ElementsOfIncidenceStructure</F>.
+For geometries in <C>IsLieGeometry</C>, <C>IsAffineSpace</C>, and <C>IsGeneralisedPolygon</C>,
+the elements of type 1,2,3,4 respectively are called usually points, lines, planes, solids, respectively.
+These methods are, for such geometries, shortcurs to <F>ElementsOfIncidenceStructure(inc,j)</F>, with <A>j</A>
+equal to 1,2,3,4, respectively.
 <Example>
 <#Include SYSTEM "../examples/include/incgeom_short.include"> 
 </Example>
@@ -292,7 +272,11 @@ a type of element of <A>inc</A>. This function returns the number of elements
 of <A>inc</A> of type <A>j</A>, and an error is displayed if <A>inc</A> has no 
 elements of type <A>j</A>. In the alternative form of this function
 <A>str</A> can be one of ``points", ``lines", ``planes" or ``solids" and the
-function returns the number of elements of type 1, 2, 3 or 4 respectively, of course if <A>inc</A> has elements of the deduced type.
+function returns the number of elements of type 1, 2, 3 or 4 respectively, of
+course if <A>inc</A> has elements of the deduced type. For geometries
+in the category <C>IsLieGeometry</C>, <C>IsAffineSpace</C>, and <C>IsGeneralisedPolygon</C>,
+the number of elements of a given type is known upon construction of the geometry. As such,
+for these geometries, this operation requires no computing time.
 <Example>
 <#Include SYSTEM "../examples/include/incgeom_nrelements.include"> 
 </Example>
@@ -525,14 +509,26 @@ of a collection.
 
 </Section>
 
-<Section>
+<Section Label="liegeometries1">
 <Heading>Lie geometries</Heading>
 
-The category <C>IsLieGeometry</C> contains the categories <C>IsProjectiveSpace</C> and <C>IsClassicalPolarSpace</C>, and 
-is bundling projective spaces and classical polar spaces. One common fact of these geometries is that their elements
-are represented by subspaces of a vector space. In these geometries, incidence is symmetrized set-theoretic containment. In this
-section we describe methods that are declared in a generic way for (elements of) Lie geometries. Again, having a declaration does
-not imply that methods are installed for all particular Lie geometries.
+<ManSection>
+<Heading>Main categories in <C>IsLieGeometry</C></Heading>
+<Filt Name="IsProjectiveSpace" Type="Category"/>
+<Filt Name="IsClassicalPolarSpace" Type="Category"/>
+<Description>
+Lie geometries bundle projective spaces and classical polar spaces together. In
+the future, more subcategories could be added since the term ``Lie
+geometry'' refers to a geometry whose automorphism group lies in some
+group of Lie type. Both classes of geometries have their category, as
+a subcategory of <C>IsLieGeometry</C>. 
+</Description>
+</ManSection>
+
+One common fact of Lie geometries is that their elements are represented by subspaces of a vector space.
+In these geometries, incidence is symmetrized set-theoretic containment. In this
+section we describe methods that are declared in a generic way for (elements of)
+Lie geometries. These operations are applicable to Lie geometries and related objects.
 
 <ManSection>
 <Attr Name="AmbientSpace" Arg="ig"/>
