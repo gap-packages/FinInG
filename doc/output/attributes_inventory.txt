@@ -5,6 +5,7 @@ geometry.gd: attributes
 A: IsChamberOfIncidenceStructure: IsFlagOfIncidenceStructure
 A: IsEmptyFlag: IsFlagOfIncidenceStructure
 A: RankAttr: IsIncidenceStructure
+A: RankAttr: IsFlagOfIncidenceStructure
 A: TypesOfElementsOfIncidenceStructure: IsIncidenceStructure
 A: TypesOfElementsOfIncidenceStructurePlural: IsIncidenceStructure
 A: CollineationGroup: IsIncidenceStructure
