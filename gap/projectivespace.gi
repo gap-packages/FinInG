@@ -2562,3 +2562,31 @@ InstallMethod( ProjectiveHomologyGroup,
 	el[n+1][n+1] := Z(q);
 	return Group(CollineationOfProjectiveSpace(M^(-1)*el*M,f));
 end );
+
+#############################################################################
+#O  IncidenceGraph( <gp> )
+# Note that computing the collineation group of a projective space is zero
+# computation time. So useless to print the warning here if the group is not
+# yet computed.
+###
+InstallMethod( IncidenceGraph,
+    "for a projective space",
+    [ IsProjectiveSpace ],
+    function( ps )
+        local elements, graph, adj, coll, sz;
+		if IsBound(ps!.IncidenceGraphAttr) then
+            return ps!.IncidenceGraphAttr;
+        fi;
+		coll := CollineationGroup(ps);
+		elements := Concatenation(List([1..Rank(ps)], i -> List(AsList(ElementsOfIncidenceStructure(ps,i)))));
+        adj := function(x,y)
+            if x!.type <> y!.type then
+                return IsIncident(x,y);
+            else
+                return false;
+            fi;
+        end;
+        graph := Graph(coll,elements,OnProjSubspaces,adj,true);
+        Setter( IncidenceGraphAttr )( ps, graph );
+        return graph;
+    end );

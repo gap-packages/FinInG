@@ -1111,9 +1111,15 @@ InstallMethod( DistanceBetweenElements,
 # Note that computing the collineation group of a projective space is zero
 # computation time. So useless to print the warning here if the group is not
 # yet computed.
+##
+# Note that there is actually a method for IsProjectiveSpace, and IsDesarguesianPlane
+# is a subcategory of IsProjectiveSpace. But the property HasGraphWithUnderlyingObjectsAsVertices
+# is important for IsGeneralisedPolygon. We could check in the method for projective
+# spaces whether the spaces is a plane, and set the property there, but we want
+# to keep projectivespace.gi independent from gpolygons.gd.
 ###
 InstallMethod( IncidenceGraph,
-    "for a generalised polygon (in all possible representations",
+    "for a Desarguesian plane",
     [ IsDesarguesianPlane ],
     function( gp )
         local points, lines, graph, adj, group, coll, sz;
@@ -1191,6 +1197,12 @@ InstallMethod( DistanceBetweenElements,
 
 #############################################################################
 #O  IncidenceGraph( <gp> )
+##
+# Note that there is actually a method for IsProjectiveSpace, and IsDesarguesianPlane
+# is a subcategory of IsProjectiveSpace. But the property HasGraphWithUnderlyingObjectsAsVertices
+# is important for IsGeneralisedPolygon. We could check in the method for projective
+# spaces whether the spaces is a plane, and set the property there, but we want
+# to keep polarspace.gi independent from gpolygons.gd.
 ###
 InstallMethod( IncidenceGraph,
     "for a generalised polygon (in all possible representations",
@@ -1209,9 +1221,7 @@ InstallMethod( IncidenceGraph,
             points := AsList(Points(gp));
             lines := AsList(Lines(gp));
             Setter( HasGraphWithUnderlyingObjectsAsVertices )( gp, false );
-
             Info(InfoFinInG, 1, "Computing incidence graph of generalised polygon...");
-    
             adj := function(x,y)
                 if x!.type <> y!.type then
                     return IsIncident(x,y);

@@ -40,7 +40,241 @@ Print("loading: geometry\c");
 InstallValue( FINING, rec() );
 
 #############################################################################
-# General methods.
+# General methods for incidence structures.
+#############################################################################
+
+# CHECKED 14/11/2011 jdb
+# 140813 modified by pc : TypesOfIncidenceStructure
+#############################################################################
+#O  IncidenceStructure( <eles>, <inc>, <typ>, <typeset> )
+# method for IncidenceStructure.
+##
+InstallMethod( IncidenceStructure, 
+	"for a set, incidence, type function and type set",
+	[ IsList, IsFunction, IsFunction, IsList ],
+	function( eles, inc, typ, typeset )
+		local geo, ty, t, typesetstrings, typesetstringsplural;
+		geo := rec( elements := eles, increl := inc, 
+					typefun := typ, typeset := typeset );
+		ty := NewType( GeometriesFamily,
+					IsIncidenceStructure and IsIncidenceStructureRep );
+		typesetstrings:=[];
+   		typesetstringsplural:=[];
+		for t in typeset do
+			Add(typesetstrings, Concatenation("element of type ", String(t)));
+   			Add(typesetstringsplural, Concatenation("elements of type ", String(t)));
+		od;
+		ObjectifyWithAttributes( geo, ty, RankAttr, Size(typeset), TypesOfElementsOfIncidenceStructure, 
+            typesetstrings, TypesOfElementsOfIncidenceStructurePlural, typesetstringsplural);
+		return geo;
+	end );
+
+# CHECKED 18/4/2011 jdb
+#############################################################################
+#O  Rank( <i> )
+# generic method that calls RankAttr to return the rank of a particular 
+# incidence structure.
+## 
+InstallMethod( Rank, 
+	"for IsIncidenceStructure", 
+	[IsIncidenceStructure], 
+	i -> RankAttr(i) );
+
+# added 140901, pc
+#############################################################################
+#O  IncidenceGraph( <incstr> )
+# Generic method for incidence graph, with trivial group
+##
+InstallMethod( IncidenceGraph,
+        "for an incidence structure",
+        [ IsIncidenceStructure ],
+        function( incstr )
+			local all, adj, gamma;
+            if IsBound(incstr!.IncidenceGraphAttr) then
+                return incstr!.IncidenceGraphAttr;
+            fi;
+			all:=List([1..Rank(incstr)], i -> AsSet(ElementsOfIncidenceStructure(incstr,i)));
+			all:=Union(all);
+			adj:=function(i,j)
+				if i=j then 
+					return false; # Otherwise problem with loops
+				else 
+					return IsIncident(all[i],all[j]);
+				fi;
+			end;
+			gamma := Graph( Group(()), [1..Size(all)], OnPoints, adj, true);
+            Setter( IncidenceGraphAttr )( incstr, gamma );
+			return gamma;
+        end );
+
+#############################################################################
+# Elements of incidence structures.
+#############################################################################
+
+######################################################################
+##
+## The following operations just make "nice" versions of functions for
+## specific geometries when the corresponding functions are defined.
+## this means: methods for the functions here are generic and relying
+## on installed methods for more particular objects.
+##
+######################################################################
+
+#############################################################################
+#O  ElementsOfIncidenceStructure( <inc>, <j> )
+# returns the elements of the incidence structure <inc> of type <j>
+## 
+InstallMethod( ElementsOfIncidenceStructure, 
+    "for an incidence structure and a type",
+	[IsIncidenceStructure, IsPosInt],
+	function( inc, j )
+		local r;
+		r := Rank(inc);
+		if j > r then
+			Error("<inc> has no elements of type <j>");
+		else
+			return Objectify(
+			NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and IsElementsOfIncidenceStructureRep ),
+				rec( geometry := inc,
+					type := j )
+					);
+		fi;
+	end);
+
+# CHECKED 18/4/2011 jdb
+#############################################################################
+#O  ElementsOfIncidenceStructure( <ps>, <str> )
+# returns the elements of an incidence structure <ps> provided there is an
+# installed method for ElementsOfIncidenceStructure for the particular <ps>
+# and <str> is occuring in TypesOfElementsOfIncidenceStructurePlural(<ps>).
+## 
+InstallMethod( ElementsOfIncidenceStructure,
+	"for an incidence structure and a string",
+	[IsIncidenceStructure, IsString],
+	function( ps, str )
+		local m;
+		m := Position(TypesOfElementsOfIncidenceStructurePlural(ps), str);
+		if m = fail then
+			Error("No such element type!");
+		else
+		return ElementsOfIncidenceStructure(ps, m);
+		fi;
+		end);
+
+# added 140813, pc
+#############################################################################
+#O  Iterator( <vs> )
+# Iterator for ElementsOfIncidenceStructure of a given type.
+##
+InstallMethod( Iterator,
+        "for IsElementsOfIncidenceStructure",
+        [ IsElementsOfIncidenceStructure ],
+        function( vs )
+            local incstr, elements, wrapped, type;
+            incstr := vs!.geometry;
+            type := vs!.type;
+            elements:=Filtered(incstr!.elements, e -> Position(incstr!.typeset,incstr!.typefun(e)) = type);
+            wrapped:=List(elements, e -> Wrap(incstr, type, e));
+            return IteratorList(wrapped);
+        end );
+ 
+# CHECKED 4/9/2011 jdb
+# but maybe to be changed later on. See to do list on top of file.
+#############################################################################
+#O  Enumerator( <D> )
+# generic method that enumerates D, using an Iterator for D
+# assuming D belongs to IsElementsOfIncidenceStructure
+##
+InstallMethod( Enumerator,
+	"generic method for IsElementsOfIncidenceStructure",
+	[ IsElementsOfIncidenceStructure ],
+	function ( D )
+	local  iter, elms;
+	iter := Iterator( D );
+	elms := [  ];
+	while not IsDoneIterator( iter )  do
+		Add( elms, NextIterator( iter ) );
+	od;
+	return elms;
+	end);
+
+#############################################################################
+#O  NrElementsOfIncidenceStructure( <ps>, <str> )
+# returns the number of elements of an incidence structure <ps> provided there 
+# is an  installed method for ElementsOfIncidenceStructure for the 
+# particular <ps> and <str> is occuring in 
+# TypesOfElementsOfIncidenceStructurePlural(<ps>). 
+## 
+InstallMethod( NrElementsOfIncidenceStructure,
+	"for an incidence structure and a string",
+	[IsIncidenceStructure, IsString],
+	function( ps, str )
+		return Size(ElementsOfIncidenceStructure(ps, str));
+		end);
+
+#############################################################################
+#O  NrElementsOfIncidenceStructure( <ps>, <typ> )
+# returns the number of elements of an incidence structure <ps> provided there 
+# is an  installed method for ElementsOfIncidenceStructure for the 
+# particular <ps>.
+## 
+InstallMethod( NrElementsOfIncidenceStructure,
+	"for an incidence structure and a type",
+	[IsIncidenceStructure, IsPosInt],
+	function( ps, typ )
+		return Size(ElementsOfIncidenceStructure(ps, typ));
+		end);
+
+InstallGlobalFunction( HashFuncForElements,
+	function( v, data )
+		return data.func(v!.obj,data.data);
+	end );
+
+InstallMethod( ChooseHashFunction, 
+	"for an element and a hash length",
+	[ IsElementOfIncidenceStructure, IsPosInt ],
+	function( v, len )
+		local data;
+		data := ChooseHashFunction( v!.obj, len );
+		return rec( func := HashFuncForElements, data := data );
+	end );
+
+#############################################################################
+# General methods for collection of elements of incidence structures.
+#############################################################################
+
+# CHECKED 18/04/11 jdb
+#############################################################################
+#O  AmbientGeometry( <x> )
+# general method that returns the ambient geometry of a collection of 
+# elements of a particular type.
+# notice the small difference with the previous method :-)
+## 
+InstallMethod( AmbientGeometry, 
+	[ IsElementsOfIncidenceStructure and IsElementsOfIncidenceStructureRep ], 
+	x -> x!.geometry );
+
+# CHECKED 18/04/11 jdb
+#############################################################################
+#O  AmbientGeometry( <x> )
+# general method that returns the ambient geometry of a collection of elements
+## 
+InstallMethod( AmbientGeometry, 
+	[ IsAllElementsOfIncidenceStructure ],
+	x -> x!.geometry );
+
+# CHECKED 14/4/2011 jdb
+#############################################################################
+#O  Type( <x> )
+# general method that returns the type of a collection of elements of a particular type.
+## 
+InstallMethod( Type, 
+	"for IsElementsOfIncidenceStructure(Rep)",
+	[IsElementsOfIncidenceStructure and IsElementsOfIncidenceStructureRep], 
+	x -> x!.type );
+
+#############################################################################
+# General methods for particular elements of incidence structures.
 #############################################################################
 
 # CHECKED 18/04/11 jdb
@@ -58,7 +292,8 @@ InstallMethod( Wrap,
 	function( geo, type, o )
 		local w;
 		w := rec( geo := geo, type := type, obj := o );
-		Objectify( NewType( ElementsOfIncidenceStructureFamily, IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep ), w );
+		Objectify( NewType( ElementsOfIncidenceStructureFamily, 
+			IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep ), w );
 		return w;	
 	end );
 
@@ -115,7 +350,6 @@ InstallMethod( ObjectToElement,
         fi;
     end );
 
-
 # CHECKED 18/04/11 jdb
 #############################################################################
 #O  AmbientGeometry( <x> )
@@ -125,35 +359,17 @@ InstallMethod( AmbientGeometry,
 	[ IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep ], 
 	x -> x!.geo );
 
-# CHECKED 18/04/11 jdb
+# CHECKED 27/6/2011 jdb and pc
 #############################################################################
-#O  AmbientGeometry( <x> )
-# general method that returns the ambient geometry of a collection of 
-# elements of a particular type.
-# notice the small difference with the previous method :-)
-## 
-InstallMethod( AmbientGeometry, 
-	[ IsElementsOfIncidenceStructure and IsElementsOfIncidenceStructureRep ], 
-	x -> x!.geometry );
-
-# CHECKED 18/04/11 jdb
-#############################################################################
-#O  AmbientGeometry( <x> )
-# general method that returns the ambient geometry of a collection of elements
-## 
-InstallMethod( AmbientGeometry, 
-	[ IsAllElementsOfIncidenceStructure ],
-	x -> x!.geometry );
-
-# added 140813 pc
-#############################################################################
-#O  AmbientGeometry( <x> )
-# general method that returns the ambient geometry of a flag
+#O  Intersection2( <el1>, <el2> )
+# method for Intersection2, referring to Meet.
 ##
-InstallMethod( AmbientGeometry,
-        [ IsFlagOfIncidenceStructure and IsFlagOfIncidenceStructureRep],
-        x -> x!.geo );
-
+InstallOtherMethod( Intersection2,
+	"for two elements of an incidence structure, relying on Meet",
+	[IsElementOfIncidenceStructure, IsElementOfIncidenceStructure],
+	function( el1, el2 )
+		return Meet(el1,el2);
+	end);
 
 # CHECKED 14/4/2011 jdb
 #############################################################################
@@ -163,38 +379,6 @@ InstallMethod( AmbientGeometry,
 InstallMethod( Type, 
 	[ IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep ], 
 	x -> x!.type );
-
-# CHECKED 14/4/2011 jdb
-#############################################################################
-#O  Type( <x> )
-# general method that returns the type of a collection of elements of a particular type.
-## 
-InstallMethod( Type, 
-	"for IsElementsOfIncidenceStructure(Rep)",
-	[IsElementsOfIncidenceStructure and IsElementsOfIncidenceStructureRep], 
-	x -> x!.type );
-
-# Added 140813, pc
-#############################################################################
-#O  Type( <x> )
-# general method that returns the type of a flag
-##
-InstallMethod( Type,
-        "for IsElementsOfIncidenceStructure(Rep)",
-        [IsFlagOfIncidenceStructure and IsFlagOfIncidenceStructureRep],
-        x -> Set(x!.els,Type) );
-
-
-# CHECKED 18/4/2011 jdb
-#############################################################################
-#O  Rank( <i> )
-# generic method that calls RankAttr to return the rank of a particular 
-# incidence structure.
-## 
-InstallMethod( Rank, 
-	"for IsIncidenceStructure", 
-	[IsIncidenceStructure], 
-	i -> RankAttr(i) );
 
 # CHECKED 18/4/2011 jdb
 #############################################################################
@@ -207,19 +391,6 @@ InstallMethod( \=,
 	[IsElementOfIncidenceStructure, IsElementOfIncidenceStructure], 
 	function( a, b ) 
 		return a!.obj = b!.obj; 
-	end );
-    
-# added 2/9/14 pc+jdb
-#############################################################################
-#O  \=( <a>, <b> )
-# test equality method for flags of an incidence structure
-# relies to testing equality of underlying 'obj' fields of the arguments.
-## 
-InstallMethod( \=, 
-	"for two IsElementOfIncidenceStructure",	
-	[IsFlagOfIncidenceStructure, IsFlagOfIncidenceStructure],
-	function( a, b )
-		return Set(a!.els) = Set(b!.els);
 	end );
 
 # CHECKED 18/4/2011 jdb, but also changed 18/4/2011. Volunteers to check again?
@@ -238,55 +409,6 @@ InstallMethod( \<, "for two IsElementOfIncidenceStructure",
 			return a!.type < b!.type;
 		fi;
 	end );
-
-# added 2/9/14 pc+jdb
-#############################################################################
-#O  \<( <a>, <b> )
-# LT for two flags of an incidence structure.
-# first compares types of elements, in case of equality, 
-# relies to comparing underlying 'obj' fields of the arguments.
-## 
-InstallMethod( \<, "for two IsFlagOfIncidenceStructure",
-	[IsFlagOfIncidenceStructure, IsFlagOfIncidenceStructure],
-	function( a, b ) 
-		if a!.types = b!.types then
-			return a!.els < b!.els;
-		else
-			return a!.types < b!.types;
-		fi;
-	end );
-
-# added 2/9/14 pc+jdb
-#############################################################################
-#O  \<( <a>, <b> )
-# LT for a flag and an element.
-# first compares types of elements, in case of equality, 
-# relies to comparing underlying 'obj' fields of the arguments.
-## 
-InstallMethod( \<, "for two IsElementOfIncidenceStructure",
-	[IsFlagOfIncidenceStructure, IsElementOfIncidenceStructure],
-	function( a, b ) 
-        if a!.geo <> b!.geo then
-            Error("<flag> and <element> do not belong to the same geometry");
-        fi;
-        return false;
-    end );
-
-# added 2/9/14 pc+jdb
-#############################################################################
-#O  \<( <a>, <b> )
-# LT for two flags of an incidence structure.
-# first compares types of elements, in case of equality, 
-# relies to comparing underlying 'obj' fields of the arguments.
-## 
-InstallMethod( \<, "for two IsElementOfIncidenceStructure",
-	[IsElementOfIncidenceStructure, IsFlagOfIncidenceStructure],
-	function( a, b )
-        if a!.geo <> b!.geo then
-            Error("<element> and <flag> do not belong to the same geometry");
-        fi;
-        return true;
-    end );
 
 # CHECKED 17/04/11 jdb
 #############################################################################
@@ -319,61 +441,9 @@ InstallMethod( IsIncident,
                 return geo!.increl(x!.obj,y!.obj);
         end );
 
-
-# added by pc 140813
-############################################################################
-#O  IsIncident( <x,F> )
-# For an element and a flag of an incidence structure
-# An element is incident with a flag if it is incident with all elements 
-# of the flag.
-##
-InstallMethod( IsIncident,
-        "for an element and a flag of an incidence structure",
-        [IsElementOfIncidenceStructure, IsFlagOfIncidenceStructure],
-        function( x, f )
-		local iter, inc;
-		iter:=Iterator(ElementsOfFlag(f));
-		inc:=true;
-                while inc and not(IsDoneIterator(iter)) do
-			inc:=IsIncident(x,NextIterator(iter));
-		od;
-		return inc;
-        end );
-        
-# added by pc 140813
-############################################################################
-#O  IsIncident( <x,F> )
-# For an element and a flag of an incidence structure
-# An element is incident with a flag if it is incident with all elements 
-# of the flag.
-##
-InstallMethod( IsIncident,
-        "for an element and a flag of an incidence structure",
-        [IsFlagOfIncidenceStructure, IsElementOfIncidenceStructure],
-        function( f, x )
-		local iter, inc;
-		iter:=Iterator(ElementsOfFlag(f));
-		inc:=true;
-                while inc and not(IsDoneIterator(iter)) do
-			inc:=IsIncident(x,NextIterator(iter));
-		od;
-		return inc;
-        end );
-
 #############################################################################
-#O  \in( <x>, <y> )
-# x: an element of an incidence structure, y a flag of that incidence structure
-##
-InstallOtherMethod( \in, 
-	"for an element and a flag of an incidence structure",
-	[ IsElementOfIncidenceStructure, IsFlagOfIncidenceStructure ],
-	function( x, y )
-		if x!.geo <> y!.geo then
-			Error( "<x> and <y> have not the same ambient geometry" );
-		else
-            return x in y!.els;
-        fi;
-	end );
+# General methods for flags of incidence structures.
+#############################################################################
 
 # added by pc 140813
 #############################################################################
@@ -424,226 +494,6 @@ InstallMethod( FlagOfIncidenceStructure,
                 return flag;
         end);
 
-# added by pc 140813
-############################################################################
-#O  ShadowOfFlag( <F,j> )
-# Completely generic shadow computation
-# For a flag of an incidence structure and a type j
-# Returns all elements of type j which are incident to the flag F
-##
-InstallMethod( ShadowOfFlag,
-        "for an incidence structure, flag of an incidence structure and a type",
-        [IsIncidenceStructure, IsFlagOfIncidenceStructure, IsPosInt],
-        function( inc, f, j )
-            local iter, shad, x;
-            return Objectify( NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and 
-                                    IsShadowElementsOfIncidenceStructure),
-                rec( geometry := inc,
-                     type := j,
-                     parentflag := f )
-                );
-        end );
-
-# added by pc 140901
-############################################################################
-#O  ShadowOfElement( <e,j> )
-# Completely generic shadow computation
-# For an element of an incidence structure and a type j
-# Returns all elements of type j which are incident to e
-##
-InstallMethod( ShadowOfElement,
-        "for an element of an incidence structure and a type",
-        [IsIncidenceStructure, IsElementOfIncidenceStructure, IsPosInt],
-        function( inc, f, j )
-            local iter, shad, x;
-            return Objectify( NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and 
-                                    IsShadowElementsOfIncidenceStructure),
-                rec( geometry := inc,
-                     type := j,
-                     parentflag := FlagOfIncidenceStructure(inc,[f]) )
-                );
-        end );
-
-# CHECKED 19/4/2011 jdb
-# moved to geometry.gi and made generic 3/9/14
-#############################################################################
-#O  ElementsIncidentWithElementOfIncidenceStructure( <el>, <i> )
-# returns the elements of type <i> in <el>, relying on ShadowOfElement 
-# for particular <el>.
-## 
-InstallMethod( ElementsIncidentWithElementOfIncidenceStructure, "for IsElementOfLieGeometry",
-	[ IsElementOfIncidenceStructure, IsPosInt],
-	function( el, i )
-		return ShadowOfElement(el!.geo, el, i);
-	end );
-
-# added by pc 140901
-#############################################################################
-#O  Iterator( <vs>) 
-# returns an iterator for <vs>, a collection of shadow elemenst of an incidence structure
-##
-InstallMethod( Iterator, 
-	"for shadow elements of an incidence structure",
-	[ IsShadowElementsOfIncidenceStructure ],
-	function( vs )
-        local j, f, shad, x, iter;
-        f := vs!.parentflag;
-        j := vs!.type;
-		if j in Type(f) then
-			return IteratorList([f!.els[Position(Type(f),j)]]);
-		fi;
-        iter:=Iterator(ElementsOfIncidenceStructure(vs!.geometry,j));
-        shad:=[];
-            for x in iter do
-                    if IsIncident(x,f) then Add(shad,x); fi;
-            od;
-        return IteratorList(shad);
-    end );
-
-InstallGlobalFunction( HashFuncForElements,
-	function( v, data )
-		return data.func(v!.obj,data.data);
-	end );
-
-InstallMethod( ChooseHashFunction, 
-	"for an element and a hash length",
-	[ IsElementOfIncidenceStructure, IsPosInt ],
-	function( v, len )
-		local data;
-		data := ChooseHashFunction( v!.obj, len );
-		return rec( func := HashFuncForElements, data := data );
-	end );
-
-#############################################################################
-# Viewing/Printing/Displaying methods.
-#############################################################################
-# 5 CHECKED 4/09/11 jdb
-
-InstallMethod( ViewObj, 
-	"for IsElementOfIncidenceStructure",
-	[ IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep ],
-	function( v )
-		Print("<a ",TypesOfElementsOfIncidenceStructure(v!.geo)[v!.type]," in ");
-		ViewObj(v!.geo);
-		Print(">");
-	end );
-
-InstallMethod( ViewObj,
-        "for IsFlagOfIncidenceStructure",
-        [ IsFlagOfIncidenceStructure and 
-IsFlagOfIncidenceStructureRep ],
-        function( v )
-                Print("<a flag of ");
-                ViewObj(v!.geo);
-                Print(">");
-        end );
-
-InstallMethod( PrintObj, 
-	"for IsElementOfIncidenceStructure",
-	[ IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep ],
-	function( v )
-		Print( v!.obj );
-	end );
-
-InstallMethod( Display, 
-	"for IsElementOfIncidenceStructure",
-	[ IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep ],
-	function( v )
-		Display(v!.obj);
-	end );
-
-# JB (31/01/2013): One thing that I would like in GAP is to have Display for vectors just
-# like that for matrices. So here is a method which makes this happen
-
-InstallMethod( Display, "for IsVector", [ IsVector ],
-	function( v )
-		Display( [v] );
-	end );
-
-InstallMethod( ViewObj, 
-	"for IsAllElementsOfIncidenceStructure",
-	[ IsAllElementsOfIncidenceStructure ],
-	function( vs )
-		Print("<Elements of ");
-		ViewObj(vs!.geometry);
-		Print(">");
-	end );
-
-InstallMethod( PrintObj, 
-	"for IsAllElementsOfIncidenceStructure",
-	[ IsAllElementsOfIncidenceStructure ],
-	function( vs )
-		Print("ElementsOfIncidenceStructure( ",vs!.geometry," )");
-	end );
-
-# Finally a generic ViewObj method for shadow elements.
-#############################################################################
-InstallMethod( ViewObj,
-	"for shadow elements of a Lie geometry", 
-	[ IsShadowElementsOfIncidenceStructure ],
-	function( vs )
-		Print("<shadow elements of type ", vs!.type," in ");
-		ViewObj(vs!.geometry);
-		Print(">");
-	end );
-
-######################################################################
-##
-## The following operations just make "nice" versions of functions for
-## specific geometries when the corresponding functions are defined.
-## this means: methods for the functions here are generic and relying
-## on installed methods for more particular objects.
-##
-######################################################################
-
-# CHECKED 18/4/2011 jdb
-#############################################################################
-#O  ElementsOfIncidenceStructure( <ps>, <str> )
-# returns the elements of an incidence structure <ps> provided there is an
-# installed method for ElementsOfIncidenceStructure for the particular <ps>
-# and <str> is occuring in TypesOfElementsOfIncidenceStructurePlural(<ps>).
-## 
-InstallMethod( ElementsOfIncidenceStructure,
-	"for an incidence structure and a string",
-	[IsIncidenceStructure, IsString],
-	function( ps, str )
-		local m;
-		m := Position(TypesOfElementsOfIncidenceStructurePlural(ps), str);
-		if m = fail then
-			Error("No such element type!");
-		else
-		return ElementsOfIncidenceStructure(ps, m);
-		fi;
-		end);
-
-# 
-#############################################################################
-#O  NrElementsOfIncidenceStructure( <ps>, <str> )
-# returns the number of elements of an incidence structure <ps> provided there 
-# is an  installed method for ElementsOfIncidenceStructure for the 
-# particular <ps> and <str> is occuring in 
-# TypesOfElementsOfIncidenceStructurePlural(<ps>). 
-## 
-InstallMethod( NrElementsOfIncidenceStructure,
-	"for an incidence structure and a string",
-	[IsIncidenceStructure, IsString],
-	function( ps, str )
-		return Size(ElementsOfIncidenceStructure(ps, str));
-		end);
-
-#############################################################################
-#O  NrElementsOfIncidenceStructure( <ps>, <typ> )
-# returns the number of elements of an incidence structure <ps> provided there 
-# is an  installed method for ElementsOfIncidenceStructure for the 
-# particular <ps>.
-## 
-InstallMethod( NrElementsOfIncidenceStructure,
-	"for an incidence structure and a type",
-	[IsIncidenceStructure, IsPosInt],
-	function( ps, typ )
-		return Size(ElementsOfIncidenceStructure(ps, typ));
-		end);
-
 # CHECKED 18/4/2011 jdb
 #############################################################################
 #A  IsChamberOfIncidenceStructure( <flag> )
@@ -656,6 +506,15 @@ InstallMethod( IsChamberOfIncidenceStructure,
 	[ IsFlagOfIncidenceStructure and IsFlagOfIncidenceStructureRep ],
 	flag -> Length(flag!.types) = Rank(flag!.geo)
 	);
+
+# added 140813 pc
+#############################################################################
+#O  AmbientGeometry( <x> )
+# general method that returns the ambient geometry of a flag
+##
+InstallMethod( AmbientGeometry,
+        [ IsFlagOfIncidenceStructure and IsFlagOfIncidenceStructureRep],
+        x -> x!.geo );
 
 # added by pc, moved to here 31/3/14
 #############################################################################
@@ -691,9 +550,189 @@ InstallMethod( Size,
 ##
 InstallMethod( Rank,
         "for IsFlagOfIncidenceStructure",
-        [IsFlagOfIncidenceStructure],
+        [ IsFlagOfIncidenceStructure ],
         i -> RankAttr(i) );
 
+# Added 140813, pc
+#############################################################################
+#O  Type( <x> )
+# general method that returns the type of a flag
+##
+InstallMethod( Type,
+        "for IsElementsOfIncidenceStructure(Rep)",
+        [ IsFlagOfIncidenceStructure and IsFlagOfIncidenceStructureRep ],
+        x -> Set(x!.els,Type) );
+
+# added 140813, pc
+#############################################################################
+#O  ResidueOfFlag( <flag> )
+# completely generic residue computation
+##
+InstallMethod( ResidueOfFlag,
+        "for a flag",
+        [ IsFlagOfIncidenceStructure ],
+        function( flag )
+                local ambigeo, geo, typfun, typset, resrank, eles, inc;
+		ambigeo:=AmbientGeometry(flag);
+		typset:=Difference([1..Rank(ambigeo)], Type(flag));
+		resrank:=Size(typset);
+		typfun:=function(ele)
+			return Position(typset, Type(ele));
+		end;
+		eles:=List(typset, j -> List(ShadowOfFlag(ambigeo,flag,j)));
+		inc:=function(x,y)
+			return IsIncident(x,y);
+		end;
+        geo := IncidenceStructure(Union(eles), inc, typfun, [1..resrank]);
+		SetAmbientGeometry(geo,ambigeo);
+        return geo;
+	end );
+
+#############################################################################
+# methods that allow us to make an ordered Set from a list of flags,
+# and to make an ordered Set of a list of elements and flags.
+#############################################################################
+
+# added 2/9/14 pc+jdb
+#############################################################################
+#O  \=( <a>, <b> )
+# test equality method for flags of an incidence structure
+# relies to testing equality of underlying 'obj' fields of the arguments.
+## 
+InstallMethod( \=, 
+	"for two IsElementOfIncidenceStructure",	
+	[ IsFlagOfIncidenceStructure, IsFlagOfIncidenceStructure ],
+	function( a, b )
+		return Set(a!.els) = Set(b!.els);
+	end );
+
+# added 2/9/14 pc+jdb
+#############################################################################
+#O  \<( <a>, <b> )
+# LT for two flags of an incidence structure.
+# first compares types of elements, in case of equality, 
+# relies to comparing underlying 'obj' fields of the arguments.
+## 
+InstallMethod( \<, "for two IsFlagOfIncidenceStructure",
+	[ IsFlagOfIncidenceStructure, IsFlagOfIncidenceStructure ],
+	function( a, b ) 
+		if a!.types = b!.types then
+			return a!.els < b!.els;
+		else
+			return a!.types < b!.types;
+		fi;
+	end );
+
+# added 2/9/14 pc+jdb
+#############################################################################
+#O  \<( <a>, <b> )
+# LT for a flag and an element.
+# first compares types of elements, in case of equality, 
+# relies to comparing underlying 'obj' fields of the arguments.
+## 
+InstallMethod( \<, "for two IsElementOfIncidenceStructure",
+	[ IsFlagOfIncidenceStructure, IsElementOfIncidenceStructure ],
+	function( a, b ) 
+        if a!.geo <> b!.geo then
+            Error("<flag> and <element> do not belong to the same geometry");
+        fi;
+        return false;
+    end );
+
+# added 2/9/14 pc+jdb
+#############################################################################
+#O  \<( <a>, <b> )
+# LT for two flags of an incidence structure.
+# first compares types of elements, in case of equality, 
+# relies to comparing underlying 'obj' fields of the arguments.
+## 
+InstallMethod( \<, "for two IsElementOfIncidenceStructure",
+	[ IsElementOfIncidenceStructure, IsFlagOfIncidenceStructure ],
+	function( a, b )
+        if a!.geo <> b!.geo then
+            Error("<element> and <flag> do not belong to the same geometry");
+        fi;
+        return true;
+    end );
+
+# added by pc 140813
+############################################################################
+#O  IsIncident( <x,F> )
+# For an element and a flag of an incidence structure
+# An element is incident with a flag if it is incident with all elements 
+# of the flag.
+##
+InstallMethod( IsIncident,
+        "for an element and a flag of an incidence structure",
+        [ IsElementOfIncidenceStructure, IsFlagOfIncidenceStructure ],
+        function( x, f )
+		local iter, inc;
+		iter:=Iterator(ElementsOfFlag(f));
+		inc:=true;
+                while inc and not(IsDoneIterator(iter)) do
+			inc:=IsIncident(x,NextIterator(iter));
+		od;
+		return inc;
+        end );
+        
+# added by pc 140813
+############################################################################
+#O  IsIncident( <x,F> )
+# For an element and a flag of an incidence structure
+# An element is incident with a flag if it is incident with all elements 
+# of the flag.
+##
+InstallMethod( IsIncident,
+        "for an element and a flag of an incidence structure",
+        [IsFlagOfIncidenceStructure, IsElementOfIncidenceStructure],
+        function( f, x )
+		local iter, inc;
+		iter:=Iterator(ElementsOfFlag(f));
+		inc:=true;
+                while inc and not(IsDoneIterator(iter)) do
+			inc:=IsIncident(x,NextIterator(iter));
+		od;
+		return inc;
+        end );
+
+#############################################################################
+#O  \in( <x>, <y> )
+# x: an element of an incidence structure, y a flag of that incidence structure
+##
+InstallOtherMethod( \in, 
+	"for an element and a flag of an incidence structure",
+	[ IsElementOfIncidenceStructure, IsFlagOfIncidenceStructure ],
+	function( x, y )
+		if x!.geo <> y!.geo then
+			Error( "<x> and <y> have not the same ambient geometry" );
+		else
+            return x in y!.els;
+        fi;
+	end );
+
+#############################################################################
+# General methods for shadows of elements/flags
+#############################################################################
+
+# added by pc 140901
+############################################################################
+#O  ShadowOfElement( <inc>, <f> ,<j> )
+# Completely generic shadow computation
+# For an element of an incidence structure and a type j
+# Returns all elements of type j which are incident to e
+##
+InstallMethod( ShadowOfElement,
+        "for an element of an incidence structure and a type",
+        [IsIncidenceStructure, IsElementOfIncidenceStructure, IsPosInt],
+        function( inc, f, j )
+            local iter, shad, x;
+            return Objectify( NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and 
+                                    IsShadowElementsOfIncidenceStructure),
+                rec( geometry := inc,
+                     type := j,
+                     parentflag := FlagOfIncidenceStructure(inc,[f]) )
+                );
+        end );
 
 # CHECKED 18/4/2011 jdb
 #############################################################################
@@ -714,6 +753,39 @@ InstallMethod( ShadowOfElement,
 			return ShadowOfElement(ps, v, m);
 		fi;
 		end);
+
+# CHECKED 19/4/2011 jdb
+# moved to geometry.gi and made generic 3/9/14
+#############################################################################
+#O  ElementsIncidentWithElementOfIncidenceStructure( <el>, <i> )
+# returns the elements of type <i> in <el>, relying on ShadowOfElement 
+# for particular <el>.
+## 
+InstallMethod( ElementsIncidentWithElementOfIncidenceStructure, "for IsElementOfLieGeometry",
+	[ IsElementOfIncidenceStructure, IsPosInt],
+	function( el, i )
+		return ShadowOfElement(el!.geo, el, i);
+	end );
+
+# added by pc 140813
+############################################################################
+#O  ShadowOfFlag( <F,j> )
+# Completely generic shadow computation
+# For a flag of an incidence structure and a type j
+# Returns all elements of type j which are incident to the flag F
+##
+InstallMethod( ShadowOfFlag,
+        "for an incidence structure, flag of an incidence structure and a type",
+        [IsIncidenceStructure, IsFlagOfIncidenceStructure, IsPosInt],
+        function( inc, f, j )
+            local iter, shad, x;
+            return Objectify( NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and 
+                                    IsShadowElementsOfIncidenceStructure),
+                rec( geometry := inc,
+                     type := j,
+                     parentflag := f )
+                );
+        end );
 
 # CHECKED 18/4/2011 jdb
 #############################################################################
@@ -763,87 +835,104 @@ InstallMethod( ShadowOfFlag,
 	function( ps, list, str )
 		return ShadowOfFlag(ps,FlagOfIncidenceStructure(ps,list),str);
 	end);
-	
-# CHECKED 4/9/2011 jdb
-# but maybe to be changed later on. See to do list on top of file.
-#############################################################################
-#O  Enumerator( <D> )
-# generic method that enumerates D, using an Iterator for D
-# assuming D belongs to IsElementsOfIncidenceStructure
-##
-InstallMethod( Enumerator,
-	"generic method for IsElementsOfIncidenceStructure",
-	[IsElementsOfIncidenceStructure],
-	function ( D )
-	local  iter, elms;
-	iter := Iterator( D );
-	elms := [  ];
-	while not IsDoneIterator( iter )  do
-		Add( elms, NextIterator( iter ) );
-	od;
-	return elms;
-	end);
-  
-# CHECKED 27/6/2011 jdb and pc
-#############################################################################
-#O  Intersection2( <el1>, <el2> )
-# method for Intersection2, referring to Meet.
-##
-InstallOtherMethod( Intersection2,
-	"for two elements of an incidence structure, relying on Meet",
-	[IsElementOfIncidenceStructure, IsElementOfIncidenceStructure],
-	function( el1, el2 )
-		return Meet(el1,el2);
-	end);
-	
 
-# CHECKED 14/11/2011 jdb
-# 140813 modified by pc : TypesOfIncidenceStructure
+# added by pc 140901
 #############################################################################
-#O  IncidenceStructure( <eles>, <inc>, <typ>, <typeset> )
-# method for IncidenceStructure.
+#O  Iterator( <vs>) 
+# returns an iterator for <vs>, a collection of shadow elemenst of an incidence structure
 ##
-InstallMethod( IncidenceStructure, 
-	"for a set, incidence, type function and type set",
-	[ IsList, IsFunction, IsFunction, IsList ],
-	function( eles, inc, typ, typeset )
-		local geo, ty, t, typesetstrings, typesetstringsplural;
-		geo := rec( elements := eles, increl := inc, 
-					typefun := typ, typeset := typeset );
-		ty := NewType( GeometriesFamily,
-					IsIncidenceStructure and IsIncidenceStructureRep );
-		typesetstrings:=[];
-   		typesetstringsplural:=[];
-		for t in typeset do
-			Add(typesetstrings, Concatenation("element of type ", String(t)));
-   			Add(typesetstringsplural, Concatenation("elements of type ", String(t)));
-		od;
-		ObjectifyWithAttributes( geo, ty, RankAttr, Size(typeset), TypesOfElementsOfIncidenceStructure, 
-            typesetstrings, TypesOfElementsOfIncidenceStructurePlural, typesetstringsplural);
-		return geo;
+InstallMethod( Iterator, 
+	"for shadow elements of an incidence structure",
+	[ IsShadowElementsOfIncidenceStructure ],
+	function( vs )
+        local j, f, shad, x, iter;
+        f := vs!.parentflag;
+        j := vs!.type;
+		if j in Type(f) then
+			return IteratorList([f!.els[Position(Type(f),j)]]);
+		fi;
+        iter:=Iterator(ElementsOfIncidenceStructure(vs!.geometry,j));
+        shad:=[];
+            for x in iter do
+                    if IsIncident(x,f) then Add(shad,x); fi;
+            od;
+        return IteratorList(shad);
+    end );
+
+#############################################################################
+# Viewing/Printing/Displaying methods.
+#############################################################################
+# 5 CHECKED 4/09/11 jdb
+
+InstallMethod( ViewObj, 
+	"for IsElementOfIncidenceStructure",
+	[ IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep ],
+	function( v )
+		Print("<a ",TypesOfElementsOfIncidenceStructure(v!.geo)[v!.type]," in ");
+		ViewObj(v!.geo);
+		Print(">");
 	end );
 
-#############################################################################
-#O  ElementsOfIncidenceStructure( <inc>, <j> )
-# returns the elements of the incidence structure <inc> of type <j>
-## 
-InstallMethod( ElementsOfIncidenceStructure, 
-    "for an incidence structure and a type",
-	[IsIncidenceStructure, IsPosInt],
-	function( inc, j )
-		local r;
-		r := Rank(inc);
-		if j > r then
-			Error("<inc> has no elements of type <j>");
-		else
-			return Objectify(
-			NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and IsElementsOfIncidenceStructureRep ),
-				rec( geometry := inc,
-					type := j					)
-					);
-		fi;
-	end);
+InstallMethod( ViewObj,
+        "for IsFlagOfIncidenceStructure",
+        [ IsFlagOfIncidenceStructure and IsFlagOfIncidenceStructureRep ],
+        function( v )
+                Print("<a flag of ");
+                ViewObj(v!.geo);
+                Print(">");
+        end );
 
+InstallMethod( PrintObj, 
+	"for IsElementOfIncidenceStructure",
+	[ IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep ],
+	function( v )
+		Print( v!.obj );
+	end );
+
+InstallMethod( Display, 
+	"for IsElementOfIncidenceStructure",
+	[ IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep ],
+	function( v )
+		Display(v!.obj);
+	end );
+
+# JB (31/01/2013): One thing that I would like in GAP is to have Display for vectors just
+# like that for matrices. So here is a method which makes this happen
+
+InstallMethod( Display, 
+	"for IsVector", 
+	[ IsVector ],
+	function( v )
+		Display( [v] );
+	end );
+
+InstallMethod( ViewObj, 
+	"for IsAllElementsOfIncidenceStructure",
+	[ IsAllElementsOfIncidenceStructure ],
+	function( vs )
+		Print("<Elements of ");
+		ViewObj(vs!.geometry);
+		Print(">");
+	end );
+
+InstallMethod( PrintObj, 
+	"for IsAllElementsOfIncidenceStructure",
+	[ IsAllElementsOfIncidenceStructure ],
+	function( vs )
+		Print("ElementsOfIncidenceStructure( ",vs!.geometry," )");
+	end );
+
+# Finally a generic ViewObj method for shadow elements.
+#############################################################################
+InstallMethod( ViewObj,
+	"for shadow elements of a Lie geometry", 
+	[ IsShadowElementsOfIncidenceStructure ],
+	function( vs )
+		Print("<shadow elements of type ", vs!.type," in ");
+		ViewObj(vs!.geometry);
+		Print(">");
+	end );
+  
 InstallMethod( ViewObj, 
 	"for IsElementsOfIncidenceStructure",
 	[ IsElementsOfIncidenceStructure ],
@@ -859,80 +948,6 @@ InstallMethod( PrintObj,
 	function( vs )
 		Print("ElementsOfIncidenceStructure( ",vs!.geometry," ) of type ",vs!.type);
 	end );
-
-
-
-# added 140813, pc
-#############################################################################
-#O  Iterator( <vs> )
-# Iterator for ElementsOfIncidenceStructure of a given type.
-##
-InstallMethod( Iterator,
-        "for IsElementsOfIncidenceStructure",
-        [ IsElementsOfIncidenceStructure ],
-        function( vs )
-            local incstr, elements, wrapped, type;
-            incstr := vs!.geometry;
-            type := vs!.type;
-            elements:=Filtered(incstr!.elements, e -> Position(incstr!.typeset,incstr!.typefun(e)) = type);
-            wrapped:=List(elements, e -> Wrap(incstr, type, e));
-            return IteratorList(wrapped);
-        end );
-
-# added 140813, pc
-#############################################################################
-#O  ResidueOfFlag( <flag> )
-# completely generic residue computation
-##
-InstallMethod( ResidueOfFlag,
-        "for a flag",
-        [ IsFlagOfIncidenceStructure ],
-        function( flag )
-                local ambigeo, geo, typfun, typset, resrank, eles, inc;
-		ambigeo:=AmbientGeometry(flag);
-		typset:=Difference([1..Rank(ambigeo)], Type(flag));
-		resrank:=Size(typset);
-		typfun:=function(ele)
-			return Position(typset, Type(ele));
-		end;
-		eles:=List(typset, j -> List(ShadowOfFlag(ambigeo,flag,j)));
-
-		inc:=function(x,y)
-			return IsIncident(x,y);
-		end;
-
-        geo := IncidenceStructure(Union(eles), inc, typfun, [1..resrank]);
-                SetAmbientGeometry(geo,ambigeo);
-                #Objectify(ty,geo);
-                return geo;
-        end );
-
-# added 140901, pc
-#############################################################################
-#O  IncidenceGraph( <incstr> )
-# Generic method for incidence graph, with trivial group
-##
-InstallMethod( IncidenceGraph,
-        "for an incidence structure",
-        [ IsIncidenceStructure ],
-        function( incstr )
-			local all, adj, gamma;
-            if IsBound(incstr!.IncidenceGraphAttr) then
-                return incstr!.IncidenceGraphAttr;
-            fi;
-			all:=List([1..Rank(incstr)], i -> AsSet(ElementsOfIncidenceStructure(incstr,i)));
-			all:=Union(all);
-			adj:=function(i,j)
-				if i=j then 
-					return false; # Otherwise problem with loops
-				else 
-					return IsIncident(all[i],all[j]);
-				fi;
-			end;
-			gamma := Graph( Group(()), [1..Size(all)], OnPoints, adj, true);
-            Setter( IncidenceGraphAttr )( incstr, gamma );
-			return gamma;
-        end );
 
 #############################################################################
 # Display methods:

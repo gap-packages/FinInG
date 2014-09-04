@@ -1600,7 +1600,33 @@ InstallMethod( Solids, [ IsAffineSpace, IsSubspaceOfAffineSpace ],
     return ShadowOfElement(geo, var, 4);
   end );
 
-
+#############################################################################
+#O  IncidenceGraph( <gp> )
+# Note that computing the collineation group of a projective space is zero
+# computation time. So useless to print the warning here if the group is not
+# yet computed.
+###
+InstallMethod( IncidenceGraph,
+    "for a projective space",
+    [ IsAffineSpace ],
+    function( as )
+        local elements, graph, adj, coll, sz;
+		if IsBound(as!.IncidenceGraphAttr) then
+            return as!.IncidenceGraphAttr;
+        fi;
+		coll := CollineationGroup(as);
+		elements := Concatenation(List([1..Rank(as)], i -> List(AsList(ElementsOfIncidenceStructure(as,i)))));
+        adj := function(x,y)
+            if x!.type <> y!.type then
+                return IsIncident(x,y);
+            else
+                return false;
+            fi;
+        end;
+        graph := Graph(coll,elements,OnAffineSubspaces,adj,true);
+        Setter( IncidenceGraphAttr )( as, graph );
+        return graph;
+    end );
 
 
 

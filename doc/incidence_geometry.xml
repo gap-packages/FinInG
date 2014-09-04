@@ -161,6 +161,11 @@ is set.
 The vertices are the elements of <A>inc</A>, adjacency between different vertices is equal to incidence,
 and there are of course no loops. For generic incidence structures, i.e. constructed through <F>IncidenceStructure</F>,
 there is no efficient method installed, so this operation can be time consuming.<P/>
+If <A>inc</A> is a generic incidence structure, i.e. created using <F>IncidenceStructure</F>, the vertex names
+of the graph are integers. It is not by default possible to use the elements of <A>inc</A> as vertex names, since
+it is not known in the generic case whether the elements of different type of <A>inc</A> can be ordered. For
+particular incidence geometries, e.g. projective spaces, etc., the vertex names will be the elements, which will
+be demonstrated through examples in the appropriate chapters.<P/>
 In the example we consider the so-called doubling of the smallest generalised quadrangle: the points of the
 incidence structure are the points and the lines of the GQ, the lines of the incidence structure are
 all the point-line flags of the GQ. The incidence is the natural one. It is then checked that diameter and girth

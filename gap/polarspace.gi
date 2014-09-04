@@ -3231,3 +3231,35 @@ InstallMethod( Pole,
 			fi;
 		fi;
 end);
+
+#############################################################################
+#O  IncidenceGraph( <gp> )
+# Note that computing the collineation group of a projective space is zero
+# computation time. So useless to print the warning here if the group is not
+# yet computed.
+###
+InstallMethod( IncidenceGraph,
+    "for a projective space",
+    [ IsClassicalPolarSpace ],
+    function( ps )
+        local elements, graph, adj, coll, sz;
+		if IsBound(ps!.IncidenceGraphAttr) then
+            return ps!.IncidenceGraphAttr;
+        fi;
+        if not HasCollineationGroup(ps) then
+            Error("No collineation group computed. Please compute collineation group before computing incidence graph\,n");
+        else
+			coll := CollineationGroup(ps);
+			elements := Concatenation(List([1..Rank(ps)], i -> List(AsList(ElementsOfIncidenceStructure(ps,i)))));
+			adj := function(x,y)
+				if x!.type <> y!.type then
+					return IsIncident(x,y);
+				else
+					return false;
+				fi;
+			end;
+			graph := Graph(coll,elements,OnProjSubspaces,adj,true);
+			Setter( IncidenceGraphAttr )( ps, graph );
+			return graph;
+		fi;
+	end );
