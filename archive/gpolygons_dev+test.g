@@ -569,9 +569,9 @@ apts := Union(pts,lines);
 gp := GeneralisedPolygonByElements(apts,flags,inc);
 
 ps := SymplecticSpace(3,2);
-pts := List(Points(ps));
-lines := List(Lines(ps));
-flags := Union(List(pts,x->List(Lines(x),y->FlagOfIncidenceStructure(ps,[x,y]))));
+pts := List(Points(ps));;
+lines := List(Lines(ps));;
+flags := Union(List(pts,x->List(Lines(x),y->FlagOfIncidenceStructure(ps,[x,y]))));;
 inc := function(x,y)
 if x = y then
     return true;
@@ -585,8 +585,19 @@ else
     return inc(y,x);
 fi;
 end;
-apts := Union(pts,lines);
-gp := GeneralisedPolygonByElements(apts,flags,inc);
+type := function(x)
+if IsList(Type(x)) then
+    return 2;
+else
+    return 1;
+fi;
+end;
+els := Union(pts,lines,flags);;
+struc := IncidenceStructure(els,inc,type,[1,2]);
+gamma := IncidenceGraph(struc);
+Diameter(gamma);
+Girth(gamma);
+#gp := GeneralisedPolygonByElements(ipts,flags,inc);
 
 
 ##### voorbeeldje Philippe

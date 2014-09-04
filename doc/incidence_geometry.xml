@@ -70,10 +70,13 @@ Top level category for all objects representing an incidence structure.
 </Description>
 </ManSection>
 
-In the following example we define an incidence structure that is not an incidence geometry. The
-example used is the incidence structure with elements the subspaces contained in the line Grassmannian
-of PG(4,2). This example is not meant to create this incidence structure in an efficient way, but just
-to demonstrate the general philosophy.
+<ManSection>
+<Filt Name="IsIncidenceGeometry" Type="Category"/>
+<Description>
+Category for all objects representing an incidence geometry. All particular geometries implemented
+in <Package>FinInG</Package> are incidence geometries.
+</Description>
+</ManSection>
 
 <ManSection>
 <Oper Name="IncidenceStructure" Arg="eles, inc_rel, type, typeset"/>
@@ -82,20 +85,19 @@ to demonstrate the general philosophy.
 <A>eles</A> is a set containing the elements of the incidence structure. <A>inc_rel</A>
 must be a function that determines if two objects in the set <A>eles</A> are incident. 
 <A>type</A> is a function mapping any element to its type, which is a unique element 
-in the set <A>typeset</A>.<Example>
-<#Include SYSTEM "../examples/include/incgeom_incstruct.include"> 
+in the set <A>typeset</A>.<P/>
+In the following example we define an incidence structure that is not an incidence geometry. The
+example used is the incidence structure with elements the subspaces contained in the line Grassmannian
+of PG(4,2). This example is not meant to create this incidence structure in an efficient way, but just
+to demonstrate the general philosophy.
+<Example>
+<#Include SYSTEM "../examples/include/incgeom_incstruct.include">
+
 </Example>
 </Description>
 </ManSection>
 
-<ManSection>
-<Filt Name="IsIncidenceGeometry" Type="Category"/>
-<Description>
-Category for all objects representing an incidence geometry.
-</Description>
-</ManSection>
-
-Lie Geometries, i.e., geometries with a projective space as ambient space, affine spaces and 
+Lie Geometries, i.e., geometries with a projective space as ambient space, affine spaces and
 generalised polygons have their own category, which is a subcategory of <C>IsIncidenceGeometry</C>.
 <ManSection>
 <Heading>Main categories in <C>IsIncidenceGeometry</C></Heading>
@@ -155,7 +157,16 @@ is set.
 <Attr Name="IncidenceGraph" Arg="inc"/>
 <Returns>a graph</Returns>
 <Description>
+The vertices are the elements of <A>inc</A>, adjacency between different vertices is equal to incidence,
+and there are of course no loops. For generic incidence structures, i.e. constructed through <F>IncidenceStructure</F>,
+there is no efficient method installed, so this operation can be time consuming.<P/>
+In the example we consider the so-called doubling of the smallest generalised quadrangle: the points of the
+incidence structure are the points and the lines of the GQ, the lines of the incidence structure are
+all the point-line flags of the GQ. The incidence is the natural one. It is then checked that diameter and girth
+of the incidence graph are 8 and 16 respectively, which makes that the incidence structure is a generalised
+octagon.
 <Example>
+<#Include SYSTEM "../examples/include/incgeom_incgraph.include">
 </Example>
 </Description>
 </ManSection>
@@ -184,6 +195,20 @@ with an exception for <C>IsSubspaceOfClassicalPolarSpace</C>, which is a subcate
 <Example>
 <#Include SYSTEM "../examples/include/incgeom_categories2.include"> 
 </Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="UnderlyingObject" Arg="el"/>
+<Returns>an object</Returns>
+<Description>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="Type" Arg="el"/>
+<Returns>an integer</Returns>
+<Description>
 </Description>
 </ManSection>
 
@@ -321,7 +346,6 @@ This function returns true if and only if <A>u</A> is incident with <A>v</A>. Re
 </Description>
 </ManSection>
 
-
 <ManSection>
 <Oper Name="AmbientGeometry" Arg="v"/>
 <Returns>the ambient geometry of the element <A>v</A></Returns>
@@ -375,7 +399,9 @@ The incidence structure is determined by the elements.
 <Oper Name="ElementsOfFlag" Arg="flag"/>
 <Returns>a list of elements</Returns>
 <Description>
+This operations simply returns the list of elements that define <A>flag</A>
 <Example>
+<#Include SYSTEM "../examples/include/incgeom_elementsofflag.include">
 </Example>
 </Description>
 </ManSection>
@@ -384,7 +410,9 @@ The incidence structure is determined by the elements.
 <Attr Name="Rank" Arg="flag"/>
 <Returns>an integer</Returns>
 <Description>
+This operations returns the number of elements that define <A>flag</A>
 <Example>
+<#Include SYSTEM "../examples/include/incgeom_rankofflag.include">
 </Example>
 </Description>
 </ManSection>
@@ -393,7 +421,9 @@ The incidence structure is determined by the elements.
 <Attr Name="Size" Arg="flag"/>
 <Returns>an integer</Returns>
 <Description>
+This operations returns the number of elements that define <A>flag</A>
 <Example>
+<#Include SYSTEM "../examples/include/incgeom_sizeofflag.include">
 </Example>
 </Description>
 </ManSection>
@@ -402,7 +432,9 @@ The incidence structure is determined by the elements.
 <Attr Name="AmbientGeometry" Arg="flag"/>
 <Returns>an incidence structure</Returns>
 <Description>
+This operations returns the ambient geometry of the <A>flag</A>
 <Example>
+<#Include SYSTEM "../examples/include/incgeom_sizeofflag.include">
 </Example>
 </Description>
 </ManSection>
@@ -411,7 +443,9 @@ The incidence structure is determined by the elements.
 <Oper Name="Type" Arg="flag"/>
 <Returns>an list of integers</Returns>
 <Description>
+This operations returns the list of types of the elements defining <A>flag</A>
 <Example>
+<#Include SYSTEM "../examples/include/incgeom_typeofflag.include">
 </Example>
 </Description>
 </ManSection>
@@ -421,7 +455,9 @@ The incidence structure is determined by the elements.
 <Oper Name="IsIncident" Arg="flag, el"/>
 <Returns>true or false</Returns>
 <Description>
+An element is incident with a flag if and only if it is incident with all elements defining the flag.
 <Example>
+<#Include SYSTEM "../examples/include/incgeom_isincidentwithflag.include">
 </Example>
 </Description>
 </ManSection>

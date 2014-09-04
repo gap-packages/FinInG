@@ -1,0 +1,12 @@
+gap&gt; ps := SymplecticSpace(5,7);
+W(5, 7)
+gap&gt; p := Random(Points(ps));
+&lt;a point in W(5, 7)&gt;
+gap&gt; plane := Random(Planes(p));
+&lt;a plane in W(5, 7)&gt;
+gap&gt; flag := FlagOfIncidenceStructure(ps,[p,p,plane]);
+&lt;a flag of W(5, 7) &gt;
+gap&gt; Size(flag);
+2
+gap&gt; ElementsOfFlag(flag);
+[ &lt;a point in W(5, 7)&gt;, &lt;a plane in W(5, 7)&gt; ]

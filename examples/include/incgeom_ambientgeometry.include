@@ -1,0 +1,12 @@
+gap&gt; gp := TwistedTrialityHexagon(2^3);
+T(8, 2)
+gap&gt; p := Random(Points(gp));
+#I  Computing nice monomorphism...
+#I  Found permutation domain...
+&lt;a point in T(8, 2)&gt;
+gap&gt; l := Random(Lines(p));
+&lt;a line in T(8, 2)&gt;
+gap&gt; flag := FlagOfIncidenceStructure(gp,[p,l]);
+&lt;a flag of T(8, 2)&gt;
+gap&gt; AmbientGeometry(flag);
+T(8, 2)

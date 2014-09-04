@@ -389,9 +389,13 @@ InstallMethod( FlagOfIncidenceStructure,
                 local list,i,test,type,flag;
                 list := Set(ShallowCopy(els));
                 if Length(list) > Rank(incgeo) then
-                  Error("A flag can contain at most Rank(<incstr>) elements");
+                    Error("A flag can contain at most Rank(<incstr>) elements");
                 fi;
-                test := Set(Flat(List([1..Length(list)-1],i -> 
+                test := Set(List(list,x->AmbientGeometry(x)));
+                if test[1] <> incgeo then
+                    Error("<els> is not a list of elements of <incgeo>");
+                fi;
+                test := Set(Flat(List([1..Length(list)-1],i ->
                     List([i..Length(list)], j -> IsIncident(list[i], list[j])))));
                 if (test <> [ true ] and test <> []) then
                   Error("<els> does not determine a flag>");

@@ -1,0 +1,12 @@
+gap&gt; ps := ParabolicQuadric(8,3); 
+Q(8, 3)
+gap&gt; l := Random(Lines(ps));
+&lt;a line in Q(8, 3)&gt;
+gap&gt; plane := Random(Planes(l));
+&lt;a plane in Q(8, 3)&gt;
+gap&gt; solid := Random(Solids(plane));
+&lt;a solid in Q(8, 3)&gt;
+gap&gt; flag := FlagOfIncidenceStructure(ps,[l,plane,solid]);
+&lt;a flag of Q(8, 3) &gt;
+gap&gt; Rank(flag);
+3

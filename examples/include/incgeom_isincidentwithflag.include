@@ -1,0 +1,14 @@
+gap&gt; pg := PG(3,5);
+ProjectiveSpace(3, 5)
+gap&gt; p := Random(Points(pg));
+&lt;a point in ProjectiveSpace(3, 5)&gt;
+gap&gt; l := Random(Lines(p));
+&lt;a line in ProjectiveSpace(3, 5)&gt;
+gap&gt; plane := Random(Planes(l));
+&lt;a plane in ProjectiveSpace(3, 5)&gt;
+gap&gt; flag := FlagOfIncidenceStructure(pg,[l,plane]);
+&lt;a flag of ProjectiveSpace(3, 5)&gt;
+gap&gt; IsIncident(flag,l);
+true
+gap&gt; IsIncident(l,flag);
+true
