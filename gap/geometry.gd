@@ -191,7 +191,7 @@ DeclareOperation( "NrElementsOfIncidenceStructure", [IsIncidenceStructure, IsPos
 DeclareOperation( "NrElementsOfIncidenceStructure", [IsIncidenceStructure, IsString] );
 
 DeclareOperation( "IncidenceGraph", [ IsIncidenceStructure ] );
-IncidenceGraphAttr := NewAttribute( "IncidenceGraph", IsIncidenceStructure, "mutable" );
+IncidenceGraphAttr := NewAttribute( "IncidenceGraphAttr", IsIncidenceStructure, "mutable" );
 
 DeclareOperation( "Points", [IsIncidenceStructure] );
 DeclareOperation( "Lines", [IsIncidenceStructure] );

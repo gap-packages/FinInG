@@ -1,3 +1,7 @@
+gap&gt; gp := PG(2,2);
+ProjectiveSpace(2, 2)
+gap&gt; CollineationGroup(gp);
+The FinInG collineation group PGL(3,2)
 gap&gt; gp := EllipticQuadric(5,4);
 Q-(5, 4)
 gap&gt; CollineationGroup(gp);
@@ -7,73 +11,6 @@ T(27, 3)
 gap&gt; CollineationGroup(gp);
 #I  Computing nice monomorphism...
 #I  Found permutation domain...
-&lt;projective collineation group with 29 generators&gt;
+3D_4(27)
 gap&gt; time;
-36071
-gap&gt; mat := [ [ 1, 1, 0, 0, 0, 1, 0 ], [ 1, 0, 0, 1, 1, 0, 0 ], 
-&gt; 	 [ 1, 0, 1, 0, 0, 0, 1 ], [ 0, 1, 1, 1, 0, 0, 0 ], 
-&gt; 	 [ 0, 1, 0, 0, 1, 0, 1 ], [ 0, 0, 0, 1, 0, 1, 1 ], 
-&gt;   	 [ 0, 0, 1, 0, 1, 1, 0 ] ];
-[ [ 1, 1, 0, 0, 0, 1, 0 ], [ 1, 0, 0, 1, 1, 0, 0 ], [ 1, 0, 1, 0, 0, 0, 1 ], 
-  [ 0, 1, 1, 1, 0, 0, 0 ], [ 0, 1, 0, 0, 1, 0, 1 ], [ 0, 0, 0, 1, 0, 1, 1 ], 
-  [ 0, 0, 1, 0, 1, 1, 0 ] ]
-gap&gt; gp := GeneralisedPolygonByIncidenceMatrix(mat);
-&lt;projective plane order 2&gt;
-gap&gt; group := CollineationGroup(gp);
-Group([ (1,2)(4,7), (2,3)(6,7), (2,6)(4,5), (3,4)(5,7), (3,7)(4,5) ])
-gap&gt; gp := EGQByqClan(FisherqClan(3));
-#I  Computed Kantor family. Now computing EGQ...
-#I  Computing points from Kantor family...
-#I  Computing lines from Kantor family...
-&lt;EGQ of order [ 9, 3 ] and basepoint 0&gt;
-gap&gt; group := CollineationGroup(gp);
-#I  Computing incidence graph of generalised polygon...
-&lt;permutation group with 8 generators&gt;
-gap&gt; Order(group);
-26127360
-gap&gt; Random(group);
-(1,108,96,51,210,262,147,206)(2,95,85,132,165,4,279,71,244,54,204,58,21,270,
-220,52,142,166,234,209,31,229,174,139)(3,87,277,186,64,38,215,125,82,216,231,
-65,156,265,207,258,76,227,104,140,46,197,228,119)(5,100,224,213,99,180,195,
-233,217,162,69,242,48,268,219,192,271,274,172,37,255,49,12,23)(6,91,30,24,272,
-26,118,44,28,243,15,45,129,264,257,211,126,131,167,235,35,138,39,278)(7,171,
-80,128,225,148,72,198,137,230,90,260,184,9,77,59,246,143,276,117,145,33,36,
-241)(8,83,122,159,141,25,169,179,55,248,42,67,183,269,218,203,187,61,256,22,
-47,239,247,19)(10,201,29,14,259,157,240,185,221,73,245,190,135,150,60,75,266,
-79,115,107,111,182,273,40)(11,94,188,105,191,68,92,152,163,27,123,254,249,267,
-158,194,208,62,173,214,196,168,120,74)( [...] )
-gap&gt; q := 4;
-4
-gap&gt; conic := ParabolicQuadric(2,q);
-Q(2, 4)
-gap&gt; nucleus := NucleusOfParabolicQuadric(conic);
-&lt;a point in ProjectiveSpace(2, 4)&gt;
-gap&gt; hyperoval := Union(List(Points(conic)),[nucleus]);
-[ &lt;a point in ProjectiveSpace(2, 4)&gt;, &lt;a point in Q(2, 4)&gt;, 
-  &lt;a point in Q(2, 4)&gt;, &lt;a point in Q(2, 4)&gt;, &lt;a point in Q(2, 4)&gt;, 
-  &lt;a point in Q(2, 4)&gt; ]
-gap&gt; pg := PG(3,q);
-ProjectiveSpace(3, 4)
-gap&gt; hyp :=  HyperplaneByDualCoordinates(pg,[1,0,0,0]*Z(q)^0);
-&lt;a plane in ProjectiveSpace(3, 4)&gt;
-gap&gt; em := NaturalEmbeddingBySubspace(PG(2,q),pg,hyp);
-&lt;geometry morphism from &lt;All elements of ProjectiveSpace(2, 
-4)&gt; to &lt;All elements of ProjectiveSpace(3, 4)&gt;&gt;
-gap&gt; O := List(hyperoval,x-&gt;x^em);
-[ &lt;a point in ProjectiveSpace(3, 4)&gt;, &lt;a point in ProjectiveSpace(3, 4)&gt;, 
-  &lt;a point in ProjectiveSpace(3, 4)&gt;, &lt;a point in ProjectiveSpace(3, 4)&gt;, 
-  &lt;a point in ProjectiveSpace(3, 4)&gt;, &lt;a point in ProjectiveSpace(3, 4)&gt; ]
-gap&gt; points := Set(Filtered(Points(pg),x-&gt;not x in hyp));;
-gap&gt; lines := Union(List(O,x-&gt;Filtered(Lines(x),y-&gt;not y in hyp)));;
-gap&gt; inc := \*;
-&lt;Operation "*"&gt;
-gap&gt; gp := GeneralisedPolygonByElements(points,lines,inc);
-&lt;generalised quadrangle of order [ 3, 5 ]&gt;
-gap&gt; coll := CollineationGroup(gp);
-&lt;permutation group with 8 generators&gt;
-gap&gt; Order(coll);
-138240
-gap&gt; Random(coll);
-(1,19,17)(2,28,25)(4,12,11)(5,13,14)(7,29,32)(8,22,24)(9,20,26)(10,27,18)(15,
-30,23)(16,21,31)(33,58,36)(34,49,44)(35,42,50)(37,40,63)(38,47,55)(39,56,
-45)(41,57,43)(46,48,64)(51,60,52)(53,54,61)
+32950

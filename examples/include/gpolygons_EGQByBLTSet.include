@@ -14,7 +14,6 @@ gap&gt; p := BasePointOfEGQ(egq);
 gap&gt; UnderlyingObject(p);
 &lt;a point in W(5, 3)&gt;
 gap&gt; l := Random(Lines(egq));
-#I  Using elation group to enumerate elements
 &lt;a line in &lt;EGQ of order [ 9, 3 ] and basepoint in W(5, 3 ) &gt;&gt;
 gap&gt; UnderlyingObject(l);
 &lt;a plane in W(5, 3)&gt;
@@ -26,15 +25,17 @@ gap&gt; CollineationGroup(egq);
 #I  Using elation group to enumerate elements
 #I  Using elation group to enumerate elements
 #I  Computing incidence graph of generalised polygon...
+#I  Using elation of the collineation group...
 #I  Using elation group to enumerate elements
 &lt;permutation group of size 26127360 with 7 generators&gt;
 gap&gt; time;
-210
+111
 gap&gt; egq := EGQByqClan(clan);
 #I  Computed Kantor family. Now computing EGQ...
 &lt;EGQ of order [ 9, 3 ] and basepoint 0&gt;
 gap&gt; CollineationGroup(egq);
 #I  Computing incidence graph of generalised polygon...
+#I  Using elation of the collineation group...
 &lt;permutation group of size 26127360 with 6 generators&gt;
 gap&gt; time;
-1489
+935

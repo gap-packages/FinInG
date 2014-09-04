@@ -8,18 +8,18 @@ blocks := [
    [ 4, 8, 10, 15, 21 ], [ 4, 9, 11, 14, 20 ], [ 5, 6, 13, 15, 20 ], 
    [ 5, 7, 12, 14, 21 ], [ 5, 8, 11, 17, 18 ], [ 5, 9, 10, 16, 19 ] ];;
 gp := GeneralisedPolygonByBlocks( blocks );
-incgraph := IncidenceGraphOfGeneralisedPolygon( gp );;
+incgraph := IncidenceGraph( gp );;
 Diameter( incgraph );
 Girth( incgraph );
 VertexDegrees( incgraph );
 aut := AutGroupGraph( incgraph );
 DisplayCompositionSeries(aut);
 gp := ParabolicQuadric(4,4);
-incgraph := IncidenceGraphOfGeneralisedPolygon( gp );;
+incgraph := IncidenceGraph( gp );;
 quit;
 CollineationGroup(gp);
 Order(last);
-incgraph := IncidenceGraphOfGeneralisedPolygon( gp );;
+incgraph := IncidenceGraph( gp );;
 aut := AutGroupGraph( incgraph );
 Order(aut);
 quit;

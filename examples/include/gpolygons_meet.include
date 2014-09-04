@@ -12,7 +12,7 @@ gap&gt; l := Random(Lines(gp));
 gap&gt; m := Random(Lines(gp));
 &lt;a line in &lt;projective plane order 2&gt;&gt;
 gap&gt; Meet(l,m);
-&lt;a line in &lt;projective plane order 2&gt;&gt;
+&lt;a point in &lt;projective plane order 2&gt;&gt;
 gap&gt; ps := ParabolicQuadric(4,3);
 Q(4, 3)
 gap&gt; gp := GeneralisedPolygonByElements(Set(Points(ps)),Set(Lines(ps)),\*);

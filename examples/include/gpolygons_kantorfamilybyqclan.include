@@ -15,6 +15,4 @@ gap&gt; fam := KantorFamilyByqClan(clan);
       &lt;matrix group with 4 generators&gt;, &lt;matrix group with 4 generators&gt;, 
       &lt;matrix group with 4 generators&gt;, &lt;matrix group with 6 generators&gt; ] ]
 gap&gt; egq := EGQByKantorFamily(fam[1],fam[2],fam[3]);
-#I  Computing points from Kantor family...
-#I  Computing lines from Kantor family...
 &lt;EGQ of order [ 49, 7 ] and basepoint 0&gt;

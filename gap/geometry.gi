@@ -913,6 +913,9 @@ InstallMethod( IncidenceGraph,
         [ IsIncidenceStructure ],
         function( incstr )
 			local all, adj, gamma;
+            if IsBound(incstr!.IncidenceGraphAttr) then
+                return incstr!.IncidenceGraphAttr;
+            fi;
 			all:=List([1..Rank(incstr)], i -> AsSet(ElementsOfIncidenceStructure(incstr,i)));
 			all:=Union(all);
 			adj:=function(i,j)
@@ -923,6 +926,7 @@ InstallMethod( IncidenceGraph,
 				fi;
 			end;
 			gamma := Graph( Group(()), [1..Size(all)], OnPoints, adj, true);
+            Setter( IncidenceGraphAttr )( incstr, gamma );
 			return gamma;
         end );
 

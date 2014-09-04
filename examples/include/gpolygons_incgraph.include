@@ -8,7 +8,7 @@ gap&gt; blocks := [
 &gt;    [ 5, 7, 12, 14, 21 ], [ 5, 8, 11, 17, 18 ], [ 5, 9, 10, 16, 19 ] ];;
 gap&gt; gp := GeneralisedPolygonByBlocks( blocks );
 &lt;projective plane order 4&gt;
-gap&gt; incgraph := IncidenceGraphOfGeneralisedPolygon( gp );;
+gap&gt; incgraph := IncidenceGraph( gp );;
 gap&gt; Diameter( incgraph );
 3
 gap&gt; Girth( incgraph );
@@ -29,7 +29,7 @@ S (4 gens, size 20160)
 1 (0 gens, size 1)
 gap&gt; gp := ParabolicQuadric(4,4);
 Q(4, 4)
-gap&gt; incgraph := IncidenceGraphOfGeneralisedPolygon( gp );;
+gap&gt; incgraph := IncidenceGraph( gp );;
 Error, No collineation group computed. Please compute collineation group before compu
 ting incidence graph,n called from
 &lt;function "unknown"&gt;( &lt;arguments&gt; )
@@ -41,7 +41,7 @@ gap&gt; CollineationGroup(gp);
 PGammaO(5,4)
 gap&gt; Order(last);
 1958400
-gap&gt; incgraph := IncidenceGraphOfGeneralisedPolygon( gp );;
+gap&gt; incgraph := IncidenceGraph( gp );;
 #I  Computing incidence graph of generalised polygon...
 gap&gt; aut := AutGroupGraph( incgraph );
 &lt;permutation group with 10 generators&gt;

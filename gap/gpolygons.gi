@@ -214,7 +214,7 @@ InstallMethod( GeneralisedPolygonByBlocks,
         SetTypesOfElementsOfIncidenceStructure(gp, ["point","line"]);
         SetOrder(gp, [s, t]);
         SetRankAttr(gp, 2);
-        Setter( IncidenceGraphOfGeneralisedPolygonAttr )( gp, graph );
+        Setter( IncidenceGraphAttr )( gp, graph );
         Setter( HasGraphWithUnderlyingObjectsAsVertices )( gp, true);
         return gp;
   end );
@@ -366,7 +366,7 @@ InstallMethod( GeneralisedPolygonByElements,
 	SetOrder(gp, [s,t] );
     SetTypesOfElementsOfIncidenceStructure(gp, ["point","line"]);
     SetRankAttr(gp, 2);
-    Setter( IncidenceGraphOfGeneralisedPolygonAttr )( gp, graph );
+    Setter( IncidenceGraphAttr )( gp, graph );
     Setter( HasGraphWithUnderlyingObjectsAsVertices )( gp, true);
     return gp;
 end );
@@ -490,7 +490,7 @@ InstallMethod( GeneralisedPolygonByElements,
 	SetOrder(gp, [s,t] );
     SetTypesOfElementsOfIncidenceStructure(gp, ["point","line"]);
     SetRankAttr(gp, 2);
-    Setter( IncidenceGraphOfGeneralisedPolygonAttr )( gp, graph );        
+    Setter( IncidenceGraphAttr )( gp, graph );        
     Setter( HasGraphWithUnderlyingObjectsAsVertices )( gp, true);
     return gp;
 end );
@@ -923,14 +923,14 @@ InstallMethod( DistanceBetweenElements,
 	end );
 
 #############################################################################
-#O  IncidenceGraphOfGeneralisedPolygon( <gp> )
+#O  IncidenceGraph( <gp> )
 # We could install a generic method. But currently, our particular GPs (hexagons, 
 # elation GQs, and classical GQs) have a particular method for good reasons. All other GPs
 # currently possible to construct, have their incidence graph computed upon construction.
 # So we may restrict here to checking whether this attribute is bounded, and return it,
 # or print an error message. Note that we deal here with a mutable attribute.
 ###
-InstallMethod( IncidenceGraphOfGeneralisedPolygon,
+InstallMethod( IncidenceGraph,
     "for a generalised polygon (in all possible representations",
     [ IsGeneralisedPolygon ],
     function( gp )
@@ -938,8 +938,8 @@ InstallMethod( IncidenceGraphOfGeneralisedPolygon,
     if not "grape" in RecNames(GAPInfo.PackagesLoaded) then
        Error("You must load the GRAPE package\n");
     fi;
-    if IsBound(gp!.IncidenceGraphOfGeneralisedPolygonAttr) then
-       return gp!.IncidenceGraphOfGeneralisedPolygonAttr;
+    if IsBound(gp!.IncidenceGraphAttr) then
+       return gp!.IncidenceGraphAttr;
     else
         Error("no method installed currently");
     fi;
@@ -953,7 +953,7 @@ InstallMethod( IncidenceMatrixOfGeneralisedPolygon,
 	[ IsGeneralisedPolygon ],
 	function( gp )
 		local graph, mat, incmat, szpoints, szlines;
-		graph := IncidenceGraphOfGeneralisedPolygon( gp );
+		graph := IncidenceGraph( gp );
 		mat := CollapsedAdjacencyMat(Group(()), graph);
 
     ## The matrix above is the adjacency matrix of the
@@ -986,7 +986,7 @@ InstallMethod( CollineationGroup,
     [ IsGeneralisedPolygon and IsGeneralisedPolygonRep ],
     function( gp )
         local graph, aut, act, stab, coll, ptsn, points, pointsobj;
-        graph := IncidenceGraphOfGeneralisedPolygon( gp );
+        graph := IncidenceGraph( gp );
         aut := AutomorphismGroup( graph );
         points := AsList(Points(gp));
         if HasGraphWithUnderlyingObjectsAsVertices(gp) then
@@ -1073,7 +1073,7 @@ InstallMethod( BlockDesignOfGeneralisedPolygon,
 #
 # Desarguesian projective planes. Methods needed:
 #	- DistanceBetweenElements
-#	- IncidenceGraphOfGeneralisedPolygon
+#	- IncidenceGraph
 #
 #############################################################################
 
@@ -1107,9 +1107,12 @@ InstallMethod( DistanceBetweenElements,
 	end );
 
 #############################################################################
-#O  IncidenceGraphOfGeneralisedPolygon( <gp> )
+#O  IncidenceGraph( <gp> )
+# Note that computing the collineation group of a projective space is zero
+# computation time. So useless to print the warning here if the group is not
+# yet computed.
 ###
-InstallMethod( IncidenceGraphOfGeneralisedPolygon,
+InstallMethod( IncidenceGraph,
     "for a generalised polygon (in all possible representations",
     [ IsDesarguesianPlane ],
     function( gp )
@@ -1117,37 +1120,31 @@ InstallMethod( IncidenceGraphOfGeneralisedPolygon,
         if not "grape" in RecNames(GAPInfo.PackagesLoaded) then
             Error("You must load the GRAPE package\n");
         fi;
-        if IsBound(gp!.IncidenceGraphOfGeneralisedPolygonAttr) then
-            return gp!.IncidenceGraphOfGeneralisedPolygonAttr;
+        if IsBound(gp!.IncidenceGraphAttr) then
+            return gp!.IncidenceGraphAttr;
         fi;
-        if not HasCollineationGroup(gp) then
-            Error("No collineation group computed. Please compute collineation group before computing incidence graph\,n");
-        else
-            points := AsList(Points(gp));
-            lines := AsList(Lines(gp));
-            Setter( HasGraphWithUnderlyingObjectsAsVertices )( gp, false );
-
-            Info(InfoFinInG, 1, "Computing incidence graph of generalised polygon...");
-    
-            adj := function(x,y)
-                if x!.type <> y!.type then
-                    return IsIncident(x,y);
-                else
-                    return false;
-                fi;
-            end;
-            group := CollineationGroup(gp);
-            graph := Graph(group,Concatenation(points,lines),OnProjSubspaces,adj,true);
-            Setter( IncidenceGraphOfGeneralisedPolygonAttr )( gp, graph );
-            return graph;
-        fi;
-  end );
+        points := AsList(Points(gp));
+        lines := AsList(Lines(gp));
+        Setter( HasGraphWithUnderlyingObjectsAsVertices )( gp, false );
+        Info(InfoFinInG, 1, "Computing incidence graph of generalised polygon...");
+        adj := function(x,y)
+            if x!.type <> y!.type then
+                return IsIncident(x,y);
+            else
+                return false;
+            fi;
+        end;
+        group := CollineationGroup(gp);
+        graph := Graph(group,Concatenation(points,lines),OnProjSubspaces,adj,true);
+        Setter( IncidenceGraphAttr )( gp, graph );
+        return graph;
+    end );
 
 #############################################################################
 #
 # Classical GQs. Methods needed:
 #	- DistanceBetweenElements
-#	- IncidenceGraphOfGeneralisedPolygon
+#	- IncidenceGraph
 #
 #############################################################################
 
@@ -1193,9 +1190,9 @@ InstallMethod( DistanceBetweenElements,
 	end );
 
 #############################################################################
-#O  IncidenceGraphOfGeneralisedPolygon( <gp> )
+#O  IncidenceGraph( <gp> )
 ###
-InstallMethod( IncidenceGraphOfGeneralisedPolygon,
+InstallMethod( IncidenceGraph,
     "for a generalised polygon (in all possible representations",
     [ IsClassicalGQ ],
     function( gp )
@@ -1203,8 +1200,8 @@ InstallMethod( IncidenceGraphOfGeneralisedPolygon,
         if not "grape" in RecNames(GAPInfo.PackagesLoaded) then
             Error("You must load the GRAPE package\n");
         fi;
-        if IsBound(gp!.IncidenceGraphOfGeneralisedPolygonAttr) then
-            return gp!.IncidenceGraphOfGeneralisedPolygonAttr;
+        if IsBound(gp!.IncidenceGraphAttr) then
+            return gp!.IncidenceGraphAttr;
         fi;
         if not HasCollineationGroup(gp) then
             Error("No collineation group computed. Please compute collineation group before computing incidence graph\,n");
@@ -1224,7 +1221,7 @@ InstallMethod( IncidenceGraphOfGeneralisedPolygon,
             end;
             group := CollineationGroup(gp);
             graph := Graph(group,Concatenation(points,lines),OnProjSubspaces,adj,true);
-            Setter( IncidenceGraphOfGeneralisedPolygonAttr )( gp, graph );
+            Setter( IncidenceGraphAttr )( gp, graph );
             return graph;
         fi;
   end );
@@ -2349,9 +2346,9 @@ InstallMethod( CollineationGroup,
 #############################################################################
 
 #############################################################################
-#O  IncidenceGraphOfGeneralisedPolygon( <gp> )
+#O  IncidenceGraph( <gp> )
 ###
-InstallMethod( IncidenceGraphOfGeneralisedPolygon,
+InstallMethod( IncidenceGraph,
     "for an ElationGQ in generic representation",
     [ IsClassicalGeneralisedHexagon and IsGeneralisedPolygonRep ],
     function( gp )
@@ -2359,8 +2356,8 @@ InstallMethod( IncidenceGraphOfGeneralisedPolygon,
     if not "grape" in RecNames(GAPInfo.PackagesLoaded) then
        Error("You must load the GRAPE package\n");
     fi;
-    if IsBound(gp!.IncidenceGraphOfGeneralisedPolygonAttr) then
-       return gp!.IncidenceGraphOfGeneralisedPolygonAttr;
+    if IsBound(gp!.IncidenceGraphAttr) then
+       return gp!.IncidenceGraphAttr;
     fi;
     if not HasCollineationGroup(gp) then
         Error("No collineation group computed. Please compute collineation group before computing incidence graph\,n");
@@ -2381,7 +2378,7 @@ InstallMethod( IncidenceGraphOfGeneralisedPolygon,
 		group := CollineationGroup(gp);
 		act := CollineationAction(group);
 		graph := Graph(group,Concatenation(points,lines),act,adj,true);
-        Setter( IncidenceGraphOfGeneralisedPolygonAttr )( gp, graph );
+        Setter( IncidenceGraphAttr )( gp, graph );
         return graph;
     fi;
   end );
@@ -3570,9 +3567,9 @@ InstallMethod( EGQByqClan,
   end );
 
 #############################################################################
-#O  IncidenceGraphOfGeneralisedPolygon( <gp> )
+#O  IncidenceGraph( <gp> )
 ###
-InstallMethod( IncidenceGraphOfGeneralisedPolygon,
+InstallMethod( IncidenceGraph,
     "for an ElationGQ in generic representation",
     [ IsElationGQ and IsGeneralisedPolygonRep ],
     function( gp )
@@ -3580,8 +3577,8 @@ InstallMethod( IncidenceGraphOfGeneralisedPolygon,
     if not "grape" in RecNames(GAPInfo.PackagesLoaded) then
        Error("You must load the GRAPE package\n");
     fi;
-    if IsBound(gp!.IncidenceGraphOfGeneralisedPolygonAttr) then
-       return gp!.IncidenceGraphOfGeneralisedPolygonAttr;
+    if IsBound(gp!.IncidenceGraphAttr) then
+       return gp!.IncidenceGraphAttr;
     fi;
     points := AsList(Points(gp));  
     lines := AsList(Lines(gp));   
@@ -3612,7 +3609,7 @@ InstallMethod( IncidenceGraphOfGeneralisedPolygon,
 	   graph := Graph( Group(()), [1..sz+Size(lines)], OnPoints, adj );  
 	fi;
 
-    Setter( IncidenceGraphOfGeneralisedPolygonAttr )( gp, graph );
+    Setter( IncidenceGraphAttr )( gp, graph );
     return graph;
   end );
 

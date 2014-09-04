@@ -26,13 +26,18 @@ gap&gt; inc := \*;
 gap&gt; gp := GeneralisedPolygonByElements(points,lines,inc);
 &lt;generalised quadrangle of order [ 3, 5 ]&gt;
 gap&gt; coll := CollineationGroup(gp);
-&lt;permutation group with 8 generators&gt;
+&lt;permutation group of size 138240 with 8 generators&gt;
 gap&gt; act := CollineationAction(coll);
 function( el, g ) ... end
 gap&gt; g := Random(coll);
-(1,37,29,42,14,54)(2,58,13,41,17,38)(3,46,51,44,5,28)(4,49,35,43,26,12)(6,7,
-19,45,48,60)(8,16,61,47,39,22)(9,24,15,34,63,40)(10,11,31,33,36,56)(18,57)(20,
-50,64,59,25,23)(21,27,32,62,52,55)(30,53)
+(1,37,45,63,27,19)(2,53,13,64,11,51)(3,33,38,61,31,28)(4,49,6,62,15,60)(5,46,
+47,59,20,17)(7,42,40,57,24,26)(8,58)(9,55)(10,39,41,56,25,23)(12,35,34,54,29,
+32)(14,48,43,52,18,21)(16,44,36,50,22,30)(65,132,90,157,89,105)(66,68,131,143,
+119,103)(67,135,76,123,130,106)(69,133,112,100,81,107)(70,134,150,88,155,
+104)(71,99,79,144,93,149)(72,153,95,120,73,122)(74,125,115,128,140,87)(75,121,
+136,117,113,91)(77,124,98,83,147,146)(78,145,84,118,85,142)(80,92,137,141,108,
+97)(82,86,116,111,138,101)(94,127,126,102,109,96)(110,152,151,154,156,
+129)(114,160,139,158,148,159)
 gap&gt; l := Random(Lines(gp));
 &lt;a line in &lt;generalised quadrangle of order [ 3, 5 ]&gt;&gt;
 gap&gt; act(l,g);
@@ -43,3 +48,7 @@ gap&gt; act(p,g);
 &lt;a point in &lt;generalised quadrangle of order [ 3, 5 ]&gt;&gt;
 gap&gt; stab := Stabilizer(coll,p,act);
 &lt;permutation group of size 2160 with 3 generators&gt;
+gap&gt; List(Orbits(stab,List(Points(gp)),act),x-&gt;Length(x));
+[ 45, 18, 1 ]
+gap&gt; List(Orbits(stab,List(Lines(gp)),act),x-&gt;Length(x));
+[ 90, 6 ]

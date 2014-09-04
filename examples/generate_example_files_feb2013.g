@@ -78,14 +78,13 @@ morphismsfiles := ["morphisms_filters", "morphisms_isopolar", "morphisms_embeddi
 					"morphisms_subfield2", "morphisms_projection", "morphisms_klein", "morphisms_klein2", "morphisms_klein3", "morphisms_duality", "morphisms_selfduality",
                     "morphisms_completion","morphisms_plucker", "morphisms_blownupsubspace", "morphisms_fieldreducpolar3" ];
 
-gpolygonfiles := [ "gpolygons_gpbyblocks", "gpolygons_gpbyincmat", "gpolygons_gpelements", "gpolygons_iskantorfamily", "gpolygons_isqclan", "gpolygons_objectselements",
-				   "gpolygons_qclan", "gpolygons_EGQByqClan", "gpolygons_kantorfamilybyqclan", "gpolygons_categories1", "gpolygons_collineationgroup1",
-				   "gpolygons_EGQByKantorFamily", "gpolygons_particularqclans", "gpolygons_bltsetbyqclan", "gpolygons_categories2", "gpolygons_shadow",
-				   "gpolygons_EGQByBLTSet", "gpolygons_elationgroup", "gpolygons_basepointofegq", "gpolygons_collineationgroup2", "gpolygons_collineationgroup3",
-				   "gpolygons_collineations", "gpolygons_SplitCayleyHexagon", "gpolygons_ambientpolarspace", "gpolygons_span", "gpolygons_meet", 
-                   "gpolygons_objectselementsofegq", "gpolygons_blockdesign", "gpolygons_objectselementsblt", "gpolygons_definingplanes",
-				   "gpolygons_collineationsubgroup", "gpolygons_cghvectorspacetoelement", "gpolygons_cghobjecttoelement"];
-
+gpolygonfiles := [ "gpolygons_categories1", "gpolygons_categories2", "gpolygons_gpbyblocks", "gpolygons_gpbyincmat", "gpolygons_gpbyelements", "gpolygons_order",
+                    "gpolygons_incgraph", "gpolygons_incmatrix", "gpolygons_collineationgroup1", "gpolygons_collineationgroup2", "gpolygons_collineationgroup3",
+                    "gpolygons_collineations", "gpolygons_blockdesign", "gpolygons_objectselements", "gpolygons_span", "gpolygons_meet", "gpolygons_shadow",
+                    "gpolygons_distance", "gpolygons_SplitCayleyHexagon", "gpolygons_TwistedTrialityHexagon", "gpolygons_cghvectorspacetoelement", 
+                    "gpolygons_cghobjecttoelement", "gpolygons_cghin", "gpolygons_spanmeet", "gpolygons_collineationgroup4", "gpolygons_EGQByKantorFamily",
+                    "gpolygons_objectselementsofegq", "gpolygons_elationgroup", "gpolygons_EGQByqClan", "gpolygons_bltsetbyqclan", 
+                    "gpolygons_EGQByBLTSet", "gpolygons_definingplanes", "gpolygons_objectselementsblt", "gpolygons_collineationsubgroup"];
 
 varieties_files := ["varieties_general", "varieties_polarspace", "varieties_veronese", "varieties_segre", "varieties_hermitian", "varieties_quadratic", "varieties_grassmann" ];
 

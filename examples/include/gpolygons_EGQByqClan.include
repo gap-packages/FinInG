@@ -8,11 +8,14 @@ gap&gt; egq := EGQByqClan(clan);
 #I  Computed Kantor family. Now computing EGQ...
 &lt;EGQ of order [ 9, 3 ] and basepoint 0&gt;
 gap&gt; incgraph := IncidenceGraphOfGeneralisedPolygon(egq);;
-#I  Computing incidence graph of generalised polygon...
+Error, Variable: 'IncidenceGraphOfGeneralisedPolygon' must have a value
+not in any function at line 13 of *stdin*
 gap&gt; group := AutomorphismGroup(incgraph);
-&lt;permutation group with 6 generators&gt;
+Error, Variable: 'incgraph' must have a value
+not in any function at line 14 of *stdin*
 gap&gt; Order(group);
-26127360
+Error, Variable: 'group' must have a value
+not in any function at line 15 of *stdin*
 gap&gt; Order(CollineationGroup(HermitianPolarSpace(3,9)));
 26127360
 gap&gt; clan := KantorKnuthqClan(9);

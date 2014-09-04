@@ -7,7 +7,7 @@ gap&gt; inc := \*;
 gap&gt; gp := GeneralisedPolygonByElements(pts,lns,inc);
 &lt;projective plane order 25&gt;
 gap&gt; time;
-20136
+20306
 gap&gt; grp := CollineationGroup(pg);
 The FinInG collineation group PGammaL(3,25)
 gap&gt; act := OnProjSubspaces;
@@ -15,7 +15,7 @@ function( var, el ) ... end
 gap&gt; gp := GeneralisedPolygonByElements(pts,lns,inc,grp,act);
 &lt;projective plane order 25&gt;
 gap&gt; time;
-77
+81
 gap&gt; q := 4;
 4
 gap&gt; conic := Set(Points(ParabolicQuadric(2,q)));
@@ -52,4 +52,4 @@ gap&gt; inc := \*;
 gap&gt; gp := GeneralisedPolygonByElements(pts,lns,inc,stab,\^);
 &lt;generalised quadrangle of order [ 4, 4 ]&gt;
 gap&gt; time;
-31
+33

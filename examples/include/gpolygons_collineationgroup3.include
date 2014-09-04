@@ -29,24 +29,26 @@ gap&gt; inc := \*;
 gap&gt; gp := GeneralisedPolygonByElements(points,lines,inc);
 &lt;generalised quadrangle of order [ 7, 9 ]&gt;
 gap&gt; time;
-15009
+13913
 gap&gt; coll := CollineationGroup(gp);
-&lt;permutation group with 9 generators&gt;
+&lt;permutation group of size 5419008 with 9 generators&gt;
 gap&gt; time;
-66
+49
 gap&gt; group := CollineationGroup(pg);
 The FinInG collineation group PGammaL(4,8)
 gap&gt; stab := FiningSetwiseStabiliser(group,O);
 #I  Computing adjusted stabilizer chain...
 &lt;projective collineation group with 11 generators&gt;
 gap&gt; time;
-1749
+1699
 gap&gt; gp := GeneralisedPolygonByElements(points,lines,inc,stab,\^);
 &lt;generalised quadrangle of order [ 7, 9 ]&gt;
 gap&gt; time;
-320
+313
 gap&gt; coll := CollineationGroup(gp);
-&lt;permutation group with 9 generators&gt;
+&lt;permutation group of size 5419008 with 9 generators&gt;
+gap&gt; time;
+54
 gap&gt; Order(coll);
 5419008
 gap&gt; Order(stab);

@@ -193,15 +193,15 @@ of lines incident with any point of <A>gp</A>.
 </ManSection>
 
 <ManSection>
-<Attr Name="IncidenceGraphOfGeneralisedPolygonAttr" Arg="gp"/>
+<Attr Name="IncidenceGraphAttr" Arg="gp"/>
 <Description>
 This attribute is declared for objects in <C>IsGeneralisedPolygon</C>. It is a mutable
-attribute and can be accesed by the operation <F>IncidenceGraphOfGeneralisedPolygon</F>.
+attribute and can be accesed by the operation <F>IncidenceGraph</F>.
 </Description>
 </ManSection>
 
 <ManSection>
-<Oper Name="IncidenceGraphOfGeneralisedPolygon" Arg="gp"/>
+<Oper Name="IncidenceGraph" Arg="gp"/>
 <Returns>a graph</Returns>
 <Description>
 The argument <A>gp</A> is a generalised polygon. This operation returns the incidence graph of
@@ -233,7 +233,7 @@ This method returns the incidence matrix of the generalised polygon via
 the operation <C>CollapsedAdjacencyMat</C> in the <Package>GRAPE</Package>
 package (so you need to load this package first). The rows of the matrix
 correspond to the points of <A>gp</A>, and the columns correspond to the lines.
-Note that since this operation relies on <F>IncidenceGraphOfGeneralisedPolygon</F>,
+Note that since this operation relies on <F>IncidenceGraph</F>,
 for some generalised polygons, it is necessary to compute a collineation group first.
 <Example>
 <#Include SYSTEM "../examples/include/gpolygons_incmatrix.include"> 
