@@ -1,0 +1,15 @@
+gap&gt; pg := PG(4,5);
+ProjectiveSpace(4, 5)
+gap&gt; p := Random(Points(pg));
+&lt;a point in ProjectiveSpace(4, 5)&gt;
+gap&gt; l := Random(Lines(p));
+&lt;a line in ProjectiveSpace(4, 5)&gt;
+gap&gt; flag := FlagOfIncidenceStructure(pg,[p,l]);
+&lt;a flag of ProjectiveSpace(4, 5)&gt;
+gap&gt; res := ResidueOfFlag(flag);
+Incidence structure of rank 2
+gap&gt; gamma := IncidenceGraph(res);;
+gap&gt; Diameter(gamma);
+3
+gap&gt; Girth(gamma);
+6

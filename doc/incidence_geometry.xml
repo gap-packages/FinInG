@@ -54,7 +54,8 @@ incidence structures, which does not imply that operations described here will w
 for arbitrary user-constructed incidence structures. Its aim is furthermore to allow
 the user to become familiar with the general philosophy of the package, using examples
 that are self-explanatory. Not all details of the commands used in the examples will
-be explained in this chapter, therefore we refer to the relevant chapter for the commands. These can easily be found using the index.
+be explained in this chapter, therefore we refer to the relevant chapter for the commands.
+These can easily be found using the index.
 
 <Section>
 <Heading>Incidence structures</Heading>
@@ -78,7 +79,7 @@ in <Package>FinInG</Package> are incidence geometries.
 </Description>
 </ManSection>
 
-<ManSection>
+<ManSection Label="oper:incidencestructure">
 <Oper Name="IncidenceStructure" Arg="eles, inc_rel, type, typeset"/>
 <Returns>an incidence structure</Returns>
 <Description>
@@ -202,6 +203,14 @@ with an exception for <C>IsSubspaceOfClassicalPolarSpace</C>, which is a subcate
 <Oper Name="UnderlyingObject" Arg="el"/>
 <Returns>an object</Returns>
 <Description>
+An element of an incidence structure has a type and an underlying object. E.g. a line of a projective
+space is determined by a two dimensional sub vector space, which is determined by a basis. Elements of
+incidence structure can also be objects representing elements of other incidence structures, as is e.g.
+the case in the example of <Ref Sect="oper:incidencestructure"/>. The examples shows the underlying objects
+of elements of three totally different incidence geometries.
+<Example>
+<#Include SYSTEM "../examples/include/incgeom_underlyingobject.include">
+</Example>
 </Description>
 </ManSection>
 
@@ -209,6 +218,11 @@ with an exception for <C>IsSubspaceOfClassicalPolarSpace</C>, which is a subcate
 <Oper Name="Type" Arg="el"/>
 <Returns>an integer</Returns>
 <Description>
+An element of an incidence structure has a type and an underlying object. Its type is always a non-negative
+integer. This operation returns the type of an element.
+<Example>
+<#Include SYSTEM "../examples/include/incgeom_type.include">
+</Example>
 </Description>
 </ManSection>
 
@@ -396,6 +410,15 @@ The incidence structure is determined by the elements.
 </ManSection>
 
 <ManSection>
+<Oper Name="IsEmptyFlag" Arg="flag"/>
+<Returns>true or false</Returns>
+<Description>
+It is possible to construct the empty flag of an incidence structure. This operation tests
+whether a given flag is empty.
+</Description>
+</ManSection>
+
+<ManSection>
 <Oper Name="ElementsOfFlag" Arg="flag"/>
 <Returns>a list of elements</Returns>
 <Description>
@@ -516,7 +539,13 @@ for the particular incidence structure <A>inc</A>.
 <Oper Name="ResidueOfFlag" Arg="flag"/>
 <Returns>an incidence structure</Returns>
 <Description>
+Consider the flag <A>flag</A>, and its ambient geometry <M>G</M>. All elements of <M>G</M>
+incident with all elements of <A>flag</A>, together with the incidence of <M>G</M>, determine
+an incidence structure. This incidence structure is returned by this operation. Note that independently
+of the Category of <M>G</M>, the returned incidence structure is constructed using the operation
+<F>IncidenceStructure</F>.
 <Example>
+<#Include SYSTEM "../examples/include/incgeom_residueofflag.include">
 </Example>
 </Description>
 </ManSection>

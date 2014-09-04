@@ -1,0 +1,10 @@
+gap&gt; pg := PG(2,2);
+ProjectiveSpace(2, 2)
+gap&gt; p := Random(Points(pg));
+&lt;a point in ProjectiveSpace(2, 2)&gt;
+gap&gt; Type(p);
+1
+gap&gt; l := Random(Lines(pg));
+&lt;a line in ProjectiveSpace(2, 2)&gt;
+gap&gt; Type(l);
+2

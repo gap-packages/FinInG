@@ -304,7 +304,7 @@ The second variant returns a random element of a random type of the projective s
 </Description>
 </ManSection>
 
-<ManSection>
+<ManSection Label="liespan">
 <Oper Name="Span" Arg="u,v"/>
 <Oper Name="Span" Arg="list"/>
 <Returns> an element or the empty subspace or the whole space</Returns>
@@ -324,7 +324,7 @@ variant of this operation.
 </Description>
 </ManSection>
 
-<ManSection>
+<ManSection Label="liemeet">
 <Oper Name="Meet" Arg="u,v"/>
 <Oper Name="Meet" Arg="list"/>
 <Returns>an element or the empty subspace or the whole space</Returns>

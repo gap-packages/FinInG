@@ -1,0 +1,58 @@
+gap&gt; pg := PG(2,2);
+ProjectiveSpace(2, 2)
+gap&gt; p := Random(Points(pg));
+&lt;a point in ProjectiveSpace(2, 2)&gt;
+gap&gt; UnderlyingObject(p);
+&lt;cvec over GF(2,1) of length 3&gt;
+gap&gt; l := Random(Lines(pg));
+&lt;a line in ProjectiveSpace(2, 2)&gt;
+gap&gt; UnderlyingObject(l);
+&lt;cmat 2x3 over GF(2,1)&gt;
+gap&gt; mat := [ [ 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 ], 
+&gt;   [ 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 ], 
+&gt;   [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0 ], 
+&gt;   [ 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0 ], 
+&gt;   [ 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0 ], 
+&gt;   [ 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0 ], 
+&gt;   [ 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 ], 
+&gt;   [ 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0 ], 
+&gt;   [ 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0 ], 
+&gt;   [ 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0 ], 
+&gt;   [ 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0 ], 
+&gt;   [ 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1 ], 
+&gt;   [ 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1 ], 
+&gt;   [ 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0 ], 
+&gt;   [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1 ] ];
+[ [ 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 ], 
+  [ 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 ], 
+  [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0 ], 
+  [ 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0 ], 
+  [ 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0 ], 
+  [ 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0 ], 
+  [ 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 ], 
+  [ 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0 ], 
+  [ 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0 ], 
+  [ 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0 ], 
+  [ 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0 ], 
+  [ 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1 ], 
+  [ 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1 ], 
+  [ 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0 ], 
+  [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1 ] ]
+gap&gt; gp := GeneralisedPolygonByIncidenceMatrix(mat);
+&lt;generalised quadrangle of order [ 2, 2 ]&gt;
+gap&gt; p := Random(Points(gp));
+&lt;a point in &lt;generalised quadrangle of order [ 2, 2 ]&gt;&gt;
+gap&gt; UnderlyingObject(p);
+15
+gap&gt; l := Random(Lines(gp));
+&lt;a line in &lt;generalised quadrangle of order [ 2, 2 ]&gt;&gt;
+gap&gt; UnderlyingObject(l);
+[ 7, 13, 15 ]
+gap&gt; egq := EGQByBLTSet(BLTSetByqClan(LinearqClan(3)));
+#I  Now embedding dual BLT-set into W(5,q)...
+#I  Computing elation group...
+&lt;EGQ of order [ 9, 3 ] and basepoint in W(5, 3 ) &gt;
+gap&gt; p := Random(Points(egq));
+&lt;a point in &lt;EGQ of order [ 9, 3 ] and basepoint in W(5, 3 ) &gt;&gt;
+gap&gt; UnderlyingObject(p);
+&lt;a point in W(5, 3)&gt;
