@@ -2,3 +2,6 @@ gap&gt; l := Random(Lines(PG(4,3)));
 &lt;a line in ProjectiveSpace(4, 3)&gt;
 gap&gt; UnderlyingObject(l);
 &lt;cmat 2x5 over GF(3,1)&gt;
+gap&gt; Unpack(last);
+[ [ Z(3)^0, Z(3), 0*Z(3), 0*Z(3), Z(3) ], 
+  [ 0*Z(3), 0*Z(3), Z(3)^0, Z(3)^0, 0*Z(3) ] ]

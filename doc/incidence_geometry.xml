@@ -651,22 +651,39 @@ all points of the polar space are to obtain an random point.
 </Description>
 </ManSection>
 
+When an iterator or enumerator is installed for a collection, <F>List</F> can be used
+to obtain all objects in that collection.
 
-We can either use <F>List</F> to get all of the elements of a projective/polar
-space efficiently, or we can ask for an iterator or enumerator
-of a collection of elements.
-takes almost no time at all. But if you want a random element from this set,
-you could be waiting a while. Instead, the user is better off using an iterator
-or an enumerator to access elements of this collection. We have
-such a facility for the elements of a projective or polar space. At the moment,
-we have made available iterators for projective spaces, and enumerators for polar spaces. 
-We give basic examples of enumerators and iterators here. For <F>AsList</F>, we refer to 
-the appropriate sections in the chapters on the particular geometries, since methods for
-<F>AsList</F> always refer to the group, and make use of the package <Package>orb</Package>.
+<ManSection Label="inc:op:list">
+<Oper Name="List" Arg="C"/>
+<Returns>all objects in the collection <A>C</A></Returns>
+<Description>
+<Example>
+<#Include SYSTEM "../examples/include/incgeom_list.include">
+</Example>
+</Description>
+</ManSection>
 
+From the example in <Ref Sect="inc:op:list"/> it can be noted that although the number
+of lines is only 315, already 3 seconds of computing time are needed. This is typically
+observed for elements of classicla polar spaces different from points or generators, and
+is explained by the recursive nature of the implementation of the enumerator. Computing
+a list of these objects as an orbit under the collineation group is, even taking into account
+the computation of the nice monomorphism of the collineation group, often much faster. Given
+a collection <A>C</A>, the function <F>AsList</F> performs this computation using the collineation group.
 
-For a collection of elements of a given type of certain incidence structures, <Package>FinInG</Package> also provides
-methods to compute an enumerator.
+<ManSection>
+<Oper Name="AsList" Arg="C"/>
+<Returns>an ORB object containing all objects in <A>C</A></Returns>
+<Description>
+The returned object is an ORB object. All objects can easily be obtained by applying
+the operation <F>List</F>.
+<Example>
+<#Include SYSTEM "../examples/include/incgeom_aslist.include">
+</Example>
+</Description>
+</ManSection>
+
 </Section>
 
 <Section Label="liegeometries1">
@@ -759,11 +776,12 @@ argument.
 </ManSection>
 
 <ManSection>
-<Oper Name="UnderlyinObject" Arg="v"/>
-<Returns>the vector or list of vectors representing the element <A>v</A></Returns>
+<Oper Name="UnderlyingObject" Arg="v"/>
+<Returns>a CVEC object, which is the vector or matrix representing the element <A>v</A></Returns>
 <Description>
 The argument <A>v</A> must be an element, so it is not allowed that <A>v</A> is the empty subspace, 
-or just a projective space.
+or just a projective space. Note that <F>Unpack</F> can be used to convert the CVEC object into
+a usual GAP vector or matrix.
 <Example>
 <#Include SYSTEM "../examples/include/incgeom_lie_elementtovectorspace.include"> 
 </Example>
@@ -801,11 +819,11 @@ the elements of type one less than the type of <A>v</A> are asked. <A>v</A> is a
 </Section>
 
 <Section>
-<Heading>Hard wired embeddings and converting elements</Heading>
+<Heading>Changing the ambient geometry of elements of a Lie geometry</Heading>
 
 A Lie geometry, i.e., an object in the category <C>IsLieGeometry</C>, is naturally embedded 
 in a projective space. This is of course in a mathematical sense. In <Package>FinInG</Package>, certain
-embeddings are implemented by providing a mapping between geometries. The Lie geometries are 
+embeddings are implemented by providing a mapping between geometries. The Lie geometries are in some sense
 <E>hard wired</E> embedded, just simply because a category containing elements of a Lie geometry, is
 always a subcategory of <C>IsSubspaceOfProjectiveSpace</C>. As a consequence, operations applicable
 to objects in the category <C>IsSubspaceOfProjectiveSpace</C> are by default applicable to objects
