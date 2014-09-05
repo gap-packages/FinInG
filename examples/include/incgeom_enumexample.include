@@ -1,0 +1,10 @@
+gap&gt; ps := ParabolicQuadric(16,7^4);
+Q(16, 2401)
+gap&gt; pts := Points(ps);
+&lt;points of Q(16, 2401)&gt;
+gap&gt; Size(pts);
+508233536514931541724405776067904925314839705888016
+gap&gt; Random(pts);
+&lt;a point in Q(16, 2401)&gt;
+gap&gt; time;
+464

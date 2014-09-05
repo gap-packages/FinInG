@@ -1,0 +1,12 @@
+gap&gt; pg := PG(12,81);
+ProjectiveSpace(12, 81)
+gap&gt; pts := Points(pg);
+&lt;points of ProjectiveSpace(12, 81)&gt;
+gap&gt; Size(pts);
+80763523615333416236653
+gap&gt; ps := ParabolicQuadric(12,81);
+Q(12, 81)
+gap&gt; First(pts,x-&gt;x in ps);
+&lt;a point in ProjectiveSpace(12, 81)&gt;
+gap&gt; time;
+18

@@ -31,7 +31,7 @@ incgeomfiles := ["incgeom_incstruct", "incgeom_categories1", "incgeom_typesofels
 				 "incgeom_el_ambient", "incgeom_flag", "incgeom_elementsofflag", "incgeom_rankofflag", "incgeom_sizeofflag",
                  "incgeom_ambientgeometry", "incgeom_typeofflag", "incgeom_isincidentwithflag", "incgeom_flag_chamber", 
                  "incgeom_shadowofelement", "incgeom_shadowofelement2", "incgeom_shadowofflag", "incgeom_residueofflag",
-                 "incgeom_shadowshort", "incgeom_iterator", "incgeom_enum", "incgeom_lie_uvs",
+                 "incgeom_shadowshort", "incgeom_iterator", "incgeom_iteratorexample", "incgeom_enum", "incgeom_enumexample", "incgeom_lie_uvs",
 				 "incgeom_lie_projdimension", "incgeom_ambientspace", "incgeom_lie_vectorspacetoelement", "incgeom_lie_elementtovectorspace", 
 				 "incgeom_lie_in", "incgeom_lie_hyperplanesof", "incgeom_lie_elementtoelement", "incgeom_nrelements" ]; #"incgeom_lie_convert"
 
