@@ -44,12 +44,70 @@ Print(", varieties\c");
 #############################################################################
 
 
+#############################################################################
+#############################################################################
+#############################################################################
+### 0. Algebraic Varieties (generic methods) ###
+#############################################################################
+#############################################################################
+#############################################################################
 
 
+#############################################################################
+#O  AlgebraicVariety( <pg>, <pring>, <list> )
+# constructs a projective variety in a projective space <pg>, with polynomials
+# in <list>
+##
 
+InstallMethod( AlgebraicVariety,
+	"for a projective space, a polynomial ring and a list of polynomials",
+	[ IsProjectiveSpace, IsPolynomialRing, IsList ],
+	function( pg, pring, list )
+		return ProjectiveVariety(pg,pring,list);
+	end );
 
+#############################################################################
+#O  AlgebraicVariety( <pg>, <list> )
+# constructs a projective variety in a projective space <pg>, with polynomials
+# in <list>
+##
 
+InstallMethod( AlgebraicVariety,
+	"for a projective space and a list of polynomials",
+	[ IsProjectiveSpace, IsList ],
+	function( pg, list )
+		local pring;
+		pring:=PolynomialRing(pg!.basefield,pg!.dimension + 1);
+		return ProjectiveVariety(pg,pring,list);
+	end );
+	
+#############################################################################
+#O  AlgebraicVariety( <ag>, <pring>, <list> )
+# constructs an affine variety in an affine space <ag>, with polynomials
+# in <list>
+##
 
+InstallMethod( AlgebraicVariety,
+	"for an affine space, a polynomial ring and a list of polynomials",
+	[ IsAffineSpace, IsPolynomialRing, IsList ],
+	function( pg, pring, list )
+		return AffineVariety(pg,pring,list);
+	end );
+	
+#############################################################################
+#O  AlgebraicVariety( <ag>, <list> )
+# constructs an affine variety in an affine space <ag>, with polynomials
+# in <list>
+##
+	
+InstallMethod( AlgebraicVariety,	
+	"for an affine space and a list of polynomials",
+	[ IsProjectiveSpace, IsList ],
+	function( ag, list )
+		local pring;
+		pring:=PolynomialRing(ag!.basefield, ag!.dimension);
+		return AffineVariety(ag, pring, list);
+	end );
 
 
 #############################################################################
@@ -103,33 +161,7 @@ InstallMethod( ProjectiveVariety,
 	end );
 
 
-#############################################################################
-#O  AlgebraicVariety( <pg>, <pring>, <list> )
-# constructs a projective variety in a projective space <pg>, with polynomials
-# in <list>
-##
 
-InstallMethod( AlgebraicVariety,
-	"for a projective space, a polynomial ring and a list of polynomials",
-	[ IsProjectiveSpace, IsPolynomialRing, IsList ],
-	function( pg, pring, list )
-		return ProjectiveVariety(pg,pring,list);
-	end );
-
-#############################################################################
-#O  AlgebraicVariety( <pg>, <list> )
-# constructs a projective variety in a projective space <pg>, with polynomials
-# in <list>
-##
-
-InstallMethod( AlgebraicVariety,
-	"for a projective space and a list of polynomials",
-	[ IsProjectiveSpace, IsList ],
-	function( pg, list )
-		local pring;
-		pring:=PolynomialRing(pg!.basefield,pg!.dimension + 1);
-		return ProjectiveVariety(pg,pring,list);
-	end );
 
 #############################################################################
 #O  ProjectiveVariety( <pg>, <list> )
@@ -165,45 +197,6 @@ InstallMethod( PrintObj,
 		Print("Projective Variety in ");
 		ViewObj(var!.geometry);
 	end );
-
-#moved to projectivespace.gi
-#############################################################################
-#O  DualCoordinatesOfHyperplane( <hyp> )
-# returns the dual coordinate of a hyperplane in a projective space.
-##
-#InstallMethod( DualCoordinatesOfHyperplane,
-#	"for a subspace of a projective space",
-#		[IsSubspaceOfProjectiveSpace],
-#		function(hyp)
-#			local mat,a;
-#			if not Dimension(hyp)=Dimension(hyp!.geo)-1 then
-#				Error("The argument is not a hyperplane");
-#			else
-#				mat:=hyp!.obj;
-#				a:=NullspaceMat(TransposedMat(mat));
-#			return Unpack(a[1]);
-#			fi;
-#	end );
-
-#moved to projectivespace.gi
-#############################################################################
-#O  HyperplaneByDualCoordinates( <pg>,<vector> )
-# returns the hyperplanes by given dual coordinates.
-##
-#InstallMethod( HyperplaneByDualCoordinates,
-#	"for a projective space and a list with coordinates",
-#	[IsProjectiveSpace,IsList],
-#	function(pg,a)
-#		local mat,list;
-#		if not Size(a)=Dimension(pg)+1 or not ForAll(a,x->x in pg!.basefield) then
-#			Error("The dual coordinates are not compatible with the projective space");
-#		else
-#			mat:=[a];
-#			list:=NullspaceMat(TransposedMat(mat));
-#			return VectorSpaceToElement(pg,list);
-#		fi;
-#	end );
-
 
 
 #############################################################################
