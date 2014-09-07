@@ -198,6 +198,14 @@ InstallMethod( PrintObj,
 		ViewObj(var!.geometry);
 	end );
 
+InstallMethod( Display, 
+	"for a projective algebraic variety",
+	[ IsProjectiveVariety and IsProjectiveVarietyRep ],
+	function( var )
+		Print("Projective Variety in ");
+		ViewObj(var!.geometry);
+		Print("\n Defining list of polynomials: ", DefiningListOfPolynomials(var),"\n");
+	end );
 
 #############################################################################
 #O HermitianVariety( <n>, <fld>);
@@ -283,11 +291,20 @@ InstallMethod( ViewObj,
 	end );
 
 InstallMethod( PrintObj, 
-	"for a hermitian algebraic variety",
+	"for a hermitian variety",
 	[ IsHermitianVariety and IsHermitianVarietyRep ],
 	function( var )
 		Print("Hermitian Variety in ");
 		ViewObj(var!.geometry);
+	end );
+
+InstallMethod( Display, 
+	"for a hermitian variety",
+	[ IsHermitianVariety and IsHermitianVarietyRep ],
+	function( var )
+		Print("Hermitian Variety in ");
+		ViewObj(var!.geometry);
+		Print("\n Polynomial: ", DefiningListOfPolynomials(var),"\n");
 	end );
 
 
@@ -333,7 +350,7 @@ InstallMethod( QuadraticVariety,
 # returns a nondegenerate quadratic variety in PG(n,fld), of a specified type
 # when n is odd.
 InstallMethod( QuadraticVariety,
-	"for a positive integer and a field",
+	"for a positive integer and a field and a string",
 	[IsPosInt, IsField, IsString],
 	function(n,fld,type)
 		local pg, pring, list, qf, var, ty, ps;
@@ -393,7 +410,25 @@ InstallMethod( QuadraticVariety,
 		return var;
 	end );
 
+#
+#############################################################################
+#O QuadraticVariety( <n>, <q>);
+#O QuadraticVariety( <n>, <q>, <type>);
+# returns a nondegenerate quadratic variety in PG(n,q)
+InstallMethod( QuadraticVariety,
+	"for a positive integer and a prime power",
+	[IsPosInt, IsPosInt],
+	function(n,q)
+		return QuadraticVariety(n,GF(q));
+	end );
 
+InstallMethod( QuadraticVariety,
+	"for a positive integer and a prime power and a string",
+	[IsPosInt, IsPosInt, IsString],
+	function(n,q,type)
+		return QuadraticVariety(n,GF(q),type);
+	end );
+	
 #############################################################################
 # View, print methods for quadratic varieties.
 ##
@@ -413,7 +448,16 @@ InstallMethod( PrintObj,
 		Print("Quadratic Variety in ");
 		ViewObj(var!.geometry);
 	end );
-
+	
+InstallMethod( Display, 
+	"for a quadratic variety",
+	[ IsQuadraticVariety and IsQuadraticVarietyRep ],
+	function( var )
+		Print("Quadratic Variety in ");
+		ViewObj(var!.geometry);
+		Print("\n Polynomial: ", DefiningListOfPolynomials(var),"\n");
+	end );
+	
 #############################################################################
 #O  PolarSpace ( <var> )
 # returns the polar space defined by the equation in the list of polynomials
@@ -535,16 +579,14 @@ InstallMethod( PrintObj,
 		ViewObj(var!.geometry);
 	end );
 
-
-
-
-
-
-
-
-
-
-
+InstallMethod( Display, 
+	"for an affine variety",
+	[ IsAffineVariety and IsAffineVarietyRep ],
+	function( var )
+		Print("Affine Variety in ");
+		ViewObj(var!.geometry);
+		Print("\n Defining list of polynomials: ", DefiningListOfPolynomials(var),"\n");
+	end );
 
 
 

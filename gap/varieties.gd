@@ -121,6 +121,8 @@ DeclareOperation( "HermitianVariety", [IsProjectiveSpace, IsPolynomial ] );
 
 DeclareOperation( "QuadraticVariety", [IsPosInt,IsField] );
 DeclareOperation( "QuadraticVariety", [IsPosInt,IsField,IsString] );
+DeclareOperation( "QuadraticVariety", [IsPosInt,IsPosInt] );
+DeclareOperation( "QuadraticVariety", [IsPosInt,IsPosInt,IsString] );
 DeclareOperation( "QuadraticVariety", [IsProjectiveSpace, IsPolynomialRing, IsPolynomial ] );
 DeclareOperation( "QuadraticVariety", [IsProjectiveSpace, IsPolynomial ] );
 
