@@ -1,3 +1,4 @@
+# points of varieties
 F:=GF(9);
 r:=PolynomialRing(F,4);
 pg:=PG(3,9);
@@ -11,3 +12,5 @@ for i in [1..4] do
 	x := NextIterator(iter);
 	Display(x);
 od;
+quit;
+

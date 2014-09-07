@@ -90,7 +90,9 @@ gpolygonfiles := [ "gpolygons_categories1", "gpolygons_categories2", "gpolygons_
                     "gpolygons_objectselementsofegq", "gpolygons_elationgroup", "gpolygons_EGQByqClan", "gpolygons_bltsetbyqclan", 
                     "gpolygons_EGQByBLTSet", "gpolygons_definingplanes", "gpolygons_objectselementsblt", "gpolygons_collineationsubgroup"];
 
-varieties_files := ["varieties_general", "varieties_polarspace", "varieties_veronese", "varieties_segre", "varieties_hermitian", "varieties_quadratic", "varieties_grassmann" ];
+varieties_files := ["varieties_general", "varieties_polarspace", "varieties_veronese", "varieties_segre", 
+					"varieties_hermitian", "varieties_quadratic", "varieties_grassmann", "varieties_points",
+					"varieties_quadratic",  ];
 
 
 diagramfiles := ["diagram_cosetgeom", "diagram_neumaier", "diagram_indmin", "diagram_nearoctagon", "diagram_autiso", "diagram_autcor",

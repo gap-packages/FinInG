@@ -6,9 +6,9 @@ gap&gt; x:=IndeterminatesOfPolynomialRing(r);
 [ x_1, x_2, x_3, x_4 ]
 gap&gt; pg:=PG(3,F);
 ProjectiveSpace(3, 5)
-gap&gt; f:=x[2]*x[3]+x[4]^2;
+gap&gt; Q:=x[2]*x[3]+x[4]^2;
 x_2*x_3+x_4^2
-gap&gt; qv:=QuadraticVariety(pg,f);
+gap&gt; qv:=QuadraticVariety(pg,Q);
 Quadratic Variety in ProjectiveSpace(3, 5)
 gap&gt; AsSet(List(Planes(pg),z-&gt;Size(Filtered(Points(z),x-&gt;x in qv))));
 [ 1, 6, 11 ]
@@ -25,11 +25,28 @@ Polynomial: [ [  x_2*x_3+x_4^2 ] ]
 gap&gt; IsDegenerateForm(qf);
 #I  Testing degeneracy of the *associated bilinear form*
 true
+gap&gt; qv:=QuadraticVariety(3,F,"-");
+Quadratic Variety in ProjectiveSpace(3, 5)
 gap&gt; PolarSpace(qv);
-Error, Form is singular called from
-PolarSpace( form ) called from
-&lt;function "unknown"&gt;( &lt;arguments&gt; )
- called from read-eval loop at line 18 of *stdin*
-you can 'quit;' to quit to outer loop, or
-you can 'return;' to continue
-brk&gt; quit;
+&lt;polar space in ProjectiveSpace(3,GF(5)): x_1^2+Z(5)*x_2^2+x_3*x_4=0 &gt;
+gap&gt; Display(last);
+&lt;polar space of rank 3 over GF(5)&gt;
+Non-singular elliptic quadratic form
+Gram Matrix:
+ 1 . . .
+ . 2 . .
+ . . . 1
+ . . . .
+Polynomial: [ [  x_1^2+Z(5)*x_2^2+x_3*x_4 ] ]
+Witt Index: 1
+Bilinear form
+Gram Matrix:
+ 2 . . .
+ . 4 . .
+ . . . 1
+ . . 1 .
+gap&gt; qv:=QuadraticVariety(3,F,"+");
+Quadratic Variety in ProjectiveSpace(3, 5)
+gap&gt; Display(last);
+Quadratic Variety in ProjectiveSpace(3, 5)
+ Polynomial: [ Z(5)*x_1*x_2+Z(5)*x_3*x_4 ]
