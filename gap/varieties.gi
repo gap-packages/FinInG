@@ -27,12 +27,11 @@
 #
 # Things To Do:
 #
-# - operations for GrassmannVariety, SegreVariety, VeroneseVariety
+# - VeroneseVariety for (m,n) not just the quadratic Veronesean.
 #   what does the user need? make example code?
 # - groups for GrassmannVariety, SegreVariety
 # - put in John's code for "QuadricDefinedByPoints" and "HermitianPolarSpaceDefinedByPoints"
 #   perhaps this should be generalised?
-# - what are things go in here?
 # - display methods 
 #
 ########################################
@@ -662,7 +661,13 @@ InstallMethod( ViewObj,
 	function( pts )
 		Print("<points of ",pts!.variety,">");
 	end );
-	 
+
+InstallMethod( PrintObj,
+	"for a collections of points of an algebraic variety",
+	[ IsPointsOfAlgebraicVariety and IsPointsOfAlgebraicVarietyRep ],
+	function( pts )
+		Print("Points( ",pts!.variety," )");
+	end );
 
 #############################################################################
 #O  Points ( <var> )

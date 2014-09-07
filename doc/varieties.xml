@@ -392,7 +392,12 @@ A <E>Veronese variety</E> in <Package>FinInG</Package> is a projective algebraic
     <Returns>a Veronese variety</Returns>
     <Description>
         The argument <A>pg</A> is a projective space defined over a finite field, say <M>PG(n-1,q)</M>. The operation also takes as input the dimension and a finite field <A>field</A> (e.g. <M>[n-1,q]</M>).
-        The operation returns a projective algebraic variety in the projective space of dimension <M>(n^2+n)/2-1</M>, known as the Veronese variety.
+        The operation returns a projective algebraic variety in the projective space of dimension <M>(n^2+n)/2-1</M>, known as the
+(quadratic) Veronese variety. It is the image of the map 
+<Alt Not="HTML"><M>(x_0,x_1,\ldots,x_n)\mapsto (x_0^2,x_0x_1,\ldots,x_0x_n,x_1^2,x_1x_2,\ldots,x_1x_n,\ldots,x_n^2)</M></Alt><Alt Only="HTML">(x&lt;sub>0&lt;/sub>,x&lt;sub>1&lt;/sub>,...,x&lt;sub>n&lt;/sub>)&#8594;
+(x&lt;sub>0&lt;/sub>&lt;sup>2&lt;/sup>,x&lt;sub>0&lt;/sub>x&lt;sub>1&lt;/sub>,...,x&lt;sub>0&lt;/sub>x&lt;sub>n&lt;/sub>,x&lt;sub>1&lt;/sub>&lt;sup>2&lt;/sup>,x&lt;sub>1&lt;/sub>x&lt;sub>2&lt;/sub>,...,x&lt;sub>1&lt;/sub>x&lt;sub>n&lt;/sub>,...,x&lt;sub>n&lt;/sub>&lt;sup>2&lt;/sup>)
+</Alt>
+		
     </Description>
 </ManSection>
 <ManSection>
