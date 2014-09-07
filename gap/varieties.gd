@@ -30,7 +30,7 @@
 ##
 #############################################################################
 
-### 1. Algbraic Varieties ###
+### 1. Algebraic Varieties ###
 
 DeclareCategory( "IsAlgebraicVariety", IsAttributeStoringRep );
 DeclareRepresentation("IsAlgebraicVarietyRep", IsAlgebraicVariety, ["geometry","polring", "listofpols"] );
@@ -119,6 +119,8 @@ DeclareOperation( "HermitianVariety", [IsPosInt,IsPosInt] );
 DeclareOperation( "HermitianVariety", [IsProjectiveSpace, IsPolynomialRing, IsPolynomial ] );
 DeclareOperation( "HermitianVariety", [IsProjectiveSpace, IsPolynomial ] );
 
+DeclareOperation( "QuadraticVariety", [IsPosInt,IsField] );
+DeclareOperation( "QuadraticVariety", [IsPosInt,IsField,IsString] );
 DeclareOperation( "QuadraticVariety", [IsProjectiveSpace, IsPolynomialRing, IsPolynomial ] );
 DeclareOperation( "QuadraticVariety", [IsProjectiveSpace, IsPolynomial ] );
 
@@ -126,6 +128,7 @@ DeclareAttribute( "SesquilinearForm", IsHermitianVariety );
 DeclareAttribute( "QuadraticForm", IsQuadraticVariety );
 
 DeclareProperty( "IsStandardHermitianVariety", IsHermitianVariety );
+DeclareProperty( "IsStandardQuadraticVariety", IsQuadraticVariety );
 
 DeclareOperation( "PolarSpace", [IsProjectiveVariety] );
 

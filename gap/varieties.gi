@@ -33,7 +33,7 @@
 # - put in John's code for "QuadricDefinedByPoints" and "HermitianPolarSpaceDefinedByPoints"
 #   perhaps this should be generalised?
 # - what are things go in here?
-# - testing, documentation
+# - display methods 
 #
 ########################################
 
@@ -102,7 +102,7 @@ InstallMethod( AlgebraicVariety,
 	
 InstallMethod( AlgebraicVariety,	
 	"for an affine space and a list of polynomials",
-	[ IsProjectiveSpace, IsList ],
+	[ IsAffineSpace, IsList ],
 	function( ag, list )
 		local pring;
 		pring:=PolynomialRing(ag!.basefield, ag!.dimension);
@@ -327,6 +327,72 @@ InstallMethod( QuadraticVariety,
 				DefiningListOfPolynomials, list, QuadraticForm, qf);
 		return var;
 	end );
+
+#############################################################################
+#O QuadraticVariety( <n>, <fld>, <type>);
+# returns a nondegenerate quadratic variety in PG(n,fld), of a specified type
+# when n is odd.
+InstallMethod( QuadraticVariety,
+	"for a positive integer and a field",
+	[IsPosInt, IsField, IsString],
+	function(n,fld,type)
+		local pg, pring, list, qf, var, ty, ps;
+		pg:=PG(n,fld);
+		pring:=PolynomialRing(fld,n+1);
+		if type = "o" or type = "parabolic" or type ="0" then
+			ps := ParabolicQuadric(n,fld);
+			if IsOddInt(n) then
+				Error("Dimension and type are incompatible.");
+			fi;
+		elif type = "+" or type = "hyperbolic" or type = "1" then
+			ps := HyperbolicQuadric(n,fld);
+			if IsEvenInt(n) then
+				Error("Dimension and type are incompatible.");
+			fi;
+		elif  type = "-" or type = "elliptic" or type = "-1" then
+			ps := EllipticQuadric(n,fld);
+			if IsEvenInt(n) then
+				Error("Dimension and type are incompatible.");
+			fi;
+		fi;
+		list:=[EquationForPolarSpace(ps)];
+		qf:=SesquilinearForm(ps);
+		
+		var:=rec( geometry:=pg, polring:=pring, listofpols:=list);
+		ty:=NewType( NewFamily("QuadraticVarietiesFamily"), IsQuadraticVariety and 
+									IsQuadraticVarietyRep );
+		ObjectifyWithAttributes(var,ty,
+				DefiningListOfPolynomials, list, SesquilinearForm, qf, IsStandardQuadraticVariety, true);
+		return var;
+	end );
+
+
+#############################################################################
+#O QuadraticVariety( <n>, <fld>);
+# returns a nondegenerate quadratic variety in PG(n,fld), where
+# we assume here that n is even.
+InstallMethod( QuadraticVariety,
+	"for an even positive integer and a field",
+	[IsPosInt, IsField],
+	function(n,fld)
+		local pg, pring, list, qf, var, ty, ps;
+		if not IsEvenInt(n) then
+			Error("The dimension must be even.");
+		fi;
+		pg:=PG(n,fld);
+		pring:=PolynomialRing(fld,n+1);
+		ps := ParabolicQuadric(n,fld);
+		list:=[EquationForPolarSpace(ps)];
+		qf:=SesquilinearForm(ps);
+		
+		var:=rec( geometry:=pg, polring:=pring, listofpols:=list);
+		ty:=NewType( NewFamily("QuadraticVarietiesFamily"), IsQuadraticVariety and 
+									IsQuadraticVarietyRep );
+		ObjectifyWithAttributes(var,ty,
+				DefiningListOfPolynomials, list, SesquilinearForm, qf, IsStandardQuadraticVariety, true);
+		return var;
+	end );
+
 
 #############################################################################
 # View, print methods for quadratic varieties.
