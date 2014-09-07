@@ -1631,7 +1631,7 @@ InstallMethod( SplitCayleyHexagon,
 		else 
 			change := c1^-1;
 		fi;
-		# UnderlyingObject will return a cvec. We must be a bit carefull: reppointvect must be normed.
+		# UnderlyingObject will return a cvec. We must be a bit careful: reppointvect must be normed.
 		reppointvect := UnderlyingObject(RepresentativesOfElements(hvm)[1]) * change; #to be changed
 		reppointvect := reppointvect / First(reppointvect,x->not IsZero(x));
 		replinevect := ([[1,0,0,0,0,0,0], [0,0,0,0,0,0,1]] * One(f)) * change;
