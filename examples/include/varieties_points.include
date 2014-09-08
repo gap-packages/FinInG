@@ -1,0 +1,26 @@
+gap&gt; F:=GF(9);
+GF(3^2)
+gap&gt; r:=PolynomialRing(F,4);
+GF(3^2)[x_1,x_2,x_3,x_4]
+gap&gt; pg:=PG(3,9);
+ProjectiveSpace(3, 9)
+gap&gt; f1:=r.1*r.3-r.2^2;
+x_1*x_3-x_2^2
+gap&gt; f2:=r.4*r.1^2-r.4^3;
+x_1^2*x_4-x_4^3
+gap&gt; var:=AlgebraicVariety(pg,[f1,f2]);
+Projective Variety in ProjectiveSpace(3, 9)
+gap&gt; points:=Points(var);
+&lt;points of Projective Variety in ProjectiveSpace(3, 9)&gt;
+gap&gt; Size(points);
+28
+gap&gt; iter := Iterator(points);
+&lt;iterator&gt;
+gap&gt; for i in [1..4] do
+&gt; 	x := NextIterator(iter);
+&gt; 	Display(x);
+&gt; od;
+[1...]
+[1..1]
+[1..2]
+[111.]
