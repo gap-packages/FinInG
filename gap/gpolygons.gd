@@ -39,6 +39,8 @@ DeclareCategory( "IsElationGQ", IsGeneralisedQuadrangle );
 DeclareCategory( "IsElationGQByKantorFamily", IsElationGQ );
 DeclareCategory( "IsElationGQByBLTSet", IsElationGQ );
 
+DeclareCategory( "IsWeakGeneralisedPolygon", IsGeneralisedPolygon );
+
 #############################################################################
 # Constructor operations:
 #############################################################################
