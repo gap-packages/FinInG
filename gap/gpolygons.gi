@@ -97,19 +97,18 @@ Print(", gpolygons\c");
 #O  GeneralisedPolygonByBlocks( <list> )
 # returns a GP, the points are Union(blocks), the lines are the blocks. functions
 # for shadows are installed. It is checked whether this is really a GP.
+# Note that we allow weak GPs: these are GPs "without order", i.e. bipartite graph,
+# grith = 2*diameter, but no constant valency for the vertices in (on of) the components
+# of the graph. We can do the necessary checks with LocalParameters.
 ##
 InstallMethod( GeneralisedPolygonByBlocks,
     "for a homogeneous list",
     [ IsHomogeneousList ],
     function( blocks )
         local pts, gp, ty, i, graph, sz, adj, girth, shadpoint, shadline, s, t, dist, vn, 
-		listels, objs, act, spanoftwopoints, meetoftwolines;
+		listels, objs, act, spanoftwopoints, meetoftwolines, bicomp, pointvertices, lp, linevertices;
         pts := Union(blocks);
-        s := Size(blocks[1]) - 1;
-        if not ForAll(blocks, b -> Size(b) = s + 1 ) then
-            Error("Not every block has size ", s + 1);
-        fi;
-        
+
         i := function( x, y )
         if IsSet( x!.obj ) and not IsSet( y!.obj ) then
             return y!.obj in x!.obj;
@@ -146,7 +145,7 @@ InstallMethod( GeneralisedPolygonByBlocks,
         else
             Error("<blocks are not defining a generalised polygon");
         fi;
-
+				
         listels := function( geom, i )
 			if i = 1 then
 				return List(pts,x->Wrap(geom,i,x));
@@ -165,8 +164,14 @@ InstallMethod( GeneralisedPolygonByBlocks,
             return List(line!.obj,x->Wrap(line!.geo,1,x));
         end;
 		
-		#we have the graph now, the following is efficient.
-		t := Length(Adjacency(graph,1))-1; # number of lines on a point minus 1.
+		#we have the graph now, the following is easy.
+		bicomp := Bicomponents(graph);
+		pointvertices := First(bicomp,x->1 in x); #just take all points
+		lp := LocalParameters(graph,pointvertices);
+		t := lp[1][3]-1; #is the number of lines on a point, is -1 if there is no order, subtract to have t
+		linevertices := First(bicomp,x->not 1 in x); #just take all lines
+		lp := LocalParameters(graph,linevertices);
+		s := lp[1][3]-1; #is the number of points on a line, is -1 if there is no orde, subtract to have s
 
 		dist := function( el1, el2 )
 			return Distance(graph,Position(vn,el1!.obj),Position(vn,el2!.obj));
@@ -204,7 +209,10 @@ InstallMethod( GeneralisedPolygonByBlocks,
 					shadowofpoint := shadpoint, shadowofline := shadline, distance := dist, 
                     span := spanoftwopoints, meet := meetoftwolines );
 
-        if girth = 6 then
+        if t = -2 or s = -2 then
+			ty := NewType( GeometriesFamily, IsWeakGeneralisedPolygon and IsGeneralisedPolygonRep );
+            gp!.gonality := girth/2;
+		elif girth = 6 then
             ty := NewType( GeometriesFamily, IsProjectivePlane and IsGeneralisedPolygonRep );
         elif girth = 8 then
             ty := NewType( GeometriesFamily, IsGeneralisedQuadrangle and IsGeneralisedPolygonRep );
@@ -219,7 +227,9 @@ InstallMethod( GeneralisedPolygonByBlocks,
 
         Objectify( ty, gp );
         SetTypesOfElementsOfIncidenceStructure(gp, ["point","line"]);
-        SetOrder(gp, [s, t]);
+        if s <> -2 and t <> -2 then
+			SetOrder(gp, [s, t]);
+		fi;
         SetRankAttr(gp, 2);
         Setter( IncidenceGraphAttr )( gp, graph );
         Setter( HasGraphWithUnderlyingObjectsAsVertices )( gp, true);
@@ -266,7 +276,8 @@ InstallMethod( GeneralisedPolygonByElements,
     [ IsSet, IsSet, IsFunction ],
     function( pts, lns, inc )
     local adj, act, graph, ty, girth, shadpoint, shadline, s, t, 
-	gp, vn, dist, listels, wrapped_incidence, spanoftwopoints, meetoftwolines;
+	gp, vn, dist, listels, wrapped_incidence, spanoftwopoints, meetoftwolines,
+	bicomp, pointvertices, linevertices, lp;
 
     adj := function(x,y)
     if x in pts and y in pts then
@@ -293,9 +304,14 @@ InstallMethod( GeneralisedPolygonByElements,
     else
         Error("elements are not defining a generalised polygon");
     fi;
-
-	s := Length(Adjacency(graph,Size(pts)+1))-1; # number of points on a line minus 1.
-	t := Length(Adjacency(graph,1))-1; # number of linbes on a point minus 1.
+	
+	bicomp := Bicomponents(graph);
+	pointvertices := First(bicomp,x->1 in x); #just take all points
+	lp := LocalParameters(graph,pointvertices);
+	t := lp[1][3]-1; #is the number of lines on a point, is -1 if there is no order, subtract to have t
+	linevertices := First(bicomp,x->(Size(pts)+1) in x); #just take all lines
+	lp := LocalParameters(graph,linevertices);
+	s := lp[1][3]-1; #is the number of points on a line, is -1 if there is no order, subtract to have s
 
 	# inc takes in fact underlying objects as arguments. So we must make a new function that takes
 	# as arguments elements of this geometry and pipes the underlying objects to inc.
@@ -357,7 +373,10 @@ InstallMethod( GeneralisedPolygonByElements,
 				shadowofpoint := shadpoint, shadowofline := shadline, distance := dist, 
                 span := spanoftwopoints, meet := meetoftwolines );
 
-    if girth = 6 then
+	if t = -2 or s = -2 then
+		ty := NewType( GeometriesFamily, IsWeakGeneralisedPolygon and IsGeneralisedPolygonRep );
+		gp!.gonality := girth/2;
+	elif girth = 6 then
         ty := NewType( GeometriesFamily, IsProjectivePlane and IsGeneralisedPolygonRep );
     elif girth = 8 then
         ty := NewType( GeometriesFamily, IsGeneralisedQuadrangle and IsGeneralisedPolygonRep );
@@ -371,7 +390,9 @@ InstallMethod( GeneralisedPolygonByElements,
     fi;
 
     Objectify( ty, gp );
-	SetOrder(gp, [s,t] );
+	if s <> -2 and t <> -2 then
+		SetOrder(gp, [s, t]);
+	fi;
     SetTypesOfElementsOfIncidenceStructure(gp, ["point","line"]);
     SetRankAttr(gp, 2);
     Setter( IncidenceGraphAttr )( gp, graph );
@@ -395,7 +416,8 @@ InstallMethod( GeneralisedPolygonByElements,
     [ IsSet, IsSet, IsFunction, IsGroup, IsFunction ],
     function( pts, lns, inc, group, act )
     local adj, graph, ty, girth, shadpoint, shadline, s, t, gp, vn, 
-	dist, listels, wrapped_incidence, spanoftwopoints, meetoftwolines;
+	dist, listels, wrapped_incidence, spanoftwopoints, meetoftwolines,
+	bicomp, pointvertices, linevertices, lp;
 
     adj := function(x,y)
     if x in pts and y in pts then
@@ -418,8 +440,13 @@ InstallMethod( GeneralisedPolygonByElements,
         Error("elements are not defining a generalised polygon");
     fi;
 
-	s := Length(Adjacency(graph,Size(pts)+1))-1; # number of points on a line minus 1.
-	t := Length(Adjacency(graph,1))-1; # number of linbes on a point minus 1.
+	bicomp := Bicomponents(graph);
+	pointvertices := First(bicomp,x->1 in x); #just take all points
+	lp := LocalParameters(graph,pointvertices);
+	t := lp[1][3]-1; #is the number of lines on a point, is -1 if there is no order, subtract -1 to have t
+	linevertices := First(bicomp,x->(Size(pts)+1) in x); #just take all lines
+	lp := LocalParameters(graph,linevertices);
+	s := lp[1][3]-1; #is the number of points on a line, is -1 if there is no order, subtract -1 to have s
     
     vn := VertexNames(graph);
 
@@ -481,8 +508,11 @@ InstallMethod( GeneralisedPolygonByElements,
     gp := rec( pointsobj := pts, linesobj := lns, incidence := wrapped_incidence, listelements := listels, 
 				shadowofpoint := shadpoint, shadowofline := shadline, distance := dist, span := spanoftwopoints, 
                 meet := meetoftwolines, action := act );
-
-    if girth = 6 then
+    
+	if t = -2 or s = -2 then
+		ty := NewType( GeometriesFamily, IsWeakGeneralisedPolygon and IsGeneralisedPolygonRep );
+		gp!.gonality := girth/2;
+	elif girth = 6 then
         ty := NewType( GeometriesFamily, IsProjectivePlane and IsGeneralisedPolygonRep );
     elif girth = 8 then
         ty := NewType( GeometriesFamily, IsGeneralisedQuadrangle and IsGeneralisedPolygonRep );
@@ -496,8 +526,10 @@ InstallMethod( GeneralisedPolygonByElements,
     fi;
 
     Objectify( ty, gp );
-	SetOrder(gp, [s,t] );
-    SetTypesOfElementsOfIncidenceStructure(gp, ["point","line"]);
+	if s <> -2 and t <> -2 then
+		SetOrder(gp, [s, t]);
+	fi;
+	SetTypesOfElementsOfIncidenceStructure(gp, ["point","line"]);
     SetRankAttr(gp, 2);
     Setter( IncidenceGraphAttr )( gp, graph );        
     Setter( HasGraphWithUnderlyingObjectsAsVertices )( gp, true);
@@ -563,11 +595,28 @@ InstallMethod( ViewObj,
         fi;
 	end );
 
+InstallMethod( ViewObj, 
+	"for a projective plane in GP rep",
+	[ IsWeakGeneralisedPolygon and IsGeneralisedPolygonRep],
+	function( gp )
+		Print("<weak generalised polygon of gonality ",String(gp!.gonality),">");
+	end );
+
 #############################################################################
 #
 # Basic methods for elements (including construction and iterator).
 #
 #############################################################################
+
+#############################################################################
+#O  Order( <x> )
+##
+InstallMethod( Order, 
+	"for a weak generalised polygon",
+	[ IsWeakGeneralisedPolygon ],
+	function( gp )
+		Error("<gp> is a weak generalised polygon and has no order");
+	end );
 
 #############################################################################
 #O  UnderlyingObject( <x> )
@@ -656,6 +705,28 @@ InstallMethod( ElementsOfIncidenceStructure,
                                 IsElementsOfGeneralisedPolygonRep),
         rec( geometry := gp, type := j, size := sz )
 						);
+	end );
+
+#############################################################################
+#O  ElementsOfIncidenceStructure( <gp>, <j> )
+# returns the elements of <gp> of type <j>
+##
+InstallMethod( ElementsOfIncidenceStructure, 
+	"for a generalised polygon and a positive integer",
+	[IsWeakGeneralisedPolygon and IsGeneralisedPolygonRep, IsPosInt],
+	function( gp, j )
+		local s, t, sz;
+		if not j in [1,2] then 
+			Error("Incorrect type value");
+		fi;
+        if j=1 then
+			sz := Length(gp!.pointsobj);
+		else
+			sz := Length(gp!.linesobj);
+		fi;
+		return Objectify( NewType( ElementsCollFamily, IsElementsOfGeneralisedPolygon and
+							IsElementsOfGeneralisedPolygonRep),
+						rec( geometry := gp, type := j, size := sz ) );
 	end );
 
 #############################################################################

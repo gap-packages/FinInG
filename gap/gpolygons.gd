@@ -39,6 +39,7 @@ DeclareCategory( "IsElationGQ", IsGeneralisedQuadrangle );
 DeclareCategory( "IsElationGQByKantorFamily", IsElationGQ );
 DeclareCategory( "IsElationGQByBLTSet", IsElationGQ );
 
+# A generalised polygon is weak if it has no order. So it is a bipartite graph, with girth=2diam, but that's all.
 DeclareCategory( "IsWeakGeneralisedPolygon", IsGeneralisedPolygon );
 
 #############################################################################
@@ -86,8 +87,6 @@ BlockDesignOfGeneralisedPolygonAttr := NewAttribute( "BlockDesignOfGeneralisedPo
 #					IsGeneralisedPolygon, "mutable" );
 
 DeclareOperation( "BlockDesignOfGeneralisedPolygon", [ IsGeneralisedPolygon ] );
-#DeclareOperation( "IncidenceGraphOfGeneralisedPolygon", [ IsGeneralisedPolygon ]);
-
 
 #############################################################################
 # Classical Generalised Hexagons

@@ -733,3 +733,6 @@ LocalInfo(incgr, 1);
 NrElementsOfIncidenceStructure(gp,1);
 LocalInfo(incgr, 3907);
 
+bicomp := Bicomponents(gamma);
+l1 := LocalParameters(bicomp[1]);
+
