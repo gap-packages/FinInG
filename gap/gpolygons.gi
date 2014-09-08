@@ -59,6 +59,12 @@ Print(", gpolygons\c");
 #
 # action: a function describing an action on the *underlying objects*.
 #
+# gonality: it is not very explicitely documented, but one can actually construct 
+#   generalised n-gons for n different than 3,4,6,8. To avoid checking the diameter of the underlying
+#   graph e.g. for ViewObj, in these case the field gonality is set upon creation. One could say
+#   that this field replaces the categories IsProjectivePlane, IsGeneralisedQuadrangle, IsGeneralisedHexagon
+#   and IsGeneralisedOctagon for these arbitrary cases.
+#
 # Note: - If an object belongs to IsGeneralisedPolygon, then the "generic operations" to explore the GP
 #			are *applicable* (does not imply that a specific method is installed or will be working).
 #		- If a GP is constructed using a "Generic method", the above fields are created as described, making
@@ -140,19 +146,7 @@ InstallMethod( GeneralisedPolygonByBlocks,
         else
             Error("<blocks are not defining a generalised polygon");
         fi;
-        
-        if girth = 6 then
-            ty := NewType( GeometriesFamily, IsProjectivePlane and IsGeneralisedPolygonRep );
-        elif girth = 8 then
-            ty := NewType( GeometriesFamily, IsGeneralisedQuadrangle and IsGeneralisedPolygonRep );
-        elif girth = 12 then
-            ty := NewType( GeometriesFamily, IsGeneralisedHexagon and IsGeneralisedPolygonRep );
-        elif girth = 16 then
-            ty := NewType( GeometriesFamily, IsGeneralisedOctagon and IsGeneralisedPolygonRep );
-        else
-            Error("<blocks> do not define a thick finite generalised polygon");
-        fi;
-        
+
         listels := function( geom, i )
 			if i = 1 then
 				return List(pts,x->Wrap(geom,i,x));
@@ -209,6 +203,19 @@ InstallMethod( GeneralisedPolygonByBlocks,
         gp := rec( pointsobj := pts, linesobj := blocks, incidence := i, listelements := listels, 
 					shadowofpoint := shadpoint, shadowofline := shadline, distance := dist, 
                     span := spanoftwopoints, meet := meetoftwolines );
+
+        if girth = 6 then
+            ty := NewType( GeometriesFamily, IsProjectivePlane and IsGeneralisedPolygonRep );
+        elif girth = 8 then
+            ty := NewType( GeometriesFamily, IsGeneralisedQuadrangle and IsGeneralisedPolygonRep );
+        elif girth = 12 then
+            ty := NewType( GeometriesFamily, IsGeneralisedHexagon and IsGeneralisedPolygonRep );
+        elif girth = 16 then
+            ty := NewType( GeometriesFamily, IsGeneralisedOctagon and IsGeneralisedPolygonRep );
+        else
+            ty := NewType( GeometriesFamily, IsGeneralisedPolygon and IsGeneralisedPolygonRep );
+            gp!.gonality := girth/2;
+        fi;
 
         Objectify( ty, gp );
         SetTypesOfElementsOfIncidenceStructure(gp, ["point","line"]);
@@ -281,22 +288,10 @@ InstallMethod( GeneralisedPolygonByElements,
 
     if IsBipartite(graph) then
         if not girth = 2*Diameter(graph) then
-            Error("<blocks> are not defining a generalised polygon");
+            Error("<pts>, <lns>, <inc> are not defining a generalised polygon");
         fi;
     else
         Error("elements are not defining a generalised polygon");
-    fi;
-        
-    if girth = 6 then
-        ty := NewType( GeometriesFamily, IsProjectivePlane and IsGeneralisedPolygonRep );
-    elif girth = 8 then
-        ty := NewType( GeometriesFamily, IsGeneralisedQuadrangle and IsGeneralisedPolygonRep );
-    elif girth = 12 then
-        ty := NewType( GeometriesFamily, IsGeneralisedHexagon and IsGeneralisedPolygonRep );
-    elif girth = 16 then
-        ty := NewType( GeometriesFamily, IsGeneralisedOctagon and IsGeneralisedPolygonRep );
-    else
-        Error("<points>, <lines> and <inc> do not define a thick finite generalised polygon");
     fi;
 
 	s := Length(Adjacency(graph,Size(pts)+1))-1; # number of points on a line minus 1.
@@ -362,6 +357,19 @@ InstallMethod( GeneralisedPolygonByElements,
 				shadowofpoint := shadpoint, shadowofline := shadline, distance := dist, 
                 span := spanoftwopoints, meet := meetoftwolines );
 
+    if girth = 6 then
+        ty := NewType( GeometriesFamily, IsProjectivePlane and IsGeneralisedPolygonRep );
+    elif girth = 8 then
+        ty := NewType( GeometriesFamily, IsGeneralisedQuadrangle and IsGeneralisedPolygonRep );
+    elif girth = 12 then
+        ty := NewType( GeometriesFamily, IsGeneralisedHexagon and IsGeneralisedPolygonRep );
+    elif girth = 16 then
+        ty := NewType( GeometriesFamily, IsGeneralisedOctagon and IsGeneralisedPolygonRep );
+    else
+        ty := NewType( GeometriesFamily, IsGeneralisedPolygon and IsGeneralisedPolygonRep );
+        gp!.gonality := girth/2;
+    fi;
+
     Objectify( ty, gp );
 	SetOrder(gp, [s,t] );
     SetTypesOfElementsOfIncidenceStructure(gp, ["point","line"]);
@@ -408,18 +416,6 @@ InstallMethod( GeneralisedPolygonByElements,
         fi;
     else
         Error("elements are not defining a generalised polygon");
-    fi;
-        
-    if girth = 6 then
-        ty := NewType( GeometriesFamily, IsProjectivePlane and IsGeneralisedPolygonRep );
-    elif girth = 8 then
-        ty := NewType( GeometriesFamily, IsGeneralisedQuadrangle and IsGeneralisedPolygonRep );
-    elif girth = 12 then
-        ty := NewType( GeometriesFamily, IsGeneralisedHexagon and IsGeneralisedPolygonRep );
-    elif girth = 16 then
-        ty := NewType( GeometriesFamily, IsGeneralisedOctagon and IsGeneralisedPolygonRep );
-    else
-        Error("<points>, <lines> and <inc> do not define a thick finite generalised polygon");
     fi;
 
 	s := Length(Adjacency(graph,Size(pts)+1))-1; # number of points on a line minus 1.
@@ -486,6 +482,19 @@ InstallMethod( GeneralisedPolygonByElements,
 				shadowofpoint := shadpoint, shadowofline := shadline, distance := dist, span := spanoftwopoints, 
                 meet := meetoftwolines, action := act );
 
+    if girth = 6 then
+        ty := NewType( GeometriesFamily, IsProjectivePlane and IsGeneralisedPolygonRep );
+    elif girth = 8 then
+        ty := NewType( GeometriesFamily, IsGeneralisedQuadrangle and IsGeneralisedPolygonRep );
+    elif girth = 12 then
+        ty := NewType( GeometriesFamily, IsGeneralisedHexagon and IsGeneralisedPolygonRep );
+    elif girth = 16 then
+        ty := NewType( GeometriesFamily, IsGeneralisedOctagon and IsGeneralisedPolygonRep );
+    else
+        ty := NewType( GeometriesFamily, IsGeneralisedPolygon and IsGeneralisedPolygonRep );
+        gp!.gonality := girth/2;
+    fi;
+
     Objectify( ty, gp );
 	SetOrder(gp, [s,t] );
     SetTypesOfElementsOfIncidenceStructure(gp, ["point","line"]);
@@ -540,6 +549,17 @@ InstallMethod( ViewObj,
             Print("<generalised octagon of order ",Order(p),">");
         else
             Print("<generalised octagon>");
+        fi;
+	end );
+
+InstallMethod( ViewObj, 
+	"for a projective plane in GP rep",
+	[ IsGeneralisedPolygon and IsGeneralisedPolygonRep],
+	function( gp )
+        if HasOrder(gp) then
+            Print("<generalised polygon of gonality ",String(gp!.gonality)," and order ",Order(gp),">");
+        else
+            Print("<generalised polygon of gonality ",String(gp!.gonality),">");
         fi;
 	end );
 
@@ -625,7 +645,13 @@ InstallMethod( ElementsOfIncidenceStructure,
 			sz := (1+s)*(1+s*t+s^2*t^2);
 		elif IsGeneralisedOctagon(gp) then
 			sz := (1+s)*(1+s*t+s^2*t^2+s^3*t^3);
-		fi;        
+		else
+            if j=1 then
+                sz := Length(gp!.pointsobj);
+            else
+                sz := Length(gp!.linesobj);
+            fi;
+        fi;
 		return Objectify( NewType( ElementsCollFamily, IsElementsOfGeneralisedPolygon and
                                 IsElementsOfGeneralisedPolygonRep),
         rec( geometry := gp, type := j, size := sz )

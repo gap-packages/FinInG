@@ -569,6 +569,7 @@ apts := Union(pts,lines);
 gp := GeneralisedPolygonByElements(apts,flags,inc);
 
 ps := SymplecticSpace(3,2);
+ps := SplitCayleyHexagon(2);
 pts := List(Points(ps));;
 lines := List(Lines(ps));;
 flags := Union(List(pts,x->List(Lines(x),y->FlagOfIncidenceStructure(ps,[x,y]))));;
@@ -597,8 +598,15 @@ struc := IncidenceStructure(els,inc,type,[1,2]);
 gamma := IncidenceGraph(struc);
 Diameter(gamma);
 Girth(gamma);
-#gp := GeneralisedPolygonByElements(ipts,flags,inc);
 
+ipts := Union(pts,lines);
+gp := GeneralisedPolygonByElements(ipts,flags,inc);
+
+pts := List(Points(gp));;
+lines := List(Lines(gp));;
+flags := Union(List(pts,x->List(Lines(x),y->FlagOfIncidenceStructure(gp,[x,y]))));;
+ipts := Union(pts,lines);
+gp := GeneralisedPolygonByElements(ipts,flags,inc);
 
 ##### voorbeeldje Philippe
 

@@ -127,8 +127,10 @@ each element of <A>l</A> represents a line of the generalised polygon. Its
 points are assumed to be the union of all elements of <A>l</A>. The incidence
 is assumed to be symmetrised containment. From this information, an incidence
 graph is computed using <Package>GRAPE</Package>. If this graph has diameter <M>d</M>
-and girth <M>2d</M>, with <M>d \in \{3,4,6,8\}</M>, a generalised polygon is returned.
-Note that for large input, this operation can be time consuming.
+and girth <M>2d</M>, a generalised polygon is returned. The thickness condition is not checked.
+If <M>d \in \{3,4,6,8\}</M>, a projective plane, a generalised quadrangle, a generalised hexagon,
+a generalised octagon respectively, is returned. Note that for large input, this operation
+can be time consuming.
 <Example>
 <#Include SYSTEM "../examples/include/gpolygons_gpbyblocks.include">
 </Example>
@@ -158,13 +160,16 @@ by <F>GeneralisedPolygonByBlocks</F>.
 The argument <A>pts</A>, <A>lns</A> and <A>inc</A> are respectively a set of objects, a set of objects
 and a function. The function <A>inc</A> must represent an incidence relation between objects of <A>pts</A>
 and <A>lns</A>. The first version of <F>GeneralisedPolygonByElements</F> will construct an incidence graph, and
-if this graph has diameter <M>d</M> and girth <M>2d</M>, with <M>d \in \{3,4,6,8\}</M>,
-a generalised polygon is returned. The argument <A>grp</A> is a group, and <A>act</A> a function, representing
+if this graph has diameter <M>d</M>
+and girth <M>2d</M>, a generalised polygon is returned. The thickness condition is not checked.
+If <M>d \in \{3,4,6,8\}</M>, a projective plane, a generalised quadrangle, a generalised hexagon,
+a generalised octagon respectively, is returned.
+The argument <A>grp</A> is a group, and <A>act</A> a function, representing
 an action of the elements of <A>grp</A> on the objects in the lists <A>pts</A> and <A>lns</A>, preserving
-the incidence. The second version of <F>GeneralisedPolygonByElements</F> will construct an incidence graph, and
-if this graph has diameter <M>d</M> and girth <M>2d</M>, with <M>d \in \{3,4,6,8\}</M>,
-a generalised polygon is returned. If <A>grp</A> is a non trivial group, the construction of the graph will
-be faster. This operation can be typically used to construct generalised polygons from objects that are available
+the incidence. The second version of <F>GeneralisedPolygonByElements</F> acts as the first version, but
+uses <A>grp</A> and <A>act</A> to construct the incidence graph in a more efficient way, so
+if <A>grp</A> is a non trivial group, the construction of the graph will
+be faster. This operation can typically be used to construct generalised polygons from objects that are available
 in <Package>FinInG</Package>. This difference in time is shown in the first two examples. The third examples
 shows the construction of the generalised quadrangle <M>T_2(O)</M>.
 <Example>
