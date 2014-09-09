@@ -1,0 +1,25 @@
+gap&gt; ps := HermitianPolarSpace(4,9);
+H(4, 3^2)
+gap&gt; EquationForPolarSpace(ps);
+x_1^4+x_2^4+x_3^4+x_4^4+x_5^4
+gap&gt; ps := HyperbolicQuadric(5,7);
+Q+(5, 7)
+gap&gt; EquationForPolarSpace(ps);
+x_1*x_2+x_3*x_4+x_5*x_6
+gap&gt; ps := SymplecticSpace(3,3);
+W(3, 3)
+gap&gt; EquationForPolarSpace(ps);
+x1*y2-x2*y1+x3*y4-x4*y3
+gap&gt; mat := IdentityMat(4,GF(11));
+[ [ Z(11)^0, 0*Z(11), 0*Z(11), 0*Z(11) ], 
+  [ 0*Z(11), Z(11)^0, 0*Z(11), 0*Z(11) ], 
+  [ 0*Z(11), 0*Z(11), Z(11)^0, 0*Z(11) ], 
+  [ 0*Z(11), 0*Z(11), 0*Z(11), Z(11)^0 ] ]
+gap&gt; form := BilinearFormByMatrix(mat,GF(11));
+&lt; bilinear form &gt;
+gap&gt; ps := PolarSpace(form);
+&lt;polar space in ProjectiveSpace(3,GF(11)): x_1^2+x_2^2+x_3^2+x_4^2=0 &gt;
+gap&gt; Rank(ps);
+2
+gap&gt; ps;
+Q+(3, 11): x_1^2+x_2^2+x_3^2+x_4^2=0

@@ -33,7 +33,7 @@ In this chapter we provide some simple examples of the use of
 <Heading>subspaces of projective spaces</Heading>
 <Description>
 The following example shows how to create some subspaces of a projective space, test their
-incidence, and determine their meet and intersection. Note that incidence in projective spaces
+incidence, and determine their span and intersection. Note that incidence in projective spaces
 is symmetrized set-theoretic containment, the latter which can be tested through the operation <F>in</F>.
 <Example>
 <#Include SYSTEM "../examples/include/examples_sub1.include">
@@ -51,9 +51,46 @@ space. Operations like <F>Span</F> and <F>Meet</F> are naturally applicable. How
 be a subspace of the polar space anymore, and if the two subspaces belong to two different polar spaces in the same
 ambient projective space, it cannot be determined in which polar space the span should be constructed. Therefore
 notice that the result of <F>Span</F> of two subspaces of a polar space is a subspace of the ambient projective space.
-It can of course be checked whether the result belongs to a polar space using <F>in</F>.
+It can of course be checked whether the result belongs to a polar space using <F>in</F>. This illustrates very well
+some general philisophy: a subspace of a polar space, and more generally, an element of any incidence structure is always
+aware of its ambient geometry. This example also illustrates how to create an element that belongs to the polar space
+from the subspace of the ambient projective geometry by using <F>ElementToElement</F>. Finally note the behaviour of <F>=</F>
+applied on the two subspaces. Clearly, a subspace of a polar space is really also a subspace of the ambient projective space.
 <Example>
 <#Include SYSTEM "../examples/include/examples_sub2.include">
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Heading>constructing polar spaces</Heading>
+<Description>
+<Package>FinInG</Package> povides the classical polar spaces as the geometries of which the subspaces
+are represented by the totally isotropic, totally singular respectively, sub vector spaces with relation 
+to a cosen sesquilinear, quadratic form respectively. The user may choose any non-degenerate, non-singular respectively,
+form to construct the polar space. The usage of the forms makes <Package>FinInG</Package> dependent on the
+package <Package>forms</Package>. Shorcuts to polar spaces in <E>standard</E> representation are included.
+Detailed information can be found in Section <Ref Sect="can_standard"/>. 
+<Example>
+<#Include SYSTEM "../examples/include/examples_cps1.include">
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Heading>some collineation groups</Heading>
+<Description>
+In principle, the full group of collineations of almost any incidence structure can be computed in 
+<Package>FinInG</Package>. Mathematically, this is almost obvious for projective spaces and affine spaces.
+For classical polar spaces, the particular forms plays a role. The coordinate change capabilities of the 
+package <Package>forms</Package>, together with the standard reference in this <Cite Key="KleidmanLiebeck"/>, make
+that the full collineation group of a classical polar space can relatively easily be obtained. The computation
+of the full collineation group of particular incidence structures, such as generalised polygons, may rely on
+the computation of the automorphism group of an underlying incidence graph, which is done by nauty through the 
+package <Package>grape</Package>. Note that the elements of a projective collineation group are semilinear
+maps, they consist of a matrix together with a field automorphism. 
+<Example>
+<#Include SYSTEM "../examples/include/examples_collgroup.include">
 </Example>
 </Description>
 </ManSection>
@@ -134,6 +171,27 @@ quadratic form over <M>GF(3)</M> and the associated polar space.
 </Example>
 
 </Subsection>
+
+</Section>
+
+
+<Section>
+<Heading>More interesting examples</Heading>
+
+<Example>
+<#Include SYSTEM "../examples/include/examples_splitcayley.include"> 
+</Example>
+
+<Example>
+<#Include SYSTEM "../examples/include/examples_e6.include"> 
+</Example>
+
+<Alt Only="HTML">&lt;img src="E6.jpg">&lt;/img></Alt>
+<Alt Only="LaTeX">\includegraphics{E6.jpg}</Alt>
+
+<Example>
+<#Include SYSTEM "../examples/include/examples_varieties.include"> 
+</Example>
 
 </Section>
 
@@ -229,5 +287,8 @@ Here is what the output looks like with the standard <F>DrawDiagram</F> command:
 
 
 </Section>
+
+
+
 
 </Chapter>

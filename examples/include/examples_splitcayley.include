@@ -1,0 +1,43 @@
+gap&gt; hexagon := SplitCayleyHexagon(5);
+H(5)
+gap&gt; Order(hexagon);
+[ 5, 5 ]
+gap&gt; g := CollineationGroup( hexagon );
+#I  for Split Cayley Hexagon
+#I  Computing nice monomorphism...
+#I  Found permutation domain...
+G_2(5)
+gap&gt; incgraph := IncidenceGraph( hexagon );;
+#I  Computing incidence graph of generalised polygon...
+gap&gt; Diameter(incgraph);
+6
+gap&gt; Girth(incgraph);
+12
+gap&gt; points := Points(hexagon);
+&lt;points of H(5)&gt;
+gap&gt; lines := Lines(hexagon);
+&lt;lines of H(5)&gt;
+gap&gt; iter := Iterator(points);
+&lt;iterator&gt;
+gap&gt; x := NextIterator(iter);
+&lt;a point in H(5)&gt;
+gap&gt; Display(x);
+[.1.....]
+gap&gt; UnderlyingObject(x);
+&lt;cvec over GF(5,1) of length 7&gt;
+gap&gt; onx := Lines(x);
+&lt;shadow lines in H(5)&gt;
+gap&gt; l := Random(onx);
+&lt;a line in H(5)&gt;
+gap&gt; onl := Points(l);
+&lt;shadow points in H(5)&gt;
+gap&gt; List(onl, t -&gt; DistanceBetweenElements(x,t));
+[ 0, 2, 2, 2, 2, 2 ]
+gap&gt; stabl := FiningStabiliser(g, l);
+&lt;projective collineation group of size 1500000 with 3 generators&gt;
+gap&gt; gl := Action(stabl, onl);
+Group([ (1,6,5,4,3), (1,4,3,6), (1,5,4,3,6,2) ])
+gap&gt; StructureDescription(gl);
+"S5"
+gap&gt; Transitivity(gl);
+3

@@ -1,0 +1,34 @@
+gap&gt; ps := EllipticQuadric(5,7);
+Q-(5, 7)
+gap&gt; vec := [1,0,0,0,0,0]*Z(7)^0;
+[ Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7) ]
+gap&gt; point := VectorSpaceToElement(ps,vec);
+Error, &lt;v&gt; does not generate an element of &lt;geom&gt; called from
+&lt;function "unknown"&gt;( &lt;arguments&gt; )
+ called from read-eval loop at line 10 of *stdin*
+you can 'quit;' to quit to outer loop, or
+you can 'return;' to continue
+brk&gt; quit;
+gap&gt; EquationForPolarSpace(ps);
+x_1^2+x_2^2+x_3*x_4+x_5*x_6
+gap&gt; vec := [0,0,1,0,0,0]*Z(7)^0;
+[ 0*Z(7), 0*Z(7), Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7) ]
+gap&gt; point := VectorSpaceToElement(ps,vec);
+&lt;a point in Q-(5, 7)&gt;
+gap&gt; vec2 := [0,0,0,1,0,0]*Z(7)^0;
+[ 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^0, 0*Z(7), 0*Z(7) ]
+gap&gt; point2 := VectorSpaceToElement(ps,vec2);
+&lt;a point in Q-(5, 7)&gt;
+gap&gt; line := Span(point,point2);
+&lt;a line in ProjectiveSpace(5, 7)&gt;
+gap&gt; mat := [[0,0,1,0,0,0],[0,0,0,0,1,0]]*Z(7)^0;
+[ [ 0*Z(7), 0*Z(7), Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7) ], 
+  [ 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^0, 0*Z(7) ] ]
+gap&gt; line2 := VectorSpaceToElement(ps,mat);
+&lt;a line in Q-(5, 7)&gt;
+gap&gt; meet := Meet(line,line2);
+&lt;a point in ProjectiveSpace(5, 7)&gt;
+gap&gt; meet in ps;
+true
+gap&gt; point3 := ElementToElement(ps,meet);
+&lt;a point in Q-(5, 7)&gt;

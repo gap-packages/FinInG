@@ -24,7 +24,8 @@ quit;
 
 examplesfiles := ["examples_hyperoval24", "examples_hermitian", "examples_embedW", "examples_patterson",  
 				  "examples_spreads", "examples_qclan", "examples_KantorKnuth", "examples_PSL211",
-                  "examples_sub1"];;
+                  "examples_sub1", "examples_sub2", "examples_cps1", "examples_collgroup", 
+				  "examples_splitcayley", "examples_e6", "examples_varieties"];;
 
 incgeomfiles := ["incgeom_incstruct", "incgeom_categories1", "incgeom_typesofels", "incgeom_rank", "incgeom_incgraph",
                  "incgeom_underlyingobject", "incgeom_type",
@@ -192,7 +193,6 @@ gap := Filename(Directory("/usr/bin/"),"gap4r6");
 paths := JoinStringsWithSeparator(GAP_ROOT_PATHS{[2,3]},";");
 args := JoinStringsWithSeparator(["-l",paths," -L fining.ws"," -o 4G"]," ");
 args := ["-l",paths,"-L","fining.ws","-o","4G"];
-
 
 #code below for gap4r7
 homedir := DirectoryCurrent();

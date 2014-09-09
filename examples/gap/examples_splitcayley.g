@@ -1,0 +1,22 @@
+# a nice example with Split Cayley hexagons
+hexagon := SplitCayleyHexagon(5);
+Order(hexagon);
+g := CollineationGroup( hexagon );
+incgraph := IncidenceGraph( hexagon );;
+Diameter(incgraph);
+Girth(incgraph);
+points := Points(hexagon);
+lines := Lines(hexagon);
+iter := Iterator(points);
+x := NextIterator(iter);
+Display(x);
+UnderlyingObject(x);
+onx := Lines(x);
+l := Random(onx);
+onl := Points(l);
+List(onl, t -> DistanceBetweenElements(x,t));
+stabl := FiningStabiliser(g, l);
+gl := Action(stabl, onl);
+StructureDescription(gl);
+Transitivity(gl);
+quit;
