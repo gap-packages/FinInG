@@ -30,9 +30,8 @@ spaces in <Package>FinInG</Package>.
 An <E>affine space</E> is a point-line incidence geometry, satisfying few well known axioms. 
 An axiomatic treatment can e.g. be found in <Cite Key="VY65a"/> and <Cite Key="VY65b"/>. As 
 is the case with projective spaces, affine spaces are axiomatically point-line geometries,
-but may contain higher dimensional affine subspaces too. An affine space can also described 
-as the <Q>geometry you get</Q> when you remove a hyperplane from a projective space. Conversely,
-adding to an affine spaces its hyperplane at infinity, yields a projective space. In 
+but may contain higher dimensional affine subspaces too. An affine space can also be described 
+as the <Q>geometry you get</Q> when you remove a hyperplane from a projective space. Conversely, each affine space can be extended to a projective space in a unique way (by "adding its hyperplane at infinity"). In 
 <Package>FinInG</Package>, we deal with <E>finite Desarguesian affine spaces</E>, i.e.
 an affine space, such that its projective completion is Desarguesian. Other concepts can
 be easily defined using this projective completion. E.g. lines of the projective space
@@ -41,17 +40,17 @@ the affine space.
 
 In order to implement (Desarguesian) affine spaces in <Package>FinInG</Package>,
 we have to represent the elements of the affine space (the affine subspaces),
-in a standard fashion. By definition, the points (i.e. the elements of type 1)
+in a standard way. By definition, the points (i.e. the elements of type 1)
 of the <M>n</M>-dimensional affine space <M>AG(n,q)</M> are the vectors of the 
 underlying <M>n</M>-dimensional vector space
 over the finite field <M>GF(q)</M>. The <M>i</M>-dimensional subspaces of <M>AG(n,q)</M> 
 (i.e. the elements of type <M>i-1</M>) are defined as the cosets of the <M>i</M>-dimensional 
 subspaces of the underlying vector space. Hence, the common representation of such a subspace is
-<Display>v+S.</Display>
-
-Hence one can think of a subspace of an affine space as consisting of: (i) an affine point,
+<Display>v+S,</Display>
+where v is a vector and S is a subspace of a vector space.
+Equivalently one can also think of a subspace of an affine space as consisting of: (i) an affine point,
 representing the coset, and and (ii) a <Q>direction</Q>, which is an element of an <M>n-1</M>-dimensional
-projective space, representing the hyperplane at infinity. Thus in <Package>FinInG</Package>,
+projective space, representing the hyperplane at infinity. In <Package>FinInG</Package>,
 we represent an <M>i</M>-dimensional subspace, <M>1 &#8804; i &#8804; n-1</M> as
 <Display>[v, mat]</Display>
 where <A>v</A> is a row vector and <A>mat</A> is a matrix (representing a basis of the
@@ -139,7 +138,7 @@ Hence, simply <A>as</A> will be returned.
 <A>v</A> is a row vector, and <A>M</A> is a matrix.
 There are two representations necessary for affine subspaces
 in <Package>FinInG</Package>: (i) points represented as
-vectors and (ii) subspaces of dimension at least 2 represented as
+vectors and (ii) subspaces of dimension at least 1 represented as
 a coset of a vector subspace:
 <Display>v+S.</Display>
 For the former, the underlying object is
@@ -161,7 +160,7 @@ user is constructing an affine point.
 <Returns>the collection of elements of the affine space <A>as</A> of type <A>j</A></Returns>
 <Description>
 For the affine space <A>as</A> of dimension <M>d</M> and the type <A>j</A>, <M>1 \leq j \leq d</M>
-this operation returns the collection of <M>j-1</M> dimenaional subspaces. 
+this operation returns the collection of <M>j-1</M> dimensional subspaces. 
 An error message is produced when the projective space <A>ps</A> has no elements of a required type.<Example>
 <#Include SYSTEM "../examples/include/affine_elements.include"> 
 </Example>
@@ -175,7 +174,7 @@ An error message is produced when the projective space <A>ps</A> has no elements
 <Oper Name="Planes" Arg="ps"/>
 <Oper Name="Solids" Arg="ps"/>
 <Oper Name="Hyperplanes" Arg="ps"/>
-<Returns>The elements of <A>ps</A> of respective type 1,2,3,4, and the hyperplanes</Returns>
+<Returns>The elements of <A>ps</A> of respective type 1, 2, 3, 4, and the hyperplanes</Returns>
 <Description>
 An error message is produced when the projective space <A>ps</A> has no elements of a required type.
 <Example>
@@ -235,7 +234,7 @@ This function returns the span of the two subspaces.
 
 <ManSection>
 <Oper Name="Meet" Arg="u, v"/>
-<Returns> a affine subspace or the empty list</Returns>
+<Returns> an affine subspace or the empty list</Returns>
 <Description>
 <A>u</A> and <A>v</A> are subspaces of an affine space.
 This function returns the meet of the two subspaces. If the two
@@ -253,7 +252,7 @@ subspaces are disjoint, then Meet returns the empty list.
 <Description>
 The arguments <A>u</A> and <A>v</A> must be affine subspaces of a common affine space,
 of the same dimension. These two subspaces are parallel if and only if they
-are cosets of the same vector subspace, i.e. if the have the same subspace at infinity. 
+are cosets of the same vector subspace, i.e. if they have the same subspace at infinity. 
 <Example>
 <#Include SYSTEM "../examples/include/affine_isparallel.include"> 
 </Example>
@@ -267,13 +266,13 @@ are cosets of the same vector subspace, i.e. if the have the same subspace at in
 </Returns>
 <Description>
 The argument <A>v</A> is an affine subspace of <A>as</A>. This operation
-returns a collection for which an iterator is installed for it.
+returns a collection for which an iterator is installed.
 The collection represents the set of elements of <A>as</A> of the same
 type as <A>v</A> which are parallel to <A>v</A>; they have the same
 direction. If <A>v</A> is a point, then this operation returns the
 collection of all points of <A>as</A>. If one argument is given,
 then it is assumed that the affine space which we are working
-with is that which <A>v</A> contains as a component.
+with is the ambient space of <A>v</A>.
 <Example>
 <#Include SYSTEM "../examples/include/affine_parallel.include"> 
 </Example>
@@ -296,7 +295,7 @@ are incident with <A>v</A>
 <A>as</A> is an affine space and <A>v</A> is an element of <A>as</A>. 
 This operation computes and returns the subspaces of dimension <A>type</A> which
 are incident with <A>v</A>. In fact, this operation returns a collection
-which is only computed when iterated (such as when applying <C>AsList</C> to
+which is only computed when iterated (e.g. when applying <C>AsList</C> to
 the collection). Some shorthand notation for <C>ShadowOfElement</C> is available
 for affine spaces: <C>Points(as,v)</C>, <C>Points(v)</C>, <C>Lines(v)</C>, etc.
 <Example>
@@ -314,7 +313,7 @@ are incident with each element of <A>list</A>
 <A>as</A> is an affine space and <A>list</A> is a list of pairwise incident elements of <A>as</A>. 
 This operation computes and returns the subspaces of dimension <A>type</A> which
 are incident with every element of <A>list</A>. In fact, this operation returns a collection
-which is only computed when iterated (such as when applying <C>AsList</C> to
+which is only computed when iterated (e.g. when applying <C>AsList</C> to
 the collection).
 <Example>
 <#Include SYSTEM "../examples/include/affine_shadow2.include"> 
@@ -328,7 +327,7 @@ the collection).
 <Section>
 <Heading>Iterators and enumerators</Heading>
 
-Recall from Section <Ref Sect="proj_enum"/>(<Q>Enumerating subspaces of a projective space</Q>,
+Recall from Section <Ref Sect="proj_enum"/> (<Q>Enumerating subspaces of a projective space</Q>,
  Chapter <Ref Chap="projective_spaces"/>), that an iterator allows us to 
 obtain elements from a collection one at a time in sequence, whereas
 an enumerator for a collection give us a way of picking out the i-th element.
@@ -350,7 +349,7 @@ subspace collections of affine spaces.
 
 <ManSection>
 <Oper Name="Enumerator" Arg="subs"/>
-<Returns> an enumerator for the the given subspaces collection </Returns>
+<Returns> an enumerator for the given subspaces collection </Returns>
 <Description>
 <A>subs</A>  is a collection of subspaces of an affine space, such as
 <F>Points( AffineSpace(3, 3) )</F>.
@@ -369,13 +368,12 @@ subspace collections of affine spaces.
 A <E>collineation</E> of an affine space is a permutation of
 the points which preserves the relation of collinearity
 within the affine space. The fundamental theorem of affine geometry states
-that the collineations of an affine space <M>AG(d,F)</M> form
-the group <Alt Not="HTML"><M>A\Gamma L(d,F)</M></Alt><Alt Only="HTML">A&#915;L(d,F)</Alt>, 
-which is generated by the 
+that the group <Alt Not="HTML"><M>A\Gamma L(d,F)</M></Alt><Alt Only="HTML">A&#915;L(d,F)</Alt>
+of collineations of an affine space <M>AG(d,F)</M> is generated by the 
 translations <M>T</M>, matrices of <M>GL(d,F)</M> and the automorphisms
-of the field <M>F</M>. Since the translations <M>T</M> form
+of the field <M>F</M>. The translations <M>T</M> form
 a normal subgroup of <Alt Not="HTML"><M>A\Gamma{}L(d,F)</M></Alt><Alt Only="HTML">A&#915;L(d,F)</Alt>, 
-we see that
+and
 <Alt Not="HTML"><M>A\Gamma{}L(d,F)</M></Alt><Alt Only="HTML">A&#915;L(d,F)</Alt>
 is the semidirect product of <M>T</M> and
 <Alt Not="HTML"><M>\Gamma{}L(d,F)</M></Alt><Alt Only="HTML">&#915;L(d,F)</Alt>.
@@ -424,10 +422,10 @@ we can write this collineation as a matrix:
 &amp; &amp; &amp; &amp; &amp; 0\\
 \hline
 &amp; &amp; x &amp; &amp; &amp; 1
-\end{array}\right)
+\end{array}\right).
 </M></Alt>
 
-We can also extend this idea to the full affine collineation group by adjoining
+We can extend this idea to the full affine collineation group by adjoining
 the field automorphisms as we would for projective collineations. Here is an example:
 
 <Example>
@@ -442,36 +440,36 @@ Here we see that this affine transformation is
 &lt;tr>
 &lt;td align="center" valign="center" width=30>1&lt;/td>
 &lt;td align="center" valign="center" width=30>2&lt;/td>
-&lt;td align="center" valign="center" width=30>2&lt;/td>
+&lt;td align="center" valign="center" width=30>1&lt;/td>
 &lt;/tr>
 &lt;/table>&lt;/td>&lt;td style ="border-top:1px solid #000; border-bottom:1px solid #000;">&nbsp;&lt;/td>&lt;/tr>&lt;/table>&lt;/td>
 &lt;td align="center" valign="center" width=30>+&lt;/td>
 &lt;td>&lt;table border=0 cellpadding=0 cellspacing=0px style="border-left:1px solid #000; border-right:1px solid #000; color:#000">&lt;tr>
 &lt;td style ="border-top:1px solid #000; border-bottom:1px solid #000;">&nbsp;&lt;/td>&lt;td>&lt;table border=0 cellpadding=0 cellspacing=0 style="color:#000;">
 &lt;tr>
-&lt;td align="center" valign="center" width=30>2&lt;/td>
+&lt;td align="center" valign="center" width=30>0&lt;/td>
 &lt;td align="center" valign="center" width=30>1&lt;/td>
-&lt;td align="center" valign="center" width=30>2&lt;/td>
+&lt;td align="center" valign="center" width=30>1&lt;/td>
 &lt;/tr>
 &lt;tr>
-&lt;td align="center" valign="center" width=30>1&lt;/td>
 &lt;td align="center" valign="center" width=30>2&lt;/td>
 &lt;td align="center" valign="center" width=30>2&lt;/td>
+&lt;td align="center" valign="center" width=30>0&lt;/td>
 &lt;/tr>
 &lt;tr>
-&lt;td align="center" valign="center" width=30>1&lt;/td>
-&lt;td align="center" valign="center" width=30>1&lt;/td>
 &lt;td align="center" valign="center" width=30>2&lt;/td>
+&lt;td align="center" valign="center" width=30>1&lt;/td>
+&lt;td align="center" valign="center" width=30>0&lt;/td>
 &lt;/tr>
 &lt;/table>&lt;/td>&lt;td style ="border-top:1px solid #000; border-bottom:1px solid #000;">&nbsp;&lt;/td>&lt;/tr>&lt;/table>&lt;/td>
 &lt;/tr>&lt;/table>
 </Alt>
 <Alt Only="LaTeX">
-<Display>(1,2,2) + \left(
+<Display>(1,2,1) + \left(
 \begin{array}
-2&amp; 1&amp; 2\\
-1&amp; 2&amp; 2\\
-1&amp; 1&amp; 2
+0&amp; 1&amp; 1\\
+2&amp; 2&amp; 0\\
+2&amp; 1&amp; 1
 \end{matrix}\right).
 </Display>
 </Alt>
@@ -496,9 +494,9 @@ such relations.
 <Description>
 This operation returnes the affine linear group <M>AGL(V)</M> acting
 on the affine space with underlying vector space <M>V</M>.
-The elements of this group are collineations of the associated projective space.
-In order to get the full group of collineations of the affine space, one may
-need to use the operation <C>CollineationGroup</C>.
+The elements of this group are projectivities of the associated projective space.
+In order to get the full group of collineations of the affine space, one
+needs to use the operation <C>CollineationGroup</C>.
 <Example>
 <#Include SYSTEM "../examples/include/affine_affinegroup.include"> 
 </Example>
@@ -529,7 +527,7 @@ Note that if the defining field has prime order, then
 </Returns>
 <Description>
 <A>subspace</A> must be an element of an affine space and <A>el</A>
-is a collineation of an affine space (which is in fact also a collineation
+ a collineation of an affine space (which is in fact also a collineation
 of an associated projective space). This is the action one should use for
 collineations of affine spaces, and it acts on subspaces of all types of
 affine spaces: points, lines, planes, etc.
@@ -546,7 +544,7 @@ affine spaces: points, lines, planes, etc.
 <Heading>Low level operations</Heading>
 
 One technical aspect of the design behind affine spaces in <Package>FinInG</Package>
-are having canonical transversals for subspaces of vector spaces. So we provide some
+is having canonical transversals for subspaces of vector spaces. We provide some
 documentation below for the interested user.
 
 <ManSection>
@@ -555,9 +553,10 @@ documentation below for the interested user.
 The category <C>IsVectorSpaceTransversal</C> represents a special object
 in <Package>FinInG</Package> which carries a record with two components:
 <A>space</A> and <A>subspace</A>. This category is a subcategory of
-<C>IsSubspacesOfVectorSpace</C>, however, we do not recommend that the
-user apply methods normally used for this category to our objects (they won't work!). Our
-objects are only used in order to facilitate computing enumerators
+<C>IsSubspacesOfVectorSpace</C>, however, we do not recommend the
+user to apply methods to objects in <C>IsVectorSpaceTransversal</C>, which are normally used for the category <C>IsSubspacesOfVectorSpace</C> (they won't work!). 
+The objects in <C>IsVectorSpaceTransversal</C>
+are only used in order to facilitate computing enumerators
 of subspace collections.
 </Description>
 </ManSection>
