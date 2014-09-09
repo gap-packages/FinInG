@@ -4103,10 +4103,10 @@ InstallMethod( Display,
     end );
 
 #############################################################################
-#O  DefiningPlanes( <egq> )
+#O  DefiningPlanesByBLTSet( <egq> )
 #  for an EGQByBLTSet
 ##
-InstallMethod( DefiningPlanes,
+InstallMethod( DefiningPlanesByBLTSet,
     "for an EGQByBLTSet",
     [ IsElationGQByBLTSet ],
     function( egq )

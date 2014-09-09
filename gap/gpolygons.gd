@@ -170,7 +170,7 @@ DeclareOperation( "EGQByqClan", [ IsqClanObj and IsqClanRep ] );
 DeclareOperation( "EGQByBLTSet", [IsList, IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace] );
 DeclareOperation( "EGQByBLTSet", [IsList] );
 
-DeclareAttribute( "DefiningPlanes", IsElationGQByBLTSet);
+DeclareAttribute( "DefiningPlanesOfEGQByBLTSet", IsElationGQByBLTSet);
 DeclareAttribute( "CollineationSubgroup", IsElationGQByBLTSet);
 
 DeclareOperation( "FlockGQByqClan", [ IsqClanObj ] );

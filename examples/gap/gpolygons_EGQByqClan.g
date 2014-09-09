@@ -4,7 +4,7 @@ id := IdentityMat(2, f);;
 list := List( f, t -> t * id );;
 clan := qClan(list,f);
 egq := EGQByqClan(clan);
-incgraph := IncidenceGraphOfGeneralisedPolygon(egq);;
+incgraph := IncidenceGraph(egq);;
 group := AutomorphismGroup(incgraph);
 Order(group);
 Order(CollineationGroup(HermitianPolarSpace(3,9)));

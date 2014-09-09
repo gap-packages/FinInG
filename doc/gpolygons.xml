@@ -706,7 +706,7 @@ and the set <Alt Not="HTML"><M>J^* = \{S_i: i=0 \ldots t\}</M></Alt>
 <Alt Only="HTML">S&lt;sub>i&lt;/sub>&lt;sup>*&lt;/sup> <M>\cap</M>S&lt;sub>j&lt;/sub> = {1}</Alt>, for distinct <M>i,j</M>.<P/>
 The pair <Alt Not="HTML"><M>(J,J^*)</M></Alt><Alt Only="HTML">(J,J&lt;sup>*&lt;/sup>)</Alt> is called a <E>4-gonal family</E> or
 <E>Kantor family</E> in <M>G</M>.<P/>
-Noteworthy, each Kantor family in a group of order <Alt Not="HTML"><M>s^2t</M></Alt><Alt Only="HTML">s&lt;sup>2&lt;/sup>t</Alt>
+Remarkably, each Kantor family in a group of order <Alt Not="HTML"><M>s^2t</M></Alt><Alt Only="HTML">s&lt;sup>2&lt;/sup>t</Alt>
 gives rise to an elation generalised quadrangle. Kantor families and elation generalised quadrangles are equivalent objects,
 and one of the motivations to study Kantor families in groups was to find examples of non-classical elation generalised quadrangles.<P/>
 Given a group <M>G</M>, together with a Kantor family <Alt Not="HTML"><M>(J,J^*)</M></Alt><Alt Only="HTML">(J,J&lt;sup>*&lt;/sup>)</Alt>,
@@ -761,8 +761,8 @@ If so, the input can be used directly for the operation <F>EGQByKantorFamily</F>
 <Returns>a generalised quadrangle</Returns>
 <Description>
 Let <A>g</A> be a group and <A>f</A> and <A>fstar</A> two collections of subgroups, satisfying the conditions of a Kantor
-family. This operation returs the corresponding elation generalised quadrangle. Note that this operation <E>does not</E> check
-if the input satisfies the conditions to be a Kantor family, it only checks wheter the group <A>f[i]</A> is a subgroup of the group
+family. This operation returns the corresponding elation generalised quadrangle. Note that this operation <E>does not</E> check
+if the input satisfies the conditions to be a Kantor family, it only checks whether the group <A>f[i]</A> is a subgroup of the group
 <A>fstar[i]</A>. In the example below, the use of <F>IsKantorFamily</F> is also
 demonstrated, and some categories are displayed.
 <Example>
@@ -775,16 +775,16 @@ demonstrated, and some categories are displayed.
 <Heading>Representation of elements and underlying objects</Heading>
 <Oper Name="ObjectToElement" Arg="egq, t, obj"/>
 <Oper Name="ObjectToElement" Arg="egq, obj"/>
-<Oper Name="base-pointOfEGQ" Arg="egq"/>
+<Oper Name="BasePointOfEGQ" Arg="egq"/>
 <Oper Name="UnderlyingObject" Arg="el"/>
 <Description>
 For technical reasons, the underlying objects of the elements of an elation generalised quadrangle constructed from a Kantor family,
-are not exactly the mathematical objects from the defintion. However, these technicalities are almost completely hidden for the user, except
+are not exactly the mathematical objects from the definition. However, these technicalities are almost completely hidden for the user, except
 for the representation of lines of type (b), which are represented in <Package>FinInG</Package> by the elements of the collection
 <Alt Not="HTML"><M>J^*</M></Alt><Alt Only="HTML">J&lt;sup>*&lt;/sup></Alt> (instead of the elements of the collection <M>J</M>). This change
-from the original definition has not mathematical implications, since there is a bijective correspondence between the elements of
+from the original definition has no mathematical implications, since there is a bijective correspondence between the elements of
 <Alt Not="HTML"><M>J^*</M></Alt><Alt Only="HTML">J&lt;sup>*&lt;/sup></Alt> and <M>J</M>. Notice also that it is only possible to obtain
-the base-point of an elation generalised quadrangle constructed from a Kantor family through calling the attribute <F>base-pointOfEGQ</F>.
+the base-point of an elation generalised quadrangle constructed from a Kantor family through calling the attribute <F>BasePointOfEGQ</F>.
 <Example>
 <#Include SYSTEM "../examples/include/gpolygons_objectselementsofegq.include">
 </Example>
@@ -798,10 +798,10 @@ the base-point of an elation generalised quadrangle constructed from a Kantor fa
 <Attr Name="CollineationAction" Arg="g"/>
 <Description>
 The attribute <F>ElationGroup</F> is naturally set upon creation of an elation generalised quadrangle from a Kantor
-family. This elements of the elation group acts "naturally" on the elements of the elation generalised quadrangle. This
-natural action is implements in the action function <F>OnKantorFamily</F>. When <A>g</A> is the elation group of an elation
+family. The elements of the elation group act "naturally" on the elements of the elation generalised quadrangle. This
+natural action is implemented in the action function <F>OnKantorFamily</F>. When <A>g</A> is the elation group of an elation
 generalised quadrangle constructed from a Kantor family, the attribute <F>CollineationAction</F> will return the action function
-<F>OnKantorFamily</F>. The action function makes a use of generic GAP operations possible, as is demonstrated in the example.
+<F>OnKantorFamily</F>. The action function makes use of generic GAP operations possible, as is demonstrated in the example.
 <Example>
 <#Include SYSTEM "../examples/include/gpolygons_elationgroup.include">
 </Example>
@@ -895,7 +895,7 @@ An elation generalised quadrangle constructed from a q-clan.
 <Description>
 Given a q-clan <A>clan</A>, the operation <F>KantorFamilyByqClan</F> will be used to construct the Kantor family 
 from <A>clan</A>, followed by the construction of the elation generalised quadrangle using the operation 
-<F>EGQByKantorFamily</F>. The first example shows also the use of <F>qClan</F>, and shows that a linear q clan 
+<F>EGQByKantorFamily</F>. The first example shows also the use of <F>qClan</F>, and shows that a linear q-clan 
 yields a classical generalised quadrangle. 
 <Example>
 <#Include SYSTEM "../examples/include/gpolygons_EGQByqClan.include">
@@ -908,14 +908,14 @@ yields a classical generalised quadrangle.
 
 A <E>flock</E> is a partition of the points of a quadratic cone in <M>PG(3,q)</M> 
 minus its vertex into conics. Each conic is determined by a plane, and each plane is determined
-uniquely by a triple of elements of the field <M>GF(q)</M>. So a flock is determind by <M>q</M> such 
+uniquely by a triple of elements of the field <M>GF(q)</M>. So a flock is determined by <M>q</M> such 
 triples. Remarkably, as was shown by J.A. Thas, the conditions for these triples to constitute a flock,
 are exactly the same conditions for these triples to constitute <M>q</M> upper triangle matrices making
-a q-clan over <M>GF(q)</M>. Hence, q-clans and flocks, and thus flocs and elation generalised quadrangles,
+a q-clan over <M>GF(q)</M>. Hence, q-clans and flocks, and thus flocks and elation generalised quadrangles,
 are equivalent objects.<P/>
 The quadratic cone can be embedded as a hyperplane section into the parabolic quadric <M>Q(4,q)</M>. L. Bader,
 G. Lunardon and J.A. Thas observed that a set of <M>q</M> points of <M>Q(4,q)</M> can be constructed from 
-the <M>q</M> plane determining the flock, and this set of points satisfies certain geometric conditions. Such
+the <M>q</M> planes determining the flock, and this set of points satisfies certain geometric conditions. Such
 a set is called a <E>BLT-set</E>. Dually, a BLT-set corresponds to a set of lines of <M>W(3,q)</M>. Furthermore,
 from this BLT-set of lines, it is possible to construct directly an elation generalised quadrangle from carefully
 selecting points and lines from the symplectic space <M>W(5,q)</M>. This construction is called the Knarr construction.<P/>
@@ -939,7 +939,7 @@ their action on elements of Lie geometries.
 <Filt Name="IsEGQByBLTSet" Type="Category"/>
 <Description>
 <C>IsEGQByBLTSet</C> is a subcategory of <C>IsElationGQ</C>. It contains all elations generalised quadrangles
-that are constructed from a BLTblt set. 
+that are constructed from a BLT set. 
 </Description>
 </ManSection>
 
@@ -951,8 +951,8 @@ A BLT-set.
 <Description>
 The BLT-set is a set of points of the parabolic quadric in <M>PG(4,q)</M> with particular
 equation <Alt Not="HTML"><M>2X_1x_5+2X_2X_4+w^{(q+1)/2}=0</M></Alt><Alt Only="HTML">X&lt;sub>1&lt;/sub>X&lt;sub>5&lt;/sub>+
-X&lt;sub>2&lt;/sub>X&lt;sub>4&lt;/sub>+w&lt;sup>(q+1)/2&lt;/sup>X&lt;sub>3&lt;/sub>&lt;sup>2&lt;/sup>=0</Alt>, <M>w</M>
-a primitive element of the underlying field of <A>clan</A>
+X&lt;sub>2&lt;/sub>X&lt;sub>4&lt;/sub>+w&lt;sup>(q+1)/2&lt;/sup>X&lt;sub>3&lt;/sub>&lt;sup>2&lt;/sup>=0</Alt>, where <M>w</M>
+is a primitive element of the underlying field of <A>clan</A>.
 <Example>
 <#Include SYSTEM "../examples/include/gpolygons_bltsetbyqclan.include">
 </Example>
@@ -965,10 +965,10 @@ a primitive element of the underlying field of <A>clan</A>
 An elation generalised quadrangle.
 </Returns>
 <Description>
-<A>blt</A> is a blt set, this operation returns an elation generalised quadrangle constructed
+<A>blt</A> is a BLT-set, this operation returns an elation generalised quadrangle constructed
 as described above consisting of elements of <M>W(5,q)</M>. Notice in the example that computing the
 full collineation group of the GQ constructed directly from the q-clan (hence a group coset geometry) is
-substantially slower than computing the full collineation group of the GQ constructed from the BLT set.
+substantially slower than computing the full collineation group of the GQ constructed from the BLT-set.
 <Example>
 <#Include SYSTEM "../examples/include/gpolygons_EGQByBLTSet.include">
 </Example>
@@ -976,9 +976,9 @@ substantially slower than computing the full collineation group of the GQ constr
 </ManSection>
 
 <ManSection>
-<Attr Name="DefiningPlanes" Arg="egq"/>
+<Attr Name="DefiningPlanesOfEGQByBLTSet" Arg="egq"/>
 <Description>
-For an elation generalised quadrangle in the category <C>IsEGQByBLTSet</C> (constructed from a BLT set), 
+For an elation generalised quadrangle in the category <C>IsEGQByBLTSet</C> (constructed from a BLT-set), 
 the planes of the polar space <M>W(5,q)</M>, as described in the introduction, determine the generalised quadrangle
 completely. This attribute returns these <M>q</M> planes of <M>W(5,q)</M>. 
 <Example>
@@ -1018,22 +1018,6 @@ instead of the elation group to compute the incidence graph.
 </Description>
 </ManSection>
 
-<!--<Subsection>
-<Heading>Flocks, BLT-sets and elation generalised quadrangles.</Heading>
-
-The final subsection. The necesary mathematics.
-</Subsection>
-
-<ManSection>
-<Oper Name="FlockGQByqClan" Arg="clan"/>
-<Returns>
-An elation generalised quadrangle.
-</Returns>
-<Description>
-<Example>
-</Example>
-</Description>
-</ManSection>-->
 
 </Section>
 
