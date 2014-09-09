@@ -60,7 +60,7 @@ geometry (see Chapter <Ref Chap="incidencegeometry"/> for definitions).
 
 <ManSection>
 <Oper Name="CosetGeometry" Arg="G,l"/>
-<Returns>the coset incidence structure defined by the list <A>l</A> of subgroups of the group <A>G</A></Returns>
+<Returns>the coset incidence structure defined by the list <A>l</A> of subgroups of the group <A>G</A>.</Returns>
 <Description> 
 <A>G</A> must be a group and <A>l</A> is a list of subgroups
 of <A>G</A>. The subgroups in <A>l</A> will be the <E>parabolic subgroups</E>
@@ -74,7 +74,7 @@ of <A>l</A>.
 
 <ManSection>
 <Oper Name="IsIncident" Arg="ele1,ele2"/>
-<Returns>true if ans only if <A>ele1</A> and <A>ele2</A> are incident</Returns>
+<Returns>true if and only if <A>ele1</A> and <A>ele2</A> are incident</Returns>
 <Description> 
 <A>ele1</A> and <A>ele2</A> must be two elements in the same coset geometry.
 </Description>
@@ -142,7 +142,7 @@ The group <M>G</M> used to define <A>cg</A> acts naturally on the
 elements of <A>cg</A> by right translation: a coset <M>G_ig</M> is
 mapped to <M>G_i(gx)</M> by an element <M>x\in G</M>.
 
-This test is quite time consuming. You can bind the
+This test can be quite time consuming. You can bind the
 attribute <C>IsFlagTransitiveGeometry</C> if you are sure the coset geometry is
 indeed flag-transitive.
 </Description>
@@ -164,7 +164,7 @@ An incidence geometry is said to be <E>firm</E> if every nonmaximal flag is cont
 <Oper Name="IsThickGeometry" Arg="cg"/>
 <Returns>true if and only if <A>cg</A> is thick.</Returns>
 <Description> 
-An incidence geometry is said to be <E>tick</E> if every nonmaximal flag is contained in at least three chambers. <A>cg</A> must be a coset geometry. 
+An incidence geometry is said to be <E>thick</E> if every nonmaximal flag is contained in at least three chambers. <A>cg</A> must be a coset geometry. 
 </Description>
 </ManSection>
 
@@ -261,8 +261,7 @@ set <M>\{i_1,i_2,\ldots ,i_k\}</M> of <A>fl</A>.
 <Returns>incidence graph of <A>cg</A>.</Returns>
 <Description> 
 <A>cg</A> must be a coset geometry. The graph returned is
-a <Package>GRAPE</Package> object. Be sure
-the <Package>GRAPE</Package> is loaded! All <Package>GRAPE</Package>
+a <Package>GRAPE</Package> object. All <Package>GRAPE</Package>
 functionality can now be used to analyse <A>cg</A> via its incidence graph.
 </Description>
 </ManSection>
@@ -376,7 +375,7 @@ gonality are all greater than <M>2</M>.
 <Description> 
 <A>Gamma</A> must be a flag-transitive coset geometry.<P/> 
 
-The flag-transitivity is not tested by this operation because such test is
+The flag-transitivity is not tested by this operation because such a test can be
 time consuming. The command <C>IsFlagTransitiveGeometry</C> can be
 used to check flag-transitivity if needed.
 </Description>
