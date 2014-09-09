@@ -112,16 +112,6 @@ way to compute stabilizers of one element.
 <#Include SYSTEM "../examples/include/stab_orbs_timing1.include"> 
 </Example>
 
-Computing the setwise stabiliser under a group is possible using <F>Stabilizer</F>. Not suprisingly, the
-computing time can also be very long.
-
-<Example>
-<#Include SYSTEM "../examples/include/stab_orbs_setwisegeneric.include"> 
-</Example>
-
-The package <Package>GenSS</Package> provides an efficient operation to compute setwise stabilisers, 
-and <Package>FinInG</Package> provides functionality to used these <Package>GenSS</Package> operation 
-for the particular groups and (elements) of geometries.
 
 <ManSection>
 <Oper Name="FiningSetwiseStabiliser" Arg="g, els"/>
@@ -136,7 +126,11 @@ the category <C>IsSubspaceOfProjectiveSpace</C>. The underlying action function 
 </Example>
 </Description>
 </ManSection>
-
+Computing the setwise stabiliser under a group is also possible using <F>Stabilizer</F>. But, not suprisingly, the computing time can be very long.
+<Example>
+<#Include SYSTEM "../examples/include/stab_orbs_setwisegeneric.include"> 
+</Example>
+The package <Package>GenSS</Package> provides an efficient operations to compute setwise stabilisers. This is why <Package>FinInG</Package> provides functionality, such as <F>FiningSetwiseStabiliser</F>, to use these <Package>GenSS</Package> operations for the particular groups and (elements) of geometries.
 A small example shows the difference in computing time. 
 <Example>
 <#Include SYSTEM "../examples/include/stab_orbs_timing2.include"> 
@@ -188,6 +182,7 @@ group of a projective space on its points.<P/>
 <Attr Name="NiceMonomorphism" Arg="group"/>
 <Returns>A group homomorphism</Returns>
 <Description>
+This is a generic GAP function, and returns a homorphism to a "better" representation.
 </Description>
 </ManSection>
 
@@ -195,7 +190,7 @@ group of a projective space on its points.<P/>
 <Attr Name="NiceObject" Arg="group"/>
 <Returns>A permutation group</Returns>
 <Description>
-<A>group</A> is a projective group. This operation returns is actually equivalent with <F>Image(NiceMonomorphism(group))</F>.
+<A>group</A> is a projective group. The object this operation returns is actually equivalent with <F>Image(NiceMonomorphism(group))</F>.
 </Description>
 </ManSection>
 
@@ -203,21 +198,20 @@ group of a projective space on its points.<P/>
 <Heading>Different behaviour for different collineation groups</Heading>
 <Description>
 For the different Lie geometries implemented in <Package>FinInG</Package>, nicemonomorphisms
-are (necessarily) treated in a different way. As the aim of a nicemonomorphism of of
+are (necessarily) treated in a different way. As the aim of a nicemonomorphism of
 group <M>G</M> is to provide a permutation representation, such that efficient algorithms for
 permutation groups become available for certain operations applicable on <M>G</M>, clearly the
-efficiency will be imcreased it the degree of the permutation representation is as small as
+efficiency will be increased if the degree of the permutation representation is as small as
 possible.<P/>
 For the collineation group, projectivity group and special projectivity group of a projective
 space, it is clear that the smallest degree permutation representation is the action of the group
 on the projective points. In principle, one could also consider the action on the hyerplanes.
 For the collineation group, similarity group and isometry group of a classical polar space,
 in most cases, the smallest degree permutation representation is the action on the points. A notorious
-example is the hermitian polar space in three dimensions, of which the number of lines is smaller than
+exception to this is the hermitian polar space in three dimensions, of which the number of lines is smaller than
 the number of points, and hence of which the smallest degree permutation representation is the action
 of the group on the lines. When constructing a collineation group (or (special) projectiviity group) of
-a projective space, the nicemonomorphism is not computed. It is only computed when needed, e.g. by invoking
-an operation like <F>Random</F>. The reason is that from the underlying field and dimension, the underlying
+a projective space, the nicemonomorphism is not computed. It is only computed when needed. The reason is that from the underlying field and dimension, the underlying
 projective space can be determined at any time, and hence the smallest degree representation can be computed.
 For the collineation groups (and similarity and isometry groups) of classical polar spaces, this behaviour is
 different. Indeed, given a group of collineations, from the underlying field and dimension, the original
