@@ -23,7 +23,8 @@ quit;
 # files for chapter "Examples"
 
 examplesfiles := ["examples_hyperoval24", "examples_hermitian", "examples_embedW", "examples_patterson",  
-				  "examples_spreads", "examples_qclan", "examples_KantorKnuth", "examples_PSL211"];;
+				  "examples_spreads", "examples_qclan", "examples_KantorKnuth", "examples_PSL211",
+                  "examples_sub1"];;
 
 incgeomfiles := ["incgeom_incstruct", "incgeom_categories1", "incgeom_typesofels", "incgeom_rank", "incgeom_incgraph",
                  "incgeom_underlyingobject", "incgeom_type",
@@ -68,7 +69,7 @@ classicalpolfiles := ["cps_polarspaceform", "cps_example", "cps_symplectic", "cp
 	   
 stab_orbsfiles := [ "stab_orbs_finingorbit1", "stab_orbs_finingorbit2", "stab_orbs_finingorbits1", "stab_orbs_example1", "stab_orbs_finingstabiliser", 
 					"stab_orbs_finingstabiliserorb", "stab_orbs_timing1", "stab_orbs_setwisegeneric", "stab_orbs_finingsetwisestabiliser", 
-					"stab_orbs_timing2", "stab_orbs_action1"];
+					"stab_orbs_timing2", "stab_orbs_action1", "stab_orbs_behaviour1", "stab_orbs_behaviour2"];
 
 	    
 affinefiles := [ "affine_affinespace", "affine_dimension", "affine_basefield", "affine_underlyingvs", "affine_ambientspace", "affine_subspaces",

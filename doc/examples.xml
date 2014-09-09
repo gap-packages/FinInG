@@ -27,6 +27,40 @@ In this chapter we provide some simple examples of the use of
 <Package>FinInG</Package>.
 
 <Section>
+<Heading>Elementary examples</Heading>
+
+<ManSection>
+<Heading>subspaces of projective spaces</Heading>
+<Description>
+The following example shows how to create some subspaces of a projective space, test their
+incidence, and determine their meet and intersection. Note that incidence in projective spaces
+is symmetrized set-theoretic containment, the latter which can be tested through the operation <F>in</F>.
+<Example>
+<#Include SYSTEM "../examples/include/examples_sub1.include">
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Heading>subspaces of classical polars spaces</Heading>
+<Description>
+<Package>FinInG</Package> povides the classical polar spaces. Subspaces can be constructed the same
+way as subspaces of projective spaces. Upon construction, it is of course checked whether the given vectorspace
+does determine a subspace of the polar space. Subspaces of polar spaces are also subspaces of the ambient projective
+space. Operations like <F>Span</F> and <F>Meet</F> are naturally applicable. However, the span of two subspaces might not
+be a subspace of the polar space anymore, and if the two subspaces belong to two different polar spaces in the same
+ambient projective space, it cannot be determined in which polar space the span should be constructed. Therefore
+notice that the result of <F>Span</F> of two subspaces of a polar space is a subspace of the ambient projective space.
+It can of course be checked whether the result belongs to a polar space using <F>in</F>.
+<Example>
+<#Include SYSTEM "../examples/include/examples_sub2.include">
+</Example>
+</Description>
+</ManSection>
+
+</Section>
+
+<Section>
 <Heading>A simple example to get you started</Heading>
 
 In this example, we consider a hyperoval of the projective

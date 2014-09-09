@@ -1,0 +1,23 @@
+# behaviour 2 (takes about 400 seconds to complete) 
+ps := HermitianPolarSpace(3,81);
+group := CollineationGroup(ps);
+time;
+g := Random(group);
+h := Random(group);
+group2 := Group([g,h]);
+HasNiceMonomorphism(group2);
+Order(group2);
+time;
+HasNiceMonomorphism(group2);
+NrMovedPoints(NiceObject(group2));
+Size(Points(PG(3,81)));
+group2 := Group([g,h]);
+SetParent(group2,group);
+HasNiceMonomorphism(group2);
+HasNiceObject(group2);
+Order(group2);
+time;
+HasNiceObject(group2);
+NrMovedPoints(NiceObject(group2));
+Size(Lines(ps));
+quit;

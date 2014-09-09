@@ -126,6 +126,6 @@ A: AmbientPolarSpace: IsGeneralisedHexagon
 A: ElationGroup: IsElationGQ
 A: BasePointOfEGQ: IsElationGQ
 A: IsLinearqClan: IsqClanObj
-A: DefiningPlanes: IsElationGQByBLTSet
+A: DefiningPlanesOfEGQByBLTSet: IsElationGQByBLTSet
 A: CollineationSubgroup: IsElationGQByBLTSet
 

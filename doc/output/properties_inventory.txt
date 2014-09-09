@@ -60,6 +60,7 @@ diagram.gd: properties
 varieties.gd: properties
 
 P: IsStandardHermitianVariety: IsHermitianVariety
+P: IsStandardQuadraticVariety: IsQuadraticVariety
 
 affinespace.gd: properties
 

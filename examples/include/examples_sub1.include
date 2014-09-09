@@ -1,0 +1,41 @@
+gap&gt; pg := PG(3,8);
+ProjectiveSpace(3, 8)
+gap&gt; vec := [0,1,0,1]*Z(8)^0;
+[ 0*Z(2), Z(2)^0, 0*Z(2), Z(2)^0 ]
+gap&gt; point := VectorSpaceToElement(pg,vec);
+&lt;a point in ProjectiveSpace(3, 8)&gt;
+gap&gt; mat := [[0,0,1,1],[0,1,0,0]]*Z(8)^0;
+[ [ 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0 ], [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ] ]
+gap&gt; line := VectorSpaceToElement(pg,mat);
+&lt;a line in ProjectiveSpace(3, 8)&gt;
+gap&gt; mat2 := [[1,0,0,1],[1,0,1,0],[1,1,0,0]]*Z(8)^0;
+[ [ Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0 ], [ Z(2)^0, 0*Z(2), Z(2)^0, 0*Z(2) ], 
+  [ Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2) ] ]
+gap&gt; plane := VectorSpaceToElement(pg,mat2);
+&lt;a plane in ProjectiveSpace(3, 8)&gt;
+gap&gt; IsIncident(point,line);
+false
+gap&gt; IsIncident(line,point);
+false
+gap&gt; point in line;
+false
+gap&gt; line in point;
+false
+gap&gt; IsIncident(point,plane);
+true
+gap&gt; IsIncident(line,plane);
+false
+gap&gt; line in plane;
+false
+gap&gt; plane2 := Span(point,line);
+&lt;a plane in ProjectiveSpace(3, 8)&gt;
+gap&gt; Meet(plane,plane2);
+&lt;a line in ProjectiveSpace(3, 8)&gt;
+gap&gt; mat3 := [[1,0,0,0],[0,0,0,1]]*Z(8)^0;
+[ [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ], [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ] ]
+gap&gt; line2 := VectorSpaceToElement(pg,mat3);
+&lt;a line in ProjectiveSpace(3, 8)&gt;
+gap&gt; Meet(line,line2);
+&lt; empty subspace &gt;
+gap&gt; Span(plane,plane2);
+ProjectiveSpace(3, 8)
