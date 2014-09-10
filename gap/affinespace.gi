@@ -1176,12 +1176,12 @@ InstallMethod( Meet,
   ## (iv) A empty or B empty => equal or empty 
 
 	## redundant cases 
+		if x = y then 
+			return x;
+		fi;
+		# we can assume now that x<>y
 		if typx = 1 and typy = 1 then
-		 	if x = y then 
-				return x;
-			else 
-				return [];
-			fi;
+			return [];
 		elif (typx = 1 or typy = 1) then
 			if typx = 1 then
 				ux1 := Unpack(x!.obj); 
