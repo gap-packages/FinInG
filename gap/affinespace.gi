@@ -1333,7 +1333,8 @@ InstallMethod( ProjectiveCompletion,
 			zerov := NullMat(1,d,gf);
 			hyp := TransposedMat(Concatenation(zerov, IdentityMat(d, gf)));
 			subspace := SumIntersectionMat(hyp, repy)[2];
-			repy := SortedList(y!.obj);  
+#			repy := SortedList(y!.obj);  ## JB: 11/09/2014 (found the bug here)
+			repy := SortedList(repy);
 			# Make use of lexicographic ordering
 			# Zero at front gives the parallel class       
 			trans := repy[n];
@@ -1482,7 +1483,7 @@ InstallMethod( Size,
 
 
 #############################################################################
-#O  Iterator( <pclass> )
+#O  Iterator( <shadow> )
 # iterator for a shadow of an element in an affine space.
 ##
 InstallMethod( Iterator, 
