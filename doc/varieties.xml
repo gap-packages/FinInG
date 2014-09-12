@@ -62,9 +62,6 @@ An <E>algebraic variety</E> in <Package>FinInG</Package> is an algebraic variety
     <Returns>a list of points</Returns>
     <Description>
         The argument <A>var</A> is an algebraic variety. This operation returns the list of points of the <Ref Attr="AmbientSpace" /> of the algebraic variety <A>var</A> whose coordinates satify the <Ref Attr="DefiningListOfPolynomials"/> of the algebraic variety <A>var</A>.
-<Example>
-<#Include SYSTEM "../examples/include/varieties_points.include"> 
-</Example>
     </Description>
 </ManSection>
 <ManSection>
