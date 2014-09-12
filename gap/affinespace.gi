@@ -1258,22 +1258,79 @@ InstallMethod( Meet,
 #O  IsParallel( <x>, <y> )
 # returns true if and only if <x> is parallel with <y>. 
 ##
+#InstallMethod( IsParallel, 
+#	"for two affine subspaces",
+#	[ IsSubspaceOfAffineSpace, IsSubspaceOfAffineSpace ],
+#	function( a, b );
+#		if a!.type <> a!.type then
+#			Error("Subspaces must be of the same dimension");
+#		fi;
+#		if a!.geo <> a!.geo then
+#			Error("Ambient affine spaces must be the same");
+#		fi;
+#		if a!.type = 1 then
+#			return true;
+#		else
+#			return a!.obj[2] = b!.obj[2];
+#		fi;
+#	end );
+
+# WRITTEN 12/9/2014 jb
+# Two affine subspaces of possibly different dimensions are parallel if
+# and only if the direction of one contains the direction of the other.
+
 InstallMethod( IsParallel, 
 	"for two affine subspaces",
 	[ IsSubspaceOfAffineSpace, IsSubspaceOfAffineSpace ],
-	function( a, b );
-		if a!.type <> a!.type then
-			Error("Subspaces must be of the same dimension");
-		fi;
+	function( a, b )
+		local vectors, nvectors, mat, nrows, ncols, zero, row, i, j, nzheads, z, flag;
 		if a!.geo <> a!.geo then
 			Error("Ambient affine spaces must be the same");
 		fi;
-		if a!.type = 1 then
+		if a!.type = 1 or b!.type = 1 then
 			return true;
-		else
-			return a!.obj[2] = b!.obj[2];
 		fi;
+		
+		## checking that the directions are incident.
+		## Algorithm is the same as for projective spaces.
+		## Note that here we will have typx, typy > 1.
+		flag := true;
+		vectors := b!.obj[2];
+		nvectors := b!.type-1;
+		mat := MutableCopyMat(a!.obj[2]);
+		nrows := a!.type - 1;
+		ncols:= b!.geo!.dimension ;
+		zero:= Zero( mat[1][1] );
+
+		# here we are going to treat "vectors" as a list of basis vectors. first
+		# figure out which column is the first nonzero column for each row
+		nzheads := [];
+		for i in [ 1 .. nvectors ] do
+			row := vectors[i];
+			j := PositionNot( row, zero );
+			Add(nzheads,j);
+		od;
+
+		# now try to reduce each row of "mat" with the basis vectors
+		for i in [ 1 .. nrows ] do
+			row := mat[i];
+			for j in [ 1 .. Length(nzheads) ] do
+				z := row[nzheads[j]];
+				if z <> zero then
+					AddRowVector( row, vectors[ j ], - z );
+				fi;
+			od;
+
+			# if the row is now not zero then y is not a subspace of x
+			j := PositionNot( row, zero );
+			if j <= ncols then
+				flag := false; break;
+			fi;
+		od;
+      
+		return flag;
 	end );
+	
 
 #############################################################################
 #O  ProjectiveCompletion( <x>, <y> )
@@ -1426,7 +1483,7 @@ InstallMethod( ParallelClass,
 	end );
   
 #############################################################################
-#O  ParallelClass( <as>, <v> )
+#O  ParallelClass( <v> )
 # returns the collection of elements parallel with <v>
 ##
 InstallMethod( ParallelClass, 
