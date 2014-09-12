@@ -1481,7 +1481,8 @@ InstallMethod( ParallelClass,
                                    IsParallelClassOfAffineSpace and
                                    IsParallelClassOfAffineSpaceRep),
 						rec( geometry := as, element := v, type := v!.type ) );
-                        # Added the type to the parallelclass
+                        # Added the type to the parallelclass 
+                        # ml 12/09/2014
 		fi;      
 	end );
   
