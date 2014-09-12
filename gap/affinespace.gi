@@ -1262,7 +1262,7 @@ InstallMethod( Meet,
 #	"for two affine subspaces",
 #	[ IsSubspaceOfAffineSpace, IsSubspaceOfAffineSpace ],
 #	function( a, b );
-#		if a!.type <> a!.type then
+#		if a!.type <> b!.type then
 #			Error("Subspaces must be of the same dimension");
 #		fi;
 #		if a!.geo <> a!.geo then
@@ -1283,8 +1283,8 @@ InstallMethod( IsParallel,
 	"for two affine subspaces",
 	[ IsSubspaceOfAffineSpace, IsSubspaceOfAffineSpace ],
 	function( a, b )
-		local vectors, nvectors, mat, nrows, ncols, zero, row, i, j, nzheads, z, flag;
-		if a!.geo <> a!.geo then
+		local vectors, nvectors, mat, nrows, ncols, zero, row, i, j, nzheads, z, flag, x, y;
+		if a!.geo <> b!.geo then
 			Error("Ambient affine spaces must be the same");
 		fi;
 		if a!.type = 1 or b!.type = 1 then
@@ -1294,12 +1294,14 @@ InstallMethod( IsParallel,
 		## checking that the directions are incident.
 		## Algorithm is the same as for projective spaces.
 		## Note that here we will have typx, typy > 1.
+		x := SortedList([a,b])[1];
+		y := SortedList([a,b])[2];
 		flag := true;
-		vectors := b!.obj[2];
-		nvectors := b!.type-1;
-		mat := MutableCopyMat(a!.obj[2]);
-		nrows := a!.type - 1;
-		ncols:= b!.geo!.dimension ;
+		vectors := y!.obj[2];
+		nvectors := y!.type-1;
+		mat := MutableCopyMat(x!.obj[2]);
+		nrows := x!.type - 1;
+		ncols:= y!.geo!.dimension ;
 		zero:= Zero( mat[1][1] );
 
 		# here we are going to treat "vectors" as a list of basis vectors. first
