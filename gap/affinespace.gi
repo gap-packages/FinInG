@@ -949,7 +949,7 @@ InstallMethod( Iterator,
                      x -> x!.obj);
 			fi;
 			vars := Union(List(subs, x -> 
-                 List(VectorSpaceTransversal(vec, x), y -> AffineSubspace(ps,y,x))));
+                 List(VectorSpaceTransversal(vec, x), y -> AffineSubspace(ps,y,Unpack(x)))));
 			return IteratorList( vars );
 		fi;
   end );
