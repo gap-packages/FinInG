@@ -437,7 +437,7 @@ space of the same dimension and the basefield <M>L</M> of <A>geom2</A> is an ext
 <M>K</M> of <A>geom1</A>. The form <M>f</M> determining <A>geom1</A> also defines a form over <M>L</M>,
 and determines a polar space. By considering the underlying vectorspaces determining the elements of <A>geom1</A>
 over the extension field <M>L</M>, there is an obvious embedding of <A>geom1</A> in the polar space over the
-extension field. Considering <M>f</M> over a field extension might change its type. The possible embeddings, where the polar spaces may be chosen up to equivalent form, 
+extension field. Considering <M>f</M> over a field extension might change its type. The possible embeddings, where the polar spaces may be chosen up to equivalent form,
 are listed in the table below (see <Cite Key="KleidmanLiebeck"/>):
         
 <Table Align="l|l|l">
@@ -491,8 +491,8 @@ The default (when calling the operation with two arguments) is set to <C>true</C
 <ManSection Label="polar_red">
 <Heading> Embedding of polar spaces by field reduction</Heading>
 <Description>
-Let <M>P</M> be a polar space over a field <Alt Not="HTML"><M>L=GF(q^t)</M></Alt> <Alt Only="HTML">GF(q&lt;sup>t&lt;/sup>)</Alt> 
-and let <M>K=GF(q)</M>. Let <M>f</M> be the form determining on the <M>r</M> dimensional vector space <M>V</M> over <M>L</M> 
+Field reduction for polar spaces is somewhat more involved than for projective spaces, and we give a brief description. Let <M>P</M> be a polar space over a field <Alt Not="HTML"><M>L=GF(q^t)</M></Alt> <Alt Only="HTML">GF(q&lt;sup>t&lt;/sup>)</Alt>
+and let <M>K=GF(q)</M>. Let <M>f</M> be the form on the <M>r</M> dimensional vector space <M>V</M> over <M>L</M>
 determining <M>P</M>. Consider the trace map <M>T:</M><Alt Not="HTML"><M>L=GF(q^t) \rightarrow GF(q):</M></Alt>
 <Alt Only="HTML">GF(q&lt;sup>t&lt;/sup>) &#8594; GF(q):</Alt><Alt Not="HTML"><M>x \mapsto x^{q^t}+ x^{q^{t-1}} + \ldots x</M></Alt>
 <Alt Only="HTML">x &#8594; x&lt;sup>q&lt;sup>t&lt;/sup>&lt;/sup> + x&lt;sup>q&lt;sup>t-1&lt;/sup>&lt;/sup> + &#8230; x</Alt>. 
@@ -500,9 +500,9 @@ Define for any <M>\alpha \in L</M> the map <Alt Not="HTML"><M>T_{\alpha}: GF(q^t
     GF(q): T_{\alpha}(x) = T(\alpha x)</M></Alt> <Alt Only="HTML">T&lt;sub>&#945;&lt;/sub>: GF(q&lt;sup>t&lt;/sup>)&#8594; GF(q): x &#8594; T(&#945; x)</Alt>.
 
 Consider the <M>rt</M> dimensional vector space <M>W</M> over <M>K</M>. There is a bijective map
-<Alt Not="HTML"><M>\Phi</M></Alt><Alt Only="HTML">&#934;</Alt> from <M>V</M> to <M>W</M>. Now it is easy to see that <Alt Only="HTML">T&lt;sub>&#945;&lt;/sub> &#8226; f &#8226; &#934; &lt;sup>-1&lt;/sup></Alt><Alt Not="HTML"><M>T_{\alpha} \circ f \circ \Phi^{-1}</M></Alt> will be a
-quadratic or sesquilinear form (depending on <M>\alpha</M>, and <M>f</M> being quadratic or sesquilinear) acting on <M>W</M>, and hence, if not singular or degenerate, inducing a polar space <M>S</M> over the finite field <M>GF(q)</M>. An element of <M>P</M> can be mapped on an element of <M>S</M> by simply blowing up using
-using field reduction. So the resulting polar space <M>W</M> is dependent on the original form <M>f</M>,
+<Alt Not="HTML"><M>\Phi</M></Alt><Alt Only="HTML">&#934;</Alt> from <M>V</M> to <M>W</M> and <Alt Only="HTML">T&lt;sub>&#945;&lt;/sub> &#8226; f &#8226; &#934; &lt;sup>-1&lt;/sup></Alt><Alt Not="HTML"><M>T_{\alpha} \circ f \circ \Phi^{-1}</M></Alt> defines a
+quadratic or sesquilinear form (depending on <M>\alpha</M>, and <M>f</M> being quadratic or sesquilinear) acting on <M>W</M>, and hence, if not singular or degenerate, inducing a polar space <M>S</M> over the finite field <M>GF(q)</M>. An element of <M>P</M> can be mapped onto an element of <M>S</M> by simply blowing up <M>P</M>
+using field reduction for projective spaces. So the resulting polar space <M>W</M> is dependent on the original form <M>f</M>,
 the parameter <M>\alpha</M> and the blowing up of elements by field reduction, the latter being dependent
 on the basis of <M>L</M> as a <M>K</M> vector space. <Package>FinInG</Package> provides two approaches.
 The first approach starts from <M>P</M> and the parameters <M>K</M>, <M>\alpha</M> and a basis for <M>L</M>
