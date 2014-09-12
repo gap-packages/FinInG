@@ -250,9 +250,7 @@ subspaces are disjoint, then Meet returns the empty list.
 <Returns> true or false
 </Returns>
 <Description>
-The arguments <A>u</A> and <A>v</A> must be affine subspaces of a common affine space,
-of the same dimension. These two subspaces are parallel if and only if they
-are cosets of the same vector subspace, i.e. if they have the same subspace at infinity. 
+The arguments <A>u</A> and <A>v</A> must be affine subspaces of a common affine space. Two subspaces are parallel if and only if the direction space of the first is contained in the direction space of the second or viceversa.
 <Example>
 <#Include SYSTEM "../examples/include/affine_isparallel.include"> 
 </Example>

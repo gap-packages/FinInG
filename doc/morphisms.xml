@@ -516,7 +516,8 @@ from two given polar spaces <M>P</M> and <M>S</M>. Based on this input, it is de
 based on the above described principle is possible, and the necessary parameters are computed. The resulting
 embedding is a geometry morhpism from <M>P</M> to <M>S</M>. Note that the polar spaces used as an argument
 may be freely chosen and are not required to be in the canonical form.<P/>
-The embeddings possible using the principle described here are listed in the following table see <Cite Key="Gill"/>).
+Fo the embeddings by field reduction of polar spaces we refer to <Cite Key="Gill"/> and <Cite Key="LaVa"/>.
+The possible embeddings are listed in the following table.
 
 <Table Align="l|l|l">
  <Caption>Field reduction of polar spaces</Caption>
