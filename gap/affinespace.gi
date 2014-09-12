@@ -1480,7 +1480,8 @@ InstallMethod( ParallelClass,
 				NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
                                    IsParallelClassOfAffineSpace and
                                    IsParallelClassOfAffineSpaceRep),
-						rec( geometry := as, element := v ) );
+						rec( geometry := as, element := v, type := v!.type ) );
+                        # Added the type to the parallelclass
 		fi;      
 	end );
   
