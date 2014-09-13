@@ -1173,6 +1173,15 @@ InstallMethod( NaturalEmbeddingByFieldReduction,
 		return NaturalEmbeddingByFieldReduction(pg1,pg2!.basefield,basis);
 	end );
 
+
+
+
+
+
+
+
+
+
 ############################################################################
 #		POLAR SPACES
 ##############################################################################
@@ -1457,7 +1466,8 @@ InstallMethod (NaturalEmbeddingByFieldReduction,
             span:=[];
             vecs := Unpack(UnderlyingObject(subspace));
             mat1 := List(vecs,x->List([1..d1],i->x{[(i-1)*t+1..i*t]}*basvecs));
-            span := VectorSpaceToElement(AmbientSpace(ps2),BlownUpMat(basis,mat1)); #the ambientspace makes sure that there is no error message here yet.
+            span := VectorSpaceToElement(AmbientSpace(ps2),BlownUpMat(basis,mat1)); 
+                #the ambientspace makes sure that there is no error message here yet.
             if not span=subspace then
                 flag := false;
             fi;

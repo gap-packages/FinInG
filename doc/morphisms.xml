@@ -514,7 +514,7 @@ from two given polar spaces <M>P</M> and <M>S</M>. Based on this input, it is de
 based on the above described principle is possible, and the necessary parameters are computed. The resulting
 embedding is a geometry morhpism from <M>P</M> to <M>S</M>. Note that the polar spaces used as an argument
 may be freely chosen and are not required to be in the canonical form.<P/>
-Fo the embeddings by field reduction of polar spaces we refer to <Cite Key="Gill"/> and <Cite Key="LaVa"/>.
+Fo the embeddings by field reduction of polar spaces, including conditions on the parameter <M>\alpha</M>, we refer to <Cite Key="Gill"/> and <Cite Key="LaVa"/>.
 The possible embeddings are listed in the following table.
 
 <Table Align="l|l|l">
@@ -592,7 +592,7 @@ The possible embeddings are listed in the following table.
 <Returns>a geometry morphism</Returns>
 <Description>
 <A>ps1</A> is a polar space over a field extension <M>L</M> of <A>f2</A>, <A>basis</A> is a 
-basis for <M>L</M> as <A>f2</A> vector space, <A>alpha</A> is a non-zero element of <M>L</M>.
+basis for <M>L</M> over <A>f2</A>, <A>alpha</A> is a non-zero element of <M>L</M>.
 The version of <F>NaturalEmbeddingByFieldReduction</F> implements the first approach as explained in 
 <Ref Sect="polar_red"/>. When no argument <A>basis</A> is given, a basis for <M>L</M> over <A>f2</A>
 is computed using <F>Basis(AsVectorSpace(K,L))</F>. When no argument <A>alpha</A> is given, 
