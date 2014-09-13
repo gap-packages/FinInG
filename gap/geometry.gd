@@ -237,8 +237,8 @@ DeclareAttribute( "AmbientGeometry", IsElementOfIncidenceStructure and IsElement
 DeclareAttribute( "AmbientGeometry", IsElementsOfIncidenceStructure and IsElementsOfIncidenceStructureRep );
 DeclareAttribute( "AmbientGeometry", IsAllElementsOfIncidenceStructure );
 
-DeclareOperation( "RandomFlag", [IsIncidenceStructure]);
-DeclareOperation( "RandomChamber", [IsIncidenceStructure]);
+#DeclareOperation( "RandomFlag", [IsIncidenceStructure]);
+#DeclareOperation( "RandomChamber", [IsIncidenceStructure]);
 
 DeclareOperation( "Type", [ IsElementOfIncidenceStructure and IsElementOfIncidenceStructureRep ] );
 DeclareOperation( "Type", [ IsElementsOfIncidenceStructure and IsElementsOfIncidenceStructureRep ] );

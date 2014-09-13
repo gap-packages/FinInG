@@ -166,16 +166,16 @@ InstallOtherMethod( \^,
 		return FlagOfIncidenceStructure(x!.geo, OnTuples(x!.els,gm));
 	end );
 
-# 
+# Obsolete since there is generic version in geometry.g*
 #############################################################################
 #O  Type ( <flag> )
 ##
-InstallMethod( Type, 
-	"for a flag of a coset geometry",
-	[IsFlagOfCosetGeometry],
-	function(flag)
-		return Set(List(flag!.els,Type));
-	end );
+#InstallMethod( Type, 
+#	"for a flag of a coset geometry",
+#	[IsFlagOfCosetGeometry],
+#	function(flag)
+#		return Set(List(flag!.els,Type));
+#	end );
 
 # CHECKED 24/3/2014 PhC
 #############################################################################
@@ -215,27 +215,44 @@ InstallMethod( FlagOfIncidenceStructure,
 		return flag;
 	end);
 
-# 27/3/2014
+# Obsolete since there is a generic version 140913
 #############################################################################
 #O \= ( < flag1 >, <flag2 > )
 # Returns true if <flag1> and <flag2> represent the same flag in a 
 # coset geometry 
 # 
 ##
-InstallOtherMethod( \=, [ IsFlagOfCosetGeometry, IsFlagOfCosetGeometry ],
-  function( flag1, flag2 )
-    local result, cg1, cg2;
-    cg1:=flag1!.geo;
-    cg2:=flag2!.geo;
-    if cg1 <> cg2 then
-      Print("#I the two flags are not in the same incidence structure!\n");
-      return false;
-    fi;
-    result:= (Set(flag1!.types)=Set(flag2!.types)) and (Set(flag1!.els)=Set(flag2!.els));
+#InstallOtherMethod( \=, [ IsFlagOfCosetGeometry, IsFlagOfCosetGeometry ],
+#  function( flag1, flag2 )
+#    local result, cg1, cg2;
+#    cg1:=flag1!.geo;
+#    cg2:=flag2!.geo;
+#    if cg1 <> cg2 then
+#      Print("#I the two flags are not in the same incidence structure!\n");
+#      return false;
+#    fi;
+#    result:= (Set(flag1!.types)=Set(flag2!.types)) and (Set(flag1!.els)=Set(flag2!.els));
+#    return result;
+#  end );
+
+# 
+
+# 140913 PhC
+#############################################################################
+#O \= ( < cg1 >, <cg2 > )
+# Returns true if <cg1> and <cg2> are the same coset geometry
+# 
+##
+InstallOtherMethod( \=, [ IsCosetGeometry, IsCosetGeometry 
+],
+  function( cg1, cg2 )
+    local result, g1, g2, pabs1, pabs2;
+    result:=(cg1!.group = cg2!.group);
+    result:=result and (cg1!.parabolics = cg2!.parabolics);
     return result;
   end );
 
-# 
+#
 
 #
 ##########################################################################
@@ -428,6 +445,7 @@ InstallMethod( IsIncident,
   function( x, y )
 
     local vx, vy, tx, ty, g, h, k;
+    if x!.geo <> y!.geo then Error("The two elements do not belong to the same incidence structure.\n"); fi;
     vx := x!.obj; vy := y!.obj;
     tx := x!.type; ty := y!.type;
     if (tx = ty) then 
@@ -688,9 +706,9 @@ end );
 
 # CHECKED 24/3/2014 PhC
 #############################################################################
-# StandardFlagOfCosetGeometry
+#O StandardFlagOfCosetGeometry(<cg>)
 #  
-# 
+# Returns standard chamber of a coset geometry <cg>.
 ##
 InstallMethod( StandardFlagOfCosetGeometry, "for coset geometries",
 	       [ IsCosetGeometry ],
@@ -1642,8 +1660,8 @@ local incgr, reps, g, dp, dl, sp, sl, np, nl, locinfo;
   locinfo:=LocalInfo(incgr,reps[2]);
   dl:=locinfo!.localDiameter;
   sp:=locinfo!.localParameters[1][3]-1;
-  np:=Index(geo!.group, geo!.parabolics[1]);
-  nl:=Index(geo!.group, geo!.parabolics[2]);
+  np:=IndexNC(geo!.group, geo!.parabolics[1]);
+  nl:=IndexNC(geo!.group, geo!.parabolics[2]);
   return[[g,dp,dl], [sp,np], [sl,nl]];
 end );
 
