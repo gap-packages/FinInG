@@ -8,6 +8,8 @@ mat2 := [[1,0,0,1],[1,0,1,0],[1,1,0,0]]*Z(8)^0;
 plane := VectorSpaceToElement(pg,mat2);
 IsIncident(point,line);
 IsIncident(line,point);
+point * line;
+line * point
 point in line;
 line in point;
 IsIncident(point,plane);

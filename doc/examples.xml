@@ -33,8 +33,10 @@ In this chapter we provide some simple examples of the use of
 <Heading>subspaces of projective spaces</Heading>
 <Description>
 The following example shows how to create some subspaces of a projective space, test their
-incidence, and determine their span and intersection. Note that incidence in projective spaces
+incidence, and determine their span and intersection. Projective spaces are considered as 
+incidence geometries too. Incidence, to be tested with <F>IsIncident</F> or equivalently <F>\*</F>, 
 is symmetrized set-theoretic containment, the latter which can be tested through the operation <F>in</F>.
+
 <Example>
 <#Include SYSTEM "../examples/include/examples_sub1.include">
 </Example>
@@ -61,6 +63,24 @@ applied on the two subspaces. Clearly, a subspace of a polar space is really als
 </Example>
 </Description>
 </ManSection>
+
+<ManSection>
+<Heading>underlying objects</Heading>
+<Description>
+Subspaces of projective spaces and polar spaces (and in general, elements of incidence structures), 
+are determined by a mathematical object, called in <Package>FinInG</Package> the <E>underlying object</E>.
+The operation <F>UnderlyingObject</F> simply returns this underlying object. For elements determined by
+vectors or sub vector spaces, the underlying objects are a vector or a matrix. To represent these 
+objects and to do very efficient orbit calculations under groups, we use the <Package>cvec</Package>. 
+This can be noted when applying <F>UnderlyingObject</F>. The operation <F>Unpack</F> simply converts
+the cvec objects into GAP vectors and matrices. The example also illustrates how the underlying object
+of an element of an affine spaces looks like.
+<Example>
+<#Include SYSTEM "../examples/include/examples_underlyingobject.include">
+</Example>
+</Description>
+</ManSection>
+
 
 <ManSection>
 <Heading>constructing polar spaces</Heading>
@@ -98,8 +118,55 @@ maps, they consist of a matrix together with a field automorphism.
 </Section>
 
 <Section>
-<Heading>A simple example to get you started</Heading>
+<Heading>Some objects with interesting combinatorial properties</Heading>
 
+The examples here are meant to give a flavour of how to explore geometrical objects from different point
+of views.
+
+<ManSection>
+<Heading>the Tits ovoid</Heading>
+<Description>
+In this example we consider the Tits ovoid in <M>PG(3,8)</M>. We explicitely check the intersection number
+of the Tits-ovoid with planes of the projective space, and compute its stabilizer group inside the homography
+group of <M>PG(3,8)</M>. The use of <F>;;</F> after a command suppresses its output, which is particularly interesting
+if the output is a long list. The operation <F>Collected</F> is self-explanatory, and a very usefull GAP command.
+The computed stabiliser is the Suzuki group <M>Sz(8)</M>, a finite simple group.
+<Example>
+<#Include SYSTEM "../examples/include/examples_tits.include">
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Heading>lines meeting a hermitian curve</Heading>
+<Description>
+Here we see how the lines of a projective plane 
+<Alt Not="HTML"><M>PG(2,q^2)</M></Alt> 
+<Alt Only="HTML">PG(2,q&lt;sup>2 &lt;/sup>)</Alt>
+meet a hermitian curve. It is well known that every line meets in either
+1 or <M>q+1</M> points.
+<Example>
+<#Include SYSTEM "../examples/include/examples_hermitian.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Heading>the Patterson ovoid</Heading>
+<Description>
+In this example, we construct the unique ovoid
+of the parabolic quadric <M>Q(6,3)</M>, first discovered by Patterson, but for
+which was given a nice construction by E. E. Shult. We begin with the ``sums of squares'' 
+quadratic form over <M>GF(3)</M> and the associated polar space.
+<Example>
+<#Include SYSTEM "../examples/include/examples_patterson_commented.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Heading>a hyperoval</Heading>
+<Description>
 In this example, we consider a hyperoval of the projective
 plane <M>PG(2,4)</M>, that is, six points no three collinear.
 We will construct such a hyperoval by some basic explorations into particular
@@ -109,41 +176,78 @@ frame is constructed, of which we may assume that it is a subset
 of the hyperoval. Finally, the stabiliser group of the hyperoval is
 computed, and it is checked that this group is isomorphic with the 
 symmetric group on six elements.
-
-
 <Example>
 <#Include SYSTEM "../examples/include/examples_hyperoval24_commented.include"> 
 </Example>
+</Description>
+</ManSection>
 
 </Section>
 
 <Section>
-<Heading>Polar Spaces</Heading>
+<Heading>Geometry morphisms</Heading>
 
-<Subsection>
-<Heading>Lines meeting a hermitian curve</Heading>
+A geometry morphism in <Package>FinInG</Package> is a map between (a subset of) the elements
+of one geometry to (a subset of) the elements of a second geometry, preserving the incidence.
+Geometry morphisms are not necessarily type preserving. This section is meant to illustrate,
+in a non exhaustive way the basis philisophy behind geometry morphisms in <Package>FinInG</Package>.
 
-Here we see how the lines of a projective plane 
-<Alt Not="HTML"><M>PG(2,q^2)</M></Alt> 
-<Alt Only="HTML">PG(2,q&lt;sup>2 &lt;/sup>)</Alt>
-meet a hermitian curve. It is well known that every line meets in either
-1 or <M>q+1</M> points.
-  
+<ManSection>
+<Heading>isomorphic polar spaces</Heading>
+<Description>
+We've seen already that a polar space can be constructed from any non-degenerate sesquilinear or
+non-singular quadratic form. An isomorphism between polar spaces of the same type, can easily be obtained.
+This example illustrates <F>IsomorphismPolarSpaces</F>, which is in its basic use self-explanatory, and
+the use of the obtained map to compute images and pre-images of elements.
 <Example>
-<#Include SYSTEM "../examples/include/examples_hermitian.include"> 
+<#Include SYSTEM "../examples/include/examples_morphism1.include"> 
 </Example>
-</Subsection>
+</Description>
+</ManSection>
+
+<ManSection>
+<Heading>intertwiners</Heading>
+<Description>
+We reconsider the previous example. The observant reader might have noticed the message
+<E>#I  No intertwiner computed...</E>. Given a geometry morphism
+<M>f</M> from <M>S</M> to <M>S'</M>, an intertwiner <Alt Not="HTML"><M>\phi</M></Alt>
+<Alt Only="HTML">&#966;</Alt> is a map
+from the automorphism group of <M>S</M> to the automorphism group of
+<M>S'</M>, such that for every element <M>p</M> of <M>S</M> and every
+automorphism <M>g</M> of <M>S</M>, we have
+<Alt Not="HTML"><Display> f(p^g) = f(p)^{\phi(g)} .</Display></Alt>
+<Alt Only="HTML"><Display>f(p&lt;sup>g&lt;/sup>)=f(p)&lt;sup>&#966;(g)&lt;/sup>.</Display></Alt>
+<Example>
+<#Include SYSTEM "../examples/include/examples_morphism2.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Heading>Klein correspondence</Heading>
+<Description>
+The klein correspondence is well known. The user may define its own hyperbolic quadric
+as range for the geometry morphism in <Package>FinInG</Package>. Note that more is possible
+than illustrated in the elementary example, see Section <Ref Sect="sec:klein"/>.
+<Example>
+<#Include SYSTEM "../examples/include/examples_klein.include"> 
+</Example>
+</Description>
+</ManSection>
 
 
-<Subsection>
-<Heading><M>W(3,3)</M> inside <M>W(5,3)</M></Heading>
-
-In this example, we embed <M>W(3,3)</M> in <M>W(5,3)</M>.
-  
+<ManSection>
+<Heading>embedding in a subspace</Heading>
+<Description>
+A projective space can be embedded as a subspace in a higher dimensional projective space.
+A comparable embedding is possble for polar spaces, clearly only when a given subspaces
+intersects the polar space of higher rank in a polar space of the same type as the polar space to
+be embedded.
 <Example>
 <#Include SYSTEM "../examples/include/examples_embedW.include"> 
 </Example>
-</Subsection>
+</Description>
+</ManSection>
 
 
 <Subsection>
@@ -158,19 +262,6 @@ partition the points of <M>W(5,q)</M>. Here we enumerate all spreads of
 </Example>
 </Subsection>
 
-<Subsection>
-<Heading>The Patterson ovoid</Heading>
-  
-In this example, we construct the unique ovoid
-of the parabolic quadric <M>Q(6,3)</M>, first discovered by Patterson, but for
-which was given a nice construction by E. E. Shult. We begin with the ``sums of squares'' 
-quadratic form over <M>GF(3)</M> and the associated polar space.
-
-<Example>
-<#Include SYSTEM "../examples/include/examples_patterson_commented.include"> 
-</Example>
-
-</Subsection>
 
 </Section>
 

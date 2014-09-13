@@ -24,8 +24,9 @@ quit;
 
 examplesfiles := ["examples_hyperoval24", "examples_hermitian", "examples_embedW", "examples_patterson",  
 				  "examples_spreads", "examples_qclan", "examples_KantorKnuth", "examples_PSL211",
-                  "examples_sub1", "examples_sub2", "examples_cps1", "examples_collgroup", 
-				  "examples_splitcayley", "examples_e6", "examples_varieties"];;
+                  "examples_sub1", "examples_sub2", "examples_underlyingobject", "examples_cps1", "examples_collgroup", 
+				  "examples_splitcayley", "examples_e6", "examples_varieties"', "examples_tits",
+				  "examples_morphism1", "examples_morphism2", "examples_klein"];;
 
 incgeomfiles := ["incgeom_incstruct", "incgeom_categories1", "incgeom_typesofels", "incgeom_rank", "incgeom_incgraph",
                  "incgeom_underlyingobject", "incgeom_type",

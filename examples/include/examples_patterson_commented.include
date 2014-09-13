@@ -24,9 +24,8 @@ gap&gt; ovoid := List(ovoid, x -&gt; VectorSpaceToElement(ps, x));;
 We check that this is indeed an ovoid...
 
 <Example>
-gap&gt; planes := AsList( Planes( ps ) );;
-#I  Computing collineation group of canonical polar space...
-gap&gt; ForAll(planes, p -&gt; Number(ovoid, x -&gt; x in p) = 1);
+gap&gt; planes := Planes( ps );;
+gap&gt; ForAll(planes, p -&gt; Number(ovoid, x -&gt; x * p) = 1);
 true
 </Example>
 
@@ -36,10 +35,11 @@ we refer to the induced permutation representation.
 
 <Example>
 gap&gt; g := IsometryGroup( ps );
+#I  Computing collineation group of canonical polar space...
 &lt;projective collineation group of size 9170703360 with 2 generators&gt;
-gap&gt; stabovoid := SetwiseStabilizer(g, OnProjSubspaces, ovoid)!.setstab;
+gap&gt; stabovoid := FiningSetwiseStabiliser(g, ovoid);
 #I  Computing adjusted stabilizer chain...
-&lt;projective collineation group with 12 generators&gt;
+&lt;projective collineation group with 13 generators&gt;
 gap&gt; DisplayCompositionSeries(stabovoid);
 G (size 1451520)
  | B(3,2) = O(7,2) ~ C(3,2) = S(6,2)

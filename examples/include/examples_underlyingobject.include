@@ -1,0 +1,30 @@
+gap&gt; pg := PG(3,169);
+ProjectiveSpace(3, 169)
+gap&gt; p := Random(Points(pg));
+&lt;a point in ProjectiveSpace(3, 169)&gt;
+gap&gt; UnderlyingObject(p);
+&lt;cvec over GF(13,2) of length 4&gt;
+gap&gt; Unpack(last);
+[ Z(13)^0, Z(13^2)^49, Z(13^2)^31, Z(13^2)^143 ]
+gap&gt; l := Random(Lines(pg));
+&lt;a line in ProjectiveSpace(3, 169)&gt;
+gap&gt; UnderlyingObject(l);
+&lt;cmat 2x4 over GF(13,2)&gt;
+gap&gt; Unpack(last);
+[ [ Z(13)^0, 0*Z(13), 0*Z(13), Z(13^2)^96 ], 
+  [ 0*Z(13), Z(13)^0, Z(13^2)^113, Z(13^2)^99 ] ]
+gap&gt; quadric := EllipticQuadric(5,2);
+Q-(5, 2)
+gap&gt; line := Random(Lines(quadric));
+&lt;a line in Q-(5, 2)&gt;
+gap&gt; UnderlyingObject(line);
+&lt;cmat 2x6 over GF(2,1)&gt;
+gap&gt; Unpack(last);
+[ [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0 ], 
+  [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2) ] ]
+gap&gt; ag := AG(4,3);
+AG(4, 3)
+gap&gt; plane := Random(Planes(ag));
+&lt;a plane in AG(4, 3)&gt;
+gap&gt; UnderlyingObject(plane);
+[ &lt;cvec over GF(3,1) of length 4&gt;, &lt;cmat 2x4 over GF(3,1)&gt; ]
