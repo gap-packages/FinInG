@@ -16,6 +16,6 @@ goodreps:=[reps[1],reps[2],orbs[1][1],last[1]];
 pabs:=List(goodreps, r -> FiningStabiliser(h,r));
 cos:=CosetGeometry(h,pabs);
 IsConnected(cos);
-IsResiduallyConnected(cos); # Time of last command: 570727 ms
+IsResiduallyConnected(cos);
 time;
 quit;

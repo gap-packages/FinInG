@@ -27,8 +27,7 @@ behind the package.
 <Section Label="philosophy">
 <Heading>Philosophy</Heading>
 
-<Package>FinInG</Package> (pronounciation: [<Alt Only="LaTeX">\textipa{f\;I{}n\;I{}N}</Alt>
-<Alt Only="HTML">f&#618;n&#618;&#331;</Alt>]) is a package for computation in
+<Package>FinInG</Package> (pronounciation: [<Alt Only="LaTeX">\textipa{f\;I{}n\;I{}N}</Alt><Alt Only="HTML">f&#618;n&#618;&#331;</Alt>]) is a package for computation in
 Finite Incidence Geometry. It provides users with the basic tools to
 work in various areas of finite geometry from the realms of
 projective spaces to the flat lands of generalised polygons. 
@@ -87,12 +86,12 @@ MacOSX. You only need a terminal application, and you need acces to the standard
     After successfully unpacking the archive, you can locate the directory
     <Display>/usr/local/gap4r7/pkg/fining/.</Display>
     This directory contains a subdirectory "./doc", containing an html and pdf version of the manual. The html version is accessible by opening the file "chap0.html" in your favorite browser.
-    The pdf version of the manual can be found in the file "manual.pdf".
+    The pdf version of the manual can be found in the file "manual.pdf".<P/>
     
     Please notice that you can unpack your archive in your favorite local "./pkg" directory, e.g. "/home/yourself/pkg/", in case you are using
     GAP on a server on which you have only a restricted access.
     
-    If you installed <Package>FinInG</Package> in the central GAP pkg directory, you can startup gap using the usual command. We suppose this is gap4r4. If
+    If you installed <Package>FinInG</Package> in the central GAP pkg directory, you can startup gap using the usual command. We suppose this is gap4r7. If
     you installed <Package>FinInG</Package> in your local pkg directory,
     e.g. "/home/yourself/pkg/", then move to "/home/yourself", and issue
     the command
@@ -219,7 +218,7 @@ If you are using BibTeX, you can use the following BibTeX entry for the current 
         Year = 2014}
 </Example>
 
-And here here is the bibliography entry produced by BibTeX (in bibliography style `alpha'), tob
+And here here is the bibliography entry produced by BibTeX (in bibliography style `alpha'), to
 be pasted directly inside the bibliography environment of your LaTeX document:
 
 <Example>

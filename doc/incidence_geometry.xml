@@ -84,7 +84,7 @@ in <Package>FinInG</Package> are incidence geometries.
 <Returns>an incidence structure</Returns>
 <Description>
 <A>eles</A> is a set containing the elements of the incidence structure. <A>inc_rel</A>
-must be a function that determines if two objects in the set <A>eles</A> are incident. 
+must be a function that determines whether two objects in the set <A>eles</A> are incident. 
 <A>type</A> is a function mapping any element to its type, which is a unique element 
 in the set <A>typeset</A>.<P/>
 In the following example we define an incidence structure that is not an incidence geometry. The
@@ -142,7 +142,7 @@ are also generic: elements of type 1, elements of type 2, etc.
 <ManSection>
 <Oper Name="Rank" Arg="inc"/>
 <Attr Name="RankAttr" Arg="inc"/>
-<Returns>rank of <A>inc</A>, an object which must belong to the categorie <C>IsIncidenceStructure</C></Returns>
+<Returns>rank of <A>inc</A>, an object which must belong to the category <C>IsIncidenceStructure</C></Returns>
 <Description>
 The operation <F>Rank</F> returns the rank of the incidence structure <C>inc</C>. The highest level method for
 <F>Rank</F>, applicable to objects in <C>IsIncidenceStructure</C> simply refers to the attribute <F>RankAttr</F>.
@@ -258,8 +258,8 @@ here means that an object is returned that represents all the elements of a give
 them immediately, to avoid long computation times. Such an abstract object is e.g. used as a range for
 In general, the collection of elements of a given type of an incidence structure belonging to <C>IsIncStr</C>,
 is in the category <C>IsElementsOfIncStr</C>. The inclusion for different categories of geometries is
-followed for their collection of elements of a given type, with an exception for <C>IsSubspaceOfClassicalPolarSpace</C>,
-which is a subcategory of <C>IsSubspaceOfProjectiveSpace</C>, while <C>IsClassicalPolarSpace</C> is not a subcategory of
+followed for their collection of elements of a given type, with an exception for <C>IsSubspacesOfClassicalPolarSpace</C>,
+which is a subcategory of <C>IsSubspacesOfProjectiveSpace</C>, while <C>IsClassicalPolarSpace</C> is not a subcategory of
 <C>IsProjectiveSpace</C>.
 </Description>
 </ManSection>
@@ -528,8 +528,8 @@ and is a shortcut to <F>ShadowOfElement(AmbientGeometry(v),v,j)</F>.
 <Oper Name="ShadowOfFlag" Arg="inc, list, str"/>
 <Oper Name="ShadowOfFlag" Arg="inc, flag, j"/>
 <Oper Name="ShadowOfFlag" Arg="inc, list, j"/>
-<Returns>The collection of elements of type <A>str</A> or type <A>j</A> incident with the elements of <A>flag</A>,
-or with the elements of <A>list</A></Returns>
+<Returns>The collection of elements of type <A>str</A> or type <A>j</A> incident with all elements of <A>flag</A>,
+or with all elements of <A>list</A></Returns>
 <Description>
 Variants 2 and 4 convert <A>list</A> to a flag of <A>inc</A>, using <F>FlagOfIcidenceStructure</F>, which performs
 the necessary checks. Variants 1 and 2 rely on variants 3 and 4 respectively, for which a method must be installed
@@ -588,7 +588,7 @@ In several situations, it can be usful to compute a complete list of objects sta
 To list all elements of a given type of an incidence structure, is a typical example. <Package>FinInG</Package> 
 provides functionality that is common in GAP for this purpose.<P/>
 In <Package>FinInG</Package>, typically a list of all elements satisfying a property, e.g. all points of
-a projective space, are represented by a GAP object that is a <E>collection</E>. The word collection is important here.
+a projective space, are represented by a GAP object that is a <E>collection</E>. The word 'collection' is important here.
 E.g. subspaces of a vector space are not calculated on calling <F>Subspaces</F>,
 rather primitive information is stored in an <F>IsComponentObjectRep</F>.
 So for example

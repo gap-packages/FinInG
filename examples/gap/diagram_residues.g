@@ -10,13 +10,13 @@ g3:=Stabilizer(g,pi);
 cg:=CosetGeometry(g, [g1,g2,g3]);
 RandomFlag(cg); # Time of last command: 10745 ms
 Type(last);
-ResidueOfFlag(cg,last2);
+ResidueOfFlag(last2);
 Rank(last);
 NrElementsOfIncidenceStructure(last2,1);
 flg:=RandomFlag(cg);;
 can:=CanonicalResidueOfFlag(cg,flg);
 Type(flg);
 Rank(can);
-res:=ResidueOfFlag(cg,flg);
+res:=ResidueOfFlag(flg);
 IsIsomorphicIncidenceStructureWithNauty(res,can);
 quit;

@@ -21,13 +21,14 @@
 
 ########################################
 #
-# Things To Do:
-#
-# - testing
-# - documentation
-# - Priorities
-#   1. Residues
-#
+# Undocumented: 
+# 		Whereisdot()
+#		Rank2Residues
+# 		MakeRank2Residue
+# Rem: the last two are mentioned in the manual
+# Rem: some specialized methods are here but not re-documented. 
+#      They should work like in the earlier chapters.
+# 
 ########################################
 
 Print(", diagram\c");
@@ -38,7 +39,7 @@ Print(", diagram\c");
 # Technicalities: Availability test for GRAPE and GraphViz/dotty
 #################################################################
 
-Whereisdot :=  function()
+Whereisdot :=  function()	# Undocumented since technical
 local str, outputtext;
     if not ARCH_IS_UNIX() then
        Info(InfoFinInG, 1, "Package `FinInG': non-Unix architecture! Don't know how to make diagram drawings in that case.");
@@ -91,11 +92,12 @@ InstallMethod( CosetGeometry, "for groups and list of subgroups",[ IsGroup , IsH
     return geo;
   end );
 
-#
+# CHECKED 140913
 #########################################################################
 #O Rank2Residues
 # 
 # Adds all rank 2 residues to an incidence geometry
+# Technical and undocumented
 ## 
 InstallMethod( Rank2Residues, [ IsIncidenceGeometry ],
   function( geo )
@@ -119,6 +121,7 @@ InstallMethod( Rank2Residues, [ IsIncidenceGeometry ],
 #O MakeRank2Residue
 # 
 # Actually computes the given rank 2 residue of given type <edge>
+# Technical and undocumented
 ##
 InstallMethod( MakeRank2Residue, [ IsRank2Residue ],
   function( res )
@@ -131,6 +134,7 @@ InstallMethod( MakeRank2Residue, [ IsRank2Residue ],
         res!.residuegeometry:=CanonicalResidueOfFlag(geo,flag);
       else
         Error("Don't know how to compute residue!\n");
+# We could use the generic residue here, with a warning.
       fi;
 end );
 
@@ -254,7 +258,7 @@ InstallOtherMethod( \=, [ IsCosetGeometry, IsCosetGeometry
 
 #
 
-#
+# CHECKED 140913 PhC
 ##########################################################################
 #O ElementsOfIncidenceStructure
 #
@@ -276,7 +280,7 @@ InstallMethod( ElementsOfIncidenceStructure, [IsCosetGeometry, IsPosInt],
     return vars;
 end );
 
-#
+# CHECKED 140913 PhC
 #############################################################################
 #O  ElementsOfIncidenceStructure( <cg> )
 # returns all the elements of the coset geometry <cg> 
@@ -292,7 +296,7 @@ InstallMethod( ElementsOfIncidenceStructure,
 				);
 	end);
 
-# 
+# CHECKED 140913 PhC
 #############################################################################
 #O  RandomElement( <cg> )
 # returns a random element of random type in the given coset geometry
@@ -307,7 +311,7 @@ InstallMethod( RandomElement,
 		return Random(ElementsOfIncidenceStructure(cg,i));
 	end );
 
-# 
+# CHECKED 140913 PhC
 #############################################################################
 #O  RandomChamber( <cg> )
 # returns a random chamber in the given coset geometry
@@ -323,7 +327,7 @@ InstallOtherMethod( RandomChamber,
 		return FlagOfIncidenceStructure(cg,els);
 	end );
 
-# 
+# CHECKED 140913 PhC
 #############################################################################
 #O  RandomFlag( <cg> )
 # returns a random flag in the given coset geometry
@@ -370,7 +374,7 @@ InstallMethod( Random,
 ###########################################################################
 #O Size
 #
-# Returns the number of elements in the object <vs>
+# Returns the number of elements in the object <vs> of type ElementsOfCosetGeometry
 ##
 InstallMethod(Size, [IsElementsOfCosetGeometry],
   function( vs )
@@ -384,7 +388,7 @@ InstallMethod(Size, [IsElementsOfCosetGeometry],
 ###########################################################################
 #O Wrap
 #
-# Make an oject from an element of a coset geometry
+# Make an object from an element of a coset geometry
 ##
 InstallMethod( Wrap, "for a coset geometry and an object (coset)",
   [IsCosetGeometry, IsPosInt, IsObject],
@@ -511,7 +515,7 @@ InstallMethod( IsFlagTransitiveGeometry, "for coset geometries",
                [ IsCosetGeometry ],
   function( cg )
     ## From Buekenhout's chapter in the "Handbook of Incidence Geometry"
-    ## a coset geometry with parabolics {G1} is flag-transitive if
+    ## a coset geometry with parabolics {Gi} is flag-transitive if
     ## (G1 G2) \cap (G1 G3) \cap ... \cap (G1 Gn) = G1( G2 \cap...\cap Gn),
     ## (G2 G3) \cap ...\cap (G2 Gn) = G2( G3 \cap ... \cap Gn),
     ## ..., (G(n-2) G(n-1)) \cap (G(n-2) G(n)) = G(n-2)( G(n-1)\cap Gn )
@@ -806,11 +810,11 @@ InstallMethod( CanonicalResidueOfFlag, "for coset geometries",
      return CosetGeometry( resg, respabs ); 
   end );
 
-# 
+# CHECKED 140913 PhC
 #############################################################################
-# ResidueOfFlag
+#O ResidueOfFlag
 #  
-# 
+# Computes the residue of the given flag in AmbientGeometry(flag)
 ##
 InstallOtherMethod( ResidueOfFlag, "for coset geometries",
                [ IsFlagOfCosetGeometry ],
@@ -1059,13 +1063,13 @@ InstallMethod( ViewObj, "for coset geometry",
 InstallMethod( ViewObj, "for flag of coset geometry",
   [ IsFlagOfCosetGeometry ],
   function( flag )
-    Print("Flag of coset geometry < ", flag!.geo, " >");
+    Print("<Flag of coset geometry < ", flag!.geo, " >>");
   end );
 
 InstallMethod( PrintObj, "for flag of coset geometry", 
   [ IsFlagOfCosetGeometry ],
   function( flag )
-    Print("Flag of coset geometry ", flag!.els );
+    Print("Flag of coset geometry ", flag!.geo, " with elements ", flag!.els );
   end );
 
 InstallMethod( PrintObj, "for coset geometry", 
@@ -1159,7 +1163,7 @@ InstallMethod( \=, [ IsEdgeOfDiagram and IsEdgeOfDiagramRep,
     return u!.edge = v!.edge;
   end );
 
-# 
+# CHECKED 140913 PhC
 #############################################################################
 #F DiagramOfGeometry
 # 
@@ -1386,7 +1390,7 @@ InstallGlobalFunction( DrawDiagramWithNeato,
 
 ####################################
 ## Draw diagram using ASCII characters, mainly for Display
-## Obsolete ?
+## Obsolete !
 ##
 ###################################
 
@@ -1588,9 +1592,9 @@ InstallMethod( DiagramOfGeometry, "for a projective space", [ IsProjectiveSpace 
     return diagram;
   end );
 
-# 
+# CHECKED 140913
 #############################################################################
-#F Rk2GeoDiamater ( < cg > , < type >)
+#F Rk2GeoDiameter ( < cg > , < type >)
 # Computes the point (type 1) or line (type 2) diamater of a rank 2 coset 
 # geometry.
 ##
@@ -1613,6 +1617,20 @@ IsPosInt],
     od;
     return d;
    end );
+
+# CHECKED 140913
+#############################################################################
+#F Rk2GeoGonality ( < cg > )
+# Return half the girth of the incidence graph of <cg>
+##
+InstallMethod( Rk2GeoGonality, "for a coset geometry", [IsCosetGeometry],
+  function( cg ) 
+    local params;
+    if Rank(cg) > 2 then Error("usage Rk2GeoGonaloty: this is only for rank 2 geometries.\n"); fi;
+    params:= Rank2Parameters(cg);
+    return params[1][1];
+   end );
+
 
 # 
 #############################################################################

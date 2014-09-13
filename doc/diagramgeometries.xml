@@ -56,7 +56,8 @@ By definition the elements of type <M>i</M> are the (right) cosets of the subgro
 <Alt Not="HTML"><M>G_{i}</M></Alt><Alt Only="HTML">G&lt;sub>i&lt;/sub></Alt>. Two
 cosets are incident if and only if their intersection is not
 empty. This is an incidence structure which is not necessarily a
-geometry (see Chapter <Ref Chap="incidencegeometry"/> for definitions).
+geometry (see Chapter <Ref Chap="incidencegeometry"/> for definitions). In order to check whether a coset incidence structure is indeed a
+geometry you can use the command <F>IsFlagTransitiveGeometry</F> which (in case it returns <F>true</F>) guarantees that the argument is a geometry.
 
 <ManSection>
 <Oper Name="CosetGeometry" Arg="G,l"/>
@@ -153,6 +154,30 @@ indeed flag-transitive.
 </Example>
 
 <ManSection>
+<Oper Name="OnCosetGeometryElement" Arg="ele,g"/>
+<Returns>the image of the <F>CosetGeometryElement</F> <A>ele</A> under the action of <A>g</A></Returns>
+<Description> 
+The group element <A>g</A> must belong to <F>AmbientGroup(AmbientGeometry(ele))</F>. 
+</Description>
+</ManSection>
+
+<ManSection>
+    <Oper Name="\^" Arg="ele,g"/>
+ <Returns>an element of a coset geometry</Returns>
+<Description>
+This is an operation which returns the image of <A>ele</A>, an element of a coset incidence structure, under <A>g</A>, an element of <F>AmbientGroup(AmbientGeometry(ele))</F>.
+ </Description>
+</ManSection>
+
+<ManSection>
+    <Oper Name="\^" Arg="flg,g"/>
+ <Returns>a flag of a coset geometry</Returns>
+<Description>
+This is an operation which returns the image of <A>flg</A>, a flag of a coset incidence structure, under <A>g</A>, an element of <F>AmbientGroup(AmbientGeometry(flg))</F>.
+ </Description>
+</ManSection>
+
+<ManSection>
 <Oper Name="IsFirmGeometry" Arg="cg"/>
 <Returns>true if and only if <A>cg</A> is firm.</Returns>
 <Description> 
@@ -245,10 +270,10 @@ set <M>\{i_1,i_2,\ldots ,i_k\}</M> of <A>fl</A>.
 </ManSection>
 
 <ManSection>
-<Oper Name="ResidueOfFlag" Arg="cg,fl"/>
-<Returns>the residue of <A>fl</A> in <A>cg</A>.</Returns>
+<Oper Name="ResidueOfFlag" Arg="fl"/>
+<Returns>the residue of <A>fl</A> in <F>AmbientGeometry(fl)</F>.</Returns>
 <Description> 
-<A>cg</A> must be a coset geometry. 
+This is a <F>CosetGeometry</F> method for the <F>ResidueOfFlag</F> operation given in Chapter <Ref Chap="incidencegeometry"/>. Note that the related operation <F>CanonicalResidueOfFlag</F> takes <E>two</E> arguments.
 </Description>
 </ManSection>
 
@@ -286,6 +311,16 @@ line diameter when <A>type</A> is <C>2</C>.
 </ManSection>
 
 <ManSection>
+<Oper Name="GeometryOfRank2Residue" Arg="resi"/>
+<Returns>the geometry of the <F>Rank2Residue</F> object <A>resi</A>.</Returns>
+<Description> 
+The rank 2 residues of a geometry are fundamental when dealing with diagrams. Therefore they 
+are kept in an attribute as (a list of) objects of type <F>Rank2Residue</F>. The present operation just extracts
+the residue as a coset geometry from such a <F>Rank2Residue</F> object.
+</Description>
+</ManSection>
+
+<ManSection>
 <Oper Name="Rank2Parameters" Arg="cg"/>
 <Returns>a list of length 3.</Returns>
 <Description> 
@@ -314,7 +349,7 @@ An <E>automorphism</E> of an incidence structure <Alt Not="HTML"><M>\Gamma</M></
 <Oper Name="AutGroupIncidenceStructureWithNauty" Arg="cg"/>
 <Returns>permutation group isomorphic to the full automorphism group of <A>cg</A>.</Returns>
 <Description> 
-The group is computed with <F>nauty</F>, which is part of <Package>GRAPE</Package> but has to be compiled on your system before use. The group returned is a permutation group acting on the set <F>[1..Sum(TypesOfElementsOfIncidenceStructure(cg), t -> NrElementsOfIncidenceStructure(cg,t))]</F>, which is exactly the vertex set of <F>IncidenceGraph(cg)</F>. At the moment the action of the automorphism group on <F>cg</F> is not provided but it can be recovered from the knowledge that the vertex set of <F>IncidenceGraph(cg)</F> ifrst contains alle elements of type 1 in <F>cg</F>, then alle elements of type 2, etc.
+The group is computed with <F>nauty</F>, which is part of <Package>GRAPE</Package> but has to be compiled on your system before use. The group returned is a permutation group acting on the set <F>[1..Sum(TypesOfElementsOfIncidenceStructure(cg), t -> NrElementsOfIncidenceStructure(cg,t))]</F>, which is exactly the vertex set of <F>IncidenceGraph(cg)</F>. At the moment the action of the automorphism group on <F>cg</F> is not provided but it can be recovered from the knowledge that the vertex set of <F>IncidenceGraph(cg)</F> first contains all elements of type 1 in <F>cg</F>, then alle elements of type 2, etc.
 </Description>
 </ManSection>
 
@@ -333,7 +368,7 @@ We use <F>nauty</F>, which is part of <Package>GRAPE</Package> but has to be com
 
 <ManSection>
 <Oper Name="CorGroupIncidenceStructureWithNauty" Arg="cg"/>
-<Returns>permutation group isomorphic to the full automorphism group of<A>cg</A>.</Returns>
+<Returns>permutation group isomorphic to the full automorphism group of <A>cg</A>.</Returns>
 <Description> 
 The group is computed with <F>nauty</F>, which is part of <Package>GRAPE</Package> but has to be compiled on your system before use. The group returned is a permutation group acting on the set <F>[1..Sum(TypesOfElementsOfIncidenceStructure(cg), t -> NrElementsOfIncidenceStructure(cg,t))]</F>, which is exactly the vertex set of <F>IncidenceGraph(cg)</F>. At the moment the action of the automorphism group on <F>cg</F> is not provided but it can be recovered from the knowledge that the vertex set of <F>IncidenceGraph(cg)</F> ifrst contains alle elements of type 1 in <F>cg</F>, then all elements of type 2, etc.
 </Description>
@@ -349,7 +384,11 @@ The group is computed with <F>nauty</F>, which is part of <Package>GRAPE</Packag
 
 The <E>diagram</E> of a flag-transitive incidence geometry is a
 schematic description of the structure of the geometry. It is based on
-the collection of rank 2 residues of the geometry.
+the collection of rank 2 residues of the geometry.<P/>
+
+Technically, the diagram is added to a <F>CosetGeometry</F> object as a mutable attribute. Also the list of rank 2 residues 
+of the geometry is added as an attribute once these have been computed. This is done with the operations <F>Rank2Residues</F> 
+(to add the attribute) and <F>MakeRank2Residue</F> (to actually compute the resiudes). These operations are not for everyday use and hence remain undocumented.<P/> 
 
 Since the geometry is flag-transitive, all chambers are
 equivalent. Let's fix a chamber <Alt Not="HTML"><M>C=\{c_{1}, c_{2},\ldots,c_{n}\}</M></Alt>
@@ -380,6 +419,13 @@ time consuming. The command <C>IsFlagTransitiveGeometry</C> can be
 used to check flag-transitivity if needed.
 </Description>
 </ManSection>
+<ManSection>
+<Oper Name="GeometryOfDiagram" Arg="diag"/>
+<Returns>the geometry of which <A>diag</A> is the diagram</Returns>
+<Description> 
+<A>diag</A> must be a diagram object.
+</Description>
+</ManSection>
 
 <ManSection>
 <Oper Name="DrawDiagram" Arg="diag,filename"/>
@@ -403,7 +449,7 @@ The default labels for the edges of the diagram use the standard convention that
 </Description>
 </ManSection>
 
-<Alt Not="HTML">\medskip</Alt>
+<Alt Only="LaTeX">\medskip</Alt>
 
 We illustrate the diagram feature with
 Neumaier's <Alt Not="HTML"><M>A_8</M></Alt><Alt Only="HTML">A&lt;sub>8&lt;/sub></Alt>-geometry. 
@@ -452,6 +498,26 @@ The <Alt Not="HTML"><M>A_7</M></Alt><Alt Only="HTML">A&lt;sub>7&lt;/sub></Alt> g
 <Alt Only="HTML">&lt;img src="a7geo.jpg">&lt;/img></Alt><Alt Only="LaTeX">\includegraphics[scale=0.5]{a7geo.pdf}</Alt><P/><P/>
 
 On a UNIX system we can start an external viewer (``gv'' or ghostview in this case) from within GAP with the <F>Exec</F> command.
+
+<ManSection>
+<Oper Name="DrawDiagramWithNeato" Arg="diag,filename"/>
+<Returns>does not return anything but writes a file <A>filename</A>.ps</Returns>
+<Description> 
+<A>diag</A> must be a diagram. Writes a file <A>filename</A>.ps in the
+current directory with a pictorial version of the diagram. <P/>
+
+This command uses a "spring tension" algorithm to draw the diagram <A>diag</A> with straight edges. For some diagrams this looks 
+better than the result of <F>DrawDiagram</F>. However this algorithm does not print the vertex labels.<P/>
+
+This
+command uses the <Package>graphviz</Package> package which is
+available from http://www.graphviz.org. 
+In case <Package>graphviz</Package> is not available on your system,
+you will get an friendly error message and a file <A>filename</A>.dot
+will be written. You can then compile this file later or ask a friend
+to help you.
+</Description>
+</ManSection>
 
 </Section>
 </Chapter>

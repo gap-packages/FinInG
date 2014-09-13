@@ -145,7 +145,8 @@ DeclareOperation( "RandomChamber", [ IsCosetGeometry ] );
 DeclareOperation( "AutGroupIncidenceStructureWithNauty", [ IsCosetGeometry ]);
 DeclareOperation( "CorGroupIncidenceStructureWithNauty", [ IsCosetGeometry ]);
 DeclareOperation( "IsIsomorphicIncidenceStructureWithNauty", [ IsCosetGeometry, IsCosetGeometry ]);
-DeclareOperation( "Rk2GeoDiameter", [ IsCosetGeometry, IsPosInt] );
+DeclareOperation( "Rk2GeoDiameter", [ IsCosetGeometry, IsPosInt ] );
+DeclareOperation( "Rk2GeoGonality", [ IsCosetGeometry ] );
 DeclareOperation( "GeometryOfRank2Residue", [ IsRank2Residue ]);
 
 DeclareAttribute( "Rank2Parameters", IsCosetGeometry );
