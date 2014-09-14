@@ -645,10 +645,10 @@ of lower rank and of the same type over the same basefield, and this operation
 returns the corresponding geometry morphism.
 It is checked whether <A>v</A> is a subspace of <A>ps</A>,
 and whether the input of the function and preimage of the returned
-geometry morphism is valid or not. We should also mention here a shorthand for
-this operation which is basically and overload of the quotient operation. So,
-for example, <C>SymplecticSpace(3, 3) / v</C> achieves the same thing
-as <C>NaturalProjectionBySubspace(SymplecticSpace(3,3), v)</C>.
+geometry morphism is valid or not. There is a shorthand for
+this operation which is basically an overload of the quotient operation. So,
+for example, <C>ps / v</C> achieves the same thing
+as <C>AmbientGeometry(Range(NaturalProjectionBySubspace(ps, v)))</C>.
 An intertwiner is not available for this geometry morphism.
 <Example>
 <#Include SYSTEM "../examples/include/morphisms_projection.include"> 
@@ -667,7 +667,7 @@ An intertwiner is not available for this geometry morphism.
 <Description>
 The argument <A>as</A> is an affine space. This operation returns an embedding
 of <A>as</A> into the projective space <A>ps</A> of the same dimension, and over the same field.
-For example, the point <M>(x, y, z)</M> goes to the projective point with
+For example, the point <M>(x, y, z)</M> is mapped onto the projective point with
 homogeneous coordinates <M>(1, x, y, z)</M>. An intertwiner is unnecessary,
 <F>CollineationGroup(as)</F> is a subgroup of <F>CollineationGroup(ps)</F>.
 <Example>
