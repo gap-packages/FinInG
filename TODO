@@ -1,4 +1,4 @@
-THIS IS A TO DO LIST FOR THE GAP-PACKAGE DESARGUES
+THIS IS A TO DO LIST FOR THE GAP-PACKAGE FINING
 ===================================================
 
 ADDED 31/01/2009
@@ -155,4 +155,70 @@ ADDED 17/3/2014
 (more general) IncidenceGraph, which is now defined for coset 
 geometries. Maybe the latter should become 
 IncidenceGraphOfCosetGeometry, a method for IncidenceGraph.
+
+ADDED 14/9/2014
+===============
+
+- VeroneseVariety for (m,n) not just the quadratic Veronesean.
+- groups for GrassmannVariety, SegreVariety
+- put in John's code for "QuadricDefinedByPoints" and "HermitianPolarSpaceDefinedByPoints"
+   perhaps this should be generalised?
+
+#############################################################################
+#O  ConicOnFivePoints ( <pts> )
+# returns the conic through five given points <pts>, as a projective variety.
+##
+InstallMethod( ConicOnFivePoints, 
+	"for a set of five points of a projective plane",
+   [ IsHomogeneousList and IsSubspaceOfProjectiveSpaceCollection ],
+
+  function( pts )
+
+  #  To find the conic, we simply solve an equation
+  #
+  #  ax^2 + by^2 + cz^2 + dxy + exz + fyz = 0
+  #  [x^2,y^2,z^2,xy,xz,yz] . [a,b,c,d,e] = 0
+  #
+  #  This function returns a projective algebraic variety
+
+    local gf, r, vecs, mat, sol, poly, mat2, plane, embed,
+          pg, d, dplus1, pairs, vars, indets;
+    if Size(AsSet(pts)) < 5 then
+       Error("Not enough points");
+    fi;
+
+    if ForAny(pts, t -> ProjectiveDimension(t) <> 0) then
+       Error("Not a set of points");
+    fi;
+
+    ## check that the points span a plane
+
+    if Dimension( Span(pts) ) <> 2 then
+       Error("Points do not span a plane");
+    fi;
+
+    ## we also need to allow the user to define a conic in a plane
+    ## which is embedded in a higher dimensional projective space
+    ## until we have done this, we need to check whether the ambient
+    ## space of the points is a plane
+    if not (Size(AsSet(List(pts,t -> AmbientSpace(t))))=1 and 
+			Dimension(AmbientSpace(Random(pts)))=2) then 
+	Error("The ambient space of the points should be a plane");
+    fi;
+
+
+    pg := AmbientSpace(pts[1]!.geo);
+    gf := pg!.basefield;
+    dplus1 := Dimension(pg) + 1;
+    r := PolynomialRing(gf, dplus1);
+    indets := IndeterminatesOfPolynomialRing(r);
+    vecs := List(pts, t -> Unwrap(t));
+    pairs := UnorderedTuples( [1..dplus1], 2 );;
+    mat := List(vecs, t -> List( pairs, p -> t[p[1]] * t[p[2]] ) );;
+    sol := NullspaceMat(TransposedMat(mat))[1];
+	vars := List(pairs, p -> indets[p[1]] * indets[p[2]]);
+    poly := vars * sol;
+
+    return ProjectiveVariety( pg, [poly] );
+  end ); 
 

@@ -2,10 +2,10 @@
 ##
 ##  gpolygons.gi              FinInG package
 ##                                                              John Bamberg
-##                                                              Anton Betten
-##                                                              Jan De Beule
+## 								                                Anton Betten
 ##                                                             Philippe Cara
-##                                                            Michel Lavrauw
+##                                                              Jan De Beule
+## 							                                  Michel Lavrauw
 ##                                                           Max Neunhoeffer
 ##
 ##  Copyright 2014	Colorado State University, Fort Collins
@@ -801,6 +801,17 @@ InstallMethod( Iterator,
 	end );
 
 #############################################################################
+#O  Iterator( <shadow>  )
+# returns an iterator for a shadow of elements of a gp
+##
+InstallMethod( Iterator, 
+	"for shadow elements of a generalised polygon",
+	[IsShadowElementsOfGeneralisedPolygon and IsShadowElementsOfGeneralisedPolygonRep ],
+	function( vs )
+        return IteratorList(vs!.func(vs!.element));
+	end);
+
+#############################################################################
 #O  Random( <vs>  )
 #	In general, the list of elements might be stored in the GP itself. Then
 #	the standard method uses the Iterator. This standard method will be called
@@ -894,7 +905,7 @@ InstallMethod( Wrap,
 	function( geo, type, o )
 		local w;
 		w := rec( geo := geo, type := type, obj := o );
-		Objectify( NewType( ElementsOfIncidenceStructureFamily,   # ElementsFamily,
+		Objectify( NewType( ElementsOfIncidenceStructureFamily,   
 			IsElementOfIncidenceStructureRep and IsElementOfGeneralisedPolygon ), w );
 		return w;
   end );
@@ -949,24 +960,6 @@ InstallMethod( ViewObj,
 		Print(">");
 	end );
  
-InstallMethod( Iterator, 
-	"for shadow elements of a generalised polygon",
-	[IsShadowElementsOfGeneralisedPolygon and IsShadowElementsOfGeneralisedPolygonRep ],
-	function( vs )
-        return IteratorList(vs!.func(vs!.element));
-	end);
-    
-#############################################################################
-#O  ElementsIncidentWithElementOfIncidenceStructure( <el>, <i> )
-# returns the elements of type <i> in <el>, relying on ShadowOfElement 
-# for particular <el>.
-## generic version is now in geometry.gi 
-#InstallMethod( ElementsIncidentWithElementOfIncidenceStructure, "for IsElementOfLieGeometry",
-#	[ IsElementOfGeneralisedPolygon, IsPosInt],
-#	function( el, i )
-#		return ShadowOfElement(el!.geo, el, i);
-#	end );
-
 #############################################################################
 #O  Points( <el> )
 # returns the points, i.e. elements of type <1> in <el>, relying on ShadowOfElement 
@@ -1072,10 +1065,10 @@ InstallMethod( IncidenceMatrixOfGeneralisedPolygon,
 # - when a GP is constructed through generic methods, the underlying graph is
 #	always computed, since this is the only way to check if the input is not rubbish.
 #	But then the VertexNames of the constructed graph are the underlying objects.
-#	For particular GQs, the underlying graph is not computed upon construction, since
-#	the developpers know what they are doing (?). But computing a graph afterwards, is
-#	very naturally done with the elements themselves as VertexNames. This has some technical
-#	consequences to compute the collineation group and to define the CollineationAction of it.
+#	For particular GQs, the underlying graph is not computed upon construction.
+#   But computing a graph afterwards, is very naturally done with the elements themselves 
+#   as VertexNames. This has some technical consequences to compute the collineation
+#   group and to define the CollineationAction of it.
 #	To distinguish in this method, we introduced the property HasGraphWithUnderlyingObjectsAsVertices.
 ###
 InstallMethod( CollineationGroup, 
@@ -1178,7 +1171,7 @@ InstallMethod( BlockDesignOfGeneralisedPolygon,
 #O  DistanceBetweenElements( <v>, <w> )
 # It is possible to create points and lines of PG(2,q) in the category 
 # IsElementsOfGeneralisedPolygon (or even more specified). But this would increase
-# the dependency of projectivespace.gi on gpolygons.gd, which I want to avoid.
+# the dependency of projectivespace.gi on gpolygons.gd, which we want to avoid.
 ###
 InstallMethod( DistanceBetweenElements,
     "for subspaces of a projective space",
@@ -1255,7 +1248,7 @@ InstallMethod( IncidenceGraph,
 #O  DistanceBetweenElements( <v>, <w> )
 # It is possible to create points and lines of PG(2,q) in the category 
 # IsElementsOfGeneralisedPolygon (or even more specified). But this would increase
-# the dependency of projectivespace.gi on gpolygons.gd, which I want to avoid.
+# the dependency of projectivespace.gi on gpolygons.gd, which we want to avoid.
 ###
 InstallMethod( DistanceBetweenElements,
     "for subspaces of a projective space",
@@ -1396,7 +1389,7 @@ InstallGlobalFunction( SplitCayleyPointToPlane5,
         Add(z,[0,0,0,1,0,0,0,1]*Z(q)^0);
         spacevec := NullspaceMat(TransposedMat(z));
 		int := IdentityMat(8,f){[1..7]};
-		int[4][8] := -One(f); #could have been One(f) too or course since this is only used in even char...
+		int[4][8] := -One(f); #could have been One(f) too, since this is only used in even char...
 		vec := SumIntersectionMat(spacevec, int)[2];
         return vec{[1..3]}{[1,2,3,5,6,7]};
     end );
@@ -1499,10 +1492,6 @@ InstallGlobalFunction( TwistedTrialityHexagonPointToPlaneByTwoTimesTriality,
 # Constructor operations for the Classical Generalised Hexagons.
 #############################################################################
 
-# JB: A big change here. I've separated the CollineationGroup out to an
-# attribute, just like we do for polar spaces and the like. 19/06/2012
-
-# 24/3/2014. cmat changes.
 #############################################################################
 #O  SplitCayleyHexagon( <f> )
 # returns the split cayley hexagon over <f>
@@ -1593,7 +1582,7 @@ InstallMethod( SplitCayleyHexagon,
 		hvmform := BilinearFormByMatrix(hvm, f);   
 		ps := PolarSpace(hvmform);
 		# UnderlyingObject will return a cvec. 
-		reppointvect := UnderlyingObject(RepresentativesOfElements(ps)[1]); #to be changed
+		reppointvect := UnderlyingObject(RepresentativesOfElements(ps)[1]); 
 
 		## Hendrik's canonical line is <(1,0,0,0,0,0), (0,0,0,0,0,1)>
 		replinevect := [[1,0,0,0,0,0], [0,0,0,0,0,1]] * One(f);
@@ -1669,7 +1658,7 @@ InstallMethod( SplitCayleyHexagon,
 	geo := rec( pointsobj := [], linesobj := [], incidence:= \*, listelements := listels, basefield := BaseField(ps), 
 		dimension := Dimension(ps), vectorspace := UnderlyingVectorSpace(ps), polarspace := ps, 
 		shadowofpoint := shadpoint, shadowofline := shadline, distance := dist);
-    ty := NewType( GeometriesFamily, IsClassicalGeneralisedHexagon and IsGeneralisedPolygonRep ); #change by jdb 7/12/11
+    ty := NewType( GeometriesFamily, IsClassicalGeneralisedHexagon and IsGeneralisedPolygonRep ); 
     Objectify( ty, geo );
     SetAmbientSpace(geo, AmbientSpace(ps));
     SetAmbientPolarSpace(geo,ps);
@@ -1718,7 +1707,7 @@ InstallMethod( SplitCayleyHexagon,
 	if IsParabolicQuadric(ps) and Dimension(ps) = 6 then
 		hvm := List([1..7], i -> [0,0,0,0,0,0,0]*One(f));
 		hvm{[1..3]}{[5..7]} := IdentityMat(3, f);
-		hvm[4][4] := -One(f); #took me hours to remove the 2 here (necessary when you switch from bilinear form to quad forms... Wenn darf man Scheisse sagen...?
+		hvm[4][4] := -One(f);
 		hvmform := QuadraticFormByMatrix(hvm, f);
 		hvm := PolarSpace(hvmform);
 		c1 := BaseChangeToCanonical(hvmform);
@@ -1798,7 +1787,7 @@ InstallMethod( SplitCayleyHexagon,
 			change := c1^-1;
 		fi;
 		# UnderlyingObject will return a cvec. We must be a bit carefull: reppointvect must be normed.
-		reppointvect := UnderlyingObject(RepresentativesOfElements(hvm)[1]) * change; #to be changed
+		reppointvect := UnderlyingObject(RepresentativesOfElements(hvm)[1]) * change; 
 		reppointvect := reppointvect / First(reppointvect,x->not IsZero(x));
 		
 		## Hendrik's canonical line is <(1,0,0,0,0,0), (0,0,0,0,0,1)>
@@ -1876,7 +1865,7 @@ InstallMethod( SplitCayleyHexagon,
 	geo := rec( pointsobj := [], linesobj := [], incidence:= \*, listelements := listels, basefield := BaseField(ps), 
 		dimension := Dimension(ps), vectorspace := UnderlyingVectorSpace(ps), polarspace := ps, 
 		shadowofpoint := shadpoint, shadowofline := shadline, distance := dist, basechange := change);
-    ty := NewType( GeometriesFamily, IsClassicalGeneralisedHexagon and IsGeneralisedPolygonRep ); #change by jdb 7/12/11
+    ty := NewType( GeometriesFamily, IsClassicalGeneralisedHexagon and IsGeneralisedPolygonRep ); 
     Objectify( ty, geo );
     SetAmbientSpace(geo, AmbientSpace(ps));
     SetAmbientPolarSpace(geo,ps);
@@ -1894,7 +1883,7 @@ InstallMethod( SplitCayleyHexagon,
     repline := Objectify( NewType( SoPSFamily, IsElementOfGeneralisedPolygon and IsElementOfIncidenceStructureRep 
 					            	and IsSubspaceOfClassicalPolarSpace ), w );
     SetRepresentativesOfElements(geo, [reppoint, repline]);
-    #it looks a bit exagerated to do such an effort for the name, but polar spaces do have a Name attribute set...
+    #it looks a bit exaggerated to do such an effort for the name, but polar spaces do have a Name attribute set...
 	if not IsCanonicalPolarSpace(ps) then
 		eq := Concatenation(": ",String(EquationForPolarSpace(ps)));
 	else
@@ -1962,7 +1951,7 @@ InstallMethod( TwistedTrialityHexagon,
         planevec := TwistedTrialityHexagonPointToPlaneByTwoTimesTriality( Unpack(pt!.obj), frob, f );
         plane := VectorSpaceToElement(PG(7,f),planevec);
         flag := FlagOfIncidenceStructure(PG(7,f),[pt,plane]);
-        # we have q^3+1 lines and have to select q+1 from them. Following can probably done more efficient,
+        # we have q^3+1 lines and have to select q+1 from them. Following can probably done more efficiently,
         # but I need more mathematics then.
         return List(Filtered(ShadowOfFlag(PG(7,f),flag,2),x->x in pt!.geo), y-> Wrap(pt!.geo,2,Unwrap(y)));
     end;
@@ -2014,7 +2003,7 @@ InstallMethod( TwistedTrialityHexagon,
     geo := rec( pointsobj := [], linesobj := [], incidence:= \*, listelements := listels, shadowofpoint := shadpoint, 
         shadowofline := shadline, basefield := BaseField(ps), dimension := Dimension(ps),
         vectorspace := UnderlyingVectorSpace(ps), polarspace := ps, distance := dist );
-    ty := NewType( GeometriesFamily, IsClassicalGeneralisedHexagon and IsGeneralisedPolygonRep ); #change by jdb 7/12/11
+    ty := NewType( GeometriesFamily, IsClassicalGeneralisedHexagon and IsGeneralisedPolygonRep ); 
     Objectify( ty, geo );
     SetAmbientSpace(geo, AmbientSpace(ps));
     SetAmbientPolarSpace(geo,ps);
@@ -2250,7 +2239,6 @@ InstallMethod( G2fining,
              [ 0, 1, 0, 0, 0, 0, 0],
              [ 0, 0, 1, 0, 0, 0, 0],
              [ 1, 0, 0, 0, 0, 0, 0]]*One(f);  
-         #ConvertToMatrixRep(m, f);
          mp := d -> 
 			[[1,  0,  0,  0,  0,  d,  0],  
              [0,  1,  0,  0, -d,  0,  0],  
@@ -2506,7 +2494,6 @@ InstallMethod( VectorSpaceToElement,
 		return VectorSpaceToElement(geom,Unpack(v));
 	end );
 
-# Added 02/08/2014 jdb
 #############################################################################
 #O  VectorSpaceToElement( <geom>, <v> ) returns the element in <geom> determined
 # by the rowvector <v>. <geom> is a generalised hexagon, so an ambient polar space
@@ -2559,7 +2546,6 @@ InstallMethod( VectorSpaceToElement,
 		fi;
 end );
 
-# Added 02/08/2014 jdb
 #############################################################################
 #O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
 # by the rowvector <v>. Several checks are built in.
@@ -2604,7 +2590,6 @@ InstallMethod( VectorSpaceToElement,
 		fi;
 end );
 
-# Added 02/08/2014 jdb
 #############################################################################
 #O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
 # by the vectorspace <v>. Code based on VectorSpaceToElement for polar spaces
@@ -2688,7 +2673,6 @@ InstallMethod( VectorSpaceToElement,
 		fi;
 	end );
 
-# Added 02/08/2014 jdb
 #############################################################################
 #O  VectorSpaceToElement( <geom>, <v> ) 
 # if mat is in IsGF2MatrixRep, then Unpack(mat) is in IsPlistRep.
@@ -2700,7 +2684,6 @@ InstallMethod( VectorSpaceToElement,
 		return VectorSpaceToElement(geom,Unpack(mat));
 	end );
 	
-# Added 02/08/2014 jdb
 #############################################################################
 #O  VectorSpaceToElement( <geom>, <v> ) 
 # if mat is in Is8BitMatrixRep, then Unpack(mat) is in IsPlistRep.
@@ -2712,7 +2695,6 @@ InstallMethod( VectorSpaceToElement,
 		return VectorSpaceToElement(geom,Unpack(mat));
 	end );
 
-# Added 02/08/2014 jdb
 #############################################################################
 #O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
 # by the vectorspace <v>. 
@@ -2816,7 +2798,6 @@ InstallMethod( \in,
         fi;
     end );
 
-# Added 13/08/2014 jdb
 #############################################################################
 #O  ObjectToElement( <geom>, <v> ) returns the elements in <geom> determined
 # by the object <obj>. This is of course just a shortcut to VectorSpaceToElement. 
@@ -3224,7 +3205,6 @@ InstallMethod( EGQByKantorFamily,
 	return geo;
   end );
 
-#Iterator and IsIncident: replaced by generic methods now.
 
 #############################################################################
 #O  Display( <egq> )
@@ -3803,7 +3783,6 @@ InstallMethod( EGQByBLTSet,
 	pointreps := Concatenation([r],blt2,[p]);
 	
 	linereps := List(pis,x->Span(r,Meet(x,perp(r))));
-	#dirty wrapping
 	linereps := List(linereps,x->Wrap(w5q,3,UnderlyingObject(x)));
 	lines2 := List(blt2,x->Span(p,x));
 	lines2 := List(lines2,x->Wrap(w5q,3,UnderlyingObject(x)));
@@ -3824,7 +3803,7 @@ InstallMethod( EGQByBLTSet,
 				for x in gp!.planes do
 					Append(points2,Filtered(Lines(x),t->not gp!.basepointobj in t));
 				od;
-				points2 := List(points2,x->Wrap(w5q,2,UnderlyingObject(x))); #dirty, see note above.
+				points2 := List(points2,x->Wrap(w5q,2,UnderlyingObject(x))); 
 				gp!.points2 := ShallowCopy(points2);
 				Append(pts,points2);
 			fi;
@@ -3841,7 +3820,7 @@ InstallMethod( EGQByBLTSet,
 				for x in gp!.planes do
 					Append(points2,Filtered(Lines(x),t->not gp!.basepointobj in t));
 				od;
-				points2 := List(points2,x->Wrap(w5q,2,UnderlyingObject(x))); #dirty, see note above.
+				points2 := List(points2,x->Wrap(w5q,2,UnderlyingObject(x))); 
 				gp!.points2 := ShallowCopy(points2);
 			fi;
 			Info(InfoFinInG, 1, "Computing lines(2) of Knarr construction... please wait");
@@ -4317,8 +4296,6 @@ InstallMethod( FlockGQByqClan, [ IsqClanObj ],
   stabblt := GroupWithGenerators(gens);
 
   Info(InfoFinInG, 1, "..computed stabiliser of BLT set");
-
-###  stabblt := SetwiseStabilizer(stabp, OnProjSubspaces, blt)!.setstab;  
 
   SetCollineationGroup( geo, stabblt );
   action := function(el, x)

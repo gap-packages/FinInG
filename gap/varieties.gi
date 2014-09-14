@@ -2,16 +2,13 @@
 ##
 ##  varieties.gi              FinInG package
 ##                                                              John Bamberg
-##                                                              Anton Betten
-##                                                              Jan De Beule
+## 								                                Anton Betten
 ##                                                             Philippe Cara
-##                                                            Michel Lavrauw
-##                                                                 Maska Law
+##                                                              Jan De Beule
+## 							                                  Michel Lavrauw
 ##                                                           Max Neunhoeffer
-##                                                            Michael Pauley
-##                                                             Sven Reichard
 ##
-##  Copyright 2011	Colorado State University, Fort Collins
+##  Copyright 2014	Colorado State University, Fort Collins
 ##					Università degli Studi di Padova
 ##					Universeit Gent
 ##					University of St. Andrews
@@ -22,19 +19,6 @@
 ##  Implementation stuff for varieties
 ##
 #############################################################################
-
-########################################
-#
-# Things To Do:
-#
-# - VeroneseVariety for (m,n) not just the quadratic Veronesean.
-#   what does the user need? make example code?
-# - groups for GrassmannVariety, SegreVariety
-# - put in John's code for "QuadricDefinedByPoints" and "HermitianPolarSpaceDefinedByPoints"
-#   perhaps this should be generalised?
-# - display methods 
-#
-########################################
 
 Print(", varieties\c");
 
@@ -734,14 +718,6 @@ InstallMethod( AmbientSpace,
 	end );
 	
 
-
-
-
-
-
-
-
-
 #############################################################################
 #############################################################################
 #############################################################################
@@ -1115,8 +1091,6 @@ InstallMethod( Size,
 		return Product(List(listofpgs,x->Size(Points(x))));
 	end );
 
-
-
 ####################
 #O  ImageElm( <sm>, <x> )
 ##
@@ -1149,21 +1123,6 @@ InstallOtherMethod( ImagesSet,
 	function(sm, x)
 		return List(x, t -> t^sm);
 	end );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 #############################################################################
@@ -1411,17 +1370,6 @@ InstallMethod( Size,
 	end );
 
 
-
-
-
-
-
-
-
-
-
-
-
 #############################################################################
 #############################################################################
 #############################################################################
@@ -1486,17 +1434,6 @@ InstallMethod( Range,
 	function(gm)
 	return gm!.range;
 end );
-
-
-
-
-
-
-
-
-
-
-
 
 
 #############################################################################
@@ -1838,158 +1775,4 @@ InstallMethod( Size,
 
 
 
-##########################################
-##########################################
-##########################################
-#
-# The part below still has to be changed (ml 19/12/2011)
-#
-##########################################
-##########################################
-##########################################
-
-### 8. Miscellaneous ###
-
-#############################################################################
-#O  ConicOnFivePoints ( <pts> )
-# returns the conic through five given points <pts>, as a projective variety.
-##
-InstallMethod( ConicOnFivePoints, 
-	"for a set of five points of a projective plane",
-   [ IsHomogeneousList and IsSubspaceOfProjectiveSpaceCollection ],
- 
-  function( pts )
-
-  #  To find the conic, we simply solve an equation
-  #
-  #  ax^2 + by^2 + cz^2 + dxy + exz + fyz = 0
-  #  [x^2,y^2,z^2,xy,xz,yz] . [a,b,c,d,e] = 0
-  #
-  #  This function returns a projective algebraic variety
-
-    local gf, r, vecs, mat, sol, poly, mat2, plane, embed,
-          pg, d, dplus1, pairs, vars, indets;
-    if Size(AsSet(pts)) < 5 then
-       Error("Not enough points");
-    fi;
-
-    if ForAny(pts, t -> ProjectiveDimension(t) <> 0) then
-       Error("Not a set of points");
-    fi;
-
-    ## check that the points span a plane
-
-    if Dimension( Span(pts) ) <> 2 then
-       Error("Points do not span a plane");
-    fi;
-
-    ## we also need to allow the user to define a conic in a plane
-    ## which is embedded in a higher dimensional projective space
-    ## until we have done this, we need to check whether the ambient
-    ## space of the points is a plane
-    if not (Size(AsSet(List(pts,t -> AmbientSpace(t))))=1 and 
-			Dimension(AmbientSpace(Random(pts)))=2) then 
-	Error("The ambient space of the points should be a plane");
-    fi;
-	
-    
-    pg := AmbientSpace(pts[1]!.geo);
-    gf := pg!.basefield;
-    dplus1 := Dimension(pg) + 1;
-    r := PolynomialRing(gf, dplus1);
-    indets := IndeterminatesOfPolynomialRing(r);
-    vecs := List(pts, t -> Unwrap(t));
-    pairs := UnorderedTuples( [1..dplus1], 2 );;
-    mat := List(vecs, t -> List( pairs, p -> t[p[1]] * t[p[2]] ) );;
-    sol := NullspaceMat(TransposedMat(mat))[1];
-	vars := List(pairs, p -> indets[p[1]] * indets[p[2]]);
-    poly := vars * sol;
-
-    return ProjectiveVariety( pg, [poly] );
-  end ); 
-
-
-### morphism suff.
-
-#InstallMethod( VeroneseMap, "given a projective space PG(n,q)",
-#    [ IsProjectiveSpace ],
-#  function( pgdomain )
-#    local n,F,n2,pgimage,varmap,func,
-#          tups,beta,betainv,hom,
-#          g1,g2,twiner,gens,newgens;
-#    n := pgdomain!.dimension + 1;
-#    F := pgdomain!.basefield;
-#    n2 := (n-1)*(n+2)/2;
-#    pgimage := VeroneseVariety(n2, F);##
-
-#    func := function( point )
-#      local i,j,list;
-#      list:=[];
-#      for i in [1..n] do
-#        for j in [i..n] do
-#          Add(list, point!.obj[i]*point!.obj[j] );
-#        od;
-#      od;
-#      ConvertToVectorRepNC( list, F );
-#      return Wrap(pgimage, 1, list);
-#    end;#
-
-#    tups := Filtered(Tuples([1..n], 2),i->i[2]>=i[1]);#
-
-#    beta := function( m )
-#      local rows;
-#      rows := List([1..n], i -> m[i]{[i..n]});
-#      return Concatenation(rows);
-#    end;
-
-#    betainv := function( v )
-#      local matb, i, j, x;
-#      matb := ShallowCopy( NullMat(n, n, F) );
-#          for i in [1..n] do
-#              for j in [i..n] do
-#                  x := v[Position(tups,[i,j])];
-#                  matb[i][j] := x;
-#                  matb[j][i] := x;
-#              od;
-#          od;
-#      return matb;
-#    end;
-      
-#    hom := function( m )
-#      local basis1, basis2, image, mat;
-#      mat := m!.mat;
-#      basis1 := IdentityMat(n2+1, F);
-#      basis2 := List(basis1, betainv);
-#      image := List(basis2, b -> beta( TransposedMat(mat) * b * mat ));  
-#      ConvertToMatrixRepNC( image, F );       
-#      return ProjElWithFrob(image, IdentityMapping(F), F);
-#    end;
-#   
-#    g1 := HomographyGroup( pgdomain );
-#    gens := GeneratorsOfGroup( g1 );
-#    newgens := List(gens, hom);
-#    g2 := Group( newgens );
-#   SetSize(g2, Size(g1));
-#    twiner := GroupHomomorphismByImagesNC(g1, g2, gens, newgens);
-#   SetIsBijective(twiner, true);#
-#    varmap := GeometryMorphismByFunction(Points(pgdomain), Points(pgimage), func);
-#    SetIsInjective( varmap, true );
-#    SetIntertwiner(varmap, twiner);
-#    return varmap;
-#  end );
-
-#InstallMethod( VeroneseMap, "given a dimension and field",
-#    [ IsPosInt, IsField ],
-#  function( d, F )
-#    return VeroneseMap( ProjectiveSpace(d, F) );
-#  end );
-
-#InstallMethod( VeroneseMap, "given a dimension and field order",
-#    [ IsPosInt, IsPosInt ],
-#  function( d, q )
-#    return VeroneseMap( ProjectiveSpace(d, q) );
-#  end );
-
-
-	
 	
