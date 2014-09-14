@@ -616,9 +616,9 @@ symplectic generalised quadrangle over <M>GF(9)</M>.
 <Oper Name="NaturalEmbeddingByFieldReduction" Arg="ps1, ps2"/>
 <Returns>a geometry morphism</Returns>
 <Description>
-If <A>ps1</A> and <A>ps2</A> are two polar spaces corresponding with one line in the table presented in
+If <A>ps1</A> and <A>ps2</A> are two polar spaces which are suitable for field reduction as listed in the table with possible embeddings in Section
 <Ref Sect="polar_red"/>, then this operation returns the corresponding embedding. An intertwiner is computed
-if <A>bool</A> is true or not present. This intertwiner has as its domain the <B>isometry group</B> of <A>ps1</A>.
+if the third argument <A>bool</A> is true, or if there is no third argument. This intertwiner has as its domain the <B>isometry group</B> of <A>ps1</A>.
 The example shows two cases where a spread is computed, including a subgroup of its stabiliser group using
 the intertwiner.
 <Example>
