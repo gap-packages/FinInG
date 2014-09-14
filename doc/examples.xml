@@ -44,17 +44,17 @@ is symmetrized set-theoretic containment, the latter which can be tested through
 </ManSection>
 
 <ManSection>
-<Heading>subspaces of classical polars spaces</Heading>
+<Heading>Subspaces of classical polar spaces</Heading>
 <Description>
-<Package>FinInG</Package> povides the classical polar spaces. Subspaces can be constructed the same
-way as subspaces of projective spaces. Upon construction, it is of course checked whether the given vectorspace
+<Package>FinInG</Package> provides classical polar spaces. Subspaces can be constructed the same
+way as subspaces of projective spaces. Upon construction, it is checked whether the given vector space
 does determine a subspace of the polar space. Subspaces of polar spaces are also subspaces of the ambient projective
 space. Operations like <F>Span</F> and <F>Meet</F> are naturally applicable. However, the span of two subspaces might not
 be a subspace of the polar space anymore, and if the two subspaces belong to two different polar spaces in the same
 ambient projective space, it cannot be determined in which polar space the span should be constructed. Therefore
-notice that the result of <F>Span</F> of two subspaces of a polar space is a subspace of the ambient projective space.
-It can of course be checked whether the result belongs to a polar space using <F>in</F>. This illustrates very well
-some general philisophy: a subspace of a polar space, and more generally, an element of any incidence structure is always
+the result of <F>Span</F> of two subspaces of a polar space is a subspace of the ambient projective space.
+It can be checked whether the result belongs to a polar space using <F>in</F>. This illustrates very well
+a general philosophy: a subspace of a polar space, and more generally, an element of any incidence structure is always
 aware of its ambient geometry. This example also illustrates how to create an element that belongs to the polar space
 from the subspace of the ambient projective geometry by using <F>ElementToElement</F>. Finally note the behaviour of <F>=</F>
 applied on the two subspaces. Clearly, a subspace of a polar space is really also a subspace of the ambient projective space.
@@ -65,7 +65,7 @@ applied on the two subspaces. Clearly, a subspace of a polar space is really als
 </ManSection>
 
 <ManSection>
-<Heading>underlying objects</Heading>
+<Heading>Underlying objects</Heading>
 <Description>
 Subspaces of projective spaces and polar spaces (and in general, elements of incidence structures), 
 are determined by a mathematical object, called in <Package>FinInG</Package> the <E>underlying object</E>.
@@ -85,11 +85,11 @@ of an element of an affine spaces looks like.
 <ManSection>
 <Heading>constructing polar spaces</Heading>
 <Description>
-<Package>FinInG</Package> povides the classical polar spaces as the geometries of which the subspaces
-are represented by the totally isotropic, totally singular respectively, sub vector spaces with relation 
-to a cosen sesquilinear, quadratic form respectively. The user may choose any non-degenerate, non-singular respectively,
+<Package>FinInG</Package> provides the classical polar spaces as the geometries of which the subspaces
+are represented by the totally isotropic (resp. totally singular) vector subspaces with relation 
+to a chosen sesquilinear (resp. quadratic form). The user may choose any non-degenerate (resp. non-singular)
 form to construct the polar space. The usage of the forms makes <Package>FinInG</Package> dependent on the
-package <Package>forms</Package>. Shorcuts to polar spaces in <E>standard</E> representation are included.
+package <Package>forms</Package>. Shortcuts to polar spaces in <E>standard</E> representation are included.
 Detailed information can be found in Section <Ref Sect="can_standard"/>. 
 <Example>
 <#Include SYSTEM "../examples/include/examples_cps1.include">
@@ -98,16 +98,16 @@ Detailed information can be found in Section <Ref Sect="can_standard"/>.
 </ManSection>
 
 <ManSection>
-<Heading>some collineation groups</Heading>
+<Heading>Some collineation groups</Heading>
 <Description>
 In principle, the full group of collineations of almost any incidence structure can be computed in 
 <Package>FinInG</Package>. Mathematically, this is almost obvious for projective spaces and affine spaces.
 For classical polar spaces, the particular forms plays a role. The coordinate change capabilities of the 
-package <Package>forms</Package>, together with the standard reference in this <Cite Key="KleidmanLiebeck"/>, make
-that the full collineation group of a classical polar space can relatively easily be obtained. The computation
+package <Package>forms</Package>, together with the standard theory (see <Cite Key="KleidmanLiebeck"/>), ensure
+that the full collineation group of a classical polar space can be relatively easily obtained. The computation
 of the full collineation group of particular incidence structures, such as generalised polygons, may rely on
-the computation of the automorphism group of an underlying incidence graph, which is done by nauty through the 
-package <Package>grape</Package>. Note that the elements of a projective collineation group are semilinear
+the computation of the automorphism group of an underlying incidence graph, which is done by using nauty through the 
+package <Package>GRAPE</Package>. Note that the elements of a projective collineation group are semilinear
 maps, they consist of a matrix together with a field automorphism. 
 <Example>
 <#Include SYSTEM "../examples/include/examples_collgroup.include">
@@ -124,12 +124,12 @@ The examples here are meant to give a flavour of how to explore geometrical obje
 of views.
 
 <ManSection>
-<Heading>the Tits ovoid</Heading>
+<Heading>The Tits ovoid</Heading>
 <Description>
-In this example we consider the Tits ovoid in <M>PG(3,8)</M>. We explicitely check the intersection number
-of the Tits-ovoid with planes of the projective space, and compute its stabilizer group inside the homography
+In this example we consider the Tits ovoid in <M>PG(3,8)</M>. We explicitly check the intersection number
+of the Tits-ovoid with planes of the projective space, and compute its stabiliser group inside the homography
 group of <M>PG(3,8)</M>. The use of <F>;;</F> after a command suppresses its output, which is particularly interesting
-if the output is a long list. The operation <F>Collected</F> is self-explanatory, and a very usefull GAP command.
+if the output is a long list. The operation <F>Collected</F> is self-explanatory, and a very useful GAP command.
 The computed stabiliser is the Suzuki group <M>Sz(8)</M>, a finite simple group.
 <Example>
 <#Include SYSTEM "../examples/include/examples_tits.include">
@@ -138,7 +138,7 @@ The computed stabiliser is the Suzuki group <M>Sz(8)</M>, a finite simple group.
 </ManSection>
 
 <ManSection>
-<Heading>lines meeting a hermitian curve</Heading>
+<Heading>Lines meeting a hermitian curve</Heading>
 <Description>
 Here we see how the lines of a projective plane 
 <Alt Not="HTML"><M>PG(2,q^2)</M></Alt> 
@@ -152,7 +152,7 @@ meet a hermitian curve. It is well known that every line meets in either
 </ManSection>
 
 <ManSection>
-<Heading>the Patterson ovoid</Heading>
+<Heading>The Patterson ovoid</Heading>
 <Description>
 In this example, we construct the unique ovoid
 of the parabolic quadric <M>Q(6,3)</M>, first discovered by Patterson, but for
@@ -165,7 +165,7 @@ quadratic form over <M>GF(3)</M> and the associated polar space.
 </ManSection>
 
 <ManSection>
-<Heading>a hyperoval</Heading>
+<Heading>A hyperoval</Heading>
 <Description>
 In this example, we consider a hyperoval of the projective
 plane <M>PG(2,4)</M>, that is, six points no three collinear.
@@ -193,7 +193,7 @@ Geometry morphisms are not necessarily type preserving. This section is meant to
 in a non exhaustive way the basis philisophy behind geometry morphisms in <Package>FinInG</Package>.
 
 <ManSection>
-<Heading>isomorphic polar spaces</Heading>
+<Heading>Isomorphic polar spaces</Heading>
 <Description>
 We've seen already that a polar space can be constructed from any non-degenerate sesquilinear or
 non-singular quadratic form. An isomorphism between polar spaces of the same type, can easily be obtained.
@@ -206,7 +206,7 @@ the use of the obtained map to compute images and pre-images of elements.
 </ManSection>
 
 <ManSection>
-<Heading>intertwiners</Heading>
+<Heading>Intertwiners</Heading>
 <Description>
 We reconsider the previous example. The observant reader might have noticed the message
 <E>#I  No intertwiner computed...</E>. Given a geometry morphism
@@ -226,7 +226,7 @@ automorphism <M>g</M> of <M>S</M>, we have
 <ManSection>
 <Heading>Klein correspondence</Heading>
 <Description>
-The klein correspondence is well known. The user may define its own hyperbolic quadric
+The Klein correspondence is well known. The user may define its own hyperbolic quadric
 as range for the geometry morphism in <Package>FinInG</Package>. Note that more is possible
 than illustrated in the elementary example, see Section <Ref Sect="sec:klein"/>.
 <Example>
@@ -237,10 +237,10 @@ than illustrated in the elementary example, see Section <Ref Sect="sec:klein"/>.
 
 
 <ManSection>
-<Heading>embedding in a subspace</Heading>
+<Heading>Embedding in a subspace</Heading>
 <Description>
 A projective space can be embedded as a subspace in a higher dimensional projective space.
-A comparable embedding is possble for polar spaces, clearly only when a given subspaces
+A comparable embedding is possible for polar spaces, clearly only when a given subspaces
 intersects the polar space of higher rank in a polar space of the same type as the polar space to
 be embedded.
 <Example>
