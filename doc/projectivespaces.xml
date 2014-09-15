@@ -37,7 +37,7 @@ So the projective points are the one-dimensional subspaces, the projective lines
 From the axiomatic point of view, a projective space is a point-line geometry, 
 and has rank at least 2. But a projective line is obtained if we start with a two dimensional vector space. Starting with a
 one dimensional vector space yields a single projective point. Both examples are not a projective space in the axiomatic point of 
-view, but are in <Package>FinInG</Package> they are considered as projective spaces. 
+view, but in <Package>FinInG</Package> they are considered as projective spaces.
 
 <ManSection>
 <Filt Name="IsProjectiveSpace" Type="Category"/>
@@ -446,7 +446,7 @@ ambient geometry.
 </Section>
 
 <Section Label="proj_enum">
-<Heading>Enumerating subspaces of a projective spaces</Heading>
+<Heading>Enumerating subspaces of a projective space</Heading>
 
 <ManSection>
 <Oper Name="Iterator" Arg="subspaces"/>

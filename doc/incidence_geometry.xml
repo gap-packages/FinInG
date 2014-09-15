@@ -393,7 +393,7 @@ can be installed. A <E>chamber</E> is a flag of size <M>n</M>, where <M>n</M> is
 structure is an incidence geometry if every maximal flag is a chamber. 
 
 <ManSection>
-<Oper Name="FlagOfIcidenceStructure" Arg="inc, l"/>
+<Oper Name="FlagOfIncidenceStructure" Arg="inc, l"/>
 <Returns>the flag consisting of the elements of <A>inc</A> in the list <A>l</A></Returns>
 <Description>
 It is checked if all elements in <A>l</A> are incident and belong to the same incidence structure. An empty list is allowed.
@@ -568,12 +568,10 @@ of the Category of <M>G</M>, the returned incidence structure is constructed usi
 <Returns>The collections of elements of <A>inc</A> of respective type 1, 2, 3 and 4, 
 that are incident with <A>v</A></Returns>
 <Description>
-It is possible that <A>inc</A> is an incidence structure where the elements of type 1, 2, 3 and 4 
-respectively are not called "points", "lines", "planes", and "solids" respectively. The methods don't
-check whether names are given, and are just shortcuts to the operation <F>ShadowOfElement</F>. The second variant
-derives the incidence structure to be used as the ambient geometry of <A>v</A>. Please keep in mind 
-that these methods are shortcuts to <F>ShadowOfElement</F>, which implies that asking e.g. <F>Lines(v)</F>
-with <A>v</A> a point, will indeed return the lines incident with a point.  
+If <A>inc</A>, or the ambient geometry of <A>v</A> is an incidence structure, where the elements
+of type 1, 2, 3 and 4 are called "points", "lines", "planes", and "solids" respectively,
+these operations are shortcuts to <F>ShadowOfElement</F>. If this is not the case, a method
+for these operations is not installed.
 <Example>
 <#Include SYSTEM "../examples/include/incgeom_shadowshort.include"> 
 </Example>

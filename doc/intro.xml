@@ -214,7 +214,7 @@ If you are using BibTeX, you can use the following BibTeX entry for the current 
             De Beule, Jan and Lavrauw, Michel and Neunh\"offer, Max },
         Key = {fining},
         Title = {{FinInG -- Finite Incidence Geometry, Version 1.0}},
-        Url = {\verb+(http://http://cage.ugent.be/geometry/fining.php)+},
+        Url = {\verb+(http://cage.ugent.be/fining.php)+},
         Year = 2014}
 </Example>
 
@@ -226,13 +226,13 @@ be pasted directly inside the bibliography environment of your LaTeX document:
 J.~Bamberg, A.~Betten, {Ph}. Cara, J.~De~Beule, M.~Lavrauw, and
   M.~Neunh\"offer.
 \newblock {\em Finite Incidence Geometry}.
-\newblock FInInG -- a {GAP} package, version 1.0 -- under development, 2014.
+\newblock FInInG -- a {GAP} package, version 1.0, 2014.
 </Example>
 
 When linking to FinInG from a web page you can use the link
 
 <Example>
-&lt;a href="http://cage.ugent.be/geometry/fining.php/">FinInG&lt;/a>.
+&lt;a href="http://cage.ugent.be/fining.php/">FinInG&lt;/a>.
 </Example>
 
 </Section>

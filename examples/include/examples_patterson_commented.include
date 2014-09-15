@@ -21,10 +21,19 @@ gap&gt; ovoid := Union( List(reps, x-&gt; Orbit(psl32, x, Permuted)) );;
 gap&gt; ovoid := List(ovoid, x -&gt; VectorSpaceToElement(ps, x));;
 </Example>
 
-We check that this is indeed an ovoid...
+We check that this is indeed an ovoid. The observant reader will notice 
+<E>#I  Computing collineation group of canonical polar space...</E> which is caused
+by the command <F>AsList</F> applied to the collection of elements <A>planes</A>.
+The use of <F>AsList</F> invokes the computation of all elements in 
+<A>planes</A> as an orbit under the collineation group of the ambient polar
+space. The reader is invited to redo, in a new GAP session, the same example
+omitting the <F>AsList</F> command, just defining <F>planes := Planes(ps);;</F>.
+The result will be te same, but the computation of all elements will now be done
+using an enumerator, and will be slower.
 
 <Example>
-gap&gt; planes := Planes( ps );;
+gap&gt; planes := AsList(Planes( ps ));;
+#I  Computing collineation group of canonical polar space...
 gap&gt; ForAll(planes, p -&gt; Number(ovoid, x -&gt; x * p) = 1);
 true
 </Example>

@@ -16,12 +16,12 @@ gap&gt; reps:=[[1,1,1,0,0,0,0], [-1,1,1,0,0,0,0],
 gap&gt; ovoid := Union( List(reps, x-&gt; Orbit(psl32, x, Permuted)) );;
 gap&gt; ovoid := List(ovoid, x -&gt; VectorSpaceToElement(ps, x));;
 gap&gt; #We check that this is indeed an ovoid...
-gap&gt; planes := Planes( ps );;
+gap&gt; planes := AsList(Planes( ps ));;
+#I  Computing collineation group of canonical polar space...
 gap&gt; ForAll(planes, p -&gt; Number(ovoid, x -&gt; x * p) = 1);
 true
 gap&gt; #The stabiliser is interesting since it yields the embedding of Sp(6,2) in PO(7,3). To efficiently compute the set-wise stabiliser, we refer to the induced permutation representation.
 gap&gt; g := IsometryGroup( ps );
-#I  Computing collineation group of canonical polar space...
 &lt;projective collineation group of size 9170703360 with 2 generators&gt;
 gap&gt; stabovoid := FiningSetwiseStabiliser(g, ovoid);
 #I  Computing adjusted stabilizer chain...

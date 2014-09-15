@@ -70,6 +70,13 @@ to <C>IsGeneralisedPolygonRep</C>.
 </ManSection>
 
 <ManSection>
+<Filt Name="IsWeakGeneralisedPolygon" Type="Category"/>
+<Description>
+<C>IsWeakGeneralisedPolygon</C> is the category for weak generalised polygons.
+</Description>
+</ManSection>
+
+<ManSection>
 <Heading>Subcategories in <C>IsProjectivePlane</C></Heading>
 <Filt Name="IsDesarguesianPlane" Type="Category"/>
 <Description>

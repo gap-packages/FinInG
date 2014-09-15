@@ -5,4 +5,5 @@ lines := Lines( pg );
 curve := AsList( Points( h ) );;
 Size(curve);
 Collected( List(lines, t -> Number(curve, c-> c in t)));
+time;
 quit;

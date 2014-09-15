@@ -144,7 +144,8 @@ Here we see how the lines of a projective plane
 <Alt Not="HTML"><M>PG(2,q^2)</M></Alt> 
 <Alt Only="HTML">PG(2,q&lt;sup>2 &lt;/sup>)</Alt>
 meet a hermitian curve. It is well known that every line meets in either
-1 or <M>q+1</M> points.
+1 or <M>q+1</M> points. Note that the last comment takes a while
+to complete.
 <Example>
 <#Include SYSTEM "../examples/include/examples_hermitian.include"> 
 </Example>
