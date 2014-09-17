@@ -9,3 +9,5 @@ gap&gt; Size(curve);
 344
 gap&gt; Collected( List(lines, t -&gt; Number(curve, c-&gt; c in t)));
 [ [ 1, 344 ], [ 8, 2107 ] ]
+gap&gt; time;
+26412

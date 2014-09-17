@@ -3,6 +3,7 @@ W(5, 3)
 gap&gt; h := HermitianPolarSpace(5, 3^2);
 H(5, 3^2)
 gap&gt; em := NaturalEmbeddingBySubfield(w, h);
+#I  No intertwiner computed. &lt;geom1&gt; must have a collineation group computed
 &lt;geometry morphism from &lt;Elements of W(5, 3)&gt; to &lt;Elements of H(5, 3^2)&gt;&gt;
 gap&gt; points := AsList(Points(w));;
 gap&gt; image := ImagesSet(em, points);;
@@ -13,6 +14,7 @@ Q+(3, 4)
 gap&gt; eq:=EllipticQuadric(3,2);
 Q-(3, 2)
 gap&gt; em:=NaturalEmbeddingBySubfield(eq,hq);
+#I  No intertwiner computed. &lt;geom1&gt; must have a collineation group computed
 &lt;geometry morphism from &lt;Elements of Q-(3, 2)&gt; to &lt;Elements of Q+(3, 4)&gt;&gt;
 gap&gt; eqpts:=ImagesSet(em,AsList(Points(eq)));
 [ &lt;a point in Q+(3, 4)&gt;, &lt;a point in Q+(3, 4)&gt;, &lt;a point in Q+(3, 4)&gt;, 

@@ -8,4 +8,4 @@ gap&gt; plane2 := Random(Planes(ps));
 &lt;a plane in Q+(5, 5)&gt;
 gap&gt; FiningSetwiseStabiliser(g,Set([plane1,plane2]));
 #I  Computing adjusted stabilizer chain...
-&lt;projective collineation group with 5 generators&gt;
+&lt;projective collineation group with 4 generators&gt;

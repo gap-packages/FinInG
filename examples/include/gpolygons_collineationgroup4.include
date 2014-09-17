@@ -13,7 +13,7 @@ gap&gt; group := CollineationGroup(gh);
 #I  Found permutation domain...
 &lt;projective collineation group with 18 generators&gt;
 gap&gt; time;
-14564
+19602
 gap&gt; HasNiceMonomorphism(group);
 true
 gap&gt; gh := TwistedTrialityHexagon(2^3);

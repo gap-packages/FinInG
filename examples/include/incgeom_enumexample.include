@@ -7,4 +7,4 @@ gap&gt; Size(pts);
 gap&gt; Random(pts);
 &lt;a point in Q(16, 2401)&gt;
 gap&gt; time;
-464
+565

@@ -14,7 +14,7 @@ gap&gt; spread := List(Points(pg1),x-&gt;x^em);
   &lt;a line in ProjectiveSpace(3, 3)&gt;, &lt;a line in ProjectiveSpace(3, 3)&gt;, 
   &lt;a line in ProjectiveSpace(3, 3)&gt;, &lt;a line in ProjectiveSpace(3, 3)&gt; ]
 gap&gt; stab := Stabilizer(CollineationGroup(PG(3,3)),Set(spread),OnSets);
-&lt;projective collineation group of size 5760&gt;
+&lt;projective collineation group of size 5760 with 3 generators&gt;
 gap&gt; hom := HomographyGroup(pg1);
 The FinInG projectivity group PGL(2,9)
 gap&gt; gens := GeneratorsOfGroup(hom);;

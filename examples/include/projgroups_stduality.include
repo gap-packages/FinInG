@@ -8,7 +8,9 @@ gap&gt; p := VectorSpaceToElement(ps,[1,2,3,0,1]*Z(5)^0);
 &lt;a point in ProjectiveSpace(4, 5)&gt;
 gap&gt; h := p^delta;
 &lt;a solid in ProjectiveSpace(4, 5)&gt;
-gap&gt; ElementToVectorSpace(h);
+gap&gt; UnderlyingObject(h);
+&lt;cmat 4x5 over GF(5,1)&gt;
+gap&gt; Unpack(last);
 [ [ Z(5)^0, 0*Z(5), 0*Z(5), 0*Z(5), Z(5)^2 ], 
   [ 0*Z(5), Z(5)^0, 0*Z(5), 0*Z(5), Z(5)^3 ], 
   [ 0*Z(5), 0*Z(5), Z(5)^0, 0*Z(5), Z(5) ], 

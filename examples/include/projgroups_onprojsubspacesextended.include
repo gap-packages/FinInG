@@ -9,9 +9,8 @@ StandardDuality( AllElementsOfIncidenceStructure( ProjectiveSpace(
 gap&gt; frob := FrobeniusAutomorphism(GF(27));
 FrobeniusAutomorphism( GF(3^3) )
 gap&gt; phi := CorrelationOfProjectiveSpace(mat,frob,GF(27),delta);
-&lt;projective element with Frobenius with projectivespace isomorphism
-[ [ Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3) ], [ 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3) ], 
-  [ 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3) ], [ 0*Z(3), 0*Z(3), 0*Z(3), Z(3)^0 ] ], F^
+&lt;projective element with Frobenius with projectivespace isomorphism: &lt;cmat 4x
+4 over GF(3,3)&gt;, F^
 3, StandardDuality( AllElementsOfIncidenceStructure( ProjectiveSpace(
 3,GF(3^3)) ) ) &gt;
 gap&gt; p := Random(Points(ps));
@@ -23,10 +22,9 @@ gap&gt; l := Random(Lines(ps));
 gap&gt; OnProjSubspacesExtended(p,phi);
 &lt;a plane in ProjectiveSpace(3, 27)&gt;
 gap&gt; psi := CorrelationOfProjectiveSpace(mat,frob^2,GF(27));
-&lt;projective element with Frobenius with projectivespace isomorphism
-[ [ Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3) ], [ 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3) ], 
-  [ 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3) ], [ 0*Z(3), 0*Z(3), 0*Z(3), Z(3)^0 ] ], F^
-9, IdentityMapping( &lt;All elements of ProjectiveSpace(3, 27)&gt; ) &gt;
+&lt;projective element with Frobenius with projectivespace isomorphism: &lt;cmat 4x
+4 over GF(3,3)&gt;, F^9, IdentityMapping( &lt;All elements of ProjectiveSpace(3, 
+27)&gt; ) &gt;
 gap&gt; OnProjSubspacesExtended(p,psi);
 &lt;a point in ProjectiveSpace(3, 27)&gt;
 gap&gt; OnProjSubspacesExtended(l,psi);

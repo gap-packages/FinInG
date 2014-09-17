@@ -7,6 +7,4 @@ gap&gt; p1 := VectorSpaceToElement(ps,[1,0,1,2]*Z(3)^0);
 gap&gt; p2 := VectorSpaceToElement(ps,[1,2,0,2]*Z(3)^0);
 &lt;a point in ProjectiveSpace(3, 9)&gt;
 gap&gt; phi := ElationOfProjectiveSpace(sub,p1,p2);
-&lt; a collineation: [ [ Z(3)^0, Z(3), Z(3), 0*Z(3) ], 
-  [ 0*Z(3), 0*Z(3), Z(3), 0*Z(3) ], [ 0*Z(3), Z(3)^0, Z(3), 0*Z(3) ], 
-  [ 0*Z(3), Z(3)^0, Z(3)^0, Z(3)^0 ] ], F^0&gt;
+&lt; a collineation: &lt;cmat 4x4 over GF(3,2)&gt;, F^0&gt;

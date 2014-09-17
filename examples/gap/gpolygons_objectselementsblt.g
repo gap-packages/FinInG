@@ -2,7 +2,7 @@
 clan := FisherThasWalkerKantorBettenqClan(11);
 blt := BLTSetByqClan(clan);
 egq := EGQByBLTSet(blt);
-planes := DefiningPlanes(egq);
+planes := DefiningPlanesOfEGQByBLTSet(egq);
 p := BasePointOfEGQ(egq);
 up := UnderlyingObject(p);
 ps := SymplecticSpace(5,11);

@@ -2,6 +2,4 @@ gap&gt; g:=CollineationGroup( ProjectiveSpace(2,49));
 The FinInG collineation group PGammaL(3,49)
 gap&gt; x:=Random(g);;
 gap&gt; Representative(x);
-[ [ [ Z(7)^4, Z(7^2)^17, Z(7^2)^9 ], [ Z(7^2)^12, Z(7^2)^47, Z(7^2)^31 ], 
-      [ Z(7^2)^11, Z(7^2)^29, Z(7^2)^31 ] ], FrobeniusAutomorphism( GF(7^2) ) 
- ]
+[ &lt;immutable cmat 3x3 over GF(7,2)&gt;, FrobeniusAutomorphism( GF(7^2) ) ]

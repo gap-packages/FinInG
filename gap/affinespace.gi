@@ -933,13 +933,13 @@ InstallMethod( Iterator,
 	## we need a transversal for each subspace
 			if j = 2 then 
 				subs := List(ElementsOfIncidenceStructure(ProjectiveSpace(ps!.dimension-1,f), 1), 
-                     x -> [x!.obj]);
+                     x -> [Unpack(x!.obj)]);
 			else
 				subs := List(ElementsOfIncidenceStructure(ProjectiveSpace(ps!.dimension-1,f), j-1), 
-                     x -> x!.obj);
+                     x -> Unpack(x!.obj));
 			fi;
 			vars := Union(List(subs, x -> 
-                 List(VectorSpaceTransversal(vec, x), y -> AffineSubspace(ps,y,Unpack(x)))));
+                 List(VectorSpaceTransversal(vec, x), y -> AffineSubspace(ps,y,x))));
 			return IteratorList( vars );
 		fi;
   end );

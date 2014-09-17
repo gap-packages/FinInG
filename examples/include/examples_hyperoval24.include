@@ -15,7 +15,7 @@ gap&gt; pointslist := AsList(points);
   &lt;a point in ProjectiveSpace(2, 4)&gt;, &lt;a point in ProjectiveSpace(2, 4)&gt;, 
   &lt;a point in ProjectiveSpace(2, 4)&gt; ]
 gap&gt; Display(pointslist[1]);
- . . 1
+[1..]
 gap&gt; frame := [[1,0,0],[0,1,0],[0,0,1],[1,1,1]]*Z(2)^0;
 [ [ Z(2)^0, 0*Z(2), 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2) ], 
   [ 0*Z(2), 0*Z(2), Z(2)^0 ], [ Z(2)^0, Z(2)^0, Z(2)^0 ] ]
@@ -45,6 +45,6 @@ gap&gt; hyperoval := Union(frame,leftover);
 gap&gt; g := CollineationGroup(pg);
 The FinInG collineation group PGammaL(3,4)
 gap&gt; stab := Stabilizer(g,Set(hyperoval),OnSets);
-&lt;projective collineation group of size 720&gt;
+&lt;projective collineation group of size 720 with 3 generators&gt;
 gap&gt; StructureDescription(stab);
 "S6"

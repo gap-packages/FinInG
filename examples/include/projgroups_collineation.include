@@ -8,15 +8,10 @@ gap&gt; mat:=
 gap&gt; frob := FrobeniusAutomorphism(GF(8));
 FrobeniusAutomorphism( GF(2^3) )
 gap&gt; phi := ProjectiveSemilinearMap(mat,frob^2,GF(8));
-&lt; a collineation: [ [ Z(2^3)^6, Z(2^3), Z(2^3)^3, Z(2^3)^3 ], 
-  [ Z(2^3)^6, Z(2)^0, Z(2^3)^2, Z(2^3)^3 ], 
-  [ 0*Z(2), Z(2^3)^4, Z(2^3), Z(2^3) ], 
-  [ Z(2^3)^6, Z(2^3)^5, Z(2^3)^3, Z(2^3)^5 ] ], F^4&gt;
+&lt; a collineation: &lt;cmat 4x4 over GF(2,3)&gt;, F^4&gt;
 gap&gt; mat2 := [[Z(2^8)^31,Z(2^8)^182,Z(2^8)^49],[Z(2^8)^224,Z(2^8)^25,Z(2^8)^45], 
 &gt; [Z(2^8)^128,Z(2^8)^165,Z(2^8)^217]];
 [ [ Z(2^8)^31, Z(2^8)^182, Z(2^8)^49 ], [ Z(2^8)^224, Z(2^8)^25, Z(2^8)^45 ], 
   [ Z(2^8)^128, Z(2^8)^165, Z(2^8)^217 ] ]
-gap&gt; psi := CollineationOfProjectiveSpace(mat2,GF(512));
-&lt; a collineation: [ [ Z(2^8)^31, Z(2^8)^182, Z(2^8)^49 ], 
-  [ Z(2^8)^224, Z(2^8)^25, Z(2^8)^45 ], 
-  [ Z(2^8)^128, Z(2^8)^165, Z(2^8)^217 ] ], F^0&gt;
+gap&gt; psi := CollineationOfProjectiveSpace(mat2,GF(256));
+&lt; a collineation: &lt;cmat 3x3 over GF(2,8)&gt;, F^0&gt;

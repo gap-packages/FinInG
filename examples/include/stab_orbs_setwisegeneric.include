@@ -7,6 +7,6 @@ gap&gt; q := Random(Points(ps));
 gap&gt; g := CollineationGroup(ps);
 The FinInG collineation group PGammaL(4,4)
 gap&gt; Stabilizer(g,Set([p,q]),OnSets);
-&lt;projective collineation group of size 552960&gt;
+&lt;projective collineation group of size 552960 with 5 generators&gt;
 gap&gt; time;
-16079
+10440

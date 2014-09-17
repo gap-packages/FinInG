@@ -1,7 +1,7 @@
 #enumerator in affine spaces
-gap> ag := AffineSpace(3, 3);
-gap> lines := Lines( ag );
-gap> enum := Enumerator( lines );
-gap> l := enum[20];
-gap> Display(l);
+ag := AffineSpace(3, 3);
+lines := Lines( ag );
+enum := Enumerator( lines );
+l := enum[20];
+Display(l);
 quit;

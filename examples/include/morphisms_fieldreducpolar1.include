@@ -9,8 +9,8 @@ gap&gt; ps2 := AmbientGeometry(Range(em));
 5,GF(3)): -x1*y6-x2*y5-x3*y4-x3*y6+x4*y3+x5*y2+x6*y1+x6*y3=0 &gt;
 gap&gt; spread := List(Points(ps1),x-&gt;x^em);;
 gap&gt; i := Intertwiner(em);
-MappingByFunction( PGSp(2,27), &lt;projective collineation group of size 
-19656 with 3 generators&gt;, function( m ) ... end, function( m ) ... end )
+MappingByFunction( PSp(2,27), &lt;projective collineation group of size 
+9828 with 2 generators&gt;, function( m ) ... end, function( m ) ... end )
 gap&gt; coll := CollineationGroup(ps2);
 #I  Computing collineation group of canonical polar space...
 &lt;projective collineation group of size 9170703360 with 4 generators&gt;

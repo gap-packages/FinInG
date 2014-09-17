@@ -8,20 +8,18 @@ gap&gt; clan := qClan(clan, f);
 &lt;q-clan over GF(3)&gt;
 gap&gt; egq := EGQByqClan( clan );
 #I  Computed Kantor family. Now computing EGQ...
-#I  Computing points from Kantor family...
-#I  Computing lines from Kantor family...
 &lt;EGQ of order [ 9, 3 ] and basepoint 0&gt;
 gap&gt; elations := ElationGroup( egq );
 &lt;matrix group of size 243 with 8 generators&gt;
 gap&gt; points := Points( egq );
 &lt;points of &lt;EGQ of order [ 9, 3 ] and basepoint 0&gt;&gt;
 gap&gt; p := Random(points);
-&lt;a point of a Kantor family&gt;
+&lt;a point of class 2 of &lt;EGQ of order [ 9, 3 ] and basepoint 0&gt;&gt;
 gap&gt; x := Random(elations);
-[ [ Z(3)^0, Z(3), Z(3)^0, Z(3) ], [ 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3) ], 
+[ [ Z(3)^0, 0*Z(3), 0*Z(3), Z(3)^0 ], [ 0*Z(3), Z(3)^0, 0*Z(3), Z(3)^0 ], 
   [ 0*Z(3), 0*Z(3), Z(3)^0, Z(3)^0 ], [ 0*Z(3), 0*Z(3), 0*Z(3), Z(3)^0 ] ]
 gap&gt; OnKantorFamily(p,x);
-&lt;a point of a Kantor family&gt;
+&lt;a point of class 2 of &lt;EGQ of order [ 9, 3 ] and basepoint 0&gt;&gt;
 gap&gt; orbs := Orbits( elations, points, OnKantorFamily);;
 gap&gt; Collected(List( orbs, Size ));
 [ [ 1, 1 ], [ 9, 4 ], [ 243, 1 ] ]

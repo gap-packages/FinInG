@@ -9,3 +9,5 @@ gap&gt; FINING.LimitForCanComputeActionOnPoints := 3*10^6;
 3000000
 gap&gt; NiceMonomorphism(CollineationGroup(ProjectiveSpace(7,8)));
 &lt;action isomorphism&gt;
+gap&gt; time;
+39619

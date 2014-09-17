@@ -1,3 +1,4 @@
+gap&gt; gp := TwistedTrialityHexagon(2^3);
 T(8, 2)
 gap&gt; Order(gp);
 [ 8, 2 ]
@@ -7,8 +8,6 @@ gap&gt; Order(gp);
 [ 25, 125 ]
 gap&gt; gp := EGQByqClan(LinearqClan(3));
 #I  Computed Kantor family. Now computing EGQ...
-#I  Computing points from Kantor family...
-#I  Computing lines from Kantor family...
 &lt;EGQ of order [ 9, 3 ] and basepoint 0&gt;
 gap&gt; Order(gp);
 [ 9, 3 ]

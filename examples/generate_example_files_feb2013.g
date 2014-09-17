@@ -99,7 +99,7 @@ varieties_files := ["varieties_general", "varieties_polarspace", "varieties_vero
 					"varieties_quadratic"  ];
 
 
-diagramfiles := ["diagram_cosetgeom", "diagram_neumaier", "diagram_indmin", "diagram_nearoctagon", "diagram_autiso", "diagram_autcor",
+diagramfiles := ["diagram_cosetgeom", "diagram_neumaier", "diagram_nearoctagon", "diagram_autiso", "diagram_autcor",
                     "diagram_random", "diagram_notFT", "diagram_firmthinthick", "diagram_connectedness", "diagram_flagmapping",
                     "diagram_residues"];
 

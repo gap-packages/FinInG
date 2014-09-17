@@ -18,6 +18,4 @@ gap&gt; hom := Embedding(h,g);
 MappingByFunction( The FinInG collineation group PGammaL(4,25), The FinInG cor
 relation-collineation group PGammaL(4,25) : 2, function( y ) ... end )
 gap&gt; coll := PreImagesRepresentative(hom,phi*psi);
-&lt; a collineation: [ [ 0*Z(5), Z(5)^0, 0*Z(5), 0*Z(5) ], 
-  [ Z(5)^0, 0*Z(5), 0*Z(5), 0*Z(5) ], [ 0*Z(5), 0*Z(5), 0*Z(5), Z(5)^0 ], 
-  [ 0*Z(5), 0*Z(5), Z(5)^0, 0*Z(5) ] ], F^5&gt;
+&lt; a collineation: &lt;cmat 4x4 over GF(5,2)&gt;, F^5&gt;

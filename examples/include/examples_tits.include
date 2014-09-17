@@ -40,6 +40,8 @@ gap&gt; stab := FiningSetwiseStabiliser(group,ovoid);
 #I  Computing adjusted stabilizer chain...
 &lt;projective collineation group with 5 generators&gt;
 gap&gt; time;
-86160
+55290
 gap&gt; IsSimple(stab);
 true
+gap&gt; Order(stab);
+29120

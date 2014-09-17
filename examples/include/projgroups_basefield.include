@@ -2,7 +2,6 @@ gap&gt; mat := [[0,1,0],[1,0,0],[0,0,2]]*Z(3)^0;
 [ [ 0*Z(3), Z(3)^0, 0*Z(3) ], [ Z(3)^0, 0*Z(3), 0*Z(3) ], 
   [ 0*Z(3), 0*Z(3), Z(3) ] ]
 gap&gt; g := Projectivity(mat,GF(3^6));
-&lt; a collineation: [ [ 0*Z(3), Z(3)^0, 0*Z(3) ], [ Z(3)^0, 0*Z(3), 0*Z(3) ], 
-  [ 0*Z(3), 0*Z(3), Z(3) ] ], F^0&gt;
+&lt; a collineation: &lt;cmat 3x3 over GF(3,6)&gt;, F^0&gt;
 gap&gt; BaseField(g);
 GF(3^6)

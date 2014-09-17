@@ -31,7 +31,7 @@ gap&gt; stab := FiningSetwiseStabiliser(biggroup,spread);
 #I  Computing adjusted stabilizer chain...
 &lt;projective collineation group with 7 generators&gt;
 gap&gt; time;
-5110
+6907
 gap&gt; Order(stab);
 5859000
 gap&gt; ps1 := HermitianPolarSpace(2,7^2);
@@ -67,6 +67,6 @@ gap&gt; stab := FiningSetwiseStabiliser(biggroup,spread);
 #I  Computing adjusted stabilizer chain...
 &lt;projective collineation group with 10 generators&gt;
 gap&gt; time;
-2325
+3438
 gap&gt; Order(stab);
 90617856

@@ -4,6 +4,6 @@ delta := StandardDualityOfProjectiveSpace(ps);
 delta^2;
 p := VectorSpaceToElement(ps,[1,2,3,0,1]*Z(5)^0);
 h := p^delta;
-ElementToVectorSpace(h);
+UnderlyingObject(h);
 Unpack(last);
 quit;

@@ -1,9 +1,5 @@
 gap&gt; x := Random(CollineationGroup(PG(4,9)));
-&lt; a collineation: [ [ Z(3)^0, Z(3)^0, Z(3^2)^3, 0*Z(3), Z(3) ], 
-  [ Z(3), Z(3)^0, Z(3^2)^2, Z(3), Z(3^2)^6 ], 
-  [ Z(3^2)^2, Z(3)^0, Z(3)^0, Z(3^2)^7, 0*Z(3) ], 
-  [ Z(3^2), Z(3^2)^5, Z(3^2)^7, Z(3^2)^2, Z(3^2) ], 
-  [ Z(3), Z(3), 0*Z(3), Z(3), Z(3^2)^2 ] ], F^3&gt;
+&lt; a collineation: &lt;cmat 5x5 over GF(3,2)&gt;, F^3&gt;
 gap&gt; t := Order(x);
 32
 gap&gt; IsOne(x^t);

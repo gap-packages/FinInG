@@ -3,7 +3,7 @@ gap&gt; q := 9;
 gap&gt; f := GF(q);
 GF(3^2)
 gap&gt; squares := AsList(Group(Z(q)^2));
-[ Z(3)^0, Z(3), Z(3^2)^2, Z(3^2)^6 ]
+[ Z(3)^0, Z(3^2)^6, Z(3), Z(3^2)^2 ]
 gap&gt; n := First(GF(q), x -&gt; not IsZero(x) and not x in squares);
 Z(3^2)
 gap&gt; sigma := FrobeniusAutomorphism( f );
@@ -26,8 +26,6 @@ gap&gt; qclan := qClan(qclan , f);
 &lt;q-clan over GF(3^2)&gt;
 gap&gt; egq1 := EGQByqClan( qclan);  
 #I  Computed Kantor family. Now computing EGQ...
-#I  Computing points from Kantor family...
-#I  Computing lines from Kantor family...
 &lt;EGQ of order [ 81, 9 ] and basepoint 0&gt;
 gap&gt; blt := BLTSetByqClan( qclan );
 [ &lt;a point in Q(4, 9): -x_1*x_5-x_2*x_4+Z(3^2)^5*x_3^2=0&gt;, 
@@ -41,12 +39,6 @@ gap&gt; blt := BLTSetByqClan( qclan );
   &lt;a point in Q(4, 9): -x_1*x_5-x_2*x_4+Z(3^2)^5*x_3^2=0&gt;, 
   &lt;a point in Q(4, 9): -x_1*x_5-x_2*x_4+Z(3^2)^5*x_3^2=0&gt; ]
 gap&gt; egq2 := EGQByBLTSet( blt );
-#I  No intertwiner computed. One of the polar spaces must have a collineation group computed
 #I  Now embedding dual BLT-set into W(5,q)...
-#I  Computing points(1) of Knarr construction...
-#I  Computing lines(1) of Knarr construction...
-#I  Computing points(2) of Knarr construction...
-#I  Computing lines(2) of Knarr construction...please wait
 #I  Computing elation group...
-&lt;EGQ of order [ 81, 9 ] and basepoint [ Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3),
-   0*Z(3), 0*Z(3) ]&gt;
+&lt;EGQ of order [ 81, 9 ] and basepoint in W(5, 9 ) &gt;

@@ -63,7 +63,7 @@ CosetGeometry( Group(
      ],]),IdentityMapping( GF(2) )) ] ) )
 gap&gt; IsConnected(cos);
 true
-gap&gt; IsResiduallyConnected(cos); # Time of last command: 570727 ms
+gap&gt; IsResiduallyConnected(cos);
 true
 gap&gt; time;
-611973
+419960

@@ -15,7 +15,7 @@ gap&gt; egq := EGQByBLTSet(blt);
 #I  Now embedding dual BLT-set into W(5,q)...
 #I  Computing elation group...
 &lt;EGQ of order [ 81, 9 ] and basepoint in W(5, 9 ) &gt;
-gap&gt; DefiningPlanes(egq);
+gap&gt; DefiningPlanesOfEGQByBLTSet(egq);
 [ &lt;a plane in W(5, 9)&gt;, &lt;a plane in W(5, 9)&gt;, &lt;a plane in W(5, 9)&gt;, 
   &lt;a plane in W(5, 9)&gt;, &lt;a plane in W(5, 9)&gt;, &lt;a plane in W(5, 9)&gt;, 
   &lt;a plane in W(5, 9)&gt;, &lt;a plane in W(5, 9)&gt;, &lt;a plane in W(5, 9)&gt;, 

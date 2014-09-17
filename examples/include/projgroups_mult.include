@@ -1,17 +1,12 @@
 gap&gt; x := Random(CollineationGroup(PG(3,4)));
-&lt; a collineation: [ [ Z(2)^0, Z(2^2), Z(2)^0, Z(2^2)^2 ], 
-  [ 0*Z(2), 0*Z(2), Z(2)^0, Z(2^2)^2 ], [ Z(2^2), Z(2^2)^2, 0*Z(2), Z(2^2)^2 ]
-    , [ Z(2)^0, 0*Z(2), Z(2)^0, Z(2^2)^2 ] ], F^2&gt;
+&lt; a collineation: &lt;cmat 4x4 over GF(2,2)&gt;, F^2&gt;
 gap&gt; y := Random(CorrelationCollineationGroup(PG(3,4)));
-&lt;projective element with Frobenius with projectivespace isomorphism
-[ [ 0*Z(2), Z(2^2), 0*Z(2), Z(2^2)^2 ], [ Z(2)^0, Z(2^2)^2, Z(2)^0, 0*Z(2) ], 
-  [ Z(2)^0, Z(2^2), Z(2^2)^2, 0*Z(2) ], [ Z(2^2), Z(2)^0, 0*Z(2), Z(2)^0 ] 
- ], F^0, StandardDuality( AllElementsOfIncidenceStructure( ProjectiveSpace(
+&lt;projective element with Frobenius with projectivespace isomorphism: &lt;immutabl
+e cmat 4x4 over GF(2,
+2)&gt;, F^0, StandardDuality( AllElementsOfIncidenceStructure( ProjectiveSpace(
 3,GF(2^2)) ) ) &gt;
 gap&gt; x*y;
-&lt;projective element with Frobenius with projectivespace isomorphism
-[ [ Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0 ], [ Z(2^2)^2, 0*Z(2), Z(2^2), Z(2^2)^2 ], 
-  [ Z(2)^0, Z(2^2)^2, Z(2^2)^2, 0*Z(2) ], 
-  [ Z(2^2)^2, Z(2^2)^2, Z(2^2), Z(2)^0 ] ], F^
+&lt;projective element with Frobenius with projectivespace isomorphism: &lt;cmat 4x
+4 over GF(2,2)&gt;, F^
 2, StandardDuality( AllElementsOfIncidenceStructure( ProjectiveSpace(
 3,GF(2^2)) ) ) &gt;

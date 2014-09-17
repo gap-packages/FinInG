@@ -13,4 +13,4 @@ gap&gt; CollineationGroup(gp);
 #I  Found permutation domain...
 3D_4(27)
 gap&gt; time;
-32950
+40691

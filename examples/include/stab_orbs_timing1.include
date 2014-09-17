@@ -5,13 +5,13 @@ The FinInG collineation group PGammaL(4,8)
 gap&gt; p := Random(Points(ps));
 &lt;a point in ProjectiveSpace(3, 8)&gt;
 gap&gt; g1 := Stabilizer(g,p);
-&lt;projective collineation group of size 177223237632&gt;
+&lt;projective collineation group of size 177223237632 with 2 generators&gt;
 gap&gt; time;
-13759
+9576
 gap&gt; g2 := FiningStabiliser(g,p);
 &lt;projective collineation group of size 177223237632 with 2 generators&gt;
 gap&gt; time;
-312
+244
 gap&gt; g3 := FiningStabiliserOrb(g,p);
 &lt;projective collineation group with 15 generators&gt;
 gap&gt; time;

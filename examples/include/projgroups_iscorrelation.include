@@ -1,21 +1,13 @@
 gap&gt; g := Random(CollineationGroup(PG(4,7)));
-&lt; a collineation: [ [ Z(7)^5, Z(7)^2, Z(7)^3, Z(7)^5, Z(7)^2 ], 
-  [ Z(7)^5, Z(7)^4, 0*Z(7), Z(7)^4, Z(7) ], 
-  [ Z(7), Z(7)^0, Z(7)^4, 0*Z(7), Z(7)^4 ], 
-  [ Z(7)^2, Z(7)^5, Z(7)^4, Z(7)^0, Z(7)^0 ], 
-  [ Z(7)^3, Z(7), Z(7)^5, Z(7)^3, Z(7)^0 ] ], F^0&gt;
+&lt; a collineation: &lt;cmat 5x5 over GF(7,1)&gt;, F^0&gt;
 gap&gt; IsCorrelationCollineation(g);
 false
 gap&gt; IsCorrelation(g);
 false
 gap&gt; g := Random(CorrelationCollineationGroup(PG(4,7)));
-&lt;projective element with Frobenius with projectivespace isomorphism
-[ [ Z(7)^0, Z(7)^3, Z(7)^0, Z(7)^3, 0*Z(7) ], 
-  [ Z(7)^2, Z(7)^2, Z(7)^2, Z(7)^0, Z(7)^5 ], 
-  [ Z(7)^4, 0*Z(7), Z(7), Z(7)^5, Z(7)^3 ], 
-  [ 0*Z(7), Z(7)^0, Z(7)^3, Z(7), Z(7) ], 
-  [ Z(7)^0, Z(7)^3, Z(7)^0, Z(7)^3, Z(7)^0 ] 
- ], F^0, IdentityMapping( &lt;All elements of ProjectiveSpace(4, 7)&gt; ) &gt;
+&lt;projective element with Frobenius with projectivespace isomorphism: &lt;cmat 5x
+5 over GF(7,1)&gt;, F^0, IdentityMapping( &lt;All elements of ProjectiveSpace(4, 
+7)&gt; ) &gt;
 gap&gt; IsCorrelationCollineation(g);
 true
 gap&gt; IsCorrelation(g);

@@ -17,8 +17,13 @@ gap&gt; IsIncident(point,line);
 false
 gap&gt; IsIncident(line,point);
 false
-gap&gt; point in line;
+gap&gt; point * line;
 false
+gap&gt; line * point
+&gt; point in line;
+Syntax error: ; expected
+point in line;
+    ^
 gap&gt; line in point;
 false
 gap&gt; IsIncident(point,plane);

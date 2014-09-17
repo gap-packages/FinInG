@@ -33,17 +33,17 @@ gap&gt; plane := Random(Planes(ps));
 gap&gt; FiningStabiliser(g,plane);
 &lt;projective collineation group of size 93000000 with 2 generators&gt;
 gap&gt; h := SplitCayleyHexagon(3);
-Split Cayley Hexagon of order 3
+H(3)
 gap&gt; g := CollineationGroup(h);
 #I  for Split Cayley Hexagon
 #I  Computing nice monomorphism...
-#I  Found permutation domain…
+#I  Found permutation domain...
 G_2(3)
 gap&gt; p := Random(Points(h));
-&lt;a point of Split Cayley Hexagon of order 3&gt;
+&lt;a point in H(3)&gt;
 gap&gt; FiningStabiliser(g,p);
-&lt;projective collineation group of size 11664 with 3 generators&gt;
+&lt;projective collineation group of size 11664 with 2 generators&gt;
 gap&gt; line := Random(Lines(h));
-&lt;a line of Split Cayley Hexagon of order 3&gt;
+&lt;a line in H(3)&gt;
 gap&gt; FiningStabiliser(g,line);
-&lt;projective collineation group of size 11664 with 3 generators&gt;
+&lt;projective collineation group of size 11664 with 2 generators&gt;

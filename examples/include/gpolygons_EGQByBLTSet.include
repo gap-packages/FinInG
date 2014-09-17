@@ -29,7 +29,7 @@ gap&gt; CollineationGroup(egq);
 #I  Using elation group to enumerate elements
 &lt;permutation group of size 26127360 with 7 generators&gt;
 gap&gt; time;
-111
+147
 gap&gt; egq := EGQByqClan(clan);
 #I  Computed Kantor family. Now computing EGQ...
 &lt;EGQ of order [ 9, 3 ] and basepoint 0&gt;
@@ -38,4 +38,4 @@ gap&gt; CollineationGroup(egq);
 #I  Using elation of the collineation group...
 &lt;permutation group of size 26127360 with 6 generators&gt;
 gap&gt; time;
-935
+1139

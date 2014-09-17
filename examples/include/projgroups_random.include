@@ -7,7 +7,7 @@ false
 gap&gt; Random(group);
 &lt; a collineation: &lt;cmat 5x5 over GF(2,3)&gt;, F^4&gt;
 gap&gt; time;
-731
+1028
 gap&gt; HasNiceMonomorphism(group);
 true
 gap&gt; Random(group);

@@ -9,4 +9,4 @@ gap&gt; s := First(Solids(pg),t -&gt; TypeOfSubspace(ps,t) = "elliptic" );
 gap&gt; orbit := FiningOrbit(g,s,OnProjSubspaces);
 &lt;closed orbit, 265356 points&gt;
 gap&gt; time;
-50555
+33555

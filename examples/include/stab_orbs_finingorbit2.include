@@ -9,7 +9,7 @@ gap&gt; s := First(Solids(pg),t -&gt; TypeOfSubspace(ps,t) = "elliptic" );
 gap&gt; orbit1 := FiningOrbit(g,s,OnProjSubspaces);
 &lt;closed orbit, 36 points&gt;
 gap&gt; time;
-5
+9
 gap&gt; spts := Filtered(Points(s),s-&gt;s in ps);
 [ &lt;a point in ProjectiveSpace(4, 3)&gt;, &lt;a point in ProjectiveSpace(4, 3)&gt;, 
   &lt;a point in ProjectiveSpace(4, 3)&gt;, &lt;a point in ProjectiveSpace(4, 3)&gt;, 
@@ -19,4 +19,4 @@ gap&gt; spts := Filtered(Points(s),s-&gt;s in ps);
 gap&gt; orbit2 := FiningOrbit(g,Set(spts),OnSetsProjSubspaces);
 &lt;closed orbit, 36 points&gt;
 gap&gt; time;
-13
+18

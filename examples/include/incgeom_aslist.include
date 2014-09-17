@@ -3,7 +3,7 @@ Q(6, 2)
 gap&gt; lines := AsList(Lines(ps));
 &lt;closed orbit, 315 points&gt;
 gap&gt; time;
-59
+58
 gap&gt; List(lines);
 [ &lt;a line in Q(6, 2)&gt;, &lt;a line in Q(6, 2)&gt;, &lt;a line in Q(6, 2)&gt;, 
   &lt;a line in Q(6, 2)&gt;, &lt;a line in Q(6, 2)&gt;, &lt;a line in Q(6, 2)&gt;, 

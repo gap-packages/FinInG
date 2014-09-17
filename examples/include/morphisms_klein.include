@@ -1,11 +1,15 @@
-gap&gt; quadric := HyperbolicQuadric(5,3);                                         
-Q+(5, 3)
-gap&gt; k := KleinCorrespondence( quadric );
-&lt;geometry morphism from &lt;lines of ProjectiveSpace(3, 3)&gt; to &lt;points of Q+(5, 
-3)&gt;&gt;
-gap&gt; pg := ProjectiveSpace(3, 3);
-ProjectiveSpace(3, 3)
+gap&gt; k := KleinCorrespondence( 9 );
+&lt;geometry morphism from &lt;lines of ProjectiveSpace(3, 9)&gt; to &lt;points of Q+(5, 
+9): x_1*x_6+x_2*x_5+x_3*x_4=0&gt;&gt;
+gap&gt; Intertwiner(k);
+MappingByFunction( The FinInG collineation group PGammaL(4,9), &lt;projective col
+lineation group with 
+3 generators&gt;, function( g ) ... end, function( g ) ... end )
+gap&gt; pg := ProjectiveSpace(3, 9);
+ProjectiveSpace(3, 9)
+gap&gt; AmbientGeometry(Range(k));
+Q+(5, 9): x_1*x_6+x_2*x_5+x_3*x_4=0
 gap&gt; l := Random( Lines(pg) );
-&lt;a line in ProjectiveSpace(3, 3)&gt;
+&lt;a line in ProjectiveSpace(3, 9)&gt;
 gap&gt; l^k;
-&lt;a point in Q+(5, 3)&gt;
+&lt;a point in Q+(5, 9): x_1*x_6+x_2*x_5+x_3*x_4=0&gt;

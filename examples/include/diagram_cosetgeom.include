@@ -20,3 +20,5 @@ gap&gt; Rank(cg) = Size(last);
 true
 gap&gt; BorelSubgroup(cg);
 Group([ (1,2), (4,5) ])
+gap&gt; AmbientGroup(cg);
+Sym( [ 1 .. 5 ] )

@@ -6,7 +6,7 @@ gap&gt; repeat
 &gt; p := Random(Points(ps));
 &gt; until p in gh;
 gap&gt; time;
-15156
+18399
 gap&gt; p in gh;
 true
 gap&gt; q := ElementToElement(gh,p);

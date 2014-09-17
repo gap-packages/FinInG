@@ -2,29 +2,25 @@ gap&gt; mat := [[1,0,0],[3,0,2],[0,5,4]]*Z(7^3);
 [ [ Z(7^3), 0*Z(7), 0*Z(7) ], [ Z(7^3)^58, 0*Z(7), Z(7^3)^115 ], 
   [ 0*Z(7), Z(7^3)^286, Z(7^3)^229 ] ]
 gap&gt; phi1 := CorrelationOfProjectiveSpace(mat,GF(7^3));
-&lt;projective element with Frobenius with projectivespace isomorphism
-[ [ Z(7^3), 0*Z(7), 0*Z(7) ], [ Z(7^3)^58, 0*Z(7), Z(7^3)^115 ], 
-  [ 0*Z(7), Z(7^3)^286, Z(7^3)^229 ] 
- ], F^0, IdentityMapping( &lt;All elements of ProjectiveSpace(2, 343)&gt; ) &gt;
+&lt;projective element with Frobenius with projectivespace isomorphism: &lt;cmat 3x
+3 over GF(7,3)&gt;, F^0, IdentityMapping( &lt;All elements of ProjectiveSpace(2, 
+343)&gt; ) &gt;
 gap&gt; frob := FrobeniusAutomorphism(GF(7^3));
 FrobeniusAutomorphism( GF(7^3) )
 gap&gt; phi2 := CorrelationOfProjectiveSpace(mat,frob,GF(7^3));
-&lt;projective element with Frobenius with projectivespace isomorphism
-[ [ Z(7^3), 0*Z(7), 0*Z(7) ], [ Z(7^3)^58, 0*Z(7), Z(7^3)^115 ], 
-  [ 0*Z(7), Z(7^3)^286, Z(7^3)^229 ] ], F^
-7, IdentityMapping( &lt;All elements of ProjectiveSpace(2, 343)&gt; ) &gt;
+&lt;projective element with Frobenius with projectivespace isomorphism: &lt;cmat 3x
+3 over GF(7,3)&gt;, F^7, IdentityMapping( &lt;All elements of ProjectiveSpace(2, 
+343)&gt; ) &gt;
 gap&gt; delta := StandardDualityOfProjectiveSpace(ProjectiveSpace(2,GF(7^3)));
 StandardDuality( AllElementsOfIncidenceStructure( ProjectiveSpace(
 2,GF(7^3)) ) )
 gap&gt; phi3 := CorrelationOfProjectiveSpace(mat,GF(7^3),delta);
-&lt;projective element with Frobenius with projectivespace isomorphism
-[ [ Z(7^3), 0*Z(7), 0*Z(7) ], [ Z(7^3)^58, 0*Z(7), Z(7^3)^115 ], 
-  [ 0*Z(7), Z(7^3)^286, Z(7^3)^229 ] 
- ], F^0, StandardDuality( AllElementsOfIncidenceStructure( ProjectiveSpace(
+&lt;projective element with Frobenius with projectivespace isomorphism: &lt;cmat 3x
+3 over GF(7,
+3)&gt;, F^0, StandardDuality( AllElementsOfIncidenceStructure( ProjectiveSpace(
 2,GF(7^3)) ) ) &gt;
 gap&gt; phi4 := CorrelationOfProjectiveSpace(mat,frob,GF(7^3),delta);
-&lt;projective element with Frobenius with projectivespace isomorphism
-[ [ Z(7^3), 0*Z(7), 0*Z(7) ], [ Z(7^3)^58, 0*Z(7), Z(7^3)^115 ], 
-  [ 0*Z(7), Z(7^3)^286, Z(7^3)^229 ] ], F^
+&lt;projective element with Frobenius with projectivespace isomorphism: &lt;cmat 3x
+3 over GF(7,3)&gt;, F^
 7, StandardDuality( AllElementsOfIncidenceStructure( ProjectiveSpace(
 2,GF(7^3)) ) ) &gt;

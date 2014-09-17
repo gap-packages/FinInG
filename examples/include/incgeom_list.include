@@ -12,7 +12,7 @@ gap&gt; List(Lines(pg));
   &lt;a line in ProjectiveSpace(2, 2)&gt; ]
 gap&gt; ps := ParabolicQuadric(6,2);
 Q(6, 2)
-gap&gt; List(Lines(ps));
+gap&gt; lines := List(Lines(ps));
 [ &lt;a line in Q(6, 2)&gt;, &lt;a line in Q(6, 2)&gt;, &lt;a line in Q(6, 2)&gt;, 
   &lt;a line in Q(6, 2)&gt;, &lt;a line in Q(6, 2)&gt;, &lt;a line in Q(6, 2)&gt;, 
   &lt;a line in Q(6, 2)&gt;, &lt;a line in Q(6, 2)&gt;, &lt;a line in Q(6, 2)&gt;, 
@@ -119,4 +119,6 @@ gap&gt; List(Lines(ps));
   &lt;a line in Q(6, 2)&gt;, &lt;a line in Q(6, 2)&gt;, &lt;a line in Q(6, 2)&gt;, 
   &lt;a line in Q(6, 2)&gt;, &lt;a line in Q(6, 2)&gt;, &lt;a line in Q(6, 2)&gt; ]
 gap&gt; time;
-3793
+3661
+gap&gt; Size(lines);
+315

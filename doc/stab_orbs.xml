@@ -54,10 +54,14 @@ a set (and therefore it might be necessary to apply <F>Set</F> on a collection o
 
 <ManSection>
 <Oper Name="FiningOrbits" Arg="g, set, act"/>
+<Oper Name="FiningOrbits" Arg="g, coll"/>
 <Returns>The orbits of the group <A>g</A> on <A>set</A> under the action of <A>act</A>.</Returns>
 <Description>
 The set is a set of elements of a projective space, the group <A>g</A> is a subgroup of the collineation group
-of a projective space, and <A>act</A> is the function <F>OnProjSubspaces</F>.
+of a projective space, and <A>act</A> is the function <F>OnProjSubspaces</F>. If <A>coll</A> is a collection of
+elements of a projective space (i.e. not a list or set, but and object representing the collection of elements
+of a given type, such as <F>Lines(PG(3,4))</F>), then the second versions returns the orbits of <A>g</A> on the elements
+of <A>coll</A> under the action <F>OnProjSubspaces</F>.
 <Example>
 <#Include SYSTEM "../examples/include/stab_orbs_finingorbits1.include"> 
 </Example>

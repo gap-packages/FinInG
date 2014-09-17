@@ -7,13 +7,13 @@ gap&gt; l1 := Random(Lines(ps));
 gap&gt; l2 := Random(Lines(ps));
 &lt;a line in Q(4, 4)&gt;
 gap&gt; g1 := Stabilizer(g,Set([l1,l2]),OnSets);
-&lt;projective collineation group of size 720&gt;
+&lt;projective collineation group of size 2304 with 6 generators&gt;
 gap&gt; time;
-31095
+2633
 gap&gt; g2 := FiningSetwiseStabiliser(g,Set([l1,l2]));
 #I  Computing adjusted stabilizer chain...
-&lt;projective collineation group with 4 generators&gt;
+&lt;projective collineation group with 5 generators&gt;
 gap&gt; time;
-56
+70
 gap&gt; g1=g2;
 true
