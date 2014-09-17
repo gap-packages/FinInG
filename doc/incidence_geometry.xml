@@ -837,7 +837,7 @@ Only in clear situations, where the ambient geometry of all elements is the same
 resulting element, the resulting element will be constructed in this common geometry. We provide however conversion
 operations for elements of Lie gometries.
 
-<ManSection>
+<ManSection Label="inc:elementtoelement">
 <Oper Name="ElementToElement" Arg="ps, el"/>
 <Oper Name="Embed" Arg="ps, el"/>
 <Returns><A>el</A> as an element of <A>ps</A></Returns>

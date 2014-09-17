@@ -83,7 +83,7 @@ of an element of an affine spaces looks like.
 
 
 <ManSection>
-<Heading>constructing polar spaces</Heading>
+<Heading>Constructing polar spaces</Heading>
 <Description>
 <Package>FinInG</Package> provides the classical polar spaces as the geometries of which the subspaces
 are represented by the totally isotropic (resp. totally singular) vector subspaces with relation 
@@ -250,59 +250,131 @@ be embedded.
 </Description>
 </ManSection>
 
+<ManSection>
+<Heading>Subfield embedding</Heading>
+<Description>
+A projective space can be embedded as a subgeometry in a projective space of the same dimension but over a field extension.
+A polar space, determined by a form <M>f</M> can be embedded in a polar space considered over a field extension by interpreting
+the form <M>f</M> over this field extension. This is an interesting tool to construct geometrical objects in projective and polar spaces.
+<Example>
+<#Include SYSTEM "../examples/include/examples_embedsubfield.include">
+</Example>
+</Description>
+</ManSection>
 
-<Subsection>
+<ManSection>
+<Heading>Embedding by field reduction</Heading>
+<Description>
+Field reduction is a power full tool to embedd low dimensional projective (and polar spaces)
+over a field <M>K</M> in to high dimensional spaces over a subfield of <M>K</M>. The mathematics behind
+field reduction is explained in sections <Ref Sect="proj_red"/> and <Ref Sect="polar_red"/>.
+The examples here show the use of these embedings to construct a regular spread of a projective space
+and a so-called Hermitian spread of a hyperbolic quadric.
+<Example>
+<#Include SYSTEM "../examples/include/examples_embedfieldreduction.include">
+</Example>
+</Description>
+</ManSection>
+
+</Section>
+
+<Section>
+<Heading>Some geometrical objects</Heading>
+
+<ManSection>
 <Heading>Spreads of <M>W(5,3)</M></Heading>
+<Description>
 A spread of <M>W(5,q)</M> is a set of <Alt Not="HTML"><M>q^3+1</M></Alt><Alt
 Only="HTML">q&lt;sup>3&lt;/sup>+1</Alt> planes which
 partition the points of <M>W(5,q)</M>. Here we enumerate all spreads of
 <M>W(5,3)</M> which have a set-wise stabiliser of order a multiple of 13.
-  
 <Example>
 <#Include SYSTEM "../examples/include/examples_spreads.include"> 
 </Example>
-</Subsection>
+</Description>
+</ManSection>
 
+<ManSection>
+<Heading>Distance-6 spread of the split Cayley hexagon</Heading>
+<Description>
+A distance 6 spread of a split Cayley hexagon is a set of lines mutually at maximal distance
+in the incidence graph. It is well known that the lines of the hexagon contained in a
+hyperplane meeting the ambient polar space in an elliptic quadric, yield such a spread.
+This example also illustrates how an element of a geometry <E>remembers</E> its ambient geometry,
+and how <F>ElementToElement</F> can be used to embed an element in another geometry, see
+<Ref Label="inc:elementtoelement"/>.
+<Example>
+<#Include SYSTEM "../examples/include/examples_translationspread.include">
+</Example>
+</Description>
+</ManSection>
 
 </Section>
 
-
 <Section>
-<Heading>More interesting examples</Heading>
+<Heading>Some particular incidence geometries</Heading>
 
+<ManSection>
+<Heading>The split Cayley hexaon</Heading>
+<Description>
+The split Cayley hexagon is one the well known classical generalised hexagons that are obtained using a triality of
+the hyperbolic quadric in 7 dimensions. This example shows some basic properties of this geometry.
 <Example>
 <#Include SYSTEM "../examples/include/examples_splitcayley.include"> 
 </Example>
+</Description>
+</ManSection>
 
+<ManSection>
+<Heading>An (apartment of) a building of type <M>E_6</M></Heading>
+<Description>
+This example shows the constructions of an incidence geometry whose automorphism group is an exceptional
+group of type <M>E_6</M>. The construction is done as a coset geometry. This example also illustrates how
+to get a diagram of such a coset geometry.
 <Example>
 <#Include SYSTEM "../examples/include/examples_e6.include"> 
 </Example>
+</Description>
+</ManSection>
 
 <Alt Only="HTML">&lt;img src="E6.jpg">&lt;/img></Alt>
 <Alt Only="LaTeX">\includegraphics{E6.jpg}</Alt>
 
+<ManSection>
+<Heading>A rank 4 geometry for <M>PSL(2,11)</M></Heading>
+<Description>
+Here we look at a particular flag-transitive geometry constructed from
+four subgroups of <M>PSL(2,11)</M>, and we construct the diagram for this geometry.
+To view this diagram, you need to either use a postscript viewer or
+a dotty viewer (such as GraphViz).
 <Example>
-<#Include SYSTEM "../examples/include/examples_varieties.include"> 
+<#Include SYSTEM "../examples/include/examples_PSL211.include"> 
 </Example>
+The output of this example uses <C>dotty</C> which is a sophisticated graph
+drawing program. We also provide <F>DrawDiagramWithNeato</F> to make a diagram with straight lines, using <C>neato</C>.
+Here is what the output looks like with the standard <F>DrawDiagram</F> command:
+<Alt Only="HTML">&lt;img src="PSL211.jpg">&lt;/img></Alt>
+<Alt Only="LaTeX">\includegraphics{PSL211.jpg}</Alt>
+</Description>
+</ManSection>
 
 </Section>
 
 <Section>
 <Heading>Elation generalised quadrangles</Heading>
 
-<Subsection>
-<Heading>The classical q-clan</Heading>
-
-In this example, we construct a classical elation
+In this section, we construct a classical elation
 generalised quadrangle from a q-clan, and we see that
 the associated BLT-set is a conic.
 
-  
+<ManSection>
+<Heading>The classical q-clan</Heading>
+<Description>
 <Example>
 <#Include SYSTEM "../examples/include/examples_qclan.include"> 
 </Example>
-</Subsection>
-
+</Description>
+</ManSection>
 
 <Subsection>
 <Heading>Two ways to construct a flock generalised quadrangle from a Kantor-Knuth semifield q-clan</Heading>
@@ -346,41 +418,24 @@ and <Alt Not="HTML"><M>\phi</M></Alt><Alt Only="HTML">&#966;</Alt> is a nontrivi
 <Example>
 <#Include SYSTEM "../examples/include/examples_KantorKnuth.include"> 
 </Example>
-
-
 </Subsection>
 
 </Section>
-
 
 <Section>
-<Heading>Diagram geometries</Heading>
+<Heading>Algebraic varieties</Heading>
 
-<Subsection>
-<Heading>A rank 4 geometry for <M>PSL(2,11)</M></Heading>
-
-Here we look at a particular flag-transitive geometry constructed from
-four subgroups of <M>PSL(2,11)</M>, and we construct the diagram for this geometry.
-To view this diagram, you need to either use a postscript viewer or
-a dotty viewer (such as GraphViz). 
-
+<ManSection>
+<Heading>A projective variety</Heading>
+<Description>
+In this example we demonstrate the construction of projective varieties.
 <Example>
-<#Include SYSTEM "../examples/include/examples_PSL211.include"> 
+<#Include SYSTEM "../examples/include/examples_varieties.include"> 
 </Example>
-
-The output of this example uses <C>dotty</C> which is a sophisticated graph
-drawing program. We also provide <F>DrawDiagramWithNeato</F> to make a diagram with straight lines, using <C>neato</C>.
-Here is what the output looks like with the standard <F>DrawDiagram</F> command:
-
-<Alt Only="HTML">&lt;img src="PSL211.jpg">&lt;/img></Alt>
-<Alt Only="LaTeX">\includegraphics{PSL211.jpg}</Alt>
-
-</Subsection>
-
+</Description>
+</ManSection>
 
 </Section>
-
-
 
 
 </Chapter>

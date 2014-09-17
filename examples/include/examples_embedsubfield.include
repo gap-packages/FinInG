@@ -1,0 +1,27 @@
+gap&gt; pgsub := PG(2,7);
+ProjectiveSpace(2, 7)
+gap&gt; pg := PG(2,7^2);
+ProjectiveSpace(2, 49)
+gap&gt; em := NaturalEmbeddingBySubfield(pgsub,pg);
+&lt;geometry morphism from &lt;All elements of ProjectiveSpace(2, 
+7)&gt; to &lt;All elements of ProjectiveSpace(2, 49)&gt;&gt;
+gap&gt; baer := List(Points(pgsub),x-&gt;x^em);;
+gap&gt; numbers := Collected(List(Lines(pg),x-&gt;Number(baer,y-&gt;y in x)));
+[ [ 1, 2394 ], [ 8, 57 ] ]
+gap&gt; mat := [[0,0,0,1],[0,0,-1,0],[0,1,0,0],[-1,0,0,0]]*Z(5)^0;
+[ [ 0*Z(5), 0*Z(5), 0*Z(5), Z(5)^0 ], [ 0*Z(5), 0*Z(5), Z(5)^2, 0*Z(5) ], 
+  [ 0*Z(5), Z(5)^0, 0*Z(5), 0*Z(5) ], [ Z(5)^2, 0*Z(5), 0*Z(5), 0*Z(5) ] ]
+gap&gt; form := BilinearFormByMatrix(mat,GF(5));
+&lt; bilinear form &gt;
+gap&gt; symplecticspace := PolarSpace(form);
+&lt;polar space in ProjectiveSpace(3,GF(5)): x1*y4-x2*y3+x3*y2-x4*y1=0 &gt;
+gap&gt; hermitianspace := HermitianPolarSpace(3,25);
+H(3, 5^2)
+gap&gt; em := NaturalEmbeddingBySubfield(symplecticspace,hermitianspace);
+#I  No intertwiner computed. &lt;geom1&gt; must have a collineation group computed
+&lt;geometry morphism from &lt;Elements of &lt;polar space in ProjectiveSpace(
+3,GF(5)): x1*y4-x2*y3+x3*y2-x4*y1=0 &gt;&gt; to &lt;Elements of H(3, 5^2)&gt;&gt;
+gap&gt; l := Random(Lines(symplecticspace));
+&lt;a line in W(3, 5): x1*y4-x2*y3+x3*y2-x4*y1=0&gt;
+gap&gt; l^em;
+&lt;a line in H(3, 5^2)&gt;
