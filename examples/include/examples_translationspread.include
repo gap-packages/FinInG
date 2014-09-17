@@ -1,0 +1,34 @@
+gap&gt; gh := SplitCayleyHexagon(3);
+H(3)
+gap&gt; q6 := AmbientPolarSpace(gh);
+Q(6, 3): -x_1*x_5-x_2*x_6-x_3*x_7+x_4^2=0
+gap&gt; hyp := First(Hyperplanes(PG(6,3)),x-&gt;TypeOfSubspace(q6,x)="elliptic");
+&lt;a proj. 5-space in ProjectiveSpace(6, 3)&gt;
+gap&gt; q5 := EllipticQuadric(5,3);
+Q-(5, 3)
+gap&gt; lines := AsList(Lines(q5));
+&lt;closed orbit, 280 points&gt;
+gap&gt; em := NaturalEmbeddingBySubspace(q5,q6,hyp);
+&lt;geometry morphism from &lt;Elements of Q-(5, 3)&gt; to &lt;Elements of Q(6, 
+3): -x_1*x_5-x_2*x_6-x_3*x_7+x_4^2=0&gt;&gt;
+gap&gt; spread := Filtered(lines,x-&gt;x^em in gh);
+[ &lt;a line in Q-(5, 3)&gt;, &lt;a line in Q-(5, 3)&gt;, &lt;a line in Q-(5, 3)&gt;, 
+  &lt;a line in Q-(5, 3)&gt;, &lt;a line in Q-(5, 3)&gt;, &lt;a line in Q-(5, 3)&gt;, 
+  &lt;a line in Q-(5, 3)&gt;, &lt;a line in Q-(5, 3)&gt;, &lt;a line in Q-(5, 3)&gt;, 
+  &lt;a line in Q-(5, 3)&gt;, &lt;a line in Q-(5, 3)&gt;, &lt;a line in Q-(5, 3)&gt;, 
+  &lt;a line in Q-(5, 3)&gt;, &lt;a line in Q-(5, 3)&gt;, &lt;a line in Q-(5, 3)&gt;, 
+  &lt;a line in Q-(5, 3)&gt;, &lt;a line in Q-(5, 3)&gt;, &lt;a line in Q-(5, 3)&gt;, 
+  &lt;a line in Q-(5, 3)&gt;, &lt;a line in Q-(5, 3)&gt;, &lt;a line in Q-(5, 3)&gt;, 
+  &lt;a line in Q-(5, 3)&gt;, &lt;a line in Q-(5, 3)&gt;, &lt;a line in Q-(5, 3)&gt;, 
+  &lt;a line in Q-(5, 3)&gt;, &lt;a line in Q-(5, 3)&gt;, &lt;a line in Q-(5, 3)&gt;, 
+  &lt;a line in Q-(5, 3)&gt; ]
+gap&gt; spread := List(spread,x-&gt;ElementToElement(gh,x^em));
+[ &lt;a line in H(3)&gt;, &lt;a line in H(3)&gt;, &lt;a line in H(3)&gt;, &lt;a line in H(3)&gt;, 
+  &lt;a line in H(3)&gt;, &lt;a line in H(3)&gt;, &lt;a line in H(3)&gt;, &lt;a line in H(3)&gt;, 
+  &lt;a line in H(3)&gt;, &lt;a line in H(3)&gt;, &lt;a line in H(3)&gt;, &lt;a line in H(3)&gt;, 
+  &lt;a line in H(3)&gt;, &lt;a line in H(3)&gt;, &lt;a line in H(3)&gt;, &lt;a line in H(3)&gt;, 
+  &lt;a line in H(3)&gt;, &lt;a line in H(3)&gt;, &lt;a line in H(3)&gt;, &lt;a line in H(3)&gt;, 
+  &lt;a line in H(3)&gt;, &lt;a line in H(3)&gt;, &lt;a line in H(3)&gt;, &lt;a line in H(3)&gt;, 
+  &lt;a line in H(3)&gt;, &lt;a line in H(3)&gt;, &lt;a line in H(3)&gt;, &lt;a line in H(3)&gt; ]
+gap&gt; Collected(Concatenation(List(spread,x-&gt;List(spread,y-&gt;DistanceBetweenElements(x,y)))));
+[ [ 0, 28 ], [ 6, 756 ] ]
