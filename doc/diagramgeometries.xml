@@ -523,6 +523,10 @@ In case <Package>graphviz</Package> is not available on your system,
 you will get an friendly error message and a file <A>filename</A>.dot
 will be written. You can then compile this file later or ask a friend
 to help you.
+An <M>E_6</M> geometry for comparison: on the left hand side we have the
+output of DrawDiagram and on the right hand side we see the result of
+DrawDiagramWithNeato<P/>
+<Alt Only="HTML">&lt;img src="E6.jpg">&lt;/img> &lt;img src="E6bis.jpg">&lt;/img></Alt><Alt Only="LaTeX">\includegraphics[scale=0.5]{E6.jpg} \includegraphics[scale=0.5]{E6bis.jpg}</Alt><P/><P/>
 </Description>
 </ManSection>
 

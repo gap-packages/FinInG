@@ -57,13 +57,16 @@ available in the package, are introduced and discussed in Chapter <Ref Chap="mor
 <Section Label="install">
 <Heading>Installing <Package>FinInG</Package></Heading>
 
-This package requires the GAP packages <Package>GAPDoc</Package>, version 0.99 or higher,
-<Package>Forms</Package>, version 1.2 or higher, <Package>Orb</Package>, version 2.0 or higher,
-<Package>GenSS</Package>, version 0.9 or higher, and <Package>GRAPE</Package>, version 4.3 or higher.
+This package requires the GAP packages <Package>GAPDoc</Package>, version 1.5.1 or higher,
+<Package>Forms</Package>, version 1.2.2 or higher, <Package>Orb</Package>, version 4.6 or higher,
+<Package>GenSS</Package>, version 1.5 or higher, and <Package>GRAPE</Package>, version 4.6.1 or higher.
 Currently, one function will use the <Package>Design</Package> package, but this package is not required to
 load <Package>FinInG</Package>. The package <Package>GenSS</Package> requires the package <Package>IO</Package>.
 
-The packages required by <Package>FinInG</Package> are all part of the standard GAP distribution but some of them have to be compiled. Make sure (at least) <Package>IO</Package>, <Package>orb</Package> and <Package>cvec</Package> have been compiled before trying to load <Package>FinInG</Package>. You can find instructions on how to compile packages for your operating system on the <Package>GAP</Package> webpage. Here we just show how to compile the required packages on a UNIX-like system.
+The packages required by <Package>FinInG</Package> are all part of the standard GAP distribution but some of them have to be compiled.
+Make sure (at least) <Package>IO</Package>, <Package>orb</Package> and <Package>cvec</Package> have been compiled before trying to
+load <Package>FinInG</Package>. You can find instructions on how to compile packages for your operating system on the <Package>GAP</Package> webpage.
+Here we just show how to compile the required packages on a UNIX-like system.
 
 In case you don't have write access to the gap installation on your computer, 
 you should ask your system administrator to do this for you.
@@ -306,6 +309,11 @@ The same survivors, staring at the destiny.
 <P/>
 <Alt Only="HTML">&lt;img src="devteamdestiny.jpg">&lt;/img></Alt>
 <Alt Only="LaTeX">\includegraphics[scale=0.6]{devteamdestiny.jpg}</Alt><P/>
+Anton Betten, during a milestone meeting at the finite geometries conference in Irsee, september 2014.
+<P/>
+<Alt Only="HTML">&lt;img src="anton_irsee2014.jpg">&lt;/img></Alt>
+<Alt Only="LaTeX">\includegraphics[scale=0.6]{anton_irsee2014}</Alt><P/>
+
 </Section>
 
 

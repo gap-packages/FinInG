@@ -353,8 +353,6 @@ as an attribute of <A>gp</A>. Normally, attributes of GAP objects are immutable.
 <A>gp</A> is any generalised polygon, <A>i</A> is a natural number, necessarily <M>1</M> or <M>2</M>.
 <F>ElementsOfIncidenceStructure</F> returns the elements of type <M>i</M> of <A>gp</A>, <F>Points</F>
 and <F>Lines</F> are the usual shortcuts.
-<Example>
-</Example>
 </Description>
 </ManSection>
 
@@ -858,8 +856,6 @@ As such, elation generalised quadrangles can directly constructed from q-clans.
 Given a list <A>list</A> of <M>2 \times</M> matrices over the field <A>f</A>,
 it is checked if the matrices in the list satisfy the condition to constitute a q-clan
 over <M>f</M>. If so, the q-clan is returned.
-<Example>
-</Example>
 </Description>
 </ManSection>
 
@@ -875,8 +871,6 @@ a q-clan
 </Returns>
 <Description>
 Some famous q-clans are built in. We refer to ... for more information on these.
-<Example>
-</Example>
 </Description>
 </ManSection>
 
@@ -889,8 +883,6 @@ A Kantor family.
 The Kantor family constructed from a q-clan will be a matrix group together with the
 corresponding collections <M>J</M> and <Alt Not="HTML">J^*</Alt>
 <Alt Only="HTML">J&lt;sup>*&lt;/sup></Alt>.
-<Example>
-</Example>
 </Description>
 </ManSection>
 
