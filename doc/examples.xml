@@ -1,4 +1,4 @@
-<!-- 
+<!--
 
   examples.xml            FinInG package documentation
                                                                    John Bamberg
@@ -315,7 +315,7 @@ and how <F>ElementToElement</F> can be used to embed an element in another geome
 <Heading>Some particular incidence geometries</Heading>
 
 <ManSection>
-<Heading>The split Cayley hexaon</Heading>
+<Heading>The split Cayley hexagon</Heading>
 <Description>
 The split Cayley hexagon is one the well known classical generalised hexagons that are obtained using a triality of
 the hyperbolic quadric in 7 dimensions. This example shows some basic properties of this geometry.
