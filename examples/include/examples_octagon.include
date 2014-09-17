@@ -1,0 +1,19 @@
+gap&gt; LoadPackage( "AtlasRep" );
+true
+gap&gt; titsgroup:=AtlasGroup("2F4(2)'");
+&lt;permutation group of size 17971200 with 2 generators&gt;
+gap&gt; g1:=AtlasSubgroup(titsgroup,3);
+&lt;permutation group of size 10240 with 2 generators&gt;
+gap&gt; g2:=AtlasSubgroup(titsgroup,5);
+&lt;permutation group of size 6144 with 2 generators&gt;
+gap&gt; conj:=ConjugacyClassSubgroups(titsgroup,g1);;
+gap&gt; # Now look for the conjugate of g1 with maximal intersection
+gap&gt; g1:=First(conj, sg -&gt; Size(Intersection(sg,g2))=2048);
+&lt;permutation group of size 10240 with 2 generators&gt;
+gap&gt; cg:=CosetGeometry(titsgroup,[g1,g2]);;
+gap&gt; Rank2Parameters(cg);
+[ [ 8, 8, 8 ], [ 2, 1755 ], [ 4, 2925 ] ]
+gap&gt; pts := Set(ElementsOfIncidenceStructure(cg,1));;
+gap&gt; lines := Set(ElementsOfIncidenceStructure(cg,2));;
+gap&gt; gp := GeneralisedPolygonByElements(pts,lines,\*,titsgroup,OnCosetGeometryElement);
+&lt;generalised octagon of order [ 2, 4 ]&gt;

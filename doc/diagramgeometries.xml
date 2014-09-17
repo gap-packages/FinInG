@@ -60,6 +60,13 @@ geometry (see Chapter <Ref Chap="incidencegeometry"/> for definitions). In order
 geometry you can use the command <F>IsFlagTransitiveGeometry</F> which (in case it returns <F>true</F>) guarantees that the argument is a geometry.
 
 <ManSection>
+<Filt Name="IsCosetGeometry" Type="Category"/>
+<Description>
+This category is a subcategory of <C>IsIncidenceGeometry</C>, and contains all coset geometries.
+</Description>
+</ManSection>
+
+<ManSection>
 <Oper Name="CosetGeometry" Arg="G,l"/>
 <Returns>the coset incidence structure defined by the list <A>l</A> of subgroups of the group <A>G</A>.</Returns>
 <Description> 
