@@ -2,19 +2,17 @@
 
   examples.xml            FinInG package documentation
                                                                    John Bamberg
-                                                               and Anton Betten
-                                                               and Jan De Beule
-                                                              and Philippe Cara
-                                                                  and Maska Law
-                                                            and Max Neunhoeffer
-                                                             and Michael Pauley
-                                                              and Sven Reichard
+                                                                   Anton Betten
+                                                                  Philippe Cara
+                                                                   Jan De Beule
+                                                                 Michel Lavrauw
+                                                                Max Neunhoeffer
 
-  Copyright (C) 2009, University of Western Australia
-                      Lehrstuhl D fuer Mathematik
-                      Universiteit Gent
+  Copyright (C) 2014, University of Western Australia
                       Colorado State University
                       Vrije Universiteit Brussel
+                      Ghent University
+					  Università degli Studi di Padova
 
 This chapter gives examples for the usage of this package.
 
@@ -241,7 +239,7 @@ than illustrated in the elementary example, see Section <Ref Sect="sec:klein"/>.
 <Heading>Embedding in a subspace</Heading>
 <Description>
 A projective space can be embedded as a subspace in a higher dimensional projective space.
-A comparable embedding is possible for polar spaces, clearly only when a given subspaces
+A comparable embedding is possible for polar spaces, clearly only when a given subspace
 intersects the polar space of higher rank in a polar space of the same type as the polar space to
 be embedded.
 <Example>
@@ -251,7 +249,7 @@ be embedded.
 </ManSection>
 
 <ManSection>
-<Heading>Subfield embedding</Heading>
+<Heading>subgeometries</Heading>
 <Description>
 A projective space can be embedded as a subgeometry in a projective space of the same dimension but over a field extension.
 A polar space, determined by a form <M>f</M> can be embedded in a polar space considered over a field extension by interpreting

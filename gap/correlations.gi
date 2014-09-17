@@ -20,18 +20,6 @@
 ##
 #############################################################################
 
-########################################
-#
-# Things To Do:
-#
-# - test CorrelationCollineationGroup
-# - Documentation
-# - Random for correlation groups
-# - a tiny detail: just see if the methods for NiceMonomorphism are called when we
-#   think they are called.
-#
-########################################
-
 Print(", correlations\c");
 
 ###################################################################

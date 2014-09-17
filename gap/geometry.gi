@@ -20,21 +20,6 @@
 ##
 #############################################################################
 
-########################################
-#
-# Things To Do:
-#
-# - testing
-# - Should we change the name of RankAttr? Note
-#   that we have installed a method for Rank here which
-#   just calls RankAttr anyway...
-#   jdb: I left as is. In principle, we could declare Rank as an attribute
-#        but maybe this is already a declared attribute, i did not check.
-# - Enumerators for subspaces of vectorspaces? This is not present in GAP, and could be
-#   used to create "real" Enumerators for projective spaces. To be discussed.
-# - check and document operation IncidenceStructure (almost bottom of file).
-########################################
-
 Print("loading: geometry\c");
 
 InstallValue( FINING, rec() );

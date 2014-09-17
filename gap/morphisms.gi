@@ -19,27 +19,6 @@
 ##  Implementation stuff for incidence geometry morphisms
 ##
 #############################################################################
-## 28/5/2014 10:11
-
-########################################
-#
-# Things To Do (as a future project)
-# - Make source of intertwiner of NaturalEmbeddingBySubfield the complete collineation group.
-# - Implement the missing intertwiners (e.g. with NaturalEmbeddingSubspace).
-#
-# - Preimages for GrassmannMap, VeroneseMap, and SegreMap.HermitianPolarSpace
-# - intertwiners for GrassmannMap and SegreMap
-# - should there be a type function as an attribute?
-# - maybe make a more user friendly system to avoid em!.prefun( <arg> )
-# - And the self duality of Q(4,q) and W(3,q), q even.
-# - test operations BlownUpSubspaceOfProjectiveSpace, BlownUpSubspaceOfProjectiveSpaceBySubfield, 
-# - an optimalization is possible: each time VectorSpaceToElement is used, this might be replaced
-#   by Wrap. VectorSpaceToElement is of course useful for testing purposes. Currently, we left it on
-#   to find bugs quicker. But it looks already quite well.
-#
-# Documentation check list
-#
-########################################
 
 
 ########################################

@@ -20,31 +20,6 @@
 ##
 #############################################################################
 
-########################################
-#
-# Things To Do:
-#
-# - Documentation: is reasonable now.
-# - test: has been done rigourously
-# - important: find out when NiceMonomorphism is computed. This is e.g. the case if
-#   a random subspace is asked. OK for me, but it should be documented.
-# - to do: check if in constructors of standard polar spaces, the Wrap should be
-#   replaced by VectorSpaceToElement
-# - check IsCollinear. Is this the best way to do it? Should it just take two points
-#   of a polar space? JB: I guess we could have points of one polar space and we want to check that
-# they are collinear with respect to a different polar space. I've fixed IsCollinear for Hermitian spaces.
-# - tiny optimalisations: Size/NumberOfTotallySingularSubspaces? (see questions at methods)
-#   \in: should probably not change the element (see remark at method).
-# - Check Iterator.
-# - see if commented out material at end of file is really obsolete.
-# - rename Polarity to PolarMap or something like that. Done.
-# - probably a mistake on line 1705. corrected 27/9/2011 jdb.
-# - check if there is a technical problem with the setting of the collineation group of a hermitian vartiety as an attribute.
-# - check and test the groups part of polar spaces. I do not expect too much problems (or even non anymore), but I did not
-#   check enough yet. 
-#
-########################################
-
 Print(", polarspace/morphisms\c");
 
 #############################################################################

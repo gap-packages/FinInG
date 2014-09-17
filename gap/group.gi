@@ -20,21 +20,6 @@
 ##
 ############################################################################
 
-########################################
-#
-# Things To Do:
-#
-# - Order for a projective collineation element: done?
-# - GammaOminus (q even). Done.
-# - Optimise the action operations/functions. Future work.
-# - Have ProjEl, ProjElWithFrob, and ProjElWithFrobWithVSIsom
-#   all compatible (can multiply them etc)
-# - homography groups need only have ProjEl, it will make them quicker. Future work?
-# - testing. Done rigourously. More is always nice.
-# - make tiny changes in agreement with John to the names of the classical groups. jdb 09/2011. Future work
-#
-########################################
-
 ## helping function. came from projectivespace.gi
 
 Print(", group\c");

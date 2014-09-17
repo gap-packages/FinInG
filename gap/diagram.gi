@@ -19,21 +19,7 @@
 ##
 #############################################################################
 
-########################################
-#
-# Undocumented: 
-# 		Whereisdot()
-#		Rank2Residues
-# 		MakeRank2Residue
-# Rem: the last two are mentioned in the manual
-# Rem: some specialized methods are here but not re-documented. 
-#      They should work like in the earlier chapters.
-# 
-########################################
-
 Print(", diagram\c");
-
-
 
 #################################################################
 # Technicalities: Availability test for GRAPE and GraphViz/dotty

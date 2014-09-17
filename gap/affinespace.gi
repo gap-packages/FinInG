@@ -19,16 +19,6 @@
 ##
 #############################################################################
 
-########################################
-#
-# Things To Do:
-#
-# - testing
-# - ProjectiveCompletion (choice of hyperplane?)
-# - Perhaps we should disable the iterator of a shadow of a flag?
-#
-########################################
-
 Print(", affinespace/affinegroup\c");
 
 #############################################################################

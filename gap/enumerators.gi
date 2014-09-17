@@ -20,20 +20,6 @@
 ##
 #############################################################################
 
-########################################
-#
-# Things To Do:
-#
-# - testing: done rigourously
-# - enumerators for symplectic spaces
-#   perhaps we don't bother and just leave as is; working on it (celle and jan).
-# - remove "iso" from Enumerator for IsShadowSubspacesOfClassicalPolarSpace ?
-# - make "FG_specialresidual" more efficient
-#   this function computes the "residual not in a hyperplane"
-# - documentation
-#
-########################################
-
 Print(", enumerators\c");
 
 #############################################################################

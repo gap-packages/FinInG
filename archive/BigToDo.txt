@@ -1,0 +1,157 @@
+########################################
+#
+# Things To Do:
+#
+# - testing
+# - Should we change the name of RankAttr? Note
+#   that we have installed a method for Rank here which
+#   just calls RankAttr anyway...
+#   jdb: I left as is. In principle, we could declare Rank as an attribute
+#        but maybe this is already a declared attribute, i did not check.
+# - Enumerators for subspaces of vectorspaces? This is not present in GAP, and could be
+#   used to create "real" Enumerators for projective spaces. To be discussed.
+# - check and document operation IncidenceStructure (almost bottom of file).
+########################################
+
+########################################
+#
+# Things To Do:
+#
+# - testing
+#
+########################################
+
+########################################
+#
+# Things To Do:
+#
+# - testing
+# - ProjectiveCompletion (choice of hyperplane?)
+# - Perhaps we should disable the iterator of a shadow of a flag?
+#
+########################################
+########################################
+#
+# Things To Do:
+#
+# - test CorrelationCollineationGroup
+# - Documentation
+# - Random for correlation groups
+# - a tiny detail: just see if the methods for NiceMonomorphism are called when we
+#   think they are called.
+#
+########################################
+########################################
+#
+# Things To Do:
+#
+# - reorganise
+#
+########################################
+########################################
+#
+# Undocumented: 
+# 		Whereisdot()
+#		Rank2Residues
+# 		MakeRank2Residue
+# Rem: the last two are mentioned in the manual
+# Rem: some specialized methods are here but not re-documented. 
+#      They should work like in the earlier chapters.
+# 
+########################################
+########################################
+#
+# Things To Do:
+#
+# - testing: done rigourously
+# - enumerators for symplectic spaces
+#   perhaps we don't bother and just leave as is; working on it (celle and jan).
+# - remove "iso" from Enumerator for IsShadowSubspacesOfClassicalPolarSpace ?
+# - make "FG_specialresidual" more efficient
+#   this function computes the "residual not in a hyperplane"
+# - documentation
+#
+########################################
+########################################
+#
+# Things To Do:
+#
+# - Order for a projective collineation element: done?
+# - GammaOminus (q even). Done.
+# - Optimise the action operations/functions. Future work.
+# - Have ProjEl, ProjElWithFrob, and ProjElWithFrobWithVSIsom
+#   all compatible (can multiply them etc)
+# - homography groups need only have ProjEl, it will make them quicker. Future work?
+# - testing. Done rigourously. More is always nice.
+# - make tiny changes in agreement with John to the names of the classical groups. jdb 09/2011. Future work
+#
+########################################
+########################################
+#
+# Things To Do:
+#
+# - Consider putting in more Lie incidence geometries
+#   parapolar spaces, E6, E7, E8, etc, dual polar spaces?
+########################################
+## 28/5/2014 10:11
+
+########################################
+#
+# Things To Do (as a future project)
+# - Make source of intertwiner of NaturalEmbeddingBySubfield the complete collineation group.
+# - Implement the missing intertwiners (e.g. with NaturalEmbeddingSubspace).
+#
+# - Preimages for GrassmannMap, VeroneseMap, and SegreMap.HermitianPolarSpace
+# - intertwiners for GrassmannMap and SegreMap
+# - should there be a type function as an attribute?
+# - maybe make a more user friendly system to avoid em!.prefun( <arg> )
+# - And the self duality of Q(4,q) and W(3,q), q even.
+# - test operations BlownUpSubspaceOfProjectiveSpace, BlownUpSubspaceOfProjectiveSpaceBySubfield, 
+# - an optimalization is possible: each time VectorSpaceToElement is used, this might be replaced
+#   by Wrap. VectorSpaceToElement is of course useful for testing purposes. Currently, we left it on
+#   to find bugs quicker. But it looks already quite well.
+#
+# Documentation check list
+#
+########################################
+
+########################################
+#
+# Things To Do:
+#
+# - Documentation: is reasonable now.
+# - test: has been done rigourously
+# - important: find out when NiceMonomorphism is computed. This is e.g. the case if
+#   a random subspace is asked. OK for me, but it should be documented.
+# - to do: check if in constructors of standard polar spaces, the Wrap should be
+#   replaced by VectorSpaceToElement
+# - check IsCollinear. Is this the best way to do it? Should it just take two points
+#   of a polar space? JB: I guess we could have points of one polar space and we want to check that
+# they are collinear with respect to a different polar space. I've fixed IsCollinear for Hermitian spaces.
+# - tiny optimalisations: Size/NumberOfTotallySingularSubspaces? (see questions at methods)
+#   \in: should probably not change the element (see remark at method).
+# - Check Iterator.
+# - see if commented out material at end of file is really obsolete.
+# - rename Polarity to PolarMap or something like that. Done.
+# - probably a mistake on line 1705. corrected 27/9/2011 jdb.
+# - check if there is a technical problem with the setting of the collineation group of a hermitian vartiety as an attribute.
+# - check and test the groups part of polar spaces. I do not expect too much problems (or even non anymore), but I did not
+#   check enough yet. 
+#
+########################################
+## To do
+#  - think about generic methods for dimension, projective dimension, basefield, underlying vector space
+#    for (Lie geometries and ((almost) done jdb) their elements, to be placed in liegeometry.gi of course.
+#  - Reconsider the function OnProjSubspaces. using this function for elements of a polar space e.g. and
+#    an ProjGrpElWithFrob, can cause to get back a subspace of a projective space which is not an element of 
+#    the polar space. No problem of course, but since Wrap is used (and that should be used for effeciency), 
+#    one can get up with an element of a projective space not belonging to the polar space, but which is displayed
+#    as being an element of the polar space. I kept it as is currently, but I would like to reconsider this when dealing
+#    with the polar space section. jdb 11/9/11
+#  - make some tiny changes at Meet for lists, such that, when possible, the empty subspace is returned and not []. (this is a
+#    detail). 14/9/2011 jdb. (When a list with one element is given, it should return that element 26/05/12 ml)
+#  - think whether it makes sense that Span and Meet return [] when they receive []. (recall that [] used to represent the 
+#    empty subspace in earlier days. 14/9/2011 jdb.
+#  - improve Random method for shadow elements. see comment there.
+#  - have a closer look at the Baer substuff methods in this file.
+#  - whenever Wrap is used, check whether the input should be normalized or not. Done.

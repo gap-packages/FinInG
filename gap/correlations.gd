@@ -20,14 +20,6 @@
 ##
 #############################################################################
 
-########################################
-#
-# Things To Do:
-#
-# - reorganise
-#
-########################################
-
 DeclareCategory( "IsProjectiveSpaceIsomorphism", IsSPGeneralMapping );
 DeclareCategory( "IsStandardDualityOfProjectiveSpace", IsProjectiveSpaceIsomorphism );
 DeclareCategory( "IsIdentityMappingOfElementsOfProjectiveSpace", IsProjectiveSpaceIsomorphism );

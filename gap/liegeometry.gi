@@ -20,14 +20,6 @@
 ##
 #############################################################################
 
-########################################
-#
-# Things To Do:
-#
-# - Consider putting in more Lie incidence geometries
-#   parapolar spaces, E6, E7, E8, etc, dual polar spaces?
-########################################
-
 Print(", liegeometry\c");
 
 

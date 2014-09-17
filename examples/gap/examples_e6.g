@@ -6,7 +6,7 @@ gens := GeneratorsOfGroup(w);;
 pabs := List(gens, g -> Group(Difference(gens, [g])));
 g := Group(gens);
 cg := CosetGeometry(g,pabs);;
-diag := DiagramOfGeometry( cg );
+diag := DiagramOfGeometry( cg );;
 DrawDiagram(diag, "E6");
 #Exec("open E6.ps");
 quit;
