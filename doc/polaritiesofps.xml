@@ -165,10 +165,9 @@ error message is returned.
 <Heading>Operations, attributes and properties for polarities of projective spaces</Heading>
 
 <ManSection>
-<Attr Name="SesquilinearForm" Arg="f"/>
+<Attr Name="SesquilinearForm" Arg="phi"/>
 <Returns>a sesquilinear form</Returns>
-<Description>The sesquilinear form corresponding to the given polarity is
-returned.
+<Description>The sesquilinear form corresponding to the given polarity <A>phi</A> is returned.
 <Example>
 <#Include SYSTEM "../examples/include/polarities_toform.include"> 
 </Example>
@@ -176,9 +175,9 @@ returned.
 </ManSection>
 
 <ManSection>
-<Attr Name="BaseField" Arg="f"/>
+<Attr Name="BaseField" Arg="phi"/>
 <Returns>a field</Returns>
-<Description>The base field over which the polarity was constructed.
+<Description>The base field over which the polarity <A>phi</A> was constructed.
 <Example>
 <#Include SYSTEM "../examples/include/polarities_basefield.include"> 
 </Example>
@@ -186,9 +185,9 @@ returned.
 </ManSection>
 
 <ManSection>
-<Attr Name="GramMatrix" Arg="f"/>
+<Attr Name="GramMatrix" Arg="phi"/>
 <Returns>a matrix</Returns>
-<Description>The Gram matrix of the polarity.
+<Description>The Gram matrix of the polarity <A>phi</A>.
 <Example>
 <#Include SYSTEM "../examples/include/polarities_grammatrix.include"> 
 </Example>
@@ -196,9 +195,9 @@ returned.
 </ManSection>
 
 <ManSection>
-<Attr Name="CompanionAutomorphism" Arg="f"/>
+<Attr Name="CompanionAutomorphism" Arg="phi"/>
 <Returns>a field automorphism</Returns>
-<Description>The involutory field automorphism accompanying the polarity
+<Description>The involutory field automorphism accompanying the polarity <A>phi</A>.
 <Example>
 <#Include SYSTEM "../examples/include/polarities_automorphism.include"> 
 </Example>
@@ -206,9 +205,9 @@ returned.
 </ManSection>
 
 <ManSection>
-<Prop Name="IsHermitianPolarityOfProjectiveSpace" Arg="f"/>
+<Prop Name="IsHermitianPolarityOfProjectiveSpace" Arg="phi"/>
 <Returns>true or false</Returns>
-<Description>The polarity <A>f</A> is a hermitian polarity of a projective space if
+<Description>The polarity <A>phi</A> is a hermitian polarity of a projective space if
 and only if the underlying matrix is hermitian.
 <Example>
 <#Include SYSTEM "../examples/include/polarities_ishermitian.include"> 
@@ -217,9 +216,9 @@ and only if the underlying matrix is hermitian.
 </ManSection>
 
 <ManSection>
-<Prop Name="IsSymplecticPolarityOfProjectiveSpace" Arg="f"/>
+<Prop Name="IsSymplecticPolarityOfProjectiveSpace" Arg="phi"/>
 <Returns>true or false</Returns>
-<Description>The polarity <A>f</A> is a symplectic polarity of a projective space if
+<Description>The polarity <A>phi</A> is a symplectic polarity of a projective space if
 and only if the underlying matrix is symplectic.
 <Example>
 <#Include SYSTEM "../examples/include/polarities_issymplectic.include"> 
@@ -228,9 +227,9 @@ and only if the underlying matrix is symplectic.
 </ManSection>
 
 <ManSection>
-<Prop Name="IsOrthogonalPolarityOfProjectiveSpace" Arg="f"/>
+<Prop Name="IsOrthogonalPolarityOfProjectiveSpace" Arg="phi"/>
 <Returns>true or false</Returns>
-<Description>The polarity <A>f</A> is an orthogonal polarity of a projective space if
+<Description>The polarity <A>phi</A> is an orthogonal polarity of a projective space if
 and only if the underlying matrix is symmetric and the characteristic of the
 field is odd.
 <Example>
@@ -240,9 +239,9 @@ field is odd.
 </ManSection>
 
 <ManSection>
-<Prop Name="IsPseudoPolarityOfProjectiveSpace" Arg="f"/>
+<Prop Name="IsPseudoPolarityOfProjectiveSpace" Arg="phi"/>
 <Returns>true or false</Returns>
-<Description>The polarity <A>f</A> is a pseudo-polarity of a projective space if
+<Description>The polarity <A>phi</A> is a pseudo-polarity of a projective space if
 and only if the underlying matrix is symmetric, not all elements on the main
 diagonal are zero and the characteristic of the field is even.
 <Example>

@@ -1037,7 +1037,9 @@ InstallMethod( ViewObj, "for diagram with geometry",
   function( diag )
     local geo;
     geo := GeometryOfDiagram( diag );
-    Print("< Diagram of ", geo ," >");
+    Print("< Diagram of ");
+    ViewObj(geo);
+    Print(" >");
   end );
 
 InstallMethod( ViewObj, "for coset geometry",

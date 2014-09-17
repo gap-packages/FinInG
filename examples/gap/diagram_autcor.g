@@ -13,5 +13,11 @@ aut:=AutGroupIncidenceStructureWithNauty(cg);
 StructureDescription(aut);
 cor:=CorGroupIncidenceStructureWithNauty(cg);
 StructureDescription(cor);
+incgrph:=IncidenceGraph(cg);;
+names:=VertexNames(incgrph);;
+g:=Random(aut);
+e:=RandomElement(cg);
+pos:=Position(names, e);
+names[pos^g];
 quit;
 
