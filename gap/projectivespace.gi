@@ -1362,7 +1362,7 @@ InstallMethod( FlagOfIncidenceStructure,
 		fi;
 		test := Set(List([1..Length(list)-1],i -> IsIncident(list[i],list[i+1])));
 		if (test <> [ true ] and test <> []) then
-		  Error("<els> does not determine a flag>");
+		  Error("<els> do not determine a flag");
 		fi;
 		flag := rec(geo := ps, types := List(list,x->x!.type), els := list, vectorspace := ps!.vectorspace );
 		ObjectifyWithAttributes(flag, IsFlagOfPSType, IsEmptyFlag, false, RankAttr, Size(list) );

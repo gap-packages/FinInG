@@ -259,8 +259,9 @@ semilinear maps, and the correlations of a projective space.
 <Heading>Collineations of projective spaces</Heading>
 <Filt Name="IsCollineation" Type="Property"/>
 <Description>
-<C>IsCollineation</C> is property. All element of <Alt Not="HTML"><M>P\Gamma L(n+1,q)</M></Alt><Alt
-Only="HTML">P&#915;L(n+1,q)</Alt> are collineations, and therefor all
+<C>IsCollineation</C> is property. All elements of <Alt 
+Not="HTML"><M>P\Gamma L(n+1,q)</M></Alt><Alt
+Only="HTML">P&#915;L(n+1,q)</Alt> are collineations, and therefore all
 elements belonging to <C>IsProjGrpElWithFrob</C> are collineations.
 But also a projectivity is a collineation, as well as an element belonging
 to <C>IsProjGrpElWithFrobWithPSIsom</C> with projective space isomorphism equal to the identity, is a collineation.
