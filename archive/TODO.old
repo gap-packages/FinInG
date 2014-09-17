@@ -1,0 +1,224 @@
+THIS IS A TO DO LIST FOR THE GAP-PACKAGE FINING
+===================================================
+
+ADDED 31/01/2009
+================
+
+- Enumerator for points of H(n, q^2)    JAN
+- Projective algebraic varieties code   CELLE
+- Get diagrams working at least without
+  pictures                              PHILIPPE
+- GraphViz stuff for diagrams?          PHILIPPE
+- Update TODO list, everyone make
+  a personal TODO list                  EVERYONE
+- Projective planes stuff               JOHN
+- Examples                              JOHN and PHILIPPE (for coset geoms)
+- March 1st Deadline
+
+
+
+ADDED September 2008
+====================
+
++- PG(3,2) should work, as well as ProjectiveGeometry
+
++- DesarguesianSpread
+
+- There should be something for history (automatic "log" file for the input?)
+
++- Method for Random elements of e.g. Lines(pg). Add this to projectivespace.gi
+  
+- polarspace.gi and projectivespace.gi
+	"size" should be removed in the "rec" field
+	
+- ConvertToMatrixRepNC: de NC zorgt ervoor dat er bij deze representatie niet meer
+ gecontroleerd wordt
+of het hier wel degelijk over een representatie gaat. 
+
+OPGELET: ConvertToMatrixRepNC geeft niet de matrix terug, maar geeft de orde van
+ het veld van de matrix
+indien die bestaat); de output is dus geen matrix!!!!
+
+line 48 moet dus "m" zijn ipv m2 #DIT IS NU REEDS VERANDERD (op de trein naar Edinburgh)
+
+Opgelet met het veld hier! Zou een deelveld kunnen zijn! 
+
+Dit zouden we moeten veranderen. De gebruiker zou hier ook een veld moeten opgev
+en. 
+Om later geen misverstanden te krijgen.
+
+- About the setwise-stabiliser problem, it seems we should talk to Steve or use the orb package or use the partition backtrack for permutation groups.
+
+-Gapdoc crash course.
+
+-NiceMonomorophisms (inheritance)
+
+-Filters overview (see ~/Gap/howto)
+
++-Stabilizer of a points in PG(3,8)
+gap> hq:=HyperbolicQuadric(3,8);
+Q+(3, 8)
+gap> g:=CollineationGroup(hq);
+PGammaO+(4,8)
+gap> pg:=ProjectiveSpace(3,8);
+PG(3, 8)
+gap> x:=Random(Points(pg));
+<a point in PG(3, 8)>
+gap> Stabilizer(g,x,OnPoints);
+
+-AlgebraicVarieties: currently only works for one defining polynomial. Should work for a list of polynomials.
+
+-ProjectivePlane (should work for a set of points and a set of lines, blockmatrix, incidencematrix etc ...)
+
+-VeroneseVarieties en alle ander varieties: 
+
+-IsVarietyOfProjectiveAlgebraicVariety moet herdacht en opnieuw geimplementeerd worden
+
+-RepresentativesVarietyTypes does not work for a projective space (it does work for symplectic space)
+
+-What about the numer of entries in the record of e.g. ProjectiveSpace
+
+-VectorSpaceToElement should be a method for each of the subcategories of IsLieGeometry
+
+-For reasons of consistency make sure that the representation of IsElementsOf... belongs to IsComponentObjRep (consistent with vector spaces in gap).
+
+-What about using mutable attributes? This would be handy for projective varieties and its points.
+
+-Add a method for Dimension of projective space
+
+-Hash function for OnProjectiveSubspacesAction
+
+
+ADDED 27/12/2007
+================
+
+1. Documenting each single function/operation/method, etc....
+2. Is everything running optimally? Test out various operations using good examples.
+3. Subgeometry issues;
+	3.1: we need a function which checks when something is a 
+	subgeometry
+	3.2: a function which generates the subgeometry, when given a 
+	frame and a prime power.
+	3.3: a function which generates a "canonical" subgeometry
+4. Spreads, translation planes, etc... (separate package?) 
+(interface with grape? design?)
+	4.1 Spread sets, Andre-Bruck-Bose, ...
+	4.2 PTR's
+	4.3 Quasifields, semifields, loops (Gabor Nagy is working on loops and is interested).
+5. Website for Desargues.																JAN
+6. Polarities and correlations; associate the forms with polarities						JAN
+7. Algebraic varieties (in general... we still need to think about how 
+and what we want to do this). This is quite a tricky subject, what do we 
+want, and what is possible, not too far fetched...
+8. We want to adjust the field reduction which is already there for projective spaces so
+that it works also for polar spaces.
+9. Work on the user interface 
+	9.1: all record and component access should have an associated operation
+	9.2: think of nifty ways to make it easy to use (such as overloading "Points"
+ 	for ResidualOfVariety(pg, x, 1);
+	9.3: try and make every example as stream-lined as possible
+	9.4: avoid any ambiguous or easy-to-forget terminology (e.g., OnLieVarieties maybe
+	such an example)
+10. Diagram Geometries.
+	10.1: implement a good, but not perfect, algorithm for deciding whether a group
+	element is in a product AB of two subgroups (need this for coset geometries);
+	10.2: heaps of operations/attributes need to be installed
+11. Working with the projective groups. Point stabilisers, pointwise,					JAN
+setwise stabilisers are too slow ...
+	11.1: having stabiliser chains for projective groups will make everything so much better
+	11.2: interface with "orb" and "genss"
+12. Convert, where possible, matrices to 8-bit representation
+13. testing, testing, and more testing!
+
+ADDED 15/11/2007
+================
+
+Here is what needs to be done:
+
+- debug \< for proj elements (with frob)
+- TEST files !
+- polarities as correlations (Jan will do this)
+- generalised polygons (John will do this)
+- documentation
+
+- unique conic on five points
+- unique baer subline on 3 points
+
+- work on IsomorphismPolarSpaces (doesn't seem to be clean enough)
+
+- changed this file by adding this line (17/3/2014) to test my svn behaviour.
+
+ADDED 17/3/2014
+===============
+
+- IncidenceGraphOfGeneralizedPolygon should become a method for the 
+(more general) IncidenceGraph, which is now defined for coset 
+geometries. Maybe the latter should become 
+IncidenceGraphOfCosetGeometry, a method for IncidenceGraph.
+
+ADDED 14/9/2014
+===============
+
+- VeroneseVariety for (m,n) not just the quadratic Veronesean.
+- groups for GrassmannVariety, SegreVariety
+- put in John's code for "QuadricDefinedByPoints" and "HermitianPolarSpaceDefinedByPoints"
+   perhaps this should be generalised?
+
+#############################################################################
+#O  ConicOnFivePoints ( <pts> )
+# returns the conic through five given points <pts>, as a projective variety.
+##
+InstallMethod( ConicOnFivePoints, 
+	"for a set of five points of a projective plane",
+   [ IsHomogeneousList and IsSubspaceOfProjectiveSpaceCollection ],
+
+  function( pts )
+
+  #  To find the conic, we simply solve an equation
+  #
+  #  ax^2 + by^2 + cz^2 + dxy + exz + fyz = 0
+  #  [x^2,y^2,z^2,xy,xz,yz] . [a,b,c,d,e] = 0
+  #
+  #  This function returns a projective algebraic variety
+
+    local gf, r, vecs, mat, sol, poly, mat2, plane, embed,
+          pg, d, dplus1, pairs, vars, indets;
+    if Size(AsSet(pts)) < 5 then
+       Error("Not enough points");
+    fi;
+
+    if ForAny(pts, t -> ProjectiveDimension(t) <> 0) then
+       Error("Not a set of points");
+    fi;
+
+    ## check that the points span a plane
+
+    if Dimension( Span(pts) ) <> 2 then
+       Error("Points do not span a plane");
+    fi;
+
+    ## we also need to allow the user to define a conic in a plane
+    ## which is embedded in a higher dimensional projective space
+    ## until we have done this, we need to check whether the ambient
+    ## space of the points is a plane
+    if not (Size(AsSet(List(pts,t -> AmbientSpace(t))))=1 and 
+			Dimension(AmbientSpace(Random(pts)))=2) then 
+	Error("The ambient space of the points should be a plane");
+    fi;
+
+
+    pg := AmbientSpace(pts[1]!.geo);
+    gf := pg!.basefield;
+    dplus1 := Dimension(pg) + 1;
+    r := PolynomialRing(gf, dplus1);
+    indets := IndeterminatesOfPolynomialRing(r);
+    vecs := List(pts, t -> Unwrap(t));
+    pairs := UnorderedTuples( [1..dplus1], 2 );;
+    mat := List(vecs, t -> List( pairs, p -> t[p[1]] * t[p[2]] ) );;
+    sol := NullspaceMat(TransposedMat(mat))[1];
+	vars := List(pairs, p -> indets[p[1]] * indets[p[2]]);
+    poly := vars * sol;
+
+    return ProjectiveVariety( pg, [poly] );
+  end ); 
+

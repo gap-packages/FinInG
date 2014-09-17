@@ -103,45 +103,6 @@ diagramfiles := ["diagram_cosetgeom", "diagram_neumaier", "diagram_nearoctagon",
                     "diagram_random", "diagram_notFT", "diagram_firmthinthick", "diagram_connectedness", "diagram_flagmapping",
                     "diagram_residues"];
 
-
-"projpol_specialisometry", "projpol_isometry", "projpol_similarity", "cps_underlyingvs", "cps_ambientspace",
-                      "cps_projectivedimension", "cps_rank", "cps_basefield", "cps_element1", "cps_projdimension_element",
-					  "cps_coordinates", "cps_ambientspaceelps", "cps_incident"];
-
-
-projpolfiles1 := ["projpol_projectivespace", "projpol_projdimension",
-                 "projpol_underlyingvs", "projpol_element1", "projpol_emptysubspace",
-		 "projpol_projdimension_element", "projpol_coordinates",
-		  "projpol_eqhyperplane", "projpol_basefieldps", "projpol_ambientspaceelps", 
-		  "projpol_basefieldelps", "projpol_randomeltsps", "projpol_randomelps",
-		  "projpol_span", "projpol_meet", "projpol_shadowofelement", "projpol_flag",
-		  "projpol_shadowofflag"];
-		 
-		 
-		 "projpol_hermitian", "projpol_elliptic",
-		 "projpol_parabolic", "projpol_hyperbolic", "projpol_element1", "projpol_in"];
-
-projspacefiles := ["projpol_projectivespace", "projpol_projdimension", "projpol_basefieldps", "projpol_underlyingvs",
-                   "projpol_element1", "projpol_emptysubspace", "projpol_projdimension_element", "projpol_standardframe",
-				   "projpol_coordinates", "projpol_eqhyperplane", "projpol_ambientspaceelps", "projpol_basefieldelps",
-				   "projpol_randomeltps", "projpol_randomeltsps", "projpol_span", "projpol_meet", "projpol_in",
-				   "projpol_flag", "projpol_chamber", "projpol_shadowofelement", "projpol_shadowofflag", "projpol_elsel",
-				   "projsp_standardframe"];
-
-
-
-projpolfiles1 := ["projpol_projectivespace", "projpol_polarspaceform",
-                 "projpol_symplectic", "projpol_hermitian", "projpol_elliptic",
-		 "projpol_parabolic", "projpol_hyperbolic", "projpol_element1", "projpol_in"];
-		 
-
-
-		  
-varieties_files := ["varieties_general", "varieties_polarspace", "varieties_veronese", "varieties_segre", "varieties_hermitian", "varieties_quadratic", "varieties_grassmann" ];
-
-
-
-
 websitefiles := ["web_hyperoval24", "web_inumbersherm", "web_embedding", "web_spreads", "web_ovoidq63"];
 
 groups_appfiles := ["groups_app_sodesargues", "groups_app_godesargues", "groups_app_sudesargues", "groups_app_gudesargues",
@@ -158,7 +119,6 @@ files := [ "gpolygons_EGQByqClan" ];
 #name of script to start gap version. The user has to fill this in!
 
 files := ["examples_test"];
-
 
 #the code below is used to demonstrate some very strange gap4r5 behaviour :-(
 dir := DirectoryCurrent();
