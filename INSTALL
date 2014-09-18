@@ -103,38 +103,39 @@ by John Bamberg (http://school.maths.uwa.edu.au/~bamberg/)
    Jan De Beule (http://cage.ugent.be/~jdebeule)
 For help, type: ?Forms 
 ---------------------------------------------------------------------
-─────────────────────────────────────────────────────────────────────────────
+---------------------------------------------------------------------
 Loading  IO 4.2 (Bindings to low level I/O in the C library)
 by Max Neunhoeffer (http://www-groups.mcs.st-and.ac.uk/~neunhoef/).
 Homepage: 
 http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/io.html
-─────────────────────────────────────────────────────────────────────────────
-─────────────────────────────────────────────────────────────────────────────
+---------------------------------------------------------------------
+---------------------------------------------------------------------
 Loading  orb 4.6 (orb - Methods to enumerate orbits)
 by Juergen Mueller (http://www.math.rwth-aachen.de/~Juergen.Mueller),
    Max Neunhoeffer (http://www-groups.mcs.st-and.ac.uk/~neunhoef), and
    Felix Noeske (http://www.math.rwth-aachen.de/~Felix.Noeske).
 Homepage: 
 http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
-─────────────────────────────────────────────────────────────────────────────
-─────────────────────────────────────────────────────────────────────────────
+---------------------------------------------------------------------
+---------------------------------------------------------------------
 Loading  cvec 2.4 (Compact vectors over finite fields)
 by Max Neunhoeffer (http://www-groups.mcs.st-and.ac.uk/~neunhoef/).
 Homepage: 
 http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/cvec.html
-─────────────────────────────────────────────────────────────────────────────
-─────────────────────────────────────────────────────────────────────────────
+---------------------------------------------------------------------
+---------------------------------------------------------------------
 Loading  genss 1.5 (genss - generic Schreier-Sims)
 by Max Neunhoeffer (http://www-groups.mcs.st-and.ac.uk/~neunhoef) and
    Felix Noeske (http://www.math.rwth-aachen.de/~Felix.Noeske).
 Homepage: 
 http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/genss.html
-─────────────────────────────────────────────────────────────────────────────
-─────────────────────────────────────────────────────────────────────────────
+---------------------------------------------------------------------
+---------------------------------------------------------------------
 Loading  GRAPE 4.6.1 (GRaph Algorithms using PErmutation groups)
 by Leonard H. Soicher (http://www.maths.qmul.ac.uk/~leonard/).
 Homepage: http://www.maths.qmul.ac.uk/~leonard/grape/
-─────────────────────────────────────────────────────────────────────────────
+---------------------------------------------------------------------
+---------------------------------------------------------------------
 patching: forms loading: geometry, liegeometry, group, projectivespace, 
 correlations, polarspace/morphisms, enumerators, diagram, varieties, 
 affinespace/affinegroup, gpolygons, orbits+stabilisers
