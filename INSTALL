@@ -33,7 +33,8 @@ applies to e-g. Please note that packages e-g require compilation and we
 recommend to compile GRAPE also to be able to compute autmorphism groups 
 with nauty.
 
-Here are the steps to follow to compile the required packages.
+Here are the steps to follow to compile the required packages on a UNIX 
+based system.
 [In case you don't have write access to the gap installation on your computer, 
 you should ask your system administrator to do this for you.]
 
@@ -88,7 +89,7 @@ DONE!
 installation, as described in the FinInG manual.]
 
 user@computer:~/$ cd /opt/gap4r7/pkg
-user@computer:~/$ tar xzf fining-1.0.tgz
+user@computer:/opt/gap4r7/pkg/$ tar xzf fining-1.0.tgz
 
 DONE!
 
