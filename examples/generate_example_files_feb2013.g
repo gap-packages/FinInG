@@ -110,6 +110,10 @@ groups_appfiles := ["groups_app_sodesargues", "groups_app_godesargues", "groups_
 					"groups_app_deltaominus", "groups_app_deltaoplus", "groups_app_gammaoplus", "groups_app_gammaominus",
 					"groups_app_gammao", "groups_app_gammau" ];
 
+files := ["testall"];
+
+exampledir := DirectoriesPackageLibrary("fining","tst")[1];
+
 files := [ "gpolygons_EGQByqClan" ];
 
 #initialize directorynames
@@ -165,8 +169,6 @@ gap := Filename(Directory("/usr/bin/"),"gap4r7");
 paths := JoinStringsWithSeparator(GAP_ROOT_PATHS{[2,3]},";");
 args := JoinStringsWithSeparator(["-l",paths," -L fining.ws"," -o 4G"]," ");
 args := ["-l",paths,"-L","fining.ws","-o","4G"];
-
-
 
 #create .out files using the saved workspace
 #IMPORTANT: here we suppose that the script to start up our favorite version of

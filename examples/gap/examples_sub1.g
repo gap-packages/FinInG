@@ -9,7 +9,7 @@ plane := VectorSpaceToElement(pg,mat2);
 IsIncident(point,line);
 IsIncident(line,point);
 point * line;
-line * point
+line * point;
 point in line;
 line in point;
 IsIncident(point,plane);
