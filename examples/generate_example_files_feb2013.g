@@ -110,7 +110,7 @@ groups_appfiles := ["groups_app_sodesargues", "groups_app_godesargues", "groups_
 					"groups_app_deltaominus", "groups_app_deltaoplus", "groups_app_gammaoplus", "groups_app_gammaominus",
 					"groups_app_gammao", "groups_app_gammau" ];
 
-files := ["testall"];
+testfiles := ["tst_test1", "tst_test2", "tst_test3", "tst_test4", "tst_test5", "tst_test6"];
 
 exampledir := DirectoriesPackageLibrary("fining","tst")[1];
 
