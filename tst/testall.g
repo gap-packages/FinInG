@@ -1,4 +1,4 @@
-dir := DirectoriesPackageLibrary( pkgname, "tst" )[1];
+dir := DirectoriesPackageLibrary( "fining", "tst" )[1];
 
 testfiles := [
 "tst_test1.tst",
