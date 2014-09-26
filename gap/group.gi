@@ -98,10 +98,10 @@ end);
 
 # CHECKED 6/09/11 jdb
 #############################################################################
-#F  IsScalarMatrix( a)
+#F  IsFiningScalarMatrix( a)
 #returns true if <a> is a scalar matrix.
 ##
-InstallGlobalFunction(IsScalarMatrix,
+InstallGlobalFunction(IsFiningScalarMatrix,
 	function( a )
 	local n;
 	n := a[1][1];
@@ -995,7 +995,7 @@ InstallMethod( Order,
 			bfrob := bfrob^frob;
 			b := b * bfrob;
 			i := i + 1;
-		until IsScalarMatrix( b ) and i mod ofrob = 0;
+		until IsFiningScalarMatrix( b ) and i mod ofrob = 0;
 		return i;
 	else
 		return Order(frob);
