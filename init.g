@@ -20,28 +20,28 @@
 ##
 #############################################################################
 
-ReadPackage("fining","gap/geometry.gd");
+ReadPackage("fining","lib/geometry.gd");
 
-ReadPackage("fining","gap/liegeometry.gd");
+ReadPackage("fining","lib/liegeometry.gd");
 
-ReadPackage("fining","gap/group.gd");
+ReadPackage("fining","lib/group.gd");
 
-ReadPackage("fining","gap/projectivespace.gd");
+ReadPackage("fining","lib/projectivespace.gd");
 
-ReadPackage("fining","gap/correlations.gd");
+ReadPackage("fining","lib/correlations.gd");
 
-ReadPackage("fining","gap/polarspace.gd");
-ReadPackage("fining","gap/morphisms.gd");
+ReadPackage("fining","lib/polarspace.gd");
+ReadPackage("fining","lib/morphisms.gd");
 
-ReadPackage("fining","gap/enumerators.gd");
+ReadPackage("fining","lib/enumerators.gd");
 
-ReadPackage("fining","gap/diagram.gd");
+ReadPackage("fining","lib/diagram.gd");
 
-ReadPackage("fining","gap/varieties.gd");
+ReadPackage("fining","lib/varieties.gd");
 
-ReadPackage("fining","gap/affinespace.gd");
-ReadPackage("fining","gap/affinegroup.gd");
+ReadPackage("fining","lib/affinespace.gd");
+ReadPackage("fining","lib/affinegroup.gd");
 
-ReadPackage("fining","gap/gpolygons.gd");
+ReadPackage("fining","lib/gpolygons.gd");
 
-ReadPackage("fining","gap/orbits-stabilisers.gd"); # added 11/02/13 ml
+ReadPackage("fining","lib/orbits-stabilisers.gd"); # added 11/02/13 ml

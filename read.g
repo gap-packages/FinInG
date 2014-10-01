@@ -21,42 +21,42 @@
 #############################################################################
 
 if InstalledPackageVersion("forms") < "1.2" then
-   ReadPackage("fining","gap/forms_ext.gi"); 
+   ReadPackage("fining","lib/forms_ext.gi"); 
 fi;
 if InstalledPackageVersion("forms") < "1.2.2" then
    Forms_RESET := RESET; 
 fi;
 if InstalledPackageVersion("forms") <= "1.2.2" then
-   ReadPackage("fining","gap/forms_patch.gi"); 
+   ReadPackage("fining","lib/forms_patch.gi"); 
 fi;
 
-ReadPackage("fining","gap/genss_patch.g");
+ReadPackage("fining","lib/genss_patch.g");
 
-ReadPackage("fining","gap/geometry.gi");
+ReadPackage("fining","lib/geometry.gi");
 
-ReadPackage("fining","gap/liegeometry.gi"); 
+ReadPackage("fining","lib/liegeometry.gi"); 
 
-ReadPackage("fining","gap/group.gi"); 
+ReadPackage("fining","lib/group.gi"); 
 
-ReadPackage("fining","gap/projectivespace.gi");
+ReadPackage("fining","lib/projectivespace.gi");
 
-ReadPackage("fining","gap/correlations.gi");
+ReadPackage("fining","lib/correlations.gi");
 
-ReadPackage("fining","gap/polarspace.gi");
-ReadPackage("fining","gap/morphisms.gi");
+ReadPackage("fining","lib/polarspace.gi");
+ReadPackage("fining","lib/morphisms.gi");
 
-ReadPackage("fining","gap/enumerators.gi");
+ReadPackage("fining","lib/enumerators.gi");
 
-ReadPackage("fining","gap/diagram.gi");
+ReadPackage("fining","lib/diagram.gi");
 
-ReadPackage("fining","gap/varieties.gi");
+ReadPackage("fining","lib/varieties.gi");
 
-ReadPackage("fining","gap/affinespace.gi");
-ReadPackage("fining","gap/affinegroup.gi");
+ReadPackage("fining","lib/affinespace.gi");
+ReadPackage("fining","lib/affinegroup.gi");
 
-ReadPackage("fining","gap/gpolygons.gi");
+ReadPackage("fining","lib/gpolygons.gi");
 
-ReadPackage("fining","gap/orbits-stabilisers.gi"); # added 11/02/13 ml
+ReadPackage("fining","lib/orbits-stabilisers.gi"); # added 11/02/13 ml
 
 Print("\n");
 

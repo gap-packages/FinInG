@@ -107,13 +107,14 @@ DeclareCategory( "IsProjectiveSpace", IsLieGeometry );
 DeclareCategory( "IsGeneralisedPolygon", IsIncidenceGeometry );
 
 # to resolve the dependency of projectivespace.gi and polarspace.gi from gpolygon.gd, the following particular
-# declarations are put here.
-DeclareCategory( "IsProjectivePlane", IsGeneralisedPolygon );
+# declarations are put here. IsProjectivePlane seems to be the name of an operation in package "rds". Therefore
+# we make it IsProjectivePlaneCategory here.
+DeclareCategory( "IsProjectivePlaneCategory", IsGeneralisedPolygon );
 DeclareCategory( "IsGeneralisedQuadrangle", IsGeneralisedPolygon );
 DeclareCategory( "IsGeneralisedHexagon", IsGeneralisedPolygon );
 DeclareCategory( "IsGeneralisedOctagon", IsGeneralisedPolygon );
 
-DeclareCategory( "IsDesarguesianPlane", IsProjectivePlane and IsProjectiveSpace ); 
+DeclareCategory( "IsDesarguesianPlane", IsProjectivePlaneCategory and IsProjectiveSpace ); 
 DeclareCategory( "IsClassicalGQ", IsGeneralisedQuadrangle and IsClassicalPolarSpace ); 
 DeclareCategory( "IsClassicalGeneralisedHexagon", IsGeneralisedHexagon and IsLieGeometry ); 
 

@@ -62,7 +62,7 @@ Print(", gpolygons\c");
 # gonality: it is not very explicitely documented, but one can actually construct 
 #   generalised n-gons for n different than 3,4,6,8. To avoid checking the diameter of the underlying
 #   graph e.g. for ViewObj, in these case the field gonality is set upon creation. One could say
-#   that this field replaces the categories IsProjectivePlane, IsGeneralisedQuadrangle, IsGeneralisedHexagon
+#   that this field replaces the categories IsProjectivePlaneCategory, IsGeneralisedQuadrangle, IsGeneralisedHexagon
 #   and IsGeneralisedOctagon for these arbitrary cases.
 #
 # Note: - If an object belongs to IsGeneralisedPolygon, then the "generic operations" to explore the GP
@@ -213,7 +213,7 @@ InstallMethod( GeneralisedPolygonByBlocks,
 			ty := NewType( GeometriesFamily, IsWeakGeneralisedPolygon and IsGeneralisedPolygonRep );
             gp!.gonality := girth/2;
 		elif girth = 6 then
-            ty := NewType( GeometriesFamily, IsProjectivePlane and IsGeneralisedPolygonRep );
+            ty := NewType( GeometriesFamily, IsProjectivePlaneCategory and IsGeneralisedPolygonRep );
         elif girth = 8 then
             ty := NewType( GeometriesFamily, IsGeneralisedQuadrangle and IsGeneralisedPolygonRep );
         elif girth = 12 then
@@ -377,7 +377,7 @@ InstallMethod( GeneralisedPolygonByElements,
 		ty := NewType( GeometriesFamily, IsWeakGeneralisedPolygon and IsGeneralisedPolygonRep );
 		gp!.gonality := girth/2;
 	elif girth = 6 then
-        ty := NewType( GeometriesFamily, IsProjectivePlane and IsGeneralisedPolygonRep );
+        ty := NewType( GeometriesFamily, IsProjectivePlaneCategory and IsGeneralisedPolygonRep );
     elif girth = 8 then
         ty := NewType( GeometriesFamily, IsGeneralisedQuadrangle and IsGeneralisedPolygonRep );
     elif girth = 12 then
@@ -513,7 +513,7 @@ InstallMethod( GeneralisedPolygonByElements,
 		ty := NewType( GeometriesFamily, IsWeakGeneralisedPolygon and IsGeneralisedPolygonRep );
 		gp!.gonality := girth/2;
 	elif girth = 6 then
-        ty := NewType( GeometriesFamily, IsProjectivePlane and IsGeneralisedPolygonRep );
+        ty := NewType( GeometriesFamily, IsProjectivePlaneCategory and IsGeneralisedPolygonRep );
     elif girth = 8 then
         ty := NewType( GeometriesFamily, IsGeneralisedQuadrangle and IsGeneralisedPolygonRep );
     elif girth = 12 then
@@ -542,7 +542,7 @@ end );
 
 InstallMethod( ViewObj, 
 	"for a projective plane in GP rep",
-	[ IsProjectivePlane and IsGeneralisedPolygonRep],
+	[ IsProjectivePlaneCategory and IsGeneralisedPolygonRep],
 	function( p )
         if HasOrder(p) then
             Print("<projective plane order ",Order(p)[1],">");
@@ -686,7 +686,7 @@ InstallMethod( ElementsOfIncidenceStructure,
 		else 
 			Error("Incorrect type value");
 		fi;
-		if IsProjectivePlane(gp) then
+		if IsProjectivePlaneCategory(gp) then
 			sz := s^2 + s + 1;
 		elif IsGeneralisedQuadrangle(gp) then 
 			sz := (1+s)*(1+s*t);

@@ -81,9 +81,14 @@ St Andrews, United Kingdom.
 <Copyright>
   &copyright; 2014 by the authors<P/>
   This package may be distributed under the terms and conditions of the
-  GNU Public License Version 2 or higher.
+  GNU Public License Version 2 or higher.<P/>
+  The development group of <Package>FinInG</Package> welcomes contacts with users. Even if you obtained the package as a deposited package,
+  we suggest you to register at <Homepage>http://cage.ugent.be/fining</Homepage> when you use <Package>FinInG</Package>.<P/>
+  Please tell us about the use of <Package>FinInG</Package> in your research or teaching. We are very interested in results obtained
+  using <Package>FinInG</Package> and we may well want to provide a reference to your work by using it as an example in our manual.
+  If your work is publised, we ask you to cite <Package>FinInG</Package> like a journal article or book. We provide the necessary BibTex and LaTeX
+  code in Section <Ref Sect="cite"/>.
 </Copyright>
-
 
 <Acknowledgements>
 The development phase of <Package>FinInG</Package> started roughly in 2005. The idea to write a package for 

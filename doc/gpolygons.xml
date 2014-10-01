@@ -55,7 +55,7 @@ to <C>IsGeneralisedPolygonRep</C>.
 
 <ManSection>
 <Heading>Subcategories in <C>IsGeneralisedPolygon</C></Heading>
-<Filt Name="IsProjectivePlane" Type="Category"/>
+<Filt Name="IsProjectivePlaneCategory" Type="Category"/>
 <Filt Name="IsGeneralisedQuadrangle" Type="Category"/>
 <Filt Name="IsGeneralisedHexagon" Type="Category"/>
 <Filt Name="IsGeneralisedOctagon" Type="Category"/>
@@ -64,7 +64,7 @@ All generalised polygons in <Package>FinInG</Package> belong to one of these fou
 possible to construct generalised polygons of which the gonality is not known (or checked). Note that the
 classical generalised quadrangles (which are the classical polar spaces of rank 2) belong
 also to <C>IsGeneralisedQuadrangle</C> and that the desarguesian projective planes (which are the projective
-spaces of dimension 2) also belong to <C>IsProjectivePlane</C>, but both do not belong
+spaces of dimension 2) also belong to <C>IsProjectivePlaneCategory</C>, but both do not belong
 to <C>IsGeneralisedPolygonRep</C>.
 </Description>
 </ManSection>
@@ -77,10 +77,10 @@ to <C>IsGeneralisedPolygonRep</C>.
 </ManSection>
 
 <ManSection>
-<Heading>Subcategories in <C>IsProjectivePlane</C></Heading>
+<Heading>Subcategories in <C>IsProjectivePlaneCategory</C></Heading>
 <Filt Name="IsDesarguesianPlane" Type="Category"/>
 <Description>
-<C>IsDesarguesianPlane</C> is declared as a subcategory of <C>IsProjectivePlane</C> and 
+<C>IsDesarguesianPlane</C> is declared as a subcategory of <C>IsProjectivePlaneCategory</C> and 
 <C>IsProjecticeSpace</C>. Projective spaces of dimension 2 constructed using <F>ProjectiveSpace</F>
 belong to <C>IsDesarguesianPlane</C>.
 </Description>
