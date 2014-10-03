@@ -210,6 +210,19 @@ InstallMethod( NrElementsOfIncidenceStructure,
 		return Size(ElementsOfIncidenceStructure(ps, typ));
 		end);
 
+#############################################################################
+# Hash functions for elements are important to use the orb package to compute
+# orbits (quickly). We implement hash functions for elements and sets of elements.
+# Note that the hash functions for elements rely on the hash functions for the underlying
+# object. For cvec/cmats, such hash functions are provided in the package cvec of course
+#
+# The idea for a hashfunction of a set of elements is as follows: if set has length n,
+# then we add all hashvalues of the objects in set. The initial length is estimated
+# through the orb functionality. So if set has n elements, the resulting value might
+# increase the size of a hash table for the individual elements. Therefore we call
+# the hash function for the elements with length len/n.
+# Note that more clever ideas might lead to faster orbit computation.
+##
 InstallGlobalFunction( HashFuncForElements,
 	function( v, data )
 		return data.func(v!.obj,data.data);
