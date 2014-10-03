@@ -46,11 +46,11 @@ facility with matrix and permutation groups.<P/>
 <Section Label="cite">
 <Heading>How to cite <Package>FinInG</Package></Heading>
 
-  The development group of <Package>FinInG</Package> welcomes contacts with users. Even if you obtained the package as a deposited package,
-  we suggest you to register at <Homepage>http://cage.ugent.be/fining</Homepage> when you use <Package>FinInG</Package>.<P/>
+  The development group of <Package>FinInG</Package> welcomes contact with users. In case you have obtained the package as a deposited package part of archive during the installation of GAP,
+  we call on your beneficence to register at <Homepage>http://cage.ugent.be/fining</Homepage> when you use <Package>FinInG</Package>.<P/>
   Please tell us about the use of <Package>FinInG</Package> in your research or teaching. We are very interested in results obtained
-  using <Package>FinInG</Package> and we may well want to provide a reference to your work by using it as an example in our manual.
-  If your work is publised, we ask you to cite <Package>FinInG</Package> like a journal article or book.<P/>
+  using <Package>FinInG</Package> and we might refer to your work in the future.
+  If your work is published, we ask you to cite <Package>FinInG</Package> like a journal article or book.<P/>
 
 If you are using BibTeX, you can use the following BibTeX entry for the current <Package>FinInG</Package> version:
 
@@ -64,7 +64,7 @@ If you are using BibTeX, you can use the following BibTeX entry for the current 
         Year = 2014}
 </Example>
 
-And here here is the bibliography entry produced by BibTeX (in bibliography style `alpha'), to
+Here is the bibliography entry produced by BibTeX (in bibliography style `alpha'), to
 be pasted directly inside the bibliography environment of your LaTeX document:
 
 <Example>
