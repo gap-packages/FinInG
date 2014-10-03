@@ -215,13 +215,28 @@ InstallGlobalFunction( HashFuncForElements,
 		return data.func(v!.obj,data.data);
 	end );
 
-InstallMethod( ChooseHashFunction, 
+InstallGlobalFunction( HashFuncForSetElements,
+	function( v, data )
+        return Sum(List(v,x->data.func(x!.obj,data.data)));
+	end );
+
+InstallMethod( ChooseHashFunction,
 	"for an element and a hash length",
 	[ IsElementOfIncidenceStructure, IsPosInt ],
 	function( v, len )
 		local data;
 		data := ChooseHashFunction( v!.obj, len );
 		return rec( func := HashFuncForElements, data := data );
+	end );
+
+InstallMethod( ChooseHashFunction, 
+	"for a set of elements and a hash length",
+	[ CategoryCollections(IsElementOfIncidenceStructure), IsPosInt ],
+	function( set, len )
+		local v,data;
+        v := set[1];
+        data := ChooseHashFunction( v!.obj, Int(len/Length(set)) );
+		return rec( func := HashFuncForSetElements, data := data );
 	end );
 
 #############################################################################

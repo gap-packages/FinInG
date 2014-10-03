@@ -260,6 +260,7 @@ DeclareOperation( "ObjectToElement", [IsIncidenceStructure, IsObject] );
 DeclareOperation( "UnderlyingObject", [IsElementOfIncidenceStructure] );
 
 DeclareGlobalFunction( "HashFuncForElements" );
+DeclareGlobalFunction( "HashFuncForSetElements" );
 # commenting this out had not effect, presumably...
 #DeclareOperation( "ChooseHashFunction", [IsElementOfIncidenceStructure,IsInt] );
 
