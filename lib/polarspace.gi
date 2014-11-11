@@ -1270,8 +1270,9 @@ InstallMethod( PrintObj, [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
   end );
 
 InstallMethod( Display, [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
+# fixed the output for rank (11/11/14 ml)
   function( p )
-    Print("<polar space of rank ",p!.dimension," over ",p!.basefield,">\n");
+    Print("<polar space of rank ",RankAttr(p)," in PG(", p!.dimension, ", ", Size(p!.basefield), ")",">\n");
     if HasQuadraticForm(p) then
        Display(QuadraticForm(p));
     fi;
