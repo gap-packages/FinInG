@@ -2378,14 +2378,19 @@ InstallMethod(Iterator,
 # geometry a method for ShadowOfElement  must be installed. 
 ##
 InstallMethod( ShadowOfElement,
-	"for a polar space, an element of a polar space, and an integer",
-	[IsClassicalPolarSpace, IsElementOfIncidenceStructure, IsPosInt],
+	"for a polar space, a subspace of a projective space, and an integer",
+	[IsClassicalPolarSpace, IsSubspaceOfProjectiveSpace, IsPosInt],
 	function( ps, v, j )
 		local localinner, localouter, localfactorspace, pstype, psdim, f, vdim, sz;
 		pstype := PolarSpaceType(ps);
 		psdim := ps!.dimension;
 		f := ps!.basefield;
 		vdim := v!.type;  
+        if not AmbientSpace(ps) = AmbientSpace(v) then
+            Error("<v> is not a subspace of (the ambient space) of <ps>");
+        elif not v in ps then
+            Error("<v> is not a subspace contained in <ps>");
+        fi;
         if j > Rank(ps) then
             Error("<ps> has no elements of type <j>");
 		elif j < vdim then

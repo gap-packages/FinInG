@@ -925,6 +925,9 @@ InstallMethod( ShadowOfElement,
 	# useful to compute with the shadows, e.g. iterator
 	function( ps, v, j )
 		local localinner, localouter, localfactorspace;
+        if not AmbientSpace(v) = ps then
+            Error("<v> is not a subspace of <ps>");
+        fi;
         if j > ps!.dimension then
             Error("<ps> has no elements of type <j>");
         elif j < v!.type then
@@ -1329,11 +1332,14 @@ InstallMethod(Iterator,
 # Methods to create flags.
 #############################################################################
 
-# CHECKED 18/4/2011 jdb
+# CHECKED 16/12/2014 (added check that all elements belong to ps) jdb
 #############################################################################
 #O  FlagOfIncidenceStructure( <ps>, <els> )
 # returns the flag of the projective space <ps> with elements in <els>.
 # the method checks whether the input really determines a flag.
+# The use of ambient space in the first test makes sure that we can also
+# use subspaces of polar spaces, as long as their ambient projective space
+# equals ps.
 ##
 InstallMethod( FlagOfIncidenceStructure,
 	"for a projective space and list of subspaces of the projective space",
@@ -1344,7 +1350,14 @@ InstallMethod( FlagOfIncidenceStructure,
 		if Length(list) > Rank(ps) then
 		  Error("A flag can contain at most Rank(<ps>) elements");
 		fi;
-		test := Set(List([1..Length(list)-1],i -> IsIncident(list[i],list[i+1])));
+        test := Set(List(list,x->AmbientSpace(x)));
+        #if not Length(test) = 1 then #not necessary since we use IsSubspaceOfProjectiveSpaceCollection
+        #    Error("not all elements have the same ambient geometry");
+        #fi;
+        if test[1] <> ps then
+                    Error("<els> is not a list of elements with ambient projective space <ps>");
+        fi;
+        test := Set(List([1..Length(list)-1],i -> IsIncident(list[i],list[i+1])));
 		if (test <> [ true ] and test <> []) then
 		  Error("<els> do not determine a flag");
 		fi;

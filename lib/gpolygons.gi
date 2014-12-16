@@ -929,6 +929,9 @@ InstallMethod( ShadowOfElement,
 	[IsGeneralisedPolygon and IsGeneralisedPolygonRep, IsElementOfGeneralisedPolygon, IsPosInt],
 	function( gp, el, j )
 		local shadow, func;
+        if not AmbientGeometry(el) = gp then
+            Error("ambient geometry of <el> is not <gp>");
+        fi;
         if j = el!.type then
             func := x->[x];
         elif j = 1 then

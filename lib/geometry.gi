@@ -459,6 +459,7 @@ InstallMethod( IsIncident,
 #############################################################################
 
 # added by pc 140813
+# changed by jdb 161214 (added check after test).
 #############################################################################
 #O  FlagOfIncidenceStructure( <incgeo>, <els> )
 # returns the flag of the incidence structure <incgeo> with elements in 
@@ -475,6 +476,9 @@ InstallMethod( FlagOfIncidenceStructure,
                     Error("A flag can contain at most Rank(<incstr>) elements");
                 fi;
                 test := Set(List(list,x->AmbientGeometry(x)));
+                if not Length(test) = 1 then
+                    Error("not all elements have the same ambient geometry");
+                fi;
                 if test[1] <> incgeo then
                     Error("<els> is not a list of elements of <incgeo>");
                 fi;
@@ -911,13 +915,13 @@ InstallMethod( Display,
 
 # JB (31/01/2013): One thing that I would like in GAP is to have Display for vectors just
 # like that for matrices. So here is a method which makes this happen
-
-InstallMethod( Display, 
-	"for IsVector", 
-	[ IsVector ],
-	function( v )
-		Display( [v] );
-	end );
+# JDB: I agree, but this causes problems, see remark of Alexander of 8/12/14.
+#InstallMethod( Display,
+#	"for IsVector",
+#	[ IsVector ],
+#	function( v )
+#		Display( [v] );
+#	end );
 
 InstallMethod( ViewObj, 
 	"for IsAllElementsOfIncidenceStructure",

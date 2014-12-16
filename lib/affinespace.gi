@@ -75,6 +75,18 @@ InstallMethod( PrintObj, [ IsAffineSpace and IsAffineSpaceRep ],
     Print("AffineSpace(",p!.dimension,",",p!.basefield,")");
   end );  
 
+# ADDED 16/12/14 jdb, this is needed to make one check in ShadowOfElement
+#############################################################################
+#O  \=( <ag1>, <ag2> )
+# Code taken from \= for projective spaces.
+##
+InstallMethod( \=, 
+	"for two projective spaces",
+	[IsAffineSpace, IsAffineSpace],
+	function(ag1,ag2);
+		return UnderlyingVectorSpace(ag1) = UnderlyingVectorSpace(ag2);
+	end );
+
 #############################################################################
 #
 # Attributes of affine spaces
@@ -1424,7 +1436,10 @@ InstallMethod( ShadowOfElement,
 	"for an affine space, an affine subspace, a positive integer",
 	[IsAffineSpace, IsSubspaceOfAffineSpace, IsPosInt],
 	function( as, v, j )   
-		return Objectify(
+        if not AmbientGeometry(v) = as then
+            Error("Ambient geometry of <v> is not <as>");
+        fi;
+        return Objectify(
 			NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
                                    IsShadowSubspacesOfAffineSpace and
                                    IsShadowSubspacesOfAffineSpaceRep),
