@@ -39,7 +39,7 @@ Version := "1.0",
 
 ##  Release date of the current version in dd/mm/yyyy format.
 # 
-#Date := "20/06/2003",  # not yet released
+Date := "17/12/2014",  # not yet released #note to Frank, this is not the submission date!
 
 ##  URL of the archive(s) of the current package release, but *without*
 ##  the format extension(s), like '.zoo', which are given next.
@@ -49,9 +49,7 @@ Version := "1.0",
 ##  directory containing the package (in our "example" probably:
 ##  example/init.g, ...    or  example-1.3/init.g, ...  )
 # 
-ArchiveURL := 
-  Concatenation("http://www.math.rwth-aachen.de/~Max.Neunhoeffer/Computer/",
-                "Software/Gap/Desargues/desargues"),
+ArchiveURL := "http://cage.ugent.be/fining/archive/fining-1.0",
 
 ##  All provided formats as list of file extensions, separated by white
 ##  space or commas.
@@ -261,12 +259,9 @@ Status := "dev",
 ##  the updating of package information on the GAP Website, and inclusion
 ##  and updating of the package in the GAP distribution.
 #
-README_URL := 
-  Concatenation("http://www.math.rwth-aachen.de/~Max.Neunhoeffer/Computer/",
-                "Software/Gap/Desargues/README.desargues"),
-PackageInfoURL := 
-  Concatenation("http://www.math.rwth-aachen.de/~Max.Neunhoeffer/Computer/",
-                "Software/Gap/Desargues/PackageInfo.g"),
+README_URL := "http://cage.ugent.be/fining/README",
+
+PackageInfoURL := "http://cage.ugent.be/fining/PackageInfo.g",
 
 ##  Here you  must provide a short abstract explaining the package content 
 ##  in HTML format (used on the package overview Web page) and an URL 
@@ -316,9 +311,9 @@ PackageDoc := rec(
   # use same as in GAP            
   BookName  := "FinInG",
   # format/extension can be one of .zoo, .tar.gz, .tar.bz2, -win.zip
-  Archive := 
-    Concatenation("http://www.math.rwth-aachen.de/~Max.Neunhoeffer/Computer/",
-                  "Software/Gap/Desargues/desarguesdoc.tar.gz"),
+  #Archive := 
+  #  Concatenation("http://www.math.rwth-aachen.de/~Max.Neunhoeffer/Computer/",
+  #                "Software/Gap/Desargues/desarguesdoc.tar.gz"),
   ArchiveURLSubset := ["doc"],
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",

@@ -245,7 +245,8 @@ DeclareOperation( "Type", [ IsElementOfIncidenceStructure and IsElementOfInciden
 DeclareOperation( "Type", [ IsElementsOfIncidenceStructure and IsElementsOfIncidenceStructureRep ] );
 DeclareOperation( "Type", [ IsFlagOfIncidenceStructure and IsFlagOfIncidenceStructureRep ] );
 
-
+# The following three lines, together with a method for the operation \^, 
+# will make sure that p^_ is the same as Unwrap(p), a handy shortcut.
 DeclareFilter( "IsUnwrapper" );
 DeclareGlobalVariable( "_" );
 InstallValue( _, Objectify( NewType( NewFamily( "UnwrapperFamily" ), IsUnwrapper ), rec() ));

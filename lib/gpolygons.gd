@@ -74,13 +74,21 @@ DeclareProperty( "HasGraphWithUnderlyingObjectsAsVertices", IsGeneralisedPolygon
 DeclareAttribute( "Order", IsGeneralisedPolygon);
 DeclareAttribute( "IncidenceMatrixOfGeneralisedPolygon", IsGeneralisedPolygon);
 
-# mutable attributes
+# do not make the next definition if "design" has been loaded already!
+# Note about BlockDesign: this is a global (so read-only) function in the
+# "design" package. We have created in FinInG a function BlockDesign (not 
+# through DeclareGlobalFunction, so it can be overwritten at user level and
+# through loading other packages), so that the method for BlockDesignOfGeneralisedPolygon
+# can be loaded without the "design" package loaded. We make sure that the "BlockDesign"
+# as variable is only initialised in FinInG if desing is *not* loaded. It is sufficient
+# to check whether BlockDesign is bounded when FinInG is loaded, it causes a warning
+# message when design is loaded after fining.
 
 if not IsBound( BlockDesign ) then 
    BlockDesign := function(arg) return 1; end;
 fi;
 
-
+# mutable attributes
 BlockDesignOfGeneralisedPolygonAttr := NewAttribute( "BlockDesignOfGeneralisedPolygonAttr", 
                     IsGeneralisedPolygon, "mutable" );
 #IncidenceGraphOfGeneralisedPolygonAttr := NewAttribute( "IncidenceGraphOfGeneralisedPolygonAttr",

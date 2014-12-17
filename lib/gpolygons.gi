@@ -1116,6 +1116,12 @@ InstallMethod( CollineationGroup,
 
 #############################################################################
 #O  BlockDesignOfGeneralisedPolygon( <gp> )
+# Note about BlockDesign: this is a global (so read-only) function in the
+# "design" package. We have created in FinInG a function BlockDesign (not 
+# through DeclareGlobalFunction, so it can be overwritten at user level and
+# through loading other packages), so that the method for BlockDesignOfGeneralisedPolygon
+# can be loaded without the "design" package loaded. We make sure that this method checks
+# whether design is loaded, and produces an error when this is not the case.
 #
 InstallMethod( BlockDesignOfGeneralisedPolygon,
     "for a generalised polygon",
