@@ -168,6 +168,7 @@ InstallOtherMethod( \^,
 #	end );
 
 # CHECKED 24/3/2014 PhC
+# added check 17/12/14 jdb
 #############################################################################
 #O  FlagOfIncidenceStructure( <cg>, <els> )
 # returns the flag of the coset geometry <cg> with elements in <els>.
@@ -182,7 +183,11 @@ InstallMethod( FlagOfIncidenceStructure,
 		if Length(list) > Rank(cg) then
 		  Error("A flag must contain at most Rank(<cg>) elements.\n");
 		fi;
-		test := Set(List([1..Length(list)-1],i -> IsIncident(list[i],list[i+1])));
+        test := List(list,x->AmbientGeometry(x));
+        if not ForAll(test,x->x=cg) then
+            Error("not all elements have <incgeo> as ambient geometry");
+        fi;
+        test := Set(List([1..Length(list)-1],i -> IsIncident(list[i],list[i+1])));
 		if (test <> [ true ] and test <> []) then
 		  Error("<els> does not determine a flag.\n");
 		fi;

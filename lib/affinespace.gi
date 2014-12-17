@@ -766,6 +766,10 @@ InstallMethod( FlagOfIncidenceStructure,
 		if Length(list) > Rank(as) then
 		  Error("A flag ca at most Rank(<as>) elements");
 		fi;
+        test := List(list,x->AmbientGeometry(x));
+        if not ForAll(test,x->x=as) then
+            Error("not all elements have <as> as ambient geometry");
+        fi;
 		test := Set(List([1..Length(list)-1],i -> IsIncident(list[i],list[i+1])));
 		if (test <> [ true ] and test <> []) then
 		  Error("<els> does not determine a flag>");

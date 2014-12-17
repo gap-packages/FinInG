@@ -2233,10 +2233,14 @@ InstallMethod( TypeOfSubspace,
 #############################################################################
 
 # ADDED 31/3/2014 jdb
+# checks added 17/12/14 jdb
 #############################################################################
 #O  FlagOfIncidenceStructure( <ps>, <els> )
 # returns the flag of the projective space <ps> with elements in <els>.
 # the method checks whether the input really determines a flag.
+# Compare the checks with the same method for projective space and a list of elements.
+# I can't get CategoryCollections work for cps, but on the other hand, it is
+# useful to allow els to be a list of subspaces of the ambient space of <ps>.
 ##
 InstallMethod( FlagOfIncidenceStructure,
 	"for a projective space and list of subspaces of the projective space",
@@ -2247,9 +2251,13 @@ InstallMethod( FlagOfIncidenceStructure,
 		if Length(list) > Rank(ps) then
 		  Error("A flag can contain at most Rank(<ps>) elements");
 		fi;
+        test := List(list,x->AmbientSpace(x));
+        if not ForAll(test,x->x=AmbientSpace(ps)) then
+            Error("not all elements have the ambient space of <ps> as ambient space");
+        fi;
 		test := Set(List(list,x->x in ps));
 		if (test <> [ true ] and test <> []) then
-		  Error("not all elements in <els> belong to <ps>"); #we are obliged to check this here because I can't get CategoryCollections work for cps...
+		  Error("not all elements in <els> belong to <ps>");
 		fi;
 		test := Set(List([1..Length(list)-1],i -> IsIncident(list[i],list[i+1])));
 		if (test <> [ true ] and test <> []) then

@@ -1350,13 +1350,13 @@ InstallMethod( FlagOfIncidenceStructure,
 		if Length(list) > Rank(ps) then
 		  Error("A flag can contain at most Rank(<ps>) elements");
 		fi;
-        test := Set(List(list,x->AmbientSpace(x)));
-        #if not Length(test) = 1 then #not necessary since we use IsSubspaceOfProjectiveSpaceCollection
-        #    Error("not all elements have the same ambient geometry");
-        #fi;
-        if test[1] <> ps then
-                    Error("<els> is not a list of elements with ambient projective space <ps>");
+        test := List(list,x->AmbientSpace(x));
+        if not ForAll(test,x->x=ps) then
+            Error("not all elements have <ps> as ambient space");
         fi;
+        #if test[1] <> ps then
+        #    Error("<els> is not a list of elements with ambient projective space <ps>");
+        #fi;
         test := Set(List([1..Length(list)-1],i -> IsIncident(list[i],list[i+1])));
 		if (test <> [ true ] and test <> []) then
 		  Error("<els> do not determine a flag");

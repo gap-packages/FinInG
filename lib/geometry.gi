@@ -475,13 +475,13 @@ InstallMethod( FlagOfIncidenceStructure,
                 if Length(list) > Rank(incgeo) then
                     Error("A flag can contain at most Rank(<incstr>) elements");
                 fi;
-                test := Set(List(list,x->AmbientGeometry(x)));
-                if not Length(test) = 1 then
-                    Error("not all elements have the same ambient geometry");
+                test := List(list,x->AmbientGeometry(x));
+                if not ForAll(test,x->x=incgeo) then
+                    Error("not all elements have <incgeo> as ambient geometry");
                 fi;
-                if test[1] <> incgeo then
-                    Error("<els> is not a list of elements of <incgeo>");
-                fi;
+                #if test[1] <> incgeo then
+                #    Error("<els> is not a list of elements of <incgeo>");
+                #fi;
                 test := Set(Flat(List([1..Length(list)-1],i ->
                     List([i..Length(list)], j -> IsIncident(list[i], list[j])))));
                 if (test <> [ true ] and test <> []) then
