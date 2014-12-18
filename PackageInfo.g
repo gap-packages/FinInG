@@ -39,7 +39,7 @@ Version := "1.0",
 
 ##  Release date of the current version in dd/mm/yyyy format.
 # 
-Date := "17/12/2014",  # not yet released #note to Frank, this is not the submission date!
+Date := "19/09/2014",  #this is the date Fining was submitted officially.
 
 ##  URL of the archive(s) of the current package release, but *without*
 ##  the format extension(s), like '.zoo', which are given next.
@@ -49,7 +49,7 @@ Date := "17/12/2014",  # not yet released #note to Frank, this is not the submis
 ##  directory containing the package (in our "example" probably:
 ##  example/init.g, ...    or  example-1.3/init.g, ...  )
 # 
-ArchiveURL := "http://cage.ugent.be/fining/archive/fining-1.0",
+ArchiveURL := Concatenation("http://cage.ugent.be/fining/archive/fining-",~.Version),
 
 ##  All provided formats as list of file extensions, separated by white
 ##  space or commas.
@@ -273,12 +273,16 @@ PackageInfoURL := "http://cage.ugent.be/fining/PackageInfo.g",
 # AbstractHTML := "This package provides  a collection of functions for \
 # computing the Smith normal form of integer matrices and some related \
 # utilities.",
-#AbstractHTML := 
+AbstractHTML := "<span class=\"pkgname\">FinInG</span> is a package for computation\
+ in Finite Incidence Geometry. It provides users with the basic tools to work in \
+ various areas of finite geometry from the realms of projective spaces to the flat \
+ lands of generalised polygons. The algebraic power of GAP is employed, particularly \
+ in its facility with matrix and permutation groups.",
 #  "The <span class=\"pkgname\">Example</span> package, as its name suggests, \
 #   is an example of how to create a <span class=\"pkgname\">GAP</span> \
 #   package. It has little functionality except for being a package",
 #
-#PackageWWWHome := "http://www.math.rwth-aachen.de/~Greg.Gamble/Example",
+PackageWWWHome := "http://cage.ugent.be/fining/",
 #               
 ##  Here is the information on the help books of the package, used for
 ##  loading into GAP's online help and maybe for an online copy of the 
