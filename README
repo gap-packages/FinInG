@@ -1,7 +1,7 @@
 
 		FinInG -- Finite Incidence Geometry
 
-				John Bamberg (University of Western Australia, Perth)
+				John Bamberg (University of Western Australia)
 				Anton Betten (Colorado State University, Fort Collins)
 				Philippe Cara (Vrije Universiteit Brussel)
 				Jan De Beule (Ghent University)
@@ -13,15 +13,15 @@ This package provides:
 
 - functionality to create and explore finite incidence structures, such as
 	finite projective spaces, finite classical polar spaces, generalised polygons,
-	coset geometries, finite affine spaces, and many more.
+	coset geometries, finite affine spaces, and many more;
 
-- functionality to explore algebraic varieties in finite projective and finite affine spaces
+- functionality to explore algebraic varieties in finite projective and finite affine spaces;
 	
 - functionality that deals with the automorphism groups of incidence structures,
 	and functionality integrating these automorphism groups with the group theoretical
-	capabilities of GAP
+	capabilities of GAP;
 
-- functionality to explore various morphisms between finite incidence structures
+- functionality to explore various morphisms between finite incidence structures.
 
 
 For further information see:
@@ -30,8 +30,8 @@ For further information see:
 
 INSTALLATION AND DEPENDENCIES
 
-FinInG requires the following packages: GAPDoc, GenSS, forms, GRAPE, orb, io, and cvec
-The design package is not required to load FinInG, but is needed to use some particular functions
+FinInG requires the following packages: GAPDoc, GenSS, forms, GRAPE, orb, io, and cvec.
+The DESIGN package is not required to load FinInG, but is needed to use some particular functions
 for generalised polygons. The required packages are all available through the website of GAP, and
 are usually installed by default. However, for some of these packages, compilation might still 
 be required. The complete installation procedure is explained in the INSTALL file, and in the
