@@ -1,0 +1,164 @@
+\documentclass{article}
+\author{John Bamberg, Anton Betten, Philippe Cara, Jan De Beule, \\Max Neunh\"offer, and Michel Lavrauw}
+\title{\fining{}: a package for finite incidence geometry}
+\usepackage{verbatim}
+\def\fining{{\sf FinInG}}
+\bibliographystyle{plain}
+\begin{document}
+\maketitle
+\begin{abstract}
+\fining{} is a package for computation in Finite Incidence Geometry. It provides users with the basic tools to work 
+in various areas of finite geometry from the realms of projective spaces to the flat lands of generalised polygons. 
+The algebraic power of GAP is employed, particularly in its facility with matrix and permutation groups.
+\end{abstract}
+
+\section{Incidence geometry on the computer}	
+
+\fining{} (\cite{fining}) is a new share package for GAP \cite{GAP4}. It is designed to provide an environment to explore various finite geometrical structures,
+such as projective spaces, affine spaces, finite classical polar spaces, coset geometries and their diagrams and generalized polygons; 
+allowing an integrated use of the automorphism groups, and exploring geometrical relations between different geometries using incidence 
+preserving morphisms. The use of automorphism groups is connected with the existing functionality in GAP to deal with groups. The algebraic
+power of GAP is especially exploited when dealing with finite fields and their extensions, and when considering affine and projective algebraic
+varieties. Connections with the packages {\sf GRAPE} (\cite{grape}) and {\sf DESIGN} (\cite{design}) are built-in and especially useful when considering
+generalized polygons; the representation of the automorphism groups of projective spaces and geometries embedded in a projective
+space relies on an implementation of collineations of a projective space as semi-linear maps of the underlying vector space, and the 
+packages {\sf genss} and {\sf orb} (citations), to deal with orbit and stabilizer computations for such groups; finally the package {\sf forms} \cite{forms}
+enables us to provide the user with the possibility to construct finite classical polar spaces from a user defined sesquilinear or quadratic form,
+where the necessary coordinate transformations are computed on the fly. This approach results, in all modesty, in a user friendly, intuitive, package
+providing generic functionality to explore many finite incidence structures.
+
+Other good systems are available, but often focus on the efficient handling of particular cases, rather than on a generic approach.
+We give some examples, where the comparison is by no means meant as a SWOT analysis of other systems, but just as an example
+explaining the \fining{} philosophy better. The system {\sf MAGMA} \cite{magma} is renown as a system for computation group theory. It contains
+furthermore an implementation of projective planes, some substructures and coset geometries and related functionality. The computation
+of the automorphism group of a projective plane is done very efficiently, however, is always returned as a permutation group. The creation
+of a coset geometry is always based on permutation groups, which is very efficient, but which makes it more difficult for the user to 
+use e.g. matrix groups occurring from e.g. the automorphism group of a finite classical polar space as starting point to construct this geometry
+as a coset geometry and to compute its diagram. For the student starting with finite incidence geometry, or the (experienced) researcher interested
+in exploring a particular incidence structure using a computer, this approach might be a hurdle. 
+
+This explains the basic philosophy of \fining{}: to construct an incidence structure together with an automorphism group 
+in its natural representation, where the user decides what is natural! Thus a conic with a particular equation can easily be considered,
+a coset geometry based on a matrix group can as easily be constructed as a coset geometry based on a permutation group. Once objects
+in a certain category have been constructed, their behavior is independent of their representation. Furthermore, many well studied
+geometries are built in using a standard representation, but it is always easy to switch from one representation to another.
+
+\begin{verbatim}
+gap> L:=SimpleLieAlgebra("D",8,Rationals);
+<Lie algebra of dimension 120 over Rationals>
+gap> rs:=RootSystem(L);
+<root system of rank 8>
+gap> w:=WeylGroup(rs);
+<matrix group with 8 generators>
+gap> gens:=GeneratorsOfGroup(w);;
+gap> pabs:=List(gens, g -> Group(Difference(gens, [g])));
+[ <matrix group with 7 generators>, <matrix group with 7 generators>, 
+  <matrix group with 7 generators>, <matrix group with 7 generators>, 
+  <matrix group with 7 generators>, <matrix group with 7 generators>, 
+  <matrix group with 7 generators>, <matrix group with 7 generators> ]
+gap> g:=Group(gens);
+<matrix group with 8 generators>
+gap> cg:=CosetGeometry(g,pabs);;
+gap> Rank(cg);
+8
+\end{verbatim}
+
+\begin{verbatim}
+gap> map := KleinCorrespondence(7);
+<geometry morphism from <lines of ProjectiveSpace(3, 7)> to <points of Q+(5, 
+7): x_1*x_6+x_2*x_5+x_3*x_4=0>>
+gap> r := Range(map);
+<points of Q+(5, 7): x_1*x_6+x_2*x_5+x_3*x_4=0>
+gap> hyp := AmbientGeometry(r);
+Q+(5, 7): x_1*x_6+x_2*x_5+x_3*x_4=0
+gap> klein := HyperbolicQuadric(5,7);
+Q+(5, 7)
+gap> EquationForPolarSpace(klein);
+x_1*x_2+x_3*x_4+x_5*x_6
+gap> map := KleinCorrespondence(klein);
+<geometry morphism from <lines of ProjectiveSpace(3, 7)> to <points of Q+(5, 7)>>
+gap> morphism := IsomorphismPolarSpaces(hyp,klein);
+<geometry morphism from <Elements of Q+(5, 
+7): x_1*x_6+x_2*x_5+x_3*x_4=0> to <Elements of Q+(5, 7)>>
+\end{verbatim}
+
+\section{Incidence geometries}
+
+We follow [BC13] for the definitions of incidence structure and incidence geometry. An incidence structure 
+consists of a set of elements, a symmetric relation on the elements and a type function from the set of 
+elements to an index set (i.e., every element has a ``type''). It satisfies the following axiom: (i) no two elements 
+of the same type are incident. An incidence structure without type function is in fact a multipartite graph where 
+the adjacency is the incidence (so with a loop on each vertex). The term geometry, or incidence geometry, is i
+nterpreted broadly in this package. Particularly, an incidence geometry is an incidence structure satisfying the 
+following axiom: (ii) every maximal flag contains an element of each type. In graph terminology, this means that 
+every maximal clique contains an element of each type.
+
+In \fining{}, a {\em Lie geometry}, is an incidence geometry whose automorphism group is a (subgroup of) a group
+of Lie type. One common fact of Lie geometries in \fining{} is that their elements are represented by subspaces of a 
+vector space. All the collineations are induced by semi-linear 
+maps of the underlying vector space. So a finite Lie geometry is a geometry of which the elements are some subspaces 
+of a projective space over a finite field, and with symmetrized set-theoretic containment. One could say that a Lie geometry
+is embedded in a projective space. Currently, in \fining{}, the following geometries are Lie geometries:
+
+\begin{itemize}
+\item projective spaces,
+\item finite classical polar spaces, and
+\item the so-called classical generalized hexagons.
+\end{itemize}
+
+Some groups occurring as collineation groups of certain Lie geometries in the list above, are implemented already in GAP, but only
+as a permutation group. Collineation groups of Lie geometries are generated by a collineation, an object that is implemented by \fining{}
+and which is a semi-linear map modulo the scalar matrices, hence which has a matrix and field automorphism as underlying
+objects. 
+
+\begin{verbatim}
+gap> group := PSL(4,4);                          
+<permutation group of size 987033600 with 2 generators>
+gap> group2 := SpecialProjectivityGroup(PG(3,4));
+The FinInG PSL group PSL(4,4)
+gap> act := Action(group2,List(Points(PG(3,4))));
+<permutation group with 2 generators>
+gap> Order(act);
+987033600
+gap> gens := GeneratorsOfGroup(group2);
+[ < a collineation: <cmat 4x4 over GF(2,2)>, F^0>, 
+  < a collineation: <cmat 4x4 over GF(2,2)>, F^0> ]
+gap> g := gens[1];
+< a collineation: <cmat 4x4 over GF(2,2)>, F^0>
+gap> UnderlyingMatrix(g);
+<cmat 4x4 over GF(2,2)>
+gap> Unpack(last);
+[ [ Z(2^2), 0*Z(2), 0*Z(2), 0*Z(2) ], [ 0*Z(2), Z(2^2)^2, 0*Z(2), 0*Z(2) ], 
+  [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2) ], [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ] ]
+gap> FieldAutomorphism(g);
+IdentityMapping( GF(2^2) )
+\end{verbatim} 
+
+An important part of \fining{} is the implementation of these collineations of projective spaces, including nice monomorphisms
+and the necessary action functions on the elements of the underlying projective spaces. From the technical point of view, 
+the package cvec (\cite{cvec}) is used. This package provides a new implementation for vectors and matrices over finite 
+fields, replacing the existing GAP implementations (these are the so-called compressed vectors and matrices in GAP). The advantage
+is a fast computation of orbits of vectors and matrices under matrix groups, for which the package orb (\cite{orb}) is then used.
+
+
+finite classical polar spaces: we use Kleidman and Liebeck as reference to construct the matrix groups, we use forms to make 
+any sesquilinear/quadratic form usable to define a polar space. 
+
+group actions!
+
+\section{geometry morphisms}
+
+refer to Lavrauw and Van de Voorde for the mathematics. explain importance
+
+\section{Coset geometries}
+
+groups and actions, elements, etc.
+
+\section{Generalised polygons}
+
+generic constructions possibilities, particular models, graphs, groups, etc.
+
+\section{Algebraic varieties}
+
+\bibliography{fining}
+\end{document}
