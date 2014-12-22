@@ -12,29 +12,28 @@ in various areas of finite geometry from the realms of projective spaces to the 
 The algebraic power of GAP is employed, particularly in its facility with matrix and permutation groups.
 \end{abstract}
 
-\section{Incidence geometry on the computer}	
+\section{Finite incidence geometry on the computer}	
 
 \fining{} (\cite{fining}) is a new share package for GAP \cite{GAP4}. It is designed to provide an environment to explore various finite geometrical structures,
 such as projective spaces, affine spaces, finite classical polar spaces, coset geometries and their diagrams and generalized polygons; 
-allowing an integrated use of the automorphism groups, and exploring geometrical relations between different geometries using incidence 
+allowing an integrated use of the automorphism groups and exploring geometrical relations between different geometries using incidence 
 preserving morphisms. The use of automorphism groups is connected with the existing functionality in GAP to deal with groups. The algebraic
 power of GAP is especially exploited when dealing with finite fields and their extensions, and when considering affine and projective algebraic
 varieties. Connections with the packages {\sf GRAPE} (\cite{grape}) and {\sf DESIGN} (\cite{design}) are built-in and especially useful when considering
-generalized polygons; the representation of the automorphism groups of projective spaces and geometries embedded in a projective
-space relies on an implementation of collineations of a projective space as semi-linear maps of the underlying vector space, and the 
-packages {\sf genss} and {\sf orb} (citations), to deal with orbit and stabilizer computations for such groups; finally the package {\sf forms} \cite{forms}
+generalized polygons or purely combinatorial incidence structures. The representation of the automorphism groups of projective spaces and geometries embedded in a projective
+space relies on an implementation of collineations of a projective space as semi-linear maps of the underlying vector space in conjunction with the 
+packages {\sf genss} and {\sf orb} (\textbf{citations ?? Only GAP-packages homepage or are there papers?}) to deal with orbit and stabilizer computations for such groups. Finally the package {\sf forms} \cite{forms}
 enables us to provide the user with the possibility to construct finite classical polar spaces from a user defined sesquilinear or quadratic form,
 where the necessary coordinate transformations are computed on the fly. This approach results, in all modesty, in a user friendly, intuitive, package
 providing generic functionality to explore many finite incidence structures.
 
-Other good systems are available, but often focus on the efficient handling of particular cases, rather than on a generic approach.
+Other good systems are available for incidence geometry but often focus on the efficient handling of particular cases, rather than on the generic approach which is central in \fining.
 We give some examples, where the comparison is by no means meant as a SWOT analysis of other systems, but just as an example
-explaining the \fining{} philosophy better. The system {\sf MAGMA} \cite{magma} is renown as a system for computation group theory. It contains
-furthermore an implementation of projective planes, some substructures and coset geometries and related functionality. The computation
+explaining the \fining{} philosophy better. The system {\sf MAGMA} \cite{magma} is renown as a system for computational group theory. It contains
+furthermore an implementation of projective planes, some substructures, coset geometries and related functionality. The computation
 of the automorphism group of a projective plane is done very efficiently, however, is always returned as a permutation group. The creation
 of a coset geometry is always based on permutation groups, which is very efficient, but which makes it more difficult for the user to 
-use e.g. matrix groups occurring from e.g. the automorphism group of a finite classical polar space as starting point to construct this geometry
-as a coset geometry and to compute its diagram. For the student starting with finite incidence geometry, or the (experienced) researcher interested
+use e.g. matrix groups occurring from e.g. the automorphism group of a finite classical polar space as starting point to construct this geometry. For the student starting with finite incidence geometry, or the (experienced) researcher interested
 in exploring a particular incidence structure using a computer, this approach might be a hurdle. 
 
 This explains the basic philosophy of \fining{}: to construct an incidence structure together with an automorphism group 
@@ -43,6 +42,7 @@ a coset geometry based on a matrix group can as easily be constructed as a coset
 in a certain category have been constructed, their behavior is independent of their representation. Furthermore, many well studied
 geometries are built in using a standard representation, but it is always easy to switch from one representation to another.
 
+We illustrate this with an example which constructs an apartment of a building of type $\mathrm{D}_8$, using existing GAP functionality of root systems and Lie algebras.
 \begin{verbatim}
 gap> L:=SimpleLieAlgebra("D",8,Rationals);
 <Lie algebra of dimension 120 over Rationals>
@@ -62,6 +62,8 @@ gap> cg:=CosetGeometry(g,pabs);;
 gap> Rank(cg);
 8
 \end{verbatim}
+
+Another example shows the standard Klein correspondence (between the lines of a $3$-dimensional projective space and the points of a hyperbolic quadric in $5$ dimensions) and the Klein correspondence computed for a user-defined hyperbolic quadric.
 
 \begin{verbatim}
 gap> map := KleinCorrespondence(7);
@@ -84,7 +86,7 @@ gap> morphism := IsomorphismPolarSpaces(hyp,klein);
 
 \section{Incidence geometries}
 
-We follow [BC13] for the definitions of incidence structure and incidence geometry. An incidence structure 
+We follow \cite{BC13} for the definitions of incidence structure and incidence geometry. An incidence structure 
 consists of a set of elements, a symmetric relation on the elements and a type function from the set of 
 elements to an index set (i.e., every element has a ``type''). It satisfies the following axiom: (i) no two elements 
 of the same type are incident. An incidence structure without type function is in fact a multipartite graph where 
@@ -148,7 +150,10 @@ group actions!
 
 \section{geometry morphisms}
 
-refer to Lavrauw and Van de Voorde for the mathematics. explain importance
+refer to Lavrauw and Van de Voorde for the mathematics. explain importance. Also explain that \verb+Shrinkvec+ is the inverse operation of what is available in GAP.
+
+\section{Enumerators of polar spaces}
+With hyperplane sections. Anton, John and Jan. Maybe some pseudocode and performance analysis.
 
 \section{Coset geometries}
 
