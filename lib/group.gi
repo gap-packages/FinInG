@@ -969,7 +969,7 @@ InstallMethod( Order,
 
 # CHECKED 5/09/11 jdb
 # 22/04/12 jb: There was a bug here. I added "and i mod ofrob = 0;"
-# 
+# 3/6/2015: bug fixed by jb.
 #############################################################################
 #O  Order( <a> )
 # returns the order of <a>.
@@ -982,7 +982,7 @@ InstallMethod( Order,
 # Celler and Leedham-Green.
 
 	function( a )
-    local b, frob, bfrob, i, ofrob;
+   local b, frob, bfrob, i, ofrob;
 	b := a!.mat;
 	frob := a!.frob;
 	if IsOne(frob) then 
@@ -992,7 +992,7 @@ InstallMethod( Order,
 		bfrob := b; i := 1;
 		ofrob := Order(frob);
 		repeat
-			bfrob := bfrob^frob;
+			bfrob := bfrob^(frob^-1);  ## JB 3/6/2015: Found bug here
 			b := b * bfrob;
 			i := i + 1;
 		until IsFiningScalarMatrix( b ) and i mod ofrob = 0;

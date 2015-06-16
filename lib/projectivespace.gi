@@ -1130,14 +1130,19 @@ InstallMethod( SpecialProjectivityGroup,
 ##
 InstallGlobalFunction( OnProjSubspaces,
   function( var, el )
-    local amb,geo,newvar;
+    local amb,geo,newvar,newel;
     geo := var!.geo;   
     if var!.type = 1 then
         newvar := OnProjPointsWithFrob(var!.obj,el);
     else
         newvar := OnProjSubspacesWithFrob(var!.obj,el);
     fi;
-    return Wrap(geo,var!.type,newvar);
+    newel := Wrap(AmbientSpace(geo),var!.type,newvar);
+    if newel in geo then
+        return Wrap(geo,var!.type,newvar);
+    else
+        return newel;
+    fi;
   end );
 
 # CHECKED, but I am unhappy with the too general filter IsElementOfIncidenceStructure
