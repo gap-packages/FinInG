@@ -1,4 +1,5 @@
-gap> START_TEST("FinInG: tst_test1.tst");
+gap> START_TEST("fining: tst_fining1.tst");
+gap> #regular 13 system
 gap> q := 3;
 3
 gap> gh := SplitCayleyHexagon(q);
@@ -38,4 +39,4 @@ gap> S := First(orbits,x->Length(x)=(q^6-1)/(q-1));
 gap> pts := AsList(Points(ps));;
 gap> Collected(List(pts,x->Number(S,y->x in y)));
 [ [ 13, 364 ] ]
-gap> STOP_TEST( "tst_test1", 10000 );
+gap> STOP_TEST("tst_fining1.tst", 10000 );

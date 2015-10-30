@@ -1,4 +1,5 @@
-gap> START_TEST("FinInG: tst_test3.tst");
+gap> START_TEST("fining: tst_fining3.tst");
+gap> #maximal partial spreads of H(5,4)
 gap> ps := HermitianPolarSpace(5,4);
 H(5, 2^2)
 gap> planes := AsList(Planes(ps));;
@@ -26,4 +27,4 @@ gap> groups := List(partial_spreads,x->FiningSetwiseStabiliser(coll,x));;
 #I  Computing adjusted stabilizer chain...
 gap> List(groups,x->Order(x));
 [ 162, 168, 9072 ]
-gap> STOP_TEST( "tst_test3", 10000 );
+gap> STOP_TEST("tst_fining3.tst", 10000 );

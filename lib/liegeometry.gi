@@ -274,15 +274,17 @@ InstallMethod( \=, "for two empty subspaces",
   end );
 
 # CHECKED 7/09/2011 jdb
+#jdb 30/10/15: This method is not used anymore after commenting out the Unwrapper stuff in geometry.gd
+#see the comment there.
 #############################################################################
 #O  \^( <e>, <u> )
 # unwrapping the empty subspace
 ## 
-InstallMethod( \^, "unwrapping an empty subspace",
-  [ IsEmptySubspace, IsUnwrapper ],
-  function( e, u )
-    return [];
-  end );
+#InstallMethod( \^, "unwrapping an empty subspace",
+#  [ IsEmptySubspace, IsUnwrapper ],
+#  function( e, u )
+#    return [];
+#  end );
 
 #############################################################################
 # Methods for \in with the EmtySubspace and elements of a Lie geometry.

@@ -45,6 +45,8 @@ InstallMethod( Wrap,
 	end );
 
 # CHECKED 6/09/11 jdb
+#jdb 30/10/15: This method is not used anymore after commenting out the Unwrapper stuff in geometry.gd
+#see the comment there.
 #############################################################################
 #O  \^( <v>, <u> )
 # If the object "v" to be unwrapped is a point of a vector space, then we do not want to use
@@ -53,14 +55,14 @@ InstallMethod( Wrap,
 # gap> p^_; 
 # will return a list, with the coordinate vector of the point p
 ##
-InstallMethod( \^, 
-	"for a subspace of a projective space and an unwrapper",
-	[ IsSubspaceOfProjectiveSpace, IsUnwrapper ],
-	function( v, u )
-		if v!.type = 1 then return [v!.obj];
-		else return v!.obj;
-		fi;
-	end );
+#InstallMethod( \^,
+#	"for a subspace of a projective space and an unwrapper",
+#	[ IsSubspaceOfProjectiveSpace, IsUnwrapper ],
+#	function( v, u )
+#		if v!.type = 1 then return [v!.obj];
+#		else return v!.obj;
+#		fi;
+#	end );
 
 #############################################################################
 # Constructor methods and some operations/attributes for projective spaces.

@@ -6,7 +6,7 @@ packagefilters:=[];
 impliedfilters:=[];
 
 basedir := DirectoriesPackageLibrary("fining","")[1];
-codedir := DirectoriesPackageLibrary("fining","gap")[1];
+codedir := DirectoriesPackageLibrary("fining","lib")[1];
 docdir := DirectoriesPackageLibrary("fining","doc")[1];
 
 d_c := "DeclareCategory(";

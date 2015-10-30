@@ -247,13 +247,16 @@ DeclareOperation( "Type", [ IsFlagOfIncidenceStructure and IsFlagOfIncidenceStru
 
 # The following three lines, together with a method for the operation \^, 
 # will make sure that p^_ is the same as Unwrap(p), a handy shortcut.
-DeclareFilter( "IsUnwrapper" );
-DeclareGlobalVariable( "_" );
-InstallValue( _, Objectify( NewType( NewFamily( "UnwrapperFamily" ), IsUnwrapper ), rec() ));
+
+#jdb 30/10/15: after it turned out that loading a value in _ breaks the package KBMag, we had to comment this out.
+#DeclareFilter( "IsUnwrapper" );
+#DeclareGlobalVariable( "_" );
+#InstallValue( _, Objectify( NewType( NewFamily( "UnwrapperFamily" ), IsUnwrapper ), rec() ));
 
 DeclareOperation( "Wrap", [IsIncidenceStructure, IsPosInt, IsObject] );
 DeclareOperation( "Unwrap", [IsElementOfIncidenceStructure] );
-DeclareOperation( "\^", [IsElementOfIncidenceStructure, IsUnwrapper ] ); 
+#jdb 30/10/15: see comment above about _.
+#DeclareOperation( "\^", [IsElementOfIncidenceStructure, IsUnwrapper ] );
 
 # three general operations. Methods to be installed for several filters.
 DeclareOperation( "ObjectToElement", [IsIncidenceStructure, IsPosInt, IsObject] );

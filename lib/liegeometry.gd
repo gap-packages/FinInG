@@ -81,7 +81,9 @@ DeclareOperation( "VectorSpaceToElement", [IsLieGeometry, IsCMatRep] );
 #DeclareOperation( "EmptySubspace", [IsProjectiveSpace] );
 DeclareOperation( "EmptySubspace", [IsLieGeometry] );
 
-DeclareOperation( "\^", [IsEmptySubspace, IsUnwrapper] );
+#jdb 30/10/15: This method is not used anymore after commenting out the Unwrapper stuff in geometry.gd
+#see the comment there.
+#DeclareOperation( "\^", [IsEmptySubspace, IsUnwrapper] );
 
 DeclareOperation("RandomSubspace",[IsVectorSpace,IsInt]); #is for vector spaces -> moves to liegeometry.gd
 

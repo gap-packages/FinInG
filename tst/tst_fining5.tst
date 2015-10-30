@@ -1,4 +1,5 @@
-gap> START_TEST("FinInG: tst_test5.tst");
+gap> START_TEST("fining: tst_fining5.tst");
+gap> #Tits ovoid, taken from one of the examples wit less output
 gap> q := 8;
 8
 gap> pg := PG(3,q);
@@ -19,4 +20,4 @@ gap> IsSimple(stab);
 true
 gap> Order(stab);
 29120
-gap> STOP_TEST( "tst_test5", 10000 );
+gap> STOP_TEST("tst_fining5.tst", 10000 );

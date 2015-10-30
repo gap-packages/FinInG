@@ -15,7 +15,7 @@ i_f := "InstallGlobalFunction(";
 i_m := "InstallMethod(";
 
 homedir := DirectoryCurrent();
-workingdir := DirectoriesPackageLibrary("fining","gap")[1]; 
+workingdir := DirectoriesPackageLibrary("fining","lib")[1];
 outputdir := DirectoriesPackageLibrary("fining","doc/output")[1]; 
 SizeScreen([256,24]);
 

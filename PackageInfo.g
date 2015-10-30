@@ -65,7 +65,7 @@ ArchiveURL := Concatenation("http://cage.ugent.be/fining/archive/fining-",~.Vers
 ##  a convenient installation and upgrading on Linux systems.
 ##  
 # ArchiveFormats := ".zoo", # the others are generated automatically
-ArchiveFormats := ".tar.gz",
+ArchiveFormats := ".tar.gz -win.zip .tar.bz2",
 
 ##  If not all of the archive formats mentioned above are provided, these 
 ##  can be produced at the GAP side. Therefore it is necessary to know which
@@ -144,7 +144,7 @@ Persons := [
     LastName      := "Betten",
     FirstNames    := "Anton",
     IsAuthor      := true,
-    IsMaintainer  := true,
+    IsMaintainer  := false,
     Email         := "betten@math.colostate.edu",
     WWWHome       := "http://www.math.colostate.edu/~betten",
     PostalAddress := Concatenation( [
@@ -162,16 +162,16 @@ Persons := [
     IsAuthor      := true,
     IsMaintainer  := true,
     Email         := "jdebeule@cage.ugent.be",
-    WWWHome       := "http://cage.ugent.be/~jdebeule",
+    WWWHome       := "http://www.debeule.eu",
     PostalAddress := Concatenation( [
                        "Jan De Beule\n",
                        "Department of Mathematics\n",
-                       "Ghent University\n",
-                       "Krijgslaan 281, S22\n",
-                       "B-9000 Ghent\n",
+                       "Vrije Universiteit Brussel\n",
+                       "Pleinlaan 2\n",
+                       "B-1050 Brussel\n",
                        "Belgium" ] ),
-    Place         := "Ghent",
-    Institution   := "Ghent University",
+    Place         := "Brussels",
+    Institution   := "Vrije Universiteit Brussel",
   ),
   rec( 
     LastName      := "Cara",
@@ -211,7 +211,7 @@ Persons := [
     LastName      := "Neunhoeffer",
     FirstNames    := "Max",
     IsAuthor      := true,
-    IsMaintainer  := true,
+    IsMaintainer  := false,
     Email         := "neunhoef@mcs.st-and.ac.uk",
     WWWHome       := "http://www-groups.mcs.st-and.ac.uk/~neunhoef/",
     PostalAddress := Concatenation( [
@@ -375,7 +375,7 @@ AvailabilityTest := function()
 ##  in this file. If you are not happy with it, you can provide a string
 ##  here that is used as a banner. GAP decides when the banner is shown and
 ##  when it is not shown. *optional* (note the ~-syntax in this example)
-##this one was made using http://www.network-science.de/ascii/ :-)
+##this one was made using http://www.network-science.de/ascii/ using "speed" :-)
 BannerString := Concatenation(
   "---------------------------------------------------------------------\n",
   "      ______________       ________      _________   _____________   \n",

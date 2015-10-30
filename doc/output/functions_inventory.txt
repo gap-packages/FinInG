@@ -3,6 +3,7 @@ Functions
 geometry.gi: global functions
 
 F: HashFuncForElements
+F: HashFuncForSetElements
 
 liegeometry.gi: global functions
 
@@ -10,7 +11,7 @@ liegeometry.gi: global functions
 group.gi: global functions
 
 F: MakeAllProjectivePoints
-F: IsScalarMatrix
+F: IsFiningScalarMatrix
 F: OnProjPoints
 F: OnProjPointsWithFrob
 F: OnProjSubspacesNoFrob

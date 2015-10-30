@@ -323,13 +323,15 @@ InstallMethod( Unwrap,
 		return v!.obj;
 	end );
 
+#jdb 30/10/15: This method is not used anymore after commenting out the Unwrapper stuff in geometry.gd
+#see the comment there.
 # CHECKED 17/04/11 jdb
-InstallMethod( \^,
-	"for an element of a incidence structure and an unwrapper",
-	[IsElementOfIncidenceStructure, IsUnwrapper ], 
-	function( x, u ) 
-		return x!.obj;
-	end );
+#InstallMethod( \^,
+#	"for an element of a incidence structure and an unwrapper",
+#	[IsElementOfIncidenceStructure, IsUnwrapper ],
+#	function( x, u )
+#		return x!.obj;
+#	end );
 
 # added 3/9/14 jdb
 #############################################################################

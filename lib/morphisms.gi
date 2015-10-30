@@ -2150,7 +2150,7 @@ InstallMethod( NaturalProjectionBySubspace,
         if not v in x then
 			Error("Subspace is not incident with the subspace of projection");
 		fi;
-        y := List(Unpack(x^_),i-> Coefficients(bas,i))*basimgs;  #x^_ = UnWrap(x), cmat unpack
+        y := List(Unpack(Unwrap(x)),i-> Coefficients(bas,i))*basimgs;  #was x^_, now UnWrap(x), cmat unpack
         if not IsEmpty(y) then 
            ## Note: TriangulizeMat does not return a matrix of full
            ##       rank, whereas SemiEchelonMat does!
