@@ -130,7 +130,7 @@ InstallMethod( FiningOrbits,
 		o := Enumerate(Orb(g, x, action));
 		Add(orbs, o);
 		SubtractSet(set2, AsList(o));
-		newupto := Int(100 * (Size(set)-Size(set2))/Size(set));
+        newupto := Int(100 * (Size(set)-Size(set2))/Size(set));
 		if newupto <> upto then
 			upto:=newupto;
 			Print(upto, "%..\c");

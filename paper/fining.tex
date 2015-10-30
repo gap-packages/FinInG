@@ -1,9 +1,12 @@
 \documentclass{article}
 \author{John Bamberg, Anton Betten, Philippe Cara, Jan De Beule, \\Max Neunh\"offer, and Michel Lavrauw}
 \title{\fining{}: a package for finite incidence geometry}
-\usepackage{verbatim}
+\usepackage{verbatim,amsmath,amssymb}
+\usepackage{amsfonts}
 \def\fining{{\sf FinInG}}
 \bibliographystyle{plain}
+\def\cS{\mathcal{S}}
+\DeclareMathOperator\I{\mathrm{I}}
 \begin{document}
 \maketitle
 \begin{abstract}
@@ -44,28 +47,6 @@ geometries are built in using a standard representation, but it is always easy t
 
 We illustrate this with an example which constructs an apartment of a building of type $\mathrm{D}_8$, using existing GAP functionality of root systems and Lie algebras.
 \begin{verbatim}
-gap> L:=SimpleLieAlgebra("D",8,Rationals);
-<Lie algebra of dimension 120 over Rationals>
-gap> rs:=RootSystem(L);
-<root system of rank 8>
-gap> w:=WeylGroup(rs);
-<matrix group with 8 generators>
-gap> gens:=GeneratorsOfGroup(w);;
-gap> pabs:=List(gens, g -> Group(Difference(gens, [g])));
-[ <matrix group with 7 generators>, <matrix group with 7 generators>, 
-  <matrix group with 7 generators>, <matrix group with 7 generators>, 
-  <matrix group with 7 generators>, <matrix group with 7 generators>, 
-  <matrix group with 7 generators>, <matrix group with 7 generators> ]
-gap> g:=Group(gens);
-<matrix group with 8 generators>
-gap> cg:=CosetGeometry(g,pabs);;
-gap> Rank(cg);
-8
-\end{verbatim}
-
-Another example shows the standard Klein correspondence (between the lines of a $3$-dimensional projective space and the points of a hyperbolic quadric in $5$ dimensions) and the Klein correspondence computed for a user-defined hyperbolic quadric.
-
-\begin{verbatim}
 gap> map := KleinCorrespondence(7);
 <geometry morphism from <lines of ProjectiveSpace(3, 7)> to <points of Q+(5, 
 7): x_1*x_6+x_2*x_5+x_3*x_4=0>>
@@ -86,6 +67,86 @@ gap> morphism := IsomorphismPolarSpaces(hyp,klein);
 
 \section{Incidence geometries}
 
+We follow \cite{BC13} for the definitions of incidence structure and incidence geometry. An {\em incidence structure} 
+consists of a set $\cS$ of elements, a symmetric relation $\I$ on the elements and a type function from the set of 
+elements to an index set (i.e., every element has a ``type''). It satisfies the following axiom: 
+\begin{quote}
+(i) no two different elements of the same type are incident. 
+\end{quote}
+An incidence structure without type function is in fact a multipartite graph where 
+the adjacency is the incidence (so with a loop on each vertex). Note that every element is incident with itself.
+Assume that $\cS$ is an incidence structure with a type function $t$ with range $T = \{1,\ldots,n\}$. Then we say that $\cS$ has rank $n$.
+A {\em flag} is a set $F$ of elements of $\cS$ such that every two elements contained in $F$ are incidence. Necessarily, 
+$F$ cannot contain two elements of the same type, so $F$ contains at most $n$ elements. We call a flag {\em maximal} when
+no element of $\cS$ is incident with all elements of $F$, unless it is contained already in $F$.
+
+The term geometry, or incidence geometry, is interpreted broadly in this package. Particularly, an {\em incidence geometry} is an 
+incidence structure satisfying the following axiom: 
+\begin{quote}
+(ii) every maximal flag contains an element of each type. 
+\end{quote}
+In graph terminology, this means that every maximal clique contains an element of each type.
+
+Let $\cS$ be an incidence structure of rank $n$, and let $e$ be an element of type $i \in T$. Let $j \in T \setminus \{i\}$. 
+Then the {\em $j$-shadow of $e$} is the set of elements of type $j$ incident with $e$. Let $F$ be a flag of $\cS$ then
+the {\em $j$-shadow of $F$} is the set of elements of type $j$ incident with all elements in $F$. The {\em residue of $F$}
+is the set of all elements of $\cS$ incident with all elements of $F$. Hence, the residue of a maximal flag of an incidence geometry 
+is empty. All geometries that can be constructed in \fining are incidence structures. This terminology is consistently used. We 
+provide two examples. The first one is an ``abstract'' coset geometry, the second one is a projective space.
+
+\begin{verbatim}
+gap> L:=SimpleLieAlgebra("D",8,Rationals);
+<Lie algebra of dimension 120 over Rationals>
+gap> rs:=RootSystem(L);
+<root system of rank 8>
+gap> w:=WeylGroup(rs);
+<matrix group with 8 generators>
+gap> gens:=GeneratorsOfGroup(w);;
+gap> pabs:=List(gens, g -> Group(Difference(gens, [g])));
+[ <matrix group with 7 generators>, <matrix group with 7 generators>, 
+  <matrix group with 7 generators>, <matrix group with 7 generators>, 
+  <matrix group with 7 generators>, <matrix group with 7 generators>, 
+  <matrix group with 7 generators>, <matrix group with 7 generators> ]
+gap> g:=Group(gens);
+<matrix group with 8 generators>
+gap> cg:=CosetGeometry(g,pabs);;
+gap> Rank(cg);
+8
+gap> elements_type_2 := ElementsOfIncidenceStructure(cg,2);;
+gap> el2 := Random(elements_type_2);;
+gap> shad := ShadowOfElement(cg,el2,3);;
+gap> el3 := Random(List(shad));;
+gap> IsIncident(el2,el3);
+true
+gap> flag := FlagOfIncidenceStructure(cg,[el2,el3]);;
+gap> shad := ShadowOfFlag(cg,flag,4);;
+\end{verbatim}
+
+Another example shows the standard Klein correspondence (between the lines of a $3$-dimensional projective space and the points of a hyperbolic quadric in $5$ dimensions) and the Klein correspondence computed for a user-defined hyperbolic quadric.
+
+\begin{verbatim}
+gap> pg := PG(5,7);
+ProjectiveSpace(5, 7)
+gap> Rank(pg);
+5
+gap> l := Random(Lines(pg));
+<a line in ProjectiveSpace(5, 7)>
+gap> shadowplanes := ShadowOfElement(pg,l,3);
+<shadow planes in ProjectiveSpace(5, 7)>
+gap> plane := Random(shadowplanes);
+<a plane in ProjectiveSpace(5, 7)>
+gap> planepoints := ShadowOfElement(pg,plane,1);
+<shadow points in ProjectiveSpace(5, 7)>
+gap> p := Random(planepoints);
+<a point in ProjectiveSpace(5, 7)>
+gap> flag := FlagOfIncidenceStructure(pg,[p,plane]);
+<a flag of ProjectiveSpace(5, 7)>
+gap> shadowlines := ShadowOfFlag(pg,flag,2);
+<shadow lines in ProjectiveSpace(5, 7)>
+\end{verbatim}
+
+\section{Incidence geometries}
+
 We follow \cite{BC13} for the definitions of incidence structure and incidence geometry. An incidence structure 
 consists of a set of elements, a symmetric relation on the elements and a type function from the set of 
 elements to an index set (i.e., every element has a ``type''). It satisfies the following axiom: (i) no two elements 
@@ -100,8 +161,9 @@ of Lie type. One common fact of Lie geometries in \fining{} is that their elemen
 vector space. All the collineations are induced by semi-linear 
 maps of the underlying vector space. So a finite Lie geometry is a geometry of which the elements are some subspaces 
 of a projective space over a finite field, and with symmetrized set-theoretic containment. One could say that a Lie geometry
-is embedded in a projective space. Currently, in \fining{}, the following geometries are Lie geometries:
-
+is embedded in a projective space. These principles are used in \fining{} to implement Lie geometries. Currently the following
+Lie geometries are available in \fining{}:
+%Historical note: today Philippe Cara shouted: ``Fuck linux''. I told him to get a mac :-D
 \begin{itemize}
 \item projective spaces,
 \item finite classical polar spaces, and
