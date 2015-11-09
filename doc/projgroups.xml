@@ -434,12 +434,23 @@ respectively.
 </ManSection>
 
 <ManSection>
-<Oper Name="UnderlyingMatrix" Arg="g"/>
+<Oper Name="MatrixOfCollineation" Arg="g"/>
 <Description>
-<A>g</A> is a projectivity, collineation or correlation of a projective space.
+<A>g</A> is a collineation (including a projectivity) of a projective space.
 This function returns the matrix that was used to construct <A>g</A>.
 <Example>
 <#Include SYSTEM "../examples/include/projgroups_underlyingmatrix.include"> 
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="MatrixOfCorrelation" Arg="g"/>
+<Description>
+<A>g</A> is a correlation of a projective space.
+This function returns the matrix that was used to construct <A>g</A>.
+<Example>
+<#Include SYSTEM "../examples/include/projgroups_underlyingmatrix2.include"> 
 </Example>
 </Description>
 </ManSection>

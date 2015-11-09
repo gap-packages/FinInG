@@ -724,18 +724,18 @@ end );
 
 # CHECKED 5/09/11 jdb
 #############################################################################
-#O  UnderlyingMatrix( <c> )
+#O  MatrixOfCollineation( <c> )
 # returns the underlying matrix of <c> 
 ##
-InstallMethod( UnderlyingMatrix, [ IsProjGrpEl and IsProjGrpElRep],
+InstallMethod( MatrixOfCollineation, [ IsProjGrpEl and IsProjGrpElRep],
 	c -> c!.mat );
 
 # CHECKED 5/09/11 jdb
 #############################################################################
-#O  UnderlyingMatrix( <c> )
+#O  MatrixOfCollineation( <c> )
 # returns the underlying matrix of <c> 
 ##  
-InstallMethod( UnderlyingMatrix, [ IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
+InstallMethod( MatrixOfCollineation, [ IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
 	c -> c!.mat );
   
 # CHECKED 5/09/11 jdb

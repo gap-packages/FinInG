@@ -92,7 +92,7 @@ DeclareOperation( "CorrelationOfProjectiveSpace", [ IsProjectiveSpace, IsMatrix,
 DeclareOperation( "Correlation", [ IsProjectiveSpace, IsMatrix, IsMapping, IsStandardDualityOfProjectiveSpace] );
 DeclareOperation( "Correlation", [ IsProjectiveSpace, IsMatrix, IsMapping, IsIdentityMappingOfElementsOfProjectiveSpace] );
 
-DeclareOperation( "UnderlyingMatrix", [ IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep ] );
+DeclareOperation( "MatrixOfCorrelation", [ IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep ] );
 DeclareOperation( "FieldAutomorphism", [ IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep ] );
 DeclareOperation( "ProjectiveSpaceIsomorphism", [ IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep ] );
 

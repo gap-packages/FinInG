@@ -9,6 +9,7 @@
 #
 #Messy things happen when you do it, so don't try this at home kids!
 #file created feb 05 2013.
+#file adapted oct 2015.
 
 #create workspace with packages
 LoadPackage("fining");
@@ -49,7 +50,8 @@ projspfiles := ["projsp_projectivespace", "projsp_projdimension", "projsp_basefi
 
 projgroupsfiles := ["projgroups_isprojectivity", "projgroups_iscollineation", "projgroups_isstrictlysemilinear", "projgroups_iscorrelation",
 					"projgroups_projectivity", "projgroups_collineation", "projgroups_stduality", "projgroups_correlation",
-					"projgroups_representative", "projgroups_underlyingmatrix", "projgroups_basefield", "projgroups_fieldautomorphism", "projgroups_psisomorphism",
+					"projgroups_representative", "projgroups_underlyingmatrix", "projgroups_underlyingmatrix2", "projgroups_basefield",
+                    "projgroups_fieldautomorphism", "projgroups_psisomorphism",
 					"projgroups_order", "projgroups_projectivitygroup", "projgroups_collineationgroup", "projgroups_specialprojectivitygroup", "projgroups_mult",
 					"projgroups_embedding", "projgroups_onprojsubspaces", "projgroups_onprojsubspacesextended", "projgroups_elation1", "projgroups_elation2",
 					"projgroups_homology1", "projgroups_homology2", "projgroups_nicem", "projgroups_niceo", "projgroups_cancompute", "projgroups_random",
@@ -80,7 +82,8 @@ affinefiles := [ "affine_affinespace", "affine_dimension", "affine_basefield", "
 
 morphismsfiles := ["morphisms_filters", "morphisms_isopolar", "morphisms_embedding1", "morphisms_embedding2", "morphisms_fieldreducproj",
 					"morphisms_intertwinerproj", "morphisms_fieldreducpolar1", "morphisms_fieldreducpolar2", "morphisms_subfield1",
-					"morphisms_subfield2", "morphisms_projection", "morphisms_klein", "morphisms_klein2", "morphisms_klein3", "morphisms_duality", "morphisms_selfduality",
+					"morphisms_subfield2", "morphisms_projection", "morphisms_klein", "morphisms_klein2", "morphisms_klein3", "morphisms_duality",
+                    "morphisms_selfduality",
                     "morphisms_completion","morphisms_plucker", "morphisms_blownupsubspace", "morphisms_fieldreducpolar3" ];
 
 gpolygonfiles := [ "gpolygons_categories1", "gpolygons_categories2", "gpolygons_gpbyblocks", "gpolygons_gpbyincmat", "gpolygons_gpbyelements", "gpolygons_order",
@@ -106,11 +109,9 @@ groups_appfiles := ["groups_app_sodesargues", "groups_app_godesargues", "groups_
 					"groups_app_deltaominus", "groups_app_deltaoplus", "groups_app_gammaoplus", "groups_app_gammaominus",
 					"groups_app_gammao", "groups_app_gammau" ];
 
-testfiles := ["tst_test1", "tst_test2", "tst_test3", "tst_test4", "tst_test5", "tst_test6"];
-
 exampledir := DirectoriesPackageLibrary("fining","tst")[1];
 
-files := [ "gpolygons_EGQByqClan" ];
+files := [ "projgroups_underlyingmatrix", "projgroups_underlyingmatrix2" ];
 
 #initialize directorynames
 #exampledir = dir where .g files are located : ".../pkg/fining/examples/gap"

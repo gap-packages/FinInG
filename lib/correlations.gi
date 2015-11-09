@@ -1196,10 +1196,10 @@ InstallMethod( Correlation,
 
 # CHECKED 19/09/11 jdb
 #############################################################################
-#O  UnderlyingMatrix( <c> )
+#O  MatrixOfCorrelation( <c> )
 # returns the underlying matrix of <c> 
 ##
-InstallMethod( UnderlyingMatrix, [ IsProjGrpElWithFrobWithPSIsom and 
+InstallMethod( MatrixOfCorrelation, [ IsProjGrpElWithFrobWithPSIsom and 
                                    IsProjGrpElWithFrobWithPSIsomRep],
   c -> c!.mat );
   

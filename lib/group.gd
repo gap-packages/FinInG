@@ -119,8 +119,8 @@ DeclareProperty( "IsCollineation", IsProjGrpElWithFrob );
 # Some operations for elements
 ###################################################################
 
-DeclareOperation( "UnderlyingMatrix", [ IsProjGrpElWithFrob and IsProjGrpElWithFrobRep ] );
-DeclareOperation( "UnderlyingMatrix", [ IsProjGrpEl and IsProjGrpElRep] );
+DeclareOperation( "MatrixOfCollineation", [ IsProjGrpElWithFrob and IsProjGrpElWithFrobRep ] );
+DeclareOperation( "MatrixOfCollineation", [ IsProjGrpEl and IsProjGrpElRep] );
 DeclareOperation( "FieldAutomorphism", [ IsProjGrpElWithFrob and IsProjGrpElWithFrobRep ] );
 
 #################################################

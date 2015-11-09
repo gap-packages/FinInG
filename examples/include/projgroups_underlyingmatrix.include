@@ -1,7 +1,7 @@
 gap&gt; g:=CollineationGroup( ProjectiveSpace(3,3));
 The FinInG collineation group PGL(4,3)
 gap&gt; x:=Random(g);;
-gap&gt; UnderlyingMatrix(x);
+gap&gt; MatrixOfCollineation(x);
 &lt;cmat 4x4 over GF(3,1)&gt;
 gap&gt; Unpack(last);
 [ [ Z(3)^0, Z(3)^0, 0*Z(3), Z(3)^0 ], [ Z(3)^0, Z(3), 0*Z(3), Z(3)^0 ], 
