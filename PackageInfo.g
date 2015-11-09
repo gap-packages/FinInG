@@ -40,7 +40,7 @@ Version := "1.1",
 ##  Release date of the current version in dd/mm/yyyy format.
 # 
 #Date := "19/09/2014",  #this is the date Fining was submitted officially.
-Date := "09/11/2015",  #this is revision 1149.
+Date := "09/11/2015",  #this is revision 1150.
 
 
 ##  URL of the archive(s) of the current package release, but *without*
@@ -240,7 +240,7 @@ Persons := [
 ##    "other"         for all other packages
 ##
 # Status := "accepted",
-Status := "dev",
+Status := "submitted",
 
 ##  You must provide the next two entries if and only if the status is 
 ##  "accepted" because is was successfully refereed:
