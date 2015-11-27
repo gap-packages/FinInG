@@ -33,14 +33,14 @@ Subtitle := "Finite Incidence Geometry",
 ##  See '?Extending: Version Numbers' in GAP help for an explanation
 ##  of valid version numbers. For an automatic package distribution update
 ##  you must provide a new version number even after small changes.
-Version := "1.1",
+Version := "1.2",
 ##  Please adjust also the VERSION file in the package directory when
 ##  changing this.
 
 ##  Release date of the current version in dd/mm/yyyy format.
 # 
 #Date := "19/09/2014",  #this is the date Fining was submitted officially.
-Date := "09/11/2015",  #this is revision 1150.
+Date := "27/11/2015",  #this is revision 1151.
 
 
 ##  URL of the archive(s) of the current package release, but *without*
@@ -379,13 +379,13 @@ AvailabilityTest := function()
 ##  when it is not shown. *optional* (note the ~-syntax in this example)
 ##this one was made using http://www.network-science.de/ascii/ using "speed" :-)
 BannerString := Concatenation(
-    "---------------------------------------------------------------------\n",
-    "      ______________       ________      _________   ____________    \n",
-    "      ___  ____/__(_)__________  _/________  ____/   __<  /__<  /    \n",
-    "      __  /_   __  /__  __ \__  / __  __ \  / __     __  / __  /     \n",
-    "      _  __/   _  / _  / / /_/ /  _  / / / /_/ /     _  /___  /      \n",
-    "      /_/      /_/  /_/ /_//___/  /_/ /_/\____/      /_/_(_)_/       \n",
-    "---------------------------------------------------------------------\n",
+"---------------------------------------------------------------------\n",
+"      ______________       ________      _________   ____________    \n",
+"      ___  ____/__(_)__________  _/________  ____/   __<  /__|__ \   \n",
+"      __  /_   __  /__  __ \__  / __  __ \  / __     __  / ____/ /   \n",
+"      _  __/   _  / _  / / /_/ /  _  / / / /_/ /     _  /___  __/    \n",
+"      /_/      /_/  /_/ /_//___/  /_/ /_/\____/      /_/_(_)____/    \n",
+"---------------------------------------------------------------------\n",
     "Loading  FinInG ", ~.Version, " (Finite Incidence Geometry) \n",
     "by ", ~.Persons[1].FirstNames, " ", ~.Persons[1].LastName,
         " (", ~.Persons[1].WWWHome, ")\n",
