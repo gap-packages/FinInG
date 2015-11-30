@@ -1,12 +1,12 @@
 #############################################################################
 ##  
 ##  PackageInfo.g for the package `FinInG'                 
-##                                                              John Bamberg
-##                                                              Jan De Beule
-##                                                                 Maska Law
-##                                                           Max Neunhoeffer
-##                                                            Michael Pauley
-##                                                             Sven Reichard
+##                                                               John Bamberg
+##                                                               Anton Betten
+##                                                              Philippe Cara
+##                                                               Jan De Beule
+##                                                             Michel Lavrauw
+##                                                            Max Neunhoeffer
 ##
 ##  (created from Frank Luebeck's PackageInfo.g template file)
 ##  
@@ -33,14 +33,14 @@ Subtitle := "Finite Incidence Geometry",
 ##  See '?Extending: Version Numbers' in GAP help for an explanation
 ##  of valid version numbers. For an automatic package distribution update
 ##  you must provide a new version number even after small changes.
-Version := "1.2",
+Version := "1.3",
 ##  Please adjust also the VERSION file in the package directory when
 ##  changing this.
 
 ##  Release date of the current version in dd/mm/yyyy format.
 # 
 #Date := "19/09/2014",  #this is the date Fining was submitted officially.
-Date := "27/11/2015",  #this is revision 1151.
+Date := "30/11/2015",  #this is revision 1153.
 
 
 ##  URL of the archive(s) of the current package release, but *without*
@@ -163,7 +163,7 @@ Persons := [
     FirstNames    := "Jan",
     IsAuthor      := true,
     IsMaintainer  := true,
-    Email         := "jdebeule@cage.ugent.be",
+    Email         := "jan@debeule.eu",
     WWWHome       := "http://www.debeule.eu",
     PostalAddress := Concatenation( [
                        "Jan De Beule\n",
@@ -344,9 +344,9 @@ Dependencies := rec(
   # list of pairs [package name, (least) version],  package name is case
   # insensitive, least version denoted with '>=' prepended to version string.
   # without these, the package will not load
-  NeededOtherPackages := [["GAPDoc", ">= 0.99"], ["Forms", ">=1.2"], 
-                          ["Orb",">=2.0"], ["GenSS",">=0.9"], 
-			  ["GRAPE",">=4.3"], ["cvec", ">=2.4"]],
+  NeededOtherPackages := [["GAPDoc", ">= 1.5.1"], ["Forms", ">=1.2.3"],
+                          ["Orb",">=4.7.3"], ["GenSS",">=1.6.2"],
+			  ["GRAPE",">=4.6.1"], ["cvec", ">=2.5.3"]],
   # without these the package will issue a warning while loading
   # SuggestedOtherPackages := [],
   SuggestedOtherPackages := [],
@@ -378,14 +378,17 @@ AvailabilityTest := function()
 ##  here that is used as a banner. GAP decides when the banner is shown and
 ##  when it is not shown. *optional* (note the ~-syntax in this example)
 ##this one was made using http://www.network-science.de/ascii/ using "speed" :-)
+## to make things complicated: note that \ must be escaped: so if you really want to
+##see one \, you need to write "\\". If you forget this, not only you don't see the \, but
+##writing one \ eats the space right after it.
 BannerString := Concatenation(
-"---------------------------------------------------------------------\n",
-"      ______________       ________      _________   ____________    \n",
-"      ___  ____/__(_)__________  _/________  ____/   __<  /__|__ \   \n",
-"      __  /_   __  /__  __ \__  / __  __ \  / __     __  / ____/ /   \n",
-"      _  __/   _  / _  / / /_/ /  _  / / / /_/ /     _  /___  __/    \n",
-"      /_/      /_/  /_/ /_//___/  /_/ /_/\____/      /_/_(_)____/    \n",
-"---------------------------------------------------------------------\n",
+"-------------------------------------------------------------------------------\n",
+"         ______________       ________      _________   ______________         \n",
+"         ___  ____/__(_)__________  _/________  ____/   __<  /__|__  /         \n",
+"         __  /_   __  /__  __ \\__  / __  __ \\  / __     __  / ___/_ <          \n",
+"         _  __/   _  / _  / / /_/ /  _  / / / /_/ /     _  /______/ /          \n",
+"         /_/      /_/  /_/ /_//___/  /_/ /_/\\____/      /_/_(_)____/           \n",
+"-------------------------------------------------------------------------------\n",
     "Loading  FinInG ", ~.Version, " (Finite Incidence Geometry) \n",
     "by ", ~.Persons[1].FirstNames, " ", ~.Persons[1].LastName,
         " (", ~.Persons[1].WWWHome, ")\n",

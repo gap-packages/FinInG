@@ -14,7 +14,7 @@
                                                                  Michel Lavrauw
                                                                 Max Neunhoeffer
 
-  Copyright (C) 2014, University of Western Australia
+  Copyright (C) 2015, University of Western Australia
                       Colorado State University
                       Vrije Universiteit Brussel
                       Ghent University
@@ -29,7 +29,7 @@
     <Version>
       <#Include SYSTEM "../VERSION">
     </Version>
-<Date>2014</Date>
+<Date><#Include SYSTEM "../DATE"></Date>
 	<Author>John Bamberg, Anton Betten, Philippe Cara, Jan De Beule, Michel Lavrauw, Max Neunhoeffer.
 	</Author>
 <!--
@@ -49,10 +49,10 @@ Colorado State University, USA.
     </Author>
     <Author>Jan De Beule
 <Address>
-Ghent University, Belgium
+Vrije Universiteit Brussel, Belgium
 </Address>
-    <Email>jdebeule@cage.ugent.be</Email>
-    <Homepage>http://cage.ugent.be/&tilde;jdebeule</Homepage>
+    <Email>jan@debeule.eu</Email>
+    <Homepage>http://www.debeule.eu</Homepage>
     </Author>
 
  <Author>Philippe Cara
@@ -79,7 +79,7 @@ St Andrews, United Kingdom.
 -->    
 
 <Copyright>
-  &copyright; 2014 by the authors<P/>
+  &copyright; <#Include SYSTEM "../DATE"> by the authors<P/>
   This package may be distributed under the terms and conditions of the
   GNU Public License Version 2 or higher.<P/>
   

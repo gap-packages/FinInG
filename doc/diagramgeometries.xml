@@ -8,13 +8,14 @@
                                                                  Michel Lavrauw
 																Max Neunhoeffer
 
- Copyright (C) 2014, University of Western Australia
-                      Colorado State University
-                      Vrije Universiteit Brussel
-                      Ghent University
-					  Università degli Studi di Padova
+  Copyright (C) 2015,	Colorado State University
+						Università degli Studi di Padova
+						Universiteit Gent
+						University of St. Andrews
+						University of Western Australia
+                        Vrije Universiteit Brussel
 
-This is the chapter of the documentation describing the projective groups.
+This is the chapter of the documentation describing diagram geometries groups.
 
 -->
 
@@ -500,9 +501,9 @@ nonplane in the model of <M>AG(3,2)</M> defined by the labeling.
 <#Include SYSTEM "../examples/include/diagram_neumaier.include"> 
 </Example>
 The produced diagrams are included here: Neumaier's <Alt Not="HTML"><M>A_8</M></Alt><Alt Only="HTML">A&lt;sub>8&lt;/sub></Alt><P/>
-<Alt Only="HTML">&lt;img src="neuma8.jpg">&lt;/img></Alt><Alt Only="LaTeX">\includegraphics{neuma8.pdf}</Alt><P/><P/>
+<Alt Only="HTML">&lt;img src="./graphics/neuma8.jpg">&lt;/img></Alt><Alt Only="LaTeX">\includegraphics{./graphics/neuma8.pdf}</Alt><P/><P/>
 The <Alt Not="HTML"><M>A_7</M></Alt><Alt Only="HTML">A&lt;sub>7&lt;/sub></Alt> geometry:<P/>
-<Alt Only="HTML">&lt;img src="a7geo.jpg">&lt;/img></Alt><Alt Only="LaTeX">\includegraphics[scale=0.5]{a7geo.pdf}</Alt><P/><P/>
+<Alt Only="HTML">&lt;img src="./graphics/a7geo.jpg">&lt;/img></Alt><Alt Only="LaTeX">\includegraphics[scale=0.5]{./graphics/a7geo.pdf}</Alt><P/><P/>
 
 On a UNIX system we can start an external viewer (``gv'' or ghostview in this case) from within GAP with the <F>Exec</F> command.
 
@@ -526,7 +527,8 @@ to help you.
 An <M>E_6</M> geometry for comparison: on the left hand side we have the
 output of DrawDiagram and on the right hand side we see the result of
 DrawDiagramWithNeato<P/>
-<Alt Only="HTML">&lt;img src="E6.jpg">&lt;/img> &lt;img src="E6bis.jpg">&lt;/img></Alt><Alt Only="LaTeX">\includegraphics[scale=0.5]{E6.jpg} \includegraphics[scale=0.5]{E6bis.jpg}</Alt><P/><P/>
+<Alt Only="HTML">&lt;img src="./graphics/E6.jpg">&lt;/img> &lt;img src="./graphics/E6bis.jpg">&lt;/img></Alt>
+<Alt Only="LaTeX">\includegraphics[scale=0.5]{./graphics/E6.jpg} \includegraphics[scale=0.5]{./graphics/E6bis.jpg}</Alt><P/><P/>
 </Description>
 </ManSection>
 

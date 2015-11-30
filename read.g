@@ -20,17 +20,17 @@
 ##
 #############################################################################
 
-if InstalledPackageVersion("forms") < "1.2" then
-   ReadPackage("fining","lib/forms_ext.gi"); 
-fi;
-if InstalledPackageVersion("forms") < "1.2.2" then
-   Forms_RESET := RESET; 
-fi;
-if InstalledPackageVersion("forms") <= "1.2.2" then
-   ReadPackage("fining","lib/forms_patch.gi"); 
-fi;
+#if InstalledPackageVersion("forms") < "1.2" then
+#   ReadPackage("fining","lib/forms_ext.gi");
+#fi;
+#if InstalledPackageVersion("forms") < "1.2.2" then
+#   Forms_RESET := RESET;
+#fi;
+#if InstalledPackageVersion("forms") <= "1.2.2" then
+#   ReadPackage("fining","lib/forms_patch.gi");
+#fi;
 
-ReadPackage("fining","lib/genss_patch.g");
+#ReadPackage("fining","lib/genss_patch.g"); became obsolete
 
 ReadPackage("fining","lib/geometry.gi");
 

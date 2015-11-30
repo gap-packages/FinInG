@@ -8,11 +8,12 @@
                                                                  Michel Lavrauw
                                                                 Max Neunhoeffer
 
-  Copyright (C) 2014, University of Western Australia
-                      Colorado State University
-                      Vrije Universiteit Brussel
-                      Ghent University
-					  Università degli Studi di Padova
+  Copyright (C) 2015,	Colorado State University
+						Università degli Studi di Padova
+						Universiteit Gent
+						University of St. Andrews
+						University of Western Australia
+                        Vrije Universiteit Brussel
 
 This chapter gives examples for the usage of this package.
 
@@ -335,8 +336,8 @@ to get a diagram of such a coset geometry.
 </Description>
 </ManSection>
 
-<Alt Only="HTML">&lt;img src="E6.jpg">&lt;/img></Alt>
-<Alt Only="LaTeX">\includegraphics{E6.jpg}</Alt>
+<Alt Only="HTML">&lt;img src="./graphics/E6.jpg">&lt;/img></Alt>
+<Alt Only="LaTeX">\includegraphics{./graphics/E6.jpg}</Alt>
 
 <ManSection>
 <Heading>A rank 4 geometry for <M>PSL(2,11)</M></Heading>
@@ -351,8 +352,8 @@ a dotty viewer (such as GraphViz).
 The output of this example uses <C>dotty</C> which is a sophisticated graph
 drawing program. We also provide <F>DrawDiagramWithNeato</F> to make a diagram with straight lines, using <C>neato</C>.
 Here is what the output looks like with the standard <F>DrawDiagram</F> command:
-<Alt Only="HTML">&lt;img src="PSL211.jpg">&lt;/img></Alt>
-<Alt Only="LaTeX">\includegraphics{PSL211.jpg}</Alt>
+<Alt Only="HTML">&lt;img src="./graphics/PSL211.jpg">&lt;/img></Alt>
+<Alt Only="LaTeX">\includegraphics{./graphics/PSL211.jpg}</Alt>
 </Description>
 </ManSection>
 
