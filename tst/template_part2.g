@@ -1,23 +1,3 @@
-TestMyPackage := function( pkgname )
-local pkgdir, testfiles, testresult, ff, fn;
-LoadPackage( pkgname );
-pkgdir := DirectoriesPackageLibrary( pkgname, "tst" );
-
-# Arrange chapters as required
-testfiles := [
-"tst_fining1.tst",
-"tst_fining2.tst",
-"tst_fining3.tst",
-"tst_fining4.tst",
-"tst_fining5.tst",
-"tst_fining6.tst",
-"tst_fining7.tst",
-"tst_fining8.tst",
-"tst_fining9.tst",
-"tst_fining10.tst",
-"tst_fining11.tst"
-];
-
 testresult:=true;
 for ff in testfiles do
   fn := Filename( pkgdir, ff );

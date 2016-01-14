@@ -42,7 +42,7 @@ extension := ".out\";";
 cmddir := "dir \:\= DirectoriesPackageLibrary\(\"fining\"\,\"tst\/output\"\)\[1\]\;";
 
 #name of script to start gap version, might be different on your computer
-gapstart := "gap4r7";
+gapstart := "gap4r8";
 gap := Filename(Directory("/usr/bin/"),gapstart);
 
 #create .out files using the saved workspace
@@ -111,8 +111,11 @@ od;
 #now write testall.g file.
 
 o := Filename(includedir,"testall.g");
-PrintTo(o,"LoadPackage(\"fining\");\n");
-AppendTo(o,"dir := DirectoriesPackageLibrary( \"fining\", \"tst\" )[1];\n\n");
+tstdir := DirectoriesPackageLibrary("fining","tst")[1];
+part1 := Filename(tstdir,"template_part1.g");
+input_stream := InputTextFile(part1);
+PrintTo(o,ReadAll(input_stream));
+
 AppendTo(o,"testfiles := [\n");
 for i in [1..Length(files)-1] do
     filename := Concatenation(files[i],".tst");
@@ -120,5 +123,25 @@ for i in [1..Length(files)-1] do
 od;
 filename := Concatenation(files[Length(files)],".tst");
 AppendTo(o,Concatenation("\"",filename,"\"\n];\n\n"));
-AppendTo(o,"for f in testfiles do\n\tfile := Filename(dir,f);\n\tReadTest(file);\nod;");
+
+part2 := Filename(tstdir,"template_part2.g");
+input_stream := InputTextFile(part2);
+AppendTo(o,ReadAll(input_stream));
+
+
+#old and unused stuff. 
+
+#AppendTo(o,"TestMyPackage(\"fining\")");
+
+#AppendTo(o,"LoadPackage(\"fining\");\n");
+
+#AppendTo(o,"dir := DirectoriesPackageLibrary( \"fining\", \"tst\" )[1];\n\n");
+#AppendTo(o,"testfiles := [\n");
+#for i in [1..Length(files)-1] do
+#    filename := Concatenation(files[i],".tst");
+#    AppendTo(o,Concatenation("\"",filename,"\",\n"));
+#od;
+#filename := Concatenation(files[Length(files)],".tst");
+#AppendTo(o,Concatenation("\"",filename,"\"\n];\n\n"));
+#AppendTo(o,"for f in testfiles do\n\tfile := Filename(dir,f);\n\tTest(file, rec( compareFunction := \"uptowhitespace\" ));\nod;");
 
