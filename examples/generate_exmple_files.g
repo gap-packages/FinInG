@@ -127,7 +127,7 @@ homedir := DirectoryCurrent();
 exampledir := DirectoriesPackageLibrary("fining","examples/gap")[1]; 
 preambledir := DirectoriesPackageLibrary("fining","examples/")[1]; 
 outputdir := DirectoriesPackageLibrary("fining","examples/output")[1];
-paths := JoinStringsWithSeparator(GAP_ROOT_PATHS{[2,3]},";");
+paths := JoinStringsWithSeparator(GAPInfo.RootPaths{[2,3]},";");
 args := JoinStringsWithSeparator(["-l",paths," -L fining.ws"," -o 4G"]," ");
 args := ["-l",paths,"-L","fining.ws","-o","4G"];
 

@@ -33,14 +33,14 @@ Subtitle := "Finite Incidence Geometry",
 ##  See '?Extending: Version Numbers' in GAP help for an explanation
 ##  of valid version numbers. For an automatic package distribution update
 ##  you must provide a new version number even after small changes.
-Version := "1.3",
+Version := "1.3.2",
 ##  Please adjust also the VERSION file in the package directory when
 ##  changing this.
 
 ##  Release date of the current version in dd/mm/yyyy format.
 # 
 #Date := "19/09/2014",  #this is the date Fining was submitted officially.
-Date := "30/11/2015",  #this is revision 1153.
+Date := "19/01/2016",  #this is revision 1156.
 
 
 ##  URL of the archive(s) of the current package release, but *without*

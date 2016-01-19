@@ -2599,6 +2599,9 @@ InstallMethod( VectorSpaceToElement,
 		fi;
 end );
 
+# changed 19/01/16 (jdb): by a change of IsPlistRep, this method gets also
+# called when using a row vector, causing a problem with TriangulizeMat.
+# a solution was to add IsMatrix.
 #############################################################################
 #O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
 # by the vectorspace <v>. Code based on VectorSpaceToElement for polar spaces
@@ -2606,7 +2609,7 @@ end );
 ## 
 InstallMethod( VectorSpaceToElement, 
 	"for a polar space and a Plist",
-	[ IsClassicalGeneralisedHexagon, IsPlistRep],
+	[ IsClassicalGeneralisedHexagon, IsPlistRep and IsMatrix],
 	function( geom, v )
 		local  x, n, i, y, ps, f, onespace1, onespace2, p1, p2, change, frob;
 		## when v is empty... 

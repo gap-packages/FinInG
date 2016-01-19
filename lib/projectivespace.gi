@@ -396,13 +396,16 @@ InstallMethod( VectorSpaceToElement,
 	end );
 
 # CHECKED 20/09/11
+# changed 19/01/16 (jdb): by a change of IsPlistRep, this method gets also
+# called when using a row vector, causing a problem with TriangulizeMat.
+# a solution was to add IsMatrix.
 #############################################################################
 #O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
 # by the vectorspace <v>. Several checks are built in. 
 ##
 InstallMethod( VectorSpaceToElement, 
 	"for a projective space and a Plist",
-	[IsProjectiveSpace, IsPlistRep],
+	[IsProjectiveSpace, IsPlistRep and IsMatrix],
 	function( geom, v )
 		local  x, n, i, y; 
 		## when v is empty... 

@@ -345,6 +345,9 @@ InstallMethod( Display,
 # but I am unhappy with the fact that an empty v just returns [].
 # 24/3/2014. I changed it now, entering [] gives an error.
 # cvec/cmat change.
+# changed 19/01/16 (jdb): by a change of IsPlistRep, this method gets also
+# called when using a row vector, causing a problem with TriangulizeMat.
+# a solution was to add IsMatrix.
 #############################################################################
 #O  AffineSubspace( <geom>, <v>, <m> )
 # returns the subspace of <geom>, with representative <v> and subspace at infinity
@@ -352,7 +355,7 @@ InstallMethod( Display,
 ##
 InstallMethod( AffineSubspace, 
 	"for a row vector and Plist",
-    [IsAffineSpace, IsRowVector, IsPlistRep],
+    [IsAffineSpace, IsRowVector, IsPlistRep and IsMatrix],
 	function( geom, v, m )
 		local  x, n, i, gf, v2;
 		gf := geom!.basefield;
