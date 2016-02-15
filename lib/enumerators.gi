@@ -8,7 +8,7 @@
 ##                                                            Michel Lavrauw
 ##                                                           Max Neunhoeffer
 ##
-##  Copyright 2014	Colorado State University, Fort Collins
+##  Copyright 2016	Colorado State University, Fort Collins
 ##					Università degli Studi di Padova
 ##					Universeit Gent
 ##					University of St. Andrews
@@ -19,11 +19,14 @@
 ##  Implementation stuff for enumerators of elements of polar spaces
 ##
 #############################################################################
+##  15/2/2016: We acknowledge Max Horn for sorting out and solving a problem
+##  with some AsList methods, causing a problem with orb 4.7.5.
+#############################################################################
 
 Print(", enumerators\c");
 
 #############################################################################
-# The enumerator functionality is quite technical. We need many tiny an less 
+# The enumerator functionality is quite technical. We need many tiny and less
 # tiny helping functions. We go for a bottom up approach, where we first 
 # declare the helping functions, and then the real user stuff in the end.
 #############################################################################
@@ -100,7 +103,7 @@ InstallGlobalFunction( FG_ffenumber,
 #the next function seems never used.
 #############################################################################
 #F  FG_unrank_GFQ( q, rk )
-# q: prme power, rk: natural number
+# q: prime power, rk: natural number
 ##
 #InstallGlobalFunction( FG_unrank_GFQ,
 #	function(q, rk)
@@ -2035,16 +2038,18 @@ InstallMethod( EnumeratorByOrbit,
      return vars;
    end );
 
+# jdb: patched 15/2/2016, using a patch file from Max Horn.
 #############################################################################
-#O AsList. Lists all elements in a collection of subspaces of polar space.  
+#O AsList. Lists all elements in a collection of subspaces of polar space.
 ##
 InstallMethod( AsList, 
 	"for subspaces of a polar space", 
 	[IsSubspacesOfClassicalPolarSpace],
 	function( vs )
-		return EnumeratorByOrbit( vs );
+		return AsList(EnumeratorByOrbit( vs ));
 	end );
 
+# jdb: patched 15/2/2016, using a patch file from Max Horn.
 #############################################################################
 #O AsSortedList. Lists all elements in a collection of subspaces of polar space.  
 ##
@@ -2052,7 +2057,7 @@ InstallMethod( AsSortedList,
 	"for subspaces of a polar space", 
 	[IsSubspacesOfClassicalPolarSpace],
 	function( vs )
-		return EnumeratorByOrbit( vs );
+		return AsSortedList(EnumeratorByOrbit( vs ));
 	end );
 
 #Exactly the same as above?
@@ -2063,12 +2068,12 @@ InstallMethod( AsSSortedList,
 	"for subspaces of a polar space", 
 	[IsSubspacesOfClassicalPolarSpace],
 	function( vs )
-		return EnumeratorByOrbit( vs );
+		return AsSortedList(EnumeratorByOrbit( vs ));
 	end );
 
 #############################################################################
 #O Enumerator. 
-# This is it! This is the big method that returns an enumertor for a collection
+# This is it! This is the big method that returns an enumerator for a collection
 # of all elements of a given type of the polar space <ps>
 ##
 InstallMethod( Enumerator, 
@@ -2162,7 +2167,7 @@ InstallMethod( Enumerator,
 
 #############################################################################
 #O Enumerator. 
-# returns an eneumerator for a collection of shadow subspaces of an element of
+# returns an enumerator for a collection of shadow subspaces of an element of
 # a polar space.
 ##
 InstallMethod( Enumerator, 

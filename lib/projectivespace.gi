@@ -8,7 +8,7 @@
 ##                                                            Michel Lavrauw
 ##                                                           Max Neunhoeffer
 ##
-##  Copyright 2014	Colorado State University, Fort Collins
+##  Copyright 2016	Colorado State University, Fort Collins
 ##					Università degli Studi di Padova
 ##					Universeit Gent
 ##					University of St. Andrews
@@ -1194,6 +1194,7 @@ InstallGlobalFunction( OnSetsProjSubspaces,
 # CHECKED 11/09/11 jdb
 # cvec change: only necessary to convert the output of MakeAllProjectivePoints. (19/3/14).
 # This is done now (ml 31/03/14)
+# 15/2/2016: jdb: changed return o; -> return AsList(o).
 #############################################################################
 #O  AsList( <vs>) 
 # returns a list of all elements in <vs>, which is a collection of subspaces of
@@ -1224,7 +1225,8 @@ InstallMethod( AsList,
                                           orbsizebound := sz ));
 		Enumerate(o, sz);
 	fi;
-	return o;
+    #return o; #see also AsList in polarspace.gi for explanation.
+    return AsList(o);
 	end );
 	
 # One of the best features of all of the orb package is the FindSuborbits command
