@@ -1699,6 +1699,9 @@ InstallMethod( VectorSpaceToElement,
 		if IsEmpty(v) then
 			Error("<v> does not represent any element");
 		fi;
+        if not IsMatrix(v) then #next 3 lines: patch of Max Horn (16/2/16)
+            TryNextMethod();
+        fi;
 
 		x := MutableCopyMat(v);
 		TriangulizeMat(x);
