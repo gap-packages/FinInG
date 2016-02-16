@@ -19,3 +19,4 @@ orbs := FiningOrbits(group,Points(pg));
 orbs := FiningOrbits(group,List(Points(pg)),OnProjSubspaces);
 orbs := FiningOrbits(group,Lines(pg));
 orbs := FiningOrbits(group,List(Lines(pg)),OnProjSubspaces);
+quit;

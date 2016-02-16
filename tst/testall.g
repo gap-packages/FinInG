@@ -15,7 +15,8 @@ testfiles := [
 "tst_fining8.tst",
 "tst_fining9.tst",
 "tst_fining10.tst",
-"tst_fining11.tst"
+"tst_fining11.tst",
+"tst_fining12.tst"
 ];
 
 testresult:=true;

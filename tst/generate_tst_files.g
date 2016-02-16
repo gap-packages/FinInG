@@ -24,7 +24,7 @@ quit;
 
 files := ["tst_fining1", "tst_fining2", "tst_fining3", "tst_fining4", "tst_fining5",
             "tst_fining6","tst_fining7", "tst_fining8", "tst_fining9", "tst_fining10",
-            "tst_fining11" ];
+            "tst_fining11", "tst_fining12" ];
 
 #initialize directorynames
 #sourcedir = dir where .g files are located : ".../pkg/fining/tst/gap"
@@ -42,15 +42,17 @@ extension := ".out\";";
 cmddir := "dir \:\= DirectoriesPackageLibrary\(\"fining\"\,\"tst\/output\"\)\[1\]\;";
 
 #name of script to start gap version, might be different on your computer
-gapstart := "gap4r8";
+gapstart := "gap4r7";
+Exec(Concatenation("which ",gapstart));
 gap := Filename(Directory("/usr/bin/"),gapstart);
+gap := Filename(Directory("/usr/local/bin/"),gapstart);
 
 #create .out files using the saved workspace
 #IMPORTANT: here we suppose that the script to start up our favorite version of
 #GAP is called 'gap4r4', and is located in '/usr/bin'. Change the code if this is not true!
 #you certainly now the name of the script, since you started gap. To find the
 #dir, just issue in the gap session that is running:
-#Exec("which gap4r4"); #for UNIX
+#Exec("which gapstart); #for UNIX
 #Note that test files that require a lot of time will keep running in background and produce their output
 #also when the for loop is completely done.
 
@@ -77,7 +79,7 @@ for filename in files do
     cmd := ReadLine(input_stream);
     ReadAll(stream);
   od;
-  #repeat until ReadAll(stream)=fail; #new since oct 2015.
+  repeat until ReadAll(stream)=fail; #new since oct 2015.
 od;
 
 #create .tst files
