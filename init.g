@@ -45,3 +45,5 @@ ReadPackage("fining","lib/affinegroup.gd");
 ReadPackage("fining","lib/gpolygons.gd");
 
 ReadPackage("fining","lib/orbits-stabilisers.gd"); # added 11/02/13 ml
+
+ReadPackage("fining","lib/subgeometries.gd"); # added 25/05/16 jdb

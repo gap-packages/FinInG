@@ -58,5 +58,7 @@ ReadPackage("fining","lib/gpolygons.gi");
 
 ReadPackage("fining","lib/orbits-stabilisers.gi"); # added 11/02/13 ml
 
+ReadPackage("fining","lib/subgeometries.gi"); # added 25/05/16 jdb
+
 Print("\n");
 
