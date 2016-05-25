@@ -485,7 +485,7 @@ InstallMethod( StabiliserGroupOfSubspace,
 function(sub)
 
 local t,pg,n,F,b1,V,comp,b2,bas,basechangeproj,G1,G2,N1,N2,
-genlist,A,B,mat,i,I1,I2,pgenlist,newgenlist,stab,q,frob,frobgens;
+genlist,A,B,mat,i,I1,I2,pgenlist,newgenlist,stab,q,frob,frobgens,pow;
 
 t:=ProjectiveDimension(sub)+1;
 pg:=AmbientSpace(sub);
