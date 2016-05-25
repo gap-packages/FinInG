@@ -60,6 +60,6 @@ DeclareOperation( "FixedSubspaces", [IsProjectiveGroupWithFrob, IsProjectiveSpac
 ################################
 
 DeclareOperation( "ProjectiveStabiliserGroupOfSubspace", [IsSubspaceOfProjectiveSpace] );
-
-
+DeclareOperation( "StabiliserGroupOfSubspace", [IsSubspaceOfProjectiveSpace] );
+DeclareOperation( "SpecialProjectiveStabiliserGroupOfSubspace", [IsSubspaceOfProjectiveSpace] );
 
