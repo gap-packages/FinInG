@@ -429,3 +429,53 @@ InstallMethod( FixedSubspaces,
 end );
 
 
+# ADDED 24/05/16 ml+pc
+InstallMethod( ProjectiveStabiliserGroupOfSubspace,
+ "for a subspace of a projective space",
+[IsSubspaceOfProjectiveSpace],
+function(sub)
+
+local t,pg,n,F,b1,V,comp,b2,bas,basechangeproj,G1,G2,N1,N2,
+genlist,A,B,mat,i,I1,I2,pgenlist,newgenlist,stab;
+
+t:=ProjectiveDimension(sub)+1;
+pg:=AmbientSpace(sub);
+n:=ProjectiveDimension(pg)+1;
+F:=pg!.basefield;
+b1:=Unpack(sub!.obj);
+# basis change!
+V:=UnderlyingVectorSpace(pg);
+comp:=ComplementSpace(V,sub!.obj);
+b2:=Basis(comp);
+bas:=Concatenation(b1,b2);
+basechangeproj:=Projectivity(pg,bas);
+G1:=GL(t,F); G2:=GL(n-t,F);
+N1:=NullMat(t,n-t,F); N2:=NullMat(n-t,t,F);
+genlist:=[];
+for A in GeneratorsOfGroup(G1) do for B in GeneratorsOfGroup(G2) do
+    mat:=[];
+    for i in [1..t] do Add(mat,Concatenation(A[i],N1[i]));
+    od;
+    for i in [1..n-t] do Add(mat,Concatenation(N2[i],B[i]));
+    od;
+    Add(genlist,mat);
+od;od;
+N2[1][1]:=One(F); I1:=IdentityMat(t,F); I2:=IdentityMat(n-t,F);
+mat:=[];
+for i in [1..t] do Add(mat,Concatenation(I1[i],N1[i]));
+od;
+for i in [1..n-t] do Add(mat,Concatenation(N2[i],I2[i]));
+od;
+Add(genlist,mat);
+pgenlist:=List(genlist,g->Projectivity(g,F));
+newgenlist:=List(pgenlist,x->x^basechangeproj);
+stab:=Group(newgenlist);
+SetParent(stab,ProjectivityGroup(pg));
+# SET SIZE !!!!!!!!!!!!!!
+return stab;
+#return Subgroup(ProjectivityGroup(pg),newgenlist);
+end );
+
+
+
+

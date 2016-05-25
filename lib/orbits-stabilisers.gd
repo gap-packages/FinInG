@@ -53,3 +53,13 @@ DeclareOperation( "FiningStabiliserPerm2", [IsProjectiveGroupWithFrob, IsElement
 ################################
 
 DeclareOperation( "FixedSubspaces", [IsProjectiveGroupWithFrob, IsProjectiveSpace] );
+
+
+#############################
+# Stabilisers of subspaces
+################################
+
+DeclareOperation( "ProjectiveStabiliserGroupOfSubspace", [IsSubspaceOfProjectiveSpace] );
+
+
+
