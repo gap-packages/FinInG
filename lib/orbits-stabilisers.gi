@@ -436,7 +436,7 @@ InstallMethod( ProjectiveStabiliserGroupOfSubspace,
 function(sub)
 
 local t,pg,n,F,b1,V,comp,b2,bas,basechangeproj,G1,G2,N1,N2,
-genlist,A,B,mat,i,I1,I2,pgenlist,newgenlist,stab;
+genlist,A,B,mat,i,I1,I2,pgenlist,newgenlist,stab,q;
 
 t:=ProjectiveDimension(sub)+1;
 pg:=AmbientSpace(sub);
@@ -471,11 +471,10 @@ pgenlist:=List(genlist,g->Projectivity(g,F));
 newgenlist:=List(pgenlist,x->x^basechangeproj);
 stab:=Group(newgenlist);
 SetParent(stab,ProjectivityGroup(pg));
-# SET SIZE !!!!!!!!!!!!!!
+q:=Size(F);
+SetSize(stab, Size(GL(t,F))*Size(GL(n-t,F))*q^(t*(n-t))/(q-1));
 return stab;
 #return Subgroup(ProjectivityGroup(pg),newgenlist);
 end );
-
-
 
 
