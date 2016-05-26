@@ -607,6 +607,25 @@ InstallMethod( CollineationOfProjectiveSpace, [ IsProjectiveSpace, IsMatrix],
 		return ProjElWithFrob( mat, IdentityMapping(gf), gf);
 	end );
 
+# Added jdb 26/05/2016
+# not documented yet
+#############################################################################
+#O  CollineationOfProjectiveSpace( <pg>, <mat> )
+# method to construct an collineation of a projective space with identitymatrix,
+# but with user defined field automorphism.
+## 
+InstallMethod( CollineationOfProjectiveSpace, [ IsProjectiveSpace, IsMapping],
+  	function( pg, frob )
+		local d,gf,mat;
+		d:=Dimension(pg);
+		gf:=Range(frob);
+        if not gf = pg!.basefield then
+            Error("basefield of <pg> does not match with range of <frob>");
+        fi;
+        mat := IdentityMat(d+1,gf);
+		return ProjElWithFrob( mat, frob, gf);
+	end );
+
 
 # Added ml 8/11/2012
 #############################################################################

@@ -90,8 +90,9 @@ DeclareOperation( "ProjElsWithFrob", [IsList, IsField] );
 #DeclareOperation( "ProjectiveSemilinearMap", [ IsList, IsField] ); # no longer valid (ml 8/11/12)
 DeclareOperation( "CollineationOfProjectiveSpace", [ IsList, IsField] );
 DeclareOperation( "CollineationOfProjectiveSpace", [ IsList, IsMapping, IsField] );
-DeclareOperation( "CollineationOfProjectiveSpace", [IsProjectiveSpace, IsMatrix] );
-DeclareOperation( "CollineationOfProjectiveSpace", [IsProjectiveSpace, IsMatrix, IsMapping] );
+DeclareOperation( "CollineationOfProjectiveSpace", [ IsProjectiveSpace, IsMatrix] );
+DeclareOperation( "CollineationOfProjectiveSpace", [ IsProjectiveSpace, IsMatrix, IsMapping] );
+DeclareOperation( "CollineationOfProjectiveSpace", [ IsProjectiveSpace, IsMapping] );
 
 DeclareOperation( "Collineation", [IsProjectiveSpace, IsMatrix] );
 DeclareOperation( "Collineation", [IsProjectiveSpace, IsMatrix, IsMapping] );

@@ -12,7 +12,7 @@ BindGlobal( "SubgeometriesFamily", NewFamily( "SubgeometriesFamily" ) );
 
 #representations
 
-DeclareRepresentation( "IsSubgeometryOfProjectiveSpaceRep", IsSubgeometryOfProjectiveSpace, [ "dimension", "basefield", "ambientspace", "isomorphicsubgeometry", "frame" ] );
+DeclareRepresentation( "IsSubgeometryOfProjectiveSpaceRep", IsSubgeometryOfProjectiveSpace, [ "dimension", "basefield", "ambientspace", "isomorphicsubgeometry", "frame", "proj", "sigma" ] );
 
 DeclareRepresentation( "IsSubspaceOfSubgeometryOfProjectiveSpaceRep", IsElementsOfLieGeometryRep, [ "geometry", "type" ] );
 

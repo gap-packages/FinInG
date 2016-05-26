@@ -65,11 +65,14 @@ InstallMethod( CanonicalSubgeometryOfProjectiveSpace,
     "for a projective space, and a prime power",
     [ IsProjectiveSpace, IsPosInt],
     function(pg,q)
-    local geo, subpg, d, frame, ty, em;
+    local geo, subpg, d, frame, ty, em, sigma, h, p, frob;
     d := ProjectiveDimension(pg);
     subpg := ProjectiveSpace(d,q);
     frame := StandardFrame(pg);
     em := NaturalEmbeddingBySubfield(subpg,pg);
+    p := Characteristic(basefield);
+    h := Log(Size(basefield)),p);
+
     geo := rec(dimension := d, basefield := GF(q), ambientspace := pg, isomorphicsubgeometry := subpg, frame := frame,
         embedding := em, vectorspace := FullRowSpace(BaseField(pg), d+1) );
     ty := NewType( SubgeometriesFamily,
@@ -227,41 +230,46 @@ InstallMethod( ExtendElementOfSubgeometry,
 	[ IsSubspaceOfSubgeometryOfProjectiveSpace ],
 	element -> VectorSpaceToElement(AmbientSpace(element),Unpack(UnderlyingObject(element))));
 
-# not functional yet.
-#InstallMethod( Span,
-#	"for two elements of a subgeometry of a projective space",
-#	[ IsSubspaceOfSubgeometryOfProjectiveSpace,  IsSubspaceOfSubgeometryOfProjectiveSpace],
-#    function(x,y)
-#    local el1, el2, em, span, res, proj, geo;
-#    geo := AmbientGeometry(x);
-#    if geo <> AmbientGeometry(y) then
-#        if AmbientSpace(x) = AmbientSpace(y)
-#            then return Span(ExtendElementOfSubgeometry(x),ExtendElementOfSubgeometry(y));
-#        else
-#            Error("<x> and <y> have different ambient geometries and different ambient spaces");
-#        fi;
-#    fi;
-#    em := geo!.embedding;
-#    if not IsCanonicalSubgeometryOfProjectiveSpace(sub) then
-#        proj := sub!.projectivity;
-#        el1 := PreImageElm(em,x^(proj^(-1)));
-#        el2 := PreImageElm(em,y^(proj^(-1)));
-#    else
-#        el1 := PreImageElm(em,x);
-#        el2 := PreImageElm(em,y);
-#    fi;
-#    span := Span(el1,el2);
-#    res := span^em;
-#    if not IsCanonicalSubgeometryOfProjectiveSpace(sub) then
-#        res := res^proj;
-#    fi;
-#    return VectorSpaceToElement(sub,UnderlyingObject(res));
-#end );
+InstallMethod( Span,
+	"for two elements of a subgeometry of a projective space",
+	[ IsSubspaceOfSubgeometryOfProjectiveSpace,  IsSubspaceOfSubgeometryOfProjectiveSpace],
+    function(x,y)
+    local z,w,pg,span;
+    pg := AmbientSpace(x);
+    if not pg = AmbientSpace(y) then
+        Error("ambient spaces of <x> and <y> differ");
+    fi;
+    z := Embed(pg,x);
+    w := Embed(pg,y);
+    span := Span(z,w); #we know already that span belongs to the subgeometry. So we may use wrap to avoid checking this again.
+    #now we check whether the subgeometries are the same. If not, we just return span.
+    if x!.geo = y!.geo then
+        return Wrap(x!.geo,span!.type,UnderlyingObject(span));
+    else
+        return span;
+    fi;
+    end );
 
+InstallMethod( Meet,
+	"for two elements of a subgeometry of a projective space",
+	[ IsSubspaceOfSubgeometryOfProjectiveSpace,  IsSubspaceOfSubgeometryOfProjectiveSpace],
+    function(x,y)
+    local z,w,pg,meet;
+    pg := AmbientSpace(x);
+    if not pg = AmbientSpace(y) then
+        Error("ambient spaces of <x> and <y> differ");
+    fi;
+    z := Embed(pg,x); #I am happy to use Embed ;-)
+    w := Embed(pg,y);
+    span := Meet(z,w); #we know already that span belongs to the subgeometry. So we may use wrap to avoid checking this again.
+    #now we check whether the subgeometries are the same. If not, we just return span.
+    if x!.geo = y!.geo then
+        return Wrap(x!.geo,span!.type,UnderlyingObject(span));
+    else
+        return span;
+    fi;
+    end );
 
-
-
-
-
+Install
 
 
