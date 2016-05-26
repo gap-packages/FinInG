@@ -1,0 +1,24 @@
+gap&gt; pg:=ProjectiveSpace(5,9);            
+ProjectiveSpace(5, 9)
+gap&gt; sub:=RandomSubspace(pg,2);     
+&lt;a plane in ProjectiveSpace(5, 9)&gt;
+gap&gt; coll:=StabiliserGroupOfSubspace(sub); time;                                
+&lt;projective collineation group of size 11173786189009966655078400 with 
+6 generators&gt;
+10
+gap&gt; computed:=FiningStabiliserOrb(CollineationGroup(pg),sub); time;
+&lt;projective collineation group with 15 generators&gt;
+35799
+gap&gt; coll = computed;
+true
+gap&gt; proj:=ProjectiveStabiliserGroupOfSubspace(sub); time;
+&lt;projective collineation group of size 5586893094504983327539200 with 
+5 generators&gt;
+2
+gap&gt; FiningStabiliserOrb(ProjectivityGroup(pg),sub)=proj; time;      
+true
+130080
+gap&gt; specproj:=SpecialProjectiveStabiliserGroupOfSubspace(sub); time;
+&lt;projective collineation group of size 2793446547252491663769600 with 
+5 generators&gt;
+3
