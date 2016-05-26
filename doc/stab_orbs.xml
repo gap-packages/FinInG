@@ -141,6 +141,34 @@ A small example shows the difference in computing time.
 <#Include SYSTEM "../examples/include/stab_orbs_timing2.include"> 
 </Example>
 
+For subspaces of projective spaces we can be even more efficient by writing down generators of the stabiliser and then return the generated subgroup.
+
+<ManSection>
+<Oper Name="StabiliserGroupOfSubspace" Arg="sub"/>
+<Returns>The subgroup of the collineation group of <A>AmbientSpace(sub)</A> stabilising the subspace <A>sub</A></Returns>
+<Description>The argument <A>sub</A> is a subspace of a projective space.
+
+</Description>
+</ManSection>
+<ManSection>
+<Oper Name="ProjectiveStabiliserGroupOfSubspace" Arg="sub"/>
+<Returns>The subgroup of the projectivity group of <A>AmbientSpace(sub)</A> stabilising the subspace <A>sub</A></Returns>
+<Description>The argument <A>sub</A> is a subspace of a projective space.
+
+</Description>
+</ManSection>
+<ManSection>
+<Oper Name="SpecialProjectiveStabiliserGroupOfSubspace" Arg="sub"/>
+<Returns>The subgroup of the special projectivity group of <A>AmbientSpace(sub)</A> stabilising the subspace <A>sub</A></Returns>
+<Description>The argument <A>sub</A> is a subspace of a projective space.
+
+<Example>
+<#Include SYSTEM "../examples/include/stab_orbs_stabofsubspace.include"> 
+</Example>
+</Description>
+</ManSection>
+
+
 </Section>
 
 <Section>
