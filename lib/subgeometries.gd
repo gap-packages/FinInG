@@ -21,9 +21,11 @@ DeclareRepresentation( "IsSubspaceOfSubgeometryOfProjectiveSpaceRep", IsElements
 
 DeclareOperation("IsFrameOfProjectiveSpace", [IsList]);
 
+DeclareOperation("CanonicalSubgeometryOfProjectiveSpace", [IsProjectiveSpace, IsField and IsFinite]);
 DeclareOperation("CanonicalSubgeometryOfProjectiveSpace", [IsProjectiveSpace, IsPosInt]);
 
 DeclareOperation("SubgeometryOfProjectiveSpaceByFrame", [IsProjectiveSpace, IsList, IsPosInt]);
+DeclareOperation("SubgeometryOfProjectiveSpaceByFrame", [IsProjectiveSpace, IsList, IsField and IsFinite]);
 
 DeclareOperation( "VectorSpaceToElement", [IsSubgeometryOfProjectiveSpace, IsObject] );
 

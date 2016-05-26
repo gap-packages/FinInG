@@ -60,21 +60,26 @@ InstallMethod( IsFrameOfProjectiveSpace,
 
 #note for the next two methods: it may look strange to put a vectorspace over the big field as vectorspace. But
 #this makes sure that incidence can be tested between elements of the subgeometry and the ambient geometry.
-
 InstallMethod( CanonicalSubgeometryOfProjectiveSpace,
     "for a projective space, and a prime power",
-    [ IsProjectiveSpace, IsPosInt],
-    function(pg,q)
-    local geo, subpg, d, frame, ty, em, sigma, h, p, frob;
+    [ IsProjectiveSpace, IsField and IsFinite],
+    function(pg,subfield)
+    local geo, subpg, d, frame, ty, em, sigma, h, t, p, frob, q;
     d := ProjectiveDimension(pg);
-    subpg := ProjectiveSpace(d,q);
+    q := Size(subfield);
+    p := Characteristic(GF(q));
+    h := Log(q,p);
+    t := Log(Size(pg!.basefield),p);
+    if not t mod h = 0 then
+        Error(" <subfield> is not a subfield of the base field of <pg>");
+    fi;
+    subpg := ProjectiveSpace(d,subfield);
     frame := StandardFrame(pg);
     em := NaturalEmbeddingBySubfield(subpg,pg);
-    p := Characteristic(basefield);
-    h := Log(Size(basefield)),p);
-
-    geo := rec(dimension := d, basefield := GF(q), ambientspace := pg, isomorphicsubgeometry := subpg, frame := frame,
-        embedding := em, vectorspace := FullRowSpace(BaseField(pg), d+1) );
+    frob := FrobeniusAutomorphism(BaseField(pg))^h;
+    sigma := CollineationOfProjectiveSpace(pg,frob);
+    geo := rec(dimension := d, basefield := GF(q), ambientspace := pg, isomorphicsubgeometry := subpg, frame := Set(frame),
+        embedding := em, vectorspace := FullRowSpace(BaseField(pg), d+1), sigma := sigma );
     ty := NewType( SubgeometriesFamily,
                   IsSubgeometryOfProjectiveSpace and IsSubgeometryOfProjectiveSpaceRep );
     Objectify( ty, geo );
@@ -86,30 +91,62 @@ InstallMethod( CanonicalSubgeometryOfProjectiveSpace,
 
 InstallMethod( SubgeometryOfProjectiveSpaceByFrame,
     "for a projective space, and a prime power",
-    [ IsProjectiveSpace, IsList, IsPosInt],
-    function(pg,frame,q)
-    local geo, subpg, d, ty, matrix, proj, n, i, vecs, basis, coefs, em;
+    [ IsProjectiveSpace, IsList, IsField and IsFinite],
+    function(pg,frame,subfield)
+    local geo, subpg, d, ty, matrix, proj, n, i, vecs, basis, coefs, em, sigma, h, t, p, frob, q, can;
     if not IsFrameOfProjectiveSpace(frame) then
         return("<frame> must be a frame of <pg>");
     fi;
     d := ProjectiveDimension(pg);
-    subpg := ProjectiveSpace(d,q);
-    n:=Size(frame)-1;
-    vecs:=List(frame,x->Coordinates(x));
-    basis:=Basis(UnderlyingVectorSpace(Span(frame)),vecs{[1..n]});
-    coefs:=Coefficients(basis,vecs[n+1]);
-    matrix := List([1..n],i->coefs[i]*vecs[i]);
-    proj := CollineationOfProjectiveSpace(matrix,BaseField(pg));
+    q := Size(subfield);
+    p := Characteristic(GF(q));
+    h := Log(q,p);
+    t := Log(Size(pg!.basefield),p);
+    if not t mod h = 0 then
+        Error(" <subfield> is not a subfield of the base field of <pg>");
+    fi;
+    subpg := ProjectiveSpace(d,subfield);
+    frob := FrobeniusAutomorphism(BaseField(pg))^h;
+    if ForAll(frame,y->ForAll(Flat(y!.obj),x->x in subfield)=true) then
+        can := true;
+        sigma := CollineationOfProjectiveSpace(pg,frob);
+    else
+        can := false;
+        n:=Size(frame)-1;
+        vecs:=List(frame,x->Coordinates(x));
+        basis:=Basis(UnderlyingVectorSpace(Span(frame)),vecs{[1..n]});
+        coefs:=Coefficients(basis,vecs[n+1]);
+        matrix := List([1..n],i->coefs[i]*vecs[i]);
+        proj := CollineationOfProjectiveSpace(matrix,BaseField(pg));
+        sigma := proj^(-1)*CollineationOfProjectiveSpace(pg,frob)*proj;
+    fi;
     em := NaturalEmbeddingBySubfield(subpg,pg);
-    geo := rec(dimension := d, basefield := GF(q), ambientspace := pg, isomorphicsubgeometry := subpg, frame := ShallowCopy(frame),
-        embedding := em, projectivity := proj, vectorspace := FullRowSpace(BaseField(pg), d+1) );
+    geo := rec(dimension := d, basefield := GF(q), ambientspace := pg, isomorphicsubgeometry := subpg, frame := Set(ShallowCopy(frame)),
+        embedding := em, vectorspace := FullRowSpace(BaseField(pg), d+1), sigma := sigma );
+    if not can then
+        geo.projectivity := proj;
+    fi;
     ty := NewType( SubgeometriesFamily,
                   IsSubgeometryOfProjectiveSpace and IsSubgeometryOfProjectiveSpaceRep );
     Objectify( ty, geo );
-    SetIsCanonicalSubgeometryOfProjectiveSpace(geo, false);
     SetAmbientSpace(geo, pg);
+    SetIsCanonicalSubgeometryOfProjectiveSpace(geo, can);
     #SetRankAttr(geo,d);
     return geo;
+    end );
+
+InstallMethod( CanonicalSubgeometryOfProjectiveSpace,
+    "for a projective space, and a prime power",
+    [ IsProjectiveSpace, IsPosInt],
+    function(pg,q)
+        return CanonicalSubgeometryOfProjectiveSpace(pg,GF(q));
+    end );
+
+InstallMethod( SubgeometryOfProjectiveSpaceByFrame,
+    "for a projective space, and a prime power",
+    [ IsProjectiveSpace, IsList, IsPosInt],
+    function(pg,frame,q)
+        return SubgeometryOfProjectiveSpaceByFrame(pg,frame,GF(q));
     end );
 
 InstallMethod( Rank,
@@ -259,17 +296,16 @@ InstallMethod( Meet,
     if not pg = AmbientSpace(y) then
         Error("ambient spaces of <x> and <y> differ");
     fi;
-    z := Embed(pg,x); #I am happy to use Embed ;-)
+    z := Embed(pg,x); #I am so happy to use Embed ;-)
     w := Embed(pg,y);
-    span := Meet(z,w); #we know already that span belongs to the subgeometry. So we may use wrap to avoid checking this again.
+    meet := Meet(z,w);
+    #we know already that span belongs to the subgeometry. So we may use wrap to avoid checking this again.
     #now we check whether the subgeometries are the same. If not, we just return span.
     if x!.geo = y!.geo then
-        return Wrap(x!.geo,span!.type,UnderlyingObject(span));
+        return Wrap(x!.geo,meet!.type,UnderlyingObject(meet));
     else
-        return span;
+        return meet;
     fi;
     end );
-
-Install
 
 
