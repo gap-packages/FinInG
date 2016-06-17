@@ -128,7 +128,7 @@ DeclareOperation("Span",[IsSubspaceOfProjectiveSpace, IsProjectiveSpace]);
 DeclareOperation("Span",[IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace, IsBool]);
 
 #DeclareOperation("Span",[IsHomogeneousList and IsSubspaceOfProjectiveSpaceCollection ]);
-DeclareOperation("Span",[IsList]);
+#DeclareOperation("Span",[ IsHomogeneousList ]);
 DeclareOperation("Span",[IsList, IsBool]);
 
 

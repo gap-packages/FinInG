@@ -1,4 +1,4 @@
-#############################################################################
+##############################################################################
 ##
 ##  subgeometries.gi        FinInG package
 ##                                                              John Bamberg
@@ -19,14 +19,32 @@
 ##
 #############################################################################
 
+#############################################################################
+# already some general comments.
+# SubgeometryOfProjectiveSpaceByFrame: creates the user defined sub geometry
+# starting from a frame. sub!.projectivity: projectivity mapping the canonical sub
+# geometry onto the user defined one.
+# sub!.sigma: collineation fixing all elements of the sub geometry.
+#
+#############################################################################
+
+
 Print(", subgeometries\c");
 
 InstallMethod( ViewObj,
     "for a subgeometry of a projective space",
     [ IsSubgeometryOfProjectiveSpace and IsSubgeometryOfProjectiveSpaceRep ],
     function(pg)
-    Print("Subgeometry PG(",pg!.dimension,", ",Size(pg!.basefield),") of ",ViewString(pg!.ambientspace));
+        Print("Subgeometry PG(",pg!.dimension,", ",Size(pg!.subfield),") of ",ViewString(pg!.ambientspace));
 end );
+
+InstallMethod( ViewString,
+    "for a subgeometry of projective space",
+    [ IsSubgeometryOfProjectiveSpace and IsSubgeometryOfProjectiveSpaceRep ],
+    function( pg )
+    return Concatenation("Subgeometry PG(",String(pg!.dimension),", ",String(Size(pg!.subfield)),") of ",ViewString(pg!.ambientspace));
+end );
+
 
 InstallMethod( IsFrameOfProjectiveSpace,
     "for a list of points",
@@ -78,8 +96,8 @@ InstallMethod( CanonicalSubgeometryOfProjectiveSpace,
     em := NaturalEmbeddingBySubfield(subpg,pg);
     frob := FrobeniusAutomorphism(BaseField(pg))^h;
     sigma := CollineationOfProjectiveSpace(pg,frob);
-    geo := rec(dimension := d, basefield := GF(q), ambientspace := pg, isomorphicsubgeometry := subpg, frame := Set(frame),
-        embedding := em, vectorspace := FullRowSpace(BaseField(pg), d+1), sigma := sigma );
+    geo := rec(dimension := d, basefield := pg!.basefield, subfield := GF(q), ambientspace := pg, isomorphicsubgeometry := subpg, frame := frame,
+        embedding := em, vectorspace := FullRowSpace(pg!.basefield, d+1), sigma := sigma );
     ty := NewType( SubgeometriesFamily,
                   IsSubgeometryOfProjectiveSpace and IsSubgeometryOfProjectiveSpaceRep );
     Objectify( ty, geo );
@@ -121,8 +139,8 @@ InstallMethod( SubgeometryOfProjectiveSpaceByFrame,
         sigma := proj^(-1)*CollineationOfProjectiveSpace(pg,frob)*proj;
     fi;
     em := NaturalEmbeddingBySubfield(subpg,pg);
-    geo := rec(dimension := d, basefield := GF(q), ambientspace := pg, isomorphicsubgeometry := subpg, frame := Set(ShallowCopy(frame)),
-        embedding := em, vectorspace := FullRowSpace(BaseField(pg), d+1), sigma := sigma );
+    geo := rec(dimension := d, basefield := pg!.basefield, subfield := GF(q), ambientspace := pg, isomorphicsubgeometry := subpg,
+        frame := ShallowCopy(frame), embedding := em, vectorspace := FullRowSpace(pg!.basefield, d+1), sigma := sigma );
     if not can then
         geo.projectivity := proj;
     fi;
@@ -134,6 +152,38 @@ InstallMethod( SubgeometryOfProjectiveSpaceByFrame,
     #SetRankAttr(geo,d);
     return geo;
     end );
+
+InstallMethod( \=,
+    "for two subgeometries of a projective space",
+	[ IsSubgeometryOfProjectiveSpace, IsSubgeometryOfProjectiveSpaceRep ],
+    function(sub1,sub2)
+    local proj1, proj2, res, mat;
+    if not AmbientSpace(sub1) = AmbientSpace(sub2) then
+        return false;
+    elif IsCanonicalSubgeometryOfProjectiveSpace(sub1) = false or IsCanonicalSubgeometryOfProjectiveSpace(sub2) = false then
+        proj1 := sub1!.projectivity;
+        proj2 := sub2!.projectivity;
+        res := proj1 * proj2^(-1);
+        mat := MatrixOfCollineation(res);
+        return ForAll(Flat(mat), x->x in sub1!.subfield);
+    else
+        return true;
+    fi;
+    end );
+
+InstallMethod( \=, 
+	"for two projective spaces",
+	[IsSubgeometryOfProjectiveSpace, IsProjectiveSpace],
+	function(pg1,pg2);
+		return false;
+	end );
+
+InstallMethod( \=, 
+	"for two projective spaces",
+	[IsProjectiveSpace, IsSubgeometryOfProjectiveSpace],
+	function(pg1,pg2);
+		return false;
+	end );
 
 InstallMethod( CanonicalSubgeometryOfProjectiveSpace,
     "for a projective space, and a prime power",
@@ -158,7 +208,19 @@ InstallMethod( Rank,
 InstallMethod( BaseField, 
 	"for an element of a projective space", 
 	[IsSubspaceOfProjectiveSpace],
-	sub -> AmbientSpace(sub)!.basefield );
+	sub -> sub!.basefield );
+
+InstallMethod( SubFieldOFSubGeometry,
+	"for a subgeometry of a projective space",
+	[ IsSubgeometryOfProjectiveSpace ],
+	sub -> sub!.subfield );
+
+InstallMethod( UnderlyingVectorSpace,
+	"for a subspace of subgeometry of a projective space",
+	[ IsSubspaceOfSubgeometryOfProjectiveSpace ],
+    function(el)
+        Error(" <el> is a subspace of a subgeometry of a projective space");
+    end );
 
 InstallMethod( ElementsOfIncidenceStructure, 
 	"for a projective space and an integer",
@@ -178,6 +240,49 @@ InstallMethod( ElementsOfIncidenceStructure,
 					);
 		fi;
 	end);
+
+InstallMethod( \in,
+	"for two subspaces of a subgeometry",
+	[IsSubspaceOfSubgeometryOfProjectiveSpace, IsSubspaceOfSubgeometryOfProjectiveSpace],
+    function(x,y)
+    if x!.geo = y!.geo then
+        return ExtendElementOfSubgeometry(x) in ExtendElementOfSubgeometry(y);
+    else
+        Error("<x> and <y> do not belong to the same geometry");
+    fi;
+    end );
+
+InstallMethod( \in,
+	"for a subspace of a subgeometry and a subspace of a projective space",
+	[IsSubspaceOfSubgeometryOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
+    function(x,y)
+        Error("<x> and <y> do not belong to the same geometry");
+    end );
+
+InstallMethod( \in,
+	"for a subspace of a projective space and a subspace of a subgeometry",
+	[IsSubspaceOfProjectiveSpace, IsSubspaceOfSubgeometryOfProjectiveSpace],
+    function(x,y)
+        Error("<x> and <y> do not belong to the same geometry");
+    end );
+
+InstallMethod( \in,
+	"for an element of a subgeometry of a projective space and a projective space",
+	[ IsSubspaceOfSubgeometryOfProjectiveSpace, IsProjectiveSpace],
+	function( element, ps )
+        if element!.geo = ps then
+            return true;
+        else
+            Error(" <element> is not an element of <ps>");
+        fi;
+    end );
+
+InstallMethod( \in,
+	"for an element of a subgeometry of a projective space and a projective space",
+	[ IsSubspaceOfProjectiveSpace, IsSubgeometryOfProjectiveSpace],
+	function( element, ps )
+       return element!.geo = ps;
+    end );
 
 InstallMethod(Iterator,
 	"for subspaces of a projective space",
@@ -222,45 +327,80 @@ InstallMethod( Wrap,
 	function( geo, type, o )
 		local w;
 		w := rec( geo := geo, type := type, obj := o );
-		Objectify( NewType( SoPSFamily, IsElementOfIncidenceStructure and
+		Objectify( NewType( SoSoPSFamily, IsElementOfIncidenceStructure and
 			IsElementOfIncidenceStructureRep and IsSubspaceOfSubgeometryOfProjectiveSpace ), w );
 		return w;
 	end );
 
 InstallMethod( VectorSpaceToElement,
+	"for a subgeometry of a projective space and a matrix as plist",
+	[IsSubgeometryOfProjectiveSpace, IsPlistRep and IsMatrix],
+	function( geom, v )
+    return VectorSpaceToElementForSubgeometries(geom,v);
+    end );
+
+InstallMethod( VectorSpaceToElement,
+	"for a subgeometry of a projective space and a CMatRep",
+	[ IsSubgeometryOfProjectiveSpace, IsCMatRep],
+	function( geom, v )
+	return VectorSpaceToElementForSubgeometries(geom, Unpack(v));
+	end );
+
+InstallMethod( VectorSpaceToElement, 
+	"for a subgeometry of a projective space and a compressed GF(2)-matrix",
+	[IsSubgeometryOfProjectiveSpace, IsGF2MatrixRep],
+	function( geom, v )
+	return VectorSpaceToElementForSubgeometries(geom, Unpack(v));
+	end );
+
+InstallMethod( VectorSpaceToElement, 
+	"for a subgeometry of a projective space and a compressed basis of a vector subspace",
+	[IsSubgeometryOfProjectiveSpace, Is8BitMatrixRep],
+	function( geom, v )
+  	return VectorSpaceToElementForSubgeometries(geom, Unpack(v));
+    end );
+
+InstallMethod( VectorSpaceToElement,
+	"for a subgeometry of a projective space and a row vector as cvec",
+	[IsSubgeometryOfProjectiveSpace, IsCVecRep],
+	function( geom, v )
+  	return VectorSpaceToElementForSubgeometries(geom, Unpack(v));
+    end );
+
+InstallMethod( VectorSpaceToElement,
+	"for a subgeometry of a projective space and a row vector",
+	[IsSubgeometryOfProjectiveSpace, IsRowVector],
+	function( geom, v )
+  	return VectorSpaceToElementForSubgeometries(geom, v);
+    end );
+
+InstallMethod( VectorSpaceToElement, 
+	"for a subgeometry of a projective space and an 8-bit vector",
+	[IsSubgeometryOfProjectiveSpace, Is8BitVectorRep],
+	function( geom, v )
+  	return VectorSpaceToElementForSubgeometries(geom, Unpack(v));
+    end );
+
+InstallMethod( VectorSpaceToElementForSubgeometries,
 	"for a sub geometry of a projective space and an object",
 	[ IsSubgeometryOfProjectiveSpace, IsObject],
 	function( sub, obj )
-        local ambient, element, proj, subfield;
+        local ambient, element, newelement, proj, subfield;
         ambient := sub!.ambientspace;
         element := VectorSpaceToElement(ambient,obj);
         if not IsCanonicalSubgeometryOfProjectiveSpace(sub) then
             proj := sub!.projectivity;
-            element := element^(proj^(-1));
+            newelement := element^(proj^(-1));
+        else
+            newelement := element;
         fi;
-        subfield := BaseField(sub);
-        if not ForAll( Flat( element!.obj ), i -> i in subfield) then
+        subfield := sub!.subfield;
+        if not ForAll( Flat( newelement!.obj ), i -> i in subfield) then
             Error( "<obj> does not determine an element in <sub>");
         else
             return Wrap(sub,element!.type,UnderlyingObject(element));
         fi;
     end);
-
-InstallMethod( \in, 
-	"for an element of a projective space and a subgeometry of a projective space",
-	[IsElementOfLieGeometry, IsSubgeometryOfProjectiveSpace],
-	function( element, sub )
-        local subfield, proj;
-        if AmbientSpace(element) <> AmbientSpace(sub) then
-            Error("ambient space of <el> differs from <pg>");
-        fi;
-        if not IsCanonicalSubgeometryOfProjectiveSpace(sub) then
-            proj := sub!.projectivity;
-            element := element^(proj^(-1));
-        fi;
-        subfield := BaseField(sub);
-        return ForAll( Flat( element!.obj ), i -> i in subfield);
-	end );
 
 InstallMethod( ExtendElementOfSubgeometry,
 	"for an element of a subgeometry of a projective space",
@@ -272,19 +412,77 @@ InstallMethod( Span,
 	[ IsSubspaceOfSubgeometryOfProjectiveSpace,  IsSubspaceOfSubgeometryOfProjectiveSpace],
     function(x,y)
     local z,w,pg,span;
-    pg := AmbientSpace(x);
-    if not pg = AmbientSpace(y) then
-        Error("ambient spaces of <x> and <y> differ");
-    fi;
-    z := Embed(pg,x);
-    w := Embed(pg,y);
-    span := Span(z,w); #we know already that span belongs to the subgeometry. So we may use wrap to avoid checking this again.
-    #now we check whether the subgeometries are the same. If not, we just return span.
     if x!.geo = y!.geo then
-        return Wrap(x!.geo,span!.type,UnderlyingObject(span));
+        pg := AmbientSpace(x);
+        z := Embed(pg,x);
+        w := Embed(pg,y);
+        span := Span(z,w);
+        if (ProjectiveDimension(span) = ProjectiveDimension(x!.geo)) then
+            return x!.geo;
+        else
+            return Wrap(x!.geo,span!.type,UnderlyingObject(span));
+        fi;
     else
-        return span;
+        Error( "<x> and <y> do not belong to the same geometry" );
     fi;
+    end );
+
+InstallMethod( Span, "for a homogeneous list of subspaces of a subgeometry of a projective space",
+	[ IsHomogeneousList and IsSubspaceOfSubgeometryOfProjectiveSpaceCollection ],
+	function( l )  
+		local list, span, pg, same;
+		# first we check that all items in the list belong to the same ambient geometry
+		if Length(l)=0 then 
+			return [];
+		elif not Size(AsDuplicateFreeList(List(l,x->AmbientGeometry(x))))=1 then
+			Error("The elements in the list do not belong to the same ambient geometry");
+		else
+            pg := AmbientSpace(l[1]);
+            list := List(l,x->Embed(pg,x));
+            span := Span(list);
+            same := Size(AsDuplicateFreeList(List(l,x->AmbientGeometry(x))))=1;
+            if (ProjectiveDimension(span) = ProjectiveDimension(l[1]!.geo)) then
+                return l[1]!.geo;
+            else
+                return Wrap(l[1]!.geo,span!.type,UnderlyingObject(span));
+            fi;
+        fi;
+    end );
+
+InstallMethod( Span,
+	"for a subspace of a projective space and a subspace of a subgeometry",
+	[IsSubspaceOfProjectiveSpace, IsSubspaceOfSubgeometryOfProjectiveSpace],
+    function(x,y)
+        Error("<x> and <y> do not belong to the same geometry");
+    end );
+
+InstallMethod( Span,
+	"for a subspace of a subgeometry and a subspace of a projective space",
+	[ IsSubspaceOfSubgeometryOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
+    function(x,y)
+        Error("<x> and <y> do not belong to the same geometry");
+    end );
+
+InstallMethod( Span,
+	"for an element of a subgeometry of a projective space and a projective space",
+	[ IsSubspaceOfSubgeometryOfProjectiveSpace, IsProjectiveSpace],
+	function( element, ps )
+        if element!.geo = ps then
+            return ps;
+        else
+            Error( "<element> does not belong to <ps>");
+        fi;
+    end );
+
+InstallMethod( Span,
+	"for a projective space and an element of a subgeometry of a projective space",
+	[ IsProjectiveSpace, IsSubspaceOfSubgeometryOfProjectiveSpace],
+	function( ps, element )
+        if element!.geo = ps then
+            return ps;
+        else
+            Error( "<element> does not belong to <ps>");
+        fi;
     end );
 
 InstallMethod( Meet,
@@ -292,20 +490,218 @@ InstallMethod( Meet,
 	[ IsSubspaceOfSubgeometryOfProjectiveSpace,  IsSubspaceOfSubgeometryOfProjectiveSpace],
     function(x,y)
     local z,w,pg,meet;
-    pg := AmbientSpace(x);
-    if not pg = AmbientSpace(y) then
-        Error("ambient spaces of <x> and <y> differ");
-    fi;
-    z := Embed(pg,x); #I am so happy to use Embed ;-)
-    w := Embed(pg,y);
-    meet := Meet(z,w);
-    #we know already that span belongs to the subgeometry. So we may use wrap to avoid checking this again.
-    #now we check whether the subgeometries are the same. If not, we just return span.
     if x!.geo = y!.geo then
-        return Wrap(x!.geo,meet!.type,UnderlyingObject(meet));
+        pg := AmbientSpace(x);
+        z := Embed(pg,x);
+        w := Embed(pg,y);
+        meet := Meet(z,w);
+        if IsEmptySubspace(meet) then
+            return EmptySubspace(x!.geo);
+        else
+            return Wrap(x!.geo,meet!.type,UnderlyingObject(meet));
+        fi;
     else
-        return meet;
+        Error( "<x> and <y> do not belong to the same geometry" );
     fi;
     end );
 
+InstallMethod( Meet,
+    "for a homogeneous list of subspaces of a subgeometry of a projective space",
+	[ IsHomogeneousList and IsSubspaceOfSubgeometryOfProjectiveSpaceCollection ],
+	function( l )  
+		local list, meet, pg, same;
+		# first we check that all items in the list belong to the same ambient geometry
+		if Length(l)=0 then 
+			return [];
+		elif not Size(AsDuplicateFreeList(List(l,x->AmbientGeometry(x))))=1 then
+			Error("The elements in the list do not belong to the same ambient geometry");
+		else
+            pg := AmbientSpace(l[1]);
+            list := List(l,x->Embed(pg,x));
+            meet := Meet(list);
+            same := Size(AsDuplicateFreeList(List(l,x->AmbientGeometry(x))))=1;
+            if IsEmptySubspace(meet) then
+                return EmptySubspace(l[1]!.geo);
+            else
+                return Wrap(l[1]!.geo,meet!.type,UnderlyingObject(meet));
+            fi;
+        fi;
+    end );
 
+InstallMethod( Meet,
+	"for a subspace of a projective space and a subspace of a subgeometry",
+	[IsSubspaceOfProjectiveSpace, IsSubspaceOfSubgeometryOfProjectiveSpace],
+    function(x,y)
+        Error("<x> and <y> do not belong to the same geometry");
+    end );
+
+InstallMethod( Meet,
+	"for a subspace of a subgeometry and a subspace of a projective space",
+	[ IsSubspaceOfSubgeometryOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
+    function(x,y)
+        Error("<x> and <y> do not belong to the same geometry");
+    end );
+
+InstallMethod( Meet,
+	"for an element of a subgeometry of a projective space and a projective space",
+	[ IsSubspaceOfSubgeometryOfProjectiveSpace, IsProjectiveSpace],
+	function( element, ps )
+        if element!.geo = ps then
+            return element;
+        else
+            Error( "<element> does not belong to <ps>");
+        fi;
+    end );
+
+InstallMethod( Meet,
+	"for a projective space and an element of a subgeometry of a projective space",
+	[ IsProjectiveSpace, IsSubspaceOfSubgeometryOfProjectiveSpace],
+	function( ps, element )
+        if element!.geo = ps then
+            return element;
+        else
+            Error( "<element> does not belong to <ps>");
+        fi;
+    end );
+
+#use sigma to compute the intersection of an element of the ambein
+InstallMethod( Meet,
+    "for a subgeometry of a projectice space and a subspace of the ambient space",
+    [ IsSubgeometryOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
+    function( sub, el)
+        local sigma,meet;
+        if not AmbientSpace(sub) = AmbientGeometry(el) then
+            Error( "the ambient space of <sub> is not the ambient geometry of <el>");
+        else
+            sigma := sub!.sigma;
+            meet := Meet(el,el^sigma);
+            if not IsEmptySubspace(meet) then
+                return Wrap(sub,meet!.type,meet!.obj);
+            else
+                return EmptySubspace(sub);
+            fi;
+        fi;
+    end );
+
+InstallMethod( FlagOfIncidenceStructure,
+	"for a projective space and list of subspaces of the projective space",
+	[ IsSubgeometryOfProjectiveSpace, IsSubspaceOfSubgeometryOfProjectiveSpaceCollection ],
+	function(ps,els)
+		local list,i,test,type,flag;
+		list := Set(ShallowCopy(els));
+		if Length(list) > Rank(ps) then
+		  Error("A flag can contain at most Rank(<ps>) elements");
+		fi;
+        test := List(list,x->AmbientGeometry(x));
+        if not ForAll(test,x->x=ps) then
+            Error("not all elements have <ps> as ambient space");
+        fi;
+        test := Set(List([1..Length(list)-1],i -> IsIncident(list[i],list[i+1])));
+		if (test <> [ true ] and test <> []) then
+		  Error("<els> do not determine a flag");
+		fi;
+		flag := rec(geo := ps, types := List(list,x->x!.type), els := list, vectorspace := ps!.vectorspace );
+		ObjectifyWithAttributes(flag, IsFlagOfPSType, IsEmptyFlag, false, RankAttr, Size(list) );
+		return flag;
+	end);
+
+InstallMethod( ShadowOfElement, 
+	"for a projective space, an element, and an integer",
+	[IsSubgeometryOfProjectiveSpace, IsSubspaceOfSubgeometryOfProjectiveSpace, IsPosInt],
+	# returns the shadow of an element v as a record containing the projective space (geometry), 
+	# the type j of the elements (type), the element v (parentflag), and some extra information
+	# useful to compute with the shadows, e.g. iterator
+	function( ps, v, j )
+		local localinner, localouter, localfactorspace, tocanonical, vs, vcanonical;
+        if not AmbientGeometry(v) = ps then
+            Error("<v> is not a subspace of <ps>");
+        fi;
+        if j > ps!.dimension then
+            Error("<ps> has no elements of type <j>");
+        fi;
+        if not IsCanonicalSubgeometryOfProjectiveSpace(ps) then
+            tocanonical := (ps!.projectivity)^(-1);
+            vcanonical := v^tocanonical;
+        else
+            vcanonical := v;
+        fi;
+        vs := ps!.isomorphicsubgeometry!.vectorspace;
+        if j < v!.type then
+			localinner := [];
+			localouter := Unpack(vcanonical!.obj);
+		elif j = v!.type then
+            tocanonical := (ps!.proj)^(-1);
+			localinner := Unpack(vcanonical!.obj);
+			localouter := localinner;
+		else
+			localinner := Unpack(vcanonical!.obj);
+			localouter := BasisVectors(Basis(vs));
+		fi;
+    	if IsVector(localinner) and not IsMatrix(localinner) then
+			localinner := [localinner]; 
+		fi;
+		if IsVector(localouter) and not IsMatrix(localouter) then
+			localouter := [localouter]; 
+		fi;
+		localfactorspace := Subspace(vs,
+		BaseSteinitzVectors(localouter, localinner).factorspace);
+		return Objectify( NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
+							IsShadowSubspacesOfSubgeometryOfProjectiveSpace and
+							IsShadowSubspacesOfSubgeometryOfProjectiveSpaceRep),
+							rec( geometry := ps,
+									type := j,
+									inner := localinner,
+									outer := localouter,
+									factorspace := localfactorspace,
+									parentflag := FlagOfIncidenceStructure(ps,[v]),
+									size := Size(Subspaces(localfactorspace))
+								)
+						);
+	end);
+
+InstallMethod( Iterator, 
+	"for shadow subspaces of a projective space",
+	[IsShadowSubspacesOfSubgeometryOfProjectiveSpace and IsShadowSubspacesOfSubgeometryOfProjectiveSpaceRep ],
+    function( vs )
+        local j, d, F, act, sub, proj;
+        sub := vs!.geometry;
+        j := vs!.type;
+        d := sub!.dimension;
+        F := sub!.basefield;
+        if IsCanonicalSubgeometryOfProjectiveSpace(sub) then
+            act := x->x;
+        else
+            proj := sub!.projectivity;
+        #this should be just the action of the projectivity on x, see OnProjSubspacesNoFrob, we will take over
+        #the code from there, OnProjSubspacesNoFrob expect that both arguments are cvec/cmat. Also note that
+        #x is always a matrix.
+            act := function(x)
+                local mat;
+                    mat := OnSubspacesByCanonicalBasis(x,Unpack(proj!.mat));
+                        TriangulizeMat(mat);
+                        return mat;
+            end;
+        fi;
+        return IteratorByFunctions( rec(
+        NextIterator := function(iter)
+            local mat;
+            mat := NextIterator(iter!.S);
+            mat := MutableCopyMat(Concatenation(
+                BasisVectors(Basis(mat)),
+                    iter!.innermat
+                ));
+            return VectorSpaceToElement(sub,act(mat));
+            end,
+            IsDoneIterator := function(iter)
+            return IsDoneIterator(iter!.S);
+            end,
+            ShallowCopy := function(iter)
+            return rec(
+                innermat := iter!.innermat,
+                S := ShallowCopy(iter!.S)
+            );
+            end,
+            innermat := vs!.inner,
+            S := Iterator(Subspaces(vs!.factorspace,j-Size(vs!.inner)))
+        ));
+    end);

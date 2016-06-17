@@ -1411,11 +1411,12 @@ InstallMethod( UnderlyingVectorSpace,
 # View/Print/Display methods for flags
 #############################################################################
 
-InstallMethod( ViewObj, "for a flag of a projective space",
-	[ IsFlagOfProjectiveSpace and IsFlagOfIncidenceStructureRep ],
-	function( flag )
-		Print("<a flag of ProjectiveSpace(",flag!.geo!.dimension,", ",Size(flag!.geo!.basefield),")>");
-	end );
+#seems not necessary thanks to general method in geometry.gi 
+#InstallMethod( ViewObj, "for a flag of a projective space",
+#	[ IsFlagOfProjectiveSpace and IsFlagOfIncidenceStructureRep ],
+#	function( flag )
+#		Print("<a flag of ProjectiveSpace(",flag!.geo!.dimension,", ",Size(flag!.geo!.basefield),")>");
+#	end );
 
 InstallMethod( PrintObj, "for a flag of a projective space",
 	[ IsFlagOfProjectiveSpace and IsFlagOfIncidenceStructureRep ],
@@ -1423,13 +1424,15 @@ InstallMethod( PrintObj, "for a flag of a projective space",
 		PrintObj(flag!.els);
 	end );
 
+#sligthly adapted: make sure to use ViewString for the projective space, which could also be e.g. a subgeometry.
+#by using ViewString, this method becomes applicable for all projective spaces, including spaces like subgeometries.
 InstallMethod( Display, "for a flag of a projective space",
 	[ IsFlagOfProjectiveSpace and IsFlagOfIncidenceStructureRep  ],
 	function( flag )
 		if IsEmptyFlag(flag) then
-			Print("<empty flag of ProjectiveSpace(",flag!.geo!.dimension,", ",Size(flag!.geo!.basefield),")>\n");
-		else
-			Print("<a flag of ProjectiveSpace(",flag!.geo!.dimension,", ",Size(flag!.geo!.basefield),")> with elements of types ",flag!.types,"\n");
+            Print(Concatenation("<empty flag of ",ViewString(flag!.geo)," >\n"));
+        else
+			Print(Concatenation("<a flag of ",ViewString(flag!.geo)," )> with elements of types ",String(flag!.types),"\n" ));
 			Print("respectively spanned by\n");
 			Display(flag!.els);
 		fi;
@@ -1870,7 +1873,8 @@ InstallMethod( Span,
 # cvec note (19/3/14: Unpack for this kind of work, in combination with VectorSpaceToElement
 # seems to be succesful. So the changes here are obvious:
 ##
-InstallMethod( Span, "for a homogeneous list of subspaces of a projective space",
+InstallMethod( Span,
+    "for a homogeneous list of subspaces of a projective space",
 	[ IsHomogeneousList and IsSubspaceOfProjectiveSpaceCollection ],
 	function( l )  
 		local unwrapped, r, unr, amb, span, temp, x, F, list;  
@@ -1904,33 +1908,38 @@ InstallMethod( Span, "for a homogeneous list of subspaces of a projective space"
 #O  Span( <l> )
 # returns the span of the projective subspaces in <l>.
 ##
-InstallMethod( Span, 
+InstallMethod( Span,
 	"for a list",
 	[ IsList ],
-	function( l )  
-		local pg,list,x;
-		# This method is added to allow the list ("l") to contain the projective space 
-		# or the empty subspace. If this method is selected, it follows that the list must
-		# contain the whole projective space or the empty set. 
-		# First we remove the emptysubspace from the list, then we check if the list
-		# contains the whold projective space. If it does, return that, if it doesn't
-		# return the span of the remaining elements of the list, which will then select
-		# the previous method for Span
-		if Length(l)=0 then return [];
-		elif Length(l)=1 then return l[1];
-		else
-			list:=Filtered(l,x->not IsEmptySubspace(x));
-			if not Size(AsDuplicateFreeList(List(list,x->AmbientSpace(x))))=1 then 
-				Error("The elements in the list do not have a common ambient space");
-			else
-				pg:=AmbientSpace(list[1]);
-				if pg in list then return pg;
-				else
-					return Span(list);
-				fi;
-			fi;
-		fi;
-	end );
+	function( l )
+		local list, listels, listgeos, x;
+        if Length(l) = 0 then
+            return [];
+        else
+            list := Filtered(l,x->not IsEmptySubspace(x));
+            listels := Filtered(list,x->IsSubspaceOfProjectiveSpace(x));
+            if Length(listels) = Length(list) then
+                if not Size(AsDuplicateFreeList(List(listels,x->AmbientGeometry(x))))=1 then
+                    Error("The elements in the list do not have a common ambient space");
+                else
+                    return Span(listels); #now we may assume that listels is homogenous.
+                fi;
+            else
+                listgeos := Filtered(l,x->IsProjectiveSpace(x));
+                if Length(listels) + Length(listgeos) <> Length(list) then
+                    Error( " <list> does not contain only subspaces and projective spaces");
+                fi;
+                if not Length(DuplicateFreeList(listgeos))=1 then
+                    Error( "<list> should not contain different projective space");
+                fi;
+                if ForAll(listels,x->x in listgeos[1]) then
+                    return listgeos[1];
+                else
+                    Error( "not all subspaces in <l> belong to the same geometry");
+                fi;
+            fi;
+        fi;
+    end );
 
 # ADDED 30/11/2011 jdb
 # this is a "helper" operation. We do not expect the user to use this variant

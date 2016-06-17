@@ -146,6 +146,8 @@ DeclareOperation( "Span", [IsEmptySubspace, IsLieGeometry]);
 DeclareOperation( "Span", [IsLieGeometry, IsEmptySubspace]);
 DeclareOperation( "Span", [IsEmptySubspace, IsEmptySubspace]);
 
+DeclareOperation( "Span", [ IsList ]); #moved here on 27/5/16
+
 DeclareOperation( "Meet", [IsEmptySubspace, IsElementOfLieGeometry]);
 DeclareOperation( "Meet", [IsElementOfLieGeometry, IsEmptySubspace]);
 DeclareOperation( "Meet", [IsEmptySubspace, IsLieGeometry]);
