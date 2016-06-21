@@ -139,6 +139,36 @@ InstallMethod( FiningOrbits,
 	return orbs;
 	end );
 
+# ADDED 21/06/16 jdb
+#############################################################################
+#O  FiningOrFiningOrbitsDomainbits( <g>, <e>, <act> )
+#  returns the orbits of e under g, using action function act. We follow the
+#  analogy of GAP: Domain when <e> is closed under the action of g. If you do
+#  not know whether this is true, one should use FiningOrbits.
+##
+InstallMethod( FiningOrbitsDomain,
+    "for a group, a collection and a function",
+    true,
+    [ IsGroup, IsSubspacesOfProjectiveSpace, IsFunction ],
+    0,
+    function(G,col,act)
+    local blist,D,x,pos,orbs,next,orb;
+    D := Elements(AsList(col));
+    blist := BlistList( [ 1 .. Length( D ) ], [  ] );
+    orbs := [  ];
+    for next in [1..Length(D)] do
+      if blist[next]=false then
+        orb := Enumerate(Orb(G, D[next], act));
+        for x in orb do
+            pos := Position(D,x);
+            blist[pos] := true;
+        od;
+        Add( orbs, orb );
+      fi;
+    od;
+    return Immutable( orbs );
+    end );
+
 # ADDED 26/03/14 ml
 # CHANGED 08/04/14 jb
 #############################################################################

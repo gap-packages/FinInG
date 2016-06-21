@@ -29,6 +29,8 @@ DeclareOperation( "FiningOrbit", [IsGroup, IsObject, IsFunction] );
 DeclareOperation( "FiningOrbit", [IsGroup, IsObject] );
 DeclareOperation( "FiningOrbits", [IsGroup, IsObject, IsFunction] );
 DeclareOperation( "FiningOrbits",[IsGroup, IsObject] );
+DeclareOperation( "FiningOrbitsDomain", [IsGroup, IsObject, IsFunction] );
+DeclareOperation( "FiningOrbitsDomain", [IsGroup, IsObject ] );
 
 #############################
 # Stabiliser methods that should work faster
@@ -53,7 +55,6 @@ DeclareOperation( "FiningStabiliserPerm2", [IsProjectiveGroupWithFrob, IsElement
 ################################
 
 DeclareOperation( "FixedSubspaces", [IsProjectiveGroupWithFrob, IsProjectiveSpace] );
-
 
 #############################
 # Stabilisers of subspaces
