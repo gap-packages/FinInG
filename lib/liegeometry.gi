@@ -784,6 +784,7 @@ InstallMethod( RandomSubspace,
 #############################################################################
 
 # Added 28/11/2011 jdb.
+# Repaired 21/6/16
 #############################################################################
 #O  ElementToElement( <geo>, <el> )
 # returns the element VectorSpaceToElement(<geo>,UnderlyingObject(<el>))
@@ -792,7 +793,7 @@ InstallMethod( ElementToElement,
 	"for a Lie geometry and an element of a Lie geometry",
 	[IsLieGeometry, IsElementOfLieGeometry],
 	function(ps,el)
-		return VectorSpaceToElement(ps,UnderlyingObject(el));
+		return VectorSpaceToElement(ps,Unpack(UnderlyingObject(el))); #here was a bug, there was no unpack, and there should be.
 	end );
 
 #############################################################################

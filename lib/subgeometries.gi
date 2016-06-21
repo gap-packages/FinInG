@@ -179,10 +179,10 @@ InstallMethod( \=,
 	end );
 
 InstallMethod( \=, 
-	"for two projective spaces",
-	[IsSubspaceOfProjectiveSpace, IsSubspaceOfSubgeometryOfProjectiveSpace],
+	"for a subspace of a projective space ",
+	[IsSubspaceOfSubgeometryOfProjectiveSpace, IsSubspaceOfSubgeometryOfProjectiveSpace],
 	function(p1,p2);
-		return false;
+		return (p1!.obj = p2!.obj) and (p!.geo = p2!.geo);
 	end );
     
 InstallMethod( \=, 
