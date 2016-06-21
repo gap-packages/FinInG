@@ -42,18 +42,18 @@ and <Package>Orb</Package>.
 <Heading>Installing <Package>FinInG</Package> under UNIX like systems</Heading>
 
 The installation of <Package>FinInG</Package> itself is generic for each UNIX like system, including the different flavours of
-MacOSX. You only need a terminal application, and you need acces to the standard unix tools gunzip and tar. The installation procedure
+Mac OS X. You only need a terminal application, and you need acces to the standard unix tools gunzip and tar. The installation procedure
 for <Package>FinInG</Package>, a standard GAP package, does <E>not</E> require compilation. Each GAP installation has a 
 pkg directory, containing supplemental GAP packages. If you have acces to this filesystem, you can locate it, e.g. 
-<Display>/usr/local/gap4r7/pkg/</Display>
+<Log>/usr/local/gap4r7/pkg/</Log>
 Download the <Package>FinInG</Package> archive "fining-....tgz" to this location, and unpack the archive. This can be done by issuing
-<Display>gunzip fining-....tar.gz</Display> 
+<Log>gunzip fining-....tar.gz</Log> 
 which yields a file "fining-....tar", in the pkg directory, after which issuing the command 
-<Display>tar -xf fining-....tar</Display>
+<Log>tar -xf fining-....tar</Log>
 unpacks the archive in a subdirectory fining.
 
 After successfully unpacking the archive, you can locate the directory 
-<Display>/usr/local/gap4r7/pkg/fining/.</Display> 
+<Log>/usr/local/gap4r7/pkg/fining/.</Log> 
 This directory contains a subdirectory "./doc", containing an html and pdf version of the manual. The html version is accessible by opening the file "chap0.html" in your favorite browser. 
 The pdf version of the manual can be found in the file "manual.pdf".
 
@@ -64,7 +64,7 @@ If you installed <Package>FinInG</Package> in the central GAP pkg directory, you
 you installed <Package>FinInG</Package> in your local pkg directory, 
 e.g. "/home/yourself/pkg/", then move to "/home/yourself", and issue 
 the command 
-<Display>gap -l "/usr/local/gap4r7;./"</Display> 
+<Log>gap -l "/usr/local/gap4r7;./"</Log> 
 This will cause gap to startup and use as pkg directory both its own central pkg directory, i.e.
 "/usr/local/gap4r7/pkg", as well as your local pkg directory, i.e. "/home/yourself/pkg/". You should see something like the following
 output. Notice that the packages <Package>GAPDoc</Package> and <Package>IO</Package> are loaded by default. This is not 
@@ -86,9 +86,9 @@ necessarily the case, but loading fining will force to load required packages an
 gap>
 </Example>
 To load <Package>FinInG</Package>, issue 
-<Display>
+<Log>
 LoadPackage("fining");
-</Display>
+</Log>
 If this fails, in most cases, the reason is that either GAP does not 
 find the directory in which <Package>FinInG</Package> is installed, or one of the required packages for <Package>FinInG</Package> is not installed. The easiest way to find out
 is to load each required package before issuing the LoadPackage command to load <Package>FinInG</Package>. The example below shows this situation, the packages
@@ -234,7 +234,7 @@ The packages <Package>orb</Package> and <Package>IO</Package> require compilatio
 some binaries to the gap kernel. On some UNIX like system, dynamical linking seems to be impossible. In 
 such a case, the binaries must be statically linked to the GAP kernel. We describe the procedure here, assuming that
 we have to link the binaries of both packages to the gap-kernel. We assume that gap is installed in the directory 
-<Display>/usr/local/gap4r4/</Display> 
+<Log>/usr/local/gap4r4/</Log> 
 and that we use the central ./pkg/ directory for the packages <Package>IO</Package> and
 <Package>orb</Package>
 <Table Align="l">
@@ -251,12 +251,12 @@ in '/usr/local/gap4r4/pkg/orb' and '/usr/local/gap4r4/pkg/io', after the executi
 produce a new GAP executable called 'gap-static'.</Item></Row>
 <Row><Item>5. Adapt the shell script to start GAP. In this example, we assumed GAP is started up using 'gap'. Locate this shell script,
 use 'which gap', which should output something like
-<Display>'/usr/bin/gap'</Display>
+<Log>'/usr/bin/gap'</Log>
 Adapt this file, find the line containing the pointer to the GAP binary, and replace this by a pointer to the 'gap-static' binary:
-<Display>if [ "x$GAP_PRG" = "x" ];  then
+<Log>if [ "x$GAP_PRG" = "x" ];  then
 GAP_PRG=i686-apple-darwin10.8.0-gcc/gap-static
 fi
-</Display>
+</Log>
 </Item></Row>
 
 </Table>

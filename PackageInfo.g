@@ -33,7 +33,7 @@ Subtitle := "Finite Incidence Geometry",
 ##  See '?Extending: Version Numbers' in GAP help for an explanation
 ##  of valid version numbers. For an automatic package distribution update
 ##  you must provide a new version number even after small changes.
-Version := "1.3.3",
+Version := "1.3.4",
 ##  Please adjust also the VERSION file in the package directory when
 ##  changing this.
 

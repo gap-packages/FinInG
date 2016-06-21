@@ -4,8 +4,8 @@
 ##  Call this with GAP.
 ##  We will use PackageInfo to find fining's path.
 
-finingpath := PackageInfo("fining")[1].InstallationPath;
-path := Concatenation(finingpath,"/doc");
-MakeGAPDocDoc(path, "fining", [], "FinInG");
-GAPDocManualLab("fining");
-quit;
+if fail = LoadPackage("AutoDoc", ">= 2016.01.21") then
+    Error("AutoDoc 2016.01.21 or newer is required");
+fi;
+AutoDoc();
+QUIT;

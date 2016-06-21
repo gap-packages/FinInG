@@ -167,18 +167,18 @@ and <Package>Orb</Package>.
 
 
 The installation of <Package>FinInG</Package> itself is generic for each UNIX like system, including the different flavours of
-MacOSX. You only need a terminal application, and you need acces to the standard unix tools gunzip and tar. The installation procedure
+Mac OS X. You only need a terminal application, and you need acces to the standard unix tools gunzip and tar. The installation procedure
     for <Package>FinInG</Package>, a standard GAP package, does <E>not</E> require compilation. Each GAP installation has a
     pkg directory, containing supplemental GAP packages. If you have acces to this filesystem, you can locate it, e.g.
-    <Display>/usr/local/gap4r7/pkg/</Display>
+    <Log>/usr/local/gap4r7/pkg/</Log>
     Download the <Package>FinInG</Package> archive "fining-....tgz" to this location, and unpack the archive. This can be done by issuing
-    <Display>gunzip fining-....tgz</Display>
+    <Log>gunzip fining-....tgz</Log>
     which yields a file "fining-....tar", in the pkg directory, after which issuing the command
-    <Display>tar -xf fining-....tar</Display>
+    <Log>tar -xf fining-....tar</Log>
     unpacks the archive in a subdirectory fining.
     
     After successfully unpacking the archive, you can locate the directory
-    <Display>/usr/local/gap4r7/pkg/fining/.</Display>
+    <Log>/usr/local/gap4r7/pkg/fining/.</Log>
     This directory contains a subdirectory "./doc", containing an html and pdf version of the manual. The html version is accessible by opening the file "chap0.html" in your favorite browser.
     The pdf version of the manual can be found in the file "manual.pdf".<P/>
     
@@ -189,7 +189,7 @@ MacOSX. You only need a terminal application, and you need acces to the standard
     you installed <Package>FinInG</Package> in your local pkg directory,
     e.g. "/home/yourself/pkg/", then move to "/home/yourself", and issue
     the command
-    <Display>gap -l "/usr/local/gap4r7;./"</Display>
+    <Log>gap -l "/usr/local/gap4r7;./"</Log>
     This will cause gap to startup and use as pkg directory both its own central pkg directory, i.e.
     "/usr/local/gap4r7/pkg", as well as your local pkg directory, i.e. "/home/yourself/pkg/". You should see something like the following
     output. Notice that the packages <Package>GAPDoc</Package> and <Package>IO</Package> are loaded by default. This is not
@@ -212,9 +212,9 @@ Try '?help' for help. See also  '?copyright' and  '?authors'
 gap>
 </Example>
 To load <Package>FinInG</Package>, issue
-<Display>
+<Log>
 LoadPackage("fining");
-</Display>
+</Log>
 If this fails, in most cases, the reason is that either GAP does not
 find the directory in which <Package>FinInG</Package> is installed, or one of the required packages for <Package>FinInG</Package> is not installed or not compiled. Make sure (at least) <Package>IO</Package>, <Package>orb</Package> and <Package>cvec</Package> have been compiled before trying to load <Package>FinInG</Package>. The easiest way to find out what goes wrong 
 is to load each required package before issuing the LoadPackage command to load <Package>FinInG</Package>. The example below shows this situation, the packages

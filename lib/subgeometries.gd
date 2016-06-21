@@ -50,3 +50,7 @@ DeclareAttribute( "IsCanonicalSubgeometryOfProjectiveSpace", IsSubgeometryOfProj
 DeclareCategory( "IsShadowSubspacesOfSubgeometryOfProjectiveSpace", IsShadowElementsOfLieGeometry );
 DeclareRepresentation( "IsShadowSubspacesOfSubgeometryOfProjectiveSpaceRep", IsShadowElementsOfLieGeometryRep, [ "geometry", "type", "inner", "outer", "factorspace" ]);
 
+
+DeclareGlobalFunction( "OnProjSubspacesOfSubgeometriesNC" );
+DeclareGlobalFunction( "OnProjSubspacesOfSubgeometries" );
+

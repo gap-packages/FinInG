@@ -180,10 +180,25 @@ InstallMethod( \=,
 
 InstallMethod( \=, 
 	"for two projective spaces",
+	[IsSubspaceOfProjectiveSpace, IsSubspaceOfSubgeometryOfProjectiveSpace],
+	function(p1,p2);
+		return false;
+	end );
+    
+InstallMethod( \=, 
+	"for two projective spaces",
+	[IsSubspaceOfSubgeometryOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
+	function(p1,p2);
+		return false;
+	end );
+
+InstallMethod( \=, 
+	"for two projective spaces",
 	[IsProjectiveSpace, IsSubgeometryOfProjectiveSpace],
 	function(pg1,pg2);
 		return false;
 	end );
+
 
 InstallMethod( CanonicalSubgeometryOfProjectiveSpace,
     "for a projective space, and a prime power",
@@ -564,7 +579,7 @@ InstallMethod( Meet,
         fi;
     end );
 
-#use sigma to compute the intersection of an element of the ambein
+#use sigma to compute the intersection of an element of the ambient space
 InstallMethod( Meet,
     "for a subgeometry of a projectice space and a subspace of the ambient space",
     [ IsSubgeometryOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
@@ -582,6 +597,14 @@ InstallMethod( Meet,
             fi;
         fi;
     end );
+
+InstallMethod( Meet,
+	"for a projective space and an element of a subgeometry of a projective space",
+	[ IsSubspaceOfProjectiveSpace, IsSubgeometryOfProjectiveSpace],
+	function( el, sub )
+        return Meet(sub,el);
+    end );
+
 
 InstallMethod( FlagOfIncidenceStructure,
 	"for a projective space and list of subspaces of the projective space",
@@ -705,3 +728,81 @@ InstallMethod( Iterator,
             S := Iterator(Subspaces(vs!.factorspace,j-Size(vs!.inner)))
         ));
     end);
+    
+
+InstallMethod( CollineationGroup, 
+	"for a full projective space",
+	[ IsSubgeometryOfProjectiveSpace and IsSubgeometryOfProjectiveSpaceRep ],
+	function( sub )
+		local coll,d,f,frob,g,newgens,q,s,pow;
+		f := sub!.subfield;
+		q := Size(f);
+		d := ProjectiveDimension(sub);
+		if d <= -1 then 
+			Error("The dimension of the projective spaces needs to be at least 0");
+		fi;
+		g := GL(d+1,q);
+		frob := FrobeniusAutomorphism(f);
+		newgens := List(GeneratorsOfGroup(g),x->[x,frob^0]);
+		if not IsOne(frob) then
+			Add(newgens,[One(g),frob]); #somehow we forgot that this is trivial if IsOne(frob)
+		fi; 
+		newgens := ProjElsWithFrob(newgens,sub!.basefield); #using sub!.basefield as second argument makes sure that
+        # ProjElsWithFrob returns elements in the collineation group of the ambient projective space.
+        if not IsCanonicalSubgeometryOfProjectiveSpace(sub) then
+            newgens := List(newgens,x->sub!.projectivity^(-1)*x*sub!.projectivity);
+        fi;
+		coll := GroupWithGenerators(newgens);
+		pow := LogInt(q, Characteristic(f));
+		s := pow * q^(d*(d+1)/2)*Product(List([2..d+1], i->q^i-1)); 
+		if pow > 1 then 
+			SetName( coll, Concatenation("The FinInG collineation group PGammaL(",String(d+1),",",String(q),")"," of ",ViewString(sub)) );
+		else
+			SetName( coll, Concatenation("The FinInG collineation group PGL(",String(d+1),",",String(q),")"," of ",ViewString(sub)) );
+			# Remark that in the prime case, PGL is returned as a FinInG collineation group with associated automorphism F^0.
+		fi;	
+		SetSize( coll, s );
+        # only for making generalised polygons section more generic:
+        if d = 2 then
+            SetCollineationAction(coll,OnProjSubspaces);
+        fi;
+		return coll;
+	end );
+    
+InstallGlobalFunction( OnProjSubspacesOfSubgeometriesNC,
+  function( var, el )
+    local amb,geo,newvar;
+    geo := var!.geo;   
+    if var!.type = 1 then
+        newvar := OnProjPointsWithFrob(var!.obj,el);
+    else
+        newvar := OnProjSubspacesWithFrob(var!.obj,el);
+    fi;
+    return Wrap(geo,var!.type,newvar);
+  end );
+
+InstallGlobalFunction( OnProjSubspacesOfSubgeometries,
+  function( var, el )
+    local amb,geo,newvar,newel,baer;
+    geo := var!.geo;   
+    if var!.type = 1 then
+        newvar := OnProjPointsWithFrob(var!.obj,el);
+    else
+        newvar := OnProjSubspacesWithFrob(var!.obj,el);
+    fi;
+    newel := Wrap(AmbientSpace(geo),var!.type,newvar);
+    baer := geo!.sigma;
+    if newel^baer = newel then
+        return Wrap(geo,var!.type,newvar);
+    else
+        return newel;
+    fi;
+  end );
+
+InstallOtherMethod( \^, 
+	"for an element of an incidence structure and a projective semilinear element",
+	[IsSubspaceOfSubgeometryOfProjectiveSpace, IsProjGrpElWithFrob],
+	function(x, em)
+		return OnProjSubspacesOfSubgeometries(x,em);
+	end );
+
