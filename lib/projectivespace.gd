@@ -157,5 +157,10 @@ DeclareOperation( "HomologyOfProjectiveSpace", [ IsSubspaceOfProjectiveSpace, Is
 	IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace ] );
 DeclareOperation( "ProjectiveHomologyGroup", [ IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace ] );
 
+#############################################################################
+# Singer cycles of projective spaces
+#############################################################################
 
+DeclareOperation( "SingerCycleMat", [IsInt, IsInt]);
+DeclareOperation( "SingerCycleCollineation", [IsInt, IsInt]);
 

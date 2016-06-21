@@ -2582,6 +2582,31 @@ InstallMethod( ProjectiveHomologyGroup,
 end );
 
 #############################################################################
+#O  SingerCycleCollineation( <dim>, <q> )
+#  returns a matrix which is a Singer cycle, of GF(q)^dim
+##
+
+InstallMethod( SingerCycleMat, [ IsInt, IsInt],
+	function(n, q)
+	local basis, omega, mat;
+	basis := Basis(AsVectorSpace(GF(q),GF(q^(n+1))));
+	omega := Z(q^(n+1));
+	# companion matrix
+	mat := List(BasisVectors(basis), t -> Coefficients(basis, t*omega));
+	return mat;
+end);
+
+#############################################################################
+#O  SingerCycleCollineation( <dim>, <q> )
+#  returns a Singer cycle of PG(<dim>,<q>)
+##
+
+InstallMethod( SingerCycleCollineation, [IsInt, IsInt],
+	function(n, q)
+	return CollineationOfProjectiveSpace(SingerCycleMat(n,q), GF(q));
+end);
+
+#############################################################################
 #O  IncidenceGraph( <gp> )
 # Note that computing the collineation group of a projective space is zero
 # computation time. So useless to print the warning here if the group is not
