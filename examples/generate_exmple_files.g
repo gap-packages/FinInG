@@ -125,7 +125,13 @@ gap := Filename(Directory("/usr/bin/"),gapstart);
 
 #code below for gap4r8
 gapstart := "gap4r8"; #might be different on your computer
+#On El Capitan, /usr/bin is very hard protected to put own binaries/scripts in. Therefore it is placed in /usr/local/bin
+#On other systems, this might still be /usr/bin or something else. The following line might help
+#note that the output of Exec is not a string, so cut and paste the directory into the line after.
+Exec(Concatenation("which ",gapstart));
+
 gap := Filename(Directory("/usr/bin/"),gapstart);
+gap := Filename(Directory("/usr/bin/local"),gapstart); #el capitan
 
 homedir := DirectoryCurrent();
 exampledir := DirectoriesPackageLibrary("fining","examples/gap")[1]; 
