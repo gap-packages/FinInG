@@ -148,7 +148,7 @@ InstallMethod( FiningOrbits,
 InstallMethod( FiningOrbitsDomain,
     "for a group, a collection and a function",
     true,
-    [ IsGroup, IsSubspacesOfProjectiveSpace, IsFunction ],
+    [ IsGroup, IsElementsOfIncidenceGeometry, IsFunction ],
     0,
     function(G,col,act)
     local blist,D,x,pos,orbs,next,orb;
