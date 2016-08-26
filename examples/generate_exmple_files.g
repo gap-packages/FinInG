@@ -154,7 +154,7 @@ cmddir := "dir \:\= DirectoriesPackageLibrary\(\"fining\"\,\"examples\/output\"\
 #dir, just issue in the gap session that is running:
 
 for filename in files do
-  Print("Now converting file: ", filename, "\n");
+  Print("Now converting file: ", filename, ", \c");
   stream := InputOutputLocalProcess( homedir, gap, args);
   #cmd := Concatenation("file := \"",filename,".out\";");
   cmd := Concatenation("file := \"",filename,extension);
@@ -173,10 +173,16 @@ for filename in files do
   while cmd <> fail do
     WriteAll(stream,cmd);
     cmd := ReadLine(input_stream);
-    ReadAll(stream);
+    #ReadAll(stream);
   od;
-  #repeat until ReadAll(stream)=fail; #new since oct 2015.
+  repeat Print(".\c"); until ReadAll(stream)=fail; #new since oct 2015.
 od;
+
+  while cmd <> fail do
+    WriteAll(stream,cmd);
+    cmd := ReadLine(input_stream);
+  od;
+
 
 #create .include files
 #for the include files, some characters will be translated to suitable xml

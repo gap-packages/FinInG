@@ -109,7 +109,6 @@ InstallMethod( FiningOrbit,
 		return FiningOrbit(g,e,OnProjSubspaces);
 	end );
 
-
 # CHECKED 26/03/14 ml
 # CHANGED 08/04/14 jb
 #############################################################################
@@ -144,7 +143,7 @@ InstallMethod( FiningOrbits,
 #O  FiningOrFiningOrbitsDomainbits( <g>, <e>, <act> )
 #  returns the orbits of e under g, using action function act. We follow the
 #  analogy of GAP: Domain when <e> is closed under the action of g. If you do
-#  not know whether this is true, one should use FiningOrbits.
+#  not know whether this is true, you should use FiningOrbits.
 ##
 InstallMethod( FiningOrbitsDomain,
     "for a group, a collection and a function",

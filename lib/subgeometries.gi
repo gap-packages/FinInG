@@ -46,6 +46,7 @@ InstallMethod( ViewString,
 end );
 
 
+# change 22/6: IsSomething should return true or false!
 InstallMethod( IsFrameOfProjectiveSpace,
     "for a list of points",
     [ IsList ],
@@ -53,24 +54,29 @@ InstallMethod( IsFrameOfProjectiveSpace,
     local pg, coll, base, n, i;
     coll := Collected(List(list,x->AmbientSpace(x)));
     if Length(coll) > 1 then
-        Error("all elements in <list> lie in the same projective space");
+        #Error("all elements in <list> lie in the same projective space");
+        return false;
     else
         pg := coll[1][1];
     fi;
     coll := Collected(List(list,x->Type(x)));
     if Length(coll) > 1 then
-        Error("all elements in <list> must be points");
+        #Error("all elements in <list> must be points");
+        return false;
     elif coll[1][1] <> 1 then
-        Error("all elements in <list> must be points");
+        #Error("all elements in <list> must be points");
+        return false;
     fi;
     n := Length(list);
     if n <> ProjectiveDimension(pg) + 2 then
-        Error("<list> does not contain the correct number of points");
+        #Error("<list> does not contain the correct number of points");
+        return false;
     fi;
     for i in [1..n] do
         base := list{Difference([1..n],[i])};
         if not Span(base) = pg then
-            Error("<list> is not a frame");
+            #Error("<list> is not a frame");
+            return false;
         fi;
     od;
     return true;
@@ -734,7 +740,7 @@ InstallMethod( CollineationGroup,
 	"for a full projective space",
 	[ IsSubgeometryOfProjectiveSpace and IsSubgeometryOfProjectiveSpaceRep ],
 	function( sub )
-		local coll,d,f,frob,g,newgens,q,s,pow;
+		local coll,d,f,frob,g,newgens,q,s,pow,h,baer;
 		f := sub!.subfield;
 		q := Size(f);
 		d := ProjectiveDimension(sub);
@@ -742,29 +748,37 @@ InstallMethod( CollineationGroup,
 			Error("The dimension of the projective spaces needs to be at least 0");
 		fi;
 		g := GL(d+1,q);
-		frob := FrobeniusAutomorphism(f);
+		frob := FrobeniusAutomorphism(sub!.basefield); #frobenius automorphism of big field
 		newgens := List(GeneratorsOfGroup(g),x->[x,frob^0]);
-		if not IsOne(frob) then
-			Add(newgens,[One(g),frob]); #somehow we forgot that this is trivial if IsOne(frob)
-		fi; 
+        baer := frob^Length(FactorsInt(q)); #this is precisely the Baer collineation for the canonical subgeometry.
+        Add(newgens,[One(g),baer]);
+        # if q is not prime, the frobenius automorphism of GF(q) is also a collineation.
+        # note that we add the frobenius automorphism of the basefield (not the subfield).
+		if not IsPrime(q) then #if q is not prime, there is a frobenius automorphism.
+			Add(newgens,[One(g),frob]);
+            s := q^(d*(d+1)/2)*Product(List([2..d+1], i->q^i-1)) * Order(frob);
+		else
+            Add(newgens,[One(g),baer]);
+            s := q^(d*(d+1)/2)*Product(List([2..d+1], i->q^i-1)) * Order(baer);
+        fi;
 		newgens := ProjElsWithFrob(newgens,sub!.basefield); #using sub!.basefield as second argument makes sure that
         # ProjElsWithFrob returns elements in the collineation group of the ambient projective space.
         if not IsCanonicalSubgeometryOfProjectiveSpace(sub) then
             newgens := List(newgens,x->sub!.projectivity^(-1)*x*sub!.projectivity);
         fi;
 		coll := GroupWithGenerators(newgens);
-		pow := LogInt(q, Characteristic(f));
-		s := pow * q^(d*(d+1)/2)*Product(List([2..d+1], i->q^i-1)); 
-		if pow > 1 then 
-			SetName( coll, Concatenation("The FinInG collineation group PGammaL(",String(d+1),",",String(q),")"," of ",ViewString(sub)) );
+		#pow := LogInt(q, Characteristic(f)); #order of frobenius of subfield!
+		#s := pow * q^(d*(d+1)/2)*Product(List([2..d+1], i->q^i-1))*Order(baer); #hard coded order!
+		if not IsPrime(q) then
+			SetName( coll, Concatenation("The FinInG collineation group PGammaL(",String(d+1),",",String(q),"):",String(Order(baer))," of ",ViewString(sub)) );
 		else
-			SetName( coll, Concatenation("The FinInG collineation group PGL(",String(d+1),",",String(q),")"," of ",ViewString(sub)) );
+			SetName( coll, Concatenation("The FinInG collineation group PGL(",String(d+1),",",String(q),"):",String(Order(baer))," of ",ViewString(sub)) );
 			# Remark that in the prime case, PGL is returned as a FinInG collineation group with associated automorphism F^0.
 		fi;	
 		SetSize( coll, s );
         # only for making generalised polygons section more generic:
         if d = 2 then
-            SetCollineationAction(coll,OnProjSubspaces);
+            SetCollineationAction(coll,OnProjSubspacesOfSubgeometriesNC);
         fi;
 		return coll;
 	end );
