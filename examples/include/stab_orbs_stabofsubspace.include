@@ -6,19 +6,27 @@ gap&gt; coll:=StabiliserGroupOfSubspace(sub); time;
 &lt;projective collineation group of size 11173786189009966655078400 with 
 6 generators&gt;
 10
-gap&gt; computed:=FiningStabiliserOrb(CollineationGroup(pg),sub); time;
+gap&gt; computed:=FiningStabiliserOrb(CollineationGroup(pg),sub); 
 &lt;projective collineation group with 15 generators&gt;
-35799
+gap&gt; time;
+34923
 gap&gt; coll = computed;
 true
-gap&gt; proj:=ProjectiveStabiliserGroupOfSubspace(sub); time;
+gap&gt; proj:=ProjectiveStabiliserGroupOfSubspace(sub); 
 &lt;projective collineation group of size 5586893094504983327539200 with 
 5 generators&gt;
+gap&gt; time;
 2
-gap&gt; FiningStabiliserOrb(ProjectivityGroup(pg),sub)=proj; time;      
+gap&gt; FiningStabiliserOrb(ProjectivityGroup(pg),sub)=proj; 
 true
-130080
-gap&gt; specproj:=SpecialProjectiveStabiliserGroupOfSubspace(sub); time;
+gap&gt; time;      
+116113
+gap&gt; specproj:=SpecialProjectiveStabiliserGroupOfSubspace(sub); 
 &lt;projective collineation group of size 2793446547252491663769600 with 
 5 generators&gt;
-3
+gap&gt; time;
+2
+gap&gt; specproj = FiningStabiliserOrb(SpecialProjectivityGroup(pg),sub); 
+true
+gap&gt; time;
+65564
