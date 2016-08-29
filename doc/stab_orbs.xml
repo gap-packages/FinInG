@@ -74,9 +74,9 @@ of <A>coll</A> under the action <F>OnProjSubspaces</F>.
 <Returns>The orbits of the group <A>g</A> on a collection <A>coll</A> under the action of <A>act</A>.</Returns>
 <Description>
 The argument <A>coll</A> must be an object in the category <C>IsElementsOfIncidenceGeometry</C>, the argument <A>g</A>
-can be any group, acting on the elements of <A>coll</A> throug a suitable action function <A>act</A>. This operation
+can be any group, acting on the elements of <A>coll</A> through a suitable action function <A>act</A>. This operation
 is inspired by the GAP operation <F>OrbitsDomain</F>. It computes the orbits of the group <A>g</A> on the set of 
-elements in <A>coll</A> <E>presuming</E> that the set of elements of <A>coll</A> is closed under that action of <A>g</A>.
+elements in <A>coll</A> <E>assuming</E> that the set of elements of <A>coll</A> is closed under that action of <A>g</A>.
 There is no check whether the assumption is correct, so this operation should typically be used when it is known that
 the assumption is correct. The operation is generic in the sense that it can be used for different types of 
 incidence geometries as long as the triple arguments consist of a suitable action of <A>g</A> on the elements of <A>coll</A>.
