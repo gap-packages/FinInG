@@ -82,7 +82,7 @@ the assumption is correct. The operation is generic in the sense that it can be 
 incidence geometries as long as the triple arguments consist of a suitable action of <A>g</A> on the elements of <A>coll</A>.
 In general, if the assumption is correct, this operation will be faster than <F>FiningOrbits</F>.
 <Example>
-blabla
+<#Include SYSTEM "../examples/include/stab_orbs_finingorbitsdomain.include"> 
 </Example>
 </Description>
 </ManSection>

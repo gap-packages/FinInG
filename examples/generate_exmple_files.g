@@ -73,7 +73,8 @@ classicalpolfiles := ["cps_polarspaceform", "cps_example", "cps_symplectic", "cp
 	   
 stab_orbsfiles := [ "stab_orbs_finingorbit1", "stab_orbs_finingorbit2", "stab_orbs_finingorbits1", "stab_orbs_example1", "stab_orbs_finingstabiliser", 
 					"stab_orbs_finingstabiliserorb", "stab_orbs_timing1", "stab_orbs_setwisegeneric", "stab_orbs_finingsetwisestabiliser", 
-					"stab_orbs_timing2", "stab_orbs_action1", "stab_orbs_behaviour1", "stab_orbs_behaviour2", "stab_orbs_stabofsubspace"];
+					"stab_orbs_timing2", "stab_orbs_action1", "stab_orbs_behaviour1", "stab_orbs_behaviour2", "stab_orbs_stabofsubspace",
+                    "stab_orbits_finingorbitsdomain"];
 
 affinefiles := [ "affine_affinespace", "affine_dimension", "affine_basefield", "affine_underlyingvs", "affine_ambientspace", "affine_subspaces",
 				 "affine_elements", "affine_short", "affine_incident", "affine_ambientspaceelas", "affine_basefieldelas", "affine_span", "affine_meet",
@@ -111,7 +112,7 @@ groups_appfiles := ["groups_app_sodesargues", "groups_app_godesargues", "groups_
 
 exampledir := DirectoriesPackageLibrary("fining","tst")[1];
 
-files := [ "stab_orbs_stabofsubspace" ];
+files := [ "stab_orbs_finingorbitsdomain" ];
 
 #initialize directorynames
 #exampledir = dir where .g files are located : ".../pkg/fining/examples/gap"
@@ -131,7 +132,7 @@ gapstart := "gap4r8"; #might be different on your computer
 Exec(Concatenation("which ",gapstart));
 
 gap := Filename(Directory("/usr/bin/"),gapstart);
-gap := Filename(Directory("/usr/bin/local"),gapstart); #el capitan
+gap := Filename(Directory("/usr/local/bin"),gapstart); #el capitan
 
 homedir := DirectoryCurrent();
 exampledir := DirectoriesPackageLibrary("fining","examples/gap")[1]; 
