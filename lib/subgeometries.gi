@@ -61,7 +61,7 @@ InstallMethod( IsFrameOfProjectiveSpace,
     [ IsList ],
     function(list)
     local pg, coll, base, n, i;
-    coll := Collected(List(list,x->AmbientSpace(x)));
+    coll := Collected(List(list,x->AmbientGeometry(x))); #changed AmbientSpace into AmbientGeometry.
     if Length(coll) > 1 then
         #Error("all elements in <list> lie in the same projective space");
         return false;
@@ -91,6 +91,22 @@ InstallMethod( IsFrameOfProjectiveSpace,
     return true;
     end );
 
+#############################################################################
+#O  RandomFrameOfProjectiveSpace( <pg> )
+#   This method returns a random frame of a projective space
+##
+InstallMethod( RandomFrameOfProjectiveSpace,
+    "for a projective space, and a prime power",
+    [ IsProjectiveSpace ],
+    function(pg)
+    local pts;
+    pts := [];
+    repeat
+        Add(pts,Random(Points(pg)));
+    until IsFrameOfProjectiveSpace(Set(pts));
+    return Set(pts);
+    end );
+
 ## Constructor methods for subgeometries of projective spaces.
 # note for the next two methods: it may look strange to put a vectorspace over
 # the big field as vectorspace. But this makes sure that incidence can be
@@ -105,6 +121,9 @@ InstallMethod( CanonicalSubgeometryOfProjectiveSpace,
     [ IsProjectiveSpace, IsField and IsFinite],
     function(pg,subfield)
     local geo, subpg, d, frame, ty, em, sigma, h, t, p, frob, q;
+    if IsSubgeometryOfProjectiveSpace(pg) then
+        Error("recursive construction of subgeometries not (yet) possible");
+    fi;
     d := ProjectiveDimension(pg);
     q := Size(subfield);
     p := Characteristic(GF(q));
@@ -142,7 +161,10 @@ InstallMethod( SubgeometryOfProjectiveSpaceByFrame,
     function(pg,frame,subfield)
     local geo, subpg, d, ty, matrix, proj, n, i, vecs, basis, coefs, em, sigma, h, t, p, frob, q, can;
     if not IsFrameOfProjectiveSpace(frame) then
-        return("<frame> must be a frame of <pg>");
+        Error(" <frame> must be a frame of <pg>");
+    fi;
+     if IsSubgeometryOfProjectiveSpace(pg) then
+        Error("recursive construction of subgeometries not (yet) possible");
     fi;
     d := ProjectiveDimension(pg);
     q := Size(subfield);
@@ -574,6 +596,36 @@ InstallMethod( \in,
        return element!.geo = ps;
     end );
 
+#############################################################################
+#O  Random( <subs> )
+# returns a random subspace out of the collection of subspaces of given dimension
+# of a subgeometry of a projective space. Note that Random has its own method
+# for a collection of subspaces of a given dimension of a projective space.
+# We use the isomorphic subgeometry for the method here.
+##
+InstallMethod( Random, 
+	"for a collection of subspaces of a projective space",
+	[ IsSubspacesOfSubgeometryOfProjectiveSpace ],
+    # chooses a random element out of the collection of subspaces of given
+    # dimension of a subgeometry of a projective space
+	function( subs )
+		local d, pg, w, isom, em, el;
+		## the underlying projective space
+		pg := subs!.geometry;
+        isom := pg!.isomorphicsubgeometry;
+        em := pg!.embedding;
+		if not IsInt(subs!.type) then
+			Error("The subspaces of the collection need to have the same dimension");
+        fi;
+		## the common type of elements of subs
+		d := subs!.type;        
+        el := Random(ElementsOfIncidenceStructure(isom,d))^em;
+        if not IsCanonicalSubgeometryOfProjectiveSpace(pg) then
+            el := el^pg!.projectivity;
+        fi;
+        return Wrap(pg,d,UnderlyingObject(el));
+        end );
+
 # Span/Meet operations. Note the basic philosophy. We allow a span of two
 # subspaces of a subgeometry only if their ambient geometry is the same. So
 # having the same ambient space is not sufficient. This is slightly different
@@ -803,6 +855,10 @@ InstallMethod( Meet,
         fi;
     end );
 
+#############################################################################
+#O Meet( <sub>, <el> )
+# for a subgeometry and a subspace of a projective space. 
+##
 #use sigma to compute the intersection of an element of the ambient space
 InstallMethod( Meet,
     "for a subgeometry of a projectice space and a subspace of the ambient space",
@@ -822,6 +878,10 @@ InstallMethod( Meet,
         fi;
     end );
 
+#############################################################################
+#O Meet( <sub>, <el> )
+# for a subspace of a projective space and a subgeometry 
+##
 InstallMethod( Meet,
 	"for a projective space and an element of a subgeometry of a projective space",
 	[ IsSubspaceOfProjectiveSpace, IsSubgeometryOfProjectiveSpace],
@@ -829,8 +889,14 @@ InstallMethod( Meet,
         return Meet(sub,el);
     end );
 
-#  flags and shodows
+#  flags and shadows
 
+#############################################################################
+#O FlagOfIncidenceStructure( <ps>, <els> )
+# returns the flag of the subgeometry <ps> with elements in <els>.
+# It is checked first whether the elements in <els> belong to the 
+# same ambient geometry. The method checks whether the input really determines a flag.
+##
 InstallMethod( FlagOfIncidenceStructure,
 	"for a projective space and list of subspaces of the projective space",
 	[ IsSubgeometryOfProjectiveSpace, IsSubspaceOfSubgeometryOfProjectiveSpaceCollection ],
@@ -853,6 +919,13 @@ InstallMethod( FlagOfIncidenceStructure,
 		return flag;
 	end);
 
+#############################################################################
+#O ShadowOfElement( <ps>, <v>, <j> )
+# returns the shadow of an element v as a record containing the subgeometry <ps>, 
+# the type j of the elements (type), the element v (parentflag), and 
+# some extra information useful to compute with the shadows, e.g. iterator
+# This method relies on the isomorphic subgeometry of <ps>
+##
 InstallMethod( ShadowOfElement, 
 	"for a projective space, an element, and an integer",
 	[IsSubgeometryOfProjectiveSpace, IsSubspaceOfSubgeometryOfProjectiveSpace, IsPosInt],
