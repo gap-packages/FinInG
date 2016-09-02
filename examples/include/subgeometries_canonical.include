@@ -1,0 +1,15 @@
+gap&gt; pg := PG(2,25);
+ProjectiveSpace(2, 25)
+gap&gt; sub := CanonicalSubgeometryOfProjectiveSpace(pg,GF(5));
+Subgeometry PG(2, 5) of ProjectiveSpace(2, 25)
+gap&gt; CategoriesOfObject(sub);
+[ "IsIncidenceStructure", "IsIncidenceGeometry", "IsLieGeometry", 
+  "IsProjectiveSpace", "IsSubgeometryOfProjectiveSpace" ]
+gap&gt; pg := PG(3,3^6);
+ProjectiveSpace(3, 729)
+gap&gt; sub := CanonicalSubgeometryOfProjectiveSpace(pg,3^2);
+Subgeometry PG(3, 9) of ProjectiveSpace(3, 729)
+gap&gt; sub := CanonicalSubgeometryOfProjectiveSpace(pg,3^3);
+Subgeometry PG(3, 27) of ProjectiveSpace(3, 729)
+gap&gt; sub := CanonicalSubgeometryOfProjectiveSpace(pg,3^6);
+ProjectiveSpace(3, 729)

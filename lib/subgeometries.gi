@@ -99,11 +99,16 @@ InstallMethod( RandomFrameOfProjectiveSpace,
     "for a projective space, and a prime power",
     [ IsProjectiveSpace ],
     function(pg)
-    local pts;
-    pts := [];
-    repeat
-        Add(pts,Random(Points(pg)));
-    until IsFrameOfProjectiveSpace(Set(pts));
+    local pts,mat,final,gauge,d,field;
+    d := ProjectiveDimension(pg)+1;
+    field := BaseField(pg);
+    mat := RandomInvertibleMat(d,field);
+    pts := List(mat,x->VectorSpaceToElement(pg,x));
+    gauge := Random(Points(pg));
+    while not IsFrameOfProjectiveSpace(Union(pts,[gauge])) do
+        gauge := Random(Points(pg));
+    od;
+    pts := Union(pts,[gauge]);
     return Set(pts);
     end );
 
@@ -908,6 +913,12 @@ InstallMethod( Meet,
 # returns the flag of the subgeometry <ps> with elements in <els>.
 # It is checked first whether the elements in <els> belong to the 
 # same ambient geometry. The method checks whether the input really determines a flag.
+# Note that the filter for the first argument is IsProjectiveSpace. So this method
+# is applicable for a projective space that is not a subgeometry and a list
+# of elements of a subgeometry, but will give an appropriate error. 
+# Using IsSubgeometryOfProjectiveSpace would force us to install another method
+# just producing an error is called with the first argument a projective space
+# that is not a subgeometry.
 ##
 InstallMethod( FlagOfIncidenceStructure,
 	"for a projective space and list of subspaces of the projective space",
@@ -937,6 +948,7 @@ InstallMethod( FlagOfIncidenceStructure,
 # the type j of the elements (type), the element v (parentflag), and 
 # some extra information useful to compute with the shadows, e.g. iterator
 # This method relies on the isomorphic subgeometry of <ps>
+# Note: we use IsProjectiveSpace, see also note at FlagOfIncidenceStructure
 ##
 InstallMethod( ShadowOfElement, 
 	"for a projective space, an element of a subgeometry, and an integer",
@@ -1000,12 +1012,13 @@ InstallMethod( ShadowOfElement,
 # the type j of the elements (type), the flag (parentflag), and some extra information
 # useful to compute with the shadows, e.g. iterator
 # This method relies on the isomorphic subgeometry of <ps>
+# Note: we use IsProjectiveSpace, see also note at FlagOfIncidenceStructure
 ##
 InstallMethod( ShadowOfFlag, 
 	"for a a projective space, a flag of a subgeometry of a projective space, and an integer",
 	[IsProjectiveSpace, IsFlagOfSubgeometryOfProjectiveSpace, IsPosInt],
 	function( ps, flag, j )
-    local localinner, localouter, localfactorspace, v, smallertypes, biggertypes, ceiling, floor, tocanonical, vs;
+    local localinner, localouter, localfactorspace, v, smallertypes, biggertypes, ceiling, floor, canels, vs;
     if not flag!.geo = ps then
         Error("<flag> is not a flag of <ps>");
     fi;
@@ -1025,24 +1038,24 @@ InstallMethod( ShadowOfFlag,
 	biggertypes:=Filtered(flag!.types,t->t >= j);
     vs := ps!.isomorphicsubgeometry!.vectorspace;
     if not IsCanonicalSubgeometryOfProjectiveSpace(ps) then
-           tocanonical := (ps!.projectivity)^(-1);
+           canels := List(flag!.els,x->x^(ps!.projectivity^(-1)));
         else
-           tocanonical := x->x;
+           canels := List(flag!.els);
     fi;
 
 	if smallertypes=[] then 
 		localinner := [];
 		ceiling:=Minimum(biggertypes);
-		localouter:=flag!.els[Position(flag!.types,ceiling)]^tocanonical;
+		localouter:= canels[Position(flag!.types,ceiling)];
 	elif biggertypes=[] then 
 		localouter:=BasisVectors(Basis(vs));
 		floor:=Maximum(smallertypes);
-		localinner:=flag!.els[Position(flag!.types,floor)]^tocanonical;
+		localinner:= canels[Position(flag!.types,floor)];
 	else
 		floor:=Maximum(smallertypes);
 		ceiling:=Minimum(biggertypes);
-		localinner:=flag!.els[Position(flag!.types,floor)]^tocanonical;
-		localouter:=flag!.els[Position(flag!.types,ceiling)]^tocanonical;
+		localinner:= canels[Position(flag!.types,floor)];
+		localouter:= canels[Position(flag!.types,ceiling)];
 	fi;
 	if not smallertypes = [] then
 		if localinner!.type = 1 then
@@ -1117,6 +1130,11 @@ InstallMethod(Iterator,
           ));
 	end);
 
+
+#############################################################################
+#O Iterator: the classical iterator for shadows, relying completely on 
+# the isomorphic subgeometry and using the projectivity.
+##
 InstallMethod( Iterator,
 	"for shadow subspaces of a projective space",
 	[IsShadowSubspacesOfSubgeometryOfProjectiveSpace and IsShadowSubspacesOfSubgeometryOfProjectiveSpaceRep ],
@@ -1164,6 +1182,9 @@ InstallMethod( Iterator,
         ));
     end);
     
+
+
+
 ## groups and actions.
 
 InstallMethod( CollineationGroup, 

@@ -21,29 +21,70 @@ This is the chapter of the documentation describing the sub geometries of projec
 <Chapter Label="subgeometries">
 <Heading>Subgeometries of projective spaces</Heading>
 
+Let <M>S=(P,L,I)</M> be a point-line incidence geometry. In case <M>S</M> is a projective
+space over a finite field, it is clear that every line (and every subspace as well) can
+be identified with the set of points incident with it. Furthermore, the incidence
+relation <M>I</M> is then symmetrised containment. To define a subgeometry
+mathematically, we follow <Cite Key="Dembowski68"/>. Let <M>P' \subset P</M> and let
+<M>L'</M> be a set of subsets of <M>P'</M>, such that every line <M>l' \in L'</M>
+is a subset of exactly one line <M>l \in L</M>. If <M>S'=(P',L',I)</M> is a projective space
+again, then we call <M>S'</M> a <E>subgeometry</E> of <M>S</M>. A typical example of a subgeometry
+is a Baer subplane of a projective plane. Mathematically, any subspace of a projective 
+space also induces a subgeometry. Using geometry morphisms, and more particular a 
+function like <F>NaturalEmbeddingBySubField</F>, one can deal in an indirect way with subgeometries. 
+However, using <F>NaturalEmbeddingBySubField</F> is not flexible, and typical problems such as 
+considering a subgeometry determined by a user chosen frame and a subfield, cannot be handled
+easily using <F>NaturalEmbeddingBySubField</F>. Therefore <Package>FinInG</Package> provides
+some functions to naturally construct subgeometries of projective spaces.
 
 <Section>
-<Heading>Categories</Heading>
+<Heading>Subgeometries of projective spaces</Heading>
 
-</Section>
+<ManSection>
+<Filt Name="IsSubgeometryOfProjectiveSpace" Type="Category"/>
+<Description>
+This category is a subcategory of <C>IsProjectiveSpace</C>, and contains all subgeometries of 
+projective spaces. Note that mathmetically spoken, a subspace of a projective space is also a subgeometry.
+However, in <Package>FinInG</Package>, subspaces of a projective space are constructed in a category that
+is not a subcategory of <C>IsProjectiveSpace</C>. Since <C>IsSubgeometryOfProjectiveSpace</C> is a subcategory
+of <C>IsProjectiveSpace</C>, all operations applicable on projective spaces, are naturally applicable on
+subgeometries of projective spaces.
+</Description>
+</ManSection>
 
-<Section>
-<Heading>Constucting subgeometries</Heading>
+<ManSection>
+<Oper Name="CanonicalSubgeometryOfProjectiveSpace" Arg="pg, subfield"/>
+<Oper Name="CanonicalSubgeometryOfProjectiveSpace" Arg="pg, q"/>
+<Returns>A subgeometry of <A>pg</A></Returns>
+<Description>This operation returns the subgeometry of <A>pg</A> induced by the standard frame
+over the subfield <A>subfield</A>. Alternatively, the integer <A>q</A> can be used as the order of the
+subfield. It is checked whether the user specified subfield is indeed a subfield of the base field of
+<A>pg</A>. If the subfield equals the base field of <A>pg</A>, the projective space <A>pg</A> is returned.  
+<Example>
+<#Include SYSTEM "../examples/include/subgeometries_canonical.include"> 
+</Example>
+</Description>
+</ManSection>
 
 <ManSection>
 <Oper Name="RandomFrameOfProjectiveSpace" Arg="pg"/>
 <Returns>A set of points of <A>pg</A>, being a frame</Returns>
 <Description>
 <Example>
+<#Include SYSTEM "../examples/include/subgeometries_randomframe.include"> 
 </Example>
 </Description>
 </ManSection>
 
 <ManSection>
-<Oper Name="IsFrameOfProjectiveSpace" Arg="pg"/>
+<Oper Name="IsFrameOfProjectiveSpace" Arg="list"/>
 <Returns>true or false</Returns>
 <Description>
+When <A>list</A> is a list of points of a projective space, this operation returns true if and only
+if <A>list</A> constitutes a frame of the projective space. It is checked as well whether all points
+in <A>list</A> belong to the same projective space.
 <Example>
+<#Include SYSTEM "../examples/include/subgeometries_isframe.include"> 
 </Example>
 </Description>
 </ManSection>

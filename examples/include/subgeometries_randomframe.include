@@ -1,0 +1,16 @@
+gap&gt; pg := PG(1,5^5);
+ProjectiveSpace(1, 3125)
+gap&gt; frame := RandomFrameOfProjectiveSpace(pg);
+[ &lt;a point in ProjectiveSpace(1, 3125)&gt;, &lt;a point in ProjectiveSpace(1, 3125)&gt;
+    , &lt;a point in ProjectiveSpace(1, 3125)&gt; ]
+gap&gt; Length(frame);
+3
+gap&gt; pg := PG(6,2^2);
+ProjectiveSpace(6, 4)
+gap&gt; frame := RandomFrameOfProjectiveSpace(pg);
+[ &lt;a point in ProjectiveSpace(6, 4)&gt;, &lt;a point in ProjectiveSpace(6, 4)&gt;, 
+  &lt;a point in ProjectiveSpace(6, 4)&gt;, &lt;a point in ProjectiveSpace(6, 4)&gt;, 
+  &lt;a point in ProjectiveSpace(6, 4)&gt;, &lt;a point in ProjectiveSpace(6, 4)&gt;, 
+  &lt;a point in ProjectiveSpace(6, 4)&gt;, &lt;a point in ProjectiveSpace(6, 4)&gt; ]
+gap&gt; Length(frame);
+8
