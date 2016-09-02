@@ -1,0 +1,162 @@
+<!-- 
+
+  subgeometries.xml    FinInG package documentation
+                                                                   John Bamberg
+                                                                   Anton Betten
+                                                                  Philippe Cara
+                                                                   Jan De Beule
+                                                                 Michel Lavrauw
+                                                                Max Neunhoeffer
+
+  Copyright (C) 2016,   Colorado State University
+                        Università degli Studi di Padova
+                        University of St. Andrews
+                        University of Western Australia
+                        Vrije Universiteit Brussel
+
+This is the chapter of the documentation describing the sub geometries of projective spaces.
+
+-->
+
+<Chapter Label="subgeometries">
+<Heading>Subgeometries of projective spaces</Heading>
+
+
+<Section>
+<Heading>Categories</Heading>
+
+</Section>
+
+<Section>
+<Heading>Constucting subgeometries</Heading>
+
+<ManSection>
+<Oper Name="RandomFrameOfProjectiveSpace" Arg="pg"/>
+<Returns>A set of points of <A>pg</A>, being a frame</Returns>
+<Description>
+<Example>
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="IsFrameOfProjectiveSpace" Arg="pg"/>
+<Returns>true or false</Returns>
+<Description>
+<Example>
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="CanonicalSubgeometryOfProjectiveSpace" Arg="pg, subfield"/>
+<Oper Name="CanonicalSubgeometryOfProjectiveSpace" Arg="pg, q"/>
+<Returns>A subgeometry of <A>pg</A></Returns>
+<Description>
+<Example>
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="SubgeometryOfProjectiveSpaceByFrame" Arg="pg, list, field"/>
+<Oper Name="SubgeometryOfProjectiveSpaceByFrame" Arg="pg, list, q"/>
+<Returns>A subgeometry of <A>pg</A></Returns>
+<Description>
+<Example>
+</Example>
+</Description>
+</ManSection>
+
+</Section>
+
+<Section>
+
+<Heading>Basic operations</Heading>
+
+blabla <F>ProjectiveDimension</F>, <F>Dimension</F>, <F>Rank</F>: same.
+
+<ManSection>
+<Oper Name="UnderlyingVectorSpace" Arg="pg"/>
+<Returns>A vector space</Returns>
+<Description>
+Verdient uitleg.
+<Example>
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="BaseField" Arg="pg"/>
+<Returns>A finite field</Returns>
+<Description>
+Verdient uitleg.
+<Example>
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="SubfieldOfSubgeometry" Arg="pg"/>
+<Returns>A finite field</Returns>
+<Description>
+Verdient uitleg.
+<Example>
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="AmbientSpace" Arg="pg"/>
+<Returns>A projective space</Returns>
+<Description>
+Verdient uitleg.
+<Example>
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Attr Name="BaerAutomorphism" Arg="pg"/>
+<Returns>A subgeometry of a projective space</Returns>
+<Description>
+Verdient uitleg.
+<Example>
+</Example>
+</Description>
+</ManSection>
+
+</Section>
+
+<Section>
+<Heading>Constructing elements of a subgeometry and basic operations</Heading>
+
+<ManSection>
+<Oper Name="VectorSpaceToElement" Arg="pg, vec"/>
+<Returns>A subspace of a subgeometry</Returns>
+<Description>
+Verdient uitleg.
+<Example>
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="ExtendElementOfSubgeometry" Arg="el"/>
+<Returns>A subspace of projective space</Returns>
+<Description>
+Verdient uitleg.
+<Example>
+</Example>
+</Description>
+</ManSection>
+
+
+</Section>
+
+<Section>
+<Heading>Groups and actions</Heading>
+
+</Section>
+
+</Chapter>

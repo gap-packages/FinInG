@@ -38,6 +38,14 @@ DeclareRepresentation( "IsSubspacesOfSubgeometryOfProjectiveSpaceRep", IsElement
 
 BindGlobal( "SubgeometriesFamily", NewFamily( "SubgeometriesFamily" ) );
 
+DeclareCategory( "IsFlagOfSubgeometryOfProjectiveSpace", IsFlagOfProjectiveSpace );
+
+BindGlobal( "FlagsOfSgOPS", NewFamily( "FlagsOfSgOPSFamily", IsObject ));
+
+BindGlobal( "IsFlagsOfSgOPSType", NewType( FlagsOfSgOPS,
+                                    IsFlagOfSubgeometryOfProjectiveSpace and IsFlagOfIncidenceStructureRep) );
+
+
 #representations
 
 DeclareRepresentation( "IsSubgeometryOfProjectiveSpaceRep", IsSubgeometryOfProjectiveSpace, [ "dimension", "basefield", "subfield", "ambientspace", "isomorphicsubgeometry", "frame", "proj", "sigma" ] );
@@ -69,7 +77,7 @@ DeclareOperation("ExtendElementOfSubgeometry", [ IsSubspaceOfSubgeometryOfProjec
 
 #DeclareOperation("UnderlyingVectorSpace", [ IsSubspaceOfSubgeometryOfProjectiveSpace ]);
 
-DeclareOperation("SubFieldOFSubGeometry", [ IsSubgeometryOfProjectiveSpace ]);
+DeclareOperation("SubfieldOfSubgeometry", [ IsSubgeometryOfProjectiveSpace ]);
 
 
 #attributes
@@ -78,6 +86,11 @@ DeclareAttribute( "IsCanonicalSubgeometryOfProjectiveSpace", IsSubgeometryOfProj
 
 DeclareCategory( "IsShadowSubspacesOfSubgeometryOfProjectiveSpace", IsShadowElementsOfLieGeometry );
 DeclareRepresentation( "IsShadowSubspacesOfSubgeometryOfProjectiveSpaceRep", IsShadowElementsOfLieGeometryRep, [ "geometry", "type", "inner", "outer", "factorspace" ]);
+
+DeclareAttribute( "BaerAutomorphism", IsSubgeometryOfProjectiveSpace);
+
+
+#action functions
 
 
 DeclareGlobalFunction( "OnProjSubspacesOfSubgeometriesNC" );

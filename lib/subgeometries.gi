@@ -300,14 +300,26 @@ InstallMethod( Rank,
 # spaces and hence, are applicable to subgeometries. See introductory comments
 # at top of file, for the "definition" of underlying vectorspace and base field.
 #############################################################################
-#O  SubFieldOFSubGeometry( <sub> )
+#O  SubfieldOfSubgeometry( <sub> )
 # Subfield of subgeometry.
 ##
-InstallMethod( SubFieldOFSubGeometry,
+InstallMethod( SubfieldOfSubgeometry,
 	"for a subgeometry of a projective space",
 	[ IsSubgeometryOfProjectiveSpace ],
 	sub -> sub!.subfield );
 
+#############################################################################
+#A BaerAutomorphism
+# For a subgeometry PG(n,q) in PG(n,q^2), we would call this the Baer involution.
+# This is the collineation of PGammaL(n+1,q^t) fixing the subgeometry point wise.
+# Its order is t.
+##
+InstallMethod( BaerAutomorphism,
+	"for a subgeometry of a projective space",
+	[ IsSubgeometryOfProjectiveSpace ],
+    function(pg)
+        return pg!.sigma;
+    end );
 
 # Constructor operations for elements and basic operations for elements.
 #############################################################################
@@ -899,7 +911,7 @@ InstallMethod( Meet,
 ##
 InstallMethod( FlagOfIncidenceStructure,
 	"for a projective space and list of subspaces of the projective space",
-	[ IsSubgeometryOfProjectiveSpace, IsSubspaceOfSubgeometryOfProjectiveSpaceCollection ],
+	[ IsProjectiveSpace, IsSubspaceOfSubgeometryOfProjectiveSpaceCollection ],
 	function(ps,els)
 		local list,i,test,type,flag;
 		list := Set(ShallowCopy(els));
@@ -915,7 +927,7 @@ InstallMethod( FlagOfIncidenceStructure,
 		  Error("<els> do not determine a flag");
 		fi;
 		flag := rec(geo := ps, types := List(list,x->x!.type), els := list, vectorspace := ps!.vectorspace );
-		ObjectifyWithAttributes(flag, IsFlagOfPSType, IsEmptyFlag, false, RankAttr, Size(list) );
+		ObjectifyWithAttributes(flag, IsFlagsOfSgOPSType, IsEmptyFlag, false, RankAttr, Size(list) );
 		return flag;
 	end);
 
@@ -927,15 +939,15 @@ InstallMethod( FlagOfIncidenceStructure,
 # This method relies on the isomorphic subgeometry of <ps>
 ##
 InstallMethod( ShadowOfElement, 
-	"for a projective space, an element, and an integer",
-	[IsSubgeometryOfProjectiveSpace, IsSubspaceOfSubgeometryOfProjectiveSpace, IsPosInt],
+	"for a projective space, an element of a subgeometry, and an integer",
+	[IsProjectiveSpace, IsSubspaceOfSubgeometryOfProjectiveSpace, IsPosInt],
 	# returns the shadow of an element v as a record containing the projective space (geometry), 
 	# the type j of the elements (type), the element v (parentflag), and some extra information
 	# useful to compute with the shadows, e.g. iterator
 	function( ps, v, j )
 		local localinner, localouter, localfactorspace, tocanonical, vs, vcanonical;
         if not AmbientGeometry(v) = ps then
-            Error("<v> is not a subspace of <ps>");
+            Error("<ps> is not the ambient geometry of <v>");
         fi;
         if j > ps!.dimension then
             Error("<ps> has no elements of type <j>");
@@ -978,6 +990,90 @@ InstallMethod( ShadowOfElement,
 									size := Size(Subspaces(localfactorspace))
 								)
 						);
+	end);
+
+#############################################################################
+#O  ShadowOfFlag( <ps>, <flag>, <j> )
+# returns the shadow elements of <flag>, i.e. the elements of <ps> of type <j> 
+# incident with all elements of <flag>.
+# returns the shadow of a flag as a record containing the geometry,
+# the type j of the elements (type), the flag (parentflag), and some extra information
+# useful to compute with the shadows, e.g. iterator
+# This method relies on the isomorphic subgeometry of <ps>
+##
+InstallMethod( ShadowOfFlag, 
+	"for a a projective space, a flag of a subgeometry of a projective space, and an integer",
+	[IsProjectiveSpace, IsFlagOfSubgeometryOfProjectiveSpace, IsPosInt],
+	function( ps, flag, j )
+    local localinner, localouter, localfactorspace, v, smallertypes, biggertypes, ceiling, floor, tocanonical, vs;
+    if not flag!.geo = ps then
+        Error("<flag> is not a flag of <ps>");
+    fi;
+    if j > ps!.dimension then
+        Error("<ps> has no elements of type <j>");
+    fi;
+    #empty flag - return all subspaces of the right type
+    if IsEmptyFlag(flag) then
+      return ElementsOfIncidenceStructure(ps, j);
+    fi;
+    
+    # find the element in the flag of highest type less than j, and the subspace
+    # in the flag of lowest type more than j.
+	
+	#listoftypes:=List(flag,x->x!.type);
+	smallertypes:=Filtered(flag!.types,t->t <= j);
+	biggertypes:=Filtered(flag!.types,t->t >= j);
+    vs := ps!.isomorphicsubgeometry!.vectorspace;
+    if not IsCanonicalSubgeometryOfProjectiveSpace(ps) then
+           tocanonical := (ps!.projectivity)^(-1);
+        else
+           tocanonical := x->x;
+    fi;
+
+	if smallertypes=[] then 
+		localinner := [];
+		ceiling:=Minimum(biggertypes);
+		localouter:=flag!.els[Position(flag!.types,ceiling)]^tocanonical;
+	elif biggertypes=[] then 
+		localouter:=BasisVectors(Basis(vs));
+		floor:=Maximum(smallertypes);
+		localinner:=flag!.els[Position(flag!.types,floor)]^tocanonical;
+	else
+		floor:=Maximum(smallertypes);
+		ceiling:=Minimum(biggertypes);
+		localinner:=flag!.els[Position(flag!.types,floor)]^tocanonical;
+		localouter:=flag!.els[Position(flag!.types,ceiling)]^tocanonical;
+	fi;
+	if not smallertypes = [] then
+		if localinner!.type = 1 then
+			localinner:=[Unpack(localinner!.obj)]; #here is the cmat change
+		else
+			localinner:=Unpack(localinner!.obj);
+		fi;
+	fi;
+    if not biggertypes = [] then
+		if localouter!.type = 1 then
+			localouter := [Unpack(localouter!.obj)];
+        else
+			localouter := Unpack(localouter!.obj);
+        fi;
+	fi;
+    localfactorspace := Subspace(vs,
+		BaseSteinitzVectors(localouter, localinner).factorspace);
+    return Objectify(
+		NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
+							IsShadowSubspacesOfSubgeometryOfProjectiveSpace and
+							IsShadowSubspacesOfSubgeometryOfProjectiveSpaceRep),
+        rec(
+          geometry := ps,
+          type := j,
+          inner := localinner,
+          outer := localouter,
+          factorspace := localfactorspace,
+		  parentflag := flag,
+          size := Size(Subspaces(localfactorspace)) #this causes a problem when localfactorspace consists of cvec/cmat.
+        )
+      );
 	end);
 
 #############################################################################

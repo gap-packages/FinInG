@@ -135,6 +135,7 @@ we acknowledge very much the hospitality of Carla and Luigi, who introduced us t
 <#Include SYSTEM "varieties.xml">
 <#Include SYSTEM "gpolygons.xml">
 <#Include SYSTEM "diagramgeometries.xml">
+<#Include SYSTEM "subgeometries.xml">
 </Body>
 
 <#Include SYSTEM "structure_app.xml">
