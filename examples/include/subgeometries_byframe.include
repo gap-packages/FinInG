@@ -1,0 +1,14 @@
+gap&gt; pg := PG(3,3^6);
+ProjectiveSpace(3, 729)
+gap&gt; frame := RandomFrameOfProjectiveSpace(pg);
+[ &lt;a point in ProjectiveSpace(3, 729)&gt;, &lt;a point in ProjectiveSpace(3, 729)&gt;, 
+  &lt;a point in ProjectiveSpace(3, 729)&gt;, &lt;a point in ProjectiveSpace(3, 729)&gt;, 
+  &lt;a point in ProjectiveSpace(3, 729)&gt; ]
+gap&gt; sub1 := SubgeometryOfProjectiveSpaceByFrame(pg,frame,GF(3));
+Subgeometry PG(3, 3) of ProjectiveSpace(3, 729)
+gap&gt; sub2 := SubgeometryOfProjectiveSpaceByFrame(pg,frame,3^2);
+Subgeometry PG(3, 9) of ProjectiveSpace(3, 729)
+gap&gt; sub3 := SubgeometryOfProjectiveSpaceByFrame(pg,frame,3^3);
+Subgeometry PG(3, 27) of ProjectiveSpace(3, 729)
+gap&gt; sub4 := SubgeometryOfProjectiveSpaceByFrame(pg,frame,3^6);
+ProjectiveSpace(3, 729)

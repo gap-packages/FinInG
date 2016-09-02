@@ -36,7 +36,23 @@ However, using <F>NaturalEmbeddingBySubField</F> is not flexible, and typical pr
 considering a subgeometry determined by a user chosen frame and a subfield, cannot be handled
 easily using <F>NaturalEmbeddingBySubField</F>. Therefore <Package>FinInG</Package> provides
 some functions to naturally construct subgeometries of projective spaces.
-
+<P/>
+A subgeometry in a projective space is completely determined by a frame of the projective space
+and a subfield of the base field of the projective space. The <E>standard frame</E> in an
+<M>n</M>-dimensional projective space <M>PG(n,q)</M> is the set of <M>n+2</M> points represented by
+<M>(1,0,\ldots,0),(0,1,\ldots,0),\ldots,(0,0,\ldots,1),(1,1,\ldots,1)</M>. The subgeometry
+determined by the standard frame will be called <E>canonical</E>. For a given subfield <M>GF(q') \subset GF(q)</M>,
+the canonical subgeometry determined by the standard frame in <M>PG(n,q)</M> is mathematically spoken
+the image of the <Package>FinInG</Package> geometry morphism <F>NaturalEmbeddingBySubField</F> of the
+projective space <M>PG(n,q')</M>. The coordinates of the points of the subgeometry will be exclusively
+over the subfield <M>GF(q')</M>, as are the coordinates of the vectors after normalizing defining
+any subspace of the subgeometry. Clearly, the Frobenius automorphism <M>x->x^q'</M> fixes all elements
+of the subgeometry.
+<P/>
+For an arbitrary frame og <M>PG(n,q)</M> and a subfield <M>GF(q')</M>, there exists a unique collineation
+of <M>PG(n,q)</M> fixing the subgeometry <M>PG(n,q')</M> pointwise. This collineation is the conjugation
+of the Frobenius automorhpism by the unique collineation mapping the defining frame of the subgeometry
+to the standard frame of <M>PG(n,q)</M>.
 <Section>
 <Heading>Subgeometries of projective spaces</Heading>
 
@@ -90,21 +106,22 @@ in <A>list</A> belong to the same projective space.
 </ManSection>
 
 <ManSection>
-<Oper Name="CanonicalSubgeometryOfProjectiveSpace" Arg="pg, subfield"/>
-<Oper Name="CanonicalSubgeometryOfProjectiveSpace" Arg="pg, q"/>
-<Returns>A subgeometry of <A>pg</A></Returns>
-<Description>
-<Example>
-</Example>
-</Description>
-</ManSection>
-
-<ManSection>
 <Oper Name="SubgeometryOfProjectiveSpaceByFrame" Arg="pg, list, field"/>
 <Oper Name="SubgeometryOfProjectiveSpaceByFrame" Arg="pg, list, q"/>
 <Returns>A subgeometry of <A>pg</A></Returns>
 <Description>
+The argument <A>pg</A> is a projective space which is not a subgeometry itself, the argument
+<A>list</A> is a list of points of <A>pg</A> defining a frame of <A>pg</A>, and finally the
+argument <A>field</A> is a subfield of the base field of <A>pg</A>. Alternatively, the
+argument <A>q</A> is an integer being the order of a subfield of the base field of <A>pg</A>.
+This method returns the subgeometry definied by the frame in <A>list</A> and the subfield <A>field</A>
+of the subfield <M>GF(<A>q</A>)</M>. This method checks whether the subfield <A>field</A> or the <M>GF(<A>q</A>)</M>
+is really a sub field of the base field of <A>pg</A> and whether the list of points in <A>list</A> is a
+frame of <A>pg</A>. Note also that it is currently not possible to construct subgeometries recursively,
+so <A>pg</A> may not be a subgeometry itself. If the specified subfield equals the base field of
+<A>pg</A>, then the projective space <A>pg</A> itself is returned.
 <Example>
+<#Include SYSTEM "../examples/include/subgeometries_byframe.include">
 </Example>
 </Description>
 </ManSection>
@@ -118,7 +135,7 @@ in <A>list</A> belong to the same projective space.
 blabla <F>ProjectiveDimension</F>, <F>Dimension</F>, <F>Rank</F>: same.
 
 <ManSection>
-<Oper Name="UnderlyingVectorSpace" Arg="pg"/>
+<Oper Name="UnderlyingVectorSpace" Arg="sub"/>
 <Returns>A vector space</Returns>
 <Description>
 Verdient uitleg.
@@ -128,7 +145,7 @@ Verdient uitleg.
 </ManSection>
 
 <ManSection>
-<Oper Name="BaseField" Arg="pg"/>
+<Oper Name="BaseField" Arg="sub"/>
 <Returns>A finite field</Returns>
 <Description>
 Verdient uitleg.
@@ -138,7 +155,7 @@ Verdient uitleg.
 </ManSection>
 
 <ManSection>
-<Oper Name="SubfieldOfSubgeometry" Arg="pg"/>
+<Oper Name="SubfieldOfSubgeometry" Arg="sub"/>
 <Returns>A finite field</Returns>
 <Description>
 Verdient uitleg.
@@ -148,7 +165,7 @@ Verdient uitleg.
 </ManSection>
 
 <ManSection>
-<Oper Name="AmbientSpace" Arg="pg"/>
+<Oper Name="AmbientSpace" Arg="sub"/>
 <Returns>A projective space</Returns>
 <Description>
 Verdient uitleg.
@@ -158,7 +175,18 @@ Verdient uitleg.
 </ManSection>
 
 <ManSection>
-<Attr Name="BaerAutomorphism" Arg="pg"/>
+<Oper Name="DefiningFrameOfSubgeometry" Arg="sub"/>
+<Returns>A list of projective points</Returns>
+<Description>
+Verdient uitleg.
+<Example>
+</Example>
+</Description>
+</ManSection>
+
+
+<ManSection>
+<Attr Name="BaerAutomorphism" Arg="sub"/>
 <Returns>A subgeometry of a projective space</Returns>
 <Description>
 Verdient uitleg.
@@ -173,7 +201,7 @@ Verdient uitleg.
 <Heading>Constructing elements of a subgeometry and basic operations</Heading>
 
 <ManSection>
-<Oper Name="VectorSpaceToElement" Arg="pg, vec"/>
+<Oper Name="VectorSpaceToElement" Arg="sub, vec"/>
 <Returns>A subspace of a subgeometry</Returns>
 <Description>
 Verdient uitleg.
@@ -192,7 +220,7 @@ Verdient uitleg.
 </Description>
 </ManSection>
 
-
+shadows, flags, shadows of flags, span, meet, ExtendElementOf 
 </Section>
 
 <Section>

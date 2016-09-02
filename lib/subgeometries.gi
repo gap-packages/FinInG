@@ -151,6 +151,7 @@ InstallMethod( CanonicalSubgeometryOfProjectiveSpace,
     Objectify( ty, geo );
     SetIsCanonicalSubgeometryOfProjectiveSpace(geo, true);
     SetAmbientSpace(geo, pg);
+    SetDefiningFrameOfSubgeometry(geo,frame);
     #SetRankAttr(geo,d);
     return geo;
     end );
@@ -207,6 +208,7 @@ InstallMethod( SubgeometryOfProjectiveSpaceByFrame,
     Objectify( ty, geo );
     SetAmbientSpace(geo, pg);
     SetIsCanonicalSubgeometryOfProjectiveSpace(geo, can);
+    SetDefiningFrameOfSubgeometry(geo,frame);
     #SetRankAttr(geo,d);
     return geo;
     end );

@@ -83,6 +83,7 @@ DeclareOperation("SubfieldOfSubgeometry", [ IsSubgeometryOfProjectiveSpace ]);
 #attributes
 
 DeclareAttribute( "IsCanonicalSubgeometryOfProjectiveSpace", IsSubgeometryOfProjectiveSpace);
+DeclareAttribute( "DefiningFrameOfSubgeometry", IsSubgeometryOfProjectiveSpace);
 
 DeclareCategory( "IsShadowSubspacesOfSubgeometryOfProjectiveSpace", IsShadowElementsOfLieGeometry );
 DeclareRepresentation( "IsShadowSubspacesOfSubgeometryOfProjectiveSpaceRep", IsShadowElementsOfLieGeometryRep, [ "geometry", "type", "inner", "outer", "factorspace" ]);
