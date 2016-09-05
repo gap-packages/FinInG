@@ -84,7 +84,8 @@ subfield. It is checked whether the user specified subfield is indeed a subfield
 
 <ManSection>
 <Oper Name="RandomFrameOfProjectiveSpace" Arg="pg"/>
-<Returns>A set of points of <A>pg</A>, being a frame</Returns>
+<Returns>A set of points of <A>pg</A>, being a frame. Note that the returned object is also a
+set in the GAP sense, i.e. an ordered list without duplicates.</Returns>
 <Description>
 <Example>
 <#Include SYSTEM "../examples/include/subgeometries_randomframe.include"> 
@@ -132,58 +133,65 @@ so <A>pg</A> may not be a subgeometry itself. If the specified subfield equals t
 
 <Heading>Basic operations</Heading>
 
-blabla <F>ProjectiveDimension</F>, <F>Dimension</F>, <F>Rank</F>: same.
-
-<ManSection>
-<Oper Name="UnderlyingVectorSpace" Arg="sub"/>
-<Returns>A vector space</Returns>
-<Description>
-Verdient uitleg.
-<Example>
-</Example>
-</Description>
-</ManSection>
-
-<ManSection>
-<Oper Name="BaseField" Arg="sub"/>
-<Returns>A finite field</Returns>
-<Description>
-Verdient uitleg.
-<Example>
-</Example>
-</Description>
-</ManSection>
-
-<ManSection>
-<Oper Name="SubfieldOfSubgeometry" Arg="sub"/>
-<Returns>A finite field</Returns>
-<Description>
-Verdient uitleg.
-<Example>
-</Example>
-</Description>
-</ManSection>
-
 <ManSection>
 <Oper Name="AmbientSpace" Arg="sub"/>
 <Returns>A projective space</Returns>
 <Description>
-Verdient uitleg.
+The ambient space of a subgeometry <A>sub</A> is the projective space of which <A>sub</A> is a subgeometry. This operation
+returns the ambient space of the subgeometry <A>sub</A>. Different subgeometries can have the same ambient space.
 <Example>
+<#Include SYSTEM "../examples/include/subgeometries_ambientspace.include">
 </Example>
 </Description>
 </ManSection>
 
 <ManSection>
-<Oper Name="DefiningFrameOfSubgeometry" Arg="sub"/>
-<Returns>A list of projective points</Returns>
+<Attr Name="DefiningFrameOfSubgeometry" Arg="sub"/>
+<Returns>A set of projective points</Returns>
 <Description>
-Verdient uitleg.
+This attribute returns a frame of the ambient space of <A>sub</A> defining it. Note that different frames
+might define the same subgeometry, but the frame used to constructed <A>sub</A> is stored at construction,
+and it is exactly this stored object that is returned by this attribute. The returned object is a set
+of points, and it is also a set in the GAP sense, i.e. an ordered list withouth duplicates.
 <Example>
+<#Include SYSTEM "../examples/include/subgeometries_definingframe.include">
 </Example>
 </Description>
 </ManSection>
 
+<ManSection>
+<Heading>Projective dimension and rank</Heading>
+<Oper Name="ProjectiveDimension" Arg="sub"/>
+<Oper Name="Dimension" Arg="sub"/>
+<Oper Name="Rank" Arg="sub"/>
+<Returns>an integer</Returns>
+<Description>
+If <A>sub</A> is a subgeometry of a projective space, then it is a projective space
+itself. Therefore, these three operations return the projective dimension of <A>sub</A>,
+see also <Ref Sect="proj:dimension"/>.
+<Example>
+<#Include SYSTEM "../examples/include/subgeometries_dimension.include">
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Heading>Underlying algebraic structures</Heading>
+<Oper Name="UnderlyingVectorSpace" Arg="sub"/>
+<Oper Name="BaseField" Arg="sub"/>
+<Oper Name="SubfieldOfSubgeometry" Arg="sub"/>
+<Returns>A vector space, a finite field, a finite field respectively</Returns>
+<Description>
+The operations <F>UnderlyingVectorSpace</F> and <F>BaseField</F> are defined for
+projective spaces, see <Ref Sect="proj:underlyingvs"/> and <Ref Sect="proj:basefield"/>.
+For a subgeometry of a projective space <A>sub</A> with ambient space <A>ps</A>,
+these operations return <F>UnderlyingVectorSpace(ps)</F>, <F>BaseField(ps)</F> respectively.
+The operation <F>SubfieldOfSubgeometry</F> returns the subfield over which <A>sub</A> is defined.
+<Example>
+<#Include SYSTEM "../examples/include/subgeometries_underlyingstructures.include">
+</Example>
+</Description>
+</ManSection>
 
 <ManSection>
 <Attr Name="BaerAutomorphism" Arg="sub"/>

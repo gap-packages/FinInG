@@ -1,0 +1,10 @@
+gap&gt; pg := PG(7,8^2);
+ProjectiveSpace(7, 64)
+gap&gt; sub := CanonicalSubgeometryOfProjectiveSpace(pg,8);
+Subgeometry PG(7, 8) of ProjectiveSpace(7, 64)
+gap&gt; ProjectiveDimension(sub);
+7
+gap&gt; Dimension(sub);
+7
+gap&gt; Rank(sub);
+7

@@ -103,7 +103,7 @@ diagramfiles := ["diagram_cosetgeom", "diagram_neumaier", "diagram_nearoctagon",
                     "diagram_random", "diagram_notFT", "diagram_firmthinthick", "diagram_connectedness", "diagram_flagmapping",
                     "diagram_residues"];
                     
-subgeometriesfiles := ["subgeometries_canonical", "subgeometries_randomframe", "subgeometries_isframe"];
+subgeometriesfiles := ["subgeometries_canonical", "subgeometries_randomframe", "subgeometries_isframe", "subgeometries_underlyingstructures"];
 
 websitefiles := ["web_hyperoval24", "web_inumbersherm", "web_embedding", "web_spreads", "web_ovoidq63"];
 
@@ -114,7 +114,7 @@ groups_appfiles := ["groups_app_sodesargues", "groups_app_godesargues", "groups_
 
 exampledir := DirectoriesPackageLibrary("fining","tst")[1];
 
-files := [ "subgeometries_isframe" ];
+files := [ "subgeometries_underlyingstructures", "subgeometries_ambientspace", "subgeometries_definingframe", "subgeometries_dimension" ];
 
 #initialize directorynames
 #exampledir = dir where .g files are located : ".../pkg/fining/examples/gap"

@@ -1,0 +1,18 @@
+gap&gt; pg := PG(3,3^6);
+ProjectiveSpace(3, 729)
+gap&gt; sub1 := CanonicalSubgeometryOfProjectiveSpace(pg,3^3);
+Subgeometry PG(3, 27) of ProjectiveSpace(3, 729)
+gap&gt; BaseField(sub1);
+GF(3^6)
+gap&gt; UnderlyingVectorSpace(sub1);
+( GF(3^6)^4 )
+gap&gt; SubfieldOfSubgeometry(sub1);
+GF(3^3)
+gap&gt; sub2 := CanonicalSubgeometryOfProjectiveSpace(pg,3^2);
+Subgeometry PG(3, 9) of ProjectiveSpace(3, 729)
+gap&gt; BaseField(sub2);
+GF(3^6)
+gap&gt; UnderlyingVectorSpace(sub2);
+( GF(3^6)^4 )
+gap&gt; SubfieldOfSubgeometry(sub2);
+GF(3^2)

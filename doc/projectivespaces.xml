@@ -66,7 +66,7 @@ namely, the common abbreviation <C>PG(d, q)</C>.
 </Description>
 </ManSection>
 
-<ManSection>
+<ManSection Label="proj:dimension">
 <Attr Name="ProjectiveDimension" Arg="ps"/>
 <Attr Name="Dimension" Arg="ps"/>
 <Attr Name="Rank" Arg="ps"/>
@@ -78,7 +78,7 @@ namely, the common abbreviation <C>PG(d, q)</C>.
 </Description>
 </ManSection>
 
-<ManSection>
+<ManSection Label="proj:basefield">
 <Oper Name="BaseField" Arg="ps"/>
 <Returns>returns the base field for the projective space <A>ps</A>
 </Returns>
@@ -89,7 +89,7 @@ namely, the common abbreviation <C>PG(d, q)</C>.
 </Description>
 </ManSection>
 
-<ManSection>
+<ManSection Label="proj:underlyingvs">
 <Oper Name="UnderlyingVectorSpace" Arg="ps"/>
 
 <Returns>a vector space</Returns>

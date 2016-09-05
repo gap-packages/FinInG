@@ -1,0 +1,21 @@
+gap&gt; pg := PG(2,2^4);
+ProjectiveSpace(2, 16)
+gap&gt; sub := CanonicalSubgeometryOfProjectiveSpace(pg,2);
+Subgeometry PG(2, 2) of ProjectiveSpace(2, 16)
+gap&gt; frame := DefiningFrameOfSubgeometry(sub);
+[ &lt;a point in ProjectiveSpace(2, 16)&gt;, &lt;a point in ProjectiveSpace(2, 16)&gt;, 
+  &lt;a point in ProjectiveSpace(2, 16)&gt;, &lt;a point in ProjectiveSpace(2, 16)&gt; ]
+gap&gt; List(frame,x-&gt;Unpack(UnderlyingObject(x)));
+[ [ Z(2)^0, 0*Z(2), 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2) ], 
+  [ 0*Z(2), 0*Z(2), Z(2)^0 ], [ Z(2)^0, Z(2)^0, Z(2)^0 ] ]
+gap&gt; frame := RandomFrameOfProjectiveSpace(pg);
+[ &lt;a point in ProjectiveSpace(2, 16)&gt;, &lt;a point in ProjectiveSpace(2, 16)&gt;, 
+  &lt;a point in ProjectiveSpace(2, 16)&gt;, &lt;a point in ProjectiveSpace(2, 16)&gt; ]
+gap&gt; sub := SubgeometryOfProjectiveSpaceByFrame(pg,frame,2^2);
+Subgeometry PG(2, 4) of ProjectiveSpace(2, 16)
+gap&gt; def := DefiningFrameOfSubgeometry(sub);
+[ &lt;a point in ProjectiveSpace(2, 16)&gt;, &lt;a point in ProjectiveSpace(2, 16)&gt;, 
+  &lt;a point in ProjectiveSpace(2, 16)&gt;, &lt;a point in ProjectiveSpace(2, 16)&gt; ]
+gap&gt; List(def,x-&gt;Unpack(UnderlyingObject(x)));
+[ [ Z(2)^0, Z(2^4)^3, 0*Z(2) ], [ Z(2)^0, Z(2^4)^9, Z(2^4)^4 ], 
+  [ Z(2)^0, Z(2^4)^13, Z(2)^0 ], [ Z(2)^0, Z(2^2)^2, Z(2^4)^14 ] ]
