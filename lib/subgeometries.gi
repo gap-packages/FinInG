@@ -361,6 +361,9 @@ InstallMethod( VectorSpaceToElementForSubgeometries,
 	[ IsSubgeometryOfProjectiveSpace, IsObject],
 	function( sub, obj )
         local ambient, element, newelement, proj, subfield;
+   		if IsZero(obj) then
+			return EmptySubspace(sub);
+        fi;
         ambient := sub!.ambientspace;
         element := VectorSpaceToElement(ambient,obj);
         if not IsCanonicalSubgeometryOfProjectiveSpace(sub) then

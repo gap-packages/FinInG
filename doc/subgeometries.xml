@@ -49,7 +49,7 @@ over the subfield <M>GF(q')</M>, as are the coordinates of the vectors after nor
 any subspace of the subgeometry. Clearly, the Frobenius automorphism <M>x->x^q'</M> fixes all elements
 of the subgeometry.
 <P/>
-For an arbitrary frame og <M>PG(n,q)</M> and a subfield <M>GF(q')</M>, there exists a unique collineation
+For an arbitrary frame of <M>PG(n,q)</M> and a subfield <M>GF(q')</M>, there exists a unique collineation
 of <M>PG(n,q)</M> fixing the subgeometry <M>PG(n,q')</M> pointwise. This collineation is the conjugation
 of the Frobenius automorhpism by the unique collineation mapping the defining frame of the subgeometry
 to the standard frame of <M>PG(n,q)</M>.
@@ -195,9 +195,10 @@ The operation <F>SubfieldOfSubgeometry</F> returns the subfield over which <A>su
 
 <ManSection>
 <Attr Name="BaerAutomorphism" Arg="sub"/>
-<Returns>A subgeometry of a projective space</Returns>
+<Returns>A collineation of the ambient projective space of <A>sub</A></Returns>
 <Description>
-Verdient uitleg.
+Given a subgeometry <A>sub</A> with ambient projective space <M>P</M>, this attribute returns
+a collineation of <M>P</M> that fixes <A>sub</A> pointwise.
 <Example>
 </Example>
 </Description>
@@ -209,11 +210,18 @@ Verdient uitleg.
 <Heading>Constructing elements of a subgeometry and basic operations</Heading>
 
 <ManSection>
-<Oper Name="VectorSpaceToElement" Arg="sub, vec"/>
+<Oper Name="VectorSpaceToElement" Arg="sub, v"/>
 <Returns>A subspace of a subgeometry</Returns>
 <Description>
-Verdient uitleg.
+<A>sub</A> is a subgeometry of aprojective space, and <A>v</A> is either a row vector 
+(for points) or an <M>m x n</M> matrix (for an (m-1)-dimensional subspace of a subgeometry of dimension <M>n-1</M> 
+of aprojective space). In the case that <A>v</A> is a matrix, the rows represent generators 
+for the subspace. An exceptional case is when v is a zero-vector, in which case the trivial 
+subspace is returned. This method checks whether <A>v</A> determines an element of <A>sub</A>. The argument
+<A>v</A> will typically be defined over the base field of <A>sub</A>, which is the base field of the ambient
+space of <A>sub</A>.
 <Example>
+
 </Example>
 </Description>
 </ManSection>
