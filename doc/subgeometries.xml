@@ -221,7 +221,7 @@ subspace is returned. This method checks whether <A>v</A> determines an element 
 <A>v</A> will typically be defined over the base field of <A>sub</A>, which is the base field of the ambient
 space of <A>sub</A>.
 <Example>
-
+<#Include SYSTEM "../examples/include/subgeometries_vectorspacetoelement.include">
 </Example>
 </Description>
 </ManSection>

@@ -103,7 +103,8 @@ diagramfiles := ["diagram_cosetgeom", "diagram_neumaier", "diagram_nearoctagon",
                     "diagram_random", "diagram_notFT", "diagram_firmthinthick", "diagram_connectedness", "diagram_flagmapping",
                     "diagram_residues"];
                     
-subgeometriesfiles := ["subgeometries_canonical", "subgeometries_randomframe", "subgeometries_isframe", "subgeometries_underlyingstructures"];
+subgeometriesfiles := ["subgeometries_canonical", "subgeometries_randomframe", "subgeometries_isframe", "subgeometries_underlyingstructures", 
+                        "subgeometries_vectorspacetoelement"];
 
 websitefiles := ["web_hyperoval24", "web_inumbersherm", "web_embedding", "web_spreads", "web_ovoidq63"];
 

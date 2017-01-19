@@ -360,21 +360,29 @@ InstallMethod( VectorSpaceToElementForSubgeometries,
 	"for a sub geometry of a projective space and an object",
 	[ IsSubgeometryOfProjectiveSpace, IsObject],
 	function( sub, obj )
-        local ambient, element, newelement, proj, subfield;
+        local ambient, element, newelements, proj, subfield, newobj, elements;
    		if IsZero(obj) then
 			return EmptySubspace(sub);
         fi;
         ambient := sub!.ambientspace;
         element := VectorSpaceToElement(ambient,obj);
+        if element = ambient then
+            newobj := Filtered(obj,x->not IsZero(x));
+            elements := List(newobj,x->VectorSpaceToElement(sub,x));
+        else
+            elements := [element];
+        fi;
         if not IsCanonicalSubgeometryOfProjectiveSpace(sub) then
             proj := sub!.projectivity;
-            newelement := element^(proj^(-1));
+            newelements := List(elements,x->x^(proj^(-1)));
         else
-            newelement := element;
+            newelements := elements;
         fi;
         subfield := sub!.subfield;
-        if not ForAll( Flat( newelement!.obj ), i -> i in subfield) then
+        if not ForAll( Flat( List(newelements,x->x!.obj ) ), i -> i in subfield) then
             Error( "<obj> does not determine an element in <sub>");
+        elif element = ambient then
+            return sub;
         else
             return Wrap(sub,element!.type,UnderlyingObject(element));
         fi;
@@ -607,7 +615,7 @@ InstallMethod( \in,
 #############################################################################
 #O \in( <element>, <ps> )
 # for a subspace of a projective space and a subgeometry.
-# This is tricky as well: subspaces of subgeometires also belong to
+# This is tricky as well: subspaces of subgeometries also belong to
 # IsSubspaceOfProjectiveSpace so the element!.geo = ps can occur if the
 # element is really a subspace of a subgeometry.
 ##
@@ -1193,7 +1201,7 @@ InstallMethod( Iterator,
 ## groups and actions.
 
 InstallMethod( CollineationGroup, 
-	"for a full projective space",
+	"for a subgeometry of a projective space",
 	[ IsSubgeometryOfProjectiveSpace and IsSubgeometryOfProjectiveSpaceRep ],
 	function( sub )
 		local coll,d,f,frob,g,newgens,q,s,pow,h,baer;
