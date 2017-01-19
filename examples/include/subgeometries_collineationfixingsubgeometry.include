@@ -1,0 +1,8 @@
+gap&gt; pg := PG(2,7^3);
+ProjectiveSpace(2, 343)
+gap&gt; sub := CanonicalSubgeometryOfProjectiveSpace(pg,GF(7));
+Subgeometry PG(2, 7) of ProjectiveSpace(2, 343)
+gap&gt; coll := CollineationFixingSubgeometry(sub);
+&lt; a collineation: &lt;cmat 3x3 over GF(7,3)&gt;, F^7&gt;
+gap&gt; Order(coll);
+3

@@ -120,12 +120,15 @@ InstallMethod( RandomFrameOfProjectiveSpace,
 #############################################################################
 #O  CanonicalSubgeometryOfProjectiveSpace( <pg>, <subfield> )
 #   This method requires a projective space and a subfield.
+# small change on 12/9/16: we added eventually a field .projectivity in the
+# returned geometry. From time to time this is useful, e.g. when comparing
+# a canonical subgeometry with an arbitrary one, see e.g. code for \=
 ##
 InstallMethod( CanonicalSubgeometryOfProjectiveSpace,
     "for a projective space, and a prime power",
     [ IsProjectiveSpace, IsField and IsFinite],
     function(pg,subfield)
-    local geo, subpg, d, frame, ty, em, sigma, h, t, p, frob, q;
+    local geo, subpg, d, frame, ty, em, sigma, h, t, p, frob, q, proj;
     if IsSubgeometryOfProjectiveSpace(pg) then
         Error("recursive construction of subgeometries not (yet) possible");
     fi;
@@ -144,8 +147,9 @@ InstallMethod( CanonicalSubgeometryOfProjectiveSpace,
     em := NaturalEmbeddingBySubfield(subpg,pg);
     frob := FrobeniusAutomorphism(BaseField(pg))^h;
     sigma := CollineationOfProjectiveSpace(pg,frob);
+    proj := CollineationOfProjectiveSpace(IdentityMat(d+1,pg!.basefield),pg!.basefield);
     geo := rec(dimension := d, basefield := pg!.basefield, subfield := GF(q), ambientspace := pg, isomorphicsubgeometry := subpg, frame := frame,
-        embedding := em, vectorspace := FullRowSpace(pg!.basefield, d+1), sigma := sigma );
+        embedding := em, vectorspace := FullRowSpace(pg!.basefield, d+1), sigma := sigma, projectivity := proj );
     ty := NewType( SubgeometriesFamily,
                   IsSubgeometryOfProjectiveSpace and IsSubgeometryOfProjectiveSpaceRep );
     Objectify( ty, geo );
@@ -186,6 +190,7 @@ InstallMethod( SubgeometryOfProjectiveSpaceByFrame,
     frob := FrobeniusAutomorphism(BaseField(pg))^h;
     if ForAll(frame,y->ForAll(Flat(y!.obj),x->x in subfield)=true) then
         can := true;
+        proj := CollineationOfProjectiveSpace(IdentityMat(d+1	,pg!.basefield),pg!.basefield);
         sigma := CollineationOfProjectiveSpace(pg,frob);
     else
         can := false;
@@ -199,10 +204,8 @@ InstallMethod( SubgeometryOfProjectiveSpaceByFrame,
     fi;
     em := NaturalEmbeddingBySubfield(subpg,pg);
     geo := rec(dimension := d, basefield := pg!.basefield, subfield := GF(q), ambientspace := pg, isomorphicsubgeometry := subpg,
-        frame := ShallowCopy(frame), embedding := em, vectorspace := FullRowSpace(pg!.basefield, d+1), sigma := sigma );
-    if not can then
-        geo.projectivity := proj;
-    fi;
+        frame := ShallowCopy(frame), embedding := em, vectorspace := FullRowSpace(pg!.basefield, d+1), sigma := sigma,
+        projectivity := proj );
     ty := NewType( SubgeometriesFamily,
                   IsSubgeometryOfProjectiveSpace and IsSubgeometryOfProjectiveSpaceRep );
     Objectify( ty, geo );
@@ -247,13 +250,15 @@ InstallMethod( SubgeometryOfProjectiveSpaceByFrame,
 # (2) if (1)=true, test if one of them is not canonical, if so, check whether they
 #      are equal if p*q^1, p, s their respective projectivities,
 #      is a collineation over the subfield,
+#      note 12/9/16: checking whether all elements of mat belong to the subfield, is
+#      too restrictive: we must now first divded mat by the first non-zero element!
 # (3) if (2)=false, then both are canonical, and return true.
 ##
 InstallMethod( \=,
     "for two subgeometries of a projective space",
 	[ IsSubgeometryOfProjectiveSpace, IsSubgeometryOfProjectiveSpaceRep ],
     function(sub1,sub2)
-    local proj1, proj2, res, mat;
+    local proj1, proj2, res, mat, nz;
     if not AmbientSpace(sub1) = AmbientSpace(sub2) then
         return false;
     elif not sub1!.subfield = sub2!.subfield then
@@ -263,7 +268,9 @@ InstallMethod( \=,
         proj2 := sub2!.projectivity;
         res := proj1 * proj2^(-1);
         mat := MatrixOfCollineation(res);
-        return ForAll(Flat(mat), x->x in sub1!.subfield);
+        #return ForAll(Flat(mat), x->x in sub1!.subfield); # too restrictive!
+        nz := First(Flat(mat),x->x <> Zero(sub1!.basefield));
+        return ForAll(Flat(mat), x->x/nz in sub1!.subfield);
     else
         return true;
     fi;
@@ -316,12 +323,12 @@ InstallMethod( SubfieldOfSubgeometry,
 	sub -> sub!.subfield );
 
 #############################################################################
-#A BaerAutomorphism
+#A CollineationFixingSubgeometry
 # For a subgeometry PG(n,q) in PG(n,q^2), we would call this the Baer involution.
 # This is the collineation of PGammaL(n+1,q^t) fixing the subgeometry point wise.
 # Its order is t.
 ##
-InstallMethod( BaerAutomorphism,
+InstallMethod( CollineationFixingSubgeometry,
 	"for a subgeometry of a projective space",
 	[ IsSubgeometryOfProjectiveSpace ],
     function(pg)
@@ -1284,3 +1291,9 @@ InstallOtherMethod( \^,
 		return OnProjSubspacesOfSubgeometries(x,em);
 	end );
 
+InstallGlobalFunction( OnSubgeometryOfProjectiveSpace,
+  function( sub, el )
+    local frame;
+    frame := List(sub!.frame,x->x^el);
+    return SubgeometryOfProjectiveSpaceByFrame(AmbientSpace(sub),frame,SubfieldOfSubgeometry(sub));
+end );

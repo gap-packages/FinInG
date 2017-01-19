@@ -88,7 +88,7 @@ DeclareAttribute( "DefiningFrameOfSubgeometry", IsSubgeometryOfProjectiveSpace);
 DeclareCategory( "IsShadowSubspacesOfSubgeometryOfProjectiveSpace", IsShadowElementsOfLieGeometry );
 DeclareRepresentation( "IsShadowSubspacesOfSubgeometryOfProjectiveSpaceRep", IsShadowElementsOfLieGeometryRep, [ "geometry", "type", "inner", "outer", "factorspace" ]);
 
-DeclareAttribute( "BaerAutomorphism", IsSubgeometryOfProjectiveSpace);
+DeclareAttribute( "CollineationFixingSubgeometry", IsSubgeometryOfProjectiveSpace);
 
 
 #action functions
@@ -96,4 +96,6 @@ DeclareAttribute( "BaerAutomorphism", IsSubgeometryOfProjectiveSpace);
 
 DeclareGlobalFunction( "OnProjSubspacesOfSubgeometriesNC" );
 DeclareGlobalFunction( "OnProjSubspacesOfSubgeometries" );
+
+DeclareGlobalFunction( "OnSubgeometryOfProjectiveSpace" );
 

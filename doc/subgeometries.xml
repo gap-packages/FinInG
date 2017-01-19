@@ -41,7 +41,11 @@ A subgeometry in a projective space is completely determined by a frame of the p
 and a subfield of the base field of the projective space. The <E>standard frame</E> in an
 <M>n</M>-dimensional projective space <M>PG(n,q)</M> is the set of <M>n+2</M> points represented by
 <M>(1,0,\ldots,0),(0,1,\ldots,0),\ldots,(0,0,\ldots,1),(1,1,\ldots,1)</M>. The subgeometry
-determined by the standard frame will be called <E>canonical</E>. For a given subfield <M>GF(q') \subset GF(q)</M>,
+determined by the standard frame will be called <E>canonical</E>. Note that different
+frames may determine the same subgeometry (over a fixed subfield). A subgeometry that
+equals the subgeometry determined by the standard frame, will also be canonical
+
+For a given subfield <M>GF(q') \subset GF(q)</M>,
 the canonical subgeometry determined by the standard frame in <M>PG(n,q)</M> is mathematically spoken
 the image of the <Package>FinInG</Package> geometry morphism <F>NaturalEmbeddingBySubField</F> of the
 projective space <M>PG(n,q')</M>. The coordinates of the points of the subgeometry will be exclusively
@@ -52,7 +56,10 @@ of the subgeometry.
 For an arbitrary frame of <M>PG(n,q)</M> and a subfield <M>GF(q')</M>, there exists a unique collineation
 of <M>PG(n,q)</M> fixing the subgeometry <M>PG(n,q')</M> pointwise. This collineation is the conjugation
 of the Frobenius automorhpism by the unique collineation mapping the defining frame of the subgeometry
-to the standard frame of <M>PG(n,q)</M>.
+to the standard frame of <M>PG(n,q)</M>. Upon construction of a subgeometry, both collineations will
+be computed, and are of use when dealing with the full collineation group of a subgeometry. As for
+any incidence geometry in <Package>FinInG</Package>, operations to compute that collineation group
+and particular action functions for subgeometries are provided.
 <Section>
 <Heading>Subgeometries of projective spaces</Heading>
 
@@ -194,12 +201,20 @@ The operation <F>SubfieldOfSubgeometry</F> returns the subfield over which <A>su
 </ManSection>
 
 <ManSection>
-<Attr Name="BaerAutomorphism" Arg="sub"/>
-<Returns>A collineation of the ambient projective space of <A>sub</A></Returns>
+<Attr Name="CollineationFixingSubgeometry" Arg="sub"/>
+<Returns>A collineation of the ambient space of <A>sub</A></Returns>
 <Description>
-Given a subgeometry <A>sub</A> with ambient projective space <M>P</M>, this attribute returns
-a collineation of <M>P</M> that fixes <A>sub</A> pointwise.
+Let <M>GF(q)</M> be the field over which <A>sub</A> is defined, this is a
+subfield of <M>GF(q^t)</M> over which the ambient projective space <M>P</M>
+is defined. It is well known that there exists a collineation of <M>P</M> of
+order <M>t</M>, fixing all elements of <A>sub</A>, which is returned by this operation.
+This collineation is the field automorphism of <M>GF(q^t)</M>, fixing all elements
+of the subfield <M>GF(q)</M>, conjugated by the collineation of <M>P</M> mapping
+the subgeometry <A>sub</A> on the canonical subgeometry of <M>P</M> over <M>GF(q)</M>
+on the subgeometry <A>sub</A>. In case of a quadratic field extension (i.e. <M>t=2</M>),
+this collineation is known in the literature as the Baer involution of the subgeometry.
 <Example>
+<#Include SYSTEM "../examples/include/subgeometries_collineationfixingsubgeometry.include">
 </Example>
 </Description>
 </ManSection>
@@ -228,7 +243,7 @@ space of <A>sub</A>.
 
 <ManSection>
 <Oper Name="ExtendElementOfSubgeometry" Arg="el"/>
-<Returns>A subspace of projective space</Returns>
+<Returns>A subspace of a projective space</Returns>
 <Description>
 Verdient uitleg.
 <Example>
