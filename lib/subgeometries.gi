@@ -641,7 +641,7 @@ InstallMethod( \in,
 # We use the isomorphic subgeometry for the method here.
 ##
 InstallMethod( Random, 
-	"for a collection of subspaces of a projective space",
+	"for a collection of subspaces of a subgeometry of a projective space",
 	[ IsSubspacesOfSubgeometryOfProjectiveSpace ],
     # chooses a random element out of the collection of subspaces of given
     # dimension of a subgeometry of a projective space
@@ -937,8 +937,9 @@ InstallMethod( Meet,
 # is applicable for a projective space that is not a subgeometry and a list
 # of elements of a subgeometry, but will give an appropriate error. 
 # Using IsSubgeometryOfProjectiveSpace would force us to install another method
-# just producing an error is called with the first argument a projective space
-# that is not a subgeometry.
+# just producing an error saying that the elements do not belong to <ps>
+# if called with the first argument a projective space that is not a subgeometry.
+# Installing no such method in that case would result in a no method found error.
 ##
 InstallMethod( FlagOfIncidenceStructure,
 	"for a projective space and list of subspaces of the projective space",
@@ -1218,18 +1219,21 @@ InstallMethod( CollineationGroup,
 		g := GL(d+1,q);
 		frob := FrobeniusAutomorphism(sub!.basefield); #frobenius automorphism of big field
 		newgens := List(GeneratorsOfGroup(g),x->[x,frob^0]);
-        baer := frob^Length(FactorsInt(q)); #this is precisely the Baer collineation for the canonical subgeometry.
-        Add(newgens,[One(g),baer]);
+        #baer := frob^Length(FactorsInt(q)); #this is precisely the Baer collineation for the canonical subgeometry.
+        #Add(newgens,[One(g),baer]);
+        # new paradigm: CollineationGroup(sub) will not consider the embedding, 
         # if q is not prime, the frobenius automorphism of GF(q) is also a collineation.
         # note that we add the frobenius automorphism of the basefield (not the subfield).
-		if not IsPrime(q) then #if q is not prime, there is a frobenius automorphism.
-			Add(newgens,[One(g),frob]);
-            s := q^(d*(d+1)/2)*Product(List([2..d+1], i->q^i-1)) * Order(frob);
-		else
-            Add(newgens,[One(g),baer]);
-            s := q^(d*(d+1)/2)*Product(List([2..d+1], i->q^i-1)) * Order(baer);
-        fi;
-		newgens := ProjElsWithFrob(newgens,sub!.basefield); #using sub!.basefield as second argument makes sure that
+		#if not IsPrime(q) then #if q is not prime, there is a frobenius automorphism.
+		#	Add(newgens,[One(g),frob]);
+        #    s := q^(d*(d+1)/2)*Product(List([2..d+1], i->q^i-1)) * Order(frob);
+		#else
+        #    Add(newgens,[One(g),baer]);
+        #    s := q^(d*(d+1)/2)*Product(List([2..d+1], i->q^i-1)) * Order(baer);
+        #fi;
+        Add(newgens,[One(g),frob]);
+		s := Size(CollineationGroup(PG(d,q)));
+        newgens := ProjElsWithFrob(newgens,sub!.basefield); #using sub!.basefield as second argument makes sure that
         # ProjElsWithFrob returns elements in the collineation group of the ambient projective space.
         if not IsCanonicalSubgeometryOfProjectiveSpace(sub) then
             newgens := List(newgens,x->sub!.projectivity^(-1)*x*sub!.projectivity);
@@ -1238,9 +1242,9 @@ InstallMethod( CollineationGroup,
 		#pow := LogInt(q, Characteristic(f)); #order of frobenius of subfield!
 		#s := pow * q^(d*(d+1)/2)*Product(List([2..d+1], i->q^i-1))*Order(baer); #hard coded order!
 		if not IsPrime(q) then
-			SetName( coll, Concatenation("The FinInG collineation group PGammaL(",String(d+1),",",String(q),"):",String(Order(baer))," of ",ViewString(sub)) );
+			SetName( coll, Concatenation("The FinInG collineation group PGammaL(",String(d+1),",",String(q),") of ",ViewString(sub)) );
 		else
-			SetName( coll, Concatenation("The FinInG collineation group PGL(",String(d+1),",",String(q),"):",String(Order(baer))," of ",ViewString(sub)) );
+			SetName( coll, Concatenation("The FinInG collineation group PGL(",String(d+1),",",String(q),") of ",ViewString(sub)) );
 			# Remark that in the prime case, PGL is returned as a FinInG collineation group with associated automorphism F^0.
 		fi;	
 		SetSize( coll, s );
@@ -1268,17 +1272,18 @@ InstallMethod( ProjectivityGroup,
 		g := GL(d+1,q);
 		frob := FrobeniusAutomorphism(sub!.basefield); #frobenius automorphism of big field
 		newgens := List(GeneratorsOfGroup(g),x->[x,frob^0]);
-        baer := frob^Length(FactorsInt(q)); #this is precisely the Baer collineation for the canonical subgeometry.
-        Add(newgens,[One(g),baer]);
+        #baer := frob^Length(FactorsInt(q)); #this is precisely the Baer collineation for the canonical subgeometry.
+        #Add(newgens,[One(g),baer]);
 		newgens := ProjElsWithFrob(newgens,sub!.basefield); #using sub!.basefield as second argument makes sure that
         # ProjElsWithFrob returns elements in the collineation group of the ambient projective space.
         if not IsCanonicalSubgeometryOfProjectiveSpace(sub) then
             newgens := List(newgens,x->sub!.projectivity^(-1)*x*sub!.projectivity);
         fi;
 		coll := GroupWithGenerators(newgens);
-        SetName( coll, Concatenation("The FinInG projectivity group PGL(",String(d+1),",",String(q),"):",String(Order(baer))," of ",ViewString(sub)) );
-        s := q^(d*(d+1)/2)*Product(List([2..d+1], i->q^i-1)) * Order(baer);
-		SetSize( coll, s );
+        SetName( coll, Concatenation("The FinInG projectivity group PGL(",String(d+1),",",String(q),") of ",ViewString(sub)) );
+        #s := q^(d*(d+1)/2)*Product(List([2..d+1], i->q^i-1)) * Order(baer);
+		s := Size(ProjectivityGroup(PG(d,q)));
+        SetSize( coll, s );
         # only for making generalised polygons section more generic:
         if d = 2 then
             SetCollineationAction(coll,OnProjSubspacesOfSubgeometriesNC);
