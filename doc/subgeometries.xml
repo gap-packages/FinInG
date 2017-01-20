@@ -257,6 +257,31 @@ shadows, flags, shadows of flags, span, meet, ExtendElementOf
 <Section>
 <Heading>Groups and actions</Heading>
 
+Let <M>P'</M> be a subgeometry of <M>P</M>. Within this framework, there are two possibilities to
+define the collineationgroup of <M>P'</M>. From the algebraic perspective, one could define a collineation
+to be a semilinear map preserving <M>P'</M>. In this perspective, one could consider all semilinear maps
+of the underlying vector space of <M>P</M>, since this is the underlying vector space of <M>P'</M> as well.
+However, this results in a group that does not act faithfully on the elements of <M>P'</M>, due to the existence
+of at least one collineation of <M>P</M> fixing all elements of <M>P'</M>. Since a non faithfull action results
+in problems when using the nice monomorphism functionality, we decided to define the collineation group of
+the subgeometry <M>P'</M> as the collineation group of the projective space isomorphic with <M>P'</M> conjugated
+by the collineation of <M>P</M> mapping <M>P'</M> on the canonical subgeometry of <M>P</M> over the same field as
+<M>P'</M>. Similarly, the projectivity group, respectively the special projectivity group, of <M>P'</M>
+is defined as the conjugate of the projectivity group, respectively special projectivity group, of
+the projective space isomorhpic with <M>P'</M>.
+
+<ManSection>
+<Heading>groups of collineations</Heading>
+<Oper Name="CollineationGroup" Arg="sub"/>
+<Oper Name="ProjectivityGroup" Arg="sub"/>
+<Oper Name="SpecialProjectivityGroup" Arg="sub"/>
+
+<Returns>A group of collineations</Returns>
+
+</ManSection>
+
+
+
 </Section>
 
 </Chapter>
