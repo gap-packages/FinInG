@@ -1202,9 +1202,6 @@ InstallMethod( Iterator,
         ));
     end);
     
-
-
-
 ## groups and actions.
 
 InstallMethod( CollineationGroup, 
@@ -1251,9 +1248,67 @@ InstallMethod( CollineationGroup,
         if d = 2 then
             SetCollineationAction(coll,OnProjSubspacesOfSubgeometriesNC);
         fi;
+        SetDefaultGeometry(coll,sub);
 		return coll;
 	end );
-    
+
+
+##
+InstallMethod( ProjectivityGroup, 
+	"for a subgeometry of a projective space",
+	[ IsSubgeometryOfProjectiveSpace and IsSubgeometryOfProjectiveSpaceRep ],
+	function( sub )
+		local d,f,frob,g,newgens,q,s,baer,coll;
+		f := sub!.subfield;
+		q := Size(f);
+		d := ProjectiveDimension(sub);
+		if d <= -1 then 
+			Error("The dimension of the projective spaces needs to be at least 0");
+		fi;
+		g := GL(d+1,q);
+		frob := FrobeniusAutomorphism(sub!.basefield); #frobenius automorphism of big field
+		newgens := List(GeneratorsOfGroup(g),x->[x,frob^0]);
+        baer := frob^Length(FactorsInt(q)); #this is precisely the Baer collineation for the canonical subgeometry.
+        Add(newgens,[One(g),baer]);
+		newgens := ProjElsWithFrob(newgens,sub!.basefield); #using sub!.basefield as second argument makes sure that
+        # ProjElsWithFrob returns elements in the collineation group of the ambient projective space.
+        if not IsCanonicalSubgeometryOfProjectiveSpace(sub) then
+            newgens := List(newgens,x->sub!.projectivity^(-1)*x*sub!.projectivity);
+        fi;
+		coll := GroupWithGenerators(newgens);
+        SetName( coll, Concatenation("The FinInG projectivity group PGL(",String(d+1),",",String(q),"):",String(Order(baer))," of ",ViewString(sub)) );
+        s := q^(d*(d+1)/2)*Product(List([2..d+1], i->q^i-1)) * Order(baer);
+		SetSize( coll, s );
+        # only for making generalised polygons section more generic:
+        if d = 2 then
+            SetCollineationAction(coll,OnProjSubspacesOfSubgeometriesNC);
+        fi;
+        SetDefaultGeometry(coll,sub);
+		return coll;
+	end );
+
+
+InstallMethod( NiceMonomorphism, 
+	"for a projective group of a subgeometry",
+	[IsProjectiveGroupWithFrob and HasDefaultGeometry], 
+	50,
+	function( pg )
+	local hom, dom,bf, geom;
+	Info(InfoFinInG,4,"Using NiceMonomorphism for proj. group (feasible)");
+    geom := DefaultGeometry(pg);
+	bf := SubfieldOfSubgeometry(geom);
+    #dom := List(MakeAllProjectivePoints( bf, Dimension(pg) - 1),x->OnProjPointsWithFrob(x,geom!.projectivity));
+    dom := AsList(Points(geom));
+	if FINING.Fast then
+	   hom := NiceMonomorphismByDomain( pg, dom, OnProjSubspacesOfSubgeometriesNC );
+    else 
+       hom := ActionHomomorphism(pg, dom, OnProjSubspacesOfSubgeometriesNC, "surjective");    
+       SetIsBijective(hom, true);
+    fi;
+    return hom;
+	end );
+
+
 InstallGlobalFunction( OnProjSubspacesOfSubgeometriesNC,
   function( var, el )
     local amb,geo,newvar;

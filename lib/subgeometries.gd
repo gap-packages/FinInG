@@ -99,3 +99,5 @@ DeclareGlobalFunction( "OnProjSubspacesOfSubgeometries" );
 
 DeclareGlobalFunction( "OnSubgeometryOfProjectiveSpace" );
 
+DeclareAttribute( "DefaultGeometry", IsProjectiveGroupWithFrob );
+
