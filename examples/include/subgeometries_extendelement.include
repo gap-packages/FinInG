@@ -1,0 +1,34 @@
+gap&gt; pg := PG(3,5^5);
+ProjectiveSpace(3, 3125)
+gap&gt; frame := RandomFrameOfProjectiveSpace(pg);
+[ &lt;a point in ProjectiveSpace(3, 3125)&gt;, &lt;a point in ProjectiveSpace(3, 3125)&gt;
+    , &lt;a point in ProjectiveSpace(3, 3125)&gt;, 
+  &lt;a point in ProjectiveSpace(3, 3125)&gt;, 
+  &lt;a point in ProjectiveSpace(3, 3125)&gt; ]
+gap&gt; sub := SubgeometryOfProjectiveSpaceByFrame(pg,frame,5);
+Subgeometry PG(3, 5) of ProjectiveSpace(3, 3125)
+gap&gt; p := Random(Points(sub));
+&lt;a point in Subgeometry PG(3, 5) of ProjectiveSpace(3, 3125)&gt;
+gap&gt; l := Random(Lines(p));
+&lt;a line in Subgeometry PG(3, 5) of ProjectiveSpace(3, 3125)&gt;
+gap&gt; p * l;
+true
+gap&gt; q := ExtendElementOfSubgeometry(p);
+&lt;a point in ProjectiveSpace(3, 3125)&gt;
+gap&gt; q * l;
+Error, &lt;x&gt; and &lt;y&gt; do not belong to the same geometry called from
+x in y at ./pkg/fining/lib/projectivespace.gi:1658 called from
+IsIncident( b, a ) at ./pkg/fining/lib/geometry.gi:439 called from
+&lt;function "unknown"&gt;( &lt;arguments&gt; )
+ called from read-eval loop at line 15 of *stdin*
+you can 'quit;' to quit to outer loop, or
+you can 'return;' to continue
+brk&gt; quit;
+gap&gt; m := ExtendElementOfSubgeometry(l);
+&lt;a line in ProjectiveSpace(3, 3125)&gt;
+gap&gt; q * m;
+true
+gap&gt; UnderlyingObject(q) = UnderlyingObject(p);
+true
+gap&gt; UnderlyingObject(l) = UnderlyingObject(m);
+true

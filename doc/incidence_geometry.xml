@@ -204,7 +204,7 @@ with an exception for <C>IsSubspaceOfClassicalPolarSpace</C>, which is a subcate
 </Description>
 </ManSection>
 
-<ManSection>
+<ManSection Label="underlyingobject1">
 <Oper Name="UnderlyingObject" Arg="el"/>
 <Returns>an object</Returns>
 <Description>
@@ -692,11 +692,24 @@ the operation <F>List</F>.
 <Filt Name="IsProjectiveSpace" Type="Category"/>
 <Filt Name="IsClassicalPolarSpace" Type="Category"/>
 <Description>
-Lie geometries bundle projective spaces and classical polar spaces together. In
-the future, more subcategories could be added since the term ``Lie
-geometry'' refers to a geometry whose automorphism group lies in some
-group of Lie type. Both classes of geometries have their category, as
-a subcategory of <C>IsLieGeometry</C>. 
+In <Package>FinInG</Package>, a <E>Lie geometry</E> <M>G</M> refers to a geometry whose automorphism group
+is a (subgroup of a) group of Lie type. Generally spoken, one could say that a Lie geometry
+is an incidence geometry, such that each element of type <M>i</M> is represented by a sub space
+of dimension <M>i+1</M> of a vector space <M>V</M>. The projective space <M>P</M> associated with <M>V</M>
+is naturally the <E>ambient space</E> of <M>G</M>.
+
+However, as one may also consider subspaces of the given vector space over <E>subfields of the ground field of <M>V</M></E>,
+one cannot not just say that the set of elements of <M>G</M> of a given type <M>i</M>, is a subset of the set of
+elements of type <M>i</M> of <M>P</M>. Geometrically, this means that embeddings may be full or not, i.e. when a line
+of a Lie geometry is embedded into <M>P</M> as a line <M>l</M>, the embedding is full only if all projective points
+of <M>l</M> have a pre image in <M>G</M>. Embeddings of finite classical polar spaces are full, and indeed the
+set of elements of type <M>i</M> is a proper subset of the set of elements of type <M>i</M> of <M>P</M>. Subgeometries
+of projective spaces behave differently, and indeed, a line of a subgeometry can be embedded into <M>P</M>, but will
+not be identified with a line of <M>P</M>.
+
+All geometries in <Package>FinInG</Package> that have a projective space as ambient space, belong to a subcategory
+of <C>IsLieGeometry</C>.
+
 </Description>
 </ManSection>
 

@@ -2,12 +2,18 @@ gap&gt; pg := PG(2,5^6);
 ProjectiveSpace(2, 15625)
 gap&gt; sub1 := CanonicalSubgeometryOfProjectiveSpace(pg,5);
 Subgeometry PG(2, 5) of ProjectiveSpace(2, 15625)
+gap&gt; UnderlyingVectorSpace(pg);
+( GF(5^6)^3 )
+gap&gt; UnderlyingVectorSpace(sub1);
+( GF(5^6)^3 )
 gap&gt; AmbientSpace(sub1);
 ProjectiveSpace(2, 15625)
 gap&gt; sub2 := CanonicalSubgeometryOfProjectiveSpace(pg,5^3);
 Subgeometry PG(2, 125) of ProjectiveSpace(2, 15625)
 gap&gt; AmbientSpace(sub2);
 ProjectiveSpace(2, 15625)
+gap&gt; UnderlyingVectorSpace(sub2);
+( GF(5^6)^3 )
 gap&gt; frame := RandomFrameOfProjectiveSpace(pg);
 [ &lt;a point in ProjectiveSpace(2, 15625)&gt;, 
   &lt;a point in ProjectiveSpace(2, 15625)&gt;, 
@@ -17,3 +23,5 @@ gap&gt; sub3 := SubgeometryOfProjectiveSpaceByFrame(pg,frame,5^2);
 Subgeometry PG(2, 25) of ProjectiveSpace(2, 15625)
 gap&gt; AmbientSpace(sub3);
 ProjectiveSpace(2, 15625)
+gap&gt; UnderlyingVectorSpace(sub3);
+( GF(5^6)^3 )
