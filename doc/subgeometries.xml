@@ -43,8 +43,8 @@ and a subfield of the base field of the projective space. The <E>standard frame<
 <M>(1,0,\ldots,0),(0,1,\ldots,0),\ldots,(0,0,\ldots,1),(1,1,\ldots,1)</M>. The subgeometry
 determined by the standard frame will be called <E>canonical</E>. Note that different
 frames may determine the same subgeometry (over a fixed subfield). A subgeometry that
-equals the subgeometry determined by the standard frame, will also be canonical
-
+equals the subgeometry determined by the standard frame, will also be canonical.
+<P/>
 For a given subfield <M>GF(q') \subset GF(q)</M>,
 the canonical subgeometry determined by the standard frame in <M>PG(n,q)</M> is mathematically spoken
 the image of the <Package>FinInG</Package> geometry morphism <F>NaturalEmbeddingBySubField</F> of the
