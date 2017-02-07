@@ -58,13 +58,13 @@ of <M>PG(n,q)</M> fixing the subgeometry <M>PG(n,q')</M> pointwise. This colline
 of the Frobenius automorhpism by the unique collineation mapping the defining frame of the subgeometry
 to the standard frame of <M>PG(n,q)</M>. Upon construction of a subgeometry, both collineations will
 be computed, and are of use when dealing with the full collineation group of a subgeometry. As for
-any incidence geometry in <Package>FinInG</Package>, operations to compute that collineation group
-and particular action functions for subgeometries are provided.
+any incidence geometry in <Package>FinInG</Package>, operations to compute this collineation group
+as well as particular action functions for subgeometries are provided.
 <P/>
 Subgeometries of projective spaces are constructed in a subcategory of <C>IsProjectiveSpace</C>, as such,
-all operations applicable one projective spaces, are naturally applicable on subgeometries. Subspaces
+all operations applicable to projective spaces, are naturally applicable to subgeometries. Subspaces
 of subgeometries are constructed in a subcategory of <C>IsSubspaceOfProjectiveSpace</C>. Hence, operations
-applicable on subspaces of projective spaces, are naturally applicable on subspaces of subgeometries.
+applicable to subspaces of projective spaces, are naturally applicable to subspaces of subgeometries.
 
 <Section>
 <Heading>Subgeometries of projective spaces</Heading>
@@ -76,7 +76,7 @@ This category is a subcategory of <C>IsProjectiveSpace</C>, and contains all sub
 projective spaces. Note that mathmetically spoken, a subspace of a projective space is also a subgeometry.
 However, in <Package>FinInG</Package>, subspaces of a projective space are constructed in a category that
 is not a subcategory of <C>IsProjectiveSpace</C>. Since <C>IsSubgeometryOfProjectiveSpace</C> is a subcategory
-of <C>IsProjectiveSpace</C>, all operations applicable on projective spaces, are naturally applicable on
+of <C>IsProjectiveSpace</C>, all operations applicable to projective spaces, are naturally applicable to
 subgeometries of projective spaces.
 </Description>
 </ManSection>
@@ -151,9 +151,9 @@ so <A>pg</A> may not be a subgeometry itself. If the specified subfield equals t
 <Oper Name="UnderlyingVectorSpace" Arg="sub"/>
 <Oper Name="AmbientSpace" Arg="sub"/>
 <Description>
-Let <M>P</M> be a projective space over the field <M>F</M>. Let Let <A>sub</A> be a subgeometry
-over <M>P</M> over the subfield <M>F'</M>. The underlying vector space of <A>sub</A>
-is defined as the underlying vector space of <M>P</M> (so which is a vector space over the field <M>F</M>).
+Let <M>P</M> be a projective space over the field <M>F</M>. Let <A>sub</A> be a subgeometry
+of <M>P</M> over the subfield <M>F'</M>. The underlying vector space of <A>sub</A>
+is defined as the underlying vector space of <M>P</M> (which is a vector space over the field <M>F</M>).
 The ambient space of a subgeometry <A>sub</A> is the projective space <M>P</M>.
 <Example>
 <#Include SYSTEM "../examples/include/subgeometries_ambientspace.include">
@@ -168,7 +168,7 @@ The ambient space of a subgeometry <A>sub</A> is the projective space <M>P</M>.
 This attribute returns a frame of the ambient space of <A>sub</A> defining it. Note that different frames
 might define the same subgeometry, but the frame used to constructed <A>sub</A> is stored at construction,
 and it is exactly this stored object that is returned by this attribute. The returned object is a set
-of points, and it is also a set in the GAP sense, i.e. an ordered list withouth duplicates.
+of points, and it is also a set in the GAP sense, i.e. an ordered list without duplicates.
 <Example>
 <#Include SYSTEM "../examples/include/subgeometries_definingframe.include">
 </Example>
@@ -196,7 +196,7 @@ see also <Ref Sect="proj:dimension"/>.
 <Oper Name="UnderlyingVectorSpace" Arg="sub"/>
 <Oper Name="BaseField" Arg="sub"/>
 <Oper Name="SubfieldOfSubgeometry" Arg="sub"/>
-<Returns>A vector space, a finite field, a finite field respectively</Returns>
+<Returns>A vector space, a finite field, a finite field, respectively</Returns>
 <Description>
 The operations <F>UnderlyingVectorSpace</F> and <F>BaseField</F> are defined for
 projective spaces, see <Ref Sect="proj:underlyingvs"/> and <Ref Sect="proj:basefield"/>.
@@ -237,12 +237,12 @@ this collineation is known in the literature as the Baer involution of the subge
 <Oper Name="VectorSpaceToElement" Arg="sub, v"/>
 <Returns>A subspace of a subgeometry</Returns>
 <Description>
-<A>sub</A> is a subgeometry of aprojective space, and <A>v</A> is either a row vector 
+<A>sub</A> is a subgeometry of a projective space, and <A>v</A> is either a row vector
 (for points) or an <M>m x n</M> matrix (for an (m-1)-dimensional subspace of a subgeometry of dimension <M>n-1</M> 
-of aprojective space). In the case that <A>v</A> is a matrix, the rows represent generators 
+of a projective space). In the case that <A>v</A> is a matrix, the rows represent generators
 for the subspace. An exceptional case is when v is a zero-vector, in which case the trivial 
 subspace is returned. This method checks whether <A>v</A> determines an element of <A>sub</A>. The argument
-<A>v</A> will typically be defined over the base field of <A>sub</A>, which is the base field of the ambient
+<A>v</A> will typically be defined over the base field of <A>sub</A>, which is the basefield of the ambient
 space of <A>sub</A>.
 <Example>
 <#Include SYSTEM "../examples/include/subgeometries_vectorspacetoelement.include">
@@ -256,10 +256,8 @@ space of <A>sub</A>.
 <Description>
 The argument <A>el</A> is an element of a subgeometry <M>P'</M> with ambient projective space <M>P</M>.
 The projective space is defined over a field <M>F</M>, the subgeometry <M>P'</M> is defined over
-a subfield <M>F'</M> of <M>F</M>. The underlying vectorspace of <A>el</A> is a <M>F'</M> vector space
-generated by a set <M>S</M>of vectors. These vectors are defined over <M>F</M>, since <M>P</M> is
-the ambient projective space of <M>P'</M>. This operation returns an element <M>pi</M> of <M>P</M>, where
-the underlying vectorspace of <M>pi</M> is now the <M>F</M> vector space generated by the vectors in <M>S</M>.
+a subfield <M>F'</M> of <M>F</M>. The underlying vectorspace of <A>el</A> is a vector space over <M>F'</M>
+generated by a set <M>S</M> of vectors. This operation returns the element <M>pi</M> of <M>P</M>, corresponding to the vector space over <M>F</M> generated by the vectors in <M>S</M>.
 Note that the set <M>S</M> can be otbained using <F>UnderlyingObject</F>, see <Ref Sect="underlyingobject1"/>.
 <Example>
 <#Include SYSTEM "../examples/include/subgeometries_extendelement.include">
@@ -300,17 +298,15 @@ Let <M>P'</M> be a subgeometry of <M>P</M>. Within this framework, there are two
 define the collineationgroup of <M>P'</M>. From the algebraic perspective, one could define a collineation
 to be a semilinear map preserving <M>P'</M>. In this perspective, one could consider all semilinear maps
 of the underlying vector space of <M>P</M>, since this is the underlying vector space of <M>P'</M> as well.
-However, this results in a group that does not act faithfully on the elements of <M>P'</M>, due to the existence
-of at least one collineation of <M>P</M> fixing all elements of <M>P'</M>. Since a non faithfull action results
-in problems when using the nice monomorphism functionality, we decided to define the collineation group of
-the subgeometry <M>P'</M> as the collineation group of the projective space isomorphic with <M>P'</M> conjugated
+However, this results in a group that does not act faithfully on the elements of <M>P'</M>. Since a non faithfull action causes problems when using the nice monomorphism functionality, we decided to define the collineation group of
+the subgeometry <M>P'</M> as the collineation group of the projective space isomorphic to <M>P'</M> conjugated
 by the collineation of <M>P</M> mapping <M>P'</M> on the canonical subgeometry of <M>P</M> over the same field as
 <M>P'</M>. Similarly, the projectivity group, respectively the special projectivity group, of <M>P'</M>
 is defined as the conjugate of the projectivity group, respectively special projectivity group, of
-the projective space isomorhpic with <M>P'</M>.
+the projective space isomorhpic to <M>P'</M>.
 
 <ManSection>
-<Heading>groups of collineations</Heading>
+<Heading>Groups of collineations</Heading>
 <Oper Name="CollineationGroup" Arg="sub"/>
 <Oper Name="ProjectivityGroup" Arg="sub"/>
 <Oper Name="SpecialProjectivityGroup" Arg="sub"/>
