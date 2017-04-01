@@ -67,7 +67,7 @@ of subgeometries are constructed in a subcategory of <C>IsSubspaceOfProjectiveSp
 applicable to subspaces of projective spaces, are naturally applicable to subspaces of subgeometries.
 
 <Section>
-<Heading>Subgeometries of projective spaces</Heading>
+<Heading>Particular Categories</Heading>
 
 <ManSection>
 <Filt Name="IsSubgeometryOfProjectiveSpace" Type="Category"/>
@@ -80,6 +80,20 @@ of <C>IsProjectiveSpace</C>, all operations applicable to projective spaces, are
 subgeometries of projective spaces.
 </Description>
 </ManSection>
+
+<ManSection>
+<Heading>Categories for elements and collections of elements</Heading>
+<Filt Name="IsSubspaceOfSubgeometryOfProjectiveSpace" Type="Category"/>
+<Filt Name="IsSubspacesOfSubgeometryOfProjectiveSpace" Type="Category"/>
+<Description>
+dd
+</Description>
+</ManSection>
+
+</Section>
+
+<Section>
+<Heading>Subgeometries of projective spaces</Heading>
 
 <ManSection>
 <Oper Name="CanonicalSubgeometryOfProjectiveSpace" Arg="pg, subfield"/>

@@ -22,8 +22,8 @@
 #############################################################################
 # already some general comments.
 # SubgeometryOfProjectiveSpaceByFrame: creates the user defined sub geometry
-# starting from a frame. sub!.projectivity: projectivity mapping the canonical sub
-# geometry onto the user defined one.
+# starting from a frame. sub!.projectivity: projectivity mapping the canonical
+# sub geometry onto the user defined one.
 # sub!.sigma: collineation fixing all elements of the sub geometry.
 #
 #############################################################################

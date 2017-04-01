@@ -21,14 +21,14 @@ typsetting beautiful mathematics can be done in LaTeX only -->
 &lt;td align="center" valign="center" width=30> x&lt;sub>2&lt;/sub> &lt;/td>
 &lt;/tr>
 &lt;tr>
-&lt;td align="center" valign="center" width=30> x&lt;sub>0&lt;/sub> &lt;/td>
-&lt;td align="center" valign="center" width=30> x&lt;sub>1&lt;/sub> &lt;/td>
-&lt;td align="center" valign="center" width=30> x&lt;sub>2&lt;/sub> &lt;/td>
+&lt;td align="center" valign="center" width=30> y&lt;sub>0&lt;/sub> &lt;/td>
+&lt;td align="center" valign="center" width=30> y&lt;sub>1&lt;/sub> &lt;/td>
+&lt;td align="center" valign="center" width=30> y&lt;sub>2&lt;/sub> &lt;/td>
 &lt;/tr>
 &lt;tr>
-&lt;td align="center" valign="center" width=30> x&lt;sub>0&lt;/sub> &lt;/td>
-&lt;td align="center" valign="center" width=30> x&lt;sub>1&lt;/sub> &lt;/td>
-&lt;td align="center" valign="center" width=30> x&lt;sub>2&lt;/sub> &lt;/td>
+&lt;td align="center" valign="center" width=30> z&lt;sub>0&lt;/sub> &lt;/td>
+&lt;td align="center" valign="center" width=30> z&lt;sub>1&lt;/sub> &lt;/td>
+&lt;td align="center" valign="center" width=30> z&lt;sub>2&lt;/sub> &lt;/td>
 &lt;/tr>
 &lt;/table>&lt;/td>&lt;td style ="border-top:1px solid #000; border-bottom:1px solid #000;">&nbsp;&lt;/td>&lt;/tr>&lt;/table>&lt;/td>
 &lt;/tr>&lt;/table>
@@ -53,14 +53,14 @@ typsetting beautiful mathematics can be done in LaTeX only -->
 &lt;td align="center" valign="center" width=30> x&lt;sub>6&lt;/sub> &lt;/td>
 &lt;/tr>
 &lt;tr>
-&lt;td align="center" valign="center" width=30> x&lt;sub>4&lt;/sub> &lt;/td>
-&lt;td align="center" valign="center" width=30> x&lt;sub>5&lt;/sub> &lt;/td>
-&lt;td align="center" valign="center" width=30> x&lt;sub>6&lt;/sub> &lt;/td>
+&lt;td align="center" valign="center" width=30> y&lt;sub>4&lt;/sub> &lt;/td>
+&lt;td align="center" valign="center" width=30> y&lt;sub>5&lt;/sub> &lt;/td>
+&lt;td align="center" valign="center" width=30> y&lt;sub>6&lt;/sub> &lt;/td>
 &lt;/tr>
 &lt;tr>
-&lt;td align="center" valign="center" width=30> x&lt;sub>4&lt;/sub> &lt;/td>
-&lt;td align="center" valign="center" width=30> x&lt;sub>5&lt;/sub> &lt;/td>
-&lt;td align="center" valign="center" width=30> x&lt;sub>6&lt;/sub> &lt;/td>
+&lt;td align="center" valign="center" width=30> z&lt;sub>4&lt;/sub> &lt;/td>
+&lt;td align="center" valign="center" width=30> z&lt;sub>5&lt;/sub> &lt;/td>
+&lt;td align="center" valign="center" width=30> z&lt;sub>6&lt;/sub> &lt;/td>
 &lt;/tr>
 &lt;/table>&lt;/td>&lt;td style ="border-top:1px solid #000; border-bottom:1px solid #000;">&nbsp;&lt;/td>&lt;/tr>&lt;/table>&lt;/td>
 &lt;/tr>&lt;/table>
