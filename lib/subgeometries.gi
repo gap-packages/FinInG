@@ -61,12 +61,14 @@ InstallMethod( IsFrameOfProjectiveSpace,
     [ IsList ],
     function(list)
     local pg, coll, base, n, i;
-    coll := Collected(List(list,x->AmbientGeometry(x))); #changed AmbientSpace into AmbientGeometry.
+    coll:=DuplicateFreeList(List(list,x->AmbientGeometry(x)));
+#    coll := Collected(List(list,x->AmbientGeometry(x))); #changed AmbientSpace into AmbientGeometry.
     if Length(coll) > 1 then
         #Error("all elements in <list> lie in the same projective space");
         return false;
     else
-        pg := coll[1][1];
+#       pg := coll[1][1];
+        pg:= coll[1];
     fi;
     coll := Collected(List(list,x->Type(x)));
     if Length(coll) > 1 then
