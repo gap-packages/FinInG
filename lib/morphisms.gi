@@ -8,9 +8,8 @@
 ##                                                            Michel Lavrauw
 ##                                                           Max Neunhoeffer
 ##
-##  Copyright 2014	Colorado State University, Fort Collins
+##  Copyright 2017	Colorado State University, Fort Collins
 ##					Università degli Studi di Padova
-##					Universeit Gent
 ##					University of St. Andrews
 ##					University of Western Australia, Perth
 ##                  Vrije Universiteit Brussel
@@ -2270,11 +2269,11 @@ InstallMethod( NaturalProjectionBySubspaceNC,
 
 # CHECKED 28/09/11 jdb
 #############################################################################
-#O  \QUO( <ps>, <v> )
+#O  QUO( <ps>, <v> )
 # returns the quotient space of the subspace <v> of the projective space <ps>
 # it is checked if <v> is a subspace of <ps>
 ##
-InstallOtherMethod(\QUO,  
+InstallOtherMethod(QUO,
 	"for a projective space and a subspace",
 	[ IsProjectiveSpace and IsProjectiveSpaceRep, IsSubspaceOfProjectiveSpace],
 	function( ps, v )

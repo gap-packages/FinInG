@@ -8,9 +8,8 @@
 ##                                                            Michel Lavrauw
 ##                                                           Max Neunhoeffer
 ##
-##  Copyright 2014	Colorado State University, Fort Collins
+##  Copyright 2017	Colorado State University, Fort Collins
 ##					Università degli Studi di Padova
-##					Universeit Gent
 ##					University of St. Andrews
 ##					University of Western Australia, Perth
 ##                  Vrije Universiteit Brussel
@@ -1574,11 +1573,11 @@ InstallMethod( RepresentativesOfElements,
 
 # CHECKED 21/09/11 jdb
 #############################################################################
-#O  \QUO( <ps>, <v> )
+#O  QUO( <ps>, <v> )
 # returns the quotien space of the element <v>, which must be an element of the
 # polar space <ps>
 ##
-InstallOtherMethod(\QUO,  
+InstallOtherMethod(QUO,
 	"for a polar space and an element of a polar space",
 	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep, IsSubspaceOfClassicalPolarSpace],
 	function( ps, v )
