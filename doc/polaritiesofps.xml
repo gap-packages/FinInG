@@ -47,25 +47,29 @@ the conditions on the matrix <M>A</M>.
   <Row><Item> </Item><Item><M>q</M> odd</Item><Item><M>q</M> even</Item></Row>
  <HorLine/>
    <Row><Item>hermitian</Item><Item> 
-   <Alt Not="HTML"><M>A^{\theta}=A^T</M></Alt><Alt Only="HTML">A&lt;sup>&#952; &lt;/sup> = A&lt;sup>T &lt;/sup></Alt>
+   <!--<Alt Not="HTML"><M>A^{\theta}=A^T</M></Alt><Alt Only="HTML">A&lt;sup>&#952; &lt;/sup> = A&lt;sup>T &lt;/sup></Alt>-->
+   <Alt Not="HTML"><M>A^{\theta}=A^T</M></Alt><Alt Only="HTML MathJax"><M>A^{\theta} = A^T</M></Alt><Alt Only="HTML noMathJax">A&lt;sup>&#952; &lt;/sup> = A&lt;sup>T &lt;/sup></Alt>
    </Item>
    <Item>
-   <Alt Not="HTML"><M>A^{\theta}=A^T</M></Alt><Alt Only="HTML">A&lt;sup>&#952; &lt;/sup> = A&lt;sup>T &lt;/sup></Alt>
+   <Alt Not="HTML"><M>A^{\theta}=A^T</M></Alt><Alt Only="HTML MathJax"><M>A^{\theta}=A^T</M></Alt>
+   <Alt Only="HTML noMathJax">A&lt;sup>&#952; &lt;/sup> = A&lt;sup>T &lt;/sup></Alt>
    </Item></Row>
    <Row><Item>symplectic</Item><Item>
-   <Alt Not="HTML"><M>A^T=-A</M></Alt><Alt Only="HTML">A&lt;sup>T &lt;/sup> = - A</Alt>
+   <Alt Not="HTML"><M>A^T=-A</M></Alt><Alt Only="HTML MathJax"><M>A^T=-A</M></Alt>
+   <Alt Only="HTML noMathJax">A&lt;sup>T &lt;/sup> = - A</Alt>
    </Item>
    <Item>
-   <Alt Not="HTML"><M>A^T=A</M>, all <M>a_{ii}=0</M></Alt><Alt
-   Only="HTML">A&lt;sup>T &lt;/sup> = A, all a&lt;sub>ii&lt;/sub>=0</Alt>
+   <Alt Not="HTML"><M>A^T=A</M>, all <M>a_{ii}=0</M></Alt><Alt Only="HTML MathJax"><M>A^T=A</M>, all <M>a_{ii}=0</M></Alt>
+   <Alt Only="HTML noMathJax">A&lt;sup>T &lt;/sup> = A, all a&lt;sub>ii&lt;/sub>=0</Alt>
    </Item></Row>
    <Row><Item>orthogonal</Item><Item>
-   <Alt Not="HTML"><M>A^T=A</M></Alt><Alt Only="HTML">A&lt;sup>T &lt;/sup> = - A</Alt>
+   <Alt Not="HTML"><M>A^T=A</M></Alt><Alt Only="HTML MathJax"><M>A^T=A</M></Alt>
+   <Alt Only="HTML noMathJax">A&lt;sup>T &lt;/sup> = - A</Alt>
    </Item><Item></Item></Row>
    <Row><Item>pseudo</Item><Item> </Item>
    <Item>
-   <Alt Not="HTML"><M>A^T=A</M>, not all <M>a_{ii}=0</M></Alt><Alt
-   Only="HTML">A&lt;sup>T &lt;/sup> = A, not all a&lt;sub>ii&lt;/sub>=0</Alt>
+   <Alt Not="HTML"><M>A^T=A</M>, not all <M>a_{ii}=0</M></Alt><Alt Only="HTML MathJax"><M>A^T=A</M>, not all <M>a_{ii}=0</M></Alt>
+   <Alt Only="HTML noMathJax">A&lt;sup>T &lt;/sup> = A, not all a&lt;sub>ii&lt;/sub>=0</Alt>
    </Item></Row>
  <HorLine/>
 </Table>

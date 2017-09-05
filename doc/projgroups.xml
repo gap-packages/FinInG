@@ -38,7 +38,7 @@ that <Alt Not="HTML"><M>\Gamma L(n+1,q)</M></Alt><Alt
 Only="HTML">&#915;L(n+1,q)</Alt> does not act faithfully on the projective points,
 and the kernel of its action is the group of scalar matrices, <M>Sc(n+1,q)</M>.
 So the group <Alt Not="HTML"><M>P\Gamma L(n+1,q)</M></Alt><Alt
-Only="HTML">P&#915;L(n+1,q)</Alt> is defined as the group <Alt Not="HTML"><M>\Gamma 
+Only="HTML">P&#915;L(n+1,q)</Alt> is defined as the group <Alt Not="HTML"><M>\Gamma
 L(n+1,q) / Sc(n+1,q)</M></Alt><Alt Only="HTML">&#915;L(n+1,q)/Sc(n+1,q)</Alt>, and
 <M>PGL(n+1,q) = GL(n+1,q) / Sc(n+1,q)</M>. An element of the group <M>PGL(n+1,q)</M> is also 
 called a <E>projectivity</E> or <E>homography</E> of
