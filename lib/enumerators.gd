@@ -35,7 +35,7 @@
 
 DeclareGlobalFunction( "PositionNonZeroFromRight" );
 DeclareGlobalFunction( "FG_pos" );
-DeclareGlobalFunction( "FG_div" );
+#DeclareGlobalFunction( "FG_div" );
 DeclareGlobalFunction( "FG_ffenumber" );
 #DeclareGlobalFunction( "FG_unrank_GFQ" ); #never used
 #DeclareGlobalFunction( "FG_rank_GFQ" ); #never used
