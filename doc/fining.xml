@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!DOCTYPE Book SYSTEM "gapdoc.dtd">
+<!DOCTYPE Book SYSTEM "gapdoc.dtd"
+    [<!ENTITY pg "\mathrm{PG}">
+    ]>
 <?LaTeX ExtraPreamble="\usepackage{graphicx,amsfonts,tipa}"?>
-<?LaTeX ExtraPreamble="\newcommand\gf{\mathrm{GF}}"?>
 
 
 
@@ -16,11 +17,11 @@
                                                                  Michel Lavrauw
                                                                 Max Neunhoeffer
 
-  Copyright (C) 2015, University of Western Australia
+  Copyright (C) 2017, University of Western Australia
                       Colorado State University
                       Vrije Universiteit Brussel
                       Ghent University
-					  Università degli Studi di Padova
+                      Università degli Studi di Padova
 -->
 
 <Book Name="FinInG">

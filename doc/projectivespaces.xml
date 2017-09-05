@@ -115,7 +115,7 @@ Hence, simply <A>ps</A> will be returned.
 <Section>
 <Heading>Subspaces of projective spaces</Heading>
 
-The elements of a projective space <M>PG(n,q)</M> are the subspaces of a suitable dimension. The 
+The elements of a projective space <M>&pg;(n,q)</M> are the subspaces of a suitable dimension. The
 empty subspace, also called the trivial subspace, has dimension <M>-1</M> and corresponds to the zero dimensional 
 vector subspace of the underlying vector space of <M>PG(n,q)</M>, and is hence represented by the zero vector
 of length <M>n+1</M> over the underlying field <M>GF(q)</M>. The trivial subspace and the whole projective 
