@@ -33,7 +33,7 @@ Subtitle := "Finite Incidence Geometry",
 ##  See '?Extending: Version Numbers' in GAP help for an explanation
 ##  of valid version numbers. For an automatic package distribution update
 ##  you must provide a new version number even after small changes.
-Version := "1.3.4",
+Version := "1.3.5",
 ##  Please adjust also the VERSION file in the package directory when
 ##  changing this.
 
@@ -414,6 +414,8 @@ Autoload := false,
 ##  *Optional*, but recommended: path relative to package root to a file which 
 ##  contains as many tests of the package functionality as sensible.
 TestFile := "tst/testall.g",
+
+IssueTrackerURL := "https://bitbucket.org/jdebeule/fining/issues",
 
 ##  *Optional*: Here you can list some keyword related to the topic 
 ##  of the package.
