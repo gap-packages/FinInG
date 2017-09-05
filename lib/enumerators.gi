@@ -8,9 +8,8 @@
 ##                                                            Michel Lavrauw
 ##                                                           Max Neunhoeffer
 ##
-##  Copyright 2016	Colorado State University, Fort Collins
+##  Copyright 2017	Colorado State University, Fort Collins
 ##					Università degli Studi di Padova
-##					Universeit Gent
 ##					University of St. Andrews
 ##					University of Western Australia, Perth
 ##                  Vrije Universiteit Brussel
