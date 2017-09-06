@@ -6,16 +6,25 @@
     [<!ENTITY pg "\mathrm{PG}">
     <!ENTITY gf "\mathrm{GF}">
     <!ENTITY gl "\mathrm{GL}">
+    <!ENTITY sl "\mathrm{SL}">
+    <!ENTITY sc "\mathrm{Sc}">
     <!ENTITY pgl "\mathrm{PGL}">
+    <!ENTITY psl "\mathrm{PSL}">
     <!ENTITY gammal "\Gamma\mathrm{L}">
     <!ENTITY pgammal "\mathrm{P}\Gamma\mathrm{L}">
     <!ENTITY gfq "<Alt Not=&#34;HTML&#34;><M>&gf;(q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&gf;(q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>GF(q)</Alt>">
     <!ENTITY pgnq "<Alt Not=&#34;HTML&#34;><M>&pg;(n,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pg;(n,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>PG(n,q)</Alt>">
     <!ENTITY glnplus1q "<Alt Not=&#34;HTML&#34;><M>&gl;(n+1,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&gl;(n+1,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>GL(n+1,q)</Alt>">
+    <!ENTITY slnplus1q "<Alt Not=&#34;HTML&#34;><M>&sl;(n+1,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&sl;(n+1,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>SL(n+1,q)</Alt>">
+    <!ENTITY scnplus1q "<Alt Not=&#34;HTML&#34;><M>&sc;(n+1,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&sc;(n+1,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>Sc(n+1,q)</Alt>">
     <!ENTITY pglnplus1q "<Alt Not=&#34;HTML&#34;><M>&pgl;(n+1,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pgl;(n+1,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>PGL(n+1,q)</Alt>">
+    <!ENTITY pslnplus1q "<Alt Not=&#34;HTML&#34;><M>&psl;(n+1,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&psl;(n+1,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>PSL(n+1,q)</Alt>">
     <!ENTITY gammalnplus1q "<Alt Not=&#34;HTML&#34;><M>&gammal;(n+1,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&gammal;(n+1,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>&#915;L(n+1,q)</Alt>">
     <!ENTITY pgammalnplus1q "<Alt Not=&#34;HTML&#34;><M>&pgammal;(n+1,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pgammal;(n+1,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>P&#915;L(n+1,q)</Alt>">
     <!ENTITY autgfq "<Alt Not=&#34;HTML&#34;><M>\mathrm{Aut}(&gf;(q))</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>\mathrm{Aut}(&gf;(q))</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>Aut(GF(q))</Alt>">
+    <!ENTITY pglinline "<Alt Not=&#34;HTML&#34;><M>&pgl;</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pgl;</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>PGL</Alt>">
+    <!ENTITY pslinline "<Alt Not=&#34;HTML&#34;><M>&psl;</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&psl;</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>PSL</Alt>">
+    <!ENTITY pgammalinline "<Alt Not=&#34;HTML&#34;><M>&pgammal;</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pgammal;</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>P&#915;L</Alt>">
     ]
    >
 

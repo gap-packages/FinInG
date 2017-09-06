@@ -40,17 +40,23 @@ of the vector space <M>V(n+1,q)</M> is obtained as the semidirect product of
 &glnplus1q; and &autgfq;, and is denoted by &gammalnplus1q;. Each semilinear map induces a collineation of &pgnq;.
 The Fundamental theorem of Projective Geometry also guarantees that the converse holds. Note also
 that &gammalnplus1q; does not act faithfully on the projective points,
-and the kernel of its action is the group of scalar matrices, <M>Sc(n+1,q)</M>.
-So the group &pgammalnplus1q; is defined as the group <Alt Not="HTML"><M>\Gamma
-L(n+1,q) / Sc(n+1,q)</M></Alt><Alt Only="HTML">&#915;L(n+1,q)/Sc(n+1,q)</Alt>, and
-<M>PGL(n+1,q) = GL(n+1,q) / Sc(n+1,q)</M>. An element of the group &pglnplus1q; is also 
+and the kernel of its action is the group of scalar matrices, &scnplus1q;.
+So the group &pgammalnplus1q; is defined as the group <Alt Not="HTML"><M>\Gamma{}\mathrm{L}(n+1,q) / \mathrm{Sc}(n+1,q)</M></Alt>
+<Alt Only="HTML MathJax"><M>\Gamma{}\mathrm{L}(n+1,q) / \mathrm{Sc}(n+1,q)</M></Alt>
+<Alt Only="HTML noMathJax">&#915;L(n+1,q)/Sc(n+1,q)</Alt>, and
+the group &pglnplus1q; as <Alt Not="HTML"><M>\mathrm{GL}(n+1,q) / \mathrm{Sc}(n+1,q)</M></Alt>
+<Alt Only="HTML MathJax"><M>\mathrm{GL}(n+1,q) / \mathrm{Sc}(n+1,q)</M></Alt>
+<Alt Only="HTML noMathJax">GL(n+1,q)/Sc(n+1,q)</Alt>. An element of the group &pglnplus1q; is also
 called a <E>projectivity</E> or <E>homography</E> of
 &pgnq;, and the group &pglnplus1q; is called the <E>projectivity
 group</E> or <E>homography group</E> of &pgnq;. An element of &pgammalnplus1q; is called a <E>collineation</E> of &pgnq;
 and the group &pgammalnplus1q; is the <E>collineation group</E> of &pgnq;.<P/>
 
-As usual, we also consider the special linear group <M>SL(n+1,q)</M>, which is the subgroup of &glnplus1q;
-of all matrices having determinant one. Its projective variant, i.e. <M>PSL(n+1,q) = SL(n+1,q) / Sc(n+1,q)</M>
+As usual, we also consider the special linear group &slnplus1q;, which is the subgroup of &glnplus1q;
+of all matrices having determinant one. Its projective variant, i.e. &pslnplus1q; is defined as
+<Alt Not="HTML"><M>\mathrm{SL}(n+1,q) / (\mathrm{SL}(n+1,q) \cap \mathrm{Sc}(n+1,q))</M></Alt>
+<Alt Only="HTML MathJax"><M>\mathrm{SL}(n+1,q) / (\mathrm{SL}(n+1,q) \cap \mathrm{Sc}(n+1,q))</M></Alt>
+<Alt Only="HTML noMathJax">SL(n+1,q)/(SL(n+1,q) &#8745; Sc(n+1,q))</Alt> and
 is called the <E>special homography group</E> or <E>special projectivity group</E> of &pgnq;.
 <P/>
 
@@ -58,56 +64,58 @@ Consider the projective space &pgnq;. As described in Chapter <Ref
 Chap="projective_spaces"/>, a point of &pgnq; is represented by a row
 vector. A <M>k</M>-dimensional subspace of &pgnq; is represented by a
 generating set of <M>k+1</M> points, and as such, by a 
-<Alt Not="HTML"><M>(k+1) \times (n+1)</M></Alt><Alt Only="HTML">(k+1) x (n+1)</Alt>
-matrix. The convention in <Package>FinInG</Package> is that a collineation  
-<Alt Not="HTML"><M>\phi</M></Alt><Alt
-Only="HTML">&#966;</Alt> with underlying matrix <M>A</M> and field automorphism
-<Alt Not="HTML"><M>\theta</M></Alt><Alt Only="HTML">&#952;</Alt> maps that projective 
-point represented by row vector <Alt Not="HTML"><M>(x_0, x_1, \ldots,
-x_n)</M></Alt><Alt Only="HTML">(x&lt;sub>0&lt;/sub>,x&lt;sub>1&lt;/sub>,...,x&lt;sub>n&lt;/sub>)</Alt>
+<Alt Not="HTML"><M>(k+1) \times (n+1)</M></Alt><Alt Only="HTML MathJax"><M>(k+1) \times (n+1)</M></Alt>
+<Alt Only="HTML noMathJax">(k+1) x (n+1)</Alt>
+matrix. The convention in <Package>FinInG</Package> is that a collineation <M>\phi</M>
+with underlying matrix <M>A</M> and field automorphism <M>\theta</M>
+maps the projective point represented by row vector <Alt Not="HTML"><M>(x_0, x_1, \ldots,
+x_n)</M></Alt><Alt Only="HTML MathJax"><M>(x_0, x_1, \ldots,
+x_n)</M></Alt><Alt Only="HTML noMathJax">(x&lt;sub>0&lt;/sub>,x&lt;sub>1&lt;/sub>,...,x&lt;sub>n&lt;/sub>)</Alt>
 to the projective point represented by row vector <Alt Not="HTML"><M>(y_0,y_1,\ldots,y_n)
+= ((x_0, x_1, \ldots, x_n) A)^{\theta}</M></Alt><Alt Only="HTML MathJax"><M>(y_0,y_1,\ldots,y_n)
 = ((x_0, x_1, \ldots, x_n) A)^{\theta}</M></Alt><Alt
-Only="HTML">(y&lt;sub>0&lt;/sub>,y&lt;sub>1&lt;/sub>,...,y&lt;sub>n&lt;/sub>) =
+Only="HTML noMathJax">(y&lt;sub>0&lt;/sub>,y&lt;sub>1&lt;/sub>,...,y&lt;sub>n&lt;/sub>) =
 ((x&lt;sub>0&lt;/sub>,x&lt;sub>1&lt;/sub>,...,x&lt;sub>n&lt;/sub>)A)&lt;sup>&#952;&lt;/sup>
 </Alt>. This convention determines completely the action of collineations on all elements 
-of a projective space, and it follows that the product of two collineations 
-<Alt Not="HTML"><M>\phi_1,\phi_2</M></Alt><Alt
-Only="HTML">&#966;&lt;sub>1&lt;/sub>,&#966;&lt;sub>2&lt;/sub></Alt> with respective
-underlying matrices <Alt Not="HTML"><M>A_1,A_2</M></Alt><Alt
-Only="HTML">A&lt;sub>1&lt;/sub>,A&lt;sub>2&lt;/sub></Alt> and respective underlying
-field automorphisms <Alt Not="HTML"><M>\theta_1,\theta_2</M></Alt><Alt
-Only="HTML">&#952;&lt;sub>1&lt;/sub>,&#952;&lt;sub>2&lt;/sub></Alt> is the collineation with
-underlying matrix <Alt Not="HTML"><M>A_1 \cdot A_2^{\theta_1^{-1}}</M></Alt><Alt
-Only="HTML">A&lt;sub>1&lt;/sub>A&lt;sub>2&lt;/sub>&lt;sup>&#952;&lt;sub>1&lt;/sub>&lt;sup>-1&lt;/sup>&lt;/sup></Alt> 
-and underlying field automorphism <Alt Not="HTML"><M>\theta_1 \theta_2</M></Alt>
-<Alt Only="HTML">&#952;&lt;sub>1&lt;/sub>&#952;&lt;sub>2&lt;/sub></Alt>.<P/>
+of a projective space, and it follows that the product of two collineations
+<Alt Not="HTML"><M>\phi_1,\phi_2</M></Alt><Alt Only="HTML MathJax"><M>\phi_1,\phi_2</M></Alt>
+<Alt Only="HTML noMathJax">&#966;&lt;sub>1&lt;/sub>,&#966;&lt;sub>2&lt;/sub></Alt> with respective
+underlying matrices <Alt Not="HTML"><M>A_1,A_2</M></Alt><Alt Only="HTML MathJax"><M>A_1,A_2</M></Alt>
+<Alt Only="HTML noMathJax">A&lt;sub>1&lt;/sub>,A&lt;sub>2&lt;/sub></Alt> and respective underlying
+field automorphisms <Alt Not="HTML"><M>\theta_1,\theta_2</M></Alt><Alt Only="HTML MathJax"><M>\theta_1,\theta_2</M></Alt>
+<Alt Only="HTML noMathJax">&#952;&lt;sub>1&lt;/sub>,&#952;&lt;sub>2&lt;/sub></Alt> is the collineation with
+underlying matrix <Alt Not="HTML"><M>A_1 \cdot A_2^{\theta_1^{-1}}</M></Alt>
+<Alt Only="HTML MathJax"><M>A_1 \cdot A_2^{\theta_1^{-1}}</M></Alt><Alt
+Only="HTML noMathJax">A&lt;sub>1&lt;/sub>A&lt;sub>2&lt;/sub>&lt;sup>&#952;&lt;sub>1&lt;/sub>&lt;sup>-1&lt;/sup>&lt;/sup></Alt>
+and underlying field automorphism <Alt Not="HTML"><M>\theta_1 \theta_2</M></Alt><Alt Only="HTML MathJax"><M>\theta_1 \theta_2</M></Alt>
+<Alt Only="HTML noMathJax">&#952;&lt;sub>1&lt;/sub>&#952;&lt;sub>2&lt;/sub></Alt>.<P/>
 
 A <E>correlation</E> of the projective space &pgnq; is a collineation from
 &pgnq; to its dual. A projectivity from &pgnq; to its dual is
 sometimes called a <E>reciprocity</E>. 
 The <E>standard duality</E> of the
 projective space &pgnq; maps any point <M>v</M> with coordinates <Alt
-Not="HTML"><M>(x_0,x_1,\ldots,x_n)</M></Alt><Alt
-Only="HTML">(x&lt;sub>0&lt;/sub>,x&lt;sub>1&lt;/sub>,...,x&lt;sub>n&lt;/sub>)</Alt> on the hyperplane
-with equation <Alt Not="HTML"><M>x_0X_0 + x_1X_1 + \cdots + x_nX_n</M></Alt><Alt
-Only="HTML">x&lt;sub>0&lt;/sub>X&lt;sub>0&lt;/sub> + x&lt;sub>1&lt;/sub>X&lt;sub>1&lt;/sub> + ...
+Not="HTML"><M>(x_0,x_1,\ldots,x_n)</M></Alt><Alt Only="HTML MathJax"><M>(x_0,x_1,\ldots,x_n)</M></Alt><Alt
+Only="HTML noMathJax">(x&lt;sub>0&lt;/sub>,x&lt;sub>1&lt;/sub>,...,x&lt;sub>n&lt;/sub>)</Alt> on the hyperplane
+with equation <Alt Not="HTML"><M>x_0X_0 + x_1X_1 + \cdots + x_nX_n</M></Alt>
+<Alt Only="HTML MathJax"><M>x_0X_0 + x_1X_1 + \cdots + x_nX_n</M></Alt>
+<Alt Only="HTML noMathJax">x&lt;sub>0&lt;/sub>X&lt;sub>0&lt;/sub> + x&lt;sub>1&lt;/sub>X&lt;sub>1&lt;/sub> + ...
 x&lt;sub>n&lt;/sub>X&lt;sub>n&lt;/sub> = 0</Alt>. The
-standard duality acts as an automorphism on <Alt Not="HTML"><M>P\Gamma L(n+1,q)</M></Alt><Alt
-Only="HTML">P&#915;L(n+1,q)</Alt> by mapping the underlying matrix of a collineation
+standard duality acts as an automorphism on &pgammalnplus1q; by mapping the underlying matrix of a collineation
 to its inverse transpose matrix. (Recall that the frobenius automorphism and the standard duality commute.) 
-The convention in <Package>FinInG</Package> is that a correlation  
-<Alt Not="HTML"><M>\phi</M></Alt><Alt
-Only="HTML">&#966;</Alt> with underlying matrix <M>A</M> and field automorphism
-<Alt Not="HTML"><M>\theta</M></Alt><Alt Only="HTML">&#952;</Alt> maps that projective 
+The convention in <Package>FinInG</Package> is that a correlation <M>\phi</M>
+with underlying matrix <M>A</M> and field automorphism <M>\theta</M> maps that projective
 point represented by row vector <Alt Not="HTML"><M>(x_0, x_1, \ldots,
-x_n)</M></Alt><Alt Only="HTML">(x&lt;sub>0&lt;/sub>,x&lt;sub>1&lt;/sub>,...,x&lt;sub>n&lt;/sub>)</Alt>
+x_n)</M></Alt><Alt Only="HTML MathJax"><M>(x_0, x_1, \ldots, x_n)</M></Alt>
+<Alt Only="HTML noMathJax">(x&lt;sub>0&lt;/sub>,x&lt;sub>1&lt;/sub>,...,x&lt;sub>n&lt;/sub>)</Alt>
 to the projective hyperplane represented by row vector <Alt Not="HTML"><M>(y_0,y_1,\ldots,y_n)
-= ((x_0, x_1, \ldots, x_n) A)^{\theta.}</M></Alt><Alt
-Only="HTML">(y&lt;sub>0&lt;/sub>,y&lt;sub>1&lt;/sub>,...,y&lt;sub>n&lt;/sub>) =
+= ((x_0, x_1, \ldots, x_n) A)^{\theta.}</M></Alt><Alt Only="HTML MathJax"><M>(y_0,y_1,\ldots,y_n)
+= ((x_0, x_1, \ldots, x_n) A)^{\theta.}</M></Alt>
+<Alt Only="HTML noMathJax">(y&lt;sub>0&lt;/sub>,y&lt;sub>1&lt;/sub>,...,y&lt;sub>n&lt;/sub>) =
 ((x&lt;sub>0&lt;/sub>,x&lt;sub>1&lt;/sub>,...,x&lt;sub>n&lt;/sub>)A)&lt;sup>&#952;&lt;/sup>.
-</Alt>, i.e. <Alt Not="HTML"><M>(y_0,y_1,\ldots,y_n)
-= ((x_0, x_1, \ldots, x_n) A)^{\theta.}</M></Alt><Alt
-Only="HTML">(y&lt;sub>0&lt;/sub>,y&lt;sub>1&lt;/sub>,...,y&lt;sub>n&lt;/sub>) =
+</Alt>, i.e. <Alt Not="HTML"><M>(y_0,y_1,\ldots,y_n) = ((x_0, x_1, \ldots, x_n) A)^{\theta.}</M></Alt>
+<Alt Only="HTML MathJax"><M>(y_0,y_1,\ldots,y_n) = ((x_0, x_1, \ldots, x_n) A)^{\theta.}</M></Alt>
+<Alt Only="HTML noMathJax">(y&lt;sub>0&lt;/sub>,y&lt;sub>1&lt;/sub>,...,y&lt;sub>n&lt;/sub>) =
 ((x&lt;sub>0&lt;/sub>,x&lt;sub>1&lt;/sub>,...,x&lt;sub>n&lt;/sub>)A)&lt;sup>&#952;&lt;/sup>
 </Alt> are the dual coordinates of the hyperplane.<P/>
 
@@ -122,28 +130,30 @@ Only="HTML">P&#915;L(n+1,q)</Alt> with the cyclic group of order 2 generated by 
 The convention determines completely 
 the action of correlations and collineations on all elements 
 of a projective space, and it follows that the product of two elements of the correlation-collineation group 
-<Alt Not="HTML"><M>\phi_1,\phi_2</M></Alt><Alt
-Only="HTML">&#966;&lt;sub>1&lt;/sub>,&#966;&lt;sub>2&lt;/sub></Alt> with respective
-underlying matrices <Alt Not="HTML"><M>A_1,A_2</M></Alt><Alt
-Only="HTML">A&lt;sub>1&lt;/sub>,A&lt;sub>2&lt;/sub></Alt>, respective underlying
-field automorphisms <Alt Not="HTML"><M>\theta_1,\theta_2</M></Alt><Alt
-Only="HTML">&#952;&lt;sub>1&lt;/sub>,&#952;&lt;sub>2&lt;/sub></Alt>, and respective underlying 
-projective space isomorphisms (standard duality or identity map) <Alt Not="HTML"><M>\delta_1,\delta_2</M></Alt><Alt
-Only="HTML">&#948;&lt;sub>1&lt;/sub>,&#948;&lt;sub>2&lt;/sub></Alt>, is the element of 
-the correlation-collineation group with underlying matrix <Alt Not="HTML"><M>A_1 (A_2^{\theta_1^{-1}})^{\delta_1}</M></Alt><Alt
-Only="HTML">A&lt;sub>1&lt;/sub>(A&lt;sub>2&lt;/sub>&lt;sup>&#952;&lt;sub>1&lt;/sub>&lt;sup>-1&lt;/sup>&lt;/sup>)
-&lt;sup>&#948;&lt;sub>1&lt;/sub>&lt;/sup>
-</Alt>,
-underlying field automorphism <Alt Not="HTML"><M>\theta_1 \theta_2</M></Alt>
-<Alt Only="HTML">&#952;&lt;sub>1&lt;/sub>&#952;&lt;sub>2&lt;/sub></Alt>, and underlying projective space automorphism 
-<Alt Not="HTML"><M>\delta_1 \delta_2.</M></Alt>
-<Alt Only="HTML">&#948;&lt;sub>1&lt;/sub>&#948;&lt;sub>2&lt;/sub>
-</Alt>, where the action of <Alt Not="HTML"><M>\delta_1</M></Alt><Alt
-Only="HTML">&#948;&lt;sub>1&lt;/sub></Alt> on the matrix 
-<Alt Not="HTML"><M>A_2</M></Alt><Alt
-Only="HTML">A&lt;sub>2&lt;/sub></Alt> is defined as the transpose inverse if  <Alt Not="HTML"><M>\delta_1</M></Alt><Alt
-Only="HTML">&#948;&lt;sub>1&lt;/sub></Alt> is the standard duality, and as the identity if <Alt Not="HTML"><M>\delta_1</M></Alt><Alt
-Only="HTML">&#948;&lt;sub>1&lt;/sub></Alt> is the identity.
+<Alt Not="HTML"><M>\phi_1,\phi_2</M></Alt><Alt Only="HTML MathJax"><M>\phi_1,\phi_2</M></Alt><Alt
+Only="HTML noMathJax">&#966;&lt;sub>1&lt;/sub>,&#966;&lt;sub>2&lt;/sub></Alt> with respective
+underlying matrices <Alt Not="HTML"><M>A_1,A_2</M></Alt><Alt Only="HTML MathJax"><M>A_1,A_2</M></Alt><Alt
+Only="HTML noMathJax">A&lt;sub>1&lt;/sub>,A&lt;sub>2&lt;/sub></Alt>, respective underlying
+field automorphisms <Alt Not="HTML"><M>\theta_1,\theta_2</M></Alt><Alt Only="HTML MathJax"><M>\theta_1,\theta_2</M></Alt>
+<Alt Only="HTML noMathJax">&#952;&lt;sub>1&lt;/sub>,&#952;&lt;sub>2&lt;/sub></Alt>, and respective underlying
+projective space isomorphisms (standard duality or identity map) <Alt Not="HTML"><M>\delta_1,\delta_2</M></Alt>
+<Alt Only="HTML MathJax"><M>\delta_1,\delta_2</M></Alt><Alt Only="HTML noMathJax">&#948;&lt;sub>1&lt;/sub>,&#948;&lt;sub>2&lt;/sub></Alt>,
+is the element of the correlation-collineation group with underlying matrix
+<Alt Not="HTML"><M>A_1 (A_2^{\theta_1^{-1}})^{\delta_1}</M></Alt>
+<Alt Only="HTML MathJax"><M>A_1 (A_2^{\theta_1^{-1}})^{\delta_1}</M></Alt>
+<Alt Only="HTML noMathJax">A&lt;sub>1&lt;/sub>(A&lt;sub>2&lt;/sub>&lt;sup>&#952;&lt;sub>1&lt;/sub>&lt;sup>-1&lt;/sup>&lt;/sup>)
+&lt;sup>&#948;&lt;sub>1&lt;/sub>&lt;/sup></Alt>,
+underlying field automorphism <Alt Not="HTML"><M>\theta_1 \theta_2</M></Alt><Alt Only="HTML MathJax"><M>\theta_1 \theta_2</M></Alt>
+<Alt Only="HTML noMathJax">&#952;&lt;sub>1&lt;/sub>&#952;&lt;sub>2&lt;/sub></Alt>, and underlying projective space automorphism
+<Alt Not="HTML"><M>\delta_1 \delta_2</M></Alt><Alt Only="HTML MathJax"><M>\delta_1 \delta_2</M></Alt>
+<Alt Only="HTML noMathJax">&#948;&lt;sub>1&lt;/sub>&#948;&lt;sub>2&lt;/sub>
+</Alt>, where the action of <Alt Not="HTML"><M>\delta_1</M></Alt><Alt Only="HTML MathJax"><M>\delta_1</M></Alt>
+<Alt Only="HTML noMathJax">&#948;&lt;sub>1&lt;/sub></Alt> on a matrix
+<!--<Alt Not="HTML"><M>A_2</M></Alt><Alt Only="HTML MathJax"><M>A_2</M></Alt><Alt Only="HTML noMathJax">A&lt;sub>2&lt;/sub></Alt>-->
+is defined as taking the transpose inverse if <Alt Not="HTML"><M>\delta_1</M></Alt><Alt Only="HTML MathJax"><M>\delta_1</M></Alt>
+<Alt Only="HTML noMathJax">&#948;&lt;sub>1&lt;/sub></Alt> is the standard duality, and as the identity map
+if <Alt Not="HTML"><M>\delta_1</M></Alt><Alt Only="HTML MathJax"><M>\delta_1</M></Alt>
+<Alt Only="HTML noMathJax">&#948;&lt;sub>1&lt;/sub></Alt> is the identity.
 <P/>
 Action functions for collineations and correlations on the subspaces of
 a projective space are described in detail in Section <Ref Sect="projgroup_actions"/>
@@ -260,9 +270,7 @@ semilinear maps, and the correlations of a projective space.
 <Heading>Collineations of projective spaces</Heading>
 <Filt Name="IsCollineation" Type="Property"/>
 <Description>
-<C>IsCollineation</C> is property. All elements of <Alt 
-Not="HTML"><M>P\Gamma L(n+1,q)</M></Alt><Alt
-Only="HTML">P&#915;L(n+1,q)</Alt> are collineations, and therefore all
+<C>IsCollineation</C> is property. All elements of &pgammalnplus1q; are collineations, and therefore all
 elements belonging to <C>IsProjGrpElWithFrob</C> are collineations.
 But also a projectivity is a collineation, as well as an element belonging
 to <C>IsProjGrpElWithFrobWithPSIsom</C> with projective space isomorphism equal to the identity, is a collineation.
@@ -277,9 +285,9 @@ to <C>IsProjGrpElWithFrobWithPSIsom</C> with projective space isomorphism equal 
 <Heading>Projective strictly semilinear maps</Heading>
 <Filt Name="IsStrictlySemilinear" Type="Property"/>
 <Description>
-<C>IsStrictlySemilinear</C> is a property that checks whether a given collineation has a nontrivial underlying field automorphisms, 
-i.e. whether the element belongs to <Alt Not="HTML"><M>P\Gamma L(n+1,q)</M></Alt><Alt
-Only="HTML">P&#915;L(n+1,q)</Alt>, but not to &pglnplus1q;. 
+<C>IsStrictlySemilinear</C> is a property that checks whether a given
+collineation has a nontrivial underlying field automorphisms,
+i.e. whether the element belongs to &pgammalnplus1q;, but not to &pglnplus1q;.
 
 If <C>IsStrictlySemilinear</C> is applied to a an element
 belonging to <C>IsProjGrpElWithFrobWithPSIsom</C>, 
@@ -303,9 +311,11 @@ semilinear maps from projectivities inside the category of collineations of a pr
 <Filt Name="IsCorrelationCollineation" Type="Category"/>
 <Filt Name="IsCorrelation" Type="Property"/>
 <Description>
-The underlying objects of a correlation-collineation in <Package>FinInG</Package> are a nonsingular matrix, a field 
-automorphism and a projective space isomorphism. <C>IsProjGrpElWithFrobWithPSIsom</C> is the category of these objects. 
-If the projective space isomorphism is not the identity, then the element is a correlation, and <C>IsCorrelation</C> will return true.
+The underlying objects of a correlation-collineation in <Package>FinInG</Package>
+are a nonsingular matrix, a field automorphism and a projective space isomorphism.
+<C>IsProjGrpElWithFrobWithPSIsom</C> is the category of these objects.
+If the projective space isomorphism is not the identity, then the element
+is a correlation, and <C>IsCorrelation</C> will return true.
 <C>IsCorrelationCollineation</C> is a synonym of <C>IsProjGrpElWithFrobWithPSIsom</C>.
 <Example>
 <#Include SYSTEM "../examples/include/projgroups_iscorrelation.include"> 
@@ -318,16 +328,19 @@ If the projective space isomorphism is not the identity, then the element is a c
 <Section>
 <Heading>Construction of projectivities, collineations and correlations.</Heading>
 
-In <Package>FinInG</Package>, projectivities and collineations are both constructed in the category <C>IsProjGrpElWithFrob</C>; 
-correlations are constructed in the category <C>IsProjGrpElWithFrobWithPSIsom</C>.
+In <Package>FinInG</Package>, projectivities and collineations are both constructed
+in the category <C>IsProjGrpElWithFrob</C>; correlations are constructed in the
+category <C>IsProjGrpElWithFrobWithPSIsom</C>.
 
 <ManSection>
 <Oper Name="Projectivity" Arg="mat, f"/>
 <Oper Name="Projectivity" Arg="pg, mat"/>
 <Returns>a projectivity of a projective space</Returns>
 <Description>The argument <A>mat</A> must be a nonsingular matrix over the finite field
-<A>f</A>. In the second variant, the size of the nonsingular matrix <A>mat</A> must be one more than the dimension of the projective space <A>pg</A>.
-This creates an element of a projectivity group. But the returned object belongs to <C>IsProjGrpElWithFrob</C>!
+<A>f</A>. In the second variant, the size of the nonsingular matrix <A>mat</A>
+must be one more than the dimension of the projective space <A>pg</A>.
+This creates an element of a projectivity group. But the returned object
+belongs to <C>IsProjGrpElWithFrob</C>!
 <Example>
 <#Include SYSTEM "../examples/include/projgroups_projectivity.include"> 
 </Example>
@@ -345,7 +358,8 @@ This creates an element of a projectivity group. But the returned object belongs
 <Oper Name="Collineation" Arg="pg,mat,frob"/>
 <Description>
 <A>mat</A> is a nonsingular matrix, <A>frob</A> is a field automorphism, <A>f</A>
-is a field, and <A>pg</A> is a projective space. This function (and its shorter version) returns the collineation with matrix
+is a field, and <A>pg</A> is a projective space. This function
+(and its shorter version) returns the collineation with matrix
 <A>mat</A> and automorphism <A>frob</A> of the field <A>f</A>. 
 If <A>frob</A> is not specified 
 then the companion automorphism of the resulting group element will be 
@@ -359,7 +373,6 @@ two arguments are compatible.
 </Example>
 </Description>
 </ManSection>
-
 
 
 <ManSection>
@@ -510,8 +523,7 @@ This function returns the order of <A>g</A>.
 </Section>
 
 <Section>
-<Heading>The groups <Alt Not="HTML"><M>P\Gamma{}L</M></Alt><Alt Only="HTML"><M>P&#915;L</M></Alt>, 
-<M>PGL</M>, and <M>PSL</M> in <Package>FinInG</Package>
+<Heading>The groups &pgammalinline;, &pglinline;, and &pslinline; in <Package>FinInG</Package>
 </Heading>
 
 As mentioned before the commands <F>PGL</F> (and <F>ProjectiveGeneralLinearGroup</F>) 
@@ -539,9 +551,7 @@ group of projectivities &pglnplus1q; of the projective space &pgnq;. Note that a
 <Returns>the group of collineations of geom</Returns>
 <Description>
 Let <A>geom</A> be the projective space &pgnq;.
-This operation returns the 
-group of collineations <Alt Not="HTML"><M>\Gamma L(n+1,q)</M></Alt><Alt
-Only="HTML">&#915;L(n+1,q)</Alt> of the projective space &pgnq;. If
+This operation returns the group of collineations &pgammalnplus1q; of the projective space &pgnq;. If
 &gfq; has no non-trivial field automorphisms, i.e. when <M>q</M> is prime,
 the group &pglnplus1q; is the full collineation group and will be returned.
 <Example>
@@ -556,7 +566,7 @@ the group &pglnplus1q; is the full collineation group and will be returned.
 <Returns>the group of special projectivities of geom</Returns>
 <Description>
 Let <A>geom</A> be the projective space &pgnq; This operation (and its synonym) returns the
-group of special projectivities <M>PSL(n+1,q)</M> of the projective space &pgnq;.
+group of special projectivities &pslnplus1q; of the projective space &pgnq;.
 <Example>
 <#Include SYSTEM "../examples/include/projgroups_specialprojectivitygroup.include"> 
 </Example>
@@ -660,8 +670,7 @@ In this section we give more detailed about the actions that are used in <Packag
 Consider the projective space &pgnq;. As described in Chapter <Ref
 Chap="projective_spaces"/>, a point of &pgnq; is represented by a row
 vector and a <M>k</M>-dimensional subspace of &pgnq; is represented by a
-<Alt Not="HTML"><M>(k+1) \times (n+1)</M></Alt><Alt Only="HTML">(k+1) x (n+1)</Alt>
-matrix.<P/>
+<M>(k+1) \times (n+1)</M> matrix.<P/>
 Consider a point <M>p</M> with row vector <Alt Not="HTML"><M>(x_0, x_1, \ldots,
 x_n)</M></Alt><Alt
 Only="HTML">(x&lt;sub>0&lt;/sub>,x&lt;sub>1&lt;/sub>,...,x&lt;sub>n&lt;/sub>)</Alt>,
