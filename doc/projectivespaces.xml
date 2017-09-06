@@ -115,10 +115,14 @@ Hence, simply <A>ps</A> will be returned.
 <Section>
 <Heading>Subspaces of projective spaces</Heading>
 
-The elements of a projective space <M>&pg;(n,q)</M> are the subspaces of a suitable dimension. The
+The elements of a projective space <Alt Not="HTML"><M>&pg;(n,q)</M></Alt>
+<Alt Only="HTML MathJax"><M>&pg;(n,q)</M></Alt><Alt Only="HTML noMathJax">PG(n,q)</Alt>
+are the subspaces of a suitable dimension. The
 empty subspace, also called the trivial subspace, has dimension <M>-1</M> and corresponds to the zero dimensional 
-vector subspace of the underlying vector space of <M>PG(n,q)</M>, and is hence represented by the zero vector
-of length <M>n+1</M> over the underlying field <M>GF(q)</M>. The trivial subspace and the whole projective 
+vector subspace of the underlying vector space of <Alt Not="HTML"><M>&pg;(n,q)</M></Alt>
+<Alt Only="HTML MathJax"><M>&pg;(n,q)</M></Alt><Alt Only="HTML noMathJax">PG(n,q)</Alt>, and is hence represented by the zero vector
+of length <M>n+1</M> over the underlying field <Alt Not="HTML"><M>&gf;(q)</M></Alt>
+<Alt Only="HTML MathJax"><M>&gf;(q)</M></Alt><Alt Only="HTML noMathJax">GF(q)</Alt>. The trivial subspace and the whole projective
 space are mathematically considered as a subspace of the projective geometry, but not as elements of the 
 incidence geometry, and hence do in <Package>FinInG</Package>
 <B>not</B> belong to the category <C>IsSubspaceOfProjectiveSpace</C>.
@@ -127,7 +131,7 @@ incidence geometry, and hence do in <Package>FinInG</Package>
 <Oper Name="VectorSpaceToElement" Arg="geo, v"/>
 <Returns>an element</Returns>
 <Description>
-<A>geo</A> is a projective space, and <A>v</A> is either a row vector (for points) or an <M>m x
+<A>geo</A> is a projective space, and <A>v</A> is either a row vector (for points) or an <M>m \times
 n</M> matrix (for an <M>(m-1)</M>-subspace of projective space of dimension <M>n-1</M>).
 In the case that <A>v</A> is a matrix, the rows represent generators for the subspace. An
 exceptional case is when <A>v</A> is a zero-vector, in which case the trivial subspace is
@@ -167,7 +171,7 @@ is also applicable on the EmptySubspace.
 <Oper Name="ElementsOfIncidenceStructure" Arg="ps, j"/>
 <Returns>the collection of elements of the projective space <A>ps</A> of type <A>j</A></Returns>
 <Description>
-For the projective space <A>ps</A> of dimension <M>d</M> and the type <A>j</A> (where <M>1 &#8804; j &#8804; d</M>),
+For the projective space <A>ps</A> of dimension <M>d</M> and the type <A>j</A> (where <M>1 \leq j \leq d</M>),
 this operation returns the collection of <M>j-1</M> dimensional subspaces. 
 An error message is produced when the projective space <A>ps</A> has no elements of the required type.<Example>
 <#Include SYSTEM "../examples/include/projsp_elements.include"> 
