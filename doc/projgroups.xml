@@ -37,23 +37,17 @@ vector space over a given field &gfq; is denoted by &glnplus1q;.
 This is a matrix group consisting of all non-singular square <M>n+1</M>-dimensional matrices
 over &gfq;. The group of all semilinear maps
 of the vector space <M>V(n+1,q)</M> is obtained as the semidirect product of
-&glnplus1q; and &autgfq;, and is denoted by <Alt Not="HTML"><M>\Gamma L(n+1,q)</M></Alt><Alt
-Only="HTML">&#915;L(n+1,q)</Alt>.
-Each semilinear map induces a collineation of &pgnq;. The
-Fundamental theorem of Projective Geometry also guarantees that the converse holds. Note also
-that <Alt Not="HTML"><M>\Gamma L(n+1,q)</M></Alt><Alt
-Only="HTML">&#915;L(n+1,q)</Alt> does not act faithfully on the projective points,
+&glnplus1q; and &autgfq;, and is denoted by &gammalnplus1q;. Each semilinear map induces a collineation of &pgnq;.
+The Fundamental theorem of Projective Geometry also guarantees that the converse holds. Note also
+that &gammalnplus1q; does not act faithfully on the projective points,
 and the kernel of its action is the group of scalar matrices, <M>Sc(n+1,q)</M>.
 So the group &pgammalnplus1q; is defined as the group <Alt Not="HTML"><M>\Gamma
 L(n+1,q) / Sc(n+1,q)</M></Alt><Alt Only="HTML">&#915;L(n+1,q)/Sc(n+1,q)</Alt>, and
 <M>PGL(n+1,q) = GL(n+1,q) / Sc(n+1,q)</M>. An element of the group &pglnplus1q; is also 
 called a <E>projectivity</E> or <E>homography</E> of
 &pgnq;, and the group &pglnplus1q; is called the <E>projectivity
-group</E> or <E>homography group</E> of &pgnq;. An element of <Alt Not="HTML"><M>P\Gamma L(n+1,q)</M></Alt><Alt
-Only="HTML">P&#915;L(n+1,q)</Alt> is called a <E>collineation</E> of &pgnq;
-and the group <Alt Not="HTML"><M>P\Gamma L(n+1,q)</M></Alt><Alt
-Only="HTML">P&#915;L(n+1,q)</Alt> is the <E>collineation group</E> of
-&pgnq;.<P/>
+group</E> or <E>homography group</E> of &pgnq;. An element of &pgammalnplus1q; is called a <E>collineation</E> of &pgnq;
+and the group &pgammalnplus1q; is the <E>collineation group</E> of &pgnq;.<P/>
 
 As usual, we also consider the special linear group <M>SL(n+1,q)</M>, which is the subgroup of &glnplus1q;
 of all matrices having determinant one. Its projective variant, i.e. <M>PSL(n+1,q) = SL(n+1,q) / Sc(n+1,q)</M>
