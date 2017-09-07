@@ -8,12 +8,11 @@
                                                                  Michel Lavrauw
                                                                 Max Neunhoeffer
 
-  Copyright (C) 2015,	Colorado State University
-						Università degli Studi di Padova
-						Universiteit Gent
-						University of St. Andrews
-						University of Western Australia
-                        Vrije Universiteit Brussel
+  Copyright (C) 2017,       Colorado State University
+                            Università degli Studi di Padova
+                            University of St. Andrews
+                            University of Western Australia
+                            Vrije Universiteit Brussel
 
 This is the chapter of the documentation describing the projective groups.
 
@@ -21,12 +20,6 @@ This is the chapter of the documentation describing the projective groups.
 
 <Chapter Label="projgroup">
 <Heading>Projective Groups</Heading>
-
-<!-- Dit is een "test". Dit is een &test; &schevei; <E>I</E>
-
-<Alt Only="HTML">only in html</Alt><Alt Not="HTML">All the rest</Alt>.
-
-&test2;-->
 
 A <E>collineation</E> of a projective space is a type preserving bijection of the
 elements of the projective space, that preserves incidence. The Fundamental Theorem
@@ -41,10 +34,14 @@ of the vector space <M>V(n+1,q)</M> is obtained as the semidirect product of
 The Fundamental theorem of Projective Geometry also guarantees that the converse holds. Note also
 that &gammalnplus1q; does not act faithfully on the projective points,
 and the kernel of its action is the group of scalar matrices, &scnplus1q;.
-So the group &pgammalnplus1q; is defined as the group <Alt Not="HTML"><M>\Gamma{}\mathrm{L}(n+1,q) / \mathrm{Sc}(n+1,q)</M></Alt>
+So the group &pgammalnplus1q; is defined as the group
+<Alt Only="Text"><M>\Gamma{}L(n+1,q) / Sc(n+1,q)</M></Alt>
+<Alt Only="LaTeX"><M>\Gamma{}\mathrm{L}(n+1,q) / \mathrm{Sc}(n+1,q)</M></Alt>
 <Alt Only="HTML MathJax"><M>\Gamma{}\mathrm{L}(n+1,q) / \mathrm{Sc}(n+1,q)</M></Alt>
 <Alt Only="HTML noMathJax">&#915;L(n+1,q)/Sc(n+1,q)</Alt>, and
-the group &pglnplus1q; as <Alt Not="HTML"><M>\mathrm{GL}(n+1,q) / \mathrm{Sc}(n+1,q)</M></Alt>
+the group &pglnplus1q; as
+<Alt Only="Text"><M>GL(n+1,q) / Sc(n+1,q)</M></Alt>
+<Alt Only="LaTeX"><M>\mathrm{GL}(n+1,q) / \mathrm{Sc}(n+1,q)</M></Alt>
 <Alt Only="HTML MathJax"><M>\mathrm{GL}(n+1,q) / \mathrm{Sc}(n+1,q)</M></Alt>
 <Alt Only="HTML noMathJax">GL(n+1,q)/Sc(n+1,q)</Alt>. An element of the group &pglnplus1q; is also
 called a <E>projectivity</E> or <E>homography</E> of
@@ -54,7 +51,8 @@ and the group &pgammalnplus1q; is the <E>collineation group</E> of &pgnq;.<P/>
 
 As usual, we also consider the special linear group &slnplus1q;, which is the subgroup of &glnplus1q;
 of all matrices having determinant one. Its projective variant, i.e. &pslnplus1q; is defined as
-<Alt Not="HTML"><M>\mathrm{SL}(n+1,q) / (\mathrm{SL}(n+1,q) \cap \mathrm{Sc}(n+1,q))</M></Alt>
+<Alt Only="Text"><M>SL(n+1,q) / (SL(n+1,q) \cap Sc(n+1,q))</M></Alt>
+<Alt Only="LaTeX"><M>\mathrm{SL}(n+1,q) / (\mathrm{SL}(n+1,q) \cap \mathrm{Sc}(n+1,q))</M></Alt>
 <Alt Only="HTML MathJax"><M>\mathrm{SL}(n+1,q) / (\mathrm{SL}(n+1,q) \cap \mathrm{Sc}(n+1,q))</M></Alt>
 <Alt Only="HTML noMathJax">SL(n+1,q)/(SL(n+1,q) &#8745; Sc(n+1,q))</Alt> and
 is called the <E>special homography group</E> or <E>special projectivity group</E> of &pgnq;.
@@ -84,7 +82,7 @@ underlying matrices <Alt Not="HTML"><M>A_1,A_2</M></Alt><Alt Only="HTML MathJax"
 <Alt Only="HTML noMathJax">A&lt;sub>1&lt;/sub>,A&lt;sub>2&lt;/sub></Alt> and respective underlying
 field automorphisms <Alt Not="HTML"><M>\theta_1,\theta_2</M></Alt><Alt Only="HTML MathJax"><M>\theta_1,\theta_2</M></Alt>
 <Alt Only="HTML noMathJax">&#952;&lt;sub>1&lt;/sub>,&#952;&lt;sub>2&lt;/sub></Alt> is the collineation with
-underlying matrix <Alt Not="HTML"><M>A_1 \cdot A_2^{\theta_1^{-1}}</M></Alt>
+underlying matrix <Alt Only="Text"><M>A_1 \cdot (A_2^(\theta_1^{-1}))</M></Alt><Alt Only="LaTeX"><M>A_1 \cdot A_2^{\theta_1^{-1}}</M></Alt>
 <Alt Only="HTML MathJax"><M>A_1 \cdot A_2^{\theta_1^{-1}}</M></Alt><Alt
 Only="HTML noMathJax">A&lt;sub>1&lt;/sub>A&lt;sub>2&lt;/sub>&lt;sup>&#952;&lt;sub>1&lt;/sub>&lt;sup>-1&lt;/sup>&lt;/sup></Alt>
 and underlying field automorphism <Alt Not="HTML"><M>\theta_1 \theta_2</M></Alt><Alt Only="HTML MathJax"><M>\theta_1 \theta_2</M></Alt>
@@ -139,7 +137,8 @@ field automorphisms <Alt Not="HTML"><M>\theta_1,\theta_2</M></Alt><Alt Only="HTM
 projective space isomorphisms (standard duality or identity map) <Alt Not="HTML"><M>\delta_1,\delta_2</M></Alt>
 <Alt Only="HTML MathJax"><M>\delta_1,\delta_2</M></Alt><Alt Only="HTML noMathJax">&#948;&lt;sub>1&lt;/sub>,&#948;&lt;sub>2&lt;/sub></Alt>,
 is the element of the correlation-collineation group with underlying matrix
-<Alt Not="HTML"><M>A_1 (A_2^{\theta_1^{-1}})^{\delta_1}</M></Alt>
+<Alt Only="Text"><M>A_1 \cdot (A_2^(\theta_1^{-1}))^{\delta_1}</M></Alt>
+<Alt Only="LaTeX"><M>A_1 \cdot (A_2^{\theta_1^{-1}})^{\delta_1}</M></Alt>
 <Alt Only="HTML MathJax"><M>A_1 (A_2^{\theta_1^{-1}})^{\delta_1}</M></Alt>
 <Alt Only="HTML noMathJax">A&lt;sub>1&lt;/sub>(A&lt;sub>2&lt;/sub>&lt;sup>&#952;&lt;sub>1&lt;/sub>&lt;sup>-1&lt;/sup>&lt;/sup>)
 &lt;sup>&#948;&lt;sub>1&lt;/sub>&lt;/sup></Alt>,
@@ -834,7 +833,7 @@ An elation is completely determind by its axis and the image of one point (not c
 in the axis). The group of elations with a given axis and centre, is isomorphic with
 the additive group of &gfq;. Finally, the group
 of all elations with a given axis <M>H</M>, acts regularly on the points of
-<Alt Not="HTML"><M>\mathrm{PG}(n,q) \setminus H</M></Alt>
+<Alt Only="Text"><M>PG(n,q) \setminus H</M></Alt><Alt Only="LaTeX"><M>\mathrm{PG}(n,q) \setminus H</M></Alt>
 <Alt Only="HTML MathJax"><M>\mathrm{PG}(n,q) \setminus H</M></Alt>
 <Alt Only="HTML noMathJax">PG(n,q) &#92; H</Alt>, and is isomorphic with the additive
 group of the vectorspace <M>V(n+1,q)</M>.
