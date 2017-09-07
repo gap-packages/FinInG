@@ -656,39 +656,42 @@ same underlying projective space is possible.
 <Section>
 <Heading>Basic action of projective group elements</Heading>
 <ManSection>
-    <Oper Name="\^" Arg="x,g"/>
- <Returns>a subspace of a projective space</Returns>
+<Oper Name="\^" Arg="x,g"/>
+<Returns>a subspace of a projective space</Returns>
 <Description>
-This is an operation which returns the image of <A>x</A>, a subspace of a projective space, under <A>g</A>, an element of the projective group, the collineation group, or the correlation group.
- </Description>
+This is an operation which returns the image of <A>x</A>, a subspace of a
+projective space, under <A>g</A>, an element of the projective group, the
+collineation group, or the correlation group.
+</Description>
 </ManSection>
 </Section>
 
 <Section Label="projgroup_actions">
 <Heading>Projective group actions</Heading>
-In this section we give more detailed about the actions that are used in <Package>FinInG</Package> for projective groups.
+In this section we give more detailed about the actions
+that are used in <Package>FinInG</Package> for projective groups.
 Consider the projective space &pgnq;. As described in Chapter <Ref
 Chap="projective_spaces"/>, a point of &pgnq; is represented by a row
 vector and a <M>k</M>-dimensional subspace of &pgnq; is represented by a
 <M>(k+1) \times (n+1)</M> matrix.<P/>
 Consider a point <M>p</M> with row vector <Alt Not="HTML"><M>(x_0, x_1, \ldots,
-x_n)</M></Alt><Alt
-Only="HTML">(x&lt;sub>0&lt;/sub>,x&lt;sub>1&lt;/sub>,...,x&lt;sub>n&lt;/sub>)</Alt>,
-and a collineation or correlation <Alt Not="HTML"><M>\phi</M></Alt><Alt
-Only="HTML">&#966;</Alt> with underlying matrix <M>A</M> and field automorphism
-<Alt Not="HTML"><M>\theta</M></Alt><Alt Only="HTML">&#952;</Alt>. Define the row
-vector <Alt Not="HTML"><M>(y_0,y_1,\ldots,y_n)
-= ((x_0, x_1, \ldots, x_n) A)^{\theta}</M></Alt><Alt
-Only="HTML">(y&lt;sub>0&lt;/sub>,y&lt;sub>1&lt;/sub>,...,y&lt;sub>n&lt;/sub>) =
+x_n)</M></Alt><Alt Only="HTML MathJax"><M>(x_0, x_1, \ldots, x_n)</M></Alt><Alt
+Only="HTML noMathJax">(x&lt;sub>0&lt;/sub>,x&lt;sub>1&lt;/sub>,...,x&lt;sub>n&lt;/sub>)</Alt>,
+and a collineation or correlation <M>\phi</M> with underlying matrix <M>A</M> and
+field automorphism <M>\theta</M>. Define the row
+vector <Alt Not="HTML"><M>(y_0,y_1,\ldots,y_n) = ((x_0, x_1, \ldots, x_n) A)^{\theta}</M></Alt>
+<Alt Only="HTML MathJax"><M>(y_0,y_1,\ldots,y_n) = ((x_0, x_1, \ldots, x_n) A)^{\theta}</M></Alt>
+<Alt Only="HTML noMathJax">(y&lt;sub>0&lt;/sub>,y&lt;sub>1&lt;/sub>,...,y&lt;sub>n&lt;/sub>) =
 ((x&lt;sub>0&lt;/sub>,x&lt;sub>1&lt;/sub>,...,x&lt;sub>n&lt;/sub>)A)&lt;sup>&#952;&lt;/sup>
-</Alt>. When <Alt Not="HTML"><M>\phi</M></Alt><Alt Only="HTML">&#966;</Alt> is a
-collineation, <Alt Not="HTML"><M>p^{\phi}</M></Alt><Alt
-Only="HTML">p&lt;sup>&#966;&lt;/sup></Alt> is the point with underlying row
-vector <Alt Not="HTML"><M>(y_0,y_1,\ldots,y_n)</M></Alt><Alt
-Only="HTML">(y&lt;sub>0&lt;/sub>,y&lt;sub>1&lt;/sub>,...,y&lt;sub>n&lt;/sub>)</Alt>. When <Alt Not="HTML"><M>\phi</M></Alt><Alt Only="HTML">&#966;</Alt> is a
-correlation, <Alt Only="HTML">p&lt;sup>&#966;&lt;/sup></Alt> is a hyperplane
-of &pgnq; with equation <Alt Not="HTML"><M>y_0X_0 + y_1X_1 + \ldots + y_nX_n</M></Alt><Alt
-Only="HTML">y&lt;sub>0&lt;/sub>X&lt;sub>0&lt;/sub> + y&lt;sub>1&lt;/sub>X&lt;sub>1&lt;/sub> + ...
+</Alt>. When <M>\phi</M> is a collineation, <Alt Not="HTML"><M>p^{\phi}</M></Alt>
+<Alt Only="HTML MathJax"><M>p^{\phi}</M></Alt><Alt Only="HTML noMathJax">p&lt;sup>&#966;&lt;/sup></Alt>
+is the point with underlying row vector <Alt Not="HTML"><M>(y_0,y_1,\ldots,y_n)</M></Alt>
+<Alt Only="HTML MathJax"><M>(y_0,y_1,\ldots,y_n)</M></Alt>
+<Alt Only="HTML noMathJax">(y&lt;sub>0&lt;/sub>,y&lt;sub>1&lt;/sub>,...,y&lt;sub>n&lt;/sub>)</Alt>.
+When <M>\phi</M> is a correlation, <Alt Not="HTML"><M>p^\phi</M></Alt><Alt Only="HTML MathJax"><M>p^\phi</M></Alt>
+<Alt Only="HTML noMathJax">p&lt;sup>&#966;&lt;/sup></Alt> is a hyperplane of &pgnq; with equation
+<Alt Not="HTML"><M>y_0X_0 + y_1X_1 + \ldots + y_nX_n</M></Alt><Alt Only="HTML MathJax"><M>y_0X_0 + y_1X_1 + \ldots + y_nX_n</M></Alt>
+<Alt Only="HTML noMathJax">y&lt;sub>0&lt;/sub>X&lt;sub>0&lt;/sub> + y&lt;sub>1&lt;/sub>X&lt;sub>1&lt;/sub> + ...
 y&lt;sub>n&lt;/sub>X&lt;sub>n&lt;/sub> = 0</Alt>. The action of collineations or
 correlations on points determines the action on subspaces of arbitrary
 dimension completely.
@@ -705,7 +708,6 @@ This is because this function does not check whether <A>el</A> is a correlation 
 </Example>
 </Description>
 </ManSection>
-
 
 <ManSection>
 <Func Name="ActionOnAllProjPoints" Arg="g"/>
@@ -732,20 +734,24 @@ subspace of the same dimension as <A>subspace</A> if <A>el</A> is a collineation
 </Description>
 </ManSection>
 
-
 </Section>
 
 <Section>
 <Heading>Special subgroups of the projectivity group</Heading>
-A <E>transvection</E> of the vector space <M>V=V(n+1,F)</M> is a linear map <Alt Only="HTML">&#964;</Alt><Alt Not="HTML"><M>\tau</M></Alt>
-from <M>V</M> to <M>V</M> with matrix <M>M</M> such that <M>rk(M-I)=1</M> and <Alt Only="HTML">(M-I)&lt;sup>2&lt;/sup>=0</Alt>
-<Alt Not="HTML"><M>(M-I)^2=0</M></Alt>. Different equivalent definitions 
-are found in the literature, here we followed <Cite Key="Cameron2"/>. 
-Choosing a basis <Alt Not="HTML"><M>e_1,\ldots,e_n,e_{n+1}</M></Alt>
-<Alt Only="HTML">e&lt;sub>1&lt;/sub>,...,e&lt;sub>n&lt;/sub>,e&lt;sub>n+1&lt;/sub></Alt> such that <Alt Not="HTML"><M>e_1,\ldots,e_{n}</M></Alt>
-<Alt Only="HTML">e&lt;sub>1&lt;/sub>,...,e&lt;sub>n&lt;/sub></Alt> generates 
+A <E>transvection</E> of the vector space <M>V=V(n+1,F)</M> is a linear map
+<M>\tau</M> from <M>V</M> to itself with matrix <M>M</M> such that the rank
+of <M>M-I</M> equals 1 (where <M>I</M> denotes the <M>(n+1) \times (n+1)</M> identity
+matrix), and <Alt Not="HTML"><M>(M-I)^2=0</M></Alt><Alt Only="HTML MathJax"><M>(M-I)^2=0</M></Alt>
+<Alt Only="HTML noMathJax">(M-I)&lt;sup>2&lt;/sup>=0</Alt>. Different equivalent definitions
+are found in the literature, here we followed <Cite Key="Cameron2"/>. Note that
+what follows is true for arbitrary fields <M>F</M>, but we will restrict to
+finite fields. Choosing a basis <Alt Not="HTML"><M>e_1,\ldots,e_n,e_{n+1}</M></Alt>
+<Alt Only="HTML MathJax"><M>e_1,\ldots,e_n,e_{n+1}</M></Alt>
+<Alt Only="HTML noMathJax">e&lt;sub>1&lt;/sub>,...,e&lt;sub>n&lt;/sub>,e&lt;sub>n+1&lt;/sub></Alt>
+such that <Alt Not="HTML"><M>e_1,\ldots,e_{n}</M></Alt><Alt Only="HTML MathJax"><M>e_1,\ldots,e_{n}</M></Alt>
+<Alt Only="HTML noMathJax">e&lt;sub>1&lt;/sub>,...,e&lt;sub>n&lt;/sub></Alt> generates
 the kernel of <M>M-I</M>, it follows that <M>M</M> equals
-<Alt Only="LaTeX"><Display>\left( \begin{array}{ccccc}
+<Alt Not="HTML"><Display>\left( \begin{array}{ccccc}
 1 &amp; 0 &amp; \ldots &amp; 0 &amp; 0 \\ 
 0 &amp; 1 &amp; \ldots &amp; 0 &amp; 0 \\ 
 \vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots \\
@@ -753,7 +759,15 @@ the kernel of <M>M-I</M>, it follows that <M>M</M> equals
 x_1 &amp; x_2 &amp; \ldots &amp; x_{n-1} &amp; 1 \\ 
 \end{array} \right).</Display>
 </Alt>
-<Alt Only="HTML">
+<Alt Only="HTML MathJax"><Display>\left( \begin{array}{ccccc}
+1 &amp; 0 &amp; \ldots &amp; 0 &amp; 0 \\ 
+0 &amp; 1 &amp; \ldots &amp; 0 &amp; 0 \\ 
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots \\
+0 &amp; 0 &amp; \ldots &amp; 1 &amp; 0 \\ 
+x_1 &amp; x_2 &amp; \ldots &amp; x_{n-1} &amp; 1 \\ 
+\end{array} \right).</Display>
+</Alt>
+<Alt Only="HTML noMathJax">
 &lt;table style="color:#000">&lt;tr>
 &lt;td>&lt;table border=0 cellpadding=0 cellspacing=0px style="border-left:1px solid #000; border-right:1px solid #000; color:#000">&lt;tr>
 &lt;td style ="border-top:1px solid #000; border-bottom:1px solid #000;">&nbsp;&lt;/td>&lt;td>&lt;table border=0 cellpadding=0 cellspacing=0 style="color:#000;">
@@ -807,19 +821,23 @@ Choosing <Alt Only="HTML">v=e&lt;sub>1&lt;/sub></Alt><Alt Not="HTML"><M>v=e_1</M
 <Alt Not="HTML"><M>x_2=\ldots=x_n=0)</M></Alt> and <Alt Only="HTML">x&lt;sub>1&lt;/sub>=1</Alt>
 <Alt Not="HTML"><M>x_1=1</M></Alt>. 
 -->
-It is also a well known fact that all transvections generate the group <M>SL(n+1,F)</M>.
+It is also a well known fact that all transvections generate the group &slnplus1q;.
 
-A transvection gives rise to a projectivity of <M>PG(n,F)</M>, we call such an element an <E>elation</E>, 
-and it is a projectivity <Alt Not="HTML"><M>\phi</M></Alt><Alt Only="HTML">&#966;</Alt> fixing a hyperplane <M>H</M> pointwise, 
-and such that there exists exactly one point <Alt Only="HTML">p &#8712; H</Alt><Alt Not="HTML"><M>p \in H</M></Alt> such 
+A transvection gives rise to a projectivity of &pgnq;, we call such an element an <E>elation</E>,
+and it is a projectivity <M>\phi</M> fixing a hyperplane <M>H</M> pointwise,
+and such that there exists exactly one point <Alt Not="HTML"><M>p \in H</M></Alt>
+<Alt Only="HTML MathJax"><M>p \in H</M></Alt><Alt Only="HTML noMathJax">p &#8712; H</Alt> such
 that all hyperplanes through <M>p</M> are stabilized. The hyperplane <M>H</M> is called the <E>axis</E> of 
-<Alt Not="HTML"><M>\phi</M></Alt><Alt Only="HTML">&#966;</Alt>, and the point <M>p</M> is called the <E>centre</E> of 
-<Alt Not="HTML"><M>\phi</M></Alt><Alt Only="HTML">&#966;</Alt>. As a transvection is an element of <M>SL(n,F)</M>, 
-an elation is an element of <M>PSL(n,F)</M>. An elation is completely determind by its axis and the image of one point (not contained
-in the axis). The group of elations with a given axis and centre, is isomorphic with the additive group of <M>F</M>. Finally, the group
-of all elations with a given axis <M>H</M>, acts regularly on the points of <Alt Only="HTML">PG(n,F) &#92; H</Alt>
-<Alt Not="HTML"><M>PG(n,F) \setminus H</M></Alt>, and is isomorphic with the additive
-group of the vectorspace <M>V(n,F)</M>. 
+<M>\phi</M>, and the point <M>p</M> is called the <E>centre</E> of
+<M>\phi</M>. As a transvection is an element of &slnplus1q;, an elation is an element of &pslnplus1q;.
+An elation is completely determind by its axis and the image of one point (not contained
+in the axis). The group of elations with a given axis and centre, is isomorphic with
+the additive group of &gfq;. Finally, the group
+of all elations with a given axis <M>H</M>, acts regularly on the points of
+<Alt Not="HTML"><M>\mathrm{PG}(n,q) \setminus H</M></Alt>
+<Alt Only="HTML MathJax"><M>\mathrm{PG}(n,q) \setminus H</M></Alt>
+<Alt Only="HTML noMathJax">PG(n,q) &#92; H</Alt>, and is isomorphic with the additive
+group of the vectorspace <M>V(n+1,q)</M>.
 
 <ManSection>
 <Oper Name="ElationOfProjectiveSpace" Arg="sub,point1,point2"/>
