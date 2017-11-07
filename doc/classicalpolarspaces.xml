@@ -7,9 +7,8 @@ classicalpolarspaces.xml    FinInG package documentation
                                                                  Michel Lavrauw
                                                                 Max Neunhoeffer
 
-  Copyright (C) 2015,	Colorado State University
+  Copyright (C) 2017,	Colorado State University
 						Università degli Studi di Padova
-						Universiteit Gent
 						University of St. Andrews
 						University of Western Australia
                         Vrije Universiteit Brussel
@@ -200,76 +199,101 @@ by a standard form up to a constant factor.
 
 In the following table, we summerise the above information on polar spaces,
 together with the standard forms that are chosen in
-<Package>FinInG</Package>. Note that <M>Tr</M> refers to the absolute Trace.
+<Package>FinInG</Package>. Note that <Alt Only="LaTeX"><M>\mathrm{Tr}</M></Alt><Alt Not="LaTeX">Tr</Alt> refers to the absolute trace map from
+&gfq; to &gfp;.
 
 <Table Align="|l|l|l|l|">
- <Caption>finite classical polar spaces</Caption>
- <HorLine/>
-  <Row><Item>polar space</Item><Item>standard form</Item><Item>characteristic <M>p</M></Item>
-  <Item>projective dimension</Item></Row>
- <HorLine/>
-   <Row><Item>hermitian polar space</Item>
-   <Item><Alt Not="HTML"><M>X_0^{q+1} + X_1^{q+1} + \ldots + X_{n}^{q+1}</M></Alt>
+<Caption>finite classical polar spaces</Caption>
+<HorLine/>
+<Row><Item>polar space</Item><Item>standard form</Item><Item>characteristic <M>p</M></Item><Item><Alt Not="LaTeX">projective dimension</Alt><Alt Only="LaTeX">\makecell[cc]{projective \\ dimension}</Alt></Item></Row>
+<HorLine/>
+<Row><Item>hermitian polar space</Item>
+<Item><Alt Not="HTML"><M>X_0^{q+1} + X_1^{q+1} + \ldots + X_{n}^{q+1}</M></Alt>
     <Alt Only="HTML MathJax"><M>X_0^{q+1} + X_1^{q+1} + \ldots + X_{n}^{q+1}</M></Alt>
     <Alt Only="HTML noMathJax">X&lt;sub>0&lt;/sub>&lt;sup>q+1&lt;/sup> +	 X&lt;sub>1&lt;/sub>&lt;sup>q+1&lt;/sup> ... +
-	 X&lt;sub>n&lt;/sub>&lt;sup>q+1&lt;/sup></Alt> 
-   </Item><Item>odd and even</Item><Item>odd and even</Item></Row>
-   <Row><Item>symplectic space</Item>
-   <Item><Alt Not="HTML"><M> X_0 Y_1 - Y_0X_1+ \ldots + X_{n-1}Y_n - Y_{n-1}X_n 
-         </M></Alt>
-        <Alt Only="HTML MathJax"><M> X_0 Y_1 - Y_0X_1+ \ldots + X_{n-1}Y_n - Y_{n-1}X_n
-         </M></Alt>
-         <Alt Only="HTML noMathJax">X&lt;sub>0&lt;/sub> Y&lt;sub>1&lt;/sub> -
-	 X&lt;sub>1&lt;/sub>Y&lt;sub>0&lt;/sub> + ... +
-	 X&lt;sub>n-1&lt;/sub>Y&lt;sub>n&lt;/sub> -
-	 X&lt;sub>n&lt;/sub>Y&lt;sub>n-1&lt;/sub></Alt>
-   </Item><Item>odd and even</Item><Item>odd</Item></Row>
-   
-   <Row><Item>hyperbolic quadric</Item>
-   <Item><Alt Not="HTML"><M> X_0 X_1 + \ldots + X_{n-1}X_n
-         </M></Alt><Alt Only="HTML">X&lt;sub>0&lt;/sub> X&lt;sub>1&lt;/sub> + ... +
-	 X&lt;sub>n-1&lt;/sub>X&lt;sub>n&lt;/sub></Alt>
-   </Item><Item><Alt Only="HTML">p &#8801; 3 mod 4</Alt><Alt Not="HTML"><M>p \equiv 3\,\mathrm{mod}\,4</M></Alt> and p even</Item><Item>odd</Item></Row>
+        X&lt;sub>n&lt;/sub>&lt;sup>q+1&lt;/sup></Alt>
+    </Item><Item>odd or even</Item><Item>odd or even</Item></Row>
 
-   <Row><Item>hyperbolic quadric</Item>
-   <Item><Alt Not="HTML"><M> 2(X_0 X_1 + \ldots + X_{n-1}X_n)
-         </M></Alt><Alt Only="HTML">2(X&lt;sub>0&lt;/sub> X&lt;sub>1&lt;/sub> + ... +
-	 X&lt;sub>n-1&lt;/sub>X&lt;sub>n&lt;/sub> )</Alt>
-   </Item><Item><Alt Only="HTML">p &#8801; 1 mod 4</Alt><Alt Not="HTML"><M>p \equiv 1\,\mathrm{mod}\,4</M></Alt></Item><Item>odd</Item></Row>
+<Row><Item>symplectic space</Item>
+<Item><Alt Not="HTML"><M> X_0 Y_1 - Y_0X_1+ \ldots + X_{n-1}Y_n - Y_{n-1}X_n</M></Alt>
+    <Alt Only="HTML MathJax"><M> X_0 Y_1 - Y_0X_1+ \ldots + X_{n-1}Y_n - Y_{n-1}X_n</M></Alt>
+    <Alt Only="HTML noMathJax">X&lt;sub>0&lt;/sub> Y&lt;sub>1&lt;/sub> -
+        X&lt;sub>1&lt;/sub>Y&lt;sub>0&lt;/sub> + ... +
+        X&lt;sub>n-1&lt;/sub>Y&lt;sub>n&lt;/sub> -
+        X&lt;sub>n&lt;/sub>Y&lt;sub>n-1&lt;/sub></Alt>
+</Item><Item>odd or even</Item><Item>odd</Item></Row>
+
+<Row><Item>hyperbolic quadric</Item>
+<Item><Alt Not="HTML"><M> X_0 X_1 + \ldots + X_{n-1}X_n</M></Alt>
+    <Alt Only="HTML MathJax"><M> X_0 X_1 + \ldots + X_{n-1}X_n</M></Alt>
+    <Alt Only="HTML noMathJax">X&lt;sub>0&lt;/sub> X&lt;sub>1&lt;/sub> + ... +
+        X&lt;sub>n-1&lt;/sub>X&lt;sub>n&lt;/sub></Alt></Item>
+<Item><Alt Not="HTML"><M>p \equiv 3 \pmod{4}</M> or <M>p=2</M></Alt>
+    <Alt Only="HTML MathJax"><M>p \equiv 3 \pmod{4}</M> or <M>p=2</M></Alt>
+    <Alt Only="HTML noMathJax">p &#8801; 3 mod 4 or p=2</Alt>
+</Item><Item>odd</Item></Row>
+
+<Row><Item>hyperbolic quadric</Item>
+<Item><Alt Not="HTML"><M>2(X_0 X_1 + \ldots + X_{n-1}X_n)</M></Alt>
+    <Alt Only="HTML MathJax"><M>2(X_0 X_1 + \ldots + X_{n-1}X_n)</M></Alt>
+    <Alt Only="HTML noMathJax">2(X&lt;sub>0&lt;/sub> X&lt;sub>1&lt;/sub> + ... +
+        X&lt;sub>n-1&lt;/sub>X&lt;sub>n&lt;/sub> )</Alt>
+   </Item><Item><Alt Only="HTML noMathJax">p &#8801; 1 mod 4</Alt>
+       <Alt Only="HTML MathJax"><M>p \equiv 1 \pmod{4}</M></Alt>
+       <Alt Not="HTML"><M>p \equiv 1 \pmod{4}</M></Alt>
+   </Item><Item>odd</Item></Row>
    
    <Row><Item>parabolic quadric</Item>
    <Item><Alt Not="HTML"><M> X_0^2 + X_1X_2 + \ldots + X_{n-1}X_n
          </M></Alt><Alt Only="HTML">X&lt;sub>0&lt;/sub>&lt;sup>2&lt;/sup> +
 	 X&lt;sub>1&lt;/sub> X&lt;sub>2&lt;/sub> + ... +
 	 X&lt;sub>n-1&lt;/sub>X&lt;sub>n&lt;/sub></Alt>
-   </Item><Item><Alt Only="HTML">p &#8801; 1,3 mod 8</Alt><Alt Not="HTML"><M>p \equiv 1,3\,\mathrm{mod}\,8</M></Alt> and p even</Item><Item>even</Item></Row>
+   </Item><Item><Alt Only="HTML noMathJax">p &#8801; 1,3 mod 8</Alt>
+   <Alt Only="HTML MathJax"><M>p \equiv 1,3 \pmod{8}</M></Alt>
+   <Alt Not="HTML"><M>p \equiv 1,3 \pmod{8}</M></Alt>or <M>p=2</M></Item>
+   <Item>even</Item></Row>
    
-   <Row><Item>parabolic quadric</Item>
-   <Item><Alt Not="HTML"><M> t(X_0^2 + X_1X_2 + \ldots + X_{n-1}X_n),\,
-         </M> <M>t</M> a primitive element of <M>GF(p)</M></Alt><Alt Only="HTML">t(X&lt;sub>0&lt;/sub>&lt;sup>2&lt;/sup> +
+<Row><Item>parabolic quadric</Item>
+    <Item><Alt Only="Text"><M>t(X_0^2 + X_1X_2 + \ldots + X_{n-1}X_n)</M>, t a primitve element of GF(p)</Alt>
+    <Alt Only="LaTeX">\makecell[cl]{<M>t(X_0^2 + X_1X_2 + \ldots + X_{n-1}X_n),</M> \\ <M>t</M> a primitve element of <M>\mathrm{GF}(p)</M>}</Alt>
+    <Alt Only="HTML noMathJax">t(X&lt;sub>0&lt;/sub>&lt;sup>2&lt;/sup> +
 	 X&lt;sub>1&lt;/sub> X&lt;sub>2&lt;/sub> + ... +
 	 X&lt;sub>n-1&lt;/sub>X&lt;sub>n&lt;/sub>), <M>t</M> a primitive element of <M>GF(p)</M></Alt>
-   </Item><Item><Alt Only="HTML">p &#8801; 5,7 mod 8</Alt><Alt Not="HTML"><M>p \equiv 5,7\,\mathrm{mod}\,8</M></Alt></Item><Item>even</Item></Row>
-   
-   <Row><Item>elliptic quadric</Item>
-   <Item><Alt Not="HTML"><M>X_0^2 + X_1^2 + X_2X_3 + \ldots + X_{n-1}X_n
-         </M></Alt><Alt Only="HTML">X&lt;sub>0&lt;/sub>&lt;sup>2&lt;/sup> +
-	 X&lt;sub>1&lt;/sub>&lt;sup>2&lt;/sup> +  X&lt;sub>2&lt;/sub>
-	 X&lt;sub>3&lt;/sub> + ... + X&lt;sub>n-1&lt;/sub>X&lt;sub>n&lt;/sub></Alt>
-   </Item><Item><Alt Only="HTML">p &#8801; 3 mod 4</Alt><Alt Not="HTML"><M>p \equiv 3\,\mathrm{mod}\,4</M></Alt></Item><Item>odd</Item></Row>
+    <Alt Only="HTML MathJax"><M>t(X_0^2 + X_1X_2 + \ldots + X_{n-1}X_n)</M>, <M>t</M> a primitve element of <M>\mathrm{GF}(p)</M></Alt>
+    </Item><Item><Alt Only="HTML noMathJax">p &#8801; 5,7 mod 8</Alt>
+        <Alt Only="HTML MathJax"><M>p \equiv 5,7 \pmod{8}</M></Alt>
+        <Alt Not="HTML"><M>p \equiv 5,7 \pmod{8}</M></Alt>
+    </Item>
+    <Item>even</Item></Row>
 
-   <Row><Item>elliptic quadric</Item>
-   <Item><Alt Not="HTML"><M>X_0^2 + tX_1^2 + X_2X_3 + \ldots + X_{n-1}X_n
-         </M>, <M>t</M> a primitive element of <M>GF(p)</M></Alt><Alt Only="HTML">X&lt;sub>0&lt;/sub>&lt;sup>2&lt;/sup> +
-	 tX&lt;sub>1&lt;/sub>&lt;sup>2&lt;/sup> +  X&lt;sub>2&lt;/sub>
-	 X&lt;sub>3&lt;/sub> + ... + X&lt;sub>n-1&lt;/sub>X&lt;sub>n&lt;/sub>
-	 , <M>t</M> a primitive element of <M>GF(p)</M></Alt>
-   </Item><Item>odd</Item><Item>odd</Item></Row>
+<Row><Item>elliptic quadric</Item>
+   <Item><Alt Not="HTML"><M>X_0^2 + X_1^2 + X_2X_3 + \ldots + X_{n-1}X_n</M></Alt>
+       <Alt Only="HTML noMathJax">X&lt;sub>0&lt;/sub>&lt;sup>2&lt;/sup> + X&lt;sub>1&lt;/sub>&lt;sup>2&lt;/sup> +  X&lt;sub>2&lt;/sub>
+	 X&lt;sub>3&lt;/sub> + ... + X&lt;sub>n-1&lt;/sub>X&lt;sub>n&lt;/sub></Alt>
+       <Alt Only="HTML MathJax"><M>X_0^2 + X_1^2 + X_2X_3 + \ldots + X_{n-1}X_n</M></Alt></Item>
+   <Item><Alt Only="HTML noMathJax">p &#8801; 3 mod 4</Alt>
+       <Alt Only="HTML MathJax"><M>p \equiv 3 \pmod{4}</M></Alt>
+       <Alt Not="HTML"><M>p \equiv 3 \pmod{4}</M></Alt></Item>
+    <Item>odd</Item></Row>
+
+<Row><Item>elliptic quadric</Item>
+    <Item><Alt Only="LaTeX">\makecell[cl]{<M>X_0^2 + tX_1^2 + X_2X_3 + \ldots + X_{n-1}X_n</M>,\\ <M>t</M> a primitive element of <M>\mathrm{GF}(p)</M>}</Alt>
+        <Alt Only="HTML MathJax"><M>X_0^2 + tX_1^2 + X_2X_3 + \ldots + X_{n-1}X_n</M>, <M>t</M> a primitive element of <M>\mathrm{GF}(p)</M></Alt>
+        <Alt Only="Text"><M>X_0^2 + tX_1^2 + X_2X_3 + \ldots + X_{n-1}X_n</M>, <M>t</M> a primitive element of <M>GF(p)</M></Alt>
+        <Alt Only="HTML noMathJax">X&lt;sub>0&lt;/sub>&lt;sup>2&lt;/sup> + tX&lt;sub>1&lt;/sub>&lt;sup>2&lt;/sup> +  X&lt;sub>2&lt;/sub> X&lt;sub>3&lt;/sub> + ... + X&lt;sub>n-1&lt;/sub>X&lt;sub>n&lt;/sub>, <M>t</M> a primitive element of GF(p)</Alt>
+   </Item>
+    <Item><Alt Only="HTML noMathJax">p &#8801; 1 mod 4</Alt>
+        <Alt Only="HTML MathJax"><M>p \equiv 1 \pmod{4}</M></Alt>
+        <Alt Not="HTML"><M>p \equiv 1 \pmod{4}</M></Alt>
+    </Item>
+    <Item>odd</Item></Row>
  
    <Row><Item>elliptic quadric</Item>
-   <Item><Alt Not="HTML"><M>X_0^2 + X_0X_1 + dX_1^2 + X_2X_3 + \ldots + X_{n-1}X_n 
-         </M>, <M>Tr(d)=1</M></Alt><Alt Only="HTML">X&lt;sub>0&lt;/sub>&lt;sup>2&lt;/sup> +
-	 X&lt;sub>0&lt;/sub>X&lt;sub>1&lt;/sub> +
+   <Item><Alt Only="Text"><M>X_0^2 + X_0X_1 + dX_1^2 + X_2X_3 + \ldots + X_{n-1}X_n
+         </M>, <M>Tr(d)=1</M></Alt>
+   <Alt Only="LaTeX">\makecell[cl]{<M>X_0^2 + X_0X_1 + dX_1^2 + X_2X_3 + \ldots + X_{n-1}X_n</M>,\\ <M>\mathrm{Tr}(d)=1</M>}</Alt>
+   <Alt Only="HTML MathJax"><M>X_0^2 + X_0X_1 + dX_1^2 + X_2X_3 + \ldots + X_{n-1}X_n</M>, <M>\mathrm{Tr}(d)=1</M></Alt>
+   <Alt Only="HTML noMathJax">X&lt;sub>0&lt;/sub>&lt;sup>2&lt;/sup> + X&lt;sub>0&lt;/sub>X&lt;sub>1&lt;/sub> +
 	 d X&lt;sub>1&lt;/sub>&lt;sup>2&lt;/sup> +  X&lt;sub>2&lt;/sub> 
 	 X&lt;sub>3&lt;/sub> + ... + X&lt;sub>n-1&lt;/sub>X&lt;sub>n&lt;/sub>
 	 , Tr(d) = 1</Alt>

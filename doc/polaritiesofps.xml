@@ -88,7 +88,7 @@ spaces and non-degenerate sesquilinear forms on the underlying vector space.
 Consider a sesquilinear form <M>f</M> on the vector space <M>V(n+1,q)</M>. Then
 <M>f</M> induces a map on the elements of &pgnq; as follows: every
 element with underlying subspace <M>\alpha</M> is mapped to the
-element with underlying subspace <Alt Not="HTML"><M>\alpha^\perp</M></Alt>
+element with underlying subspace <Alt Not="HTML"><M>\alpha^{\perp}</M></Alt>
 <Alt Only="HTML MathJax"><M>\alpha^\perp</M></Alt><Alt Only="HTML noMathJax">&#945;&lt;sup>&#8869;&lt;/sup></Alt>,
 i.e. the subspace of <M>V(n+1,q)</M> orthogonal to <M>\alpha</M> with
 respect to the form <M>f</M>. It is clear that

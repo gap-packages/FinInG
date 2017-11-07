@@ -13,6 +13,7 @@
     <!ENTITY gammal "\Gamma\mathrm{L}">
     <!ENTITY pgammal "\mathrm{P}\Gamma\mathrm{L}">
     <!ENTITY gfq "<Alt Only=&#34;Text&#34;><M>GF(q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&gf;(q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&gf;(q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>GF(q)</Alt>">
+    <!ENTITY gfp "<Alt Only=&#34;Text&#34;><M>GF(p)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&gf;(p)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&gf;(p)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>GF(p)</Alt>">
     <!ENTITY pgnq "<Alt Only=&#34;Text&#34;><M>PG(n,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&pg;(n,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pg;(n,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>PG(n,q)</Alt>">
     <!ENTITY glnplus1q "<Alt Only=&#34;Text&#34;><M>GL(n+1,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&gl;(n+1,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&gl;(n+1,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>GL(n+1,q)</Alt>">
     <!ENTITY slnplus1q "<Alt Only=&#34;Text&#34;><M>SL(n+1,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&sl;(n+1,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&sl;(n+1,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>SL(n+1,q)</Alt>">
@@ -28,7 +29,7 @@
     ]
    >
 
-<?LaTeX ExtraPreamble="\usepackage{graphicx,amsfonts,tipa}"?>
+<?LaTeX ExtraPreamble="\usepackage{graphicx,amsfonts,tipa,makecell}"?>
 
 
 <!--
