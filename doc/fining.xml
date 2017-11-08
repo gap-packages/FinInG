@@ -12,6 +12,7 @@
     <!ENTITY psl "\mathrm{PSL}">
     <!ENTITY gammal "\Gamma\mathrm{L}">
     <!ENTITY pgammal "\mathrm{P}\Gamma\mathrm{L}">
+    <!ENTITY phi "<Alt Not=&#34;HTML&#34;><M>\phi</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>\phi</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>&#966;</Alt>">
     <!ENTITY gfq "<Alt Only=&#34;Text&#34;><M>GF(q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&gf;(q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&gf;(q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>GF(q)</Alt>">
     <!ENTITY gfp "<Alt Only=&#34;Text&#34;><M>GF(p)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&gf;(p)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&gf;(p)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>GF(p)</Alt>">
     <!ENTITY pgnq "<Alt Only=&#34;Text&#34;><M>PG(n,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&pg;(n,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pg;(n,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>PG(n,q)</Alt>">
