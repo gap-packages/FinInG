@@ -102,8 +102,10 @@ the automorphism groups of the source and range. Given a geometry morphism
 from the automorphism group of <M>S</M> to the automorphism group of
 <M>S'</M>, such that for every element <M>p</M> of <M>S</M> and every
 automorphism <M>g</M> of <M>S</M>, we have
-<Alt Not="HTML"><Display> f(p^g) = f(p)^{\phi(g)} .</Display></Alt>
-<Alt Only="HTML"><Display>f(p&lt;sup>g&lt;/sup>)=f(p)&lt;sup>&#966;(g)&lt;/sup>.</Display></Alt>
+<Alt Only="Text"><M>f(p^g) = f(p)^{\phi(g)}.</M></Alt>
+<Alt Only="LaTeX"><Display> f(p^g) = f(p)^{\phi(g)}.</Display></Alt>
+<Alt Only="HTML MathJax"><Display> f(p^g) = f(p)^{\phi(g)}.</Display></Alt>
+<Alt Only="HTML noMathJax"><Display>f(p&lt;sup>g&lt;/sup>)=f(p)&lt;sup>&#966;(g)&lt;/sup>.</Display></Alt>
 There is no method to compute an intertwiner for a given
 geometry morphism, the attribute is or is not set during the construction of the geometry
 morphism, depending whether the Source and Range of the morphism have the appropriate

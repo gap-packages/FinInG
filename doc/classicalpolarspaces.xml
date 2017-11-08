@@ -855,19 +855,10 @@ overview.
  <Caption>projective finite classical groups</Caption>
  <HorLine/>
   <Row><Item>(sub)group</Item><Item>symplectic</Item><Item>hyperbolic</Item><Item>elliptic</Item><Item>parabolic</Item><Item>hermitian</Item></Row>
-  <Row><Item>special isometry</Item><Item>&pspdq;</Item><Item>&psoplusdq;</Item><Item>&psominusdq;</Item>
-	   <Item>&pso0dq;</Item><Item><Alt Not="HTML"><M>PSU(d,q^2)</M></Alt><Alt Only="HTML">PSU(d,q&lt;sup>2&lt;/sup>)</Alt></Item></Row>
-  <Row><Item>isometry</Item><Item><M>PSp(d,q)</M></Item><Item><M>PGO(1,d,q)</M></Item><Item><M>PGO(-1,d,q)</M></Item>
-	   <Item><M>PGO(0,d,q)</M></Item><Item><Alt Not="HTML"><M>PGU(d,q^2)</M></Alt><Alt Only="HTML">PGU(d,q&lt;sup>2&lt;/sup>)</Alt></Item></Row>
-  <Row><Item>similarity</Item><Item><M>PGSp(d,q)</M></Item><Item><Alt Not="HTML"><M>P\Delta{}O^+(d,q)</M></Alt>
-             <Alt Only="HTML">P&#916;O&lt;sup>+&lt;/sup>(d,q)</Alt></Item><Item><Alt Not="HTML"><M>P\Delta{}O^-(d,q)</M></Alt>
-             <Alt Only="HTML">P&#916;O&lt;sup>-&lt;/sup>(d,q)</Alt></Item><Item><M>PGO(0,d,q)</M></Item>
-			 <Item><Alt Not="HTML"><M>PGU(d,q^2)</M></Alt><Alt Only="HTML">PGU(d,q&lt;sup>2&lt;/sup>)</Alt></Item></Row>
-  <Row><Item>collineation</Item><Item><Alt Only="HTML">P&#915;Sp(d,q)</Alt><Alt Not="HTML"><M>P\Gamma{}Sp(d,q)</M></Alt></Item>
-		<Item><Alt Only="HTML">P&#915;O&lt;sup>+&lt;/sup>(d,q)</Alt><Alt Not="HTML"><M>P\Gamma{}O^+(d,q)</M></Alt></Item>
-		<Item><Alt Only="HTML">P&#915;O&lt;sup>-&lt;/sup>(d,q)</Alt><Alt Not="HTML"><M>P\Gamma{}O^-(d,q)</M></Alt></Item>
-		<Item><Alt Only="HTML">P&#915;O(d,q)</Alt><Alt Not="HTML"><M>P\Gamma{}O(d,q)</M></Alt></Item>
-		<Item><Alt Only="HTML">P&#915;U(d,q&lt;sup>2&lt;/sup>)</Alt><Alt Not="HTML"><M>P\Gamma{}U(d,q^2)</M></Alt></Item></Row>   
+  <Row><Item>special isometry</Item><Item>&pspdq;</Item><Item>&psoplusdq;</Item><Item>&psominusdq;</Item><Item>&pso0dq;</Item><Item>&psudq2;</Item></Row>
+  <Row><Item>isometry</Item><Item>&pspdq;</Item><Item>&pgoplusdq;</Item><Item>&pgominusdq;</Item><Item>&pgo0dq;</Item><Item>&pgudq2;</Item></Row>
+  <Row><Item>similarity</Item><Item>&pgspdq;</Item><Item>&pdeltaoplusdq;</Item><Item>&pdeltaominusdq;</Item><Item>&pgo0dq;</Item><Item>&pgudq2;</Item></Row>
+  <Row><Item>collineation</Item><Item>&pgammaspdq;</Item><Item>&pgammaoplusdq;</Item><Item>&pgammaominusdq;</Item><Item>&pgammaodq;</Item><Item>&pgammaudq2;</Item></Row>
  <HorLine/>
 </Table>
 
