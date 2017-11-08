@@ -161,7 +161,8 @@ The pair <M>(V,q)</M> is called a formed space. Consider now two formed spaces
 forms on <M>V</M>. A non-degenerate linear map &phi; from <M>V</M> to itself induces a
 <E>similarity</E> of the formed space <M>(V,q)</M> to the formed space 
 <M>(V,q')</M> if and only if
-<Alt Not="HTML"><Display>q(v) = \lambda q'(\phi(v))),</Display></Alt>
+<Alt Only="LaTeX"><Display>q(v) = \lambda q'(\phi(v))),</Display></Alt>
+<Alt Only="Text"><M>q(v) = \lambda q'(\phi(v)))</M>,</Alt>
 <Alt Only="HTML MathJax"><Display>q(v) = \lambda q'(\phi(v))),</Display></Alt>
 <Alt Only="HTML noMathJax"><Display>q(v) = &#955; (q'(&#966;(v))),</Display></Alt>
 for all vectors <M>v</M> and some non-zero 
@@ -854,8 +855,8 @@ overview.
  <Caption>projective finite classical groups</Caption>
  <HorLine/>
   <Row><Item>(sub)group</Item><Item>symplectic</Item><Item>hyperbolic</Item><Item>elliptic</Item><Item>parabolic</Item><Item>hermitian</Item></Row>
-  <Row><Item>special isometry</Item><Item><M>PSp(d,q)</M></Item><Item><M>PSO(1,d,q)</M></Item><Item><M>PSO(-1,d,q)</M></Item>
-	   <Item><M>PSO(0,d,q)</M></Item><Item><Alt Not="HTML"><M>PSU(d,q^2)</M></Alt><Alt Only="HTML">PSU(d,q&lt;sup>2&lt;/sup>)</Alt></Item></Row>
+  <Row><Item>special isometry</Item><Item>&pspdq;</Item><Item>&psoplusdq;</Item><Item>&psominusdq;</Item>
+	   <Item>&pso0dq;</Item><Item><Alt Not="HTML"><M>PSU(d,q^2)</M></Alt><Alt Only="HTML">PSU(d,q&lt;sup>2&lt;/sup>)</Alt></Item></Row>
   <Row><Item>isometry</Item><Item><M>PSp(d,q)</M></Item><Item><M>PGO(1,d,q)</M></Item><Item><M>PGO(-1,d,q)</M></Item>
 	   <Item><M>PGO(0,d,q)</M></Item><Item><Alt Not="HTML"><M>PGU(d,q^2)</M></Alt><Alt Only="HTML">PGU(d,q&lt;sup>2&lt;/sup>)</Alt></Item></Row>
   <Row><Item>similarity</Item><Item><M>PGSp(d,q)</M></Item><Item><Alt Not="HTML"><M>P\Delta{}O^+(d,q)</M></Alt>

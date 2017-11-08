@@ -10,6 +10,11 @@
     <!ENTITY sc "\mathrm{Sc}">
     <!ENTITY pgl "\mathrm{PGL}">
     <!ENTITY psl "\mathrm{PSL}">
+    <!ENTITY psp "\mathrm{PSp}">
+    <!ENTITY pgo "\mathrm{PGO}">
+    <!ENTITY pso "\mathrm{PSO}">
+    <!ENTITY pgu "\mathrm{PGU}">
+    <!ENTITY psu "\mathrm{PSU}">
     <!ENTITY gammal "\Gamma\mathrm{L}">
     <!ENTITY pgammal "\mathrm{P}\Gamma\mathrm{L}">
     <!ENTITY phi "<Alt Not=&#34;HTML&#34;><M>\phi</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>\phi</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>&#966;</Alt>">
@@ -27,6 +32,11 @@
     <!ENTITY pglinline "<Alt Only=&#34;Text&#34;><M>PGL</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&pgl;</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pgl;</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>PGL</Alt>">
     <!ENTITY pslinline "<Alt Only=&#34;Text&#34;><M>PSL</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&psl;</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&psl;</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>PSL</Alt>">
     <!ENTITY pgammalinline "<Alt Only=&#34;Text&#34;><M>P\Gamma{}L</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&pgammal;</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pgammal;</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>P&#915;L</Alt>">
+    <!ENTITY pspdq "<Alt Only=&#34;Text&#34;><M>PSp(d,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&psp;(d,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&psp;(d,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>PSp(d,q)</Alt>">
+    <!ENTITY psoplusdq "<Alt Only=&#34;Text&#34;><M>PSO(1,d,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&pso;(1,d,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pso;(1,d,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>PSO(1,d,q)</Alt>">
+    <!ENTITY psominusdq "<Alt Only=&#34;Text&#34;><M>PSO(-1,d,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&pso;(-1,d,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pso;(-1,d,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>PSO(-1,d,q)</Alt>">
+    <!ENTITY pso0dq "<Alt Only=&#34;Text&#34;><M>PSO(0,d,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&pso;(0,d,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pso;(0,d,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>PSO(0,d,q)</Alt>">
+    <!ENTITY psudq2 "<Alt Only=&#34;Text&#34;><M>PSU(d,q^2)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&psu;(d,q^2)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&psu;(d,q^2)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>PSU(d,q^2)</Alt>">
     ]
    >
 
