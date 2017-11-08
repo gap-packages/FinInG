@@ -1,0 +1,7 @@
+tst1: ok
+tst2: ok
+tst3: ok
+tst4: ok
+tst5: maybe too long? third last command takes 
+tst6: enumerators until tst11
+tst12: ok
