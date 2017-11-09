@@ -750,16 +750,19 @@ finite fields. Choosing a basis <Alt Not="HTML"><M>e_1,\ldots,e_n,e_{n+1}</M></A
 such that <Alt Not="HTML"><M>e_1,\ldots,e_{n}</M></Alt><Alt Only="HTML MathJax"><M>e_1,\ldots,e_{n}</M></Alt>
 <Alt Only="HTML noMathJax">e&lt;sub>1&lt;/sub>,...,e&lt;sub>n&lt;/sub></Alt> generates
 the kernel of <M>M-I</M>, it follows that <M>M</M> equals
-<Alt Only="Text"><Display>Pending: matrix in text format</Display></Alt>
-<Alt Only="LaTeX"><Display>\left( \begin{array}{ccccc}
-1 &amp; 0 &amp; \ldots &amp; 0 &amp; 0 \\ 
-0 &amp; 1 &amp; \ldots &amp; 0 &amp; 0 \\ 
-\vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots \\
-0 &amp; 0 &amp; \ldots &amp; 1 &amp; 0 \\ 
-x_1 &amp; x_2 &amp; \ldots &amp; x_{n-1} &amp; 1 \\ 
-\end{array} \right).</Display>
-</Alt>
 <Alt Only="HTML MathJax"><Display>\left( \begin{array}{ccccc}
+    1 &amp; 0 &amp; \ldots &amp; 0 &amp; 0 \\
+    0 &amp; 1 &amp; \ldots &amp; 0 &amp; 0 \\
+    \vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots \\
+    0 &amp; 0 &amp; \ldots &amp; 1 &amp; 0 \\
+    x_1 &amp; x_2 &amp; \ldots &amp; x_{n-1} &amp; 1 \\
+    \end{array} \right).</Display></Alt>
+<Alt Only="Text"><M>1  0  \ldots  0  0 </M><P/> <!-- I would like to have one newline here, which seems impossible-->
+    <M>0  1  \ldots  0  0</M>
+    <M>\vdots  \vdots  \ddots  \vdots  \vdots</M>
+    <M>0  0  \ldots  1  0</M>
+    <M>x_1  x_2  \ldots  x_{n-1}  1</M></Alt>
+<Alt Only="LaTeX"><Display>\left( \begin{array}{ccccc}
 1 &amp; 0 &amp; \ldots &amp; 0 &amp; 0 \\ 
 0 &amp; 1 &amp; \ldots &amp; 0 &amp; 0 \\ 
 \vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots \\
