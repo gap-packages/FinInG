@@ -139,7 +139,8 @@ formed spaces <M>(V,f)</M> and <M>(V,f')</M>, where <M>f</M> and <M>f'</M> are
 two sesquilinear forms on <M>V</M>. A non-singular linear map &phi; from <M>V</M> to itself
 induces a <E>similarity</E> of the formed space <M>(V,f)</M> to the formed space
 <M>(V,f')</M> if and only if
-<Alt Not="HTML"><Display>f(v,w) = \lambda f'(\phi(v),\phi(w)),</Display></Alt>
+<Alt Only="LaTeX"><Display>f(v,w) = \lambda f'(\phi(v),\phi(w)),</Display></Alt>
+<Alt Only="Text"><M>f(v,w) = \lambda f'(\phi(v),\phi(w)),</M></Alt>
 <Alt Only="HTML MathJax"><Display>f(v,w) = \lambda f'(\phi(v),\phi(w)),</Display></Alt>
 <Alt Only="HTML noMathJax"><Display>f(v,w) = &#955; (f'(&#966;(v),&#966;(w))),</Display></Alt>
 for all vectors <M>v,w</M> and some non-zero
@@ -778,24 +779,24 @@ that &phi; is a linear map from <M>V</M> to <M>W</M>.
 The map &phi; is an <E>isometry</E><Index>Isometry</Index> from the formed
 space <M>(V,f)</M> to the formed space 
 <M>(W,g)</M> if for all <M>v,w</M> in <M>V</M> we have
-<Display>
-<Alt Not="HTML">f(v,w) = f'(\phi(v), \phi(w)).</Alt>
-<Alt Only="HTML MathJax">f(v,w) = f'(\phi(v), \phi(w)).</Alt>
-<Alt Only="HTML noMathJax">f(v,w) = f'(&#966;(v),&#966;(w))</Alt></Display>
+<Alt Only="LaTeX"><Display>f(v,w) = f'(\phi(v), \phi(w)).</Display></Alt>
+<Alt Only="Text"><M>f(v,w) = f'(\phi(v), \phi(w))</M>.</Alt>
+<Alt Only="HTML MathJax"><Display>f(v,w) = f'(\phi(v), \phi(w)).</Display></Alt>
+<Alt Only="HTML noMathJax"><Display>f(v,w) = f'(&#966;(v),&#966;(w)).</Display></Alt>
 The map &phi; is a <E>similarity</E><Index>Similarity</Index> from the
 formed space <M>(V,f)</M> to the formed space <M>(W,g)</M> if for all <M>v,w</M>
-in <M>V</M> we have 
-<Display>
-<Alt Not="HTML">f(v,w) = \lambda f'(\phi(v), \phi(w)).</Alt>
-<Alt Only="HTML MathJax">f(v,w) = \lambda f'(\phi(v), \phi(w)).</Alt>
-<Alt Only="HTML noMathJax">f(v,w) = &#955; (f'(&#966;(v),&#966;(w)))</Alt>
-</Display>
+in <M>V</M> we have
+<Alt Only="LaTeX"><Display>f(v,w) = \lambda f'(\phi(v), \phi(w))</Display></Alt>
+<Alt Only="Text"><M>f(v,w) = \lambda f'(\phi(v), \phi(w))</M></Alt>
+<Alt Only="HTML MathJax"><Display>f(v,w) = \lambda f'(\phi(v), \phi(w))</Display></Alt>
+<Alt Only="HTML noMathJax"><Display>f(v,w) = &#955; (f'(&#966;(v),&#966;(w)))</Display></Alt>
 for some non-zero <Alt Only="HTML noMathJax">&#955; in <M>F</M></Alt><Alt
 Not="HTML"><M>\lambda \in F</M></Alt><Alt Only="HTML MathJax"><M>\lambda \in F</M></Alt>. 
 Finally, the map &phi; is a <E>semi-similarity</E><Index>Semi-similarity</Index> from the formed space  
 <M>(V,f)</M> to the formed space <M>(W,g)</M> if for all <M>v,w</M> in <M>V</M>
 we have
-<Alt Not="HTML"><Display>f(v,w) = \lambda f'(\phi(v), \phi(w))^\alpha</Display></Alt>
+<Alt Only="LaTeX"><Display>f(v,w) = \lambda f'(\phi(v), \phi(w))^\alpha</Display></Alt>
+<Alt Only="Text"><M>f(v,w) = \lambda f'(\phi(v), \phi(w))^\alpha</M></Alt>
 <Alt Only="HTML MathJax"><Display>f(v,w) = \lambda f'(\phi(v), \phi(w))^\alpha</Display></Alt>
 <Alt Only="HTML noMathJax"><Display>f(v,w) = &#955; f'(&#966;(v),&#966;(w))&lt;SUP>&#945;&lt;/SUP></Display></Alt>
 for some non-zero <Alt Only="HTML">&#955; in <M>F</M></Alt><Alt Not="HTML"><M>\lambda \in F</M></Alt>
@@ -808,29 +809,27 @@ that &phi; is a linear
 map from <M>V</M> to <M>W</M>. The map &phi; is an
 <E>isometry</E><Index>Isometry</Index> from the formed space <M>(V,f)</M> to the
 formed space <M>(W,g)</M> if for all <M>v,w</M> in <M>V</M> we have
-<Display>
-<Alt Not="HTML">f(v) = f'(\phi(v)).</Alt>
-<Alt Only="HTML MathJax">f(v) = f'(\phi(v)).</Alt>
-<Alt Only="HTML noMathJax">f(v) = f'(&#966;(v)).</Alt></Display>
+<Alt Only="LaTeX"><Display>f(v) = f'(\phi(v)).</Display></Alt>
+<Alt Only="Text"><M>f(v) = f'(\phi(v)).</M></Alt>
+<Alt Only="HTML MathJax"><Display>f(v) = f'(\phi(v)).</Display></Alt>
+<Alt Only="HTML noMathJax"><Display>f(v) = f'(&#966;(v)).</Display></Alt>
 The map &phi; is a
 <E>similarity</E><Index>Similarity</Index> from the formed space <M>(V,f)</M> to
 a formed space <M>(W,g)</M> if for all <M>v,w</M> 
 in <M>V</M> we have 
-<Display>
-<Alt Not="HTML">f(v) = \lambda f'(\phi(v)).</Alt>
-<Alt Only="HTML MathJax">f(v) = \lambda f'(\phi(v)).</Alt>
-<Alt Only="HTML noMathJax">f(v) = &#955; (f'(&#966;(v)))</Alt>
-</Display>
+<Alt Only="HTML"><Display>f(v) = \lambda f'(\phi(v))</Display></Alt>
+<Alt Only="Text"><M>f(v) = \lambda f'(\phi(v))</M></Alt>
+<Alt Only="HTML MathJax"><Display>f(v) = \lambda f'(\phi(v))</Display></Alt>
+<Alt Only="HTML noMathJax"><Display>f(v) = &#955; (f'(&#966;(v)))</Display></Alt>
 for some non-zero <Alt Only="HTML noMathJax">&#955; in <M>F</M></Alt><Alt
 Only="HTML MathJax"><M>\lambda \in F</M></Alt><Alt Not="HTML"><M>\lambda \in F</M></Alt>. 
 Finally, the map &phi; is a <E>semi-similarity</E><Index>Semi-similarity</Index> 
 from the formed space <M>(V,f)</M> to the formed space <M>(W,g)</M> 
 if for all <M>v,w</M> in <M>V</M> we have
-<Display>
-<Alt Not="HTML"> f(v)=\lambda f'(\phi(v))^\alpha</Alt>
-<Alt Only="HTML MathJax"> f(v)=\lambda f'(\phi(v))^\alpha</Alt>
-<Alt Only="HTML noMathJax">f(v) = &#955; f'(&#966;(v))&lt;SUP>&#945;&lt;/SUP></Alt>
-</Display>
+<Alt Only="LaTeX"><Display>f(v)=\lambda f'(\phi(v))^\alpha</Display></Alt>
+<Alt Only="Text"><M>f(v)=\lambda f'(\phi(v))^\alpha</M></Alt>
+<Alt Only="HTML MathJax"><Display>f(v)=\lambda f'(\phi(v))^\alpha</Display></Alt>
+<Alt Only="HTML noMathJax"><Display>f(v) = &#955; f'(&#966;(v))&lt;SUP>&#945;&lt;/SUP></Display></Alt>
 for some non-zero <Alt Only="HTML noMathJax">&#955; in <M>F</M></Alt><Alt Only="HTML MathJax"><M>\lambda \in F</M></Alt><Alt Not="HTML"><M>\lambda \in F</M></Alt>
 and a field automorphism <Alt Only="HTML noMathJax">&#945;</Alt><Alt Only="HTML MathJax"><M>\alpha</M></Alt><Alt Not="HTML"><M>\alpha</M></Alt> 
 of <M>F</M>.
@@ -846,10 +845,13 @@ one. We use a consistent terminology, where isometries, similarities, respective
 space, correspond with isometries, similarities, respectively, of the underlying formed vector space.
 Special isometries of a polar space are induced by isometries of the formed vector space that have a matrix
 with determinant one. If <M>P</M> is a polar space with special isometry group, isometry group, similarity group, 
-collineation group, respectively, <M>SI</M>, <M>I</M>, <M>G</M>, <Alt Not="HTML"><M>\Gamma</M></Alt><Alt Only="HTML">&#915;</Alt>,
-respectively, then clearly <Alt Not="HTML"><M>SI \leqslant I \leqslant G \leqslant \Gamma</M></Alt>
-<Alt Only="HTML">SI &#8804; I &#8804; G &#8804; &#915;</Alt>. Equalities can occur in certain cases, and will, as we will see in the following
-overview.
+collineation group, respectively, <M>S</M>, <M>I</M>, <M>G</M>,
+<Alt Not="HTML"><M>\Gamma</M></Alt><Alt Only="HTML MathJax"><M>\Gamma</M></Alt><Alt Only="HTML noMahJax">&#915;</Alt>,
+respectively, then clearly <Alt Only="LaTeX"><M>S \leqslant I \leqslant G \leqslant \Gamma</M></Alt>
+<Alt Only="Text"><M>S \leq I \leq G \leq \Gamma</M></Alt>
+<Alt Only="HTML MathJax"><M>S \leqslant I \leqslant G \leqslant \Gamma</M></Alt>
+<Alt Only="HTML noMathJax">S &#8804; I &#8804; G &#8804; &#915;</Alt>. Equalities can
+occur in certain cases, and will, as we will see in the following overview.
 
 <Table Align="|l|l|l|l|l|l|">
  <Caption>projective finite classical groups</Caption>
