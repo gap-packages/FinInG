@@ -333,7 +333,11 @@ can take either <C>true</C> or
 intertwiner accordingly. The default (when calling the operation
 with two arguments) is set to <C>true</C>. Note that the source of the intertwiner is the
 projectivity group of <A>geom1</A> and its range is a subgroup of the projectivity group
-of <A>geom2</A>. Here is a simple example where the geometry morphism embeds <M>PG(2,3)</M> into <M>PG(2,9)</M>.
+of <A>geom2</A>. Here is a simple example where the geometry morphism embeds 
+<Alt Only="HTML MathJax"><M>\mathrm{PG}(2,3)</M></Alt><Alt Only="HTML noMathJax">PG(2,3)</Alt>
+<Alt Only="LaTeX"><M>\mathrm{PG}(2,3)</M></Alt><Alt Only="Text">PG(2,3)</Alt> into 
+<Alt Only="HTML MathJax"><M>\mathrm{PG}(2,9)</M></Alt><Alt Only="HTML noMathJax">PG(2,9)</Alt>
+<Alt Only="LaTeX"><M>\mathrm{PG}(2,9)</M></Alt><Alt Only="Text">PG(2,9)</Alt>.
 <Example>
 <#Include SYSTEM "../examples/include/morphisms_subfield1.include">
 </Example>
@@ -343,19 +347,17 @@ of <A>geom2</A>. Here is a simple example where the geometry morphism embeds <M>
 <ManSection Label="proj_red">
 <Heading> Embedding of projective spaces by field reduction</Heading>
 <Description>
-We briefly describe the mathematics behind field reduction. For more details we refer to <Cite Key="LaVa"/>. Consider the fields <M>K=GF(q)</M> and <Alt Not="HTML"><M>L=GF(q^t)</M></Alt>
-<Alt Only="HTML">L=GF(q&lt;sup>t&lt;/sup>)</Alt>. The field <M>L</M> is a <M>t</M>-dimensional
-vector space over <M>K</M>. Hence, with respect to a chosen basis <M>B</M> for <M>L</M>
-as a <M>K</M>-vectorspace, the bijection between the vectorspaces
-<Alt Not="HTML"><M>V(n,q^t)</M></Alt><Alt Only="HTML">V(n,q&lt;sup>t&lt;/sup>)</Alt> and
-<M>V(tn,q)</M> can be implemented.
+We briefly describe the mathematics behind field reduction. For more details we 
+refer to <Cite Key="LaVa"/>. Consider the fields &gfq; and &gfqt;. The field &gfqt; is a 
+<M>t</M>-dimensional vector space over &gfq;. Hence, with respect to a chosen basis 
+<M>B</M> for &gfqt; as a &gfq;-vectorspace, the bijection between the vectorspaces
+&vnqt; and <M>V(tn,q)</M> can be implemented.
 
-Consider the projective space <Alt Not="HTML"><M>PG(n-1,q^t)</M></Alt><Alt Only="HTML">PG(n-1,q&lt;sup>t&lt;/sup>)</Alt>.
- The elements are represented by subspaces of <Alt Not="HTML"><M>V(n,q^t)</M></Alt><Alt Only="HTML">V(n,q&lt;sup>t&lt;/sup>)</Alt>. Clearly, a <M>k</M> dimensional subspace of
- <Alt Not="HTML"><M>V(n,q^t)</M></Alt><Alt Only="HTML">V(n,q&lt;sup>t&lt;/sup>)</Alt> is also a 
- <M>kn</M>-dimensional subspace of the <M>V(nt,q)</M>.
- This induces an embedding from <Alt Not="HTML"><M>PG(n-1,q^t)</M></Alt><Alt Only="HTML">PG(n-1,q&lt;sup>t&lt;/sup>)</Alt>
-into <M>PG(nt-1,q)</M>. The embedding will be determined by the chosen basis of <M>L</M> as a vector space over <M>GF(q)</M>.
+Consider the projective space &pgnminus1qt;. The elements are represented by subspaces 
+of &vnqt;. Clearly, a <M>k</M> dimensional subspace of
+&vnqt; is also a  <M>kn</M>-dimensional subspace of <M>V(nt,q)</M>.  
+This induces an embedding from &pgnminus1qt; into &pgntminus1q;. 
+The embedding will be determined by the chosen basis of &gfqt; as a vector space over &gfq;
 </Description>
 </ManSection>
 
@@ -363,13 +365,13 @@ into <M>PG(nt-1,q)</M>. The embedding will be determined by the chosen basis of 
 <Oper Name="BlownUpSubspaceOfProjectiveSpace" Arg="B, subspace"/>
 <Returns>a subspace of a projective space</Returns>
 <Description>
-Let <A>B</A> be a basis for the field <Alt Not="HTML"><M>L=GF(q^t)</M></Alt><Alt Only="HTML">L=GF(q&lt;sup>t&lt;/sup>)</Alt> as
-<M>GF(q)</M> vector space, and let <A>subspace</A> be a <M>k-1</M>-dimensional subspace of 
-<Alt Not="HTML"><M>PG(n-1,q^t)</M></Alt><Alt Only="HTML">PG(n-1,q&lt;sup>t&lt;/sup>)</Alt> represented by a <M>k</M>-dimensional
-subspace <M>S</M> of <Alt Not="HTML"><M>V(n,q^t)</M></Alt><Alt Only="HTML">V(n,q&lt;sup>t&lt;/sup>)</Alt>. 
-This operation returns the <M>kt-1</M>-dimensional subspace of <M>PG(nt-1,q)</M> represented by blowing up <M>S</M> with respect to
-the base <A>B</A>. This operation relies on the &GAP; operation <F>BlownUpMat</F>. In the example, the effect of chosen a different
-basis is shown.
+Let <A>B</A> be a basis for the field &gfqt; as &gfq; vector space, and 
+let <A>subspace</A> be a <M>k-1</M>-dimensional subspace of 
+&pgnminus1qt; represented by a <M>k</M>-dimensional subspace <M>S</M> of &vnqt;. 
+This operation returns the <M>kt-1</M>-dimensional subspace of &pgntminus1q; 
+represented by blowing up <M>S</M> with respect to the base <A>B</A>. This operation 
+relies on the &GAP; operation <F>BlownUpMat</F>. In the example, the effect 
+of choosing a different basis is shown.
 <Example>
 <#Include SYSTEM "../examples/include/morphisms_blownupsubspace.include">
 </Example>
@@ -384,20 +386,18 @@ basis is shown.
 <Returns>a geometry morphism</Returns>
 <Description>
 This operation comes in four flavours. For the first flavour, the argument <A>geom1</A> is a projective 
-space over a field <Alt Not="HTML"><M>L=GF(q^t)</M></Alt><Alt Only="HTML">L=GF(q&lt;sup>t&lt;/sup>)</Alt>.
-The argument <A>f2</A> is a subfield <M>K=GF(q)</M> of <M>L</M>. The argument <M>B</M>
-is a basis for <M>L</M> as a <M>K</M>-vectorspace. When this argument is not given, a basis for <M>L</M> over <M>K</M>
-is computed using <F>Basis(AsVectorSpace(K,L))</F>. It is checked whether <A>f2</A> is a subfield of the basefield of
-<A>geom1</A>. The third and fourth flavour are comparable, where now <M>K</M> is found as the basefield of <A>geom2</A>.
-In fact the arguments <A>geom1</A> and <A>geom2</A> are the projective spaces
-<Alt Not="HTML"><M>PG(r-1,q^t)</M></Alt><Alt Only="HTML">PG(r-1,q&lt;sup>t&lt;/sup>)</Alt> and
-<Alt Not="HTML"><M>PG(rt-1,q)</M></Alt><Alt Only="HTML">PG(rt-1,q)</Alt> respectively. As in the previous flavours, the 
+space over a field &gfqt;. The argument <A>f2</A> is a subfield &gfq; of &gfqt;. The argument <M>B</M>
+is a basis for &gfqt; as a &gfq;-vectorspace. When this argument is not given, a basis for &gfqt; over &gfq;
+is computed using <F>Basis(AsVectorSpace(GF(q),GF(q^t)))</F>. It is checked whether <A>f2</A> is a 
+subfield of the basefield of <A>geom1</A>. The third and fourth flavour are comparable, 
+where now &gfq; is found as the basefield of <A>geom2</A>. In fact the arguments <A>geom1</A> and 
+<A>geom2</A> are the projective spaces &pgnminus1qt; and &pgntminus1q; respectively. As in the previous flavours, the 
 argument <A>B</A> is optional. <P/>An intertwiner is always available for this geometry morphism, and has source the
 homography group of <A>geom1</A> and as range a subgroup of the homography group of <A>geom2</A> (or the projective space
 of the appropriate dimension over <A>f2</A>.
-Notice in the example
-below the difference of a factor 2 in the orders of the group, which comes of course from restricing the homomorphism to
-the homography group, which differes a factor 2 from the collineation group of the projective line, that has an extra
+Notice in the example below the difference of a factor 2 in the orders of the group, 
+which comes of course from restricing the homomorphism to the homography group, which 
+differs a factor 2 from the collineation group of the projective line, that has an extra
 automorphism of order two, corresponding with the Frobenius automorphism.
 <Example>
 <#Include SYSTEM "../examples/include/morphisms_fieldreducproj.include"> 
@@ -435,7 +435,8 @@ space of the same dimension and the basefield <M>L</M> of <A>geom2</A> is an ext
 <M>K</M> of <A>geom1</A>. The form <M>f</M> determining <A>geom1</A> also defines a form over <M>L</M>,
 and determines a polar space. By considering the underlying vectorspaces determining the elements of <A>geom1</A>
 over the extension field <M>L</M>, there is an obvious embedding of <A>geom1</A> in the polar space over the
-extension field. Considering <M>f</M> over a field extension might change its type. The possible embeddings, where the polar spaces may be chosen up to equivalent form,
+extension field. Considering <M>f</M> over a field extension might change its type. The possible embeddings, 
+where the polar spaces may be chosen up to equivalent form,
 are listed in the table below (see <Cite Key="KleidmanLiebeck"/>):
         
 <Table Align="l|l|l">
@@ -446,7 +447,7 @@ are listed in the table below (see <Cite Key="KleidmanLiebeck"/>):
 <HorLine/>
 <HorLine/>
 <Row>
-<Item><M>W(2n-1,q)</M></Item>
+<Item><Alt Only="HTML MathJax"><M>W(2n-1,q)</M></Alt></Item>
 <Item><Alt Not="HTML"><M>W(2n-1,q^a)</M></Alt><Alt Only="HTML">W(2n-1,q&lt;sup>a&lt;/sup>)</Alt></Item>
 <Item>--</Item>
 </Row>

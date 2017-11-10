@@ -31,19 +31,20 @@ An <E>affine space</E> is a point-line incidence geometry, satisfying few well k
 An axiomatic treatment can e.g. be found in <Cite Key="VY65a"/> and <Cite Key="VY65b"/>. As 
 is the case with projective spaces, affine spaces are axiomatically point-line geometries,
 but may contain higher dimensional affine subspaces too. An affine space can also be described 
-as the <Q>geometry you get</Q> when you remove a hyperplane from a projective space. Conversely, each affine space can be extended to a projective space in a unique way (by "adding its hyperplane at infinity"). In 
-<Package>FinInG</Package>, we deal with <E>finite Desarguesian affine spaces</E>, i.e.
-an affine space, such that its projective completion is Desarguesian. Other concepts can
-be easily defined using this projective completion. E.g. lines of the projective space
-which are concurrent in a point of the hyperplane at infinity, become now <E>parallel</E> in
-the affine space.
+as the <Q>geometry you get</Q> when you remove a hyperplane from a projective space. Conversely, 
+each affine space can be extended to a projective space in a unique way (by "adding its 
+hyperplane at infinity"). In  <Package>FinInG</Package>, we deal with <E>finite Desarguesian 
+affine spaces</E>, i.e. an affine space, such that its projective completion is Desarguesian. 
+Other concepts can be easily defined using this projective completion. E.g. lines of the 
+projective space which are concurrent in a point of the hyperplane at infinity, become 
+now <E>parallel</E> in the affine space.
 
 In order to implement (Desarguesian) affine spaces in <Package>FinInG</Package>,
 we have to represent the elements of the affine space (the affine subspaces),
 in a standard way. By definition, the points (i.e. the elements of type 1)
-of the <M>n</M>-dimensional affine space <M>AG(n,q)</M> are the vectors of the 
+of the <M>n</M>-dimensional affine space &agnq; are the vectors of the 
 underlying <M>n</M>-dimensional vector space
-over the finite field <M>GF(q)</M>. The <M>i</M>-dimensional subspaces of <M>AG(n,q)</M> 
+over the finite field &gfq;. The <M>i</M>-dimensional subspaces of &agnq; 
 (i.e. the elements of type <M>i-1</M>) are defined as the cosets of the <M>i</M>-dimensional 
 subspaces of the underlying vector space. Hence, the common representation of such a subspace is
 <Display>v+S,</Display>
@@ -106,7 +107,7 @@ namely, the common abbreviation <C>AG(d, q)</C>.
 <Oper Name="UnderlyingVectorSpace" Arg="as"/>
 <Returns>a vector space</Returns>
 <Description>
-The underlying vectorspace of <M>AG(n,q)</M> is simply <M>V(n,q)</M>.
+The underlying vectorspace of &agnq; is simply <M>V(n,q)</M>.
 <Example>
 <#Include SYSTEM "../examples/include/affine_underlyingvs.include"> 
 </Example>
