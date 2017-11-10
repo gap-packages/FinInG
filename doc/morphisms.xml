@@ -522,7 +522,7 @@ elements by field reduction, the latter being dependent on the basis of <M>L</M>
 a <M>K</M> vector space. <Package>FinInG</Package> provides two approaches.
 The first approach starts from <M>P</M> and the parameters <M>K</M>, <M>\alpha</M>
 and a basis for <M>L</M> as <M>K</M> vector space. Then the resulting form
-<Alt Only="HTML">T&lt;sub>&#945;&lt;/sub> &#8226; f &#8226; &#934; &lt;sup>-1&lt;/sup></Alt>
+<Alt Only="HTML noMathJax">T&lt;sub>&#945;&lt;/sub> &#8226; f &#8226; &#934; &lt;sup>-1&lt;/sup></Alt>
 <Alt Only="HTML MathJax"><M>T_{\alpha} \circ f \circ \Phi^{-1}</M></Alt>
 <Alt Not="HTML"><M>T_{\alpha} \circ f \circ \Phi^{-1}</M></Alt>
 is determined, and the associated polar space <M>S</M> will be the range of the embedding.
@@ -580,7 +580,7 @@ The possible embeddings are listed in the following table.
  <Row>
      <Item><Alt Only="HTML MathJax"><M>\mathrm{Q}(2n,q^{4a})</M></Alt><Alt Only="HTML noMathJax">Q(2n,q&lt;sup>4a&lt;/sup>)</Alt><Alt Only="LaTeX"><M>\mathrm{Q}(2n,q^{4a})</M></Alt><Alt Only="Text"><M>Q(2n,q^(4a))</M></Alt>
 </Item>
-     <Item><Alt Only="HTML MathJax"><M>\mathrm{Q}^-(4a(2n+1)-1,q)</M></Alt><Alt Only="LaTeX"><M>\mathrm{Q}^-(4a(2n+1)-1,q)</M></Alt><Alt Only="HTML noMathJax">Q&lt;sup-&lt;/sup>(4a(2n+1)-1,q)</Alt><Alt Only="Text"><M>Q^-(4a(2n+1)-1,q)</M></Alt>
+     <Item><Alt Only="HTML MathJax"><M>\mathrm{Q}^-(4a(2n+1)-1,q)</M></Alt><Alt Only="LaTeX"><M>\mathrm{Q}^-(4a(2n+1)-1,q)</M></Alt><Alt Only="HTML noMathJax">Q&lt;sup>-&lt;/sup>(4a(2n+1)-1,q)</Alt><Alt Only="Text"><M>Q^-(4a(2n+1)-1,q)</M></Alt>
 </Item>
      <Item><Alt Not="HTML"><M>q \equiv 3 \pmod{4}</M></Alt>
          <Alt Only="HTML MathJax"><M>q \equiv 3 \pmod{4}</M></Alt>
@@ -600,14 +600,14 @@ The possible embeddings are listed in the following table.
    <Item><M>q</M> even</Item>
  </Row>
 <Row>
-   <Item><Alt Not="HTML"><M>H(2n,q^{2a})</M></Alt><Alt Only="HTML">H(2n,q&lt;sup>2a&lt;/sup>)</Alt></Item>
-   <Item><Alt Not="HTML"><M>Q^-(2a(2n+1)-1,q)</M></Alt><Alt Only="HTML">Q&lt;sup>-&lt;/sup>(2a(2n+1)-1,q)</Alt></Item>
-   <Item>q odd</Item>
+   <Item><Alt Only="HTML MathJax"><M>\mathrm{H}(2n,q^{2a})</M></Alt><Alt Only="HTML noMathJax">H(2n,q&lt;sup>2a&lt;/sup>)</Alt><Alt Only="LaTeX"><M>\mathrm{H}(2n,q^{2a})</M></Alt><Alt Only="Text"><M>H(2n,q^(2a))</M></Alt></Item>
+   <Item><Alt Only="HTML MathJax"><M>\mathrm{Q}^-(2a(2n+1)-1,q)</M></Alt><Alt Only="LaTeX"><M>\mathrm{Q}^-(2a(2n+1)-1,q)</M></Alt><Alt Only="HTML noMathJax">Q&lt;sup>-&lt;/sup>(2a(2n+1)-1,q)</Alt><Alt Only="Text"><M>Q^-(2a(2n+1)-1,q)</M></Alt></Item>
+   <Item><M>q</M> odd</Item>
  </Row>
 <Row>
-   <Item><Alt Not="HTML"><M>H(2n+1,q^{2a})</M></Alt><Alt Only="HTML">H(2n+1,q&lt;sup>2a&lt;/sup>)</Alt></Item>
-   <Item><Alt Not="HTML"><M>Q^+(2a(2n+2)-1,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>(2a(2n+2)-1,q)</Alt></Item>
-   <Item>q odd</Item>
+   <Item><Alt Only="HTML MathJax"><M>\mathrm{H}(2n+1,q^{2a})</M></Alt><Alt Only="HTML noMathJax">H(2n+1,q&lt;sup>2a&lt;/sup>)</Alt><Alt Only="LaTeX"><M>\mathrm{H}(2n+1,q^{2a})</M></Alt><Alt Only="Text"><M>H(2n+1,q^(2a))</M></Alt></Item>
+   <Item><Alt Only="HTML MathJax"><M>\mathrm{Q}^+(2a(2n+2)-1,q)</M></Alt><Alt Only="LaTeX"><M>\mathrm{Q}^+(2a(2n+2)-1,q)</M></Alt><Alt Only="HTML noMathJax">Q&lt;sup>+&lt;/sup>(2a(2n+2)-1,q)</Alt><Alt Only="Text"><M>Q^+(2a(2n+2)-1,q)</M></Alt></Item>
+   <Item><M>q</M> odd</Item>
  </Row>
 </Table>
 </Description>
@@ -634,7 +634,8 @@ when embedding large polar spaces. The default (when calling the operation
 with two arguments) is set to <C>true</C>. In the first example, we construct a spread of maximal 
 subspaces (solids) in a 7 dimensional symplectic space. We compute a subgroup of its stabilizer 
 group using the intertwiner. In the second example, we construct a linear blocking set of the 
-symplectic generalised quadrangle over <M>GF(9)</M>. 
+symplectic generalised quadrangle over <Alt Only="HTML MathJax"><M>\mathrm{GF}(9)</M></Alt><Alt Only="HTML noMathJax">GF(9)</Alt>
+<Alt Only="LaTeX"><M>\mathrm{GF}(9)</M></Alt><Alt Only="Text">GF(9)</Alt>.
 <Example>
 <#Include SYSTEM "../examples/include/morphisms_fieldreducpolar1.include">
 <#Include SYSTEM "../examples/include/morphisms_fieldreducpolar2.include"> 
@@ -647,9 +648,11 @@ symplectic generalised quadrangle over <M>GF(9)</M>.
 <Oper Name="NaturalEmbeddingByFieldReduction" Arg="ps1, ps2"/>
 <Returns>a geometry morphism</Returns>
 <Description>
-If <A>ps1</A> and <A>ps2</A> are two polar spaces which are suitable for field reduction as listed in the table with possible embeddings in Section
-<Ref Sect="polar_red"/>, then this operation returns the corresponding embedding. An intertwiner is computed
-if the third argument <A>bool</A> is true, or if there is no third argument. This intertwiner has as its domain the <B>isometry group</B> of <A>ps1</A>.
+If <A>ps1</A> and <A>ps2</A> are two polar spaces which are suitable for field
+reduction as listed in the table with possible embeddings in Section
+<Ref Sect="polar_red"/>, then this operation returns the corresponding embedding.
+An intertwiner is computed if the third argument <A>bool</A> is true, or if there
+is no third argument. This intertwiner has as its domain the <B>isometry group</B> of <A>ps1</A>.
 The example shows two cases where a spread is computed, including a subgroup of its stabiliser group using
 the intertwiner.
 <Example>
