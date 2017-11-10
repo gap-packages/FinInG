@@ -497,33 +497,42 @@ space over a field <M>L</M>. Let <M>f</M> be the form on the <M>r</M> dimensiona
 vector space <M>V</M> over <M>L</M> determining <M>P</M>. Consider the trace map
 
 <Alt Only="HTML MathJax"><Display>T: L \rightarrow K: x \mapsto x^{q^t}+ x^{q^{t-1}} + \ldots + x.</Display></Alt>
-<Alt Only="HTML noMathJax"><M>T: L \rightarrow K</M>: x &#8594; x&lt;sup>q&lt;sup>t&lt;/sup>&lt;/sup> + x&lt;sup>q&lt;sup>t-1&lt;/sup>&lt;/sup> + &#8230; + x.</Alt>
+<Alt Only="HTML noMathJax"><M>T: L \rightarrow K: x \mapsto </M> x&lt;sup>q&lt;sup>t&lt;/sup>&lt;/sup> + x&lt;sup>q&lt;sup>t-1&lt;/sup>&lt;/sup> + &#8230; + x.</Alt> <!-- rightarrow in html: &#8594;-->
 <Alt Only="LaTeX"><Display>T: L \rightarrow K: x \mapsto x^{q^t}+ x^{q^{t-1}} + \ldots + x.</Display></Alt>
-<Alt Only="Text"><M>T: L \rightarrow K: x \mapsto x^(q^t)+ x^(q^(t-1)) + \ldots + x.</M></Alt>
+<Alt Only="Text"><M>T: L \rightarrow K: x \mapsto x^(q^t)+ x^(q^(t-1)) + \ldots + x.</M><P/></Alt>
 
 Define for any <M>\alpha \in L</M> the map
 
-<Alt Only="HTML MathJax"><Display>T_\alpha: L \rightarrow K: T_\alpha(x) = T(\alpha x).</Display></Alt>
-<Alt Only="HTML noMathJax"><M>T&lt;sub>&#945;&lt;/sub>: GF(q&lt;sup>t&lt;/sup>)&#8594; GF(q): x &#8594; T(&#945; x)</M>.</Alt>
-<Alt Only="LaTeX"><Display>T_\alpha: L \rightarrow K: T_\alpha(x) = T(\alpha x).</Display></Alt>
-<Alt Only="Text"><M>T_\alpha: L \rightarrow K: T_\alpha(x) = T(\alpha x).</M></Alt>
+<Alt Only="HTML MathJax"><Display>T_\alpha: L \rightarrow K: x \mapsto T_\alpha(x) = T(\alpha x).</Display></Alt>
+<Alt Only="HTML noMathJax">T&lt;sub>&#945;&lt;/sub>: L: &#8594; K: x<M>\mapsto</M> T&lt;sub>&#945;&lt;/sub> = T(&#945; x).</Alt>
+<Alt Only="LaTeX"><Display>T_\alpha: L \rightarrow K: x \mapsto T_\alpha(x) = T(\alpha x).</Display></Alt>
+<Alt Only="Text"><M>T_\alpha: L \rightarrow K: x \mapsto T_\alpha(x) = T(\alpha x).</M><P/></Alt>
 
-Consider the <M>rt</M> dimensional vector space <M>W</M> over <M>K</M>. There is a bijective map
-<Alt Not="HTML"><M>\Phi</M></Alt><Alt Only="HTML">&#934;</Alt> from <M>V</M> to <M>W</M> and <Alt Only="HTML">T&lt;sub>&#945;&lt;/sub> &#8226; f &#8226; &#934; &lt;sup>-1&lt;/sup></Alt><Alt Not="HTML"><M>T_{\alpha} \circ f \circ \Phi^{-1}</M></Alt> defines a
-quadratic or sesquilinear form (depending on <M>\alpha</M>, and <M>f</M> being quadratic or sesquilinear) acting on <M>W</M>, and hence, if not singular or degenerate, inducing a polar space <M>S</M> over the finite field <M>GF(q)</M>. An element of <M>P</M> can be mapped onto an element of <M>S</M> by simply blowing up <M>P</M>
-using field reduction for projective spaces. So the resulting polar space <M>W</M> is dependent on the original form <M>f</M>,
-the parameter <M>\alpha</M> and the blowing up of elements by field reduction, the latter being dependent
-on the basis of <M>L</M> as a <M>K</M> vector space. <Package>FinInG</Package> provides two approaches.
-The first approach starts from <M>P</M> and the parameters <M>K</M>, <M>\alpha</M> and a basis for <M>L</M>
-as <M>K</M> vector space. Then the resulting form <Alt Only="HTML">T&lt;sub>&#945;&lt;/sub> &#8226; f &#8226; &#934; &lt;sup>-1&lt;/sup></Alt>
-<Alt Not="HTML"><M>T_{\alpha} \circ f \circ \Phi^{-1}</M></Alt> is determined,
-and the associated polar space <M>W</M> will be the range of the embedding. Note that the resulting polar
-space will not necessarily be canonical. The second approach starts
+Consider the <M>rt</M> dimensional vector space <M>W</M> over <M>K</M>. There is a bijective map &Phi;: <M>V \rightarrow W</M>
+and <Alt Only="HTML noMathJax">T&lt;sub>&#945;&lt;/sub> &#8226; f &#8226; &#934; &lt;sup>-1&lt;/sup></Alt>
+<Alt Only="HTML MathJax"><M>T_{\alpha} \circ f \circ \Phi^{-1}</M></Alt>
+<Alt Not="HTML"><M>T_{\alpha} \circ f \circ \Phi^{-1}</M></Alt> defines a
+quadratic or sesquilinear form (depending on <M>\alpha</M>, and <M>f</M> being quadratic
+or sesquilinear) acting on <M>W</M>, and hence, if not singular or degenerate, inducing a
+polar space <M>S</M> over the finite field <M>GF(q)</M>. An element of <M>P</M> can be
+mapped onto an element of <M>S</M> by simply blowing up <M>P</M>
+using field reduction for projective spaces. So the resulting polar space <M>S</M> is
+dependent on the original form <M>f</M>, the parameter <M>\alpha</M> and the blowing up of
+elements by field reduction, the latter being dependent on the basis of <M>L</M> as
+a <M>K</M> vector space. <Package>FinInG</Package> provides two approaches.
+The first approach starts from <M>P</M> and the parameters <M>K</M>, <M>\alpha</M>
+and a basis for <M>L</M> as <M>K</M> vector space. Then the resulting form
+<Alt Only="HTML">T&lt;sub>&#945;&lt;/sub> &#8226; f &#8226; &#934; &lt;sup>-1&lt;/sup></Alt>
+<Alt Only="HTML MathJax"><M>T_{\alpha} \circ f \circ \Phi^{-1}</M></Alt>
+<Alt Not="HTML"><M>T_{\alpha} \circ f \circ \Phi^{-1}</M></Alt>
+is determined, and the associated polar space <M>S</M> will be the range of the embedding.
+Note that the resulting polar space will not necessarily be canonical. The second approach starts
 from two given polar spaces <M>P</M> and <M>S</M>. Based on this input, it is determined wheter an embedding
 based on the above described principle is possible, and the necessary parameters are computed. The resulting
 embedding is a geometry morhpism from <M>P</M> to <M>S</M>. Note that the polar spaces used as an argument
 may be freely chosen and are not required to be in the canonical form.<P/>
-Fo the embeddings by field reduction of polar spaces, including conditions on the parameter <M>\alpha</M>, we refer to <Cite Key="Gill"/> and <Cite Key="LaVa"/>.
+For more information on the embeddings by field reduction of polar spaces, including conditions on
+the parameter <M>\alpha</M>, we refer to <Cite Key="Gill"/> and <Cite Key="LaVa"/>.
 The possible embeddings are listed in the following table.
 
 <Table Align="l|l|l">
@@ -534,48 +543,61 @@ The possible embeddings are listed in the following table.
  <HorLine/>
  <HorLine/>
   <Row>
-   <Item><Alt Not="HTML"><M>W(2n-1,q^t)</M></Alt><Alt Only="HTML">W(2n-1,q&lt;sup>t&lt;/sup>)</Alt></Item>
-   <Item><M>W(2nt-1,q)</M></Item><Item>--</Item>
+   <Item><Alt Only="HTML MathJax"><M>\mathrm{W}(2n-1,q^t)</M></Alt><Alt Only="HTML noMathJax">W(2n-1,q&lt;sup>t&lt;/sup>)</Alt><Alt Only="LaTeX"><M>\mathrm{W}(2n-1,q^t)</M></Alt><Alt Only="Text"><M>W(2n-1,q^t)</M></Alt></Item>
+   <Item><Alt Only="HTML MathJax"><M>\mathrm{W}(2nt-1,q)</M></Alt><Alt Only="HTML noMathJax"><M>W(2nt-1,q)</M></Alt><Alt Only="LaTeX"><M>\mathrm{W}(2nt-1,q)</M></Alt><Alt Only="Text"><M>W(2nt-1,q)</M></Alt></Item><Item>--</Item>
   </Row>
  <Row>
-   <Item><Alt Not="HTML"><M>Q^+(2n-1,q^t)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>(2n-1,q&lt;sup>t&lt;/sup>)</Alt></Item>
-   <Item><Alt Not="HTML"><M>Q^+(2nt-1,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>(2nt-1,q)</Alt></Item>
+   <Item><Alt Only="HTML MathJax"><M>\mathrm{Q}^+(2n-1,q^t)</M></Alt><Alt Only="LaTeX"><M>\mathrm{Q}^+(2n-1,q^t)</M></Alt><Alt Only="HTML noMathJax">Q&lt;sup>+&lt;/sup>(2n-1,q&lt;sup>t&lt;/sup>)</Alt><Alt Only="Text"><M>Q^+(2n-1,q^t)</M></Alt></Item>
+   <Item><Alt Only="HTML MathJax"><M>\mathrm{Q}^+(2nt-1,q)</M></Alt><Alt Only="LaTeX"><M>\mathrm{Q}^+(2nt-1,q)</M></Alt><Alt Only="HTML noMathJax">Q&lt;sup>+&lt;/sup>(2nt-1,q)</Alt><Alt Only="Text"><M>Q^+(2nt-1,q)</M></Alt></Item>
    <Item>--</Item>
   </Row>
  <Row>
-   <Item><Alt Not="HTML"><M>Q^-(2n-1,q^t)</M></Alt><Alt Only="HTML">Q&lt;sup>-&lt;/sup>(2n-1,q&lt;sup>t&lt;/sup>)</Alt></Item>
-   <Item><Alt Not="HTML"><M>Q^-(2nt-1,q)</M></Alt><Alt Only="HTML">Q&lt;sup>-&lt;/sup>(2nt-1,q)</Alt></Item>
+   <Item><Alt Only="HTML MathJax"><M>\mathrm{Q}^-(2n-1,q^t)</M></Alt><Alt Only="LaTeX"><M>\mathrm{Q}^-(2n-1,q^t)</M></Alt><Alt Only="HTML noMathJax">Q&lt;sup>-&lt;/sup>(2n-1,q&lt;sup>t&lt;/sup>)</Alt><Alt Only="Text"><M>Q^-(2n-1,q^t)</M></Alt></Item>
+   <Item><Alt Only="HTML MathJax"><M>\mathrm{Q}^-(2nt-1,q)</M></Alt><Alt Only="LaTeX"><M>\mathrm{Q}^-(2nt-1,q)</M></Alt><Alt Only="HTML noMathJax">Q&lt;sup>-&lt;/sup>(2nt-1,q)</Alt><Alt Only="Text"><M>Q^-(2nt-1,q)</M></Alt></Item>
    <Item>--</Item>
   </Row>
  <Row>
-   <Item><Alt Not="HTML"><M>Q(2n,q^{2a+1})</M></Alt><Alt Only="HTML">Q(2n,q&lt;sup>2a+1&lt;/sup>)</Alt></Item>
-   <Item><Alt Not="HTML"><M>Q((2a+1)(2n+1)-1,q)</M></Alt><Alt Only="HTML">Q((2a+1)(2n+1)-1,q)</Alt></Item>
-   <Item>q odd</Item>
+     <Item><Alt Only="HTML MathJax"><M>\mathrm{Q}(2n,q^{2a+1})</M></Alt><Alt Only="HTML noMathJax">Q(2n,q&lt;sup>2a+1&lt;/sup>)</Alt><Alt Only="LaTeX"><M>\mathrm{Q}(2n,q^{2a+1})</M></Alt><Alt Only="Text"><M>Q(2n,q^(2a+1))</M></Alt>
+</Item>
+   <Item><Alt Only="HTML MathJax"><M>\mathrm{Q}((2a+1)(2n+1)-1,q)</M></Alt><Alt Only="HTML noMathJax"><M>Q((2a+1)(2n+1)-1,q)</M></Alt><Alt Only="LaTeX"><M>\mathrm{Q}((2a+1)(2n+1)-1,q)</M></Alt><Alt Only="Text"><M>Q((2a+1)(2n+1)-1,q)</M></Alt></Item>
+   <Item><M>q</M> odd</Item>
  </Row>
  <Row>
-   <Item><Alt Not="HTML"><M>Q(2n,q^{2a})</M></Alt><Alt Only="HTML">Q(2n,q&lt;sup>2a&lt;/sup>)</Alt></Item>
-   <Item><Alt Not="HTML"><M>Q^-(2a(2n+1)-1,q)</M></Alt><Alt Only="HTML">Q&lt;sup>-&lt;/sup>(2a(2n+1)-1,q)</Alt></Item>
-   <Item>q=1 mod 4</Item>
+     <Item><Alt Only="HTML MathJax"><M>\mathrm{Q}(2n,q^{2a})</M></Alt><Alt Only="HTML noMathJax">Q(2n,q&lt;sup>2a&lt;/sup>)</Alt><Alt Only="LaTeX"><M>\mathrm{Q}(2n,q^{2a})</M></Alt><Alt Only="Text"><M>Q(2n,q^(2a))</M></Alt>
+</Item>
+   <Item><Alt Only="HTML MathJax"><M>\mathrm{Q}(2a(2n+1)-1,q)</M></Alt><Alt Only="HTML noMathJax"><M>Q(2a(2n+1)-1,q)</M></Alt><Alt Only="LaTeX"><M>\mathrm{Q}(2a(2n+1)-1,q)</M></Alt><Alt Only="Text"><M>Q(2a(2n+1)-1,q)</M></Alt></Item>
+   <Item><Alt Not="HTML"><M>q \equiv 1 \pmod{4}</M></Alt>
+       <Alt Only="HTML MathJax"><M>q \equiv 1 \pmod{4}</M></Alt>
+       <Alt Only="HTML noMathJax">q &#8801; 1 mod 4</Alt></Item>
  </Row>
  <Row>
-   <Item><Alt Not="HTML"><M>Q(2n,q^{4a+2})</M></Alt><Alt Only="HTML">Q(2n,q&lt;sup>4a+2&lt;/sup>)</Alt></Item>
-   <Item><Alt Not="HTML"><M>Q^+((4a+2)(2n+1)-1,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>((4a+2)(2n+1)-1,q)</Alt></Item>
-   <Item>q=3 mod 4</Item>
+   <Item><Alt Only="HTML MathJax"><M>\mathrm{Q}(2n,q^{4a+2})</M></Alt><Alt Only="HTML noMathJax">Q(2n,q&lt;sup>4a+2&lt;/sup>)</Alt><Alt Only="LaTeX"><M>\mathrm{Q}(2n,q^{4a+2})</M></Alt><Alt Only="Text"><M>Q(2n,q^(4a+2))</M></Alt></Item>
+   <Item><Alt Only="HTML MathJax"><M>\mathrm{Q}((4a+2)(2n+1)-1,q)</M></Alt><Alt Only="HTML noMathJax"><M>Q((4a+2)(2n+1)-1,q)</M></Alt><Alt Only="LaTeX"><M>\mathrm{Q}((4a+2)(2n+1)-1,q)</M></Alt><Alt Only="Text"><M>Q((4a+2)(2n+1)-1,q)</M></Alt></Item>
+   <Item><Alt Not="HTML"><M>q \equiv 3 \pmod{4}</M></Alt>
+       <Alt Only="HTML MathJax"><M>q \equiv 3 \pmod{4}</M></Alt>
+       <Alt Only="HTML noMathJax">q &#8801; 3 mod 4</Alt></Item>
  </Row>
  <Row>
-  <Item><Alt Not="HTML"><M>Q(2n,q^{4a})</M></Alt><Alt Only="HTML">Q(2n,q&lt;sup>4a&lt;/sup>)</Alt></Item>
-  <Item><Alt Not="HTML"><M>Q^-(4a(2n+1)-1,q)</M></Alt><Alt Only="HTML">Q&lt;sup>-&lt;/sup>(4a(2n+1)-1,q)</Alt></Item>
-  <Item>q=3 mod 4</Item>
+     <Item><Alt Only="HTML MathJax"><M>\mathrm{Q}(2n,q^{4a})</M></Alt><Alt Only="HTML noMathJax">Q(2n,q&lt;sup>4a&lt;/sup>)</Alt><Alt Only="LaTeX"><M>\mathrm{Q}(2n,q^{4a})</M></Alt><Alt Only="Text"><M>Q(2n,q^(4a))</M></Alt>
+</Item>
+     <Item><Alt Only="HTML MathJax"><M>\mathrm{Q}^-(4a(2n+1)-1,q)</M></Alt><Alt Only="LaTeX"><M>\mathrm{Q}^-(4a(2n+1)-1,q)</M></Alt><Alt Only="HTML noMathJax">Q&lt;sup-&lt;/sup>(4a(2n+1)-1,q)</Alt><Alt Only="Text"><M>Q^-(4a(2n+1)-1,q)</M></Alt>
+</Item>
+     <Item><Alt Not="HTML"><M>q \equiv 3 \pmod{4}</M></Alt>
+         <Alt Only="HTML MathJax"><M>q \equiv 3 \pmod{4}</M></Alt>
+         <Alt Only="HTML noMathJax">q &#8801; 3 mod 4</Alt></Item>
  </Row>
 <Row>
-   <Item><Alt Not="HTML"><M>H(n,q^{2a+1})</M></Alt><Alt Only="HTML">H(n,q&lt;sup>2a+1&lt;/sup>)</Alt></Item>
-   <Item><M>H((n+1)(2a+1)-1,q)</M></Item>
-   <Item>q square</Item>
+    <Item><Alt Only="HTML MathJax"><M>\mathrm{H}(n,q^{2a+1})</M></Alt><Alt Only="HTML noMathJax">H(n,q&lt;sup>2a+1&lt;/sup>)</Alt><Alt Only="LaTeX"><M>\mathrm{H}(n,q^{2a+1})</M></Alt><Alt Only="Text"><M>H(n,q^(2a+1))</M></Alt>
+</Item>
+    <Item><Alt Only="HTML MathJax"><M>\mathrm{H}((2a+1)(n+1)-1,q)</M></Alt><Alt Only="HTML noMathJax"><M>H((2a+1)(n+1)-1,q)</M></Alt><Alt Only="LaTeX"><M>\mathrm{H}((2a+1)(n+1)-1,q)</M></Alt><Alt Only="Text"><M>H((2a+1)(n+1)-1,q)</M></Alt>
+</Item>
+   <Item><M>q</M> square</Item>
  </Row>
  <Row>
-   <Item><Alt Not="HTML"><M>H(n,q^{2a})</M></Alt><Alt Only="HTML">H(n,q&lt;sup>2a&lt;/sup>)</Alt></Item>
-   <Item><M>W(2a(n+1)-1,q)</M></Item>
-   <Item>q even</Item>
+     <Item><Alt Only="HTML MathJax"><M>\mathrm{H}(n,q^{2a})</M></Alt><Alt Only="HTML noMathJax">H(n,q&lt;sup>2a&lt;/sup>)</Alt><Alt Only="LaTeX"><M>\mathrm{H}(n,q^{2a})</M></Alt><Alt Only="Text"><M>H(n,q^(2a))</M></Alt>
+</Item>
+   <Item><Alt Only="HTML MathJax"><M>\mathrm{W}(2a(n+1)-1,q)</M></Alt><Alt Only="HTML noMathJax"><M>W(2a(n+1)-1,q)</M></Alt><Alt Only="LaTeX"><M>\mathrm{W}(2a(n+1)-1,q)</M></Alt><Alt Only="Text"><M>W(2a(n+1)-1,q)</M></Alt></Item>
+   <Item><M>q</M> even</Item>
  </Row>
 <Row>
    <Item><Alt Not="HTML"><M>H(2n,q^{2a})</M></Alt><Alt Only="HTML">H(2n,q&lt;sup>2a&lt;/sup>)</Alt></Item>

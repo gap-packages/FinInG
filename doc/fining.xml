@@ -29,6 +29,7 @@
     <!ENTITY pgammao "\mathrm{P}\Gamma\mathrm{O}">
     <!ENTITY pgammau "\mathrm{P}\Gamma\mathrm{U}">
     <!ENTITY phi "<Alt Not=&#34;HTML&#34;><M>\phi</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>\phi</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>&#966;</Alt>">
+    <!ENTITY Phi "<Alt Not=&#34;HTML&#34;><M>\Phi</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>\Phi</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>&#934;</Alt>">
     <!ENTITY gfq "<Alt Only=&#34;Text&#34;><M>GF(q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&gf;(q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&gf;(q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>GF(q)</Alt>">
     <!ENTITY gfp "<Alt Only=&#34;Text&#34;><M>GF(p)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&gf;(p)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&gf;(p)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>GF(p)</Alt>">
     <!ENTITY gfqt "<Alt Only=&#34;Text&#34;><M>GF(q^t)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&gf;(q^t)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&gf;(q^t)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>GF(q&lt;sup&gt;t&lt;/sup&gt;)</Alt>">
