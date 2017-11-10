@@ -160,7 +160,7 @@ Hence we also obtain a natural group isomorphism from the collineation group of
 <Heading>Klein correspondence and derived dualities</Heading>
 
 The Klein correspondence is a well known geometry morphism from the lines
-of <M>PG(3,q)</M> to the points of a hyperbolic quadric in <M>PG(5,q)</M>.
+of &pg3q; to the points of a hyperbolic quadric in &pg5q;.
 This morphism and some derived morphisms are provided in <Package>FinInG</Package>.
 
 The bare essential of the Klein corresondence is the so-called Plücker map.
@@ -168,10 +168,11 @@ The bare essential of the Klein corresondence is the so-called Plücker map.
 <ManSection>
 <Oper Name="PluckerCoordinates" Arg="line"/>
 <Description>
-This operation takes a line of <M>PG(3,q)</M> as argument. It returns the plucker coordinates of the argument as list of finite
+This operation takes a line of &pg3q; as argument. It returns the plucker coordinates of the argument as list of finite
 field elements. The retured list can be used in operations as <F>VectorSpaceToElement</F>, and represents a point of the hyperbolic
-quadric in <M>PG(5,q)</M> with equation <Alt Not="HTML"><M>X_0X_5+X_1X_4+X_2X_3 = 0</M></Alt>
-<Alt Only="HTML">X&lt;sub>0&lt;/sub>X&lt;sub>5&lt;/sub>+X&lt;sub>1&lt;/sub>X&lt;sub>4&lt;/sub>+X&lt;sub>2&lt;/sub>X&lt;sub>3&lt;/sub> = 0</Alt>
+quadric in &pg5q; with equation <Alt Only="HTML MathJax"><M>X_0X_5+X_1X_4+X_2X_3 = 0</M></Alt>
+<Alt Not="HTML"><M>X_0X_5+X_1X_4+X_2X_3 = 0</M></Alt>
+<Alt Only="HTML noMathJax">X&lt;sub>0&lt;/sub>X&lt;sub>5&lt;/sub>+X&lt;sub>1&lt;/sub>X&lt;sub>4&lt;/sub>+X&lt;sub>2&lt;/sub>X&lt;sub>3&lt;/sub> = 0</Alt>
 <Example>
 <#Include SYSTEM "../examples/include/morphisms_plucker.include">
 </Example>
@@ -189,12 +190,10 @@ The argument <A>f</A> is a finite field, the argument <A>q</A> is a prime power.
 The first an the third version use <K>true</K> as value for <A>boolean</A>.
 When using <K>true</K> as value for the boolean, the intertwiner is computed.
 This variant of the operation <F>KleinCorrespondence</F> has always as ambient geometry of
-its range the hyperbolic quadric <Alt Not="HTML"><M>Q^+(5,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>(5,q)</Alt>
+its range the hyperbolic quadric &qplus5q;
 with equation <Alt Not="HTML"><M>X_0X_5+X_1X_4+X_2X_3 = 0</M></Alt>
-<Alt Only="HTML">X&lt;sub>0&lt;/sub>X&lt;sub>5&lt;/sub>+X&lt;sub>1&lt;/sub>X&lt;sub>4&lt;/sub>+X&lt;sub>2&lt;/sub>X&lt;sub>3&lt;/sub> = 0</Alt>
-The returned geometry morphism has the lines of <M>PG(3,q)</M>
-as source and the points of <Alt Not="HTML"><M>Q^+(5,q)</M></Alt><Alt Only="HTML">Q&lt;sup>-&lt;/sup>(5,q)</Alt>
-as range.
+<Alt Only="HTML noMathJax">X&lt;sub>0&lt;/sub>X&lt;sub>5&lt;/sub>+X&lt;sub>1&lt;/sub>X&lt;sub>4&lt;/sub>+X&lt;sub>2&lt;/sub>X&lt;sub>3&lt;/sub> = 0</Alt>
+The returned geometry morphism has the lines of &pg3q; as source and the points of &qplus5q; as range.
 <Example>
 <#Include SYSTEM "../examples/include/morphisms_klein.include">
 </Example>
@@ -208,9 +207,8 @@ as range.
 <Description>
 The argument <A>quadric</A> is a hyperbolic quadric in a 5 dimensional projective space.
 If <A>boolean</A> is <K>true</K> or not given, this operation returns the geometry morphism
-equipped with an intertwiner. The returned geometry morphism has the lines of <M>PG(3,q)</M>
-as source and the points of <Alt Not="HTML"><M>Q^+(5,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>(5,q)</Alt>
-as range.
+equipped with an intertwiner. The returned geometry morphism has the lines of &pg3q; as source
+and the points of &qplus5q; as range.
 <Example>
 <#Include SYSTEM "../examples/include/morphisms_klein2.include">
 </Example>
@@ -224,19 +222,18 @@ as range.
 <Description>
 The argument <A>quadric</A> is a hyperbolic quadric in a 5 dimensional projective space.
 If <A>boolean</A> is <K>true</K> or not given, this operation returns the geometry morphism
-equipped with an intertwiner. The returned geometry morphism has all the elements of <M>PG(3,q)</M>
-as source (not just the lines) and the elements of <Alt Not="HTML"><M>Q^+(5,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>(5,q)</Alt>
-as range, hence this operation is a kind of extension of <F>KleinCorrespondence</F>.
+equipped with an intertwiner. The returned geometry morphism has all the elements of &pg3q;
+as source (not just the lines) and the elements of &qplus5q; as range, hence this operation
+is a kind of extension of <F>KleinCorrespondence</F>.
 <Example>
 <#Include SYSTEM "../examples/include/morphisms_klein3.include">
 </Example>
 </Description>
 </ManSection>
 
-It is well known that the classical generalised quadrangles <M>W(3,q)</M> and <M>Q(4,q)</M>
+It is well known that the classical generalised quadrangles &w3q; and &q4q;
 are dual incidence structures, the same holds for the classical generalised quadrangles
-<Alt Not="HTML"><M>Q^-(5,q)</M></Alt><Alt Only="HTML">Q&lt;sup>-&lt;/sup>(5,q)</Alt>
-and <Alt Not="HTML"><M>H(3,q^2)</M></Alt><Alt Only="HTML">H(3,q&lt;sup>2&lt;/sup>)</Alt>.
+&qmin5q; and &h3q2;.
 Essentially, these dual dualities are based on the Klein correspondence, and
 are implemented through the operation <F>NaturalDuality</F>,
 this operation will return a geometry morphism with <C>ElementsOfIncidenceStructure(gq1)</C> as
@@ -251,10 +248,9 @@ and swapping the types.<P/>
 <Oper Name="NaturalDuality" Arg="gq, boolean"/>
 <Returns>a geometry morphism</Returns>
 <Description>
-The operation allows the construction of the duality between <M>W(3,q)</M> and <M>Q(4,q)</M>, 
-respectively <Alt Not="HTML"><M>Q^-(5,q)</M></Alt><Alt Only="HTML">Q&lt;sup>-&lt;/sup>(5,q)</Alt>, or
-<Alt Not="HTML"><M>H(3,q^2)</M></Alt><Alt Only="HTML">H(3,q&lt;sup>2&lt;/sup>)</Alt>, in two directions.
-It is checked if the arguments are appropriate, i.e. the right type of generalised quadrangle(s).
+The operation allows the construction of the duality between &w3q; and &q4q;,
+respectively &qmin5q;, in two directions. It is checked if the arguments are appropriate,
+i.e. the right type of generalised quadrangle(s).
 
 The first version requires two arguments: either the symplectic or parabolic
 quadrangle, in any order, and defined by any suitable bilinear/quadratic and bilinear form; or the
@@ -262,9 +258,8 @@ elliptic or hermitian quadrangle (in dimension <M>3</M>), in any order, and defi
 bilinear/quadratic and hermitian form. In all cases the generalised quadrangles may be the standard
 one provided by the package <Package>FinInG</Package>. <P/>
 
-The third version requires only one argument, either <M>W(3,q)</M>, <M>Q(4,q)</M>,
-<Alt Not="HTML"><M>Q^-(5,q)</M></Alt><Alt Only="HTML">Q&lt;sup>-&lt;/sup>(5,q)</Alt>, or
-<Alt Not="HTML"><M>H(3,q^2)</M></Alt><Alt Only="HTML">H(3,q&lt;sup>2&lt;/sup>)</Alt>,
+The third version requires only one argument, either &w3q;, &q4q;,
+&qmin5q;, or &h3q2;,
 standard or user specified using an appropriate bilinear, quadratic or hermitian
 form. The range of the returned geometry morphism will be the set of all elements of a suitable generalised
 quadrangle, in standard form.<P/>
@@ -278,7 +273,7 @@ that is not equipped with an intertwiner.<P/>
 </Description>
 </ManSection>
 
-The combination of the isomorphism of the GQs <M>W(3,q)</M>, <M>Q(4,q)</M> when <M>q</M> is even
+The combination of the isomorphism of the GQs &w3q;, &q4q; when <M>q</M> is even
 and the duality between the same GQs, yields a duality from each of these GQs itself. The operation
 <F>SelfDuality</F> implements this combination.
 
@@ -288,10 +283,11 @@ and the duality between the same GQs, yields a duality from each of these GQs it
 <Returns>a geometry morphism</Returns>
 <Description>
 It is checked wheter the base field of <A>gq</A> is a field of charateristic 2 and whether
-<A>gq</A> is a symplectic generalised quadrangle in 3-dimensional projective space or a parabolic quadric in 4-dimensional projective space.
-The first version will return, when possible, a geometry morphism equipped with an intertwiner.
-Using the boolean argument <A>false</A> will return a geometry morphism
-that is not equipped with an intertwiner. The example shows the use of the boolean argument.
+<A>gq</A> is a symplectic generalised quadrangle in 3-dimensional projective space or a parabolic
+quadric in 4-dimensional projective space. The first version will return, when possible,
+a geometry morphism equipped with an intertwiner. Using the boolean argument <A>false</A> will
+return a geometry morphism that is not equipped with an intertwiner. The example shows the use
+of the boolean argument.
 <Example>
 <#Include SYSTEM "../examples/include/morphisms_selfduality.include">
 </Example>

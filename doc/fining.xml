@@ -16,8 +16,11 @@
     <!ENTITY pso "\mathrm{PSO}">
     <!ENTITY pgu "\mathrm{PGU}">
     <!ENTITY psu "\mathrm{PSU}">
+    <!ENTITY ag "\mathrm{AG}">
+    <!ENTITY agl "\mathrm{AGL}">
     <!ENTITY gammal "\Gamma\mathrm{L}">
     <!ENTITY pgammal "\mathrm{P}\Gamma\mathrm{L}">
+    <!ENTITY agammal "\mathrm{A}\Gamma\mathrm{L}">
     <!ENTITY pdeltaoplus "\mathrm{P}\Delta\mathrm{O}^+">
     <!ENTITY pdeltaominus "\mathrm{P}\Delta\mathrm{O}^-">
     <!ENTITY pgammasp "\mathrm{P}\Gamma\mathrm{Sp}">
@@ -29,12 +32,15 @@
     <!ENTITY gfq "<Alt Only=&#34;Text&#34;><M>GF(q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&gf;(q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&gf;(q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>GF(q)</Alt>">
     <!ENTITY gfp "<Alt Only=&#34;Text&#34;><M>GF(p)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&gf;(p)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&gf;(p)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>GF(p)</Alt>">
     <!ENTITY pgnq "<Alt Only=&#34;Text&#34;><M>PG(n,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&pg;(n,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pg;(n,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>PG(n,q)</Alt>">
+    <!ENTITY agnq "<Alt Only=&#34;Text&#34;><M>AG(n,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&ag;(n,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&ag;(n,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>AG(n,q)</Alt>">
     <!ENTITY glnplus1q "<Alt Only=&#34;Text&#34;><M>GL(n+1,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&gl;(n+1,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&gl;(n+1,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>GL(n+1,q)</Alt>">
+    <!ENTITY glnq "<Alt Only=&#34;Text&#34;><M>GL(n,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&gl;(n,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&gl;(n,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>GL(n,q)</Alt>">
     <!ENTITY slnplus1q "<Alt Only=&#34;Text&#34;><M>SL(n+1,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&sl;(n+1,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&sl;(n+1,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>SL(n+1,q)</Alt>">
     <!ENTITY scnplus1q "<Alt Only=&#34;Text&#34;><M>Sc(n+1,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&sc;(n+1,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&sc;(n+1,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>Sc(n+1,q)</Alt>">
     <!ENTITY pglnplus1q "<Alt Only=&#34;Text&#34;><M>PGL(n+1,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&pgl;(n+1,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pgl;(n+1,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>PGL(n+1,q)</Alt>">
     <!ENTITY pslnplus1q "<Alt Only=&#34;Text&#34;><M>PSL(n+1,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&psl;(n+1,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&psl;(n+1,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>PSL(n+1,q)</Alt>">
     <!ENTITY gammalnplus1q "<Alt Only=&#34;Text&#34;><M>\Gamma{}L(n+1,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&gammal;(n+1,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&gammal;(n+1,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>&#915;L(n+1,q)</Alt>">
+    <!ENTITY gammalnq "<Alt Only=&#34;Text&#34;><M>\Gamma{}L(n,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&gammal;(n,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&gammal;(n,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>&#915;L(n,q)</Alt>">
     <!ENTITY pgammalnplus1q "<Alt Only=&#34;Text&#34;><M>P\Gamma{}L(n+1,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&pgammal;(n+1,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pgammal;(n+1,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>P&#915;L(n+1,q)</Alt>">
     <!ENTITY autgfq "<Alt Only=&#34;Text&#34;><M>Aut(GF(q))</M></Alt><Alt Only=&#34;LaTeX&#34;><M>\mathrm{Aut}(&gf;(q))</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>\mathrm{Aut}(&gf;(q))</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>Aut(GF(q))</Alt>">
     <!ENTITY pglinline "<Alt Only=&#34;Text&#34;><M>PGL</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&pgl;</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pgl;</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>PGL</Alt>">
@@ -57,6 +63,15 @@
     <!ENTITY pgammaominusdq "<Alt Only=&#34;Text&#34;><M>P\Gamma{}O-(d,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&pgammaominus;(d,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pgammaominus;(d,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>P&#915;O&lt;sup&gt;-&lt;/sup&gt;(d,q)</Alt>">
     <!ENTITY pgammaodq "<Alt Only=&#34;Text&#34;><M>P\Gamma{}O(d,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&pgammao;(d,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pgammao;(d,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>P&#915;O(d,q)</Alt>">
     <!ENTITY pgammaudq2 "<Alt Only=&#34;Text&#34;><M>P\Gamma{}U(d,q^2)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&pgammau;(d,q^2)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pgammau;(d,q^2)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>P&#915;U(d,q&lt;sup&gt;2&lt;/sup&gt;)</Alt>">
+    <!ENTITY aglnq "<Alt Only=&#34;Text&#34;><M>AGL(n,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&agl;(n+1,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&agl;(n,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>AGL(n,q)</Alt>">
+    <!ENTITY agammalnq "<Alt Only=&#34;Text&#34;><M>A\Gamma{}L(n,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&agammal;(n,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&agammal;(n,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>A&#915;L(n,q)</Alt>">
+    <!ENTITY qplus5q "<Alt Only=&#34;HTML MathJax&#34;><M>\mathrm{Q}^+(5,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>\mathrm{Q}^+(5,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>Q&lt;sup&gt;+&lt;/sup&gt;(5,q)</Alt><Alt Only=&#34;Text&#34;><M>Q^+(5,q)</M></Alt>">
+    <!ENTITY qmin5q "<Alt Only=&#34;HTML MathJax&#34;><M>\mathrm{Q}^-(5,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>\mathrm{Q}^-(5,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>Q&lt;sup&gt;+&lt;/sup&gt;(5,q)</Alt><Alt Only=&#34;Text&#34;><M>Q^-(5,q)</M></Alt>">
+    <!ENTITY w3q "<Alt Only=&#34;HTML MathJax&#34;><M>\mathrm{W}(3,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>\mathrm{W}(3,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>W(3,q)</Alt><Alt Only=&#34;Text&#34;><M>W(3,q)</M></Alt>">
+    <!ENTITY q4q "<Alt Only=&#34;HTML MathJax&#34;><M>\mathrm{Q}(4,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>\mathrm{Q}(4,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>Q(4,q)</Alt><Alt Only=&#34;Text&#34;><M>Q(4,q)</M></Alt>">
+    <!ENTITY pg3q "<Alt Only=&#34;Text&#34;><M>PG(3,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&pg;(3,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pg;(3,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>PG(3,q)</Alt>">
+    <!ENTITY pg5q "<Alt Only=&#34;Text&#34;><M>PG(5,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&pg;(5,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pg;(5,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>PG(5,q)</Alt>">
+    <!ENTITY h3q2 "<Alt Only=&#34;HTML MathJax&#34;><M>\mathrm{H}(3,q^2)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>\mathrm{H}(3,q^2)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>H(3,q&lt;sup&gt;2&lt;/sup&gt;)</Alt><Alt Only=&#34;Text&#34;><M>H(3,q^2)</M></Alt>">"
 ]
    >
 
