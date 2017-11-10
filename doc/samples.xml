@@ -1,0 +1,7 @@
+<!-- samples.xml: some <Alt> structs to -->
+<Alt Only="HTML MathJax"><M>x</M></Alt><Alt Only="HTML noMathJax"><M>y</M></Alt><Alt Only="LaTeX"><M>z</M></Alt><Alt Only="Text"><M>u</M></Alt>
+
+<Alt Only="HTML MathJax"><M>\mathrm{X}</M></Alt><Alt Only="HTML noMathJax"><M>X</M></Alt><Alt Only="LaTeX"><M>\mathrm{X}</M></Alt><Alt Only="Text"><M>X</M></Alt>
+
+
+<Alt Only="HTML MathJax"><M>x</M></Alt><Alt Only="HTML noMathJax"><M>y</M></Alt><Alt Not="HTML"><M>z</M></Alt>

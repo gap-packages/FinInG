@@ -447,29 +447,29 @@ are listed in the table below (see <Cite Key="KleidmanLiebeck"/>):
 <HorLine/>
 <HorLine/>
 <Row>
-<Item><Alt Only="HTML MathJax"><M>W(2n-1,q)</M></Alt></Item>
-<Item><Alt Not="HTML"><M>W(2n-1,q^a)</M></Alt><Alt Only="HTML">W(2n-1,q&lt;sup>a&lt;/sup>)</Alt></Item>
+<Item><Alt Only="HTML MathJax"><M>\mathrm{W}(2n-1,q)</M></Alt><Alt Only="HTML noMathJax"><M>W(2n-1,q)</M></Alt><Alt Only="LaTeX"><M>\mathrm{W}(2n-1,q)</M></Alt><Alt Only="Text"><M>W(2n-1,q)</M></Alt></Item>
+<Item><Alt Only="HTML MathJax"><M>\mathrm{W}(2n-1,q^a)</M></Alt><Alt Only="HTML noMathJax">W(2n-1,q&lt;sup>a&lt;/sup>)</Alt><Alt Only="LaTeX"><M>\mathrm{W}(2n-1,q^a)</M></Alt><Alt Only="Text"><M>W(2n-1,q^a)</M></Alt></Item>
 <Item>--</Item>
 </Row>
 <Row>
-<Item><M>W(2n-1,q)</M></Item>
-<Item><Alt Not="HTML"><M>H(2n-1,q^2)</M></Alt><Alt Only="HTML">H(2n-1,q&lt;sup>2&lt;/sup>)</Alt></Item>
+<Item><Alt Only="HTML MathJax"><M>\mathrm{W}(2n-1,q)</M></Alt><Alt Only="HTML noMathJax"><M>W(2n-1,q)</M></Alt><Alt Only="LaTeX"><M>\mathrm{W}(2n-1,q)</M></Alt><Alt Only="Text"><M>W(2n-1,q)</M></Alt></Item>
+<Item><Alt Only="HTML MathJax"><M>\mathrm{H}(2n-1,q^a)</M></Alt><Alt Only="HTML noMathJax">H(2n-1,q&lt;sup>a&lt;/sup>)</Alt><Alt Only="LaTeX"><M>\mathrm{H}(2n-1,q^a)</M></Alt><Alt Only="Text"><M>H(2n-1,q^a)</M></Alt></Item>
 <Item>--</Item>
 </Row>
 <Row>
-<Item><Alt Not="HTML"><M>H(d,q^2)</M></Alt><Alt Only="HTML">H(d,q&lt;sup>2&lt;/sup>)</Alt></Item>
-<Item><Alt Not="HTML"><M>H(d,q^{2r})</M></Alt><Alt Only="HTML">H(d,q&lt;sup>2r&lt;/sup>)</Alt></Item>
-<Item>r odd</Item>
+<Item><Alt Only="HTML MathJax"><M>\mathrm{H}(d,q^2)</M></Alt><Alt Only="HTML noMathJax">H(d,q&lt;sup>2&lt;/sup>)</Alt><Alt Only="LaTeX"><M>\mathrm{H}(d,q^2)</M></Alt><Alt Only="Text"><M>H(d,q^2)</M></Alt></Item>
+<Item><Alt Only="HTML MathJax"><M>\mathrm{H}(d,q^{2r})</M></Alt><Alt Only="HTML noMathJax">H(d,q&lt;sup>2r&lt;/sup>)</Alt><Alt Only="LaTeX"><M>\mathrm{H}(d,q^{2r})</M></Alt><Alt Only="Text"><M>H(d,q^(2r))</M></Alt></Item>
+<Item><M>r</M> odd</Item>
 </Row>
 <Row>
-<Item><Alt Not="HTML"><M>O^\epsilon(d,q)</M></Alt><Alt Only="HTML">O&lt;sup>&#949;&lt;/sup>(d,q)</Alt></Item>
-<Item><Alt Not="HTML"><M>H(d,q^2)</M></Alt><Alt Only="HTML">H(d,q&lt;sup>2&lt;/sup>)</Alt></Item>
-<Item>q odd</Item>
+<Item><Alt Only="HTML MathJax"><M>\mathrm{O}^{\epsilon}(d,q)</M></Alt><Alt Only="HTML noMathJax">O&lt;sup>&#949;&lt;/sup>(d,q)</Alt><Alt Only="LaTeX"><M>\mathrm{O}^{\epsilon}(d,q)</M></Alt><Alt Only="Text"><M>O^\epsilon(d,q)</M></Alt></Item>
+<Item><Alt Only="HTML MathJax"><M>\mathrm{H}(d,q^2)</M></Alt><Alt Only="HTML noMathJax">H(d,q&lt;sup>2&lt;/sup>)</Alt><Alt Only="LaTeX"><M>\mathrm{H}(d,q^2)</M></Alt><Alt Only="Text"><M>H(d,q^2)</M></Alt></Item>
+<Item><M>q</M> odd</Item>
 </Row>
 <Row>
-<Item><Alt Not="HTML"><M>O^\epsilon(d,q)</M></Alt><Alt Only="HTML">O&lt;sup>&#949;&lt;/sup>(d,q)</Alt></Item>
-<Item><Alt Not="HTML"><M>O^{\epsilon'}(d,q^r)</M></Alt><Alt Only="HTML">O&lt;sup>&#949;'&lt;/sup>(d,q&lt;sup>r&lt;/sup>)</Alt></Item>
-<Item><Alt Not="HTML"><M>\epsilon=(\epsilon')^r</M></Alt><Alt Only="HTML">&#949;=(&#949;')&lt;sup>r&lt;/sup></Alt></Item>
+<Item><Alt Only="HTML MathJax"><M>\mathrm{O}^{\epsilon}(d,q)</M></Alt><Alt Only="HTML noMathJax">O&lt;sup>&#949;&lt;/sup>(d,q)</Alt><Alt Only="LaTeX"><M>\mathrm{O}^{\epsilon}(d,q)</M></Alt><Alt Only="Text"><M>O^\epsilon(d,q)</M></Alt></Item>
+<Item><Alt Only="HTML MathJax"><M>\mathrm{O}^{\epsilon'}(d,q^r)</M></Alt><Alt Only="HTML noMathJax">O&lt;sup>&#949;'&lt;/sup>(d,q&lt;sup>r&lt;/sup>)</Alt><Alt Only="LaTeX"><M>\mathrm{O}^{\epsilon'}(d,q^r)</M></Alt><Alt Only="Text"><M>O^\epsilon'(d,q^r)</M></Alt></Item>
+<Item><Alt Not="HTML"><M>\epsilon=(\epsilon')^r</M></Alt><Alt Only="HTML MathJax"><M>\epsilon=(\epsilon')^r</M></Alt><Alt Only="HTML noMathJax">&#949;=(&#949;')&lt;sup>r&lt;/sup></Alt></Item>
 </Row>
 </Table>
         
@@ -490,13 +490,23 @@ The default (when calling the operation with two arguments) is set to <C>true</C
 <ManSection Label="polar_red">
 <Heading> Embedding of polar spaces by field reduction</Heading>
 <Description>
-Field reduction for polar spaces is somewhat more involved than for projective spaces, and we give a brief description. Let <M>P</M> be a polar space over a field <Alt Not="HTML"><M>L=GF(q^t)</M></Alt> <Alt Only="HTML">GF(q&lt;sup>t&lt;/sup>)</Alt>
-and let <M>K=GF(q)</M>. Let <M>f</M> be the form on the <M>r</M> dimensional vector space <M>V</M> over <M>L</M>
-determining <M>P</M>. Consider the trace map <M>T:</M><Alt Not="HTML"><M>L=GF(q^t) \rightarrow GF(q):</M></Alt>
-<Alt Only="HTML">GF(q&lt;sup>t&lt;/sup>) &#8594; GF(q):</Alt><Alt Not="HTML"><M>x \mapsto x^{q^t}+ x^{q^{t-1}} + \ldots x</M></Alt>
-<Alt Only="HTML">x &#8594; x&lt;sup>q&lt;sup>t&lt;/sup>&lt;/sup> + x&lt;sup>q&lt;sup>t-1&lt;/sup>&lt;/sup> + &#8230; x</Alt>. 
-Define for any <M>\alpha \in L</M> the map <Alt Not="HTML"><M>T_{\alpha}: GF(q^t)\rightarrow
-    GF(q): T_{\alpha}(x) = T(\alpha x)</M></Alt> <Alt Only="HTML">T&lt;sub>&#945;&lt;/sub>: GF(q&lt;sup>t&lt;/sup>)&#8594; GF(q): x &#8594; T(&#945; x)</Alt>.
+Field reduction for polar spaces is somewhat more involved than for
+projective spaces, and we give a brief description. Let <M>L</M> be the
+field &gfqt; and let <M>K</M> be the field &gfq; Let <M>P</M> be a polar
+space over a field <M>L</M>. Let <M>f</M> be the form on the <M>r</M> dimensional
+vector space <M>V</M> over <M>L</M> determining <M>P</M>. Consider the trace map
+
+<Alt Only="HTML MathJax"><Display>T: L \rightarrow K: x \mapsto x^{q^t}+ x^{q^{t-1}} + \ldots + x.</Display></Alt>
+<Alt Only="HTML noMathJax"><M>T: L \rightarrow K</M>: x &#8594; x&lt;sup>q&lt;sup>t&lt;/sup>&lt;/sup> + x&lt;sup>q&lt;sup>t-1&lt;/sup>&lt;/sup> + &#8230; + x.</Alt>
+<Alt Only="LaTeX"><Display>T: L \rightarrow K: x \mapsto x^{q^t}+ x^{q^{t-1}} + \ldots + x.</Display></Alt>
+<Alt Only="Text"><M>T: L \rightarrow K: x \mapsto x^(q^t)+ x^(q^(t-1)) + \ldots + x.</M></Alt>
+
+Define for any <M>\alpha \in L</M> the map
+
+<Alt Only="HTML MathJax"><Display>T_\alpha: L \rightarrow K: T_\alpha(x) = T(\alpha x).</Display></Alt>
+<Alt Only="HTML noMathJax"><M>T&lt;sub>&#945;&lt;/sub>: GF(q&lt;sup>t&lt;/sup>)&#8594; GF(q): x &#8594; T(&#945; x)</M>.</Alt>
+<Alt Only="LaTeX"><Display>T_\alpha: L \rightarrow K: T_\alpha(x) = T(\alpha x).</Display></Alt>
+<Alt Only="Text"><M>T_\alpha: L \rightarrow K: T_\alpha(x) = T(\alpha x).</M></Alt>
 
 Consider the <M>rt</M> dimensional vector space <M>W</M> over <M>K</M>. There is a bijective map
 <Alt Not="HTML"><M>\Phi</M></Alt><Alt Only="HTML">&#934;</Alt> from <M>V</M> to <M>W</M> and <Alt Only="HTML">T&lt;sub>&#945;&lt;/sub> &#8226; f &#8226; &#934; &lt;sup>-1&lt;/sup></Alt><Alt Not="HTML"><M>T_{\alpha} \circ f \circ \Phi^{-1}</M></Alt> defines a
