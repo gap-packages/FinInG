@@ -40,7 +40,7 @@ Version := "1.3.7",
 ##  Release date of the current version in dd/mm/yyyy format.
 # 
 #Date := "19/09/2014",  #this is the date Fining was submitted officially.
-Date := "16/02/2016",  #this is revision 1160.
+Date := "11/10/2017",
 
 
 ##  URL of the archive(s) of the current package release, but *without*
@@ -383,11 +383,11 @@ AvailabilityTest := function()
 ##writing one \ eats the space right after it.
 BannerString := Concatenation(
 "-------------------------------------------------------------------------------\n",
-"         ______________       ________      _________   ______________         \n",
-"         ___  ____/__(_)__________  _/________  ____/   __<  /__|__  /         \n",
-"         __  /_   __  /__  __ \\__  / __  __ \\  / __     __  / ___/_ <          \n",
-"         _  __/   _  / _  / / /_/ /  _  / / / /_/ /     _  /______/ /          \n",
-"         /_/      /_/  /_/ /_//___/  /_/ /_/\\____/      /_/_(_)____/           \n",
+"         ______________       ________      _________   __________ __          \n",
+"         ___  ____/__(_)__________  _/________  ____/   __<  /_  // /          \n",
+"         __  /_   __  /__  __ \__  / __  __ \  / __     __  /_  // /_          \n",
+"         _  __/   _  / _  / / /_/ /  _  / / / /_/ /     _  /_/__  __/          \n",
+"         /_/      /_/  /_/ /_//___/  /_/ /_/\____/      /_/_(_)/_/             \n",
 "-------------------------------------------------------------------------------\n",
     "Loading  FinInG ", ~.Version, " (Finite Incidence Geometry) \n",
     "by ", ~.Persons[1].FirstNames, " ", ~.Persons[1].LastName,
