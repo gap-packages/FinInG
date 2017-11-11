@@ -345,13 +345,8 @@ Dependencies := rec(
   # insensitive, least version denoted with '>=' prepended to version string.
   # without these, the package will not load
   NeededOtherPackages := [["GAPDoc", ">= 1.6"], ["Forms", ">=1.2.3"],
-<<<<<<< HEAD
                           ["Orb",">=4.7.6"], ["GenSS",">=1.6.4"],
 			  ["GRAPE",">=4.7"], ["cvec", ">=2.5.7"]],
-=======
-                          ["Orb",">=4.7.3"], ["GenSS",">=1.6.2"],
-			  ["GRAPE",">=4.6.1"], ["cvec", ">=2.5.7"]],
->>>>>>> fining-newGAPDoc
   # without these the package will issue a warning while loading
   # SuggestedOtherPackages := [],
   SuggestedOtherPackages := [],
