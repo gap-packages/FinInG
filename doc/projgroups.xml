@@ -757,11 +757,11 @@ the kernel of <M>M-I</M>, it follows that <M>M</M> equals
     0 &amp; 0 &amp; \ldots &amp; 1 &amp; 0 \\
     x_1 &amp; x_2 &amp; \ldots &amp; x_{n-1} &amp; 1 \\
     \end{array} \right).</Display></Alt>
-<Alt Only="Text"><M>1  0  \ldots  0  0 </M><P/> <!-- I would like to have one newline here, which seems impossible-->
-    <M>0  1  \ldots  0  0</M>
+<!--<Alt Only="Text"><M>1  0  \ldots  0  0 </M><P/> <!-- I would like to have one newline here, which seems impossible-->
+<!--    <M>0  1  \ldots  0  0</M>
     <M>\vdots  \vdots  \ddots  \vdots  \vdots</M>
     <M>0  0  \ldots  1  0</M>
-    <M>x_1  x_2  \ldots  x_{n-1}  1</M></Alt>
+    <M>x_1  x_2  \ldots  x_{n-1}  1</M></Alt>-->
 <Alt Only="LaTeX"><Display>\left( \begin{array}{ccccc}
 1 &amp; 0 &amp; \ldots &amp; 0 &amp; 0 \\ 
 0 &amp; 1 &amp; \ldots &amp; 0 &amp; 0 \\ 
@@ -812,6 +812,7 @@ x_1 &amp; x_2 &amp; \ldots &amp; x_{n-1} &amp; 1 \\
 &lt;/table>&lt;/td>&lt;td style ="border-top:1px solid #000; border-bottom:1px solid #000;">&nbsp;&lt;/td>&lt;/tr>&lt;/table>&lt;/td>
 &lt;/tr>&lt;/table>
 </Alt>
+<Alt Only="Text"><Display>matrix display not possible in text mode.</Display></Alt>
 <!--The vector hyperplanes that are fixed by <Alt Only="HTML">&#964;</Alt><Alt Not="HTML"><M>\tau</M></Alt> are the 
 hyperplanes containing the vector <Alt Only="HTML">v=(x&lt;sub>1&lt;/sub>,...,x&lt;sub>n&lt;/sub>,0)</Alt>
 <Alt Not="HTML"><M>v=(x_1,\ldots,x_n,0)</M></Alt>, a vector contained in 
