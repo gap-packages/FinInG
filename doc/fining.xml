@@ -1,12 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<!DOCTYPE Book SYSTEM "gapdoc.dtd">
-<?LaTeX ExtraPreamble="\usepackage{graphicx,amsfonts,tipa}"?>
-
-
 <!--
-
-  fining.xml		FinInG package documentation
+fining.xml		FinInG package documentation
                                                                    John Bamberg
                                                                    Anton Betten
                                                                   Philippe Cara
@@ -14,12 +7,103 @@
                                                                  Michel Lavrauw
                                                                 Max Neunhoeffer
 
-  Copyright (C) 2015, University of Western Australia
-                      Colorado State University
-                      Vrije Universiteit Brussel
-                      Ghent University
-					  Università degli Studi di Padova
+  Copyright (C) 2017,	Colorado State University
+                        Sabancı Üniversitesi
+						Università degli Studi di Padova
+						Universiteit Gent
+						University of St. Andrews
+						University of Western Australia
+                        Vrije Universiteit Brussel
 -->
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- In the next lines, after the DOCTYPE specification, we are going to define a entities that are shortcuts to long xml code that is (unfortunately) necessary to produce e.g. a nicely readable PG(n,q) under three circumstances: (1) in HTML using MathJax, in HTML no using MathJax, and in all the rest. Note that the code for HTML with MathJax and LaTeX is obviously the same, but it is not possible to specify alternatives like "only in HTML with MathJax", and "all the rest". Therefore, the HTML part requires the use of two ALTs. Also note that "entity" is available then as &entity;. So use e.g. &pgnq; to get PG(n,q). -->
+
+<!DOCTYPE Book SYSTEM "gapdoc.dtd"
+    [<!ENTITY pg "\mathrm{PG}">
+    <!ENTITY gf "\mathrm{GF}">
+    <!ENTITY gl "\mathrm{GL}">
+    <!ENTITY sl "\mathrm{SL}">
+    <!ENTITY sc "\mathrm{Sc}">
+    <!ENTITY pgl "\mathrm{PGL}">
+    <!ENTITY psl "\mathrm{PSL}">
+    <!ENTITY psp "\mathrm{PSp}">
+    <!ENTITY pgsp "\mathrm{PGSp}">
+    <!ENTITY pgo "\mathrm{PGO}">
+    <!ENTITY pso "\mathrm{PSO}">
+    <!ENTITY pgu "\mathrm{PGU}">
+    <!ENTITY psu "\mathrm{PSU}">
+    <!ENTITY ag "\mathrm{AG}">
+    <!ENTITY agl "\mathrm{AGL}">
+    <!ENTITY gammal "\Gamma\mathrm{L}">
+    <!ENTITY pgammal "\mathrm{P}\Gamma\mathrm{L}">
+    <!ENTITY agammal "\mathrm{A}\Gamma\mathrm{L}">
+    <!ENTITY pdeltaoplus "\mathrm{P}\Delta\mathrm{O}^+">
+    <!ENTITY pdeltaominus "\mathrm{P}\Delta\mathrm{O}^-">
+    <!ENTITY pgammasp "\mathrm{P}\Gamma\mathrm{Sp}">
+    <!ENTITY pgammaoplus "\mathrm{P}\Gamma\mathrm{O}^+">
+    <!ENTITY pgammaominus "\mathrm{P}\Gamma\mathrm{O}^-">
+    <!ENTITY pgammao "\mathrm{P}\Gamma\mathrm{O}">
+    <!ENTITY pgammau "\mathrm{P}\Gamma\mathrm{U}">
+    <!ENTITY phi "<Alt Not=&#34;HTML&#34;><M>\phi</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>\phi</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>&#966;</Alt>">
+    <!ENTITY Phi "<Alt Not=&#34;HTML&#34;><M>\Phi</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>\Phi</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>&#934;</Alt>">
+    <!ENTITY gfq "<Alt Only=&#34;Text&#34;><M>GF(q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&gf;(q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&gf;(q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>GF(q)</Alt>">
+    <!ENTITY gfp "<Alt Only=&#34;Text&#34;><M>GF(p)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&gf;(p)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&gf;(p)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>GF(p)</Alt>">
+    <!ENTITY gfqt "<Alt Only=&#34;Text&#34;><M>GF(q^t)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&gf;(q^t)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&gf;(q^t)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>GF(q&lt;sup&gt;t&lt;/sup&gt;)</Alt>">
+    <!ENTITY gfq3 "<Alt Only=&#34;Text&#34;><M>GF(q^3)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&gf;(q^3)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&gf;(q^3)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>GF(q&lt;sup&gt;3&lt;/sup&gt;)</Alt>">
+    <!ENTITY vnqt "<Alt Only=&#34;Text&#34;><M>V(n,q^t)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>V(n,q^t)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>V(n,q^t)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>V(n,q&lt;sup&gt;t&lt;/sup&gt;)</Alt>">
+    <!ENTITY pgnq "<Alt Only=&#34;Text&#34;><M>PG(n,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&pg;(n,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pg;(n,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>PG(n,q)</Alt>">
+    <!ENTITY pgnminus1qt "<Alt Only=&#34;Text&#34;><M>PG(n-1,q^t)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&pg;(n-1,q^t)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pg;(n-1,q^t)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>PG(n-1,q&lt;sup&gt;t&lt;/sup&gt;)</Alt>">
+    <!ENTITY pgntminus1q "<Alt Only=&#34;Text&#34;><M>PG(nt-1,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&pg;(nt-1,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pg;(nt-1,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>PG(nt-1,q)</Alt>">
+    <!ENTITY agnq "<Alt Only=&#34;Text&#34;><M>AG(n,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&ag;(n,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&ag;(n,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>AG(n,q)</Alt>">
+    <!ENTITY glnplus1q "<Alt Only=&#34;Text&#34;><M>GL(n+1,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&gl;(n+1,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&gl;(n+1,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>GL(n+1,q)</Alt>">
+    <!ENTITY glnq "<Alt Only=&#34;Text&#34;><M>GL(n,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&gl;(n,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&gl;(n,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>GL(n,q)</Alt>">
+    <!ENTITY slnplus1q "<Alt Only=&#34;Text&#34;><M>SL(n+1,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&sl;(n+1,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&sl;(n+1,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>SL(n+1,q)</Alt>">
+    <!ENTITY scnplus1q "<Alt Only=&#34;Text&#34;><M>Sc(n+1,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&sc;(n+1,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&sc;(n+1,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>Sc(n+1,q)</Alt>">
+    <!ENTITY pglnplus1q "<Alt Only=&#34;Text&#34;><M>PGL(n+1,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&pgl;(n+1,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pgl;(n+1,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>PGL(n+1,q)</Alt>">
+    <!ENTITY pslnplus1q "<Alt Only=&#34;Text&#34;><M>PSL(n+1,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&psl;(n+1,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&psl;(n+1,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>PSL(n+1,q)</Alt>">
+    <!ENTITY gammalnplus1q "<Alt Only=&#34;Text&#34;><M>\Gamma{}L(n+1,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&gammal;(n+1,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&gammal;(n+1,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>&#915;L(n+1,q)</Alt>">
+    <!ENTITY gammalnq "<Alt Only=&#34;Text&#34;><M>\Gamma{}L(n,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&gammal;(n,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&gammal;(n,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>&#915;L(n,q)</Alt>">
+    <!ENTITY pgammalnplus1q "<Alt Only=&#34;Text&#34;><M>P\Gamma{}L(n+1,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&pgammal;(n+1,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pgammal;(n+1,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>P&#915;L(n+1,q)</Alt>">
+    <!ENTITY autgfq "<Alt Only=&#34;Text&#34;><M>Aut(GF(q))</M></Alt><Alt Only=&#34;LaTeX&#34;><M>\mathrm{Aut}(&gf;(q))</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>\mathrm{Aut}(&gf;(q))</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>Aut(GF(q))</Alt>">
+    <!ENTITY pglinline "<Alt Only=&#34;Text&#34;><M>PGL</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&pgl;</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pgl;</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>PGL</Alt>">
+    <!ENTITY pslinline "<Alt Only=&#34;Text&#34;><M>PSL</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&psl;</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&psl;</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>PSL</Alt>">
+    <!ENTITY pgammalinline "<Alt Only=&#34;Text&#34;><M>P\Gamma{}L</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&pgammal;</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pgammal;</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>P&#915;L</Alt>">
+    <!ENTITY pspdq "<Alt Only=&#34;Text&#34;><M>PSp(d,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&psp;(d,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&psp;(d,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>PSp(d,q)</Alt>">
+    <!ENTITY pgspdq "<Alt Only=&#34;Text&#34;><M>PGSp(d,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&pgsp;(d,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pgsp;(d,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>PGSp(d,q)</Alt>">
+    <!ENTITY psoplusdq "<Alt Only=&#34;Text&#34;><M>PSO(1,d,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&pso;(1,d,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pso;(1,d,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>PSO(1,d,q)</Alt>">
+    <!ENTITY psominusdq "<Alt Only=&#34;Text&#34;><M>PSO(-1,d,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&pso;(-1,d,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pso;(-1,d,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>PSO(-1,d,q)</Alt>">
+    <!ENTITY pso0dq "<Alt Only=&#34;Text&#34;><M>PSO(0,d,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&pso;(0,d,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pso;(0,d,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>PSO(0,d,q)</Alt>">
+    <!ENTITY pgoplusdq "<Alt Only=&#34;Text&#34;><M>PGO(1,d,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&pgo;(1,d,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pgo;(1,d,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>PGO(1,d,q)</Alt>">
+    <!ENTITY pgominusdq "<Alt Only=&#34;Text&#34;><M>PGO(-1,d,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&pgo;(-1,d,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pgo;(-1,d,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>PGO(-1,d,q)</Alt>">
+    <!ENTITY pgo0dq "<Alt Only=&#34;Text&#34;><M>PGO(0,d,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&pgo;(0,d,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pgo;(0,d,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>PGO(0,d,q)</Alt>">
+    <!ENTITY psudq2 "<Alt Only=&#34;Text&#34;><M>PSU(d,q^2)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&psu;(d,q^2)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&psu;(d,q^2)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>PSU(d,q&lt;sup&gt;2&lt;/sup&gt;)</Alt>">
+    <!ENTITY pgudq2 "<Alt Only=&#34;Text&#34;><M>PGU(d,q^2)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&pgu;(d,q^2)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pgu;(d,q^2)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>PGU(d,q&lt;sup&gt;2&lt;/sup&gt;)</Alt>">
+    <!ENTITY pdeltaoplusdq "<Alt Only=&#34;Text&#34;><M>P\Delta{}O+(d,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&pdeltaoplus;(d,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pdeltaoplus;(d,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>P&#916;O&lt;sup&gt;+&lt;/sup&gt;(d,q)</Alt>">
+    <!ENTITY pdeltaominusdq "<Alt Only=&#34;Text&#34;><M>P\Delta{}O-(d,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&pdeltaominus;(d,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pdeltaominus;(d,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>P&#916;O&lt;sup&gt;-&lt;/sup&gt;(d,q)</Alt>">
+    <!ENTITY pgammaspdq "<Alt Only=&#34;Text&#34;><M>P\Gamma{}Sp(d,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&pgammasp;(d,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pgammasp;(d,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>P&#915;Sp(d,q)</Alt>">
+    <!ENTITY pgammaoplusdq "<Alt Only=&#34;Text&#34;><M>P\Gamma{}O+(d,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&pgammaoplus;(d,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pgammaoplus;(d,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>P&#915;O&lt;sup&gt;+&lt;/sup&gt;(d,q)</Alt>">
+    <!ENTITY pgammaominusdq "<Alt Only=&#34;Text&#34;><M>P\Gamma{}O-(d,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&pgammaominus;(d,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pgammaominus;(d,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>P&#915;O&lt;sup&gt;-&lt;/sup&gt;(d,q)</Alt>">
+    <!ENTITY pgammaodq "<Alt Only=&#34;Text&#34;><M>P\Gamma{}O(d,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&pgammao;(d,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pgammao;(d,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>P&#915;O(d,q)</Alt>">
+    <!ENTITY pgammaudq2 "<Alt Only=&#34;Text&#34;><M>P\Gamma{}U(d,q^2)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&pgammau;(d,q^2)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pgammau;(d,q^2)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>P&#915;U(d,q&lt;sup&gt;2&lt;/sup&gt;)</Alt>">
+    <!ENTITY aglnq "<Alt Only=&#34;Text&#34;><M>AGL(n,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&agl;(n+1,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&agl;(n,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>AGL(n,q)</Alt>">
+    <!ENTITY agammalnq "<Alt Only=&#34;Text&#34;><M>A\Gamma{}L(n,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&agammal;(n,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&agammal;(n,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>A&#915;L(n,q)</Alt>">
+    <!ENTITY qplus5q "<Alt Only=&#34;HTML MathJax&#34;><M>\mathrm{Q}^+(5,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>\mathrm{Q}^+(5,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>Q&lt;sup&gt;+&lt;/sup&gt;(5,q)</Alt><Alt Only=&#34;Text&#34;><M>Q^+(5,q)</M></Alt>">
+    <!ENTITY qplus7q "<Alt Only=&#34;HTML MathJax&#34;><M>\mathrm{Q}^+(7,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>\mathrm{Q}^+(7,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>Q&lt;sup&gt;+&lt;/sup&gt;(7,q)</Alt><Alt Only=&#34;Text&#34;><M>Q^+(7,q)</M></Alt>">
+    <!ENTITY qmin5q "<Alt Only=&#34;HTML MathJax&#34;><M>\mathrm{Q}^-(5,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>\mathrm{Q}^-(5,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>Q&lt;sup&gt;+&lt;/sup&gt;(5,q)</Alt><Alt Only=&#34;Text&#34;><M>Q^-(5,q)</M></Alt>">
+    <!ENTITY w3q "<Alt Only=&#34;HTML MathJax&#34;><M>\mathrm{W}(3,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>\mathrm{W}(3,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>W(3,q)</Alt><Alt Only=&#34;Text&#34;><M>W(3,q)</M></Alt>">
+    <!ENTITY w5q "<Alt Only=&#34;HTML MathJax&#34;><M>\mathrm{W}(5,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>\mathrm{W}(5,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>W(5,q)</Alt><Alt Only=&#34;Text&#34;><M>W(5,q)</M></Alt>">
+    <!ENTITY q4q "<Alt Only=&#34;HTML MathJax&#34;><M>\mathrm{Q}(4,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>\mathrm{Q}(4,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>Q(4,q)</Alt><Alt Only=&#34;Text&#34;><M>Q(4,q)</M></Alt>">
+    <!ENTITY q6q "<Alt Only=&#34;HTML MathJax&#34;><M>\mathrm{Q}(6,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>\mathrm{Q}(6,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>Q(6,q)</Alt><Alt Only=&#34;Text&#34;><M>Q(6,q)</M></Alt>">
+    <!ENTITY pg3q "<Alt Only=&#34;Text&#34;><M>PG(3,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&pg;(3,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pg;(3,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>PG(3,q)</Alt>">
+    <!ENTITY pg5q "<Alt Only=&#34;Text&#34;><M>PG(5,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&pg;(5,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pg;(5,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>PG(5,q)</Alt>">
+    <!ENTITY h3q2 "<Alt Only=&#34;HTML MathJax&#34;><M>\mathrm{H}(3,q^2)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>\mathrm{H}(3,q^2)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>H(3,q&lt;sup&gt;2&lt;/sup&gt;)</Alt><Alt Only=&#34;Text&#34;><M>H(3,q^2)</M></Alt>">
+    <!ENTITY Gamma "<Alt Not=&#34;HTML&#34;><M>\Gamma</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>\Gamma</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>&#915;</Alt>">
+]
+   >
+
+<?LaTeX ExtraPreamble="\usepackage{graphicx,amsfonts,tipa,makecell}"?>
 
 <Book Name="FinInG">
 

@@ -7,7 +7,8 @@ classicalpolarspaces.xml    FinInG package documentation
                                                                  Michel Lavrauw
                                                                 Max Neunhoeffer
 
-  Copyright (C) 2015,	Colorado State University
+  Copyright (C) 2017,	Colorado State University
+                        Sabancı Üniversitesi
 						Università degli Studi di Padova
 						Universiteit Gent
 						University of St. Andrews
@@ -49,9 +50,11 @@ geometry consists only of projective points, and is then in the axiomatic treatm
 However, as is the case for projective spaces, we will consider the rank one geometries associated to
 forms of Witt index 1 as examples of classical polar spaces. Even the elliptic quadric on the projective line,
 a <E>geometry</E> associated to an elliptic quadratic form on a two dimensional vector space over a finite field, is
-considered as a classical polar space, though it has no singular subspaces. The reason for this treatment is that most, if not all, methods for 
+considered as a classical polar space, though it has no singular subspaces.
+The reason for this treatment is that most, if not all, methods for
 operations applicable on these geometries, rely on the same algebraic methodology. So, in <Package>FinInG</Package>, 
-a classical polar space (sometimes abbreviated to polar space), is the geometry associated with a sesquilinear or quadratic
+a classical polar space (sometimes abbreviated to polar space), is the geometry
+associated with a sesquilinear or quadratic
 form on a finite dimensional vector space over a finite field.
 
 <ManSection>
@@ -69,14 +72,14 @@ and <Cite Key="Cameron"/> for the necessary background theory (if it is not
 otherwise provided), and we follow the approach of <Cite Key="Cameron"/> to
 introduce all different flavours.<P/> 
 
-Consider the projective space <M>PG(n,q)</M> with underlying vector space
+Consider the projective space &pgnq; with underlying vector space
 <M>V(n+1,q)</M>. Consider a non-degenerate sesquilinear form <M>f</M>. Then
 <M>f</M> is Hermitian, alternating or symmetric. When the characteristic
 of the field is odd, respectively even, a symmetric bilinear form is called
 orthogonal, respectively, pseudo. We do not consider the pseudo case, so we
 suppose that <M>f</M> is Hermitian, symplectic or orthogonal. The classical
 polar space associated with <M>f</M> is the incidence geometry whose elements
-are of the subspaces of <M>PG(n,q)</M> whose underlying
+are of the subspaces of &pgnq; whose underlying
 vector subspace is totally isotropic with relation to <M>f</M>. 
 We call a polar space <E>Hermitian</E>, respectively,
 <E>symplectic</E>, <E>orthogonal</E>, if the underlying sesquilinear form is
@@ -89,7 +92,7 @@ exist in even characteristic. The algebraic background is now established by
 quadratic forms on a vector space instead of bilinear forms. Consider a
 non-singular quadratic form <M>q</M> on a vector space <M>V(n+1,q)</M>. The 
 classical polar space associated with <M>f</M> is the incidence geometry whose 
-elements are the subspaces of <M>PG(n,q)</M> whose
+elements are the subspaces of &pgnq; whose
 underlying vector subspace is totally singular with relation to <M>q</M>. 
 The connection with orthogonal polar spaces in odd
 characteristic is clear, since in odd characteristic, quadratic forms and
@@ -135,13 +138,18 @@ terminology of <Cite Key="KleidmanLiebeck"/>, as we did in the manual of the pac
 Consider a vector space <M>V=V(n+1,q)</M> and a sesquilinear form <M>f</M> on
 <M>V</M>. The pair <M>(V,f)</M> is called a formed space. Consider now two
 formed spaces <M>(V,f)</M> and <M>(V,f')</M>, where <M>f</M> and <M>f'</M> are
-two sesquilinear forms on <M>V</M>. A non-singular linear map <Alt
-Not="HTML"><M>\phi</M></Alt> <Alt Only="HTML">&#966;</Alt> from <M>V</M> to itself
+two sesquilinear forms on <M>V</M>. A non-singular linear map &phi; from <M>V</M> to itself
 induces a <E>similarity</E> of the formed space <M>(V,f)</M> to the formed space
-<M>(V,f')</M> if and only if <Alt Not="HTML"><M>f(v,w) = \lambda f'(\phi(v),
-\phi(w))</M></Alt> <Alt Only="HTML">f(v,w) = &#955;
-(f'(&#966;(v),&#966;(w)))</Alt>, for all vectors <M>v,w</M> some non-zero <Alt  
-Only="HTML">&#955; in <M>GF(q)</M></Alt>. Up to similarity, there is only one
+<M>(V,f')</M> if and only if
+<Alt Only="LaTeX"><Display>f(v,w) = \lambda f'(\phi(v),\phi(w)),</Display></Alt>
+<Alt Only="Text"><M>f(v,w) = \lambda f'(\phi(v),\phi(w)),</M></Alt>
+<Alt Only="HTML MathJax"><Display>f(v,w) = \lambda f'(\phi(v),\phi(w)),</Display></Alt>
+<Alt Only="HTML noMathJax"><Display>f(v,w) = &#955; (f'(&#966;(v),&#966;(w))),</Display></Alt>
+for all vectors <M>v,w</M> and some non-zero
+<Alt Only="LaTeX"><M>\lambda \in &gf;(q)</M></Alt>
+<Alt Only="Text"><M>\lambda \in GF(q)</M></Alt>
+<Alt Only="HTML MathJax"><M>\lambda \in GF(q)</M></Alt>
+<Alt Only="HTML noMathJax">&#955; in <M>GF(q)</M></Alt>. Up to similarity, there is only one
 class of non-degenerate Hermitian forms, and one class of non-degenerate
 symplectic forms on a given vector space <M>V</M>. For symmetric bilinear forms
 in odd characteristic, the number of similarity classes depends on the
@@ -153,21 +161,28 @@ either elliptic (bilinear) forms or hyperbolic (bilinear) forms.<P/>
 Consider now a vector space <M>V</M> and a quadratic form <M>q</M> on <M>V</M>.
 The pair <M>(V,q)</M> is called a formed space. Consider now two formed spaces
 <M>(V,q)</M> and <M>(V,q')</M>, where <M>q</M> and <M>q'</M> are two quadratic
-forms on <M>V</M>. A non-degenerate linear map <Alt Not="HTML"><M>\phi</M></Alt>
-<Alt Only="HTML">&#966;</Alt> from <M>V</M> to itself induces a
+forms on <M>V</M>. A non-degenerate linear map &phi; from <M>V</M> to itself induces a
 <E>similarity</E> of the formed space <M>(V,q)</M> to the formed space 
-<M>(V,q')</M> if and only if <Alt Not="HTML"><M>q(v) = \lambda f'(\phi(v)))</M></Alt>
-<Alt Only="HTML">f(v) = &#955; (f'(&#966;(v)))</Alt>, for all vectors <M>v</M>
-some non-zero <Alt Only="HTML">&#955; in <M>GF(q)</M></Alt>. For quadratic
-forms in even characteristic, the number of similarity classes depends on the dimension of <M>V</M>. In odd dimension, there is only one
+<M>(V,q')</M> if and only if
+<Alt Only="LaTeX"><Display>q(v) = \lambda q'(\phi(v))),</Display></Alt>
+<Alt Only="Text"><M>q(v) = \lambda q'(\phi(v)))</M>,</Alt>
+<Alt Only="HTML MathJax"><Display>q(v) = \lambda q'(\phi(v))),</Display></Alt>
+<Alt Only="HTML noMathJax"><Display>q(v) = &#955; (q'(&#966;(v))),</Display></Alt>
+for all vectors <M>v</M> and some non-zero 
+<Alt Only="LaTeX"><M>\lambda \in &gf;(q)</M></Alt>
+<Alt Only="Text"><M>\lambda \in GF(q)</M></Alt>
+<Alt Only="HTML MathJax"><M>\lambda \in GF(q)</M></Alt>
+<Alt Only="HTML noMathJax">&#955; in <M>GF(q)</M></Alt>.
+For quadratic forms in even characteristic, the number of similarity classes depends
+on the dimension of <M>V</M>. In odd dimension, there is only one
 similarity class, and non-degenerate forms in this class are called parabolic
 (bilinear) forms. In even dimension, there are two similarity classes, and
 non-degenerate forms are either elliptic (bilinear) forms or hyperbolic
 (bilinear) forms.<P/>
 
-If <Alt Not="HTML"><M>\phi</M></Alt><Alt Only="HTML">&#966;</Alt> induces a similarity of
-a formed vector space such that <Alt Not="HTML"><M>\lambda = 1</M></Alt>
-<Alt Only="HTML">&#955;=1</Alt>, then the similarity is called an <E>isometry</E> of the
+If &phi; induces a similarity of
+a formed vector space such that <M>\lambda = 1</M>,
+then the similarity is called an <E>isometry</E> of the
 formed vector space. In almost all cases, each similarity class contains exactly one 
 isometry class. Only the orthogonal sesquilinear forms (in odd characteristic) have
 two isometry classes. Consequently, if an isometry exists between formed vector spaces,
@@ -187,73 +202,101 @@ by a standard form up to a constant factor.
 
 In the following table, we summerise the above information on polar spaces,
 together with the standard forms that are chosen in
-<Package>FinInG</Package>. Note that <M>Tr</M> refers to the absolute Trace.
+<Package>FinInG</Package>. Note that <Alt Only="LaTeX"><M>\mathrm{Tr}</M></Alt><Alt Not="LaTeX">Tr</Alt> refers to the absolute trace map from
+&gfq; to &gfp;.
 
 <Table Align="|l|l|l|l|">
- <Caption>finite classical polar spaces</Caption>
- <HorLine/>
-  <Row><Item>polar space</Item><Item>standard form</Item><Item>characteristic <M>p</M></Item>
-  <Item>projective dimension</Item></Row>
- <HorLine/>
-   <Row><Item>hermitian polar space</Item>
-   <Item><Alt Not="HTML"><M>X_0^{q+1} + X_1^{q+1} + \ldots + X_{n}^{q+1}</M></Alt>
-         <Alt Only="HTML">X&lt;sub>0&lt;/sub>&lt;sup>q+1&lt;/sup> +
-	 X&lt;sub>1&lt;/sub>&lt;sup>q+1&lt;/sup> ... +
-	 X&lt;sub>n&lt;/sub>&lt;sup>q+1&lt;/sup></Alt> 
-   </Item><Item>odd and even</Item><Item>odd and even</Item></Row>
-   <Row><Item>symplectic space</Item>
-   <Item><Alt Not="HTML"><M> X_0 Y_1 - Y_0X_1+ \ldots + X_{n-1}Y_n - Y_{n-1}X_n 
-         </M></Alt><Alt Only="HTML">X&lt;sub>0&lt;/sub> Y&lt;sub>1&lt;/sub> -
-	 X&lt;sub>1&lt;/sub>Y&lt;sub>0&lt;/sub> + ... +
-	 X&lt;sub>n-1&lt;/sub>Y&lt;sub>n&lt;/sub> -
-	 X&lt;sub>n&lt;/sub>Y&lt;sub>n-1&lt;/sub></Alt>
-   </Item><Item>odd and even</Item><Item>odd</Item></Row>
-   
-   <Row><Item>hyperbolic quadric</Item>
-   <Item><Alt Not="HTML"><M> X_0 X_1 + \ldots + X_{n-1}X_n
-         </M></Alt><Alt Only="HTML">X&lt;sub>0&lt;/sub> X&lt;sub>1&lt;/sub> + ... +
-	 X&lt;sub>n-1&lt;/sub>X&lt;sub>n&lt;/sub></Alt>
-   </Item><Item><Alt Only="HTML">p &#8801; 3 mod 4</Alt><Alt Not="HTML"><M>p \equiv 3\,\mathrm{mod}\,4</M></Alt> and p even</Item><Item>odd</Item></Row>
+<Caption>finite classical polar spaces</Caption>
+<HorLine/>
+<Row><Item>polar space</Item><Item>standard form</Item><Item>characteristic <M>p</M></Item><Item><Alt Not="LaTeX">projective dimension</Alt><Alt Only="LaTeX">\makecell[cc]{projective \\ dimension}</Alt></Item></Row>
+<HorLine/>
+<Row><Item>hermitian polar space</Item>
+<Item><Alt Not="HTML"><M>X_0^{q+1} + X_1^{q+1} + \ldots + X_{n}^{q+1}</M></Alt>
+    <Alt Only="HTML MathJax"><M>X_0^{q+1} + X_1^{q+1} + \ldots + X_{n}^{q+1}</M></Alt>
+    <Alt Only="HTML noMathJax">X&lt;sub>0&lt;/sub>&lt;sup>q+1&lt;/sup> +	 X&lt;sub>1&lt;/sub>&lt;sup>q+1&lt;/sup> ... +
+        X&lt;sub>n&lt;/sub>&lt;sup>q+1&lt;/sup></Alt>
+    </Item><Item>odd or even</Item><Item>odd or even</Item></Row>
 
-   <Row><Item>hyperbolic quadric</Item>
-   <Item><Alt Not="HTML"><M> 2(X_0 X_1 + \ldots + X_{n-1}X_n)
-         </M></Alt><Alt Only="HTML">2(X&lt;sub>0&lt;/sub> X&lt;sub>1&lt;/sub> + ... +
-	 X&lt;sub>n-1&lt;/sub>X&lt;sub>n&lt;/sub> )</Alt>
-   </Item><Item><Alt Only="HTML">p &#8801; 1 mod 4</Alt><Alt Not="HTML"><M>p \equiv 1\,\mathrm{mod}\,4</M></Alt></Item><Item>odd</Item></Row>
+<Row><Item>symplectic space</Item>
+<Item><Alt Not="HTML"><M> X_0 Y_1 - Y_0X_1+ \ldots + X_{n-1}Y_n - Y_{n-1}X_n</M></Alt>
+    <Alt Only="HTML MathJax"><M> X_0 Y_1 - Y_0X_1+ \ldots + X_{n-1}Y_n - Y_{n-1}X_n</M></Alt>
+    <Alt Only="HTML noMathJax">X&lt;sub>0&lt;/sub> Y&lt;sub>1&lt;/sub> -
+        X&lt;sub>1&lt;/sub>Y&lt;sub>0&lt;/sub> + ... +
+        X&lt;sub>n-1&lt;/sub>Y&lt;sub>n&lt;/sub> -
+        X&lt;sub>n&lt;/sub>Y&lt;sub>n-1&lt;/sub></Alt>
+</Item><Item>odd or even</Item><Item>odd</Item></Row>
+
+<Row><Item>hyperbolic quadric</Item>
+<Item><Alt Not="HTML"><M> X_0 X_1 + \ldots + X_{n-1}X_n</M></Alt>
+    <Alt Only="HTML MathJax"><M> X_0 X_1 + \ldots + X_{n-1}X_n</M></Alt>
+    <Alt Only="HTML noMathJax">X&lt;sub>0&lt;/sub> X&lt;sub>1&lt;/sub> + ... +
+        X&lt;sub>n-1&lt;/sub>X&lt;sub>n&lt;/sub></Alt></Item>
+<Item><Alt Not="HTML"><M>p \equiv 3 \pmod{4}</M> or <M>p=2</M></Alt>
+    <Alt Only="HTML MathJax"><M>p \equiv 3 \pmod{4}</M> or <M>p=2</M></Alt>
+    <Alt Only="HTML noMathJax">p &#8801; 3 mod 4 or p=2</Alt>
+</Item><Item>odd</Item></Row>
+
+<Row><Item>hyperbolic quadric</Item>
+<Item><Alt Not="HTML"><M>2(X_0 X_1 + \ldots + X_{n-1}X_n)</M></Alt>
+    <Alt Only="HTML MathJax"><M>2(X_0 X_1 + \ldots + X_{n-1}X_n)</M></Alt>
+    <Alt Only="HTML noMathJax">2(X&lt;sub>0&lt;/sub> X&lt;sub>1&lt;/sub> + ... +
+        X&lt;sub>n-1&lt;/sub>X&lt;sub>n&lt;/sub> )</Alt>
+   </Item><Item><Alt Only="HTML noMathJax">p &#8801; 1 mod 4</Alt>
+       <Alt Only="HTML MathJax"><M>p \equiv 1 \pmod{4}</M></Alt>
+       <Alt Not="HTML"><M>p \equiv 1 \pmod{4}</M></Alt>
+   </Item><Item>odd</Item></Row>
    
    <Row><Item>parabolic quadric</Item>
    <Item><Alt Not="HTML"><M> X_0^2 + X_1X_2 + \ldots + X_{n-1}X_n
          </M></Alt><Alt Only="HTML">X&lt;sub>0&lt;/sub>&lt;sup>2&lt;/sup> +
 	 X&lt;sub>1&lt;/sub> X&lt;sub>2&lt;/sub> + ... +
 	 X&lt;sub>n-1&lt;/sub>X&lt;sub>n&lt;/sub></Alt>
-   </Item><Item><Alt Only="HTML">p &#8801; 1,3 mod 8</Alt><Alt Not="HTML"><M>p \equiv 1,3\,\mathrm{mod}\,8</M></Alt> and p even</Item><Item>even</Item></Row>
+   </Item><Item><Alt Only="HTML noMathJax">p &#8801; 1,3 mod 8</Alt>
+   <Alt Only="HTML MathJax"><M>p \equiv 1,3 \pmod{8}</M></Alt>
+   <Alt Not="HTML"><M>p \equiv 1,3 \pmod{8}</M></Alt>or <M>p=2</M></Item>
+   <Item>even</Item></Row>
    
-   <Row><Item>parabolic quadric</Item>
-   <Item><Alt Not="HTML"><M> t(X_0^2 + X_1X_2 + \ldots + X_{n-1}X_n),\,
-         </M> <M>t</M> a primitive element of <M>GF(p)</M></Alt><Alt Only="HTML">t(X&lt;sub>0&lt;/sub>&lt;sup>2&lt;/sup> +
+<Row><Item>parabolic quadric</Item>
+    <Item><Alt Only="Text"><M>t(X_0^2 + X_1X_2 + \ldots + X_{n-1}X_n)</M>, t a primitve element of GF(p)</Alt>
+    <Alt Only="LaTeX">\makecell[cl]{<M>t(X_0^2 + X_1X_2 + \ldots + X_{n-1}X_n),</M> \\ <M>t</M> a primitve element of <M>\mathrm{GF}(p)</M>}</Alt>
+    <Alt Only="HTML noMathJax">t(X&lt;sub>0&lt;/sub>&lt;sup>2&lt;/sup> +
 	 X&lt;sub>1&lt;/sub> X&lt;sub>2&lt;/sub> + ... +
 	 X&lt;sub>n-1&lt;/sub>X&lt;sub>n&lt;/sub>), <M>t</M> a primitive element of <M>GF(p)</M></Alt>
-   </Item><Item><Alt Only="HTML">p &#8801; 5,7 mod 8</Alt><Alt Not="HTML"><M>p \equiv 5,7\,\mathrm{mod}\,8</M></Alt></Item><Item>even</Item></Row>
-   
-   <Row><Item>elliptic quadric</Item>
-   <Item><Alt Not="HTML"><M>X_0^2 + X_1^2 + X_2X_3 + \ldots + X_{n-1}X_n
-         </M></Alt><Alt Only="HTML">X&lt;sub>0&lt;/sub>&lt;sup>2&lt;/sup> +
-	 X&lt;sub>1&lt;/sub>&lt;sup>2&lt;/sup> +  X&lt;sub>2&lt;/sub>
-	 X&lt;sub>3&lt;/sub> + ... + X&lt;sub>n-1&lt;/sub>X&lt;sub>n&lt;/sub></Alt>
-   </Item><Item><Alt Only="HTML">p &#8801; 3 mod 4</Alt><Alt Not="HTML"><M>p \equiv 3\,\mathrm{mod}\,4</M></Alt></Item><Item>odd</Item></Row>
+    <Alt Only="HTML MathJax"><M>t(X_0^2 + X_1X_2 + \ldots + X_{n-1}X_n)</M>, <M>t</M> a primitve element of <M>\mathrm{GF}(p)</M></Alt>
+    </Item><Item><Alt Only="HTML noMathJax">p &#8801; 5,7 mod 8</Alt>
+        <Alt Only="HTML MathJax"><M>p \equiv 5,7 \pmod{8}</M></Alt>
+        <Alt Not="HTML"><M>p \equiv 5,7 \pmod{8}</M></Alt>
+    </Item>
+    <Item>even</Item></Row>
 
-   <Row><Item>elliptic quadric</Item>
-   <Item><Alt Not="HTML"><M>X_0^2 + tX_1^2 + X_2X_3 + \ldots + X_{n-1}X_n
-         </M>, <M>t</M> a primitive element of <M>GF(p)</M></Alt><Alt Only="HTML">X&lt;sub>0&lt;/sub>&lt;sup>2&lt;/sup> +
-	 tX&lt;sub>1&lt;/sub>&lt;sup>2&lt;/sup> +  X&lt;sub>2&lt;/sub>
-	 X&lt;sub>3&lt;/sub> + ... + X&lt;sub>n-1&lt;/sub>X&lt;sub>n&lt;/sub>
-	 , <M>t</M> a primitive element of <M>GF(p)</M></Alt>
-   </Item><Item>odd</Item><Item>odd</Item></Row>
+<Row><Item>elliptic quadric</Item>
+   <Item><Alt Not="HTML"><M>X_0^2 + X_1^2 + X_2X_3 + \ldots + X_{n-1}X_n</M></Alt>
+       <Alt Only="HTML noMathJax">X&lt;sub>0&lt;/sub>&lt;sup>2&lt;/sup> + X&lt;sub>1&lt;/sub>&lt;sup>2&lt;/sup> +  X&lt;sub>2&lt;/sub>
+	 X&lt;sub>3&lt;/sub> + ... + X&lt;sub>n-1&lt;/sub>X&lt;sub>n&lt;/sub></Alt>
+       <Alt Only="HTML MathJax"><M>X_0^2 + X_1^2 + X_2X_3 + \ldots + X_{n-1}X_n</M></Alt></Item>
+   <Item><Alt Only="HTML noMathJax">p &#8801; 3 mod 4</Alt>
+       <Alt Only="HTML MathJax"><M>p \equiv 3 \pmod{4}</M></Alt>
+       <Alt Not="HTML"><M>p \equiv 3 \pmod{4}</M></Alt></Item>
+    <Item>odd</Item></Row>
+
+<Row><Item>elliptic quadric</Item>
+    <Item><Alt Only="LaTeX">\makecell[cl]{<M>X_0^2 + tX_1^2 + X_2X_3 + \ldots + X_{n-1}X_n</M>,\\ <M>t</M> a primitive element of <M>\mathrm{GF}(p)</M>}</Alt>
+        <Alt Only="HTML MathJax"><M>X_0^2 + tX_1^2 + X_2X_3 + \ldots + X_{n-1}X_n</M>, <M>t</M> a primitive element of <M>\mathrm{GF}(p)</M></Alt>
+        <Alt Only="Text"><M>X_0^2 + tX_1^2 + X_2X_3 + \ldots + X_{n-1}X_n</M>, <M>t</M> a primitive element of <M>GF(p)</M></Alt>
+        <Alt Only="HTML noMathJax">X&lt;sub>0&lt;/sub>&lt;sup>2&lt;/sup> + tX&lt;sub>1&lt;/sub>&lt;sup>2&lt;/sup> +  X&lt;sub>2&lt;/sub> X&lt;sub>3&lt;/sub> + ... + X&lt;sub>n-1&lt;/sub>X&lt;sub>n&lt;/sub>, <M>t</M> a primitive element of GF(p)</Alt>
+   </Item>
+    <Item><Alt Only="HTML noMathJax">p &#8801; 1 mod 4</Alt>
+        <Alt Only="HTML MathJax"><M>p \equiv 1 \pmod{4}</M></Alt>
+        <Alt Not="HTML"><M>p \equiv 1 \pmod{4}</M></Alt>
+    </Item>
+    <Item>odd</Item></Row>
  
    <Row><Item>elliptic quadric</Item>
-   <Item><Alt Not="HTML"><M>X_0^2 + X_0X_1 + dX_1^2 + X_2X_3 + \ldots + X_{n-1}X_n 
-         </M>, <M>Tr(d)=1</M></Alt><Alt Only="HTML">X&lt;sub>0&lt;/sub>&lt;sup>2&lt;/sup> +
-	 X&lt;sub>0&lt;/sub>X&lt;sub>1&lt;/sub> +
+   <Item><Alt Only="Text"><M>X_0^2 + X_0X_1 + dX_1^2 + X_2X_3 + \ldots + X_{n-1}X_n
+         </M>, <M>Tr(d)=1</M></Alt>
+   <Alt Only="LaTeX">\makecell[cl]{<M>X_0^2 + X_0X_1 + dX_1^2 + X_2X_3 + \ldots + X_{n-1}X_n</M>,\\ <M>\mathrm{Tr}(d)=1</M>}</Alt>
+   <Alt Only="HTML MathJax"><M>X_0^2 + X_0X_1 + dX_1^2 + X_2X_3 + \ldots + X_{n-1}X_n</M>, <M>\mathrm{Tr}(d)=1</M></Alt>
+   <Alt Only="HTML noMathJax">X&lt;sub>0&lt;/sub>&lt;sup>2&lt;/sup> + X&lt;sub>0&lt;/sub>X&lt;sub>1&lt;/sub> +
 	 d X&lt;sub>1&lt;/sub>&lt;sup>2&lt;/sup> +  X&lt;sub>2&lt;/sub> 
 	 X&lt;sub>3&lt;/sub> + ... + X&lt;sub>n-1&lt;/sub>X&lt;sub>n&lt;/sub>
 	 , Tr(d) = 1</Alt>
@@ -733,97 +776,93 @@ definitions are exactly the same as in <Package>Forms</Package>.<P/>
 
 Let <M>(V,f)</M> and <M>(W,g)</M> be two formed vector spaces over the same
 field <M>F</M>, where both <M>f</M> and <M>g</M> are sesquilinear forms. Suppose
-that <Alt Not="HTML"><M>\phi</M></Alt><Alt Only="HTML">&#966;</Alt> is a linear
-map from <M>V</M> to <M>W</M>. 
+that &phi; is a linear map from <M>V</M> to <M>W</M>. 
 
-The map <Alt Not="HTML"><M>\phi</M></Alt><Alt Only="HTML">&#966;</Alt> is an <E>isometry</E><Index>Isometry</Index> from the formed
+The map &phi; is an <E>isometry</E><Index>Isometry</Index> from the formed
 space <M>(V,f)</M> to the formed space 
 <M>(W,g)</M> if for all <M>v,w</M> in <M>V</M> we have
-<Display>
-<Alt Not="HTML">f(v,w) = f'(\phi(v), \phi(w)).</Alt>
-<Alt Only="HTML">f(v,w) = f'(&#966;(v),&#966;(w))</Alt></Display>
-The map <Alt Not="HTML"><M>\phi</M></Alt><Alt Only="HTML">&#966;</Alt> is a <E>similarity</E><Index>Similarity</Index> from the
+<Alt Only="LaTeX"><Display>f(v,w) = f'(\phi(v), \phi(w)).</Display></Alt>
+<Alt Only="Text"><M>f(v,w) = f'(\phi(v), \phi(w))</M>.</Alt>
+<Alt Only="HTML MathJax"><Display>f(v,w) = f'(\phi(v), \phi(w)).</Display></Alt>
+<Alt Only="HTML noMathJax"><Display>f(v,w) = f'(&#966;(v),&#966;(w)).</Display></Alt>
+The map &phi; is a <E>similarity</E><Index>Similarity</Index> from the
 formed space <M>(V,f)</M> to the formed space <M>(W,g)</M> if for all <M>v,w</M>
-in <M>V</M> we have 
-<Display>
-<Alt Not="HTML">f(v,w) = \lambda f'(\phi(v), \phi(w)).</Alt>
-<Alt Only="HTML">f(v,w) = &#955; (f'(&#966;(v),&#966;(w)))</Alt>
-</Display>
-for some non-zero <Alt Only="HTML">&#955; in <M>F</M></Alt><Alt
-Not="HTML"><M>\lambda \in F</M></Alt>. Finally, the map <Alt Only="HTML">&#966;</Alt><Alt
-Not="HTML"><M>\phi</M></Alt>. is a
-<E>semi-similarity</E><Index>Semi-similarity</Index> from the formed space  
+in <M>V</M> we have
+<Alt Only="LaTeX"><Display>f(v,w) = \lambda f'(\phi(v), \phi(w))</Display></Alt>
+<Alt Only="Text"><M>f(v,w) = \lambda f'(\phi(v), \phi(w))</M></Alt>
+<Alt Only="HTML MathJax"><Display>f(v,w) = \lambda f'(\phi(v), \phi(w))</Display></Alt>
+<Alt Only="HTML noMathJax"><Display>f(v,w) = &#955; (f'(&#966;(v),&#966;(w)))</Display></Alt>
+for some non-zero <Alt Only="HTML noMathJax">&#955; in <M>F</M></Alt><Alt
+Not="HTML"><M>\lambda \in F</M></Alt><Alt Only="HTML MathJax"><M>\lambda \in F</M></Alt>. 
+Finally, the map &phi; is a <E>semi-similarity</E><Index>Semi-similarity</Index> from the formed space  
 <M>(V,f)</M> to the formed space <M>(W,g)</M> if for all <M>v,w</M> in <M>V</M>
 we have
-<Alt Not="HTML"><Display>f(v,w) = \lambda f'(\phi(v), \phi(w))^\alpha</Display></Alt>
-<Alt Only="HTML"><Display>f(v,w) = &#955; f'(&#966;(v),&#966;(w))&lt;SUP>&#945;&lt;/SUP></Display></Alt>
-for some non-zero <Alt Only="HTML">&#955; in <M>F</M></Alt><Alt
-Not="HTML"><M>\lambda \in F</M></Alt> and a field automorphism <Alt
-Only="HTML">&#945;</Alt><Alt Not="HTML"><M>\alpha</M></Alt> of <M>F</M>.<P/>
+<Alt Only="LaTeX"><Display>f(v,w) = \lambda f'(\phi(v), \phi(w))^\alpha</Display></Alt>
+<Alt Only="Text"><M>f(v,w) = \lambda f'(\phi(v), \phi(w))^\alpha</M></Alt>
+<Alt Only="HTML MathJax"><Display>f(v,w) = \lambda f'(\phi(v), \phi(w))^\alpha</Display></Alt>
+<Alt Only="HTML noMathJax"><Display>f(v,w) = &#955; f'(&#966;(v),&#966;(w))&lt;SUP>&#945;&lt;/SUP></Display></Alt>
+for some non-zero <Alt Only="HTML">&#955; in <M>F</M></Alt><Alt Not="HTML"><M>\lambda \in F</M></Alt>
+<Alt Only="HTML MathJax"><M>\lambda \in F</M></Alt> and a field automorphism <Alt
+Only="HTML noMathJax">&#945;</Alt><Alt Only="HTML MathJax"><M>\alpha</M></Alt><Alt Not="HTML"><M>\alpha</M></Alt> of <M>F</M>.<P/>
 
 Let <M>(V,f)</M> and <M>(W,g)</M> be two formed vector spaces over the same
 field <M>F</M>, where both <M>f</M> and <M>g</M> are quadratic forms. Suppose
-that <Alt Not="HTML"><M>\phi</M></Alt><Alt Only="HTML">&#966;</Alt> is a linear
-map from <M>V</M> to <M>W</M>. The map <Alt
-Not="HTML"><M>\phi</M></Alt><Alt Only="HTML">&#966;</Alt> is an
+that &phi; is a linear
+map from <M>V</M> to <M>W</M>. The map &phi; is an
 <E>isometry</E><Index>Isometry</Index> from the formed space <M>(V,f)</M> to the
 formed space <M>(W,g)</M> if for all <M>v,w</M> in <M>V</M> we have
-<Display>
-<Alt Not="HTML">f(v) = f'(\phi(v)).</Alt>
-<Alt Only="HTML">f(v) = f'(&#966;(v)).</Alt></Display>
-The map <Alt Not="HTML"><M>\phi</M></Alt><Alt Only="HTML">&#966;</Alt> is a
+<Alt Only="LaTeX"><Display>f(v) = f'(\phi(v)).</Display></Alt>
+<Alt Only="Text"><M>f(v) = f'(\phi(v)).</M></Alt>
+<Alt Only="HTML MathJax"><Display>f(v) = f'(\phi(v)).</Display></Alt>
+<Alt Only="HTML noMathJax"><Display>f(v) = f'(&#966;(v)).</Display></Alt>
+The map &phi; is a
 <E>similarity</E><Index>Similarity</Index> from the formed space <M>(V,f)</M> to
 a formed space <M>(W,g)</M> if for all <M>v,w</M> 
 in <M>V</M> we have 
-<Display>
-<Alt Not="HTML">f(v) = \lambda f'(\phi(v)).</Alt>
-<Alt Only="HTML">f(v) = &#955; (f'(&#966;(v)))</Alt>
-</Display>
-for some non-zero <Alt Only="HTML">&#955; in <M>F</M></Alt><Alt
-Not="HTML"><M>\lambda \in F</M></Alt>. Finally, the map <Alt Only="HTML">&#966;</Alt><Alt
-Not="HTML"><M>\phi</M></Alt>. is a
-<E>semi-similarity</E><Index>Semi-similarity</Index> from the formed space  
-<M>(V,f)</M> to the formed space <M>(W,g)</M> if for all <M>v,w</M> in <M>V</M>
-we have
-<Display><Alt Not="HTML">
-f(v)=\lambda f'(\phi(v))^\alpha</Alt>
-<Alt Only="HTML">f(v) = &#955; f'(&#966;(v))&lt;SUP>&#945;&lt;/SUP></Alt>
-</Display>
-for some non-zero <Alt Only="HTML">&#955; in <M>F</M></Alt><Alt
-Not="HTML"><M>\lambda \in F</M></Alt> and a field automorphism <Alt
-Only="HTML">&#945;</Alt><Alt Not="HTML"><M>\alpha</M></Alt> of <M>F</M>.
+<Alt Only="HTML"><Display>f(v) = \lambda f'(\phi(v))</Display></Alt>
+<Alt Only="Text"><M>f(v) = \lambda f'(\phi(v))</M></Alt>
+<Alt Only="HTML MathJax"><Display>f(v) = \lambda f'(\phi(v))</Display></Alt>
+<Alt Only="HTML noMathJax"><Display>f(v) = &#955; (f'(&#966;(v)))</Display></Alt>
+for some non-zero <Alt Only="HTML noMathJax">&#955; in <M>F</M></Alt><Alt
+Only="HTML MathJax"><M>\lambda \in F</M></Alt><Alt Not="HTML"><M>\lambda \in F</M></Alt>. 
+Finally, the map &phi; is a <E>semi-similarity</E><Index>Semi-similarity</Index> 
+from the formed space <M>(V,f)</M> to the formed space <M>(W,g)</M> 
+if for all <M>v,w</M> in <M>V</M> we have
+<Alt Only="LaTeX"><Display>f(v)=\lambda f'(\phi(v))^\alpha</Display></Alt>
+<Alt Only="Text"><M>f(v)=\lambda f'(\phi(v))^\alpha</M></Alt>
+<Alt Only="HTML MathJax"><Display>f(v)=\lambda f'(\phi(v))^\alpha</Display></Alt>
+<Alt Only="HTML noMathJax"><Display>f(v) = &#955; f'(&#966;(v))&lt;SUP>&#945;&lt;/SUP></Display></Alt>
+for some non-zero <Alt Only="HTML noMathJax">&#955; in <M>F</M></Alt><Alt Only="HTML MathJax"><M>\lambda \in F</M></Alt><Alt Not="HTML"><M>\lambda \in F</M></Alt>
+and a field automorphism <Alt Only="HTML noMathJax">&#945;</Alt><Alt Only="HTML MathJax"><M>\alpha</M></Alt><Alt Not="HTML"><M>\alpha</M></Alt> 
+of <M>F</M>.
 <P/>
 
 Collineations of classical polar spaces are induced by semi-similarities of the underlying
 formed vector space, and vice versa, analoguously by factoring out scalar matrices. The only exceptions
 are the two-dimensional unitary groups where the the full semi-similarity group can contain
-elements of its centre that are not scalars. In <Package>FinInG</Package>, the subgroups corresponding with similarities and isometries are also implemented, including a <E>special</E> variant, corresponding with the matrices having determinant
+elements of its centre that are not scalars. In <Package>FinInG</Package>, the subgroups 
+corresponding with similarities and isometries are also implemented, including a <E>special</E> variant, 
+corresponding with the matrices having determinant
 one. We use a consistent terminology, where isometries, similarities, respectively, of the polar
 space, correspond with isometries, similarities, respectively, of the underlying formed vector space.
 Special isometries of a polar space are induced by isometries of the formed vector space that have a matrix
 with determinant one. If <M>P</M> is a polar space with special isometry group, isometry group, similarity group, 
-collineation group, respectively, <M>SI</M>, <M>I</M>, <M>G</M>, <Alt Not="HTML"><M>\Gamma</M></Alt><Alt Only="HTML">&#915;</Alt>,
-respectively, then clearly <Alt Not="HTML"><M>SI \leqslant I \leqslant G \leqslant \Gamma</M></Alt>
-<Alt Only="HTML">SI &#8804; I &#8804; G &#8804; &#915;</Alt>. Equalities can occur in certain cases, and will, as we will see in the following
-overview.
+collineation group, respectively, <M>S</M>, <M>I</M>, <M>G</M>,
+<Alt Not="HTML"><M>\Gamma</M></Alt><Alt Only="HTML MathJax"><M>\Gamma</M></Alt><Alt Only="HTML noMahJax">&#915;</Alt>,
+respectively, then clearly <Alt Only="LaTeX"><M>S \leqslant I \leqslant G \leqslant \Gamma</M></Alt>
+<Alt Only="Text"><M>S \leq I \leq G \leq \Gamma</M></Alt>
+<Alt Only="HTML MathJax"><M>S \leqslant I \leqslant G \leqslant \Gamma</M></Alt>
+<Alt Only="HTML noMathJax">S &#8804; I &#8804; G &#8804; &#915;</Alt>. Equalities can
+occur in certain cases, and will, as we will see in the following overview.
 
 <Table Align="|l|l|l|l|l|l|">
  <Caption>projective finite classical groups</Caption>
  <HorLine/>
   <Row><Item>(sub)group</Item><Item>symplectic</Item><Item>hyperbolic</Item><Item>elliptic</Item><Item>parabolic</Item><Item>hermitian</Item></Row>
-  <Row><Item>special isometry</Item><Item><M>PSp(d,q)</M></Item><Item><M>PSO(1,d,q)</M></Item><Item><M>PSO(-1,d,q)</M></Item>
-	   <Item><M>PSO(0,d,q)</M></Item><Item><Alt Not="HTML"><M>PSU(d,q^2)</M></Alt><Alt Only="HTML">PSU(d,q&lt;sup>2&lt;/sup>)</Alt></Item></Row>
-  <Row><Item>isometry</Item><Item><M>PSp(d,q)</M></Item><Item><M>PGO(1,d,q)</M></Item><Item><M>PGO(-1,d,q)</M></Item>
-	   <Item><M>PGO(0,d,q)</M></Item><Item><Alt Not="HTML"><M>PGU(d,q^2)</M></Alt><Alt Only="HTML">PGU(d,q&lt;sup>2&lt;/sup>)</Alt></Item></Row>
-  <Row><Item>similarity</Item><Item><M>PGSp(d,q)</M></Item><Item><Alt Not="HTML"><M>P\Delta{}O^+(d,q)</M></Alt>
-             <Alt Only="HTML">P&#916;O&lt;sup>+&lt;/sup>(d,q)</Alt></Item><Item><Alt Not="HTML"><M>P\Delta{}O^-(d,q)</M></Alt>
-             <Alt Only="HTML">P&#916;O&lt;sup>-&lt;/sup>(d,q)</Alt></Item><Item><M>PGO(0,d,q)</M></Item>
-			 <Item><Alt Not="HTML"><M>PGU(d,q^2)</M></Alt><Alt Only="HTML">PGU(d,q&lt;sup>2&lt;/sup>)</Alt></Item></Row>
-  <Row><Item>collineation</Item><Item><Alt Only="HTML">P&#915;Sp(d,q)</Alt><Alt Not="HTML"><M>P\Gamma{}Sp(d,q)</M></Alt></Item>
-		<Item><Alt Only="HTML">P&#915;O&lt;sup>+&lt;/sup>(d,q)</Alt><Alt Not="HTML"><M>P\Gamma{}O^+(d,q)</M></Alt></Item>
-		<Item><Alt Only="HTML">P&#915;O&lt;sup>-&lt;/sup>(d,q)</Alt><Alt Not="HTML"><M>P\Gamma{}O^-(d,q)</M></Alt></Item>
-		<Item><Alt Only="HTML">P&#915;O(d,q)</Alt><Alt Not="HTML"><M>P\Gamma{}O(d,q)</M></Alt></Item>
-		<Item><Alt Only="HTML">P&#915;U(d,q&lt;sup>2&lt;/sup>)</Alt><Alt Not="HTML"><M>P\Gamma{}U(d,q^2)</M></Alt></Item></Row>   
+  <Row><Item>special isometry</Item><Item>&pspdq;</Item><Item>&psoplusdq;</Item><Item>&psominusdq;</Item><Item>&pso0dq;</Item><Item>&psudq2;</Item></Row>
+  <Row><Item>isometry</Item><Item>&pspdq;</Item><Item>&pgoplusdq;</Item><Item>&pgominusdq;</Item><Item>&pgo0dq;</Item><Item>&pgudq2;</Item></Row>
+  <Row><Item>similarity</Item><Item>&pgspdq;</Item><Item>&pdeltaoplusdq;</Item><Item>&pdeltaominusdq;</Item><Item>&pgo0dq;</Item><Item>&pgudq2;</Item></Row>
+  <Row><Item>collineation</Item><Item>&pgammaspdq;</Item><Item>&pgammaoplusdq;</Item><Item>&pgammaominusdq;</Item><Item>&pgammaodq;</Item><Item>&pgammaudq2;</Item></Row>
  <HorLine/>
 </Table>
 

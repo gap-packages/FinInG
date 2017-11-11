@@ -33,7 +33,7 @@ Subtitle := "Finite Incidence Geometry",
 ##  See '?Extending: Version Numbers' in GAP help for an explanation
 ##  of valid version numbers. For an automatic package distribution update
 ##  you must provide a new version number even after small changes.
-Version := "1.3.5",
+Version := "1.3.7",
 ##  Please adjust also the VERSION file in the package directory when
 ##  changing this.
 
@@ -345,8 +345,13 @@ Dependencies := rec(
   # insensitive, least version denoted with '>=' prepended to version string.
   # without these, the package will not load
   NeededOtherPackages := [["GAPDoc", ">= 1.6"], ["Forms", ">=1.2.3"],
+<<<<<<< HEAD
                           ["Orb",">=4.7.6"], ["GenSS",">=1.6.4"],
 			  ["GRAPE",">=4.7"], ["cvec", ">=2.5.7"]],
+=======
+                          ["Orb",">=4.7.3"], ["GenSS",">=1.6.2"],
+			  ["GRAPE",">=4.6.1"], ["cvec", ">=2.5.7"]],
+>>>>>>> fining-newGAPDoc
   # without these the package will issue a warning while loading
   # SuggestedOtherPackages := [],
   SuggestedOtherPackages := [],

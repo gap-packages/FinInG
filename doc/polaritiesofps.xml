@@ -1,6 +1,5 @@
 <!-- 
-
-  polaritiesofps.xml    FinInG package documentation
+polaritiesofps.xml    FinInG package documentation
                                                                    John Bamberg
                                                                    Anton Betten
                                                                   Philippe Cara
@@ -8,7 +7,8 @@
                                                                  Michel Lavrauw
                                                                 Max Neunhoeffer
 
-  Copyright (C) 2015,	Colorado State University
+  Copyright (C) 2017,	Colorado State University
+                        Sabancı Üniversitesi
 						Università degli Studi di Padova
 						Universiteit Gent
 						University of St. Andrews
@@ -39,60 +39,69 @@ Since polarities of a projective space necessarily have an involutory field
 automorphism as companion automorphism and the standard duality of the projective
 space as the companion projective space isomorphism, a polarity of a projective
 space is determined completely by a suitable matrix <M>A</M>. Every polarity of
-a projective space <M>PG(n,q)</M> is listed in the following table, including
+a projective space &pgnq; is listed in the following table, including
 the conditions on the matrix <M>A</M>.  
+
 <Table Align="|l|l|l|">
  <Caption>polarities of a projective space</Caption>
  <HorLine/>
   <Row><Item> </Item><Item><M>q</M> odd</Item><Item><M>q</M> even</Item></Row>
  <HorLine/>
    <Row><Item>hermitian</Item><Item> 
-   <Alt Not="HTML"><M>A^{\theta}=A^T</M></Alt><Alt Only="HTML">A&lt;sup>&#952; &lt;/sup> = A&lt;sup>T &lt;/sup></Alt>
+   <!--<Alt Not="HTML"><M>A^{\theta}=A^T</M></Alt><Alt Only="HTML">A&lt;sup>&#952; &lt;/sup> = A&lt;sup>T &lt;/sup></Alt>-->
+   <Alt Not="HTML"><M>A^{\theta}=A^T</M></Alt>
+   <Alt Only="HTML MathJax"><M>A^{\theta}=A^T</M></Alt>
+   <Alt Only="HTML noMathJax">A&lt;sup>&#952; &lt;/sup> = A&lt;sup>T &lt;/sup></Alt>
    </Item>
    <Item>
-   <Alt Not="HTML"><M>A^{\theta}=A^T</M></Alt><Alt Only="HTML">A&lt;sup>&#952; &lt;/sup> = A&lt;sup>T &lt;/sup></Alt>
+   <Alt Not="HTML"><M>A^{\theta}=A^T</M></Alt>
+   <Alt Only="HTML MathJax"><M>A^{\theta}=A^T</M></Alt>
+   <Alt Only="HTML noMathJax">A&lt;sup>&#952; &lt;/sup> = A&lt;sup>T &lt;/sup></Alt>
    </Item></Row>
    <Row><Item>symplectic</Item><Item>
-   <Alt Not="HTML"><M>A^T=-A</M></Alt><Alt Only="HTML">A&lt;sup>T &lt;/sup> = - A</Alt>
+   <Alt Not="HTML"><M>A^T=-A</M></Alt>
+   <Alt Only="HTML MathJax"><M>A^T=-A</M></Alt>
+   <Alt Only="HTML noMathJax">A&lt;sup>T &lt;/sup> = - A</Alt>
    </Item>
    <Item>
-   <Alt Not="HTML"><M>A^T=A</M>, all <M>a_{ii}=0</M></Alt><Alt
-   Only="HTML">A&lt;sup>T &lt;/sup> = A, all a&lt;sub>ii&lt;/sub>=0</Alt>
+   <Alt Not="HTML"><M>A^T=A</M>, all <M>a_{ii}=0</M></Alt>
+   <Alt Only="HTML MathJax"><M>A^T=A</M>, all <M>a_{ii}=0</M></Alt>
+   <Alt Only="HTML noMathJax">A&lt;sup>T &lt;/sup> = A, all a&lt;sub>ii&lt;/sub>=0</Alt>
    </Item></Row>
    <Row><Item>orthogonal</Item><Item>
-   <Alt Not="HTML"><M>A^T=A</M></Alt><Alt Only="HTML">A&lt;sup>T &lt;/sup> = - A</Alt>
+   <Alt Not="HTML"><M>A^T=A</M></Alt>
+   <Alt Only="HTML MathJax"><M>A^T=A</M></Alt>
+   <Alt Only="HTML noMathJax">A&lt;sup>T &lt;/sup> = A</Alt>
    </Item><Item></Item></Row>
    <Row><Item>pseudo</Item><Item> </Item>
    <Item>
-   <Alt Not="HTML"><M>A^T=A</M>, not all <M>a_{ii}=0</M></Alt><Alt
-   Only="HTML">A&lt;sup>T &lt;/sup> = A, not all a&lt;sub>ii&lt;/sub>=0</Alt>
+   <Alt Not="HTML"><M>A^T=A</M>, not all <M>a_{ii}=0</M></Alt>
+   <Alt Only="HTML MathJax"><M>A^T=A</M>, not all <M>a_{ii}=0</M></Alt>
+   <Alt Only="HTML noMathJax">A&lt;sup>T &lt;/sup> = A, not all a&lt;sub>ii&lt;/sub>=0</Alt>
    </Item></Row>
  <HorLine/>
 </Table>
-A hermitian polarity of the projective space <M>PG(n,q)</M> exists if and only
-if the field <M>GF(q)</M> admits an involutory field automorphism <Alt
-Not="HTML"><M>\theta</M></Alt><Alt Only="HTML">&#952;</Alt>.<P/>
+A hermitian polarity of the projective space &pgnq; exists if and only
+if the field &gfq; admits an involutory field automorphism.<P/>
 It is well known that there is a correspondence between polarities of projective
 spaces and non-degenerate sesquilinear forms on the underlying vector space.
 Consider a sesquilinear form <M>f</M> on the vector space <M>V(n+1,q)</M>. Then
-<M>f</M> induces a map on the elements of <M>PG(n,q)</M> as follows: every
-element with underlying subspace <Alt
-Not="HTML"><M>\alpha</M></Alt><Alt Only="HTML">&#945;</Alt> is mapped to the
-element with underlying subspace <Alt Not="HTML"><M>\alpha^\perp</M></Alt><Alt
-Only="HTML">&#945;&lt;sup>&#8869;&lt;/sup></Alt>, i.e. the subspace of
-<M>V(n+1,q)</M> orthogonal to <Alt Not="HTML"><M>\alpha</M></Alt><Alt
-Only="HTML">&#945;</Alt> with respect to the form <M>f</M>. It is clear that
-this induced map is a polarity of <M>PG(n,q)</M>. Also the converse is true,
-with any polarity of <M>PG(n,q)</M> corresponds a sesquilinear form on
-<M>V(n+1,q)</M>. The above classification of polarities of <M>PG(n,q)</M> follows
+<M>f</M> induces a map on the elements of &pgnq; as follows: every
+element with underlying subspace <M>\alpha</M> is mapped to the
+element with underlying subspace <Alt Not="HTML"><M>\alpha^{\perp}</M></Alt>
+<Alt Only="HTML MathJax"><M>\alpha^\perp</M></Alt><Alt Only="HTML noMathJax">&#945;&lt;sup>&#8869;&lt;/sup></Alt>,
+i.e. the subspace of <M>V(n+1,q)</M> orthogonal to <M>\alpha</M> with
+respect to the form <M>f</M>. It is clear that
+this induced map is a polarity of &pgnq;. Also the converse is true,
+with any polarity of &pgnq; corresponds a sesquilinear form on
+<M>V(n+1,q)</M>. The above classification of polarities of &pgnq; follows
 from the classification of sesquilinear forms on <M>V(n+1,q)</M>. For more
 information, we refer to <Cite Key="HirschfeldThas"/> and <Cite
 Key="KleidmanLiebeck"/>. We mention that the implementation of the action of
 correlations on projective points (see <Ref Sect="projgroup_actions"/>)
-guarantees that a sesquilinear form with matrix <M>M</M> and field automorphism <Alt
-Not="HTML"><M>\theta</M></Alt><Alt Only="HTML">&#952;</Alt> corresponds to a
-polarity with matrix <M>M</M> and field automorphism <Alt
-Not="HTML"><M>\theta</M></Alt><Alt Only="HTML">&#952;</Alt> and vice versa.<P/>
+guarantees that a sesquilinear form with matrix <M>M</M> and field
+automorphism <M>\theta</M> corresponds to a polarity with matrix <M>M</M>
+and field automorphism <M>\theta</M> and vice versa.<P/>
 
 In <Package>FinInG</Package>, polarities of projective spaces are always
 objects in the category <C>IsPolarityOfProjectiveSpace</C>, which is a
@@ -117,7 +126,8 @@ induce a polarity.
 <Oper Name="HermitianPolarityOfProjectiveSpace" Arg="mat, f"/>
 <Returns>a polarity of a projective space</Returns>
 <Description>The underlying correlation of
-the projective space is constructed using matrix <A>mat</A>, field automorphism <A>frob</A>, <A>f</A> and the standard duality of the projective space. It is
+the projective space is constructed using matrix <A>mat</A>, field
+automorphism <A>frob</A>, <A>f</A> and the standard duality of the projective space. It is
 checked whether the <A>mat</A> satisfies the necessary conditions to 
 induce a polarity, and whether <A>frob</A> is a non-trivial involutory field
 automorphism. The second operation only needs the arguments <A>mat</A> and
@@ -256,29 +266,27 @@ diagonal are zero and the characteristic of the field is even.
 <Heading>Polarities, absolute points, totally isotropic elements and finite classical polar
 spaces</Heading>
 
-We already mentioned the equivalence between polarities of <M>PG(n,q)</M> and
+We already mentioned the equivalence between polarities of &pgnq; and
 sesquilinear forms on <M>V(n+1,q)</M>, hence there is a relation between
-polarities of <M>PG(n,q)</M> and polar spaces induced by sesquilinear forms. The
+polarities of &pgnq; and polar spaces induced by sesquilinear forms. The
 following concepts express these relations geometrically.<P/>
-Suppose that <Alt Not="HTML"><M>\phi</M></Alt><Alt Only="HTML">&#966;</Alt> is a
-polarity of <M>PG(n,q)</M> and that <Alt Not="HTML"><M>\alpha</M></Alt><Alt
-Only="HTML">&#945;</Alt> is an element of <M>PG(n,q)</M>. We call <Alt
-Not="HTML"><M>\alpha</M></Alt><Alt Only="HTML">&#945;</Alt> a <E>totally
-isotropic element</E> or an <E>absolute element</E> if and only if <Alt
-Not="HTML"><M>\alpha</M></Alt><Alt Only="HTML">&#945;</Alt> is incident with
-<Alt Not="HTML"><M>\alpha^\phi</M></Alt><Alt
-Only="HTML">&#945;&lt;sup>&#966;&lt;/sup></Alt>. An absolute element that is a
+Suppose that <M>\phi</M> is a
+polarity of &pgnq; and that <M>\alpha</M> is an element of &pgnq;. We call
+<M>\alpha</M> a <E>totally isotropic element</E> or an <E>absolute element</E>
+if and only if <M>\alpha</M> is incident with <Alt Not="HTML"><M>\alpha^\phi</M></Alt>
+<Alt Only="HTML MathJax"><M>\alpha^\phi</M></Alt><Alt Only="HTML noMathJax">&#945;&lt;sup>&#966;&lt;/sup></Alt>.
+An absolute element that is a
 point is also called an <E>absolute point</E> or an <E>isotropic point</E>. It
-is clear that an element of <M>PG(n,q)</M> is absolute if and only if the
+is clear that an element of &pgnq; is absolute if and only if the
 underlying vector space is totally isotropic with respect to the sesquilinear
-form equivalent to <Alt Not="HTML"><M>\phi</M></Alt><Alt
-Only="HTML">&#966;</Alt>. Hence the absolute elements induce a <E>finite classical polar space</E>, the
-same that is induced by the equivalent sesquilinear form. When <Alt
-Not="HTML"><M>\phi</M></Alt><Alt Only="HTML">&#966;</Alt> is a pseudo-polarity,
-the set of absolute elements are the elements of a hyperplane of <M>PG(n,q)</M>.
+form equivalent to <M>\phi</M>. Hence the absolute elements induce a
+<E>finite classical polar space</E>, the same that is induced by the
+equivalent sesquilinear form. When <M>\phi</M> is a pseudo-polarity,
+the set of absolute elements are the elements of a hyperplane of &pgnq;.
 <P/>
-We restrict our introduction to finite classical polar spaces in this section to the following examples.
-Many aspects of these geometries are extensively described in Chapter <Ref Chap="classicalpolarspaces"/>.
+We restrict our introduction to finite classical polar spaces in this
+section to the following examples. Many aspects of these geometries
+are extensively described in Chapter <Ref Chap="classicalpolarspaces"/>.
 <ManSection>
 <Oper Name="GeometryOfAbsolutePoints" Arg="f"/>
 <Returns>a polar space or a hyperplane</Returns>
@@ -318,9 +326,12 @@ polar space induced by <A>f</A>.
 <Section>
 <Heading>Commuting polarities</Heading>
 
-<Package>FinInG</Package> constructs polarities of projective spaces as correlations. This allows polarities to be multiplied
-easily, resulting in a collineation. The resulting collineation is constructed in the correlation group
-but can be mapped onto its unique representative in the collineation group. We provide an example with two commuting polarities.
+<Package>FinInG</Package> constructs polarities of projective
+spaces as correlations. This allows polarities to be multiplied
+easily, resulting in a collineation. The resulting collineation
+is constructed in the correlation group but can be mapped onto its
+unique representative in the collineation group. We provide an
+example with two commuting polarities.
 
 <Example>
 <#Include SYSTEM "../examples/include/polarities_commuting.include"> 

@@ -1,6 +1,5 @@
 <!-- 
-
-  incidence_geometry.xml    FinInG package documentation
+incidence_geometry.xml    FinInG package documentation
                                                                    John Bamberg
                                                                    Anton Betten
                                                                   Philippe Cara
@@ -8,7 +7,8 @@
                                                                  Michel Lavrauw
                                                                 Max Neunhoeffer
 
-  Copyright (C) 2015,	Colorado State University
+  Copyright (C) 2017,	Colorado State University
+                        Sabancı Üniversitesi
 						Università degli Studi di Padova
 						Universiteit Gent
 						University of St. Andrews
@@ -128,7 +128,7 @@ in Section <Ref Sect="liegeometries1"/> and subcategories of <C>IsGeneralisedPol
 <Description>
 Both attributes are declared for objects in the category <C>IsIncidenceStructure</C>.
 Any incidence structure has a set of types, which is usually
-just the list <M>{1..n}</M>. If specific names are
+just the list <M>[1..n]</M>. If specific names are
 given to each type, like points, lines, etc., this attribute returns the names for the
 particular incidence structure <A>inc</A>. The second variant returns the list of plurals
 of these names. For genericly constructed incidence structures, the names of the Elements

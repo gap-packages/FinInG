@@ -1,0 +1,46 @@
+<!-- samples.xml: some <Alt> structs to -->
+<Alt Only="HTML MathJax"><M>x</M></Alt><Alt Only="HTML noMathJax"><M>y</M></Alt><Alt Only="LaTeX"><M>z</M></Alt><Alt Only="Text"><M>u</M></Alt>
+
+<Alt Only="HTML MathJax"><M>\mathrm{X}</M></Alt><Alt Only="HTML noMathJax"><M>X</M></Alt><Alt Only="LaTeX"><M>\mathrm{X}</M></Alt><Alt Only="Text"><M>X</M></Alt>
+
+
+<Alt Only="HTML MathJax"><M>x</M></Alt><Alt Only="HTML noMathJax"><M>y</M></Alt><Alt Not="HTML"><M>z</M></Alt>
+
+<Alt Only="HTML MathJax"><M>\mathrm{W}(2n-1,q^t)</M></Alt><Alt Only="HTML noMathJax">W(2n-1,q&lt;sup>t&lt;/sup>)</Alt><Alt Only="LaTeX"><M>\mathrm{W}(2n-1,q^t)</M></Alt><Alt Only="Text"><M>W(2n-1,q^t)</M></Alt>
+
+<Alt Only="HTML MathJax"><M>\mathrm{W}(2nt-1,q)</M></Alt><Alt Only="HTML noMathJax"><M>W(2nt-1,q)</M></Alt><Alt Only="LaTeX"><M>\mathrm{W}(2nt-1,q)</M></Alt><Alt Only="Text"><M>W(2nt-1,q)</M></Alt>
+
+<Alt Only="HTML MathJax"><M>\mathrm{Q}^+(2nt-1,q)</M></Alt><Alt Only="LaTeX"><M>\mathrm{Q}^+(2nt-1,q)</M></Alt><Alt Only="HTML noMathJax">Q&lt;sup>+&lt;/sup>(2nt-1,q)</Alt><Alt Only="Text"><M>Q^+(2nt-1,q)</M></Alt>
+
+<Alt Only="HTML MathJax"><M>\mathrm{Q}^+(2n-1,q^t)</M></Alt><Alt Only="LaTeX"><M>\mathrm{Q}^+(2n-1,q^t)</M></Alt><Alt Only="HTML noMathJax">Q&lt;sup>+&lt;/sup>(2n-1,q&lt;sup>t&lt;/sup>)</Alt><Alt Only="Text"><M>Q^+(2n-1,q^t)</M></Alt>
+
+
+<Alt Only="HTML MathJax"><M>\mathrm{Q}^-(2nt-1,q)</M></Alt><Alt Only="LaTeX"><M>\mathrm{Q}^-(2nt-1,q)</M></Alt><Alt Only="HTML noMathJax">Q&lt;sup-&lt;/sup>(2nt-1,q)</Alt><Alt Only="Text"><M>Q^-(2nt-1,q)</M></Alt>
+
+<Alt Only="HTML MathJax"><M>\mathrm{Q}^-(2n-1,q^t)</M></Alt><Alt Only="LaTeX"><M>\mathrm{Q}^-(2n-1,q^t)</M></Alt><Alt Only="HTML noMathJax">Q&lt;sup-&lt;/sup>(2n-1,q&lt;sup>t&lt;/sup>)</Alt><Alt Only="Text"><M>Q^-(2n-1,q^t)</M></Alt>
+
+<Alt Only="HTML MathJax"><M>\mathrm{Q}(2n,q^{2a+1})</M></Alt><Alt Only="HTML noMathJax">Q(2n,q&lt;sup>2a+1&lt;/sup>)</Alt><Alt Only="LaTeX"><M>\mathrm{Q}(2n,q^{2a+1})</M></Alt><Alt Only="Text"><M>Q(2n,q^(2a+1))</M></Alt>
+
+<Alt Only="HTML MathJax"><M>\mathrm{Q}((2a+1)(2n+1)-1,q)</M></Alt><Alt Only="HTML noMathJax"><M>Q((2a+1)(2n+1)-1,q)</M></Alt><Alt Only="LaTeX"><M>\mathrm{Q}((2a+1)(2n+1)-1,q)</M></Alt><Alt Only="Text"><M>Q((2a+1)(2n+1)-1,q)</M></Alt>
+
+<Alt Only="HTML MathJax"><M>\mathrm{Q}(2n,q^{2a})</M></Alt><Alt Only="HTML noMathJax">Q(2n,q&lt;sup>2a&lt;/sup>)</Alt><Alt Only="LaTeX"><M>\mathrm{Q}(2n,q^{2a})</M></Alt><Alt Only="Text"><M>Q(2n,q^(2a))</M></Alt>
+
+<Alt Only="HTML MathJax"><M>\mathrm{Q}(2a(2n+1)-1,q)</M></Alt><Alt Only="HTML noMathJax"><M>Q(2a(2n+1)-1,q)</M></Alt><Alt Only="LaTeX"><M>\mathrm{Q}(2a(2n+1)-1,q)</M></Alt><Alt Only="Text"><M>Q(2a(2n+1)-1,q)</M></Alt>
+
+<Alt Only="HTML MathJax"><M>\mathrm{Q}(2n,q^{4a+2})</M></Alt><Alt Only="HTML noMathJax">Q(2n,q&lt;sup>4a+2&lt;/sup>)</Alt><Alt Only="LaTeX"><M>\mathrm{Q}(2n,q^{4a+2})</M></Alt><Alt Only="Text"><M>Q(2n,q^(4a+2))</M></Alt>
+
+<Alt Only="HTML MathJax"><M>\mathrm{Q}((4a+2)(2n+1)-1,q)</M></Alt><Alt Only="HTML noMathJax"><M>Q((4a+2)(2n+1)-1,q)</M></Alt><Alt Only="LaTeX"><M>\mathrm{Q}((4a+2)(2n+1)-1,q)</M></Alt><Alt Only="Text"><M>Q((4a+2)(2n+1)-1,q)</M></Alt>
+
+<Alt Only="HTML MathJax"><M>\mathrm{Q}(2n,q^{4a})</M></Alt><Alt Only="HTML noMathJax">Q(2n,q&lt;sup>4a&lt;/sup>)</Alt><Alt Only="LaTeX"><M>\mathrm{Q}(2n,q^{4a})</M></Alt><Alt Only="Text"><M>Q(2n,q^(4a))</M></Alt>
+
+<Alt Only="HTML MathJax"><M>\mathrm{Q}^-(4a(2n+1)-1,q)</M></Alt><Alt Only="LaTeX"><M>\mathrm{Q}^-(4a(2n+1)-1,q)</M></Alt><Alt Only="HTML noMathJax">Q&lt;sup-&lt;/sup>(4a(2n+1)-1,q)</Alt><Alt Only="Text"><M>Q^-(4a(2n+1)-1,q)</M></Alt>
+
+<Alt Only="HTML MathJax"><M>\mathrm{H}(n,q^{2a+1})</M></Alt><Alt Only="HTML noMathJax">H(n,q&lt;sup>2a+1&lt;/sup>)</Alt><Alt Only="LaTeX"><M>\mathrm{H}(n,q^{2a+1})</M></Alt><Alt Only="Text"><M>H(n,q^(2a+1))</M></Alt>
+
+<Alt Only="HTML MathJax"><M>\mathrm{H}((2a+1)(n+1)-1,q)</M></Alt><Alt Only="HTML noMathJax"><M>H((2a+1)(n+1)-1,q)</M></Alt><Alt Only="LaTeX"><M>\mathrm{H}((2a+1)(n+1)-1,q)</M></Alt><Alt Only="Text"><M>H((2a+1)(n+1)-1,q)</M></Alt>
+
+<Alt Only="HTML MathJax"><M>\mathrm{H}(n,q^{2a})</M></Alt><Alt Only="HTML noMathJax">H(n,q&lt;sup>2a&lt;/sup>)</Alt><Alt Only="LaTeX"><M>\mathrm{H}(n,q^{2a})</M></Alt><Alt Only="Text"><M>H(n,q^(2a))</M></Alt>
+
+<Alt Only="HTML MathJax"><M>\mathrm{W}(2a(n+1)-1,q)</M></Alt><Alt Only="HTML noMathJax"><M>W(2a(n+1)-1,q)</M></Alt><Alt Only="LaTeX"><M>\mathrm{W}(2a(n+1)-1,q)</M></Alt><Alt Only="Text"><M>W(2a(n+1)-1,q)</M></Alt>
+
+<Alt Only="HTML MathJax"><M>\mathrm{H}(2n,q^{2a})</M></Alt><Alt Only="HTML noMathJax">H(2n,q&lt;sup>2a&lt;/sup>)</Alt><Alt Only="LaTeX"><M>\mathrm{H}(2n,q^{2a})</M></Alt><Alt Only="Text"><M>H(2n,q^(2a))</M></Alt>

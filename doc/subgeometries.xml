@@ -1,6 +1,5 @@
 <!-- 
-
-  subgeometries.xml    FinInG package documentation
+subgeometries.xml    FinInG package documentation
                                                                    John Bamberg
                                                                    Anton Betten
                                                                   Philippe Cara
@@ -8,14 +7,15 @@
                                                                  Michel Lavrauw
                                                                 Max Neunhoeffer
 
-  Copyright (C) 2016,   Colorado State University
-                        Università degli Studi di Padova
-                        University of St. Andrews
-                        University of Western Australia
+  Copyright (C) 2017,	Colorado State University
+                        Sabancı Üniversitesi
+						Università degli Studi di Padova
+						Universiteit Gent
+						University of St. Andrews
+						University of Western Australia
                         Vrije Universiteit Brussel
 
 This is the chapter of the documentation describing the sub geometries of projective spaces.
-
 -->
 
 <Chapter Label="subgeometries">

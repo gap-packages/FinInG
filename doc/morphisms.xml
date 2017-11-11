@@ -8,7 +8,7 @@
                                                                  Michel Lavrauw
                                                             and Max Neunhoeffer
 
-  Copyright (C) 2015,	Colorado State University
+  Copyright (C) 2017,	Colorado State University
 						Università degli Studi di Padova
 						Universiteit Gent
 						University of St. Andrews
@@ -102,8 +102,10 @@ the automorphism groups of the source and range. Given a geometry morphism
 from the automorphism group of <M>S</M> to the automorphism group of
 <M>S'</M>, such that for every element <M>p</M> of <M>S</M> and every
 automorphism <M>g</M> of <M>S</M>, we have
-<Alt Not="HTML"><Display> f(p^g) = f(p)^{\phi(g)} .</Display></Alt>
-<Alt Only="HTML"><Display>f(p&lt;sup>g&lt;/sup>)=f(p)&lt;sup>&#966;(g)&lt;/sup>.</Display></Alt>
+<Alt Only="Text"><M>f(p^g) = f(p)^{\phi(g)}.</M></Alt>
+<Alt Only="LaTeX"><Display> f(p^g) = f(p)^{\phi(g)}.</Display></Alt>
+<Alt Only="HTML MathJax"><Display> f(p^g) = f(p)^{\phi(g)}.</Display></Alt>
+<Alt Only="HTML noMathJax"><Display>f(p&lt;sup>g&lt;/sup>)=f(p)&lt;sup>&#966;(g)&lt;/sup>.</Display></Alt>
 There is no method to compute an intertwiner for a given
 geometry morphism, the attribute is or is not set during the construction of the geometry
 morphism, depending whether the Source and Range of the morphism have the appropriate
@@ -158,7 +160,7 @@ Hence we also obtain a natural group isomorphism from the collineation group of
 <Heading>Klein correspondence and derived dualities</Heading>
 
 The Klein correspondence is a well known geometry morphism from the lines
-of <M>PG(3,q)</M> to the points of a hyperbolic quadric in <M>PG(5,q)</M>.
+of &pg3q; to the points of a hyperbolic quadric in &pg5q;.
 This morphism and some derived morphisms are provided in <Package>FinInG</Package>.
 
 The bare essential of the Klein corresondence is the so-called Plücker map.
@@ -166,10 +168,11 @@ The bare essential of the Klein corresondence is the so-called Plücker map.
 <ManSection>
 <Oper Name="PluckerCoordinates" Arg="line"/>
 <Description>
-This operation takes a line of <M>PG(3,q)</M> as argument. It returns the plucker coordinates of the argument as list of finite
+This operation takes a line of &pg3q; as argument. It returns the plucker coordinates of the argument as list of finite
 field elements. The retured list can be used in operations as <F>VectorSpaceToElement</F>, and represents a point of the hyperbolic
-quadric in <M>PG(5,q)</M> with equation <Alt Not="HTML"><M>X_0X_5+X_1X_4+X_2X_3 = 0</M></Alt>
-<Alt Only="HTML">X&lt;sub>0&lt;/sub>X&lt;sub>5&lt;/sub>+X&lt;sub>1&lt;/sub>X&lt;sub>4&lt;/sub>+X&lt;sub>2&lt;/sub>X&lt;sub>3&lt;/sub> = 0</Alt>
+quadric in &pg5q; with equation <Alt Only="HTML MathJax"><M>X_0X_5+X_1X_4+X_2X_3 = 0</M></Alt>
+<Alt Not="HTML"><M>X_0X_5+X_1X_4+X_2X_3 = 0</M></Alt>
+<Alt Only="HTML noMathJax">X&lt;sub>0&lt;/sub>X&lt;sub>5&lt;/sub>+X&lt;sub>1&lt;/sub>X&lt;sub>4&lt;/sub>+X&lt;sub>2&lt;/sub>X&lt;sub>3&lt;/sub> = 0</Alt>
 <Example>
 <#Include SYSTEM "../examples/include/morphisms_plucker.include">
 </Example>
@@ -187,12 +190,10 @@ The argument <A>f</A> is a finite field, the argument <A>q</A> is a prime power.
 The first an the third version use <K>true</K> as value for <A>boolean</A>.
 When using <K>true</K> as value for the boolean, the intertwiner is computed.
 This variant of the operation <F>KleinCorrespondence</F> has always as ambient geometry of
-its range the hyperbolic quadric <Alt Not="HTML"><M>Q^+(5,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>(5,q)</Alt>
+its range the hyperbolic quadric &qplus5q;
 with equation <Alt Not="HTML"><M>X_0X_5+X_1X_4+X_2X_3 = 0</M></Alt>
-<Alt Only="HTML">X&lt;sub>0&lt;/sub>X&lt;sub>5&lt;/sub>+X&lt;sub>1&lt;/sub>X&lt;sub>4&lt;/sub>+X&lt;sub>2&lt;/sub>X&lt;sub>3&lt;/sub> = 0</Alt>
-The returned geometry morphism has the lines of <M>PG(3,q)</M>
-as source and the points of <Alt Not="HTML"><M>Q^+(5,q)</M></Alt><Alt Only="HTML">Q&lt;sup>-&lt;/sup>(5,q)</Alt>
-as range.
+<Alt Only="HTML noMathJax">X&lt;sub>0&lt;/sub>X&lt;sub>5&lt;/sub>+X&lt;sub>1&lt;/sub>X&lt;sub>4&lt;/sub>+X&lt;sub>2&lt;/sub>X&lt;sub>3&lt;/sub> = 0</Alt>
+The returned geometry morphism has the lines of &pg3q; as source and the points of &qplus5q; as range.
 <Example>
 <#Include SYSTEM "../examples/include/morphisms_klein.include">
 </Example>
@@ -206,9 +207,8 @@ as range.
 <Description>
 The argument <A>quadric</A> is a hyperbolic quadric in a 5 dimensional projective space.
 If <A>boolean</A> is <K>true</K> or not given, this operation returns the geometry morphism
-equipped with an intertwiner. The returned geometry morphism has the lines of <M>PG(3,q)</M>
-as source and the points of <Alt Not="HTML"><M>Q^+(5,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>(5,q)</Alt>
-as range.
+equipped with an intertwiner. The returned geometry morphism has the lines of &pg3q; as source
+and the points of &qplus5q; as range.
 <Example>
 <#Include SYSTEM "../examples/include/morphisms_klein2.include">
 </Example>
@@ -222,19 +222,18 @@ as range.
 <Description>
 The argument <A>quadric</A> is a hyperbolic quadric in a 5 dimensional projective space.
 If <A>boolean</A> is <K>true</K> or not given, this operation returns the geometry morphism
-equipped with an intertwiner. The returned geometry morphism has all the elements of <M>PG(3,q)</M>
-as source (not just the lines) and the elements of <Alt Not="HTML"><M>Q^+(5,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>(5,q)</Alt>
-as range, hence this operation is a kind of extension of <F>KleinCorrespondence</F>.
+equipped with an intertwiner. The returned geometry morphism has all the elements of &pg3q;
+as source (not just the lines) and the elements of &qplus5q; as range, hence this operation
+is a kind of extension of <F>KleinCorrespondence</F>.
 <Example>
 <#Include SYSTEM "../examples/include/morphisms_klein3.include">
 </Example>
 </Description>
 </ManSection>
 
-It is well known that the classical generalised quadrangles <M>W(3,q)</M> and <M>Q(4,q)</M>
+It is well known that the classical generalised quadrangles &w3q; and &q4q;
 are dual incidence structures, the same holds for the classical generalised quadrangles
-<Alt Not="HTML"><M>Q^-(5,q)</M></Alt><Alt Only="HTML">Q&lt;sup>-&lt;/sup>(5,q)</Alt>
-and <Alt Not="HTML"><M>H(3,q^2)</M></Alt><Alt Only="HTML">H(3,q&lt;sup>2&lt;/sup>)</Alt>.
+&qmin5q; and &h3q2;.
 Essentially, these dual dualities are based on the Klein correspondence, and
 are implemented through the operation <F>NaturalDuality</F>,
 this operation will return a geometry morphism with <C>ElementsOfIncidenceStructure(gq1)</C> as
@@ -249,10 +248,9 @@ and swapping the types.<P/>
 <Oper Name="NaturalDuality" Arg="gq, boolean"/>
 <Returns>a geometry morphism</Returns>
 <Description>
-The operation allows the construction of the duality between <M>W(3,q)</M> and <M>Q(4,q)</M>, 
-respectively <Alt Not="HTML"><M>Q^-(5,q)</M></Alt><Alt Only="HTML">Q&lt;sup>-&lt;/sup>(5,q)</Alt>, or
-<Alt Not="HTML"><M>H(3,q^2)</M></Alt><Alt Only="HTML">H(3,q&lt;sup>2&lt;/sup>)</Alt>, in two directions.
-It is checked if the arguments are appropriate, i.e. the right type of generalised quadrangle(s).
+The operation allows the construction of the duality between &w3q; and &q4q;,
+respectively &qmin5q;, in two directions. It is checked if the arguments are appropriate,
+i.e. the right type of generalised quadrangle(s).
 
 The first version requires two arguments: either the symplectic or parabolic
 quadrangle, in any order, and defined by any suitable bilinear/quadratic and bilinear form; or the
@@ -260,9 +258,8 @@ elliptic or hermitian quadrangle (in dimension <M>3</M>), in any order, and defi
 bilinear/quadratic and hermitian form. In all cases the generalised quadrangles may be the standard
 one provided by the package <Package>FinInG</Package>. <P/>
 
-The third version requires only one argument, either <M>W(3,q)</M>, <M>Q(4,q)</M>,
-<Alt Not="HTML"><M>Q^-(5,q)</M></Alt><Alt Only="HTML">Q&lt;sup>-&lt;/sup>(5,q)</Alt>, or
-<Alt Not="HTML"><M>H(3,q^2)</M></Alt><Alt Only="HTML">H(3,q&lt;sup>2&lt;/sup>)</Alt>,
+The third version requires only one argument, either &w3q;, &q4q;,
+&qmin5q;, or &h3q2;,
 standard or user specified using an appropriate bilinear, quadratic or hermitian
 form. The range of the returned geometry morphism will be the set of all elements of a suitable generalised
 quadrangle, in standard form.<P/>
@@ -276,7 +273,7 @@ that is not equipped with an intertwiner.<P/>
 </Description>
 </ManSection>
 
-The combination of the isomorphism of the GQs <M>W(3,q)</M>, <M>Q(4,q)</M> when <M>q</M> is even
+The combination of the isomorphism of the GQs &w3q;, &q4q; when <M>q</M> is even
 and the duality between the same GQs, yields a duality from each of these GQs itself. The operation
 <F>SelfDuality</F> implements this combination.
 
@@ -286,10 +283,11 @@ and the duality between the same GQs, yields a duality from each of these GQs it
 <Returns>a geometry morphism</Returns>
 <Description>
 It is checked wheter the base field of <A>gq</A> is a field of charateristic 2 and whether
-<A>gq</A> is a symplectic generalised quadrangle in 3-dimensional projective space or a parabolic quadric in 4-dimensional projective space.
-The first version will return, when possible, a geometry morphism equipped with an intertwiner.
-Using the boolean argument <A>false</A> will return a geometry morphism
-that is not equipped with an intertwiner. The example shows the use of the boolean argument.
+<A>gq</A> is a symplectic generalised quadrangle in 3-dimensional projective space or a parabolic
+quadric in 4-dimensional projective space. The first version will return, when possible,
+a geometry morphism equipped with an intertwiner. Using the boolean argument <A>false</A> will
+return a geometry morphism that is not equipped with an intertwiner. The example shows the use
+of the boolean argument.
 <Example>
 <#Include SYSTEM "../examples/include/morphisms_selfduality.include">
 </Example>
@@ -335,7 +333,11 @@ can take either <C>true</C> or
 intertwiner accordingly. The default (when calling the operation
 with two arguments) is set to <C>true</C>. Note that the source of the intertwiner is the
 projectivity group of <A>geom1</A> and its range is a subgroup of the projectivity group
-of <A>geom2</A>. Here is a simple example where the geometry morphism embeds <M>PG(2,3)</M> into <M>PG(2,9)</M>.
+of <A>geom2</A>. Here is a simple example where the geometry morphism embeds 
+<Alt Only="HTML MathJax"><M>\mathrm{PG}(2,3)</M></Alt><Alt Only="HTML noMathJax">PG(2,3)</Alt>
+<Alt Only="LaTeX"><M>\mathrm{PG}(2,3)</M></Alt><Alt Only="Text">PG(2,3)</Alt> into 
+<Alt Only="HTML MathJax"><M>\mathrm{PG}(2,9)</M></Alt><Alt Only="HTML noMathJax">PG(2,9)</Alt>
+<Alt Only="LaTeX"><M>\mathrm{PG}(2,9)</M></Alt><Alt Only="Text">PG(2,9)</Alt>.
 <Example>
 <#Include SYSTEM "../examples/include/morphisms_subfield1.include">
 </Example>
@@ -345,19 +347,17 @@ of <A>geom2</A>. Here is a simple example where the geometry morphism embeds <M>
 <ManSection Label="proj_red">
 <Heading> Embedding of projective spaces by field reduction</Heading>
 <Description>
-We briefly describe the mathematics behind field reduction. For more details we refer to <Cite Key="LaVa"/>. Consider the fields <M>K=GF(q)</M> and <Alt Not="HTML"><M>L=GF(q^t)</M></Alt>
-<Alt Only="HTML">L=GF(q&lt;sup>t&lt;/sup>)</Alt>. The field <M>L</M> is a <M>t</M>-dimensional
-vector space over <M>K</M>. Hence, with respect to a chosen basis <M>B</M> for <M>L</M>
-as a <M>K</M>-vectorspace, the bijection between the vectorspaces
-<Alt Not="HTML"><M>V(n,q^t)</M></Alt><Alt Only="HTML">V(n,q&lt;sup>t&lt;/sup>)</Alt> and
-<M>V(tn,q)</M> can be implemented.
+We briefly describe the mathematics behind field reduction. For more details we 
+refer to <Cite Key="LaVa"/>. Consider the fields &gfq; and &gfqt;. The field &gfqt; is a 
+<M>t</M>-dimensional vector space over &gfq;. Hence, with respect to a chosen basis 
+<M>B</M> for &gfqt; as a &gfq;-vectorspace, the bijection between the vectorspaces
+&vnqt; and <M>V(tn,q)</M> can be implemented.
 
-Consider the projective space <Alt Not="HTML"><M>PG(n-1,q^t)</M></Alt><Alt Only="HTML">PG(n-1,q&lt;sup>t&lt;/sup>)</Alt>.
- The elements are represented by subspaces of <Alt Not="HTML"><M>V(n,q^t)</M></Alt><Alt Only="HTML">V(n,q&lt;sup>t&lt;/sup>)</Alt>. Clearly, a <M>k</M> dimensional subspace of
- <Alt Not="HTML"><M>V(n,q^t)</M></Alt><Alt Only="HTML">V(n,q&lt;sup>t&lt;/sup>)</Alt> is also a 
- <M>kn</M>-dimensional subspace of the <M>V(nt,q)</M>.
- This induces an embedding from <Alt Not="HTML"><M>PG(n-1,q^t)</M></Alt><Alt Only="HTML">PG(n-1,q&lt;sup>t&lt;/sup>)</Alt>
-into <M>PG(nt-1,q)</M>. The embedding will be determined by the chosen basis of <M>L</M> as a vector space over <M>GF(q)</M>.
+Consider the projective space &pgnminus1qt;. The elements are represented by subspaces 
+of &vnqt;. Clearly, a <M>k</M> dimensional subspace of
+&vnqt; is also a  <M>kn</M>-dimensional subspace of <M>V(nt,q)</M>.  
+This induces an embedding from &pgnminus1qt; into &pgntminus1q;. 
+The embedding will be determined by the chosen basis of &gfqt; as a vector space over &gfq;
 </Description>
 </ManSection>
 
@@ -365,13 +365,13 @@ into <M>PG(nt-1,q)</M>. The embedding will be determined by the chosen basis of 
 <Oper Name="BlownUpSubspaceOfProjectiveSpace" Arg="B, subspace"/>
 <Returns>a subspace of a projective space</Returns>
 <Description>
-Let <A>B</A> be a basis for the field <Alt Not="HTML"><M>L=GF(q^t)</M></Alt><Alt Only="HTML">L=GF(q&lt;sup>t&lt;/sup>)</Alt> as
-<M>GF(q)</M> vector space, and let <A>subspace</A> be a <M>k-1</M>-dimensional subspace of 
-<Alt Not="HTML"><M>PG(n-1,q^t)</M></Alt><Alt Only="HTML">PG(n-1,q&lt;sup>t&lt;/sup>)</Alt> represented by a <M>k</M>-dimensional
-subspace <M>S</M> of <Alt Not="HTML"><M>V(n,q^t)</M></Alt><Alt Only="HTML">V(n,q&lt;sup>t&lt;/sup>)</Alt>. 
-This operation returns the <M>kt-1</M>-dimensional subspace of <M>PG(nt-1,q)</M> represented by blowing up <M>S</M> with respect to
-the base <A>B</A>. This operation relies on the &GAP; operation <F>BlownUpMat</F>. In the example, the effect of chosen a different
-basis is shown.
+Let <A>B</A> be a basis for the field &gfqt; as &gfq; vector space, and 
+let <A>subspace</A> be a <M>k-1</M>-dimensional subspace of 
+&pgnminus1qt; represented by a <M>k</M>-dimensional subspace <M>S</M> of &vnqt;. 
+This operation returns the <M>kt-1</M>-dimensional subspace of &pgntminus1q; 
+represented by blowing up <M>S</M> with respect to the base <A>B</A>. This operation 
+relies on the &GAP; operation <F>BlownUpMat</F>. In the example, the effect 
+of choosing a different basis is shown.
 <Example>
 <#Include SYSTEM "../examples/include/morphisms_blownupsubspace.include">
 </Example>
@@ -386,20 +386,18 @@ basis is shown.
 <Returns>a geometry morphism</Returns>
 <Description>
 This operation comes in four flavours. For the first flavour, the argument <A>geom1</A> is a projective 
-space over a field <Alt Not="HTML"><M>L=GF(q^t)</M></Alt><Alt Only="HTML">L=GF(q&lt;sup>t&lt;/sup>)</Alt>.
-The argument <A>f2</A> is a subfield <M>K=GF(q)</M> of <M>L</M>. The argument <M>B</M>
-is a basis for <M>L</M> as a <M>K</M>-vectorspace. When this argument is not given, a basis for <M>L</M> over <M>K</M>
-is computed using <F>Basis(AsVectorSpace(K,L))</F>. It is checked whether <A>f2</A> is a subfield of the basefield of
-<A>geom1</A>. The third and fourth flavour are comparable, where now <M>K</M> is found as the basefield of <A>geom2</A>.
-In fact the arguments <A>geom1</A> and <A>geom2</A> are the projective spaces
-<Alt Not="HTML"><M>PG(r-1,q^t)</M></Alt><Alt Only="HTML">PG(r-1,q&lt;sup>t&lt;/sup>)</Alt> and
-<Alt Not="HTML"><M>PG(rt-1,q)</M></Alt><Alt Only="HTML">PG(rt-1,q)</Alt> respectively. As in the previous flavours, the 
+space over a field &gfqt;. The argument <A>f2</A> is a subfield &gfq; of &gfqt;. The argument <M>B</M>
+is a basis for &gfqt; as a &gfq;-vectorspace. When this argument is not given, a basis for &gfqt; over &gfq;
+is computed using <F>Basis(AsVectorSpace(GF(q),GF(q^t)))</F>. It is checked whether <A>f2</A> is a 
+subfield of the basefield of <A>geom1</A>. The third and fourth flavour are comparable, 
+where now &gfq; is found as the basefield of <A>geom2</A>. In fact the arguments <A>geom1</A> and 
+<A>geom2</A> are the projective spaces &pgnminus1qt; and &pgntminus1q; respectively. As in the previous flavours, the 
 argument <A>B</A> is optional. <P/>An intertwiner is always available for this geometry morphism, and has source the
 homography group of <A>geom1</A> and as range a subgroup of the homography group of <A>geom2</A> (or the projective space
 of the appropriate dimension over <A>f2</A>.
-Notice in the example
-below the difference of a factor 2 in the orders of the group, which comes of course from restricing the homomorphism to
-the homography group, which differes a factor 2 from the collineation group of the projective line, that has an extra
+Notice in the example below the difference of a factor 2 in the orders of the group, 
+which comes of course from restricing the homomorphism to the homography group, which 
+differs a factor 2 from the collineation group of the projective line, that has an extra
 automorphism of order two, corresponding with the Frobenius automorphism.
 <Example>
 <#Include SYSTEM "../examples/include/morphisms_fieldreducproj.include"> 
@@ -437,7 +435,8 @@ space of the same dimension and the basefield <M>L</M> of <A>geom2</A> is an ext
 <M>K</M> of <A>geom1</A>. The form <M>f</M> determining <A>geom1</A> also defines a form over <M>L</M>,
 and determines a polar space. By considering the underlying vectorspaces determining the elements of <A>geom1</A>
 over the extension field <M>L</M>, there is an obvious embedding of <A>geom1</A> in the polar space over the
-extension field. Considering <M>f</M> over a field extension might change its type. The possible embeddings, where the polar spaces may be chosen up to equivalent form,
+extension field. Considering <M>f</M> over a field extension might change its type. The possible embeddings, 
+where the polar spaces may be chosen up to equivalent form,
 are listed in the table below (see <Cite Key="KleidmanLiebeck"/>):
         
 <Table Align="l|l|l">
@@ -448,29 +447,29 @@ are listed in the table below (see <Cite Key="KleidmanLiebeck"/>):
 <HorLine/>
 <HorLine/>
 <Row>
-<Item><M>W(2n-1,q)</M></Item>
-<Item><Alt Not="HTML"><M>W(2n-1,q^a)</M></Alt><Alt Only="HTML">W(2n-1,q&lt;sup>a&lt;/sup>)</Alt></Item>
+<Item><Alt Only="HTML MathJax"><M>\mathrm{W}(2n-1,q)</M></Alt><Alt Only="HTML noMathJax"><M>W(2n-1,q)</M></Alt><Alt Only="LaTeX"><M>\mathrm{W}(2n-1,q)</M></Alt><Alt Only="Text"><M>W(2n-1,q)</M></Alt></Item>
+<Item><Alt Only="HTML MathJax"><M>\mathrm{W}(2n-1,q^a)</M></Alt><Alt Only="HTML noMathJax">W(2n-1,q&lt;sup>a&lt;/sup>)</Alt><Alt Only="LaTeX"><M>\mathrm{W}(2n-1,q^a)</M></Alt><Alt Only="Text"><M>W(2n-1,q^a)</M></Alt></Item>
 <Item>--</Item>
 </Row>
 <Row>
-<Item><M>W(2n-1,q)</M></Item>
-<Item><Alt Not="HTML"><M>H(2n-1,q^2)</M></Alt><Alt Only="HTML">H(2n-1,q&lt;sup>2&lt;/sup>)</Alt></Item>
+<Item><Alt Only="HTML MathJax"><M>\mathrm{W}(2n-1,q)</M></Alt><Alt Only="HTML noMathJax"><M>W(2n-1,q)</M></Alt><Alt Only="LaTeX"><M>\mathrm{W}(2n-1,q)</M></Alt><Alt Only="Text"><M>W(2n-1,q)</M></Alt></Item>
+<Item><Alt Only="HTML MathJax"><M>\mathrm{H}(2n-1,q^a)</M></Alt><Alt Only="HTML noMathJax">H(2n-1,q&lt;sup>a&lt;/sup>)</Alt><Alt Only="LaTeX"><M>\mathrm{H}(2n-1,q^a)</M></Alt><Alt Only="Text"><M>H(2n-1,q^a)</M></Alt></Item>
 <Item>--</Item>
 </Row>
 <Row>
-<Item><Alt Not="HTML"><M>H(d,q^2)</M></Alt><Alt Only="HTML">H(d,q&lt;sup>2&lt;/sup>)</Alt></Item>
-<Item><Alt Not="HTML"><M>H(d,q^{2r})</M></Alt><Alt Only="HTML">H(d,q&lt;sup>2r&lt;/sup>)</Alt></Item>
-<Item>r odd</Item>
+<Item><Alt Only="HTML MathJax"><M>\mathrm{H}(d,q^2)</M></Alt><Alt Only="HTML noMathJax">H(d,q&lt;sup>2&lt;/sup>)</Alt><Alt Only="LaTeX"><M>\mathrm{H}(d,q^2)</M></Alt><Alt Only="Text"><M>H(d,q^2)</M></Alt></Item>
+<Item><Alt Only="HTML MathJax"><M>\mathrm{H}(d,q^{2r})</M></Alt><Alt Only="HTML noMathJax">H(d,q&lt;sup>2r&lt;/sup>)</Alt><Alt Only="LaTeX"><M>\mathrm{H}(d,q^{2r})</M></Alt><Alt Only="Text"><M>H(d,q^(2r))</M></Alt></Item>
+<Item><M>r</M> odd</Item>
 </Row>
 <Row>
-<Item><Alt Not="HTML"><M>O^\epsilon(d,q)</M></Alt><Alt Only="HTML">O&lt;sup>&#949;&lt;/sup>(d,q)</Alt></Item>
-<Item><Alt Not="HTML"><M>H(d,q^2)</M></Alt><Alt Only="HTML">H(d,q&lt;sup>2&lt;/sup>)</Alt></Item>
-<Item>q odd</Item>
+<Item><Alt Only="HTML MathJax"><M>\mathrm{O}^{\epsilon}(d,q)</M></Alt><Alt Only="HTML noMathJax">O&lt;sup>&#949;&lt;/sup>(d,q)</Alt><Alt Only="LaTeX"><M>\mathrm{O}^{\epsilon}(d,q)</M></Alt><Alt Only="Text"><M>O^\epsilon(d,q)</M></Alt></Item>
+<Item><Alt Only="HTML MathJax"><M>\mathrm{H}(d,q^2)</M></Alt><Alt Only="HTML noMathJax">H(d,q&lt;sup>2&lt;/sup>)</Alt><Alt Only="LaTeX"><M>\mathrm{H}(d,q^2)</M></Alt><Alt Only="Text"><M>H(d,q^2)</M></Alt></Item>
+<Item><M>q</M> odd</Item>
 </Row>
 <Row>
-<Item><Alt Not="HTML"><M>O^\epsilon(d,q)</M></Alt><Alt Only="HTML">O&lt;sup>&#949;&lt;/sup>(d,q)</Alt></Item>
-<Item><Alt Not="HTML"><M>O^{\epsilon'}(d,q^r)</M></Alt><Alt Only="HTML">O&lt;sup>&#949;'&lt;/sup>(d,q&lt;sup>r&lt;/sup>)</Alt></Item>
-<Item><Alt Not="HTML"><M>\epsilon=(\epsilon')^r</M></Alt><Alt Only="HTML">&#949;=(&#949;')&lt;sup>r&lt;/sup></Alt></Item>
+<Item><Alt Only="HTML MathJax"><M>\mathrm{O}^{\epsilon}(d,q)</M></Alt><Alt Only="HTML noMathJax">O&lt;sup>&#949;&lt;/sup>(d,q)</Alt><Alt Only="LaTeX"><M>\mathrm{O}^{\epsilon}(d,q)</M></Alt><Alt Only="Text"><M>O^\epsilon(d,q)</M></Alt></Item>
+<Item><Alt Only="HTML MathJax"><M>\mathrm{O}^{\epsilon'}(d,q^r)</M></Alt><Alt Only="HTML noMathJax">O&lt;sup>&#949;'&lt;/sup>(d,q&lt;sup>r&lt;/sup>)</Alt><Alt Only="LaTeX"><M>\mathrm{O}^{\epsilon'}(d,q^r)</M></Alt><Alt Only="Text"><M>O^\epsilon'(d,q^r)</M></Alt></Item>
+<Item><Alt Not="HTML"><M>\epsilon=(\epsilon')^r</M></Alt><Alt Only="HTML MathJax"><M>\epsilon=(\epsilon')^r</M></Alt><Alt Only="HTML noMathJax">&#949;=(&#949;')&lt;sup>r&lt;/sup></Alt></Item>
 </Row>
 </Table>
         
@@ -491,30 +490,49 @@ The default (when calling the operation with two arguments) is set to <C>true</C
 <ManSection Label="polar_red">
 <Heading> Embedding of polar spaces by field reduction</Heading>
 <Description>
-Field reduction for polar spaces is somewhat more involved than for projective spaces, and we give a brief description. Let <M>P</M> be a polar space over a field <Alt Not="HTML"><M>L=GF(q^t)</M></Alt> <Alt Only="HTML">GF(q&lt;sup>t&lt;/sup>)</Alt>
-and let <M>K=GF(q)</M>. Let <M>f</M> be the form on the <M>r</M> dimensional vector space <M>V</M> over <M>L</M>
-determining <M>P</M>. Consider the trace map <M>T:</M><Alt Not="HTML"><M>L=GF(q^t) \rightarrow GF(q):</M></Alt>
-<Alt Only="HTML">GF(q&lt;sup>t&lt;/sup>) &#8594; GF(q):</Alt><Alt Not="HTML"><M>x \mapsto x^{q^t}+ x^{q^{t-1}} + \ldots x</M></Alt>
-<Alt Only="HTML">x &#8594; x&lt;sup>q&lt;sup>t&lt;/sup>&lt;/sup> + x&lt;sup>q&lt;sup>t-1&lt;/sup>&lt;/sup> + &#8230; x</Alt>. 
-Define for any <M>\alpha \in L</M> the map <Alt Not="HTML"><M>T_{\alpha}: GF(q^t)\rightarrow
-    GF(q): T_{\alpha}(x) = T(\alpha x)</M></Alt> <Alt Only="HTML">T&lt;sub>&#945;&lt;/sub>: GF(q&lt;sup>t&lt;/sup>)&#8594; GF(q): x &#8594; T(&#945; x)</Alt>.
+Field reduction for polar spaces is somewhat more involved than for
+projective spaces, and we give a brief description. Let <M>L</M> be the
+field &gfqt; and let <M>K</M> be the field &gfq; Let <M>P</M> be a polar
+space over a field <M>L</M>. Let <M>f</M> be the form on the <M>r</M> dimensional
+vector space <M>V</M> over <M>L</M> determining <M>P</M>. Consider the trace map
 
-Consider the <M>rt</M> dimensional vector space <M>W</M> over <M>K</M>. There is a bijective map
-<Alt Not="HTML"><M>\Phi</M></Alt><Alt Only="HTML">&#934;</Alt> from <M>V</M> to <M>W</M> and <Alt Only="HTML">T&lt;sub>&#945;&lt;/sub> &#8226; f &#8226; &#934; &lt;sup>-1&lt;/sup></Alt><Alt Not="HTML"><M>T_{\alpha} \circ f \circ \Phi^{-1}</M></Alt> defines a
-quadratic or sesquilinear form (depending on <M>\alpha</M>, and <M>f</M> being quadratic or sesquilinear) acting on <M>W</M>, and hence, if not singular or degenerate, inducing a polar space <M>S</M> over the finite field <M>GF(q)</M>. An element of <M>P</M> can be mapped onto an element of <M>S</M> by simply blowing up <M>P</M>
-using field reduction for projective spaces. So the resulting polar space <M>W</M> is dependent on the original form <M>f</M>,
-the parameter <M>\alpha</M> and the blowing up of elements by field reduction, the latter being dependent
-on the basis of <M>L</M> as a <M>K</M> vector space. <Package>FinInG</Package> provides two approaches.
-The first approach starts from <M>P</M> and the parameters <M>K</M>, <M>\alpha</M> and a basis for <M>L</M>
-as <M>K</M> vector space. Then the resulting form <Alt Only="HTML">T&lt;sub>&#945;&lt;/sub> &#8226; f &#8226; &#934; &lt;sup>-1&lt;/sup></Alt>
-<Alt Not="HTML"><M>T_{\alpha} \circ f \circ \Phi^{-1}</M></Alt> is determined,
-and the associated polar space <M>W</M> will be the range of the embedding. Note that the resulting polar
-space will not necessarily be canonical. The second approach starts
+<Alt Only="HTML MathJax"><Display>T: L \rightarrow K: x \mapsto x^{q^t}+ x^{q^{t-1}} + \ldots + x.</Display></Alt>
+<Alt Only="HTML noMathJax"><M>T: L \rightarrow K: x \mapsto </M> x&lt;sup>q&lt;sup>t&lt;/sup>&lt;/sup> + x&lt;sup>q&lt;sup>t-1&lt;/sup>&lt;/sup> + &#8230; + x.</Alt> <!-- rightarrow in html: &#8594;-->
+<Alt Only="LaTeX"><Display>T: L \rightarrow K: x \mapsto x^{q^t}+ x^{q^{t-1}} + \ldots + x.</Display></Alt>
+<Alt Only="Text"><M>T: L \rightarrow K: x \mapsto x^(q^t)+ x^(q^(t-1)) + \ldots + x.</M><P/></Alt>
+
+Define for any <M>\alpha \in L</M> the map
+
+<Alt Only="HTML MathJax"><Display>T_\alpha: L \rightarrow K: x \mapsto T_\alpha(x) = T(\alpha x).</Display></Alt>
+<Alt Only="HTML noMathJax">T&lt;sub>&#945;&lt;/sub>: L: &#8594; K: x<M>\mapsto</M> T&lt;sub>&#945;&lt;/sub> = T(&#945; x).</Alt>
+<Alt Only="LaTeX"><Display>T_\alpha: L \rightarrow K: x \mapsto T_\alpha(x) = T(\alpha x).</Display></Alt>
+<Alt Only="Text"><M>T_\alpha: L \rightarrow K: x \mapsto T_\alpha(x) = T(\alpha x).</M><P/></Alt>
+
+Consider the <M>rt</M> dimensional vector space <M>W</M> over <M>K</M>. There is a bijective map &Phi;: <M>V \rightarrow W</M>
+and <Alt Only="HTML noMathJax">T&lt;sub>&#945;&lt;/sub> &#8226; f &#8226; &#934; &lt;sup>-1&lt;/sup></Alt>
+<Alt Only="HTML MathJax"><M>T_{\alpha} \circ f \circ \Phi^{-1}</M></Alt>
+<Alt Not="HTML"><M>T_{\alpha} \circ f \circ \Phi^{-1}</M></Alt> defines a
+quadratic or sesquilinear form (depending on <M>\alpha</M>, and <M>f</M> being quadratic
+or sesquilinear) acting on <M>W</M>, and hence, if not singular or degenerate, inducing a
+polar space <M>S</M> over the finite field <M>GF(q)</M>. An element of <M>P</M> can be
+mapped onto an element of <M>S</M> by simply blowing up <M>P</M>
+using field reduction for projective spaces. So the resulting polar space <M>S</M> is
+dependent on the original form <M>f</M>, the parameter <M>\alpha</M> and the blowing up of
+elements by field reduction, the latter being dependent on the basis of <M>L</M> as
+a <M>K</M> vector space. <Package>FinInG</Package> provides two approaches.
+The first approach starts from <M>P</M> and the parameters <M>K</M>, <M>\alpha</M>
+and a basis for <M>L</M> as <M>K</M> vector space. Then the resulting form
+<Alt Only="HTML noMathJax">T&lt;sub>&#945;&lt;/sub> &#8226; f &#8226; &#934; &lt;sup>-1&lt;/sup></Alt>
+<Alt Only="HTML MathJax"><M>T_{\alpha} \circ f \circ \Phi^{-1}</M></Alt>
+<Alt Not="HTML"><M>T_{\alpha} \circ f \circ \Phi^{-1}</M></Alt>
+is determined, and the associated polar space <M>S</M> will be the range of the embedding.
+Note that the resulting polar space will not necessarily be canonical. The second approach starts
 from two given polar spaces <M>P</M> and <M>S</M>. Based on this input, it is determined wheter an embedding
 based on the above described principle is possible, and the necessary parameters are computed. The resulting
 embedding is a geometry morhpism from <M>P</M> to <M>S</M>. Note that the polar spaces used as an argument
 may be freely chosen and are not required to be in the canonical form.<P/>
-Fo the embeddings by field reduction of polar spaces, including conditions on the parameter <M>\alpha</M>, we refer to <Cite Key="Gill"/> and <Cite Key="LaVa"/>.
+For more information on the embeddings by field reduction of polar spaces, including conditions on
+the parameter <M>\alpha</M>, we refer to <Cite Key="Gill"/> and <Cite Key="LaVa"/>.
 The possible embeddings are listed in the following table.
 
 <Table Align="l|l|l">
@@ -525,58 +543,71 @@ The possible embeddings are listed in the following table.
  <HorLine/>
  <HorLine/>
   <Row>
-   <Item><Alt Not="HTML"><M>W(2n-1,q^t)</M></Alt><Alt Only="HTML">W(2n-1,q&lt;sup>t&lt;/sup>)</Alt></Item>
-   <Item><M>W(2nt-1,q)</M></Item><Item>--</Item>
+   <Item><Alt Only="HTML MathJax"><M>\mathrm{W}(2n-1,q^t)</M></Alt><Alt Only="HTML noMathJax">W(2n-1,q&lt;sup>t&lt;/sup>)</Alt><Alt Only="LaTeX"><M>\mathrm{W}(2n-1,q^t)</M></Alt><Alt Only="Text"><M>W(2n-1,q^t)</M></Alt></Item>
+   <Item><Alt Only="HTML MathJax"><M>\mathrm{W}(2nt-1,q)</M></Alt><Alt Only="HTML noMathJax"><M>W(2nt-1,q)</M></Alt><Alt Only="LaTeX"><M>\mathrm{W}(2nt-1,q)</M></Alt><Alt Only="Text"><M>W(2nt-1,q)</M></Alt></Item><Item>--</Item>
   </Row>
  <Row>
-   <Item><Alt Not="HTML"><M>Q^+(2n-1,q^t)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>(2n-1,q&lt;sup>t&lt;/sup>)</Alt></Item>
-   <Item><Alt Not="HTML"><M>Q^+(2nt-1,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>(2nt-1,q)</Alt></Item>
+   <Item><Alt Only="HTML MathJax"><M>\mathrm{Q}^+(2n-1,q^t)</M></Alt><Alt Only="LaTeX"><M>\mathrm{Q}^+(2n-1,q^t)</M></Alt><Alt Only="HTML noMathJax">Q&lt;sup>+&lt;/sup>(2n-1,q&lt;sup>t&lt;/sup>)</Alt><Alt Only="Text"><M>Q^+(2n-1,q^t)</M></Alt></Item>
+   <Item><Alt Only="HTML MathJax"><M>\mathrm{Q}^+(2nt-1,q)</M></Alt><Alt Only="LaTeX"><M>\mathrm{Q}^+(2nt-1,q)</M></Alt><Alt Only="HTML noMathJax">Q&lt;sup>+&lt;/sup>(2nt-1,q)</Alt><Alt Only="Text"><M>Q^+(2nt-1,q)</M></Alt></Item>
    <Item>--</Item>
   </Row>
  <Row>
-   <Item><Alt Not="HTML"><M>Q^-(2n-1,q^t)</M></Alt><Alt Only="HTML">Q&lt;sup>-&lt;/sup>(2n-1,q&lt;sup>t&lt;/sup>)</Alt></Item>
-   <Item><Alt Not="HTML"><M>Q^-(2nt-1,q)</M></Alt><Alt Only="HTML">Q&lt;sup>-&lt;/sup>(2nt-1,q)</Alt></Item>
+   <Item><Alt Only="HTML MathJax"><M>\mathrm{Q}^-(2n-1,q^t)</M></Alt><Alt Only="LaTeX"><M>\mathrm{Q}^-(2n-1,q^t)</M></Alt><Alt Only="HTML noMathJax">Q&lt;sup>-&lt;/sup>(2n-1,q&lt;sup>t&lt;/sup>)</Alt><Alt Only="Text"><M>Q^-(2n-1,q^t)</M></Alt></Item>
+   <Item><Alt Only="HTML MathJax"><M>\mathrm{Q}^-(2nt-1,q)</M></Alt><Alt Only="LaTeX"><M>\mathrm{Q}^-(2nt-1,q)</M></Alt><Alt Only="HTML noMathJax">Q&lt;sup>-&lt;/sup>(2nt-1,q)</Alt><Alt Only="Text"><M>Q^-(2nt-1,q)</M></Alt></Item>
    <Item>--</Item>
   </Row>
  <Row>
-   <Item><Alt Not="HTML"><M>Q(2n,q^{2a+1})</M></Alt><Alt Only="HTML">Q(2n,q&lt;sup>2a+1&lt;/sup>)</Alt></Item>
-   <Item><Alt Not="HTML"><M>Q((2a+1)(2n+1)-1,q)</M></Alt><Alt Only="HTML">Q((2a+1)(2n+1)-1,q)</Alt></Item>
-   <Item>q odd</Item>
+     <Item><Alt Only="HTML MathJax"><M>\mathrm{Q}(2n,q^{2a+1})</M></Alt><Alt Only="HTML noMathJax">Q(2n,q&lt;sup>2a+1&lt;/sup>)</Alt><Alt Only="LaTeX"><M>\mathrm{Q}(2n,q^{2a+1})</M></Alt><Alt Only="Text"><M>Q(2n,q^(2a+1))</M></Alt>
+</Item>
+   <Item><Alt Only="HTML MathJax"><M>\mathrm{Q}((2a+1)(2n+1)-1,q)</M></Alt><Alt Only="HTML noMathJax"><M>Q((2a+1)(2n+1)-1,q)</M></Alt><Alt Only="LaTeX"><M>\mathrm{Q}((2a+1)(2n+1)-1,q)</M></Alt><Alt Only="Text"><M>Q((2a+1)(2n+1)-1,q)</M></Alt></Item>
+   <Item><M>q</M> odd</Item>
  </Row>
  <Row>
-   <Item><Alt Not="HTML"><M>Q(2n,q^{2a})</M></Alt><Alt Only="HTML">Q(2n,q&lt;sup>2a&lt;/sup>)</Alt></Item>
-   <Item><Alt Not="HTML"><M>Q^-(2a(2n+1)-1,q)</M></Alt><Alt Only="HTML">Q&lt;sup>-&lt;/sup>(2a(2n+1)-1,q)</Alt></Item>
-   <Item>q=1 mod 4</Item>
+     <Item><Alt Only="HTML MathJax"><M>\mathrm{Q}(2n,q^{2a})</M></Alt><Alt Only="HTML noMathJax">Q(2n,q&lt;sup>2a&lt;/sup>)</Alt><Alt Only="LaTeX"><M>\mathrm{Q}(2n,q^{2a})</M></Alt><Alt Only="Text"><M>Q(2n,q^(2a))</M></Alt>
+</Item>
+   <Item><Alt Only="HTML MathJax"><M>\mathrm{Q}(2a(2n+1)-1,q)</M></Alt><Alt Only="HTML noMathJax"><M>Q(2a(2n+1)-1,q)</M></Alt><Alt Only="LaTeX"><M>\mathrm{Q}(2a(2n+1)-1,q)</M></Alt><Alt Only="Text"><M>Q(2a(2n+1)-1,q)</M></Alt></Item>
+   <Item><Alt Not="HTML"><M>q \equiv 1 \pmod{4}</M></Alt>
+       <Alt Only="HTML MathJax"><M>q \equiv 1 \pmod{4}</M></Alt>
+       <Alt Only="HTML noMathJax">q &#8801; 1 mod 4</Alt></Item>
  </Row>
  <Row>
-   <Item><Alt Not="HTML"><M>Q(2n,q^{4a+2})</M></Alt><Alt Only="HTML">Q(2n,q&lt;sup>4a+2&lt;/sup>)</Alt></Item>
-   <Item><Alt Not="HTML"><M>Q^+((4a+2)(2n+1)-1,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>((4a+2)(2n+1)-1,q)</Alt></Item>
-   <Item>q=3 mod 4</Item>
+   <Item><Alt Only="HTML MathJax"><M>\mathrm{Q}(2n,q^{4a+2})</M></Alt><Alt Only="HTML noMathJax">Q(2n,q&lt;sup>4a+2&lt;/sup>)</Alt><Alt Only="LaTeX"><M>\mathrm{Q}(2n,q^{4a+2})</M></Alt><Alt Only="Text"><M>Q(2n,q^(4a+2))</M></Alt></Item>
+   <Item><Alt Only="HTML MathJax"><M>\mathrm{Q}((4a+2)(2n+1)-1,q)</M></Alt><Alt Only="HTML noMathJax"><M>Q((4a+2)(2n+1)-1,q)</M></Alt><Alt Only="LaTeX"><M>\mathrm{Q}((4a+2)(2n+1)-1,q)</M></Alt><Alt Only="Text"><M>Q((4a+2)(2n+1)-1,q)</M></Alt></Item>
+   <Item><Alt Not="HTML"><M>q \equiv 3 \pmod{4}</M></Alt>
+       <Alt Only="HTML MathJax"><M>q \equiv 3 \pmod{4}</M></Alt>
+       <Alt Only="HTML noMathJax">q &#8801; 3 mod 4</Alt></Item>
  </Row>
  <Row>
-  <Item><Alt Not="HTML"><M>Q(2n,q^{4a})</M></Alt><Alt Only="HTML">Q(2n,q&lt;sup>4a&lt;/sup>)</Alt></Item>
-  <Item><Alt Not="HTML"><M>Q^-(4a(2n+1)-1,q)</M></Alt><Alt Only="HTML">Q&lt;sup>-&lt;/sup>(4a(2n+1)-1,q)</Alt></Item>
-  <Item>q=3 mod 4</Item>
+     <Item><Alt Only="HTML MathJax"><M>\mathrm{Q}(2n,q^{4a})</M></Alt><Alt Only="HTML noMathJax">Q(2n,q&lt;sup>4a&lt;/sup>)</Alt><Alt Only="LaTeX"><M>\mathrm{Q}(2n,q^{4a})</M></Alt><Alt Only="Text"><M>Q(2n,q^(4a))</M></Alt>
+</Item>
+     <Item><Alt Only="HTML MathJax"><M>\mathrm{Q}^-(4a(2n+1)-1,q)</M></Alt><Alt Only="LaTeX"><M>\mathrm{Q}^-(4a(2n+1)-1,q)</M></Alt><Alt Only="HTML noMathJax">Q&lt;sup>-&lt;/sup>(4a(2n+1)-1,q)</Alt><Alt Only="Text"><M>Q^-(4a(2n+1)-1,q)</M></Alt>
+</Item>
+     <Item><Alt Not="HTML"><M>q \equiv 3 \pmod{4}</M></Alt>
+         <Alt Only="HTML MathJax"><M>q \equiv 3 \pmod{4}</M></Alt>
+         <Alt Only="HTML noMathJax">q &#8801; 3 mod 4</Alt></Item>
  </Row>
 <Row>
-   <Item><Alt Not="HTML"><M>H(n,q^{2a+1})</M></Alt><Alt Only="HTML">H(n,q&lt;sup>2a+1&lt;/sup>)</Alt></Item>
-   <Item><M>H((n+1)(2a+1)-1,q)</M></Item>
-   <Item>q square</Item>
+    <Item><Alt Only="HTML MathJax"><M>\mathrm{H}(n,q^{2a+1})</M></Alt><Alt Only="HTML noMathJax">H(n,q&lt;sup>2a+1&lt;/sup>)</Alt><Alt Only="LaTeX"><M>\mathrm{H}(n,q^{2a+1})</M></Alt><Alt Only="Text"><M>H(n,q^(2a+1))</M></Alt>
+</Item>
+    <Item><Alt Only="HTML MathJax"><M>\mathrm{H}((2a+1)(n+1)-1,q)</M></Alt><Alt Only="HTML noMathJax"><M>H((2a+1)(n+1)-1,q)</M></Alt><Alt Only="LaTeX"><M>\mathrm{H}((2a+1)(n+1)-1,q)</M></Alt><Alt Only="Text"><M>H((2a+1)(n+1)-1,q)</M></Alt>
+</Item>
+   <Item><M>q</M> square</Item>
  </Row>
  <Row>
-   <Item><Alt Not="HTML"><M>H(n,q^{2a})</M></Alt><Alt Only="HTML">H(n,q&lt;sup>2a&lt;/sup>)</Alt></Item>
-   <Item><M>W(2a(n+1)-1,q)</M></Item>
-   <Item>q even</Item>
+     <Item><Alt Only="HTML MathJax"><M>\mathrm{H}(n,q^{2a})</M></Alt><Alt Only="HTML noMathJax">H(n,q&lt;sup>2a&lt;/sup>)</Alt><Alt Only="LaTeX"><M>\mathrm{H}(n,q^{2a})</M></Alt><Alt Only="Text"><M>H(n,q^(2a))</M></Alt>
+</Item>
+   <Item><Alt Only="HTML MathJax"><M>\mathrm{W}(2a(n+1)-1,q)</M></Alt><Alt Only="HTML noMathJax"><M>W(2a(n+1)-1,q)</M></Alt><Alt Only="LaTeX"><M>\mathrm{W}(2a(n+1)-1,q)</M></Alt><Alt Only="Text"><M>W(2a(n+1)-1,q)</M></Alt></Item>
+   <Item><M>q</M> even</Item>
  </Row>
 <Row>
-   <Item><Alt Not="HTML"><M>H(2n,q^{2a})</M></Alt><Alt Only="HTML">H(2n,q&lt;sup>2a&lt;/sup>)</Alt></Item>
-   <Item><Alt Not="HTML"><M>Q^-(2a(2n+1)-1,q)</M></Alt><Alt Only="HTML">Q&lt;sup>-&lt;/sup>(2a(2n+1)-1,q)</Alt></Item>
-   <Item>q odd</Item>
+   <Item><Alt Only="HTML MathJax"><M>\mathrm{H}(2n,q^{2a})</M></Alt><Alt Only="HTML noMathJax">H(2n,q&lt;sup>2a&lt;/sup>)</Alt><Alt Only="LaTeX"><M>\mathrm{H}(2n,q^{2a})</M></Alt><Alt Only="Text"><M>H(2n,q^(2a))</M></Alt></Item>
+   <Item><Alt Only="HTML MathJax"><M>\mathrm{Q}^-(2a(2n+1)-1,q)</M></Alt><Alt Only="LaTeX"><M>\mathrm{Q}^-(2a(2n+1)-1,q)</M></Alt><Alt Only="HTML noMathJax">Q&lt;sup>-&lt;/sup>(2a(2n+1)-1,q)</Alt><Alt Only="Text"><M>Q^-(2a(2n+1)-1,q)</M></Alt></Item>
+   <Item><M>q</M> odd</Item>
  </Row>
 <Row>
-   <Item><Alt Not="HTML"><M>H(2n+1,q^{2a})</M></Alt><Alt Only="HTML">H(2n+1,q&lt;sup>2a&lt;/sup>)</Alt></Item>
-   <Item><Alt Not="HTML"><M>Q^+(2a(2n+2)-1,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>(2a(2n+2)-1,q)</Alt></Item>
-   <Item>q odd</Item>
+   <Item><Alt Only="HTML MathJax"><M>\mathrm{H}(2n+1,q^{2a})</M></Alt><Alt Only="HTML noMathJax">H(2n+1,q&lt;sup>2a&lt;/sup>)</Alt><Alt Only="LaTeX"><M>\mathrm{H}(2n+1,q^{2a})</M></Alt><Alt Only="Text"><M>H(2n+1,q^(2a))</M></Alt></Item>
+   <Item><Alt Only="HTML MathJax"><M>\mathrm{Q}^+(2a(2n+2)-1,q)</M></Alt><Alt Only="LaTeX"><M>\mathrm{Q}^+(2a(2n+2)-1,q)</M></Alt><Alt Only="HTML noMathJax">Q&lt;sup>+&lt;/sup>(2a(2n+2)-1,q)</Alt><Alt Only="Text"><M>Q^+(2a(2n+2)-1,q)</M></Alt></Item>
+   <Item><M>q</M> odd</Item>
  </Row>
 </Table>
 </Description>
@@ -603,7 +634,8 @@ when embedding large polar spaces. The default (when calling the operation
 with two arguments) is set to <C>true</C>. In the first example, we construct a spread of maximal 
 subspaces (solids) in a 7 dimensional symplectic space. We compute a subgroup of its stabilizer 
 group using the intertwiner. In the second example, we construct a linear blocking set of the 
-symplectic generalised quadrangle over <M>GF(9)</M>. 
+symplectic generalised quadrangle over <Alt Only="HTML MathJax"><M>\mathrm{GF}(9)</M></Alt><Alt Only="HTML noMathJax">GF(9)</Alt>
+<Alt Only="LaTeX"><M>\mathrm{GF}(9)</M></Alt><Alt Only="Text">GF(9)</Alt>.
 <Example>
 <#Include SYSTEM "../examples/include/morphisms_fieldreducpolar1.include">
 <#Include SYSTEM "../examples/include/morphisms_fieldreducpolar2.include"> 
@@ -616,9 +648,11 @@ symplectic generalised quadrangle over <M>GF(9)</M>.
 <Oper Name="NaturalEmbeddingByFieldReduction" Arg="ps1, ps2"/>
 <Returns>a geometry morphism</Returns>
 <Description>
-If <A>ps1</A> and <A>ps2</A> are two polar spaces which are suitable for field reduction as listed in the table with possible embeddings in Section
-<Ref Sect="polar_red"/>, then this operation returns the corresponding embedding. An intertwiner is computed
-if the third argument <A>bool</A> is true, or if there is no third argument. This intertwiner has as its domain the <B>isometry group</B> of <A>ps1</A>.
+If <A>ps1</A> and <A>ps2</A> are two polar spaces which are suitable for field
+reduction as listed in the table with possible embeddings in Section
+<Ref Sect="polar_red"/>, then this operation returns the corresponding embedding.
+An intertwiner is computed if the third argument <A>bool</A> is true, or if there
+is no third argument. This intertwiner has as its domain the <B>isometry group</B> of <A>ps1</A>.
 The example shows two cases where a spread is computed, including a subgroup of its stabiliser group using
 the intertwiner.
 <Example>

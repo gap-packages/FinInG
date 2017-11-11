@@ -1,19 +1,20 @@
 <!-- 
-
-  gpolygons.xml    FinInG package documentation
+gpolygons.xml    FinInG package documentation
                                                                    John Bamberg
                                                                    Anton Betten
-                                                                   Jan De Beule
                                                                   Philippe Cara
+                                                                   Jan De Beule
                                                                  Michel Lavrauw
                                                                 Max Neunhoeffer
 
-  Copyright (C) 2015,	Colorado State University
+  Copyright (C) 2017,	Colorado State University
+                        Sabancı Üniversitesi
 						Università degli Studi di Padova
 						Universiteit Gent
 						University of St. Andrews
 						University of Western Australia
                         Vrije Universiteit Brussel
+-->
 
 This is the chapter of the documentation describing generalised polygons.
 -->
@@ -106,11 +107,10 @@ discusedd in detail in Section <Ref Sect="EGQ"/>
 <Description>
 <C>IsClassicalGeneralisedHexagon</C> is declared as subcategory of <C>IsGeneralisedHexagon</C> and <C>IsLieGeometry</C>.
 The so called classical generalised hexagons are the hexagons that come from the triality of the hyperbolic quadric 
-<Alt Only="LaTeX"><M>Q^+(7,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>(7,q)</Alt>.
-The Split Cayley hexagon is embedded in the parabolic quadric <M>Q(6,q)</M>,
-or <M>W(5,q)</M> in even characteristic. The twisted triality hexagon
-is embedded in the hyperbolic quadric <Alt Only="LaTeX"><M>Q^+(7,q)</M></Alt>
-<Alt Only="HTML">Q&lt;sup>+&lt;/sup>(7,q)</Alt>. The construction of these hexagons in a subcategory 
+&qplus7q;.
+The Split Cayley hexagon is embedded in the parabolic quadric &q6q;,
+or &w5q; in even characteristic. The twisted triality hexagon
+is embedded in the hyperbolic quadric &qplus7q;. The construction of these hexagons in a subcategory
 of <C>IsLieGeometry</C> means that the usual operations for Lie geometries become applicable. 
 The classical generalised hexagons are in detail discussed in Section <Ref Sect="CGH"/>
 <Example>
@@ -469,28 +469,33 @@ elements in the incidence graph of their ambient geometry is returned.
 <Subsection>
 <Heading>Trialities of the hyperbolic quadric and generalised hexagons</Heading>
 
-Consider the hyperbolic quadric <Alt Not="HTML"><M>Q+(7,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>(7,q)</Alt>.
-This is a polar space of rank 4. It is well known that
-its generators fall into two systems. Each system contains exactly <Alt Not="HTML"><M>(q^3+q^2+q+1)(q^2+q+1)</M></Alt>
-<Alt Only="HTML">(q&lt;sup>3&lt;/sup>+q&lt;sup>2&lt;/sup>+q+1)(q&lt;sup>2&lt;/sup>+q+1)</Alt>
-generators, which is equal to the number of points of <Alt Not="HTML"><M>Q+(7,q)</M></Alt>
-<Alt Only="HTML">Q&lt;sup>+&lt;/sup>(7,q)</Alt>. Generators from the
+Consider the hyperbolic quadric &qplus7q;. This is a polar space of rank 4.
+It is well known that its generators fall into two systems. Each system
+contains exactly <Alt Only="HTML MathJax"><M>(q^3+q^2+q+1)(q^2+q+1)</M></Alt>
+<Alt Not="HTML"><M>(q^3+q^2+q+1)(q^2+q+1)</M></Alt>
+<Alt Only="HTML noMathJax">(q&lt;sup>3&lt;/sup>+q&lt;sup>2&lt;/sup>+q+1)(q&lt;sup>2&lt;/sup>+q+1)</Alt>
+generators, which is equal to the number of points of &qplus7q;. Generators from the
 same system meet each other in an empty subspace or in a line, Generators from a different system
-meet each other in a point of a plane. One defines the rank <M>4</M> geometry <Alt Not="HTML"><M>\Omega(7,q)</M></Alt><Alt Only="HTML">&#937;(7,q)</Alt> as follows.
-The 0-points are the points of <Alt Not="HTML"><M>Q+(7,q)</M></Alt>
-<Alt Only="HTML">Q&lt;sup>+&lt;/sup>(7,q)</Alt>, the 1-points are the generators of the first system, the 2-points
-are the generators of the second system, and the lines are the lines of <Alt Not="HTML"><M>Q+(7,q)</M></Alt>
-<Alt Only="HTML">Q&lt;sup>+&lt;/sup>(7,q)</Alt>. The incidence is the
-natural incidence of the underlying projective space. Denote the set of <M>i</M>-points as <Alt Not="HTML"><M>P^{(i)}</M></Alt>
-<Alt Only="HTML">P&lt;sup>(i)&lt;/sup></Alt>, <M>i=0,1,2</M>.<P/>
-A triality of <Alt Not="HTML"><M>\Omega(7,q)</M></Alt><Alt Only="HTML">&#937;(7,q)</Alt> is a map
-<Alt Not="HTML"><M>\tau: P^{(i)} \rightarrow P^{(i+1)}</M></Alt><Alt Only="HTML"><M>\tau</M>:P&lt;sup>(i)&lt;/sup>&#8594;P&lt;sup>(i+1)&lt;/sup></Alt>
+meet each other in a point or a plane. One defines the rank <M>4</M> geometry
+<Alt Not="HTML"><M>\Omega(7,q)</M></Alt><Alt Only="HTML MathJax"><M>\Omega(7,q)</M></Alt>
+<Alt Only="HTML noMathJax">&#937;(7,q)</Alt> as follows. The 0-points are the points of &qplus7q;,
+the 1-points are the generators of the first system, the 2-points are the generators of the second system,
+and the lines are the lines of &qplus7q;. The incidence is the
+natural incidence of the underlying projective space. Denote the set of <M>i</M>-points as
+<Alt Not="HTML"><M>P^{(i)}</M></Alt>
+<Alt Only="HTML MathJax"><M>P^{(i)}</M></Alt>
+<Alt Only="HTML noMathJax">P&lt;sup>(i)&lt;/sup></Alt>, <M>i=0,1,2</M>.<P/>
+A triality of <Alt Only="HTML MathJax"><M>\Omega(7,q)</M></Alt><Alt Not="HTML"><M>\Omega(7,q)</M></Alt>
+<Alt Only="HTML noMathJax">&#937;(7,q)</Alt> is a map <Alt Not="HTML"><M>\tau: P^{(i)} \rightarrow P^{(i+1)}</M></Alt>
+<Alt Only="HTML MathJax"><M>\tau: P^{(i)} \rightarrow P^{(i+1)}</M></Alt>
+<Alt Only="HTML noMathJax"><M>\tau</M>:P&lt;sup>(i)&lt;/sup>&#8594;P&lt;sup>(i+1)&lt;/sup></Alt>
 (where <M>i+1</M> is computed modulo 3) preserving the incidence and for which <Alt Not="HTML"><M>\tau^3 = 1</M></Alt>
-<Alt Only="HTML"><M>\tau</M>&lt;sup>3&lt;/sup>=1</Alt>. Note that the image of a line under <M>\tau</M> is
+<Alt Only="HTML MathJax"><M>\tau^3 = 1</M></Alt><Alt Only="HTML noMathJax"><M>\tau</M>&lt;sup>3&lt;/sup>=1</Alt>.
+Note that the image of a line under <M>\tau</M> is
 determined by the image of the points incident with the line.<P/> An <M>i</M>-point is absolute with
 respect to a fixed triality if it is incident with its image under the triality. Consequently, a line is absolute
 with if it is fixed by the triality.<P/>
-A generalised hexagon might be obtained as geometry of absolute points of one kind and absolute lines with relation to
+A generalised hexagon can be constructed as geometry of absolute points of one kind and absolute lines with relation to
 a fixed triality. Note that not all trialities yield (thick) generalised quadrangles. There are different
 types of trialities, for some of them the absolute geometry is degenerate.<P/>
 The triality used in <Package>FinInG</Package> to construct the classical generalised hexagons is fixed. It is
@@ -498,12 +503,13 @@ described explicitely in <Cite Key="HVM"/>. To describe the triality, a trilinea
 between <M>i</M>-points of <M>\Omega(7,q)</M> is used. Given the fact that, because of the existence of a triality,
 the role of the 0, 1 and 2 points are the same, each of the 1 and 2 points can be labelled the same way as the 0-points,
 which are effectively labelled by 8-tuples <M>(x_0,\ldots,x_7) \in V(8,q)=V</M> where each 8-tuples represents a projective point
-of <Alt Not="HTML"><M>Q+(7,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>(7,q)</Alt>.<P/>
+of &qplus7q;.<P/>
 Consider the hyperbolic quadric determined by the quadratic form
 <Alt Not="HTML"><M>X_0X_4+X_1X_5+X_2X_6+X_3X_7</M></Alt>
-<Alt Only="HTML">X&lt;sub>0&lt;/sub>X&lt;sub>4&lt;/sub>+X&lt;sub>1&lt;/sub>X&lt;sub>5&lt;/sub>+X&lt;sub>2&lt;/sub>X&lt;sub>6&lt;/sub>+X&lt;sub>3&lt;/sub>X&lt;sub>7&lt;/sub></Alt>.
+<Alt Only="HTML MathJax"><M>X_0X_4+X_1X_5+X_2X_6+X_3X_7</M></Alt>
+<Alt Only="HTML noMathJax">X&lt;sub>0&lt;/sub>X&lt;sub>4&lt;/sub>+X&lt;sub>1&lt;/sub>X&lt;sub>5&lt;/sub>+X&lt;sub>2&lt;/sub>X&lt;sub>6&lt;/sub>+X&lt;sub>3&lt;/sub>X&lt;sub>7&lt;/sub></Alt>.
 Consider the trilinear map <M>T</M>,<P/>
-<Alt Not="HTML"><M>T(x,y,z) = \left|\begin{array}{ccc}
+<Alt Only="HTML MathJax"><M>T(x,y,z) = \left|\begin{array}{ccc}
 x_0 &amp; x_1 &amp; x_2 \\
 y_0 &amp; y_1 &amp; y_2 \\
 z_0 &amp; z_1 &amp; z_2 \\
@@ -514,59 +520,84 @@ y_4 &amp; y_5 &amp; y_6 \\
 z_4 &amp; z_5 &amp; z_6 \\
 \end{array}\right| + 
 x_3(z_0y_4+z_1y_5+z_2y_6) + x_7(y_0z_4+y_1z_5+y_2z_6) + 
-y_3(x_0z_4+x_1z_5+x_2z_6) + y_7(z_0x_4+z_1x_5+z_2x_6) + 
+y_3(x_0z_4+x_1z_5+x_2z_6) + \\ y_7(z_0x_4+z_1x_5+z_2x_6) +
 z_3(y_0x_4+y_1x_5+y_2x_6) + z_7(x_0y_4+x_1y_5+x_2y_6) - 
-x_3y_3z_3 - x_7y_7z_7</M></Alt><Alt Only="HTML">
+x_3y_3z_3 - x_7y_7z_7.</M></Alt>
+<Alt Only="LaTeX"><Display>T(x,y,z) = \left|\begin{array}{ccc}
+    x_0 &amp; x_1 &amp; x_2 \\
+    y_0 &amp; y_1 &amp; y_2 \\
+    z_0 &amp; z_1 &amp; z_2 \\
+    \end{array}\right| +
+    \left|\begin{array}{ccc}
+    x_4 &amp; x_5 &amp; x_6 \\
+    y_4 &amp; y_5 &amp; y_6 \\
+    z_4 &amp; z_5 &amp; z_6 \\
+    \end{array}\right| +
+    x_3(z_0y_4+z_1y_5+z_2y_6) + x_7(y_0z_4+y_1z_5+y_2z_6) +</Display></Alt>
+<Alt Only="LaTeX"><Display>
+    y_3(x_0z_4+x_1z_5+x_2z_6) + \\ y_7(z_0x_4+z_1x_5+z_2x_6) +
+    z_3(y_0x_4+y_1x_5+y_2x_6) + z_7(x_0y_4+x_1y_5+x_2y_6) -
+    x_3y_3z_3 - x_7y_7z_7.</Display></Alt><Alt Only="HTML noMathJax">
 <#Include SYSTEM "./beautiful_formula_in_ugly_html.xml">
-</Alt>.<P/>
-
+</Alt><Alt Only="Text">Display of this formula is not possible in text mode</Alt><P/>
 
 Now a pair <M>(x,y) \in V \times V</M> represents an incident 0-1 pair of points if and only if <M>T(x,y,z)</M> vanishes in the variable
 <M>z</M>, and similarly for any cyclic permutation of the letters <M>x,y,z</M>.  So given a <M>1</M>-point <M>y</M>, <M>T(x,y,z) = 0</M>,
-where <M>z</M> is a variable, and <M>x</M> is an unknown, gives a set of equations representing a generator of
-<Alt Not="HTML"><M>Q+(7,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>(7,q)</Alt>, this the generator of
-<Alt Not="HTML"><M>Q+(7,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>(7,q)</Alt> represented by <M>y</M> as label
-of a <M>1</M>-point.<P/>
-Let <M>\sigma</M> be an automorphism of <M>GF(q)</M> of order <M>3</M>, or the identity. Consider the map<P/>
-<Alt Only="HTML">       &#964;&lt;sub>&#963;&lt;/sub>: P&lt;sup>(i)&lt;/sup>&#8594;P&lt;sup>(i+1)&lt;/sup></Alt>
+where <M>z</M> is a variable, and <M>x</M> is an unknown, gives a set of equations representing a generator of &qplus7q;
+this is the generator of &qplus7q; represented by <M>y</M> as label of a <M>1</M>-point.<P/>
+Let <M>\sigma</M> be an automorphism of &gfq; of order <M>3</M>, or the identity. Consider the map<P/>
+<Alt Only="HTML noMathJax">       &#964;&lt;sub>&#963;&lt;/sub>: P&lt;sup>(i)&lt;/sup>&#8594;P&lt;sup>(i+1)&lt;/sup></Alt>
+<Alt Only="HTML MathJax"><M>\tau_{\sigma}: P^{(i)} \rightarrow P^{(i+1)}</M></Alt>
 <Alt Not="HTML"><M>\tau_{\sigma}: P^{(i)} \rightarrow P^{(i+1)}</M></Alt><P/>
 <Alt Not="HTML"><M>(x_j) \mapsto (x_j^{\sigma})</M>, <M>j=0\ldots 7</M></Alt>
-<Alt Only="HTML">       (x&lt;sub>j&lt;/sub>) &#8594; (x&lt;sub>j&lt;/sub>&lt;sup>&#963;&lt;/sup>), j=0...7</Alt>.<P/>
+<Alt Only="HTML MathJax"><M>(x_j) \mapsto (x_j^{\sigma})</M>, <M>j=0\ldots 7</M></Alt>
+<Alt Only="HTML noMathJax">       (x&lt;sub>j&lt;/sub>) &#8594; (x&lt;sub>j&lt;/sub>&lt;sup>&#963;&lt;/sup>), j=0...7</Alt>.<P/>
 This map clearly preserves <M>T(x,y,z)</M>, so preserves the incidence, and has order three, so it is a triality of
-<Alt Not="HTML"><M>\Omega(7,q)</M></Alt><Alt Only="HTML">&#937;(7,q)</Alt>. We call an element <M>p</M> absolute with
-respect to a triality <M>\tau</M> if and only if <Alt Not="HTML"><M>p I p^\tau</M></Alt>
-<Alt Only="HTML">p I p&lt;sup>&#964;&lt;/sup></Alt>. Consequently, a line is absolute if and only if it
+<Alt Not="HTML"><M>\Omega(7,q)</M></Alt><Alt Only="HTML MathJax"><M>\Omega(7,q)</M></Alt><Alt Only="HTML noMathJax">&#937;(7,q)</Alt>. We call an element <M>p</M> absolute with
+respect to a triality <M>\tau</M> if and only if <Alt Only="HTML MathJax"><M>p \mathrm{I} p^\tau</M></Alt><Alt Not="HTML"><M>p \mathrm{I} p^\tau</M></Alt>
+<Alt Only="HTML noMathJax">p I p&lt;sup>&#964;&lt;/sup></Alt>. Consequently, a line is absolute if and only if it
 is fixed by the triality. Denote the set of <M>i</M>-points that are absolute with respect to the triality as
-<Alt Not="HTML"><M>P_{\mathrm{abs}}^{(i)}</M></Alt><Alt Only="HTML">P&lt;sup>(i)&lt;/sup>&lt;sub>abs&lt;/sub></Alt>, and
-set of absolute lines with respect to the triality as <Alt Not="HTML"><M>L_{\mathrm{abs}}</M></Alt><Alt Only="HTML">L&lt;sub>abs&lt;/sub></Alt>.
+<Alt Only="HTML MathJax"><M>P_{\mathrm{abs}}^{(i)}</M></Alt><Alt Not="HTML"><M>P_{\mathrm{abs}}^{(i)}</M></Alt>
+<Alt Only="HTML noMathJax">P&lt;sup>(i)&lt;/sup>&lt;sub>abs&lt;/sub></Alt>, and the
+set of absolute lines with respect to the triality as <Alt Not="HTML"><M>L_{\mathrm{abs}}</M></Alt>
+<Alt Only="HTML MathJax"><M>L_{\mathrm{abs}}</M></Alt><Alt Only="HTML noMathJax">L&lt;sub>abs&lt;/sub></Alt>.
 Then a famous theorem of Tits (<Cite Key="Tits1959"/>) says that for the triality
-<Alt Only="HTML">&#964;&lt;sub>&#963;&lt;/sub></Alt><Alt Not="HTML"><M>\tau_{\sigma}</M></Alt>,
-the point-line geometry <Alt Not="HTML"><M>\Gamma^{(i)} = (P^{(i)}_{\mathrm{abs}},L_{\mathrm{abs}}),I)</M></Alt>
-<Alt Only="HTML">&#915;&lt;sup>(i)&lt;/sup> = (P&lt;sup>(i)&lt;/sup>&lt;sub>abs&lt;/sub>, L&lt;sub>abs&lt;/sub>, I)</Alt>
-is a generalised hexagon of order <M>(|K|,|L|)</M>, <M>K=GF(q)</M> and <M>L</M> the subfield of invariant elements of <M>K</M>
+<Alt Only="HTML noMathJax">&#964;&lt;sub>&#963;&lt;/sub></Alt><Alt Only="HTML MathJax"><M>\tau_{\sigma}</M></Alt>
+<Alt Not="HTML"><M>\tau_{\sigma}</M></Alt>, the point-line geometry
+<Alt Not="HTML"><M>\Gamma^{(i)} = (P^{(i)}_{\mathrm{abs}},L_{\mathrm{abs}},\mathrm{I})</M></Alt>
+<Alt Only="HTML MathJax"><M>\Gamma^{(i)} = (P^{(i)}_{\mathrm{abs}},L_{\mathrm{abs}},\mathrm{I})</M></Alt>
+<Alt Only="HTML noMathJax">&#915;&lt;sup>(i)&lt;/sup> = (P&lt;sup>(i)&lt;/sup>&lt;sub>abs&lt;/sub>, L&lt;sub>abs&lt;/sub>, I)</Alt>
+is a generalised hexagon of order <M>(|K|,|L|)</M>, <M>K</M> the field &gfq; and <M>L</M> the subfield of invariant elements of <M>K</M>
 under the field automorphism <M>\sigma</M>. Note that a finite field has a field automorphism of order three if and only if its
-order equals <Alt Not="HTML"><M>q^3</M></Alt><Alt Only="HTML">q&lt;sup>3&lt;/sup></Alt>. So, for <M>K=GF(q)</M> and
-<M>\sigma=1</M>, <Alt Only="HTML">&#915;&lt;sup>(i)&lt;/sup></Alt><Alt Not="HTML"><M>\Gamma^{(i)}</M></Alt> is a generalised hexagon
+order equals <Alt Only="HTML MathJax"><M>q^3</M></Alt><Alt Not="HTML"><M>q^3</M></Alt><Alt Only="HTML noMathJax">q&lt;sup>3&lt;/sup></Alt>.
+So, for <M>K</M> equal to &gfq; and <M>\sigma=1</M>, <Alt Only="HTML noMathJax">&#915;&lt;sup>(i)&lt;/sup></Alt>
+<Alt Only="HTML MathJax"><M>\Gamma^{(i)}</M></Alt><Alt Not="HTML"><M>\Gamma^{(i)}</M></Alt> is a generalised hexagon
 of order <M>q</M>, which is called the <E>split Cayley hexagon of order <M>q</M></E>, denoted <M>H(q)</M>.
-For <Alt Not="HTML"><M>K=GF(q^3)</M></Alt><Alt Only="HTML">K=GF(q&lt;sup>3&lt;/sup>)</Alt>, and
-<M>\sigma</M> a non-trival field automorphism of order <M>3</M>, <Alt Only="HTML">&#915;&lt;sup>(i)&lt;/sup></Alt>
-<Alt Not="HTML"><M>\Gamma^{(i)}</M></Alt> is a generalised hexagon of order <Alt Not="HTML"><M>(q^3,q)</M></Alt>
-<Alt Only="HTML">(q&lt;sup>3&lt;/sup>,q)</Alt>, which is called the <E>twisted triality hexagon of order <Alt Not="HTML"><M>(q^3,q)</M></Alt>
-<Alt Only="HTML">(q&lt;sup>3&lt;/sup>,q)</Alt></E>, denoted <Alt Not="HTML"><M>T(q^3,q)</M></Alt>
-<Alt Only="HTML">T(q&lt;sup>3&lt;/sup>,q)</Alt>. Note that for a given triality, the hexagons <Alt Only="HTML">&#915;&lt;sup>(i)&lt;/sup></Alt>
-<Alt Not="HTML"><M>\Gamma^{(i)}</M></Alt>, <M>i=0,1,2</M> are isomorphic. Consequently, <Alt Only="HTML">&#915;&lt;sup>(0)&lt;/sup></Alt>
-<Alt Not="HTML"><M>\Gamma^{(0)}</M></Alt> is a point-line geometry of which the point set, line set respectively, is a subset
-of the points, lines respectively of <Alt Not="HTML"><M>Q+(7,q)</M></Alt>
-<Alt Only="HTML">Q&lt;sup>+&lt;/sup>(7,q)</Alt>. Finally, we mention the following important theorem, which was shown by Tits (<Cite Key="Tits1959"/>):
+For <M>K</M> equal to &gfq3;, and
+<M>\sigma</M> a non-trival field automorphism of order <M>3</M>, <Alt Only="HTML noMathJax">&#915;&lt;sup>(i)&lt;/sup></Alt>
+<Alt Only="HTML MathJax"><M>\Gamma^{(i)}</M></Alt><Alt Not="HTML"><M>\Gamma^{(i)}</M></Alt> is a generalised hexagon
+of order <Alt Only="HTML MathJax"><M>(q^3,q)</M></Alt><Alt Not="HTML"><M>(q^3,q)</M></Alt>
+<Alt Only="HTML noMathJax">(q&lt;sup>3&lt;/sup>,q)</Alt>, which is called the <E>twisted triality hexagon
+of order <Alt Only="HTML MathJax"><M>(q^3,q)</M></Alt><Alt Not="HTML"><M>(q^3,q)</M></Alt>
+<Alt Only="HTML noMathJax">(q&lt;sup>3&lt;/sup>,q)</Alt></E>, denoted <Alt Only="HTML MathJax"><M>T(q^3,q)</M></Alt><Alt Not="HTML"><M>T(q^3,q)</M></Alt>
+<Alt Only="HTML noMathJax">T(q&lt;sup>3&lt;/sup>,q)</Alt>. Note that for a given triality, the hexagons
+<Alt Only="HTML noMathJax">&#915;&lt;sup>(i)&lt;/sup></Alt><Alt Not="HTML"><M>\Gamma^{(i)}</M></Alt>
+<Alt Only="HTML MathJax"><M>\Gamma^{(i)}</M></Alt>, <M>i=0,1,2</M> are isomorphic. Consequently, <Alt Only="HTML noMathJax">&#915;&lt;sup>(0)&lt;/sup></Alt>
+<Alt Only="HTML MathJax"><M>\Gamma^{(0)}</M></Alt><Alt Not="HTML"><M>\Gamma^{(0)}</M></Alt>
+is a point-line geometry of which the point set, line set respectively, is a subset
+of the points, lines respectively of &qplus7q;. Finally, we mention the following important theorem, which was shown by Tits (<Cite Key="Tits1959"/>):
 the split Cayley hexagon, obtained by the triliaty with <M>\sigma=1</M>, is contained in the hyperplane with equation
-<Alt Not="HTML"><M>X_3+X_7=0</M></Alt><Alt Only="HTML">X&lt;sub>3&lt;/sub> + X&lt;sub>7&lt;/sub></Alt>, which intersects
-the hyperbolic quadric in the parabolic quadric <M>Q(6,q)</M>. The points of the split Cayley hexagon are the points
-of <M>Q(6,q)</M>.<P/>
+<Alt Not="HTML"><M>X_3+X_7=0</M></Alt><Alt Only="HTML MathJax"><M>X_3+X_7=0</M></Alt>
+<Alt Only="HTML noMathJax">X&lt;sub>3&lt;/sub> + X&lt;sub>7&lt;/sub></Alt>, which intersects
+the hyperbolic quadric in the parabolic quadric &q6q;.
+The points of the split Cayley hexagon are the points of &q6q;.<P/>
 This above description of the triality and the associated generalised hexagons, contains sufficient analytical information
 to implement the split Cayley hexagon and the twisted triality hexagon in an efficient way. The user is allowed to choose
-a representation for the ambient polar space. For <Alt Not="HTML"><M>q=2^h</M></Alt><Alt Only="HTML">q=2&lt;sup>h&lt;/sup></Alt>
-the polar spaces <M>Q(6,q)</M> and <M>W(5,q)</M> are isomorphic. Consequently, the user may choose <M>W(5,q)</M> as ambient polar
-space for the split Cayley hexagon of even order. This embedding in <M>W(5,q)</M> is called the perfect symplectic embedding of
+a representation for the ambient polar space. For <Alt Not="HTML"><M>q=2^h</M></Alt><Alt Only="HTML MathJax"><M>q=2^h</M></Alt>
+<Alt Only="HTML noMathJax">q=2&lt;sup>h&lt;/sup></Alt>
+the polar spaces &q6q; and &w5q; are isomorphic.
+Consequently, the user may choose &w5q; as ambient polar space for the split Cayley hexagon of even order.
+This embedding in &w5q; is called the perfect symplectic embedding of
 the split Cayley hexagon. Finally, <Cite Key="HVM"/> contains an explicit description of the generators of the collineation groups
 of both generalised hexagons.
 
@@ -687,48 +718,59 @@ there exists a point <M>p</M> and a group of collineations <M>G</M> fixing
 <M>p</M> and each line through <M>p</M>, with the extra property that
 <M>G</M> acts regularly on the points not collinear with <M>p</M>. Then
 <M>S</M> is called an <E>elation generalised quadrangle</E> with base-point <M>p</M>
-and elation group <M>G</M>, and <M>G</M> has order <Alt Not="HTML"><M>s^2t</M></Alt><Alt Only="HTML">s&lt;sup>2&lt;/sup>t</Alt>.
+and elation group <M>G</M>, and <M>G</M> has order <Alt Only="HTML MathJax"><M>s^2t</M></Alt><Alt Not="HTML"><M>s^2t</M></Alt><Alt Only="HTML noMathJax">s&lt;sup>2&lt;/sup>t</Alt>.
 Let <M>y</M> be a fixed point of <M>S</M>, not collinear with <M>p</M>. Denote the <M>t+1</M>
-lines incident with <M>p</M> as <Alt Not="HTML"><M>L_i, i=0 \ldots t</M></Alt>
-<Alt Only="HTML">L&lt;sub>i&lt;/sub>, i=0 ... t</Alt>. Define for each line
-<Alt Not="HTML"><M>L_i</M></Alt><Alt Only="HTML">L&lt;sub>i&lt;/sub></Alt> the unique
-point-line pair <Alt Not="HTML"><M>(z_i,M_i)</M></Alt><Alt Only="HTML">(z&lt;sub>i&lt;/sub>,M&lt;sub>i&lt;/sub>)</Alt>
-such that <Alt Not="HTML"><M>L_i I z_i I M_i I y</M></Alt>
-<Alt Only="HTML">L&lt;sub>i&lt;/sub> I z&lt;sub>i&lt;/sub> I M&lt;sub>i&lt;/sub> I y</Alt>. Define the groups
-<Alt Not="HTML"><M>S_i</M></Alt><Alt Only="HTML">S&lt;sub>i&lt;/sub></Alt> as the subgroups of <M>G</M> fixing the lines
-<Alt Not="HTML"><M>M_i</M></Alt><Alt Only="HTML">M&lt;sub>i&lt;/sub></Alt>, and define the groups
-<Alt Not="HTML"><M>S_i^*</M></Alt><Alt Only="HTML">S&lt;sub>i&lt;/sub>&lt;sup>*&lt;/sup></Alt> as the subgroups of
-<M>G</M> fixing the point <Alt Not="HTML"><M>z_i</M></Alt><Alt Only="HTML">z&lt;sub>i&lt;/sub></Alt>.
-Define the set <Alt Not="HTML"><M>J = \{S_i: i=0 \ldots t\}</M></Alt><Alt Only="HTML">J = {S&lt;sub>i&lt;/sub>: i=0 ... t}</Alt>,
-and the set <Alt Not="HTML"><M>J^* = \{S_i: i=0 \ldots t\}</M></Alt>
-<Alt Only="HTML">J&lt;sup>*&lt;/sup> = {S&lt;sub>i&lt;/sub>&lt;sup>*&lt;/sup>: i=0 ... t}</Alt>. Since <M>S</M> is an elation generalised quadrangle,
-<M>J</M> is a collection of <M>t+1</M> subgroups of <M>G</M> of order <M>s</M>, and each <Alt Not="HTML"><M>S_i^*</M></Alt>
-<Alt Only="HTML">S&lt;sub>i&lt;/sub>&lt;sup>*&lt;/sup></Alt> contains has order <M>st</M> and contains <Alt Not="HTML"><M>S_i</M></Alt>
-<Alt Only="HTML">S&lt;sub>i&lt;/sub></Alt> as a subgroup. Furthermore, the following two conditions are satisfied.<P/>
-(K1) <Alt Not="HTML"><M>S_iS_j \cap S_k = \{1\}</M></Alt>
-<Alt Only="HTML">S&lt;sub>i&lt;/sub> S&lt;sub>j&lt;/sub> <M>\cap</M>S&lt;sub>k&lt;/sub> = {1}</Alt>, for distinct <M>i,j,k</M>.<P/>
-(K2) <Alt Not="HTML"><M>S_i \cap S_j^* = \{1\}</M></Alt>
-<Alt Only="HTML">S&lt;sub>i&lt;/sub>&lt;sup>*&lt;/sup> <M>\cap</M>S&lt;sub>j&lt;/sub> = {1}</Alt>, for distinct <M>i,j</M>.<P/>
-The pair <Alt Not="HTML"><M>(J,J^*)</M></Alt><Alt Only="HTML">(J,J&lt;sup>*&lt;/sup>)</Alt> is called a <E>4-gonal family</E> or
+lines incident with <M>p</M> as <Alt Only="HTML MathJax"><M>L_i, i=0 \ldots t</M></Alt><Alt Not="HTML"><M>L_i, i=0 \ldots t</M></Alt>
+<Alt Only="HTML noMathJax">L&lt;sub>i&lt;/sub>, i=0 ... t</Alt>. Define for each line
+<Alt Only="HTML MathJax"><M>L_i</M></Alt><Alt Only="HTML noMathJax">L&lt;sub>i&lt;/sub></Alt><Alt Not="HTML"><M>L_i</M></Alt> the unique
+point-line pair <Alt Only="HTML MathJax"><M>(z_i,M_i)</M></Alt><Alt Only="HTML noMathJax">(z&lt;sub>i&lt;/sub>,M&lt;sub>i&lt;/sub>)</Alt>
+<Alt Not="HTML"><M>(z_i,M_i)</M></Alt> such that <Alt Only="HTML MathJax"><M>L_i I z_i I M_i I y</M></Alt>
+<Alt Not="HTML"><M>L_i I z_i I M_i I y</M></Alt><Alt Only="HTML noMathJax">L&lt;sub>i&lt;/sub> I z&lt;sub>i&lt;/sub> I M&lt;sub>i&lt;/sub> I y</Alt>.
+Define the groups <Alt Only="HTML MathJax"><M>S_i</M></Alt><Alt Not="HTML"><M>S_i</M></Alt>
+<Alt Only="HTML noMathJax">S&lt;sub>i&lt;/sub></Alt> as the subgroups of <M>G</M> fixing the lines
+<Alt Only="HTML MathJax"><M>M_i</M></Alt><Alt Not="HTML"><M>M_i</M></Alt><Alt Only="HTML noMathJax">M&lt;sub>i&lt;/sub></Alt>, and define the groups
+<Alt Only="HTML MathJax"><M>S_i^*</M></Alt><Alt Not="HTML"><M>S_i^*</M></Alt>
+<Alt Only="HTML noMathJax">S&lt;sub>i&lt;/sub>&lt;sup>*&lt;/sup></Alt> as the subgroups of
+<M>G</M> fixing the point <Alt Only="HTML MathJax"><M>z_i</M></Alt><Alt Not="HTML"><M>z_i</M></Alt>
+<Alt Only="HTML noMathJax">z&lt;sub>i&lt;/sub></Alt>.
+Define the set <Alt Only="HTML MathJax"><M>J = \{S_i: i=0 \ldots t\}</M></Alt><Alt Not="HTML"><M>J = \{S_i: i=0 \ldots t\}</M></Alt>
+<Alt Only="HTML noMathJax">J = {S&lt;sub>i&lt;/sub>: i=0 ... t}</Alt>,
+and the set <Alt Only="HTML MathJax"><M>J^* = \{S_i: i=0 \ldots t\}</M></Alt><Alt Not="HTML"><M>J^* = \{S_i: i=0 \ldots t\}</M></Alt>
+<Alt Only="HTML noMathJax">J&lt;sup>*&lt;/sup> = {S&lt;sub>i&lt;/sub>&lt;sup>*&lt;/sup>: i=0 ... t}</Alt>. Since <M>S</M> is an elation generalised quadrangle,
+<M>J</M> is a collection of <M>t+1</M> subgroups of <M>G</M> of order <M>s</M>, and each <Alt Only="HTML MathJax"><M>S_i^*</M></Alt>
+<Alt Not="HTML"><M>S_i^*</M></Alt><Alt Only="HTML noMathJax">S&lt;sub>i&lt;/sub>&lt;sup>*&lt;/sup></Alt>
+contains has order <M>st</M> and contains <Alt Only="HTML MathJax"><M>S_i</M></Alt><Alt Not="HTML"><M>S_i</M></Alt>
+<Alt Only="HTML noMathJax">S&lt;sub>i&lt;/sub></Alt> as a subgroup. Furthermore, the following two conditions are satisfied.<P/>
+(K1) <Alt Only="HTML MathJax"><M>S_iS_j \cap S_k = \{1\}</M></Alt><Alt Not="HTML"><M>S_iS_j \cap S_k = \{1\}</M></Alt>
+<Alt Only="HTML noMathJax">S&lt;sub>i&lt;/sub> S&lt;sub>j&lt;/sub> <M>\cap</M>S&lt;sub>k&lt;/sub> = {1}</Alt>, for distinct <M>i,j,k</M>.<P/>
+(K2) <Alt Only="HTML MathJax"><M>S_i \cap S_j^* = \{1\}</M></Alt><Alt Not="HTML"><M>S_i \cap S_j^* = \{1\}</M></Alt>
+<Alt Only="HTML noMathJax">S&lt;sub>i&lt;/sub>&lt;sup>*&lt;/sup> <M>\cap</M>S&lt;sub>j&lt;/sub> = {1}</Alt>, for distinct <M>i,j</M>.<P/>
+The pair <Alt Only="HTML MathJax"><M>(J,J^*)</M></Alt><Alt Not="HTML"><M>(J,J^*)</M></Alt>
+<Alt Only="HTML noMathJax">(J,J&lt;sup>*&lt;/sup>)</Alt> is called a <E>4-gonal family</E> or
 <E>Kantor family</E> in <M>G</M>.<P/>
-Remarkably, each Kantor family in a group of order <Alt Not="HTML"><M>s^2t</M></Alt><Alt Only="HTML">s&lt;sup>2&lt;/sup>t</Alt>
+Remarkably, each Kantor family in a group of order <Alt Only="HTML MathJax"><M>s^2t</M></Alt><Alt Not="HTML"><M>s^2t</M></Alt>
+<Alt Only="HTML noMathJax">s&lt;sup>2&lt;/sup>t</Alt>
 gives rise to an elation generalised quadrangle. Kantor families and elation generalised quadrangles are equivalent objects,
 and one of the motivations to study Kantor families in groups was to find examples of non-classical elation generalised quadrangles.<P/>
-Given a group <M>G</M>, together with a Kantor family <Alt Not="HTML"><M>(J,J^*)</M></Alt><Alt Only="HTML">(J,J&lt;sup>*&lt;/sup>)</Alt>,
+Given a group <M>G</M>, together with a Kantor family <Alt Only="HTML MathJax"><M>(J,J^*)</M></Alt><Alt Not="HTML"><M>(J,J^*)</M></Alt>
+<Alt Only="HTML noMathJax">(J,J&lt;sup>*&lt;/sup>)</Alt>,
 a generalised quadrangle is defined as follows.<P/>
 The points are of three types:<P/>
 (i) points of type 1 are the elements of <M>G</M>;<P/>
-(ii) points of of type 2 are the right cosets <Alt Not="HTML"><M>S^*g, s^* \in J^*</M></Alt>
-<Alt Only="HTML">S&lt;sup>*&lt;/sup>g, S&lt;sup>*&lt;/sup><M>\in</M> J&lt;sup>*&lt;/sup></Alt><P/>
-(iii) the unique point of type (iii) is the symbol <Alt Not="HTML"><M>(\infty)</M></Alt><Alt Only="HTML">(&#8734;)</Alt>.<P/>
+(ii) points of of type 2 are the right cosets <Alt Only="HTML MathJax"><M>S^*g, s^* \in J^*</M></Alt>
+<Alt Not="HTML"><M>S^*g, s^* \in J^*</M></Alt><Alt Only="HTML noMathJax">S&lt;sup>*&lt;/sup>g, S&lt;sup>*&lt;/sup><M>\in</M> J&lt;sup>*&lt;/sup></Alt><P/>
+(iii) the unique point of type (iii) is the symbol <Alt Only="HTML MathJax"><M>(\infty)</M></Alt><Alt Not="HTML"><M>(\infty)</M></Alt>
+<Alt Only="HTML noMathJax">(&#8734;)</Alt>.<P/>
 The lines are of two types:<P/>
 (a) lines of type (a) are the right cosets <M>Sg</M>, <M>S \in J</M>;<P/>
 (b) Lines of type (b) are the symbols <M>[S], S \in J</M>.<P/>
 Incidence is defined as follows. A point <M>g</M> of type (i) is incident with each
-line <M>Sg, S \in J</M> of type (a). A point of type (ii) <Alt Not="HTML"><M>S^*g</M></Alt>
-<Alt Only="HTML">S&lt;sup>*&lt;/sup>g</Alt> is incident the line <M>[S]</M> of type (b)
-and the <M>t</M> lines of type (a) for which <Alt Not="HTML"><M>Sh \subset S^*g</M></Alt>
-<Alt Only="HTML">Sh <M>\subset</M> S&lt;sup>*&lt;/sup>g</Alt>. Finally, the unique point of type (iii)
+line <M>Sg, S \in J</M> of type (a). A point of type (ii) <Alt Only="HTML MathJax"><M>S^*g</M></Alt>
+<Alt Not="HTML"><M>S^*g</M></Alt>
+<Alt Only="HTML noMathJax">S&lt;sup>*&lt;/sup>g</Alt> is incident the line <M>[S]</M> of type (b)
+and the <M>t</M> lines of type (a) for which <Alt Only="HTML MathJax"><M>Sh \subset S^*g</M></Alt>
+<Alt Not="HTML"><M>Sh \subset S^*g</M></Alt>
+<Alt Only="HTML noMathJax">Sh <M>\subset</M> S&lt;sup>*&lt;/sup>g</Alt>. Finally, the unique point of type (iii)
 is incident with the lines of type (b), and there are no further incidences.<P/>
 It is shown, see e.g. the standard work in this field of Payne and Thas <Cite Key="FGQ"/>, that this
 point-line geoemtry is a generalised quadrangle of order <M>(s,t)</M>.<P/>
@@ -786,9 +828,9 @@ demonstrated, and some categories are displayed.
 For technical reasons, the underlying objects of the elements of an elation generalised quadrangle constructed from a Kantor family,
 are not exactly the mathematical objects from the definition. However, these technicalities are almost completely hidden for the user, except
 for the representation of lines of type (b), which are represented in <Package>FinInG</Package> by the elements of the collection
-<Alt Not="HTML"><M>J^*</M></Alt><Alt Only="HTML">J&lt;sup>*&lt;/sup></Alt> (instead of the elements of the collection <M>J</M>). This change
+<Alt Only="HTML MathJax"><M>J^*</M></Alt><Alt Not="HTML"><M>J^*</M></Alt><Alt Only="HTML noMathJax">J&lt;sup>*&lt;/sup></Alt> (instead of the elements of the collection <M>J</M>). This change
 from the original definition has no mathematical implications, since there is a bijective correspondence between the elements of
-<Alt Not="HTML"><M>J^*</M></Alt><Alt Only="HTML">J&lt;sup>*&lt;/sup></Alt> and <M>J</M>. Notice also that it is only possible to obtain
+<Alt Only="HTML MathJax"><M>J^*</M></Alt><Alt Not="HTML"><M>J^*</M></Alt><Alt Only="HTML noMathJax">J&lt;sup>*&lt;/sup></Alt> and <M>J</M>. Notice also that it is only possible to obtain
 the base-point of an elation generalised quadrangle constructed from a Kantor family through calling the attribute <F>BasePointOfEGQ</F>.
 <Example>
 <#Include SYSTEM "../examples/include/gpolygons_objectselementsofegq.include">
@@ -816,35 +858,44 @@ generalised quadrangle constructed from a Kantor family, the attribute <F>Collin
 <Subsection>
 <Heading>Kantor families, q-clans, and elation generalised quadrangles</Heading>
 
-Let <Alt Not="HTML"><M>C=\{A_i: i=1 \ldots q\}</M></Alt><Alt Only="HTML">C = {A&lt;sub>i&lt;/sub>: i=1 ... q}</Alt>
+Let <Alt Only="HTML MathJax"><M>C=\{A_i: i=1 \ldots q\}</M></Alt><Alt Not="HTML"><M>C=\{A_i: i=1 \ldots q\}</M></Alt><Alt Only="HTML noMathJax">C = {A&lt;sub>i&lt;/sub>: i=1 ... q}</Alt>
  be a set of <M>q</M> distinct upper triangle <M>2 \times 2</M> 
-matrices over the finite field <M>GF(q)</M>. Then <M>C</M> is called a <E>q-clan</E> if 
-<Alt Not="HTML"><M>A_r - A_t</M></Alt><Alt Only="HTML">A&lt;sub>r&lt;/sub> - A&lt;sub>t&lt;/sub></Alt> 
+matrices over the finite field &gfq;. Then <M>C</M> is called a <E>q-clan</E> if 
+<Alt Only="HTML MathJax"><M>A_r - A_t</M></Alt><Alt Not="HTML"><M>A_r - A_t</M></Alt><Alt Only="HTML noMathJax">A&lt;sub>r&lt;/sub> - A&lt;sub>t&lt;/sub></Alt>
 is anistropic for <M>r \neq t</M>.<P/> Define 
+<Alt Only="HTML MathJax"><M>G = \{(\alpha,c,\beta): \alpha,\beta \in GF(q)^2, c \in GF(q)\}</M></Alt>
 <Alt Not="HTML"><M>G = \{(\alpha,c,\beta): \alpha,\beta \in GF(q)^2, c \in GF(q)\}</M></Alt>
-<Alt Only="HTML">G = {(&#945;,c,&#946;): &#945;,&#946; &#8712; GF(q)&lt;sup>2&lt;/sup>, c &#8712; GF(q) }</Alt>, 
+<Alt Only="HTML noMathJax">G = {(&#945;,c,&#946;): &#945;,&#946; &#8712; GF(q)&lt;sup>2&lt;/sup>, c &#8712; GF(q) }</Alt>, 
 and define the binary operator <M>\times</M> as 
-<Alt Not="HTML"><M>(\alpha,c,\beta) \times (\alpha',c',\beta') = 
-(\alpha + \alpha',c+c'+\beta \cdot \alpha'^{T},\beta + \beta')</M></Alt><Alt Only="HTML">(&#945;,c,&#946;) <M>\times</M>
+<Alt Only="HTML MathJax"><M>(\alpha,c,\beta) \times (\alpha',c',\beta') =
+(\alpha + \alpha',c+c'+\beta \cdot \alpha'^{T},\beta + \beta')</M></Alt>
+<Alt Not="HTML"><M>(\alpha,c,\beta) \times (\alpha',c',\beta') =
+    (\alpha + \alpha',c+c'+\beta \cdot \alpha'^{T},\beta + \beta')</M></Alt>
+<Alt Only="HTML noMathJax">(&#945;,c,&#946;) <M>\times</M>
 (&#945;',c',&#946;') = (&#945;+&#945;',c+c'+&#946;&#945;'&lt;sup>T&lt;/sup>,&#946;+&#946;')</Alt>. Then <M>G,\times</M>
 is a group with center <M>Z(G)=\{(0,c,0): c \in GF(q)\}</M>. Consider a q-clan 
-<Alt Not="HTML"><M>C=\{A_i: i=1 \ldots q\}</M></Alt><Alt Only="HTML">C = {A&lt;sub>i&lt;/sub>: i=1 ... q}</Alt>, define
-<Alt Not="HTML"><M>K_i = A_i+A_i^T</M></Alt><Alt Only="HTML">K&lt;sub>i&lt;/sub> = A&lt;sub>i&lt;/sub> + 
+<Alt Only="HTML MathJax"><M>C=\{A_i: i=1 \ldots q\}</M></Alt><Alt Not="HTML"><M>C=\{A_i: i=1 \ldots q\}</M></Alt><Alt Only="HTML noMathJax">C = {A&lt;sub>i&lt;/sub>: i=1 ... q}</Alt>, define
+<Alt Only="HTML MathJax"><M>K_i = A_i+A_i^T</M></Alt><Alt Not="HTML"><M>K_i = A_i+A_i^T</M></Alt><Alt Only="HTML noMathJax">K&lt;sub>i&lt;/sub> = A&lt;sub>i&lt;/sub> +
 A&lt;sub>i&lt;/sub>&lt;sup>T&lt;/sup></Alt>. Now define the following subgroups of <M>G</M><P/>
 <Alt Not="HTML"><M>A(i) = \{(\alpha,\alpha A_t,\alpha K_t): \alpha \in GF(q)^2, i=1\ldots q\}</M></Alt>
-<Alt Only="HTML">A(i)= {(&#945;,&#945;A&lt;sub>i&lt;/sub>,&#945;K&lt;sub>i&lt;/sub>): &#945; &#8712; GF(q)&lt;sup>2&lt;/sup>, i=1..q }</Alt> and
-<Alt Not="HTML"><M>A(\infty) = \(0,0,\gamma): \gamma \in GF(q)^2\}</M></Alt>
-<Alt Only="HTML">A(&#8734;)= {(0,0,&#947;) &#947; &#8712; GF(q)&lt;sup>2&lt;/sup> }</Alt>, and<P/>
+<Alt Only="HTML MathJax"><M>A(i) = \{(\alpha,\alpha A_t,\alpha K_t): \alpha \in GF(q)^2, i=1\ldots q\}</M></Alt>
+<Alt Only="HTML noMathJax">A(i)= {(&#945;,&#945;A&lt;sub>i&lt;/sub>,&#945;K&lt;sub>i&lt;/sub>): &#945; &#8712; GF(q)&lt;sup>2&lt;/sup>, i=1..q }</Alt> and
+<Alt Only="HTML MathJax"><M>A(\infty) = \{(0,0,\gamma): \gamma \in GF(q)^2\}</M></Alt><Alt Not="HTML"><M>A(\infty) = \(0,0,\gamma): \gamma \in GF(q)^2\}</M></Alt>
+<Alt Only="HTML noMathJax">A(&#8734;)= {(0,0,&#947;) &#947; &#8712; GF(q)&lt;sup>2&lt;/sup> }</Alt>, and<P/>
+<Alt Only="HTML MathJax"><M>A^*(i) = \{(\alpha,b,\alpha K_t): \alpha \in GF(q)^2, b \in GF(q), i=1\ldots q\}</M></Alt>
 <Alt Not="HTML"><M>A^*(i) = \{(\alpha,\b,\alpha K_t): \alpha \in GF(q)^2, b \in GF(q), i=1\ldots q\}</M></Alt>
-<Alt Only="HTML">A&lt;sup>*&lt;/sup>(i)= {(&#945;,b,&#945;K&lt;sub>i&lt;/sub>): &#945; &#8712; GF(q)&lt;sup>2&lt;/sup>, b &#8712; GF(q), i=1..q }</Alt> and
+<Alt Only="HTML noMathJax">A&lt;sup>*&lt;/sup>(i)= {(&#945;,b,&#945;K&lt;sub>i&lt;/sub>): &#945; &#8712; GF(q)&lt;sup>2&lt;/sup>, b &#8712; GF(q), i=1..q }</Alt> and
+<Alt Only="HTML MathJax"><M>A^*(\infty) = \{(0,b,\gamma): \gamma \in GF(q)^2, b \in GF(q)\}</M></Alt>
 <Alt Not="HTML"><M>A^*(\infty) = \{(0,b,\gamma): \gamma \in GF(q)^2, b \in GF(q)\}</M></Alt>
-<Alt Only="HTML">A&lt;sup>*&lt;/sup>(&#8734;) = {(0,b,&#947;): &#947; &#8712; GF(q)&lt;sup>2&lt;/sup>, b &#8712; GF(q)}</Alt><P/>
-Define <Alt Not="HTML"><M>J=\{A(i):i=1\ldots q\} \cup \{A(\infty)\}</M></Alt>
-<Alt Only="HTML">J = {A(i): i= 1 ... q} &#8746; {A(&#8734;)}</Alt> and 
+<Alt Only="HTML noMathJax">A&lt;sup>*&lt;/sup>(&#8734;) = {(0,b,&#947;): &#947; &#8712; GF(q)&lt;sup>2&lt;/sup>, b &#8712; GF(q)}</Alt><P/>
+Define <Alt Only="HTML MathJax"><M>J=\{A(i):i=1\ldots q\} \cup \{A(\infty)\}</M></Alt>
+<Alt Not="HTML"><M>J=\{A(i):i=1\ldots q\} \cup \{A(\infty)\}</M></Alt>
+<Alt Only="HTML noMathJax">J = {A(i): i= 1 ... q} &#8746; {A(&#8734;)}</Alt> and 
+<Alt Only="HTML MathJax"><M>J^*=\{A^*(i):i=1\ldots q\} \cup \{A^*(\infty)\}</M></Alt>
 <Alt Not="HTML"><M>J^*=\{A^*(i):i=1\ldots q\} \cup \{A^*(\infty)\}</M></Alt>
-<Alt Only="HTML">J&lt;sup>*&lt;/sup> = {A&lt;sup>*&lt;/sup>(i): i= 1 ... q} &#8746; {A&lt;sup>*&lt;/sup>(&#8734;)}</Alt><P/>
-A combination of results of Payne and Kantor yield the famous theorem that <Alt Not="HTML">(J,J^*)</Alt>
-<Alt Only="HTML">(J,J&lt;sup>*&lt;/sup>)</Alt> is a Kantor family in <M>G</M> if and only if <M>C</M> is a q-clan. 
+<Alt Only="HTML noMathJax">J&lt;sup>*&lt;/sup> = {A&lt;sup>*&lt;/sup>(i): i= 1 ... q} &#8746; {A&lt;sup>*&lt;/sup>(&#8734;)}</Alt><P/>
+A combination of results of Payne and Kantor yield the famous theorem that <Alt Only="HTML MathJax">(J,J^*)</Alt><Alt Not="HTML">(J,J^*)</Alt>
+<Alt Only="HTML noMathJax">(J,J&lt;sup>*&lt;/sup>)</Alt> is a Kantor family in <M>G</M> if and only if <M>C</M> is a q-clan. 
 <Package>FinInG</Package> provides functionality to construct q-clans and to construct the corresponding Kantor family.
 As such, elation generalised quadrangles can directly constructed from q-clans.
 </Subsection>
@@ -881,8 +932,8 @@ A Kantor family.
 </Returns>
 <Description>
 The Kantor family constructed from a q-clan will be a matrix group together with the
-corresponding collections <M>J</M> and <Alt Not="HTML">J^*</Alt>
-<Alt Only="HTML">J&lt;sup>*&lt;/sup></Alt>.
+corresponding collections <M>J</M> and <Alt Only="HTML MathJax">J^*</Alt><Alt Not="HTML">J^*</Alt>
+<Alt Only="HTML noMathJax">J&lt;sup>*&lt;/sup></Alt>.
 </Description>
 </ManSection>
 
@@ -905,29 +956,30 @@ yields a classical generalised quadrangle.
 <Subsection>
 <Heading>BLT-sets, flocks, q-clans, and elation generalised quadrangles</Heading>
 
-A <E>flock</E> is a partition of the points of a quadratic cone in <M>PG(3,q)</M> 
+A <E>flock</E> is a partition of the points of a quadratic cone in &pg3q; 
 minus its vertex into conics. Each conic is determined by a plane, and each plane is determined
-uniquely by a triple of elements of the field <M>GF(q)</M>. So a flock is determined by <M>q</M> such 
+uniquely by a triple of elements of the field &gfq;. So a flock is determined by <M>q</M> such 
 triples. Remarkably, as was shown by J.A. Thas, the conditions for these triples to constitute a flock,
 are exactly the same conditions for these triples to constitute <M>q</M> upper triangle matrices making
-a q-clan over <M>GF(q)</M>. Hence, q-clans and flocks, and thus flocks and elation generalised quadrangles,
+a q-clan over &gfq;. Hence, q-clans and flocks, and thus flocks and elation generalised quadrangles,
 are equivalent objects.<P/>
-The quadratic cone can be embedded as a hyperplane section into the parabolic quadric <M>Q(4,q)</M>. L. Bader,
-G. Lunardon and J.A. Thas observed that a set of <M>q</M> points of <M>Q(4,q)</M> can be constructed from 
+The quadratic cone can be embedded as a hyperplane section into the parabolic quadric &q4q;. L. Bader,
+G. Lunardon and J.A. Thas observed that a set of <M>q</M> points of &q4q; can be constructed from 
 the <M>q</M> planes determining the flock, and this set of points satisfies certain geometric conditions. Such
-a set is called a <E>BLT-set</E>. Dually, a BLT-set corresponds to a set of lines of <M>W(3,q)</M>. Furthermore,
+a set is called a <E>BLT-set</E>. Dually, a BLT-set corresponds to a set of lines of &w3q;. Furthermore,
 from this BLT-set of lines, it is possible to construct directly an elation generalised quadrangle from carefully
-selecting points and lines from the symplectic space <M>W(5,q)</M>. This construction is called the Knarr construction.<P/>
-Consider the symplectic polar space <M>W(5,q)</M> and choose a point <M>P \in W(5,q)</M>. Its tangent space is
-a <M>4</M>-dimensional space <M>F</M>. Embed <M>W(3,q)</M> in a solid of <M>F</M> not on the point <M>p</M>, and 
-let <M>L</M> be the set of BLT lines. Each line spans with <M>p</M> a plane of <M>W(5,q)</M>, call these <M>q</M> planes
+selecting points and lines from the symplectic space &w5q;. This construction is called the Knarr construction.<P/>
+Consider the symplectic polar space &w5q; and choose a point <M>P \in W(5,q)</M>. Its tangent space is
+a <M>4</M>-dimensional space <M>F</M>. Embed &w3q; in a solid of <M>F</M> not on the point <M>p</M>, and 
+let <M>L</M> be the set of BLT lines. Each line spans with <M>p</M> a plane of &w5q;, call these <M>q</M> planes
 the <E>BLT-planes</E>. Now we can define the points an lines of the elation generalised quadrangle as follows.<P/>
 Points of type (i) are the points of <M>W(5,q) \setminus F</M>, points of type (ii) are the lines of each BLT-plane
 not on <M>p</M> and the unique point of type (iii) is the point <M>p</M>. Lines of type (a) are the
-planes of <M>W(5,q)</M> meeting a BLT-plane in a line. Note that no plane of <M>W(5,q)</M> meeting two BLT planes in a
+planes of &w5q; meeting a BLT-plane in a line. Note that no plane of &w5q; meeting two BLT planes in a
 line can exist. Lines of type (b) are the BLT-planes. Incidence is the natural incidence (so the incidence inherited)
-from the polar space <M>W(5,q)</M>, and this geometry is a elation generalised quadrangle with base-point <M>p</M> and
-of order <Alt Only="HTML">(q&lt;sup>2&lt;/sup>,q)</Alt><Alt Not="HTML"><M>(q^2,q)</M></Alt>.<P/>
+from the polar space &w5q;, and this geometry is a elation generalised quadrangle with base-point <M>p</M> and
+of order <Alt Only="HTML noMathJax">(q&lt;sup>2&lt;/sup>,q)</Alt><Alt Only="HTML MathJax"><M>(q^2,q)</M></Alt>
+<Alt Not="HTML"><M>(q^2,q)</M></Alt>.<P/>
 <Package>FinInG</Package> provides functions to construct elation generalised quadrangles using this model from
 BLT-sets, and provides a function to compute a BLT set from a q-clan directly. The advantage of constructing 
 a elation generalised from elements of Lie geometries is the availability of the underlying projective groups and
@@ -949,7 +1001,8 @@ A BLT-set.
 </Returns>
 <Description>
 The BLT-set is a set of points of the parabolic quadric in <M>PG(4,q)</M> with particular
-equation <Alt Not="HTML"><M>2X_1x_5+2X_2X_4+w^{(q+1)/2}=0</M></Alt><Alt Only="HTML">X&lt;sub>1&lt;/sub>X&lt;sub>5&lt;/sub>+
+equation <Alt Only="HTML MathJax"><M>2X_1x_5+2X_2X_4+w^{(q+1)/2}=0</M></Alt><Alt Not="HTML"><M>2X_1x_5+2X_2X_4+w^{(q+1)/2}=0</M></Alt>
+<Alt Only="HTML noMathJax">X&lt;sub>1&lt;/sub>X&lt;sub>5&lt;/sub>+
 X&lt;sub>2&lt;/sub>X&lt;sub>4&lt;/sub>+w&lt;sup>(q+1)/2&lt;/sup>X&lt;sub>3&lt;/sub>&lt;sup>2&lt;/sup>=0</Alt>, where <M>w</M>
 is a primitive element of the underlying field of <A>clan</A>.
 <Example>
@@ -965,7 +1018,7 @@ An elation generalised quadrangle.
 </Returns>
 <Description>
 <A>blt</A> is a BLT-set, this operation returns an elation generalised quadrangle constructed
-as described above consisting of elements of <M>W(5,q)</M>. Notice in the example that computing the
+as described above consisting of elements of &w5q;. Notice in the example that computing the
 full collineation group of the GQ constructed directly from the q-clan (hence a group coset geometry) is
 substantially slower than computing the full collineation group of the GQ constructed from the BLT-set.
 <Example>
@@ -978,8 +1031,8 @@ substantially slower than computing the full collineation group of the GQ constr
 <Attr Name="DefiningPlanesOfEGQByBLTSet" Arg="egq"/>
 <Description>
 For an elation generalised quadrangle in the category <C>IsEGQByBLTSet</C> (constructed from a BLT-set), 
-the planes of the polar space <M>W(5,q)</M>, as described in the introduction, determine the generalised quadrangle
-completely. This attribute returns these <M>q</M> planes of <M>W(5,q)</M>. 
+the planes of the polar space &w5q;, as described in the introduction, determine the generalised quadrangle
+completely. This attribute returns these <M>q</M> planes of &w5q;. 
 <Example>
 <#Include SYSTEM "../examples/include/gpolygons_definingplanes.include">
 </Example>
@@ -993,7 +1046,7 @@ completely. This attribute returns these <M>q</M> planes of <M>W(5,q)</M>.
 <Oper Name="UnderlyingObject" Arg="el"/>
 <Description>
 The underlying objects of the elements of an elation generalised quadrangle in the category <C>IsEGQByBLTSet</C> 
-are elements of the polar space <M>W(5,q)</M> in its standard representation. These elements can be used as underlying
+are elements of the polar space &w5q; in its standard representation. These elements can be used as underlying
 object to construct elements of <A>egq</A>. The example also demonstrates the use of <F>DistanceBetweenElements</F>.
 <Example>
 <#Include SYSTEM "../examples/include/gpolygons_objectselementsblt.include">
@@ -1005,8 +1058,8 @@ object to construct elements of <A>egq</A>. The example also demonstrates the us
 <Attr Name="CollineationSubgroup" Arg="egq"/>
 <Description>
 For an elation generalised quadrangle in the category <C>IsEGQByBLTSet</C> (constructed from a BLT set), 
-the planes of the polar space <M>W(5,q)</M>, as described in the introduction, determine the generalised quadrangle
-completely. The setwise stabiliser of these planes in the collineation group of <M>W(5,q)</M> is a subgroup of the
+the planes of the polar space &w5q;, as described in the introduction, determine the generalised quadrangle
+completely. The setwise stabiliser of these planes in the collineation group of &w5q; is a subgroup of the
 completely collineation group of the elation generalised quadrangle, and can be computed much faster than the 
 complete collineation group. This attribute returns this setwise stabiliser. The returned group is equipped
 with the <F>CollineationACtion</F> attribute. If <F>CollineationSubgroup</F> is computed, this group will be used
