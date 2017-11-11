@@ -1,19 +1,20 @@
 <!-- 
-
-  gpolygons.xml    FinInG package documentation
+gpolygons.xml    FinInG package documentation
                                                                    John Bamberg
                                                                    Anton Betten
-                                                                   Jan De Beule
                                                                   Philippe Cara
+                                                                   Jan De Beule
                                                                  Michel Lavrauw
                                                                 Max Neunhoeffer
 
-  Copyright (C) 2015,	Colorado State University
+  Copyright (C) 2017,	Colorado State University
+                        Sabancı Üniversitesi
 						Università degli Studi di Padova
 						Universiteit Gent
 						University of St. Andrews
 						University of Western Australia
                         Vrije Universiteit Brussel
+-->
 
 This is the chapter of the documentation describing generalised polygons.
 -->
@@ -475,7 +476,7 @@ contains exactly <Alt Only="HTML MathJax"><M>(q^3+q^2+q+1)(q^2+q+1)</M></Alt>
 <Alt Only="HTML noMathJax">(q&lt;sup>3&lt;/sup>+q&lt;sup>2&lt;/sup>+q+1)(q&lt;sup>2&lt;/sup>+q+1)</Alt>
 generators, which is equal to the number of points of &qplus7q;. Generators from the
 same system meet each other in an empty subspace or in a line, Generators from a different system
-meet each other in a point of a plane. One defines the rank <M>4</M> geometry
+meet each other in a point or a plane. One defines the rank <M>4</M> geometry
 <Alt Not="HTML"><M>\Omega(7,q)</M></Alt><Alt Only="HTML MathJax"><M>\Omega(7,q)</M></Alt>
 <Alt Only="HTML noMathJax">&#937;(7,q)</Alt> as follows. The 0-points are the points of &qplus7q;,
 the 1-points are the generators of the first system, the 2-points are the generators of the second system,
@@ -486,7 +487,7 @@ natural incidence of the underlying projective space. Denote the set of <M>i</M>
 <Alt Only="HTML noMathJax">P&lt;sup>(i)&lt;/sup></Alt>, <M>i=0,1,2</M>.<P/>
 A triality of <Alt Only="HTML MathJax"><M>\Omega(7,q)</M></Alt><Alt Not="HTML"><M>\Omega(7,q)</M></Alt>
 <Alt Only="HTML noMathJax">&#937;(7,q)</Alt> is a map <Alt Not="HTML"><M>\tau: P^{(i)} \rightarrow P^{(i+1)}</M></Alt>
-<Alt Not="HTML"><M>\tau: P^{(i)} \rightarrow P^{(i+1)}</M></Alt>
+<Alt Only="HTML MathJax"><M>\tau: P^{(i)} \rightarrow P^{(i+1)}</M></Alt>
 <Alt Only="HTML noMathJax"><M>\tau</M>:P&lt;sup>(i)&lt;/sup>&#8594;P&lt;sup>(i+1)&lt;/sup></Alt>
 (where <M>i+1</M> is computed modulo 3) preserving the incidence and for which <Alt Not="HTML"><M>\tau^3 = 1</M></Alt>
 <Alt Only="HTML MathJax"><M>\tau^3 = 1</M></Alt><Alt Only="HTML noMathJax"><M>\tau</M>&lt;sup>3&lt;/sup>=1</Alt>.
@@ -494,7 +495,7 @@ Note that the image of a line under <M>\tau</M> is
 determined by the image of the points incident with the line.<P/> An <M>i</M>-point is absolute with
 respect to a fixed triality if it is incident with its image under the triality. Consequently, a line is absolute
 with if it is fixed by the triality.<P/>
-A generalised hexagon might be obtained as geometry of absolute points of one kind and absolute lines with relation to
+A generalised hexagon can be constructed as geometry of absolute points of one kind and absolute lines with relation to
 a fixed triality. Note that not all trialities yield (thick) generalised quadrangles. There are different
 types of trialities, for some of them the absolute geometry is degenerate.<P/>
 The triality used in <Package>FinInG</Package> to construct the classical generalised hexagons is fixed. It is
@@ -552,7 +553,7 @@ Let <M>\sigma</M> be an automorphism of &gfq; of order <M>3</M>, or the identity
 <Alt Only="HTML MathJax"><M>(x_j) \mapsto (x_j^{\sigma})</M>, <M>j=0\ldots 7</M></Alt>
 <Alt Only="HTML noMathJax">       (x&lt;sub>j&lt;/sub>) &#8594; (x&lt;sub>j&lt;/sub>&lt;sup>&#963;&lt;/sup>), j=0...7</Alt>.<P/>
 This map clearly preserves <M>T(x,y,z)</M>, so preserves the incidence, and has order three, so it is a triality of
-<Alt Not="HTML"><M>\Omega(7,q)</M></Alt><Alt Only="HTML noMathJax">&#937;(7,q)</Alt>. We call an element <M>p</M> absolute with
+<Alt Not="HTML"><M>\Omega(7,q)</M></Alt><Alt Only="HTML MathJax"><M>\Omega(7,q)</M></Alt><Alt Only="HTML noMathJax">&#937;(7,q)</Alt>. We call an element <M>p</M> absolute with
 respect to a triality <M>\tau</M> if and only if <Alt Only="HTML MathJax"><M>p \mathrm{I} p^\tau</M></Alt><Alt Not="HTML"><M>p \mathrm{I} p^\tau</M></Alt>
 <Alt Only="HTML noMathJax">p I p&lt;sup>&#964;&lt;/sup></Alt>. Consequently, a line is absolute if and only if it
 is fixed by the triality. Denote the set of <M>i</M>-points that are absolute with respect to the triality as

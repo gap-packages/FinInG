@@ -1,6 +1,5 @@
 <!-- 
-
-  projectivespaces.xml    FinInG package documentation
+projectivespaces.xml    FinInG package documentation
                                                                    John Bamberg
                                                                    Anton Betten
                                                                   Philippe Cara
@@ -8,14 +7,15 @@
                                                                  Michel Lavrauw
                                                                 Max Neunhoeffer
 
-  Copyright (C) 2015,	Colorado State University
+  Copyright (C) 2017,	Colorado State University
+                        Sabancı Üniversitesi
 						Università degli Studi di Padova
 						Universiteit Gent
 						University of St. Andrews
 						University of Western Australia
                         Vrije Universiteit Brussel
 
-This is the chapter of the documentation describing the projective spaces.
+ This is the chapter of the documentation describing the projective spaces.
 
 -->
 

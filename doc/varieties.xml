@@ -1,20 +1,21 @@
 <!-- 
-
-  varieties.xml    FinInG package documentation
+varieties.xml    FinInG package documentation
+ 
                                                                    John Bamberg
                                                                    Anton Betten
-                                                                   Jan De Beule
                                                                   Philippe Cara
+                                                                   Jan De Beule
                                                                  Michel Lavrauw
                                                                 Max Neunhoeffer
 
-  Copyright (C) 2015,	Colorado State University
+  Copyright (C) 2017,	Colorado State University
+                        Sabancı Üniversitesi
 						Università degli Studi di Padova
 						Universiteit Gent
 						University of St. Andrews
 						University of Western Australia
                         Vrije Universiteit Brussel
-
+ 
 This is the chapter of the documentation describing the algebraic varieties.
 
 -->

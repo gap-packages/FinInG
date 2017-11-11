@@ -1,14 +1,14 @@
 <!-- 
-
-  diagramgeometries.xml    FinInG package documentation
+diagramgeometries.xml    FinInG package documentation
                                                                    John Bamberg
                                                                    Anton Betten
-                                                                   Jan De Beule
                                                                   Philippe Cara
+                                                                   Jan De Beule
                                                                  Michel Lavrauw
-																Max Neunhoeffer
+                                                                Max Neunhoeffer
 
-  Copyright (C) 2015,	Colorado State University
+  Copyright (C) 2017,	Colorado State University
+                        Sabancı Üniversitesi
 						Università degli Studi di Padova
 						Universiteit Gent
 						University of St. Andrews
@@ -29,32 +29,33 @@ on <Package>GRAPE</Package>.
 <Heading>Coset Geometries</Heading>
 
 Suppose we have an <E>incidence
-geometry</E> <Alt Not="HTML"><M>\Gamma</M></Alt><Alt Only="HTML">&#915;</Alt>
-(as defined in chapter <Ref Chap="incidencegeometry"/>), together with
-a group <M>G</M> of automorphisms of <Alt Not="HTML"><M>\Gamma</M></Alt><Alt Only="HTML">&#915;</Alt> such that <M>G</M> is
-transitive on the set of <E>chambers</E> of <M>\Gamma</M> (also
+geometry</E> &Gamma; (as defined in chapter <Ref Chap="incidencegeometry"/>), together with
+a group <M>G</M> of automorphisms of &Gamma; such that <M>G</M> is
+transitive on the set of <E>chambers</E> of &Gamma; (also
 defined in chapter <Ref Chap="incidencegeometry"/>). This implies
 that <M>G</M> is also transitive on the set of all elements of any
 chosen type <M>i</M>. If we consider a chamber <Alt Not="HTML"><M>\{c_{1},c_{2},... ,c_{n}\}</M></Alt>
-<Alt Only="HTML">c&lt;sub>1&lt;/sub>,c&lt;sub>2&lt;/sub>,...,c&lt;sub>n&lt;/sub></Alt>
-such that <Alt Not="HTML"><M>c_{i}</M></Alt><Alt Only="HTML">c&lt;sub>i&lt;/sub></Alt> is of type <M>i</M>, 
-we can look at the stabilizer <Alt Not="HTML"><M>G_{i}</M></Alt><Alt Only="HTML">G&lt;sub>i&lt;/sub></Alt>
-of <Alt Not="HTML"><M>c_{i}</M></Alt><Alt Only="HTML">c&lt;sub>i&lt;/sub></Alt> in <M>G</M>. The
-subgroups  <Alt Not="HTML"><M>G_{i}</M></Alt><Alt Only="HTML">G&lt;sub>i&lt;/sub></Alt> are 
-called <E>parabolic subgroups</E> of <Alt Not="HTML"><M>\Gamma</M></Alt><Alt Only="HTML">&#915;</Alt>. For a
+<Alt Only="HTML MathJax"><M>\{c_{1},c_{2},... ,c_{n}\}</M></Alt>
+<Alt Only="HTML noMathJax">c&lt;sub>1&lt;/sub>,c&lt;sub>2&lt;/sub>,...,c&lt;sub>n&lt;/sub></Alt>
+such that <Alt Not="HTML"><M>c_{i}</M></Alt><Alt Only="HTML MathJax"><M>c_{i}</M></Alt><Alt Only="HTML noMathJax">c&lt;sub>i&lt;/sub></Alt> is of type <M>i</M>,
+we can look at the stabilizer <Alt Not="HTML"><M>G_{i}</M></Alt><Alt Only="HTML MathJax"><M>G_{i}</M></Alt><Alt Only="HTML noMathJax">G&lt;sub>i&lt;/sub></Alt>
+of <Alt Not="HTML"><M>c_{i}</M></Alt><Alt Only="HTML MathJax"><M>c_{i}</M></Alt><Alt Only="HTML noMathJax">c&lt;sub>i&lt;/sub></Alt> in <M>G</M>. The
+subgroups  <Alt Not="HTML"><M>G_{i}</M></Alt><Alt Only="HTML MathJax"><M>G_{i}</M></Alt><Alt Only="HTML noMathJax">G&lt;sub>i&lt;/sub></Alt> are
+called <E>parabolic subgroups</E> of &Gamma;. For a
 type <M>i</M>, transitivity of <M>G</M> on the elements of
 type <M>i</M> gives a correspondence between the cosets of the
-stabilizer <Alt Not="HTML"><M>G_{i}</M></Alt><Alt Only="HTML">G&lt;sub>i&lt;/sub></Alt> and the elements of type <M>i</M>
-in <Alt Not="HTML"><M>\Gamma</M></Alt><Alt Only="HTML">&#915;</Alt>. Two elements of 
-<Alt Not="HTML"><M>\Gamma</M></Alt><Alt Only="HTML">&#915;</Alt> are incident if and only
+stabilizer <Alt Not="HTML"><M>G_{i}</M></Alt><Alt Only="HTML MathJax"><M>G_{i}</M></Alt>
+<Alt Only="HTML noMathJax">G&lt;sub>i&lt;/sub></Alt> and the elements of type <M>i</M>
+in &Gamma;. Two elements of &Gamma; are incident if and only
 if the corresponding cosets have a nonempty intersection.<P/>
 
 We now use the above observation to define an incidence structure from
 a group <M>G</M> together with a set of
-subgroups <Alt Not="HTML"><M>\{G_{1},G_{2},...,G_{n}\}</M></Alt><Alt Only="HTML">G&lt;sub>1&lt;/sub>,G&lt;sub>2&lt;/sub>,...,G&lt;sub>n&lt;/sub></Alt>.
-The type set is <Alt Not="HTML"><M>\{1,2,...,n\}</M></Alt><Alt Only="HTML">&#123;1,2,...,n&#125;</Alt>. 
+subgroups <Alt Not="HTML"><M>\{G_{1},G_{2},...,G_{n}\}</M></Alt><Alt Only="HTML MathJax"><M>\{G_{1},G_{2},...,G_{n}\}</M></Alt>
+<Alt Only="HTML noMathJax">G&lt;sub>1&lt;/sub>,G&lt;sub>2&lt;/sub>,...,G&lt;sub>n&lt;/sub></Alt>.
+The type set is <Alt Not="HTML"><M>\{1,2,...,n\}</M></Alt><Alt Only="HTML MathJax"><M>\{1,2,...,n\}</M></Alt><Alt Only="HTML noMathJax">&#123;1,2,...,n&#125;</Alt>.
 By definition the elements of type <M>i</M> are the (right) cosets of the subgroup 
-<Alt Not="HTML"><M>G_{i}</M></Alt><Alt Only="HTML">G&lt;sub>i&lt;/sub></Alt>. Two
+<Alt Not="HTML"><M>G_{i}</M></Alt><Alt Only="HTML MathJax"><M>G_{i}</M></Alt><Alt Only="HTML noMathJax">G&lt;sub>i&lt;/sub></Alt>. Two
 cosets are incident if and only if their intersection is not
 empty. This is an incidence structure which is not necessarily a
 geometry (see Chapter <Ref Chap="incidencegeometry"/> for definitions). In order to check whether a coset incidence structure is indeed a
@@ -205,7 +206,8 @@ An incidence geometry is said to be <E>thick</E> if every nonmaximal flag is con
 <Oper Name="IsThinGeometry" Arg="cg"/>
 <Returns>true if and only if <A>cg</A> is thin.</Returns>
 <Description> 
-An incidence geometry is said to be <E>thin</E> if every rank one residue contains exactly 2 elements. This means that every comaximal flag is contained in exactly 2 chambers. <A>cg</A> must be a coset geometry. 
+An incidence geometry is said to be <E>thin</E> if every rank one residue contains exactly 2 elements.
+This means that every comaximal flag is contained in exactly 2 chambers. <A>cg</A> must be a coset geometry.
 </Description>
 </ManSection>
 
@@ -281,7 +283,8 @@ set <M>\{i_1,i_2,\ldots ,i_k\}</M> of <A>fl</A>.
 <Oper Name="ResidueOfFlag" Arg="fl"/>
 <Returns>the residue of <A>fl</A> in <F>AmbientGeometry(fl)</F>.</Returns>
 <Description> 
-This is a <F>CosetGeometry</F> method for the <F>ResidueOfFlag</F> operation given in Chapter <Ref Chap="incidencegeometry"/>. Note that the related operation <F>CanonicalResidueOfFlag</F> takes <E>two</E> arguments.
+This is a <F>CosetGeometry</F> method for the <F>ResidueOfFlag</F> operation given in Chapter <Ref Chap="incidencegeometry"/>.
+Note that the related operation <F>CanonicalResidueOfFlag</F> takes <E>two</E> arguments.
 </Description>
 </ManSection>
 
@@ -351,7 +354,10 @@ fetch the second Janko group, also known as the Hall-Janko group. Beware that <P
 </Section>
 <Section>
 <Heading>Automorphisms, Correlations and Isomorphisms</Heading>
-An <E>automorphism</E> of an incidence structure <Alt Not="HTML"><M>\Gamma</M></Alt><Alt Only="HTML">&#915;</Alt> is a permutation of the element set of <Alt Not="HTML"><M>\Gamma</M></Alt><Alt Only="HTML">&#915;</Alt> such that incidence is preserved and types are fixed (i.e. the type of the image of an element coincides with the type of that element). One way to compute the (full) automorphism group of <Alt Not="HTML"><M>\Gamma</M></Alt><Alt Only="HTML">&#915;</Alt> is to compute its incidence graph and then use the available <F>nauty</F> machinery to obtain the group. 
+An <E>automorphism</E> of an incidence structure &Gamma; is a permutation of the element set of &Gamma;
+such that incidence is preserved and types are fixed (i.e. the type of the image of an element
+coincides with the type of that element). One way to compute the (full) automorphism group of &Gamma;
+is to compute its incidence graph and then use the available <F>nauty</F> machinery to obtain the group.
 
 <ManSection>
 <Oper Name="AutGroupIncidenceStructureWithNauty" Arg="cg"/>
@@ -399,13 +405,13 @@ of the geometry is added as an attribute once these have been computed. This is 
 (to add the attribute) and <F>MakeRank2Residue</F> (to actually compute the resiudes). These operations are not for everyday use and hence remain undocumented.<P/> 
 
 Since the geometry is flag-transitive, all chambers are
-equivalent. Let's fix a chamber <Alt Not="HTML"><M>C=\{c_{1}, c_{2},\ldots,c_{n}\}</M></Alt>
-<Alt Only="HTML">C = &#123; c&lt;sub>1&lt;/sub>,c&lt;sub>2&lt;/sub>,...,c&lt;sub>n&lt;/sub>&#125;</Alt>,
-with <Alt Not="HTML"><M>c_{i}</M></Alt><Alt Only="HTML">c&lt;sub>i&lt;/sub></Alt> of type <M>i</M>. For each subset 
-<Alt Not="HTML"><M>\{i,j\}</M></Alt><Alt Only="HTML">&#123;i,j&#125;</Alt> of
-size two in <Alt Not="HTML"><M>I=\{1,2,\ldots,n\}</M></Alt><Alt Only="HTML">&#123;1,2,...n&#125;</Alt> we take the residue of the
-flag <Alt Not="HTML"><M>C\setminus \{c_{i},c_{j}\}</M></Alt>
-<Alt Only="HTML">C \ &#123; c&lt;sub>i&lt;/sub>, c&lt;sub>j&lt;/sub>&#125;</Alt>. Flag transitivity ensures
+equivalent. Let's fix a chamber <Alt Not="HTML"><M>C=\{c_{1}, c_{2},\ldots,c_{n}\}</M></Alt><Alt Only="HTML MathJax"><M>C=\{c_{1}, c_{2},\ldots,c_{n}\}</M></Alt>
+<Alt Only="HTML noMathJax">C = &#123; c&lt;sub>1&lt;/sub>,c&lt;sub>2&lt;/sub>,...,c&lt;sub>n&lt;/sub>&#125;</Alt>,
+with <Alt Not="HTML"><M>c_{i}</M></Alt><Alt Only="HTML MathJax"><M>c_{i}</M></Alt><Alt Only="HTML noMathJax">c&lt;sub>i&lt;/sub></Alt> of type <M>i</M>. For each subset
+<Alt Not="HTML"><M>\{i,j\}</M></Alt><Alt Only="HTML MathJax"><M>\{i,j\}</M></Alt><Alt Only="HTML noMathJax">&#123;i,j&#125;</Alt> of
+size two in <Alt Not="HTML"><M>I=\{1,2,\ldots,n\}</M></Alt><Alt Only="HTML MathJax"><M>I=\{1,2,\ldots,n\}</M></Alt><Alt Only="HTML noMathJax">&#123;1,2,...n&#125;</Alt>
+we take the residue of the flag <Alt Not="HTML"><M>C\setminus \{c_{i},c_{j}\}</M></Alt><Alt Only="HTML MathJax"><M>C\setminus \{c_{i},c_{j}\}</M></Alt>
+<Alt Only="HTML noMathJax">C \ &#123; c&lt;sub>i&lt;/sub>, c&lt;sub>j&lt;/sub>&#125;</Alt>. Flag transitivity ensures
 that <E>all</E> residues of type <M>\{i,j\}</M> are
 isomorphic to each other. For each such residue, the structure is
 described by some parameters: the gonality and the point and line
@@ -460,7 +466,7 @@ The default labels for the edges of the diagram use the standard convention that
 <Alt Only="LaTeX">\medskip</Alt>
 
 We illustrate the diagram feature with
-Neumaier's <Alt Not="HTML"><M>A_8</M></Alt><Alt Only="HTML">A&lt;sub>8&lt;/sub></Alt>-geometry. 
+Neumaier's <Alt Not="HTML"><M>A_8</M></Alt><Alt Only="HTML">A&lt;sub>8&lt;/sub></Alt>-geometry.
 
 The affine space of dimension 3 over the field with two elements is
 denoted by <M>AG(3,2)</M>. If we fix a plane <Alt Not="HTML"><M>\Pi</M></Alt><Alt Only="HTML">&#928;</Alt> in <M>PG(3,2)</M>, the

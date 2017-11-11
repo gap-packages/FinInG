@@ -1,20 +1,19 @@
 <!-- 
+install.xml            FinInG package documentation
+                                                                   John Bamberg
+                                                                   Anton Betten
+                                                                  Philippe Cara
+                                                                   Jan De Beule
+                                                                 Michel Lavrauw
+                                                                Max Neunhoeffer
 
-  install.xml            FinInG package documentation
-                                                                   John Bamberg                                                                   
-                                                              and Philippe Cara
-                                                               and Jan De Beule
-                                                             and Michel Lavrauw
-                                                                  and Maska Law
-                                                            and Max Neunhoeffer
-                                                             and Michael Pauley
-                                                              and Sven Reichard
-
-  Copyright 2008 University of Western Australia, Perth
-                 Lehrstuhl D fuer Mathematik, RWTH Aachen
-                 Ghent University
-                 Colorado State University
-                 Vrije Universiteit Brussel
+  Copyright (C) 2017,	Colorado State University
+                        Sabancı Üniversitesi
+						Università degli Studi di Padova
+						Universiteit Gent
+						University of St. Andrews
+						University of Western Australia
+                        Vrije Universiteit Brussel
 
 This is the chapter of the documentation describing the installation.
 
