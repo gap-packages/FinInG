@@ -8,7 +8,7 @@
 ##                                                            Michel Lavrauw
 ##                                                           Max Neunhoeffer
 ##
-##  Copyright 2014	Colorado State University, Fort Collins
+##  Copyright 2017	Colorado State University, Fort Collins
 ##					Università degli Studi di Padova
 ##					Universeit Gent
 ##					University of St. Andrews
@@ -46,4 +46,4 @@ ReadPackage("fining","lib/gpolygons.gd");
 
 ReadPackage("fining","lib/orbits-stabilisers.gd"); # added 11/02/13 ml
 
-ReadPackage("fining","lib/subgeometries.gd"); # added 25/05/16 jdb
+#ReadPackage("fining","lib/subgeometries.gd"); # added 25/05/16 jdb
