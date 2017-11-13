@@ -40,7 +40,6 @@ enumerators.gi: global functions
 
 F: PositionNonZeroFromRight
 F: FG_pos
-F: FG_div
 F: FG_ffenumber
 F: FG_alpha_power
 F: FG_log_alpha
