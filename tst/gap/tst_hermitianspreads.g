@@ -15,4 +15,3 @@ partial_spreads := List(cliques9,x->VertexNames(graph){x});;
 groups := List(partial_spreads,x->FiningSetwiseStabiliser(coll,x));;
 List(groups,x->Order(x));
 quit;
-quit;

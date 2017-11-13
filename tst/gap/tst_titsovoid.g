@@ -8,4 +8,3 @@ ovoid := List(vecs,x->VectorSpaceToElement(pg,x));;
 numbers := List(Planes(pg),x->Number(ovoid,y->y in x));;
 Collected(numbers);
 quit;
-quit;

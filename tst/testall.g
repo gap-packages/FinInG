@@ -5,18 +5,13 @@ pkgdir := DirectoriesPackageLibrary( pkgname, "tst" );
 
 # Arrange chapters as required
 testfiles := [
-"tst_fining1.tst",
-"tst_fining2.tst",
-"tst_fining3.tst",
-"tst_fining4.tst",
-"tst_fining5.tst",
-"tst_fining6.tst",
-"tst_fining7.tst",
-"tst_fining8.tst",
-"tst_fining9.tst",
-"tst_fining10.tst",
-"tst_fining11.tst",
-"tst_fining12.tst"
+"tst_regular13system.tst",
+"tst_segrevariety.tst",
+"tst_hermitianspreads.tst",
+"tst_andrebruckbose.tst",
+"tst_titsovoid.tst",
+"tst_finingorbits.tst",
+"tst_enumerators.tst"
 ];
 
 testresult:=true;

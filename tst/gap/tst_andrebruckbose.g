@@ -17,4 +17,3 @@ gp := GeneralisedPolygonByElements(pts,lines,\*,stab2,OnProjSubspaces);
 coll := CollineationGroup(gp);;
 Order(CollineationGroup(PG(2,q^2)))=Order(coll);
 quit;
-quit;

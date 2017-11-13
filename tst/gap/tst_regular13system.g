@@ -17,4 +17,3 @@ S := First(orbits,x->Length(x)=(q^6-1)/(q-1));
 pts := AsList(Points(ps));;
 Collected(List(pts,x->Number(S,y->x in y)));
 quit;
-quit;

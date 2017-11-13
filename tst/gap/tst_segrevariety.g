@@ -14,4 +14,3 @@ pairs:=Combinations(o5,2);;
 secants:=AsSet(List(pairs,x->Span(x[1],x[2])));;
 4lines:=Filtered(secants,l->Size(Filtered(Points(l),x->x in o5))=q+1);
 quit;
-quit;

@@ -21,3 +21,4 @@ els := Planes(ps);
 enum := Enumerator(els);
 Collected(List(AsList(els),x->enum[Position(enum,x)]=x));
 quit;
+

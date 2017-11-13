@@ -26,6 +26,9 @@ files := ["tst_fining1", "tst_fining2", "tst_fining3", "tst_fining4", "tst_finin
             "tst_fining6","tst_fining7", "tst_fining8", "tst_fining9", "tst_fining10",
             "tst_fining11", "tst_fining12" ];
 
+files := ["tst_regular13system", "tst_segrevariety", "tst_hermitianspreads", "tst_andrebruckbose",
+            "tst_titsovoid", "tst_finingorbits", "tst_enumerators"];
+
 #initialize directorynames
 #sourcedir = dir where .g files are located : ".../pkg/fining/tst/gap"
 #preambledir = directory where 'preamble_sws.g is found' :  ".../pkg/fining/examples"
@@ -35,14 +38,14 @@ homedir := DirectoryCurrent();
 sourcedir := DirectoriesPackageLibrary("fining","tst/gap")[1];
 preambledir := DirectoriesPackageLibrary("fining","examples/")[1];
 outputdir := DirectoriesPackageLibrary("fining","tst/output")[1];
-paths := JoinStringsWithSeparator(GAPInfo.RootPaths{[2,3]},";");
+paths := JoinStringsWithSeparator(GAPInfo.RootPaths{[3,4]},";");
 args := JoinStringsWithSeparator(["-l",paths," -L fining.ws"," -o 4G"]," ");
 args := ["-l",paths,"-L","fining.ws","-o","4G"];
 extension := ".out\";";
 cmddir := "dir \:\= DirectoriesPackageLibrary\(\"fining\"\,\"tst\/output\"\)\[1\]\;";
 
 #name of script to start gap version, might be different on your computer
-gapstart := "gap4r7";
+gapstart := "gap4r8";
 Exec(Concatenation("which ",gapstart));
 gap := Filename(Directory("/usr/bin/"),gapstart);
 gap := Filename(Directory("/usr/local/bin/"),gapstart);
