@@ -336,44 +336,32 @@ gap>
 <Subsection>
 <Heading>Updating <Package>FinInG</Package></Heading>
 
-New release of <Package>FinInG</Package> will be distributed automatically with new releases of &GAP;. However,
+New releases of <Package>FinInG</Package> will be distributed automatically with new releases of &GAP;. However,
 it is possible easily to update <Package>FinInG</Package> in an existing installation of &GAP;, provided
 the new version of <Package>FinInG</Package> does not require newer versions of existing packages in the
 installation. It is also possible to have different versions of <Package>FinInG</Package> installed on
-one system.
+one system. 
 
-
-
-
-
-The installation of <Package>FinInG</Package> itself is generic for each UNIX like system, including the different flavours of
-Mac OS X. You only need a terminal application, and you need acces to the standard unix tools gunzip and tar. The installation procedure
-    for <Package>FinInG</Package>, a standard GAP package, does <E>not</E> require compilation. Each GAP installation has a
-    pkg directory, containing supplemental GAP packages. If you have acces to this filesystem, you can locate it, e.g.
-    <Log>/usr/local/gap4r7/pkg/</Log>
-    Download the <Package>FinInG</Package> archive "fining-....tgz" to this location, and unpack the archive. This can be done by issuing
-    <Log>gunzip fining-....tgz</Log>
-    which yields a file "fining-....tar", in the pkg directory, after which issuing the command
-    <Log>tar -xf fining-....tar</Log>
-    unpacks the archive in a subdirectory fining.
+To update <Package>FinInG</Package> it is sufficient to download and unpack the archive containing the new release. First find the
+location of your existing &GAP; installation. We assume in the example below that it is
+<Log>/opt/gap4r8/</Log>
+Make sure you have write permission on this location. If this is not the case, you must ask your system administrator to do
+this. Download the <Package>FinInG</Package> archive "fining-....tgz" to this location, and unpack the archive. This can be done by issuing
+<Log>gunzip fining-....tgz</Log>
+which yields a file "fining-....tar", in the pkg directory, after which issuing the command
+<Log>tar -xf fining-....tar</Log>
+unpacks the archive in a subdirectory fining. Starting &gap; and loading <Package>FinInG</Package> the usual
+way should give you the newly installed version.
     
-    After successfully unpacking the archive, you can locate the directory
-    <Log>/usr/local/gap4r7/pkg/fining/.</Log>
-    This directory contains a subdirectory "./doc", containing an html and pdf version of the manual. The html version is accessible by opening the file "chap0.html" in your favorite browser.
-    The pdf version of the manual can be found in the file "manual.pdf".<P/>
-    
-    Please notice that you can unpack your archive in your favorite local "./pkg" directory, e.g. "/home/yourself/pkg/", in case you are using
-    GAP on a server on which you have only a restricted access.
-    
-    If you installed <Package>FinInG</Package> in the central GAP pkg directory, you can startup gap using the usual command. We suppose this is gap4r7. If
-    you installed <Package>FinInG</Package> in your local pkg directory,
-    e.g. "/home/yourself/pkg/", then move to "/home/yourself", and issue
-    the command
-    <Log>gap -l "/usr/local/gap4r7;./"</Log>
-    This will cause gap to startup and use as pkg directory both its own central pkg directory, i.e.
-    "/usr/local/gap4r7/pkg", as well as your local pkg directory, i.e. "/home/yourself/pkg/". You should see something like the following
-    output. Notice that the packages <Package>GAPDoc</Package> and <Package>IO</Package> are loaded by default. This is not
-    necessarily the case, but loading fining will force to load required packages anyway.
+Please notice that you can unpack your archive in your favorite local 
+"./pkg" directory, e.g. "/home/yourself/pkg/", in case you are using
+&GAP; on a server on which you have only a restricted access.
+In this case, i.e. if you installed <Package>FinInG</Package> in your local pkg directory,
+e.g. "/home/yourself/pkg/", then move to "/home/yourself", and issue the command
+<Log>gap -l "/opt/gap4r8;./"</Log>
+This will cause gap to startup and use as pkg directory both its own central pkg directory, i.e.
+"/opt/gap4r8/pkg/", as well as your local pkg directory, i.e. "/home/yourself/pkg/". 
+You should see something like the following output.
     
 <Example>
  +-------+   GAP 4.8.8, 20-Aug-2017, build of 2017-09-04 15:17:33 (CEST)
