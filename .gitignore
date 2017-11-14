@@ -82,3 +82,5 @@ doc/rainbow.js
 doc/times.css
 doc/toggless.css
 doc/toggless.js
+doc/output/filtergraph.dot
+tst/output/*
