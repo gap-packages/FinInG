@@ -27,7 +27,8 @@ behind the package.
 <Section Label="philosophy">
 <Heading>Philosophy</Heading>
 
-<Package>FinInG</Package> (pronounciation: [<Alt Only="LaTeX">\textipa{f\;I{}n\;I{}N}</Alt><Alt Only="HTML">f&#618;n&#618;&#331;</Alt>]) is a package for computation in
+<Package>FinInG</Package> (pronounciation: [<Alt Only="LaTeX">\textipa{f\;I{}n\;I{}N}</Alt><Alt Only="HTML">f&#618;n&#618;&#331;</Alt>])
+is a package for computation in
 Finite Incidence Geometry. It provides users with the basic tools to
 work in various areas of finite geometry from the realms of
 projective spaces to the flat lands of generalised polygons. 
@@ -46,8 +47,10 @@ facility with matrix and permutation groups.<P/>
 <Section Label="cite">
 <Heading>How to cite <Package>FinInG</Package></Heading>
 
-  The development group of <Package>FinInG</Package> welcomes contact with users. In case you have obtained the package as a deposited package part of archive during the installation of GAP,
-  we call on your beneficence to register at <Homepage>http://cage.ugent.be/fining</Homepage> when you use <Package>FinInG</Package>.<P/>
+  The development group of <Package>FinInG</Package> welcomes contact with users. In case you have obtained the
+  package as a deposited package part of archive during the installation of GAP,
+  we call on your beneficence to register at <Homepage>http://www.fining.org</Homepage> when you use <Package>FinInG</Package> or to
+  tell us by sending a message to <Email>council@fining.org</Email>.<P/>
   Please tell us about the use of <Package>FinInG</Package> in your research or teaching. We are very interested in results obtained
   using <Package>FinInG</Package> and we might refer to your work in the future.
   If your work is published, we ask you to cite <Package>FinInG</Package> like a journal article or book.<P/>
@@ -78,7 +81,7 @@ J.~Bamberg, A.~Betten, {Ph}. Cara, J.~De~Beule, M.~Lavrauw, and
 When linking to FinInG from a web page you can use the link
 
 <Example>
-&lt;a href="http://cage.ugent.be/fining/">FinInG&lt;/a>.
+&lt;a href="http://www.fining.org">FinInG&lt;/a>.
 </Example>
 
 </Section>
@@ -97,14 +100,14 @@ available in the package, are introduced and discussed in Chapter <Ref Chap="mor
 <Heading>Getting and installing <Package>FinInG</Package></Heading>
 <Index><Package>FinInG</Package></Index>
 
-Since version 4.7.8, the official &GAP; distribution includes the <Package>FinInG</Package>. The
+Since version 4.7.8, the official &GAP; distribution includes the <Package>FinInG</Package> package. The
 <Package>FinInG</Package> package requires the GAP packages <Package>GAPDoc</Package>, version 1.6 or higher,
 <Package>Forms</Package>, version 1.2.3 or higher, <Package>Orb</Package>, version 4.7.6 or higher,
 <Package>GenSS</Package>, version 1.6.4 or higher, and <Package>GRAPE</Package>, version 4.7 or higher,
 and <Package>cvec</Package>, version 2.5.7 or higher. These required packages
 are all part of the standard &GAP; distribution. However, the packages <Package>cvec</Package>, <Package>GRAPE</Package>,
 <Package>IO</Package>, and <Package>Orb</Package> may require additional compilation (cfr. infra for detailed instructions).
-Note that the <Package>IO</Package> is a package required by the <Package>cvec</Package> and <Package>Orb</Package>, and
+Note that the <Package>IO</Package> is a package required by <Package>cvec</Package> and <Package>Orb</Package>, and
 is also part of the standard &GAP; distrubution.
 
 Shortly summarized, to get <Package>FinInG</Package> working, download and install &GAP; as explained in its installation
@@ -115,9 +118,9 @@ no further steps are required after installing &GAP; according to its installati
 
 In the next section we summarize the installation procedure under UNIX like systems.
 
-Finally note that currently, one <Package>FinInG</Package> function will use the
+<!--Finally note that currently, one <Package>FinInG</Package> function will use the
 <Package>Design</Package> package. This package is part of the standard &GAP;
-distribution too, but it is not a requirement.
+distribution too, but it is not a requirement.--><!--This remark is very true, but maybe not relevant here-->
 
 <Subsection>
 <Heading>Installation procedure under UNIX like systems</Heading>
@@ -168,7 +171,7 @@ gap might reside in "/usr/local/gap4r8" too. In all examples in this section, we
 resides in "/opt/gap4r8". Therefore, replace any occurence of "/opt/gap4r8" with the actual directory
 of your &GAP; installation when executing the installation steps.
 
-Three steps will be necessary to compile the <Package>IO</Package>package: go into the correct directory, and
+Three steps will be necessary to compile the <Package>IO</Package> package: go into the correct directory, and
 issue the 'configure' command and then issue the 'make' command. Note that the directory name
 of the package is dependent on its version number. The correct name can be found as follows:
 
@@ -352,7 +355,7 @@ this. Download the <Package>FinInG</Package> archive "fining-....tgz" to this lo
 <Log>gunzip fining-....tgz</Log>
 which yields a file "fining-....tar", in the pkg directory, after which issuing the command
 <Log>tar -xf fining-....tar</Log>
-unpacks the archive in a subdirectory fining. Starting &GAP; and loading <Package>FinInG</Package> the usual
+Unpack the archive in a subdirectory fining. Starting &GAP; and loading <Package>FinInG</Package> the usual
 way should give you the newly installed version.
     
 Please notice that you can unpack your archive in your favorite local 
@@ -437,7 +440,7 @@ true
 <Section>
 <Heading>The Development Team</Heading>
 This is the development team (without Anton),  meeting in St. Andrews in september 2008,
-from left to right: Philippe Cara, Michel Lavrauw, Max Neunh&#246;ffer, Jan De Beule and John Bamberg
+from left to right: Philippe Cara, Michel Lavrauw, Max Neunh&#246;ffer, Jan De Beule and John Bamberg.
 <P/>
 <Alt Only="HTML">&lt;img src="./graphics/devteamstasep08.jpg">&lt;/img></Alt>
 <Alt Only="LaTeX">\includegraphics[scale=0.6]{./graphics/devteamstasep08.jpg}</Alt><P/>

@@ -643,11 +643,7 @@ is an element with projective dimension -1. (Note that the poset
 of subspaces of a polar space is a meet-semilattice, but not closed under
 taking spans).
 <Example>
-gap> ps := HyperbolicQuadric(5,3);;
-gap> pi := Random( Planes(ps) );;
-gap> tau := Random( Planes(ps) );;
-gap> Meet(pi,tau);
-&lt;a point in Q+(5, 3)&gt;
+<#Include SYSTEM "../examples/include/cps_meet.include">
 </Example>
 Note: the above example will return different answers depending on the two
 planes chosen at random.
@@ -759,6 +755,7 @@ the type <A>i</A> shadow of the element <A>el</A>
 Internally, the function <F>FlagOfIncidenceStructure</F> is used to create a flag from <A>list</A>. This function
 also performs the checking.
 <Example>
+<#Include SYSTEM "../examples/include/cps_elementsincidentwithelement.include">
 </Example>
 </Description>
 </ManSection>

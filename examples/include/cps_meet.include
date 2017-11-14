@@ -1,0 +1,8 @@
+gap&gt; ps := HyperbolicQuadric(5,3);
+Q+(5, 3)
+gap&gt; pi := Random( Planes(ps) );
+&lt;a plane in Q+(5, 3)&gt;
+gap&gt; tau := Random( Planes(ps) );
+&lt;a plane in Q+(5, 3)&gt;
+gap&gt; Meet(pi,tau);
+&lt;a point in Q+(5, 3)&gt;

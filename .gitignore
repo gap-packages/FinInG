@@ -84,3 +84,4 @@ doc/toggless.css
 doc/toggless.js
 tst/output/*
 doc/output/filtergraph.dot
+examples/output/*
