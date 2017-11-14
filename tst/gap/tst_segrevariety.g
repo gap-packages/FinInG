@@ -7,7 +7,7 @@ Size(svpts);
 pgbig:=AmbientSpace(sv);
 g:=CollineationGroup(pgbig);
 stab1:=FiningSetwiseStabiliser(g,AsSet(svpts));;
-StructureDescription(stab1);
+Order(stab1);
 orbs1:=FiningOrbits(stab1,Points(pgbig));
 o5:=orbs1[5];
 pairs:=Combinations(o5,2);;

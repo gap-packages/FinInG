@@ -15,8 +15,8 @@ gap> g:=CollineationGroup(pgbig);
 The FinInG collineation group PGL(8,2)
 gap> stab1:=FiningSetwiseStabiliser(g,AsSet(svpts));;
 #I  Computing adjusted stabilizer chain...
-gap> StructureDescription(stab1);
-"((((C3 x ((C3 x C3) : C2)) : C2) : C3) : C2) : C2"
+gap> Order(stab1);
+1296
 gap> orbs1:=FiningOrbits(stab1,Points(pgbig));
 10%..31%..52%..95%..100%..[ <closed orbit, 27 points>, <closed orbit, 54 points>, 
   <closed orbit, 54 points>, <closed orbit, 108 points>, 
