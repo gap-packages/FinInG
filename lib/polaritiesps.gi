@@ -1,22 +1,21 @@
 #############################################################################
 ##
-##  polarities.gi              FinInG package
+##  polaritiesps.gi              FinInG package
 ##                                                              John Bamberg
 ##                                                              Anton Betten
 ##                                                              Jan De Beule
 ##                                                             Philippe Cara
 ##                                                            Michel Lavrauw
-##                                                                 Maska Law
 ##                                                           Max Neunhoeffer
-##                                                            Michael Pauley
-##                                                             Sven Reichard
 ##
-##  Copyright 2011 University of Western Australia, Perth
-##                 University of St. Andrews
-##                 Ghent University
-##                 Colorado State University
-##                 Vrije Universiteit Brussel
-##                 Università degli Studi di Padova
+##  Copyright 2017	Colorado State University
+##                  Sabancı Üniversitesi
+##					Università degli Studi di Padova
+##					Universiteit Gent
+##					University of St. Andrews
+##					University of Western Australia
+##                  Vrije Universiteit Brussel
+##
 ##
 ##  Implementation stuff for polarities of projective spaces
 ##

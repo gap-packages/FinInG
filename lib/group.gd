@@ -6,22 +6,19 @@
 ##                                                              Jan De Beule
 ##                                                             Philippe Cara
 ##                                                            Michel Lavrauw
-##                                                                 Maska Law
 ##                                                           Max Neunhoeffer
-##                                                            Michael Pauley
-##                                                             Sven Reichard
 ##
-##  Copyright 2011	Colorado State University, Fort Collins
+##  Copyright 2017	Colorado State University
+##                  Sabancı Üniversitesi
 ##					Università degli Studi di Padova
-##					Universeit Gent
+##					Universiteit Gent
 ##					University of St. Andrews
-##					University of Western Australia, Perth
+##					University of Western Australia
 ##                  Vrije Universiteit Brussel
-##                 
-##  Declaration stuff for some new group representations
 ##
-##  Declaration stuff for groups. changed by the new gang of four september
-##  25, 2008, st. andrews.
+##
+##  Declaration stuff for groups
+##
 #############################################################################
 
 DeclareGlobalFunction("MakeAllProjectivePoints");

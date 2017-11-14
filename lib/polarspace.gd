@@ -8,12 +8,14 @@
 ##                                                            Michel Lavrauw
 ##                                                           Max Neunhoeffer
 ##
-##  Copyright 2014	Colorado State University, Fort Collins
+##  Copyright 2017	Colorado State University
+##                  Sabancı Üniversitesi
 ##					Università degli Studi di Padova
-##					Universeit Gent
+##					Universiteit Gent
 ##					University of St. Andrews
-##					University of Western Australia, Perth
+##					University of Western Australia
 ##                  Vrije Universiteit Brussel
+##
 ##
 ##  Declaration stuff for polar spaces
 ##

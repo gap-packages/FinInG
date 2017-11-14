@@ -1,4 +1,30 @@
 #############################################################################
+##
+##  polaritiesps.gd              FinInG package
+##                                                              John Bamberg
+##                                                              Anton Betten
+##                                                              Jan De Beule
+##                                                             Philippe Cara
+##                                                            Michel Lavrauw
+##                                                           Max Neunhoeffer
+##
+##  Copyright 2017	Colorado State University
+##                  Sabancı Üniversitesi
+##					Università degli Studi di Padova
+##					Universiteit Gent
+##					University of St. Andrews
+##					University of Western Australia
+##                  Vrije Universiteit Brussel
+##
+##
+##  Declaration stuff for polarities of projective spaces
+##
+#############################################################################
+
+
+
+
+#############################################################################
 #
 # operations to create incidence preserving and reversing maps (to be placed in geometry.gd afterwards).
 #
