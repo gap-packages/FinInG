@@ -40,7 +40,7 @@ Version := "1.4",
 ##  Release date of the current version in dd/mm/yyyy format.
 # 
 #Date := "19/09/2014",  #this is the date Fining was submitted officially.
-Date := "11/10/2017",
+Date := "15/11/2017",
 
 
 ##  URL of the archive(s) of the current package release, but *without*
