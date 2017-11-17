@@ -18,7 +18,7 @@ fining.xml		FinInG package documentation
 
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- In the next lines, after the DOCTYPE specification, we are going to define a entities that are shortcuts to long xml code that is (unfortunately) necessary to produce e.g. a nicely readable PG(n,q) under three circumstances: (1) in HTML using MathJax, in HTML no using MathJax, and in all the rest. Note that the code for HTML with MathJax and LaTeX is obviously the same, but it is not possible to specify alternatives like "only in HTML with MathJax", and "all the rest". Therefore, the HTML part requires the use of two ALTs. Also note that "entity" is available then as &entity;. So use e.g. &pgnq; to get PG(n,q). -->
+<!-- In the next line, in the DOCTYPE specification, we are going to include a file containing definitions of entities that are shortcuts to long xml code that is (unfortunately) necessary to produce e.g. a nicely readable PG(n,q) under three circumstances: (1) in HTML using MathJax, in HTML no using MathJax, and in all the rest. Note that the code for HTML with MathJax and LaTeX is obviously the same, but it is not possible to specify alternatives like "only in HTML with MathJax", and "all the rest". Therefore, the HTML part requires the use of two ALTs. Also note that "entity" is available then as &entity;. So use e.g. &pgnq; to get PG(n,q). -->
 
 <!DOCTYPE Book SYSTEM "gapdoc.dtd"
     [<#Include SYSTEM "entities.xml"> <!--entities.xml contains definitions of mathamtical stuff like PGammaL(n+1,q) -->
@@ -122,7 +122,7 @@ phase of <Package>FinInG</Package>. The authors are grateful for this support.
 John Bamberg, Philippe Cara and Jan De Beule have spent several weeks in Vicenza while developing <Package>FinInG</Package>.
 We acknowledge the hospitality of Michel Lavrauw and Corrado Zanella. Our stays in Vicenza were always fruitful and very
 enjoyable. During or daily morning and afternoon coffee breaks, we discussed several topics, while enjoying coffee in <E>Caffe Pigaffeta</E>,
-<Homepage>http://www.caffepigafetta.it</Homepage>. Although one cannot acknowledge everybody, such as the bakery who provided us with the sandwiches,
+<Homepage>http://www.caffepigafetta.com</Homepage>. Although one cannot acknowledge everybody, such as the bakery who provided us with the sandwiches,
 we acknowledge very much the hospitality of Carla and Luigi, who introduced us to many different kinds of coffees from all over the world.
 </Acknowledgements>
 
