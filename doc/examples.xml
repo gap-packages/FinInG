@@ -8,7 +8,8 @@
                                                                  Michel Lavrauw
                                                                 Max Neunhoeffer
 
-  Copyright (C) 2015,	Colorado State University
+  Copyright (C) 2017,	Colorado State University
+                        Sabancı Üniversitesi
 						Università degli Studi di Padova
 						Universiteit Gent
 						University of St. Andrews
@@ -28,9 +29,8 @@ In this chapter we provide some simple examples of the use of
 <Section>
 <Heading>Elementary examples</Heading>
 
-<ManSection>
+<Subsection>
 <Heading>subspaces of projective spaces</Heading>
-<Description>
 The following example shows how to create some subspaces of a projective space, test their
 incidence, and determine their span and intersection. Projective spaces are considered as 
 incidence geometries too. Incidence, to be tested with <F>IsIncident</F> or equivalently <F>\*</F>, 
@@ -39,12 +39,10 @@ is symmetrized set-theoretic containment, the latter which can be tested through
 <Example>
 <#Include SYSTEM "../examples/include/examples_sub1.include">
 </Example>
-</Description>
-</ManSection>
+</Subsection>
 
-<ManSection>
+<Subsection>
 <Heading>Subspaces of classical polar spaces</Heading>
-<Description>
 <Package>FinInG</Package> provides classical polar spaces. Subspaces can be constructed the same
 way as subspaces of projective spaces. Upon construction, it is checked whether the given vector space
 does determine a subspace of the polar space. Subspaces of polar spaces are also subspaces of the ambient projective
@@ -60,12 +58,10 @@ applied on the two subspaces. Clearly, a subspace of a polar space is really als
 <Example>
 <#Include SYSTEM "../examples/include/examples_sub2.include">
 </Example>
-</Description>
-</ManSection>
+</Subsection>
 
-<ManSection>
+<Subsection>
 <Heading>Underlying objects</Heading>
-<Description>
 Subspaces of projective spaces and polar spaces (and in general, elements of incidence structures), 
 are determined by a mathematical object, called in <Package>FinInG</Package> the <E>underlying object</E>.
 The operation <F>UnderlyingObject</F> simply returns this underlying object. For elements determined by
@@ -77,13 +73,11 @@ of an element of an affine spaces looks like.
 <Example>
 <#Include SYSTEM "../examples/include/examples_underlyingobject.include">
 </Example>
-</Description>
-</ManSection>
+</Subsection>
 
 
-<ManSection>
+<Subsection>
 <Heading>Constructing polar spaces</Heading>
-<Description>
 <Package>FinInG</Package> provides the classical polar spaces as the geometries of which the subspaces
 are represented by the totally isotropic (resp. totally singular) vector subspaces with relation 
 to a chosen sesquilinear (resp. quadratic form). The user may choose any non-degenerate (resp. non-singular)
@@ -93,12 +87,10 @@ Detailed information can be found in Section <Ref Sect="can_standard"/>.
 <Example>
 <#Include SYSTEM "../examples/include/examples_cps1.include">
 </Example>
-</Description>
-</ManSection>
+</Subsection>
 
-<ManSection>
+<Subsection>
 <Heading>Some collineation groups</Heading>
-<Description>
 In principle, the full group of collineations of almost any incidence structure can be computed in 
 <Package>FinInG</Package>. Mathematically, this is almost obvious for projective spaces and affine spaces.
 For classical polar spaces, the particular forms plays a role. The coordinate change capabilities of the 
@@ -111,8 +103,7 @@ maps, they consist of a matrix together with a field automorphism.
 <Example>
 <#Include SYSTEM "../examples/include/examples_collgroup.include">
 </Example>
-</Description>
-</ManSection>
+</Subsection>
 
 </Section>
 
@@ -122,9 +113,8 @@ maps, they consist of a matrix together with a field automorphism.
 The examples here are meant to give a flavour of how to explore geometrical objects from different point
 of views.
 
-<ManSection>
+<Subsection>
 <Heading>The Tits ovoid</Heading>
-<Description>
 In this example we consider the Tits ovoid in <M>PG(3,8)</M>. We explicitly check the intersection number
 of the Tits-ovoid with planes of the projective space, and compute its stabiliser group inside the homography
 group of <M>PG(3,8)</M>. The use of <F>;;</F> after a command suppresses its output, which is particularly interesting
@@ -133,12 +123,10 @@ The computed stabiliser is the Suzuki group <M>Sz(8)</M>, a finite simple group.
 <Example>
 <#Include SYSTEM "../examples/include/examples_tits.include">
 </Example>
-</Description>
-</ManSection>
+</Subsection>
 
-<ManSection>
+<Subsection>
 <Heading>Lines meeting a hermitian curve</Heading>
-<Description>
 Here we see how the lines of a projective plane 
 <Alt Not="HTML"><M>PG(2,q^2)</M></Alt> 
 <Alt Only="HTML">PG(2,q&lt;sup>2 &lt;/sup>)</Alt>
@@ -148,12 +136,10 @@ to complete.
 <Example>
 <#Include SYSTEM "../examples/include/examples_hermitian.include"> 
 </Example>
-</Description>
-</ManSection>
+</Subsection>
 
-<ManSection>
+<Subsection>
 <Heading>The Patterson ovoid</Heading>
-<Description>
 In this example, we construct the unique ovoid
 of the parabolic quadric <M>Q(6,3)</M>, first discovered by Patterson, but for
 which was given a nice construction by E. E. Shult. We begin with the ``sums of squares'' 
@@ -161,12 +147,10 @@ quadratic form over <M>GF(3)</M> and the associated polar space.
 <Example>
 <#Include SYSTEM "../examples/include/examples_patterson_commented.include"> 
 </Example>
-</Description>
-</ManSection>
+</Subsection>
 
-<ManSection>
+<Subsection>
 <Heading>A hyperoval</Heading>
-<Description>
 In this example, we consider a hyperoval of the projective
 plane <M>PG(2,4)</M>, that is, six points no three collinear.
 We will construct such a hyperoval by some basic explorations into particular
@@ -179,8 +163,7 @@ symmetric group on six elements.
 <Example>
 <#Include SYSTEM "../examples/include/examples_hyperoval24_commented.include"> 
 </Example>
-</Description>
-</ManSection>
+</Subsection>
 
 </Section>
 
@@ -192,9 +175,8 @@ of one geometry to (a subset of) the elements of a second geometry, preserving t
 Geometry morphisms are not necessarily type preserving. This section is meant to illustrate,
 in a non exhaustive way the basis philisophy behind geometry morphisms in <Package>FinInG</Package>.
 
-<ManSection>
+<Subsection>
 <Heading>Isomorphic polar spaces</Heading>
-<Description>
 We've seen already that a polar space can be constructed from any non-degenerate sesquilinear or
 non-singular quadratic form. An isomorphism between polar spaces of the same type, can easily be obtained.
 This example illustrates <F>IsomorphismPolarSpaces</F>, which is in its basic use self-explanatory, and
@@ -202,12 +184,10 @@ the use of the obtained map to compute images and pre-images of elements.
 <Example>
 <#Include SYSTEM "../examples/include/examples_morphism1.include"> 
 </Example>
-</Description>
-</ManSection>
+</Subsection>
 
-<ManSection>
+<Subsection>
 <Heading>Intertwiners</Heading>
-<Description>
 We reconsider the previous example. The observant reader might have noticed the message
 <E>#I  No intertwiner computed...</E>. Given a geometry morphism
 <M>f</M> from <M>S</M> to <M>S'</M>, an intertwiner <Alt Not="HTML"><M>\phi</M></Alt>
@@ -220,25 +200,21 @@ automorphism <M>g</M> of <M>S</M>, we have
 <Example>
 <#Include SYSTEM "../examples/include/examples_morphism2.include"> 
 </Example>
-</Description>
-</ManSection>
+</Subsection>
 
-<ManSection>
+<Subsection>
 <Heading>Klein correspondence</Heading>
-<Description>
 The Klein correspondence is well known. The user may define its own hyperbolic quadric
 as range for the geometry morphism in <Package>FinInG</Package>. Note that more is possible
 than illustrated in the elementary example, see Section <Ref Sect="sec:klein"/>.
 <Example>
 <#Include SYSTEM "../examples/include/examples_klein.include"> 
 </Example>
-</Description>
-</ManSection>
+</Subsection>
 
 
-<ManSection>
+<Subsection>
 <Heading>Embedding in a subspace</Heading>
-<Description>
 A projective space can be embedded as a subspace in a higher dimensional projective space.
 A comparable embedding is possible for polar spaces, clearly only when a given subspace
 intersects the polar space of higher rank in a polar space of the same type as the polar space to
@@ -246,24 +222,20 @@ be embedded.
 <Example>
 <#Include SYSTEM "../examples/include/examples_embedW.include"> 
 </Example>
-</Description>
-</ManSection>
+</Subsection>
 
-<ManSection>
-<Heading>subgeometries</Heading>
-<Description>
+<Subsection>
+<Heading>Subgeometries</Heading>
 A projective space can be embedded as a subgeometry in a projective space of the same dimension but over a field extension.
 A polar space, determined by a form <M>f</M> can be embedded in a polar space considered over a field extension by interpreting
 the form <M>f</M> over this field extension. This is an interesting tool to construct geometrical objects in projective and polar spaces.
 <Example>
 <#Include SYSTEM "../examples/include/examples_embedsubfield.include">
 </Example>
-</Description>
-</ManSection>
+</Subsection>
 
-<ManSection>
+<Subsection>
 <Heading>Embedding by field reduction</Heading>
-<Description>
 Field reduction is a power full tool to embedd low dimensional projective (and polar spaces)
 over a field <M>K</M> in to high dimensional spaces over a subfield of <M>K</M>. The mathematics behind
 field reduction is explained in sections <Ref Sect="proj_red"/> and <Ref Sect="polar_red"/>.
@@ -272,17 +244,15 @@ and a so-called Hermitian spread of a hyperbolic quadric.
 <Example>
 <#Include SYSTEM "../examples/include/examples_embedfieldreduction.include">
 </Example>
-</Description>
-</ManSection>
+</Subsection>
 
 </Section>
 
 <Section>
 <Heading>Some geometrical objects</Heading>
 
-<ManSection>
+<Subsection>
 <Heading>Spreads of <M>W(5,3)</M></Heading>
-<Description>
 A spread of <M>W(5,q)</M> is a set of <Alt Not="HTML"><M>q^3+1</M></Alt><Alt
 Only="HTML">q&lt;sup>3&lt;/sup>+1</Alt> planes which
 partition the points of <M>W(5,q)</M>. Here we enumerate all spreads of
@@ -290,12 +260,10 @@ partition the points of <M>W(5,q)</M>. Here we enumerate all spreads of
 <Example>
 <#Include SYSTEM "../examples/include/examples_spreads.include"> 
 </Example>
-</Description>
-</ManSection>
+</Subsection>
 
-<ManSection>
+<Subsection>
 <Heading>Distance-6 spread of the split Cayley hexagon</Heading>
-<Description>
 A distance 6 spread of a split Cayley hexagon is a set of lines mutually at maximal distance
 in the incidence graph. It is well known that the lines of the hexagon contained in a
 hyperplane meeting the ambient polar space in an elliptic quadric, yield such a spread.
@@ -305,43 +273,37 @@ and how <F>ElementToElement</F> can be used to embed an element in another geome
 <Example>
 <#Include SYSTEM "../examples/include/examples_translationspread.include">
 </Example>
-</Description>
-</ManSection>
+</Subsection>
 
 </Section>
 
 <Section>
 <Heading>Some particular incidence geometries</Heading>
 
-<ManSection>
+<Subsection>
 <Heading>The split Cayley hexagon</Heading>
-<Description>
 The split Cayley hexagon is one the well known classical generalised hexagons that are obtained using a triality of
 the hyperbolic quadric in 7 dimensions. This example shows some basic properties of this geometry.
 <Example>
 <#Include SYSTEM "../examples/include/examples_splitcayley.include"> 
 </Example>
-</Description>
-</ManSection>
+</Subsection>
 
-<ManSection>
+<Subsection>
 <Heading>An (apartment of) a building of type <M>E_6</M></Heading>
-<Description>
 This example shows the constructions of an incidence geometry whose automorphism group is an exceptional
 group of type <M>E_6</M>. The construction is done as a coset geometry. This example also illustrates how
 to get a diagram of such a coset geometry.
 <Example>
 <#Include SYSTEM "../examples/include/examples_e6.include"> 
 </Example>
-</Description>
-</ManSection>
+</Subsection>
 
 <Alt Only="HTML">&lt;img src="./graphics/E6.jpg">&lt;/img></Alt>
 <Alt Only="LaTeX">\includegraphics{./graphics/E6.jpg}</Alt>
 
-<ManSection>
+<Subsection>
 <Heading>A rank 4 geometry for <M>PSL(2,11)</M></Heading>
-<Description>
 Here we look at a particular flag-transitive geometry constructed from
 four subgroups of <M>PSL(2,11)</M>, and we construct the diagram for this geometry.
 To view this diagram, you need to either use a postscript viewer or
@@ -354,12 +316,10 @@ drawing program. We also provide <F>DrawDiagramWithNeato</F> to make a diagram w
 Here is what the output looks like with the standard <F>DrawDiagram</F> command:
 <Alt Only="HTML">&lt;img src="./graphics/PSL211.jpg">&lt;/img></Alt>
 <Alt Only="LaTeX">\includegraphics{./graphics/PSL211.jpg}</Alt>
-</Description>
-</ManSection>
+</Subsection>
 
-<ManSection>
+<Subsection>
 <Heading>The Ree-Tits octagon of order <M>[2,4]</M> as coset geometry</Heading>
-<Description>
 In this example we construct the Ree-Tits octagon of order <M>[2,4]</M>
 as a coset geometry. From the computation of the so-called rank 2 parameters,
 it can be observed already that the constructed geometry must be a generalised octagon.
@@ -368,8 +328,7 @@ and the available group as a subgroup of the collineation group, a generalised o
 is constructed.<Example>
 <#Include SYSTEM "../examples/include/examples_octagon.include">
 </Example>
-</Description>
-</ManSection>
+</Subsection>
 
 </Section>
 
@@ -380,14 +339,12 @@ In this section, we construct a classical elation
 generalised quadrangle from a q-clan, and we see that
 the associated BLT-set is a conic.
 
-<ManSection>
+<Subsection>
 <Heading>The classical q-clan</Heading>
-<Description>
 <Example>
 <#Include SYSTEM "../examples/include/examples_qclan.include"> 
 </Example>
-</Description>
-</ManSection>
+</Subsection>
 
 <Subsection>
 <Heading>Two ways to construct a flock generalised quadrangle from a Kantor-Knuth semifield q-clan</Heading>
@@ -438,15 +395,13 @@ and <Alt Not="HTML"><M>\phi</M></Alt><Alt Only="HTML">&#966;</Alt> is a nontrivi
 <Section>
 <Heading>Algebraic varieties</Heading>
 
-<ManSection>
+<Subsection>
 <Heading>A projective variety</Heading>
-<Description>
 In this example we demonstrate the construction of projective varieties.
 <Example>
 <#Include SYSTEM "../examples/include/examples_varieties.include"> 
 </Example>
-</Description>
-</ManSection>
+</Subsection>
 
 </Section>
 

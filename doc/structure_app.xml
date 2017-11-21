@@ -39,9 +39,8 @@ own declarations and the ones before.
 <Section>
 <Heading>The complete inventory</Heading>
 
-<ManSection>
+<Subsection>
 <Heading>Declarations</Heading>
-<Description>
 <Example>
 <#Include SYSTEM "./output/operations_inventory.txt">
 </Example>
@@ -51,12 +50,10 @@ own declarations and the ones before.
 <Example>
 <#Include SYSTEM "./output/properties_inventory.txt">
 </Example>
-</Description>
-</ManSection>
+</Subsection>
 
-<ManSection>
+<Subsection>
 <Heading>Functions/Methods</Heading>
-<Description>
 <Example>
 <#Include SYSTEM "./output/functions_inventory.txt">
 </Example>
@@ -64,8 +61,7 @@ own declarations and the ones before.
 <#Include SYSTEM "./output/methods_inventory.txt"> 
 </Example>
 
-</Description>
-</ManSection>
+</Subsection>
 
 </Section>
 <Section>

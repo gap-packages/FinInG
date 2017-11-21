@@ -21,8 +21,6 @@
 ##
 #############################################################################
 
-Print(", gpolygons\c");
-
 #############################################################################
 # Part I: generic part
 # This section is generic, i.e. if someone constructs a GP and obeys the representation,

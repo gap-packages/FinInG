@@ -245,9 +245,8 @@ This is a generic GAP function, and returns a homorphism to a "better" represent
 </Description>
 </ManSection>
 
-<ManSection>
+<Subsection>
 <Heading>Different behaviour for different collineation groups</Heading>
-<Description>
 For the different Lie geometries implemented in <Package>FinInG</Package>, nicemonomorphisms
 are (necessarily) treated in a different way. As the aim of a nicemonomorphism of
 group <M>G</M> is to provide a permutation representation, such that efficient algorithms for
@@ -274,8 +273,7 @@ collineation group of a polar space can be time consuming.
 <Example>
 <#Include SYSTEM "../examples/include/stab_orbs_behaviour1.include">
 </Example>
-</Description>
-</ManSection>
+</Subsection>
 
 <ManSection>
 <Oper Name="SetParent" Arg="group"/>
