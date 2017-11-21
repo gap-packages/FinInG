@@ -344,9 +344,8 @@ of <A>geom2</A>. Here is a simple example where the geometry morphism embeds
 </Description>
 </ManSection>
 
-<ManSection Label="proj_red">
+<Subsection Label="proj_red">
 <Heading> Embedding of projective spaces by field reduction</Heading>
-<Description>
 We briefly describe the mathematics behind field reduction. For more details we 
 refer to <Cite Key="LaVa"/>. Consider the fields &gfq; and &gfqt;. The field &gfqt; is a 
 <M>t</M>-dimensional vector space over &gfq;. Hence, with respect to a chosen basis 
@@ -358,8 +357,7 @@ of &vnqt;. Clearly, a <M>k</M> dimensional subspace of
 &vnqt; is also a  <M>kn</M>-dimensional subspace of <M>V(nt,q)</M>.  
 This induces an embedding from &pgnminus1qt; into &pgntminus1q;. 
 The embedding will be determined by the chosen basis of &gfqt; as a vector space over &gfq;
-</Description>
-</ManSection>
+</Subsection>
 
 <ManSection>
 <Oper Name="BlownUpSubspaceOfProjectiveSpace" Arg="B, subspace"/>
@@ -487,9 +485,8 @@ The default (when calling the operation with two arguments) is set to <C>true</C
 </Description>
 </ManSection>
 
-<ManSection Label="polar_red">
-<Heading> Embedding of polar spaces by field reduction</Heading>
-<Description>
+<Subsection Label="polar_red">
+<Heading>Embedding of polar spaces by field reduction</Heading>
 Field reduction for polar spaces is somewhat more involved than for
 projective spaces, and we give a brief description. Let <M>L</M> be the
 field &gfqt; and let <M>K</M> be the field &gfq; Let <M>P</M> be a polar
@@ -610,8 +607,7 @@ The possible embeddings are listed in the following table.
    <Item><M>q</M> odd</Item>
  </Row>
 </Table>
-</Description>
-</ManSection>
+</Subsection>
 
 <ManSection>
 <Oper Name="NaturalEmbeddingByFieldReduction" Arg="ps1,f2, alpha, basis, bool"/>

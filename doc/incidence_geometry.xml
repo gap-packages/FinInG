@@ -112,14 +112,12 @@ in Section <Ref Sect="liegeometries1"/> and subcategories of <C>IsGeneralisedPol
 </Description>
 </ManSection>
 
-<ManSection>
+<Subsection>
 <Heading>Examples of categories of incidence geometries</Heading>
-<Description>
 <Example>
 <#Include SYSTEM "../examples/include/incgeom_categories1.include"> 
 </Example>
-</Description>
-</ManSection>
+</Subsection>
 
 <ManSection>
 <Attr Name="TypesOfElementsOfIncidenceStructure" Arg="inc"/>
