@@ -23,8 +23,6 @@
 
 ## helping function. came from projectivespace.gi
 
-Print(", group\c");
-
 # CHECKED 5/09/11 jdb
 # We are currently CVec'ing everything. I decide to keep this function as is, and
 # convert its output where appriopriate to a list of cvecs

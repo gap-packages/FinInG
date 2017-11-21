@@ -24,8 +24,6 @@
 ##  with some AsList methods, causing a problem with orb 4.7.5.
 #############################################################################
 
-Print(", enumerators\c");
-
 #############################################################################
 # The enumerator functionality is quite technical. We need many tiny and less
 # tiny helping functions. We go for a bottom up approach, where we first 
