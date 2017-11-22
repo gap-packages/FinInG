@@ -39,8 +39,7 @@ Version := "1.4",
 
 ##  Release date of the current version in dd/mm/yyyy format.
 # 
-#Date := "19/09/2014",  #this is the date Fining was submitted officially.
-Date := "15/11/2017",
+Date := "23/11/2017",
 
 
 ##  URL of the archive(s) of the current package release, but *without*
@@ -244,16 +243,16 @@ Persons := [
 ##    "other"         for all other packages
 ##
 # Status := "accepted",
-Status := "submitted",
+Status := "accepted",
 
 ##  You must provide the next two entries if and only if the status is 
 ##  "accepted" because is was successfully refereed:
 # format: 'name (place)'
-# CommunicatedBy := "Mike Atkinson (St. Andrews)",
+ CommunicatedBy := "Alexander Konovalov (St Andrews)",
 #CommunicatedBy := "",
 # format: mm/yyyy
 # AcceptDate := "08/1999",
-#AcceptDate := "",
+AcceptDate := "11/2017",
 
 ##  For a central overview of all packages and a collection of all package
 ##  archives it is necessary to have two files accessible which should be

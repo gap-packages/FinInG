@@ -2863,6 +2863,7 @@ InstallMethod( CollineationGroup,
  	   type := PolarSpaceType( ps );
        if type ="hermitian" and d = 2 and not IsPrime(Sqrt(Size(f)))  then
           Info(InfoFinInG, 1, "No nice monomorphism computed.");
+          Info(InfoFinInG, 2, "This really pisses me off, John!");
  	   else
 	      if not IsEmpty(x) then
             if type = "hermitian" and d=4 then

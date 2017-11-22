@@ -1003,7 +1003,7 @@ InstallMethod( IsConfiguration,
     "for an incidence structure",
     [ IsIncidenceStructure],
     function(x)
-    Info(InfoFinInG, 10, "The authors are grateful to Harald Gropp for pointing out clearly the difference between a configuration and a constellation.");
+    Info(InfoFinInG, 2, "The authors are grateful to Harald Gropp for pointing out clearly the difference between a configuration and a constellation.");
     return true;
     end );
     
@@ -1011,7 +1011,7 @@ InstallMethod( IsConstellation,
     "for an incidence structure",
     [ IsIncidenceStructure],
     function(x)
-    Info(InfoFinInG, 10, "The authors are grateful to Harald Gropp for pointing out clearly the difference between a configuration and a constellation.");
+    Info(InfoFinInG, 2, "The authors are grateful to Harald Gropp for pointing out clearly the difference between a configuration and a constellation.");
     return true;
     end );
 

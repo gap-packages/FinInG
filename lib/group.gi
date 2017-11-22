@@ -3074,7 +3074,7 @@ InstallMethod( GammaU, [IsPosInt, IsField and IsFinite],
     SetSize( g, Order(frob) * Size(gu) / (sqrtq+1) );
     if d = 2 then
        Info(InfoFinInG, 1, "Warning: We have only factored scalars out of GammaU to construct a central cover of PGammaU.\n The centre is thus nontrivial and acts trivially on totally isotropic 1-spaces.");
-       Info(InfoFinInG, 2, "So be carefull because you're opening a can of worms;-)");
+       Info(InfoFinInG, 2, "So be careful because you're opening a can of worms!");
        SetName( g, Concatenation("2.PGammaU(",String(d),",",String(sqrtq),"^2)") );
     else
        SetName( g, Concatenation("PGammaU(",String(d),",",String(sqrtq),"^2)") ); 
