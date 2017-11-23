@@ -291,7 +291,7 @@ automorphism group of the generalised polygon is actually the full collineation 
 time is needed to compute the automorphism group of the underlying graph. The timings after both
 <F>CollineationGroup</F> commands are wrong. This is because <Package>GRAPE</Package> relies on
 an external binary to computed the automorphism group of a graph. The generalised quadrangle in this example
-is known as <M>T_2(O)^</M>.
+is known as <Alt Only="HTML MathJax"><M>T_2^*(O)</M></Alt><Alt Not="HTML"><M>T_2^*(O)</M></Alt><Alt Only="HTML noMathJax">T&lt;sub>2&lt;/sub>&lt;sup>*&lt;/sup>(O)</Alt>.
 <Example>
 <#Include SYSTEM "../examples/include/gpolygons_collineationgroup3.include">
 </Example>

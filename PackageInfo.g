@@ -197,7 +197,7 @@ Persons := [
     IsAuthor      := true,
     IsMaintainer  := true,
     Email         := "michel.lavrauw@unipd.it",
-    WWWHome       := "http://cage.ugent.be/~ml",
+    WWWHome       := "http://people.sabanciuniv.edu/~mlavrauw/",
     PostalAddress := Concatenation( [
                        "Michel Lavrauw\n",
                        "Faculty of Engineering and Natural Sciences\n",
