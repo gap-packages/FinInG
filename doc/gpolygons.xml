@@ -178,7 +178,8 @@ uses <A>grp</A> and <A>act</A> to construct the incidence graph in a more effici
 if <A>grp</A> is a non trivial group, the construction of the graph will
 be faster. This operation can typically be used to construct generalised polygons from objects that are available
 in <Package>FinInG</Package>. This difference in time is shown in the first two examples. The third examples
-shows the construction of the generalised quadrangle <M>T_2(O)</M>.
+shows the construction of the generalised quadrangle
+<Alt Only="HTML MathJax"><M>T_2(O)</M></Alt><Alt Not="HTML"><M>T_2(O)</M></Alt><Alt Only="HTML noMathJax">T&lt;sub>2&lt;/sub>(O)</Alt>.
 <Example>
 <#Include SYSTEM "../examples/include/gpolygons_gpbyelements.include">
 </Example>
