@@ -16,7 +16,7 @@ i_m := "InstallMethod(";
 
 homedir := DirectoryCurrent();
 workingdir := DirectoriesPackageLibrary("fining","lib")[1];
-outputdir := DirectoriesPackageLibrary("fining","doc/output")[1]; 
+outputdir := DirectoriesPackageLibrary("fining","doc/include")[1];
 SizeScreen([256,24]);
 
 #different files for global functions and methods.

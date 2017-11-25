@@ -539,7 +539,7 @@ x_3y_3z_3 - x_7y_7z_7.</M></Alt>
     y_3(x_0z_4+x_1z_5+x_2z_6) + \\ y_7(z_0x_4+z_1x_5+z_2x_6) +
     z_3(y_0x_4+y_1x_5+y_2x_6) + z_7(x_0y_4+x_1y_5+x_2y_6) -
     x_3y_3z_3 - x_7y_7z_7.</Display></Alt><Alt Only="HTML noMathJax">
-<#Include SYSTEM "./beautiful_formula_in_ugly_html.xml">
+<#Include SYSTEM "./include/beautiful_formula_in_ugly_html.xml">
 </Alt><Alt Only="Text">Display of this formula is not possible in text mode</Alt><P/>
 
 Now a pair <M>(x,y) \in V \times V</M> represents an incident 0-1 pair of points if and only if <M>T(x,y,z)</M> vanishes in the variable
