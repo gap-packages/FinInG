@@ -45,7 +45,7 @@ be considered as a subset of the set of elements of <M>S</M>. The same considera
 for classical polar spaes. These consideration have implications for the behaviour of
 certain operations in &fining;, e.g. when computing the span and meet of different elements.
 
-Using geometry morphisms, and more particular a 
+Using geometry morphisms, and more particular a
 function like <F>NaturalEmbeddingBySubField</F>, one can deal in an indirect way with subgeometries. 
 However, using <F>NaturalEmbeddingBySubField</F> is not flexible, and typical problems such as 
 considering a subgeometry determined by a user chosen frame and a subfield, cannot be handled
