@@ -39,23 +39,23 @@ in both <E>component1.gd</E> and <E>component2.gd</E>.
 <Subsection>
 <Heading>Declarations</Heading>
 <Example>
-<#Include SYSTEM "./output/operations_inventory.txt">
+<#Include SYSTEM "./include/operations_inventory.txt">
 </Example>
 <Example>
-<#Include SYSTEM "./output/attributes_inventory.txt">
+<#Include SYSTEM "./include/attributes_inventory.txt">
 </Example>
 <Example>
-<#Include SYSTEM "./output/properties_inventory.txt">
+<#Include SYSTEM "./include/properties_inventory.txt">
 </Example>
 </Subsection>
 
 <Subsection>
 <Heading>Functions/Methods</Heading>
 <Example>
-<#Include SYSTEM "./output/functions_inventory.txt">
+<#Include SYSTEM "./include/functions_inventory.txt">
 </Example>
 <Example>
-<#Include SYSTEM "./output/methods_inventory.txt"> 
+<#Include SYSTEM "./include/methods_inventory.txt">
 </Example>
 
 </Subsection>
@@ -64,8 +64,8 @@ in both <E>component1.gd</E> and <E>component2.gd</E>.
 <Section>
 <Heading>The filter graph(s)</Heading>
 
-<Alt Only="HTML">&lt;img src="filtergraph.png">&lt;/img></Alt>
-<Alt Only="LaTeX">\includegraphics[width=18cm]{filtergraph.png}</Alt><P/>
+<Alt Only="HTML">&lt;img src="./graphics/filtergraph.png">&lt;/img></Alt>
+<Alt Only="LaTeX">\includegraphics[width=18cm]{./graphics/filtergraph.png}</Alt><P/>
 
 </Section>
 </Appendix>
