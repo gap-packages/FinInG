@@ -28,9 +28,24 @@ relation <M>I</M> is then symmetrised containment. To define a subgeometry
 mathematically, we follow <Cite Key="Dembowski68"/>. Let <M>P' \subset P</M> and let
 <M>L'</M> be a set of subsets of <M>P'</M>, such that every line <M>l' \in L'</M>
 is a subset of exactly one line <M>l \in L</M>. If <M>S'=(P',L',I)</M> is a projective space
-again, then we call <M>S'</M> a <E>subgeometry</E> of <M>S</M>. A typical example of a subgeometry
-is a Baer subplane of a projective plane. Mathematically, any subspace of a projective 
-space also induces a subgeometry. Using geometry morphisms, and more particular a 
+again, then we call <M>S'</M> a <E>subgeometry</E> of <M>S</M>. Note that this definition
+does not imply that the elements of <M>S'</M> are a subset of the elements of <M>S</M>.
+
+A typical example of a subgeometry is a Baer subplane of a projective plane. In this example,
+with <M>S'</M> the Baer subplane of the projective plane <M>S</M>, one could say that
+the set of points of <M>S'</M> is indeed a subset of the set of points of <M>S</M>, contrary
+to the set of lines of <M>S'</M>, which is not considered a subset of the set of lines of <M>S</M>,
+for various mathematical reasons. However, one could consider a line of <M>S'</M> as a set of
+points of <M>S'</M>, so the set of points of a line of <M>S'</M> is a subset of the set
+of points of a line of <M>S</M>.
+
+Another example is the subgeometry of a projective space induced by a subspace <M>\pi</M>.
+In this example, clearly, the set of elements of the induced subgeometry can, mathematically,
+be considered as a subset of the set of elements of <M>S</M>. The same considerations apply
+for classical polar spaes. These consideration have implications for the behaviour of
+certain operations in &fining;, e.g. when computing the span and meet of different elements.
+
+Using geometry morphisms, and more particular a 
 function like <F>NaturalEmbeddingBySubField</F>, one can deal in an indirect way with subgeometries. 
 However, using <F>NaturalEmbeddingBySubField</F> is not flexible, and typical problems such as 
 considering a subgeometry determined by a user chosen frame and a subfield, cannot be handled
