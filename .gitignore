@@ -82,6 +82,6 @@ doc/rainbow.js
 doc/times.css
 doc/toggless.css
 doc/toggless.js
-tst/output/*
 doc/output/filtergraph.dot
+tst/output/*
 examples/output/*
