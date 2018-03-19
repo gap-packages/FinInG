@@ -7,7 +7,7 @@ intro.xml            FinInG package documentation
                                                                  Michel Lavrauw
                                                                 Max Neunhoeffer
 
-  Copyright (C) 2017,	Colorado State University
+  Copyright (C) 2018,	Colorado State University
                         Sabancı Üniversitesi
 						Università degli Studi di Padova
 						Universiteit Gent
@@ -62,9 +62,9 @@ If you are using BibTeX, you can use the following BibTeX entry for the current 
         Author = {Bamberg, John and Betten, Anton and Cara, Philippe and
             De Beule, Jan and Lavrauw, Michel and Neunh\"offer, Max },
         Key = {fining},
-        Title = {{FinInG -- Finite Incidence Geometry, Version 1.4}},
+        Title = {{FinInG -- Finite Incidence Geometry, Version 1.4.1}},
         Url = {\verb+(http://www.fining.org)+},
-        Year = 2017}
+        Year = 2018}
 </Example>
 
 Here is the bibliography entry produced by BibTeX (in bibliography style `alpha'), to
@@ -75,7 +75,7 @@ be pasted directly inside the bibliography environment of your LaTeX document:
 J.~Bamberg, A.~Betten, {Ph}. Cara, J.~De~Beule, M.~Lavrauw, and
   M.~Neunh\"offer.
 \newblock {\em Finite Incidence Geometry}.
-\newblock FInInG -- a {GAP} package, version 1.4, 2017.
+\newblock FInInG -- a {GAP} package, version 1.4.1, 2018.
 </Example>
 
 When linking to FinInG from a web page you can use the link
@@ -320,7 +320,7 @@ Homepage: http://www.maths.qmul.ac.uk/~leonard/grape/
          _  __/   _  / _  / / /_/ /  _  / / / /_/ /     _  /_/__  __/
          /_/      /_/  /_/ /_//___/  /_/ /_/____/      /_/_(_)/_/
 -------------------------------------------------------------------------------
-Loading  FinInG 1.4 (Finite Incidence Geometry)
+Loading  FinInG 1.4.1 (Finite Incidence Geometry)
 by John Bamberg (http://school.maths.uwa.edu.au/~bamberg/)
    Anton Betten (http://www.math.colostate.edu/~betten)
    Jan De Beule (http://www.debeule.eu)
