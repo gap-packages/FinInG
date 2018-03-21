@@ -1916,7 +1916,7 @@ InstallMethod( TwistedTrialityHexagon,
     [ IsField and IsFinite ],
 	function( f )
     local geo, ty, points, lines, repline, hvm, ps, orblen, hvmc, c, listels, dist,
-          hvmform, form, q, pps, reppoint, reppointvect, replinevect, w, shadline, 
+          hvmform, form, q, reppoint, reppointvect, replinevect, w, shadline,
           shadpoint, frob;
        ## Field must be GF(q^3);
 	frob := FrobeniusAutomorphism(f);
@@ -1924,7 +1924,6 @@ InstallMethod( TwistedTrialityHexagon,
 	if not q^3 = Size(f) then
        Error("Field order must be a cube of a prime power");
     fi;
-    pps := PrimePowersInt( Size(f) );
 
        ## Hendrik's form
     hvm := List([1..8], i -> [0,0,0,0,0,0,0,0]*One(f));
@@ -2060,7 +2059,7 @@ InstallMethod( TwistedTrialityHexagon,
 	[ IsClassicalPolarSpace ],
 	function( ps )
     local geo, ty, points, lines, repline, hvm, orblen, hvmc, c, listels, eq, naampje,
-          hvmform, form, q, pps, reppoint, reppointvect, replinevect, w, shadline, f,
+          hvmform, form, q, reppoint, reppointvect, replinevect, w, shadline, f,
           shadpoint, c1, c2, change, dist, frob;
        ## Field must be GF(q^3);
     if not (IsHyperbolicQuadric(ps) and ps!.dimension = 7) then
@@ -2072,7 +2071,6 @@ InstallMethod( TwistedTrialityHexagon,
 	if not q^3 = Size(f) then
        Error("Field order must be a cube of a prime power");
     fi;
-    pps := PrimePowersInt( Size(f) );
 
        ## Hendrik's form
     hvm := List([1..8], i -> [0,0,0,0,0,0,0,0]*One(f));
@@ -2366,8 +2364,7 @@ InstallMethod( CollineationGroup,
 	[ IsClassicalGeneralisedHexagon],
 	function( hexagon )
 		local group, coll, f, gens, newgens, change, d, q, rep, domain, orblen, hom, frob, t,
-		
-		pps, sigma, m, mp, ml, nonzerof, nonzeroq,  x;
+		sigma, m, mp, ml, nonzerof, nonzeroq,  x;
 		f := hexagon!.basefield;
 		q := Size(f);
 		d := hexagon!.dimension;
