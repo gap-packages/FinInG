@@ -149,7 +149,7 @@ InstallMethod( FiningOrbitsDomain,
     0,
     function(G,col,act)
     local blist,D,x,pos,orbs,next,orb;
-    D := Elements(AsList(col));
+    D := AsSet(col);
     blist := BlistList( [ 1 .. Length( D ) ], [  ] );
     orbs := [  ];
     for next in [1..Length(D)] do
