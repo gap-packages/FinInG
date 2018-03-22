@@ -13,8 +13,8 @@ SetPackageInfo( rec(
 
 PackageName := "FinInG",
 Subtitle := "Finite Incidence Geometry",
-Version := "1.4",
-Date := "23/11/2017",
+Version := "1.4.1",
+Date := "31/03/2018",
 
 ArchiveURL := Concatenation("http://cage.ugent.be/fining/archive/fining-",~.Version),
 ArchiveFormats := ".tar.gz -win.zip .tar.bz2",
