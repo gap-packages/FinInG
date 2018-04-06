@@ -2386,6 +2386,9 @@ InstallMethod(Iterator,
 
 # CHECKED 22/09/11 jdb
 # cmat notice. in this case just the ConvertToMatrixRep causes trouble.
+# added "parentflag" field in creation of collection. This happens
+# also for ShadowSubspacesOfProjectiveSpace. Now generic method for \in
+# for "an element of a Lie geometry and a collection of shadow elements" works.
 #############################################################################
 #O ShadowOfElement(<ps>, <v>, <j> ). Recall that for every particular Lie 
 # geometry a method for ShadowOfElement  must be installed. 
@@ -2449,6 +2452,7 @@ InstallMethod( ShadowOfElement,
 					inner := localinner,
 					outer := localouter,
 					factorspace := localfactorspace,
+                    parentflag := FlagOfIncidenceStructure(ps,[v]), #added 5/4/2018, see remark above
 					size := sz
 					)
 				);

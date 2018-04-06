@@ -326,34 +326,6 @@ InstallMethod( Size,
 		return ShallowCopy(subs!.size);
 	end);
 
-# CHECKED 11/09/11 jdb
-#############################################################################
-#O  \in( <x>, <dom> )
-# returns true if <x> belongs to the elements collected in <dom> It is checked if their 
-# geometry matches.
-## 
-InstallMethod( \in, 
-	"for an element and set of elements",  
-	# 1*SUM_FLAGS+3 increases the ranking for this method
-    [IsElementOfIncidenceStructure, IsElementsOfIncidenceStructure], 1*SUM_FLAGS+3,
-	function( x, dom )
-		return x in dom!.geometry and x!.type = dom!.type;
-	end );
-
-# CHECKED 11/09/11 jdb
-#############################################################################
-#O  \in( <x>, <dom> )
-# returns true if <x> belongs to the elements collected in <dom> It is checked if their 
-# geometry matches.
-## 
-InstallMethod( \in, 
-	"for an element and domain",  
-	# 1*SUM_FLAGS+3 increases the ranking for this method
-    [IsElementOfIncidenceStructure, IsAllElementsOfIncidenceStructure], 1*SUM_FLAGS+3,
-	function( x, dom )
-		return x in dom!.geometry;
-	end );
-
 #############################################################################
 # Constructor methods and some operations/attributes for subspaces of 
 # projective spaces.
