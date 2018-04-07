@@ -2163,7 +2163,7 @@ InstallMethod( Enumerator,
      return enum;
    end );
 
-
+# 7/4/2018 adapted enumerator to work for shadow of flags of cps too.
 #############################################################################
 #O Enumerator. 
 # returns an enumerator for a collection of shadow subspaces of an element of
@@ -2181,7 +2181,7 @@ InstallMethod( Enumerator,
           ps2, newdim, canon_quot, Wvectors, mb, compl,
           gen, m, newform, changeform_inv, cquot_to_res, 
           enumps2, enum, ps, var, j, out, m2, iso, proj,
-          img, changeform, res_to_cquot, bas, canbas, zero, basimgs;
+          img, changeform, res_to_cquot, bas, canbas, zero, basimgs, flagtypes;
 
     ps := res!.geometry;
     var := res!.inner;
@@ -2189,17 +2189,21 @@ InstallMethod( Enumerator,
     j := res!.type;
     f := ps!.basefield;
     psdim := ps!.dimension;
-    pstype := PolarSpaceType(ps); 
+    pstype := PolarSpaceType(ps);
+    flagtypes := res!.parentflag!.types; #7/4/2018 not so nice for the reader not familiar with the names of our data fields...
 
-    if IsEmpty(var) then
+    #if Minimum(flagtypes) <= j and j <= Maximum(flagtypes) then #jdb 7/4/2018.
+    #    Print("vlammeste miljaardedju\n");
+    #    enumps2 := Enumerator( Subspaces(ps2, j-Size(var) ) ); #7/4/2018 added here " - Size(var)"
 
+    if IsEmpty(var) then # old situation must be kept.
        ## This is the residual for varieties contained in a subspace, such
        ## as "points on a line". Hence we need only use a method which 
        ## simulates the residual of a projective subspace.
 
        ps2 := res!.factorspace; 
 	
-       enumps2 := Enumerator( Subspaces(ps2, j) ); 
+       enumps2 := Enumerator( Subspaces(ps2, j));
 	
        enum := EnumeratorByFunctions( res, rec(
           ElementNumber := function(e, num)

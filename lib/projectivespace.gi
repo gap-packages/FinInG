@@ -951,43 +951,6 @@ InstallMethod( Size,
 		vs!.type - Size(vs!.inner)));
 	end);
 
-#############################################################################
-# Shortcuts to ShadowOfElement, specifically for projective spaces. 
-#############################################################################
-
-# CHECKED 7/09/2011 jdb
-#############################################################################
-#O  Hyperplanes( <el> )
-# returns the hyperplanes incident with <el>, relying on ShadowOfElement 
-# for particular <el>.
-##
-#InstallMethod( Hyperplanes, 
-#	"for elements of a Lie geometry",
-#	[ IsSubspaceOfProjectiveSpace ],
-#	function( var )
-#		local geo, d, f;
-#		geo := var!.geo;
-#		#d := geo!.dimension;
-#		#f := geo!.basefield;
-#		# return ShadowOfElement( ProjectiveSpace(d, f), var, var!.type - 1 ); changed this into
-#	    return ShadowOfElement( geo, var, geo!.dimension );
-# end );
-
-# CHECKED 7/09/2011 jdb
-#############################################################################
-#O  Hyperplanes( <geo>, <el> )
-# returns the hyperplanes incident with <el>, relying on ShadowOfElement 
-# for particular <el>.
-##
-#InstallMethod( Hyperplanes, 
-#	"for a Lie geometry and elements of a Lie geometry",
-#	[ IsProjectiveSpace, IsSubspaceOfProjectiveSpace ],
-#	function( geo, var )
-#		local d, f;
-#		d := geo!.dimension;
-#		f := geo!.basefield;
-#		return ShadowOfElement( geo, var, geo!.dimension );
-#end );
 
 #############################################################################
 # Constructors for groups of projective spaces.
@@ -1482,7 +1445,7 @@ InstallMethod( ShadowOfFlag,
           outer := localouter,
           factorspace := localfactorspace,
 		  parentflag := flag,
-          size := Size(Subspaces(localfactorspace)) #this causes a problem when localfactorspace consists of cvec/cmat.
+          size := Size(Subspaces(localfactorspace)) #this is wrong!!! But since we do some work again in the iterator, it's never used!
         )
       );
 	end);
