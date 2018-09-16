@@ -177,7 +177,7 @@ InstallMethod( PrintObj,
 	[ IsProjectiveVariety and IsProjectiveVarietyRep ],
 	function( var )
 		Print("Projective Variety in ");
-		ViewObj(var!.geometry);
+		PrintObj(var!.geometry);
 	end );
 
 InstallMethod( Display, 
@@ -277,7 +277,7 @@ InstallMethod( PrintObj,
 	[ IsHermitianVariety and IsHermitianVarietyRep ],
 	function( var )
 		Print("Hermitian Variety in ");
-		ViewObj(var!.geometry);
+		PrintObj(var!.geometry);
 	end );
 
 InstallMethod( Display, 
@@ -428,7 +428,7 @@ InstallMethod( PrintObj,
 	[ IsQuadraticVariety and IsQuadraticVarietyRep ],
 	function( var )
 		Print("Quadratic Variety in ");
-		ViewObj(var!.geometry);
+		PrintObj(var!.geometry);
 	end );
 	
 InstallMethod( Display, 
@@ -558,7 +558,7 @@ InstallMethod( PrintObj,
 	[ IsAffineVariety and IsAffineVarietyRep ],
 	function( var )
 		Print("Affine Variety in ");
-		ViewObj(var!.geometry);
+		PrintObj(var!.geometry);
 	end );
 
 InstallMethod( Display, 
@@ -857,7 +857,7 @@ InstallMethod( PrintObj,
 	[ IsSegreMap and IsSegreMapRep ],
 	function( segremap )
 		Print("Segre Map of ");
-		ViewObj(segremap!.source);
+		PrintObj(segremap!.source);
 	end );
 
 #############################################################################
@@ -985,7 +985,7 @@ InstallMethod( PrintObj,
 	[ IsSegreVariety and IsSegreVarietyRep ],
 	function( var )
 		Print("Segre Variety in ");
-		ViewObj(var!.geometry);
+		PrintObj(var!.geometry);
 	end );
 
 #############################################################################
@@ -1183,7 +1183,7 @@ InstallMethod( PrintObj,
 	[ IsVeroneseMap and IsVeroneseMapRep ],
 	function( veronesemap )
 		Print("Veronese Map of ");
-		ViewObj(veronesemap!.source);
+		PrintObj(veronesemap!.source);
 	end );
 
 #############################################################################
@@ -1267,7 +1267,7 @@ InstallMethod( PrintObj,
 	[ IsVeroneseVariety and IsVeroneseVarietyRep ],
 	function( var )
 		Print("Veronese Variety in ");
-		ViewObj(var!.geometry);
+		PrintObj(var!.geometry);
   end );
 	
 #############################################################################
@@ -1556,7 +1556,7 @@ InstallMethod( PrintObj,
 	[ IsGrassmannMap and IsGrassmannMapRep ],
 	function( map )
 		Print("Grassmann Map of ");
-		ViewObj(map!.source);
+		PrintObj(map!.source);
 	end );
 	
 
@@ -1660,7 +1660,7 @@ InstallMethod( PrintObj,
 	[ IsGrassmannVariety and IsGrassmannVarietyRep ],
 	function( gv )
 		Print("Grassmann Variety in ");
-		ViewObj(gv!.geometry);
+		PrintObj(gv!.geometry);
 	end );
 
 
