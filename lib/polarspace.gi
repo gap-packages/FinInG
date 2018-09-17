@@ -2293,19 +2293,19 @@ InstallMethod( FlagOfIncidenceStructure,
 # View/Print/Display methods for flags
 #############################################################################
 
-InstallMethod( ViewObj, "for a flag of a polar space",
+InstallMethod( ViewObj, "for a flag of a classical polar space",
 	[ IsFlagOfClassicalPolarSpace and IsFlagOfIncidenceStructureRep ],
 	function( flag )
 		Print("<a flag of ",ViewString(flag!.geo)," >");
 	end );
 
-InstallMethod( PrintObj, "for a flag of a projective space",
+InstallMethod( PrintObj, "for a flag of a classical polar space",
 	[ IsFlagOfClassicalPolarSpace and IsFlagOfIncidenceStructureRep ],
 	function( flag )
 		PrintObj(flag!.els);
 	end );
 
-InstallMethod( Display, "for a flag of a projective space",
+InstallMethod( Display, "for a flag of a classical polar space",
 	[ IsFlagOfClassicalPolarSpace and IsFlagOfIncidenceStructureRep ],
 	function( flag )
 		if IsEmptyFlag(flag) then
