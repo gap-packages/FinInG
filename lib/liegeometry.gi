@@ -720,6 +720,29 @@ InstallMethod( \in,
     return false;
   end );
 
+
+#############################################################################
+# A method to check set theoretic containment for an element of a Lie geometry
+# and a collection of shadow elements of a Lie geometry
+#############################################################################
+
+# new since 5/4/2018 jdb
+# see also remarks at method O  \in( <x>, <dom> )
+# "for an element and collection of shadow elements of an incidence structure"
+#############################################################################
+#O  \in( <x>, <dom> )
+# returns true if <x> belongs to the elements collected in <dom> It is checked if their
+# geometry matches.
+##
+InstallMethod( \in,
+    "for an element and set of shadow elements of a Lie geometry",
+    # 1*SUM_FLAGS+3 increases the ranking for this method
+    # 5/4/2018: jdb wonders if the above line is necessary.
+    [IsElementOfLieGeometry, IsShadowElementsOfLieGeometry],
+    1*SUM_FLAGS+3,
+    function( x, dom )
+        return x in dom!.geometry and x!.type = dom!.type and IsIncident(x,dom!.parentflag);
+    end );
 #############################################################################
 ## Methods for random selection of elements
 #############################################################################  

@@ -728,6 +728,59 @@ InstallOtherMethod( \in,
         fi;
 	end );
 
+# CHECKED 11/09/11 jdb
+# this is a method that is generic for more geometries than projective spaces, so
+# this was moved from projectivespace.gi to geometry.gi on 5/4/2018.
+#############################################################################
+#O  \in( <x>, <dom> )
+# returns true if <x> belongs to the elements collected in <dom> It is checked if their
+# geometry matches.
+##
+InstallMethod( \in,
+    "for an element and domain",
+    # 1*SUM_FLAGS+3 increases the ranking for this method
+    # 5/4/2018: jdb wonders if the above line is necessary.
+    [IsElementOfIncidenceStructure, IsAllElementsOfIncidenceStructure], 1*SUM_FLAGS+3,
+    function( x, dom )
+        return x in dom!.geometry;
+    end );
+
+# CHECKED 11/09/11 jdb
+# this was moved from projectivespace.gi to geometry.gi on 5/4/2018.
+#############################################################################
+#O  \in( <x>, <dom> )
+# returns true if <x> belongs to the elements collected in <dom> It is checked if their
+# geometry matches.
+##
+InstallMethod( \in,
+    "for an element and set of elements of an incidence structure",
+    # 1*SUM_FLAGS+3 increases the ranking for this method
+    # 5/4/2018: jdb wonders if the above line is necessary.
+    [IsElementOfIncidenceStructure, IsElementsOfIncidenceStructure], 1*SUM_FLAGS+3,
+    function( x, dom )
+        return x in dom!.geometry and x!.type = dom!.type;
+    end );
+
+# new since 5/4/2018 jdb
+# this was necessary, since the above method causes prblems when dom is
+# IsShadowElementsOf...
+# this new method is generic. Since e.g. IsShadowSubspacesOfProjectiveSpace
+# is not a subcategory of IsShadowElementsOfIncidenceStructure, we have
+# to create an operation for Lie geometries (and probably others) as well.
+#############################################################################
+#O  \in( <x>, <dom> )
+# returns true if <x> belongs to the elements collected in <dom> It is checked if their
+# geometry matches.
+##
+#InstallMethod( \in,
+#    "for an element and collection of shadow elements of an incidence structure",
+    # 1*SUM_FLAGS+3 increases the ranking for this method
+    # 5/4/2018: jdb wonders if the above line is necessary.
+#    [IsElementOfIncidenceStructure, IsShadowElementsOfIncidenceStructure], 1*SUM_FLAGS+3,
+#    function( x, dom )
+#        return x in dom!.geometry and x!.type = dom!.type and IsIncident(x,dom!.flag); #there is no representation declared for IsShadowElementsOfIncidenceStructure, so we have no idea whether a flag is available.
+#    end );
+
 #############################################################################
 # General methods for shadows of elements/flags
 #############################################################################

@@ -51,7 +51,7 @@ DeclareCategory( "IsEmptySubspace", IsAttributeStoringRep );
 DeclareRepresentation( "IsEmptySubspaceRep", IsEmptySubspace, ["geo", "obj"] );
 
 DeclareCategory( "IsShadowElementsOfLieGeometry", IsElementsOfIncidenceStructure );
-DeclareRepresentation( "IsShadowElementsOfLieGeometryRep", IsElementsOfIncidenceStructure, [ "geometry", "type", "inner", "outer", "factorspace" ]);
+DeclareRepresentation( "IsShadowElementsOfLieGeometryRep", IsElementsOfIncidenceStructure, [ "geometry", "type", "inner", "outer", "factorspace", "parentflag" ]);
 
 DeclareOperation( "UnderlyingVectorSpace", [IsLieGeometry] );
 DeclareOperation( "UnderlyingVectorSpace", [IsElementOfLieGeometry] );

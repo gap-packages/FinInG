@@ -2293,19 +2293,19 @@ InstallMethod( FlagOfIncidenceStructure,
 # View/Print/Display methods for flags
 #############################################################################
 
-InstallMethod( ViewObj, "for a flag of a polar space",
+InstallMethod( ViewObj, "for a flag of a classical polar space",
 	[ IsFlagOfClassicalPolarSpace and IsFlagOfIncidenceStructureRep ],
 	function( flag )
 		Print("<a flag of ",ViewString(flag!.geo)," >");
 	end );
 
-InstallMethod( PrintObj, "for a flag of a projective space",
+InstallMethod( PrintObj, "for a flag of a classical polar space",
 	[ IsFlagOfClassicalPolarSpace and IsFlagOfIncidenceStructureRep ],
 	function( flag )
 		PrintObj(flag!.els);
 	end );
 
-InstallMethod( Display, "for a flag of a projective space",
+InstallMethod( Display, "for a flag of a classical polar space",
 	[ IsFlagOfClassicalPolarSpace and IsFlagOfIncidenceStructureRep ],
 	function( flag )
 		if IsEmptyFlag(flag) then
@@ -2386,6 +2386,9 @@ InstallMethod(Iterator,
 
 # CHECKED 22/09/11 jdb
 # cmat notice. in this case just the ConvertToMatrixRep causes trouble.
+# added "parentflag" field in creation of collection. This happens
+# also for ShadowSubspacesOfProjectiveSpace. Now generic method for \in
+# for "an element of a Lie geometry and a collection of shadow elements" works.
 #############################################################################
 #O ShadowOfElement(<ps>, <v>, <j> ). Recall that for every particular Lie 
 # geometry a method for ShadowOfElement  must be installed. 
@@ -2449,10 +2452,114 @@ InstallMethod( ShadowOfElement,
 					inner := localinner,
 					outer := localouter,
 					factorspace := localfactorspace,
+                    parentflag := FlagOfIncidenceStructure(ps,[v]), #added 5/4/2018, see remark above
 					size := sz
 					)
 				);
 	end );
+
+# CHECKED 18/4/2011 jdb
+# 25/3/14 It turns out that there is a problem when we do not Unpack
+# cvec/cmat with Size(Subspaces(localfactorspace)). As there is never an action
+# on shadow of flag objects, it is not unreasonable to store the matrices as
+# GAP matrices rather than cvec/cmats.
+#############################################################################
+#O  ShadowOfFlag( <ps>, <flag>, <j> )
+# returns the shadow elements of <flag>, i.e. the elements of <ps> of type <j>
+# incident with all elements of <flag>.
+# returns the shadow of a flag as a record containing the projective space (geometry),
+# the type j of the elements (type), the flag (parentflag), and some extra information
+# useful to compute with the shadows, e.g. iterator
+##
+InstallMethod( ShadowOfFlag,
+    "for a classical polar space, a flag and an integer",
+    [IsClassicalPolarSpace, IsFlagOfClassicalPolarSpace, IsPosInt],
+    function( ps, flag, j )
+    local localinner, localouter, localfactorspace, v, smallertypes, biggertypes, ceiling, floor, pstype, f, vdim, psdim, sz;
+    if j > ps!.dimension then
+        Error("<ps> has no elements of type <j>");
+    fi;
+    #empty flag - return all subspaces of the right type
+    if IsEmptyFlag(flag) then
+      return ElementsOfIncidenceStructure(ps, j);
+    fi;
+
+    # find the element in the flag of highest type less than j, and the subspace
+    # in the flag of lowest type more than j.
+
+    #listoftypes:=List(flag,x->x!.type);
+    smallertypes:=Filtered(flag!.types,t->t <= j);
+    biggertypes:=Filtered(flag!.types,t->t >= j);
+    if smallertypes=[] then
+        localinner := [];
+        ceiling:=Minimum(biggertypes);
+        localouter:=flag!.els[Position(flag!.types,ceiling)];
+    elif biggertypes=[] then
+        localouter:=BasisVectors(Basis(ps!.vectorspace));
+        floor:=Maximum(smallertypes);
+        localinner:=flag!.els[Position(flag!.types,floor)];
+        vdim := localinner!.type;
+    else
+        floor:=Maximum(smallertypes);
+        ceiling:=Minimum(biggertypes);
+        localinner:=flag!.els[Position(flag!.types,floor)];
+        localouter:=flag!.els[Position(flag!.types,ceiling)];
+    fi;
+    if not smallertypes = [] then
+        if localinner!.type = 1 then
+            localinner:=[Unpack(localinner!.obj)]; #here is the cmat change
+        else
+            localinner:=Unpack(localinner!.obj);
+        fi;
+    fi;
+    if not biggertypes = [] then
+        if localouter!.type = 1 then
+            localouter := [Unpack(localouter!.obj)];
+        else
+            localouter := Unpack(localouter!.obj);
+        fi;
+    fi;
+    if not biggertypes = [] then
+        localfactorspace := Subspace(ps!.vectorspace,
+            BaseSteinitzVectors(localouter, localinner).factorspace);
+            if Dimension(localfactorspace) = 0 then
+                sz := 1;
+            else
+                sz := Size(Subspaces(localfactorspace,j-Size(localinner)));
+            fi;
+    else
+        pstype := PolarSpaceType(ps);
+        psdim := ps!.dimension;
+        f := ps!.basefield;
+        if pstype = "symplectic" then
+            localfactorspace := SymplecticSpace( psdim- 2*vdim, f );
+        elif pstype = "hermitian" then
+            localfactorspace := HermitianPolarSpace( psdim-2*vdim, f );
+        elif pstype = "elliptic" then
+            localfactorspace := EllipticQuadric( psdim-2*vdim, f );
+        elif pstype = "parabolic" then
+            localfactorspace := ParabolicQuadric( psdim-2*vdim, f );
+        elif pstype = "hyperbolic" then
+            localfactorspace := HyperbolicQuadric( psdim-2*vdim, f );
+        fi;
+        sz := Size(ElementsOfIncidenceStructure(localfactorspace, j - vdim));
+    fi;
+    return Objectify(
+        NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
+                                IsShadowSubspacesOfClassicalPolarSpace and
+                                IsShadowSubspacesOfClassicalPolarSpaceRep),
+        rec(
+          geometry := ps,
+          type := j,
+          inner := localinner,
+          outer := localouter,
+          factorspace := localfactorspace,
+          parentflag := flag,
+          size := sz
+        )
+      );
+    end);
+
 
 # added 3/9/14. This was necessary since there is a generic method now
 # for Iterator of shadow elements of a generic incidence structure which 
@@ -2478,26 +2585,7 @@ InstallMethod( Size,
 		return vs!.size;
 	end);
 
-#############################################################################
-#O IsCollinear( <ps>, <a>, <b> ) returns true if <a> and <b> are collinear in 
-# <ps>
-##
-#InstallMethod( IsCollinear, 
-#	"for points of a polar space", 
-#	[IsClassicalPolarSpace and IsClassicalPolarSpaceRep, 
-#		IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
-#	function( ps, a, b )
-#    local m;
-#    m := SesquilinearForm(ps)!.matrix;
-#    return Unwrap(a)*m*Unwrap(b)=Zero(ps!.basefield);
-#
-   # JB: There was a bug here for Hermitian polar spaces
-   # We may want to copy the code from \^ "for sesquilinear forms" to here
-
-#    return IsZero( [Unwrap(a),Unwrap(b)]^SesquilinearForm(ps) );   
-#  end);
-
-# above method was wrong
+# checked 7/4/2018 jdb.
 #############################################################################
 #O IsCollinear( <ps>, <a>, <b> ) returns true if <a> and <b> are collinear in 
 # <ps>
@@ -2736,83 +2824,6 @@ InstallMethod( PolarMap,
     fi;
     return perp; ## should we return a correlation here? No.
   end );
-
-#InstallMethod( DefiningPolarity, "for a polar space, if it is defined by a polarity",
-#    [ IsClassicalPolarSpace ],
-#  function( ps )
-#    local f, q, type, form, polarity;
-#    f := ps!.basefield;
-#    q := Size(f);
-#    type := PolarSpaceType( ps );
-#    if type in ["elliptic", "hyperbolic", "parabolic"] and IsEvenInt(q) then
-#        Error("This polar space is not defined by a polarity");
-#    else
-#       form := SesquilinearForm( ps );
-#    fi;
-#    polarity := PolarityOfProjectiveSpace( form );
-#    return polarity;
-#  end );
-#
-
-#InstallMethod( Polarisation, "for a quadratic form",
-#  [ IsQuadraticForm ],
-#  function( form )
-#
-#  ## This function returns the bilinear form obtained from a quadratic
-#  ## form Q; that is, <u ,v> = Q(u + v) - Q(u) - Q(v).
-#  ## This method will be replace by the new operation in "Forms"
-#  # jdb: I commented out this function now, we can use AssociatedBilinearForm.
-#  local gram, f;
-#    gram := form!.matrix;
-#    f := form!.basefield;
-#    return BilinearFormByMatrix( gram + TransposedMat(gram), f);
-#  end);
- 
-#InstallMethod( \in, "for a variety and a polar space",
-#  [IsElementOfIncidenceStructure, IsClassicalPolarSpace],
-#  function( w, ps )
-#    local form, r, tsingular, mat, aut, polar;
-#    # if the vector spaces don't agree we can't go any further
-#    if w!.geo!.vectorspace <> ps!.vectorspace then
-#      return false;
-#    fi;
-#
-#    r := w!.obj;
-#    if w!.type = 1 then r := [r]; fi;
-#
-#    # check if the subspace is totally isotropic/singular
-#
-#    if HasQuadraticForm(ps) then
-#       form := QuadraticForm(ps);
-#       
-#       ## check that each basis element is singular
-#       if not ForAll( r, i -> IsZero( i^form ) ) then
-#          return false;  
-#       fi;
-#       
-#       ## now look at all pairs of basis elements
-#       ## under the associated bilinear form
-#
-#       polar := AssociatedBilinearForm( form );
-#       tsingular := ForAll([1..Size(r)-1], i ->
-#                      ForAll([i+1..Size(r)], j ->
-#                        IsZero( [r[i],r[j]]^polar ) ) );
-#    else
-#       form := SesquilinearForm(ps);
-#       mat := form!.matrix;
-#       if form!.type = "hermitian" then
-#          aut := CompanionAutomorphism( ps );
-#          tsingular := IsZero( (r^aut) * mat * TransposedMat(r) );
-#       else 
-#          tsingular := IsZero( r * mat * TransposedMat(r) ); 
-#       fi;
-#    fi;
-#   
-#    if not IsSubspaceOfClassicalPolarSpace(w) and tsingular then
-#       w!.geo := ps;
-#    fi;
-#    return tsingular;
-#  end );
 
 #############################################################################
 #

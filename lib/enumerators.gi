@@ -2163,7 +2163,7 @@ InstallMethod( Enumerator,
      return enum;
    end );
 
-
+# 7/4/2018 adapted enumerator to work for shadow of flags of cps too.
 #############################################################################
 #O Enumerator. 
 # returns an enumerator for a collection of shadow subspaces of an element of
@@ -2180,8 +2180,9 @@ InstallMethod( Enumerator,
     local pstype, psdim, f, b, vardim, perp, vs, 
           ps2, newdim, canon_quot, Wvectors, mb, compl,
           gen, m, newform, changeform_inv, cquot_to_res, 
-          enumps2, enum, ps, var, j, out, m2, iso, proj,
-          img, changeform, res_to_cquot, bas, canbas, zero, basimgs;
+          enumps2, enum, ps, var, j, out, m2, iso, proj, higherels,
+          img, changeform, res_to_cquot, bas, canbas, zero, basimgs,
+          flag, flagtypes, flagpg, pg;
 
     ps := res!.geometry;
     var := res!.inner;
@@ -2189,17 +2190,22 @@ InstallMethod( Enumerator,
     j := res!.type;
     f := ps!.basefield;
     psdim := ps!.dimension;
-    pstype := PolarSpaceType(ps); 
+    pstype := PolarSpaceType(ps);
+    flag := res!.parentflag;
+    flagtypes := flag!.types;
 
-    if IsEmpty(var) then
+    #if Minimum(flagtypes) <= j and j <= Maximum(flagtypes) then #jdb 7/4/2018.
+    #    Print("vlammeste miljaardedju\n");
+    #    enumps2 := Enumerator( Subspaces(ps2, j-Size(var) ) ); #7/4/2018 added here " - Size(var)"
 
+    if IsEmpty(var) then # old situation must be kept.
        ## This is the residual for varieties contained in a subspace, such
        ## as "points on a line". Hence we need only use a method which 
        ## simulates the residual of a projective subspace.
 
        ps2 := res!.factorspace; 
 	
-       enumps2 := Enumerator( Subspaces(ps2, j) ); 
+       enumps2 := Enumerator( Subspaces(ps2, j));
 	
        enum := EnumeratorByFunctions( res, rec(
           ElementNumber := function(e, num)
@@ -2234,24 +2240,50 @@ InstallMethod( Enumerator,
           end ) );
     else
 
-       ## This is the residual for varieties containing a subspace, such
-       ## as "lines on a point". We use projection to create the enumerator.
+        # Now there are two possibilities: (1): the flag is not a single element,
+        # and j is not a type of one of the flag elements, and (2) j is larger
+        # than the largest type of a flag element. (1) is dealt partially in the
+        # above cases, except when j is in between the smallest and largest type of
+        # the flag, (2) means that j is larger than the largest type of the flag elements,
+        # then we deal with subspaces through a given one which is the subspace of largest
+        # type in the flag.
 
-       b := VectorSpaceToElement(ps, var);     
-       proj := NaturalProjectionBySubspace(ps, b);  
-       img := Range(proj)!.geometry;
-       newdim := j - b!.type;
-       canon_quot := ElementsOfIncidenceStructure(img, newdim); 
-       enumps2 := Enumerator( canon_quot );
+        higherels := Filtered(flag!.els,x->x!.type > j);
+        if not IsEmpty(higherels) then
 
-       enum := EnumeratorByFunctions( res, rec(
-          ElementNumber := function(e, num)
-             return proj!.prefun( enumps2[num] );  
-          end, 
-          NumberElement := function( e, elm )
-             return Position( enumps2, proj!.fun(elm ) );
-          end ) );
+            # This means that j is somewhere between smallest and largest type in flag,
+            # but not equal to one of the types of the flag (by above)
+            # We go for the easy solution: use the "enumerator" for shadows of flags
+            # in projective spaces. This results currently in a list, since there is
+            # no proper enumerator for projective spaces and shadows of flags.
+            # So when we get the list, we just convert all elements in this list to
+            # elements of the polar space. If we develop code for an enumerator of a
+            # projective space later, we can recycle the essential part of the code here.
+            # To do so, we just create the appropriate flag.
 
+            pg := AmbientSpace(ps);
+            flagpg := FlagOfIncidenceStructure(pg,flag!.els);
+            enum := List(ShadowOfFlag(pg,flagpg,j),x->Embed(ps,x));
+        else
+
+            # This is the residual for varieties containing a subspace, such
+            # as "lines on a point". We use projection to create the enumerator.
+
+            b := VectorSpaceToElement(ps, var);
+            proj := NaturalProjectionBySubspace(ps, b);
+            img := Range(proj)!.geometry;
+            newdim := j - b!.type;
+            canon_quot := ElementsOfIncidenceStructure(img, newdim);
+            enumps2 := Enumerator( canon_quot );
+
+            enum := EnumeratorByFunctions( res, rec(
+                ElementNumber := function(e, num)
+                    return proj!.prefun( enumps2[num] );
+            end,
+            NumberElement := function( e, elm )
+                return Position( enumps2, proj!.fun(elm ) );
+            end ) );
+        fi;
     fi;
     return enum;
   end );
