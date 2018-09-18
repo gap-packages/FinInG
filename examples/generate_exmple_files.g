@@ -69,7 +69,7 @@ classicalpolfiles := ["cps_polarspaceform", "cps_example", "cps_symplectic", "cp
 						"cps_ambientspaceelps", "cps_coordinates", "cps_incident", "cps_span", "cps_typesubspace", "cps_shadowofelement",
 						"cps_elementsincidentwithelement", "cps_specialisometry", "cps_isometry", "cps_similarity", "cps_collineation",
 						 "cps_enumerator", "cps_iterator", "cps_aslist", "cps_polarityofps", "cps_iscollinear",
-						 "cps_tangentspace", "cps_pole" ];
+						 "cps_tangentspace", "cps_pole", "cps_evaluateform" ];
 	   
 stab_orbsfiles := [ "stab_orbs_finingorbit1", "stab_orbs_finingorbit2", "stab_orbs_finingorbits1", "stab_orbs_example1", "stab_orbs_finingstabiliser", 
 					"stab_orbs_finingstabiliserorb", "stab_orbs_timing1", "stab_orbs_setwisegeneric", "stab_orbs_finingsetwisestabiliser", 
@@ -115,7 +115,7 @@ groups_appfiles := ["groups_app_sodesargues", "groups_app_godesargues", "groups_
 
 exampledir := DirectoriesPackageLibrary("fining","tst")[1];
 
-files := [ "subgeometries_extendelement" ];
+files := [ "cps_evaluateform" ];
 
 #initialize directorynames
 #exampledir = dir where .g files are located : ".../pkg/fining/examples/gap"
@@ -124,8 +124,8 @@ files := [ "subgeometries_extendelement" ];
 #name of script to start gap version. The user has to fill this in!
 
 #code below for gap4r7
-gapstart := "gap4r7"; #might be different on your computer
-gap := Filename(Directory("/usr/bin/"),gapstart);
+gapstart := "gap4r9"; #might be different on your computer
+gap := Filename(Directory("/usr/local/bin/"),gapstart);
 
 #code below for gap4r8
 gapstart := "gap4r8"; #might be different on your computer
@@ -140,7 +140,7 @@ gap := Filename(Directory("/usr/local/bin"),gapstart); #el capitan
 homedir := DirectoryCurrent();
 exampledir := DirectoriesPackageLibrary("fining","examples/gap")[1]; 
 preambledir := DirectoriesPackageLibrary("fining","examples/")[1]; 
-outputdir := DirectoriesPackageLibrary("fining","examples/output")[1];
+outputdir := DirectoriesPackageLibrary("fining","examples/output")[1]; #possibly output does not exist, just create dir then.
 paths := JoinStringsWithSeparator(GAPInfo.RootPaths{[3,4]},";");
 #paths := JoinStringsWithSeparator("./","/opt/gap4r8");
 #args := JoinStringsWithSeparator(["-l",paths," -L fining.ws"," -o 4G"]," ");

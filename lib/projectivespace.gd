@@ -165,3 +165,11 @@ DeclareOperation( "ProjectiveHomologyGroup", [ IsSubspaceOfProjectiveSpace, IsSu
 DeclareOperation( "SingerCycleMat", [IsInt, IsInt]);
 DeclareOperation( "SingerCycleCollineation", [IsInt, IsInt]);
 
+#############################################################################
+# Action of forms on elements of Lie geometries (cfr. report FinInG meeting 8/6/2018 (Arco))
+#############################################################################
+
+DeclareOperation( "EvaluateForm", [ IsSesquilinearForm, IsElementOfLieGeometry, IsElementOfLieGeometry ] );
+DeclareOperation( "EvaluateForm", [ IsQuadraticForm, IsElementOfLieGeometry ] );
+DeclareOperation( "\^", [ IsSubspaceOfProjectiveSpaceCollection, IsSesquilinearForm ] );
+DeclareOperation( "\^", [ IsElementOfLieGeometry, IsQuadraticForm ] );

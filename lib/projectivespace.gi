@@ -2567,3 +2567,70 @@ InstallMethod( IncidenceGraph,
         Setter( IncidenceGraphAttr )( ps, graph );
         return graph;
     end );
+
+# Added 18/09/18 jdb.
+#############################################################################
+#O  EvaluateForm( <form>, <el1>, <el2> )
+# returns the "action" of <form> (sesquilinear) on the subspaces <el1> and <el2>.
+# All it does is unpack the underlyingobject and call the existing method
+# for EvaluateForm and matrices/vectors (and counts on checking of input
+# of the existing method.
+#
+InstallMethod( EvaluateForm,
+    "for a sesquilinear form and two elements of a Lie geometry",
+    [IsSesquilinearForm, IsElementOfLieGeometry, IsElementOfLieGeometry],
+    function(form, el1, el2)
+    local list;
+    list := Set([AmbientSpace(el1)!.vectorspace,AmbientSpace(el2)!.vectorspace]);
+    if Size(list) <> 1 or not form!.vectorspace in list then
+        Error("underlying vectorspaces of <form>, <el1> and <el2> do not match");
+    fi;
+    return EvaluateForm(form,Unpack(UnderlyingObject(el1)),Unpack(UnderlyingObject(el2)));
+    end );
+
+# Added 18/09/18 jdb.
+#############################################################################
+#O  EvaluateForm( <form>, <el1> )
+# returns the "action" of <form> (quadratic) on the subspace <el1>.
+# All it does is unpack the underlyingobject and call the existing method
+# for EvaluateForm and matrices/vectors (and counts on checking of input
+# of the existing method.
+#
+InstallMethod( EvaluateForm,
+    "for a quadratic form and two elements of a Lie geometry",
+    [IsQuadraticForm, IsElementOfLieGeometry ],
+    function(form, el1 )
+    if not form!.vectorspace = AmbientSpace(el1)!.vectorspace then
+        Error("underlying vectorspaces of <form> and <el1> do not match");
+    fi;
+    return EvaluateForm(form,Unpack(UnderlyingObject(el1)));
+    end );
+
+# Added 18/09/18 jdb.
+#############################################################################
+#O  \^( <el>, <form> )
+# returns the "action" of <form> (quadratic) on the subspace <el1>.
+# All it does is call EvaluateForm
+#
+InstallMethod( \^,
+    "for an element of a Lie geometry and a quadratic form",
+    [IsElementOfLieGeometry, IsQuadraticForm ],
+    function(el1, form)
+        return EvaluateForm(form,el1);
+    end );
+
+# Added 18/09/18 jdb.
+#############################################################################
+#O  \^( <pair>, <form> )
+# returns the "action" of <form> (quadratic) on the subspace <el1>.
+# All it does is call EvaluateForm
+#
+InstallMethod( \^,
+    "for two elements of a Lie geometry and a sesquilinear form",
+    [IsSubspaceOfProjectiveSpaceCollection, IsSesquilinearForm ],
+    function(pair, form)
+        if Size(pair) <> 2 then
+            Error("The first argument must be a pair of subspaces of a projective space");
+        fi;
+        return EvaluateForm(form,pair[1],pair[2]);
+    end );

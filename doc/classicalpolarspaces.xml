@@ -724,6 +724,24 @@ returns the pole of <A>el</A> with relation to the polar space <A>ps</A>.
 </Description>
 </ManSection>
 
+<ManSection>
+<Oper Name="EvaluateForm" Arg="form, el1"/>
+<Oper Name="EvaluateForm" Arg="form, el1, el2"/>
+<Oper Name="\^" Arg="form, el1"/>
+<Oper Name="\^" Arg="form, el1, el2"/>
+<Returns>a finite field element or a list (of lists) of finite field elements</Returns>
+<Description>
+This method passes <A>form</A> and the underlying vector or matrix of <A>el1</A>, when <A>form</A> is a quadratic form,
+and <A>el1</A> and <A>el2</A> when <A>form</A> is a sesquilinear form to the operation <F>Evaluate</F> of
+the package <Package>Forms</Package>. The same applies to the respective methods for <F>\^</F>. The example
+below illustrates how the points of a projective space that evaluate to zero under a given form, are
+precisely the points of the quadric associated with the given form.
+<Example>
+<#Include SYSTEM "../examples/include/cps_evaluateform.include">
+</Example>
+</Description>
+</ManSection>
+
 </Section>
 
 <Section Label="polar:shadows">
@@ -760,9 +778,7 @@ also performs the checking.
 </Description>
 </ManSection>
 
-
 </Section>
-
 
 <Section Label="polar:classicalgroups">
 <Heading>Projective Orthogonal/Unitary/Symplectic groups in <Package>FinInG</Package></Heading>
