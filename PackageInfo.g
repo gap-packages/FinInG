@@ -169,7 +169,7 @@ Dependencies := rec(
   GAP := ">=4.8",
   NeededOtherPackages := [
           ["cvec", ">=2.5.7"],
-          ["Forms", ">=1.2.3"],
+          ["Forms", ">=1.2.5"],
           ["GAPDoc", ">= 1.6"],
           ["GenSS", ">=1.6.4"],
           ["GRAPE", ">=4.7"],
