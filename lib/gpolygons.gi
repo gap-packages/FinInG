@@ -2328,7 +2328,7 @@ InstallMethod( 3D4fining,
            [ 0, 0, 1, 0, 0, 0, 0, 0],
            [ 1, 0, 0, 0, 0, 0, 0, 0],
            [ 0, 0, 0, 1, 0, 0, 0, 0]]*One(f);  
-       ConvertToMatrixRep(m, f);
+       #ConvertToMatrixRep(m, f);      #jdb 19/09/2018: I think this ConverToMatrixRep is not needed anymore.
        mp:=d->[[1,  0,  0,  0,  0,  d,  0,  0],  
                [0,  1,  0,  0, -d,  0,  0,  0],  
                [0,  0,  1,  0,  0,  0,  0,  0],  
@@ -4230,9 +4230,9 @@ InstallMethod( FlockGQByqClan, [ IsqClanObj ],
   blt := [ VectorSpaceToElement(w5, [[1,0,0,0,0,0], [0,0,0,1,0,0],[0,0,0,0,1,0]]*One(f)) ];
   
 	bltvecs := List(clan,x->[[1,0,0,0,0,0], [0,1,0,x[1][2],x[1][1],0], [0,0,1,x[2][2],x[1][2],0]] * One(f));
-	for x in bltvecs do
-		ConvertToMatrixRepNC(x,f);
-	od;
+	#for x in bltvecs do
+	#	ConvertToMatrixRepNC(x,f); #jdb 19/09/2018: I think this is not needed anymore.
+	#od;
   
   #for x in clan do
   #    Add(blt, VectorSpaceToElement(w5, [[1,0,0,0,0,0], [0,1,0,x[1][2],x[1][1],0], [0,0,1,x[2][2],x[1][2],0]] * One(f)));

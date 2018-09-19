@@ -1078,7 +1078,7 @@ InstallMethod( NaturalEmbeddingByFieldReduction,
                 Info(InfoFinInG, 1, "<el> is not a projectivity");
             fi;
 			image := BlownUpMat(basis, m!.mat); 
-			ConvertToMatrixRepNC( image, f2 );       
+			#ConvertToMatrixRepNC( image, f2 );
 			return CollineationOfProjectiveSpace(image, f2);
 		end;
 
@@ -1089,7 +1089,7 @@ InstallMethod( NaturalEmbeddingByFieldReduction,
                 Info(InfoFinInG, 1, "<el> is not a projectivity");
             fi;
 			preimage := ShrinkMat(basis, Unpack(m!.mat));
-			ConvertToMatrixRepNC( preimage, f1 );       
+			#ConvertToMatrixRepNC( preimage, f1 );       
 			return CollineationOfProjectiveSpace(preimage, f1);
 		end;
 
