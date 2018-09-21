@@ -85,3 +85,5 @@ doc/toggless.js
 tst/output/*
 doc/output/filtergraph.dot
 examples/output/*
+tmp
+tmp.json

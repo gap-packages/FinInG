@@ -31,3 +31,6 @@ end;
 
 # Set the name of the package here
 TestMyPackage( "fining" );
+
+QUIT_GAP(0);
+
