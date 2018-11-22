@@ -1027,9 +1027,9 @@ InstallMethod( IncidenceGraph,
     [ IsGeneralisedPolygon ],
     function( gp )
     local points, lines, graph, sz, adj, elations, gg, coll;
-    if not "grape" in RecNames(GAPInfo.PackagesLoaded) then
-       Error("You must load the GRAPE package\n");
-    fi;
+    #if not "grape" in RecNames(GAPInfo.PackagesLoaded) then
+    #   Error("You must load the GRAPE package\n");
+    #fi;
     if IsBound(gp!.IncidenceGraphAttr) then
        return gp!.IncidenceGraphAttr;
     else
@@ -1127,7 +1127,8 @@ InstallMethod( BlockDesignOfGeneralisedPolygon,
     [ IsGeneralisedPolygon and IsGeneralisedPolygonRep ],
     function( gp )
         local points, lines, des, blocks, l, b, elations, gg, orbs;
-        if not "design" in RecNames(GAPInfo.PackagesLoaded) then
+        if not IsPackageLoaded("design") then #this is a gap4r10 function.
+        #if not "design" in RecNames(GAPInfo.PackagesLoaded) then
             Error("You must load the DESIGN package\n");
         fi;
         if IsBound(gp!.BlockDesignOfGeneralisedPolygonAttr) then
@@ -1221,9 +1222,9 @@ InstallMethod( IncidenceGraph,
     [ IsDesarguesianPlane ],
     function( gp )
         local points, lines, graph, adj, group, coll, sz;
-        if not "grape" in RecNames(GAPInfo.PackagesLoaded) then
-            Error("You must load the GRAPE package\n");
-        fi;
+        #if not "grape" in RecNames(GAPInfo.PackagesLoaded) then
+        #    Error("You must load the GRAPE package\n");
+        #fi;
         if IsBound(gp!.IncidenceGraphAttr) then
             return gp!.IncidenceGraphAttr;
         fi;
@@ -1307,9 +1308,9 @@ InstallMethod( IncidenceGraph,
     [ IsClassicalGQ ],
     function( gp )
         local points, lines, graph, adj, group, coll, sz;
-        if not "grape" in RecNames(GAPInfo.PackagesLoaded) then
-            Error("You must load the GRAPE package\n");
-        fi;
+        #if not "grape" in RecNames(GAPInfo.PackagesLoaded) then
+        #    Error("You must load the GRAPE package\n");
+        #fi;
         if IsBound(gp!.IncidenceGraphAttr) then
             return gp!.IncidenceGraphAttr;
         fi;
@@ -2453,9 +2454,9 @@ InstallMethod( IncidenceGraph,
     [ IsClassicalGeneralisedHexagon and IsGeneralisedPolygonRep ],
     function( gp )
     local points, lines, graph, adj, group, coll, act,sz;
-    if not "grape" in RecNames(GAPInfo.PackagesLoaded) then
-       Error("You must load the GRAPE package\n");
-    fi;
+    #if not "grape" in RecNames(GAPInfo.PackagesLoaded) then
+    #   Error("You must load the GRAPE package\n");
+    #fi;
     if IsBound(gp!.IncidenceGraphAttr) then
        return gp!.IncidenceGraphAttr;
     fi;
@@ -3669,9 +3670,9 @@ InstallMethod( IncidenceGraph,
     [ IsElationGQ and IsGeneralisedPolygonRep ],
     function( gp )
     local points, lines, graph, adj, elationgroup, coll, act,sz;
-    if not "grape" in RecNames(GAPInfo.PackagesLoaded) then
-       Error("You must load the GRAPE package\n");
-    fi;
+    #if not "grape" in RecNames(GAPInfo.PackagesLoaded) then
+    #   Error("You must load the GRAPE package\n");
+    #fi;
     if IsBound(gp!.IncidenceGraphAttr) then
        return gp!.IncidenceGraphAttr;
     fi;

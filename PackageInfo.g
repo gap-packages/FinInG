@@ -53,24 +53,7 @@ Persons := [
     Place         := "Colorado",
     Institution   := "Colorado State University",
   ),
-  rec( 
-    LastName      := "De Beule",
-    FirstNames    := "Jan",
-    IsAuthor      := true,
-    IsMaintainer  := true,
-    Email         := "jan@debeule.eu",
-    WWWHome       := "http://www.debeule.eu",
-    PostalAddress := Concatenation( [
-                       "Jan De Beule\n",
-                       "Department of Mathematics\n",
-                       "Vrije Universiteit Brussel\n",
-                       "Pleinlaan 2\n",
-                       "B-1050 Brussel\n",
-                       "Belgium" ] ),
-    Place         := "Brussels",
-    Institution   := "Vrije Universiteit Brussel",
-  ),
-  rec( 
+  rec(
     LastName      := "Cara",
     FirstNames    := "Philippe",
     IsAuthor      := true,
@@ -85,6 +68,23 @@ Persons := [
                        "B-1050 Brussel\n",
                        "Belgium" ] ),
     Place         := "Brussel",
+    Institution   := "Vrije Universiteit Brussel",
+  ),
+  rec(
+    LastName      := "De Beule",
+    FirstNames    := "Jan",
+    IsAuthor      := true,
+    IsMaintainer  := true,
+    Email         := "jan@debeule.eu",
+    WWWHome       := "http://www.debeule.eu",
+    PostalAddress := Concatenation( [
+    "Jan De Beule\n",
+    "Department of Mathematics\n",
+    "Vrije Universiteit Brussel\n",
+    "Pleinlaan 2\n",
+    "B-1050 Brussel\n",
+    "Belgium" ] ),
+    Place         := "Brussels",
     Institution   := "Vrije Universiteit Brussel",
   ),
   rec( 
@@ -166,7 +166,7 @@ PackageDoc := rec(
 ##  Are there restrictions on the operating system for this package? Or does
 ##  the package need other packages to be available?
 Dependencies := rec(
-  GAP := ">=4.8",
+  GAP := ">=4.10",
   NeededOtherPackages := [
           ["cvec", ">=2.5.7"],
           ["Forms", ">=1.2.5"],

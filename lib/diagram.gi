@@ -869,9 +869,10 @@ InstallMethod( IncidenceGraph, [ IsCosetGeometry and IsHandledByNiceMonomorphism
 
     local fastgeo, gamma, hom;
 
-    if not "grape" in RecNames(GAPInfo.PackagesLoaded) then
-       Error("You must load the Grape package in order to use IncidenceGraph.\n");
-    fi;
+    #the following is obsolete: grape is a NeededOtherPackage (PackageInfo.g)
+    #if not "grape" in RecNames(GAPInfo.PackagesLoaded) then
+    #   Error("You must load the Grape package in order to use IncidenceGraph.\n");
+    #fi;
 
     if FINING.Fast then
       Print("#I Using NiceMonomorphism...\n");   
@@ -901,9 +902,9 @@ InstallMethod( IncidenceGraph, [ IsCosetGeometry ],
   
     local g, vars, gamma, allvars, reps, hom1, hom2, im1, im2, d, em1, em2, gens, newgens, diagonal;
 
-    if not "grape" in RecNames(GAPInfo.PackagesLoaded) then
-       Error("You must load the Grape package.\n");
-    fi;
+    #if not "grape" in RecNames(GAPInfo.PackagesLoaded) then
+    #   Error("You must load the Grape package.\n");
+    #fi;
 
     g := geo!.group;
 
