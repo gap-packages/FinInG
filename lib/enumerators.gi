@@ -724,7 +724,7 @@ end );
 #F  FG_herm_N_rank( q, v, offset, n )
 #v: FFE vector.
 ##
-InstallGlobalFunction( FG_herm_N_rank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt],
+InstallGlobalFunction( FG_herm_N_rank,
   function(q, v, offset, n)
   local Q, rk, val, m_val, alpha, A, rk1, coset, a, coset0, rk0, beta, nb, log;
   Q := q * q;
@@ -796,7 +796,7 @@ end );
 #F  FG_herm_S_rank( q, v, offset, n )
 #v: FFE vector.
 ##
-InstallGlobalFunction( FG_herm_S_rank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt],
+InstallGlobalFunction( FG_herm_S_rank,
   function(q, v, offset, n)
   local val, rk, rk1, m_val, log, a, log1, nb, coset;
   if n = 1 then
@@ -879,7 +879,7 @@ end );
 #F  FG_herm_N1_rank( q, v, offset, n )
 #v: FFE vector.
 ##
-InstallGlobalFunction( FG_herm_N1_rank, [IsPosInt, IsFFECollection, IsPosInt, IsPosInt],
+InstallGlobalFunction( FG_herm_N1_rank,
   function(q, v, offset, n)
   local Q, one, val, rk, rk1, nb, nb1, A, coset, coset1, coset2, a, av, i, new_val, log, rk2, log1;
   Q := q * q;
