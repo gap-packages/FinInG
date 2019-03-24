@@ -108,6 +108,7 @@ InstallMethod( FiningOrbit,
 
 # CHECKED 26/03/14 ml
 # CHANGED 08/04/14 jb
+# CHANGED 24/03/19 jb
 #############################################################################
 #O  FiningOrbits( <g>, <e>, <act> )
 #  returns the orbits of e under g, using action function act.
@@ -115,24 +116,28 @@ InstallMethod( FiningOrbit,
 InstallMethod( FiningOrbits,
 	"for a group, a homogeneous list, and an action function",
 	[ IsGroup, IsHomogeneousList, IsFunction],
-	function(g,set,action)
-	local orbs, set2, x, o, upto, newupto;
-	orbs := [];
-	set2 := ShallowCopy(set);
-	set2 := Set(set2);;
-	upto := 0;
-	repeat
-		x := set2[1];
-		o := Enumerate(Orb(g, x, action));
-		Add(orbs, o);
-		SubtractSet(set2, AsList(o));
-        newupto := Int(100 * (Size(set)-Size(set2))/Size(set));
+	function(G,set,act)
+	local blist,D,x,pos,orbs,next,orb,upto,newupto;
+    D := AsSet(set);
+    blist := BlistList( [ 1 .. Length( D ) ], [  ] );
+    orbs := [  ];
+    upto := 0;
+    for next in [1..Length(D)] do
+      if blist[next]=false then
+        orb := Enumerate(Orb(G, D[next], act));
+        for x in orb do
+            pos := Position(D,x);
+            blist[pos] := true;
+        od;
+        Add( orbs, orb );
+        newupto := Int(100 * Number(blist,x->x)/Size(set)); 
 		if newupto <> upto then
 			upto:=newupto;
-			Print(upto, "%..\c");
+			Print(upto, "%\r");
 		fi;
-	until IsEmpty(set2);
-	return orbs;
+      fi;
+    od;
+    return Immutable( orbs );
 	end );
 
 # ADDED 21/06/16 jdb
