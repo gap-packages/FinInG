@@ -34,14 +34,14 @@ Subtitle := "Finite Incidence Geometry",
 ##  of valid version numbers. For an automatic package distribution update
 ##  you must provide a new version number even after small changes.
 
-Version := "1.4.1-subgeometry",
+Version := "1.4.2",
 
 ##  Please adjust also the VERSION file in the package directory when
 ##  changing this.
 
 ##  Release date of the current version in dd/mm/yyyy format.
 # 
-Date := "23/11/2017",
+Date := "18/05/2020",
 
 
 ##  URL of the archive(s) of the current package release, but *without*
