@@ -124,6 +124,7 @@ InstallMethod( FiningOrbits,
     upto := 0;
     for next in [1..Length(D)] do
       if blist[next]=false then
+	# The following two loops can be combined # ml (18 May 2020)
         orb := Enumerate(Orb(G, D[next], act));
         for x in orb do
             pos := Position(D,x);
