@@ -368,32 +368,34 @@ InstallMethod( VectorSpaceToElementForSubgeometries,
 	"for a sub geometry of a projective space and an object",
 	[ IsSubgeometryOfProjectiveSpace, IsObject],
 	function( sub, obj )
-        local ambient, element, newelements, proj, subfield, newobj, elements;
+        local ambient, element, newelement, proj, subfield, newobj, elements;
    		if IsZero(obj) then
-			return EmptySubspace(sub);
-        fi;
-        ambient := sub!.ambientspace;
-        element := VectorSpaceToElement(ambient,obj);
-        if element = ambient then
-            newobj := Filtered(obj,x->not IsZero(x));
-            elements := List(newobj,x->VectorSpaceToElement(sub,x));
-        else
-            elements := [element];
-        fi;
-        if not IsCanonicalSubgeometryOfProjectiveSpace(sub) then
-            proj := sub!.projectivity;
-            newelements := List(elements,x->x^(proj^(-1)));
-        else
-            newelements := elements;
-        fi;
-        subfield := sub!.subfield;
-        if not ForAll( Flat( List(newelements,x->x!.obj ) ), i -> i in subfield) then
-            Error( "<obj> does not determine an element in <sub>");
-        elif element = ambient then
-            return sub;
-        else
-            return Wrap(sub,element!.type,UnderlyingObject(element));
-        fi;
+        return EmptySubspace(sub);
+      fi;
+      ambient := sub!.ambientspace;
+      element := VectorSpaceToElement(ambient,obj);
+      if element = ambient then
+          # newobj := Filtered(obj,x->not IsZero(x));
+          # elements := List(newobj,x->VectorSpaceToElement(sub,x));
+          return sub;
+      # else
+      #     elements := [element];
+      fi;
+      if not IsCanonicalSubgeometryOfProjectiveSpace(sub) then
+          proj := sub!.projectivity;
+          newelement := element^(proj^(-1));
+      else
+          newelement := element;
+      fi;
+      subfield := sub!.subfield;
+      if not ForAll(Flat(newelement!.obj),a->a in subfield) then
+      #if not ForAll( Flat( List(newelements,x->x!.obj ) ), i -> i in subfield) then
+          Error( "<obj> does not determine an element in <sub>");
+      # elif element = ambient then
+      #     return sub;
+      else
+          return Wrap(sub,element!.type,UnderlyingObject(element));
+      fi;
     end);
 
 # Now follow the different methods for VectorSpaceToElement for objects
