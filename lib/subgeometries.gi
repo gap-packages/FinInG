@@ -833,7 +833,7 @@ InstallMethod( Meet,
             pg := AmbientSpace(l[1]);
             list := List(l,x->Embed(pg,x));
             meet := Meet(list);
-            same := Size(AsDuplicateFreeList(List(l,x->AmbientGeometry(x))))=1;
+            # same := Size(AsDuplicateFreeList(List(l,x->AmbientGeometry(x))))=1;
             if IsEmptySubspace(meet) then
                 return EmptySubspace(l[1]!.geo);
             else
@@ -1256,6 +1256,7 @@ InstallMethod( CollineationGroup,
             SetCollineationAction(coll,OnProjSubspacesOfSubgeometriesNC);
         fi;
         SetDefaultGeometry(coll,sub);
+        SetParent(coll,CollineationGroup(AmbientSpace(sub)));
 		return coll;
 	end );
 
