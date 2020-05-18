@@ -13,7 +13,7 @@
 ##					University of St. Andrews
 ##					University of Western Australia, Perth
 ##                  Vrije Universiteit Brussel
-##                 
+##
 ##
 ##  Implementation stuff for subgeometries of projective spaces.
 ##
@@ -104,6 +104,7 @@ InstallMethod( RandomFrameOfProjectiveSpace,
     field := BaseField(pg);
     mat := RandomInvertibleMat(d,field);
     pts := List(mat,x->VectorSpaceToElement(pg,x));
+    # TODO: start with the standard frame and choose a random projectivity (#ml 18 May 2020)
     gauge := Random(Points(pg));
     while not IsFrameOfProjectiveSpace(Union(pts,[gauge])) do
         gauge := Random(Points(pg));
@@ -481,7 +482,7 @@ InstallMethod( \=,
 	function(p1,p2);
 		return (p1!.obj = p2!.obj) and (p1!.geo = p2!.geo);
 	end );
-    
+
 #############################################################################
 #O \=
 # Equality of a subspace of a subgeometry and a subspace of a projective space
@@ -640,7 +641,7 @@ InstallMethod( \in,
 # for a collection of subspaces of a given dimension of a projective space.
 # We use the isomorphic subgeometry for the method here.
 ##
-InstallMethod( Random, 
+InstallMethod( Random,
 	"for a collection of subspaces of a subgeometry of a projective space",
 	[ IsSubspacesOfSubgeometryOfProjectiveSpace ],
     # chooses a random element out of the collection of subspaces of given
@@ -655,7 +656,7 @@ InstallMethod( Random,
 			Error("The subspaces of the collection need to have the same dimension");
         fi;
 		## the common type of elements of subs
-		d := subs!.type;        
+		d := subs!.type;
         el := Random(ElementsOfIncidenceStructure(isom,d))^em;
         if not IsCanonicalSubgeometryOfProjectiveSpace(pg) then
             el := el^pg!.projectivity;
@@ -706,10 +707,10 @@ InstallMethod( Span,
 InstallMethod( Span,
     "for a homogeneous list of subspaces of a subgeometry of a projective space",
 	[ IsHomogeneousList and IsSubspaceOfSubgeometryOfProjectiveSpaceCollection ],
-	function( l )  
+	function( l )
 		local list, span, pg, same;
 		# first we check that all items in the list belong to the same ambient geometry
-		if Length(l)=0 then 
+		if Length(l)=0 then
 			return [];
 		elif not Size(AsDuplicateFreeList(List(l,x->AmbientGeometry(x))))=1 then
 			Error("The elements in the list do not belong to the same ambient geometry");
@@ -819,10 +820,10 @@ InstallMethod( Meet,
 InstallMethod( Meet,
     "for a homogeneous list of subspaces of a subgeometry of a projective space",
 	[ IsHomogeneousList and IsSubspaceOfSubgeometryOfProjectiveSpaceCollection ],
-	function( l )  
+	function( l )
 		local list, meet, pg, same;
 		# first we check that all items in the list belong to the same ambient geometry
-		if Length(l)=0 then 
+		if Length(l)=0 then
 			return [];
 		elif not Size(AsDuplicateFreeList(List(l,x->AmbientGeometry(x))))=1 then
 			Error("The elements in the list do not belong to the same ambient geometry");
@@ -894,7 +895,7 @@ InstallMethod( Meet,
 
 #############################################################################
 #O Meet( <sub>, <el> )
-# for a subgeometry and a subspace of a projective space. 
+# for a subgeometry and a subspace of a projective space.
 ##
 #use sigma to compute the intersection of an element of the ambient space
 InstallMethod( Meet,
@@ -917,7 +918,7 @@ InstallMethod( Meet,
 
 #############################################################################
 #O Meet( <sub>, <el> )
-# for a subspace of a projective space and a subgeometry 
+# for a subspace of a projective space and a subgeometry
 ##
 InstallMethod( Meet,
 	"for a projective space and an element of a subgeometry of a projective space",
@@ -931,11 +932,11 @@ InstallMethod( Meet,
 #############################################################################
 #O FlagOfIncidenceStructure( <ps>, <els> )
 # returns the flag of the subgeometry <ps> with elements in <els>.
-# It is checked first whether the elements in <els> belong to the 
+# It is checked first whether the elements in <els> belong to the
 # same ambient geometry. The method checks whether the input really determines a flag.
 # Note that the filter for the first argument is IsProjectiveSpace. So this method
 # is applicable for a projective space that is not a subgeometry and a list
-# of elements of a subgeometry, but will give an appropriate error. 
+# of elements of a subgeometry, but will give an appropriate error.
 # Using IsSubgeometryOfProjectiveSpace would force us to install another method
 # just producing an error saying that the elements do not belong to <ps>
 # if called with the first argument a projective space that is not a subgeometry.
@@ -965,16 +966,16 @@ InstallMethod( FlagOfIncidenceStructure,
 
 #############################################################################
 #O ShadowOfElement( <ps>, <v>, <j> )
-# returns the shadow of an element v as a record containing the subgeometry <ps>, 
-# the type j of the elements (type), the element v (parentflag), and 
+# returns the shadow of an element v as a record containing the subgeometry <ps>,
+# the type j of the elements (type), the element v (parentflag), and
 # some extra information useful to compute with the shadows, e.g. iterator
 # This method relies on the isomorphic subgeometry of <ps>
 # Note: we use IsProjectiveSpace, see also note at FlagOfIncidenceStructure
 ##
-InstallMethod( ShadowOfElement, 
+InstallMethod( ShadowOfElement,
 	"for a projective space, an element of a subgeometry, and an integer",
 	[IsProjectiveSpace, IsSubspaceOfSubgeometryOfProjectiveSpace, IsPosInt],
-	# returns the shadow of an element v as a record containing the projective space (geometry), 
+	# returns the shadow of an element v as a record containing the projective space (geometry),
 	# the type j of the elements (type), the element v (parentflag), and some extra information
 	# useful to compute with the shadows, e.g. iterator
 	function( ps, v, j )
@@ -1004,10 +1005,10 @@ InstallMethod( ShadowOfElement,
 			localouter := BasisVectors(Basis(vs));
 		fi;
     	if IsVector(localinner) and not IsMatrix(localinner) then
-			localinner := [localinner]; 
+			localinner := [localinner];
 		fi;
 		if IsVector(localouter) and not IsMatrix(localouter) then
-			localouter := [localouter]; 
+			localouter := [localouter];
 		fi;
 		localfactorspace := Subspace(vs,
 		BaseSteinitzVectors(localouter, localinner).factorspace);
@@ -1027,7 +1028,7 @@ InstallMethod( ShadowOfElement,
 
 #############################################################################
 #O  ShadowOfFlag( <ps>, <flag>, <j> )
-# returns the shadow elements of <flag>, i.e. the elements of <ps> of type <j> 
+# returns the shadow elements of <flag>, i.e. the elements of <ps> of type <j>
 # incident with all elements of <flag>.
 # returns the shadow of a flag as a record containing the geometry,
 # the type j of the elements (type), the flag (parentflag), and some extra information
@@ -1035,7 +1036,7 @@ InstallMethod( ShadowOfElement,
 # This method relies on the isomorphic subgeometry of <ps>
 # Note: we use IsProjectiveSpace, see also note at FlagOfIncidenceStructure
 ##
-InstallMethod( ShadowOfFlag, 
+InstallMethod( ShadowOfFlag,
 	"for a a projective space, a flag of a subgeometry of a projective space, and an integer",
 	[IsProjectiveSpace, IsFlagOfSubgeometryOfProjectiveSpace, IsPosInt],
 	function( ps, flag, j )
@@ -1050,10 +1051,10 @@ InstallMethod( ShadowOfFlag,
     if IsEmptyFlag(flag) then
       return ElementsOfIncidenceStructure(ps, j);
     fi;
-    
+
     # find the element in the flag of highest type less than j, and the subspace
     # in the flag of lowest type more than j.
-	
+
 	#listoftypes:=List(flag,x->x!.type);
 	smallertypes:=Filtered(flag!.types,t->t <= j);
 	biggertypes:=Filtered(flag!.types,t->t >= j);
@@ -1064,11 +1065,11 @@ InstallMethod( ShadowOfFlag,
            canels := List(flag!.els);
     fi;
 
-	if smallertypes=[] then 
+	if smallertypes=[] then
 		localinner := [];
 		ceiling:=Minimum(biggertypes);
 		localouter:= canels[Position(flag!.types,ceiling)];
-	elif biggertypes=[] then 
+	elif biggertypes=[] then
 		localouter:=BasisVectors(Basis(vs));
 		floor:=Maximum(smallertypes);
 		localinner:= canels[Position(flag!.types,floor)];
@@ -1153,7 +1154,7 @@ InstallMethod(Iterator,
 
 
 #############################################################################
-#O Iterator: the classical iterator for shadows, relying completely on 
+#O Iterator: the classical iterator for shadows, relying completely on
 # the isomorphic subgeometry and using the projectivity.
 ##
 InstallMethod( Iterator,
@@ -1202,10 +1203,10 @@ InstallMethod( Iterator,
             S := Iterator(Subspaces(vs!.factorspace,j-Size(vs!.inner)))
         ));
     end);
-    
+
 ## groups and actions.
 
-InstallMethod( CollineationGroup, 
+InstallMethod( CollineationGroup,
 	"for a subgeometry of a projective space",
 	[ IsSubgeometryOfProjectiveSpace and IsSubgeometryOfProjectiveSpaceRep ],
 	function( sub )
@@ -1213,7 +1214,7 @@ InstallMethod( CollineationGroup,
 		f := sub!.subfield;
 		q := Size(f);
 		d := ProjectiveDimension(sub);
-		if d <= -1 then 
+		if d <= -1 then
 			Error("The dimension of the projective spaces needs to be at least 0");
 		fi;
 		g := GL(d+1,q);
@@ -1221,7 +1222,7 @@ InstallMethod( CollineationGroup,
 		newgens := List(GeneratorsOfGroup(g),x->[x,frob^0]);
         #baer := frob^Length(FactorsInt(q)); #this is precisely the Baer collineation for the canonical subgeometry.
         #Add(newgens,[One(g),baer]);
-        # new paradigm: CollineationGroup(sub) will not consider the embedding, 
+        # new paradigm: CollineationGroup(sub) will not consider the embedding,
         # if q is not prime, the frobenius automorphism of GF(q) is also a collineation.
         # note that we add the frobenius automorphism of the basefield (not the subfield).
 		#if not IsPrime(q) then #if q is not prime, there is a frobenius automorphism.
@@ -1246,7 +1247,7 @@ InstallMethod( CollineationGroup,
 		else
 			SetName( coll, Concatenation("The FinInG collineation group PGL(",String(d+1),",",String(q),") of ",ViewString(sub)) );
 			# Remark that in the prime case, PGL is returned as a FinInG collineation group with associated automorphism F^0.
-		fi;	
+		fi;
 		SetSize( coll, s );
         # only for making generalised polygons section more generic:
         if d = 2 then
@@ -1258,7 +1259,7 @@ InstallMethod( CollineationGroup,
 
 
 ##
-InstallMethod( ProjectivityGroup, 
+InstallMethod( ProjectivityGroup,
 	"for a subgeometry of a projective space",
 	[ IsSubgeometryOfProjectiveSpace and IsSubgeometryOfProjectiveSpaceRep ],
 	function( sub )
@@ -1266,7 +1267,7 @@ InstallMethod( ProjectivityGroup,
 		f := sub!.subfield;
 		q := Size(f);
 		d := ProjectiveDimension(sub);
-		if d <= -1 then 
+		if d <= -1 then
 			Error("The dimension of the projective spaces needs to be at least 0");
 		fi;
 		g := GL(d+1,q);
@@ -1293,9 +1294,9 @@ InstallMethod( ProjectivityGroup,
 	end );
 
 
-InstallMethod( NiceMonomorphism, 
+InstallMethod( NiceMonomorphism,
 	"for a projective group of a subgeometry",
-	[IsProjectiveGroupWithFrob and HasDefaultGeometry], 
+	[IsProjectiveGroupWithFrob and HasDefaultGeometry],
 	50,
 	function( pg )
 	local hom, dom,bf, geom;
@@ -1306,8 +1307,8 @@ InstallMethod( NiceMonomorphism,
     dom := AsList(Points(geom));
 	if FINING.Fast then
 	   hom := NiceMonomorphismByDomain( pg, dom, OnProjSubspacesOfSubgeometriesNC );
-    else 
-       hom := ActionHomomorphism(pg, dom, OnProjSubspacesOfSubgeometriesNC, "surjective");    
+    else
+       hom := ActionHomomorphism(pg, dom, OnProjSubspacesOfSubgeometriesNC, "surjective");
        SetIsBijective(hom, true);
     fi;
     return hom;
@@ -1317,7 +1318,7 @@ InstallMethod( NiceMonomorphism,
 InstallGlobalFunction( OnProjSubspacesOfSubgeometriesNC,
   function( var, el )
     local amb,geo,newvar;
-    geo := var!.geo;   
+    geo := var!.geo;
     if var!.type = 1 then
         newvar := OnProjPointsWithFrob(var!.obj,el);
     else
@@ -1329,7 +1330,7 @@ InstallGlobalFunction( OnProjSubspacesOfSubgeometriesNC,
 InstallGlobalFunction( OnProjSubspacesOfSubgeometries,
   function( var, el )
     local amb,geo,newvar,newel,baer;
-    geo := var!.geo;   
+    geo := var!.geo;
     if var!.type = 1 then
         newvar := OnProjPointsWithFrob(var!.obj,el);
     else
@@ -1344,7 +1345,7 @@ InstallGlobalFunction( OnProjSubspacesOfSubgeometries,
     fi;
   end );
 
-InstallOtherMethod( \^, 
+InstallOtherMethod( \^,
 	"for an element of an incidence structure and a projective semilinear element",
 	[IsSubspaceOfSubgeometryOfProjectiveSpace, IsProjGrpElWithFrob],
 	function(x, em)
