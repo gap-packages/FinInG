@@ -8,7 +8,7 @@
 ##                                                            Michel Lavrauw
 ##                                                           Max Neunhoeffer
 ##
-##  Copyright 2017	Colorado State University, Fort Collins
+##  Copyright 2020	Colorado State University, Fort Collins
 ##					Università degli Studi di Padova
 ##					University of St. Andrews
 ##					University of Western Australia, Perth
@@ -94,8 +94,8 @@ DeclareAttribute( "CollineationFixingSubgeometry", IsSubgeometryOfProjectiveSpac
 #action functions
 
 
-DeclareGlobalFunction( "OnProjSubspacesOfSubgeometriesNC" );
-DeclareGlobalFunction( "OnProjSubspacesOfSubgeometries" );
+DeclareGlobalFunction( "OnProjSubspacesOfSubgeometryNC" );
+DeclareGlobalFunction( "OnProjSubspacesOfSubgeometry" );
 
 DeclareGlobalFunction( "OnSubgeometryOfProjectiveSpace" );
 

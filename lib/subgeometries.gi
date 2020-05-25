@@ -8,7 +8,7 @@
 ##                                                            Michel Lavrauw
 ##                                                           Max Neunhoeffer
 ##
-##  Copyright 2017	Colorado State University, Fort Collins
+##  Copyright 2020	Colorado State University, Fort Collins
 ##					Università degli Studi di Padova
 ##					University of St. Andrews
 ##					University of Western Australia, Perth
@@ -1221,7 +1221,8 @@ InstallMethod( CollineationGroup,
 		fi;
 		g := GL(d+1,q);
 		frob := FrobeniusAutomorphism(sub!.basefield); #frobenius automorphism of big field
-		newgens := List(GeneratorsOfGroup(g),x->[x,frob^0]);
+        h := LogInt(Size(sub!.basefield),q);
+        newgens := List(GeneratorsOfGroup(g),x->[x,frob^0]);
         #baer := frob^Length(FactorsInt(q)); #this is precisely the Baer collineation for the canonical subgeometry.
         #Add(newgens,[One(g),baer]);
         # new paradigm: CollineationGroup(sub) will not consider the embedding,
@@ -1235,7 +1236,7 @@ InstallMethod( CollineationGroup,
         #    s := q^(d*(d+1)/2)*Product(List([2..d+1], i->q^i-1)) * Order(baer);
         #fi;
         Add(newgens,[One(g),frob]);
-		s := Size(CollineationGroup(PG(d,q)));
+		s := Size(CollineationGroup(PG(d,q)))*h;
         newgens := ProjElsWithFrob(newgens,sub!.basefield); #using sub!.basefield as second argument makes sure that
         # ProjElsWithFrob returns elements in the collineation group of the ambient projective space.
         if not IsCanonicalSubgeometryOfProjectiveSpace(sub) then
@@ -1253,7 +1254,7 @@ InstallMethod( CollineationGroup,
 		SetSize( coll, s );
         # only for making generalised polygons section more generic:
         if d = 2 then
-            SetCollineationAction(coll,OnProjSubspacesOfSubgeometriesNC);
+            SetCollineationAction(coll,OnProjSubspacesOfSubgeometryNC);
         fi;
         SetDefaultGeometry(coll,sub);
 		return coll;
@@ -1289,7 +1290,7 @@ InstallMethod( ProjectivityGroup,
         SetSize( coll, s );
         # only for making generalised polygons section more generic:
         if d = 2 then
-            SetCollineationAction(coll,OnProjSubspacesOfSubgeometriesNC);
+            SetCollineationAction(coll,OnProjSubspacesOfSubgeometryNC);
         fi;
         SetDefaultGeometry(coll,sub);
 		return coll;
@@ -1307,17 +1308,18 @@ InstallMethod( NiceMonomorphism,
 	bf := SubfieldOfSubgeometry(geom);
     #dom := List(MakeAllProjectivePoints( bf, Dimension(pg) - 1),x->OnProjPointsWithFrob(x,geom!.projectivity));
     dom := AsList(Points(geom));
-	if FINING.Fast then
-	   hom := NiceMonomorphismByDomain( pg, dom, OnProjSubspacesOfSubgeometriesNC );
-    else
-       hom := ActionHomomorphism(pg, dom, OnProjSubspacesOfSubgeometriesNC, "surjective");
-       SetIsBijective(hom, true);
-    fi;
+    #The use of FINING.Fast seems deprecated 25/5/2020.
+    #if FINING.Fast then
+    hom := NiceMonomorphismByDomain( pg, dom, OnProjSubspacesOfSubgeometryNC );
+    #else
+    #   hom := ActionHomomorphism(pg, dom, OnProjSubspacesOfSubgeometriesNC, "surjective");
+    #   SetIsBijective(hom, true);
+    #fi;
     return hom;
 	end );
 
 
-InstallGlobalFunction( OnProjSubspacesOfSubgeometriesNC,
+InstallGlobalFunction( OnProjSubspacesOfSubgeometryNC,
   function( var, el )
     local amb,geo,newvar;
     geo := var!.geo;
@@ -1329,7 +1331,7 @@ InstallGlobalFunction( OnProjSubspacesOfSubgeometriesNC,
     return Wrap(geo,var!.type,newvar);
   end );
 
-InstallGlobalFunction( OnProjSubspacesOfSubgeometries,
+InstallGlobalFunction( OnProjSubspacesOfSubgeometry,
   function( var, el )
     local amb,geo,newvar,newel,baer;
     geo := var!.geo;
@@ -1351,7 +1353,7 @@ InstallOtherMethod( \^,
 	"for an element of an incidence structure and a projective semilinear element",
 	[IsSubspaceOfSubgeometryOfProjectiveSpace, IsProjGrpElWithFrob],
 	function(x, em)
-		return OnProjSubspacesOfSubgeometries(x,em);
+		return OnProjSubspacesOfSubgeometry(x,em);
 	end );
 
 InstallGlobalFunction( OnSubgeometryOfProjectiveSpace,
