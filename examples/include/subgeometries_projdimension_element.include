@@ -1,0 +1,18 @@
+gap&gt; sub := CanonicalSubgeometryOfProjectiveSpace(PG(2,5^3),GF(5));
+Subgeometry PG(2, 5) of ProjectiveSpace(2, 125)
+gap&gt; v := [[1,1,0],[0,3,2]]*Z(5)^0;
+[ [ Z(5)^0, Z(5)^0, 0*Z(5) ], [ 0*Z(5), Z(5)^3, Z(5) ] ]
+gap&gt; line := VectorSpaceToElement(sub,v);
+&lt;a line in Subgeometry PG(2, 5) of ProjectiveSpace(2, 125)&gt;
+gap&gt; ProjectiveDimension(line);
+1
+gap&gt; Dimension(line);
+1
+gap&gt; p := VectorSpaceToElement(sub,[1,2,3]*Z(5)^0);
+&lt;a point in Subgeometry PG(2, 5) of ProjectiveSpace(2, 125)&gt;
+gap&gt; ProjectiveDimension(p);
+0
+gap&gt; Dimension(p);
+0
+gap&gt; ProjectiveDimension(EmptySubspace(sub));
+-1

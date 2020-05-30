@@ -1,0 +1,14 @@
+gap&gt; sub := CanonicalSubgeometryOfProjectiveSpace(PG(4,49),GF(7));
+Subgeometry PG(4, 7) of ProjectiveSpace(4, 49)
+gap&gt; e := EmptySubspace(sub);
+&lt; empty subspace &gt;
+gap&gt; p := VectorSpaceToElement(sub,[1,0,0,1,0]*Z(7)^0);
+&lt;a point in Subgeometry PG(4, 7) of ProjectiveSpace(4, 49)&gt;
+gap&gt; e*p;
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `*' on 2 arguments at /opt/gap-4.11.0/lib/methsel2.g:249 called from
+&lt;function "HANDLE_METHOD_NOT_FOUND"&gt;( &lt;arguments&gt; )
+ called from read-eval loop at *stdin*:11
+type 'quit;' to quit to outer loop
+brk&gt; 
+brk&gt; quit;

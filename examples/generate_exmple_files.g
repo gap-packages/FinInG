@@ -104,7 +104,7 @@ diagramfiles := ["diagram_cosetgeom", "diagram_neumaier", "diagram_nearoctagon",
                     "diagram_residues"];
                     
 subgeometriesfiles := ["subgeometries_canonical", "subgeometries_categories", "subgeometries_randomframe", "subgeometries_isframe", "subgeometries_underlyingstructures",
-                        "subgeometries_collineationfixingsubgeometry", "subgeometries_vectorspacetoelement", "subgeometries_extendelement" ];
+                        "subgeometries_collineationfixingsubgeometry", "subgeometries_vectorspacetoelement", "subgeometries_extendelement", "subgeometries_emptysubspace", "subgeometries_projdimension_element.g" ];
 
 websitefiles := ["web_hyperoval24", "web_inumbersherm", "web_embedding", "web_spreads", "web_ovoidq63"];
 
@@ -115,7 +115,7 @@ groups_appfiles := ["groups_app_sodesargues", "groups_app_godesargues", "groups_
 
 exampledir := DirectoriesPackageLibrary("fining","tst")[1];
 
-files := [ "subgeometries_categories" ];
+files := [ "subgeometries_elements" ];
 
 #initialize directorynames
 #exampledir = dir where .g files are located : ".../pkg/fining/examples/gap"
@@ -128,7 +128,7 @@ gapstart := "gap4r11"; #might be different on your computer
 gap := Filename(Directory("/usr/local/bin/"),gapstart);
 
 #code below for gap4r8
-gapstart := "gap4r8"; #might be different on your computer
+#gapstart := "gap4r8"; #might be different on your computer
 #On El Capitan, /usr/bin is very hard protected to put own binaries/scripts in. Therefore it is placed in /usr/local/bin
 #On other systems, this might still be /usr/bin or something else. The following line might help
 #note that the output of Exec is not a string, so cut and paste the directory into the line after.

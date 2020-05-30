@@ -1,0 +1,39 @@
+gap&gt; ps := PG(6,27);
+ProjectiveSpace(6, 27)
+gap&gt; frame := RandomFrameOfProjectiveSpace(ps);
+[ &lt;a point in ProjectiveSpace(6, 27)&gt;, &lt;a point in ProjectiveSpace(6, 27)&gt;, 
+  &lt;a point in ProjectiveSpace(6, 27)&gt;, &lt;a point in ProjectiveSpace(6, 27)&gt;, 
+  &lt;a point in ProjectiveSpace(6, 27)&gt;, &lt;a point in ProjectiveSpace(6, 27)&gt;, 
+  &lt;a point in ProjectiveSpace(6, 27)&gt;, &lt;a point in ProjectiveSpace(6, 27)&gt; ]
+gap&gt; sub := SubgeometryOfProjectiveSpaceByFrame(ps,frame,GF(3));
+Subgeometry PG(6, 3) of ProjectiveSpace(6, 27)
+gap&gt; Points(sub);
+&lt;points of Subgeometry PG(6, 3) of ProjectiveSpace(6, 27)&gt;
+gap&gt; Lines(sub);
+&lt;lines of Subgeometry PG(6, 3) of ProjectiveSpace(6, 27)&gt;
+gap&gt; Planes(sub);
+&lt;planes of Subgeometry PG(6, 3) of ProjectiveSpace(6, 27)&gt;
+gap&gt; Solids(sub);
+&lt;solids of Subgeometry PG(6, 3) of ProjectiveSpace(6, 27)&gt;
+gap&gt; Hyperplanes(sub);
+&lt;proj. 5-subspaces of Subgeometry PG(6, 3) of ProjectiveSpace(6, 27)&gt;
+gap&gt; ElementsOfIncidenceStructure(ps,1);
+&lt;points of ProjectiveSpace(6, 27)&gt;
+gap&gt; ElementsOfIncidenceStructure(ps,2);
+&lt;lines of ProjectiveSpace(6, 27)&gt;
+gap&gt; ElementsOfIncidenceStructure(ps,3);
+&lt;planes of ProjectiveSpace(6, 27)&gt;
+gap&gt; ElementsOfIncidenceStructure(ps,4);
+&lt;solids of ProjectiveSpace(6, 27)&gt;
+gap&gt; ElementsOfIncidenceStructure(ps,5);
+&lt;proj. 4-subspaces of ProjectiveSpace(6, 27)&gt;
+gap&gt; ElementsOfIncidenceStructure(ps,6);
+&lt;proj. 5-subspaces of ProjectiveSpace(6, 27)&gt;
+gap&gt; ElementsOfIncidenceStructure(ps,7);
+Error, &lt;ps&gt; has no elements of type &lt;j&gt; at ./pkg/fining/lib/projectivespace.gi:274 called from
+&lt;function "ElementsOfIncidenceStructure for a projective space and an integer"
+&gt;( &lt;arguments&gt; )
+ called from read-eval loop at *stdin*:22
+you can 'quit;' to quit to outer loop, or
+you can 'return;' to continue
+brk&gt; quit;
