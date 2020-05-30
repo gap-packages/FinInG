@@ -1,3 +1,4 @@
+<!ENTITY fining "<Package>FinInG</Package>">
 <!ENTITY pg "\mathrm{PG}">
 <!ENTITY gf "\mathrm{GF}">
 <!ENTITY gl "\mathrm{GL}">
@@ -31,6 +32,7 @@
 <!ENTITY gfq3 "<Alt Only=&#34;Text&#34;><M>GF(q^3)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&gf;(q^3)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&gf;(q^3)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>GF(q&lt;sup&gt;3&lt;/sup&gt;)</Alt>">
 <!ENTITY vnqt "<Alt Only=&#34;Text&#34;><M>V(n,q^t)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>V(n,q^t)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>V(n,q^t)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>V(n,q&lt;sup&gt;t&lt;/sup&gt;)</Alt>">
 <!ENTITY pgnq "<Alt Only=&#34;Text&#34;><M>PG(n,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&pg;(n,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pg;(n,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>PG(n,q)</Alt>">
+<!ENTITY pgnqt "<Alt Only=&#34;Text&#34;><M>PG(n,q^t)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&pg;(n,q^t)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pg;(n,q^t)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>PG(n,q&lt;sup&gt;t&lt;/sup&gt;)</Alt>">
 <!ENTITY pgnminus1qt "<Alt Only=&#34;Text&#34;><M>PG(n-1,q^t)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&pg;(n-1,q^t)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pg;(n-1,q^t)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>PG(n-1,q&lt;sup&gt;t&lt;/sup&gt;)</Alt>">
 <!ENTITY pgntminus1q "<Alt Only=&#34;Text&#34;><M>PG(nt-1,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&pg;(nt-1,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&pg;(nt-1,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>PG(nt-1,q)</Alt>">
 <!ENTITY agnq "<Alt Only=&#34;Text&#34;><M>AG(n,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&ag;(n,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&ag;(n,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>AG(n,q)</Alt>">

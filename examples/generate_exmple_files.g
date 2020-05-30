@@ -103,7 +103,7 @@ diagramfiles := ["diagram_cosetgeom", "diagram_neumaier", "diagram_nearoctagon",
                     "diagram_random", "diagram_notFT", "diagram_firmthinthick", "diagram_connectedness", "diagram_flagmapping",
                     "diagram_residues"];
                     
-subgeometriesfiles := ["subgeometries_canonical", "subgeometries_randomframe", "subgeometries_isframe", "subgeometries_underlyingstructures",
+subgeometriesfiles := ["subgeometries_canonical", "subgeometries_categories", "subgeometries_randomframe", "subgeometries_isframe", "subgeometries_underlyingstructures",
                         "subgeometries_collineationfixingsubgeometry", "subgeometries_vectorspacetoelement", "subgeometries_extendelement" ];
 
 websitefiles := ["web_hyperoval24", "web_inumbersherm", "web_embedding", "web_spreads", "web_ovoidq63"];
@@ -115,7 +115,7 @@ groups_appfiles := ["groups_app_sodesargues", "groups_app_godesargues", "groups_
 
 exampledir := DirectoriesPackageLibrary("fining","tst")[1];
 
-files := [ "cps_evaluateform" ];
+files := [ "subgeometries_categories" ];
 
 #initialize directorynames
 #exampledir = dir where .g files are located : ".../pkg/fining/examples/gap"
@@ -124,7 +124,7 @@ files := [ "cps_evaluateform" ];
 #name of script to start gap version. The user has to fill this in!
 
 #code below for gap4r7
-gapstart := "gap4r9"; #might be different on your computer
+gapstart := "gap4r11"; #might be different on your computer
 gap := Filename(Directory("/usr/local/bin/"),gapstart);
 
 #code below for gap4r8

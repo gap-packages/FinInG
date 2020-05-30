@@ -1,0 +1,19 @@
+gap&gt; sub := CanonicalSubgeometryOfProjectiveSpace(PG(3,25),GF(5));
+Subgeometry PG(3, 5) of ProjectiveSpace(3, 25)
+gap&gt; CategoriesOfObject(sub);
+[ "IsIncidenceStructure", "IsIncidenceGeometry", "IsLieGeometry", 
+  "IsProjectiveSpace", "IsSubgeometryOfProjectiveSpace" ]
+gap&gt; planes := Planes(sub);
+&lt;planes of Subgeometry PG(3, 5) of ProjectiveSpace(3, 25)&gt;
+gap&gt; CategoriesOfObject(planes);
+[ "IsListOrCollection", "IsCollection", "IsGeneralizedDomain", 
+  "IsAnyElementsOfIncidenceStructure", "IsElementsOfIncidenceStructure", 
+  "CategoryCollections(IsElementOfIncidenceStructure)", 
+  "IsElementsOfIncidenceGeometry", "IsElementsOfLieGeometry", 
+  "IsSubspacesOfSubgeometryOfProjectiveSpace" ]
+gap&gt; p := Random(planes);
+&lt;a plane in Subgeometry PG(3, 5) of ProjectiveSpace(3, 25)&gt;
+gap&gt; CategoriesOfObject(p);
+[ "IsElementOfIncidenceStructure", "IsElementOfIncidenceGeometry", 
+  "IsElementOfLieGeometry", "IsSubspaceOfProjectiveSpace", 
+  "IsSubspaceOfSubgeometryOfProjectiveSpace" ]
