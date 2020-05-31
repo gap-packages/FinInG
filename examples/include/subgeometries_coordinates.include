@@ -1,0 +1,32 @@
+gap&gt; pg := PG(3,3^5);
+ProjectiveSpace(3, 243)
+gap&gt; vectors := [ [ Z(3)^0, Z(3^5)^58, Z(3), Z(3^5)^239 ], 
+&gt;   [ Z(3)^0, Z(3^5)^217, Z(3^5)^18, Z(3^5)^65 ], 
+&gt;   [ Z(3)^0, Z(3^5)^202, Z(3^5)^52, Z(3^5)^209 ], 
+&gt;   [ Z(3)^0, Z(3^5)^93, Z(3^5)^123, Z(3^5)^93 ], 
+&gt;   [ Z(3)^0, Z(3^5)^199, Z(3^5)^68, Z(3^5)^13 ] ];
+[ [ Z(3)^0, Z(3^5)^58, Z(3), Z(3^5)^239 ], 
+  [ Z(3)^0, Z(3^5)^217, Z(3^5)^18, Z(3^5)^65 ], 
+  [ Z(3)^0, Z(3^5)^202, Z(3^5)^52, Z(3^5)^209 ], 
+  [ Z(3)^0, Z(3^5)^93, Z(3^5)^123, Z(3^5)^93 ], 
+  [ Z(3)^0, Z(3^5)^199, Z(3^5)^68, Z(3^5)^13 ] ]
+gap&gt; frame := List(vectors,x-&gt;VectorSpaceToElement(pg,x));
+[ &lt;a point in ProjectiveSpace(3, 243)&gt;, &lt;a point in ProjectiveSpace(3, 243)&gt;, 
+  &lt;a point in ProjectiveSpace(3, 243)&gt;, &lt;a point in ProjectiveSpace(3, 243)&gt;, 
+  &lt;a point in ProjectiveSpace(3, 243)&gt; ]
+gap&gt; sub := SubgeometryOfProjectiveSpaceByFrame(pg,frame,GF(3));
+Subgeometry PG(3, 3) of ProjectiveSpace(3, 243)
+gap&gt; p := Random(Points(sub));
+&lt;a point in Subgeometry PG(3, 3) of ProjectiveSpace(3, 243)&gt;
+gap&gt; Coordinates(p);
+[ Z(3)^0, Z(3^5)^217, Z(3^5)^18, Z(3^5)^65 ]
+gap&gt; plane := Random(Planes(sub));
+&lt;a plane in Subgeometry PG(3, 3) of ProjectiveSpace(3, 243)&gt;
+gap&gt; DualCoordinatesOfHyperplane(plane);
+[ Z(3)^0, Z(3^5)^175, Z(3^5)^160, Z(3^5)^12 ]
+gap&gt; dual := [ Z(3)^0, Z(3^5)^78, Z(3^5)^58, Z(3^5)^8 ];
+[ Z(3)^0, Z(3^5)^78, Z(3^5)^58, Z(3^5)^8 ]
+gap&gt; pi := HyperplaneByDualCoordinates(sub,dual);
+&lt;a plane in Subgeometry PG(3, 3) of ProjectiveSpace(3, 243)&gt;
+gap&gt; EquationOfHyperplane(pi);
+x_1+Z(3^5)^78*x_2+Z(3^5)^58*x_3+Z(3^5)^8*x_4

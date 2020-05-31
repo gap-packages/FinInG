@@ -365,26 +365,20 @@ of the subgeometry and an element of its ambient space, will produce an error (a
 <ManSection>
 <Heading>Coordinates and related operations</Heading>
 <Attr Name="Coordinates" Arg="p"/>
-<Attr Name="CoordinatesOfHyperplane" Arg="hyp"/>
 <Oper Name="DualCoordinatesOfHyperplane" Arg="hyp"/>
-<Returns>A list of finite field elements</Returns>
+<Oper Name="HyperplaneByDualCoordinates" Arg="hyp"/>
+<Oper Name="EquationOfHyperplane" Arg="sub, list"/>
+<Returns>A list of finite field elements, or a hyperplane, or a polynomial</Returns>
 <Description>
-The attribute returns a frame of the ambient space of <A>sub</A> defining it. Note that different frames
-might define the same subgeometry, but the frame used to constructed <A>sub</A> is stored at construction,
-and it is exactly this stored object that is returned by this attribute. The returned object is a set
-of points, and it is also a set in the GAP sense, i.e. an ordered list without duplicates.
-<P/>
-Note that the points of the defining frame meet the subgeometry non trivially, i.e. their
-underlying object defines a point of the subgeometry (by construction). This set of defined
-points of <A>sub</A> is returned by the second attribute.
+These respective attributes/operations behave similarly as the respective attributes/opeartions
+described in <Ref Sect="projsp:coordinates"/>, <Ref Sect="projsp:dualcoordinatesofhyperplane"/>,
+<Ref Sect="projsp:hyperplanebydualcoordinates"/>, and <Ref Sect="projsp:equationofhyperplane"/>.
+It is very important to note that the coordinates of a point of a subgeoemtry <M>P</M> are computed with
+relation to the <E>standard frame of the ambient projective space of <M>P</M></E>.
 <Example>
-
+<#Include SYSTEM "../examples/include/subgeometries_coordinates.include">
 </Example>
 </Description>
-</ManSection>
-
-<ManSection>
-<Oper Name="HyperplaneByDualCoordinates" Arg="sub, list"/>
 </ManSection>
 
 

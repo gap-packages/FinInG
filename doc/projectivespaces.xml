@@ -221,8 +221,8 @@ of the geometry, but both the empty subspace and the whole projective space are 
 </Description>
 </ManSection>
 
-<ManSection>
-<Oper Name="Coordinates" Arg="p"/>
+<ManSection Label="projsp:coordinates">
+<Attr Name="Coordinates" Arg="p"/>
 <Returns>the homogeneous coordinates of the projective point <A>p</A>
 </Returns>
 <Description>
@@ -232,24 +232,28 @@ of the geometry, but both the empty subspace and the whole projective space are 
 </Description>
 </ManSection>
 
-<ManSection>
-    <Oper Name="DualCoordinatesOfHyperplane" Arg="hyp"/>
-    <Returns>a list</Returns>
-    <Description>
-        The argument <A>hyp</A> is a hyperplane of a projective space. This operation returns the dual coordinates of the hyperplane <A>hyp</A>, i.e. the list with the coefficients of the equation defining the hyperplane <A>hyp</A> as an algebraic variety.
-    </Description>
+<ManSection Label="projsp:dualcoordinatesofhyperplane">
+<Oper Name="DualCoordinatesOfHyperplane" Arg="hyp"/>
+<Returns>a list</Returns>
+<Description>
+The argument <A>hyp</A> is a hyperplane of a projective space. This operation returns
+the dual coordinates of the hyperplane <A>hyp</A>, i.e. the list with the coefficients
+of the equation defining the hyperplane <A>hyp</A> as an algebraic variety.
+</Description>
 </ManSection>
 
-<ManSection>
-    <Oper Name="HyperplaneByDualCoordinates" Arg="pg,list"/>
-    <Returns>a hyperplane of a projective space</Returns>
-    <Description>
-        The argument <A>pg</A> is a projective space, and <A>list</A> is the coordinate vector of a point of <A>pg</A>. This operation returns the hyperplane that has <A>list</A> as the list of coefficients of the equation defining the hyperplane as an algebraic variety.
-    </Description>
+<ManSection Label="projsp:hyperplanebydualcoordinates">
+<Oper Name="HyperplaneByDualCoordinates" Arg="pg,list"/>
+<Returns>a hyperplane of a projective space</Returns>
+<Description>
+The argument <A>pg</A> is a projective space, and <A>list</A> is the coordinate vector of a
+point of <A>pg</A>. This operation returns the hyperplane that has <A>list</A> as the
+list of coefficients of the equation defining the hyperplane as an algebraic variety.
+</Description>
 </ManSection>
 
 
-<ManSection>
+<ManSection Label="projsp:equationofhyperplane">
 <Oper Name="EquationOfHyperplane" Arg="h"/>
 <Returns>the equation of the hyperplane <A>h</A> of a projective space</Returns>
 <Description>
