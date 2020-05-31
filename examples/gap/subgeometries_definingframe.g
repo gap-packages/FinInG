@@ -7,4 +7,5 @@ frame := RandomFrameOfProjectiveSpace(pg);
 sub := SubgeometryOfProjectiveSpaceByFrame(pg,frame,2^2);
 def := DefiningFrameOfSubgeometry(sub);
 List(def,x->Unpack(UnderlyingObject(x)));
+StandardFrame(sub);
 quit;

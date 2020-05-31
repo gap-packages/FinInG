@@ -82,6 +82,8 @@ DeclareOperation("SubfieldOfSubgeometry", [ IsSubgeometryOfProjectiveSpace ]);
 
 #attributes
 
+#DeclareAttribute( "StandardFrame", IsSubgeometryOfProjectiveSpace );
+
 DeclareAttribute( "IsCanonicalSubgeometryOfProjectiveSpace", IsSubgeometryOfProjectiveSpace);
 DeclareAttribute( "DefiningFrameOfSubgeometry", IsSubgeometryOfProjectiveSpace);
 

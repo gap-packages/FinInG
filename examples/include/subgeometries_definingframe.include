@@ -17,5 +17,10 @@ gap&gt; def := DefiningFrameOfSubgeometry(sub);
 [ &lt;a point in ProjectiveSpace(2, 16)&gt;, &lt;a point in ProjectiveSpace(2, 16)&gt;, 
   &lt;a point in ProjectiveSpace(2, 16)&gt;, &lt;a point in ProjectiveSpace(2, 16)&gt; ]
 gap&gt; List(def,x-&gt;Unpack(UnderlyingObject(x)));
-[ [ Z(2)^0, Z(2^4)^3, 0*Z(2) ], [ Z(2)^0, Z(2^4)^9, Z(2^4)^4 ], 
-  [ Z(2)^0, Z(2^4)^13, Z(2)^0 ], [ Z(2)^0, Z(2^2)^2, Z(2^4)^14 ] ]
+[ [ Z(2)^0, 0*Z(2), Z(2^4)^9 ], [ Z(2)^0, Z(2^4)^4, Z(2^4)^11 ], 
+  [ Z(2)^0, Z(2^4)^2, Z(2^2)^2 ], [ Z(2)^0, Z(2^2)^2, Z(2^4)^14 ] ]
+gap&gt; StandardFrame(sub);
+[ &lt;a point in Subgeometry PG(2, 4) of ProjectiveSpace(2, 16)&gt;, 
+  &lt;a point in Subgeometry PG(2, 4) of ProjectiveSpace(2, 16)&gt;, 
+  &lt;a point in Subgeometry PG(2, 4) of ProjectiveSpace(2, 16)&gt;, 
+  &lt;a point in Subgeometry PG(2, 4) of ProjectiveSpace(2, 16)&gt; ]

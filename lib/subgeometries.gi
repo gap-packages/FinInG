@@ -323,6 +323,23 @@ InstallMethod( SubfieldOfSubgeometry,
 	[ IsSubgeometryOfProjectiveSpace ],
 	sub -> sub!.subfield );
 
+# NEW 31/5/2020 jdb
+#############################################################################
+#A  StandardFrame( <sub> )
+# if the dimension of subgeometry <sub> is n and <sub> is the canonical subgeometry,
+# then StandardFrame returns a list of points of <sub> with coordinates
+# (1,0,...0), (0,1,0,...,0), ..., (0,...,0,1) and (1,1,...,1). In case <sub> is not the
+# canonical subgeometry, the image of these points under sub!.projectivity is returned.
+# note that, due to the way we construct subgeometries of projective space,
+# this is nothing else than the meet of the points of the defining frame with sub
+##
+InstallMethod( StandardFrame, 
+	"for a subgeometry of a projective space",
+	[ IsSubgeometryOfProjectiveSpace ],
+	function( sub )
+        return List(sub!.frame,x->Meet(sub,x));
+	end );
+
 #############################################################################
 #A CollineationFixingSubgeometry
 # For a subgeometry PG(n,q) in PG(n,q^2), we would call this the Baer involution.

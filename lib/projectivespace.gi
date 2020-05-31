@@ -699,6 +699,7 @@ InstallMethod( Dimension,
 #InstallMethod( Dimension, [ IsEmpty ], function(x) return -1;end );
 
 # CHECKED 8/09/11 jdb
+# 31/5/2020: still ok, but undocumentend!
 #############################################################################
 #O  StandardFrame( <subspace> ) returns a standard frame for <subspace>
 ##

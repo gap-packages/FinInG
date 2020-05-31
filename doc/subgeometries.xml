@@ -216,13 +216,19 @@ The ambient space of a subgeometry <A>sub</A> is the projective space <M>P</M>.
 </ManSection>
 
 <ManSection>
+<Heading>Defining frame and standard frame of a subgeometry</Heading>
 <Attr Name="DefiningFrameOfSubgeometry" Arg="sub"/>
+<Attr Name="StandardFrame" Arg="sub"/>
 <Returns>A set of projective points</Returns>
 <Description>
-This attribute returns a frame of the ambient space of <A>sub</A> defining it. Note that different frames
+The attribute returns a frame of the ambient space of <A>sub</A> defining it. Note that different frames
 might define the same subgeometry, but the frame used to constructed <A>sub</A> is stored at construction,
 and it is exactly this stored object that is returned by this attribute. The returned object is a set
 of points, and it is also a set in the GAP sense, i.e. an ordered list without duplicates.
+<P/>
+Note that the points of the defining frame meet the subgeometry non trivially, i.e. their
+underlying object defines a point of the subgeometry (by construction). This set of defined
+points of <A>sub</A> is returned by the second attribute.
 <Example>
 <#Include SYSTEM "../examples/include/subgeometries_definingframe.include">
 </Example>
@@ -334,6 +340,51 @@ An error message is produced when the subgeometry <A>sub</A> has no elements of 
 <#Include SYSTEM "../examples/include/subgeometries_elements.include">
 </Example>
 </Description>
+</ManSection>
+
+<ManSection>
+<Heading>Incidence and containment</Heading>
+<Oper Name="IsIncident" Arg="el1, el2"/>
+<Oper Name="\*" Arg="el1, el2"/>
+<Oper Name="\in" Arg="el1, el2"/>
+<Returns>true or false</Returns>
+<Description>
+The arguments <A>el1, el2</A> are subspaces of a subgeometry of a projective space.
+Recall that for projective spaces (and hence also subgeometries), incidence is symmetrized containment,
+where the empty subspace and the whole projective space (i.e. the subgeometry in this case)
+are excluded as arguments for the operations <F>IsIncident</F> and <F>\*</F>, since they are not considered as elements
+of the geometry, but both the empty subspace and the whole projective space are allowed as arguments for <F>\in</F>.
+Also note that elements of subgeometry are not elements of the ambient space, hence asking for incidence between an element
+of the subgeometry and an element of its ambient space, will produce an error (and similarly for the operation <F>\in</F>).
+<Example>
+<#Include SYSTEM "../examples/include/subgeometries_incident.include">
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Heading>Coordinates and related operations</Heading>
+<Attr Name="Coordinates" Arg="p"/>
+<Attr Name="CoordinatesOfHyperplane" Arg="hyp"/>
+<Oper Name="DualCoordinatesOfHyperplane" Arg="hyp"/>
+<Returns>A list of finite field elements</Returns>
+<Description>
+The attribute returns a frame of the ambient space of <A>sub</A> defining it. Note that different frames
+might define the same subgeometry, but the frame used to constructed <A>sub</A> is stored at construction,
+and it is exactly this stored object that is returned by this attribute. The returned object is a set
+of points, and it is also a set in the GAP sense, i.e. an ordered list without duplicates.
+<P/>
+Note that the points of the defining frame meet the subgeometry non trivially, i.e. their
+underlying object defines a point of the subgeometry (by construction). This set of defined
+points of <A>sub</A> is returned by the second attribute.
+<Example>
+
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Oper Name="HyperplaneByDualCoordinates" Arg="sub, list"/>
 </ManSection>
 
 
