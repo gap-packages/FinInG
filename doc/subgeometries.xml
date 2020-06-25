@@ -7,8 +7,10 @@ subgeometries.xml    FinInG package documentation
                                                                  Michel Lavrauw
                                                                 Max Neunhoeffer
 
-  Copyright (C) 2020,	Colorado State University
+  Copyright (C) 2017,	Colorado State University
                         Sabancı Üniversitesi
+						Università degli Studi di Padova
+						Universiteit Gent
 						University of St. Andrews
 						University of Western Australia
                         Vrije Universiteit Brussel
@@ -24,52 +26,52 @@ space over a finite field, it is clear that every line (and every subspace as we
 be identified with the set of points incident with it. Furthermore, the incidence
 relation <M>I</M> is then symmetrised containment. To define a subgeometry
 mathematically, we follow <Cite Key="Dembowski68"/>. Let <M>P' \subset P</M> and let
-<M>L'</M> be a set of subsets of <M>P'</M>, such that every line <M>l' \in L'</M>
+<M>L'</M> be a set of subsets of <M>P'</M>, such that every <M>l' \in L'</M>
 is a subset of exactly one line <M>l \in L</M>. If <M>S'=(P',L',I)</M> is a projective space
-again, then we call <M>S'</M> a <E>subgeometry</E> of <M>S</M>. Note that this definition
-does not imply that the elements of <M>S'</M> are a subset of the elements of <M>S</M>.
-
+again, then we call <M>S'</M> a <E>subgeometry</E> of <M>S</M>. Note that in general the subspaces of <M>S'</M> will be subsets of subspaces of <M>S</M>.
+<P/>
 A typical example of a subgeometry is a Baer subplane of a projective plane. In this example,
 with <M>S'</M> the Baer subplane of the projective plane <M>S</M>, one could say that
-the set of points of <M>S'</M> is indeed a subset of the set of points of <M>S</M>, contrary
-to the set of lines of <M>S'</M>, which is not considered a subset of the set of lines of <M>S</M>,
-for various mathematical reasons. However, one could consider a line of <M>S'</M> as a set of
-points of <M>S'</M>, so the set of points of a line of <M>S'</M> is a subset of the set
-of points of a line of <M>S</M>.
+a point of <M>S'</M> is indeed a point of <M>S</M>, but
+a line of <M>S'</M>, is not a line of <M>S</M>. 
+If one considers a line of <M>S'</M> as a set of
+points of <M>S'</M>, then a line of <M>S'</M> is a subset of the set
+of points on a line of <M>S</M>.
 
 Another example is the subgeometry of a projective space induced by a subspace <M>\pi</M>.
 In this example, clearly, the set of elements of the induced subgeometry can, mathematically,
-be considered as a subset of the set of elements of <M>S</M>. The same considerations apply
-for classical polar spaes. These consideration have implications for the behaviour of
-certain operations in &fining;, e.g. when computing the span and meet of different elements.
+be considered as a subset of the set of elements of <M>S</M>. 
 
-Using geometry morphisms, and more particular a
+<P/>The same considerations apply
+for classical polar spaces. These consideration have implications for the behaviour of
+certain operations in  <Package>FinInG</Package>, e.g. when computing the span and meet of different elements.
+
+<P/>Using geometry morphisms, and more particular a
 function like <F>NaturalEmbeddingBySubField</F>, one can deal in an indirect way with subgeometries. 
 However, using <F>NaturalEmbeddingBySubField</F> is not flexible, and typical problems such as 
 considering a subgeometry determined by a user chosen frame and a subfield, cannot be handled
-easily using <F>NaturalEmbeddingBySubField</F>. Therefore <Package>FinInG</Package> provides
+easily. Therefore <Package>FinInG</Package> provides
 some functions to naturally construct subgeometries of projective spaces.
 <P/>
 A subgeometry in a projective space is completely determined by a frame of the projective space
 and a subfield of the base field of the projective space. The <E>standard frame</E> in an
-<M>n</M>-dimensional projective space &pgnq; is the set of <M>n+2</M> points represented by
+<M>n</M>-dimensional projective space <M>PG(n,q)</M> is the set of <M>n+2</M> points represented by
 <M>(1,0,\ldots,0),(0,1,\ldots,0),\ldots,(0,0,\ldots,1),(1,1,\ldots,1)</M>. The subgeometry
 determined by the standard frame will be called <E>canonical</E>. Note that different
-frames may determine the same subgeometry (over a fixed subfield). A subgeometry that
-equals the subgeometry determined by the standard frame, will also be canonical.
+frames may determine the same subgeometry (over a fixed subfield). 
 <P/>
-For a given subfield &gfq; of &gfqt;,
-the canonical subgeometry determined by the standard frame in &pgnqt; is mathematically spoken
+For a given subfield <M>GF(q') \subset GF(q)</M>,
+the canonical subgeometry determined by the standard frame in <M>PG(n,q)</M> is mathematically spoken
 the image of the <Package>FinInG</Package> geometry morphism <F>NaturalEmbeddingBySubField</F> of the
-projective space &pgnq;. The coordinates of the points of the subgeometry will be exclusively
-over the subfield &gfq;, as are the coordinates of the vectors after normalizing defining
-any subspace of the subgeometry. Clearly, the Frobenius automorphism <M>x \rightarrow x^q</M> fixes all elements
+projective space <M>PG(n,q')</M>. The coordinates of the points of the subgeometry will be exclusively
+over the subfield <M>GF(q')</M>, as are the coordinates of the vectors after normalizing defining
+any subspace of the subgeometry. Clearly, the Frobenius automorphism which maps <M>x</M> to <M>x^{q'}</M> fixes all elements
 of the subgeometry.
 <P/>
-For an arbitrary frame of &pgnq; and a subfield &gfq;, there exists a unique collineation
-of &pgnqt; fixing the subgeometry &pgnq; pointwise. This collineation is the conjugation
-of the Frobenius automorhpism by the unique collineation mapping the defining frame of the subgeometry
-to the standard frame of &pgnqt;. Upon construction of a subgeometry, both collineations will
+For an arbitrary frame of <M>PG(n,q)</M> and a subfield <M>GF(q')</M>, there exists a natural collineation
+of <M>PG(n,q)</M> which fixes the subgeometry pointwise. This collineation is the conjugation
+of the Frobenius automorphism by the unique collineation mapping the defining frame of the subgeometry
+to the standard frame of <M>PG(n,q)</M>, i.e. the frame defining the canonical subsgeometry over <M>GF(q')</M>. Upon construction of a subgeometry, both collineations will
 be computed, and are of use when dealing with the full collineation group of a subgeometry. As for
 any incidence geometry in <Package>FinInG</Package>, operations to compute this collineation group
 as well as particular action functions for subgeometries are provided.
@@ -80,13 +82,13 @@ of subgeometries are constructed in a subcategory of <C>IsSubspaceOfProjectiveSp
 applicable to subspaces of projective spaces, are naturally applicable to subspaces of subgeometries.
 
 <Section>
-<Heading>Subgeometries of projective spaces and basic operations</Heading>
+<Heading>Particular Categories</Heading>
 
 <ManSection>
 <Filt Name="IsSubgeometryOfProjectiveSpace" Type="Category"/>
 <Description>
 This category is a subcategory of <C>IsProjectiveSpace</C>, and contains all subgeometries of 
-projective spaces. Note that mathmetically spoken, a subspace of a projective space induces also a subgeometry.
+projective spaces. Note that mathematically, a subspace of a projective space is also a subgeometry.
 However, in <Package>FinInG</Package>, subspaces of a projective space are constructed in a category that
 is not a subcategory of <C>IsProjectiveSpace</C>. Since <C>IsSubgeometryOfProjectiveSpace</C> is a subcategory
 of <C>IsProjectiveSpace</C>, all operations applicable to projective spaces, are naturally applicable to
@@ -99,20 +101,21 @@ subgeometries of projective spaces.
 <Filt Name="IsSubspaceOfSubgeometryOfProjectiveSpace" Type="Category"/>
 <Filt Name="IsSubspacesOfSubgeometryOfProjectiveSpace" Type="Category"/>
 <Description>
-Elements of a subgeoemtry of a projective space are also subspaces of a projective space.
-This is reflected in the category containing elements and collections of elements.
-<Example>
-<#Include SYSTEM "../examples/include/subgeometries_categories.include">
-</Example>
+A subspace of a subgeometry belongs to the category <C>IsSubspaceOfSubgeometryOfProjectiveSpace</C>.
 </Description>
 </ManSection>
+
+</Section>
+
+<Section>
+<Heading>Subgeometries of projective spaces</Heading>
 
 <ManSection>
 <Oper Name="CanonicalSubgeometryOfProjectiveSpace" Arg="pg, subfield"/>
 <Oper Name="CanonicalSubgeometryOfProjectiveSpace" Arg="pg, q"/>
-<Returns>A subgeometry of <A>pg</A></Returns>
+<Returns>a subgeometry of <A>pg</A></Returns>
 <Description>This operation returns the subgeometry of <A>pg</A> induced by the standard frame
-over the subfield <A>subfield</A>. Alternatively, the integer <A>q</A> can be used as the order of the
+over the subfield <A>subfield</A>. Alternatively, a prime power <A>q</A> can be used as the order of the
 subfield. It is checked whether the user specified subfield is indeed a subfield of the base field of
 <A>pg</A>. If the subfield equals the base field of <A>pg</A>, the projective space <A>pg</A> is returned.  
 <Example>
@@ -123,7 +126,7 @@ subfield. It is checked whether the user specified subfield is indeed a subfield
 
 <ManSection>
 <Oper Name="RandomFrameOfProjectiveSpace" Arg="pg"/>
-<Returns>A set of points of <A>pg</A>, being a frame. Note that the returned object is also a
+<Returns>a set of points of <A>pg</A>, being a frame. Note that the returned object is also a
 set in the GAP sense, i.e. an ordered list without duplicates.</Returns>
 <Description>
 <Example>
@@ -148,20 +151,55 @@ in <A>list</A> belong to the same projective space.
 <ManSection>
 <Oper Name="SubgeometryOfProjectiveSpaceByFrame" Arg="pg, list, field"/>
 <Oper Name="SubgeometryOfProjectiveSpaceByFrame" Arg="pg, list, q"/>
-<Returns>A subgeometry of <A>pg</A></Returns>
+<Returns>a subgeometry of <A>pg</A></Returns>
 <Description>
 The argument <A>pg</A> is a projective space which is not a subgeometry itself, the argument
 <A>list</A> is a list of points of <A>pg</A> defining a frame of <A>pg</A>, and finally the
 argument <A>field</A> is a subfield of the base field of <A>pg</A>. Alternatively, the
-argument <A>q</A> is an integer being the order of a subfield of the base field of <A>pg</A>.
+argument <A>q</A> is the order of a subfield of the base field of <A>pg</A>.
 This method returns the subgeometry definied by the frame in <A>list</A> and the subfield <A>field</A>
-of the subfield &gfq;. This method checks whether the subfield <A>field</A> or the &gfq;
-is really a sub field of the base field of <A>pg</A> and whether the list of points in <A>list</A> is a
+of the subfield <M>GF(<A>q</A>)</M>. This method checks whether the subfield <A>field</A> or the field <M>GF(<A>q</A>)</M>
+is really a subfield of the base field of <A>pg</A> and whether the list of points in <A>list</A> is a
 frame of <A>pg</A>. Note also that it is currently not possible to construct subgeometries recursively,
 so <A>pg</A> may not be a subgeometry itself. If the specified subfield equals the base field of
 <A>pg</A>, then the projective space <A>pg</A> itself is returned.
 <Example>
 <#Include SYSTEM "../examples/include/subgeometries_byframe.include">
+</Example>
+</Description>
+</ManSection>
+
+</Section>
+
+<Section>
+
+<Heading>Basic operations</Heading>
+
+<ManSection>
+<Heading>Underlying vector space and ambient projective space</Heading>
+<Oper Name="UnderlyingVectorSpace" Arg="sub"/>
+<Oper Name="AmbientSpace" Arg="sub"/>
+<Description>
+Let <M>P</M> be a projective space over the field <M>F</M>. Let <A>sub</A> be a subgeometry
+of <M>P</M> over the subfield <M>F'</M>. The underlying vector space of <A>sub</A>
+is defined as the underlying vector space of <M>P</M> (which is a vector space over the field <M>F</M>).
+The ambient space of a subgeometry <A>sub</A> is the projective space <M>P</M>.
+<Example>
+<#Include SYSTEM "../examples/include/subgeometries_ambientspace.include">
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Attr Name="DefiningFrameOfSubgeometry" Arg="sub"/>
+<Returns>a set of projective points</Returns>
+<Description>
+This attribute returns a frame of the ambient space of <A>sub</A> defining it. Note that different frames
+might define the same subgeometry, but the frame used to constructed <A>sub</A> is stored at construction,
+and it is exactly this stored object that is returned by this attribute. The returned object is a set
+of points, and it is also a set in the GAP sense, i.e. an ordered list without duplicates.
+<Example>
+<#Include SYSTEM "../examples/include/subgeometries_definingframe.include">
 </Example>
 </Description>
 </ManSection>
@@ -187,7 +225,7 @@ see also <Ref Sect="proj:dimension"/>.
 <Oper Name="UnderlyingVectorSpace" Arg="sub"/>
 <Oper Name="BaseField" Arg="sub"/>
 <Oper Name="SubfieldOfSubgeometry" Arg="sub"/>
-<Returns>A vector space, a finite field, a finite field, respectively</Returns>
+<Returns>the first operation returns a vector space, the second and third operations return a finite field</Returns>
 <Description>
 The operations <F>UnderlyingVectorSpace</F> and <F>BaseField</F> are defined for
 projective spaces, see <Ref Sect="proj:underlyingvs"/> and <Ref Sect="proj:basefield"/>.
@@ -201,52 +239,16 @@ The operation <F>SubfieldOfSubgeometry</F> returns the subfield over which <A>su
 </ManSection>
 
 <ManSection>
-<Heading>Underlying vector space and ambient projective space</Heading>
-<Oper Name="UnderlyingVectorSpace" Arg="sub"/>
-<Oper Name="AmbientSpace" Arg="sub"/>
-<Description>
-Let <M>P</M> be a projective space over the field <M>F</M>. Let <A>sub</A> be a subgeometry
-of <M>P</M> over the subfield <M>F'</M>. The underlying vector space of <A>sub</A>
-is defined as the underlying vector space of <M>P</M> (which is a vector space over the field <M>F</M>).
-The ambient space of a subgeometry <A>sub</A> is the projective space <M>P</M>.
-<Example>
-<#Include SYSTEM "../examples/include/subgeometries_ambientspace.include">
-</Example>
-</Description>
-</ManSection>
-
-<ManSection>
-<Heading>Defining frame and standard frame of a subgeometry</Heading>
-<Attr Name="DefiningFrameOfSubgeometry" Arg="sub"/>
-<Attr Name="StandardFrame" Arg="sub"/>
-<Returns>A set of projective points</Returns>
-<Description>
-The attribute returns a frame of the ambient space of <A>sub</A> defining it. Note that different frames
-might define the same subgeometry, but the frame used to constructed <A>sub</A> is stored at construction,
-and it is exactly this stored object that is returned by this attribute. The returned object is a set
-of points, and it is also a set in the GAP sense, i.e. an ordered list without duplicates.
-<P/>
-Note that the points of the defining frame meet the subgeometry non trivially, i.e. their
-underlying object defines a point of the subgeometry (by construction). This set of defined
-points of <A>sub</A> is returned by the second attribute.
-<Example>
-<#Include SYSTEM "../examples/include/subgeometries_definingframe.include">
-</Example>
-</Description>
-</ManSection>
-
-<ManSection>
 <Attr Name="CollineationFixingSubgeometry" Arg="sub"/>
-<Returns>A collineation of the ambient space of <A>sub</A></Returns>
+<Returns>a collineation of the ambient space of <A>sub</A></Returns>
 <Description>
-Let &gfq; be the field over which <A>sub</A> is defined, this is a
-subfield of &gfqt; over which the ambient projective space <M>P</M>
+Let <M>GF(q)</M> be the field over which <A>sub</A> is defined, this is a
+subfield of <M>GF(q^t)</M> over which the ambient projective space <M>P</M>
 is defined. It is well known that there exists a collineation of <M>P</M> of
 order <M>t</M>, fixing all elements of <A>sub</A>, which is returned by this operation.
-This collineation is the field automorphism of &gfqt;, fixing all elements
-of the subfield &gfq;, conjugated by the collineation of <M>P</M> mapping
-the subgeometry <A>sub</A> on the canonical subgeometry of <M>P</M> over &gfq;
-on the subgeometry <A>sub</A>. In case of a quadratic field extension (i.e. <M>t=2</M>),
+This collineation is the collineation induced by the Frobenius map <M>x\mapsto x^q</M>, 
+ conjugated by the collineation of <M>P</M> mapping
+the subgeometry <A>sub</A> to the canonical subgeometry of <M>P</M> over <M>GF(q)</M>. In case of a quadratic field extension (i.e. <M>t=2</M>),
 this collineation is known in the literature as the Baer involution of the subgeometry.
 <Example>
 <#Include SYSTEM "../examples/include/subgeometries_collineationfixingsubgeometry.include">
@@ -257,26 +259,16 @@ this collineation is known in the literature as the Baer involution of the subge
 </Section>
 
 <Section>
-<Heading>Elements of a subgeometry of a projective space</Heading>
-
-Since subgeometries of a projective space are constructed in a subcagegory of <C>IsProjectiveSpace</C> and
-elements of a subgeometry are constructed in a subcategory of <C>IsSubspacesOfSubgeometryOfProjectiveSpace</C>,
-all operations described in <Ref Chap="incidencegeometry"/> and <Ref Chap="projective_spaces"/> are applicable
-and behave similarly. The Operation <F>ExtendElementOfSubgeometry</F> is particular for elements of a subgeometry,
-and the operation <F>Meet</F> has extended functionality for elements of a projective space combined with a subgeometry.
+<Heading>Constructing elements of a subgeometry</Heading>
 
 <ManSection>
 <Oper Name="VectorSpaceToElement" Arg="sub, v"/>
-<Returns>A subspace of a subgeometry</Returns>
+<Returns>a subspace of a subgeometry</Returns>
 <Description>
 <A>sub</A> is a subgeometry of a projective space, and <A>v</A> is either a row vector
-(for points) or an <M>m \times n</M> matrix (for an (m-1)-dimensional subspace of a subgeometry of dimension <M>n-1</M>
-of a projective space). In the case that <A>v</A> is a matrix, the rows represent generators
-for the subspace. An exceptional case is when v is a zero-vector, in which case the trivial 
-subspace is returned. This method checks whether <A>v</A> determines an element of <A>sub</A>. The argument
-<A>v</A> will typically be defined over the base field of <A>sub</A>, which is the basefield of the ambient
-space of <A>sub</A>.
-<Example>
+(for points) or a matrix (for higher dimensional subspaces). In the case that <A>v</A> is a matrix, the rows represent generators
+for the subspace. An exceptional case is when <A>v</A> is the zero-vector, in which case the trivial 
+subspace is returned. This method checks whether <A>v</A> determines an element of <A>sub</A>. <Example>
 <#Include SYSTEM "../examples/include/subgeometries_vectorspacetoelement.include">
 </Example>
 </Description>
@@ -284,12 +276,12 @@ space of <A>sub</A>.
 
 <ManSection>
 <Oper Name="ExtendElementOfSubgeometry" Arg="el"/>
-<Returns>A subspace of a projective space</Returns>
+<Returns>a subspace of a projective space</Returns>
 <Description>
-Consider &pgnq; as a subgeometry of &pgnqt;. Let <A>el</A> be an element of &pgnq;. The underlying vector space
-of <A>el</A> is a vector space over &gfq; generated by a set <M>S</M> of vectors. Now let <M>V</M> be
-the vector space over &gfqt; generated by the same set <M>S</M> of vectors. Then this operation returns
-the element of &pgnqt; which has <M>V</M> as underlying vector space.
+The argument <A>el</A> is an element of a subgeometry <M>P'</M> with ambient projective space <M>P</M>.
+The projective space is defined over a field <M>F</M>, the subgeometry <M>P'</M> is defined over
+a subfield <M>F'</M> of <M>F</M>. The underlying vectorspace of <A>el</A> is a vector space over <M>F'</M>
+generated by a set <M>S</M> of vectors. This operation returns the element of <M>P</M>, corresponding to the vector space over <M>F</M> generated by the vectors in <M>S</M>.
 Note that the set <M>S</M> can be otbained using <F>UnderlyingObject</F>, see <Ref Sect="underlyingobject1"/>.
 <Example>
 <#Include SYSTEM "../examples/include/subgeometries_extendelement.include">
@@ -298,115 +290,34 @@ Note that the set <M>S</M> can be otbained using <F>UnderlyingObject</F>, see <R
 </ManSection>
 
 <ManSection>
-<Oper Name="EmptySubspace" Arg="sub"/>
-<Returns>The trivial subspace in the subgeometry <A>sub</A></Returns>
+<Oper Name="AmbientGeometry" Arg="el"/>
+<Returns>an incidence geometry</Returns>
 <Description>
-The object returned by this operation is contained in
-every projective subspace of the projective space <A>ps</A>, but is not an element of <A>ps</A>. Hence, testing
-incidence results in an error message.
-<Example>
-<#Include SYSTEM "../examples/include/subgeometries_emptysubspace.include"> 
-</Example>
+For <A>el</A> an element of a subgeometry <M>P</M>, which is also a projective space, this operation
+returns <M>P</M>.
 </Description>
 </ManSection>
-
-<ManSection>
-<Oper Name="ProjectiveDimension" Arg="sub"/>
-<Returns>the projective dimension of a subspace of a subgeometry of projective space. The operation <F>ProjectiveDimension</F>
-is also applicable on the EmptySubspace.
-</Returns>
-<Description>
-<Example>
-<#Include SYSTEM "../examples/include/subgeometries_projdimension_element.include"> 
-</Example>
-</Description>
-</ManSection>
-
-<ManSection>
-<Heading>Collection of elements of subgeometries</Heading>
-<Oper Name="ElementsOfIncidenceStructure" Arg="sub, j"/>
-<Oper Name="Points" Arg="sub"/>
-<Oper Name="Lines" Arg="sub"/>
-<Oper Name="Planes" Arg="sub"/>
-<Oper Name="Solids" Arg="sub"/>
-<Oper Name="Hyperplanes" Arg="sub"/>
-<Returns>the collection of elements of the subgeometry of a projective space <A>sub</A> of a given type <A>j</A></Returns>
-<Description>
-For the subgeometry <A>sub</A> of dimension <M>d</M> and the type <A>j</A> (where <M>1 \leq j \leq d</M>),
-the operation <F>ElementsOfIncidenceStructure</F> returns the collection of <M>j-1</M> dimensional subspaces of <A>sub</A>.
-The operations <F>Points</F>, <F>Lines</F>, <F>Planes</F>, <F>Solids</F> and <F>Hyperplanes</F> respectively return
-the elements of <A>sub</A> of respective type 1,2,3,4 and the thyperplanes.
-An error message is produced when the subgeometry <A>sub</A> has no elements of the required type.<Example>
-<#Include SYSTEM "../examples/include/subgeometries_elements.include">
-</Example>
-</Description>
-</ManSection>
-
-<ManSection>
-<Heading>Incidence and containment</Heading>
-<Oper Name="IsIncident" Arg="el1, el2"/>
-<Oper Name="\*" Arg="el1, el2"/>
-<Oper Name="\in" Arg="el1, el2"/>
-<Returns>true or false</Returns>
-<Description>
-The arguments <A>el1, el2</A> are subspaces of a subgeometry of a projective space.
-Recall that for projective spaces (and hence also subgeometries), incidence is symmetrized containment,
-where the empty subspace and the whole projective space (i.e. the subgeometry in this case)
-are excluded as arguments for the operations <F>IsIncident</F> and <F>\*</F>, since they are not considered as elements
-of the geometry, but both the empty subspace and the whole projective space are allowed as arguments for <F>\in</F>.
-Also note that elements of subgeometry are not elements of the ambient space, hence asking for incidence between an element
-of the subgeometry and an element of its ambient space, will produce an error (and similarly for the operation <F>\in</F>).
-<Example>
-<#Include SYSTEM "../examples/include/subgeometries_incident.include">
-</Example>
-</Description>
-</ManSection>
-
-<ManSection>
-<Heading>Coordinates and related operations</Heading>
-<Attr Name="Coordinates" Arg="p"/>
-<Oper Name="DualCoordinatesOfHyperplane" Arg="hyp"/>
-<Oper Name="HyperplaneByDualCoordinates" Arg="hyp"/>
-<Oper Name="EquationOfHyperplane" Arg="sub, list"/>
-<Returns>A list of finite field elements, or a hyperplane, or a polynomial</Returns>
-<Description>
-These respective attributes/operations behave similarly as the respective attributes/opeartions
-described in <Ref Sect="projsp:coordinates"/>, <Ref Sect="projsp:dualcoordinatesofhyperplane"/>,
-<Ref Sect="projsp:hyperplanebydualcoordinates"/>, and <Ref Sect="projsp:equationofhyperplane"/>.
-It is very important to note that the coordinates of a point of a subgeoemtry <M>P</M> are computed with
-relation to the <E>standard frame of the ambient projective space of <M>P</M></E>.
-<Example>
-<#Include SYSTEM "../examples/include/subgeometries_coordinates.include">
-</Example>
-</Description>
-</ManSection>
-
 
 <ManSection>
 <Heading>Flags</Heading>
 <Oper Name="FlagOfIncidenceStructure" Arg="sub, els"/>
 <Oper Name="IsEmptyFlag" Arg="flag"/>
 <Oper Name="IsChamberOfIncidenceStructure" Arg="flag"/>
+<Returns>true or false</Returns>
 <Description>
-
-
+These operations are defined for projective spaces and so they are also applicable to subgeometries.
 </Description>
 </ManSection>
 
 
 
 
-shadows, flags, shadows of flags, span, meet, ExtendElementOf 
 </Section>
 
 <Section>
 <Heading>Groups and actions</Heading>
 
-Let <M>P'</M> be a subgeometry of <M>P</M>. Within this framework, there are two possibilities to
-define the collineationgroup of <M>P'</M>. From the algebraic perspective, one could define a collineation
-to be a semilinear map preserving <M>P'</M>. In this perspective, one could consider all semilinear maps
-of the underlying vector space of <M>P</M>, since this is the underlying vector space of <M>P'</M> as well.
-However, this results in a group that does not act faithfully on the elements of <M>P'</M>. Since a non faithfull action causes problems when using the nice monomorphism functionality, we decided to define the collineation group of
+Let <M>P'</M> be a subgeometry of <M>P</M>. Although one could argue that any semilinear map inducing a collineation preserving <M>P'</M> can be called a collineation of <M>P'</M>, this would cause problems with the nice monomorphism functionality, since such a collineation does not necessarily have a faithful action on the subgeometry. For this reason, we decided to define the collineation group of
 the subgeometry <M>P'</M> as the collineation group of the projective space isomorphic to <M>P'</M> conjugated
 by the collineation of <M>P</M> mapping <M>P'</M> on the canonical subgeometry of <M>P</M> over the same field as
 <M>P'</M>. Similarly, the projectivity group, respectively the special projectivity group, of <M>P'</M>
@@ -419,7 +330,7 @@ the projective space isomorhpic to <M>P'</M>.
 <Oper Name="ProjectivityGroup" Arg="sub"/>
 <Oper Name="SpecialProjectivityGroup" Arg="sub"/>
 
-<Returns>A group of collineations</Returns>
+<Returns>a group of collineations</Returns>
 
 </ManSection>
 
