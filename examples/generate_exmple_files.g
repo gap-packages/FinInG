@@ -115,7 +115,7 @@ groups_appfiles := ["groups_app_sodesargues", "groups_app_godesargues", "groups_
 
 exampledir := DirectoriesPackageLibrary("fining","tst")[1];
 
-files := [ "subgeometries_coordinates" ];
+files := [ "subgeometries_vectorspacetoelement" ];
 
 #initialize directorynames
 #exampledir = dir where .g files are located : ".../pkg/fining/examples/gap"
