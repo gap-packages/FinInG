@@ -1,2 +1,4 @@
 StandardFrame is applicable on subgeometries of projective spaces but
 gives currently a non acceptable error. Should be fixed. 
+
+CoordinatesWithRespectToDefininigFrameOfSubgeometry
