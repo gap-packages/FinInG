@@ -24,7 +24,7 @@ Version := "1.4.2",
 
 ##  Release date of the current version in dd/mm/yyyy format.
 # 
-Date := "25/05/2020",
+Date := "03/07/2020",
 
 ##  URL of the archive(s) of the current package release, but *without*
 ##  the format extension(s), like '.zoo', which are given next.
@@ -186,12 +186,12 @@ PackageDoc := rec(
 Dependencies := rec(
   GAP := ">=4.10",
   NeededOtherPackages := [
-          ["cvec", ">=2.5.7"],
+          ["cvec", ">=2.7.4"],
           ["Forms", ">=1.2.5"],
-          ["GAPDoc", ">= 1.6"],
-          ["GenSS", ">=1.6.4"],
-          ["GRAPE", ">=4.7"],
-          ["Orb", ">=4.7.6"],
+          ["GAPDoc", ">= 1.6.3"],
+          ["GenSS", ">=1.6.6"],
+          ["GRAPE", ">=4.8.3"],
+          ["Orb", ">=4.8.3"],
       ],
   SuggestedOtherPackages := [],
   ExternalConditions := []
