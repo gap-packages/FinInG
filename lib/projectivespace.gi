@@ -2398,7 +2398,7 @@ InstallMethod( ProjectiveElationGroup,
 	mat := UnderlyingObject(sub);
 	f := BaseField(sub);
 	vssub := VectorSpace(f,mat);
-	e0 := UnderlyingObject(centre);
+	e0 := Unpack(UnderlyingObject(centre));
 	ei := BasisVectors(Basis(ComplementSpace(vssub,[e0])));
 	en := BasisVectors(Basis(ComplementSpace(f^(n+1),mat)))[1];
 	M := Concatenation([e0],ei,[en]);
