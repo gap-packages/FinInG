@@ -1,12 +1,14 @@
+[![Build Status](https://github.com/gap-packages/FinInG/workflows/CI/badge.svg?branch=master)](https://github.com/gap-packages/FinInG/actions?query=workflow%3ACI+branch%3Amaster)
+[![Code Coverage](https://codecov.io/github/gap-packages/FinInG/coverage.svg?branch=master&token=)](https://codecov.io/gh/gap-packages/FinInG)
 
-		FinInG -- Finite Incidence Geometry
+# FinInG -- Finite Incidence Geometry
 
-				John Bamberg (University of Western Australia)
-				Anton Betten (Colorado State University, Fort Collins)
-				Philippe Cara (Vrije Universiteit Brussel)
-				Jan De Beule (Vrije Universiteit Brussel)
-				Michel Lavrauw (Sabancı Üniversitesi, and Università degli Studi di Padova)
-				Max Neunhoeffer (University of St. Andrews)
+- John Bamberg (University of Western Australia)
+- Anton Betten (Colorado State University, Fort Collins)
+- Philippe Cara (Vrije Universiteit Brussel)
+- Jan De Beule (Vrije Universiteit Brussel)
+- Michel Lavrauw (Sabancı Üniversitesi, and Università degli Studi di Padova)
+- Max Neunhoeffer (University of St. Andrews)
                                    
 
 This package provides:
@@ -28,7 +30,7 @@ For further information see:
 	
 	http://www.fining.org
 
-INSTALLATION AND DEPENDENCIES
+## INSTALLATION AND DEPENDENCIES
 
 FinInG requires the following packages: GAPDoc, GenSS, forms, GRAPE, orb, io, and cvec.
 The DESIGN package is not required to load FinInG, but is needed to use some particular functions
@@ -40,8 +42,8 @@ FinInG manual. Here we continue with the summary for the experienced or impatien
 Just unpack one of the archives in the "pkg" subdirectory of your GAP 
 installation. The archive is available in several formats:
 
-   fining-x.y.tgz  
-   fining-x.y.zip 
+    fining-x.y.tgz  
+    fining-x.y.zip 
 
 Unpacking generates a subdirectory "fining". If the dependencies are satisfied, you can load the package
 by typing in the GAP command line "LoadPackage("fining");". All documentation and
