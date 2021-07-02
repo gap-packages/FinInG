@@ -24,8 +24,10 @@ for ff in testfiles do
 od;
 if testresult then
   Print("#I  No errors detected while testing package ", pkgname, "\n");
+  QUIT_GAP(0);
 else
   Print("#I  Errors detected while testing package ", pkgname, "\n");
+  QUIT_GAP(1);
 fi;
 end;
 
