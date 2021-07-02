@@ -30,6 +30,8 @@ fi;
 end;
 
 # Set the name of the package here
+Print("EXecuting this file\n");
+
 TestMyPackage( "fining" );
 
 QUIT_GAP(0);
