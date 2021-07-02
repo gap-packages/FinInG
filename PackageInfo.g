@@ -220,10 +220,10 @@ BannerString := Concatenation(
 
 TestFile := "tst/testall.g",
 
-IssueTrackerURL := "https://bitbucket.org/jdebeule/fining/issues",
+IssueTrackerURL := "https://github.com/gap-packages/FinInG/issues",
 SourceRepository := rec(
     Type := "git",
-    URL := "https://bitbucket.org/jdebeule/fining",
+    URL := "https://github.com/gap-packages/FinInG",
 ),
 
 Keywords := ["FinInG", "finite", "geometry"],
