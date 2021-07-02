@@ -147,7 +147,7 @@ Status := "accepted",
 CommunicatedBy := "Olexandr Konovalov (St Andrews)",
 AcceptDate := "11/2017",
 
-README_URL := "http://cage.ugent.be/fining/README",
+README_URL := "http://cage.ugent.be/fining/README.md",
 PackageInfoURL := "http://cage.ugent.be/fining/PackageInfo.g",
 
 AbstractHTML := "<span class=\"pkgname\">FinInG</span> is a package for computation\
