@@ -2271,11 +2271,11 @@ InstallMethod( NaturalProjectionBySubspaceNC,
 
 # CHECKED 28/09/11 jdb
 #############################################################################
-#O  QUO( <ps>, <v> )
+#O  \/( <ps>, <v> )
 # returns the quotient space of the subspace <v> of the projective space <ps>
 # it is checked if <v> is a subspace of <ps>
 ##
-InstallOtherMethod(QUO,
+InstallOtherMethod(\/,
 	"for a projective space and a subspace",
 	[ IsProjectiveSpace and IsProjectiveSpaceRep, IsSubspaceOfProjectiveSpace],
 	function( ps, v )
