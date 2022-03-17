@@ -119,7 +119,7 @@ Persons := [
                        "Istanbul\n",
                        "Turkey\n" ] ),
     Place         := "Istanbul, and Vicenza",
-    Institution   := "Sabancõ †niversitesi, and Universitˆ degli Studi di Padova",
+    Institution   := "SabancÄ± Ãœniversitesi, and UniversitÃ  degli Studi di Padova",
   ),
   rec( 
     LastName      := "Neunhoeffer",
