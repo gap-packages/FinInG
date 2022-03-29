@@ -35,7 +35,7 @@ Date := "03/07/2020",
 ##  example/init.g, ...    or  example-1.3/init.g, ...  )
 # 
 ArchiveURL := Concatenation("http://cage.ugent.be/fining/archive/fining-",~.Version),
-ArchiveFormats := ".tar.gz -win.zip .tar.bz2",
+ArchiveFormats := ".tar.gz .tar.bz2",
 
 Persons := [
   rec( 
