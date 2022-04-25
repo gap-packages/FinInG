@@ -144,7 +144,7 @@ Persons := [
 ],
 
 Status := "accepted",
-CommunicatedBy := "Alexander Konovalov (St Andrews)",
+CommunicatedBy := "Olexandr Konovalov (St Andrews)",
 AcceptDate := "11/2017",
 
 README_URL := "http://cage.ugent.be/fining/README",
