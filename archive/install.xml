@@ -71,7 +71,7 @@ necessarily the case, but loading fining will force to load required packages an
 
 <Example>
  ┌───────┐   GAP, Version 4.7.5 of 24-May-2014 (free software, GPL)
- │  GAP  │   http://www.gap-system.org
+ │  GAP  │   https://www.gap-system.org
  └───────┘   Architecture: x86_64-unknown-linux-gnu-gcc-default64
  Libs used:  gmp
  Loading the library and packages ...
@@ -172,7 +172,7 @@ gap>
 For the sake of completeness, we show the output under GAP4r5
 <Example>
  *********   GAP, Version 4.5.2(beta) of 27-Nov-2011 (free software, GPL)
- *  GAP  *   http://www.gap-system.org
+ *  GAP  *   https://www.gap-system.org
  *********   Architecture: x86_64-apple-darwin10.8.0-gcc-default64
  Libs used:  gmp
  Loading the library and packages ...
