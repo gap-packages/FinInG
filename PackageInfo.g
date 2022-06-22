@@ -139,8 +139,22 @@ Persons := [
     Place         := "St Andrews",
     Institution   := "University of St Andrews"
   ),
-,
-  
+  rec(
+    LastName      := "Horn",
+    FirstNames    := "Max",
+    IsAuthor      := false,
+    IsMaintainer  := true,
+    Email         := "horn@mathematik.uni-kl.de",
+    WWWHome       := "https://www.quendi.de/math",
+    PostalAddress := Concatenation(
+                       "Fachbereich Mathematik\n",
+                       "TU Kaiserslautern\n",
+                       "Gottlieb-Daimler-Straﬂe 48\n",
+                       "67663 Kaiserslautern\n",
+                       "Germany" ),
+    Place         := "Kaiserslautern, Germany",
+    Institution   := "TU Kaiserslautern",
+  ),
 ],
 
 Status := "accepted",
