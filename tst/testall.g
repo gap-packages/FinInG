@@ -5,6 +5,7 @@ pkgdir := DirectoriesPackageLibrary( pkgname, "tst" );
 
 # Arrange chapters as required
 testfiles := [
+"bugfix.tst",
 "tst_regular13system.tst",
 "tst_segrevariety.tst",
 "tst_hermitianspreads.tst",
