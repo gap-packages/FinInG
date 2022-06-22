@@ -20,7 +20,7 @@ Subtitle := "Finite Incidence Geometry",
 ##  Please adjust also the VERSION file in the package directory when
 ##  changing this.
 
-Version := "1.4.2",
+Version := "1.4.2dev",
 
 ##  Release date of the current version in dd/mm/yyyy format.
 # 
