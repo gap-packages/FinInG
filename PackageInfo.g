@@ -13,27 +13,10 @@ SetPackageInfo( rec(
 
 PackageName := "FinInG",
 Subtitle := "Finite Incidence Geometry",
-
-##  See '?Extending: Version Numbers' in GAP help for an explanation
-##  of valid version numbers. For an automatic package distribution update
-##  you must provide a new version number even after small changes.
-##  Please adjust also the VERSION file in the package directory when
-##  changing this.
-
 Version := "1.4.2dev",
+Date := "03/07/2020", # dd/mm/yyyy format
+License := "GPL-2.0-or-later",
 
-##  Release date of the current version in dd/mm/yyyy format.
-# 
-Date := "03/07/2020",
-
-##  URL of the archive(s) of the current package release, but *without*
-##  the format extension(s), like '.zoo', which are given next.
-##  The archive file name *must be changed* with each version of the archive
-##  (and probably somehow contain the package name and version).
-##  The paths of the files in the archive must begin with the name of the
-##  directory containing the package (in our "example" probably:
-##  example/init.g, ...    or  example-1.3/init.g, ...  )
-# 
 ArchiveURL := Concatenation("http://cage.ugent.be/fining/archive/fining-",~.Version),
 ArchiveFormats := ".tar.gz .tar.bz2",
 
@@ -184,9 +167,6 @@ PackageDoc := rec(
   # fit on a single text line (appears with the '?books' command in GAP)
   # LongTitle := "Elementary Divisors of Integer Matrices",
   LongTitle := "FinInG - Finite Incidence Geometry",
-  # Should this help book be autoloaded when GAP starts up? This should
-  # usually be 'true', otherwise say 'false'. 
-  Autoload  := true
 ),
 
 
@@ -243,5 +223,3 @@ SourceRepository := rec(
 Keywords := ["FinInG", "finite", "geometry"],
 
 ));
-
-
