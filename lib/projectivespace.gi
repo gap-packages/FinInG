@@ -2366,7 +2366,7 @@ InstallMethod( ElationOfProjectiveSpace,
 	mat := UnderlyingObject(sub);
 	f := BaseField(sub);
 	vssub := VectorSpace(f,mat);
-	e0 := UnderlyingObject(centre);
+	e0 := Unpack(UnderlyingObject(centre));
 	ei := BasisVectors(Basis(ComplementSpace(vssub,[e0])));
 	en := UnderlyingObject(point1);
 	M := Concatenation([e0],ei,[en]);
