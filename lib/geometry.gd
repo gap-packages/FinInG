@@ -37,7 +37,7 @@ SetInfoLevel( InfoFinInG, 1 );
 #
 #############################################################################
 
-DeclareGlobalVariable( "FINING" );
+BindGlobal( "FINING", rec() );
 
 
 #############################################################################
@@ -247,18 +247,8 @@ DeclareOperation( "Type", [ IsElementOfIncidenceStructure and IsElementOfInciden
 DeclareOperation( "Type", [ IsElementsOfIncidenceStructure and IsElementsOfIncidenceStructureRep ] );
 DeclareOperation( "Type", [ IsFlagOfIncidenceStructure and IsFlagOfIncidenceStructureRep ] );
 
-# The following three lines, together with a method for the operation \^, 
-# will make sure that p^_ is the same as Unwrap(p), a handy shortcut.
-
-#jdb 30/10/15: after it turned out that loading a value in _ breaks the package KBMag, we had to comment this out.
-#DeclareFilter( "IsUnwrapper" );
-#DeclareGlobalVariable( "_" );
-#InstallValue( _, Objectify( NewType( NewFamily( "UnwrapperFamily" ), IsUnwrapper ), rec() ));
-
 DeclareOperation( "Wrap", [IsIncidenceStructure, IsPosInt, IsObject] );
 DeclareOperation( "Unwrap", [IsElementOfIncidenceStructure] );
-#jdb 30/10/15: see comment above about _.
-#DeclareOperation( "\^", [IsElementOfIncidenceStructure, IsUnwrapper ] );
 
 # three general operations. Methods to be installed for several filters.
 DeclareOperation( "ObjectToElement", [IsIncidenceStructure, IsPosInt, IsObject] );
@@ -267,8 +257,6 @@ DeclareOperation( "UnderlyingObject", [IsElementOfIncidenceStructure] );
 
 DeclareGlobalFunction( "HashFuncForElements" );
 DeclareGlobalFunction( "HashFuncForSetElements" );
-# commenting this out had not effect, presumably...
-#DeclareOperation( "ChooseHashFunction", [IsElementOfIncidenceStructure,IsInt] );
 
 #############################################################################
 #

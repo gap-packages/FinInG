@@ -1,8 +1,7 @@
 #from geometry.gd
 
 DeclareFilter( "IsUnwrapper" );
-DeclareGlobalVariable( "_" );
-InstallValue( _, Objectify( NewType( NewFamily( "UnwrapperFamily" ), IsUnwrapper ), rec() ));
+BindGlobal( "_", Objectify( NewType( NewFamily( "UnwrapperFamily" ), IsUnwrapper ), rec() ));
 
 DeclareOperation( "\^", [IsElementOfIncidenceStructure, IsUnwrapper ] );
 

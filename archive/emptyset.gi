@@ -1,7 +1,6 @@
 DeclareFilter( "IsEmptySubspace", IsSubspaceOfProjectiveSpace );
-DeclareGlobalVariable( "EmptySubspace" );
 
-InstallValue( EmptySubspace, Objectify( NewType( 
+BindGlobal( "EmptySubspace", Objectify( NewType(
       NewFamily( "EmptySubspaceFamily" ), IsEmptySubspace ), rec() ));
 
 SetProjectiveDimension(EmptySubspace, -1);
