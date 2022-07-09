@@ -1,102 +1,225 @@
 #############################################################################
 ##  
-##  Demo PackageInfo.g for the GitHubPagesForGAP
-##
+##  PackageInfo.g for the package `FinInG'                 
+##                                                               John Bamberg
+##                                                               Anton Betten
+##                                                              Philippe Cara
+##                                                               Jan De Beule
+##                                                             Michel Lavrauw
+##                                                            Max Neunhoeffer
+##  
 
 SetPackageInfo( rec(
 
-PackageName := "GitHubPagesForGAP",
+PackageName := "FinInG",
+Subtitle := "Finite Incidence Geometry",
+Version := "1.4.2dev",
+Date := "03/07/2020", # dd/mm/yyyy format
+License := "GPL-2.0-or-later",
 
-Subtitle := "A GitHub Pages generator for GAP packages",
-Version := "0.3",
-Date := "10/11/2019", # dd/mm/yyyy format
-License := "0BSD",
+ArchiveURL := Concatenation("http://cage.ugent.be/fining/archive/fining-",~.Version),
+ArchiveFormats := ".tar.gz .tar.bz2",
 
 Persons := [
+  rec( 
+    LastName      := "Bamberg",
+    FirstNames    := "John",
+    IsAuthor      := true,
+    IsMaintainer  := true,
+    Email         := "bamberg@maths.uwa.edu.au",
+    WWWHome       := "http://school.maths.uwa.edu.au/~bamberg/",
+    PostalAddress := Concatenation( [
+                       "John Bamberg\n",
+                       "School of Mathematics and Statistics\n",
+                       "The University of Western Australia\n",
+                       "35 Stirling Highway\n",
+                       "CrawleyY WA 6009, Perth\n",
+                       "Australia" ] ),
+    Place         := "Perth",
+    Institution   := "The University of Western Australia",
+  ),
+  rec( 
+    LastName      := "Betten",
+    FirstNames    := "Anton",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "betten@math.colostate.edu",
+    WWWHome       := "http://www.math.colostate.edu/~betten",
+    PostalAddress := Concatenation( [
+                       "Anton Betten\n",
+                       "Department of Mathematics\n",
+                       "Colorado State University\n",
+                       "Fort Collins, CO 80523\n",
+                       "USA" ] ),
+    Place         := "Colorado",
+    Institution   := "Colorado State University",
+  ),
+  rec(
+    LastName      := "Cara",
+    FirstNames    := "Philippe",
+    IsAuthor      := true,
+    IsMaintainer  := true,
+    Email         := "pcara@vub.ac.be",
+    WWWHome       := "http://homepages.vub.ac.be/~pcara",
+    PostalAddress := Concatenation( [
+                       "Philippe Cara\n",
+                       "Department of Mathematics\n",
+                       "Vrije Universiteit Brussel\n",
+                       "Pleinlaan 2\n",
+                       "B-1050 Brussel\n",
+                       "Belgium" ] ),
+    Place         := "Brussel",
+    Institution   := "Vrije Universiteit Brussel",
+  ),
+  rec(
+    LastName      := "De Beule",
+    FirstNames    := "Jan",
+    IsAuthor      := true,
+    IsMaintainer  := true,
+    Email         := "jan@debeule.eu",
+    WWWHome       := "http://www.debeule.eu",
+    PostalAddress := Concatenation( [
+    "Jan De Beule\n",
+    "Department of Mathematics\n",
+    "Vrije Universiteit Brussel\n",
+    "Pleinlaan 2\n",
+    "B-1050 Brussel\n",
+    "Belgium" ] ),
+    Place         := "Brussels",
+    Institution   := "Vrije Universiteit Brussel",
+  ),
+  rec( 
+    LastName      := "Lavrauw",
+    FirstNames    := "Michel",
+    IsAuthor      := true,
+    IsMaintainer  := true,
+    Email         := "michel.lavrauw@unipd.it",
+    WWWHome       := "http://people.sabanciuniv.edu/~mlavrauw/",
+    PostalAddress := Concatenation( [
+                       "Michel Lavrauw\n",
+                       "Faculty of Engineering and Natural Sciences\n",
+                       "Sabanci Universitesi\n",
+                       "Istanbul\n",
+                       "Turkey\n" ] ),
+    Place         := "Istanbul, and Vicenza",
+    Institution   := "Sabancı Üniversitesi, and Università degli Studi di Padova",
+  ),
+  rec( 
+    LastName      := "Neunhoeffer",
+    FirstNames    := "Max",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "neunhoef@mcs.st-and.ac.uk",
+    WWWHome       := "http://www-groups.mcs.st-and.ac.uk/~neunhoef/",
+    PostalAddress := Concatenation( [
+                       "Max Neunhoeffer\n",
+                       "School of Mathematics and Statistics\n",
+                       "University of St Andrews\n",
+                       "Mathematical Institute\n",
+                       "North Haugh\n",
+                       "St Andrews, Fife KY16 9SS\n",
+                       "Scotland, UK" ] ),
+    Place         := "St Andrews",
+    Institution   := "University of St Andrews"
+  ),
   rec(
     LastName      := "Horn",
     FirstNames    := "Max",
-    IsAuthor      := true,
-    IsMaintainer  := true,
-    Email         := "max.horn@uni-siegen.de",
-    WWWHome       := "https://www.quendi.de/math",
-    PostalAddress := Concatenation(
-                       "Department Mathematik\n",
-                       "Universität Siegen\n",
-                       "Walter-Flex-Straße 3\n",
-                       "57072 Siegen\n",
-                       "Germany" ),
-    Place         := "Siegen",
-    Institution   := "Universität Siegen"
-  ),
-
-  rec(
-    LastName      := "Thor",
-    FirstNames    := "A. U.",
-    IsAuthor      := true,
-    IsMaintainer  := false,
-    #Email         := "author@example.com",
-  ),
-
-  rec(
-    LastName      := "Itor",
-    FirstNames    := "Jan",
     IsAuthor      := false,
     IsMaintainer  := true,
-    #Email         := "janitor@example.com",
+    Email         := "horn@mathematik.uni-kl.de",
+    WWWHome       := "https://www.quendi.de/math",
+    PostalAddress := Concatenation(
+                       "Fachbereich Mathematik\n",
+                       "TU Kaiserslautern\n",
+                       "Gottlieb-Daimler-Stra�e 48\n",
+                       "67663 Kaiserslautern\n",
+                       "Germany" ),
+    Place         := "Kaiserslautern, Germany",
+    Institution   := "TU Kaiserslautern",
   ),
 ],
 
-Status := "other",
+Status := "accepted",
+CommunicatedBy := "Olexandr Konovalov (St Andrews)",
+AcceptDate := "11/2017",
 
-# The following are not strictly necessary in your own PackageInfo.g
-# (in the sense that update.g only looks at the usual fields
-# like PackageWWWHome, ArchiveURL etc.). But they are convenient
-# if you use exactly the scheme for your package website that we propose.
-GithubUser := "gap-system",
-GithubRepository := ~.PackageName,
-GithubWWW := Concatenation("https://github.com/", ~.GithubUser, "/", ~.GithubRepository),
+README_URL := "http://cage.ugent.be/fining/README.md",
+PackageInfoURL := "http://cage.ugent.be/fining/PackageInfo.g",
 
-PackageWWWHome := Concatenation("https://", ~.GithubUser, ".github.io/", ~.GithubRepository, "/"),
-README_URL     := Concatenation( ~.PackageWWWHome, "README.md" ),
-PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
-# The following assumes you are using the Github releases system. If not, adjust
-# it accordingly.
-ArchiveURL     := Concatenation(~.GithubWWW,
-                    "/releases/download/v", ~.Version, "/",
-                    ~.GithubRepository, "-", ~.Version),
+AbstractHTML := "<span class=\"pkgname\">FinInG</span> is a package for computation\
+ in Finite Incidence Geometry. It provides users with the basic tools to work in \
+ various areas of finite geometry from the realms of projective spaces to the flat \
+ lands of generalised polygons. The algebraic power of GAP is employed, particularly \
+ in its facility with matrix and permutation groups.",
 
-ArchiveFormats := ".tar.gz .tar.bz2",
-
-AbstractHTML := 
-  "This is a pseudo package that contains no actual\
-  <span class=\"pkgname\">GAP</span> code. Instead, it is a template for other\
-  GAP packages that allows to quickly setup GitHub Pages.",
+PackageWWWHome := "http://www.fining.org",
 
 PackageDoc := rec(
-  BookName  := "GitHubPagesForGAP",
+  # use same as in GAP            
+  BookName  := "FinInG",
   ArchiveURLSubset := ["doc"],
-  HTMLStart := "doc/chap0.html",
+  HTMLStart := "doc/chap0_mj.html",
   PDFFile   := "doc/manual.pdf",
+  # the path to the .six file used by GAP's help system
   SixFile   := "doc/manual.six",
-  LongTitle := "A GitHub Pages generator for GAP packages",
+  # a longer title of the book, this together with the book name should
+  # fit on a single text line (appears with the '?books' command in GAP)
+  # LongTitle := "Elementary Divisors of Integer Matrices",
+  LongTitle := "FinInG - Finite Incidence Geometry",
 ),
 
-# The following dependencies are fake and for testing / demo purposes
+
+##  Are there restrictions on the operating system for this package? Or does
+##  the package need other packages to be available?
 Dependencies := rec(
-  GAP := ">=4.8.1",
+  GAP := ">=4.10",
   NeededOtherPackages := [
-    ["GAPDoc", ">= 1.2"],
-    ["IO", ">= 4.1"],
-  ],
-  SuggestedOtherPackages := [["orb", ">= 4.2"]],
+          ["cvec", ">=2.7.4"],
+          ["Forms", ">=1.2.5"],
+          ["GAPDoc", ">= 1.6.3"],
+          ["GenSS", ">=1.6.6"],
+          ["GRAPE", ">=4.8.2"],
+          ["Orb", ">=4.8.3"],
+      ],
+  SuggestedOtherPackages := [],
   ExternalConditions := []
 ),
 
 AvailabilityTest := ReturnTrue,
 
-Keywords := ["GitHub Pages", "GAP"]
+BannerString := Concatenation(
+"-------------------------------------------------------------------------------\n",
+"         ______________       ________      _________   __________ __          \n",
+"         ___  ____/__(_)__________  _/________  ____/   __<  /_  // /          \n",
+"         __  /_   __  /__  __ \__  / __  __ \  / __     __  /_  // /_          \n",
+"         _  __/   _  / _  / / /_/ /  _  / / / /_/ /     _  /_/__  __/          \n",
+"         /_/      /_/  /_/ /_//___/  /_/ /_/\____/      /_/_(_)/_/             \n",
+"-------------------------------------------------------------------------------\n",
+    "Loading  FinInG ", ~.Version, " (Finite Incidence Geometry) \n",
+    "by ", ~.Persons[1].FirstNames, " ", ~.Persons[1].LastName,
+        " (", ~.Persons[1].WWWHome, ")\n",
+    "   ", ~.Persons[2].FirstNames, " ", ~.Persons[2].LastName,
+        " (", ~.Persons[2].WWWHome, ")\n",
+    "   ", ~.Persons[3].FirstNames, " ", ~.Persons[3].LastName,
+        " (", ~.Persons[3].WWWHome, ")\n",
+    "   ", ~.Persons[4].FirstNames, " ", ~.Persons[4].LastName,
+        " (", ~.Persons[4].WWWHome, ")\n",
+    "   ", ~.Persons[5].FirstNames, " ", ~.Persons[5].LastName,
+        " (", ~.Persons[5].WWWHome, ")\n",
+    "   ", ~.Persons[6].FirstNames, " ", ~.Persons[6].LastName,
+        " (", ~.Persons[6].WWWHome, ")\n",
+    "For help, type: ?FinInG \n",
+    "---------------------------------------------------------------------\n" ),
+
+TestFile := "tst/testall.g",
+
+IssueTrackerURL := "https://github.com/gap-packages/FinInG/issues",
+SourceRepository := rec(
+    Type := "git",
+    URL := "https://github.com/gap-packages/FinInG",
+),
+
+Keywords := ["FinInG", "finite", "geometry"],
 
 ));
-
-
