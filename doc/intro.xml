@@ -62,9 +62,9 @@ If you are using BibTeX, you can use the following BibTeX entry for the current 
         Author = {Bamberg, John and Betten, Anton and Cara, Philippe and
             De Beule, Jan and Lavrauw, Michel and Neunh\"offer, Max },
         Key = {fining},
-        Title = {{FinInG -- Finite Incidence Geometry, Version 1.4.1}},
+        Title = {{FinInG -- Finite Incidence Geometry, Version &VERSION;}},
         Url = {\verb+(http://www.fining.org)+},
-        Year = 2018}
+        Year = &YEAR;}
 </Example>
 
 Here is the bibliography entry produced by BibTeX (in bibliography style `alpha'), to
@@ -75,7 +75,7 @@ be pasted directly inside the bibliography environment of your LaTeX document:
 J.~Bamberg, A.~Betten, {Ph}. Cara, J.~De~Beule, M.~Lavrauw, and
   M.~Neunh\"offer.
 \newblock {\em Finite Incidence Geometry}.
-\newblock FInInG -- a {GAP} package, version 1.4.1, 2018.
+\newblock FInInG -- a {GAP} package, version &VERSION;, &YEAR;.
 </Example>
 
 When linking to FinInG from a web page you can use the link

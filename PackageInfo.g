@@ -222,4 +222,15 @@ SourceRepository := rec(
 
 Keywords := ["FinInG", "finite", "geometry"],
 
+
+AutoDoc := rec(
+    entities := rec(
+        VERSION := ~.Version,
+        DATE := ~.Date,
+        YEAR := ~.Date{[7..10]},
+    ),
+    MainPage := false,
+    TitlePage := false,
+),
+
 ));
