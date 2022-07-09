@@ -1,0 +1,11 @@
+#!/bin/sh
+# This file is executed by the `release` script from
+# https://github.com/gap-system/ReleaseTools
+
+# Remove some files we don't want in the release archive
+rm -rf archive
+rm -rf make_filtergraph.g
+rm -rf make_inventory.g
+rm -rf old
+rm -rf paper
+rm -rf scripts
