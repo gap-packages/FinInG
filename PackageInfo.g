@@ -17,7 +17,22 @@ Version := "1.4.2dev",
 Date := "03/07/2020", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
-ArchiveURL := Concatenation("http://cage.ugent.be/fining/archive/fining-",~.Version),
+IssueTrackerURL := "https://github.com/gap-packages/FinInG/issues",
+SourceRepository := rec(
+    Type := "git",
+    URL := "https://github.com/gap-packages/FinInG",
+),
+
+# TODO: change PackageWWWHome back to http://www.fining.org
+# (or better, https://www.fining.org) once it has the new
+# version
+PackageWWWHome  := Concatenation( "https://gap-packages.github.io/", LowercaseString(~.PackageName) ),
+README_URL      := Concatenation( ~.PackageWWWHome, "/README.md" ),
+PackageInfoURL  := Concatenation( ~.PackageWWWHome, "/PackageInfo.g" ),
+ArchiveURL      := Concatenation( ~.SourceRepository.URL,
+                                 "/releases/download/v", ~.Version,
+                                 "/", LowercaseString(~.PackageName), "-", ~.Version ),
+
 ArchiveFormats := ".tar.gz .tar.bz2",
 
 Persons := [
@@ -144,16 +159,11 @@ Status := "accepted",
 CommunicatedBy := "Olexandr Konovalov (St Andrews)",
 AcceptDate := "11/2017",
 
-README_URL := "http://cage.ugent.be/fining/README.md",
-PackageInfoURL := "http://cage.ugent.be/fining/PackageInfo.g",
-
 AbstractHTML := "<span class=\"pkgname\">FinInG</span> is a package for computation\
  in Finite Incidence Geometry. It provides users with the basic tools to work in \
  various areas of finite geometry from the realms of projective spaces to the flat \
  lands of generalised polygons. The algebraic power of GAP is employed, particularly \
  in its facility with matrix and permutation groups.",
-
-PackageWWWHome := "http://www.fining.org",
 
 PackageDoc := rec(
   # use same as in GAP            
@@ -213,12 +223,6 @@ BannerString := Concatenation(
     "---------------------------------------------------------------------\n" ),
 
 TestFile := "tst/testall.g",
-
-IssueTrackerURL := "https://github.com/gap-packages/FinInG/issues",
-SourceRepository := rec(
-    Type := "git",
-    URL := "https://github.com/gap-packages/FinInG",
-),
 
 Keywords := ["FinInG", "finite", "geometry"],
 
