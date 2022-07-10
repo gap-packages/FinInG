@@ -9,8 +9,8 @@
 ##                                                           Max Neunhoeffer
 ##
 ##  Copyright 2017	Colorado State University, Fort Collins
-##					Sabancõ †niversitesi
-##					Universitˆ degli Studi di Padova
+##					SabancÄ± Ãœniversitesi
+##					UniversitÃ  degli Studi di Padova
 ##					Universeit Gent
 ##					University of St. Andrews
 ##					University of Western Australia, Perth
@@ -20,18 +20,6 @@
 ##  Reading the implementation part of the FinInG package.
 ##
 #############################################################################
-
-#if InstalledPackageVersion("forms") < "1.2" then
-#   ReadPackage("fining","lib/forms_ext.gi");
-#fi;
-#if InstalledPackageVersion("forms") < "1.2.2" then
-#   Forms_RESET := RESET;
-#fi;
-#if InstalledPackageVersion("forms") <= "1.2.2" then
-#   ReadPackage("fining","lib/forms_patch.gi");
-#fi;
-
-#ReadPackage("fining","lib/genss_patch.g"); became obsolete
 
 ReadPackage("fining","lib/geometry.gi");
 
