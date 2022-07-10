@@ -26,7 +26,7 @@ SourceRepository := rec(
 # TODO: change PackageWWWHome back to http://www.fining.org
 # (or better, https://www.fining.org) once it has the new
 # version
-PackageWWWHome  := Concatenation( "https://gap-packages.github.io/", LowercaseString(~.PackageName) ),
+PackageWWWHome  := "https://gap-packages.github.io/FinInG",
 README_URL      := Concatenation( ~.PackageWWWHome, "/README.md" ),
 PackageInfoURL  := Concatenation( ~.PackageWWWHome, "/PackageInfo.g" ),
 ArchiveURL      := Concatenation( ~.SourceRepository.URL,

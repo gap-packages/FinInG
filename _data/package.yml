@@ -53,9 +53,9 @@ needed-pkgs:
       version: ">=4.8.3"
       url: "https://gap-packages.github.io/orb"
 
-www: https://gap-packages.github.io/fining
+www: https://gap-packages.github.io/FinInG
 readme: README.md
-packageinfo: https://gap-packages.github.io/fining/PackageInfo.g
+packageinfo: https://gap-packages.github.io/FinInG/PackageInfo.g
 
 downloads:
     - name: .tar.gz
@@ -78,7 +78,7 @@ citeas: |
              Version 1.5</i>
      (<span class='BibYear'>2022</span>)<br />
     (<span class='BibNote'>Refereed GAP package</span>),
-    <span class='BibHowpublished'><a href="https://gap-packages.github.io/fining">https://gap-packages.github.io/fining</a></span>.
+    <span class='BibHowpublished'><a href="https://gap-packages.github.io/FinInG">https://gap-packages.github.io/FinInG</a></span>.
     </p>
     
 
@@ -90,9 +90,9 @@ bibtex: |
       month =            {Jul},
       year =             {2022},
       note =             {Refereed GAP package},
-      howpublished =     {\href          {https://gap-packages.github.io/fining}
+      howpublished =     {\href          {https://gap-packages.github.io/FinInG}
                           {\texttt{https://gap-packages.github.io/}\discretionary
-                          {}{}{}\texttt{fining}}},
+                          {}{}{}\texttt{FinInG}}},
       keywords =         {FinInG; finite; geometry},
       printedkey =       {BBCBLNH22}
     }
