@@ -33,61 +33,24 @@ fining.xml		FinInG package documentation
 <TitlePage>
     <Title>GAP 4 Package <Package>FinInG</Package></Title>
     <Subtitle>Finite Incidence Geometry</Subtitle>
-    <Version>
-      &VERSION;
-    </Version>
-<Date>&DATE;</Date>
-	<Author>John Bamberg, Anton Betten, Philippe Cara, Jan De Beule, Michel Lavrauw, Max Neunhoeffer.
-    <Email>support@fining.org</Email>
-    <Homepage>http://www.fining.org</Homepage>
-	</Author>
-    
-    
-<!--
+    <Version>&VERSION;</Version>
+    <Date>&DATE;</Date>
     <Author>John Bamberg
-<Address>
-Ghent University, Belgium.
-</Address>
-    <Email>john.bamberg@uwa.edu.au</Email>
-    <Homepage>http://school.maths.uwa.edu.au/&tilde;bamberg/</Homepage>
-</Author>
+    </Author>
     <Author>Anton Betten
-<Address>
-Colorado State University, USA.
-</Address>
-    <Email>betten@math.colostate.edu</Email>
-    <Homepage>http://www.math.colostate.edu/&tilde;betten/</Homepage>
     </Author>
     <Author>Jan De Beule
-<Address>
-Vrije Universiteit Brussel, Belgium
-</Address>
-    <Email>jan@debeule.eu</Email>
-    <Homepage>http://www.debeule.eu</Homepage>
     </Author>
-
- <Author>Philippe Cara
-<Address>
-Vrije Universiteit Brussel, Belgium
-</Address>
-    <Email>pcara@vub.ac.be</Email>
-    <Homepage>http://homepages.vub.ac.be/&tilde;pcara</Homepage>
+    <Author>Philippe Cara
     </Author>
-<Author>Michel Lavrauw
-<Address>
-Ghent University, Belgium
-</Address>
-    <Email>ml@cage.ugent.be</Email>
-    <Homepage>http://cage.ugent.be/&tilde;ml</Homepage>
+    <Author>Michel Lavrauw
     </Author>
-    <Author>Max Neunhoeffer
-<Address>
-St Andrews, United Kingdom.
-</Address>
-    <Email>max.neunhoeffer@math.rwth-aachen.de</Email>
-    <Homepage>http://www.math.rwth-aachen.de/&tilde;Max.Neunhoeffer</Homepage>
+    <Author>Max Neunhöffer
     </Author>
--->    
+    <Author>
+    <Email>support@fining.org</Email>
+    <Homepage>http://www.fining.org</Homepage>
+    </Author>
 
 <Copyright>
   &copyright; 2014-2022 by the authors<P/>

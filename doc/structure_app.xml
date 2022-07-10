@@ -61,6 +61,7 @@ in both <E>component1.gd</E> and <E>component2.gd</E>.
 </Subsection>
 
 </Section>
+<!-- 
 <Section>
 <Heading>The filter graph(s)</Heading>
 
@@ -68,4 +69,5 @@ in both <E>component1.gd</E> and <E>component2.gd</E>.
 <Alt Only="LaTeX">\includegraphics[width=18cm]{./graphics/filtergraph.png}</Alt><P/>
 
 </Section>
+ -->
 </Appendix>

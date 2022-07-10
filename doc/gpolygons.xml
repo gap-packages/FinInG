@@ -881,7 +881,7 @@ A&lt;sub>i&lt;/sub>&lt;sup>T&lt;/sup></Alt>. Now define the following subgroups 
 <Alt Not="HTML"><M>A(i) = \{(\alpha,\alpha A_t,\alpha K_t): \alpha \in GF(q)^2, i=1\ldots q\}</M></Alt>
 <Alt Only="HTML MathJax"><M>A(i) = \{(\alpha,\alpha A_t,\alpha K_t): \alpha \in GF(q)^2, i=1\ldots q\}</M></Alt>
 <Alt Only="HTML noMathJax">A(i)= {(&#945;,&#945;A&lt;sub>i&lt;/sub>,&#945;K&lt;sub>i&lt;/sub>): &#945; &#8712; GF(q)&lt;sup>2&lt;/sup>, i=1..q }</Alt> and
-<Alt Only="HTML MathJax"><M>A(\infty) = \{(0,0,\gamma): \gamma \in GF(q)^2\}</M></Alt><Alt Not="HTML"><M>A(\infty) = \(0,0,\gamma): \gamma \in GF(q)^2\}</M></Alt>
+<Alt Only="HTML MathJax"><M>A(\infty) = \{(0,0,\gamma): \gamma \in GF(q)^2\}</M></Alt><Alt Not="HTML"><M>A(\infty) = (0,0,\gamma): \gamma \in GF(q)^2\}</M></Alt>
 <Alt Only="HTML noMathJax">A(&#8734;)= {(0,0,&#947;) &#947; &#8712; GF(q)&lt;sup>2&lt;/sup> }</Alt>, and<P/>
 <Alt Only="HTML MathJax"><M>A^*(i) = \{(\alpha,b,\alpha K_t): \alpha \in GF(q)^2, b \in GF(q), i=1\ldots q\}</M></Alt>
 <Alt Not="HTML"><M>A^*(i) = \{(\alpha,\b,\alpha K_t): \alpha \in GF(q)^2, b \in GF(q), i=1\ldots q\}</M></Alt>
