@@ -1,0 +1,74 @@
+Properties
+
+geometry.gd: properties
+
+P: IsConfiguration: IsIncidenceStructure
+P: IsConstellation: IsIncidenceStructure
+
+liegeometry.gd: properties
+
+
+group.gd: properties
+
+P: IsProjectivity: IsProjGrpEl
+P: IsProjectivity: IsProjGrpElWithFrob
+P: IsStrictlySemilinear: IsProjGrpEl
+P: IsStrictlySemilinear: IsProjGrpElWithFrob
+P: IsCollineation: IsProjGrpEl
+P: IsCollineation: IsProjGrpElWithFrob
+P: IsProjectivityGroup: IsProjectiveGroupWithFrob
+P: IsCollineationGroup: IsProjectiveGroupWithFrob
+P: CanComputeActionOnPoints: IsProjectiveGroupWithFrob
+
+projectivespace.gd: properties
+
+
+correlations.gd: properties
+
+P: IsCorrelation: IsProjGrpElWithFrobWithPSIsom
+P: IsCorrelation: IsProjGrpElWithFrob
+P: IsCorrelation: IsProjGrpEl
+P: CanComputeActionOnPoints: IsProjGroupWithFrobWithPSIsom
+P: IsProjectivity: IsProjGrpElWithFrobWithPSIsom
+P: IsStrictlySemilinear: IsProjGrpElWithFrobWithPSIsom
+P: IsCollineation: IsProjGrpElWithFrobWithPSIsom
+P: IsProjectivityGroup: IsProjGroupWithFrobWithPSIsom
+P: IsCollineationGroup: IsProjGroupWithFrobWithPSIsom
+P: IsHermitianPolarityOfProjectiveSpace: IsPolarityOfProjectiveSpace
+P: IsSymplecticPolarityOfProjectiveSpace: IsPolarityOfProjectiveSpace
+P: IsOrthogonalPolarityOfProjectiveSpace: IsPolarityOfProjectiveSpace
+P: IsPseudoPolarityOfProjectiveSpace: IsPolarityOfProjectiveSpace
+
+polarspace.gd: properties
+
+P: IsEllipticQuadric: IsClassicalPolarSpace
+P: IsSymplecticSpace: IsClassicalPolarSpace
+P: IsParabolicQuadric: IsClassicalPolarSpace
+P: IsHyperbolicQuadric: IsClassicalPolarSpace
+P: IsHermitianPolarSpace: IsClassicalPolarSpace
+P: IsStandardPolarSpace: IsClassicalPolarSpace
+
+morphisms.gd: properties
+
+
+enumerators.gd: properties
+
+
+diagram.gd: properties
+
+
+varieties.gd: properties
+
+P: IsStandardHermitianVariety: IsHermitianVariety
+P: IsStandardQuadraticVariety: IsQuadraticVariety
+
+affinespace.gd: properties
+
+
+affinegroup.gd: properties
+
+
+gpolygons.gd: properties
+
+P: HasGraphWithUnderlyingObjectsAsVertices: IsGeneralisedPolygon
+

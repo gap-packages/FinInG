@@ -1,0 +1,1532 @@
+  
+  [1X7 [33X[0;0YFinite Classical Polar Spaces[133X[101X
+  
+  [33X[0;0YIn  this chapter we describe how to use [5XFinInG[105X to work with finite classical
+  polar spaces.[133X
+  
+  
+  [1X7.1 [33X[0;0YFinite Classical Polar Spaces[133X[101X
+  
+  [33X[0;0YA  [13Xpolar  space[113X  is  a  point-line incidence geometry, satisfying the famous
+  one-or-all  axiom,  i.e.  for  any point [22XP[122X, not incident with a line [22Xl[122X, [22XP[122X is
+  collinear with exactly one point of [22Xl[122X or with all points of [22Xl[122X. The axiomatic
+  treatment  of  polar  spaces  has  its  foundations in [Vel59], [Tit74], and
+  [BS74],  the latter in which the one-or-all axiom is described. Polar spaces
+  are axiomatically, point-line geometries, but may contain higher dimensional
+  projective  subspaces  too.  All  maximal subspaces have the same projective
+  dimension, and this determines the rank of the polar space.[133X
+  
+  [33X[0;0YWell  known  examples  of [13Xfinite[113X polar spaces are the geometries attached to
+  sesquilinear and quadratic forms of vector spaces over a finite field, these
+  geometries  are  called  the  [13Xfinite  classical  polar  spaces[113X.  For a given
+  sesquilinear, respectively quadratic, form [22Xf[122X, the elements of the associated
+  geometry are the totally isotropic, respectively totally singular, subspaces
+  of the vectors space with relation to the form [22Xf[122X. The treatment of the forms
+  is done through the package [5XForms[105X.[133X
+  
+  [33X[0;0YFrom  the  axiomatic  point of view, a polar space is a point-line geometry,
+  and  has rank at least 2. Considering a sesquilinear or quadratic form [22Xf[122X, of
+  Witt  index  1,  the associated geometry consists only of projective points,
+  and  is  then  in the axiomatic treatment, not a polar space. However, as is
+  the  case  for  projective  spaces, we will consider the rank one geometries
+  associated  to  forms of Witt index 1 as examples of classical polar spaces.
+  Even  the  elliptic quadric on the projective line, a [13Xgeometry[113X associated to
+  an  elliptic  quadratic form on a two dimensional vector space over a finite
+  field,  is  considered as a classical polar space, though it has no singular
+  subspaces.  The  reason for this treatment is that most, if not all, methods
+  for  operations  applicable  on these geometries, rely on the same algebraic
+  methodology.  So,  in [5XFinInG[105X, a classical polar space (sometimes abbreviated
+  to polar space), is the geometry associated with a sesquilinear or quadratic
+  form on a finite dimensional vector space over a finite field.[133X
+  
+  [1X7.1-1 IsClassicalPolarSpace[101X
+  
+  [33X[1;0Y[29X[2XIsClassicalPolarSpace[102X [32X Category[133X
+  
+  [33X[0;0YThis  category  is  a  subcategory  of  [10XIsLieGeometry[110X,  and contains all the
+  geometries associated to a non-degenerate sesquilinear or quadratic form.[133X
+  
+  [33X[0;0YThe  underlying  vector  space  and matrix group are to our advantage in the
+  treatment  of  classical  polar  spaces.  We  refer the reader to [HT91] and
+  [Cam00b]  for  the  necessary  background  theory  (if  it  is not otherwise
+  provided), and we follow the approach of [Cam00b] to introduce all different
+  flavours.[133X
+  
+  [33X[0;0YConsider the projective space [22XPG(n,q)[122X with underlying vector space [22XV(n+1,q)[122X.
+  Consider  a  non-degenerate  sesquilinear  form  [22Xf[122X.  Then  [22Xf[122X  is  Hermitian,
+  alternating  or  symmetric.  When  the  characteristic  of the field is odd,
+  respectively   even,   a  symmetric  bilinear  form  is  called  orthogonal,
+  respectively, pseudo. We do not consider the pseudo case, so we suppose that
+  [22Xf[122X  is  Hermitian,  symplectic  or  orthogonal.  The  classical  polar  space
+  associated  with  [22Xf[122X  is  the  incidence  geometry  whose elements are of the
+  subspaces  of  [22XPG(n,q)[122X whose underlying vector subspace is totally isotropic
+  with  relation  to  [22Xf[122X.  We  call  a  polar  space  [13XHermitian[113X,  respectively,
+  [13Xsymplectic[113X,  [13Xorthogonal[113X,  if  the underlying sesquilinear form is Hermitian,
+  respectively, symplectic, orthogonal.[133X
+  
+  [33X[0;0YSymmetric  bilinear  forms have completely different geometric properties in
+  even  characteristic  than  in  odd characteristic. On the other hand, polar
+  spaces   geometrically   comparable   to  orthogonal  polar  spaces  in  odd
+  characteristic, do exist in even characteristic. The algebraic background is
+  now  established  by  quadratic  forms on a vector space instead of bilinear
+  forms.  Consider a non-singular quadratic form [22Xq[122X on a vector space [22XV(n+1,q)[122X.
+  The  classical polar space associated with [22Xf[122X is the incidence geometry whose
+  elements  are  the  subspaces of [22XPG(n,q)[122X whose underlying vector subspace is
+  totally  singular  with  relation to [22Xq[122X. The connection with orthogonal polar
+  spaces  in  odd  characteristic  is  clear,  since  in  odd  characteristic,
+  quadratic  forms  and symmetric bilinear forms are equivalent. Therefore, we
+  call  polar  spaces with an underlying quadratic form in even characteristic
+  also [13Xorthogonal[113X polar spaces.[133X
+  
+  [1X7.1-2 PolarSpace[101X
+  
+  [33X[1;0Y[29X[2XPolarSpace[102X( [3Xform[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XPolarSpace[102X( [3Xpol[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya classical polar space[133X
+  
+  [33X[0;0Y[3Xform[103X  must  be  a  sesquilinear  or quadratic form created by use of the GAP
+  package [5XForms[105X. In the second variant, the argument [3Xpol[103X must be a polarity of
+  a  projective  space.  An error message will be displayed if [3Xpol[103X is a pseudo
+  polarity.  We  refer  to  Chapter  [14X6[114X  for  more information on polarities of
+  projective  spaces,  and more particularly to Section [14X6.3[114X for the connection
+  between polarities and forms.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat := [[0,0,0,1],[0,0,-2,0],[0,2,0,0],[-1,0,0,0]]*Z(5)^0;[127X[104X
+    [4X[28X[ [ 0*Z(5), 0*Z(5), 0*Z(5), Z(5)^0 ], [ 0*Z(5), 0*Z(5), Z(5)^3, 0*Z(5) ], [128X[104X
+    [4X[28X  [ 0*Z(5), Z(5), 0*Z(5), 0*Z(5) ], [ Z(5)^2, 0*Z(5), 0*Z(5), 0*Z(5) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xform := BilinearFormByMatrix(mat,GF(25));[127X[104X
+    [4X[28X< bilinear form >[128X[104X
+    [4X[25Xgap>[125X [27Xps := PolarSpace(form);[127X[104X
+    [4X[28X<polar space in ProjectiveSpace([128X[104X
+    [4X[28X3,GF(5^2)): x1*y4+Z(5)^3*x2*y3+Z(5)*x3*y2-x4*y1=0 >[128X[104X
+    [4X[25Xgap>[125X [27Xr := PolynomialRing(GF(32),4);[127X[104X
+    [4X[28XGF(2^5)[x_1,x_2,x_3,x_4][128X[104X
+    [4X[25Xgap>[125X [27Xpoly := r.3*r.2+r.1*r.4;[127X[104X
+    [4X[28Xx_1*x_4+x_2*x_3[128X[104X
+    [4X[25Xgap>[125X [27Xform := QuadraticFormByPolynomial(poly,r);[127X[104X
+    [4X[28X< quadratic form >[128X[104X
+    [4X[25Xgap>[125X [27Xps := PolarSpace(form);[127X[104X
+    [4X[28X<polar space in ProjectiveSpace(3,GF(2^5)): x_1*x_4+x_2*x_3=0 >[128X[104X
+    [4X[25Xgap>[125X [27Xmat := IdentityMat(5,GF(7));[127X[104X
+    [4X[28X[ [ Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7) ], [128X[104X
+    [4X[28X  [ 0*Z(7), Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7) ], [128X[104X
+    [4X[28X  [ 0*Z(7), 0*Z(7), Z(7)^0, 0*Z(7), 0*Z(7) ], [128X[104X
+    [4X[28X  [ 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^0, 0*Z(7) ], [128X[104X
+    [4X[28X  [ 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^0 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xphi := PolarityOfProjectiveSpace(mat,GF(7));[127X[104X
+    [4X[28X<polarity of PG(4, GF(7)) >[128X[104X
+    [4X[25Xgap>[125X [27Xps := PolarSpace(phi);[127X[104X
+    [4X[28X<polar space in ProjectiveSpace(4,GF(7)): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2=0 >[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0Y[5XFinInG[105X  relies  on  the package [5XForms[105X for its facility with sesquilinear and
+  quadratic forms. One can specify a polar space with a user-defined form, and
+  we  refer  to  the  documentation  for  [5XForms[105X for information on how one can
+  create and use forms. Here we just display a worked example.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xid := IdentityMat(7, GF(3));;[127X[104X
+    [4X[25Xgap>[125X [27Xform := QuadraticFormByMatrix(id, GF(3));[127X[104X
+    [4X[28X< quadratic form >[128X[104X
+    [4X[25Xgap>[125X [27Xps := PolarSpace( form );[127X[104X
+    [4X[28X<polar space in ProjectiveSpace([128X[104X
+    [4X[28X6,GF(3)): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2+x_7^2=0 >[128X[104X
+    [4X[25Xgap>[125X [27Xpsl32 := PSL(3,2);[127X[104X
+    [4X[28XGroup([ (4,6)(5,7), (1,2,4)(3,6,5) ])[128X[104X
+    [4X[25Xgap>[125X [27Xreps:=[[1,1,1,0,0,0,0], [-1,1,1,0,0,0,0], [1,-1,1,0,0,0,0], [1,1,-1,0,0,0,0]]*Z(3)^0;;[127X[104X
+    [4X[25Xgap>[125X [27Xovoid := Union( List(reps, x-> Orbit(psl32, x, Permuted)) );;[127X[104X
+    [4X[25Xgap>[125X [27Xovoid := List(ovoid, x -> VectorSpaceToElement(ps, x));;[127X[104X
+    [4X[25Xgap>[125X [27Xplanes := AsList( Planes( ps ) );;[127X[104X
+    [4X[28X#I  Computing collineation group of canonical polar space...[128X[104X
+    [4X[25Xgap>[125X [27XForAll(planes, p -> Number(ovoid, x -> x in p) = 1);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  
+  [1X7.2 [33X[0;0YCanonical and standard Polar Spaces[133X[101X
+  
+  [33X[0;0YTo  introduce  the classification of polar spaces, we use the classification
+  of the underlying forms in similarity classes. We follow mostly the approach
+  and terminology of [KL90], as we did in the manual of the package [5XForms[105X.[133X
+  
+  [33X[0;0YConsider  a vector space [22XV=V(n+1,q)[122X and a sesquilinear form [22Xf[122X on [22XV[122X. The pair
+  [22X(V,f)[122X  is  called  a  formed space. Consider now two formed spaces [22X(V,f)[122X and
+  [22X(V,f')[122X,  where  [22Xf[122X  and  [22Xf'[122X  are  two sesquilinear forms on [22XV[122X. A non-singular
+  linear map [22Xϕ[122X from [22XV[122X to itself induces a [13Xsimilarity[113X of the formed space [22X(V,f)[122X
+  to the formed space [22X(V,f')[122X if and only if[133X
+  
+  [33X[0;0Y[22Xf(v,w) = λ f'(ϕ(v),ϕ(w)),[122X[133X
+  
+  [33X[0;0Yfor all vectors [22Xv,w[122X and some non-zero [22Xλ ∈ GF(q)[122X . Up to similarity, there is
+  only  one  class  of  non-degenerate  Hermitian  forms,  and  one  class  of
+  non-degenerate  symplectic  forms  on  a given vector space [22XV[122X. For symmetric
+  bilinear  forms  in  odd  characteristic,  the  number of similarity classes
+  depends  on  the  dimension  of  [22XV[122X.  In  odd  dimension,  there  is only one
+  similarity  class,  and  non-degenerate  forms  in  this  class  are  called
+  parabolic  (bilinear)  forms.  In  even  dimension, there are two similarity
+  classes,  and  non-degenerate  forms are either elliptic (bilinear) forms or
+  hyperbolic (bilinear) forms.[133X
+  
+  [33X[0;0YConsider now a vector space [22XV[122X and a quadratic form [22Xq[122X on [22XV[122X. The pair [22X(V,q)[122X is
+  called  a  formed  space.  Consider  now two formed spaces [22X(V,q)[122X and [22X(V,q')[122X,
+  where  [22Xq[122X  and [22Xq'[122X are two quadratic forms on [22XV[122X. A non-degenerate linear map [22Xϕ[122X
+  from  [22XV[122X  to  itself  induces  a  [13Xsimilarity[113X of the formed space [22X(V,q)[122X to the
+  formed space [22X(V,q')[122X if and only if[133X
+  
+  [33X[0;0Y[22Xq(v) = λ q'(ϕ(v)))[122X,[133X
+  
+  [33X[0;0Yfor  all vectors [22Xv[122X and some non-zero [22Xλ ∈ GF(q)[122X . For quadratic forms in even
+  characteristic, the number of similarity classes depends on the dimension of
+  [22XV[122X.  In odd dimension, there is only one similarity class, and non-degenerate
+  forms  in  this  class  are  called  parabolic  (bilinear)  forms.  In  even
+  dimension,  there  are  two similarity classes, and non-degenerate forms are
+  either elliptic (bilinear) forms or hyperbolic (bilinear) forms.[133X
+  
+  [33X[0;0YIf [22Xϕ[122X induces a similarity of a formed vector space such that [22Xλ = 1[122X, then the
+  similarity  is  called an [13Xisometry[113X of the formed vector space. In almost all
+  cases,  each  similarity class contains exactly one isometry class. Only the
+  orthogonal  sesquilinear  forms  (in  odd  characteristic) have two isometry
+  classes.  Consequently,  if an isometry exists between formed vector spaces,
+  they  are  called  [13Xisometric[113X.  Projectively, a formed vector space becomes a
+  classical  polar  space  embedded in a projective space. Obviously, forms in
+  the  same similarity class determine exactly the same classical polar space.
+  Conversely,  it is well known that a classical polar space determines a form
+  up  to a constant factor, i.e. it determines a similarity class of forms. In
+  [5XFinInG[105X,  the  word  [13Xcanonical[113X  is  used  in  the  mathematical sense, i.e. a
+  classical  polar  space  is  [13Xcanonical[113X  if its determining form belongs to a
+  fixed  similarity  class.  A classical polar space is called [13Xstandard[113X if its
+  determining  form  is  the  fixed representative of the canonical similarity
+  class.  Hence  a  [13Xstandard[113X  classical  polar  space  is  always  a [13Xcanonical[113X
+  classical  polar  space, a canonical polar space is determined by a standard
+  form up to a constant factor. In the following table, we summerise the above
+  information  on  polar  spaces,  together  with  the standard forms that are
+  chosen  in  [5XFinInG[105X. Note that Tr refers to the absolute trace map from [22XGF(q)[122X
+  to [22XGF(p)[122X.[133X
+  
+      ┌───────────────────────┬──────────────────────────────────────────────────────────────────────────┬─────────────────────┬──────────────────────┐
+      │ polar space           │ standard form                                                            │ characteristic [22Xp[122X    │ projective dimension │ 
+      ├───────────────────────┼──────────────────────────────────────────────────────────────────────────┼─────────────────────┼──────────────────────┤
+      │ hermitian polar space │ [22XX_0^q+1 + X_1^q+1 + ... + X_n^q+1[122X                                        │ odd or even         │ odd or even          │ 
+      │ symplectic space      │ [22XX_0 Y_1 - Y_0X_1+ ... + X_n-1Y_n - Y_n-1X_n[122X                              │ odd or even         │ odd                  │ 
+      │ hyperbolic quadric    │ [22XX_0 X_1 + ... + X_n-1X_n[122X                                                 │ [22Xp ≡ 3 mod 4[122X or [22Xp=2[122X  │ odd                  │ 
+      │ hyperbolic quadric    │ [22X2(X_0 X_1 + ... + X_n-1X_n)[122X                                              │ [22Xp ≡ 1 mod 4[122X         │ odd                  │ 
+      │ parabolic quadric     │ [22XX_0^2 + X_1X_2 + ... + X_n-1X_n[122X                                          │ [22Xp ≡ 1,3 mod 8[122Xor [22Xp=2[122X │ even                 │ 
+      │ parabolic quadric     │ [22Xt(X_0^2 + X_1X_2 + ... + X_n-1X_n)[122X, t a primitve element of GF(p)        │ [22Xp ≡ 5,7 mod 8[122X       │ even                 │ 
+      │ elliptic quadric      │ [22XX_0^2 + X_1^2 + X_2X_3 + ... + X_n-1X_n[122X                                  │ [22Xp ≡ 3 mod 4[122X         │ odd                  │ 
+      │ elliptic quadric      │ [22XX_0^2 + tX_1^2 + X_2X_3 + ... + X_n-1X_n[122X, [22Xt[122X a primitive element of [22XGF(p)[122X │ [22Xp ≡ 1 mod 4[122X         │ odd                  │ 
+      │ elliptic quadric      │ [22XX_0^2 + X_0X_1 + dX_1^2 + X_2X_3 + ... + X_n-1X_n[122X, [22XTr(d)=1[122X               │ even                │ odd                  │ 
+      └───────────────────────┴──────────────────────────────────────────────────────────────────────────┴─────────────────────┴──────────────────────┘
+  
+       [1XTable:[101X finite classical polar spaces
+  
+  
+  [33X[0;0YWe refer to Appendix [14XB[114X for information on the operations that construct gram
+  matrices that are used to obtain the above standard forms.[133X
+  
+  [33X[0;0YThe  [5XFinInG[105X  provides  a wealth of flexibility in constructing polar spaces.
+  The  user  may  choose  a particular quadratic or sesquilinear form, but may
+  also  chose  to construct polars spaces that have one of the above mentioned
+  forms  as underlying form. Furthermore, [5XFinInG[105X will detect when necessary if
+  the user-constructed polar space is canonical. This mechanism gives the user
+  complete  flexibility  while  avoiding  unnecessary  computations  when, for
+  example, constructing the collineation group of a user-defined polar space.[133X
+  
+  [33X[0;0YThe  following  five operations always return polar spaces induced by one of
+  the above standard forms.[133X
+  
+  [1X7.2-1 SymplecticSpace[101X
+  
+  [33X[1;0Y[29X[2XSymplecticSpace[102X( [3Xd[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XSymplecticSpace[102X( [3Xd[103X, [3Xq[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya symplectic polar space[133X
+  
+  [33X[0;0YThis function returns the symplectic polar space of dimension [3Xd[103X over [3XF[103X for a
+  field [3XF[103X or over GF([3Xq[103X) for a prime power [3Xq[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := SymplecticSpace(3,4);[127X[104X
+    [4X[28XW(3, 4)[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(ps);[127X[104X
+    [4X[28XW(3, 4)[128X[104X
+    [4X[28XSymplectic form[128X[104X
+    [4X[28XGram Matrix:[128X[104X
+    [4X[28X . 1 . .[128X[104X
+    [4X[28X 1 . . .[128X[104X
+    [4X[28X . . . 1[128X[104X
+    [4X[28X . . 1 .[128X[104X
+    [4X[28XWitt Index: 2[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X7.2-2 HermitianPolarSpace[101X
+  
+  [33X[1;0Y[29X[2XHermitianPolarSpace[102X( [3Xd[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XHermitianPolarSpace[102X( [3Xd[103X, [3Xq[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya Hermitian polar space[133X
+  
+  [33X[0;0YThis  function returns the Hermitian polar space of dimension [3Xd[103X over [3XF[103X for a
+  field [3XF[103X or over GF([3Xq[103X) for a prime power [3Xq[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := HermitianPolarSpace(2,25);[127X[104X
+    [4X[28XH(2, 5^2)[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(ps);[127X[104X
+    [4X[28XH(2, 25)[128X[104X
+    [4X[28XHermitian form[128X[104X
+    [4X[28XGram Matrix:[128X[104X
+    [4X[28X 1 . .[128X[104X
+    [4X[28X . 1 .[128X[104X
+    [4X[28X . . 1[128X[104X
+    [4X[28XPolynomial: [ [  x_1^6+x_2^6+x_3^6 ] ][128X[104X
+    [4X[28XWitt Index: 1[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X7.2-3 ParabolicQuadric[101X
+  
+  [33X[1;0Y[29X[2XParabolicQuadric[102X( [3Xd[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XParabolicQuadric[102X( [3Xd[103X, [3Xq[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya parabolic quadric[133X
+  
+  [33X[0;0Y[3Xd[103X  must  be  an  even  positive integer. This function returns the parabolic
+  quadric  of dimension [3Xd[103X over [3XF[103X for a field [3XF[103X or over GF([3Xq[103X) for a prime power
+  [3Xq[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := ParabolicQuadric(2,9);[127X[104X
+    [4X[28XQ(2, 9)[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(ps);[127X[104X
+    [4X[28XQ(2, 9)[128X[104X
+    [4X[28XParabolic bilinear form[128X[104X
+    [4X[28XGram Matrix:[128X[104X
+    [4X[28X 1 . .[128X[104X
+    [4X[28X . . 2[128X[104X
+    [4X[28X . 2 .[128X[104X
+    [4X[28XPolynomial: [ [  x_1^2+x_2*x_3 ] ][128X[104X
+    [4X[28XWitt Index: 1[128X[104X
+    [4X[25Xgap>[125X [27Xps := ParabolicQuadric(4,16);[127X[104X
+    [4X[28XQ(4, 16)[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(ps);[127X[104X
+    [4X[28XQ(4, 16)[128X[104X
+    [4X[28XParabolic quadratic form[128X[104X
+    [4X[28XGram Matrix:[128X[104X
+    [4X[28X 1 . . . .[128X[104X
+    [4X[28X . . 1 . .[128X[104X
+    [4X[28X . . . . .[128X[104X
+    [4X[28X . . . . 1[128X[104X
+    [4X[28X . . . . .[128X[104X
+    [4X[28XPolynomial: [ [  x_1^2+x_2*x_3+x_4*x_5 ] ][128X[104X
+    [4X[28XWitt Index: 2[128X[104X
+    [4X[28XBilinear form[128X[104X
+    [4X[28XGram Matrix:[128X[104X
+    [4X[28X . . . . .[128X[104X
+    [4X[28X . . 1 . .[128X[104X
+    [4X[28X . 1 . . .[128X[104X
+    [4X[28X . . . . 1[128X[104X
+    [4X[28X . . . 1 .[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X7.2-4 HyperbolicQuadric[101X
+  
+  [33X[1;0Y[29X[2XHyperbolicQuadric[102X( [3Xd[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XHyperbolicQuadric[102X( [3Xd[103X, [3Xq[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya hyperbolic quadric[133X
+  
+  [33X[0;0Y[3Xd[103X  must  be  an  odd  positive integer. This function returns the hyperbolic
+  quadric  of dimension [3Xd[103X over [3XF[103X for a field [3XF[103X or over GF([3Xq[103X) for a prime power
+  [3Xq[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := HyperbolicQuadric(5,3);[127X[104X
+    [4X[28XQ+(5, 3)[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(ps);[127X[104X
+    [4X[28XQ+(5, 3)[128X[104X
+    [4X[28XHyperbolic bilinear form[128X[104X
+    [4X[28XGram Matrix:[128X[104X
+    [4X[28X . 2 . . . .[128X[104X
+    [4X[28X 2 . . . . .[128X[104X
+    [4X[28X . . . 2 . .[128X[104X
+    [4X[28X . . 2 . . .[128X[104X
+    [4X[28X . . . . . 2[128X[104X
+    [4X[28X . . . . 2 .[128X[104X
+    [4X[28XPolynomial: [ [  x_1*x_2+x_3*x_4+x_5*x_6 ] ][128X[104X
+    [4X[28XWitt Index: 3[128X[104X
+    [4X[25Xgap>[125X [27Xps := HyperbolicQuadric(3,4);[127X[104X
+    [4X[28XQ+(3, 4)[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(ps);[127X[104X
+    [4X[28XQ+(3, 4)[128X[104X
+    [4X[28XHyperbolic quadratic form[128X[104X
+    [4X[28XGram Matrix:[128X[104X
+    [4X[28X . 1 . .[128X[104X
+    [4X[28X . . . .[128X[104X
+    [4X[28X . . . 1[128X[104X
+    [4X[28X . . . .[128X[104X
+    [4X[28XPolynomial: [ [  x_1*x_2+x_3*x_4 ] ][128X[104X
+    [4X[28XWitt Index: 2[128X[104X
+    [4X[28XBilinear form[128X[104X
+    [4X[28XGram Matrix:[128X[104X
+    [4X[28X . 1 . .[128X[104X
+    [4X[28X 1 . . .[128X[104X
+    [4X[28X . . . 1[128X[104X
+    [4X[28X . . 1 .[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X7.2-5 EllipticQuadric[101X
+  
+  [33X[1;0Y[29X[2XEllipticQuadric[102X( [3Xd[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XEllipticQuadric[102X( [3Xd[103X, [3Xq[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan elliptic quadric[133X
+  
+  [33X[0;0Y[3Xd[103X  must  be  an  odd  positive  integer.  This function returns the elliptic
+  quadric  of dimension [3Xd[103X over [3XF[103X for a field [3XF[103X or over GF([3Xq[103X) for a prime power
+  [3Xq[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := EllipticQuadric(3,27);[127X[104X
+    [4X[28XQ-(3, 27)[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(ps);[127X[104X
+    [4X[28XQ-(3, 27)[128X[104X
+    [4X[28XElliptic bilinear form[128X[104X
+    [4X[28XGram Matrix:[128X[104X
+    [4X[28X 1 . . .[128X[104X
+    [4X[28X . 1 . .[128X[104X
+    [4X[28X . . . 2[128X[104X
+    [4X[28X . . 2 .[128X[104X
+    [4X[28XPolynomial: [ [  x_1^2+x_2^2+x_3*x_4 ] ][128X[104X
+    [4X[28XWitt Index: 1[128X[104X
+    [4X[25Xgap>[125X [27Xps := EllipticQuadric(5,8);[127X[104X
+    [4X[28XQ-(5, 8)[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(ps);[127X[104X
+    [4X[28XQ-(5, 8)[128X[104X
+    [4X[28XElliptic quadratic form[128X[104X
+    [4X[28XGram Matrix:[128X[104X
+    [4X[28X 1 1 . . . .[128X[104X
+    [4X[28X . 1 . . . .[128X[104X
+    [4X[28X . . . 1 . .[128X[104X
+    [4X[28X . . . . . .[128X[104X
+    [4X[28X . . . . . 1[128X[104X
+    [4X[28X . . . . . .[128X[104X
+    [4X[28XPolynomial: [ [  x_1^2+x_1*x_2+x_2^2+x_3*x_4+x_5*x_6 ] ][128X[104X
+    [4X[28XWitt Index: 2[128X[104X
+    [4X[28XBilinear form[128X[104X
+    [4X[28XGram Matrix:[128X[104X
+    [4X[28X . 1 . . . .[128X[104X
+    [4X[28X 1 . . . . .[128X[104X
+    [4X[28X . . . 1 . .[128X[104X
+    [4X[28X . . 1 . . .[128X[104X
+    [4X[28X . . . . . 1[128X[104X
+    [4X[28X . . . . 1 .[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  following  operations  are  applicable  on any classical polar space in
+  [5XFinInG[105X.[133X
+  
+  [1X7.2-6 IsCanonicalPolarSpace[101X
+  
+  [33X[1;0Y[29X[2XIsCanonicalPolarSpace[102X( [3Xps[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ytrue or false[133X
+  
+  [33X[0;0YThis  attribute returns true when a polar space with a particular underlying
+  form  is  canonical.  The  execution  of  this  attribute  on a general user
+  constructed  polar  space  needs to check the type of [3Xps[103X. The obtained extra
+  information  is stored automatically as attribute for [3Xps[103X, as can be noted by
+  the different printing of [3Xps[103X before and after execution.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat := [[0,1,0,0],[0,0,0,0],[0,0,0,1],[0,0,0,0]]*Z(5)^0;[127X[104X
+    [4X[28X[ [ 0*Z(5), Z(5)^0, 0*Z(5), 0*Z(5) ], [ 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5) ], [128X[104X
+    [4X[28X  [ 0*Z(5), 0*Z(5), 0*Z(5), Z(5)^0 ], [ 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xform := QuadraticFormByMatrix(mat,GF(5));[127X[104X
+    [4X[28X< quadratic form >[128X[104X
+    [4X[25Xgap>[125X [27Xps := PolarSpace(form);[127X[104X
+    [4X[28X<polar space in ProjectiveSpace(3,GF(5)): x_1*x_2+x_3*x_4=0 >[128X[104X
+    [4X[25Xgap>[125X [27XIsCanonicalPolarSpace(ps);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xps;[127X[104X
+    [4X[28XQ+(3, 5): x_1*x_2+x_3*x_4=0[128X[104X
+    [4X[25Xgap>[125X [27Xmat := [[1,0,0],[0,0,1],[0,1,0]]*Z(3)^0;[127X[104X
+    [4X[28X[ [ Z(3)^0, 0*Z(3), 0*Z(3) ], [ 0*Z(3), 0*Z(3), Z(3)^0 ], [128X[104X
+    [4X[28X  [ 0*Z(3), Z(3)^0, 0*Z(3) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xform := QuadraticFormByMatrix(mat,GF(3));[127X[104X
+    [4X[28X< quadratic form >[128X[104X
+    [4X[25Xgap>[125X [27Xps := PolarSpace(form);[127X[104X
+    [4X[28X<polar space in ProjectiveSpace(2,GF(3)): x_1^2-x_2*x_3=0 >[128X[104X
+    [4X[25Xgap>[125X [27XIsCanonicalPolarSpace(ps);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27Xps;[127X[104X
+    [4X[28XQ(2, 3): x_1^2-x_2*x_3=0[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X7.2-7 CanonicalPolarSpace[101X
+  
+  [33X[1;0Y[29X[2XCanonicalPolarSpace[102X( [3Xform[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XCanonicalPolarSpace[102X( [3XP[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya classical polar space[133X
+  
+  [33X[0;0Ythe  canonical  polar  space  isometric  to  the  given polar space [3XP[103X or the
+  classical polar space with underlying form [3Xform[103X.[133X
+  
+  [1X7.2-8 StandardPolarSpace[101X
+  
+  [33X[1;0Y[29X[2XStandardPolarSpace[102X( [3Xform[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XStandardPolarSpace[102X( [3XP[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya classical polar space[133X
+  
+  [33X[0;0Ythe  polar  space  induced by a standard form and similar to the given polar
+  space [3XP[103X or the classical polar space with underlying form [3Xform[103X.[133X
+  
+  
+  [1X7.3 [33X[0;0YBasic operations for finite classical polar spaces[133X[101X
+  
+  [1X7.3-1 UnderlyingVectorSpace[101X
+  
+  [33X[1;0Y[29X[2XUnderlyingVectorSpace[102X( [3Xps[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya vector space[133X
+  
+  [33X[0;0YThe  polar  space  [3Xps[103X  is  the  geometry  associated  with a sesquilinear or
+  quadratic form [22Xf[122X. The vector space on which [22Xf[122X is acting is returned.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := EllipticQuadric(5,4);[127X[104X
+    [4X[28XQ-(5, 4)[128X[104X
+    [4X[25Xgap>[125X [27Xvs := UnderlyingVectorSpace(ps);[127X[104X
+    [4X[28X( GF(2^2)^6 )[128X[104X
+    [4X[25Xgap>[125X [27Xps := SymplecticSpace(3,81);[127X[104X
+    [4X[28XW(3, 81)[128X[104X
+    [4X[25Xgap>[125X [27Xvs := UnderlyingVectorSpace(ps);[127X[104X
+    [4X[28X( GF(3^4)^4 )[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X7.3-2 AmbientSpace[101X
+  
+  [33X[1;0Y[29X[2XAmbientSpace[102X( [3Xps[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe ambient projective space[133X
+  
+  [33X[0;0YWhen  [3Xps[103X  is  a  polar  space, this operation returns the ambient projective
+  space,  i.e. the underlying projective space of the sequilinear or quadratic
+  form that defines [3Xps[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := EllipticQuadric(5,4);[127X[104X
+    [4X[28XQ-(5, 4)[128X[104X
+    [4X[25Xgap>[125X [27XAmbientSpace(ps);[127X[104X
+    [4X[28XProjectiveSpace(5, 4)[128X[104X
+    [4X[25Xgap>[125X [27Xps := SymplecticSpace(3,81);[127X[104X
+    [4X[28XW(3, 81)[128X[104X
+    [4X[25Xgap>[125X [27XAmbientSpace(ps);[127X[104X
+    [4X[28XProjectiveSpace(3, 81)[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X7.3-3 ProjectiveDimension[101X
+  
+  [33X[1;0Y[29X[2XProjectiveDimension[102X( [3Xps[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XDimension[102X( [3Xps[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe dimension of the ambient projective space of [3Xps[103X[133X
+  
+  [33X[0;0YWhen  [3Xps[103X is a polar space, an ambient projective space [22XP[122X is uniquely defined
+  and  can  be  asked  using  [11XAmbientSpace[111X.  This  operation  and  its synomym
+  [11XDimension[111X returns the dimension of [22XP[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := EllipticQuadric(5,4);[127X[104X
+    [4X[28XQ-(5, 4)[128X[104X
+    [4X[25Xgap>[125X [27XProjectiveDimension(ps);[127X[104X
+    [4X[28X5[128X[104X
+    [4X[25Xgap>[125X [27Xps := SymplecticSpace(3,81);[127X[104X
+    [4X[28XW(3, 81)[128X[104X
+    [4X[25Xgap>[125X [27XProjectiveDimension(ps);[127X[104X
+    [4X[28X3[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X7.3-4 Rank[101X
+  
+  [33X[1;0Y[29X[2XRank[102X( [3Xps[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe rank of [3Xps[103X[133X
+  
+  [33X[0;0YWhen  [3Xps[103X  is  a  polar  space, its rank, i.e. the number of different types,
+  equals the Witt index of the defining sesquilinear or quadratic form.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := EllipticQuadric(5,4);[127X[104X
+    [4X[28XQ-(5, 4)[128X[104X
+    [4X[25Xgap>[125X [27XRank(ps);[127X[104X
+    [4X[28X2[128X[104X
+    [4X[25Xgap>[125X [27Xps := HyperbolicQuadric(5,4);[127X[104X
+    [4X[28XQ+(5, 4)[128X[104X
+    [4X[25Xgap>[125X [27XRank(ps);[127X[104X
+    [4X[28X3[128X[104X
+    [4X[25Xgap>[125X [27Xps := SymplecticSpace(7,81);[127X[104X
+    [4X[28XW(7, 81)[128X[104X
+    [4X[25Xgap>[125X [27XRank(ps);[127X[104X
+    [4X[28X4[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X7.3-5 BaseField[101X
+  
+  [33X[1;0Y[29X[2XBaseField[102X( [3Xps[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe base field of the polar space [3Xps[103X[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := HyperbolicQuadric(5,7);[127X[104X
+    [4X[28XQ+(5, 7)[128X[104X
+    [4X[25Xgap>[125X [27XBaseField(ps);[127X[104X
+    [4X[28XGF(7)[128X[104X
+    [4X[25Xgap>[125X [27Xps := HermitianPolarSpace(2,256);[127X[104X
+    [4X[28XH(2, 16^2)[128X[104X
+    [4X[25Xgap>[125X [27XBaseField(ps);[127X[104X
+    [4X[28XGF(2^8)[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X7.3-6 IsHyperbolicQuadric[101X
+  
+  [33X[1;0Y[29X[2XIsHyperbolicQuadric[102X( [3Xps[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Ytrue or false[133X
+  
+  [33X[0;0Yreturns true if and only if [3Xps[103X is a hyperbolic quadric.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat := IdentityMat(6,GF(5));[127X[104X
+    [4X[28X< mutable compressed matrix 6x6 over GF(5) >[128X[104X
+    [4X[25Xgap>[125X [27Xform := BilinearFormByMatrix(mat,GF(5));[127X[104X
+    [4X[28X< bilinear form >[128X[104X
+    [4X[25Xgap>[125X [27Xps := PolarSpace(form);[127X[104X
+    [4X[28X<polar space in ProjectiveSpace([128X[104X
+    [4X[28X5,GF(5)): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2=0 >[128X[104X
+    [4X[25Xgap>[125X [27XIsHyperbolicQuadric(ps);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xmat := IdentityMat(6,GF(7));[127X[104X
+    [4X[28X< mutable compressed matrix 6x6 over GF(7) >[128X[104X
+    [4X[25Xgap>[125X [27Xform := BilinearFormByMatrix(mat,GF(7));[127X[104X
+    [4X[28X< bilinear form >[128X[104X
+    [4X[25Xgap>[125X [27Xps := PolarSpace(form);[127X[104X
+    [4X[28X<polar space in ProjectiveSpace([128X[104X
+    [4X[28X5,GF(7)): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2=0 >[128X[104X
+    [4X[25Xgap>[125X [27XIsHyperbolicQuadric(ps);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X7.3-7 IsEllipticQuadric[101X
+  
+  [33X[1;0Y[29X[2XIsEllipticQuadric[102X( [3Xps[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Ytrue or false[133X
+  
+  [33X[0;0Yreturns true if and only if [3Xps[103X is an elliptic quadric.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat := IdentityMat(6,GF(5));[127X[104X
+    [4X[28X< mutable compressed matrix 6x6 over GF(5) >[128X[104X
+    [4X[25Xgap>[125X [27Xform := BilinearFormByMatrix(mat,GF(5));[127X[104X
+    [4X[28X< bilinear form >[128X[104X
+    [4X[25Xgap>[125X [27Xps := PolarSpace(form);[127X[104X
+    [4X[28X<polar space in ProjectiveSpace([128X[104X
+    [4X[28X5,GF(5)): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2=0 >[128X[104X
+    [4X[25Xgap>[125X [27XIsEllipticQuadric(ps);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27Xmat := IdentityMat(6,GF(7));[127X[104X
+    [4X[28X< mutable compressed matrix 6x6 over GF(7) >[128X[104X
+    [4X[25Xgap>[125X [27Xform := BilinearFormByMatrix(mat,GF(7));[127X[104X
+    [4X[28X< bilinear form >[128X[104X
+    [4X[25Xgap>[125X [27Xps := PolarSpace(form);[127X[104X
+    [4X[28X<polar space in ProjectiveSpace([128X[104X
+    [4X[28X5,GF(7)): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2=0 >[128X[104X
+    [4X[25Xgap>[125X [27XIsEllipticQuadric(ps);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X7.3-8 IsParabolicQuadric[101X
+  
+  [33X[1;0Y[29X[2XIsParabolicQuadric[102X( [3Xps[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Ytrue or false[133X
+  
+  [33X[0;0Yreturns true if and only if [3Xps[103X is a parabolic quadric.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat := IdentityMat(5,GF(9));[127X[104X
+    [4X[28X[ [ Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ], [128X[104X
+    [4X[28X  [ 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3) ], [128X[104X
+    [4X[28X  [ 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3) ], [128X[104X
+    [4X[28X  [ 0*Z(3), 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3) ], [128X[104X
+    [4X[28X  [ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), Z(3)^0 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xform := BilinearFormByMatrix(mat,GF(9));[127X[104X
+    [4X[28X< bilinear form >[128X[104X
+    [4X[25Xgap>[125X [27Xps := PolarSpace(form);[127X[104X
+    [4X[28X<polar space in ProjectiveSpace(4,GF(3^2)): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2=0 >[128X[104X
+    [4X[25Xgap>[125X [27XIsParabolicQuadric(ps);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xmat := [[1,0,0,0,0],[0,0,1,0,0],[0,0,0,0,0],[0,0,0,0,1],[0,0,0,0,0]]*Z(2)^0;[127X[104X
+    [4X[28X[ [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ], [128X[104X
+    [4X[28X  [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ], [128X[104X
+    [4X[28X  [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ], [128X[104X
+    [4X[28X  [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ], [128X[104X
+    [4X[28X  [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xform := QuadraticFormByMatrix(mat,GF(8));[127X[104X
+    [4X[28X< quadratic form >[128X[104X
+    [4X[25Xgap>[125X [27Xps := PolarSpace(form);[127X[104X
+    [4X[28X<polar space in ProjectiveSpace(4,GF(2^3)): x_1^2+x_2*x_3+x_4*x_5=0 >[128X[104X
+    [4X[25Xgap>[125X [27XIsParabolicQuadric(ps);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  
+  [1X7.4 [33X[0;0YSubspaces of finite classical polar spaces[133X[101X
+  
+  [33X[0;0YThe  elements  of  a finite classical polar space [22XP[122X are the subspaces of the
+  ambient  projective  space  that  are totally isotropic with relation to the
+  sesquilinear  or  quadratic  form  that defines [22XP[122X. Constructing subspaces of
+  finite  classical  polar  spaces  is  done  as in the projective space case,
+  except  that  additional checks are implemented in the methods to check that
+  the  subspace  of the vector space is totally isotropic. The empty subspace,
+  also  called  the trivial subspace, which has dimension -1, corresponds with
+  the  zero  dimensional  vector  space  of the underlying vector space of the
+  ambient  projective space of [22XP[122X, and is of course totally isotropic. As such,
+  is  is  considered  as  a  subspace of a finite classical polar space in the
+  mathematical  sense,  but  not  as an element of the incidence geometry, and
+  hence     do     in     [5XFinInG[105X     not     belong     to     the    category
+  [10XIsSubspaceOfClassicalPolarSpace[110X.[133X
+  
+  [1X7.4-1 VectorSpaceToElement[101X
+  
+  [33X[1;0Y[29X[2XVectorSpaceToElement[102X( [3Xps[103X, [3Xv[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan element of the polar space [3Xgeo[103X[133X
+  
+  [33X[0;0YLet [3Xps[103X be a polar space, and [3Xv[103X is either a row vector (for points) or an [22Xm[122Xx[22Xn[122X
+  matrix  (for  an  [22X(m-1)[122X-subspace  of a polar space with an [22X(n-1)[122X-dimensional
+  ambient projective space. In the case that [3Xv[103X is a matrix, the rows represent
+  basis  vectors  for  the  subspace.  An  exceptional  case  is  when  [3Xv[103X is a
+  zero-vector,  whereby  the  trivial subspace is returned. It is checked that
+  the  subspace  defined  by  [22Xv[122X is totally isotropic with relation to the form
+  defining [3Xps[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := SymplecticSpace(3,4);[127X[104X
+    [4X[28XW(3, 4)[128X[104X
+    [4X[25Xgap>[125X [27Xv := [1,0,1,0]*Z(4)^0;[127X[104X
+    [4X[28X[ Z(2)^0, 0*Z(2), Z(2)^0, 0*Z(2) ][128X[104X
+    [4X[25Xgap>[125X [27Xp := VectorSpaceToElement(ps,v);[127X[104X
+    [4X[28X<a point in W(3, 4)>[128X[104X
+    [4X[25Xgap>[125X [27Xmat := [[1,1,0,1],[0,0,1,0]]*Z(4)^0;[127X[104X
+    [4X[28X[ [ Z(2)^0, Z(2)^0, 0*Z(2), Z(2)^0 ], [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xline := VectorSpaceToElement(ps,mat);[127X[104X
+    [4X[28XError, <x> does not generate an element of <geom> called from[128X[104X
+    [4X[28X<function "unknown">( <arguments> )[128X[104X
+    [4X[28X called from read-eval loop at line 12 of *stdin*[128X[104X
+    [4X[28Xyou can 'quit;' to quit to outer loop, or[128X[104X
+    [4X[28Xyou can 'return;' to continue[128X[104X
+    [4X[26Xbrk>[126X [27Xquit;[127X[104X
+    [4X[25Xgap>[125X [27Xmat := [[1,1,0,0],[0,0,1,0]]*Z(4)^0;[127X[104X
+    [4X[28X[ [ Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2) ], [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xline := VectorSpaceToElement(ps,mat);[127X[104X
+    [4X[28X<a line in W(3, 4)>[128X[104X
+    [4X[25Xgap>[125X [27Xp := VectorSpaceToElement(ps,[0,0,0,0]*Z(4)^0);[127X[104X
+    [4X[28X< empty subspace >[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X7.4-2 EmptySubspace[101X
+  
+  [33X[1;0Y[29X[2XEmptySubspace[102X( [3Xps[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe trivial subspace in the projective [3Xps[103X[133X
+  
+  [33X[0;0YThe  object  returned  by  this  operation  is contained in every projective
+  subspace  of  the  projective  space [3Xps[103X, but is not an element of [3Xps[103X. Hence,
+  testing incidence results in an error message.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := HermitianPolarSpace(10,49);[127X[104X
+    [4X[28XH(10, 7^2)[128X[104X
+    [4X[25Xgap>[125X [27Xe := EmptySubspace(ps);[127X[104X
+    [4X[28X< empty subspace >[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X7.4-3 ProjectiveDimension[101X
+  
+  [33X[1;0Y[29X[2XProjectiveDimension[102X( [3Xsub[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XDimension[102X( [3Xsub[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe  projective  dimension  of  a  subspace  of a polar space. The
+            operation   [11XProjectiveDimension[111X   is   also   applicable   on  the
+            EmptySubspace[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := EllipticQuadric(7,8);[127X[104X
+    [4X[28XQ-(7, 8)[128X[104X
+    [4X[25Xgap>[125X [27Xmat := [[0,0,1,0,0,0,0,0],[0,0,0,0,1,0,0,0]]*Z(8)^0;[127X[104X
+    [4X[28X[ [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ], [128X[104X
+    [4X[28X  [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xline := VectorSpaceToElement(ps,mat);[127X[104X
+    [4X[28X<a line in Q-(7, 8)>[128X[104X
+    [4X[25Xgap>[125X [27XProjectiveDimension(line);[127X[104X
+    [4X[28X1[128X[104X
+    [4X[25Xgap>[125X [27XDimension(line);[127X[104X
+    [4X[28X1[128X[104X
+    [4X[25Xgap>[125X [27Xe := EmptySubspace(ps);[127X[104X
+    [4X[28X< empty subspace >[128X[104X
+    [4X[25Xgap>[125X [27XProjectiveDimension(e);[127X[104X
+    [4X[28X-1[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X7.4-4 ElementsOfIncidenceStructure[101X
+  
+  [33X[1;0Y[29X[2XElementsOfIncidenceStructure[102X( [3Xps[103X, [3Xj[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe collection of elements of the projective space [3Xps[103X of type [3Xj[103X[133X
+  
+  [33X[0;0YFor  the  projective  space [3Xps[103X of dimension [22Xd[122X and the type [3Xj[103X, [22X1 ≤ j ≤ d[122X this
+  operation returns the collection of [22Xj-1[122X dimensional subspaces.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := HermitianPolarSpace(8,13^2);[127X[104X
+    [4X[28XH(8, 13^2)[128X[104X
+    [4X[25Xgap>[125X [27Xplanes := ElementsOfIncidenceStructure(ps,3);[127X[104X
+    [4X[28X<planes of H(8, 13^2)>[128X[104X
+    [4X[25Xgap>[125X [27Xsolids := ElementsOfIncidenceStructure(ps,4);[127X[104X
+    [4X[28X<solids of H(8, 13^2)>[128X[104X
+    [4X[25Xgap>[125X [27XElementsOfIncidenceStructure(ps,5);[127X[104X
+    [4X[28XError, <geo> has no elements of type <j> called from[128X[104X
+    [4X[28X<function "unknown">( <arguments> )[128X[104X
+    [4X[28X called from read-eval loop at line 11 of *stdin*[128X[104X
+    [4X[28Xyou can 'quit;' to quit to outer loop, or[128X[104X
+    [4X[28Xyou can 'return;' to continue[128X[104X
+    [4X[26Xbrk>[126X [27Xquit;[127X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X7.4-5 AmbientSpace[101X
+  
+  [33X[1;0Y[29X[2XAmbientSpace[102X( [3Xel[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yreturns the ambient space of an element [3Xel[103X of a polar space[133X
+  
+  [33X[0;0YThis  operation  is  also  applicable  on  the  trivial  subspace. For a Lie
+  geometry, the ambient space of an element is defined as the ambient space of
+  the Lie geometry, i.e. a projective space.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := HermitianPolarSpace(3,7^2);[127X[104X
+    [4X[28XH(3, 7^2)[128X[104X
+    [4X[25Xgap>[125X [27Xline := VectorSpaceToElement(ps,[[Z(7)^0,0*Z(7),Z(7^2)^34,Z(7^2)^44],[127X[104X
+    [4X[25X>[125X [27X[0*Z(7),Z(7)^0,Z(7^2)^2,Z(7^2)^4]]);[127X[104X
+    [4X[28X<a line in H(3, 7^2)>[128X[104X
+    [4X[25Xgap>[125X [27XAmbientSpace(line);[127X[104X
+    [4X[28XProjectiveSpace(3, 49)[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X7.4-6 Coordinates[101X
+  
+  [33X[1;0Y[29X[2XCoordinates[102X( [3Xp[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe homogeneous coordinates of the point [3Xp[103X[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := ParabolicQuadric(6,5);[127X[104X
+    [4X[28XQ(6, 5)[128X[104X
+    [4X[25Xgap>[125X [27Xp := VectorSpaceToElement(ps,[0,1,0,0,0,0,0]*Z(5)^0);[127X[104X
+    [4X[28X<a point in Q(6, 5)>[128X[104X
+    [4X[25Xgap>[125X [27XCoordinates(p);[127X[104X
+    [4X[28X[ 0*Z(5), Z(5)^0, 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5) ][128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  
+  [1X7.5 [33X[0;0YBasic operations for polar spaces and subspaces of projective spaces[133X[101X
+  
+  
+  [1X7.5-1 [33X[0;0YIncidence and containment[133X[101X
+  
+  [33X[1;0Y[29X[2XIsIncident[102X( [3Xel1[103X, [3Xel2[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2X\*[102X( [3Xel1[103X, [3Xel2[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2X\in[102X( [3Xel1[103X, [3Xel2[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ytrue or false[133X
+  
+  [33X[0;0YRecall  that  for  projective  spaces, incidence is symmetrized containment,
+  where  the  empty  subspace  and  the whole projective space are excluded as
+  arguments  for  this operation, since they are not considered as elements of
+  the geometry, but both the empty subspace and the whole projective space are
+  allowed as arguments for [11X\in[111X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := HyperbolicQuadric(7,7);[127X[104X
+    [4X[28XQ+(7, 7)[128X[104X
+    [4X[25Xgap>[125X [27Xp := VectorSpaceToElement(ps,[1,0,1,0,0,0,0,0]*Z(7)^0);[127X[104X
+    [4X[28X<a point in Q+(7, 7)>[128X[104X
+    [4X[25Xgap>[125X [27Xl := VectorSpaceToElement(ps,[[1,0,1,0,0,0,0,0],[0,-1,0,1,0,0,0,0]]*Z(7)^0);[127X[104X
+    [4X[28X<a line in Q+(7, 7)>[128X[104X
+    [4X[25Xgap>[125X [27Xp * l;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xl * p;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsIncident(p,l);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xp in l;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xl in p;[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27Xe := EmptySubspace(ps);[127X[104X
+    [4X[28X< empty subspace >[128X[104X
+    [4X[25Xgap>[125X [27Xe * l;[127X[104X
+    [4X[28XError, no method found! For debugging hints type ?Recovery from NoMethodFound[128X[104X
+    [4X[28XError, no 1st choice method found for `*' on 2 arguments called from[128X[104X
+    [4X[28X<function "HANDLE_METHOD_NOT_FOUND">( <arguments> )[128X[104X
+    [4X[28X called from read-eval loop at line 17 of *stdin*[128X[104X
+    [4X[28Xyou can 'quit;' to quit to outer loop, or[128X[104X
+    [4X[28Xyou can 'return;' to continue[128X[104X
+    [4X[26Xbrk>[126X [27Xquit;[127X[104X
+    [4X[25Xgap>[125X [27Xe in l;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xl in ps;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X7.5-2 Span[101X
+  
+  [33X[1;0Y[29X[2XSpan[102X( [3Xu[103X, [3Xv[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan element[133X
+  
+  [33X[0;0Y[3Xu[103X  and  [3Xv[103X are elements of a projective or polar space. This function returns
+  the join of the two elements, that is, the span of the two subspaces.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := HyperbolicQuadric(5,2);[127X[104X
+    [4X[28XQ+(5, 2)[128X[104X
+    [4X[25Xgap>[125X [27Xp := Random(Planes(ps));[127X[104X
+    [4X[28X<a plane in Q+(5, 2)>[128X[104X
+    [4X[25Xgap>[125X [27Xq := Random(Planes(ps));[127X[104X
+    [4X[28X<a plane in Q+(5, 2)>[128X[104X
+    [4X[25Xgap>[125X [27Xs := Span(p,q);[127X[104X
+    [4X[28X<a proj. 4-space in ProjectiveSpace(5, 2)>[128X[104X
+    [4X[25Xgap>[125X [27Xs = Span([p,q]);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xt := Span(EmptySubspace(ps),p);[127X[104X
+    [4X[28X<a plane in Q+(5, 2)>[128X[104X
+    [4X[25Xgap>[125X [27Xt = p;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X7.5-3 Meet[101X
+  
+  [33X[1;0Y[29X[2XMeet[102X( [3Xu[103X, [3Xv[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan element[133X
+  
+  [33X[0;0Y[3Xu[103X  and  [3Xv[103X are elements of a projective or polar space. This function returns
+  the meet of the two elements. If two elements do not meet, then Meet returns
+  [10XEmptySubspace[110X,  which in [5XFinInG[105X, is an element with projective dimension -1.
+  (Note  that  the  poset of subspaces of a polar space is a meet-semilattice,
+  but not closed under taking spans).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := HyperbolicQuadric(5,3);[127X[104X
+    [4X[28XQ+(5, 3)[128X[104X
+    [4X[25Xgap>[125X [27Xpi := Random( Planes(ps) );[127X[104X
+    [4X[28X<a plane in Q+(5, 3)>[128X[104X
+    [4X[25Xgap>[125X [27Xtau := Random( Planes(ps) );[127X[104X
+    [4X[28X<a plane in Q+(5, 3)>[128X[104X
+    [4X[25Xgap>[125X [27XMeet(pi,tau);[127X[104X
+    [4X[28X<a point in Q+(5, 3)>[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YNote:  the  above example will return different answers depending on the two
+  planes chosen at random.[133X
+  
+  [1X7.5-4 IsCollinear[101X
+  
+  [33X[1;0Y[29X[2XIsCollinear[102X( [3Xps[103X, [3Xu[103X, [3Xv[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YBoolean[133X
+  
+  [33X[0;0Y[3Xu[103X and [3Xv[103X are points of the ambient space of the polar space [3Xps[103X. This function
+  returns  True if [3Xu[103X and [3Xv[103X are collinear in [3Xps[103X. Note that belonging to [3Xps[103X is a
+  necessary condition for [3Xu[103X and [3Xv[103X to be collinear.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := ParabolicQuadric(4,9);[127X[104X
+    [4X[28XQ(4, 9)[128X[104X
+    [4X[25Xgap>[125X [27Xp := VectorSpaceToElement(PG(4,9),[0,1,0,0,0]*Z(9)^0);[127X[104X
+    [4X[28X<a point in ProjectiveSpace(4, 9)>[128X[104X
+    [4X[25Xgap>[125X [27Xq := VectorSpaceToElement(PG(4,9),[0,0,1,0,0]*Z(9)^0);[127X[104X
+    [4X[28X<a point in ProjectiveSpace(4, 9)>[128X[104X
+    [4X[25Xgap>[125X [27Xr := VectorSpaceToElement(PG(4,9),[0,0,0,1,0]*Z(9)^0);[127X[104X
+    [4X[28X<a point in ProjectiveSpace(4, 9)>[128X[104X
+    [4X[25Xgap>[125X [27Xp in ps;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xq in ps;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xr in ps;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsCollinear(ps,p,q);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsCollinear(ps,p,r);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsCollinear(ps,q,r);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xps := ParabolicQuadric(4,4);[127X[104X
+    [4X[28XQ(4, 4)[128X[104X
+    [4X[25Xgap>[125X [27Xp := VectorSpaceToElement(PG(4,4),[1,0,0,0,0]*Z(2)^0);[127X[104X
+    [4X[28X<a point in ProjectiveSpace(4, 4)>[128X[104X
+    [4X[25Xgap>[125X [27Xq := VectorSpaceToElement(PG(4,4),[0,1,0,0,0]*Z(2)^0);[127X[104X
+    [4X[28X<a point in ProjectiveSpace(4, 4)>[128X[104X
+    [4X[25Xgap>[125X [27Xr := VectorSpaceToElement(PG(4,4),[0,0,0,1,0]*Z(2)^0);[127X[104X
+    [4X[28X<a point in ProjectiveSpace(4, 4)>[128X[104X
+    [4X[25Xgap>[125X [27Xp in ps;[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27Xq in ps;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xr in ps;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsCollinear(ps,p,q);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsCollinear(ps,q,r);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X7.5-5 PolarityOfProjectiveSpace[101X
+  
+  [33X[1;0Y[29X[2XPolarityOfProjectiveSpace[102X( [3Xps[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya polarity of a projective space[133X
+  
+  [33X[0;0Y[3Xps[103X  must  be a polar space. This operation returns, when possible a polarity
+  of  the  ambient  projective  space  of [3Xps[103X. It is well known that except for
+  orthogonal  polar  spaces in even characteristic, a classical polar space is
+  in fact the geometry of absolute points of a polarity of a projective space,
+  and  that  no  polarity  can  be  associated  to  parabolic quadrics in even
+  characteristic. Polarities of projective spaces are discussed in more detail
+  in Chapter [14X6[114X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := SymplecticSpace(5,9);[127X[104X
+    [4X[28XW(5, 9)[128X[104X
+    [4X[25Xgap>[125X [27Xphi := PolarityOfProjectiveSpace(ps);[127X[104X
+    [4X[28X<polarity of PG(5, GF(3^2)) >[128X[104X
+    [4X[25Xgap>[125X [27Xps := EllipticQuadric(3,4);[127X[104X
+    [4X[28XQ-(3, 4)[128X[104X
+    [4X[25Xgap>[125X [27Xphi := PolarityOfProjectiveSpace(ps);[127X[104X
+    [4X[28X<polarity of PG(3, GF(2^2)) >[128X[104X
+    [4X[25Xgap>[125X [27Xps := ParabolicQuadric(4,4);[127X[104X
+    [4X[28XQ(4, 4)[128X[104X
+    [4X[25Xgap>[125X [27Xphi := PolarityOfProjectiveSpace(ps);[127X[104X
+    [4X[28XError, no polarity of the ambient projective space can be associated to <ps> called from[128X[104X
+    [4X[28X<function "unknown">( <arguments> )[128X[104X
+    [4X[28X called from read-eval loop at line 13 of *stdin*[128X[104X
+    [4X[28Xyou can 'quit;' to quit to outer loop, or[128X[104X
+    [4X[28Xyou can 'return;' to continue[128X[104X
+    [4X[26Xbrk>[126X [27Xquit;[127X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X7.5-6 TypeOfSubspace[101X
+  
+  [33X[1;0Y[29X[2XTypeOfSubspace[102X( [3Xps[103X, [3Xv[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya string[133X
+  
+  [33X[0;0YThis  operation  is  a convenient way to find out the intersection type of a
+  projective  subspace  with a polar space. The argument [3Xps[103X is a nondegenerate
+  polar  space,  and  the  argument  [3Xv[103X is a subspace of the ambient projective
+  space.  The  operation  returns  a  string  in  accordance  with the type of
+  subspace:   [21Xdegenerate[121X,   [21Xsymplectic[121X,  [21Xhermitian[121X,  [21Xelliptic[121X,  [21Xhyperbolic[121X  or
+  [21Xparabolic[121X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xh1 := HermitianPolarSpace(2, 3^2);[127X[104X
+    [4X[28XH(2, 3^2)[128X[104X
+    [4X[25Xgap>[125X [27Xh2 := HermitianPolarSpace(3, 3^2);[127X[104X
+    [4X[28XH(3, 3^2)[128X[104X
+    [4X[25Xgap>[125X [27Xpg := AmbientSpace( h2 );    [127X[104X
+    [4X[28XProjectiveSpace(3, 9)[128X[104X
+    [4X[25Xgap>[125X [27Xpi := VectorSpaceToElement( pg, [[1,0,0,0],[0,1,0,0],[0,0,1,0]] * Z(9)^0 );[127X[104X
+    [4X[28X<a plane in ProjectiveSpace(3, 9)>[128X[104X
+    [4X[25Xgap>[125X [27XTypeOfSubspace(h2, pi);[127X[104X
+    [4X[28X"hermitian"[128X[104X
+    [4X[25Xgap>[125X [27Xpi := VectorSpaceToElement( pg, [[1,0,0,0],[0,1,0,0],[0,0,1,Z(9)]] * Z(9)^0 );[127X[104X
+    [4X[28X<a plane in ProjectiveSpace(3, 9)>[128X[104X
+    [4X[25Xgap>[125X [27XTypeOfSubspace(h2, pi);[127X[104X
+    [4X[28X"degenerate"[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X7.5-7 TangentSpace[101X
+  
+  [33X[1;0Y[29X[2XTangentSpace[102X( [3Xel[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XTangentSpace[102X( [3Xps[103X, [3Xel[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YA subspace of a projective space[133X
+  
+  [33X[0;0YLet  [3Xel[103X  be an element of a classical polar space. The first version returns
+  the  tangent  space  at  [3Xel[103X to this polar space. Let [3Xel[103X be a subspace of the
+  ambient  space  of  the polar space [3Xps[103X. The second version checks whether [3Xel[103X
+  belongs  to  [3Xps[103X  and  returns  the  tangent  space at [3Xel[103X to [3Xps[103X. Some obvious
+  properties are demonstrated in the example.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := HermitianPolarSpace(3,4^2);[127X[104X
+    [4X[28XH(3, 4^2)[128X[104X
+    [4X[25Xgap>[125X [27Xp := Random(Points(ps));[127X[104X
+    [4X[28X<a point in H(3, 4^2)>[128X[104X
+    [4X[25Xgap>[125X [27Xplane := TangentSpace(p);[127X[104X
+    [4X[28X<a plane in ProjectiveSpace(3, 16)>[128X[104X
+    [4X[25Xgap>[125X [27XTypeOfSubspace(ps,plane);[127X[104X
+    [4X[28X"degenerate"[128X[104X
+    [4X[25Xgap>[125X [27Xps := ParabolicQuadric(6,4);[127X[104X
+    [4X[28XQ(6, 4)[128X[104X
+    [4X[25Xgap>[125X [27Xp := VectorSpaceToElement(PG(6,4),[0,1,0,0,0,0,0]*Z(4)^0);[127X[104X
+    [4X[28X<a point in ProjectiveSpace(6, 4)>[128X[104X
+    [4X[25Xgap>[125X [27Xhyp := TangentSpace(ps,p);[127X[104X
+    [4X[28X<a proj. 5-space in ProjectiveSpace(6, 4)>[128X[104X
+    [4X[25Xgap>[125X [27XNucleusOfParabolicQuadric(ps) in hyp;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xps := EllipticQuadric(5,2);[127X[104X
+    [4X[28XQ-(5, 2)[128X[104X
+    [4X[25Xgap>[125X [27Xline := Random(Lines(ps));[127X[104X
+    [4X[28X<a line in Q-(5, 2)>[128X[104X
+    [4X[25Xgap>[125X [27XTangentSpace(line);[127X[104X
+    [4X[28X<a solid in ProjectiveSpace(5, 2)>[128X[104X
+    [4X[25Xgap>[125X [27Xps := HermitianPolarSpace(5,4);[127X[104X
+    [4X[28XH(5, 2^2)[128X[104X
+    [4X[25Xgap>[125X [27Xplane := Random(Planes(ps));[127X[104X
+    [4X[28X<a plane in H(5, 2^2)>[128X[104X
+    [4X[25Xgap>[125X [27Xtan := TangentSpace(plane);[127X[104X
+    [4X[28X<a plane in ProjectiveSpace(5, 4)>[128X[104X
+    [4X[25Xgap>[125X [27Xtan in ps;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xtan = plane;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X7.5-8 Pole[101X
+  
+  [33X[1;0Y[29X[2XPole[102X( [3Xps[103X, [3Xel[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YA subspace of a projective space[133X
+  
+  [33X[0;0YLet  [3Xel[103X  be  a  subspace  of  the  ambient space of the polar space [3Xps[103X. This
+  operation returns the pole of [3Xel[103X with relation to the polar space [3Xps[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xconic := ParabolicQuadric(2,13);[127X[104X
+    [4X[28XQ(2, 13)[128X[104X
+    [4X[25Xgap>[125X [27Xp := VectorSpaceToElement(PG(2,13),[1,0,0]*Z(13)^0);[127X[104X
+    [4X[28X<a point in ProjectiveSpace(2, 13)>[128X[104X
+    [4X[25Xgap>[125X [27Xpole := Pole(conic,p);[127X[104X
+    [4X[28X<a line in ProjectiveSpace(2, 13)>[128X[104X
+    [4X[25Xgap>[125X [27XTypeOfSubspace(conic,pole);[127X[104X
+    [4X[28X"hyperbolic"[128X[104X
+    [4X[25Xgap>[125X [27Xtangent_points := Filtered(Points(pole),x->x in conic);[127X[104X
+    [4X[28X[ <a point in ProjectiveSpace(2, 13)>, <a point in ProjectiveSpace(2, 13)> ][128X[104X
+    [4X[25Xgap>[125X [27Xtangent_lines_on_p := List(tangent_points,x->Span(x,p));[127X[104X
+    [4X[28X[ <a line in ProjectiveSpace(2, 13)>, <a line in ProjectiveSpace(2, 13)> ][128X[104X
+    [4X[25Xgap>[125X [27XList(tangent_lines_on_p,x->Number(Points(x),y->y in conic));[127X[104X
+    [4X[28X[ 1, 1 ][128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X7.5-9 EvaluateForm[101X
+  
+  [33X[1;0Y[29X[2XEvaluateForm[102X( [3Xform[103X, [3Xel1[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XEvaluateForm[102X( [3Xform[103X, [3Xel1[103X, [3Xel2[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2X\^[102X( [3Xform[103X, [3Xel1[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2X\^[102X( [3Xform[103X, [3Xel1[103X, [3Xel2[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya  finite  field  element  or  a  list  (of lists) of finite field
+            elements[133X
+  
+  [33X[0;0YThis  method  passes  [3Xform[103X  and the underlying vector or matrix of [3Xel1[103X, when
+  [3Xform[103X  is  a quadratic form, and [3Xel1[103X and [3Xel2[103X when [3Xform[103X is a sesquilinear form
+  to  the  operation  [11XEvaluate[111X  of  the package [5XForms[105X. The same applies to the
+  respective methods for [11X\^[111X. The example below illustrates how the points of a
+  projective space that evaluate to zero under a given form, are precisely the
+  points of the quadric associated with the given form.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf := GF(5);[127X[104X
+    [4X[28XGF(5)[128X[104X
+    [4X[25Xgap>[125X [27Xmat := IdentityMat(4,f);[127X[104X
+    [4X[28X[ [ Z(5)^0, 0*Z(5), 0*Z(5), 0*Z(5) ], [ 0*Z(5), Z(5)^0, 0*Z(5), 0*Z(5) ], [128X[104X
+    [4X[28X  [ 0*Z(5), 0*Z(5), Z(5)^0, 0*Z(5) ], [ 0*Z(5), 0*Z(5), 0*Z(5), Z(5)^0 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xform := BilinearFormByMatrix(mat,f);[127X[104X
+    [4X[28X< bilinear form >[128X[104X
+    [4X[25Xgap>[125X [27Xpg := PG(3,5);[127X[104X
+    [4X[28XProjectiveSpace(3, 5)[128X[104X
+    [4X[25Xgap>[125X [27Xpts := Filtered(Points(pg),x->[x,x]^form = Zero(f));;[127X[104X
+    [4X[25Xgap>[125X [27Xps := PolarSpace(form);[127X[104X
+    [4X[28X<polar space in ProjectiveSpace(3,GF(5)): x_1^2+x_2^2+x_3^2+x_4^2=0 >[128X[104X
+    [4X[25Xgap>[125X [27XCollected(List(pts,x->x in ps));[127X[104X
+    [4X[28X[ [ true, 36 ] ][128X[104X
+    [4X[25Xgap>[125X [27XSize(Points(ps));[127X[104X
+    [4X[28X36[128X[104X
+    [4X[25Xgap>[125X [27Xqform := QuadraticForm(ps);[127X[104X
+    [4X[28X< quadratic form >[128X[104X
+    [4X[25Xgap>[125X [27Xpts2 := Filtered(Points(pg),x->x^qform = Zero(f));;[127X[104X
+    [4X[25Xgap>[125X [27XCollected(List(pts2,x->x in ps));[127X[104X
+    [4X[28X[ [ true, 36 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X7.6 [33X[0;0YShadow of elements[133X[101X
+  
+  [33X[0;0YThe  functionality in this section is comparable to the shadow functionality
+  for  elements  of projective spaces, which are described in Section [14X4.3[114X. The
+  generic  description  of  shadows of elements of incidence structures can be
+  found in Section [14X3.4[114X.[133X
+  
+  [1X7.6-1 ShadowOfElement[101X
+  
+  [33X[1;0Y[29X[2XShadowOfElement[102X( [3Xps[103X, [3Xel[103X, [3Xi[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XShadowOfElement[102X( [3Xps[103X, [3Xel[103X, [3Xstr[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe  elements  of  type  [3Xi[103X  incident  with  [3Xel[103X. The second variant
+            determines  the  type  [3Xi[103X  from  the  position  of  [3Xstr[103X in the list
+            returned by [11XTypesOfElementsOfIncidenceStructurePlural[111X[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xid := IdentityMat(8,GF(7));[127X[104X
+    [4X[28X< mutable compressed matrix 8x8 over GF(7) >[128X[104X
+    [4X[25Xgap>[125X [27Xform := BilinearFormByMatrix(id,GF(7));[127X[104X
+    [4X[28X< bilinear form >[128X[104X
+    [4X[25Xgap>[125X [27Xps := PolarSpace(form);[127X[104X
+    [4X[28X<polar space in ProjectiveSpace([128X[104X
+    [4X[28X7,GF(7)): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2+x_7^2+x_8^2=0 >[128X[104X
+    [4X[25Xgap>[125X [27XRank(ps);[127X[104X
+    [4X[28X4[128X[104X
+    [4X[25Xgap>[125X [27Xps;[127X[104X
+    [4X[28XQ+(7, 7): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2+x_7^2+x_8^2=0[128X[104X
+    [4X[25Xgap>[125X [27Xmat := [[1,0,0,0,3,2,0,0],[0,1,0,0,0,0,3,2],[0,0,1,0,5,3,0,0]]*Z(7)^0;[127X[104X
+    [4X[28X[ [ Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7), Z(7), Z(7)^2, 0*Z(7), 0*Z(7) ], [128X[104X
+    [4X[28X  [ 0*Z(7), Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), Z(7), Z(7)^2 ], [128X[104X
+    [4X[28X  [ 0*Z(7), 0*Z(7), Z(7)^0, 0*Z(7), Z(7)^5, Z(7), 0*Z(7), 0*Z(7) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xplane := VectorSpaceToElement(ps,mat);[127X[104X
+    [4X[28X<a plane in Q+(7, 7): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2+x_7^2+x_8^2=0>[128X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X1[128X[104X
+    [4X[25Xgap>[125X [27Xshadow := ShadowOfElement(ps,plane,4);[127X[104X
+    [4X[28X<shadow solids in Q+(7, 7): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2+x_7^2+x_8^2=0>[128X[104X
+    [4X[25Xgap>[125X [27XList(shadow);[127X[104X
+    [4X[28X[ <a solid in Q+(7, 7): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2+x_7^2+x_8^2=0>, [128X[104X
+    [4X[28X  <a solid in Q+(7, 7): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2+x_7^2+x_8^2=0> ][128X[104X
+    [4X[25Xgap>[125X [27Xshadow := ShadowOfElement(ps,plane,2);[127X[104X
+    [4X[28X<shadow lines in Q+(7, 7): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2+x_7^2+x_8^2=0>[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X7.6-2 ElementsIncidentWithElementOfIncidenceStructure[101X
+  
+  [33X[1;0Y[29X[2XElementsIncidentWithElementOfIncidenceStructure[102X( [3Xel[103X, [3Xi[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe  elements of type [3Xi[103X incident with [3Xel[103X, in other words, the type
+            [3Xi[103X shadow of the element [3Xel[103X[133X
+  
+  [33X[0;0YInternally,  the  function [11XFlagOfIncidenceStructure[111X is used to create a flag
+  from [3Xlist[103X. This function also performs the checking.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := HyperbolicQuadric(11,2);[127X[104X
+    [4X[28XQ+(11, 2)[128X[104X
+    [4X[25Xgap>[125X [27Xvec := [[Z(2)^0,0*Z(2),0*Z(2),0*Z(2),0*Z(2),Z(2)^0,0*Z(2),Z(2)^0,Z(2)^0,[127X[104X
+    [4X[25X>[125X [27X0*Z(2),0*Z(2),0*Z(2)],[127X[104X
+    [4X[25X>[125X [27X[0*Z(2),Z(2)^0,0*Z(2),0*Z(2),0*Z(2),Z(2)^0,Z(2)^0,Z(2)^0,Z(2)^0,[127X[104X
+    [4X[25X>[125X [27X0*Z(2),Z(2)^0,Z(2)^0],[127X[104X
+    [4X[25X>[125X [27X[0*Z(2),0*Z(2),Z(2)^0,0*Z(2),0*Z(2),Z(2)^0,0*Z(2),Z(2)^0,0*Z(2),[127X[104X
+    [4X[25X>[125X [27X0*Z(2),0*Z(2),Z(2)^0],[127X[104X
+    [4X[25X>[125X [27X[0*Z(2),0*Z(2),0*Z(2),Z(2)^0,0*Z(2),Z(2)^0,0*Z(2),Z(2)^0,0*Z(2),[127X[104X
+    [4X[25X>[125X [27X0*Z(2),Z(2)^0,0*Z(2)],[127X[104X
+    [4X[25X>[125X [27X[0*Z(2),0*Z(2),0*Z(2),0*Z(2),Z(2)^0,Z(2)^0,0*Z(2),0*Z(2),0*Z(2),[127X[104X
+    [4X[25X>[125X [27XZ(2)^0,Z(2)^0,Z(2)^0]];[127X[104X
+    [4X[28X[ [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), Z(2)^0, Z(2)^0, [128X[104X
+    [4X[28X      0*Z(2), 0*Z(2), 0*Z(2) ], [128X[104X
+    [4X[28X  [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, [128X[104X
+    [4X[28X      0*Z(2), Z(2)^0, Z(2)^0 ], [128X[104X
+    [4X[28X  [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), Z(2)^0, 0*Z(2), [128X[104X
+    [4X[28X      0*Z(2), 0*Z(2), Z(2)^0 ], [128X[104X
+    [4X[28X  [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), Z(2)^0, 0*Z(2), Z(2)^0, 0*Z(2), [128X[104X
+    [4X[28X      0*Z(2), Z(2)^0, 0*Z(2) ], [128X[104X
+    [4X[28X  [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), [128X[104X
+    [4X[28X      Z(2)^0, Z(2)^0, Z(2)^0 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xsubspace := VectorSpaceToElement(ps,vec);[127X[104X
+    [4X[28X<a proj. 4-space in Q+(11, 2)>[128X[104X
+    [4X[25Xgap>[125X [27Xels := ElementsIncidentWithElementOfIncidenceStructure(subspace,6);[127X[104X
+    [4X[28X<shadow proj. subspaces of dim. 5 in Q+(11, 2)>[128X[104X
+    [4X[25Xgap>[125X [27XList(els);[127X[104X
+    [4X[28X[ <a proj. 5-space in Q+(11, 2)>, <a proj. 5-space in Q+(11, 2)> ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X7.7 [33X[0;0YProjective Orthogonal/Unitary/Symplectic groups in [5XFinInG[105X[101X[1X[133X[101X
+  
+  [33X[0;0YThe  classical  groups  (apart from the general lines group), are the matrix
+  groups  that [13Xrespect[113X, in a certain way, a sesquilinear or quadratic form. We
+  formally  recall  the  definitions  used  in  [5XFinInG[105X.  These definitions are
+  exactly the same as in [5XForms[105X.[133X
+  
+  [33X[0;0YLet [22X(V,f)[122X and [22X(W,g)[122X be two formed vector spaces over the same field [22XF[122X, where
+  both  [22Xf[122X  and [22Xg[122X are sesquilinear forms. Suppose that [22Xϕ[122X is a linear map from [22XV[122X
+  to  [22XW[122X.  The  map  [22Xϕ[122X is an [13Xisometry[113X from the formed space [22X(V,f)[122X to the formed
+  space [22X(W,g)[122X if for all [22Xv,w[122X in [22XV[122X we have[133X
+  
+  [33X[0;0Y[22Xf(v,w) = f'(ϕ(v), ϕ(w))[122X.[133X
+  
+  [33X[0;0YThe  map  [22Xϕ[122X  is a [13Xsimilarity[113X from the formed space [22X(V,f)[122X to the formed space
+  [22X(W,g)[122X if for all [22Xv,w[122X in [22XV[122X we have[133X
+  
+  [33X[0;0Y[22Xf(v,w) = λ f'(ϕ(v), ϕ(w))[122X[133X
+  
+  [33X[0;0Yfor  some  non-zero  [22Xλ ∈ F[122X. Finally, the map [22Xϕ[122X is a [13Xsemi-similarity[113X from the
+  formed space [22X(V,f)[122X to the formed space [22X(W,g)[122X if for all [22Xv,w[122X in [22XV[122X we have[133X
+  
+  [33X[0;0Y[22Xf(v,w) = λ f'(ϕ(v), ϕ(w))^α[122X[133X
+  
+  [33X[0;0Yfor some non-zero [22Xλ ∈ F[122X and a field automorphism [22Xα[122X of [22XF[122X.[133X
+  
+  [33X[0;0YLet [22X(V,f)[122X and [22X(W,g)[122X be two formed vector spaces over the same field [22XF[122X, where
+  both  [22Xf[122X  and [22Xg[122X are quadratic forms. Suppose that [22Xϕ[122X is a linear map from [22XV[122X to
+  [22XW[122X.  The map [22Xϕ[122X is an [13Xisometry[113X from the formed space [22X(V,f)[122X to the formed space
+  [22X(W,g)[122X if for all [22Xv,w[122X in [22XV[122X we have[133X
+  
+  [33X[0;0Y[22Xf(v) = f'(ϕ(v)).[122X[133X
+  
+  [33X[0;0YThe  map  [22Xϕ[122X  is  a  [13Xsimilarity[113X from the formed space [22X(V,f)[122X to a formed space
+  [22X(W,g)[122X if for all [22Xv,w[122X in [22XV[122X we have[133X
+  
+  [33X[0;0Y[22Xf(v) = λ f'(ϕ(v))[122X[133X
+  
+  [33X[0;0Yfor  some  non-zero  [22Xλ ∈ F[122X. Finally, the map [22Xϕ[122X is a [13Xsemi-similarity[113X from the
+  formed space [22X(V,f)[122X to the formed space [22X(W,g)[122X if for all [22Xv,w[122X in [22XV[122X we have[133X
+  
+  [33X[0;0Y[22Xf(v)=λ f'(ϕ(v))^α[122X[133X
+  
+  [33X[0;0Yfor some non-zero [22Xλ ∈ F[122X and a field automorphism [22Xα[122X of [22XF[122X.[133X
+  
+  [33X[0;0YCollineations  of classical polar spaces are induced by semi-similarities of
+  the  underlying  formed  vector  space,  and  vice  versa,  analoguously  by
+  factoring  out  scalar matrices. The only exceptions are the two-dimensional
+  unitary groups where the the full semi-similarity group can contain elements
+  of  its  centre that are not scalars. In [5XFinInG[105X, the subgroups corresponding
+  with  similarities  and isometries are also implemented, including a [13Xspecial[113X
+  variant,  corresponding  with  the matrices having determinant one. We use a
+  consistent terminology, where isometries, similarities, respectively, of the
+  polar  space, correspond with isometries, similarities, respectively, of the
+  underlying  formed  vector  space.  Special  isometries of a polar space are
+  induced  by  isometries  of  the formed vector space that have a matrix with
+  determinant one. If [22XP[122X is a polar space with special isometry group, isometry
+  group,  similarity  group,  collineation  group,  respectively,  [22XS[122X, [22XI[122X, [22XG[122X, [22XΓ[122X,
+  respectively,  then  clearly [22XS ≤ I ≤ G ≤ Γ[122X . Equalities can occur in certain
+  cases, and will, as we will see in the following overview.[133X
+  
+      ┌──────────────────┬────────────┬────────────┬─────────────┬────────────┬────────────┐
+      │ (sub)group       │ symplectic │ hyperbolic │ elliptic    │ parabolic  │ hermitian  │ 
+      │ special isometry │ [22XPSp(d,q)[122X   │ [22XPSO(1,d,q)[122X │ [22XPSO(-1,d,q)[122X │ [22XPSO(0,d,q)[122X │ [22XPSU(d,q^2)[122X │ 
+      │ isometry         │ [22XPSp(d,q)[122X   │ [22XPGO(1,d,q)[122X │ [22XPGO(-1,d,q)[122X │ [22XPGO(0,d,q)[122X │ [22XPGU(d,q^2)[122X │ 
+      │ similarity       │ [22XPGSp(d,q)[122X  │ [22XP∆O+(d,q)[122X  │ [22XP∆O-(d,q)[122X   │ [22XPGO(0,d,q)[122X │ [22XPGU(d,q^2)[122X │ 
+      │ collineation     │ [22XPΓSp(d,q)[122X  │ [22XPΓO+(d,q)[122X  │ [22XPΓO-(d,q)[122X   │ [22XPΓO(d,q)[122X   │ [22XPΓU(d,q^2)[122X │ 
+      └──────────────────┴────────────┴────────────┴─────────────┴────────────┴────────────┘
+  
+       [1XTable:[101X projective finite classical groups
+  
+  
+  [1X7.7-1 SpecialIsometryGroup[101X
+  
+  [33X[1;0Y[29X[2XSpecialIsometryGroup[102X( [3Xps[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe special isometry group of the polar space [3Xps[103X[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := SymplecticSpace(3,4);[127X[104X
+    [4X[28XW(3, 4)[128X[104X
+    [4X[25Xgap>[125X [27XSpecialIsometryGroup(ps);[127X[104X
+    [4X[28XPSp(4,4)[128X[104X
+    [4X[25Xgap>[125X [27Xps := HyperbolicQuadric(5,8);[127X[104X
+    [4X[28XQ+(5, 8)[128X[104X
+    [4X[25Xgap>[125X [27XSpecialIsometryGroup(ps);[127X[104X
+    [4X[28XPSO(1,6,8)[128X[104X
+    [4X[25Xgap>[125X [27Xps := EllipticQuadric(3,27);[127X[104X
+    [4X[28XQ-(3, 27)[128X[104X
+    [4X[25Xgap>[125X [27XSpecialIsometryGroup(ps);[127X[104X
+    [4X[28XPSO(-1,4,27)[128X[104X
+    [4X[25Xgap>[125X [27Xps := ParabolicQuadric(4,8);[127X[104X
+    [4X[28XQ(4, 8)[128X[104X
+    [4X[25Xgap>[125X [27XSpecialIsometryGroup(ps);[127X[104X
+    [4X[28XPSO(0,5,8)[128X[104X
+    [4X[25Xgap>[125X [27Xps := HermitianPolarSpace(4,9);[127X[104X
+    [4X[28XH(4, 3^2)[128X[104X
+    [4X[25Xgap>[125X [27XSpecialIsometryGroup(ps);[127X[104X
+    [4X[28XPSU(5,3^2)[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X7.7-2 IsometryGroup[101X
+  
+  [33X[1;0Y[29X[2XIsometryGroup[102X( [3Xps[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe isometry group of the polar space [3Xps[103X[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := SymplecticSpace(3,4);[127X[104X
+    [4X[28XW(3, 4)[128X[104X
+    [4X[25Xgap>[125X [27XIsometryGroup(ps);[127X[104X
+    [4X[28XPSp(4,4)[128X[104X
+    [4X[25Xgap>[125X [27Xps := HyperbolicQuadric(5,8);[127X[104X
+    [4X[28XQ+(5, 8)[128X[104X
+    [4X[25Xgap>[125X [27XIsometryGroup(ps);[127X[104X
+    [4X[28XPGO(1,6,8)[128X[104X
+    [4X[25Xgap>[125X [27Xps := EllipticQuadric(3,27);[127X[104X
+    [4X[28XQ-(3, 27)[128X[104X
+    [4X[25Xgap>[125X [27XIsometryGroup(ps);[127X[104X
+    [4X[28XPGO(-1,4,27)[128X[104X
+    [4X[25Xgap>[125X [27Xps := ParabolicQuadric(4,8);[127X[104X
+    [4X[28XQ(4, 8)[128X[104X
+    [4X[25Xgap>[125X [27XIsometryGroup(ps);[127X[104X
+    [4X[28XPGO(0,5,8)[128X[104X
+    [4X[25Xgap>[125X [27Xps := HermitianPolarSpace(4,9);[127X[104X
+    [4X[28XH(4, 3^2)[128X[104X
+    [4X[25Xgap>[125X [27XIsometryGroup(ps);[127X[104X
+    [4X[28XPGU(5,3^2)[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X7.7-3 SimilarityGroup[101X
+  
+  [33X[1;0Y[29X[2XSimilarityGroup[102X( [3Xps[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe similarity group of the polar space [3Xps[103X[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := SymplecticSpace(3,4);[127X[104X
+    [4X[28XW(3, 4)[128X[104X
+    [4X[25Xgap>[125X [27XSimilarityGroup(ps);[127X[104X
+    [4X[28XPGSp(4,4)[128X[104X
+    [4X[25Xgap>[125X [27Xps := HyperbolicQuadric(5,8);[127X[104X
+    [4X[28XQ+(5, 8)[128X[104X
+    [4X[25Xgap>[125X [27XSimilarityGroup(ps);[127X[104X
+    [4X[28XPDeltaO+(6,8)[128X[104X
+    [4X[25Xgap>[125X [27Xps := EllipticQuadric(3,27);[127X[104X
+    [4X[28XQ-(3, 27)[128X[104X
+    [4X[25Xgap>[125X [27XSimilarityGroup(ps);[127X[104X
+    [4X[28XPDeltaO-(4,27)[128X[104X
+    [4X[25Xgap>[125X [27Xps := ParabolicQuadric(4,8);[127X[104X
+    [4X[28XQ(4, 8)[128X[104X
+    [4X[25Xgap>[125X [27XSimilarityGroup(ps);[127X[104X
+    [4X[28XPGO(0,5,8)[128X[104X
+    [4X[25Xgap>[125X [27Xps := HermitianPolarSpace(4,9);[127X[104X
+    [4X[28XH(4, 3^2)[128X[104X
+    [4X[25Xgap>[125X [27XSimilarityGroup(ps);[127X[104X
+    [4X[28XPGU(5,3^2)[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X7.7-4 CollineationGroup[101X
+  
+  [33X[1;0Y[29X[2XCollineationGroup[102X( [3Xps[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe collineation group of the polar space [3Xps[103X[133X
+  
+  [33X[0;0YIn  most  cases,  the  full projective semisimilarity group is returned. For
+  two-dimensional unitary groups, the centre may contain elements that are not
+  scalars.  In  this  case,  we  return  a central extension of the projective
+  semisimilarity  group.  If  the  basefield  of  [3Xps[103X  is [22XGF(q^2)[122X, [22Xq[122X prime, the
+  similarity group is returned.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := SymplecticSpace(3,4);[127X[104X
+    [4X[28XW(3, 4)[128X[104X
+    [4X[25Xgap>[125X [27XCollineationGroup(ps);[127X[104X
+    [4X[28XPGammaSp(4,4)[128X[104X
+    [4X[25Xgap>[125X [27Xps := HyperbolicQuadric(5,8);[127X[104X
+    [4X[28XQ+(5, 8)[128X[104X
+    [4X[25Xgap>[125X [27XCollineationGroup(ps);[127X[104X
+    [4X[28XPGammaO+(6,8)[128X[104X
+    [4X[25Xgap>[125X [27Xps := EllipticQuadric(3,27);[127X[104X
+    [4X[28XQ-(3, 27)[128X[104X
+    [4X[25Xgap>[125X [27XCollineationGroup(ps);[127X[104X
+    [4X[28XPGammaO-(4,27)[128X[104X
+    [4X[25Xgap>[125X [27Xps := ParabolicQuadric(4,8);[127X[104X
+    [4X[28XQ(4, 8)[128X[104X
+    [4X[25Xgap>[125X [27XCollineationGroup(ps);[127X[104X
+    [4X[28XPGammaO(5,8)[128X[104X
+    [4X[25Xgap>[125X [27Xps := HermitianPolarSpace(4,9);[127X[104X
+    [4X[28XH(4, 3^2)[128X[104X
+    [4X[25Xgap>[125X [27XCollineationGroup(ps);[127X[104X
+    [4X[28XPGammaU(5,3^2)[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  
+  [1X7.8 [33X[0;0YEnumerating subspaces of polar spaces[133X[101X
+  
+  
+  [1X7.8-1 [33X[0;0YEnumerators for polar spaces[133X[101X
+  
+  [33X[0;0YAn enumerator for a collection of subspaces of a given type of a polar space
+  is  provided in [5XFinInG[105X. If [3XC[103X is such a collection, then [11XList(C)[111X will use the
+  enumerator to compute a list with all the elements of [3XC[103X.[133X
+  
+  [1X7.8-2 Enumerator[101X
+  
+  [33X[1;0Y[29X[2XEnumerator[102X( [3XC[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XList[102X( [3XC[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan enumerator for the collection [3XC[103X and a list with all elements of
+            [3XC[103X[133X
+  
+  [33X[0;0YThe argument [3XC[103X is a collection of subspaces of a polar space.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XEnumerator(Points(ParabolicQuadric(6,3)));[127X[104X
+    [4X[28XEnumeratorOfSubspacesOfClassicalPolarSpace( <points of Q(6, 3)> )[128X[104X
+    [4X[25Xgap>[125X [27XEnumerator(Lines(HermitianPolarSpace(4,4)));[127X[104X
+    [4X[28XEnumeratorOfSubspacesOfClassicalPolarSpace( <lines of H(4, 2^2)> )[128X[104X
+    [4X[25Xgap>[125X [27Xplanes := List(Planes(HermitianPolarSpace(5,4)));;[127X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X11515[128X[104X
+    [4X[25Xgap>[125X [27XLength(planes);[127X[104X
+    [4X[28X891[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  
+  [1X7.8-3 [33X[0;0YIterators for polar spaces[133X[101X
+  
+  [33X[0;0YFor  all  polar  spaces an iterator is constructed using [11XIteratorList(enum)[111X,
+  where [3Xenum[103X is an appropriate enumerator.[133X
+  
+  [1X7.8-4 Iterator[101X
+  
+  [33X[1;0Y[29X[2XIterator[102X( [3Xelements[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan iterator[133X
+  
+  [33X[0;0Y[3XC[103X is a collection of subspaces of a polar space.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xiter := Iterator(Lines(ParabolicQuadric(4,2)));[127X[104X
+    [4X[28X<iterator>[128X[104X
+    [4X[25Xgap>[125X [27XNextIterator(iter);[127X[104X
+    [4X[28X<a line in Q(4, 2)>[128X[104X
+    [4X[25Xgap>[125X [27XNextIterator(iter);[127X[104X
+    [4X[28X<a line in Q(4, 2)>[128X[104X
+    [4X[25Xgap>[125X [27XNextIterator(iter);[127X[104X
+    [4X[28X<a line in Q(4, 2)>[128X[104X
+    [4X[25Xgap>[125X [27XNextIterator(iter);[127X[104X
+    [4X[28X<a line in Q(4, 2)>[128X[104X
+    [4X[25Xgap>[125X [27XNextIterator(iter);[127X[104X
+    [4X[28X<a line in Q(4, 2)>[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X7.8-5 AsList[101X
+  
+  [33X[1;0Y[29X[2XAsList[102X( [3Xsubspaces[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan Orb object or list[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := HyperbolicQuadric(5,3);[127X[104X
+    [4X[28XQ+(5, 3)[128X[104X
+    [4X[25Xgap>[125X [27Xlines := AsList(Lines(ps));[127X[104X
+    [4X[28X<closed orbit, 520 points>[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  

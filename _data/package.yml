@@ -1,7 +1,7 @@
 name: FinInG
-version: "1.4.2dev"
+version: "1.5"
 license: "GPL-2.0-or-later"
-date: 2020-07-03
+date: 2022-07-10
 description: |
     Finite Incidence Geometry
 
@@ -53,15 +53,15 @@ needed-pkgs:
       version: ">=4.8.3"
       url: "https://gap-packages.github.io/orb"
 
-www: http://www.fining.org
+www: https://gap-packages.github.io/fining
 readme: README.md
-packageinfo: http://cage.ugent.be/fining/PackageInfo.g
+packageinfo: https://gap-packages.github.io/fining/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: http://cage.ugent.be/fining/archive/fining-1.4.2dev.tar.gz
+      url: https://github.com/gap-packages/FinInG/releases/download/v1.5/fining-1.5.tar.gz
     - name: .tar.bz2
-      url: http://cage.ugent.be/fining/archive/fining-1.4.2dev.tar.bz2
+      url: https://github.com/gap-packages/FinInG/releases/download/v1.5/fining-1.5.tar.bz2
 
 abstract: |
     <span class="pkgname">FinInG</span> is a package for computation in Finite Incidence Geometry. It provides users with the basic tools to work in  various areas of finite geometry from the realms of projective spaces to the flat  lands of generalised polygons. The algebraic power of GAP is employed, particularly  in its facility with matrix and permutation groups.
@@ -73,25 +73,27 @@ keywords: |
     FinInG, finite, geometry.
 citeas: |
     <p class='BibEntry'>
-    [<span class='BibKey'>BBCBLNH20</span>]   <b class='BibAuthor'>Bamberg, J., Betten, A., Cara, P., De Beule, J., Lavrauw, M., Neunhoeffer, M. and Horn, M.</b>,
+    [<span class='BibKey'>BBCBLNH22</span>]   <b class='BibAuthor'>Bamberg, J., Betten, A., Cara, P., De Beule, J., Lavrauw, M., Neunhoeffer, M. and Horn, M.</b>,
      <i class='BibTitle'>FinInG, Finite Incidence Geometry,
-             Version 1.4.2dev</i>
-     (<span class='BibYear'>2020</span>)<br />
+             Version 1.5</i>
+     (<span class='BibYear'>2022</span>)<br />
     (<span class='BibNote'>Refereed GAP package</span>),
-    <span class='BibHowpublished'><a href="http://www.fining.org">http://www.fining.org</a></span>.
+    <span class='BibHowpublished'><a href="https://gap-packages.github.io/fining">https://gap-packages.github.io/fining</a></span>.
     </p>
     
 
 bibtex: |
-    @misc{ FinInG1.4.2dev,
-      author =           {Bamberg,  J.  and  Betten,  A.  and Cara, P. and De Beule, J. and
-                          Lavrauw, M. and Neunhoeffer, M. and Horn, M.},
-      title =            {{FinInG}, Finite Incidence Geometry, {V}ersion 1.4.2dev},
+    @misc{ FinInG1.5,
+      author =           {Bamberg,  J. and Betten, A. and Cara, P. and De Beule,
+                          J. and Lavrauw, M. and Neunhoeffer, M. and Horn, M.},
+      title =            {{FinInG}, Finite Incidence Geometry, {V}ersion 1.5},
       month =            {Jul},
-      year =             {2020},
+      year =             {2022},
       note =             {Refereed GAP package},
-      howpublished =     {\href {http://www.fining.org} {\texttt{http://www.fining.org}}},
+      howpublished =     {\href          {https://gap-packages.github.io/fining}
+                          {\texttt{https://gap-packages.github.io/}\discretionary
+                          {}{}{}\texttt{fining}}},
       keywords =         {FinInG; finite; geometry},
-      printedkey =       {BBCBLNH20}
+      printedkey =       {BBCBLNH22}
     }
 

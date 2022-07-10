@@ -1,0 +1,2195 @@
+  
+  [1X12 [33X[0;0YGeneralised Polygons[133X[101X
+  
+  [33X[0;0YA  [13Xgeneralised  n-gon[113X  is  a  point/line  geometry  whose incidence graph is
+  bipartite  of  diameter [3Xn[103X and girth [3X2n[103X. Although these rank 2 structures are
+  very  much  a  subdomain  of  [5XGRAPE[105X and [5XDesign[105X, their significance in finite
+  geometry  warrants  their inclusion in [5XFinInG[105X. By the famous theorem of Feit
+  and  Higman,  a  generalised  n-gon which has at least three points on every
+  line,  must  have  [22Xn[122X  in  [22X{2,3,4,6,8}[122X.  The  case  [22Xn=2[122X concerns the complete
+  multipartite  graphs,  which  we  disregard.  The more interesting cases are
+  accordingly   projective   planes   ([22Xn=3[122X),  generalised  quadrangles  ([22Xn=4[122X),
+  generalised hexagons ([22Xn=6[122X), and generalised octagons ([22Xn=8[122X).[133X
+  
+  [33X[0;0Y[5XFinInG[105X  provides  some basic functionality to deal with generalised polygons
+  as  incidence  geometries. A lot of non-trivial interaction with the package
+  [5XGRAPE[105X  has been very useful and even necessary. Currently, generic functions
+  to  create generalised polygons, to create elements of generalised polygons,
+  and  to  explore  the  elements  are implemented. This generic functionality
+  allows  the  user  to  construct generalised polygons through many different
+  objects  available  in  GAP  and [5XFinInG[105X. Apart from these generic functions,
+  some   particular   generalised   polygons   are  available:  the  classical
+  generalised  hexagons  and  elation  generalised  quadrangles from different
+  perspectives can be constructed.[133X
+  
+  
+  [1X12.1 [33X[0;0YCategories[133X[101X
+  
+  [1X12.1-1 IsGeneralisedPolygon[101X
+  
+  [33X[1;0Y[29X[2XIsGeneralisedPolygon[102X [32X Category[133X
+  [33X[1;0Y[29X[2XIsGeneralisedPolygonRep[102X [32X Representation[133X
+  
+  [33X[0;0YThis  category  is  a  subcategory  of [10XIsIncidenceGeometry[110X, and contains all
+  generalised  polygons.  Generalised  polygons  constructed through functions
+  described in this chapter, all belong to [10XIsGeneralisedPolygonRep[110X.[133X
+  
+  
+  [1X12.1-2 [33X[0;0YSubcategories in [10XIsGeneralisedPolygon[110X[101X[1X[133X[101X
+  
+  [33X[1;0Y[29X[2XIsProjectivePlaneCategory[102X [32X Category[133X
+  [33X[1;0Y[29X[2XIsGeneralisedQuadrangle[102X [32X Category[133X
+  [33X[1;0Y[29X[2XIsGeneralisedHexagon[102X [32X Category[133X
+  [33X[1;0Y[29X[2XIsGeneralisedOctagon[102X [32X Category[133X
+  
+  [33X[0;0YAll  generalised  polygons in [5XFinInG[105X belong to one of these four categories.
+  It  is  not possible to construct generalised polygons of which the gonality
+  is  not  known (or checked). Note that the classical generalised quadrangles
+  (which   are   the  classical  polar  spaces  of  rank  2)  belong  also  to
+  [10XIsGeneralisedQuadrangle[110X  and  that the desarguesian projective planes (which
+  are    the    projective   spaces   of   dimension   2)   also   belong   to
+  [10XIsProjectivePlaneCategory[110X,     but     both     do     not     belong     to
+  [10XIsGeneralisedPolygonRep[110X.[133X
+  
+  [1X12.1-3 IsWeakGeneralisedPolygon[101X
+  
+  [33X[1;0Y[29X[2XIsWeakGeneralisedPolygon[102X [32X Category[133X
+  
+  [33X[0;0Y[10XIsWeakGeneralisedPolygon[110X is the category for weak generalised polygons.[133X
+  
+  
+  [1X12.1-4 [33X[0;0YSubcategories in [10XIsProjectivePlaneCategory[110X[101X[1X[133X[101X
+  
+  [33X[1;0Y[29X[2XIsDesarguesianPlane[102X [32X Category[133X
+  
+  [33X[0;0Y[10XIsDesarguesianPlane[110X      is     declared     as     a     subcategory     of
+  [10XIsProjectivePlaneCategory[110X   and   [10XIsProjecticeSpace[110X.  Projective  spaces  of
+  dimension 2 constructed using [11XProjectiveSpace[111X belong to [10XIsDesarguesianPlane[110X.[133X
+  
+  
+  [1X12.1-5 [33X[0;0YSubcategories in [10XIsGeneralisedQuadrangle[110X[101X[1X[133X[101X
+  
+  [33X[1;0Y[29X[2XIsClassicalGQ[102X [32X Category[133X
+  [33X[1;0Y[29X[2XIsElationGQ[102X [32X Category[133X
+  
+  [33X[0;0Y[10XIsClassicalGQ[110X  is  declared  as a subcategory of [10XIsGeneralisedQuadrangle[110X and
+  [10XIsClassicalPolarSpace[110X.  All  classical  polar  spaces  of  rank  2 belong to
+  [10XIsClassicalGQ[110X.     [10XIsElationGQ[110X     is    declared    as    subcategory    of
+  [10XIsGeneralisedQuadrangle[110X.  Elation GQs will be discusedd in detail in Section
+  [14X12.6[114X[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xgp := SymplecticSpace(3,2);[127X[104X
+    [4X[28XW(3, 2)[128X[104X
+    [4X[25Xgap>[125X [27XIsGeneralisedPolygon(gp);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsGeneralisedQuadrangle(gp);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsClassicalGQ(gp);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsGeneralisedPolygonRep(gp);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X12.1-6 IsClassicalGeneralisedHexagon[101X
+  
+  [33X[1;0Y[29X[2XIsClassicalGeneralisedHexagon[102X [32X Category[133X
+  
+  [33X[0;0Y[10XIsClassicalGeneralisedHexagon[110X     is     declared    as    subcategory    of
+  [10XIsGeneralisedHexagon[110X  and [10XIsLieGeometry[110X. The so called classical generalised
+  hexagons  are  the  hexagons  that  come from the triality of the hyperbolic
+  quadric  [22XQ^+(7,q)[122X.  The  Split  Cayley  hexagon is embedded in the parabolic
+  quadric  [22XQ(6,q)[122X,  or  [22XW(5,q)[122X  in  even  characteristic. The twisted triality
+  hexagon  is embedded in the hyperbolic quadric [22XQ^+(7,q)[122X. The construction of
+  these  hexagons  in  a  subcategory  of  [10XIsLieGeometry[110X  means that the usual
+  operations  for  Lie geometries become applicable. The classical generalised
+  hexagons are in detail discussed in Section [14X12.5[114X[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xgp := SplitCayleyHexagon(3);[127X[104X
+    [4X[28XH(3)[128X[104X
+    [4X[25Xgap>[125X [27XIsGeneralisedHexagon(gp);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsClassicalGeneralisedHexagon(gp);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsLieGeometry(gp);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsGeneralisedPolygonRep(gp);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X12.2 [33X[0;0YGeneric functions to create generalised polygons[133X[101X
+  
+  [1X12.2-1 GeneralisedPolygonByBlocks[101X
+  
+  [33X[1;0Y[29X[2XGeneralisedPolygonByBlocks[102X( [3Xl[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya generalised polygon[133X
+  
+  [33X[0;0YThe  argument [3Xl[103X is a finite homogeneous list consisting of ordered sets of a
+  common  size  [22Xn+1[122X.  This  operation  will  assume  that  each  element  of [3Xl[103X
+  represents  a  line of the generalised polygon. Its points are assumed to be
+  the  union  of all elements of [3Xl[103X. The incidence is assumed to be symmetrised
+  containment.  From  this  information,  an incidence graph is computed using
+  [5XGRAPE[105X.  If  this graph has diameter [22Xd[122X and girth [22X2d[122X, a generalised polygon is
+  returned.  The  thickness  condition  is  not  checked.  If [22Xd ∈ {3,4,6,8}[122X, a
+  projective  plane,  a  generalised  quadrangle,  a  generalised  hexagon,  a
+  generalised  octagon  respectively,  is returned. Note that for large input,
+  this operation can be time consuming.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xblocks := [ [127X[104X
+    [4X[25X>[125X [27X  [ 1, 2, 3, 4, 5 ], [ 1, 6, 7, 8, 9 ], [ 1, 10, 11, 12, 13 ],[127X[104X
+    [4X[25X>[125X [27X  [ 1, 14, 15, 16, 17 ], [ 1, 18, 19, 20, 21 ], [ 2, 6, 10, 14, 18 ], [127X[104X
+    [4X[25X>[125X [27X  [ 2, 7, 11, 15, 19 ], [ 2, 8, 12, 16, 20 ], [ 2, 9, 13, 17, 21 ], [127X[104X
+    [4X[25X>[125X [27X  [ 3, 6, 11, 16, 21 ], [ 3, 7, 10, 17, 20 ], [ 3, 8, 13, 14, 19 ], [127X[104X
+    [4X[25X>[125X [27X  [ 3, 9, 12, 15, 18 ], [ 4, 6, 12, 17, 19 ], [ 4, 7, 13, 16, 18 ], [127X[104X
+    [4X[25X>[125X [27X  [ 4, 8, 10, 15, 21 ], [ 4, 9, 11, 14, 20 ], [ 5, 6, 13, 15, 20 ], [127X[104X
+    [4X[25X>[125X [27X  [ 5, 7, 12, 14, 21 ], [ 5, 8, 11, 17, 18 ], [ 5, 9, 10, 16, 19 ] ];;[127X[104X
+    [4X[25Xgap>[125X [27Xgp := GeneralisedPolygonByBlocks( blocks );[127X[104X
+    [4X[28X<projective plane order 4>[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X12.2-2 GeneralisedPolygonByIncidenceMatrix[101X
+  
+  [33X[1;0Y[29X[2XGeneralisedPolygonByIncidenceMatrix[102X( [3Xincmat[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya generalised polygon[133X
+  
+  [33X[0;0YThe argument [22Xincmat[122X is a matrix representing the incidence matrix of a point
+  line geometry. The points are represented by the columns, the rows represent
+  the  lines.  From  [3Xincmat[103X  a  homogeneous  list of sets of column entries is
+  derived,  which  is  then  passed to [11XGeneralisedPolygonByBlocks[111X. When [3Xincmat[103X
+  indeed  represents  a  generalised  polygon,  it is returned. The checks are
+  performed by [11XGeneralisedPolygonByBlocks[111X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xincmat := [ [127X[104X
+    [4X[25X>[125X [27X  [ 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [127X[104X
+    [4X[25X>[125X [27X  [ 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [127X[104X
+    [4X[25X>[125X [27X  [ 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0 ], [127X[104X
+    [4X[25X>[125X [27X  [ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0 ], [127X[104X
+    [4X[25X>[125X [27X  [ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1 ], [127X[104X
+    [4X[25X>[125X [27X  [ 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 ], [127X[104X
+    [4X[25X>[125X [27X  [ 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0 ], [127X[104X
+    [4X[25X>[125X [27X  [ 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0 ], [127X[104X
+    [4X[25X>[125X [27X  [ 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1 ], [127X[104X
+    [4X[25X>[125X [27X  [ 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 ], [127X[104X
+    [4X[25X>[125X [27X  [ 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0 ], [127X[104X
+    [4X[25X>[125X [27X  [ 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0 ], [127X[104X
+    [4X[25X>[125X [27X  [ 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0 ], [127X[104X
+    [4X[25X>[125X [27X  [ 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0 ], [127X[104X
+    [4X[25X>[125X [27X  [ 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0 ], [127X[104X
+    [4X[25X>[125X [27X  [ 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1 ], [127X[104X
+    [4X[25X>[125X [27X  [ 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0 ], [127X[104X
+    [4X[25X>[125X [27X  [ 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0 ], [127X[104X
+    [4X[25X>[125X [27X  [ 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1 ], [127X[104X
+    [4X[25X>[125X [27X  [ 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0 ], [127X[104X
+    [4X[25X>[125X [27X  [ 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0 ] ];;[127X[104X
+    [4X[25Xgap>[125X [27Xpp := GeneralisedPolygonByIncidenceMatrix( incmat );[127X[104X
+    [4X[28X<projective plane order 4>[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X12.2-3 GeneralisedPolygonByElements[101X
+  
+  [33X[1;0Y[29X[2XGeneralisedPolygonByElements[102X( [3Xpts[103X, [3Xlns[103X, [3Xinc[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XGeneralisedPolygonByElements[102X( [3Xpts[103X, [3Xlns[103X, [3Xinc[103X, [3Xgrp[103X, [3Xact[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya generalised polygon[133X
+  
+  [33X[0;0YThe  argument  [3Xpts[103X,  [3Xlns[103X and [3Xinc[103X are respectively a set of objects, a set of
+  objects  and  a  function.  The  function  [3Xinc[103X  must  represent an incidence
+  relation   between   objects   of   [3Xpts[103X   and  [3Xlns[103X.  The  first  version  of
+  [11XGeneralisedPolygonByElements[111X  will construct an incidence graph, and if this
+  graph  has  diameter  [22Xd[122X and girth [22X2d[122X, a generalised polygon is returned. The
+  thickness  condition is not checked. If [22Xd ∈ {3,4,6,8}[122X, a projective plane, a
+  generalised   quadrangle,  a  generalised  hexagon,  a  generalised  octagon
+  respectively,  is returned. The argument [3Xgrp[103X is a group, and [3Xact[103X a function,
+  representing  an  action  of the elements of [3Xgrp[103X on the objects in the lists
+  [3Xpts[103X   and   [3Xlns[103X,   preserving   the   incidence.   The   second  version  of
+  [11XGeneralisedPolygonByElements[111X acts as the first version, but uses [3Xgrp[103X and [3Xact[103X
+  to construct the incidence graph in a more efficient way, so if [3Xgrp[103X is a non
+  trivial  group, the construction of the graph will be faster. This operation
+  can  typically  be  used to construct generalised polygons from objects that
+  are  available  in [5XFinInG[105X. This difference in time is shown in the first two
+  examples.  The  third  examples  shows  the  construction of the generalised
+  quadrangle [22XT_2(O)[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xpg := PG(2,25);[127X[104X
+    [4X[28XProjectiveSpace(2, 25)[128X[104X
+    [4X[25Xgap>[125X [27Xpts := Set(Points(pg));;[127X[104X
+    [4X[25Xgap>[125X [27Xlns := Set(Lines(pg));;[127X[104X
+    [4X[25Xgap>[125X [27Xinc := \*;[127X[104X
+    [4X[28X<Operation "*">[128X[104X
+    [4X[25Xgap>[125X [27Xgp := GeneralisedPolygonByElements(pts,lns,inc);[127X[104X
+    [4X[28X<projective plane order 25>[128X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X26427[128X[104X
+    [4X[25Xgap>[125X [27Xgrp := CollineationGroup(pg);[127X[104X
+    [4X[28XThe FinInG collineation group PGammaL(3,25)[128X[104X
+    [4X[25Xgap>[125X [27Xact := OnProjSubspaces;[127X[104X
+    [4X[28Xfunction( var, el ) ... end[128X[104X
+    [4X[25Xgap>[125X [27Xgp := GeneralisedPolygonByElements(pts,lns,inc,grp,act);[127X[104X
+    [4X[28X<projective plane order 25>[128X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X127[128X[104X
+    [4X[25Xgap>[125X [27Xq := 4;[127X[104X
+    [4X[28X4[128X[104X
+    [4X[25Xgap>[125X [27Xconic := Set(Points(ParabolicQuadric(2,q)));[127X[104X
+    [4X[28X[ <a point in Q(2, 4)>, <a point in Q(2, 4)>, <a point in Q(2, 4)>, [128X[104X
+    [4X[28X  <a point in Q(2, 4)>, <a point in Q(2, 4)> ][128X[104X
+    [4X[25Xgap>[125X [27Xpg := PG(3,q);[127X[104X
+    [4X[28XProjectiveSpace(3, 4)[128X[104X
+    [4X[25Xgap>[125X [27Xhyp :=  HyperplaneByDualCoordinates(pg,[1,0,0,0]*Z(q)^0);[127X[104X
+    [4X[28X<a plane in ProjectiveSpace(3, 4)>[128X[104X
+    [4X[25Xgap>[125X [27Xem := NaturalEmbeddingBySubspace(PG(2,q),pg,hyp);[127X[104X
+    [4X[28X<geometry morphism from <All elements of ProjectiveSpace(2, [128X[104X
+    [4X[28X4)> to <All elements of ProjectiveSpace(3, 4)>>[128X[104X
+    [4X[25Xgap>[125X [27XO := List(conic,x->x^em);;[127X[104X
+    [4X[25Xgap>[125X [27Xgroup := CollineationGroup(pg);[127X[104X
+    [4X[28XThe FinInG collineation group PGammaL(4,4)[128X[104X
+    [4X[25Xgap>[125X [27Xstab := FiningSetwiseStabiliser(group,O);[127X[104X
+    [4X[28X#I  Computing adjusted stabilizer chain...[128X[104X
+    [4X[28X<projective collineation group with 6 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xpoints1 := Set(Filtered(Points(pg),x->not x in hyp));;[127X[104X
+    [4X[25Xgap>[125X [27Xtangents := List(conic,x->TangentSpace(x)^em);[127X[104X
+    [4X[28X[ <a line in ProjectiveSpace(3, 4)>, <a line in ProjectiveSpace(3, 4)>, [128X[104X
+    [4X[28X  <a line in ProjectiveSpace(3, 4)>, <a line in ProjectiveSpace(3, 4)>, [128X[104X
+    [4X[28X  <a line in ProjectiveSpace(3, 4)> ][128X[104X
+    [4X[25Xgap>[125X [27Xplanes := List(tangents,x->Filtered(Planes(x),y->not y in hyp));;[127X[104X
+    [4X[25Xgap>[125X [27Xpoints2 := Union(planes);;[127X[104X
+    [4X[25Xgap>[125X [27Xpoints3 := [hyp];[127X[104X
+    [4X[28X[ <a plane in ProjectiveSpace(3, 4)> ][128X[104X
+    [4X[25Xgap>[125X [27Xlinesa := Union(List(O,x->Filtered(Lines(x),y->not y in hyp)));;[127X[104X
+    [4X[25Xgap>[125X [27Xlinesb := Set(O);;[127X[104X
+    [4X[25Xgap>[125X [27Xpts := Union(points1,points2,points3);;[127X[104X
+    [4X[25Xgap>[125X [27Xlns := Union(linesa,linesb);;[127X[104X
+    [4X[25Xgap>[125X [27Xinc := \*;[127X[104X
+    [4X[28X<Operation "*">[128X[104X
+    [4X[25Xgap>[125X [27Xgp := GeneralisedPolygonByElements(pts,lns,inc,stab,\^);[127X[104X
+    [4X[28X<generalised quadrangle of order [ 4, 4 ]>[128X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X50[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X12.3 [33X[0;0YAttributes and operations for generalised polygons[133X[101X
+  
+  [33X[0;0YAll  operations  described  in this section are applicable on objects in the
+  category [10XIsGeneralisedPolygon[110X.[133X
+  
+  [1X12.3-1 Order[101X
+  
+  [33X[1;0Y[29X[2XOrder[102X( [3Xgp[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya pair of positive integers[133X
+  
+  [33X[0;0YThis method returns the parameters [22X(s,t)[122X of the generalised polygon [3Xgp[103X. That
+  is,  [22Xs+1[122X is the number of points on any line of [3Xgp[103X, and [22Xt+1[122X is the number of
+  lines incident with any point of [3Xgp[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xgp := TwistedTrialityHexagon(2^3);[127X[104X
+    [4X[28XT(8, 2)[128X[104X
+    [4X[25Xgap>[125X [27XOrder(gp);[127X[104X
+    [4X[28X[ 8, 2 ][128X[104X
+    [4X[25Xgap>[125X [27Xgp := HermitianPolarSpace(4,25);[127X[104X
+    [4X[28XH(4, 5^2)[128X[104X
+    [4X[25Xgap>[125X [27XOrder(gp);[127X[104X
+    [4X[28X[ 25, 125 ][128X[104X
+    [4X[25Xgap>[125X [27Xgp := EGQByqClan(LinearqClan(3));[127X[104X
+    [4X[28X#I  Computed Kantor family. Now computing EGQ...[128X[104X
+    [4X[28X<EGQ of order [ 9, 3 ] and basepoint 0>[128X[104X
+    [4X[25Xgap>[125X [27XOrder(gp);[127X[104X
+    [4X[28X[ 9, 3 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X12.3-2 IncidenceGraphAttr[101X
+  
+  [33X[1;0Y[29X[2XIncidenceGraphAttr[102X( [3Xgp[103X ) [32X attribute[133X
+  
+  [33X[0;0YThis  attribute  is  declared  for  objects in [10XIsGeneralisedPolygon[110X. It is a
+  mutable attribute and can be accessed by the operation [11XIncidenceGraph[111X.[133X
+  
+  [1X12.3-3 IncidenceGraph[101X
+  
+  [33X[1;0Y[29X[2XIncidenceGraph[102X( [3Xgp[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya graph[133X
+  
+  [33X[0;0YThe  argument  [3Xgp[103X  is  a  generalised  polygon.  This  operation returns the
+  incidence     graph     of     [3Xgp[103X.    If    [3Xgp[103X    is    constructed    using
+  [11XGeneralisedPolygonByBlocks[111X,          [11XGeneralisedPolygonByElements[111X         or
+  [11XGeneralisedPolygonByIncidenceMatrix[111X, an incidence graph is computed to check
+  the  input,  and  is  stored as an attribute. For the particular generalised
+  polygons  available in [5XFinInG[105X, there is no precomputed incidence graph. Note
+  that computing an incidence graph may require some time, especially when the
+  [3Xgp[103X has no collineation group computed. Therefore, this operation will return
+  an error when [3Xgp[103X has no collineation group computed. As [11XCollineationGroup[111X is
+  an  attribute  for  objects in [10XIsGeneralisedPolygon[110X, the user should compute
+  the collineation group and then reissue the command to compute the incidence
+  graph.[133X
+  
+  [33X[0;0YWe should also point out that this method returns a [13Xmutable[113X attribute of [3Xgp[103X,
+  so  that  acquired  information  about the incidence graph can be added. For
+  example,  the  automorphism group of the incidence graph may be computed and
+  stored  as  a  record  component  after  the incidence graph is stored as an
+  attribute of [3Xgp[103X. Normally, attributes of GAP objects are immutable.[133X
+  
+  [33X[0;0YNote  that the factor 2 as difference in the order of the collineation group
+  of  [22XQ(4,4)[122X and the order of the automorphism group of its incidence graph is
+  easily explained by the fact that the [22XQ(4,4)[122X is self dual.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xblocks := [ [127X[104X
+    [4X[25X>[125X [27X   [ 1, 2, 3, 4, 5 ], [ 1, 6, 7, 8, 9 ], [ 1, 10, 11, 12, 13 ],[127X[104X
+    [4X[25X>[125X [27X   [ 1, 14, 15, 16, 17 ], [ 1, 18, 19, 20, 21 ], [ 2, 6, 10, 14, 18 ], [127X[104X
+    [4X[25X>[125X [27X   [ 2, 7, 11, 15, 19 ], [ 2, 8, 12, 16, 20 ], [ 2, 9, 13, 17, 21 ], [127X[104X
+    [4X[25X>[125X [27X   [ 3, 6, 11, 16, 21 ], [ 3, 7, 10, 17, 20 ], [ 3, 8, 13, 14, 19 ], [127X[104X
+    [4X[25X>[125X [27X   [ 3, 9, 12, 15, 18 ], [ 4, 6, 12, 17, 19 ], [ 4, 7, 13, 16, 18 ], [127X[104X
+    [4X[25X>[125X [27X   [ 4, 8, 10, 15, 21 ], [ 4, 9, 11, 14, 20 ], [ 5, 6, 13, 15, 20 ], [127X[104X
+    [4X[25X>[125X [27X   [ 5, 7, 12, 14, 21 ], [ 5, 8, 11, 17, 18 ], [ 5, 9, 10, 16, 19 ] ];;[127X[104X
+    [4X[25Xgap>[125X [27Xgp := GeneralisedPolygonByBlocks( blocks );[127X[104X
+    [4X[28X<projective plane order 4>[128X[104X
+    [4X[25Xgap>[125X [27Xincgraph := IncidenceGraph( gp );;[127X[104X
+    [4X[25Xgap>[125X [27XDiameter( incgraph );[127X[104X
+    [4X[28X3[128X[104X
+    [4X[25Xgap>[125X [27XGirth( incgraph );[127X[104X
+    [4X[28X6[128X[104X
+    [4X[25Xgap>[125X [27XVertexDegrees( incgraph );[127X[104X
+    [4X[28X[ 5 ][128X[104X
+    [4X[25Xgap>[125X [27Xaut := AutGroupGraph( incgraph );[127X[104X
+    [4X[28X<permutation group with 9 generators>[128X[104X
+    [4X[25Xgap>[125X [27XDisplayCompositionSeries(aut);[127X[104X
+    [4X[28XG (9 gens, size 241920)[128X[104X
+    [4X[28X | Z(2)[128X[104X
+    [4X[28XS (5 gens, size 120960)[128X[104X
+    [4X[28X | Z(2)[128X[104X
+    [4X[28XS (5 gens, size 60480)[128X[104X
+    [4X[28X | Z(3)[128X[104X
+    [4X[28XS (4 gens, size 20160)[128X[104X
+    [4X[28X | A(2,4) = L(3,4)[128X[104X
+    [4X[28X1 (0 gens, size 1)[128X[104X
+    [4X[25Xgap>[125X [27Xgp := ParabolicQuadric(4,4);[127X[104X
+    [4X[28XQ(4, 4)[128X[104X
+    [4X[25Xgap>[125X [27Xincgraph := IncidenceGraph( gp );;[127X[104X
+    [4X[28XError, No collineation group computed. Please compute collineation group before compu[128X[104X
+    [4X[28Xting incidence graph,n called from[128X[104X
+    [4X[28X<function "unknown">( <arguments> )[128X[104X
+    [4X[28X called from read-eval loop at line 24 of *stdin*[128X[104X
+    [4X[28Xyou can 'quit;' to quit to outer loop, or[128X[104X
+    [4X[28Xyou can 'return;' to continue[128X[104X
+    [4X[26Xbrk>[126X [27Xquit;[127X[104X
+    [4X[25Xgap>[125X [27XCollineationGroup(gp);[127X[104X
+    [4X[28XPGammaO(5,4)[128X[104X
+    [4X[25Xgap>[125X [27XOrder(last);[127X[104X
+    [4X[28X1958400[128X[104X
+    [4X[25Xgap>[125X [27Xincgraph := IncidenceGraph( gp );;[127X[104X
+    [4X[28X#I  Computing incidence graph of generalised polygon...[128X[104X
+    [4X[25Xgap>[125X [27Xaut := AutGroupGraph( incgraph );[127X[104X
+    [4X[28X<permutation group with 10 generators>[128X[104X
+    [4X[25Xgap>[125X [27XOrder(aut);[127X[104X
+    [4X[28X3916800[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X12.3-4 IncidenceMatrixOfGeneralisedPolygon[101X
+  
+  [33X[1;0Y[29X[2XIncidenceMatrixOfGeneralisedPolygon[102X( [3Xgp[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya matrix[133X
+  
+  [33X[0;0YThis  method returns the incidence matrix of the generalised polygon via the
+  operation [10XCollapsedAdjacencyMat[110X in the [5XGRAPE[105X package. The rows of the matrix
+  correspond  to  the  points  of [3Xgp[103X, and the columns correspond to the lines.
+  Note   that   since  this  operation  relies  on  [11XIncidenceGraph[111X,  for  some
+  generalised polygons, it is necessary to compute a collineation group first.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xgp := SymplecticSpace(3,2);[127X[104X
+    [4X[28XW(3, 2)[128X[104X
+    [4X[25Xgap>[125X [27XCollineationGroup(gp);[127X[104X
+    [4X[28XPGammaSp(4,2)[128X[104X
+    [4X[25Xgap>[125X [27Xmat := IncidenceMatrixOfGeneralisedPolygon(gp);[127X[104X
+    [4X[28X#I  Computing incidence graph of generalised polygon...[128X[104X
+    [4X[28X[ [ 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 ], [128X[104X
+    [4X[28X  [ 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 ], [128X[104X
+    [4X[28X  [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0 ], [128X[104X
+    [4X[28X  [ 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0 ], [128X[104X
+    [4X[28X  [ 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0 ], [128X[104X
+    [4X[28X  [ 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0 ], [128X[104X
+    [4X[28X  [ 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 ], [128X[104X
+    [4X[28X  [ 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0 ], [128X[104X
+    [4X[28X  [ 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0 ], [128X[104X
+    [4X[28X  [ 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0 ], [128X[104X
+    [4X[28X  [ 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0 ], [128X[104X
+    [4X[28X  [ 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1 ], [128X[104X
+    [4X[28X  [ 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1 ], [128X[104X
+    [4X[28X  [ 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0 ], [128X[104X
+    [4X[28X  [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1 ] ][128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X12.3-5 CollineationGroup[101X
+  
+  [33X[1;0Y[29X[2XCollineationGroup[102X( [3Xgp[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya group[133X
+  
+  [33X[0;0YThis  attribute  returns  the  full  collineation  group  of the generalised
+  polygon  [3Xgp[103X.  For  some particular generalised polygons, a (subgroup) of the
+  full  collineation  group  can be computed efficiently without computing the
+  incidence  graph of [3Xgp[103X: the full collineation group of classical generalised
+  quadrangles  and  classical  generalised hexagons; and an elation group with
+  relation   to  a  base-point  of  an  elation  generalised  quadrangle.  For
+  generalised       polygons      constructed      by      the      operations
+  [11XGeneralisedPolygonByBlocks[111X,          [11XGeneralisedPolygonByElements[111X         or
+  [11XGeneralisedPolygonByIncidenceMatrix[111X, the full collineation group is computed
+  using  the  full  automorphism  group of the underlying incidence graph, the
+  latter being computed by the package [5XGRAPE[105X.[133X
+  
+  [33X[0;0YThe  collineation  groups computed for classical generalised quadrangles and
+  classical  generalised  hexagons  are  collineation  groups  in the sense of
+  [5XFinInG[105X,  and  come equipped with a NiceMonomorphism. The collineation groups
+  computed  in all other cases are permutations groups, acting on the vertices
+  of the underlying incidence graph.[133X
+  
+  [33X[0;0YNote  that the computation of the automorphism group of the underlying graph
+  can  be  time  consuming,  also  if  the  complete collineation group of the
+  generalised    polygon    has   been   used   as   an   argument   in   e.g.
+  [11XGeneralisedPolygonByElements[111X.[133X
+  
+  [33X[0;0YThe first example illustrates that [11XCollineationGroup[111X is naturally applicable
+  to all classical generalised Polygons.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xgp := PG(2,2);[127X[104X
+    [4X[28XProjectiveSpace(2, 2)[128X[104X
+    [4X[25Xgap>[125X [27XCollineationGroup(gp);[127X[104X
+    [4X[28XThe FinInG collineation group PGL(3,2)[128X[104X
+    [4X[25Xgap>[125X [27Xgp := EllipticQuadric(5,4);[127X[104X
+    [4X[28XQ-(5, 4)[128X[104X
+    [4X[25Xgap>[125X [27XCollineationGroup(gp);[127X[104X
+    [4X[28XPGammaO-(6,4)[128X[104X
+    [4X[25Xgap>[125X [27Xgp := TwistedTrialityHexagon(3^3);[127X[104X
+    [4X[28XT(27, 3)[128X[104X
+    [4X[25Xgap>[125X [27XCollineationGroup(gp);[127X[104X
+    [4X[28X#I  Computing nice monomorphism...[128X[104X
+    [4X[28X#I  Found permutation domain...[128X[104X
+    [4X[28X3D_4(27)[128X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X40691[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  second  example  illustrates  the computation of collineation groups of
+  generalised polygons constructed using different objects.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat := [ [ 1, 1, 0, 0, 0, 1, 0 ], [ 1, 0, 0, 1, 1, 0, 0 ],[127X[104X
+    [4X[25X>[125X [27X         [ 1, 0, 1, 0, 0, 0, 1 ], [ 0, 1, 1, 1, 0, 0, 0 ],[127X[104X
+    [4X[25X>[125X [27X         [ 0, 1, 0, 0, 1, 0, 1 ], [ 0, 0, 0, 1, 0, 1, 1 ],[127X[104X
+    [4X[25X>[125X [27X         [ 0, 0, 1, 0, 1, 1, 0 ] ];[127X[104X
+    [4X[28X[ [ 1, 1, 0, 0, 0, 1, 0 ], [ 1, 0, 0, 1, 1, 0, 0 ], [ 1, 0, 1, 0, 0, 0, 1 ], [128X[104X
+    [4X[28X  [ 0, 1, 1, 1, 0, 0, 0 ], [ 0, 1, 0, 0, 1, 0, 1 ], [ 0, 0, 0, 1, 0, 1, 1 ], [128X[104X
+    [4X[28X  [ 0, 0, 1, 0, 1, 1, 0 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xgp := GeneralisedPolygonByIncidenceMatrix(mat);[127X[104X
+    [4X[28X<projective plane order 2>[128X[104X
+    [4X[25Xgap>[125X [27Xgroup := CollineationGroup(gp);[127X[104X
+    [4X[28XGroup([ (3,4)(5,7)(9,10)(13,14), (3,7)(4,5)(11,12)(13,14), (2,3)(6,7)(8,9)[128X[104X
+    [4X[28X(12,13), (2,6)(4,5)(11,13)(12,14), (1,2)(4,7)(9,11)(10,12) ])[128X[104X
+    [4X[25Xgap>[125X [27Xgp := EGQByqClan(FisherqClan(3));[127X[104X
+    [4X[28X#I  Computed Kantor family. Now computing EGQ...[128X[104X
+    [4X[28X<EGQ of order [ 9, 3 ] and basepoint 0>[128X[104X
+    [4X[25Xgap>[125X [27Xgroup := CollineationGroup(gp);[127X[104X
+    [4X[28X#I  Computing incidence graph of generalised polygon...[128X[104X
+    [4X[28X#I  Using elation of the collineation group...[128X[104X
+    [4X[28X<permutation group of size 26127360 with 8 generators>[128X[104X
+    [4X[25Xgap>[125X [27XOrder(group);[127X[104X
+    [4X[28X26127360[128X[104X
+    [4X[25Xgap>[125X [27XRandom(group);[127X[104X
+    [4X[28X(1,75,27,191,96,50,9,110,88,53,63,154,115,213,229,19,236,226,49,143,16,266,58,[128X[104X
+    [4X[28X245,11,270,57,44)(2,181,116,225,262,223,17)(3,33,187,149,108,120,177,164,167,[128X[104X
+    [4X[28X261,198,26,196,276,52,73,94,222,101,176,32,39,43,89,31,280,65,71)(4,250,173,[128X[104X
+    [4X[28X112,246,38,142,138,54,208,69,243,197,42,269,242,125,8,134,265,67,206,20,13,29,[128X[104X
+    [4X[28X182,205,36)(5,109,129,82,210,277,185,56,104,114,90,68,61,228,132,235,78,257,[128X[104X
+    [4X[28X10,238,145,184,241,170,153,263,45,179)(6,159,230,106,147,91,22,137,256,113,[128X[104X
+    [4X[28X117,180,7,133,279,100,55,156,168,86,122,131,12,35,273,264,254,152)(14,62,66,[128X[104X
+    [4X[28X268,51,233,253,218,172,130,144,25,169,83,234,127,171,221,34,190,21,46,272,224,[128X[104X
+    [4X[28X239,267,60,98)(15,40,278,128,160,215,87,178,203,166,247,119,209,84,255,271,[128X[104X
+    [4X[28X232,81,193,252,92,95,111,201,107,140,135,258)( [...] )[128X[104X
+    [4X[25Xgap>[125X [27Xq := 4;[127X[104X
+    [4X[28X4[128X[104X
+    [4X[25Xgap>[125X [27Xconic := ParabolicQuadric(2,q);[127X[104X
+    [4X[28XQ(2, 4)[128X[104X
+    [4X[25Xgap>[125X [27Xnucleus := NucleusOfParabolicQuadric(conic);[127X[104X
+    [4X[28X<a point in ProjectiveSpace(2, 4)>[128X[104X
+    [4X[25Xgap>[125X [27Xconic := ParabolicQuadric(2,q);[127X[104X
+    [4X[28XQ(2, 4)[128X[104X
+    [4X[25Xgap>[125X [27Xnucleus := NucleusOfParabolicQuadric(conic);[127X[104X
+    [4X[28X<a point in ProjectiveSpace(2, 4)>[128X[104X
+    [4X[25Xgap>[125X [27Xhyperoval := Union(List(Points(conic)),[nucleus]);[127X[104X
+    [4X[28X[ <a point in ProjectiveSpace(2, 4)>, <a point in Q(2, 4)>, [128X[104X
+    [4X[28X  <a point in Q(2, 4)>, <a point in Q(2, 4)>, <a point in Q(2, 4)>, [128X[104X
+    [4X[28X  <a point in Q(2, 4)> ][128X[104X
+    [4X[25Xgap>[125X [27Xpg := PG(3,q);[127X[104X
+    [4X[28XProjectiveSpace(3, 4)[128X[104X
+    [4X[25Xgap>[125X [27Xhyp :=  HyperplaneByDualCoordinates(pg,[1,0,0,0]*Z(q)^0);[127X[104X
+    [4X[28X<a plane in ProjectiveSpace(3, 4)>[128X[104X
+    [4X[25Xgap>[125X [27Xem := NaturalEmbeddingBySubspace(PG(2,q),pg,hyp);[127X[104X
+    [4X[28X<geometry morphism from <All elements of ProjectiveSpace(2, [128X[104X
+    [4X[28X4)> to <All elements of ProjectiveSpace(3, 4)>>[128X[104X
+    [4X[25Xgap>[125X [27XO := List(hyperoval,x->x^em);[127X[104X
+    [4X[28X[ <a point in ProjectiveSpace(3, 4)>, <a point in ProjectiveSpace(3, 4)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(3, 4)>, <a point in ProjectiveSpace(3, 4)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(3, 4)>, <a point in ProjectiveSpace(3, 4)> ][128X[104X
+    [4X[25Xgap>[125X [27Xpoints := Set(Filtered(Points(pg),x->not x in hyp));;[127X[104X
+    [4X[25Xgap>[125X [27Xlines := Union(List(O,x->Filtered(Lines(x),y->not y in hyp)));;[127X[104X
+    [4X[25Xgap>[125X [27Xinc := \*;[127X[104X
+    [4X[28X<Operation "*">[128X[104X
+    [4X[25Xgap>[125X [27Xgp := GeneralisedPolygonByElements(points,lines,inc);[127X[104X
+    [4X[28X<generalised quadrangle of order [ 3, 5 ]>[128X[104X
+    [4X[25Xgap>[125X [27Xcoll := CollineationGroup(gp);[127X[104X
+    [4X[28X<permutation group of size 138240 with 8 generators>[128X[104X
+    [4X[25Xgap>[125X [27XOrder(coll);[127X[104X
+    [4X[28X138240[128X[104X
+    [4X[25Xgap>[125X [27XRandom(coll);[127X[104X
+    [4X[28X(1,29,60,40)(2,42,4,10,3,61,59,19,57,51,58,8)(5,21,17,25,52,13,64,48,44,36,9,[128X[104X
+    [4X[28X56)(6,34,41,55,50,45,63,27,20,14,11,24)(7,53,18,46,12,35,62,16,43,23,49,[128X[104X
+    [4X[28X26)(15,32,47,31,28,39,54,37,22,38,33,30)(65,74,83,111,66,117,149,104,70,151,[128X[104X
+    [4X[28X142,78)(67,135,139,136,68,109,98,125,69,95,120,137)(71,92,73,128,77,106,141,[128X[104X
+    [4X[28X105,145,150,88,155)(72,121,158,160,76,143,119,103,138,152,134,84)(75,153,133,[128X[104X
+    [4X[28X107,115,122,118,85,154,116,147,91)(79,110,101,159,126,90,157,81,112,100,89,[128X[104X
+    [4X[28X108)(80,99,97,86,156,129,144,94,127,114,148,82)(87,132,102,131,123,130,124,96,[128X[104X
+    [4X[28X93,113,146,140)[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YIn  the  third  example,  the  use  of  an precomputed automorphism group is
+  illustrated.  It  speeds up the construction of the underlying graph and the
+  computation  of  the automorphism group of the underlying graph. However, as
+  is   also   illustrated   in  the  example,  despite  that  the  precomputed
+  automorphism   group  of  the  generalised  polygon  is  actually  the  full
+  collineation  group,  still  some time is needed to compute the automorphism
+  group  of  the  underlying  graph.  The timings after both [11XCollineationGroup[111X
+  commands  are  wrong.  This is because [5XGRAPE[105X relies on an external binary to
+  computed  the  automorphism  group of a graph. The generalised quadrangle in
+  this example is known as [22XT_2^*(O)[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xq := 8;[127X[104X
+    [4X[28X8[128X[104X
+    [4X[25Xgap>[125X [27Xconic := ParabolicQuadric(2,q);[127X[104X
+    [4X[28XQ(2, 8)[128X[104X
+    [4X[25Xgap>[125X [27Xnucleus := NucleusOfParabolicQuadric(conic);[127X[104X
+    [4X[28X<a point in ProjectiveSpace(2, 8)>[128X[104X
+    [4X[25Xgap>[125X [27Xhyperoval := Union(List(Points(conic)),[nucleus]);[127X[104X
+    [4X[28X[ <a point in ProjectiveSpace(2, 8)>, <a point in Q(2, 8)>, [128X[104X
+    [4X[28X  <a point in Q(2, 8)>, <a point in Q(2, 8)>, <a point in Q(2, 8)>, [128X[104X
+    [4X[28X  <a point in Q(2, 8)>, <a point in Q(2, 8)>, <a point in Q(2, 8)>, [128X[104X
+    [4X[28X  <a point in Q(2, 8)>, <a point in Q(2, 8)> ][128X[104X
+    [4X[25Xgap>[125X [27Xpg := PG(3,q);[127X[104X
+    [4X[28XProjectiveSpace(3, 8)[128X[104X
+    [4X[25Xgap>[125X [27Xhyp :=  HyperplaneByDualCoordinates(pg,[1,0,0,0]*Z(q)^0);[127X[104X
+    [4X[28X<a plane in ProjectiveSpace(3, 8)>[128X[104X
+    [4X[25Xgap>[125X [27Xem := NaturalEmbeddingBySubspace(PG(2,q),pg,hyp);[127X[104X
+    [4X[28X<geometry morphism from <All elements of ProjectiveSpace(2, [128X[104X
+    [4X[28X8)> to <All elements of ProjectiveSpace(3, 8)>>[128X[104X
+    [4X[25Xgap>[125X [27XO := List(hyperoval,x->x^em);[127X[104X
+    [4X[28X[ <a point in ProjectiveSpace(3, 8)>, <a point in ProjectiveSpace(3, 8)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(3, 8)>, <a point in ProjectiveSpace(3, 8)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(3, 8)>, <a point in ProjectiveSpace(3, 8)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(3, 8)>, <a point in ProjectiveSpace(3, 8)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(3, 8)>, <a point in ProjectiveSpace(3, 8)> ][128X[104X
+    [4X[25Xgap>[125X [27Xpoints := Set(Filtered(Points(pg),x->not x in hyp));;[127X[104X
+    [4X[25Xgap>[125X [27Xlines := Union(List(O,x->Filtered(Lines(x),y->not y in hyp)));;[127X[104X
+    [4X[25Xgap>[125X [27Xinc := \*;[127X[104X
+    [4X[28X<Operation "*">[128X[104X
+    [4X[25Xgap>[125X [27Xgp := GeneralisedPolygonByElements(points,lines,inc);[127X[104X
+    [4X[28X<generalised quadrangle of order [ 7, 9 ]>[128X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X17466[128X[104X
+    [4X[25Xgap>[125X [27Xcoll := CollineationGroup(gp);[127X[104X
+    [4X[28X<permutation group of size 5419008 with 9 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X69[128X[104X
+    [4X[25Xgap>[125X [27Xgroup := CollineationGroup(pg);[127X[104X
+    [4X[28XThe FinInG collineation group PGammaL(4,8)[128X[104X
+    [4X[25Xgap>[125X [27Xstab := FiningSetwiseStabiliser(group,O);[127X[104X
+    [4X[28X#I  Computing adjusted stabilizer chain...[128X[104X
+    [4X[28X<projective collineation group with 11 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X2045[128X[104X
+    [4X[25Xgap>[125X [27Xgp := GeneralisedPolygonByElements(points,lines,inc,stab,\^);[127X[104X
+    [4X[28X<generalised quadrangle of order [ 7, 9 ]>[128X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X394[128X[104X
+    [4X[25Xgap>[125X [27Xcoll := CollineationGroup(gp);[127X[104X
+    [4X[28X<permutation group of size 5419008 with 9 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X62[128X[104X
+    [4X[25Xgap>[125X [27XOrder(coll);[127X[104X
+    [4X[28X5419008[128X[104X
+    [4X[25Xgap>[125X [27XOrder(stab);[127X[104X
+    [4X[28X5419008[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X12.3-6 CollineationAction[101X
+  
+  [33X[1;0Y[29X[2XCollineationAction[102X( [3Xgroup[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya function[133X
+  
+  [33X[0;0Y[3Xgroup[103X  is  a  collineation  group  of  a generalised polygon, computed using
+  [11XCollineationGroup[111X.  The collineation group of classical generalised polygons
+  will  be  a collineation group in the sense of [5XFinInG[105X. The natural action is
+  [11XOnProjectiveSubspaces[111X.  The  collineation  group  of  any  other generalised
+  polygons  will  be a permutation group. The result of [11XCollineationAction[111X for
+  such  a group is a function with input a pair [3X(x,g)[103X where [3Xx[103X is an element of
+  the generalised polygon, and [3Xg[103X is a collineation of the generalised polygon,
+  so  an  element of [3Xgroup[103X. The example illustrates the use in the generalised
+  quadrangle.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xq := 4;[127X[104X
+    [4X[28X4[128X[104X
+    [4X[25Xgap>[125X [27Xconic := ParabolicQuadric(2,q);[127X[104X
+    [4X[28XQ(2, 4)[128X[104X
+    [4X[25Xgap>[125X [27Xnucleus := NucleusOfParabolicQuadric(conic);[127X[104X
+    [4X[28X<a point in ProjectiveSpace(2, 4)>[128X[104X
+    [4X[25Xgap>[125X [27Xhyperoval := Union(List(Points(conic)),[nucleus]);[127X[104X
+    [4X[28X[ <a point in ProjectiveSpace(2, 4)>, <a point in Q(2, 4)>, [128X[104X
+    [4X[28X  <a point in Q(2, 4)>, <a point in Q(2, 4)>, <a point in Q(2, 4)>, [128X[104X
+    [4X[28X  <a point in Q(2, 4)> ][128X[104X
+    [4X[25Xgap>[125X [27Xpg := PG(3,q);[127X[104X
+    [4X[28XProjectiveSpace(3, 4)[128X[104X
+    [4X[25Xgap>[125X [27Xhyp :=  HyperplaneByDualCoordinates(pg,[1,0,0,0]*Z(q)^0);[127X[104X
+    [4X[28X<a plane in ProjectiveSpace(3, 4)>[128X[104X
+    [4X[25Xgap>[125X [27Xem := NaturalEmbeddingBySubspace(PG(2,q),pg,hyp);[127X[104X
+    [4X[28X<geometry morphism from <All elements of ProjectiveSpace(2, [128X[104X
+    [4X[28X4)> to <All elements of ProjectiveSpace(3, 4)>>[128X[104X
+    [4X[25Xgap>[125X [27XO := List(hyperoval,x->x^em);[127X[104X
+    [4X[28X[ <a point in ProjectiveSpace(3, 4)>, <a point in ProjectiveSpace(3, 4)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(3, 4)>, <a point in ProjectiveSpace(3, 4)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(3, 4)>, <a point in ProjectiveSpace(3, 4)> ][128X[104X
+    [4X[25Xgap>[125X [27Xpoints := Set(Filtered(Points(pg),x->not x in hyp));;[127X[104X
+    [4X[25Xgap>[125X [27Xlines := Union(List(O,x->Filtered(Lines(x),y->not y in hyp)));;[127X[104X
+    [4X[25Xgap>[125X [27Xinc := \*;[127X[104X
+    [4X[28X<Operation "*">[128X[104X
+    [4X[25Xgap>[125X [27Xgp := GeneralisedPolygonByElements(points,lines,inc);[127X[104X
+    [4X[28X<generalised quadrangle of order [ 3, 5 ]>[128X[104X
+    [4X[25Xgap>[125X [27Xcoll := CollineationGroup(gp);[127X[104X
+    [4X[28X<permutation group of size 138240 with 8 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xact := CollineationAction(coll);[127X[104X
+    [4X[28Xfunction( el, g ) ... end[128X[104X
+    [4X[25Xgap>[125X [27Xg := Random(coll);[127X[104X
+    [4X[28X(1,37,45,63,27,19)(2,53,13,64,11,51)(3,33,38,61,31,28)(4,49,6,62,15,60)(5,46,[128X[104X
+    [4X[28X47,59,20,17)(7,42,40,57,24,26)(8,58)(9,55)(10,39,41,56,25,23)(12,35,34,54,29,[128X[104X
+    [4X[28X32)(14,48,43,52,18,21)(16,44,36,50,22,30)(65,132,90,157,89,105)(66,68,131,143,[128X[104X
+    [4X[28X119,103)(67,135,76,123,130,106)(69,133,112,100,81,107)(70,134,150,88,155,[128X[104X
+    [4X[28X104)(71,99,79,144,93,149)(72,153,95,120,73,122)(74,125,115,128,140,87)(75,121,[128X[104X
+    [4X[28X136,117,113,91)(77,124,98,83,147,146)(78,145,84,118,85,142)(80,92,137,141,108,[128X[104X
+    [4X[28X97)(82,86,116,111,138,101)(94,127,126,102,109,96)(110,152,151,154,156,[128X[104X
+    [4X[28X129)(114,160,139,158,148,159)[128X[104X
+    [4X[25Xgap>[125X [27Xl := Random(Lines(gp));[127X[104X
+    [4X[28X<a line in <generalised quadrangle of order [ 3, 5 ]>>[128X[104X
+    [4X[25Xgap>[125X [27Xact(l,g);[127X[104X
+    [4X[28X<a line in <generalised quadrangle of order [ 3, 5 ]>>[128X[104X
+    [4X[25Xgap>[125X [27Xp := Random(Points(gp));[127X[104X
+    [4X[28X<a point in <generalised quadrangle of order [ 3, 5 ]>>[128X[104X
+    [4X[25Xgap>[125X [27Xact(p,g);[127X[104X
+    [4X[28X<a point in <generalised quadrangle of order [ 3, 5 ]>>[128X[104X
+    [4X[25Xgap>[125X [27Xstab := Stabilizer(coll,p,act);[127X[104X
+    [4X[28X<permutation group of size 2160 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XList(Orbits(stab,List(Points(gp)),act),x->Length(x));[127X[104X
+    [4X[28X[ 45, 18, 1 ][128X[104X
+    [4X[25Xgap>[125X [27XList(Orbits(stab,List(Lines(gp)),act),x->Length(x));[127X[104X
+    [4X[28X[ 90, 6 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X12.3-7 BlockDesignOfGeneralisedPolygon[101X
+  
+  [33X[1;0Y[29X[2XBlockDesignOfGeneralisedPolygon[102X( [3Xgp[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya block design[133X
+  
+  [33X[0;0YThis  method  allows  one  to  use  the  GAP  package  [5XDESIGN[105X  to  analyse a
+  generalised  polygon, so the user must first load this package. The argument
+  [3Xgp[103X  is  a generalised polygon, and if it has a collineation group, the block
+  design is computed with this extra information and thus the resulting design
+  is easier to work with. Likewise, if [3Xgp[103X is an elation generalised quadrangle
+  and  it  has  an  elation  group,  then we use the elation group's action to
+  efficiently  compute  the  block  design. We should also point out that this
+  method  returns  a  [13Xmutable[113X  attribute  of [3Xgp[103X, so that accquired information
+  about  the block design can be added. For example, the automorphism group of
+  the  block design may be computed after the design is stored as an attribute
+  of [3Xgp[103X. Normally, attributes of GAP objects are immutable.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XLoadPackage("design");[127X[104X
+    [4X[28X-----------------------------------------------------------------------------[128X[104X
+    [4X[28XLoading  DESIGN 1.6 (The Design Package for GAP)[128X[104X
+    [4X[28Xby Leonard H. Soicher (http://www.maths.qmul.ac.uk/~leonard/).[128X[104X
+    [4X[28XHomepage: http://www.designtheory.org/software/gap_design/[128X[104X
+    [4X[28X-----------------------------------------------------------------------------[128X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xgh := SplitCayleyHexagon(2);[127X[104X
+    [4X[28XH(2)[128X[104X
+    [4X[25Xgap>[125X [27XCollineationGroup(gh);[127X[104X
+    [4X[28X#I  for Split Cayley Hexagon[128X[104X
+    [4X[28X#I  Computing nice monomorphism...[128X[104X
+    [4X[28X#I  Found permutation domain...[128X[104X
+    [4X[28XG_2(2)[128X[104X
+    [4X[25Xgap>[125X [27Xdes := BlockDesignOfGeneralisedPolygon(gh);[127X[104X
+    [4X[28Xrec( autSubgroup := <permutation group with 3 generators>, [128X[104X
+    [4X[28X  blocks := [ [ 1, 29, 52 ], [ 1, 34, 36 ], [ 1, 37, 48 ], [ 2, 13, 60 ], [128X[104X
+    [4X[28X      [ 2, 44, 53 ], [ 2, 45, 52 ], [ 3, 17, 35 ], [ 3, 22, 51 ], [128X[104X
+    [4X[28X      [ 3, 23, 48 ], [ 4, 16, 57 ], [ 4, 19, 36 ], [ 4, 54, 56 ], [128X[104X
+    [4X[28X      [ 5, 22, 63 ], [ 5, 31, 57 ], [ 5, 49, 52 ], [ 6, 7, 60 ], [128X[104X
+    [4X[28X      [ 6, 28, 57 ], [ 6, 35, 43 ], [ 7, 26, 27 ], [ 7, 33, 34 ], [128X[104X
+    [4X[28X      [ 8, 9, 53 ], [ 8, 22, 33 ], [ 8, 38, 56 ], [ 9, 25, 61 ], [128X[104X
+    [4X[28X      [ 9, 28, 37 ], [ 10, 18, 53 ], [ 10, 32, 35 ], [ 10, 36, 62 ], [128X[104X
+    [4X[28X      [ 11, 12, 63 ], [ 11, 26, 54 ], [ 11, 37, 42 ], [ 12, 41, 43 ], [128X[104X
+    [4X[28X      [ 12, 44, 50 ], [ 13, 15, 42 ], [ 13, 19, 51 ], [ 14, 15, 31 ], [128X[104X
+    [4X[28X      [ 14, 17, 61 ], [ 14, 34, 50 ], [ 15, 20, 38 ], [ 16, 23, 44 ], [128X[104X
+    [4X[28X      [ 16, 40, 59 ], [ 17, 45, 54 ], [ 18, 24, 26 ], [ 18, 30, 31 ], [128X[104X
+    [4X[28X      [ 19, 25, 41 ], [ 20, 21, 62 ], [ 20, 23, 27 ], [ 21, 28, 55 ], [128X[104X
+    [4X[28X      [ 21, 39, 45 ], [ 24, 29, 59 ], [ 24, 51, 55 ], [ 25, 27, 49 ], [128X[104X
+    [4X[28X      [ 29, 38, 43 ], [ 30, 39, 41 ], [ 30, 46, 48 ], [ 32, 40, 42 ], [128X[104X
+    [4X[28X      [ 32, 47, 49 ], [ 33, 39, 40 ], [ 46, 47, 56 ], [ 46, 58, 60 ], [128X[104X
+    [4X[28X      [ 47, 50, 55 ], [ 58, 59, 61 ], [ 58, 62, 63 ] ], isBlockDesign := true,[128X[104X
+    [4X[28X  v := 63 )[128X[104X
+    [4X[25Xgap>[125X [27Xf := GF(3);[127X[104X
+    [4X[28XGF(3)[128X[104X
+    [4X[25Xgap>[125X [27Xid := IdentityMat(2, f);;[127X[104X
+    [4X[25Xgap>[125X [27Xclan := List( f, t -> t*id );;[127X[104X
+    [4X[25Xgap>[125X [27Xclan := qClan(clan,f);[127X[104X
+    [4X[28X<q-clan over GF(3)>[128X[104X
+    [4X[25Xgap>[125X [27Xegq := EGQByqClan( clan );[127X[104X
+    [4X[28X#I  Computed Kantor family. Now computing EGQ...[128X[104X
+    [4X[28X<EGQ of order [ 9, 3 ] and basepoint 0>[128X[104X
+    [4X[25Xgap>[125X [27XHasElationGroup( egq );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xdesign := BlockDesignOfGeneralisedPolygon( egq );;[127X[104X
+    [4X[28X#I  Computing orbits on lines of gen. polygon...[128X[104X
+    [4X[28X#I  Computing block design of generalised polygon...[128X[104X
+    [4X[25Xgap>[125X [27Xaut := AutGroupBlockDesign( design );[127X[104X
+    [4X[28X<permutation group with 6 generators>[128X[104X
+    [4X[25Xgap>[125X [27XNrBlockDesignPoints( design );[127X[104X
+    [4X[28X280[128X[104X
+    [4X[25Xgap>[125X [27XNrBlockDesignBlocks( design );[127X[104X
+    [4X[28X112[128X[104X
+    [4X[25Xgap>[125X [27XDisplayCompositionSeries(aut);[127X[104X
+    [4X[28XG (6 gens, size 26127360)[128X[104X
+    [4X[28X | Z(2)[128X[104X
+    [4X[28XS (5 gens, size 13063680)[128X[104X
+    [4X[28X | Z(2)[128X[104X
+    [4X[28XS (5 gens, size 6531840)[128X[104X
+    [4X[28X | Z(2)[128X[104X
+    [4X[28XS (4 gens, size 3265920)[128X[104X
+    [4X[28X | 2A(3,3) = U(4,3) ~ 2D(3,3) = O-(6,3)[128X[104X
+    [4X[28X1 (0 gens, size 1)[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X12.4 [33X[0;0YElements of generalised polygons[133X[101X
+  
+  
+  [1X12.4-1 [33X[0;0YCollections of elements of generalised polygons[133X[101X
+  
+  [33X[1;0Y[29X[2XElementsOfIncidencStructure[102X( [3Xgp[103X, [3Xi[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XPoints[102X( [3Xgp[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XLines[102X( [3Xgp[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya collection of elements of a generalised polygon[133X
+  
+  [33X[0;0Y[3Xgp[103X  is  any  generalised polygon, [3Xi[103X is a natural number, necessarily [22X1[122X or [22X2[122X.
+  [11XElementsOfIncidenceStructure[111X  returns  the  elements of type [22Xi[122X of [3Xgp[103X, [11XPoints[111X
+  and [11XLines[111X are the usual shortcuts.[133X
+  
+  [1X12.4-2 Size[101X
+  
+  [33X[1;0Y[29X[2XSize[102X( [3Xels[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya number[133X
+  
+  [33X[0;0Y[3Xels[103X  is  a  collection  of elements of a generalised polygon. This operation
+  returns the number of element in [3Xels[103X.[133X
+  
+  
+  [1X12.4-3 [33X[0;0YCreating elements from objects and retrieving objects from elements[133X[101X
+  
+  [33X[1;0Y[29X[2XObjectToElement[102X( [3Xgp[103X, [3Xobj[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XObjectToElement[102X( [3Xgp[103X, [3Xtype[103X, [3Xobj[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XUnderlyingObject[102X( [3Xel[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya collection of elements of a generalised polygon[133X
+  
+  [33X[0;0YTo   create  elements  in  [3Xgp[103X  (of  type  [3Xtype[103X),  one  of  the  versions  of
+  [11XObjectToElement[111X can be used. It is checked whether [3Xobj[103X represents an element
+  (of  type  [3Xtype[103X).  To  retrieve  an  underlying  object  of  an  element [3Xel[103X,
+  [11XUnderlyingObject[111X can be used.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat := [ [ 1, 1, 0, 0, 0, 1, 0 ], [ 1, 0, 0, 1, 1, 0, 0 ],[127X[104X
+    [4X[25X>[125X [27X         [ 1, 0, 1, 0, 0, 0, 1 ], [ 0, 1, 1, 1, 0, 0, 0 ],[127X[104X
+    [4X[25X>[125X [27X         [ 0, 1, 0, 0, 1, 0, 1 ], [ 0, 0, 0, 1, 0, 1, 1 ],[127X[104X
+    [4X[25X>[125X [27X         [ 0, 0, 1, 0, 1, 1, 0 ] ];[127X[104X
+    [4X[28X[ [ 1, 1, 0, 0, 0, 1, 0 ], [ 1, 0, 0, 1, 1, 0, 0 ], [ 1, 0, 1, 0, 0, 0, 1 ], [128X[104X
+    [4X[28X  [ 0, 1, 1, 1, 0, 0, 0 ], [ 0, 1, 0, 0, 1, 0, 1 ], [ 0, 0, 0, 1, 0, 1, 1 ], [128X[104X
+    [4X[28X  [ 0, 0, 1, 0, 1, 1, 0 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xgp := GeneralisedPolygonByIncidenceMatrix(mat);[127X[104X
+    [4X[28X<projective plane order 2>[128X[104X
+    [4X[25Xgap>[125X [27Xp := Random(Points(gp));[127X[104X
+    [4X[28X<a point in <projective plane order 2>>[128X[104X
+    [4X[25Xgap>[125X [27XUnderlyingObject(p);[127X[104X
+    [4X[28X7[128X[104X
+    [4X[25Xgap>[125X [27Xl := Random(Lines(gp));[127X[104X
+    [4X[28X<a line in <projective plane order 2>>[128X[104X
+    [4X[25Xgap>[125X [27XUnderlyingObject(l);[127X[104X
+    [4X[28X[ 4, 6, 7 ][128X[104X
+    [4X[25Xgap>[125X [27XObjectToElement(gp,1,4);[127X[104X
+    [4X[28X<a point in <projective plane order 2>>[128X[104X
+    [4X[25Xgap>[125X [27XObjectToElement(gp,2,5);[127X[104X
+    [4X[28XError, <obj> does not represent a line of <gp> called from[128X[104X
+    [4X[28X<function "unknown">( <arguments> )[128X[104X
+    [4X[28X called from read-eval loop at line 18 of *stdin*[128X[104X
+    [4X[28Xyou can 'quit;' to quit to outer loop, or[128X[104X
+    [4X[28Xyou can 'return;' to continue[128X[104X
+    [4X[26Xbrk>[126X [27Xquit;[127X[104X
+    [4X[25Xgap>[125X [27XObjectToElement(gp,2,[1,2,3]);[127X[104X
+    [4X[28XError, <obj> does not represent a line of <gp> called from[128X[104X
+    [4X[28X<function "unknown">( <arguments> )[128X[104X
+    [4X[28X called from read-eval loop at line 18 of *stdin*[128X[104X
+    [4X[28Xyou can 'quit;' to quit to outer loop, or[128X[104X
+    [4X[28Xyou can 'return;' to continue[128X[104X
+    [4X[26Xbrk>[126X [27Xquit;[127X[104X
+    [4X[25Xgap>[125X [27XObjectToElement(gp,[1,2,6]);[127X[104X
+    [4X[28X<a line in <projective plane order 2>>[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X12.4-4 [33X[0;0YIncidence[133X[101X
+  
+  [33X[1;0Y[29X[2XIsIncident[102X( [3Xv[103X, [3Xw[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2X\*[102X( [3Xv[103X, [3Xw[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ytrue or false[133X
+  
+  [33X[0;0YLet  [3Xv[103X  and [3Xw[103X be two elements of a generalised polygon. It is checked if the
+  ambient  geometry of the two elements are identical, and true is returned if
+  and only if the two elements are incident in their ambient geometry.[133X
+  
+  [1X12.4-5 Span[101X
+  
+  [33X[1;0Y[29X[2XSpan[102X( [3Xv[103X, [3Xw[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya line of a generalised polygon or fail[133X
+  
+  [33X[0;0YLet  [3Xv[103X  and [3Xw[103X be two elements of a generalised polygon. It is checked if the
+  ambient  geometries  of  the  two  elements  are  identical,  and if the two
+  elements  are points. If [3Xv[103X and [3Xw[103X are incidence with a common line, this line
+  is   returned.   Otherwise   [9Xfail[109X  is  returned.  For  generalised  polygons
+  constructed with [10XGeneralisedPolygonByBlocks[110X, [10XGeneralisedPolygonByElements[110X an
+  [10XGeneralisedPolygonByInidenceMatrix[110X,  the underlying graph is used. Note that
+  the behaviour of [11XSpan[111X is different for elements of generalised polygons that
+  belong to [10XIsLieGeometry[110X, see [14X4.2-16[114X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat := [ [ 1, 1, 0, 0, 0, 1, 0 ], [ 1, 0, 0, 1, 1, 0, 0 ],[127X[104X
+    [4X[25X>[125X [27X         [ 1, 0, 1, 0, 0, 0, 1 ], [ 0, 1, 1, 1, 0, 0, 0 ],[127X[104X
+    [4X[25X>[125X [27X         [ 0, 1, 0, 0, 1, 0, 1 ], [ 0, 0, 0, 1, 0, 1, 1 ],[127X[104X
+    [4X[25X>[125X [27X         [ 0, 0, 1, 0, 1, 1, 0 ] ];[127X[104X
+    [4X[28X[ [ 1, 1, 0, 0, 0, 1, 0 ], [ 1, 0, 0, 1, 1, 0, 0 ], [ 1, 0, 1, 0, 0, 0, 1 ], [128X[104X
+    [4X[28X  [ 0, 1, 1, 1, 0, 0, 0 ], [ 0, 1, 0, 0, 1, 0, 1 ], [ 0, 0, 0, 1, 0, 1, 1 ], [128X[104X
+    [4X[28X  [ 0, 0, 1, 0, 1, 1, 0 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xgp := GeneralisedPolygonByIncidenceMatrix(mat);[127X[104X
+    [4X[28X<projective plane order 2>[128X[104X
+    [4X[25Xgap>[125X [27Xp := Random(Points(gp));[127X[104X
+    [4X[28X<a point in <projective plane order 2>>[128X[104X
+    [4X[25Xgap>[125X [27Xq := Random(Points(gp));[127X[104X
+    [4X[28X<a point in <projective plane order 2>>[128X[104X
+    [4X[25Xgap>[125X [27XSpan(p,q);[127X[104X
+    [4X[28X<a line in <projective plane order 2>>[128X[104X
+    [4X[25Xgap>[125X [27Xps := ParabolicQuadric(4,3);[127X[104X
+    [4X[28XQ(4, 3)[128X[104X
+    [4X[25Xgap>[125X [27Xgp := GeneralisedPolygonByElements(Set(Points(ps)),Set(Lines(ps)),\*);[127X[104X
+    [4X[28X<generalised quadrangle of order [ 3, 3 ]>[128X[104X
+    [4X[25Xgap>[125X [27Xp := Random(Points(gp));[127X[104X
+    [4X[28X<a point in <generalised quadrangle of order [ 3, 3 ]>>[128X[104X
+    [4X[25Xgap>[125X [27Xq := Random(Points(gp));[127X[104X
+    [4X[28X<a point in <generalised quadrangle of order [ 3, 3 ]>>[128X[104X
+    [4X[25Xgap>[125X [27XSpan(p,q);[127X[104X
+    [4X[28X#I  <x> and <y> do not span a line of gp[128X[104X
+    [4X[28Xfail[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X12.4-6 Meet[101X
+  
+  [33X[1;0Y[29X[2XMeet[102X( [3Xv[103X, [3Xw[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya point of a generalised polygon or fail[133X
+  
+  [33X[0;0YLet  [3Xv[103X  and [3Xw[103X be two elements of a generalised polygon. It is checked if the
+  ambient  geometries  of  the  two  elements  are  identical,  and if the two
+  elements are lines. If [3Xv[103X and [3Xw[103X are incidence with a common point, this point
+  is   returned.   Otherwise   [9Xfail[109X  is  returned.  For  generalised  polygons
+  constructed with [10XGeneralisedPolygonByBlocks[110X, [10XGeneralisedPolygonByElements[110X an
+  [10XGeneralisedPolygonByInidenceMatrix[110X,  the underlying graph is used. Note that
+  the behavior of [11XMeet[111X is different for elements of generalised polygongs that
+  belong to [10XIsLieGeometry[110X, see [14X4.2-17[114X[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat := [ [ 1, 1, 0, 0, 0, 1, 0 ], [ 1, 0, 0, 1, 1, 0, 0 ],[127X[104X
+    [4X[25X>[125X [27X         [ 1, 0, 1, 0, 0, 0, 1 ], [ 0, 1, 1, 1, 0, 0, 0 ],[127X[104X
+    [4X[25X>[125X [27X         [ 0, 1, 0, 0, 1, 0, 1 ], [ 0, 0, 0, 1, 0, 1, 1 ],[127X[104X
+    [4X[25X>[125X [27X         [ 0, 0, 1, 0, 1, 1, 0 ] ];[127X[104X
+    [4X[28X[ [ 1, 1, 0, 0, 0, 1, 0 ], [ 1, 0, 0, 1, 1, 0, 0 ], [ 1, 0, 1, 0, 0, 0, 1 ], [128X[104X
+    [4X[28X  [ 0, 1, 1, 1, 0, 0, 0 ], [ 0, 1, 0, 0, 1, 0, 1 ], [ 0, 0, 0, 1, 0, 1, 1 ], [128X[104X
+    [4X[28X  [ 0, 0, 1, 0, 1, 1, 0 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xgp := GeneralisedPolygonByIncidenceMatrix(mat);[127X[104X
+    [4X[28X<projective plane order 2>[128X[104X
+    [4X[25Xgap>[125X [27Xl := Random(Lines(gp));[127X[104X
+    [4X[28X<a line in <projective plane order 2>>[128X[104X
+    [4X[25Xgap>[125X [27Xm := Random(Lines(gp));[127X[104X
+    [4X[28X<a line in <projective plane order 2>>[128X[104X
+    [4X[25Xgap>[125X [27XMeet(l,m);[127X[104X
+    [4X[28X<a point in <projective plane order 2>>[128X[104X
+    [4X[25Xgap>[125X [27Xps := ParabolicQuadric(4,3);[127X[104X
+    [4X[28XQ(4, 3)[128X[104X
+    [4X[25Xgap>[125X [27Xgp := GeneralisedPolygonByElements(Set(Points(ps)),Set(Lines(ps)),\*);[127X[104X
+    [4X[28X<generalised quadrangle of order [ 3, 3 ]>[128X[104X
+    [4X[25Xgap>[125X [27Xl := Random(Lines(gp));[127X[104X
+    [4X[28X<a line in <generalised quadrangle of order [ 3, 3 ]>>[128X[104X
+    [4X[25Xgap>[125X [27Xm := Random(Lines(gp));[127X[104X
+    [4X[28X<a line in <generalised quadrangle of order [ 3, 3 ]>>[128X[104X
+    [4X[25Xgap>[125X [27XMeet(l,m);[127X[104X
+    [4X[28X#I  <x> and <y> do meet in a common point of gp[128X[104X
+    [4X[28Xfail[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X12.4-7 [33X[0;0YShadow elements[133X[101X
+  
+  [33X[1;0Y[29X[2XShadowOfElement[102X( [3Xgeo[103X, [3Xv[103X, [3Xj[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XPoints[102X( [3Xel[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XLines[102X( [3Xel[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XElementsIncidentWithElementOfIncidenceStructure[102X( [3Xel[103X, [3Xi[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YA collection of elements[133X
+  
+  [33X[0;0Y[3Xgeo[103X  is  a generalised polygon, [3Xv[103X must be an element of [3Xgeo[103X, [3Xj[103X is an integer
+  equal  to  1  or  2,  since  [3Xgeo[103X  is  a  rank  two  geometry.  The operation
+  [11XShadowOfElement[111X  returns  the  collection  of  elements  of  [3Xgeo[103X  of type [3Xj[103X,
+  incident  with  the element [3Xv[103X. The operations [11XPoints[111X and [11XLines[111X with argument
+  are  the  usual shortcuts to [11XShadowOfElement[111X with [3Xj[103X respectively equal to 1,
+  2.  The  operation  [11XElementsIncidentWithElementOfIncidenceStructure[111X  is  the
+  usual shortcut to [11XShadowOfElement[111X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xblocks := [[127X[104X
+    [4X[25X>[125X [27X  [ 1, 2, 3, 4, 5 ], [ 1, 6, 7, 8, 9 ], [ 1, 10, 11, 12, 13 ],[127X[104X
+    [4X[25X>[125X [27X  [ 1, 14, 15, 16, 17 ], [ 1, 18, 19, 20, 21 ], [ 2, 6, 10, 14, 18 ],[127X[104X
+    [4X[25X>[125X [27X  [ 2, 7, 11, 15, 19 ], [ 2, 8, 12, 16, 20 ], [ 2, 9, 13, 17, 21 ],[127X[104X
+    [4X[25X>[125X [27X  [ 3, 6, 11, 16, 21 ], [ 3, 7, 10, 17, 20 ], [ 3, 8, 13, 14, 19 ],[127X[104X
+    [4X[25X>[125X [27X  [ 3, 9, 12, 15, 18 ], [ 4, 6, 12, 17, 19 ], [ 4, 7, 13, 16, 18 ],[127X[104X
+    [4X[25X>[125X [27X  [ 4, 8, 10, 15, 21 ], [ 4, 9, 11, 14, 20 ], [ 5, 6, 13, 15, 20 ],[127X[104X
+    [4X[25X>[125X [27X  [ 5, 7, 12, 14, 21 ], [ 5, 8, 11, 17, 18 ], [ 5, 9, 10, 16, 19 ] ];; [127X[104X
+    [4X[25Xgap>[125X [27Xgp := GeneralisedPolygonByBlocks( blocks ); [127X[104X
+    [4X[28X<projective plane order 4>[128X[104X
+    [4X[25Xgap>[125X [27Xl := Random(Lines(gp)); [127X[104X
+    [4X[28X<a line in <projective plane order 4>>[128X[104X
+    [4X[25Xgap>[125X [27Xpts := ShadowOfElement(gp,l,1);[127X[104X
+    [4X[28X<shadow points in <projective plane order 4>>[128X[104X
+    [4X[25Xgap>[125X [27XList(pts);[127X[104X
+    [4X[28X[ <a point in <projective plane order 4>>, [128X[104X
+    [4X[28X  <a point in <projective plane order 4>>, [128X[104X
+    [4X[28X  <a point in <projective plane order 4>>, [128X[104X
+    [4X[28X  <a point in <projective plane order 4>>, [128X[104X
+    [4X[28X  <a point in <projective plane order 4>> ][128X[104X
+    [4X[25Xgap>[125X [27Xp := Random(Points(gp));[127X[104X
+    [4X[28X<a point in <projective plane order 4>>[128X[104X
+    [4X[25Xgap>[125X [27Xlines := Lines(p);[127X[104X
+    [4X[28X<shadow lines in <projective plane order 4>>[128X[104X
+    [4X[25Xgap>[125X [27XList(lines);[127X[104X
+    [4X[28X[ <a line in <projective plane order 4>>, <a line in <projective plane order [128X[104X
+    [4X[28X    4>>, <a line in <projective plane order 4>>, [128X[104X
+    [4X[28X  <a line in <projective plane order 4>>, <a line in <projective plane order [128X[104X
+    [4X[28X    4>> ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X12.4-8 DistanceBetweenElements[101X
+  
+  [33X[1;0Y[29X[2XDistanceBetweenElements[102X( [3Xv[103X, [3Xw[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya number[133X
+  
+  [33X[0;0YLet  [3Xv[103X  and [3Xw[103X be two elements of a generalised polygon. It is checked if the
+  ambient geometry of the two elements are identical, and the distance between
+  the  two  elements  in  the  incidence  graph  of  their ambient geometry is
+  returned.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xg := ElementaryAbelianGroup(27);[127X[104X
+    [4X[28X<pc group of size 27 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xflist1 := [ Group(g.1), Group(g.2), Group(g.3), Group(g.1*g.2*g.3) ];;[127X[104X
+    [4X[25Xgap>[125X [27Xflist2 := [ Group([g.1, g.2^2*g.3]), Group([g.2, g.1^2*g.3 ]),[127X[104X
+    [4X[25X>[125X [27X            Group([g.3, g.1^2*g.2]), Group([g.1^2*g.2, g.1^2*g.3 ]) ];;[127X[104X
+    [4X[25Xgap>[125X [27Xegq := EGQByKantorFamily(g, flist1, flist2);[127X[104X
+    [4X[28X<EGQ of order [ 3, 3 ] and basepoint 0>[128X[104X
+    [4X[25Xgap>[125X [27Xp := Random(Points(egq));[127X[104X
+    [4X[28X<a point of class 2 of <EGQ of order [ 3, 3 ] and basepoint 0>>[128X[104X
+    [4X[25Xgap>[125X [27Xq := Random(Points(egq));[127X[104X
+    [4X[28X<a point of class 3 of <EGQ of order [ 3, 3 ] and basepoint 0>>[128X[104X
+    [4X[25Xgap>[125X [27XDistanceBetweenElements(p,q);[127X[104X
+    [4X[28X2[128X[104X
+    [4X[25Xgap>[125X [27Xgh := SplitCayleyHexagon(3);[127X[104X
+    [4X[28XH(3)[128X[104X
+    [4X[25Xgap>[125X [27Xl := Random(Lines(gh));[127X[104X
+    [4X[28X#I  for Split Cayley Hexagon[128X[104X
+    [4X[28X#I  Computing nice monomorphism...[128X[104X
+    [4X[28X#I  Found permutation domain...[128X[104X
+    [4X[28X<a line in H(3)>[128X[104X
+    [4X[25Xgap>[125X [27Xm := First(Lines(gh),x->DistanceBetweenElements(l,x)=6);[127X[104X
+    [4X[28X<a line in H(3)>[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X12.5 [33X[0;0YThe classical generalised hexagons[133X[101X
+  
+  
+  [1X12.5-1 [33X[0;0YTrialities of the hyperbolic quadric and generalised hexagons[133X[101X
+  
+  [33X[0;0YConsider  the  hyperbolic quadric [22XQ^+(7,q)[122X. This is a polar space of rank 4.
+  It  is  well  known  that  its generators fall into two systems. Each system
+  contains  exactly  [22X(q^3+q^2+q+1)(q^2+q+1)[122X  generators, which is equal to the
+  number  of  points  of  [22XQ^+(7,q)[122X.  Generators from the same system meet each
+  other  in an empty subspace or in a line, Generators from a different system
+  meet  each  other  in  a  point  or a plane. One defines the rank [22X4[122X geometry
+  [22XΩ(7,q)[122X as follows. The 0-points are the points of [22XQ^+(7,q)[122X, the 1-points are
+  the  generators  of the first system, the 2-points are the generators of the
+  second system, and the lines are the lines of [22XQ^+(7,q)[122X. The incidence is the
+  natural  incidence  of  the  underlying  projective space. Denote the set of
+  [22Xi[122X-points as [22XP^(i)[122X , [22Xi=0,1,2[122X.[133X
+  
+  [33X[0;0YA  triality  of  [22XΩ(7,q)[122X  is  a map [22Xτ: P^(i) → P^(i+1)[122X (where [22Xi+1[122X is computed
+  modulo  3)  preserving  the  incidence and for which [22Xτ^3 = 1[122X . Note that the
+  image  of  a  line under [22Xτ[122X is determined by the image of the points incident
+  with the line.[133X
+  
+  [33X[0;0YAn  [22Xi[122X-point  is  absolute with respect to a fixed triality if it is incident
+  with  its image under the triality. Consequently, a line is absolute with if
+  it is fixed by the triality.[133X
+  
+  [33X[0;0YA  generalised  hexagon can be constructed as geometry of absolute points of
+  one kind and absolute lines with relation to a fixed triality. Note that not
+  all  trialities  yield  (thick) generalised quadrangles. There are different
+  types of trialities, for some of them the absolute geometry is degenerate.[133X
+  
+  [33X[0;0YThe  triality used in [5XFinInG[105X to construct the classical generalised hexagons
+  is fixed. It is described explicitely in [VM98]. To describe the triality, a
+  trilinear  form expressing the incidence between [22Xi[122X-points of [22XΩ(7,q)[122X is used.
+  Given the fact that, because of the existence of a triality, the role of the
+  0,  1  and 2 points are the same, each of the 1 and 2 points can be labelled
+  the  same  way  as  the 0-points, which are effectively labelled by 8-tuples
+  [22X(x_0,...,x_7)  ∈  V(8,q)=V[122X where each 8-tuples represents a projective point
+  of [22XQ^+(7,q)[122X.[133X
+  
+  [33X[0;0YConsider   the   hyperbolic   quadric   determined  by  the  quadratic  form
+  [22XX_0X_4+X_1X_5+X_2X_6+X_3X_7[122X . Consider the trilinear map [22XT[122X,[133X
+  
+  [33X[0;0YDisplay of this formula is not possible in text mode[133X
+  
+  [33X[0;0YNow  a  pair  [22X(x,y) ∈ V × V[122X represents an incident 0-1 pair of points if and
+  only  if  [22XT(x,y,z)[122X  vanishes in the variable [22Xz[122X, and similarly for any cyclic
+  permutation  of the letters [22Xx,y,z[122X. So given a [22X1[122X-point [22Xy[122X, [22XT(x,y,z) = 0[122X, where
+  [22Xz[122X  is a variable, and [22Xx[122X is an unknown, gives a set of equations representing
+  a  generator  of [22XQ^+(7,q)[122X this is the generator of [22XQ^+(7,q)[122X represented by [22Xy[122X
+  as label of a [22X1[122X-point.[133X
+  
+  [33X[0;0YLet  [22Xσ[122X be an automorphism of [22XGF(q)[122X of order [22X3[122X, or the identity. Consider the
+  map[133X
+  
+  [33X[0;0Y[22Xτ_σ: P^(i) → P^(i+1)[122X[133X
+  
+  [33X[0;0Y[22X(x_j) ↦ (x_j^σ)[122X, [22Xj=0... 7[122X .[133X
+  
+  [33X[0;0YThis  map  clearly  preserves  [22XT(x,y,z)[122X, so preserves the incidence, and has
+  order  three,  so  it is a triality of [22XΩ(7,q)[122X. We call an element [22Xp[122X absolute
+  with  respect to a triality [22Xτ[122X if and only if [22Xp mathrmI p^τ[122X . Consequently, a
+  line  is absolute if and only if it is fixed by the triality. Denote the set
+  of   [22Xi[122X-points   that   are   absolute   with  respect  to  the  triality  as
+  [22XP_mathrmabs}^(i)[122X  ,  and  the  set  of  absolute  lines  with respect to the
+  triality as [22XL_mathrmabs}[122X . Then a famous theorem of Tits ([Tit59]) says that
+  for    the    triality    [22Xτ_σ[122X,    the    point-line    geometry    [22XΓ^(i)   =
+  (P^(i)_mathrmabs},L_mathrmabs},mathrmI)[122X  is  a  generalised hexagon of order
+  [22X(|K|,|L|)[122X,  [22XK[122X  the field [22XGF(q)[122X and [22XL[122X the subfield of invariant elements of [22XK[122X
+  under  the  field  automorphism  [22Xσ[122X.  Note  that  a  finite field has a field
+  automorphism  of  order three if and only if its order equals [22Xq^3[122X. So, for [22XK[122X
+  equal  to [22XGF(q)[122X and [22Xσ=1[122X, [22XΓ^(i)[122X is a generalised hexagon of order [22Xq[122X, which is
+  called  the  [13Xsplit  Cayley  hexagon of order [22Xq[122X[113X, denoted [22XH(q)[122X. For [22XK[122X equal to
+  [22XGF(q^3)[122X,  and  [22Xσ[122X  a  non-trival  field  automorphism  of order [22X3[122X, [22XΓ^(i)[122X is a
+  generalised  hexagon of order [22X(q^3,q)[122X , which is called the [13Xtwisted triality
+  hexagon  of  order  [22X(q^3,q)[122X  [113X,  denoted  [22XT(q^3,q)[122X  .  Note  that for a given
+  triality,  the  hexagons [22XΓ^(i)[122X , [22Xi=0,1,2[122X are isomorphic. Consequently, [22XΓ^(0)[122X
+  is a point-line geometry of which the point set, line set respectively, is a
+  subset  of  the  points, lines respectively of [22XQ^+(7,q)[122X. Finally, we mention
+  the  following  important  theorem,  which  was shown by Tits ([Tit59]): the
+  split Cayley hexagon, obtained by the triliaty with [22Xσ=1[122X, is contained in the
+  hyperplane with equation [22XX_3+X_7=0[122X , which intersects the hyperbolic quadric
+  in  the parabolic quadric [22XQ(6,q)[122X. The points of the split Cayley hexagon are
+  the points of [22XQ(6,q)[122X.[133X
+  
+  [33X[0;0YThis  above  description  of  the  triality  and  the associated generalised
+  hexagons,  contains sufficient analytical information to implement the split
+  Cayley  hexagon  and  the  twisted triality hexagon in an efficient way. The
+  user  is allowed to choose a representation for the ambient polar space. For
+  [22Xq=2^h[122X  the  polar spaces [22XQ(6,q)[122X and [22XW(5,q)[122X are isomorphic. Consequently, the
+  user  may  choose [22XW(5,q)[122X as ambient polar space for the split Cayley hexagon
+  of  even  order.  This  embedding in [22XW(5,q)[122X is called the perfect symplectic
+  embedding  of the split Cayley hexagon. Finally, [VM98] contains an explicit
+  description of the generators of the collineation groups of both generalised
+  hexagons.[133X
+  
+  [1X12.5-2 IsLieGeometry[101X
+  
+  [33X[1;0Y[29X[2XIsLieGeometry[102X [32X Category[133X
+  
+  [33X[0;0YRecall  that the classical generalised hexagons are constructed as an object
+  in  [11XIsLieGeometry[111X.  This  makes most operations described in the appropriate
+  chapters on Lie geometries, projective spaces and polar spaces applicable.[133X
+  
+  [1X12.5-3 SplitCayleyHexagon[101X
+  
+  [33X[1;0Y[29X[2XSplitCayleyHexagon[102X( [3Xq[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XSplitCayleyHexagon[102X( [3Xf[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XSplitCayleyHexagon[102X( [3Xps[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya generalised hexagon[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xhexagon := SplitCayleyHexagon( 3 );[127X[104X
+    [4X[28XH(3)[128X[104X
+    [4X[25Xgap>[125X [27XAmbientPolarSpace(hexagon);[127X[104X
+    [4X[28XQ(6, 3): -x_1*x_5-x_2*x_6-x_3*x_7+x_4^2=0[128X[104X
+    [4X[25Xgap>[125X [27Xps := ParabolicQuadric(6,3);[127X[104X
+    [4X[28XQ(6, 3)[128X[104X
+    [4X[25Xgap>[125X [27Xhexagon := SplitCayleyHexagon( ps );[127X[104X
+    [4X[28XH(3) in Q(6, 3)[128X[104X
+    [4X[25Xgap>[125X [27XAmbientPolarSpace(hexagon);[127X[104X
+    [4X[28XQ(6, 3)[128X[104X
+    [4X[25Xgap>[125X [27Xhexagon := SplitCayleyHexagon( 4 );[127X[104X
+    [4X[28XH(4)[128X[104X
+    [4X[25Xgap>[125X [27XAmbientPolarSpace(hexagon);[127X[104X
+    [4X[28XW(5, 4): x1*y4+x2*y5+x3*y6+x4*y1+x5*y2+x6*y3=0[128X[104X
+    [4X[25Xgap>[125X [27Xps := ParabolicQuadric(6,4);[127X[104X
+    [4X[28XQ(6, 4)[128X[104X
+    [4X[25Xgap>[125X [27Xhexagon := SplitCayleyHexagon( ps );[127X[104X
+    [4X[28XH(4) in Q(6, 4)[128X[104X
+    [4X[25Xgap>[125X [27XAmbientPolarSpace(hexagon);[127X[104X
+    [4X[28XQ(6, 4)[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X12.5-4 TwistedTrialityHexagon[101X
+  
+  [33X[1;0Y[29X[2XTwistedTrialityHexagon[102X( [3Xq[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XTwistedTrialityHexagon[102X( [3Xf[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XTwistedTrialityHexagon[102X( [3Xps[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya generalised hexagon[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xhexagon := TwistedTrialityHexagon(2^3);[127X[104X
+    [4X[28XT(8, 2)[128X[104X
+    [4X[25Xgap>[125X [27XAmbientPolarSpace(hexagon);[127X[104X
+    [4X[28X<polar space in ProjectiveSpace([128X[104X
+    [4X[28X7,GF(2^3)): x_1*x_5+x_2*x_6+x_3*x_7+x_4*x_8=0 >[128X[104X
+    [4X[25Xgap>[125X [27Xps := HyperbolicQuadric(7,2^3);[127X[104X
+    [4X[28XQ+(7, 8)[128X[104X
+    [4X[25Xgap>[125X [27Xhexagon := TwistedTrialityHexagon(ps);[127X[104X
+    [4X[28XT(8, 2) in Q+(7, 8)[128X[104X
+    [4X[25Xgap>[125X [27XAmbientPolarSpace(hexagon);[127X[104X
+    [4X[28XQ+(7, 8)[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X12.5-5 VectorSpaceToElement[101X
+  
+  [33X[1;0Y[29X[2XVectorSpaceToElement[102X( [3Xgh[103X, [3Xvec[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan element of a classical generlised hexagon[133X
+  
+  [33X[0;0YThe  argument  [3Xvec[103X  is  one  vector or a list of vectors from the underlying
+  vectorspace of [3Xgh[103X. This operation checks whether [3Xvec[103X represents a point or a
+  line  of [3Xgh[103X. Note that vectors and matrices in different representations are
+  allowed as argument.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := ParabolicQuadric(6,9);[127X[104X
+    [4X[28XQ(6, 9)[128X[104X
+    [4X[25Xgap>[125X [27Xgh := SplitCayleyHexagon(ps);[127X[104X
+    [4X[28XH(9) in Q(6, 9)[128X[104X
+    [4X[25Xgap>[125X [27Xvec := [ Z(3)^0, Z(3^2), 0*Z(3), Z(3^2), Z(3^2)^3, Z(3^2)^5, 0*Z(3) ];[127X[104X
+    [4X[28X[ Z(3)^0, Z(3^2), 0*Z(3), Z(3^2), Z(3^2)^3, Z(3^2)^5, 0*Z(3) ][128X[104X
+    [4X[25Xgap>[125X [27Xp := VectorSpaceToElement(gh,vec);[127X[104X
+    [4X[28X<a point in H(9) in Q(6, 9)>[128X[104X
+    [4X[25Xgap>[125X [27Xvec := [ [ Z(3)^0, 0*Z(3), Z(3^2)^7, 0*Z(3), Z(3)^0, Z(3^2)^2, Z(3^2)^2 ], [127X[104X
+    [4X[25X>[125X [27X  [ 0*Z(3), Z(3)^0, 0*Z(3), Z(3)^0, 0*Z(3), Z(3^2)^3, 0*Z(3) ] ];[127X[104X
+    [4X[28X[ [ Z(3)^0, 0*Z(3), Z(3^2)^7, 0*Z(3), Z(3)^0, Z(3^2)^2, Z(3^2)^2 ], [128X[104X
+    [4X[28X  [ 0*Z(3), Z(3)^0, 0*Z(3), Z(3)^0, 0*Z(3), Z(3^2)^3, 0*Z(3) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xline := VectorSpaceToElement(gh,vec);[127X[104X
+    [4X[28XError, <x> does not generate an element of <geom> called from[128X[104X
+    [4X[28X<function "unknown">( <arguments> )[128X[104X
+    [4X[28X called from read-eval loop at line 14 of *stdin*[128X[104X
+    [4X[28Xyou can 'quit;' to quit to outer loop, or[128X[104X
+    [4X[28Xyou can 'return;' to continue[128X[104X
+    [4X[26Xbrk>[126X [27Xquit;[127X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X12.5-6 ObjectToElement[101X
+  
+  [33X[1;0Y[29X[2XObjectToElement[102X( [3Xgh[103X, [3Xobj[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan element of a classical generlised hexagon[133X
+  
+  [33X[0;0YThe  argument  [3Xobj[103X  is  one  vector or a list of vectors from the underlying
+  vectorspace of [3Xgh[103X. This operation checks whether [3Xobj[103X represents a point or a
+  line  of [3Xgh[103X. Note that vectors and matrices in different representations are
+  allowed as argument.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat := IdentityMat(8,GF(5^3));[127X[104X
+    [4X[28X< mutable compressed matrix 8x8 over GF(125) >[128X[104X
+    [4X[25Xgap>[125X [27Xform := BilinearFormByMatrix(mat,GF(5^3));[127X[104X
+    [4X[28X< bilinear form >[128X[104X
+    [4X[25Xgap>[125X [27Xps := PolarSpace(form);[127X[104X
+    [4X[28X<polar space in ProjectiveSpace([128X[104X
+    [4X[28X7,GF(5^3)): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2+x_7^2+x_8^2=0 >[128X[104X
+    [4X[25Xgap>[125X [27Xgh := TwistedTrialityHexagon(ps);[127X[104X
+    [4X[28XT(125, 5) in Q+(7, 125): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2+x_7^2+x_8^2[128X[104X
+    [4X[25Xgap>[125X [27Xvec := [ Z(5)^0, Z(5^3)^55, Z(5^3)^99, Z(5^3)^107, Z(5^3)^8, Z(5^3)^35, Z(5^3)^73, [127X[104X
+    [4X[25X>[125X [27X  Z(5^3)^115 ];[127X[104X
+    [4X[28X[ Z(5)^0, Z(5^3)^55, Z(5^3)^99, Z(5^3)^107, Z(5^3)^8, Z(5^3)^35, Z(5^3)^73, [128X[104X
+    [4X[28X  Z(5^3)^115 ][128X[104X
+    [4X[25Xgap>[125X [27Xp := ObjectToElement(gh,vec);[127X[104X
+    [4X[28X<a point in T(125, 5) in Q+(7, 125): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2+x_7^2[128X[104X
+    [4X[28X+x_8^2>[128X[104X
+    [4X[25Xgap>[125X [27Xvec := [ [ Z(5)^0, 0*Z(5), Z(5^3)^76, Z(5^3)^117, Z(5^3)^80, Z(5^3)^19, Z(5^3)^48, [127X[104X
+    [4X[25X>[125X [27X      Z(5^3)^100 ], [127X[104X
+    [4X[25X>[125X [27X  [ 0*Z(5), Z(5)^0, Z(5^3)^115, Z(5^3)^14, Z(5^3)^40, Z(5^3)^67, Z(5^3)^123, [127X[104X
+    [4X[25X>[125X [27X      Z(5^3)^3 ] ];[127X[104X
+    [4X[28X[ [ Z(5)^0, 0*Z(5), Z(5^3)^76, Z(5^3)^117, Z(5^3)^80, Z(5^3)^19, Z(5^3)^48, [128X[104X
+    [4X[28X      Z(5^3)^100 ], [128X[104X
+    [4X[28X  [ 0*Z(5), Z(5)^0, Z(5^3)^115, Z(5^3)^14, Z(5^3)^40, Z(5^3)^67, Z(5^3)^123, [128X[104X
+    [4X[28X      Z(5^3)^3 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xline := ObjectToElement(gh,vec);[127X[104X
+    [4X[28X<a line in T(125, 5) in Q+(7, 125): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2+x_7^2+[128X[104X
+    [4X[28Xx_8^2>[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X12.5-7 UnderlyingObject[101X
+  
+  [33X[1;0Y[29X[2XUnderlyingObject[102X( [3Xgh[103X, [3Xobj[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya vector or a matrix[133X
+  
+  [1X12.5-8 \in[101X
+  
+  [33X[1;0Y[29X[2X\in[102X( [3Xx[103X, [3Xgh[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ytrue or false[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := HyperbolicQuadric(7,5^3);[127X[104X
+    [4X[28XQ+(7, 125)[128X[104X
+    [4X[25Xgap>[125X [27Xgh := TwistedTrialityHexagon(ps);[127X[104X
+    [4X[28XT(125, 5) in Q+(7, 125)[128X[104X
+    [4X[25Xgap>[125X [27Xrepeat[127X[104X
+    [4X[25X>[125X [27Xp := Random(Points(ps));[127X[104X
+    [4X[25X>[125X [27Xuntil p in gh;[127X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X18399[128X[104X
+    [4X[25Xgap>[125X [27Xp in gh;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xq := ElementToElement(gh,p);[127X[104X
+    [4X[28X<a point in T(125, 5) in Q+(7, 125)>[128X[104X
+    [4X[25Xgap>[125X [27Xl := Random(Lines(p));[127X[104X
+    [4X[28X<a line in Q+(7, 125)>[128X[104X
+    [4X[25Xgap>[125X [27Xl in gh;[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XList(Lines(q),x->x in gh);[127X[104X
+    [4X[28X[ true, true, true, true, true, true ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X12.5-9 [33X[0;0YSpan and meet of elements[133X[101X
+  
+  [33X[1;0Y[29X[2XSpan[102X( [3Xx[103X, [3Xy[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XMeet[102X( [3Xx[103X, [3Xy[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya subspace of a projective space[133X
+  
+  [33X[0;0Y[3Xx[103X  and  [3Xy[103X are two elements of a classical generalised hexagon. The operation
+  [11XSpan[111X  returns  the  projective  line  spanned by [3Xx[103X and [3Xy[103X. The operation [11XMeet[111X
+  returns  the  intersection  of the elements [3Xx[103X and [3Xy[103X. Note that the classical
+  generalised  hexagons  are  Lie  geometries,  so  their elements belong to a
+  subcategory  of  [10XIsSubspaceOfProjectiveSpace[110X. Therefore, the operations [11XSpan[111X
+  and [11XMeet[111X behave as described in [14X7.5-2[114X and [14X7.5-3[114X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := SymplecticSpace(5,8);[127X[104X
+    [4X[28XW(5, 8)[128X[104X
+    [4X[25Xgap>[125X [27Xgh := SplitCayleyHexagon(ps);[127X[104X
+    [4X[28XH(8) in W(5, 8)[128X[104X
+    [4X[25Xgap>[125X [27Xvec := [ Z(2)^0, Z(2^3)^6, Z(2^3)^5, Z(2^3)^6, Z(2)^0, Z(2^3) ];[127X[104X
+    [4X[28X[ Z(2)^0, Z(2^3)^6, Z(2^3)^5, Z(2^3)^6, Z(2)^0, Z(2^3) ][128X[104X
+    [4X[25Xgap>[125X [27Xp := VectorSpaceToElement(gh,vec);[127X[104X
+    [4X[28X<a point in H(8) in W(5, 8)>[128X[104X
+    [4X[25Xgap>[125X [27Xvec := [ Z(2)^0, Z(2^3)^2, Z(2^3), Z(2^3)^3, Z(2^3)^5, Z(2^3)^5 ];[127X[104X
+    [4X[28X[ Z(2)^0, Z(2^3)^2, Z(2^3), Z(2^3)^3, Z(2^3)^5, Z(2^3)^5 ][128X[104X
+    [4X[25Xgap>[125X [27Xq := VectorSpaceToElement(gh,vec);[127X[104X
+    [4X[28X<a point in H(8) in W(5, 8)>[128X[104X
+    [4X[25Xgap>[125X [27Xspan := Span(p,q);[127X[104X
+    [4X[28X<a line in ProjectiveSpace(5, 8)>[128X[104X
+    [4X[25Xgap>[125X [27XElementToElement(gh,span);[127X[104X
+    [4X[28X<a line in H(8) in W(5, 8)>[128X[104X
+    [4X[25Xgap>[125X [27Xvec := [ [ Z(2)^0, 0*Z(2), Z(2^3)^6, Z(2)^0, 0*Z(2), Z(2^3) ], [127X[104X
+    [4X[25X>[125X [27X  [ 0*Z(2), Z(2)^0, Z(2^3)^6, Z(2^3)^4, Z(2^3)^4, 0*Z(2) ] ];[127X[104X
+    [4X[28X[ [ Z(2)^0, 0*Z(2), Z(2^3)^6, Z(2)^0, 0*Z(2), Z(2^3) ], [128X[104X
+    [4X[28X  [ 0*Z(2), Z(2)^0, Z(2^3)^6, Z(2^3)^4, Z(2^3)^4, 0*Z(2) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xl := VectorSpaceToElement(gh,vec);[127X[104X
+    [4X[28X<a line in H(8) in W(5, 8)>[128X[104X
+    [4X[25Xgap>[125X [27Xvec := [ [ Z(2)^0, 0*Z(2), Z(2)^0, Z(2^3), 0*Z(2), Z(2^3) ], [127X[104X
+    [4X[25X>[125X [27X  [ 0*Z(2), Z(2)^0, Z(2)^0, Z(2^3)^2, Z(2^3)^4, Z(2^3)^4 ] ];[127X[104X
+    [4X[28X[ [ Z(2)^0, 0*Z(2), Z(2)^0, Z(2^3), 0*Z(2), Z(2^3) ], [128X[104X
+    [4X[28X  [ 0*Z(2), Z(2)^0, Z(2)^0, Z(2^3)^2, Z(2^3)^4, Z(2^3)^4 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xm := VectorSpaceToElement(gh,vec);[127X[104X
+    [4X[28X<a line in H(8) in W(5, 8)>[128X[104X
+    [4X[25Xgap>[125X [27XMeet(l,m);[127X[104X
+    [4X[28X< empty subspace >[128X[104X
+    [4X[25Xgap>[125X [27XDistanceBetweenElements(l,m);[127X[104X
+    [4X[28X6[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X12.5-10 CollineationGroup[101X
+  
+  [33X[1;0Y[29X[2XCollineationGroup[102X( [3Xgh[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya group of collineations[133X
+  
+  [33X[0;0Y[3Xgh[103X  is  a  classical  generalised  hexagon.  This attribute returns the full
+  collineation group, equipped with a nice monomorphism.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat := IdentityMat(7,GF(9));[127X[104X
+    [4X[28X< mutable compressed matrix 7x7 over GF(9) >[128X[104X
+    [4X[25Xgap>[125X [27Xform := BilinearFormByMatrix(mat,GF(9));[127X[104X
+    [4X[28X< bilinear form >[128X[104X
+    [4X[25Xgap>[125X [27Xps := PolarSpace(form);[127X[104X
+    [4X[28X<polar space in ProjectiveSpace([128X[104X
+    [4X[28X6,GF(3^2)): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2+x_7^2=0 >[128X[104X
+    [4X[25Xgap>[125X [27Xgh := SplitCayleyHexagon(ps);[127X[104X
+    [4X[28XH(9) in Q(6, 9): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2+x_7^2[128X[104X
+    [4X[25Xgap>[125X [27Xgroup := CollineationGroup(gh);[127X[104X
+    [4X[28X#I  for Split Cayley Hexagon[128X[104X
+    [4X[28X#I  Computing nice monomorphism...[128X[104X
+    [4X[28X#I  Found permutation domain...[128X[104X
+    [4X[28X<projective collineation group with 18 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X19602[128X[104X
+    [4X[25Xgap>[125X [27XHasNiceMonomorphism(group);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xgh := TwistedTrialityHexagon(2^3);[127X[104X
+    [4X[28XT(8, 2)[128X[104X
+    [4X[25Xgap>[125X [27Xgroup := CollineationGroup(gh);[127X[104X
+    [4X[28X#I  Computing nice monomorphism...[128X[104X
+    [4X[28X#I  Found permutation domain...[128X[104X
+    [4X[28X3D_4(8)[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X12.6 [33X[0;0YElation generalised quadrangles[133X[101X
+  
+  
+  [1X12.6-1 [33X[0;0YElation generalised quadrangles and Kantor families[133X[101X
+  
+  [33X[0;0YSuppose [22XS=(P,B,I)[122X is a generalised quadrangle of order [22X(s,t)[122X for which there
+  exists  a  point  [22Xp[122X  and  a  group of collineations [22XG[122X fixing [22Xp[122X and each line
+  through  [22Xp[122X,  with the extra property that [22XG[122X acts regularly on the points not
+  collinear  with  [22Xp[122X.  Then [22XS[122X is called an [13Xelation generalised quadrangle[113X with
+  base-point  [22Xp[122X  and  elation  group [22XG[122X, and [22XG[122X has order [22Xs^2t[122X. Let [22Xy[122X be a fixed
+  point  of  [22XS[122X,  not collinear with [22Xp[122X. Denote the [22Xt+1[122X lines incident with [22Xp[122X as
+  [22XL_i,  i=0  ...  t[122X  .  Define  for  each  line [22XL_i[122X the unique point-line pair
+  [22X(z_i,M_i)[122X  such  that  [22XL_i  I  z_i  I  M_i I y[122X. Define the groups [22XS_i[122X as the
+  subgroups  of  [22XG[122X  fixing  the  lines [22XM_i[122X, and define the groups [22XS_i^*[122X as the
+  subgroups  of [22XG[122X fixing the point [22Xz_i[122X . Define the set [22XJ = {S_i: i=0 ... t}[122X ,
+  and  the  set  [22XJ^*  =  {S_i:  i=0 ... t}[122X . Since [22XS[122X is an elation generalised
+  quadrangle,  [22XJ[122X  is  a  collection of [22Xt+1[122X subgroups of [22XG[122X of order [22Xs[122X, and each
+  [22XS_i^*[122X contains has order [22Xst[122X and contains [22XS_i[122X as a subgroup. Furthermore, the
+  following two conditions are satisfied.[133X
+  
+  [33X[0;0Y(K1) [22XS_iS_j ∩ S_k = {1}[122X , for distinct [22Xi,j,k[122X.[133X
+  
+  [33X[0;0Y(K2) [22XS_i ∩ S_j^* = {1}[122X , for distinct [22Xi,j[122X.[133X
+  
+  [33X[0;0YThe pair [22X(J,J^*)[122X is called a [13X4-gonal family[113X or [13XKantor family[113X in [22XG[122X.[133X
+  
+  [33X[0;0YRemarkably,  each  Kantor  family  in a group of order [22Xs^2t[122X gives rise to an
+  elation  generalised  quadrangle.  Kantor  families  and elation generalised
+  quadrangles  are  equivalent  objects,  and  one of the motivations to study
+  Kantor  families  in  groups  was  to find examples of non-classical elation
+  generalised quadrangles.[133X
+  
+  [33X[0;0YGiven  a  group  [22XG[122X,  together  with  a Kantor family [22X(J,J^*)[122X , a generalised
+  quadrangle is defined as follows.[133X
+  
+  [33X[0;0YThe points are of three types:[133X
+  
+  [33X[0;0Y(i) points of type 1 are the elements of [22XG[122X;[133X
+  
+  [33X[0;0Y(ii) points of of type 2 are the right cosets [22XS^*g, s^* ∈ J^*[122X[133X
+  
+  [33X[0;0Y(iii) the unique point of type (iii) is the symbol [22X(∞)[122X .[133X
+  
+  [33X[0;0YThe lines are of two types:[133X
+  
+  [33X[0;0Y(a) lines of type (a) are the right cosets [22XSg[122X, [22XS ∈ J[122X;[133X
+  
+  [33X[0;0Y(b) Lines of type (b) are the symbols [22X[S], S ∈ J[122X.[133X
+  
+  [33X[0;0YIncidence is defined as follows. A point [22Xg[122X of type (i) is incident with each
+  line  [22XSg,  S ∈ J[122X of type (a). A point of type (ii) [22XS^*g[122X is incident the line
+  [22X[S][122X  of  type (b) and the [22Xt[122X lines of type (a) for which [22XSh ⊂ S^*g[122X . Finally,
+  the  unique  point of type (iii) is incident with the lines of type (b), and
+  there are no further incidences.[133X
+  
+  [33X[0;0YIt  is  shown,  see  e.g.  the standard work in this field of Payne and Thas
+  [PT84],  that  this point-line geoemtry is a generalised quadrangle of order
+  [22X(s,t)[122X.[133X
+  
+  [33X[0;0Y[5XFinInG[105X  provides  functions  to  construct  elation  generalised quadrangles
+  directly  from  a Kantor family. The constructed generalised quadrangles are
+  generalised  polygons  in  the  sense of [5XFinInG[105X, i.e. all generic operations
+  described in Sections [14X12.3[114X and [14X12.4[114X.[133X
+  
+  
+  [1X12.6-2 [33X[0;0YCategories[133X[101X
+  
+  [33X[1;0Y[29X[2XIsEGQByKantorFamily[102X [32X Category[133X
+  [33X[1;0Y[29X[2XIsElementOfKantorFamily[102X [32X Category[133X
+  
+  [33X[0;0Y[10XIsEGQByKantorFamily[110X  is  a  subcategory  of  [10XIsElationGQ[110X.  It  contains  all
+  elations  generalised quadrangles that are constructed from a Kantor family.
+  [10XIsElementOfKantorFamily[110X  is  a subcategory of [10XIsElementOfGeneralisedPolygon[110X.
+  It  contains  the  elements  from  generalised  quadrangles  in the category
+  [10XIsEGQByKantorFamily[110X.[133X
+  
+  
+  [1X12.6-3 [33X[0;0YKantor families[133X[101X
+  
+  [33X[1;0Y[29X[2XIsKantorFamily[102X( [3Xg[103X, [3Xf[103X, [3Xfstar[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ytrue or false[133X
+  
+  [33X[0;0YThere  is  no  specific way to construct a Kantor family in [5XFinInG[105X. However,
+  given  a group [22XG[122X and two collections of subgroups, [11XIsKantorFamily[111X will check
+  whether  the  input  satisfies the conditions of a Kantor family. If so, the
+  input can be used directly for the operation [11XEGQByKantorFamily[111X.[133X
+  
+  [1X12.6-4 EGQByKantorFamily[101X
+  
+  [33X[1;0Y[29X[2XEGQByKantorFamily[102X( [3Xg[103X, [3Xf[103X, [3Xfstar[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya generalised quadrangle[133X
+  
+  [33X[0;0YLet  [3Xg[103X  be  a group and [3Xf[103X and [3Xfstar[103X two collections of subgroups, satisfying
+  the  conditions of a Kantor family. This operation returns the corresponding
+  elation  generalised  quadrangle. Note that this operation [13Xdoes not[113X check if
+  the  input  satisfies  the  conditions to be a Kantor family, it only checks
+  whether  the  group [3Xf[i][103X is a subgroup of the group [3Xfstar[i][103X. In the example
+  below,  the  use of [11XIsKantorFamily[111X is also demonstrated, and some categories
+  are displayed.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xg := ElementaryAbelianGroup(27);[127X[104X
+    [4X[28X<pc group of size 27 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xflist1 := [ Group(g.1), Group(g.2), Group(g.3), Group(g.1*g.2*g.3) ];;[127X[104X
+    [4X[25Xgap>[125X [27Xflist2 := [ Group([g.1, g.2^2*g.3]), Group([g.2, g.1^2*g.3 ]), [127X[104X
+    [4X[25X>[125X [27X            Group([g.3, g.1^2*g.2]), Group([g.1^2*g.2, g.1^2*g.3 ]) ];; [127X[104X
+    [4X[25Xgap>[125X [27XIsKantorFamily( g, flist1, flist2 );[127X[104X
+    [4X[28X#I  Checking tangency condition...[128X[104X
+    [4X[28X#I  Checking triple condition...[128X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xegq := EGQByKantorFamily(g, flist1, flist2);[127X[104X
+    [4X[28X<EGQ of order [ 3, 3 ] and basepoint 0>[128X[104X
+    [4X[25Xgap>[125X [27XCategoriesOfObject(egq);[127X[104X
+    [4X[28X[ "IsIncidenceStructure", "IsIncidenceGeometry", "IsGeneralisedPolygon", [128X[104X
+    [4X[28X  "IsGeneralisedQuadrangle", "IsElationGQ", "IsElationGQByKantorFamily" ][128X[104X
+    [4X[25Xgap>[125X [27Xp := Random(Points(egq));[127X[104X
+    [4X[28X<a point of class 2 of <EGQ of order [ 3, 3 ] and basepoint 0>>[128X[104X
+    [4X[25Xgap>[125X [27XCategoriesOfObject(p);[127X[104X
+    [4X[28X[ "IsElementOfIncidenceStructure", "IsElementOfIncidenceGeometry", [128X[104X
+    [4X[28X  "IsElementOfGeneralisedPolygon", "IsElementOfKantorFamily" ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X12.6-5 [33X[0;0YRepresentation of elements and underlying objects[133X[101X
+  
+  [33X[1;0Y[29X[2XObjectToElement[102X( [3Xegq[103X, [3Xt[103X, [3Xobj[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XObjectToElement[102X( [3Xegq[103X, [3Xobj[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XBasePointOfEGQ[102X( [3Xegq[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XUnderlyingObject[102X( [3Xel[103X ) [32X operation[133X
+  
+  [33X[0;0YFor  technical reasons, the underlying objects of the elements of an elation
+  generalised quadrangle constructed from a Kantor family, are not exactly the
+  mathematical  objects from the definition. However, these technicalities are
+  almost  completely  hidden  for  the  user, except for the representation of
+  lines  of  type  (b), which are represented in [5XFinInG[105X by the elements of the
+  collection  [22XJ^*[122X  (instead  of the elements of the collection [22XJ[122X). This change
+  from  the  original definition has no mathematical implications, since there
+  is a bijective correspondence between the elements of [22XJ^*[122X and [22XJ[122X. Notice also
+  that  it is only possible to obtain the base-point of an elation generalised
+  quadrangle  constructed  from  a Kantor family through calling the attribute
+  [11XBasePointOfEGQ[111X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xg := ElementaryAbelianGroup(27);[127X[104X
+    [4X[28X<pc group of size 27 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xflist1 := [ Group(g.1), Group(g.2), Group(g.3), Group(g.1*g.2*g.3) ];;[127X[104X
+    [4X[25Xgap>[125X [27Xflist2 := [ Group([g.1, g.2^2*g.3]), Group([g.2, g.1^2*g.3 ]),[127X[104X
+    [4X[25X>[125X [27X            Group([g.3, g.1^2*g.2]), Group([g.1^2*g.2, g.1^2*g.3 ]) ];;[127X[104X
+    [4X[25Xgap>[125X [27Xegq := EGQByKantorFamily(g, flist1, flist2);[127X[104X
+    [4X[28X<EGQ of order [ 3, 3 ] and basepoint 0>[128X[104X
+    [4X[25Xgap>[125X [27Xh := Random(g);[127X[104X
+    [4X[28Xf1*f2^2[128X[104X
+    [4X[25Xgap>[125X [27Xp := ObjectToElement(egq,h);[127X[104X
+    [4X[28X<a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>[128X[104X
+    [4X[25Xgap>[125X [27Xcoset := RightCoset(flist1[1],h);[127X[104X
+    [4X[28XRightCoset(Group( [ f1 ] ),f1*f2^2)[128X[104X
+    [4X[25Xgap>[125X [27Xl := ObjectToElement(egq,coset);[127X[104X
+    [4X[28X<a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>[128X[104X
+    [4X[25Xgap>[125X [27Xp * l;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XS := flist2[2];[127X[104X
+    [4X[28X<pc group of size 9 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xm := ObjectToElement(egq,S);[127X[104X
+    [4X[28X<a line of class 2 of <EGQ of order [ 3, 3 ] and basepoint 0>>[128X[104X
+    [4X[25Xgap>[125X [27Xq := BasePointOfEGQ(egq);[127X[104X
+    [4X[28X<a point of class 3 of <EGQ of order [ 3, 3 ] and basepoint 0>>[128X[104X
+    [4X[25Xgap>[125X [27Xm * q;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xlines := List(Lines(p));[127X[104X
+    [4X[28X[ <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>> ][128X[104X
+    [4X[25Xgap>[125X [27Xpts1 := List(Points(m));[127X[104X
+    [4X[28X[ <a point of class 2 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a point of class 2 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a point of class 2 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a point of class 3 of <EGQ of order [ 3, 3 ] and basepoint 0>> ][128X[104X
+    [4X[25Xgap>[125X [27Xpts2 := List(Points(l));[127X[104X
+    [4X[28X[ <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a point of class 2 of <EGQ of order [ 3, 3 ] and basepoint 0>> ][128X[104X
+    [4X[25Xgap>[125X [27XList(pts2,x->UnderlyingObject(x));[127X[104X
+    [4X[28X[ f2^2, f1*f2^2, f1^2*f2^2, RightCoset(Group( [ f1, f2^2*f3 ] ),f3^2) ][128X[104X
+    [4X[25Xgap>[125X [27XUnderlyingObject(q);[127X[104X
+    [4X[28X0[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X12.6-6 [33X[0;0YElation group and natural action on elements[133X[101X
+  
+  [33X[1;0Y[29X[2XElationGroup[102X( [3Xegq[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XOnKantorFamily[102X( [3Xg[103X, [3Xel[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XCollineationAction[102X( [3Xg[103X ) [32X attribute[133X
+  
+  [33X[0;0YThe  attribute  [11XElationGroup[111X  is  naturally  set upon creation of an elation
+  generalised  quadrangle  from  a  Kantor family. The elements of the elation
+  group act "naturally" on the elements of the elation generalised quadrangle.
+  This  natural  action  is implemented in the action function [11XOnKantorFamily[111X.
+  When [3Xg[103X is the elation group of an elation generalised quadrangle constructed
+  from  a  Kantor  family,  the  attribute  [11XCollineationAction[111X will return the
+  action function [11XOnKantorFamily[111X. The action function makes use of generic GAP
+  operations possible, as is demonstrated in the example.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xg := ElementaryAbelianGroup(27);[127X[104X
+    [4X[28X<pc group of size 27 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xflist1 := [ Group(g.1), Group(g.2), Group(g.3), Group(g.1*g.2*g.3) ];;[127X[104X
+    [4X[25Xgap>[125X [27Xflist2 := [ Group([g.1, g.2^2*g.3]), Group([g.2, g.1^2*g.3 ]),[127X[104X
+    [4X[25X>[125X [27X            Group([g.3, g.1^2*g.2]), Group([g.1^2*g.2, g.1^2*g.3 ]) ];;[127X[104X
+    [4X[25Xgap>[125X [27Xegq := EGQByKantorFamily(g, flist1, flist2);[127X[104X
+    [4X[28X<EGQ of order [ 3, 3 ] and basepoint 0>[128X[104X
+    [4X[25Xgap>[125X [27Xgroup := ElationGroup(egq);[127X[104X
+    [4X[28X<pc group of size 27 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XCollineationAction(group) = OnKantorFamily;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xl := ObjectToElement(egq,RightCoset(flist1[1],One(g)));[127X[104X
+    [4X[28X<a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>[128X[104X
+    [4X[25Xgap>[125X [27Xstab := Stabilizer(group,l,OnKantorFamily);[127X[104X
+    [4X[28XGroup([ f1 ])[128X[104X
+    [4X[25Xgap>[125X [27Xpts := List(Points(egq));[127X[104X
+    [4X[28X[ <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a point of class 2 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a point of class 2 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a point of class 2 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a point of class 2 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a point of class 2 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a point of class 2 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a point of class 2 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a point of class 2 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a point of class 2 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a point of class 2 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a point of class 2 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a point of class 2 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a point of class 3 of <EGQ of order [ 3, 3 ] and basepoint 0>> ][128X[104X
+    [4X[25Xgap>[125X [27XOrbits(group,pts,OnKantorFamily);[127X[104X
+    [4X[28X[ [ <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a point of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>> ], [128X[104X
+    [4X[28X  [ <a point of class 2 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a point of class 2 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a point of class 2 of <EGQ of order [ 3, 3 ] and basepoint 0>> ], [128X[104X
+    [4X[28X  [ <a point of class 2 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a point of class 2 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a point of class 2 of <EGQ of order [ 3, 3 ] and basepoint 0>> ], [128X[104X
+    [4X[28X  [ <a point of class 2 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a point of class 2 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a point of class 2 of <EGQ of order [ 3, 3 ] and basepoint 0>> ], [128X[104X
+    [4X[28X  [ <a point of class 2 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a point of class 2 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a point of class 2 of <EGQ of order [ 3, 3 ] and basepoint 0>> ], [128X[104X
+    [4X[28X  [ <a point of class 3 of <EGQ of order [ 3, 3 ] and basepoint 0>> ] ][128X[104X
+    [4X[25Xgap>[125X [27Xlines := List(Lines(egq));[127X[104X
+    [4X[28X[ <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a line of class 2 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a line of class 2 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a line of class 2 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X  <a line of class 2 of <EGQ of order [ 3, 3 ] and basepoint 0>> ][128X[104X
+    [4X[25Xgap>[125X [27XOrbits(group,lines,OnKantorFamily);[127X[104X
+    [4X[28X[ [ <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>> ], [128X[104X
+    [4X[28X  [ <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>> ], [128X[104X
+    [4X[28X  [ <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>> ], [128X[104X
+    [4X[28X  [ <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>>, [128X[104X
+    [4X[28X      <a line of class 1 of <EGQ of order [ 3, 3 ] and basepoint 0>> ], [128X[104X
+    [4X[28X  [ <a line of class 2 of <EGQ of order [ 3, 3 ] and basepoint 0>> ], [128X[104X
+    [4X[28X  [ <a line of class 2 of <EGQ of order [ 3, 3 ] and basepoint 0>> ], [128X[104X
+    [4X[28X  [ <a line of class 2 of <EGQ of order [ 3, 3 ] and basepoint 0>> ], [128X[104X
+    [4X[28X  [ <a line of class 2 of <EGQ of order [ 3, 3 ] and basepoint 0>> ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X12.6-7 [33X[0;0YKantor families, q-clans, and elation generalised quadrangles[133X[101X
+  
+  [33X[0;0YLet  [22XC={A_i: i=1 ... q}[122X be a set of [22Xq[122X distinct upper triangle [22X2 × 2[122X matrices
+  over  the  finite  field  [22XGF(q)[122X.  Then  [22XC[122X is called a [13Xq-clan[113X if [22XA_r - A_t[122X is
+  anistropic for [22Xr ≠ t[122X.[133X
+  
+  [33X[0;0YDefine  [22XG  =  {(α,c,β):  α,β  ∈  GF(q)^2, c ∈ GF(q)}[122X , and define the binary
+  operator  [22X×[122X  as  [22X(α,c,β) × (α',c',β') = (α + α',c+c'+β ⋅ α'^T,β + β')[122X . Then
+  [22XG,×[122X  is  a  group  with  center [22XZ(G)={(0,c,0): c ∈ GF(q)}[122X. Consider a q-clan
+  [22XC={A_i:  i=1  ...  q}[122X,  define  [22XK_i  =  A_i+A_i^T[122X.  Now define the following
+  subgroups of [22XG[122X[133X
+  
+  [33X[0;0Y[22XA(i)  =  {(α,α  A_t,α  K_t):  α ∈ GF(q)^2, i=1... q}[122X and [22XA(∞) = (0,0,γ): γ ∈
+  GF(q)^2}[122X , and[133X
+  
+  [33X[0;0Y[22XA^*(i)  =  {(α,b,α  K_t):  α  ∈  GF(q)^2,  b ∈ GF(q), i=1... q}[122X and [22XA^*(∞) =
+  {(0,b,γ): γ ∈ GF(q)^2, b ∈ GF(q)}[122X[133X
+  
+  [33X[0;0YDefine [22XJ={A(i):i=1... q} ∪ {A(∞)}[122X and [22XJ^*={A^*(i):i=1... q} ∪ {A^*(∞)}[122X[133X
+  
+  [33X[0;0YA  combination  of results of Payne and Kantor yield the famous theorem that
+  (J,J^*)  is  a  Kantor  family  in  [22XG[122X  if  and only if [22XC[122X is a q-clan. [5XFinInG[105X
+  provides   functionality   to   construct   q-clans  and  to  construct  the
+  corresponding  Kantor  family.  As such, elation generalised quadrangles can
+  directly constructed from q-clans.[133X
+  
+  [1X12.6-8 qClan[101X
+  
+  [33X[1;0Y[29X[2XqClan[102X( [3Xlist[103X, [3Xf[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya q-clan.[133X
+  
+  [33X[0;0YGiven  a  list  [3Xlist[103X  of [22X2 ×[122X matrices over the field [3Xf[103X, it is checked if the
+  matrices in the list satisfy the condition to constitute a q-clan over [22Xf[122X. If
+  so, the q-clan is returned.[133X
+  
+  
+  [1X12.6-9 [33X[0;0YParticular q-clans[133X[101X
+  
+  [33X[1;0Y[29X[2XLinearqClan[102X( [3Xq[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XFisherThasWalkerKantorBettenqClan[102X( [3Xq[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XKantorMonomialqClan[102X( [3Xq[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XKantorKnuthqClan[102X( [3Xq[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XFisherqClan[102X( [3Xq[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya q-clan[133X
+  
+  [33X[0;0YSome  famous  q-clans  are built in. We refer to ... for more information on
+  these.[133X
+  
+  [1X12.6-10 KantorFamilyByqClan[101X
+  
+  [33X[1;0Y[29X[2XKantorFamilyByqClan[102X( [3Xclan[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YA Kantor family.[133X
+  
+  [33X[0;0YThe  Kantor family constructed from a q-clan will be a matrix group together
+  with the corresponding collections [22XJ[122X and J^* .[133X
+  
+  [1X12.6-11 EGQByqClan[101X
+  
+  [33X[1;0Y[29X[2XEGQByqClan[102X( [3Xclan[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YAn elation generalised quadrangle constructed from a q-clan.[133X
+  
+  [33X[0;0YGiven  a  q-clan  [3Xclan[103X,  the  operation  [11XKantorFamilyByqClan[111X will be used to
+  construct  the  Kantor family from [3Xclan[103X, followed by the construction of the
+  elation  generalised  quadrangle  using the operation [11XEGQByKantorFamily[111X. The
+  first  example  shows  also the use of [11XqClan[111X, and shows that a linear q-clan
+  yields a classical generalised quadrangle.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf := GF(3);[127X[104X
+    [4X[28XGF(3)[128X[104X
+    [4X[25Xgap>[125X [27Xid := IdentityMat(2, f);;[127X[104X
+    [4X[25Xgap>[125X [27Xlist := List( f, t -> t * id );;[127X[104X
+    [4X[25Xgap>[125X [27Xclan := qClan(list,f);[127X[104X
+    [4X[28X<q-clan over GF(3)>[128X[104X
+    [4X[25Xgap>[125X [27Xegq := EGQByqClan(clan);[127X[104X
+    [4X[28X#I  Computed Kantor family. Now computing EGQ...[128X[104X
+    [4X[28X<EGQ of order [ 9, 3 ] and basepoint 0>[128X[104X
+    [4X[25Xgap>[125X [27Xincgraph := IncidenceGraph(egq);;[127X[104X
+    [4X[28X#I  Computing incidence graph of generalised polygon...[128X[104X
+    [4X[28X#I  Using elation of the collineation group...[128X[104X
+    [4X[25Xgap>[125X [27Xgroup := AutomorphismGroup(incgraph);[127X[104X
+    [4X[28X<permutation group with 6 generators>[128X[104X
+    [4X[25Xgap>[125X [27XOrder(group);[127X[104X
+    [4X[28X26127360[128X[104X
+    [4X[25Xgap>[125X [27XOrder(CollineationGroup(HermitianPolarSpace(3,9)));[127X[104X
+    [4X[28X26127360[128X[104X
+    [4X[25Xgap>[125X [27Xclan := KantorKnuthqClan(9);[127X[104X
+    [4X[28X<q-clan over GF(3^2)>[128X[104X
+    [4X[25Xgap>[125X [27Xegq := EGQByqClan(clan);[127X[104X
+    [4X[28X#I  Computed Kantor family. Now computing EGQ...[128X[104X
+    [4X[28X<EGQ of order [ 81, 9 ] and basepoint 0>[128X[104X
+    [4X[25Xgap>[125X [27Xclan := FisherThasWalkerKantorBettenqClan(11);[127X[104X
+    [4X[28X<q-clan over GF(11)>[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X12.6-12 [33X[0;0YBLT-sets, flocks, q-clans, and elation generalised quadrangles[133X[101X
+  
+  [33X[0;0YA  [13Xflock[113X  is  a partition of the points of a quadratic cone in [22XPG(3,q)[122X minus
+  its  vertex into conics. Each conic is determined by a plane, and each plane
+  is  determined  uniquely  by  a  triple of elements of the field [22XGF(q)[122X. So a
+  flock  is  determined  by  [22Xq[122X  such triples. Remarkably, as was shown by J.A.
+  Thas,  the  conditions  for these triples to constitute a flock, are exactly
+  the  same  conditions  for  these  triples  to  constitute  [22Xq[122X upper triangle
+  matrices  making  a  q-clan  over [22XGF(q)[122X. Hence, q-clans and flocks, and thus
+  flocks and elation generalised quadrangles, are equivalent objects.[133X
+  
+  [33X[0;0YThe  quadratic  cone  can  be  embedded  as  a  hyperplane  section into the
+  parabolic  quadric [22XQ(4,q)[122X. L. Bader, G. Lunardon and J.A. Thas observed that
+  a set of [22Xq[122X points of [22XQ(4,q)[122X can be constructed from the [22Xq[122X planes determining
+  the  flock,  and  this set of points satisfies certain geometric conditions.
+  Such  a  set  is called a [13XBLT-set[113X. Dually, a BLT-set corresponds to a set of
+  lines  of [22XW(3,q)[122X. Furthermore, from this BLT-set of lines, it is possible to
+  construct   directly   an  elation  generalised  quadrangle  from  carefully
+  selecting   points   and  lines  from  the  symplectic  space  [22XW(5,q)[122X.  This
+  construction is called the Knarr construction.[133X
+  
+  [33X[0;0YConsider  the  symplectic  polar space [22XW(5,q)[122X and choose a point [22XP ∈ W(5,q)[122X.
+  Its  tangent  space is a [22X4[122X-dimensional space [22XF[122X. Embed [22XW(3,q)[122X in a solid of [22XF[122X
+  not  on the point [22Xp[122X, and let [22XL[122X be the set of BLT lines. Each line spans with
+  [22Xp[122X  a  plane of [22XW(5,q)[122X, call these [22Xq[122X planes the [13XBLT-planes[113X. Now we can define
+  the points an lines of the elation generalised quadrangle as follows.[133X
+  
+  [33X[0;0YPoints of type (i) are the points of [22XW(5,q) ∖ F[122X, points of type (ii) are the
+  lines  of  each BLT-plane not on [22Xp[122X and the unique point of type (iii) is the
+  point [22Xp[122X. Lines of type (a) are the planes of [22XW(5,q)[122X meeting a BLT-plane in a
+  line.  Note  that  no  plane  of [22XW(5,q)[122X meeting two BLT planes in a line can
+  exist.  Lines  of  type  (b)  are  the  BLT-planes. Incidence is the natural
+  incidence (so the incidence inherited) from the polar space [22XW(5,q)[122X, and this
+  geometry  is a elation generalised quadrangle with base-point [22Xp[122X and of order
+  [22X(q^2,q)[122X.[133X
+  
+  [33X[0;0Y[5XFinInG[105X provides functions to construct elation generalised quadrangles using
+  this  model from BLT-sets, and provides a function to compute a BLT set from
+  a  q-clan directly. The advantage of constructing a elation generalised from
+  elements  of Lie geometries is the availability of the underlying projective
+  groups and their action on elements of Lie geometries.[133X
+  
+  [1X12.6-13 IsEGQByBLTSet[101X
+  
+  [33X[1;0Y[29X[2XIsEGQByBLTSet[102X [32X Category[133X
+  
+  [33X[0;0Y[10XIsEGQByBLTSet[110X  is  a  subcategory  of  [10XIsElationGQ[110X. It contains all elations
+  generalised quadrangles that are constructed from a BLT set.[133X
+  
+  [1X12.6-14 BLTSetByqClan[101X
+  
+  [33X[1;0Y[29X[2XBLTSetByqClan[102X( [3Xclan[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YA BLT-set.[133X
+  
+  [33X[0;0YThe  BLT-set  is  a  set  of points of the parabolic quadric in [22XPG(4,q)[122X with
+  particular  equation  [22X2X_1x_5+2X_2X_4+w^(q+1)/2=0[122X  ,  where [22Xw[122X is a primitive
+  element of the underlying field of [3Xclan[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xclan := KantorKnuthqClan(9);[127X[104X
+    [4X[28X<q-clan over GF(3^2)>[128X[104X
+    [4X[25Xgap>[125X [27Xblt := BLTSetByqClan(clan);[127X[104X
+    [4X[28X[ <a point in Q(4, 9): -x_1*x_5-x_2*x_4+Z(3^2)^5*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 9): -x_1*x_5-x_2*x_4+Z(3^2)^5*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 9): -x_1*x_5-x_2*x_4+Z(3^2)^5*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 9): -x_1*x_5-x_2*x_4+Z(3^2)^5*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 9): -x_1*x_5-x_2*x_4+Z(3^2)^5*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 9): -x_1*x_5-x_2*x_4+Z(3^2)^5*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 9): -x_1*x_5-x_2*x_4+Z(3^2)^5*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 9): -x_1*x_5-x_2*x_4+Z(3^2)^5*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 9): -x_1*x_5-x_2*x_4+Z(3^2)^5*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 9): -x_1*x_5-x_2*x_4+Z(3^2)^5*x_3^2=0> ][128X[104X
+    [4X[25Xgap>[125X [27Xclan := FisherThasWalkerKantorBettenqClan(11);[127X[104X
+    [4X[28X<q-clan over GF(11)>[128X[104X
+    [4X[25Xgap>[125X [27Xblt := BLTSetByqClan(clan);[127X[104X
+    [4X[28X[ <a point in Q(4, 11): Z(11)*x_1*x_5+Z(11)*x_2*x_4+Z(11)^6*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 11): Z(11)*x_1*x_5+Z(11)*x_2*x_4+Z(11)^6*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 11): Z(11)*x_1*x_5+Z(11)*x_2*x_4+Z(11)^6*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 11): Z(11)*x_1*x_5+Z(11)*x_2*x_4+Z(11)^6*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 11): Z(11)*x_1*x_5+Z(11)*x_2*x_4+Z(11)^6*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 11): Z(11)*x_1*x_5+Z(11)*x_2*x_4+Z(11)^6*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 11): Z(11)*x_1*x_5+Z(11)*x_2*x_4+Z(11)^6*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 11): Z(11)*x_1*x_5+Z(11)*x_2*x_4+Z(11)^6*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 11): Z(11)*x_1*x_5+Z(11)*x_2*x_4+Z(11)^6*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 11): Z(11)*x_1*x_5+Z(11)*x_2*x_4+Z(11)^6*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 11): Z(11)*x_1*x_5+Z(11)*x_2*x_4+Z(11)^6*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 11): Z(11)*x_1*x_5+Z(11)*x_2*x_4+Z(11)^6*x_3^2=0> ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X12.6-15 EGQByBLTSet[101X
+  
+  [33X[1;0Y[29X[2XEGQByBLTSet[102X( [3Xblt[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YAn elation generalised quadrangle.[133X
+  
+  [33X[0;0Y[3Xblt[103X  is  a BLT-set, this operation returns an elation generalised quadrangle
+  constructed  as  described above consisting of elements of [22XW(5,q)[122X. Notice in
+  the example that computing the full collineation group of the GQ constructed
+  directly  from  the  q-clan  (hence a group coset geometry) is substantially
+  slower than computing the full collineation group of the GQ constructed from
+  the BLT-set.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xclan := LinearqClan(3);[127X[104X
+    [4X[28X<q-clan over GF(3)>[128X[104X
+    [4X[25Xgap>[125X [27Xbltset := BLTSetByqClan( clan);[127X[104X
+    [4X[28X[ <a point in Q(4, 3): -x_1*x_5-x_2*x_4+x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 3): -x_1*x_5-x_2*x_4+x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 3): -x_1*x_5-x_2*x_4+x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 3): -x_1*x_5-x_2*x_4+x_3^2=0> ][128X[104X
+    [4X[25Xgap>[125X [27Xegq := EGQByBLTSet( bltset );[127X[104X
+    [4X[28X#I  Now embedding dual BLT-set into W(5,q)...[128X[104X
+    [4X[28X#I  Computing elation group...[128X[104X
+    [4X[28X<EGQ of order [ 9, 3 ] and basepoint in W(5, 3 ) >[128X[104X
+    [4X[25Xgap>[125X [27Xp := BasePointOfEGQ(egq);[127X[104X
+    [4X[28X<a point in <EGQ of order [ 9, 3 ] and basepoint in W(5, 3 ) >>[128X[104X
+    [4X[25Xgap>[125X [27XUnderlyingObject(p);[127X[104X
+    [4X[28X<a point in W(5, 3)>[128X[104X
+    [4X[25Xgap>[125X [27Xl := Random(Lines(egq));[127X[104X
+    [4X[28X<a line in <EGQ of order [ 9, 3 ] and basepoint in W(5, 3 ) >>[128X[104X
+    [4X[25Xgap>[125X [27XUnderlyingObject(l);[127X[104X
+    [4X[28X<a plane in W(5, 3)>[128X[104X
+    [4X[25Xgap>[125X [27Xgroup := ElationGroup(egq);[127X[104X
+    [4X[28X<projective collineation group with 5 generators>[128X[104X
+    [4X[25Xgap>[125X [27XOrder(group);[127X[104X
+    [4X[28X243[128X[104X
+    [4X[25Xgap>[125X [27XCollineationGroup(egq);[127X[104X
+    [4X[28X#I  Using elation group to enumerate elements[128X[104X
+    [4X[28X#I  Using elation group to enumerate elements[128X[104X
+    [4X[28X#I  Computing incidence graph of generalised polygon...[128X[104X
+    [4X[28X#I  Using elation of the collineation group...[128X[104X
+    [4X[28X#I  Using elation group to enumerate elements[128X[104X
+    [4X[28X<permutation group of size 26127360 with 7 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X147[128X[104X
+    [4X[25Xgap>[125X [27Xegq := EGQByqClan(clan);[127X[104X
+    [4X[28X#I  Computed Kantor family. Now computing EGQ...[128X[104X
+    [4X[28X<EGQ of order [ 9, 3 ] and basepoint 0>[128X[104X
+    [4X[25Xgap>[125X [27XCollineationGroup(egq);[127X[104X
+    [4X[28X#I  Computing incidence graph of generalised polygon...[128X[104X
+    [4X[28X#I  Using elation of the collineation group...[128X[104X
+    [4X[28X<permutation group of size 26127360 with 6 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X1139[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X12.6-16 DefiningPlanesOfEGQByBLTSet[101X
+  
+  [33X[1;0Y[29X[2XDefiningPlanesOfEGQByBLTSet[102X( [3Xegq[103X ) [32X attribute[133X
+  
+  [33X[0;0YFor   an  elation  generalised  quadrangle  in  the  category  [10XIsEGQByBLTSet[110X
+  (constructed  from  a  BLT-set),  the  planes  of the polar space [22XW(5,q)[122X, as
+  described   in   the  introduction,  determine  the  generalised  quadrangle
+  completely. This attribute returns these [22Xq[122X planes of [22XW(5,q)[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xclan := KantorKnuthqClan(9);[127X[104X
+    [4X[28X<q-clan over GF(3^2)>[128X[104X
+    [4X[25Xgap>[125X [27Xblt := BLTSetByqClan(clan);[127X[104X
+    [4X[28X[ <a point in Q(4, 9): -x_1*x_5-x_2*x_4+Z(3^2)^5*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 9): -x_1*x_5-x_2*x_4+Z(3^2)^5*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 9): -x_1*x_5-x_2*x_4+Z(3^2)^5*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 9): -x_1*x_5-x_2*x_4+Z(3^2)^5*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 9): -x_1*x_5-x_2*x_4+Z(3^2)^5*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 9): -x_1*x_5-x_2*x_4+Z(3^2)^5*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 9): -x_1*x_5-x_2*x_4+Z(3^2)^5*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 9): -x_1*x_5-x_2*x_4+Z(3^2)^5*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 9): -x_1*x_5-x_2*x_4+Z(3^2)^5*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 9): -x_1*x_5-x_2*x_4+Z(3^2)^5*x_3^2=0> ][128X[104X
+    [4X[25Xgap>[125X [27Xegq := EGQByBLTSet(blt);[127X[104X
+    [4X[28X#I  Now embedding dual BLT-set into W(5,q)...[128X[104X
+    [4X[28X#I  Computing elation group...[128X[104X
+    [4X[28X<EGQ of order [ 81, 9 ] and basepoint in W(5, 9 ) >[128X[104X
+    [4X[25Xgap>[125X [27XDefiningPlanesOfEGQByBLTSet(egq);[127X[104X
+    [4X[28X[ <a plane in W(5, 9)>, <a plane in W(5, 9)>, <a plane in W(5, 9)>, [128X[104X
+    [4X[28X  <a plane in W(5, 9)>, <a plane in W(5, 9)>, <a plane in W(5, 9)>, [128X[104X
+    [4X[28X  <a plane in W(5, 9)>, <a plane in W(5, 9)>, <a plane in W(5, 9)>, [128X[104X
+    [4X[28X  <a plane in W(5, 9)> ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X12.6-17 [33X[0;0YRepresentation of elements and underlying objects[133X[101X
+  
+  [33X[1;0Y[29X[2XObjectToElement[102X( [3Xegq[103X, [3Xt[103X, [3Xobj[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XObjectToElement[102X( [3Xegq[103X, [3Xobj[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XUnderlyingObject[102X( [3Xel[103X ) [32X operation[133X
+  
+  [33X[0;0YThe  underlying objects of the elements of an elation generalised quadrangle
+  in  the category [10XIsEGQByBLTSet[110X are elements of the polar space [22XW(5,q)[122X in its
+  standard  representation. These elements can be used as underlying object to
+  construct  elements  of  [3Xegq[103X.  The  example  also  demonstrates  the  use of
+  [11XDistanceBetweenElements[111X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xclan := FisherThasWalkerKantorBettenqClan(11);[127X[104X
+    [4X[28X<q-clan over GF(11)>[128X[104X
+    [4X[25Xgap>[125X [27Xblt := BLTSetByqClan(clan);[127X[104X
+    [4X[28X[ <a point in Q(4, 11): Z(11)*x_1*x_5+Z(11)*x_2*x_4+Z(11)^6*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 11): Z(11)*x_1*x_5+Z(11)*x_2*x_4+Z(11)^6*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 11): Z(11)*x_1*x_5+Z(11)*x_2*x_4+Z(11)^6*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 11): Z(11)*x_1*x_5+Z(11)*x_2*x_4+Z(11)^6*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 11): Z(11)*x_1*x_5+Z(11)*x_2*x_4+Z(11)^6*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 11): Z(11)*x_1*x_5+Z(11)*x_2*x_4+Z(11)^6*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 11): Z(11)*x_1*x_5+Z(11)*x_2*x_4+Z(11)^6*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 11): Z(11)*x_1*x_5+Z(11)*x_2*x_4+Z(11)^6*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 11): Z(11)*x_1*x_5+Z(11)*x_2*x_4+Z(11)^6*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 11): Z(11)*x_1*x_5+Z(11)*x_2*x_4+Z(11)^6*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 11): Z(11)*x_1*x_5+Z(11)*x_2*x_4+Z(11)^6*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 11): Z(11)*x_1*x_5+Z(11)*x_2*x_4+Z(11)^6*x_3^2=0> ][128X[104X
+    [4X[25Xgap>[125X [27Xegq := EGQByBLTSet(blt);[127X[104X
+    [4X[28X#I  Now embedding dual BLT-set into W(5,q)...[128X[104X
+    [4X[28X#I  Computing elation group...[128X[104X
+    [4X[28X<EGQ of order [ 121, 11 ] and basepoint in W(5, 11 ) >[128X[104X
+    [4X[25Xgap>[125X [27Xplanes := DefiningPlanesOfEGQByBLTSet(egq);[127X[104X
+    [4X[28X[ <a plane in W(5, 11)>, <a plane in W(5, 11)>, <a plane in W(5, 11)>, [128X[104X
+    [4X[28X  <a plane in W(5, 11)>, <a plane in W(5, 11)>, <a plane in W(5, 11)>, [128X[104X
+    [4X[28X  <a plane in W(5, 11)>, <a plane in W(5, 11)>, <a plane in W(5, 11)>, [128X[104X
+    [4X[28X  <a plane in W(5, 11)>, <a plane in W(5, 11)>, <a plane in W(5, 11)> ][128X[104X
+    [4X[25Xgap>[125X [27Xp := BasePointOfEGQ(egq);[127X[104X
+    [4X[28X<a point in <EGQ of order [ 121, 11 ] and basepoint in W(5, 11 ) >>[128X[104X
+    [4X[25Xgap>[125X [27Xup := UnderlyingObject(p);[127X[104X
+    [4X[28X<a point in W(5, 11)>[128X[104X
+    [4X[25Xgap>[125X [27Xps := SymplecticSpace(5,11);[127X[104X
+    [4X[28XW(5, 11)[128X[104X
+    [4X[25Xgap>[125X [27Xuq := VectorSpaceToElement(ps,[1,1,0,0,0,0]*Z(11)^0);[127X[104X
+    [4X[28X<a point in W(5, 11)>[128X[104X
+    [4X[25Xgap>[125X [27Xq := ObjectToElement(egq,1,uq);[127X[104X
+    [4X[28X<a point in <EGQ of order [ 121, 11 ] and basepoint in W(5, 11 ) >>[128X[104X
+    [4X[25Xgap>[125X [27XDistanceBetweenElements(p,q);[127X[104X
+    [4X[28X4[128X[104X
+    [4X[25Xgap>[125X [27Xl := ObjectToElement(egq,2,planes[1]);[127X[104X
+    [4X[28X<a line in <EGQ of order [ 121, 11 ] and basepoint in W(5, 11 ) >>[128X[104X
+    [4X[25Xgap>[125X [27XDistanceBetweenElements(p,l);[127X[104X
+    [4X[28X1[128X[104X
+    [4X[25Xgap>[125X [27XDistanceBetweenElements(q,l);[127X[104X
+    [4X[28X3[128X[104X
+    [4X[25Xgap>[125X [27Xum := VectorSpaceToElement(ps,[[1,0,0,0,1,1],[0,1,0,9,1,0],[0,0,1,9,9,9]]*Z(11)^0);[127X[104X
+    [4X[28X<a plane in W(5, 11)>[128X[104X
+    [4X[25Xgap>[125X [27Xm := ObjectToElement(egq,2,um);[127X[104X
+    [4X[28X<a line in <EGQ of order [ 121, 11 ] and basepoint in W(5, 11 ) >>[128X[104X
+    [4X[25Xgap>[125X [27XDistanceBetweenElements(p,m);[127X[104X
+    [4X[28X3[128X[104X
+    [4X[25Xgap>[125X [27XDistanceBetweenElements(q,m);[127X[104X
+    [4X[28X3[128X[104X
+    [4X[25Xgap>[125X [27XDistanceBetweenElements(l,m);[127X[104X
+    [4X[28X2[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X12.6-18 CollineationSubgroup[101X
+  
+  [33X[1;0Y[29X[2XCollineationSubgroup[102X( [3Xegq[103X ) [32X attribute[133X
+  
+  [33X[0;0YFor   an  elation  generalised  quadrangle  in  the  category  [10XIsEGQByBLTSet[110X
+  (constructed  from  a  BLT  set),  the  planes of the polar space [22XW(5,q)[122X, as
+  described   in   the  introduction,  determine  the  generalised  quadrangle
+  completely. The setwise stabiliser of these planes in the collineation group
+  of  [22XW(5,q)[122X is a subgroup of the completely collineation group of the elation
+  generalised  quadrangle,  and  can be computed much faster than the complete
+  collineation  group.  This  attribute  returns  this setwise stabiliser. The
+  returned  group  is  equipped  with  the  [11XCollineationACtion[111X  attribute.  If
+  [11XCollineationSubgroup[111X  is  computed,  this  group will be used instead of the
+  elation group to compute the incidence graph.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xclan := FisherThasWalkerKantorBettenqClan(5);[127X[104X
+    [4X[28X<q-clan over GF(5)>[128X[104X
+    [4X[25Xgap>[125X [27Xblt := BLTSetByqClan(clan);[127X[104X
+    [4X[28X[ <a point in Q(4, 5): Z(5)*x_1*x_5+Z(5)*x_2*x_4+Z(5)^3*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 5): Z(5)*x_1*x_5+Z(5)*x_2*x_4+Z(5)^3*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 5): Z(5)*x_1*x_5+Z(5)*x_2*x_4+Z(5)^3*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 5): Z(5)*x_1*x_5+Z(5)*x_2*x_4+Z(5)^3*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 5): Z(5)*x_1*x_5+Z(5)*x_2*x_4+Z(5)^3*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 5): Z(5)*x_1*x_5+Z(5)*x_2*x_4+Z(5)^3*x_3^2=0> ][128X[104X
+    [4X[25Xgap>[125X [27Xegq := EGQByBLTSet(blt);[127X[104X
+    [4X[28X#I  Now embedding dual BLT-set into W(5,q)...[128X[104X
+    [4X[28X#I  Computing elation group...[128X[104X
+    [4X[28X<EGQ of order [ 25, 5 ] and basepoint in W(5, 5 ) >[128X[104X
+    [4X[25Xgap>[125X [27Xcoll := CollineationSubgroup(egq);[127X[104X
+    [4X[28X#I  Computing adjusted stabilizer chain...[128X[104X
+    [4X[28X<projective collineation group with 13 generators>[128X[104X
+    [4X[25Xgap>[125X [27XOrder(coll);[127X[104X
+    [4X[28X9000000[128X[104X
+    [4X[25Xgap>[125X [27Xact := CollineationAction(coll);[127X[104X
+    [4X[28Xfunction( el, x ) ... end[128X[104X
+    [4X[25Xgap>[125X [27Xorbs := Orbits(coll,Points(egq),act);;[127X[104X
+    [4X[28X#I  Using elation group to enumerate elements[128X[104X
+    [4X[25Xgap>[125X [27XList(orbs,x->Length(x));[127X[104X
+    [4X[28X[ 1, 3125, 150 ][128X[104X
+    [4X[25Xgap>[125X [27Xel := ElationGroup(egq);[127X[104X
+    [4X[28X<projective collineation group with 5 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xorbs := Orbits(el,Points(egq),act);;[127X[104X
+    [4X[28X#I  Using elation group to enumerate elements[128X[104X
+    [4X[25Xgap>[125X [27XList(orbs,x->Length(x));[127X[104X
+    [4X[28X[ 1, 3125, 25, 25, 25, 25, 25, 25 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  

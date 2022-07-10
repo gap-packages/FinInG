@@ -1,0 +1,339 @@
+  
+  
+  [1XIndex[101X
+  
+  [2X3D4fining[102X B.2-16 
+  [2X\*[102X 3.2-11  4.2-6  7.5-1  9.2-4  12.4-4 
+  [2X\^[102X 5.7-1  7.5-9  7.5-9  9.5-3  11.5-5  13.1-12  13.1-13 
+  [2X\in[102X 3.7-3  4.2-6  7.5-1  9.2-4  11.1-6  11.1-6  12.5-8 
+  [2XAbsolutePoints[102X 6.3-2 
+  [2XAction[102X 8.3-2 
+  [2XActionHomomorphism[102X 8.3-2 
+  [2XActionOnAllProjPoints[102X 5.8-2 
+  [2XAffineGroup[102X 9.5-1 
+  [2XAffineSpace[102X 9.1-2  9.1-2 
+  [2XAffineSubspace[102X 9.2-1  9.2-1 
+  [2XAffineVariety[102X 11.4-1  11.4-1 
+  [2XAG[102X 9.1-2  9.1-2 
+  [2XAlgebraicVariety[102X 11.1-1  11.1-1  11.2-1  11.2-1  11.4-1  11.4-1 
+  [2XAmbientGeometry[102X 3.2-12  3.3-7  14.4-3 
+  [2XAmbientGroup[102X 13.1-5 
+  [2XAmbientSpace[102X 3.6-2  4.1-6  4.2-12  7.3-2  7.4-5  9.1-6  9.2-5  11.1-3  14.3-1 
+  [2XAsList[102X 3.5-4  4.4-3  7.8-5 
+  [2XAutGroupIncidenceStructureWithNauty[102X 13.2-1 
+  [2XBaseField[102X 4.1-4  4.2-13  5.3-4  5.5-1  6.2-2  7.3-5  9.1-4  9.2-6  14.3-4 
+  [2XBasePointOfEGQ[102X 12.6-5 
+  [2XBilinearFormFieldReduction[102X C.2-2  C.2-2 
+  [2XBlockDesignOfGeneralisedPolygon[102X 12.3-7 
+  [2XBlownUpProjectiveSpace[102X C.1-3 
+  [2XBlownUpProjectiveSpaceBySubfield[102X C.1-4 
+  [2XBlownUpSubspaceOfProjectiveSpace[102X 10.4-4  C.1-5  C.1-5 
+  [2XBlownUpSubspaceOfProjectiveSpaceBySubfield[102X C.1-6 
+  [2XBLTSetByqClan[102X 12.6-14 
+  [2XBorelsubgroup[102X 13.1-6 
+  [2XCanComputeActionOnPoints[102X 5.10-4 
+  [2XCanonicalGramMatrix[102X B.1-1 
+  [2XCanonicalPolarSpace[102X 7.2-7  7.2-7 
+  [2XCanonicalQuadraticForm[102X B.1-2 
+  [2XCanonicalResidueOfFlag[102X 13.1-21 
+  [2XCanonicalSubgeometryOfProjectiveSpace[102X 14.2-1  14.2-1 
+  [2XCollineation[102X 5.2-2  5.2-2 
+  [2XCollineationAction[102X 12.3-6  12.6-6 
+  [2XCollineationFixingSubgeometry[102X 14.3-5 
+  [2XCollineationGroup[102X 5.4-2  7.7-4  9.5-2  12.3-5  12.5-10  14.5-1 
+  [2XCollineationOfProjectiveSpace[102X 5.2-2  5.2-2  5.2-2  5.2-2  5.2-2  5.2-2 
+  [2XCollineationSubgroup[102X 12.6-18 
+  [2XCompanionAutomorphism[102X 6.2-4 
+  [2XComplementSpace[102X 9.6-4 
+  [2XCoordinates[102X 4.2-8  7.4-6 
+  [2XCorGroupIncidenceStructureWithNauty[102X 13.2-2 
+  [2XCorrelation[102X 5.2-6 
+  [2XCorrelationCollineationGroup[102X 5.4-6 
+  [2XCorrelationOfProjectiveSpace[102X 5.2-6  5.2-6  5.2-6  5.2-6  5.2-6 
+  [2XCosetGeometry[102X 13.1-2 
+  [2XDefiningFrameOfSubgeometry[102X 14.3-2 
+  [2XDefiningListOfPolynomials[102X 11.1-2 
+  [2XDefiningPlanesOfEGQByBLTSet[102X 12.6-16 
+  [2XDeltaOminus[102X B.2-9 
+  [2XDeltaOplus[102X B.2-10 
+  [2XDiagramOfGeometry[102X 13.3-1 
+  [2XDimension[102X 4.1-3  5.5-2  7.3-3  7.4-3  9.1-3  14.3-3 
+  [2XDistanceBetweenElements[102X 12.4-8 
+  [2XDrawDiagram[102X 13.3-3  13.3-3  13.3-3 
+  [2XDrawDiagramWithNeato[102X 13.3-4 
+  [2XDualCoordinatesOfHyperplane[102X 4.2-9 
+  [2XEGQByBLTSet[102X 12.6-15 
+  [2XEGQByKantorFamily[102X 12.6-4 
+  [2XEGQByqClan[102X 12.6-11 
+  [2XElationGroup[102X 12.6-6 
+  [2XElationOfProjectiveSpace[102X 5.9-1 
+  [2XElementsIncidentWithElementOfIncidenceStructure[102X 3.4-2  4.3-3  7.6-2  12.4-7 
+  [2XElementsOfFlag[102X 3.3-4 
+  [2XElementsOfIncidenceStructure[102X 3.2-6  3.2-6  3.2-7  4.2-4  7.4-4  9.2-2 
+  [2XElementsOfIncidencStructure[102X 12.4-1 
+  [2XElementToElement[102X 3.8-1 
+  [2XEllipticQuadric[102X 7.2-5  7.2-5 
+  [2XEmbed[102X 3.8-1 
+  [2XEmbedding[102X 5.6-1 
+  [2XEmptySubspace[102X 4.2-2  7.4-2 
+  [2XEnumerator[102X 3.5-2  4.4-2  7.8-2  9.4-2 
+  [2XEquationOfHyperplane[102X 4.2-11 
+  [2XEvaluateForm[102X 7.5-9  7.5-9 
+  [2XExtendElementOfSubgeometry[102X 14.4-2 
+  [2XFieldAutomorphism[102X 5.3-5 
+  [2XFindBasePointCandidates[102X B.3-1 
+  [5XFinInG[105X 1.4 
+  [2XFINING[102X 5.10-3 
+  [2XFiningOrbit[102X 8.1-1 
+  [2XFiningOrbits[102X 8.1-2  8.1-2 
+  [2XFiningOrbitsDomain[102X 8.1-3 
+  [2XFiningSetwiseStabiliser[102X 8.2-3 
+  [2XFiningStabiliser[102X 8.2-1 
+  [2XFiningStabiliserOrb[102X 8.2-2 
+  [2XFisherqClan[102X 12.6-9 
+  [2XFisherThasWalkerKantorBettenqClan[102X 12.6-9 
+  [2XFlagOfIncidenceStructure[102X 3.3-1  4.2-18  14.4-4 
+  [2XFlagToStandardFlag[102X 13.1-20 
+  [2XG2fining[102X B.2-15 
+  [2XGammaO[102X B.2-12 
+  [2XGammaOminus[102X B.2-11 
+  [2XGammaOplus[102X B.2-13 
+  [2XGammaSp[102X B.2-8 
+  [2XGammaU[102X B.2-14 
+  [2XGeneralisedPolygonByBlocks[102X 12.2-1 
+  [2XGeneralisedPolygonByElements[102X 12.2-3  12.2-3 
+  [2XGeneralisedPolygonByIncidenceMatrix[102X 12.2-2 
+  [2XGeneralSymplecticGroup[102X B.2-6 
+  [2XGeometryOfAbsolutePoints[102X 6.3-1 
+  [2XGeometryOfDiagram[102X 13.3-2 
+  [2XGeometryOfRank2Residue[102X 13.1-26 
+  [2XGOdesargues[102X B.2-2 
+  [2XGramMatrix[102X 6.2-3 
+  [2XGrassmannMap[102X 11.8-3  11.8-3  11.8-3  11.8-3 
+  [2XGrassmannVariety[102X 11.8-1  11.8-1  11.8-1 
+  [2XGSpdesargues[102X B.2-7 
+  [2XGUdesargues[102X B.2-4 
+  [2XHermitianFormFieldReduction[102X C.2-3  C.2-3 
+  [2XHermitianPolarityOfProjectiveSpace[102X 6.1-2 
+  [2XHermitianPolarSpace[102X 7.2-2  7.2-2 
+  [2XHermitianVariety[102X 11.3-1  11.3-1  11.3-1  11.3-1 
+  [2XHomographyGroup[102X 5.4-1 
+  [2XHomologyOfProjectiveSpace[102X 5.9-3 
+  [2XHyperbolicQuadric[102X 7.2-4  7.2-4 
+  [2XHyperplaneByDualCoordinates[102X 4.2-10 
+  [2XHyperplanes[102X 3.7-4  3.7-4  4.2-5  4.3-4  4.3-4  9.2-3 
+  [2XIdentityMappingOfElementsOfProjectiveSpace[102X 5.2-4 
+  [2XImageElm[102X 11.5-3 
+  [2XImagesSet[102X 11.5-4 
+  [2XIncidenceGraph[102X 3.1-8  12.3-3  13.1-23 
+  [2XIncidenceGraphAttr[102X 12.3-2 
+  [2XIncidenceMatrixOfGeneralisedPolygon[102X 12.3-4 
+  [2XIncidenceStructure[102X 3.1-3 
+  [2XIntertwiner[102X 10.1-2 
+  [2XInversePluckerCoordinates[102X C.3-1 
+  [2XIsAffineSpace[102X 3.1-4  9.1-1 
+  [2XIsCanonicalPolarSpace[102X 7.2-6 
+  [2XIsChamberOfIncidenceStructure[102X 3.3-2  4.2-20  14.4-4 
+  [2XIsClassicalGeneralisedHexagon[102X 12.1-6 
+  [2XIsClassicalGQ[102X 12.1-5 
+  [2XIsClassicalPolarSpace[102X 3.6-1  7.1-1 
+  [2XIsCollinear[102X 7.5-4 
+  [2XIsCollineation[102X 5.1-4 
+  [2XIsCollineationGroup[102X 5.4-5 
+  [2XIsConnected[102X 13.1-17 
+  [2XIsCorrelation[102X 5.1-6 
+  [2XIsCorrelationCollineation[102X 5.1-6 
+  [2XIsCosetGeometry[102X 3.1-4  13.1-1 
+  [2XIsDesarguesianPlane[102X 12.1-4 
+  [2XIsDesarguesianSpreadElement[102X C.1-7 
+  [2XIsEGQByBLTSet[102X 12.6-13 
+  [2XIsEGQByKantorFamily[102X 12.6-2 
+  [2XIsElationGQ[102X 12.1-5 
+  [2XIsElementOfAffineSpace[102X 3.2-1 
+  [2XIsElementOfCosetGeometry[102X 3.2-1 
+  [2XIsElementOfGeneralisedPolygon[102X 3.2-1 
+  [2XIsElementOfIncidenceGeometry[102X 3.2-1 
+  [2XIsElementOfIncidenceStructure[102X 3.2-1 
+  [2XIsElementOfKantorFamily[102X 12.6-2 
+  [2XIsElementOfLieGeometry[102X 3.2-1 
+  [2XIsElementsOfAffineSpace[102X 3.2-5 
+  [2XIsElementsOfCosetGeometry[102X 3.2-5 
+  [2XIsElementsOfIncidenceGeometry[102X 3.2-5 
+  [2XIsElementsOfIncidenceStructure[102X 3.2-5 
+  [2XIsElementsOfLieGeometry[102X 3.2-5 
+  [2XIsEllipticQuadric[102X 7.3-7 
+  [2XIsEmptyFlag[102X 3.3-3  4.2-19  14.4-4 
+  [2XIsEmptySubspace[102X 3.6-5 
+  [2XIsFirmGeometry[102X 13.1-14 
+  [2XIsFlagTransitiveGeometry[102X 13.1-10 
+  [2XIsFrameOfProjectiveSpace[102X 14.2-3 
+  [2XIsGeneralisedHexagon[102X 12.1-2 
+  [2XIsGeneralisedOctagon[102X 12.1-2 
+  [2XIsGeneralisedPolygon[102X 3.1-4  12.1-1 
+  [2XIsGeneralisedPolygonRep[102X 12.1-1 
+  [2XIsGeneralisedQuadrangle[102X 12.1-2 
+  [2XIsGeometryMorphism[102X 10.1-1 
+  [2XIsHermitianPolarityOfProjectiveSpace[102X 6.2-5 
+  [2XIsHyperbolicQuadric[102X 7.3-6 
+  [2XIsIncidenceGeometry[102X 3.1-2 
+  [2XIsIncidenceStructure[102X 3.1-1 
+  [2XIsIncident[102X 3.2-11  3.3-9  3.3-9  4.2-6  7.5-1  9.2-4  12.4-4  13.1-3 
+  [2XIsIsomorphicIncidenceStructureWithNauty[102X 13.2-3 
+  [2XIsKantorFamily[102X 12.6-3 
+  [2XIsLieGeometry[102X 3.1-4  12.5-2 
+  Isometry 7.7  7.7 
+  [2XIsometryGroup[102X 7.7-2 
+  [2XIsomorphismPolarSpaces[102X 10.2-1  10.2-1 
+  [2XIsomorphismPolarSpacesNC[102X C.3-3  C.3-3 
+  [2XIsomorphismPolarSpacesProjectionFromNucleus[102X C.3-2 
+  [2XIsOrthogonalPolarityOfProjectiveSpace[102X 6.2-7 
+  [2XIsParabolicQuadric[102X 7.3-8 
+  [2XIsParallel[102X 9.2-9 
+  [2XIsProjectivePlaneCategory[102X 12.1-2 
+  [2XIsProjectiveSpace[102X 3.6-1  4.1-1 
+  [2XIsProjectivity[102X 5.1-3 
+  [2XIsProjectivityGroup[102X 5.4-4 
+  [2XIsProjGrpEl[102X 5.1-1 
+  [2XIsProjGrpElRep[102X 5.1-2 
+  [2XIsProjGrpElWithFrob[102X 5.1-1 
+  [2XIsProjGrpElWithFrobRep[102X 5.1-2 
+  [2XIsProjGrpElWithFrobWithPSIsom[102X 5.1-1  5.1-6 
+  [2XIsProjGrpElWithFrobWithPSIsomRep[102X 5.1-2 
+  [2XIsPseudoPolarityOfProjectiveSpace[102X 6.2-8 
+  [2XIsResiduallyConnected[102X 13.1-18 
+  [2XIsStrictlySemilinear[102X 5.1-5 
+  [2XIsSubgeometryOfProjectiveSpace[102X 14.1-1 
+  [2XIsSubspaceOfClassicalPolarSpace[102X 3.2-1 
+  [2XIsSubspaceOfProjectiveSpace[102X 3.2-1 
+  [2XIsSubspaceOfSubgeometryOfProjectiveSpace[102X 14.1-2 
+  [2XIsSubspacesOfClassicalPolarSpace[102X 3.2-5 
+  [2XIsSubspacesOfProjectiveSpace[102X 3.2-5 
+  [2XIsSubspacesOfSubgeometryOfProjectiveSpace[102X 14.1-2 
+  [2XIsSymplecticPolarityOfProjectiveSpace[102X 6.2-6 
+  [2XIsThickGeometry[102X 13.1-15 
+  [2XIsThinGeometry[102X 13.1-16 
+  [2XIsVectorSpaceTransversal[102X 9.6-1 
+  [2XIsWeakGeneralisedPolygon[102X 12.1-3 
+  [2XIterator[102X 3.5-1  4.4-1  7.8-4  9.4-1  11.1-5 
+  [2XKantorFamilyByqClan[102X 12.6-10 
+  [2XKantorKnuthqClan[102X 12.6-9 
+  [2XKantorMonomialqClan[102X 12.6-9 
+  [2XKleinCorrespondence[102X 10.3-2  10.3-2  10.3-2  10.3-2  10.3-3  10.3-3 
+  [2XKleinCorrespondenceExtended[102X 10.3-4  10.3-4 
+  [2XLinearqClan[102X 12.6-9 
+  [2XLines[102X 3.2-8  3.4-5  3.4-5  4.2-5  4.3-4  4.3-4  9.2-3  12.4-1  12.4-7 
+  [2XList[102X 3.5-3  4.4-3  7.8-2 
+  [2XMatrixOfCollineation[102X 5.3-2 
+  [2XMatrixOfCorrelation[102X 5.3-3 
+  [2XMeet[102X 4.2-17  4.2-17  7.5-3  9.2-8  12.4-6  12.5-9 
+  [2XNaturalDuality[102X 10.3-5  10.3-5  10.3-5  10.3-5 
+  [2XNaturalEmbeddingByFieldReduction[102X 10.4-5  10.4-5  10.4-5  10.4-5  10.5-4  10.5-4  10.5-4  10.5-4  10.5-4  10.5-4  10.5-5  10.5-5 
+  [2XNaturalEmbeddingBySubField[102X 10.4-2  10.4-2  10.5-2  10.5-2 
+  [2XNaturalEmbeddingBySubspace[102X 10.4-1  10.5-1 
+  [2XNaturalEmbeddingBySubspaceNC[102X C.3-4 
+  [2XNaturalProjectionBySubspace[102X 10.6-1 
+  [2XNaturalProjectionBySubspaceNC[102X C.3-5 
+  [2XNiceMonomorphism[102X 5.10-1  8.3-3 
+  [2XNiceMonomorphismByDomain[102X 5.10-5 
+  [2XNiceMonomorphismByOrbit[102X 5.10-6 
+  [2XNiceObject[102X 5.10-2  8.3-4 
+  [2XNrElementsOfIncidenceStructure[102X 3.2-9  3.2-9 
+  [2XObjectToElement[102X 3.2-4  12.4-3  12.4-3  12.5-6  12.6-5  12.6-5  12.6-17  12.6-17 
+  [2XOnAffineSpaces[102X 9.5-3 
+  [2XOnCosetGeometryElement[102X 13.1-11 
+  [2XOnKantorFamily[102X 12.6-6 
+  [2XOnProjSubspaces[102X 5.8-1  8.3-1 
+  [2XOnProjSubspacesExtended[102X 5.8-3  8.3-1 
+  [2XOnSetsProjSubspaces[102X 8.3-1 
+  [2XOrder[102X 5.3-7  12.3-1 
+  [2XParabolicQuadric[102X 7.2-3  7.2-3 
+  [2XParabolicSubgroups[102X 13.1-4 
+  [2XParallelClass[102X 9.2-10  9.2-10 
+  [2XPG[102X 4.1-2 
+  [2XPlanes[102X 3.2-8  3.4-5  3.4-5  4.2-5  4.3-4  4.3-4  9.2-3 
+  [2XPluckerCoordinates[102X 10.3-1  C.3-1 
+  [2XPoints[102X 3.2-8  3.4-5  3.4-5  4.2-5  4.3-4  4.3-4  9.2-3  11.1-4  11.6-2  11.7-2  11.8-2  12.4-1  12.4-7 
+  [2XPointsOfAlgebraicVariety[102X 11.1-4 
+  [2XPointsOfGrassmannVariety[102X 11.8-2 
+  [2XPointsOfSegreVariety[102X 11.6-2 
+  [2XPointsOfVeroneseVariety[102X 11.7-2 
+  [2XPolarityOfProjectiveSpace[102X 6.1-1  6.1-2  6.1-3  6.1-4  7.5-5 
+  [2XPolarSpace[102X 6.3-3  7.1-2  7.1-2  11.3-5 
+  [2XPole[102X 7.5-8 
+  [2XProjectiveCompletion[102X 10.7-1 
+  [2XProjectiveDimension[102X 3.6-4  4.1-3  4.2-3  7.3-3  7.4-3  14.3-3 
+  [2XProjectiveElationGroup[102X 5.9-2  5.9-2 
+  [2XProjectiveHomologyGroup[102X 5.9-4 
+  [2XProjectiveSemilinearMap[102X 5.2-3 
+  [2XProjectiveSpace[102X 4.1-2  4.1-2 
+  [2XProjectiveSpaceIsomorphism[102X 5.3-6 
+  [2XProjectiveStabiliserGroupOfSubspace[102X 8.2-5 
+  [2XProjectiveVariety[102X 11.2-1  11.2-1 
+  [2XProjectivity[102X 5.2-1  5.2-1 
+  [2XProjectivityGroup[102X 5.4-1  14.5-1 
+  [2XqClan[102X 12.6-8 
+  [2XQuadraticForm[102X 11.3-3 
+  [2XQuadraticFormFieldReduction[102X C.2-1  C.2-1 
+  [2XQuadraticVariety[102X 11.3-2  11.3-2  11.3-2  11.3-2  11.3-2  11.3-2 
+  [2XRandom[102X 3.2-10  4.2-14 
+  [2XRandomChamber[102X 13.1-9 
+  [2XRandomElement[102X 13.1-7 
+  [2XRandomFlag[102X 13.1-8 
+  [2XRandomFrameOfProjectiveSpace[102X 14.2-2 
+  [2XRandomSubspace[102X 4.2-15  4.2-15 
+  [2XRange[102X 11.5-2 
+  [2XRank[102X 3.1-7  3.3-5  4.1-3  7.3-4  9.1-3  14.3-3 
+  [2XRank2Parameters[102X 13.1-27 
+  [2XRankAttr[102X 3.1-7 
+  [2XRepresentative[102X 5.3-1 
+  [2XResidueOfFlag[102X 3.4-4  13.1-22 
+  [2XRk2GeoDiameter[102X 13.1-25 
+  [2XRk2GeoGonality[102X 13.1-24 
+  [2XSegreMap[102X 11.6-3  11.6-3  11.6-3  11.6-3  11.6-3  11.6-3 
+  [2XSegreVariety[102X 11.6-1  11.6-1  11.6-1  11.6-1  11.6-1 
+  [2XSelfDuality[102X 10.3-6  10.3-6 
+  Semi-similarity 7.7  7.7 
+  [2XSesquilinearForm[102X 6.2-1  11.3-4 
+  [2XSetParent[102X 8.3-6 
+  [2XShadowOfElement[102X 3.4-1  3.4-1  4.3-1  4.3-1  7.6-1  7.6-1  9.3-1  12.4-7 
+  [2XShadowOfFlag[102X 3.4-3  3.4-3  3.4-3  3.4-3  4.3-2  4.3-2  9.3-2 
+  [2XShrinkMat[102X C.1-2  C.1-2 
+  [2XShrinkVec[102X C.1-1  C.1-1 
+  Similarity 7.7  7.7 
+  [2XSimilarityGroup[102X 7.7-3 
+  [2XSize[102X 3.3-6  12.4-2 
+  [2XSOdesargues[102X B.2-1 
+  [2XSolids[102X 3.2-8  3.4-5  3.4-5  4.2-5  4.3-4  4.3-4  9.2-3 
+  [2XSource[102X 11.5-1  11.6-4  11.7-4  11.8-4 
+  [2XSpan[102X 4.2-16  4.2-16  7.5-2  9.2-7  12.4-5  12.5-9 
+  [2XSpdesargues[102X B.2-5 
+  [2XSpecialHomographyGroup[102X 5.4-3 
+  [2XSpecialIsometryGroup[102X 7.7-1 
+  [2XSpecialProjectiveStabiliserGroupOfSubspace[102X 8.2-6 
+  [2XSpecialProjectivityGroup[102X 5.4-3  14.5-1 
+  [2XSplitCayleyHexagon[102X 12.5-3  12.5-3  12.5-3 
+  [2XStabiliserGroupOfSubspace[102X 8.2-4 
+  [2XStandardDualityOfProjectiveSpace[102X 5.2-5 
+  [2XStandardFlagOfCosetGeometry[102X 13.1-19 
+  [2XStandardFrame[102X 4.2-7 
+  [2XStandardPolarSpace[102X 7.2-8  7.2-8 
+  [2XSubfieldOfSubgeometry[102X 14.3-4 
+  [2XSubgeometryOfProjectiveSpaceByFrame[102X 14.2-4  14.2-4 
+  [2XSUdesargues[102X B.2-3 
+  [2XSymplecticSpace[102X 7.2-1  7.2-1 
+  [2XTangentSpace[102X 7.5-7  7.5-7 
+  [2XTwistedTrialityHexagon[102X 12.5-4  12.5-4  12.5-4 
+  [2XType[102X 3.2-3  3.3-8 
+  [2XTypeOfSubspace[102X 7.5-6 
+  [2XTypesOfElementsOfIncidenceStructure[102X 3.1-6 
+  [2XTypesOfElementsOfIncidenceStructurePlural[102X 3.1-6 
+  [2XUnderlyingObject[102X 3.2-2  3.7-2  12.4-3  12.5-7  12.6-5  12.6-17 
+  [2XUnderlyingVectorSpace[102X 3.6-3  4.1-5  7.3-1  9.1-5  14.3-1  14.3-4 
+  [2XVectorSpaceToElement[102X 3.7-1  3.7-1  4.2-1  7.4-1  12.5-5  14.4-1 
+  [2XVectorSpaceTransversal[102X 9.6-2 
+  [2XVectorSpaceTransversalElement[102X 9.6-3 
+  [2XVeroneseMap[102X 11.7-3  11.7-3  11.7-3  11.7-3 
+  [2XVeroneseVariety[102X 11.7-1  11.7-1  11.7-1 
+  
+  
+  -------------------------------------------------------

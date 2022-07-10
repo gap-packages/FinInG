@@ -1,0 +1,646 @@
+  
+  
+                              [1XGAP 4 Package [5XFinInG[105X[101X
+  
+  
+                           [1XFinite Incidence Geometry[101X
+  
+  
+                                      1.5
+  
+  
+                                   10/07/2022
+  
+  
+                                  John Bamberg
+  
+                                  Anton Betten
+  
+                                  Jan De Beule
+  
+                                 Philippe Cara
+  
+                                 Michel Lavrauw
+  
+                                 Max Neunhöffer
+  
+  
+  
+  
+  
+      Email:    [7Xmailto:support@fining.org[107X
+      Homepage: [7Xhttp://www.fining.org[107X
+  
+  -------------------------------------------------------
+  [1XCopyright[101X
+  [33X[0;0Y© 2014-2022 by the authors[133X
+  
+  [33X[0;0YThis  package  may  be distributed under the terms and conditions of the GNU
+  Public License Version 2 or higher.[133X
+  
+  [33X[0;0YThe  development  group  of  [5XFinInG[105X welcomes contact with users. In case you
+  have  obtained the package as a deposited package part of archive during the
+  installation   of   GAP,   we  call  on  your  beneficence  to  register  at
+  [7Xhttp://www.fining.org[107X  when  you  use  [5XFinInG[105X,  or  to tell us by sending an
+  e-mail to [7Xmailto:council@fining.org[107X.[133X
+  
+  [33X[0;0YPlease also tell us about the use of [5XFinInG[105X in your research or teaching. We
+  are  very  interested in results obtained using [5XFinInG[105X and we might refer to
+  your  work  in  the  future.  If  your work is published, we ask you to cite
+  [5XFinInG[105X  like  a journal article or book. We provide the necessary BibTex and
+  LaTeX code in Section [14X1.2[114X.[133X
+  
+  
+  -------------------------------------------------------
+  [1XAcknowledgements[101X
+  [33X[0;0YThe development phase of [5XFinInG[105X started roughly in 2005. The idea to write a
+  package  for  projective geometry in GAP had emerged before, and resulted in
+  [5Xpg[105X,  a  relic that still can be found in the undeposited packages section of
+  the  GAP  website. One of the main objectives was to develop the new package
+  was  to  create  a  tighter connection between finite geometry and the group
+  theoretical functions present in GAP.[133X
+  
+  [33X[0;0YThe  authors  thank  Michael  Pauley, Maska Law and Sven Reichard, for their
+  contributions during the early days of the project.[133X
+  
+  [33X[0;0YJan  De  Beule  and  Michel  Lavrauw  have  been  supported  by the Research
+  Foundation Flanders -- Belgium (FWO), and John Bamberg has been supported by
+  a  Marie  Curie  grant  and an ARC grant during almost the whole development
+  phase of [5XFinInG[105X. The authors are grateful for this support.[133X
+  
+  [33X[0;0YJohn  Bamberg,  Philippe  Cara  and Jan De Beule have spent several weeks in
+  Vicenza  while  developing  [5XFinInG[105X. We acknowledge the hospitality of Michel
+  Lavrauw  and  Corrado Zanella. Our stays in Vicenza were always fruitful and
+  very  enjoyable.  During  or  daily  morning and afternoon coffee breaks, we
+  discussed several topics, while enjoying coffee in [13XCaffe Pigaffeta[113X. Although
+  one  cannot  acknowledge  everybody, such as the bakery who provided us with
+  the sandwiches, we acknowledge very much the hospitality of Carla and Luigi,
+  who  introduced  us  to  many  different  kinds of coffees from all over the
+  world.[133X
+  
+  
+  -------------------------------------------------------
+  
+  
+  [1XContents (FinInG)[101X
+  
+  1 [33X[0;0YIntroduction[133X
+    1.1 [33X[0;0YPhilosophy[133X
+    1.2 [33X[0;0YHow to cite [5XFinInG[105X[133X
+    1.3 [33X[0;0YOverview of this manual[133X
+    1.4 [33X[0;0YGetting and installing [5XFinInG[105X[133X
+      1.4-1 [33X[0;0YInstallation procedure under UNIX like systems[133X
+      1.4-2 [33X[0;0YCompiling packages[133X
+      1.4-3 [33X[0;0YUpdating [5XFinInG[105X[133X
+    1.5 [33X[0;0YThe Development Team[133X
+  2 [33X[0;0YExamples[133X
+    2.1 [33X[0;0YElementary examples[133X
+      2.1-1 [33X[0;0Ysubspaces of projective spaces[133X
+      2.1-2 [33X[0;0YSubspaces of classical polar spaces[133X
+      2.1-3 [33X[0;0YUnderlying objects[133X
+      2.1-4 [33X[0;0YConstructing polar spaces[133X
+      2.1-5 [33X[0;0YSome collineation groups[133X
+    2.2 [33X[0;0YSome objects with interesting combinatorial properties[133X
+      2.2-1 [33X[0;0YThe Tits ovoid[133X
+      2.2-2 [33X[0;0YLines meeting a hermitian curve[133X
+      2.2-3 [33X[0;0YThe Patterson ovoid[133X
+      2.2-4 [33X[0;0YA hyperoval[133X
+    2.3 [33X[0;0YGeometry morphisms[133X
+      2.3-1 [33X[0;0YIsomorphic polar spaces[133X
+      2.3-2 [33X[0;0YIntertwiners[133X
+      2.3-3 [33X[0;0YKlein correspondence[133X
+      2.3-4 [33X[0;0YEmbedding in a subspace[133X
+      2.3-5 [33X[0;0YSubgeometries[133X
+      2.3-6 [33X[0;0YEmbedding by field reduction[133X
+    2.4 [33X[0;0YSome geometrical objects[133X
+      2.4-1 [33X[0;0YSpreads of [22XW(5,3)[122X[133X
+      2.4-2 [33X[0;0YDistance-6 spread of the split Cayley hexagon[133X
+    2.5 [33X[0;0YSome particular incidence geometries[133X
+      2.5-1 [33X[0;0YThe split Cayley hexagon[133X
+      2.5-2 [33X[0;0YAn (apartment of) a building of type [22XE_6[122X[133X
+      2.5-3 [33X[0;0YA rank 4 geometry for [22XPSL(2,11)[122X[133X
+      2.5-4 [33X[0;0YThe Ree-Tits octagon of order [22X[2,4][122X as coset geometry[133X
+    2.6 [33X[0;0YElation generalised quadrangles[133X
+      2.6-1 [33X[0;0YThe classical q-clan[133X
+      2.6-2 [33X[0;0YTwo ways to construct a flock generalised quadrangle from a
+      Kantor-Knuth semifield q-clan[133X
+    2.7 [33X[0;0YAlgebraic varieties[133X
+      2.7-1 [33X[0;0YA projective variety[133X
+  3 [33X[0;0YIncidence Geometry[133X
+    3.1 [33X[0;0YIncidence structures[133X
+      3.1-1 IsIncidenceStructure
+      3.1-2 IsIncidenceGeometry
+      3.1-3 IncidenceStructure
+      3.1-4 [33X[0;0YMain categories in [10XIsIncidenceGeometry[110X[133X
+      3.1-5 [33X[0;0YExamples of categories of incidence geometries[133X
+      3.1-6 TypesOfElementsOfIncidenceStructure
+      3.1-7 Rank
+      3.1-8 IncidenceGraph
+    3.2 [33X[0;0YElements of incidence structures[133X
+      3.2-1 [33X[0;0YMain categories for individual elements of incidence structures[133X
+      3.2-2 UnderlyingObject
+      3.2-3 Type
+      3.2-4 ObjectToElement
+      3.2-5 [33X[0;0YMain categories for collections of all the elements of a given
+      type of an incidence structure[133X
+      3.2-6 ElementsOfIncidenceStructure
+      3.2-7 ElementsOfIncidenceStructure
+      3.2-8 [33X[0;0YShort names for ElementsOfIncidenceStructure[133X
+      3.2-9 NrElementsOfIncidenceStructure
+      3.2-10 Random
+      3.2-11 IsIncident
+      3.2-12 AmbientGeometry
+    3.3 [33X[0;0YFlags of incidence structures[133X
+      3.3-1 FlagOfIncidenceStructure
+      3.3-2 IsChamberOfIncidenceStructure
+      3.3-3 IsEmptyFlag
+      3.3-4 ElementsOfFlag
+      3.3-5 Rank
+      3.3-6 Size
+      3.3-7 AmbientGeometry
+      3.3-8 Type
+      3.3-9 IsIncident
+    3.4 [33X[0;0YShadow of elements[133X
+      3.4-1 ShadowOfElement
+      3.4-2 ElementsIncidentWithElementOfIncidenceStructure
+      3.4-3 ShadowOfFlag
+      3.4-4 ResidueOfFlag
+      3.4-5 [33X[0;0YShort names for ElementsIncidentWithElementOfIncidenceStructure[133X
+    3.5 [33X[0;0YEnumerating elements of an incidence structure[133X
+      3.5-1 Iterator
+      3.5-2 Enumerator
+      3.5-3 List
+      3.5-4 AsList
+    3.6 [33X[0;0YLie geometries[133X
+      3.6-1 [33X[0;0YMain categories in [10XIsLieGeometry[110X[133X
+      3.6-2 AmbientSpace
+      3.6-3 UnderlyingVectorSpace
+      3.6-4 ProjectiveDimension
+      3.6-5 IsEmptySubspace
+    3.7 [33X[0;0YElements of Lie geometries[133X
+      3.7-1 VectorSpaceToElement
+      3.7-2 UnderlyingObject
+      3.7-3 \in
+      3.7-4 [33X[0;0YMore short names for
+      [11XElementsIncidentWithElementOfIncidenceStructure[111X[133X
+    3.8 [33X[0;0YChanging the ambient geometry of elements of a Lie geometry[133X
+      3.8-1 ElementToElement
+  4 [33X[0;0YProjective Spaces[133X
+    4.1 [33X[0;0YProjective Spaces and basic operations[133X
+      4.1-1 IsProjectiveSpace
+      4.1-2 ProjectiveSpace
+      4.1-3 ProjectiveDimension
+      4.1-4 BaseField
+      4.1-5 UnderlyingVectorSpace
+      4.1-6 AmbientSpace
+    4.2 [33X[0;0YSubspaces of projective spaces[133X
+      4.2-1 VectorSpaceToElement
+      4.2-2 EmptySubspace
+      4.2-3 ProjectiveDimension
+      4.2-4 ElementsOfIncidenceStructure
+      4.2-5 [33X[0;0YShort names for ElementsOfIncidenceStructure[133X
+      4.2-6 [33X[0;0YIncidence and containment[133X
+      4.2-7 StandardFrame
+      4.2-8 Coordinates
+      4.2-9 DualCoordinatesOfHyperplane
+      4.2-10 HyperplaneByDualCoordinates
+      4.2-11 EquationOfHyperplane
+      4.2-12 AmbientSpace
+      4.2-13 BaseField
+      4.2-14 Random
+      4.2-15 RandomSubspace
+      4.2-16 Span
+      4.2-17 Meet
+      4.2-18 FlagOfIncidenceStructure
+      4.2-19 IsEmptyFlag
+      4.2-20 IsChamberOfIncidenceStructure
+    4.3 [33X[0;0YShadows of Projective Subspaces[133X
+      4.3-1 ShadowOfElement
+      4.3-2 ShadowOfFlag
+      4.3-3 ElementsIncidentWithElementOfIncidenceStructure
+      4.3-4 [33X[0;0YShort names for [11XElementsIncidentWithElementOfIncidenceStructure[111X[133X
+    4.4 [33X[0;0YEnumerating subspaces of a projective space[133X
+      4.4-1 Iterator
+      4.4-2 Enumerator
+      4.4-3 List
+  5 [33X[0;0YProjective Groups[133X
+    5.1 [33X[0;0YProjectivities, collineations and correlations of projective spaces.[133X
+      5.1-1 [33X[0;0YCategories for group elements[133X
+      5.1-2 [33X[0;0YRepresentations for group elements[133X
+      5.1-3 [33X[0;0YProjectivities[133X
+      5.1-4 [33X[0;0YCollineations of projective spaces[133X
+      5.1-5 [33X[0;0YProjective strictly semilinear maps[133X
+      5.1-6 [33X[0;0YCorrelations and collineations[133X
+    5.2 [33X[0;0YConstruction of projectivities, collineations and correlations.[133X
+      5.2-1 Projectivity
+      5.2-2 CollineationOfProjectiveSpace
+      5.2-3 ProjectiveSemilinearMap
+      5.2-4 IdentityMappingOfElementsOfProjectiveSpace
+      5.2-5 StandardDualityOfProjectiveSpace
+      5.2-6 CorrelationOfProjectiveSpace
+    5.3 [33X[0;0YBasic operations for projectivities, collineations and correlations of
+    projective spaces[133X
+      5.3-1 Representative
+      5.3-2 MatrixOfCollineation
+      5.3-3 MatrixOfCorrelation
+      5.3-4 BaseField
+      5.3-5 FieldAutomorphism
+      5.3-6 ProjectiveSpaceIsomorphism
+      5.3-7 Order
+    5.4 [33X[0;0YThe groups [22XPΓL[122X, [22XPGL[122X, and [22XPSL[122X in [5XFinInG[105X[133X
+      5.4-1 ProjectivityGroup
+      5.4-2 CollineationGroup
+      5.4-3 SpecialProjectivityGroup
+      5.4-4 IsProjectivityGroup
+      5.4-5 IsCollineationGroup
+      5.4-6 CorrelationCollineationGroup
+    5.5 [33X[0;0YBasic operations for projective groups[133X
+      5.5-1 BaseField
+      5.5-2 Dimension
+    5.6 [33X[0;0YNatural embedding of a collineation group in a correlationcollineation
+    group[133X
+      5.6-1 Embedding
+    5.7 [33X[0;0YBasic action of projective group elements[133X
+      5.7-1 \^
+    5.8 [33X[0;0YProjective group actions[133X
+      5.8-1 OnProjSubspaces
+      5.8-2 ActionOnAllProjPoints
+      5.8-3 OnProjSubspacesExtended
+    5.9 [33X[0;0YSpecial subgroups of the projectivity group[133X
+      5.9-1 ElationOfProjectiveSpace
+      5.9-2 ProjectiveElationGroup
+      5.9-3 HomologyOfProjectiveSpace
+      5.9-4 ProjectiveHomologyGroup
+    5.10 [33X[0;0YNice Monomorphisms[133X
+      5.10-1 NiceMonomorphism
+      5.10-2 NiceObject
+      5.10-3 FINING
+      5.10-4 CanComputeActionOnPoints
+      5.10-5 NiceMonomorphismByDomain
+      5.10-6 NiceMonomorphismByOrbit
+  6 [33X[0;0YPolarities of Projective Spaces[133X
+    6.1 [33X[0;0YCreating polarities of projective spaces[133X
+      6.1-1 PolarityOfProjectiveSpace
+      6.1-2 PolarityOfProjectiveSpace
+      6.1-3 PolarityOfProjectiveSpace
+      6.1-4 PolarityOfProjectiveSpace
+    6.2 [33X[0;0YOperations, attributes and properties for polarities of projective
+    spaces[133X
+      6.2-1 SesquilinearForm
+      6.2-2 BaseField
+      6.2-3 GramMatrix
+      6.2-4 CompanionAutomorphism
+      6.2-5 IsHermitianPolarityOfProjectiveSpace
+      6.2-6 IsSymplecticPolarityOfProjectiveSpace
+      6.2-7 IsOrthogonalPolarityOfProjectiveSpace
+      6.2-8 IsPseudoPolarityOfProjectiveSpace
+    6.3 [33X[0;0YPolarities, absolute points, totally isotropic elements and finite
+    classical polar spaces[133X
+      6.3-1 GeometryOfAbsolutePoints
+      6.3-2 AbsolutePoints
+      6.3-3 PolarSpace
+    6.4 [33X[0;0YCommuting polarities[133X
+  7 [33X[0;0YFinite Classical Polar Spaces[133X
+    7.1 [33X[0;0YFinite Classical Polar Spaces[133X
+      7.1-1 IsClassicalPolarSpace
+      7.1-2 PolarSpace
+    7.2 [33X[0;0YCanonical and standard Polar Spaces[133X
+      7.2-1 SymplecticSpace
+      7.2-2 HermitianPolarSpace
+      7.2-3 ParabolicQuadric
+      7.2-4 HyperbolicQuadric
+      7.2-5 EllipticQuadric
+      7.2-6 IsCanonicalPolarSpace
+      7.2-7 CanonicalPolarSpace
+      7.2-8 StandardPolarSpace
+    7.3 [33X[0;0YBasic operations for finite classical polar spaces[133X
+      7.3-1 UnderlyingVectorSpace
+      7.3-2 AmbientSpace
+      7.3-3 ProjectiveDimension
+      7.3-4 Rank
+      7.3-5 BaseField
+      7.3-6 IsHyperbolicQuadric
+      7.3-7 IsEllipticQuadric
+      7.3-8 IsParabolicQuadric
+    7.4 [33X[0;0YSubspaces of finite classical polar spaces[133X
+      7.4-1 VectorSpaceToElement
+      7.4-2 EmptySubspace
+      7.4-3 ProjectiveDimension
+      7.4-4 ElementsOfIncidenceStructure
+      7.4-5 AmbientSpace
+      7.4-6 Coordinates
+    7.5 [33X[0;0YBasic operations for polar spaces and subspaces of projective spaces[133X
+      7.5-1 [33X[0;0YIncidence and containment[133X
+      7.5-2 Span
+      7.5-3 Meet
+      7.5-4 IsCollinear
+      7.5-5 PolarityOfProjectiveSpace
+      7.5-6 TypeOfSubspace
+      7.5-7 TangentSpace
+      7.5-8 Pole
+      7.5-9 EvaluateForm
+    7.6 [33X[0;0YShadow of elements[133X
+      7.6-1 ShadowOfElement
+      7.6-2 ElementsIncidentWithElementOfIncidenceStructure
+    7.7 [33X[0;0YProjective Orthogonal/Unitary/Symplectic groups in [5XFinInG[105X[133X
+      7.7-1 SpecialIsometryGroup
+      7.7-2 IsometryGroup
+      7.7-3 SimilarityGroup
+      7.7-4 CollineationGroup
+    7.8 [33X[0;0YEnumerating subspaces of polar spaces[133X
+      7.8-1 [33X[0;0YEnumerators for polar spaces[133X
+      7.8-2 Enumerator
+      7.8-3 [33X[0;0YIterators for polar spaces[133X
+      7.8-4 Iterator
+      7.8-5 AsList
+  8 [33X[0;0YOrbits, stabilisers and actions[133X
+    8.1 [33X[0;0YOrbits[133X
+      8.1-1 FiningOrbit
+      8.1-2 FiningOrbits
+      8.1-3 FiningOrbitsDomain
+    8.2 [33X[0;0YStabilisers[133X
+      8.2-1 FiningStabiliser
+      8.2-2 FiningStabiliserOrb
+      8.2-3 FiningSetwiseStabiliser
+      8.2-4 StabiliserGroupOfSubspace
+      8.2-5 ProjectiveStabiliserGroupOfSubspace
+      8.2-6 SpecialProjectiveStabiliserGroupOfSubspace
+    8.3 [33X[0;0YActions and nice monomorphisms revisited[133X
+      8.3-1 [33X[0;0YAction functions[133X
+      8.3-2 [33X[0;0YGeneric GAP functions[133X
+      8.3-3 NiceMonomorphism
+      8.3-4 NiceObject
+      8.3-5 [33X[0;0YDifferent behaviour for different collineation groups[133X
+      8.3-6 SetParent
+  9 [33X[0;0YAffine Spaces[133X
+    9.1 [33X[0;0YAffine spaces and basic operations[133X
+      9.1-1 IsAffineSpace
+      9.1-2 AffineSpace
+      9.1-3 Dimension
+      9.1-4 BaseField
+      9.1-5 UnderlyingVectorSpace
+      9.1-6 AmbientSpace
+    9.2 [33X[0;0YSubspaces of affine spaces[133X
+      9.2-1 AffineSubspace
+      9.2-2 ElementsOfIncidenceStructure
+      9.2-3 [33X[0;0YShort names for ElementsOfIncidenceStructure[133X
+      9.2-4 [33X[0;0YIncidence and containment[133X
+      9.2-5 AmbientSpace
+      9.2-6 BaseField
+      9.2-7 Span
+      9.2-8 Meet
+      9.2-9 IsParallel
+      9.2-10 ParallelClass
+    9.3 [33X[0;0YShadows of Affine Subspaces[133X
+      9.3-1 ShadowOfElement
+      9.3-2 ShadowOfFlag
+    9.4 [33X[0;0YIterators and enumerators[133X
+      9.4-1 Iterator
+      9.4-2 Enumerator
+    9.5 [33X[0;0YAffine groups[133X
+      9.5-1 AffineGroup
+      9.5-2 CollineationGroup
+      9.5-3 OnAffineSpaces
+    9.6 [33X[0;0YLow level operations[133X
+      9.6-1 IsVectorSpaceTransversal
+      9.6-2 VectorSpaceTransversal
+      9.6-3 VectorSpaceTransversalElement
+      9.6-4 ComplementSpace
+  10 [33X[0;0YGeometry Morphisms[133X
+    10.1 [33X[0;0YGeometry morphisms in FinInG[133X
+      10.1-1 IsGeometryMorphism
+      10.1-2 Intertwiner
+    10.2 [33X[0;0YType preserving bijective geometry morphisms[133X
+      10.2-1 IsomorphismPolarSpaces
+    10.3 [33X[0;0YKlein correspondence and derived dualities[133X
+      10.3-1 PluckerCoordinates
+      10.3-2 KleinCorrespondence
+      10.3-3 KleinCorrespondence
+      10.3-4 KleinCorrespondenceExtended
+      10.3-5 NaturalDuality
+      10.3-6 SelfDuality
+    10.4 [33X[0;0YEmbeddings of projective spaces[133X
+      10.4-1 NaturalEmbeddingBySubspace
+      10.4-2 NaturalEmbeddingBySubField
+      10.4-3 [33X[0;0YEmbedding of projective spaces by field reduction[133X
+      10.4-4 BlownUpSubspaceOfProjectiveSpace
+      10.4-5 NaturalEmbeddingByFieldReduction
+    10.5 [33X[0;0YEmbeddings of polar spaces[133X
+      10.5-1 NaturalEmbeddingBySubspace
+      10.5-2 NaturalEmbeddingBySubField
+      10.5-3 [33X[0;0YEmbedding of polar spaces by field reduction[133X
+      10.5-4 NaturalEmbeddingByFieldReduction
+      10.5-5 NaturalEmbeddingByFieldReduction
+    10.6 [33X[0;0YProjections[133X
+      10.6-1 NaturalProjectionBySubspace
+    10.7 [33X[0;0YProjective completion[133X
+      10.7-1 ProjectiveCompletion
+  11 [33X[0;0YAlgebraic Varieties[133X
+    11.1 [33X[0;0YAlgebraic Varieties[133X
+      11.1-1 AlgebraicVariety
+      11.1-2 DefiningListOfPolynomials
+      11.1-3 AmbientSpace
+      11.1-4 PointsOfAlgebraicVariety
+      11.1-5 Iterator
+      11.1-6 \in
+    11.2 [33X[0;0YProjective Varieties[133X
+      11.2-1 ProjectiveVariety
+    11.3 [33X[0;0YQuadrics and Hermitian varieties[133X
+      11.3-1 HermitianVariety
+      11.3-2 QuadraticVariety
+      11.3-3 QuadraticForm
+      11.3-4 SesquilinearForm
+      11.3-5 PolarSpace
+    11.4 [33X[0;0YAffine Varieties[133X
+      11.4-1 AffineVariety
+    11.5 [33X[0;0YGeometry maps[133X
+      11.5-1 Source
+      11.5-2 Range
+      11.5-3 ImageElm
+      11.5-4 ImagesSet
+      11.5-5 \^
+    11.6 [33X[0;0YSegre Varieties[133X
+      11.6-1 SegreVariety
+      11.6-2 PointsOfSegreVariety
+      11.6-3 SegreMap
+      11.6-4 Source
+    11.7 [33X[0;0YVeronese Varieties[133X
+      11.7-1 VeroneseVariety
+      11.7-2 PointsOfVeroneseVariety
+      11.7-3 VeroneseMap
+      11.7-4 Source
+    11.8 [33X[0;0YGrassmann Varieties[133X
+      11.8-1 GrassmannVariety
+      11.8-2 PointsOfGrassmannVariety
+      11.8-3 GrassmannMap
+      11.8-4 Source
+  12 [33X[0;0YGeneralised Polygons[133X
+    12.1 [33X[0;0YCategories[133X
+      12.1-1 IsGeneralisedPolygon
+      12.1-2 [33X[0;0YSubcategories in [10XIsGeneralisedPolygon[110X[133X
+      12.1-3 IsWeakGeneralisedPolygon
+      12.1-4 [33X[0;0YSubcategories in [10XIsProjectivePlaneCategory[110X[133X
+      12.1-5 [33X[0;0YSubcategories in [10XIsGeneralisedQuadrangle[110X[133X
+      12.1-6 IsClassicalGeneralisedHexagon
+    12.2 [33X[0;0YGeneric functions to create generalised polygons[133X
+      12.2-1 GeneralisedPolygonByBlocks
+      12.2-2 GeneralisedPolygonByIncidenceMatrix
+      12.2-3 GeneralisedPolygonByElements
+    12.3 [33X[0;0YAttributes and operations for generalised polygons[133X
+      12.3-1 Order
+      12.3-2 IncidenceGraphAttr
+      12.3-3 IncidenceGraph
+      12.3-4 IncidenceMatrixOfGeneralisedPolygon
+      12.3-5 CollineationGroup
+      12.3-6 CollineationAction
+      12.3-7 BlockDesignOfGeneralisedPolygon
+    12.4 [33X[0;0YElements of generalised polygons[133X
+      12.4-1 [33X[0;0YCollections of elements of generalised polygons[133X
+      12.4-2 Size
+      12.4-3 [33X[0;0YCreating elements from objects and retrieving objects from
+      elements[133X
+      12.4-4 [33X[0;0YIncidence[133X
+      12.4-5 Span
+      12.4-6 Meet
+      12.4-7 [33X[0;0YShadow elements[133X
+      12.4-8 DistanceBetweenElements
+    12.5 [33X[0;0YThe classical generalised hexagons[133X
+      12.5-1 [33X[0;0YTrialities of the hyperbolic quadric and generalised hexagons[133X
+      12.5-2 IsLieGeometry
+      12.5-3 SplitCayleyHexagon
+      12.5-4 TwistedTrialityHexagon
+      12.5-5 VectorSpaceToElement
+      12.5-6 ObjectToElement
+      12.5-7 UnderlyingObject
+      12.5-8 \in
+      12.5-9 [33X[0;0YSpan and meet of elements[133X
+      12.5-10 CollineationGroup
+    12.6 [33X[0;0YElation generalised quadrangles[133X
+      12.6-1 [33X[0;0YElation generalised quadrangles and Kantor families[133X
+      12.6-2 [33X[0;0YCategories[133X
+      12.6-3 [33X[0;0YKantor families[133X
+      12.6-4 EGQByKantorFamily
+      12.6-5 [33X[0;0YRepresentation of elements and underlying objects[133X
+      12.6-6 [33X[0;0YElation group and natural action on elements[133X
+      12.6-7 [33X[0;0YKantor families, q-clans, and elation generalised quadrangles[133X
+      12.6-8 qClan
+      12.6-9 [33X[0;0YParticular q-clans[133X
+      12.6-10 KantorFamilyByqClan
+      12.6-11 EGQByqClan
+      12.6-12 [33X[0;0YBLT-sets, flocks, q-clans, and elation generalised quadrangles[133X
+      12.6-13 IsEGQByBLTSet
+      12.6-14 BLTSetByqClan
+      12.6-15 EGQByBLTSet
+      12.6-16 DefiningPlanesOfEGQByBLTSet
+      12.6-17 [33X[0;0YRepresentation of elements and underlying objects[133X
+      12.6-18 CollineationSubgroup
+  13 [33X[0;0YCoset Geometries and Diagrams[133X
+    13.1 [33X[0;0YCoset Geometries[133X
+      13.1-1 IsCosetGeometry
+      13.1-2 CosetGeometry
+      13.1-3 IsIncident
+      13.1-4 ParabolicSubgroups
+      13.1-5 AmbientGroup
+      13.1-6 Borelsubgroup
+      13.1-7 RandomElement
+      13.1-8 RandomFlag
+      13.1-9 RandomChamber
+      13.1-10 IsFlagTransitiveGeometry
+      13.1-11 OnCosetGeometryElement
+      13.1-12 \^
+      13.1-13 \^
+      13.1-14 IsFirmGeometry
+      13.1-15 IsThickGeometry
+      13.1-16 IsThinGeometry
+      13.1-17 IsConnected
+      13.1-18 IsResiduallyConnected
+      13.1-19 StandardFlagOfCosetGeometry
+      13.1-20 FlagToStandardFlag
+      13.1-21 CanonicalResidueOfFlag
+      13.1-22 ResidueOfFlag
+      13.1-23 IncidenceGraph
+      13.1-24 Rk2GeoGonality
+      13.1-25 Rk2GeoDiameter
+      13.1-26 GeometryOfRank2Residue
+      13.1-27 Rank2Parameters
+    13.2 [33X[0;0YAutomorphisms, Correlations and Isomorphisms[133X
+      13.2-1 AutGroupIncidenceStructureWithNauty
+      13.2-2 CorGroupIncidenceStructureWithNauty
+      13.2-3 IsIsomorphicIncidenceStructureWithNauty
+    13.3 [33X[0;0YDiagrams[133X
+      13.3-1 DiagramOfGeometry
+      13.3-2 GeometryOfDiagram
+      13.3-3 DrawDiagram
+      13.3-4 DrawDiagramWithNeato
+  14 [33X[0;0YSubgeometries of projective spaces[133X
+    14.1 [33X[0;0YParticular Categories[133X
+      14.1-1 IsSubgeometryOfProjectiveSpace
+      14.1-2 [33X[0;0YCategories for elements and collections of elements[133X
+    14.2 [33X[0;0YSubgeometries of projective spaces[133X
+      14.2-1 CanonicalSubgeometryOfProjectiveSpace
+      14.2-2 RandomFrameOfProjectiveSpace
+      14.2-3 IsFrameOfProjectiveSpace
+      14.2-4 SubgeometryOfProjectiveSpaceByFrame
+    14.3 [33X[0;0YBasic operations[133X
+      14.3-1 [33X[0;0YUnderlying vector space and ambient projective space[133X
+      14.3-2 DefiningFrameOfSubgeometry
+      14.3-3 [33X[0;0YProjective dimension and rank[133X
+      14.3-4 [33X[0;0YUnderlying algebraic structures[133X
+      14.3-5 CollineationFixingSubgeometry
+    14.4 [33X[0;0YConstructing elements of a subgeometry[133X
+      14.4-1 VectorSpaceToElement
+      14.4-2 ExtendElementOfSubgeometry
+      14.4-3 AmbientGeometry
+      14.4-4 [33X[0;0YFlags[133X
+    14.5 [33X[0;0YGroups and actions[133X
+      14.5-1 [33X[0;0YGroups of collineations[133X
+  A [33X[0;0YThe structure of [5XFinInG[105X[133X
+    A.1 [33X[0;0YThe different components[133X
+    A.2 [33X[0;0YThe complete inventory[133X
+      A.2-1 [33X[0;0YDeclarations[133X
+      A.2-2 [33X[0;0YFunctions/Methods[133X
+  B [33X[0;0YThe finite classical groups in [5XFinInG[105X[133X
+    B.1 [33X[0;0YStandard forms used to produce the finite classical groups.[133X
+      B.1-1 CanonicalGramMatrix
+      B.1-2 CanonicalQuadraticForm
+    B.2 [33X[0;0YDirect commands to construct the projective classical groups in [5XFinInG[105X[133X
+      B.2-1 SOdesargues
+      B.2-2 GOdesargues
+      B.2-3 SUdesargues
+      B.2-4 GUdesargues
+      B.2-5 Spdesargues
+      B.2-6 GeneralSymplecticGroup
+      B.2-7 GSpdesargues
+      B.2-8 GammaSp
+      B.2-9 DeltaOminus
+      B.2-10 DeltaOplus
+      B.2-11 GammaOminus
+      B.2-12 GammaO
+      B.2-13 GammaOplus
+      B.2-14 GammaU
+      B.2-15 G2fining
+      B.2-16 3D4fining
+    B.3 [33X[0;0YBasis of the collineation groups[133X
+      B.3-1 FindBasePointCandidates
+  C [33X[0;0YLow level functions for morphisms[133X
+    C.1 [33X[0;0YField reduction and vector spaces[133X
+      C.1-1 ShrinkVec
+      C.1-2 ShrinkMat
+      C.1-3 BlownUpProjectiveSpace
+      C.1-4 BlownUpProjectiveSpaceBySubfield
+      C.1-5 BlownUpSubspaceOfProjectiveSpace
+      C.1-6 BlownUpSubspaceOfProjectiveSpaceBySubfield
+      C.1-7 IsDesarguesianSpreadElement
+    C.2 [33X[0;0YField reduction and forms[133X
+      C.2-1 QuadraticFormFieldReduction
+      C.2-2 BilinearFormFieldReduction
+      C.2-3 HermitianFormFieldReduction
+    C.3 [33X[0;0YLow level functions[133X
+      C.3-1 PluckerCoordinates
+      C.3-2 IsomorphismPolarSpacesProjectionFromNucleus
+      C.3-3 IsomorphismPolarSpacesNC
+      C.3-4 NaturalEmbeddingBySubspaceNC
+      C.3-5 NaturalProjectionBySubspaceNC
+  
+  
+  [32X

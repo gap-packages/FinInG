@@ -1,0 +1,985 @@
+  
+  [1X13 [33X[0;0YCoset Geometries and Diagrams[133X[101X
+  
+  [33X[0;0YThis part of [5XFinInG[105X depends on [5XGRAPE[105X.[133X
+  
+  
+  [1X13.1 [33X[0;0YCoset Geometries[133X[101X
+  
+  [33X[0;0YSuppose  we have an [13Xincidence geometry[113X [22XΓ[122X (as defined in chapter [14X3[114X), together
+  with a group [22XG[122X of automorphisms of [22XΓ[122X such that [22XG[122X is transitive on the set of
+  [13Xchambers[113X  of  [22XΓ[122X  (also  defined  in  chapter [14X3[114X). This implies that [22XG[122X is also
+  transitive on the set of all elements of any chosen type [22Xi[122X. If we consider a
+  chamber  [22X{c_1,c_2,...  ,c_n}[122X  such that [22Xc_i[122X is of type [22Xi[122X, we can look at the
+  stabilizer [22XG_i[122X of [22Xc_i[122X in [22XG[122X. The subgroups [22XG_i[122X are called [13Xparabolic subgroups[113X
+  of  [22XΓ[122X.  For  a  type  [22Xi[122X, transitivity of [22XG[122X on the elements of type [22Xi[122X gives a
+  correspondence  between the cosets of the stabilizer [22XG_i[122X and the elements of
+  type [22Xi[122X in [22XΓ[122X. Two elements of [22XΓ[122X are incident if and only if the corresponding
+  cosets have a nonempty intersection.[133X
+  
+  [33X[0;0YWe  now  use  the  above observation to define an incidence structure from a
+  group [22XG[122X together with a set of subgroups [22X{G_1,G_2,...,G_n}[122X . The type set is
+  [22X{1,2,...,n}[122X.  By definition the elements of type [22Xi[122X are the (right) cosets of
+  the  subgroup [22XG_i[122X. Two cosets are incident if and only if their intersection
+  is  not  empty.  This  is  an incidence structure which is not necessarily a
+  geometry  (see Chapter [14X3[114X for definitions). In order to check whether a coset
+  incidence   structure   is  indeed  a  geometry  you  can  use  the  command
+  [11XIsFlagTransitiveGeometry[111X which (in case it returns [11Xtrue[111X) guarantees that the
+  argument is a geometry.[133X
+  
+  [1X13.1-1 IsCosetGeometry[101X
+  
+  [33X[1;0Y[29X[2XIsCosetGeometry[102X [32X Category[133X
+  
+  [33X[0;0YThis  category  is  a  subcategory  of [10XIsIncidenceGeometry[110X, and contains all
+  coset geometries.[133X
+  
+  [1X13.1-2 CosetGeometry[101X
+  
+  [33X[1;0Y[29X[2XCosetGeometry[102X( [3XG[103X, [3Xl[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe  coset  incidence structure defined by the list [3Xl[103X of subgroups
+            of the group [3XG[103X.[133X
+  
+  [33X[0;0Y[3XG[103X must be a group and [3Xl[103X is a list of subgroups of [3XG[103X. The subgroups in [3Xl[103X will
+  be  the  [13Xparabolic  subgroups[113X  of  the  [13Xcoset incidence structure[113X whose rank
+  equals the length of [3Xl[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xg:=SymmetricGroup(5);[127X[104X
+    [4X[28XSym( [ 1 .. 5 ] )[128X[104X
+    [4X[25Xgap>[125X [27Xg1:=Stabilizer(g,[1,2],OnSets);[127X[104X
+    [4X[28XGroup([ (4,5), (3,5), (1,2)(4,5) ])[128X[104X
+    [4X[25Xgap>[125X [27Xg2:=Stabilizer(g,[1,2,3],OnSets);[127X[104X
+    [4X[28XGroup([ (4,5), (2,3), (1,2,3) ])[128X[104X
+    [4X[25Xgap>[125X [27Xcg:=CosetGeometry(g,[g1,g2]);[127X[104X
+    [4X[28XCosetGeometry( SymmetricGroup( [ 1 .. 5 ] ) )[128X[104X
+    [4X[25Xgap>[125X [27Xp:=Random(ElementsOfIncidenceStructure(cg,1));[127X[104X
+    [4X[28X<element of type 1 of CosetGeometry( SymmetricGroup( [ 1 .. 5 ] ) )>[128X[104X
+    [4X[25Xgap>[125X [27Xq:=Random(ElementsOfIncidenceStructure(cg,2));[127X[104X
+    [4X[28X<element of type 2 of CosetGeometry( SymmetricGroup( [ 1 .. 5 ] ) )>[128X[104X
+    [4X[25Xgap>[125X [27XIsIncident(p,q);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsIncident(p,p);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XParabolicSubgroups(cg);[127X[104X
+    [4X[28X[ Group([ (4,5), (3,5), (1,2)(4,5) ]), Group([ (4,5), (2,3), (1,2,3) ]) ][128X[104X
+    [4X[25Xgap>[125X [27XRank(cg) = Size(last);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XBorelSubgroup(cg);[127X[104X
+    [4X[28XGroup([ (1,2), (4,5) ])[128X[104X
+    [4X[25Xgap>[125X [27XAmbientGroup(cg);[127X[104X
+    [4X[28XSym( [ 1 .. 5 ] )[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X13.1-3 IsIncident[101X
+  
+  [33X[1;0Y[29X[2XIsIncident[102X( [3Xele1[103X, [3Xele2[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ytrue if and only if [3Xele1[103X and [3Xele2[103X are incident[133X
+  
+  [33X[0;0Y[3Xele1[103X and [3Xele2[103X must be two elements in the same coset geometry.[133X
+  
+  [1X13.1-4 ParabolicSubgroups[101X
+  
+  [33X[1;0Y[29X[2XParabolicSubgroups[102X( [3Xcg[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe list of parabolic subgroups defining the coset geometry [3Xcg[103X[133X
+  
+  [1X13.1-5 AmbientGroup[101X
+  
+  [33X[1;0Y[29X[2XAmbientGroup[102X( [3Xcg[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe group used to define the coset geometry [3Xcg[103X[133X
+  
+  [33X[0;0Y[3Xcg[103X must be a coset geometry.[133X
+  
+  [1X13.1-6 Borelsubgroup[101X
+  
+  [33X[1;0Y[29X[2XBorelsubgroup[102X( [3Xcg[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe Borel subgroup of de geometry [3Xcg[103X[133X
+  
+  [33X[0;0YThe  Borel  subgroup is equal to the stabilizer of a chamber. It corresponds
+  to the intersection of all parabolic subgroups.[133X
+  
+  [1X13.1-7 RandomElement[101X
+  
+  [33X[1;0Y[29X[2XRandomElement[102X( [3Xcg[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya random element of [3Xcg[103X[133X
+  
+  [33X[0;0Y[3Xcg[103X must be a coset geometry.[133X
+  
+  [1X13.1-8 RandomFlag[101X
+  
+  [33X[1;0Y[29X[2XRandomFlag[102X( [3Xcg[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya random flag of [3Xcg[103X[133X
+  
+  [33X[0;0Y[3Xcg[103X must be a coset geometry.[133X
+  
+  [1X13.1-9 RandomChamber[101X
+  
+  [33X[1;0Y[29X[2XRandomChamber[102X( [3Xcg[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya random chamber of [3Xcg[103X[133X
+  
+  [33X[0;0Y[3Xcg[103X must be a coset geometry.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xg:=SymmetricGroup(5);[127X[104X
+    [4X[28XSym( [ 1 .. 5 ] )[128X[104X
+    [4X[25Xgap>[125X [27Xg1:=Stabilizer(g,[1,2],OnSets);[127X[104X
+    [4X[28XGroup([ (4,5), (3,5), (1,2)(4,5) ])[128X[104X
+    [4X[25Xgap>[125X [27Xg2:=Stabilizer(g,[[1,2],[3,4]],OnSetsSets);[127X[104X
+    [4X[28XGroup([ (1,2), (3,4), (1,3)(2,4) ])[128X[104X
+    [4X[25Xgap>[125X [27Xcg:=CosetGeometry(g,[g1,g2]);[127X[104X
+    [4X[28XCosetGeometry( SymmetricGroup( [ 1 .. 5 ] ) )[128X[104X
+    [4X[25Xgap>[125X [27XRandomElement(cg);[127X[104X
+    [4X[28X<element of type 1 of CosetGeometry( SymmetricGroup( [ 1 .. 5 ] ) )>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(last);[127X[104X
+    [4X[28XRightCoset(Group( [ (4,5), (3,5), (1,2)(4,5) ] ),(1,4,2,5,3))[128X[104X
+    [4X[25Xgap>[125X [27XRandomFlag(cg);[127X[104X
+    [4X[28X<Flag of coset geometry < CosetGeometry( SymmetricGroup( [ 1 .. 5 ] ) , [128X[104X
+    [4X[28X[ Group( [ (4,5), (3,5), (1,2)(4,5) ] ), [128X[104X
+    [4X[28X  Group( [ (1,2), (3,4), (1,3)(2,4) ] ) ] ) >>[128X[104X
+    [4X[25Xgap>[125X [27Xflg:=RandomFlag(cg);[127X[104X
+    [4X[28X<Flag of coset geometry < CosetGeometry( SymmetricGroup( [ 1 .. 5 ] ) , [128X[104X
+    [4X[28X[ Group( [ (4,5), (3,5), (1,2)(4,5) ] ), [128X[104X
+    [4X[28X  Group( [ (1,2), (3,4), (1,3)(2,4) ] ) ] ) >>[128X[104X
+    [4X[25Xgap>[125X [27XType(flg);[127X[104X
+    [4X[28X[ 1 ][128X[104X
+    [4X[25Xgap>[125X [27Xflg2:=RandomFlag(cg);[127X[104X
+    [4X[28X<Flag of coset geometry < CosetGeometry( SymmetricGroup( [ 1 .. 5 ] ) , [128X[104X
+    [4X[28X[ Group( [ (4,5), (3,5), (1,2)(4,5) ] ), [128X[104X
+    [4X[28X  Group( [ (1,2), (3,4), (1,3)(2,4) ] ) ] ) >>[128X[104X
+    [4X[25Xgap>[125X [27XType(flg2);[127X[104X
+    [4X[28X[ 2 ][128X[104X
+    [4X[25Xgap>[125X [27XIsChamberOfIncidenceStructure(flg2);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsChamberOfIncidenceStructure(flg);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(flg2);[127X[104X
+    [4X[28XFlag of coset geometry CosetGeometry( SymmetricGroup( [ 1 .. 5 ] ) , [128X[104X
+    [4X[28X[ Group( [ (4,5), (3,5), (1,2)(4,5) ] ), [128X[104X
+    [4X[28X  Group( [ (1,2), (3,4), (1,3)(2,4) ] ) ] ) with elements [128X[104X
+    [4X[28X[ RightCoset(Group( [ (1,2), (3,4), (1,3)(2,4) ] ),(2,3,5)) ][128X[104X
+    [4X[25Xgap>[125X [27Xcham:=RandomChamber(cg);[127X[104X
+    [4X[28X<Flag of coset geometry < CosetGeometry( SymmetricGroup( [ 1 .. 5 ] ) , [128X[104X
+    [4X[28X[ Group( [ (4,5), (3,5), (1,2)(4,5) ] ), [128X[104X
+    [4X[28X  Group( [ (1,2), (3,4), (1,3)(2,4) ] ) ] ) >>[128X[104X
+    [4X[25Xgap>[125X [27XIsChamberOfIncidenceStructure(cham);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XElementsOfFlag(cham);[127X[104X
+    [4X[28X[ <element of type 1 of CosetGeometry( SymmetricGroup( [ 1 .. 5 ] ) )>, [128X[104X
+    [4X[28X  <element of type 2 of CosetGeometry( SymmetricGroup( [ 1 .. 5 ] ) )> ][128X[104X
+    [4X[25Xgap>[125X [27XIsIncident(last[1],last[2]);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X13.1-10 IsFlagTransitiveGeometry[101X
+  
+  [33X[1;0Y[29X[2XIsFlagTransitiveGeometry[102X( [3Xcg[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ytrue   if   and   only   if   the   group   [3XG[103X   defining  [3Xcg[103X  acts
+            flag-transitively.[133X
+  
+  [33X[0;0Y[3Xcg[103X must be a coset geometry.[133X
+  
+  [33X[0;0YThe  group [22XG[122X used to define [3Xcg[103X acts naturally on the elements of [3Xcg[103X by right
+  translation: a coset [22XG_ig[122X is mapped to [22XG_i(gx)[122X by an element [22Xx∈ G[122X. This test
+  can    be    quite    time   consuming.   You   can   bind   the   attribute
+  [10XIsFlagTransitiveGeometry[110X  if  you  are  sure  the  coset  geometry is indeed
+  flag-transitive.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xg:=SymmetricGroup(4);[127X[104X
+    [4X[28XSym( [ 1 .. 4 ] )[128X[104X
+    [4X[25Xgap>[125X [27Xg1:=Subgroup(g,[(1,2,3)]);[127X[104X
+    [4X[28XGroup([ (1,2,3) ])[128X[104X
+    [4X[25Xgap>[125X [27Xg2:=Subgroup(g,[(1,4)]);[127X[104X
+    [4X[28XGroup([ (1,4) ])[128X[104X
+    [4X[25Xgap>[125X [27Xg3:=Subgroup(g,[(1,2,3,4)]);[127X[104X
+    [4X[28XGroup([ (1,2,3,4) ])[128X[104X
+    [4X[25Xgap>[125X [27Xcg:=CosetGeometry(g,[g1,g2,g3]);[127X[104X
+    [4X[28XCosetGeometry( SymmetricGroup( [ 1 .. 4 ] ) )[128X[104X
+    [4X[25Xgap>[125X [27XIsFlagTransitiveGeometry(cg);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27Xcg2:=CosetGeometry(g,[g1,g2]);[127X[104X
+    [4X[28XCosetGeometry( SymmetricGroup( [ 1 .. 4 ] ) )[128X[104X
+    [4X[25Xgap>[125X [27XIsFlagTransitiveGeometry(cg2);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X13.1-11 OnCosetGeometryElement[101X
+  
+  [33X[1;0Y[29X[2XOnCosetGeometryElement[102X( [3Xele[103X, [3Xg[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe image of the [11XCosetGeometryElement[111X [3Xele[103X under the action of [3Xg[103X[133X
+  
+  [33X[0;0YThe group element [3Xg[103X must belong to [11XAmbientGroup(AmbientGeometry(ele))[111X.[133X
+  
+  [1X13.1-12 \^[101X
+  
+  [33X[1;0Y[29X[2X\^[102X( [3Xele[103X, [3Xg[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan element of a coset geometry[133X
+  
+  [33X[0;0YThis  is  an operation which returns the image of [3Xele[103X, an element of a coset
+  incidence       structure,       under       [3Xg[103X,      an      element      of
+  [11XAmbientGroup(AmbientGeometry(ele))[111X.[133X
+  
+  [1X13.1-13 \^[101X
+  
+  [33X[1;0Y[29X[2X\^[102X( [3Xflg[103X, [3Xg[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya flag of a coset geometry[133X
+  
+  [33X[0;0YThis  is  an  operation  which  returns  the image of [3Xflg[103X, a flag of a coset
+  incidence       structure,       under       [3Xg[103X,      an      element      of
+  [11XAmbientGroup(AmbientGeometry(flg))[111X.[133X
+  
+  [1X13.1-14 IsFirmGeometry[101X
+  
+  [33X[1;0Y[29X[2XIsFirmGeometry[102X( [3Xcg[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ytrue if and only if [3Xcg[103X is firm.[133X
+  
+  [33X[0;0YAn  incidence  geometry  is  said  to  be  [13Xfirm[113X  if every nonmaximal flag is
+  contained in at least two chambers. [3Xcg[103X must be a coset geometry.[133X
+  
+  [1X13.1-15 IsThickGeometry[101X
+  
+  [33X[1;0Y[29X[2XIsThickGeometry[102X( [3Xcg[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ytrue if and only if [3Xcg[103X is thick.[133X
+  
+  [33X[0;0YAn  incidence  geometry  is  said  to  be  [13Xthick[113X if every nonmaximal flag is
+  contained in at least three chambers. [3Xcg[103X must be a coset geometry.[133X
+  
+  [1X13.1-16 IsThinGeometry[101X
+  
+  [33X[1;0Y[29X[2XIsThinGeometry[102X( [3Xcg[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ytrue if and only if [3Xcg[103X is thin.[133X
+  
+  [33X[0;0YAn  incidence geometry is said to be [13Xthin[113X if every rank one residue contains
+  exactly  2  elements.  This  means that every comaximal flag is contained in
+  exactly 2 chambers. [3Xcg[103X must be a coset geometry.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xg:=SymmetricGroup(8);;[127X[104X
+    [4X[25Xgap>[125X [27Xpabs:=[];;[127X[104X
+    [4X[25Xgap>[125X [27Xpabs[1]:=Stabilizer(g,1);; pabs[2]:=Stabilizer(g,2);;[127X[104X
+    [4X[25Xgap>[125X [27Xpabs[3]:=Stabilizer(g,3);;[127X[104X
+    [4X[25Xgap>[125X [27Xpabs[4]:=Stabilizer(g,[1,2,3,4],OnSets);;[127X[104X
+    [4X[25Xgap>[125X [27Xpabs[5]:=Stabilizer(g,[1,2,3,4,5],OnSets);;[127X[104X
+    [4X[25Xgap>[125X [27Xpabs[6]:=Stabilizer(g,6);; pabs[7]:=Stabilizer(g,7);;[127X[104X
+    [4X[25Xgap>[125X [27Xcg:=CosetGeometry(g,pabs);[127X[104X
+    [4X[28XCosetGeometry( SymmetricGroup( [ 1 .. 8 ] ) )[128X[104X
+    [4X[25Xgap>[125X [27XIsFirmGeometry(cg);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsThinGeometry(cg);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsThickGeometry(cg);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27Xtruncation:=CosetGeometry(g,pabs{[1..5]});[127X[104X
+    [4X[28XCosetGeometry( SymmetricGroup( [ 1 .. 8 ] ) )[128X[104X
+    [4X[25Xgap>[125X [27XIsFirmGeometry(truncation);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsThinGeometry(truncation);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsThickGeometry(truncation);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27Xtruncation2:=CosetGeometry(g,pabs{[4,5]});[127X[104X
+    [4X[28XCosetGeometry( SymmetricGroup( [ 1 .. 8 ] ) )[128X[104X
+    [4X[25Xgap>[125X [27XIsFirmGeometry(truncation2);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsThinGeometry(truncation2);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsThickGeometry(truncation2);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X13.1-17 IsConnected[101X
+  
+  [33X[1;0Y[29X[2XIsConnected[102X( [3Xcg[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ytrue if and only if [3Xcg[103X is connected.[133X
+  
+  [33X[0;0YA  geometry is [13Xconnected[113X if and only if its incidence graph is connected. [3Xcg[103X
+  must be a coset geometry.[133X
+  
+  [1X13.1-18 IsResiduallyConnected[101X
+  
+  [33X[1;0Y[29X[2XIsResiduallyConnected[102X( [3Xcg[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ytrue if and only if [3Xcg[103X is residually connected.[133X
+  
+  [33X[0;0YA  geometry  is  [13Xresidually  connected[113X  if  the  incidence graphs of all its
+  residues of rank at least 2 are connected. [3Xcg[103X must be a coset geometry.[133X
+  
+  [33X[0;0YThis   test   is   quite   time   consuming.  You  can  bind  the  attribute
+  [10XIsResiduallyConnected[110X   if  you  are  sure  the  coset  geometry  is  indeed
+  residually connected.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps:=HyperbolicQuadric(7,2);[127X[104X
+    [4X[28XQ+(7, 2)[128X[104X
+    [4X[25Xgap>[125X [27Xg:=IsometryGroup(ps);;[127X[104X
+    [4X[25Xgap>[125X [27Xreps:=RepresentativesOfElements(ps);[127X[104X
+    [4X[28X[ <a point in Q+(7, 2)>, <a line in Q+(7, 2)>, <a plane in Q+(7, 2)>, [128X[104X
+    [4X[28X  <a solid in Q+(7, 2)> ][128X[104X
+    [4X[25Xgap>[125X [27Xsolids:=Orbit(g,reps[4]);;[127X[104X
+    [4X[25Xgap>[125X [27Xps:=HyperbolicQuadric(7,2);[127X[104X
+    [4X[28XQ+(7, 2)[128X[104X
+    [4X[25Xgap>[125X [27Xg:=IsometryGroup(ps);;[127X[104X
+    [4X[25Xgap>[125X [27Xreps:=RepresentativesOfElements(ps);[127X[104X
+    [4X[28X[ <a point in Q+(7, 2)>, <a line in Q+(7, 2)>, <a plane in Q+(7, 2)>, [128X[104X
+    [4X[28X  <a solid in Q+(7, 2)> ][128X[104X
+    [4X[25Xgap>[125X [27Xh:=DerivedSubgroup(g);; # to get greek and latin solids[127X[104X
+    [4X[25Xgap>[125X [27Xorbs:=FiningOrbits(h,Solids(ps));;[127X[104X
+    [4X[28X50%..100%..gap> List(orbs, Size);[128X[104X
+    [4X[28X[ 135, 135 ][128X[104X
+    [4X[25Xgap>[125X [27XFiltered(orbs[2], s -> ProjectiveDimension(Meet(orbs[1][1],s))=2); # to[127X[104X
+    [4X[28X[ <a solid in Q+(7, 2)>, <a solid in Q+(7, 2)>, <a solid in Q+(7, 2)>, [128X[104X
+    [4X[28X  <a solid in Q+(7, 2)>, <a solid in Q+(7, 2)>, <a solid in Q+(7, 2)>, [128X[104X
+    [4X[28X  <a solid in Q+(7, 2)>, <a solid in Q+(7, 2)>, <a solid in Q+(7, 2)>, [128X[104X
+    [4X[28X  <a solid in Q+(7, 2)>, <a solid in Q+(7, 2)>, <a solid in Q+(7, 2)>, [128X[104X
+    [4X[28X  <a solid in Q+(7, 2)>, <a solid in Q+(7, 2)>, <a solid in Q+(7, 2)> ][128X[104X
+    [4X[25Xgap>[125X [27X#find a latin incident with the greek which is orbs[1][1][127X[104X
+    [4X[25Xgap>[125X [27X# Now we have a chamber[127X[104X
+    [4X[25Xgap>[125X [27Xgoodreps:=[reps[1],reps[2],orbs[1][1],last[1]];[127X[104X
+    [4X[28X[ <a point in Q+(7, 2)>, <a line in Q+(7, 2)>, <a solid in Q+(7, 2)>, [128X[104X
+    [4X[28X  <a solid in Q+(7, 2)> ][128X[104X
+    [4X[25Xgap>[125X [27Xpabs:=List(goodreps, r -> FiningStabiliser(h,r));[127X[104X
+    [4X[28X[ <projective collineation group of size 1290240 with 2 generators>, [128X[104X
+    [4X[28X  <projective collineation group of size 110592 with 4 generators>, [128X[104X
+    [4X[28X  <projective collineation group of size 1290240 with 2 generators>, [128X[104X
+    [4X[28X  <projective collineation group of size 1290240 with 4 generators> ][128X[104X
+    [4X[25Xgap>[125X [27Xcos:=CosetGeometry(h,pabs);[127X[104X
+    [4X[28XCosetGeometry( Group( [128X[104X
+    [4X[28X[ ProjElWithFrob(NewMatrix(IsCMatRep,GF(2,1),8,[[128X[104X
+    [4X[28X    [ Z(2)^0, Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0 ],[128X[104X
+    [4X[28X    [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X    [ 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ],[128X[104X
+    [4X[28X    [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X    [ 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), Z(2)^0 ],[128X[104X
+    [4X[28X    [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X    [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ],[128X[104X
+    [4X[28X    [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2) [128X[104X
+    [4X[28X     ],]),IdentityMapping( GF(2) )), ProjElWithFrob(NewMatrix(IsCMatRep,GF(2,[128X[104X
+    [4X[28X    1),8,[[ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X    [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X    [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ],[128X[104X
+    [4X[28X    [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X    [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), Z(2)^0 ],[128X[104X
+    [4X[28X    [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X    [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ],[128X[104X
+    [4X[28X    [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2) [128X[104X
+    [4X[28X     ],]),IdentityMapping( GF(2) )), ProjElWithFrob(NewMatrix(IsCMatRep,GF(2,[128X[104X
+    [4X[28X    1),8,[[ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X    [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2) ],[128X[104X
+    [4X[28X    [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X    [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X    [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X    [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X    [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2) ],[128X[104X
+    [4X[28X    [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0 [128X[104X
+    [4X[28X     ],]),IdentityMapping( GF(2) )) ] ) )[128X[104X
+    [4X[25Xgap>[125X [27XIsConnected(cos);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsResiduallyConnected(cos);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X419960[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X13.1-19 StandardFlagOfCosetGeometry[101X
+  
+  [33X[1;0Y[29X[2XStandardFlagOfCosetGeometry[102X( [3Xcg[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ystandard chamber of [3Xcg[103X[133X
+  
+  [33X[0;0YThe  standard  chamber  just  consists  of all parabolic subgroups (i.e. the
+  trivial   cosets   of   these   subgroups).   The   object   returned  is  a
+  FlagOfIncidenceStructure. [3Xcg[103X must be a coset geometry.[133X
+  
+  [1X13.1-20 FlagToStandardFlag[101X
+  
+  [33X[1;0Y[29X[2XFlagToStandardFlag[102X( [3Xcg[103X, [3Xfl[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yelement  of the defining group of [3Xcg[103X which maps [3Xfl[103X to the standard
+            chamber of [3Xcg[103X.[133X
+  
+  [33X[0;0Y[3Xfl[103X must be a chamber given as a list of cosets of the parabolic subgroups of
+  [3Xcg[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XL:=SimpleLieAlgebra("D",8,Rationals);[127X[104X
+    [4X[28X<Lie algebra of dimension 120 over Rationals>[128X[104X
+    [4X[25Xgap>[125X [27Xrs:=RootSystem(L);[127X[104X
+    [4X[28X<root system of rank 8>[128X[104X
+    [4X[25Xgap>[125X [27Xw:=WeylGroup(rs);[127X[104X
+    [4X[28X<matrix group with 8 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xgens:=GeneratorsOfGroup(w);;[127X[104X
+    [4X[25Xgap>[125X [27Xpabs:=List(gens, g -> Group(Difference(gens, [g])));[127X[104X
+    [4X[28X[ <matrix group with 7 generators>, <matrix group with 7 generators>, [128X[104X
+    [4X[28X  <matrix group with 7 generators>, <matrix group with 7 generators>, [128X[104X
+    [4X[28X  <matrix group with 7 generators>, <matrix group with 7 generators>, [128X[104X
+    [4X[28X  <matrix group with 7 generators>, <matrix group with 7 generators> ][128X[104X
+    [4X[25Xgap>[125X [27Xg:=Group(gens);[127X[104X
+    [4X[28X<matrix group with 8 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xcg:=CosetGeometry(g,pabs);;[127X[104X
+    [4X[25Xgap>[125X [27Xcham:=RandomChamber(cg);; # Time of last command: 23945 ms[127X[104X
+    [4X[25Xgap>[125X [27XFlagToStandardFlag(cg,cham); # Time of last command: 1720 ms[127X[104X
+    [4X[28X[ [ 0, 0, 0, 0, 1, -1, 0, 0 ], [ 0, 0, 0, 1, 0, -1, 0, 0 ], [128X[104X
+    [4X[28X  [ 0, 0, 0, 1, 0, 0, -1, -1 ], [ 1, -1, 0, 1, 0, 0, -1, -1 ], [128X[104X
+    [4X[28X  [ 0, -1, 0, 1, 0, 0, -1, -1 ], [ 0, -1, 0, 1, 0, 0, 0, -2 ], [128X[104X
+    [4X[28X  [ 0, -1, 1, 0, 0, 0, 0, -1 ], [ 0, -1, 0, 1, 0, 0, 0, -1 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xcham^last = StandardFlagOfCosetGeometry(cg); # Time of last command:1005 ms[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X13.1-21 CanonicalResidueOfFlag[101X
+  
+  [33X[1;0Y[29X[2XCanonicalResidueOfFlag[102X( [3Xcg[103X, [3Xfl[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ycoset geometry isomorphic to residue of [3Xfl[103X in [3Xcg[103X[133X
+  
+  [33X[0;0Y[3Xcg[103X  must  be  a  coset  incidence  structure  and  [3Xfl[103X must be a flag in that
+  incidence  structure.  The  returned  coset  incidence  structure for a flag
+  [22X{G_i_1g_i_1,G_i_2g_i_2,...  ,  G_i_kg_i_k}[122X  is the coset incidence structure
+  defined  by  the  group [22XH:=∩_j=1^kG_i_j[122X and parabolic subgroups [22XG_j∩ H[122X for [22Xj[122X
+  not in the type set [22X{i_1,i_2,... ,i_k}[122X of [3Xfl[103X.[133X
+  
+  [1X13.1-22 ResidueOfFlag[101X
+  
+  [33X[1;0Y[29X[2XResidueOfFlag[102X( [3Xfl[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe residue of [3Xfl[103X in [11XAmbientGeometry(fl)[111X.[133X
+  
+  [33X[0;0YThis  is  a  [11XCosetGeometry[111X  method  for the [11XResidueOfFlag[111X operation given in
+  Chapter  [14X3[114X. Note that the related operation [11XCanonicalResidueOfFlag[111X takes [13Xtwo[113X
+  arguments.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xpg:=SymplecticSpace(5,2);[127X[104X
+    [4X[28XW(5, 2)[128X[104X
+    [4X[25Xgap>[125X [27Xpi:=Random(Planes(pg));[127X[104X
+    [4X[28X<a plane in W(5, 2)>[128X[104X
+    [4X[25Xgap>[125X [27Xl:=Random(Lines(pi));[127X[104X
+    [4X[28X<a line in W(5, 2)>[128X[104X
+    [4X[25Xgap>[125X [27Xp:=Random(Points(l));[127X[104X
+    [4X[28X<a point in W(5, 2)>[128X[104X
+    [4X[25Xgap>[125X [27Xg:=CollineationGroup(pg);[127X[104X
+    [4X[28XPGammaSp(6,2)[128X[104X
+    [4X[25Xgap>[125X [27Xg1:=Stabilizer(g,p);[127X[104X
+    [4X[28X<projective collineation group of size 23040 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xg2:=Stabilizer(g,l);[127X[104X
+    [4X[28X<projective collineation group of size 4608 with 4 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xg3:=Stabilizer(g,pi);[127X[104X
+    [4X[28X<projective collineation group of size 10752 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xcg:=CosetGeometry(g, [g1,g2,g3]);[127X[104X
+    [4X[28XCosetGeometry( PGammaSp(6,2) )[128X[104X
+    [4X[25Xgap>[125X [27XRandomFlag(cg); # Time of last command: 10745 ms[127X[104X
+    [4X[28X<Flag of coset geometry < CosetGeometry( PGammaSp(6,2) , [128X[104X
+    [4X[28X[ [128X[104X
+    [4X[28X  Group( [128X[104X
+    [4X[28X    [ ProjElWithFrob(NewMatrix(IsCMatRep,GF(2,1),6,[[128X[104X
+    [4X[28X        [ Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0 ],[128X[104X
+    [4X[28X        [ Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2) ],[128X[104X
+    [4X[28X        [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X        [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X        [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ],[128X[104X
+    [4X[28X        [ Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) [128X[104X
+    [4X[28X         ],]),IdentityMapping( GF(2) )), [128X[104X
+    [4X[28X      ProjElWithFrob(NewMatrix(IsCMatRep,GF(2,1),6,[[128X[104X
+    [4X[28X        [ Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ],[128X[104X
+    [4X[28X        [ Z(2)^0, Z(2)^0, 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0 ],[128X[104X
+    [4X[28X        [ Z(2)^0, 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0 ],[128X[104X
+    [4X[28X        [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X        [ Z(2)^0, Z(2)^0, 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X        [ Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2) [128X[104X
+    [4X[28X         ],]),IdentityMapping( GF(2) )), [128X[104X
+    [4X[28X      ProjElWithFrob(NewMatrix(IsCMatRep,GF(2,1),6,[[128X[104X
+    [4X[28X        [ Z(2)^0, 0*Z(2), Z(2)^0, 0*Z(2), Z(2)^0, Z(2)^0 ],[128X[104X
+    [4X[28X        [ Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X        [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2) ],[128X[104X
+    [4X[28X        [ 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X        [ 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0 ],[128X[104X
+    [4X[28X        [ Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2) [128X[104X
+    [4X[28X         ],]),IdentityMapping( GF(2) )) ] ), [128X[104X
+    [4X[28X  Group( [128X[104X
+    [4X[28X    [ ProjElWithFrob(NewMatrix(IsCMatRep,GF(2,1),6,[[128X[104X
+    [4X[28X        [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X        [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X        [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X        [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X        [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ],[128X[104X
+    [4X[28X        [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2) [128X[104X
+    [4X[28X         ],]),IdentityMapping( GF(2) )), [128X[104X
+    [4X[28X      ProjElWithFrob(NewMatrix(IsCMatRep,GF(2,1),6,[[128X[104X
+    [4X[28X        [ 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0 ],[128X[104X
+    [4X[28X        [ 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2), Z(2)^0 ],[128X[104X
+    [4X[28X        [ Z(2)^0, 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X        [ Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, 0*Z(2), Z(2)^0 ],[128X[104X
+    [4X[28X        [ Z(2)^0, Z(2)^0, Z(2)^0, 0*Z(2), Z(2)^0, Z(2)^0 ],[128X[104X
+    [4X[28X        [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 [128X[104X
+    [4X[28X         ],]),IdentityMapping( GF(2) )), [128X[104X
+    [4X[28X      ProjElWithFrob(NewMatrix(IsCMatRep,GF(2,1),6,[[128X[104X
+    [4X[28X        [ Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0 ],[128X[104X
+    [4X[28X        [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X        [ 0*Z(2), Z(2)^0, 0*Z(2), Z(2)^0, 0*Z(2), Z(2)^0 ],[128X[104X
+    [4X[28X        [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0 ],[128X[104X
+    [4X[28X        [ 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0 ],[128X[104X
+    [4X[28X        [ 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2), Z(2)^0, Z(2)^0 [128X[104X
+    [4X[28X         ],]),IdentityMapping( GF(2) )), [128X[104X
+    [4X[28X      ProjElWithFrob(NewMatrix(IsCMatRep,GF(2,1),6,[[128X[104X
+    [4X[28X        [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X        [ Z(2)^0, Z(2)^0, Z(2)^0, 0*Z(2), Z(2)^0, Z(2)^0 ],[128X[104X
+    [4X[28X        [ 0*Z(2), Z(2)^0, 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X        [ 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0, 0*Z(2) ],[128X[104X
+    [4X[28X        [ 0*Z(2), Z(2)^0, 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0 ],[128X[104X
+    [4X[28X        [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2) [128X[104X
+    [4X[28X         ],]),IdentityMapping( GF(2) )) ] ), [128X[104X
+    [4X[28X  Group( [128X[104X
+    [4X[28X    [ ProjElWithFrob(NewMatrix(IsCMatRep,GF(2,1),6,[[128X[104X
+    [4X[28X        [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X        [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X        [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X        [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X        [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ],[128X[104X
+    [4X[28X        [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2) [128X[104X
+    [4X[28X         ],]),IdentityMapping( GF(2) )), [128X[104X
+    [4X[28X      ProjElWithFrob(NewMatrix(IsCMatRep,GF(2,1),6,[[128X[104X
+    [4X[28X        [ Z(2)^0, Z(2)^0, 0*Z(2), Z(2)^0, 0*Z(2), Z(2)^0 ],[128X[104X
+    [4X[28X        [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X        [ 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0 ],[128X[104X
+    [4X[28X        [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X        [ 0*Z(2), Z(2)^0, 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0 ],[128X[104X
+    [4X[28X        [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 [128X[104X
+    [4X[28X         ],]),IdentityMapping( GF(2) )), [128X[104X
+    [4X[28X      ProjElWithFrob(NewMatrix(IsCMatRep,GF(2,1),6,[[128X[104X
+    [4X[28X        [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2) ],[128X[104X
+    [4X[28X        [ 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X        [ 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0 ],[128X[104X
+    [4X[28X        [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2) ],[128X[104X
+    [4X[28X        [ Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X        [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) [128X[104X
+    [4X[28X         ],]),IdentityMapping( GF(2) )) ] ) ] ) >>[128X[104X
+    [4X[25Xgap>[125X [27XType(last);[127X[104X
+    [4X[28X[  ][128X[104X
+    [4X[25Xgap>[125X [27XResidueOfFlag(last2);[127X[104X
+    [4X[28XCosetGeometry( PGammaSp(6,2) )[128X[104X
+    [4X[25Xgap>[125X [27XRank(last);[127X[104X
+    [4X[28X3[128X[104X
+    [4X[25Xgap>[125X [27XNrElementsOfIncidenceStructure(last2,1);[127X[104X
+    [4X[28X63[128X[104X
+    [4X[25Xgap>[125X [27Xflg:=RandomFlag(cg);;[127X[104X
+    [4X[25Xgap>[125X [27Xcan:=CanonicalResidueOfFlag(cg,flg);[127X[104X
+    [4X[28XCosetGeometry( Group( ... ) )[128X[104X
+    [4X[25Xgap>[125X [27XType(flg);[127X[104X
+    [4X[28X[ 1, 2 ][128X[104X
+    [4X[25Xgap>[125X [27XRank(can);[127X[104X
+    [4X[28X1[128X[104X
+    [4X[25Xgap>[125X [27Xres:=ResidueOfFlag(flg);[127X[104X
+    [4X[28XCosetGeometry( Group( [128X[104X
+    [4X[28X[ ProjElWithFrob(NewMatrix(IsCMatRep,GF(2,1),6,[[128X[104X
+    [4X[28X    [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X    [ Z(2)^0, Z(2)^0, Z(2)^0, 0*Z(2), Z(2)^0, Z(2)^0 ],[128X[104X
+    [4X[28X    [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X    [ Z(2)^0, 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0 ],[128X[104X
+    [4X[28X    [ Z(2)^0, 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0 ],[128X[104X
+    [4X[28X    [ Z(2)^0, 0*Z(2), Z(2)^0, 0*Z(2), Z(2)^0, 0*Z(2) [128X[104X
+    [4X[28X     ],]),IdentityMapping( GF(2) )), ProjElWithFrob(NewMatrix(IsCMatRep,GF(2,[128X[104X
+    [4X[28X    1),6,[[ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X    [ Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2) ],[128X[104X
+    [4X[28X    [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X    [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X    [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2) ],[128X[104X
+    [4X[28X    [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0 [128X[104X
+    [4X[28X     ],]),IdentityMapping( GF(2) )), ProjElWithFrob(NewMatrix(IsCMatRep,GF(2,[128X[104X
+    [4X[28X    1),6,[[ 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0 ],[128X[104X
+    [4X[28X    [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X    [ Z(2)^0, Z(2)^0, 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0 ],[128X[104X
+    [4X[28X    [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X    [ 0*Z(2), Z(2)^0, 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2) ],[128X[104X
+    [4X[28X    [ 0*Z(2), Z(2)^0, 0*Z(2), Z(2)^0, 0*Z(2), Z(2)^0 [128X[104X
+    [4X[28X     ],]),IdentityMapping( GF(2) )), ProjElWithFrob(NewMatrix(IsCMatRep,GF(2,[128X[104X
+    [4X[28X    1),6,[[ Z(2)^0, Z(2)^0, 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X    [ Z(2)^0, Z(2)^0, Z(2)^0, 0*Z(2), Z(2)^0, Z(2)^0 ],[128X[104X
+    [4X[28X    [ 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X    [ Z(2)^0, 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0 ],[128X[104X
+    [4X[28X    [ Z(2)^0, 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0 ],[128X[104X
+    [4X[28X    [ Z(2)^0, 0*Z(2), Z(2)^0, 0*Z(2), Z(2)^0, 0*Z(2) [128X[104X
+    [4X[28X     ],]),IdentityMapping( GF(2) )), ProjElWithFrob(NewMatrix(IsCMatRep,GF(2,[128X[104X
+    [4X[28X    1),6,[[ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2) ],[128X[104X
+    [4X[28X    [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0 ],[128X[104X
+    [4X[28X    [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X    [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X    [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X    [ Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2) [128X[104X
+    [4X[28X     ],]),IdentityMapping( GF(2) )), ProjElWithFrob(NewMatrix(IsCMatRep,GF(2,[128X[104X
+    [4X[28X    1),6,[[ Z(2)^0, 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0 ],[128X[104X
+    [4X[28X    [ Z(2)^0, 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2), Z(2)^0 ],[128X[104X
+    [4X[28X    [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2) ],[128X[104X
+    [4X[28X    [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ],[128X[104X
+    [4X[28X    [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ],[128X[104X
+    [4X[28X    [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2) [128X[104X
+    [4X[28X     ],]),IdentityMapping( GF(2) )) ] ) )[128X[104X
+    [4X[25Xgap>[125X [27XIsIsomorphicIncidenceStructureWithNauty(res,can);[127X[104X
+    [4X[28X#I Using NiceMonomorphism...[128X[104X
+    [4X[28X#I Using NiceMonomorphism...[128X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X13.1-23 IncidenceGraph[101X
+  
+  [33X[1;0Y[29X[2XIncidenceGraph[102X( [3Xcg[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yincidence graph of [3Xcg[103X.[133X
+  
+  [33X[0;0Y[3Xcg[103X must be a coset geometry. The graph returned is a [5XGRAPE[105X object. All [5XGRAPE[105X
+  functionality can now be used to analyse [3Xcg[103X via its incidence graph.[133X
+  
+  [1X13.1-24 Rk2GeoGonality[101X
+  
+  [33X[1;0Y[29X[2XRk2GeoGonality[102X( [3Xcg[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe gonality (i.e. half the girth) of the incidence graph of [3Xcg[103X.[133X
+  
+  [33X[0;0Y[3Xcg[103X must be a coset geometry of rank 2.[133X
+  
+  [1X13.1-25 Rk2GeoDiameter[101X
+  
+  [33X[1;0Y[29X[2XRk2GeoDiameter[102X( [3Xcg[103X, [3Xtype[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe point (or line) diameter.[133X
+  
+  [33X[0;0Y[3Xcg[103X  must  be  a  coset  geometry of rank 2. [3Xtype[103X must be either [10X1[110X or [10X2[110X. This
+  function  computes  the  point  diameter  of  [3Xcg[103X when [3Xtype[103X is [10X1[110X and the line
+  diameter when [3Xtype[103X is [10X2[110X.[133X
+  
+  [1X13.1-26 GeometryOfRank2Residue[101X
+  
+  [33X[1;0Y[29X[2XGeometryOfRank2Residue[102X( [3Xresi[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe geometry of the [11XRank2Residue[111X object [3Xresi[103X.[133X
+  
+  [33X[0;0YThe  rank  2  residues  of  a  geometry  are  fundamental  when dealing with
+  diagrams.  Therefore they are kept in an attribute as (a list of) objects of
+  type  [11XRank2Residue[111X.  The  present  operation  just extracts the residue as a
+  coset geometry from such a [11XRank2Residue[111X object.[133X
+  
+  [1X13.1-27 Rank2Parameters[101X
+  
+  [33X[1;0Y[29X[2XRank2Parameters[102X( [3Xcg[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya list of length 3.[133X
+  
+  [33X[0;0Y[3Xcg[103X  must be a coset geometry of rank 2. This function computes the gonality,
+  point  and line diameter of [3Xcg[103X. These appear as a list in the first entry of
+  the  returned  list.  The  second entry contains a list of length 2 with the
+  point  order and the total number of points (i.e. elements of type 1) in the
+  geometry.  The  last  entry  contains the line order and the number of lines
+  (i.e. elements of type 2).[133X
+  
+  [33X[0;0YThe following example illustrates [11XRank2Parameters[111X. It uses [5XAtlasRep[105X to fetch
+  the  second  Janko  group,  also  known as the Hall-Janko group. Beware that
+  [5XAtlasRep[105X  needs  special  write permissions on some systems. The constructed
+  geometry  has  gonality  6 and both diameters equal to 8. It is known as the
+  [13XCohen-Tits near octagon[113X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XLoadPackage("atlasrep");[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xj2:=AtlasGroup("J2"); #Uses AtlasRep package[127X[104X
+    [4X[28X<permutation group of size 604800 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xmax3:=AtlasSubgroup(j2,3); #member of 3rd ATLAS class of max. subgps[127X[104X
+    [4X[28X<permutation group of size 1920 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xmax4:=AtlasSubgroup(j2,4); #member of 4th ATLAS class of max. subgps[127X[104X
+    [4X[28X<permutation group of size 1152 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xconj3:=ConjugacyClassSubgroups(j2,max3);;[127X[104X
+    [4X[25Xgap>[125X [27Xg1:=First(conj3, c -> Size(Intersection(c,max4))=384);;[127X[104X
+    [4X[25Xgap>[125X [27Xg2:=max4;;[127X[104X
+    [4X[25Xgap>[125X [27Xcg:=CosetGeometry(j2,[g1,g2]);;[127X[104X
+    [4X[25Xgap>[125X [27XRank2Parameters(cg);[127X[104X
+    [4X[28X[ [ 6, 8, 8 ], [ 2, 315 ], [ 4, 525 ] ][128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  
+  [1X13.2 [33X[0;0YAutomorphisms, Correlations and Isomorphisms[133X[101X
+  
+  [33X[0;0YAn  [13Xautomorphism[113X of an incidence structure [22XΓ[122X is a permutation of the element
+  set of [22XΓ[122X such that incidence is preserved and types are fixed (i.e. the type
+  of the image of an element coincides with the type of that element). One way
+  to  compute  the  (full) automorphism group of [22XΓ[122X is to compute its incidence
+  graph and then use the available [11Xnauty[111X machinery to obtain the group.[133X
+  
+  [1X13.2-1 AutGroupIncidenceStructureWithNauty[101X
+  
+  [33X[1;0Y[29X[2XAutGroupIncidenceStructureWithNauty[102X( [3Xcg[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ypermutation group isomorphic to the full automorphism group of [3Xcg[103X.[133X
+  
+  [33X[0;0YThe  group  is  computed  with  [11Xnauty[111X,  which is part of [5XGRAPE[105X but has to be
+  compiled  on  your  system  before  use. The group returned is a permutation
+  group  acting  on the set [11X[1..Sum(TypesOfElementsOfIncidenceStructure(cg), t
+  ->  NrElementsOfIncidenceStructure(cg,t))][111X,  which is exactly the vertex set
+  of [11XIncidenceGraph(cg)[111X. At the moment the action of the automorphism group on
+  [11Xcg[111X  is  not  provided  but  it  can be recovered from the knowledge that the
+  vertex  set  of  [11XIncidenceGraph(cg)[111X first contains all elements of type 1 in
+  [11Xcg[111X,  then  all  elements  of  type  2, etc. or, better still, with the [5XGRAPE[105X
+  command [11XVertexNames[111X (see example below).[133X
+  
+  [1X13.2-2 CorGroupIncidenceStructureWithNauty[101X
+  
+  [33X[1;0Y[29X[2XCorGroupIncidenceStructureWithNauty[102X( [3Xcg[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ypermutation group isomorphic to the full automorphism group of [3Xcg[103X.[133X
+  
+  [33X[0;0YThe  group  is  computed  with  [11Xnauty[111X,  which is part of [5XGRAPE[105X but has to be
+  compiled  on  your  system  before  use. The group returned is a permutation
+  group  acting  on the set [11X[1..Sum(TypesOfElementsOfIncidenceStructure(cg), t
+  ->  NrElementsOfIncidenceStructure(cg,t))][111X,  which is exactly the vertex set
+  of [11XIncidenceGraph(cg)[111X. At the moment the action of the automorphism group on
+  [11Xcg[111X  is  not  provided  but  it  can be recovered from the knowledge that the
+  vertex  set  of  [11XIncidenceGraph(cg)[111X first contains all elements of type 1 in
+  [11Xcg[111X, then all elements of type 2, etc. or with the [5XGRAPE[105X command [11XVertexNames[111X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xg := PSL(2,11);;[127X[104X
+    [4X[25Xgap>[125X [27Xg1 := Group([ (1,2,3)(4,8,12)(5,10,9)(6,11,7), [127X[104X
+    [4X[25X>[125X [27X(1,2)(3,4)(5,12)(6,11)(7,10)(8,9) ]);;[127X[104X
+    [4X[25Xgap>[125X [27Xg2 := Group([ (1,2,7)(3,9,4)(5,11,10)(6,8,12), [127X[104X
+    [4X[25X>[125X [27X(1,2)(3,4)(5,12)(6,11)(7,10)(8,9) ]);;[127X[104X
+    [4X[25Xgap>[125X [27Xg3 := Group([ (1,2,11)(3,8,7)(4,9,5)(6,10,12), [127X[104X
+    [4X[25X>[125X [27X(1,2)(3,12)(4,11)(5,10)(6,9)(7,8) ]);;[127X[104X
+    [4X[25Xgap>[125X [27Xg4 := Group([ (1,2,11)(3,8,7)(4,9,5)(6,10,12), [127X[104X
+    [4X[25X>[125X [27X(1,2)(3,10)(4,9)(5,8)(6,7)(11,12) ]);;[127X[104X
+    [4X[25Xgap>[125X [27Xcg:=CosetGeometry(g,[g1,g2,g3,g4]);[127X[104X
+    [4X[28XCosetGeometry( Group( [ ( 3,11, 9, 7, 5)( 4,12,10, 8, 6), [128X[104X
+    [4X[28X  ( 1, 2, 8)( 3, 7, 9)( 4,10, 5)( 6,12,11) ] ) )[128X[104X
+    [4X[25Xgap>[125X [27Xaut:=AutGroupIncidenceStructureWithNauty(cg);[127X[104X
+    [4X[28X<permutation group with 4 generators>[128X[104X
+    [4X[25Xgap>[125X [27XStructureDescription(aut);[127X[104X
+    [4X[28X"PSL(2,11)"[128X[104X
+    [4X[25Xgap>[125X [27Xcor:=CorGroupIncidenceStructureWithNauty(cg);[127X[104X
+    [4X[28X<permutation group with 5 generators>[128X[104X
+    [4X[25Xgap>[125X [27XStructureDescription(cor);[127X[104X
+    [4X[28X"C2 x PSL(2,11)"[128X[104X
+    [4X[25Xgap>[125X [27Xincgrph:=IncidenceGraph(cg);;[127X[104X
+    [4X[25Xgap>[125X [27Xnames:=VertexNames(incgrph);;[127X[104X
+    [4X[25Xgap>[125X [27Xg:=Random(aut);[127X[104X
+    [4X[28X(1,9,7,6,2,3,5,11,4,8,10)(12,13,15,17,14,19,22,16,18,21,20)(23,28,33,25,29,31,[128X[104X
+    [4X[28X32,26,27,24,30)(34,44,38,41,42,35,43,39,40,36,37)[128X[104X
+    [4X[25Xgap>[125X [27Xe:=RandomElement(cg);[127X[104X
+    [4X[28X<element of type 3 of CosetGeometry( Group( [128X[104X
+    [4X[28X[ ( 3,11, 9, 7, 5)( 4,12,10, 8, 6), ( 1, 2, 8)( 3, 7, 9)( 4,10, 5)( 6,12,11) [128X[104X
+    [4X[28X ] ) )>[128X[104X
+    [4X[25Xgap>[125X [27Xpos:=Position(names, e);[127X[104X
+    [4X[28X26[128X[104X
+    [4X[25Xgap>[125X [27Xnames[pos^g];[127X[104X
+    [4X[28X<element of type 3 of CosetGeometry( Group( [128X[104X
+    [4X[28X[ ( 3,11, 9, 7, 5)( 4,12,10, 8, 6), ( 1, 2, 8)( 3, 7, 9)( 4,10, 5)( 6,12,11) [128X[104X
+    [4X[28X ] ) )>[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X13.2-3 IsIsomorphicIncidenceStructureWithNauty[101X
+  
+  [33X[1;0Y[29X[2XIsIsomorphicIncidenceStructureWithNauty[102X( [3Xcg1[103X, [3Xcg2[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ytrue iff cg1 and cg2 are isomorphic.[133X
+  
+  [33X[0;0YWe  use  [11Xnauty[111X, which is part of [5XGRAPE[105X but has to be compiled on your system
+  before  use.  Isomorphism  is tested (with [11Xnauty[111X) after converting the coset
+  geometries [3Xcg1[103X and [3Xcg2[103X to coloured graphs.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xg:=SymmetricGroup(4); g1:=Subgroup(g,[(1,2,3)]);[127X[104X
+    [4X[28XSym( [ 1 .. 4 ] )[128X[104X
+    [4X[28XGroup([ (1,2,3) ])[128X[104X
+    [4X[25Xgap>[125X [27Xg2:=Subgroup(g,[(1,4)]); g3:=Subgroup(g,[(1,2,3,4)]);[127X[104X
+    [4X[28XGroup([ (1,4) ])[128X[104X
+    [4X[28XGroup([ (1,2,3,4) ])[128X[104X
+    [4X[25Xgap>[125X [27Xcg:=CosetGeometry(g,[g1,g2,g3]);[127X[104X
+    [4X[28XCosetGeometry( SymmetricGroup( [ 1 .. 4 ] ) )[128X[104X
+    [4X[25Xgap>[125X [27XIsFlagTransitiveGeometry(cg);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27Xaut:=AutGroupIncidenceStructureWithNauty(cg);[127X[104X
+    [4X[28X<permutation group with 4 generators>[128X[104X
+    [4X[25Xgap>[125X [27XSize(aut);[127X[104X
+    [4X[28X48[128X[104X
+    [4X[25Xgap>[125X [27XSize(g);[127X[104X
+    [4X[28X24[128X[104X
+    [4X[25Xgap>[125X [27Xnewg1:=Stabilizer(aut, 1);[127X[104X
+    [4X[28XGroup([ (5,7)(6,8)(10,15)(11,12)(13,16)(14,18)(17,19)(21,25)(23,26), (3,6)[128X[104X
+    [4X[28X(4,5)(9,18)(10,16)(12,20)(13,17)(15,19)(21,22)(24,26) ])[128X[104X
+    [4X[25Xgap>[125X [27Xnewg2:=Stabilizer(aut, NrElementsOfIncidenceStructure(cg,1) + 1);[127X[104X
+    [4X[28XGroup([ (5,7)(6,8)(10,15)(11,12)(13,16)(14,18)(17,19)(21,25)(23,26), (1,3)[128X[104X
+    [4X[28X(2,4)(5,6)(7,8)(10,11)(12,15)(13,16)(14,17)(18,19)(21,25)(22,24)(23,26) ])[128X[104X
+    [4X[25Xgap>[125X [27Xnewg3:=Stabilizer(aut, NrElementsOfIncidenceStructure(cg,1) +[127X[104X
+    [4X[25X>[125X [27X			NrElementsOfIncidenceStructure(cg,2) + 1);[127X[104X
+    [4X[28XGroup([ (1,3)(2,4)(5,8)(6,7)(10,12)(11,15)(14,19)(17,18)(22,24), (3,8)(4,7)[128X[104X
+    [4X[28X(9,14)(10,17)(11,20)(13,15)(16,19)(22,25)(23,24) ])[128X[104X
+    [4X[25Xgap>[125X [27Xnewcg:=CosetGeometry(aut, [newg1, newg2, newg3]);[127X[104X
+    [4X[28XCosetGeometry( Group( [128X[104X
+    [4X[28X[ ( 5, 7)( 6, 8)(10,15)(11,12)(13,16)(14,18)(17,19)(21,25)(23,26), [128X[104X
+    [4X[28X  ( 3, 6)( 4, 5)( 9,18)(10,16)(12,20)(13,17)(15,19)(21,22)(24,26), [128X[104X
+    [4X[28X  ( 1, 2)( 3, 4)( 5, 6)( 7, 8)( 9,20)(10,17)(11,14)(12,18)(13,16)(15,19)[128X[104X
+    [4X[28X    (21,26)(22,24)(23,25), ( 1, 3)( 2, 4)( 5, 6)( 7, 8)(10,11)(12,15)(13,16)[128X[104X
+    [4X[28X    (14,17)(18,19)(21,25)(22,24)(23,26) ] ) )[128X[104X
+    [4X[25Xgap>[125X [27XIsFlagTransitiveGeometry(newcg);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsIsomorphicIncidenceStructureWithNauty(cg, newcg);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  
+  [1X13.3 [33X[0;0YDiagrams[133X[101X
+  
+  [33X[0;0YThe   [13Xdiagram[113X  of  a  flag-transitive  incidence  geometry  is  a  schematic
+  description  of the structure of the geometry. It is based on the collection
+  of rank 2 residues of the geometry.[133X
+  
+  [33X[0;0YTechnically,  the  diagram  is  added to a [11XCosetGeometry[111X object as a mutable
+  attribute.  Also  the list of rank 2 residues of the geometry is added as an
+  attribute  once  these  have been computed. This is done with the operations
+  [11XRank2Residues[111X  (to  add  the  attribute)  and  [11XMakeRank2Residue[111X (to actually
+  compute  the  resiudes). These operations are not for everyday use and hence
+  remain undocumented.[133X
+  
+  [33X[0;0YSince  the  geometry  is flag-transitive, all chambers are equivalent. Let's
+  fix  a  chamber  [22XC={c_1,  c_2,...,c_n}[122X , with [22Xc_i[122X of type [22Xi[122X. For each subset
+  [22X{i,j}[122X  of  size  two  in  [22XI={1,2,...,n}[122X  we  take the residue of the flag [22XC∖
+  {c_i,c_j}[122X  .  Flag  transitivity ensures that [13Xall[113X residues of type [22X{i,j}[122X are
+  isomorphic  to each other. For each such residue, the structure is described
+  by  some parameters: the gonality and the point and line diameters. For each
+  type  [22Xi[122X,  we  also  define  the  [22Xi[122X-order  to  be one less than the number of
+  elements  of  type  [22Xi[122X  in  the residue of a(ny) flag of type [22XI∖{i}[122X. All this
+  information  is  depicted  in a [13Xdiagram[113X which is bascically a labelled graph
+  with  vertex  set [22XI[122X and edges whenever the point diamater, the line diameter
+  and the gonality are all greater than [22X2[122X.[133X
+  
+  [1X13.3-1 DiagramOfGeometry[101X
+  
+  [33X[1;0Y[29X[2XDiagramOfGeometry[102X( [3XGamma[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe diagram of the geometry [3XGamma[103X[133X
+  
+  [33X[0;0Y[3XGamma[103X must be a flag-transitive coset geometry.[133X
+  
+  [33X[0;0YThe  flag-transitivity  is  not tested by this operation because such a test
+  can  be  time consuming. The command [10XIsFlagTransitiveGeometry[110X can be used to
+  check flag-transitivity if needed.[133X
+  
+  [1X13.3-2 GeometryOfDiagram[101X
+  
+  [33X[1;0Y[29X[2XGeometryOfDiagram[102X( [3Xdiag[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe geometry of which [3Xdiag[103X is the diagram[133X
+  
+  [33X[0;0Y[3Xdiag[103X must be a diagram object.[133X
+  
+  [1X13.3-3 DrawDiagram[101X
+  
+  [33X[1;0Y[29X[2XDrawDiagram[102X( [3Xdiag[103X, [3Xfilename[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XDrawDiagram[102X( [3Xdiag[103X, [3Xfilename[103X, [3Xvertexverbosity[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XDrawDiagram[102X( [3Xdiag[103X, [3Xfilename[103X, [3Xvertexverbosity[103X, [3Xedgeverbosity[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ydoes not return anything but writes a file [3Xfilename[103X.ps[133X
+  
+  [33X[0;0Y[3Xdiag[103X  must  be a diagram. Writes a file [3Xfilename[103X.ps in the current directory
+  with  a  pictorial  version  of  the diagram. This command uses the [5Xgraphviz[105X
+  package which is available from http://www.graphviz.org.[133X
+  
+  [33X[0;0YIn  case  [5Xgraphviz[105X is not available on your system, you will get an friendly
+  error  message and a file [3Xfilename[103X.dot will be written. You can then compile
+  this file later or ask a friend to help you. By default the diagram provides
+  for  each  type  [22Xi[122X  the  [22Xi[122X-order  and the number of elements of type [22Xi[122X. This
+  behaviour  can  be  changed  by providing a [3Xvertexverbosity[103X level. A value [3X2[103X
+  results in no label under the vertices and a value [3X1[103X gives only the [22Xi[122X-order.
+  Any  other  potitive integer value yields the default behaviour. The default
+  labels  for  the  edges  of  the  diagram use the standard convention that a
+  [22X[g,dp,dl][122X-gon  with  all  three  parameters  equal is labelled only with the
+  number  [22Xg[122X.  Putting  [3Xedgeverbosity[103X  equal  to  [22X2[122X puts no labels at all. This
+  yields  the  so called ``basic diagram'' of the geometry. With [3Xedgeverbosity[103X
+  equal  to  any  integer  greater  than  [22X2[122X  all labels contain girth and both
+  diameters.[133X
+  
+  [33X[0;0YWe  illustrate  the diagram feature with Neumaier's [22XA_8[122X-geometry. The affine
+  space of dimension 3 over the field with two elements is denoted by [22XAG(3,2)[122X.
+  If we fix a plane [22XΠ[122X in [22XPG(3,2)[122X, the structure induced on the 8 points not in
+  [22XΠ[122X  by  the lines and planes of [22XPG(3,2)[122X is isomorphic to [22XAG(3,2)[122X. Since every
+  two points of [22XAG(3,2)[122X define a line, the collinearity graph of [22XAG(3,2)[122X (that
+  is  the  graph  whose  vertices  are  the points of [22XAG(3,2)[122X and in which two
+  vertices are adjacent whenever they are collinear) is the complete graph [22XK_8[122X
+  on 8 vertices. Given two copies of the complete graph on 8 vertices, one can
+  label  the  vertices  of  each  of  them with the numbers from 1 to 8. These
+  labelings  are always equivalent when the two copies are seen as graphs, but
+  not if they are understood as models of the affine space. The reason is that
+  an  affine  space  has  parallel  lines  and  to be affinely equivalent, the
+  labelings  must be such that edges which were parallel in the first labeling
+  remain  parallel  in  the  second  labeling.  In  fact there are 15 affinely
+  nonequivalent  ways  to  label  the vertices of [22XK_8[122X. The affine space has 14
+  planes  of 4 points and there are 70 subsets of 4 elements in the vertex set
+  of  [22XK_8[122X.  Each  time we label [22XK_8[122X, there are 14 of the 70 sets of 4 elements
+  which  become  planes  of  [22XAG(3,2)[122X.  The  remaining 4-subsets will be called
+  [13Xnonplanes[113X  for  that  labeling.  A  well-known rank 4 geometry discovered by
+  Neumaier  in  1984  can  be described using these concepts. This geometry is
+  quite  important  since  its  residue of cotype [22X1[122X is the famous [22XA_7[122X-geometry
+  which is known to be the only flag-transitive locally classical [22XC_3[122X-geometry
+  which  is  not  a polar space (see Aschbacher1984 for details). The Neumaier
+  geometry  can  be  constructed as follows. The elements of types 1 and 2 are
+  the vertices and edges of the complete graph [22XK_8[122X, the elements of type 3 are
+  the 4-subsets of the vertex set of [22XK_8[122X and the elements of type 4 are the 15
+  nonequivalent  labelings  of  [22XK_8[122X. Incidences are mostly the natural ones. A
+  4-subset  is incident with a labeling of [22XK_8[122X if it is the set of points of a
+  nonplane in the model of [22XAG(3,2)[122X defined by the labeling.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28XAlt( [ 1 .. 8 ] )[128X[104X
+    [4X[25Xgap>[125X [27Xpabs:= [[127X[104X
+    [4X[25X>[125X [27X  Group([ (2,4,6), (1,3,2)(4,8)(6,7) ]), [127X[104X
+    [4X[25X>[125X [27X  Group([ (1,6,7,8,4), (2,5)(3,4) ]),[127X[104X
+    [4X[25X>[125X [27X  Group([ (3,6)(7,8), (2,4,5), (1,5)(2,4), (2,4)(6,7), (6,8,7), [127X[104X
+    [4X[25X>[125X [27X(1,2)(4,5), (3,7)(6,8) ]),[127X[104X
+    [4X[25X>[125X [27X  Group([ (1,7,8,4)(2,5,3,6), (1,3)(2,6)(4,8)(5,7), (1,5)(2,4)(3,7)(6,8),[127X[104X
+    [4X[25X>[125X [27X      (1,8)(2,7)(3,4)(5,6), (1,3)(2,6)(4,7)(5,8) ]) ];[127X[104X
+    [4X[28X[ Group([ (2,4,6), (1,3,2)(4,8)(6,7) ]), Group([ (1,6,7,8,4), (2,5)(3,4) ]), [128X[104X
+    [4X[28X  Group([ (3,6)(7,8), (2,4,5), (1,5)(2,4), (2,4)(6,7), (6,8,7), (1,2)[128X[104X
+    [4X[28X  (4,5), (3,7)(6,8) ]), Group([ (1,7,8,4)(2,5,3,6), (1,3)(2,6)(4,8)[128X[104X
+    [4X[28X  (5,7), (1,5)(2,4)(3,7)(6,8), (1,8)(2,7)(3,4)(5,6), (1,3)(2,6)(4,7)(5,8) ]) ][128X[104X
+    [4X[25Xgap>[125X [27Xcg:=CosetGeometry(g,pabs);[127X[104X
+    [4X[28XCosetGeometry( AlternatingGroup( [ 1 .. 8 ] ) )[128X[104X
+    [4X[25Xgap>[125X [27Xdiag:=DiagramOfGeometry(cg);[127X[104X
+    [4X[28X< Diagram of CosetGeometry( AlternatingGroup( [ 1 .. 8 ] ) , [128X[104X
+    [4X[28X[ Group( [ (2,4,6), (1,3,2)(4,8)(6,7) ] ), [128X[104X
+    [4X[28X  Group( [ (1,6,7,8,4), (2,5)(3,4) ] ), [128X[104X
+    [4X[28X  Group( [ (3,6)(7,8), (2,4,5), (1,5)(2,4), (2,4)(6,7), (6,8,7), (1,2)(4,5), [128X[104X
+    [4X[28X      (3,7)(6,8) ] ), [128X[104X
+    [4X[28X  Group( [ (1,7,8,4)(2,5,3,6), (1,3)(2,6)(4,8)(5,7), (1,5)(2,4)(3,7)(6,8), [128X[104X
+    [4X[28X      (1,8)(2,7)(3,4)(5,6), (1,3)(2,6)(4,7)(5,8) ] ) ] ) >[128X[104X
+    [4X[25Xgap>[125X [27XDrawDiagram(diag, "neuma8");[127X[104X
+    [4X[25Xgap>[125X [27X#Exec("gv neuma8.ps");[127X[104X
+    [4X[25Xgap>[125X [27Xpoint:=Random(ElementsOfIncidenceStructure(cg,1));[127X[104X
+    [4X[28X<element of type 1 of CosetGeometry( AlternatingGroup( [ 1 .. 8 ] ) )>[128X[104X
+    [4X[25Xgap>[125X [27Xresidue:=ResidueOfFlag(FlagOfIncidenceStructure(cg,[point]));[127X[104X
+    [4X[28XCosetGeometry( Group( [ (3,5,7), (1,7)(2,4,3)(5,8) ] ) )[128X[104X
+    [4X[25Xgap>[125X [27Xdiagc3:=DiagramOfGeometry(residue);[127X[104X
+    [4X[28X< Diagram of CosetGeometry( Group( [ (3,5,7), (1,7)(2,4,3)(5,8) ] ) , [128X[104X
+    [4X[28X[ Group( [ (4,5,8), (1,4,5), (1,7,8), (1,8,4,2,7) ] ), [128X[104X
+    [4X[28X  Group( [ (1,8)(4,7), (2,5,3), (1,7)(2,3), (1,7,8), (1,4)(7,8) ] ), [128X[104X
+    [4X[28X  Group( [ (1,5,4,3)(7,8), (2,4)(5,8) ] ) ] ) >[128X[104X
+    [4X[25Xgap>[125X [27XDrawDiagram(diagc3, "a7geo");[127X[104X
+    [4X[25Xgap>[125X [27X#Exec("gv a7geo.ps");[127X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe produced diagrams are included here: Neumaier's [22XA_8[122X[133X
+  
+  [33X[0;0YThe [22XA_7[122X geometry:[133X
+  
+  [33X[0;0YOn  a  UNIX  system  we can start an external viewer (``gv'' or ghostview in
+  this case) from within GAP with the [11XExec[111X command.[133X
+  
+  [1X13.3-4 DrawDiagramWithNeato[101X
+  
+  [33X[1;0Y[29X[2XDrawDiagramWithNeato[102X( [3Xdiag[103X, [3Xfilename[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ydoes not return anything but writes a file [3Xfilename[103X.ps[133X
+  
+  [33X[0;0Y[3Xdiag[103X  must  be a diagram. Writes a file [3Xfilename[103X.ps in the current directory
+  with a pictorial version of the diagram.[133X
+  
+  [33X[0;0YThis command uses a "spring tension" algorithm to draw the diagram [3Xdiag[103X with
+  straight  edges.  For  some  diagrams  this  looks better than the result of
+  [11XDrawDiagram[111X. However this algorithm does not print the vertex labels.[133X
+  
+  [33X[0;0YThis   command   uses   the   [5Xgraphviz[105X   package  which  is  available  from
+  http://www.graphviz.org.  In  case [5Xgraphviz[105X is not available on your system,
+  you  will  get  an  friendly  error  message and a file [3Xfilename[103X.dot will be
+  written.  You  can then compile this file later or ask a friend to help you.
+  An  [22XE_6[122X geometry for comparison: on the left hand side we have the output of
+  DrawDiagram   and   on   the   right   hand   side  we  see  the  result  of
+  DrawDiagramWithNeato[133X
+  

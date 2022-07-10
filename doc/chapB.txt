@@ -1,0 +1,361 @@
+  
+  [1XB [33X[0;0YThe finite classical groups in [5XFinInG[105X[101X[1X[133X[101X
+  
+  
+  [1XB.1 [33X[0;0YStandard forms used to produce the finite classical groups.[133X[101X
+  
+  [33X[0;0YAn  overview  of operations is given that produce gram matrices to construct
+  standard forms. The notion [13Xstandard form[113X is explained in Section [14X7.2[114X, in the
+  context of canonical and standard polar spaces.[133X
+  
+  [1XB.1-1 CanonicalGramMatrix[101X
+  
+  [33X[1;0Y[29X[2XCanonicalGramMatrix[102X( [3Xtype[103X, [3Xd[103X, [3Xf[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya gram matrix usable as input to construct a sesquilinear form[133X
+  
+  [33X[0;0YThe  arguments  [3Xd[103X  and  [3Xf[103X  are  the  vector  dimension and the fininte field
+  respectively.   The   argument  [3Xtype[103X  is  eiter  "symplectic",  "hermitian",
+  "hyperbolic", "elliptic" or "parabolic".[133X
+  
+  [33X[0;0YIf [3Xtype[103X equals "symplectic", the gram matrix is[133X
+  
+  [33X[0;0YIf  [3Xtype[103X  equals  "hermitian",  the  gram  matrix  is the identity matrix of
+  dimension [3Xd[103X over the field [22Xf=GF(q)[122X[133X
+  
+  [33X[0;0YIf [3Xtype[103X equals "hyperbolic", the gram matrix is[133X
+  
+  [33X[0;0Ywith and [22Xa=1[122X otherwise.[133X
+  
+  [33X[0;0YIf [3Xtype[103X equals "ellipic", the gram matrix is[133X
+  
+  [33X[0;0Ywith  [22Xt[122X  the primitive root of [22XGF(q)[122X if [22Xq ≡ 1 mathrmmod 4[122X or [22Xq ≡ 2 mathrmmod
+  4[122X,  and  [22Xt=1[122X otherwise; and [22Xa=fracp+12[122X if [22Xp+1 ≡ 0 mathrmmod 4, q=p^h[122X and [22Xa=1[122X
+  otherwise.[133X
+  
+  [33X[0;0YIf [3Xtype[103X equals "parabolic", the gram matrix is[133X
+  
+  [33X[0;0Ywith [22Xt[122X the primitive root of [22XGF(p)[122X and [22Xa=tfracp+12[122X if [22Xq ≡ 5 mathrmmod 8[122X or [22Xq
+  ≡ 7 mathrmmod 8[122X, and [22Xt=a=1[122X otherwise.[133X
+  
+  [33X[0;0YThere  is  no  error  message  when  asking  for  a  hyperbolic, elliptic or
+  parabolic type if the characteristic of the field [22Xf[122X is even. In such a case,
+  a  matrix  is returned, which is of course not suitable to create a bilinear
+  form  that  corresponds  with  an  orthogonal  polar space. For this reason,
+  [11XCanonicalGramMatrix[111X is not a operation designed for the user.[133X
+  
+  [1XB.1-2 CanonicalQuadraticForm[101X
+  
+  [33X[1;0Y[29X[2XCanonicalQuadraticForm[102X( [3Xtype[103X, [3Xd[103X, [3Xf[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya gram matrix usable as input to construct a quadratic form[133X
+  
+  [33X[0;0YThe  arguments  [3Xd[103X  and  [3Xf[103X  are  the  vector  dimension and the fininte field
+  respectively.  The  argument  [3Xtype[103X  is  eiter  "hyperbolic",  "elliptic"  or
+  "parabolic". The matrix returned can be used to construct a quadratic form.[133X
+  
+  [33X[0;0YIf  [3Xtype[103X  equals  "hyperbolic",  the gram matrix returned will result in the
+  quadratic form [22Xx_1x_2+ x_3x_4+...+ x_d-1x_d[122X[133X
+  
+  [33X[0;0YIf  [3Xtype[103X  equals  "elliptic",  the  gram  matrix returned will result in the
+  quadratic  form  [22Xx_1^2+x_1x_2+ν x_2^2 + x_3x_4+...+ x_d-1x_d[122Xwith [22Xν=α^i[122X, with
+  \alpha  the primitive element of the multiplicative group of [22XGF(q)[122X, which is
+  in  GAP  [11XZ(q)[111X,  and [22Xi[122X the first number in [22X[0,1,...,q-2][122X for which [22Xx^2+x+ν[122X is
+  irreducible over [22XGF(q)[122X.[133X
+  
+  [33X[0;0YIf  [3Xtype[103X  equals  "parabolic",  the  gram matrix returned will result in the
+  quadratic form [22Xx_1^2+x_2x_3 + ... x_d-1x_d[122X[133X
+  
+  [33X[0;0YThis  function  is  intended to be used only when the characteristic of [3Xf[103X is
+  two, but there is no error message is this is not the case. For this reason,
+  [11XCanonicalQuadraticForm[111X is not an operation designed for the user.[133X
+  
+  
+  [1XB.2 [33X[0;0YDirect commands to construct the projective classical groups in [5XFinInG[105X[101X[1X[133X[101X
+  
+  [33X[0;0YAs  explained  in Chapter [14X7[114X, Section [14X7.7[114X, we have assumed that the user asks
+  for the projective classical groups in an indirect way, i.e. as a (subgroup)
+  of  the collineation group of a classical polar space. However, shortcuts to
+  these  groups  exist.  More  information  on  the  notations can be found in
+  Section [14X7.7[114X.[133X
+  
+  [1XB.2-1 SOdesargues[101X
+  
+  [33X[1;0Y[29X[2XSOdesargues[102X( [3Xe[103X, [3Xd[103X, [3Xf[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe special isometry group of a canonical orthogonal polar space[133X
+  
+  [33X[0;0YThe argument [3Xe[103X determines the type of the othogonal polar space, i.e. -1,0,1
+  for  an  elliptic, hyperbolic, parabolic orthogonal space, respectively. The
+  argument  [3Xd[103X is the dimension of the underlying vector space, [3Xf[103X is the finite
+  field.  The  method  relies  on  [11XSO[111X, a GAP command returning the appropriate
+  matrix group. Internally, the invariant form is asked, and the base chage to
+  our canonical form is obtained using the package [5Xform[105X[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XSOdesargues(-1,6,GF(9));[127X[104X
+    [4X[28XPSO(-1,6,9)[128X[104X
+    [4X[25Xgap>[125X [27XSOdesargues(0,7,GF(11));[127X[104X
+    [4X[28XPSO(0,7,11)[128X[104X
+    [4X[25Xgap>[125X [27XSOdesargues(1,8,GF(16));[127X[104X
+    [4X[28XPSO(1,8,16)[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1XB.2-2 GOdesargues[101X
+  
+  [33X[1;0Y[29X[2XGOdesargues[102X( [3Xe[103X, [3Xd[103X, [3Xf[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe isometry group of a canonical orthogonal polar space[133X
+  
+  [33X[0;0YThe argument [3Xe[103X determines the type of the othogonal polar space, i.e. -1,0,1
+  for  an  elliptic, hyperbolic, parabolic orthogonal space, respectively. The
+  argument  [3Xd[103X is the dimension of the underlying vector space, [3Xf[103X is the finite
+  field.  The  method  relies  on  [11XGO[111X, a GAP command returning the appropriate
+  matrix group. Internally, the invariant form is asked, and the base chage to
+  our canonical form is obtained using the package [5Xform[105X[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XGOdesargues(-1,6,GF(9));[127X[104X
+    [4X[28XPGO(-1,6,9)[128X[104X
+    [4X[25Xgap>[125X [27XGOdesargues(0,7,GF(11));[127X[104X
+    [4X[28XPGO(0,7,11)[128X[104X
+    [4X[25Xgap>[125X [27XGOdesargues(1,8,GF(16));[127X[104X
+    [4X[28XPGO(1,8,16)[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1XB.2-3 SUdesargues[101X
+  
+  [33X[1;0Y[29X[2XSUdesargues[102X( [3Xd[103X, [3Xf[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe special isometry group of a canonical hermitian polar space[133X
+  
+  [33X[0;0YThe  argument  [3Xd[103X  is  the dimension of the underlying vector space, [3Xf[103X is the
+  finite  field.  The  method  relies  on  [11XSU[111X,  a  GAP  command  returning the
+  appropriate  matrix  group. Internally, the invariant form is asked, and the
+  base chage to our canonical form is obtained using the package [5Xform[105X[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XSUdesargues(4,GF(9));[127X[104X
+    [4X[28XPSU(4,3^2)[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1XB.2-4 GUdesargues[101X
+  
+  [33X[1;0Y[29X[2XGUdesargues[102X( [3Xd[103X, [3Xf[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe isometry/similarity group of a canonical hermitian polar space[133X
+  
+  [33X[0;0YThe  argument  [3Xd[103X  is  the dimension of the underlying vector space, [3Xf[103X is the
+  finite  field.  The  method  relies  on  [11XGU[111X,  a  GAP  command  returning the
+  appropriate  matrix  group. Internally, the invariant form is asked, and the
+  base chage to our canonical form is obtained using the package [5Xform[105X[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XGUdesargues(4,GF(9));[127X[104X
+    [4X[28XPGU(4,3^2)[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1XB.2-5 Spdesargues[101X
+  
+  [33X[1;0Y[29X[2XSpdesargues[102X( [3Xd[103X, [3Xf[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe (special) isometry group of a canonical symplectic polar space[133X
+  
+  [33X[0;0YThe  argument  [3Xd[103X  is  the dimension of the underlying vector space, [3Xf[103X is the
+  finite  field.  The  method  relies  on  [11XSp[111X,  a  GAP  command  returning the
+  appropriate  matrix  group. Internally, the invariant form is asked, and the
+  base chage to our canonical form is obtained using the package [5Xform[105X[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XSpdesargues(6,GF(11));[127X[104X
+    [4X[28XPSp(6,11)[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1XB.2-6 GeneralSymplecticGroup[101X
+  
+  [33X[1;0Y[29X[2XGeneralSymplecticGroup[102X( [3Xd[103X, [3Xf[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe isometry group of a canonical symplectic form[133X
+  
+  [33X[0;0YThe  argument  [3Xd[103X  is  the dimension of the underlying vector space, [3Xf[103X is the
+  finite field. Internally, the invariant form is asked, and the base chage to
+  our canonical form is obtained using the package [5Xform[105X[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XGeneralSymplecticGroup(6,GF(7));[127X[104X
+    [4X[28XGSp(6,7)[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1XB.2-7 GSpdesargues[101X
+  
+  [33X[1;0Y[29X[2XGSpdesargues[102X( [3Xd[103X, [3Xf[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe similarity group of a canonical symplectic polar space[133X
+  
+  [33X[0;0YThe  argument  [3Xd[103X  is  the dimension of the underlying vector space, [3Xf[103X is the
+  finite  field.  The  method  relies  on  [11XSp[111X,  a  GAP  command  returning the
+  appropriate  matrix  group. Internally, the invariant form is asked, and the
+  base chage to our canonical form is obtained using the package [5Xform[105X[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XGSpdesargues(4,GF(9));[127X[104X
+    [4X[28XPGSp(4,9)[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1XB.2-8 GammaSp[101X
+  
+  [33X[1;0Y[29X[2XGammaSp[102X( [3Xd[103X, [3Xf[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe collineation group of a canonical symplectic polar space[133X
+  
+  [33X[0;0YThe  argument  [3Xd[103X  is  the dimension of the underlying vector space, [3Xf[103X is the
+  finite  field.  The  method  relies  on [11XGeneralSymplecticGroup[111X, and adds the
+  frobenius automorphism.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XGammaSp(4,GF(9));[127X[104X
+    [4X[28XPGammaSp(4,9)[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1XB.2-9 DeltaOminus[101X
+  
+  [33X[1;0Y[29X[2XDeltaOminus[102X( [3Xd[103X, [3Xf[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe  similarity  group  of  a  canonical elliptic orthogonal polar
+            space[133X
+  
+  [33X[0;0YThe  argument  [3Xd[103X  is  the dimension of the underlying vector space, [3Xf[103X is the
+  finite  field. The method relies on [11XGOdesargues[111X, and computes the generators
+  to be added.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XDeltaOminus(6,GF(7));[127X[104X
+    [4X[28XPDeltaO-(6,7)[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1XB.2-10 DeltaOplus[101X
+  
+  [33X[1;0Y[29X[2XDeltaOplus[102X( [3Xd[103X, [3Xf[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe  similarity  group  of a canonical hyperbolic orthogonal polar
+            space[133X
+  
+  [33X[0;0YThe  argument  [3Xd[103X  is  the dimension of the underlying vector space, [3Xf[103X is the
+  finite  field. The method relies on [11XGOdesargues[111X, and computes the generators
+  to be added.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XDeltaOplus(8,GF(7));[127X[104X
+    [4X[28XPDeltaO+(8,7)[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1XB.2-11 GammaOminus[101X
+  
+  [33X[1;0Y[29X[2XGammaOminus[102X( [3Xd[103X, [3Xf[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe  collineation  group  of a canonical elliptic orthogonal polar
+            space[133X
+  
+  [33X[0;0YThe  argument  [3Xd[103X  is  the dimension of the underlying vector space, [3Xf[103X is the
+  finite  field. The method relies on [11XDeltaOminus[111X, and computes the generators
+  to be added.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XGammaOminus(4,GF(25));[127X[104X
+    [4X[28XPGammaO-(4,25)[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1XB.2-12 GammaO[101X
+  
+  [33X[1;0Y[29X[2XGammaO[102X( [3Xd[103X, [3Xf[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe  collineation  group of a canonical parabolic orthogonal polar
+            space[133X
+  
+  [33X[0;0YThe  argument  [3Xd[103X  is  the dimension of the underlying vector space, [3Xf[103X is the
+  finite  field.  The  method  relies  on  [11XGO[111X,  a  GAP  command  returning the
+  appropriate  matrix  group. Internally, the invariant form is asked, and the
+  base  chage  to  our  canonical  form  is  obtained  using the package [5Xform[105X.
+  Furthermore, the generators to be added are computed.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XGammaO(5,GF(49));[127X[104X
+    [4X[28XPGammaO(5,49)[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1XB.2-13 GammaOplus[101X
+  
+  [33X[1;0Y[29X[2XGammaOplus[102X( [3Xd[103X, [3Xf[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe  collineation group of a canonical hyperbolic orthogonal polar
+            space[133X
+  
+  [33X[0;0YThe  argument  [3Xd[103X  is  the dimension of the underlying vector space, [3Xf[103X is the
+  finite  field.  The method relies on [11XDeltaOplus[111X, and computes the generators
+  to be added.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XGammaOplus(6,GF(64));[127X[104X
+    [4X[28XPGammaO+(6,64)[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1XB.2-14 GammaU[101X
+  
+  [33X[1;0Y[29X[2XGammaU[102X( [3Xd[103X, [3Xf[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe collineation group of a canonical hermitian variety[133X
+  
+  [33X[0;0YThe  argument  [3Xd[103X  is  the dimension of the underlying vector space, [3Xf[103X is the
+  finite  field.  The  method  relies  on  [11XGU[111X,  a  GAP  command  returning the
+  appropriate  matrix  group. Internally, the invariant form is asked, and the
+  base  chage  to  our  canonical  form  is  obtained  using the package [5Xform[105X.
+  Furthermore, the generators to be added are computed.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XGammaU(4,GF(81));[127X[104X
+    [4X[28XPGammaU(4,9^2)[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1XB.2-15 G2fining[101X
+  
+  [33X[1;0Y[29X[2XG2fining[102X( [3Xd[103X, [3Xf[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe chevalley group G_2(q)[133X
+  
+  [33X[0;0YThis  group  is  the  group  of  projectivities stabilising the split Cayley
+  hexagon  embedded in the paraboloc quadric [22XQ(6,q):[122X[22XX_0X_4+X_1X_5+X_2X_6=X_3^2[122X
+  .  [3Xf[103X  must  be a finite field and [3Xd[103X must be 5 or 6. When [3Xd[103X is 5, [3XF[103X must be a
+  field  of even order, and then the returned group consists of projectivities
+  of  [22XW(5,q)[122X.  The  generators  of  this  group  are described exaplicitely in
+  [VM98], Appendix D. A correction can be found in [Off00]. However, also this
+  source contains a mistake.[133X
+  
+  [1XB.2-16 3D4fining[101X
+  
+  [33X[1;0Y[29X[2X3D4fining[102X( [3Xd[103X, [3Xf[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe chevalley group 3D4(q)[133X
+  
+  [33X[0;0Y[3Xd[103X must equal 7 and [3Xf[103X must be a field of order [22Xq^3[122X This group is the group of
+  collineations  stabilising  the  twisted  triality  hexagon  embedded in the
+  hyperbolic  quadric  [22XQ+(7,q)[122X:  [22XX_0X_4+X_1X_5+X_2X_6+X_3X_7[122X The generators of
+  this group are described exaplicitely in [VM98], Appendix D.[133X
+  
+  
+  [1XB.3 [33X[0;0YBasis of the collineation groups[133X[101X
+  
+  [33X[0;0YThe  [5XGenSS[105X  uses a function [11XFindBasePointCandidates[111X taking a group as one of
+  the  arguments.  From  a geometrical point of view, it is straightforward to
+  construct  a  basis  for  a  collineation group for the action on projective
+  points.[133X
+  
+  [1XB.3-1 FindBasePointCandidates[101X
+  
+  [33X[1;0Y[29X[2XFindBasePointCandidates[102X( [3Xg[103X, [3Xopt[103X, [3Xi[103X, [3XparentS[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya record[133X
+  
+  [33X[0;0YThe  returned record contains the base points for the action, and some other
+  fields. The information in the other fields is determined from the arguments
+  [3Xopt[103X  and  [3Xi[103X. More information on these details can be found in the manual of
+  [5XGenSS[105X.[133X
+  
+  [33X[0;0YVariations  on  this version of [11XBasePointCandidates[111X are found in [5XFinInG[105X used
+  in  previous  versions of [5XGenSS[105X. These variations are already or will become
+  obsolete in the (near) future.[133X
+  

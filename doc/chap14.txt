@@ -1,0 +1,539 @@
+  
+  [1X14 [33X[0;0YSubgeometries of projective spaces[133X[101X
+  
+  [33X[0;0YLet  [22XS=(P,L,I)[122X be a point-line incidence geometry. In case [22XS[122X is a projective
+  space  over  a finite field, it is clear that every line (and every subspace
+  as  well)  can  be  identified  with  the  set  of  points incident with it.
+  Furthermore,  the  incidence  relation [22XI[122X is then symmetrised containment. To
+  define  a  subgeometry mathematically, we follow [Dem97]. Let [22XP' ⊂ P[122X and let
+  [22XL'[122X be a set of subsets of [22XP'[122X, such that every [22Xl' ∈ L'[122X is a subset of exactly
+  one line [22Xl ∈ L[122X. If [22XS'=(P',L',I)[122X is a projective space again, then we call [22XS'[122X
+  a [13Xsubgeometry[113X of [22XS[122X. Note that in general the subspaces of [22XS'[122X will be subsets
+  of subspaces of [22XS[122X.[133X
+  
+  [33X[0;0YA typical example of a subgeometry is a Baer subplane of a projective plane.
+  In  this  example,  with [22XS'[122X the Baer subplane of the projective plane [22XS[122X, one
+  could  say  that  a point of [22XS'[122X is indeed a point of [22XS[122X, but a line of [22XS'[122X, is
+  not  a  line  of  [22XS[122X. If one considers a line of [22XS'[122X as a set of points of [22XS'[122X,
+  then  a  line of [22XS'[122X is a subset of the set of points on a line of [22XS[122X. Another
+  example is the subgeometry of a projective space induced by a subspace [22Xπ[122X. In
+  this  example,  clearly, the set of elements of the induced subgeometry can,
+  mathematically, be considered as a subset of the set of elements of [22XS[122X.[133X
+  
+  [33X[0;0YThe   same   considerations   apply   for   classical  polar  spaces.  These
+  consideration  have  implications for the behaviour of certain operations in
+  [5XFinInG[105X, e.g. when computing the span and meet of different elements.[133X
+  
+  [33X[0;0YUsing   geometry   morphisms,   and   more   particular   a   function  like
+  [11XNaturalEmbeddingBySubField[111X,   one   can   deal   in  an  indirect  way  with
+  subgeometries.  However,  using  [11XNaturalEmbeddingBySubField[111X is not flexible,
+  and  typical problems such as considering a subgeometry determined by a user
+  chosen  frame  and  a  subfield,  cannot be handled easily. Therefore [5XFinInG[105X
+  provides  some  functions to naturally construct subgeometries of projective
+  spaces.[133X
+  
+  [33X[0;0YA  subgeometry  in a projective space is completely determined by a frame of
+  the  projective  space  and  a  subfield of the base field of the projective
+  space.  The  [13Xstandard  frame[113X in an [22Xn[122X-dimensional projective space [22XPG(n,q)[122X is
+  the        set        of        [22Xn+2[122X        points       represented       by
+  [22X(1,0,...,0),(0,1,...,0),...,(0,0,...,1),(1,1,...,1)[122X.     The     subgeometry
+  determined  by  the  standard  frame  will  be  called  [13Xcanonical[113X. Note that
+  different frames may determine the same subgeometry (over a fixed subfield).[133X
+  
+  [33X[0;0YFor a given subfield [22XGF(q') ⊂ GF(q)[122X, the canonical subgeometry determined by
+  the  standard  frame  in  [22XPG(n,q)[122X  is mathematically spoken the image of the
+  [5XFinInG[105X  geometry morphism [11XNaturalEmbeddingBySubField[111X of the projective space
+  [22XPG(n,q')[122X.  The  coordinates  of  the  points  of  the  subgeometry  will  be
+  exclusively  over the subfield [22XGF(q')[122X, as are the coordinates of the vectors
+  after  normalizing  defining  any  subspace of the subgeometry. Clearly, the
+  Frobenius  automorphism  which  maps  [22Xx[122X  to  [22Xx^q'[122X  fixes all elements of the
+  subgeometry.[133X
+  
+  [33X[0;0YFor  an  arbitrary  frame  of  [22XPG(n,q)[122X and a subfield [22XGF(q')[122X, there exists a
+  natural  collineation of [22XPG(n,q)[122X which fixes the subgeometry pointwise. This
+  collineation  is the conjugation of the Frobenius automorphism by the unique
+  collineation  mapping  the defining frame of the subgeometry to the standard
+  frame  of  [22XPG(n,q)[122X,  i.e. the frame defining the canonical subsgeometry over
+  [22XGF(q')[122X.  Upon  construction  of  a  subgeometry,  both collineations will be
+  computed,  and are of use when dealing with the full collineation group of a
+  subgeometry.  As for any incidence geometry in [5XFinInG[105X, operations to compute
+  this   collineation  group  as  well  as  particular  action  functions  for
+  subgeometries are provided.[133X
+  
+  [33X[0;0YSubgeometries  of  projective  spaces  are  constructed  in a subcategory of
+  [10XIsProjectiveSpace[110X,  as such, all operations applicable to projective spaces,
+  are  naturally  applicable  to subgeometries. Subspaces of subgeometries are
+  constructed   in   a   subcategory  of  [10XIsSubspaceOfProjectiveSpace[110X.  Hence,
+  operations  applicable  to  subspaces  of  projective  spaces, are naturally
+  applicable to subspaces of subgeometries.[133X
+  
+  
+  [1X14.1 [33X[0;0YParticular Categories[133X[101X
+  
+  [1X14.1-1 IsSubgeometryOfProjectiveSpace[101X
+  
+  [33X[1;0Y[29X[2XIsSubgeometryOfProjectiveSpace[102X [32X Category[133X
+  
+  [33X[0;0YThis  category  is  a  subcategory  of  [10XIsProjectiveSpace[110X,  and contains all
+  subgeometries  of projective spaces. Note that mathematically, a subspace of
+  a projective space is also a subgeometry. However, in [5XFinInG[105X, subspaces of a
+  projective  space are constructed in a category that is not a subcategory of
+  [10XIsProjectiveSpace[110X.  Since [10XIsSubgeometryOfProjectiveSpace[110X is a subcategory of
+  [10XIsProjectiveSpace[110X,  all  operations  applicable  to  projective  spaces, are
+  naturally applicable to subgeometries of projective spaces.[133X
+  
+  
+  [1X14.1-2 [33X[0;0YCategories for elements and collections of elements[133X[101X
+  
+  [33X[1;0Y[29X[2XIsSubspaceOfSubgeometryOfProjectiveSpace[102X [32X Category[133X
+  [33X[1;0Y[29X[2XIsSubspacesOfSubgeometryOfProjectiveSpace[102X [32X Category[133X
+  
+  [33X[0;0YA     subspace    of    a    subgeometry    belongs    to    the    category
+  [10XIsSubspaceOfSubgeometryOfProjectiveSpace[110X.[133X
+  
+  
+  [1X14.2 [33X[0;0YSubgeometries of projective spaces[133X[101X
+  
+  [1X14.2-1 CanonicalSubgeometryOfProjectiveSpace[101X
+  
+  [33X[1;0Y[29X[2XCanonicalSubgeometryOfProjectiveSpace[102X( [3Xpg[103X, [3Xsubfield[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XCanonicalSubgeometryOfProjectiveSpace[102X( [3Xpg[103X, [3Xq[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya subgeometry of [3Xpg[103X[133X
+  
+  [33X[0;0YThis  operation  returns the subgeometry of [3Xpg[103X induced by the standard frame
+  over  the  subfield  [3Xsubfield[103X. Alternatively, a prime power [3Xq[103X can be used as
+  the order of the subfield. It is checked whether the user specified subfield
+  is  indeed  a  subfield  of the base field of [3Xpg[103X. If the subfield equals the
+  base field of [3Xpg[103X, the projective space [3Xpg[103X is returned.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xpg := PG(2,25);[127X[104X
+    [4X[28XProjectiveSpace(2, 25)[128X[104X
+    [4X[25Xgap>[125X [27Xsub := CanonicalSubgeometryOfProjectiveSpace(pg,GF(5));[127X[104X
+    [4X[28XSubgeometry PG(2, 5) of ProjectiveSpace(2, 25)[128X[104X
+    [4X[25Xgap>[125X [27XCategoriesOfObject(sub);[127X[104X
+    [4X[28X[ "IsIncidenceStructure", "IsIncidenceGeometry", "IsLieGeometry", [128X[104X
+    [4X[28X  "IsProjectiveSpace", "IsSubgeometryOfProjectiveSpace" ][128X[104X
+    [4X[25Xgap>[125X [27Xpg := PG(3,3^6);[127X[104X
+    [4X[28XProjectiveSpace(3, 729)[128X[104X
+    [4X[25Xgap>[125X [27Xsub := CanonicalSubgeometryOfProjectiveSpace(pg,3^2);[127X[104X
+    [4X[28XSubgeometry PG(3, 9) of ProjectiveSpace(3, 729)[128X[104X
+    [4X[25Xgap>[125X [27Xsub := CanonicalSubgeometryOfProjectiveSpace(pg,3^3);[127X[104X
+    [4X[28XSubgeometry PG(3, 27) of ProjectiveSpace(3, 729)[128X[104X
+    [4X[25Xgap>[125X [27Xsub := CanonicalSubgeometryOfProjectiveSpace(pg,3^6);[127X[104X
+    [4X[28XProjectiveSpace(3, 729)[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X14.2-2 RandomFrameOfProjectiveSpace[101X
+  
+  [33X[1;0Y[29X[2XRandomFrameOfProjectiveSpace[102X( [3Xpg[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya  set  of  points  of  [3Xpg[103X,  being a frame. Note that the returned
+            object  is  also  a  set  in  the  GAP sense, i.e. an ordered list
+            without duplicates.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xpg := PG(1,5^5);[127X[104X
+    [4X[28XProjectiveSpace(1, 3125)[128X[104X
+    [4X[25Xgap>[125X [27Xframe := RandomFrameOfProjectiveSpace(pg);[127X[104X
+    [4X[28X[ <a point in ProjectiveSpace(1, 3125)>, <a point in ProjectiveSpace(1, 3125)>[128X[104X
+    [4X[28X    , <a point in ProjectiveSpace(1, 3125)> ][128X[104X
+    [4X[25Xgap>[125X [27XLength(frame);[127X[104X
+    [4X[28X3[128X[104X
+    [4X[25Xgap>[125X [27Xpg := PG(6,2^2);[127X[104X
+    [4X[28XProjectiveSpace(6, 4)[128X[104X
+    [4X[25Xgap>[125X [27Xframe := RandomFrameOfProjectiveSpace(pg);[127X[104X
+    [4X[28X[ <a point in ProjectiveSpace(6, 4)>, <a point in ProjectiveSpace(6, 4)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(6, 4)>, <a point in ProjectiveSpace(6, 4)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(6, 4)>, <a point in ProjectiveSpace(6, 4)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(6, 4)>, <a point in ProjectiveSpace(6, 4)> ][128X[104X
+    [4X[25Xgap>[125X [27XLength(frame);[127X[104X
+    [4X[28X8[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X14.2-3 IsFrameOfProjectiveSpace[101X
+  
+  [33X[1;0Y[29X[2XIsFrameOfProjectiveSpace[102X( [3Xlist[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ytrue or false[133X
+  
+  [33X[0;0YWhen  [3Xlist[103X is a list of points of a projective space, this operation returns
+  true  if and only if [3Xlist[103X constitutes a frame of the projective space. It is
+  checked  as  well  whether  all points in [3Xlist[103X belong to the same projective
+  space.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xpg := PG(1,7^3);[127X[104X
+    [4X[28XProjectiveSpace(1, 343)[128X[104X
+    [4X[25Xgap>[125X [27Xp1 := VectorSpaceToElement(pg,[1,1]*Z(7)^0);[127X[104X
+    [4X[28X<a point in ProjectiveSpace(1, 343)>[128X[104X
+    [4X[25Xgap>[125X [27Xp2 := VectorSpaceToElement(pg,[1,2]*Z(7)^0);[127X[104X
+    [4X[28X<a point in ProjectiveSpace(1, 343)>[128X[104X
+    [4X[25Xgap>[125X [27Xp3 := VectorSpaceToElement(pg,[1,3]*Z(7)^0);[127X[104X
+    [4X[28X<a point in ProjectiveSpace(1, 343)>[128X[104X
+    [4X[25Xgap>[125X [27XIsFrameOfProjectiveSpace([p1,p2,p3]);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X14.2-4 SubgeometryOfProjectiveSpaceByFrame[101X
+  
+  [33X[1;0Y[29X[2XSubgeometryOfProjectiveSpaceByFrame[102X( [3Xpg[103X, [3Xlist[103X, [3Xfield[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XSubgeometryOfProjectiveSpaceByFrame[102X( [3Xpg[103X, [3Xlist[103X, [3Xq[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya subgeometry of [3Xpg[103X[133X
+  
+  [33X[0;0YThe argument [3Xpg[103X is a projective space which is not a subgeometry itself, the
+  argument  [3Xlist[103X is a list of points of [3Xpg[103X defining a frame of [3Xpg[103X, and finally
+  the argument [3Xfield[103X is a subfield of the base field of [3Xpg[103X. Alternatively, the
+  argument  [3Xq[103X  is the order of a subfield of the base field of [3Xpg[103X. This method
+  returns the subgeometry definied by the frame in [3Xlist[103X and the subfield [3Xfield[103X
+  of  the subfield [22XGF([3Xq[103X)[122X. This method checks whether the subfield [3Xfield[103X or the
+  field  [22XGF([3Xq[103X)[122X  is  really  a subfield of the base field of [3Xpg[103X and whether the
+  list  of points in [3Xlist[103X is a frame of [3Xpg[103X. Note also that it is currently not
+  possible  to  construct  subgeometries  recursively,  so  [3Xpg[103X  may  not  be a
+  subgeometry  itself.  If the specified subfield equals the base field of [3Xpg[103X,
+  then the projective space [3Xpg[103X itself is returned.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xpg := PG(3,3^6);[127X[104X
+    [4X[28XProjectiveSpace(3, 729)[128X[104X
+    [4X[25Xgap>[125X [27Xframe := RandomFrameOfProjectiveSpace(pg);[127X[104X
+    [4X[28X[ <a point in ProjectiveSpace(3, 729)>, <a point in ProjectiveSpace(3, 729)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(3, 729)>, <a point in ProjectiveSpace(3, 729)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(3, 729)> ][128X[104X
+    [4X[25Xgap>[125X [27Xsub1 := SubgeometryOfProjectiveSpaceByFrame(pg,frame,GF(3));[127X[104X
+    [4X[28XSubgeometry PG(3, 3) of ProjectiveSpace(3, 729)[128X[104X
+    [4X[25Xgap>[125X [27Xsub2 := SubgeometryOfProjectiveSpaceByFrame(pg,frame,3^2);[127X[104X
+    [4X[28XSubgeometry PG(3, 9) of ProjectiveSpace(3, 729)[128X[104X
+    [4X[25Xgap>[125X [27Xsub3 := SubgeometryOfProjectiveSpaceByFrame(pg,frame,3^3);[127X[104X
+    [4X[28XSubgeometry PG(3, 27) of ProjectiveSpace(3, 729)[128X[104X
+    [4X[25Xgap>[125X [27Xsub4 := SubgeometryOfProjectiveSpaceByFrame(pg,frame,3^6);[127X[104X
+    [4X[28XProjectiveSpace(3, 729)[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X14.3 [33X[0;0YBasic operations[133X[101X
+  
+  
+  [1X14.3-1 [33X[0;0YUnderlying vector space and ambient projective space[133X[101X
+  
+  [33X[1;0Y[29X[2XUnderlyingVectorSpace[102X( [3Xsub[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAmbientSpace[102X( [3Xsub[103X ) [32X operation[133X
+  
+  [33X[0;0YLet  [22XP[122X be a projective space over the field [22XF[122X. Let [3Xsub[103X be a subgeometry of [22XP[122X
+  over  the  subfield [22XF'[122X. The underlying vector space of [3Xsub[103X is defined as the
+  underlying vector space of [22XP[122X (which is a vector space over the field [22XF[122X). The
+  ambient space of a subgeometry [3Xsub[103X is the projective space [22XP[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xpg := PG(2,5^6);[127X[104X
+    [4X[28XProjectiveSpace(2, 15625)[128X[104X
+    [4X[25Xgap>[125X [27Xsub1 := CanonicalSubgeometryOfProjectiveSpace(pg,5);[127X[104X
+    [4X[28XSubgeometry PG(2, 5) of ProjectiveSpace(2, 15625)[128X[104X
+    [4X[25Xgap>[125X [27XUnderlyingVectorSpace(pg);[127X[104X
+    [4X[28X( GF(5^6)^3 )[128X[104X
+    [4X[25Xgap>[125X [27XUnderlyingVectorSpace(sub1);[127X[104X
+    [4X[28X( GF(5^6)^3 )[128X[104X
+    [4X[25Xgap>[125X [27XAmbientSpace(sub1);[127X[104X
+    [4X[28XProjectiveSpace(2, 15625)[128X[104X
+    [4X[25Xgap>[125X [27Xsub2 := CanonicalSubgeometryOfProjectiveSpace(pg,5^3);[127X[104X
+    [4X[28XSubgeometry PG(2, 125) of ProjectiveSpace(2, 15625)[128X[104X
+    [4X[25Xgap>[125X [27XAmbientSpace(sub2);[127X[104X
+    [4X[28XProjectiveSpace(2, 15625)[128X[104X
+    [4X[25Xgap>[125X [27XUnderlyingVectorSpace(sub2);[127X[104X
+    [4X[28X( GF(5^6)^3 )[128X[104X
+    [4X[25Xgap>[125X [27Xframe := RandomFrameOfProjectiveSpace(pg);[127X[104X
+    [4X[28X[ <a point in ProjectiveSpace(2, 15625)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(2, 15625)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(2, 15625)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(2, 15625)> ][128X[104X
+    [4X[25Xgap>[125X [27Xsub3 := SubgeometryOfProjectiveSpaceByFrame(pg,frame,5^2);[127X[104X
+    [4X[28XSubgeometry PG(2, 25) of ProjectiveSpace(2, 15625)[128X[104X
+    [4X[25Xgap>[125X [27XAmbientSpace(sub3);[127X[104X
+    [4X[28XProjectiveSpace(2, 15625)[128X[104X
+    [4X[25Xgap>[125X [27XUnderlyingVectorSpace(sub3);[127X[104X
+    [4X[28X( GF(5^6)^3 )[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X14.3-2 DefiningFrameOfSubgeometry[101X
+  
+  [33X[1;0Y[29X[2XDefiningFrameOfSubgeometry[102X( [3Xsub[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya set of projective points[133X
+  
+  [33X[0;0YThis attribute returns a frame of the ambient space of [3Xsub[103X defining it. Note
+  that  different frames might define the same subgeometry, but the frame used
+  to  constructed [3Xsub[103X is stored at construction, and it is exactly this stored
+  object  that  is returned by this attribute. The returned object is a set of
+  points,  and it is also a set in the GAP sense, i.e. an ordered list without
+  duplicates.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xpg := PG(2,2^4);[127X[104X
+    [4X[28XProjectiveSpace(2, 16)[128X[104X
+    [4X[25Xgap>[125X [27Xsub := CanonicalSubgeometryOfProjectiveSpace(pg,2);[127X[104X
+    [4X[28XSubgeometry PG(2, 2) of ProjectiveSpace(2, 16)[128X[104X
+    [4X[25Xgap>[125X [27Xframe := DefiningFrameOfSubgeometry(sub);[127X[104X
+    [4X[28X[ <a point in ProjectiveSpace(2, 16)>, <a point in ProjectiveSpace(2, 16)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(2, 16)>, <a point in ProjectiveSpace(2, 16)> ][128X[104X
+    [4X[25Xgap>[125X [27XList(frame,x->Unpack(UnderlyingObject(x)));[127X[104X
+    [4X[28X[ [ Z(2)^0, 0*Z(2), 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2) ], [128X[104X
+    [4X[28X  [ 0*Z(2), 0*Z(2), Z(2)^0 ], [ Z(2)^0, Z(2)^0, Z(2)^0 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xframe := RandomFrameOfProjectiveSpace(pg);[127X[104X
+    [4X[28X[ <a point in ProjectiveSpace(2, 16)>, <a point in ProjectiveSpace(2, 16)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(2, 16)>, <a point in ProjectiveSpace(2, 16)> ][128X[104X
+    [4X[25Xgap>[125X [27Xsub := SubgeometryOfProjectiveSpaceByFrame(pg,frame,2^2);[127X[104X
+    [4X[28XSubgeometry PG(2, 4) of ProjectiveSpace(2, 16)[128X[104X
+    [4X[25Xgap>[125X [27Xdef := DefiningFrameOfSubgeometry(sub);[127X[104X
+    [4X[28X[ <a point in ProjectiveSpace(2, 16)>, <a point in ProjectiveSpace(2, 16)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(2, 16)>, <a point in ProjectiveSpace(2, 16)> ][128X[104X
+    [4X[25Xgap>[125X [27XList(def,x->Unpack(UnderlyingObject(x)));[127X[104X
+    [4X[28X[ [ Z(2)^0, 0*Z(2), Z(2^4)^9 ], [ Z(2)^0, Z(2^4)^4, Z(2^4)^11 ], [128X[104X
+    [4X[28X  [ Z(2)^0, Z(2^4)^2, Z(2^2)^2 ], [ Z(2)^0, Z(2^2)^2, Z(2^4)^14 ] ][128X[104X
+    [4X[25Xgap>[125X [27XStandardFrame(sub);[127X[104X
+    [4X[28X[ <a point in Subgeometry PG(2, 4) of ProjectiveSpace(2, 16)>, [128X[104X
+    [4X[28X  <a point in Subgeometry PG(2, 4) of ProjectiveSpace(2, 16)>, [128X[104X
+    [4X[28X  <a point in Subgeometry PG(2, 4) of ProjectiveSpace(2, 16)>, [128X[104X
+    [4X[28X  <a point in Subgeometry PG(2, 4) of ProjectiveSpace(2, 16)> ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X14.3-3 [33X[0;0YProjective dimension and rank[133X[101X
+  
+  [33X[1;0Y[29X[2XProjectiveDimension[102X( [3Xsub[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XDimension[102X( [3Xsub[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XRank[102X( [3Xsub[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan integer[133X
+  
+  [33X[0;0YIf [3Xsub[103X is a subgeometry of a projective space, then it is a projective space
+  itself. Therefore, these three operations return the projective dimension of
+  [3Xsub[103X, see also [14X4.1-3[114X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xpg := PG(7,8^2);[127X[104X
+    [4X[28XProjectiveSpace(7, 64)[128X[104X
+    [4X[25Xgap>[125X [27Xsub := CanonicalSubgeometryOfProjectiveSpace(pg,8);[127X[104X
+    [4X[28XSubgeometry PG(7, 8) of ProjectiveSpace(7, 64)[128X[104X
+    [4X[25Xgap>[125X [27XProjectiveDimension(sub);[127X[104X
+    [4X[28X7[128X[104X
+    [4X[25Xgap>[125X [27XDimension(sub);[127X[104X
+    [4X[28X7[128X[104X
+    [4X[25Xgap>[125X [27XRank(sub);[127X[104X
+    [4X[28X7[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X14.3-4 [33X[0;0YUnderlying algebraic structures[133X[101X
+  
+  [33X[1;0Y[29X[2XUnderlyingVectorSpace[102X( [3Xsub[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XBaseField[102X( [3Xsub[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XSubfieldOfSubgeometry[102X( [3Xsub[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe  first  operation returns a vector space, the second and third
+            operations return a finite field[133X
+  
+  [33X[0;0YThe   operations   [11XUnderlyingVectorSpace[111X   and  [11XBaseField[111X  are  defined  for
+  projective  spaces,  see  [14X4.1-5[114X and [14X4.1-4[114X. For a subgeometry of a projective
+  space    [3Xsub[103X    with    ambient    space   [3Xps[103X,   these   operations   return
+  [11XUnderlyingVectorSpace(ps)[111X,   [11XBaseField(ps)[111X   respectively.   The   operation
+  [11XSubfieldOfSubgeometry[111X returns the subfield over which [3Xsub[103X is defined.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xpg := PG(3,3^6);[127X[104X
+    [4X[28XProjectiveSpace(3, 729)[128X[104X
+    [4X[25Xgap>[125X [27Xsub1 := CanonicalSubgeometryOfProjectiveSpace(pg,3^3);[127X[104X
+    [4X[28XSubgeometry PG(3, 27) of ProjectiveSpace(3, 729)[128X[104X
+    [4X[25Xgap>[125X [27XBaseField(sub1);[127X[104X
+    [4X[28XGF(3^6)[128X[104X
+    [4X[25Xgap>[125X [27XUnderlyingVectorSpace(sub1);[127X[104X
+    [4X[28X( GF(3^6)^4 )[128X[104X
+    [4X[25Xgap>[125X [27XSubfieldOfSubgeometry(sub1);[127X[104X
+    [4X[28XGF(3^3)[128X[104X
+    [4X[25Xgap>[125X [27Xsub2 := CanonicalSubgeometryOfProjectiveSpace(pg,3^2);[127X[104X
+    [4X[28XSubgeometry PG(3, 9) of ProjectiveSpace(3, 729)[128X[104X
+    [4X[25Xgap>[125X [27XBaseField(sub2);[127X[104X
+    [4X[28XGF(3^6)[128X[104X
+    [4X[25Xgap>[125X [27XUnderlyingVectorSpace(sub2);[127X[104X
+    [4X[28X( GF(3^6)^4 )[128X[104X
+    [4X[25Xgap>[125X [27XSubfieldOfSubgeometry(sub2);[127X[104X
+    [4X[28XGF(3^2)[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X14.3-5 CollineationFixingSubgeometry[101X
+  
+  [33X[1;0Y[29X[2XCollineationFixingSubgeometry[102X( [3Xsub[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya collineation of the ambient space of [3Xsub[103X[133X
+  
+  [33X[0;0YLet  [22XGF(q)[122X  be  the  field  over which [3Xsub[103X is defined, this is a subfield of
+  [22XGF(q^t)[122X  over  which  the  ambient projective space [22XP[122X is defined. It is well
+  known  that there exists a collineation of [22XP[122X of order [22Xt[122X, fixing all elements
+  of  [3Xsub[103X,  which  is  returned  by  this  operation. This collineation is the
+  collineation  induced  by  the  Frobenius  map  [22Xx↦  x^q[122X,  conjugated  by the
+  collineation  of  [22XP[122X mapping the subgeometry [3Xsub[103X to the canonical subgeometry
+  of  [22XP[122X  over  [22XGF(q)[122X.  In case of a quadratic field extension (i.e. [22Xt=2[122X), this
+  collineation  is  known  in  the  literature  as  the Baer involution of the
+  subgeometry.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xpg := PG(2,7^3);[127X[104X
+    [4X[28XProjectiveSpace(2, 343)[128X[104X
+    [4X[25Xgap>[125X [27Xsub := CanonicalSubgeometryOfProjectiveSpace(pg,GF(7));[127X[104X
+    [4X[28XSubgeometry PG(2, 7) of ProjectiveSpace(2, 343)[128X[104X
+    [4X[25Xgap>[125X [27Xcoll := CollineationFixingSubgeometry(sub);[127X[104X
+    [4X[28X< a collineation: <cmat 3x3 over GF(7,3)>, F^7>[128X[104X
+    [4X[25Xgap>[125X [27XOrder(coll);[127X[104X
+    [4X[28X3[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X14.4 [33X[0;0YConstructing elements of a subgeometry[133X[101X
+  
+  [1X14.4-1 VectorSpaceToElement[101X
+  
+  [33X[1;0Y[29X[2XVectorSpaceToElement[102X( [3Xsub[103X, [3Xv[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya subspace of a subgeometry[133X
+  
+  [33X[0;0Y[3Xsub[103X  is  a  subgeometry  of a projective space, and [3Xv[103X is either a row vector
+  (for  points)  or  a  matrix (for higher dimensional subspaces). In the case
+  that  [3Xv[103X  is  a  matrix,  the  rows represent generators for the subspace. An
+  exceptional  case  is  when  [3Xv[103X is the zero-vector, in which case the trivial
+  subspace  is returned. This method checks whether [3Xv[103X determines an element of
+  [3Xsub[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xpg := PG(2,5^6);[127X[104X
+    [4X[28XProjectiveSpace(2, 15625)[128X[104X
+    [4X[25Xgap>[125X [27Xvecs := [ [ Z(5)^0, Z(5^6)^13972, Z(5^6)^11653 ], [127X[104X
+    [4X[25X>[125X [27X[ Z(5)^0, Z(5^6)^9384, Z(5^6)^1372 ],[127X[104X
+    [4X[25X>[125X [27X[ Z(5)^0, Z(5^6)^14447, Z(5^6)^15032 ], [127X[104X
+    [4X[25X>[125X [27X[ Z(5)^0, Z(5^6)^8784, Z(5^6)^10360 ] ];;[127X[104X
+    [4X[25Xgap>[125X [27Xframe := List(vecs,x->VectorSpaceToElement(pg,x));[127X[104X
+    [4X[28X[ <a point in ProjectiveSpace(2, 15625)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(2, 15625)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(2, 15625)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(2, 15625)> ][128X[104X
+    [4X[25Xgap>[125X [27Xsub := SubgeometryOfProjectiveSpaceByFrame(pg,frame,5^3);[127X[104X
+    [4X[28XSubgeometry PG(2, 125) of ProjectiveSpace(2, 15625)[128X[104X
+    [4X[25Xgap>[125X [27XVectorSpaceToElement(sub,[0,0,0]*Z(5)^0);[127X[104X
+    [4X[28X< empty subspace >[128X[104X
+    [4X[25Xgap>[125X [27Xvec := [ Z(5)^0, Z(5^6)^8584, Z(5^6)^13650 ];[127X[104X
+    [4X[28X[ Z(5)^0, Z(5^6)^8584, Z(5^6)^13650 ][128X[104X
+    [4X[25Xgap>[125X [27XVectorSpaceToElement(sub,vec);[127X[104X
+    [4X[28X<a point in Subgeometry PG(2, 125) of ProjectiveSpace(2, 15625)>[128X[104X
+    [4X[25Xgap>[125X [27Xvec := [ [ Z(5)^0, 0*Z(5), Z(5^6)^5740 ], [ 0*Z(5), Z(5)^0, Z(5^6)^15250 ] ];[127X[104X
+    [4X[28X[ [ Z(5)^0, 0*Z(5), Z(5^6)^5740 ], [ 0*Z(5), Z(5)^0, Z(5^6)^15250 ] ][128X[104X
+    [4X[25Xgap>[125X [27XVectorSpaceToElement(sub,vec);[127X[104X
+    [4X[28XError, <obj> does not determine an element in <sub> called from[128X[104X
+    [4X[28XVectorSpaceToElementForSubgeometries( geom, v [128X[104X
+    [4X[28X ) at ./pkg/fining/lib/subgeometries.gi:400 called from[128X[104X
+    [4X[28X<function "unknown">( <arguments> )[128X[104X
+    [4X[28X called from read-eval loop at line 19 of *stdin*[128X[104X
+    [4X[28Xyou can 'quit;' to quit to outer loop, or[128X[104X
+    [4X[28Xyou can 'return;' to continue[128X[104X
+    [4X[26Xbrk>[126X [27Xquit;[127X[104X
+    [4X[25Xgap>[125X [27Xvec := [ [ Z(5)^0, 0*Z(5), Z(5^6)^8268 ], [ 0*Z(5), Z(5)^0, Z(5^6)^1472 ] ];[127X[104X
+    [4X[28X[ [ Z(5)^0, 0*Z(5), Z(5^6)^8268 ], [ 0*Z(5), Z(5)^0, Z(5^6)^1472 ] ][128X[104X
+    [4X[25Xgap>[125X [27XVectorSpaceToElement(sub,vec);[127X[104X
+    [4X[28X<a line in Subgeometry PG(2, 125) of ProjectiveSpace(2, 15625)>[128X[104X
+    [4X[25Xgap>[125X [27XVectorSpaceToElement(sub,vecs);[127X[104X
+    [4X[28XSubgeometry PG(2, 125) of ProjectiveSpace(2, 15625)[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X14.4-2 ExtendElementOfSubgeometry[101X
+  
+  [33X[1;0Y[29X[2XExtendElementOfSubgeometry[102X( [3Xel[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya subspace of a projective space[133X
+  
+  [33X[0;0YThe  argument  [3Xel[103X  is an element of a subgeometry [22XP'[122X with ambient projective
+  space  [22XP[122X. The projective space is defined over a field [22XF[122X, the subgeometry [22XP'[122X
+  is  defined  over  a subfield [22XF'[122X of [22XF[122X. The underlying vectorspace of [3Xel[103X is a
+  vector space over [22XF'[122X generated by a set [22XS[122X of vectors. This operation returns
+  the  element of [22XP[122X, corresponding to the vector space over [22XF[122X generated by the
+  vectors  in  [22XS[122X.  Note that the set [22XS[122X can be otbained using [11XUnderlyingObject[111X,
+  see [14X3.2-2[114X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xpg := PG(3,5^5);[127X[104X
+    [4X[28XProjectiveSpace(3, 3125)[128X[104X
+    [4X[25Xgap>[125X [27Xframe := RandomFrameOfProjectiveSpace(pg);[127X[104X
+    [4X[28X[ <a point in ProjectiveSpace(3, 3125)>, <a point in ProjectiveSpace(3, 3125)>[128X[104X
+    [4X[28X    , <a point in ProjectiveSpace(3, 3125)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(3, 3125)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(3, 3125)> ][128X[104X
+    [4X[25Xgap>[125X [27Xsub := SubgeometryOfProjectiveSpaceByFrame(pg,frame,5);[127X[104X
+    [4X[28XSubgeometry PG(3, 5) of ProjectiveSpace(3, 3125)[128X[104X
+    [4X[25Xgap>[125X [27Xp := Random(Points(sub));[127X[104X
+    [4X[28X<a point in Subgeometry PG(3, 5) of ProjectiveSpace(3, 3125)>[128X[104X
+    [4X[25Xgap>[125X [27Xl := Random(Lines(p));[127X[104X
+    [4X[28X<a line in Subgeometry PG(3, 5) of ProjectiveSpace(3, 3125)>[128X[104X
+    [4X[25Xgap>[125X [27Xp * l;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xq := ExtendElementOfSubgeometry(p);[127X[104X
+    [4X[28X<a point in ProjectiveSpace(3, 3125)>[128X[104X
+    [4X[25Xgap>[125X [27Xq * l;[127X[104X
+    [4X[28XError, <x> and <y> do not belong to the same geometry called from[128X[104X
+    [4X[28Xx in y at ./pkg/fining/lib/projectivespace.gi:1658 called from[128X[104X
+    [4X[28XIsIncident( b, a ) at ./pkg/fining/lib/geometry.gi:439 called from[128X[104X
+    [4X[28X<function "unknown">( <arguments> )[128X[104X
+    [4X[28X called from read-eval loop at line 15 of *stdin*[128X[104X
+    [4X[28Xyou can 'quit;' to quit to outer loop, or[128X[104X
+    [4X[28Xyou can 'return;' to continue[128X[104X
+    [4X[26Xbrk>[126X [27Xquit;[127X[104X
+    [4X[25Xgap>[125X [27Xm := ExtendElementOfSubgeometry(l);[127X[104X
+    [4X[28X<a line in ProjectiveSpace(3, 3125)>[128X[104X
+    [4X[25Xgap>[125X [27Xq * m;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XUnderlyingObject(q) = UnderlyingObject(p);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XUnderlyingObject(l) = UnderlyingObject(m);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X14.4-3 AmbientGeometry[101X
+  
+  [33X[1;0Y[29X[2XAmbientGeometry[102X( [3Xel[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan incidence geometry[133X
+  
+  [33X[0;0YFor [3Xel[103X an element of a subgeometry [22XP[122X, which is also a projective space, this
+  operation returns [22XP[122X.[133X
+  
+  
+  [1X14.4-4 [33X[0;0YFlags[133X[101X
+  
+  [33X[1;0Y[29X[2XFlagOfIncidenceStructure[102X( [3Xsub[103X, [3Xels[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsEmptyFlag[102X( [3Xflag[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsChamberOfIncidenceStructure[102X( [3Xflag[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ytrue or false[133X
+  
+  [33X[0;0YThese  operations  are  defined  for  projective spaces and so they are also
+  applicable to subgeometries.[133X
+  
+  
+  [1X14.5 [33X[0;0YGroups and actions[133X[101X
+  
+  [33X[0;0YLet  [22XP'[122X  be a subgeometry of [22XP[122X. Although one could argue that any semilinear
+  map  inducing  a  collineation preserving [22XP'[122X can be called a collineation of
+  [22XP'[122X,  this  would  cause  problems  with the nice monomorphism functionality,
+  since such a collineation does not necessarily have a faithful action on the
+  subgeometry. For this reason, we decided to define the collineation group of
+  the  subgeometry  [22XP'[122X  as  the  collineation  group  of  the projective space
+  isomorphic  to  [22XP'[122X  conjugated  by  the  collineation of [22XP[122X mapping [22XP'[122X on the
+  canonical  subgeometry  of  [22XP[122X  over  the  same  field  as [22XP'[122X. Similarly, the
+  projectivity  group,  respectively  the special projectivity group, of [22XP'[122X is
+  defined  as  the  conjugate  of the projectivity group, respectively special
+  projectivity group, of the projective space isomorhpic to [22XP'[122X.[133X
+  
+  
+  [1X14.5-1 [33X[0;0YGroups of collineations[133X[101X
+  
+  [33X[1;0Y[29X[2XCollineationGroup[102X( [3Xsub[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XProjectivityGroup[102X( [3Xsub[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XSpecialProjectivityGroup[102X( [3Xsub[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya group of collineations[133X
+  

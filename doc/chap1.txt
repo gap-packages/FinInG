@@ -1,0 +1,442 @@
+  
+  [1X1 [33X[0;0YIntroduction[133X[101X
+  
+  
+  [1X1.1 [33X[0;0YPhilosophy[133X[101X
+  
+  [33X[0;0Y[5XFinInG[105X (pronounciation: []) is a package for computation in Finite Incidence
+  Geometry. It provides users with the basic tools to work in various areas of
+  finite  geometry  from  the realms of projective spaces to the flat lands of
+  generalised  polygons.  The algebraic power of GAP is employed, particularly
+  in its facility with matrix and permutation groups.[133X
+  
+  
+  [1X1.2 [33X[0;0YHow to cite [5XFinInG[105X[101X[1X[133X[101X
+  
+  [33X[0;0YThe  development  group  of  [5XFinInG[105X welcomes contact with users. In case you
+  have  obtained the package as a deposited package part of archive during the
+  installation   of   GAP,   we  call  on  your  beneficence  to  register  at
+  [7Xhttp://www.fining.org[107X when you use [5XFinInG[105X or to tell us by sending a message
+  to [7Xmailto:council@fining.org[107X.[133X
+  
+  [33X[0;0YPlease  tell us about the use of [5XFinInG[105X in your research or teaching. We are
+  very  interested in results obtained using [5XFinInG[105X and we might refer to your
+  work  in  the  future.  If your work is published, we ask you to cite [5XFinInG[105X
+  like a journal article or book.[133X
+  
+  [33X[0;0YIf  you  are  using  BibTeX,  you can use the following BibTeX entry for the
+  current [5XFinInG[105X version:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X@manual{fining,[128X[104X
+    [4X[28X        Author = {Bamberg, John and Betten, Anton and Cara, Philippe and[128X[104X
+    [4X[28X            De Beule, Jan and Lavrauw, Michel and Neunh\"offer, Max },[128X[104X
+    [4X[28X        Key = {fining},[128X[104X
+    [4X[28X        Title = {{FinInG -- Finite Incidence Geometry, Version 1.5}},[128X[104X
+    [4X[28X        Url = {\verb+(http://www.fining.org)+},[128X[104X
+    [4X[28X        Year = 2022}[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YHere  is  the  bibliography  entry produced by BibTeX (in bibliography style
+  `alpha'),  to be pasted directly inside the bibliography environment of your
+  LaTeX document:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X\bibitem[FinInG]{fining}[128X[104X
+    [4X[28XJ.~Bamberg, A.~Betten, {Ph}. Cara, J.~De~Beule, M.~Lavrauw, and[128X[104X
+    [4X[28X  M.~Neunh\"offer.[128X[104X
+    [4X[28X\newblock {\em Finite Incidence Geometry}.[128X[104X
+    [4X[28X\newblock FInInG -- a {GAP} package, version 1.5, 2022.[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YWhen linking to FinInG from a web page you can use the link[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X<a href="http://www.fining.org">FinInG</a>.[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X1.3 [33X[0;0YOverview of this manual[133X[101X
+  
+  [33X[0;0YThis  chapter  (section  [14X1.4[114X)  describes  the  installation  of the package.
+  Chapter [14X2[114X contains some extended examples to introduce the user to the basic
+  functionality  and  philosophy to get started. Chapter [14X3[114X contains a rigorous
+  discription  of  the  basic structures. This chapter can be omitted at first
+  reading,  since  the  set  of  consequent  chapters  is also self contained.
+  Chapters  [14X4[114X,  [14X5[114X  and  [14X6[114X  deal  with projective spaces, projective semilinear
+  groups  and  polarities of projective spaces, respectively. In Chapter [14X7[114X the
+  functionality  for classical polar spaces is treated and in Chapter [14X9[114X affine
+  spaces  and  their groups are considered. [13XGeometry morphisms[113X between various
+  geometries  that  are available in the package, are introduced and discussed
+  in  Chapter  [14X10[114X.  The final three chapters, [14X11[114X, [14X12[114X, and [14X13[114X explain the basic
+  functionality  which  is  provided for algebraic varieties (in projective or
+  affine  spaces),  generalised  polygons,  of  which  several  models  can be
+  constructed, and finally coset geometries and diagrams.[133X
+  
+  
+  [1X1.4 [33X[0;0YGetting and installing [5XFinInG[105X[101X[1X[133X[101X
+  
+  [33X[0;0YSince  version  4.7.8,  the  official  [5XGAP[105X  distribution includes the [5XFinInG[105X
+  package. The [5XFinInG[105X package requires the GAP packages [5XGAPDoc[105X, version 1.6 or
+  higher, [5XForms[105X, version 1.2.3 or higher, [5XOrb[105X, version 4.7.6 or higher, [5XGenSS[105X,
+  version 1.6.4 or higher, and [5XGRAPE[105X, version 4.7 or higher, and [5Xcvec[105X, version
+  2.5.7  or  higher.  These required packages are all part of the standard [5XGAP[105X
+  distribution.  However,  the  packages  [5Xcvec[105X, [5XGRAPE[105X, [5XIO[105X, and [5XOrb[105X may require
+  additional compilation (cfr. infra for detailed instructions). Note that the
+  [5XIO[105X  is  a package required by [5Xcvec[105X and [5XOrb[105X, and is also part of the standard
+  [5XGAP[105X  distrubution.  Shortly  summarized, to get [5XFinInG[105X working, download and
+  install  [5XGAP[105X  as explained in its installation instructions, and, under UNIX
+  like  systems  (including  MacOS),  make  sure  that  the compilation of the
+  packages   [5Xcvec[105X,  [5XGRAPE[105X,  [5XIO[105X,  and  [5XOrb[105X  is  done.  Note  that  the  windows
+  distrubution  of  [5XGAP[105X  contains  precompiled  binaries of these packages, so
+  under  Windows, no further steps are required after installing [5XGAP[105X according
+  to  its  installation  instructions.  In  the  next section we summarize the
+  installation procedure under UNIX like systems.[133X
+  
+  
+  [1X1.4-1 [33X[0;0YInstallation procedure under UNIX like systems[133X[101X
+  
+  [33X[0;0YThe  installation  of  [5XGAP[105X  itself  is  generic  for  each UNIX like system,
+  including  the  different  flavours  of  Mac  OS.  You  only need a terminal
+  application,  and  you need acces to the standard unix tools gunzip and tar,
+  and the make tools. Detailed information on how to install [5XGAP[105X, can be found
+  in  the  documentation  of  [5XGAP[105X.  The  installation  procedure for [5XFinInG[105X, a
+  standard  GAP  package,  does  [13Xnot[113X require compilation, however the packages
+  [5Xcvec[105X, [5XGRAPE[105X, [5XIO[105X, and [5XOrb[105X do. First install [5XGAP[105X according to the installation
+  instructions.  If  you  start  [5XGAP[105X the output might look like in the example
+  below.  Note that [5XIO[105X is not listed as loaded package (see line starting with
+  'Packages' in the example output). This means that [5XIO[105X has not been compiled.
+  Trying to load the [5XIO[105X will result in an error message.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28Xjdebeule ~  $ gap4r8[128X[104X
+    [4X[28X +-------+   GAP 4.8.8, 20-Aug-2017, build of 2017-09-04 15:17:33 (CEST)[128X[104X
+    [4X[28X |  GAP  |   https://www.gap-system.org[128X[104X
+    [4X[28X +-------+   Architecture: x86_64-apple-darwin16.7.0-gcc-default64[128X[104X
+    [4X[28X Libs used:  gmp[128X[104X
+    [4X[28X Loading the library and packages ...[128X[104X
+    [4X[28X Components: trans 1.0, prim 2.1, small* 1.0, id* 1.0[128X[104X
+    [4X[28X Packages:   AClib 1.2, Alnuth 3.0.0, AtlasRep 1.5.1, AutPGrp 1.8,[128X[104X
+    [4X[28X             CRISP 1.4.4, Cryst 4.1.12, CrystCat 1.1.6, CTblLib 1.2.2,[128X[104X
+    [4X[28X             FactInt 1.5.4, FGA 1.3.1, GAPDoc 1.6, IRREDSOL 1.4, LAGUNA 3.7.0,[128X[104X
+    [4X[28X             Polenta 1.3.7, Polycyclic 2.11, RadiRoot 2.7, ResClasses 4.6.0,[128X[104X
+    [4X[28X             Sophus 1.23, SpinSym 1.5, TomLib 1.2.6, Utils 0.46[128X[104X
+    [4X[28X Try '??help' for help. See also '?copyright', '?cite' and '?authors'[128X[104X
+    [4X[25Xgap>[125X [27XLoadPackage("io");[127X[104X
+    [4X[28X#I  IO package is not available. To see further details, enter[128X[104X
+    [4X[28X#I  SetInfoLevel(InfoPackageLoading,4); and try to load the package again.[128X[104X
+    [4X[28Xfail[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X1.4-2 [33X[0;0YCompiling packages[133X[101X
+  
+  [33X[0;0YIn  this subsection it is explained how to compile the necessary packages in
+  case this is not yet done for your [5XGAP[105X installation. We assume that you have
+  write  access  to  the [5XGAP[105X installation on your computer. If this is not the
+  case,  you  should  ask your system administrator to do this for you. Locate
+  your  [5XGAP[105X  installation.  The  examples below are generated using a GAP4.8.8
+  installation  residing in "/opt/gap4r8". Clearly, subsequent versions of gap
+  will  reside  in  a differently named directory, e.g. "/opt/gap4r9". Another
+  commonly  used  directory  under  UNIX  like  systems to install software is
+  "/usr/local",  so  gap  might  reside  in  "/usr/local/gap4r8"  too.  In all
+  examples  in  this  section,  we  assume  your  [5XGAP[105X  installation resides in
+  "/opt/gap4r8".  Therefore,  replace  any occurence of "/opt/gap4r8" with the
+  actual  directory  of  your [5XGAP[105X installation when executing the installation
+  steps.  Three steps will be necessary to compile the [5XIO[105X package: go into the
+  correct  directory,  and  issue  the  'configure' command and then issue the
+  'make'  command. Note that the directory name of the package is dependent on
+  its version number. The correct name can be found as follows:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28Xjdebeule ~  $ ls /opt/gap4r8/pkg/ |grep io-[128X[104X
+    [4X[28Xio-4.4.6[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YFrom   this   output,   it   can  be  determined  that  the  [5XIO[105X  resides  in
+  "/opt/gap4r8/pkg/io-4.4.6/".  The  three steps to be taken to compile [5Xio[105X are
+  demonstrated in the example below.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28Xroot ~  $ cd /opt/gap4r8/pkg/io-4.4.6/[128X[104X
+    [4X[28Xroot /opt/gap4r8/pkg/io-4.4.6  $ ./configure[128X[104X
+    [4X[28Xchecking for a BSD-compatible install... /usr/bin/install -c[128X[104X
+    [4X[28Xchecking whether build environment is sane... yes[128X[104X
+    [4X[28Xchecking for a thread-safe mkdir -p... cnf/install-sh -c -d[128X[104X
+    [4X[28X...[128X[104X
+    [4X[28X...lots of output[128X[104X
+    [4X[28X...[128X[104X
+    [4X[28Xconfig.status: creating Makefile[128X[104X
+    [4X[28Xconfig.status: creating src/pkgconfig.h[128X[104X
+    [4X[28Xconfig.status: src/pkgconfig.h is unchanged[128X[104X
+    [4X[28Xconfig.status: executing depfiles commands[128X[104X
+    [4X[28Xconfig.status: executing libtool commands[128X[104X
+    [4X[28Xroot /opt/gap4r8/pkg/io-4.4.6  $ make[128X[104X
+    [4X[28X  CC       src/io_la-io.lo[128X[104X
+    [4X[28X  CCLD     io.la[128X[104X
+    [4X[28Xcnf/install-sh -c -d ./bin/x86_64-apple-darwin16.7.0-gcc-default64[128X[104X
+    [4X[28Xcp .libs/io.so bin/x86_64-apple-darwin16.7.0-gcc-default64/io.so[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YNow starting [5XGAP[105X should produce the following output, notice the presence of
+  "IO 4.4.6" as one of the loaded packges.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28Xjdebeule ~  $ gap4r8[128X[104X
+    [4X[28X +-------+   GAP 4.8.8, 20-Aug-2017, build of 2017-09-04 15:17:33 (CEST)[128X[104X
+    [4X[28X |  GAP  |   https://www.gap-system.org[128X[104X
+    [4X[28X +-------+   Architecture: x86_64-apple-darwin16.7.0-gcc-default64[128X[104X
+    [4X[28X Libs used:  gmp[128X[104X
+    [4X[28X Loading the library and packages ...[128X[104X
+    [4X[28X Components: trans 1.0, prim 2.1, small* 1.0, id* 1.0[128X[104X
+    [4X[28X Packages:   AClib 1.2, Alnuth 3.0.0, AtlasRep 1.5.1, AutPGrp 1.8,[128X[104X
+    [4X[28X             CRISP 1.4.4, Cryst 4.1.12, CrystCat 1.1.6, CTblLib 1.2.2,[128X[104X
+    [4X[28X             FactInt 1.5.4, FGA 1.3.1, GAPDoc 1.6, IO 4.4.6, IRREDSOL 1.4,[128X[104X
+    [4X[28X             LAGUNA 3.7.0, Polenta 1.3.7, Polycyclic 2.11, RadiRoot 2.7,[128X[104X
+    [4X[28X             ResClasses 4.6.0, Sophus 1.23, SpinSym 1.5, TomLib 1.2.6,[128X[104X
+    [4X[28X             Utils 0.46[128X[104X
+    [4X[28X Try '??help' for help. See also '?copyright', '?cite' and '?authors'[128X[104X
+    [4X[28Xgap>[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YSimilar steps are now necessary to compile the package [5Xcvec[105X, [5XOrb[105X, and [5Xgrape[105X:
+  go into the correct directory, and issue the 'configure' and 'make' command.
+  In  the example below, we include the determination of the correct directory
+  names. Note that the directory name of the [5Xgrape[105X package is not dependent on
+  its version number, so it resides in "/opt/gap4r8/pkg/grape".[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28Xroot /opt/gap4r8/pkg/cvec-2.5.7  $ cd[128X[104X
+    [4X[28Xroot ~  $ ls /opt/gap4r8/pkg/ |grep cvec-[128X[104X
+    [4X[28Xcvec-2.5.7[128X[104X
+    [4X[28Xroot ~  $ cd /opt/gap4r8/pkg/cvec-2.5.7/[128X[104X
+    [4X[28Xroot /opt/gap4r8/pkg/cvec-2.5.7  $ ./configure[128X[104X
+    [4X[28X...[128X[104X
+    [4X[28X...lots of output[128X[104X
+    [4X[28X...[128X[104X
+    [4X[28Xconfig.status: executing libtool commands[128X[104X
+    [4X[28Xroot /opt/gap4r8/pkg/cvec-2.5.7  $ make[128X[104X
+    [4X[28X  CC       src/cvec_la-cvec.lo[128X[104X
+    [4X[28X  CCLD     cvec.la[128X[104X
+    [4X[28Xcnf/install-sh -c -d ./bin/x86_64-apple-darwin16.7.0-gcc-default64[128X[104X
+    [4X[28Xcp .libs/cvec.so bin/x86_64-apple-darwin16.7.0-gcc-default64/cvec.so[128X[104X
+    [4X[28Xroot ~  $ ls /opt/gap4r8/pkg/ |grep orb-[128X[104X
+    [4X[28Xorb-4.7.6[128X[104X
+    [4X[28Xroot ~  $ cd /opt/gap4r8/pkg/orb-4.7.6/[128X[104X
+    [4X[28Xroot /opt/gap4r8/pkg/orb-4.7.6  $ ./configure[128X[104X
+    [4X[28X...[128X[104X
+    [4X[28X...lots of output[128X[104X
+    [4X[28X...[128X[104X
+    [4X[28Xconfig.status: executing libtool commands[128X[104X
+    [4X[28Xroot /opt/gap4r8/pkg/orb-4.7.6  $ make[128X[104X
+    [4X[28X...some output[128X[104X
+    [4X[28Xcp .libs/orb.so bin/x86_64-apple-darwin16.7.0-gcc-default64/orb.so[128X[104X
+    [4X[28Xroot ~  $ cd /opt/gap4r8/pkg/grape[128X[104X
+    [4X[28Xroot /opt/gap4r8/pkg/grape  $ ./configure[128X[104X
+    [4X[28Xroot /opt/gap4r8/pkg/grape  $ make[128X[104X
+    [4X[28X...lots of output[128X[104X
+    [4X[28Xroot /opt/gap4r8/pkg/grape  $[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YNote  that  warnings may occur during the compilation process, which can all
+  be ignored. If compilation of these packages has been succesful, restart [5XGAP[105X
+  and  load  [5XFinInG[105X  using  "LoadPackage("fining")". The output should look as
+  follows.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28Xjdebeule ~  $ gap4r8[128X[104X
+    [4X[28X +-------+   GAP 4.8.8, 20-Aug-2017, build of 2017-09-04 15:17:33 (CEST)[128X[104X
+    [4X[28X |  GAP  |   https://www.gap-system.org[128X[104X
+    [4X[28X +-------+   Architecture: x86_64-apple-darwin16.7.0-gcc-default64[128X[104X
+    [4X[28X Libs used:  gmp[128X[104X
+    [4X[28X Loading the library and packages ...[128X[104X
+    [4X[28X Components: trans 1.0, prim 2.1, small* 1.0, id* 1.0[128X[104X
+    [4X[28X Packages:   AClib 1.2, Alnuth 3.0.0, AtlasRep 1.5.1, AutPGrp 1.8,[128X[104X
+    [4X[28X             CRISP 1.4.4, Cryst 4.1.12, CrystCat 1.1.6, CTblLib 1.2.2,[128X[104X
+    [4X[28X             FactInt 1.5.4, FGA 1.3.1, GAPDoc 1.6, IO 4.4.6, IRREDSOL 1.4,[128X[104X
+    [4X[28X             LAGUNA 3.7.0, Polenta 1.3.7, Polycyclic 2.11, RadiRoot 2.7,[128X[104X
+    [4X[28X             ResClasses 4.6.0, Sophus 1.23, SpinSym 1.5, TomLib 1.2.6,[128X[104X
+    [4X[28X             Utils 0.46[128X[104X
+    [4X[28X Try '??help' for help. See also '?copyright', '?cite' and '?authors'[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XLoadPackage("fining");[127X[104X
+    [4X[28X---------------------------------------------------------------------[128X[104X
+    [4X[28XLoading 'Forms' 1.2.5 (21/09/2017)[128X[104X
+    [4X[28Xby John Bamberg (http://school.maths.uwa.edu.au/~bamberg/)[128X[104X
+    [4X[28X   Jan De Beule (http://www.debeule.eu)[128X[104X
+    [4X[28XFor help, type: ?Forms[128X[104X
+    [4X[28X---------------------------------------------------------------------[128X[104X
+    [4X[28X---------------------------------------------------------------------[128X[104X
+    [4X[28XLoading  orb 4.7.6 (Methods to enumerate orbits)[128X[104X
+    [4X[28Xby Juergen Mueller (http://www.math.rwth-aachen.de/~Juergen.Mueller),[128X[104X
+    [4X[28X   Max Neunhöffer (http://www-groups.mcs.st-and.ac.uk/~neunhoef), and[128X[104X
+    [4X[28X   Felix Noeske (http://www.math.rwth-aachen.de/~Felix.Noeske).[128X[104X
+    [4X[28XHomepage: https://gap-packages.github.io/orb[128X[104X
+    [4X[28X---------------------------------------------------------------------[128X[104X
+    [4X[28X---------------------------------------------------------------------[128X[104X
+    [4X[28XLoading  cvec 2.5.7 (Compact vectors over finite fields)[128X[104X
+    [4X[28Xby Max Neunhöffer (http://www-groups.mcs.st-and.ac.uk/~neunhoef).[128X[104X
+    [4X[28XHomepage: https://gap-packages.github.io/cvec[128X[104X
+    [4X[28X---------------------------------------------------------------------[128X[104X
+    [4X[28X---------------------------------------------------------------------[128X[104X
+    [4X[28XLoading  genss 1.6.4 (Generic Schreier-Sims)[128X[104X
+    [4X[28Xby Max Neunhöffer (http://www-groups.mcs.st-and.ac.uk/~neunhoef) and[128X[104X
+    [4X[28X   Felix Noeske (http://www.math.rwth-aachen.de/~Felix.Noeske).[128X[104X
+    [4X[28XHomepage: https://gap-packages.github.io/genss[128X[104X
+    [4X[28X---------------------------------------------------------------------[128X[104X
+    [4X[28X---------------------------------------------------------------------[128X[104X
+    [4X[28XLoading  GRAPE 4.7 (GRaph Algorithms using PErmutation groups)[128X[104X
+    [4X[28Xby Leonard H. Soicher (http://www.maths.qmul.ac.uk/~leonard/).[128X[104X
+    [4X[28XHomepage: http://www.maths.qmul.ac.uk/~leonard/grape/[128X[104X
+    [4X[28X---------------------------------------------------------------------[128X[104X
+    [4X[28X-------------------------------------------------------------------------------[128X[104X
+    [4X[28X         ______________       ________      _________   __________ __[128X[104X
+    [4X[28X         ___  ____/__(_)__________  _/________  ____/   __<  /_  // /[128X[104X
+    [4X[28X         __  /_   __  /__  __ __  / __  __   / __     __  /_  // /_[128X[104X
+    [4X[28X         _  __/   _  / _  / / /_/ /  _  / / / /_/ /     _  /_/__  __/[128X[104X
+    [4X[28X         /_/      /_/  /_/ /_//___/  /_/ /_/____/      /_/_(_)/_/[128X[104X
+    [4X[28X-------------------------------------------------------------------------------[128X[104X
+    [4X[28XLoading  FinInG 1.4.1 (Finite Incidence Geometry)[128X[104X
+    [4X[28Xby John Bamberg (http://school.maths.uwa.edu.au/~bamberg/)[128X[104X
+    [4X[28X   Anton Betten (http://www.math.colostate.edu/~betten)[128X[104X
+    [4X[28X   Jan De Beule (http://www.debeule.eu)[128X[104X
+    [4X[28X   Philippe Cara (http://homepages.vub.ac.be/~pcara)[128X[104X
+    [4X[28X   Michel Lavrauw (http://people.sabanciuniv.edu/~mlavrauw/)[128X[104X
+    [4X[28X   Max Neunhoeffer (http://www-groups.mcs.st-and.ac.uk/~neunhoef/)[128X[104X
+    [4X[28XFor help, type: ?FinInG[128X[104X
+    [4X[28X---------------------------------------------------------------------[128X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28Xgap>[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X1.4-3 [33X[0;0YUpdating [5XFinInG[105X[101X[1X[133X[101X
+  
+  [33X[0;0YNew  releases  of [5XFinInG[105X will be distributed automatically with new releases
+  of  [5XGAP[105X.  However,  it  is  possible  easily to update [5XFinInG[105X in an existing
+  installation  of  [5XGAP[105X,  provided  the new version of [5XFinInG[105X does not require
+  newer versions of existing packages in the installation. It is also possible
+  to  have  different  versions  of  [5XFinInG[105X installed on one system. To update
+  [5XFinInG[105X  it  is  sufficient to download and unpack the archive containing the
+  new  release.  First find the location of your existing [5XGAP[105X installation. We
+  assume in the example below that it is[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X/opt/gap4r8/[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YMake  sure  you  have  write permission on this location. If this is not the
+  case, you must ask your system administrator to do this. Download the [5XFinInG[105X
+  archive  "fining-....tgz" to this location, and unpack the archive. This can
+  be done by issuing[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28Xgunzip fining-....tgz[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0Ywhich  yields  a  file  "fining-....tar",  in the pkg directory, after which
+  issuing the command[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28Xtar -xf fining-....tar[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YUnpack the archive in a subdirectory fining. Starting [5XGAP[105X and loading [5XFinInG[105X
+  the  usual  way  should  give you the newly installed version. Please notice
+  that  you  can unpack your archive in your favorite local "./pkg" directory,
+  e.g.  "/home/yourself/pkg/",  in case you are using [5XGAP[105X on a server on which
+  you  have  only  a  restricted  access.  In this case, i.e. if you installed
+  [5XFinInG[105X in your local pkg directory, e.g. "/home/yourself/pkg/", then move to
+  "/home/yourself", and issue the command[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28Xgap -l "/opt/gap4r8;./"[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThis will cause gap to startup and use as pkg directory both its own central
+  pkg directory, i.e. "/opt/gap4r8/pkg/", as well as your local pkg directory,
+  i.e.  "/home/yourself/pkg/".  You  should  see  something like the following
+  output.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X +-------+   GAP 4.8.8, 20-Aug-2017, build of 2017-09-04 15:17:33 (CEST)[128X[104X
+    [4X[28X |  GAP  |   https://www.gap-system.org[128X[104X
+    [4X[28X +-------+   Architecture: x86_64-apple-darwin16.7.0-gcc-default64[128X[104X
+    [4X[28XLibs used:  gmp[128X[104X
+    [4X[28XLoading the library and packages ...[128X[104X
+    [4X[28XComponents: trans 1.0, prim 2.1, small* 1.0, id* 1.0[128X[104X
+    [4X[28XPackages:   AClib 1.2, Alnuth 3.0.0, AtlasRep 1.5.0, AutPGrp 1.6,[128X[104X
+    [4X[28X            Browse 1.8.6, CRISP 1.3.8, Cryst 4.1.12, CrystCat 1.1.6,[128X[104X
+    [4X[28X            CTblLib 1.2.2, FactInt 1.5.3, FGA 1.2.0, GAPDoc 1.5.1, IO 4.4.4,[128X[104X
+    [4X[28X            IRREDSOL 1.2.4, LAGUNA 3.7.0, Polenta 1.3.2, Polycyclic 2.11,[128X[104X
+    [4X[28X            RadiRoot 2.7, ResClasses 3.4.0, Sophus 1.23, SpinSym 1.5,[128X[104X
+    [4X[28X            TomLib 1.2.5[128X[104X
+    [4X[28XTry '?help' for help. See also  '?copyright' and  '?authors'[128X[104X
+    [4X[25Xgap>[125X [27XLoadPackage("fining");[127X[104X
+    [4X[28X---------------------------------------------------------------------[128X[104X
+    [4X[28XLoading 'Forms' 1.2.5 (21/09/2017)[128X[104X
+    [4X[28Xby John Bamberg (http://school.maths.uwa.edu.au/~bamberg/)[128X[104X
+    [4X[28X   Jan De Beule (http://www.debeule.eu)[128X[104X
+    [4X[28XFor help, type: ?Forms [128X[104X
+    [4X[28X---------------------------------------------------------------------[128X[104X
+    [4X[28X---------------------------------------------------------------------[128X[104X
+    [4X[28XLoading  orb 4.7.6 (Methods to enumerate orbits)[128X[104X
+    [4X[28Xby Juergen Mueller (http://www.math.rwth-aachen.de/~Juergen.Mueller),[128X[104X
+    [4X[28X   Max Neunhöffer (http://www-groups.mcs.st-and.ac.uk/~neunhoef), and[128X[104X
+    [4X[28X   Felix Noeske (http://www.math.rwth-aachen.de/~Felix.Noeske).[128X[104X
+    [4X[28XHomepage: https://gap-packages.github.io/orb[128X[104X
+    [4X[28X---------------------------------------------------------------------[128X[104X
+    [4X[28X---------------------------------------------------------------------[128X[104X
+    [4X[28XLoading  cvec 2.5.7 (Compact vectors over finite fields)[128X[104X
+    [4X[28Xby Max Neunhöffer (http://www-groups.mcs.st-and.ac.uk/~neunhoef).[128X[104X
+    [4X[28XHomepage: https://gap-packages.github.io/cvec[128X[104X
+    [4X[28X---------------------------------------------------------------------[128X[104X
+    [4X[28X---------------------------------------------------------------------[128X[104X
+    [4X[28XLoading  genss 1.6.4 (Generic Schreier-Sims)[128X[104X
+    [4X[28Xby Max Neunhöffer (http://www-groups.mcs.st-and.ac.uk/~neunhoef) and[128X[104X
+    [4X[28X   Felix Noeske (http://www.math.rwth-aachen.de/~Felix.Noeske).[128X[104X
+    [4X[28XHomepage: https://gap-packages.github.io/genss[128X[104X
+    [4X[28X---------------------------------------------------------------------[128X[104X
+    [4X[28X---------------------------------------------------------------------[128X[104X
+    [4X[28XLoading  GRAPE 4.7 (GRaph Algorithms using PErmutation groups)[128X[104X
+    [4X[28Xby Leonard H. Soicher (http://www.maths.qmul.ac.uk/~leonard/).[128X[104X
+    [4X[28XHomepage: http://www.maths.qmul.ac.uk/~leonard/grape/[128X[104X
+    [4X[28X---------------------------------------------------------------------[128X[104X
+    [4X[28X-------------------------------------------------------------------------------[128X[104X
+    [4X[28X         ______________       ________      _________   __________ __          [128X[104X
+    [4X[28X         ___  ____/__(_)__________  _/________  ____/   __<  /_  // /          [128X[104X
+    [4X[28X         __  /_   __  /__  __ __  / __  __   / __     __  /_  // /_          [128X[104X
+    [4X[28X         _  __/   _  / _  / / /_/ /  _  / / / /_/ /     _  /_/__  __/          [128X[104X
+    [4X[28X         /_/      /_/  /_/ /_//___/  /_/ /_/____/      /_/_(_)/_/             [128X[104X
+    [4X[28X-------------------------------------------------------------------------------[128X[104X
+    [4X[28XLoading  FinInG 1.4.1 (Finite Incidence Geometry) [128X[104X
+    [4X[28Xby John Bamberg (http://school.maths.uwa.edu.au/~bamberg/)[128X[104X
+    [4X[28X   Anton Betten (http://www.math.colostate.edu/~betten)[128X[104X
+    [4X[28X   Jan De Beule (http://www.debeule.eu)[128X[104X
+    [4X[28X   Philippe Cara (http://homepages.vub.ac.be/~pcara)[128X[104X
+    [4X[28X   Michel Lavrauw (http://people.sabanciuniv.edu/~mlavrauw/)[128X[104X
+    [4X[28X   Max Neunhoeffer (http://www-groups.mcs.st-and.ac.uk/~neunhoef/)[128X[104X
+    [4X[28XFor help, type: ?FinInG [128X[104X
+    [4X[28X---------------------------------------------------------------------[128X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X1.5 [33X[0;0YThe Development Team[133X[101X
+  
+  [33X[0;0YThis  is  the  development  team  (without Anton), meeting in St. Andrews in
+  september  2008,  from  left  to  right:  Philippe Cara, Michel Lavrauw, Max
+  Neunhöffer, Jan De Beule and John Bamberg.[133X
+  
+  [33X[0;0YThe  development  team meeting again (without Anton and Max), now in Vicenza
+  in  april  2011.  from left to right: Michel Lavrauw, John Bamberg, Philippe
+  Cara, Jan De Beule.[133X
+  
+  [33X[0;0YSurvivors  of  the  first  version  of  [5XFinInG[105X, enjoying a trip to Chioggia,
+  december 2011.[133X
+  
+  [33X[0;0YThe same survivors, staring at the destiny.[133X
+  
+  [33X[0;0YAnton Betten, during a milestone meeting at the finite geometries conference
+  in Irsee, september 2014.[133X
+  

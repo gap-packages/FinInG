@@ -1,0 +1,898 @@
+  
+  [1X4 [33X[0;0YProjective Spaces[133X[101X
+  
+  [33X[0;0YIn this chapter we describe how to use [5XFinInG[105X to work with finite projective
+  spaces.[133X
+  
+  
+  [1X4.1 [33X[0;0YProjective Spaces and basic operations[133X[101X
+  
+  [33X[0;0YA [13Xprojective space[113X is a point-line incidence geometry, satisfying a few well
+  known axioms. An axiomatic treatment can be found in [VY65a] and [VY65b]. In
+  [5XFinInG[105X, we deal with [13Xfinite Desarguesian projective spaces[113X. It is well known
+  that  these  geometries can be described completely using vector spaces over
+  finite  fields.  The  elements  of  the  projective space are all nontrivial
+  subspaces   of   the   vector  space.  So  the  projective  points  are  the
+  one-dimensional  subspaces,  the  projective  lines  are the two-dimensional
+  subspaces,  and  so on. From the axiomatic point of view, a projective space
+  is  a point-line geometry, and has rank at least 2. But a projective line is
+  obtained  if  we  start with a two dimensional vector space. Starting with a
+  one dimensional vector space yields a single projective point. Both examples
+  are  not  a  projective  space in the axiomatic point of view, but in [5XFinInG[105X
+  they are considered as projective spaces.[133X
+  
+  [1X4.1-1 IsProjectiveSpace[101X
+  
+  [33X[1;0Y[29X[2XIsProjectiveSpace[102X [32X Category[133X
+  
+  [33X[0;0YThis  category  is  a  subcategory of [10XIsLieGeometry[110X, and contains all finite
+  Desarguesian projective spaces.[133X
+  
+  [33X[0;0YWe refer the reader to [HT91] for the necessary background theory in case it
+  is not provided in the manual.[133X
+  
+  [1X4.1-2 ProjectiveSpace[101X
+  
+  [33X[1;0Y[29X[2XProjectiveSpace[102X( [3Xd[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XProjectiveSpace[102X( [3Xd[103X, [3Xq[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XPG[102X( [3Xd[103X, [3Xq[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya projective space[133X
+  
+  [33X[0;0Y[3Xd[103X  must  be  a  positive  integer.  In  the first form, [3XF[103X is a field and the
+  function  returns  the projective space of dimension [3Xd[103X over [3XF[103X. In the second
+  form, [3Xq[103X is a prime power specifying the size of the field. The user may also
+  use an alias, namely, the common abbreviation [10XPG(d, q)[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XProjectiveSpace(3,GF(3));[127X[104X
+    [4X[28XProjectiveSpace(3, 3)[128X[104X
+    [4X[25Xgap>[125X [27XProjectiveSpace(3,3);[127X[104X
+    [4X[28XProjectiveSpace(3, 3)[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X4.1-3 ProjectiveDimension[101X
+  
+  [33X[1;0Y[29X[2XProjectiveDimension[102X( [3Xps[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XDimension[102X( [3Xps[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XRank[102X( [3Xps[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ythe projective dimension of the projective space [3Xps[103X[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := PG(5,8);[127X[104X
+    [4X[28XProjectiveSpace(5, 8)[128X[104X
+    [4X[25Xgap>[125X [27XProjectiveDimension(ps);[127X[104X
+    [4X[28X5[128X[104X
+    [4X[25Xgap>[125X [27XDimension(ps);[127X[104X
+    [4X[28X5[128X[104X
+    [4X[25Xgap>[125X [27XRank(ps);[127X[104X
+    [4X[28X5[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X4.1-4 BaseField[101X
+  
+  [33X[1;0Y[29X[2XBaseField[102X( [3Xps[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yreturns the base field for the projective space [3Xps[103X[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XBaseField(ProjectiveSpace(3,81));[127X[104X
+    [4X[28XGF(3^4)[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X4.1-5 UnderlyingVectorSpace[101X
+  
+  [33X[1;0Y[29X[2XUnderlyingVectorSpace[102X( [3Xps[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya vector space[133X
+  
+  [33X[0;0YIf  [3Xps[103X  is a projective space of dimension [22Xn[122X over the field of order [22Xq[122X, then
+  this  operation  simply  returns  the  underlying vector space, i.e. the [22Xn+1[122X
+  dimensional vector space over the field of order [22Xq[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := ProjectiveSpace(4,7);[127X[104X
+    [4X[28XProjectiveSpace(4, 7)[128X[104X
+    [4X[25Xgap>[125X [27Xvs := UnderlyingVectorSpace(ps);[127X[104X
+    [4X[28X( GF(7)^5 )[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X4.1-6 AmbientSpace[101X
+  
+  [33X[1;0Y[29X[2XAmbientSpace[102X( [3Xps[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya projective space[133X
+  
+  [33X[0;0YThe  ambient  space of a projective space [3Xps[103X is the projective space itself.
+  Hence, simply [3Xps[103X will be returned.[133X
+  
+  
+  [1X4.2 [33X[0;0YSubspaces of projective spaces[133X[101X
+  
+  [33X[0;0YThe  elements  of  a  projective  space [22XmathrmPG(n,q)[122X are the subspaces of a
+  suitable  dimension.  The  empty subspace, also called the trivial subspace,
+  has  dimension [22X-1[122X and corresponds to the zero dimensional vector subspace of
+  the  underlying  vector space of [22XmathrmPG(n,q)[122X , and is hence represented by
+  the  zero  vector  of length [22Xn+1[122X over the underlying field [22XmathrmGF(q)[122X . The
+  trivial   subspace   and  the  whole  projective  space  are  mathematically
+  considered  as a subspace of the projective geometry, but not as elements of
+  the  incidence  geometry,  and hence do in [5XFinInG[105X [12Xnot[112X belong to the category
+  [10XIsSubspaceOfProjectiveSpace[110X.[133X
+  
+  [1X4.2-1 VectorSpaceToElement[101X
+  
+  [33X[1;0Y[29X[2XVectorSpaceToElement[102X( [3Xgeo[103X, [3Xv[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan element[133X
+  
+  [33X[0;0Y[3Xgeo[103X is a projective space, and [3Xv[103X is either a row vector (for points) or an [22Xm
+  ×  n[122X matrix (for an [22X(m-1)[122X-subspace of projective space of dimension [22Xn-1[122X). In
+  the case that [3Xv[103X is a matrix, the rows represent generators for the subspace.
+  An  exceptional  case  is when [3Xv[103X is a zero-vector, in which case the trivial
+  subspace is returned.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := ProjectiveSpace(6,7);[127X[104X
+    [4X[28XProjectiveSpace(6, 7)[128X[104X
+    [4X[25Xgap>[125X [27Xv := [3,5,6,0,3,2,3]*Z(7)^0;[127X[104X
+    [4X[28X[ Z(7), Z(7)^5, Z(7)^3, 0*Z(7), Z(7), Z(7)^2, Z(7) ][128X[104X
+    [4X[25Xgap>[125X [27Xp := VectorSpaceToElement(ps,v);[127X[104X
+    [4X[28X<a point in ProjectiveSpace(6, 7)>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(p);[127X[104X
+    [4X[28X[142.131][128X[104X
+    [4X[25Xgap>[125X [27Xps := ProjectiveSpace(3,4);[127X[104X
+    [4X[28XProjectiveSpace(3, 4)[128X[104X
+    [4X[25Xgap>[125X [27Xv := [1,1,0,1]*Z(4)^0;[127X[104X
+    [4X[28X[ Z(2)^0, Z(2)^0, 0*Z(2), Z(2)^0 ][128X[104X
+    [4X[25Xgap>[125X [27Xp := VectorSpaceToElement(ps,v);[127X[104X
+    [4X[28X<a point in ProjectiveSpace(3, 4)>[128X[104X
+    [4X[25Xgap>[125X [27Xmat := [[1,0,0,1],[0,1,1,0]]*Z(4)^0;[127X[104X
+    [4X[28X[ [ Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0 ], [ 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xline := VectorSpaceToElement(ps,mat);[127X[104X
+    [4X[28X<a line in ProjectiveSpace(3, 4)>[128X[104X
+    [4X[25Xgap>[125X [27Xe := VectorSpaceToElement(ps,[]);[127X[104X
+    [4X[28XError, <v> does not represent any element called from[128X[104X
+    [4X[28X<function "unknown">( <arguments> )[128X[104X
+    [4X[28X called from read-eval loop at line 17 of *stdin*[128X[104X
+    [4X[28Xyou can 'quit;' to quit to outer loop, or[128X[104X
+    [4X[28Xyou can 'return;' to continue[128X[104X
+    [4X[26Xbrk>[126X [27Xquit;[127X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X4.2-2 EmptySubspace[101X
+  
+  [33X[1;0Y[29X[2XEmptySubspace[102X( [3Xps[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe trivial subspace in the projective [3Xps[103X[133X
+  
+  [33X[0;0YThe  object  returned  by  this  operation  is contained in every projective
+  subspace  of  the  projective  space [3Xps[103X, but is not an element of [3Xps[103X. Hence,
+  testing incidence results in an error message.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xe := EmptySubspace(PG(5,9));[127X[104X
+    [4X[28X< empty subspace >[128X[104X
+    [4X[25Xgap>[125X [27Xp := VectorSpaceToElement(PG(5,9),[1,0,0,0,0,0]*Z(9)^0);[127X[104X
+    [4X[28X<a point in ProjectiveSpace(5, 9)>[128X[104X
+    [4X[25Xgap>[125X [27Xe*p;[127X[104X
+    [4X[28XError, no method found! For debugging hints type ?Recovery from NoMethodFound[128X[104X
+    [4X[28XError, no 1st choice method found for `*' on 2 arguments called from[128X[104X
+    [4X[28X<function "HANDLE_METHOD_NOT_FOUND">( <arguments> )[128X[104X
+    [4X[28X called from read-eval loop at line 10 of *stdin*[128X[104X
+    [4X[28Xyou can 'quit;' to quit to outer loop, or[128X[104X
+    [4X[28Xyou can 'return;' to continue[128X[104X
+    [4X[26Xbrk>[126X [27Xquit;[127X[104X
+    [4X[25Xgap>[125X [27Xe in p;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X4.2-3 ProjectiveDimension[101X
+  
+  [33X[1;0Y[29X[2XProjectiveDimension[102X( [3Xsub[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe  projective dimension of a subspace of a projective space. The
+            operation   [11XProjectiveDimension[111X   is   also   applicable   on  the
+            EmptySubspace.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := PG(2,5);[127X[104X
+    [4X[28XProjectiveSpace(2, 5)[128X[104X
+    [4X[25Xgap>[125X [27Xv := [[1,1,0],[0,3,2]]*Z(5)^0;[127X[104X
+    [4X[28X[ [ Z(5)^0, Z(5)^0, 0*Z(5) ], [ 0*Z(5), Z(5)^3, Z(5) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xline := VectorSpaceToElement(ps,v);[127X[104X
+    [4X[28X<a line in ProjectiveSpace(2, 5)>[128X[104X
+    [4X[25Xgap>[125X [27XProjectiveDimension(line);[127X[104X
+    [4X[28X1[128X[104X
+    [4X[25Xgap>[125X [27XDimension(line);[127X[104X
+    [4X[28X1[128X[104X
+    [4X[25Xgap>[125X [27Xp := VectorSpaceToElement(ps,[1,2,3]*Z(5)^0);[127X[104X
+    [4X[28X<a point in ProjectiveSpace(2, 5)>[128X[104X
+    [4X[25Xgap>[125X [27XProjectiveDimension(p);[127X[104X
+    [4X[28X0[128X[104X
+    [4X[25Xgap>[125X [27XDimension(p);[127X[104X
+    [4X[28X0[128X[104X
+    [4X[25Xgap>[125X [27XProjectiveDimension(EmptySubspace(ps));[127X[104X
+    [4X[28X-1[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X4.2-4 ElementsOfIncidenceStructure[101X
+  
+  [33X[1;0Y[29X[2XElementsOfIncidenceStructure[102X( [3Xps[103X, [3Xj[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe collection of elements of the projective space [3Xps[103X of type [3Xj[103X[133X
+  
+  [33X[0;0YFor the projective space [3Xps[103X of dimension [22Xd[122X and the type [3Xj[103X (where [22X1 ≤ j ≤ d[122X),
+  this operation returns the collection of [22Xj-1[122X dimensional subspaces. An error
+  message  is  produced  when  the  projective space [3Xps[103X has no elements of the
+  required type.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := ProjectiveSpace(6,7);[127X[104X
+    [4X[28XProjectiveSpace(6, 7)[128X[104X
+    [4X[25Xgap>[125X [27XElementsOfIncidenceStructure(ps,1);[127X[104X
+    [4X[28X<points of ProjectiveSpace(6, 7)>[128X[104X
+    [4X[25Xgap>[125X [27XElementsOfIncidenceStructure(ps,2);[127X[104X
+    [4X[28X<lines of ProjectiveSpace(6, 7)>[128X[104X
+    [4X[25Xgap>[125X [27XElementsOfIncidenceStructure(ps,3);[127X[104X
+    [4X[28X<planes of ProjectiveSpace(6, 7)>[128X[104X
+    [4X[25Xgap>[125X [27XElementsOfIncidenceStructure(ps,4);[127X[104X
+    [4X[28X<solids of ProjectiveSpace(6, 7)>[128X[104X
+    [4X[25Xgap>[125X [27XElementsOfIncidenceStructure(ps,5);[127X[104X
+    [4X[28X<proj. 4-subspaces of ProjectiveSpace(6, 7)>[128X[104X
+    [4X[25Xgap>[125X [27XElementsOfIncidenceStructure(ps,6);[127X[104X
+    [4X[28X<proj. 5-subspaces of ProjectiveSpace(6, 7)>[128X[104X
+    [4X[25Xgap>[125X [27XElementsOfIncidenceStructure(ps,7);[127X[104X
+    [4X[28XError, <ps> has no elements of type <j> called from[128X[104X
+    [4X[28X<function "unknown">( <arguments> )[128X[104X
+    [4X[28X called from read-eval loop at line 15 of *stdin*[128X[104X
+    [4X[28Xyou can 'quit;' to quit to outer loop, or[128X[104X
+    [4X[28Xyou can 'return;' to continue[128X[104X
+    [4X[26Xbrk>[126X [27Xquit;[127X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  
+  [1X4.2-5 [33X[0;0YShort names for ElementsOfIncidenceStructure[133X[101X
+  
+  [33X[1;0Y[29X[2XPoints[102X( [3Xps[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XLines[102X( [3Xps[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XPlanes[102X( [3Xps[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XSolids[102X( [3Xps[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XHyperplanes[102X( [3Xps[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YThe  elements  of  [3Xps[103X  of  respective  type  1,  2,  3, 4, and the
+            hyperplanes[133X
+  
+  [33X[0;0YAn error message is produced when the projective space [3Xps[103X has no elements of
+  a required type.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := PG(6,13);[127X[104X
+    [4X[28XProjectiveSpace(6, 13)[128X[104X
+    [4X[25Xgap>[125X [27XPoints(ps);[127X[104X
+    [4X[28X<points of ProjectiveSpace(6, 13)>[128X[104X
+    [4X[25Xgap>[125X [27XLines(ps);[127X[104X
+    [4X[28X<lines of ProjectiveSpace(6, 13)>[128X[104X
+    [4X[25Xgap>[125X [27XPlanes(ps);[127X[104X
+    [4X[28X<planes of ProjectiveSpace(6, 13)>[128X[104X
+    [4X[25Xgap>[125X [27XSolids(ps);[127X[104X
+    [4X[28X<solids of ProjectiveSpace(6, 13)>[128X[104X
+    [4X[25Xgap>[125X [27XHyperplanes(ps);[127X[104X
+    [4X[28X<proj. 5-subspaces of ProjectiveSpace(6, 13)>[128X[104X
+    [4X[25Xgap>[125X [27Xps := PG(2,2);[127X[104X
+    [4X[28XProjectiveSpace(2, 2)[128X[104X
+    [4X[25Xgap>[125X [27XHyperplanes(ps);[127X[104X
+    [4X[28X<lines of ProjectiveSpace(2, 2)>[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  
+  [1X4.2-6 [33X[0;0YIncidence and containment[133X[101X
+  
+  [33X[1;0Y[29X[2XIsIncident[102X( [3Xel1[103X, [3Xel2[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2X\*[102X( [3Xel1[103X, [3Xel2[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2X\in[102X( [3Xel1[103X, [3Xel2[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ytrue or false[133X
+  
+  [33X[0;0YRecall  that  for  projective  spaces, incidence is symmetrized containment,
+  where  the  empty  subspace  and  the whole projective space are excluded as
+  arguments  for  this operation, since they are not considered as elements of
+  the geometry, but both the empty subspace and the whole projective space are
+  allowed as arguments for [11X\in[111X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := ProjectiveSpace(5,9);[127X[104X
+    [4X[28XProjectiveSpace(5, 9)[128X[104X
+    [4X[25Xgap>[125X [27Xp := VectorSpaceToElement(ps,[1,1,1,1,0,0]*Z(9)^0);[127X[104X
+    [4X[28X<a point in ProjectiveSpace(5, 9)>[128X[104X
+    [4X[25Xgap>[125X [27Xl := VectorSpaceToElement(ps,[[1,1,1,1,0,0],[0,0,0,0,1,0]]*Z(9)^0);[127X[104X
+    [4X[28X<a line in ProjectiveSpace(5, 9)>[128X[104X
+    [4X[25Xgap>[125X [27Xplane := VectorSpaceToElement(ps,[[1,0,0,0,0,0],[0,1,0,0,0,0],[0,0,1,0,0,0]]*Z(9)^0);[127X[104X
+    [4X[28X<a plane in ProjectiveSpace(5, 9)>[128X[104X
+    [4X[25Xgap>[125X [27Xp * l;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xl * p;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsIncident(p,l);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xp in l;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xl in p;[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27Xp * plane;[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27Xl * plane;[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27Xl in plane;[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27Xe := EmptySubspace(ps);[127X[104X
+    [4X[28X< empty subspace >[128X[104X
+    [4X[25Xgap>[125X [27Xe * l;[127X[104X
+    [4X[28XError, no method found! For debugging hints type ?Recovery from NoMethodFound[128X[104X
+    [4X[28XError, no 1st choice method found for `*' on 2 arguments called from[128X[104X
+    [4X[28X<function "HANDLE_METHOD_NOT_FOUND">( <arguments> )[128X[104X
+    [4X[28X called from read-eval loop at line 21 of *stdin*[128X[104X
+    [4X[28Xyou can 'quit;' to quit to outer loop, or[128X[104X
+    [4X[28Xyou can 'return;' to continue[128X[104X
+    [4X[26Xbrk>[126X [27Xquit;[127X[104X
+    [4X[25Xgap>[125X [27Xe in l;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xl in ps;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X4.2-7 StandardFrame[101X
+  
+  [33X[1;0Y[29X[2XStandardFrame[102X( [3Xps[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe standard frame of the projective space [3Xps[103X[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XStandardFrame(PG(5,4));[127X[104X
+    [4X[28X[ <a point in ProjectiveSpace(5, 4)>, <a point in ProjectiveSpace(5, 4)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(5, 4)>, <a point in ProjectiveSpace(5, 4)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(5, 4)>, <a point in ProjectiveSpace(5, 4)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(5, 4)> ][128X[104X
+    [4X[25Xgap>[125X [27XDisplay(last);[127X[104X
+    [4X[28X[ NewRowVector(IsCVecRep,GF(2,2),[Z(2)^0,0*Z(2),0*Z(2),0*Z(2),0*Z(2),0*Z(2),])[128X[104X
+    [4X[28X    , NewRowVector(IsCVecRep,GF(2,2),[0*Z(2),Z(2)^0,0*Z(2),0*Z(2),0*Z(2),[128X[104X
+    [4X[28X    0*Z(2),]), NewRowVector(IsCVecRep,GF(2,2),[0*Z(2),0*Z(2),Z(2)^0,0*Z(2),[128X[104X
+    [4X[28X    0*Z(2),0*Z(2),]), NewRowVector(IsCVecRep,GF(2,2),[0*Z(2),0*Z(2),0*Z(2),[128X[104X
+    [4X[28X    Z(2)^0,0*Z(2),0*Z(2),]), NewRowVector(IsCVecRep,GF(2,2),[0*Z(2),0*Z(2),[128X[104X
+    [4X[28X    0*Z(2),0*Z(2),Z(2)^0,0*Z(2),]), NewRowVector(IsCVecRep,GF(2,2),[0*Z(2),[128X[104X
+    [4X[28X    0*Z(2),0*Z(2),0*Z(2),0*Z(2),Z(2)^0,]), NewRowVector(IsCVecRep,GF(2,2),[[128X[104X
+    [4X[28X    Z(2)^0,Z(2)^0,Z(2)^0,Z(2)^0,Z(2)^0,Z(2)^0,]) ][128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X4.2-8 Coordinates[101X
+  
+  [33X[1;0Y[29X[2XCoordinates[102X( [3Xp[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ythe homogeneous coordinates of the projective point [3Xp[103X[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xp := Random(Points(PG(5,16)));[127X[104X
+    [4X[28X<a point in ProjectiveSpace(5, 16)>[128X[104X
+    [4X[25Xgap>[125X [27XCoordinates(p);[127X[104X
+    [4X[28X[ Z(2)^0, Z(2^4)^13, Z(2)^0, Z(2^4)^8, Z(2^4)^3, Z(2^4)^7 ][128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X4.2-9 DualCoordinatesOfHyperplane[101X
+  
+  [33X[1;0Y[29X[2XDualCoordinatesOfHyperplane[102X( [3Xhyp[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya list[133X
+  
+  [33X[0;0YThe  argument  [3Xhyp[103X  is  a  hyperplane  of a projective space. This operation
+  returns  the  dual coordinates of the hyperplane [3Xhyp[103X, i.e. the list with the
+  coefficients  of  the  equation  defining the hyperplane [3Xhyp[103X as an algebraic
+  variety.[133X
+  
+  [1X4.2-10 HyperplaneByDualCoordinates[101X
+  
+  [33X[1;0Y[29X[2XHyperplaneByDualCoordinates[102X( [3Xpg[103X, [3Xlist[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya hyperplane of a projective space[133X
+  
+  [33X[0;0YThe  argument [3Xpg[103X is a projective space, and [3Xlist[103X is the coordinate vector of
+  a  point  of  [3Xpg[103X. This operation returns the hyperplane that has [3Xlist[103X as the
+  list of coefficients of the equation defining the hyperplane as an algebraic
+  variety.[133X
+  
+  [1X4.2-11 EquationOfHyperplane[101X
+  
+  [33X[1;0Y[29X[2XEquationOfHyperplane[102X( [3Xh[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe equation of the hyperplane [3Xh[103X of a projective space[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xhyperplane := VectorSpaceToElement(PG(3,2),[[1,1,0,0],[0,0,1,0],[0,0,0,1]]*Z(2)^0);[127X[104X
+    [4X[28X<a plane in ProjectiveSpace(3, 2)>[128X[104X
+    [4X[25Xgap>[125X [27XEquationOfHyperplane(hyperplane);[127X[104X
+    [4X[28Xx_1+x_2[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X4.2-12 AmbientSpace[101X
+  
+  [33X[1;0Y[29X[2XAmbientSpace[102X( [3Xel[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yreturns the ambient space of an element [3Xel[103X of a projective space[133X
+  
+  [33X[0;0YThis operation is also applicable on the empty subspace and the whole space.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := PG(3,27);[127X[104X
+    [4X[28XProjectiveSpace(3, 27)[128X[104X
+    [4X[25Xgap>[125X [27Xp := VectorSpaceToElement(ps,[1,2,1,0]*Z(3)^3);[127X[104X
+    [4X[28X<a point in ProjectiveSpace(3, 27)>[128X[104X
+    [4X[25Xgap>[125X [27XAmbientSpace(p);[127X[104X
+    [4X[28XProjectiveSpace(3, 27)[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X4.2-13 BaseField[101X
+  
+  [33X[1;0Y[29X[2XBaseField[102X( [3Xel[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yreturns the base field of an element [3Xel[103X of a projective space[133X
+  
+  [33X[0;0YThis  operation  is  also  applicable  on the trivial subspace and the whole
+  space.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := PG(5,8);[127X[104X
+    [4X[28XProjectiveSpace(5, 8)[128X[104X
+    [4X[25Xgap>[125X [27Xp := VectorSpaceToElement(ps,[1,1,1,0,0,1]*Z(2));[127X[104X
+    [4X[28X<a point in ProjectiveSpace(5, 8)>[128X[104X
+    [4X[25Xgap>[125X [27XBaseField(p);[127X[104X
+    [4X[28XGF(2^3)[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X4.2-14 Random[101X
+  
+  [33X[1;0Y[29X[2XRandom[102X( [3Xelements[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya random element from the collection [3Xelements[103X[133X
+  
+  [33X[0;0YThe    collection    [3Xelements[103X    is    an    object    in    the    category
+  [10XIsElementsOfIncidenceStructure[110X,  i.e.  an  object  representing  the  set of
+  elements  of  a  certain  incidence  structure  of  a given type. The latter
+  information can be derived e.g. using [10XAmbientSpace[110X and [10XType[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := PG(9,49);[127X[104X
+    [4X[28XProjectiveSpace(9, 49)[128X[104X
+    [4X[25Xgap>[125X [27XRandom(Lines(ps));[127X[104X
+    [4X[28X<a line in ProjectiveSpace(9, 49)>[128X[104X
+    [4X[25Xgap>[125X [27XRandom(Points(ps));[127X[104X
+    [4X[28X<a point in ProjectiveSpace(9, 49)>[128X[104X
+    [4X[25Xgap>[125X [27XRandom(Solids(ps));[127X[104X
+    [4X[28X<a solid in ProjectiveSpace(9, 49)>[128X[104X
+    [4X[25Xgap>[125X [27XRandom(Hyperplanes(ps));[127X[104X
+    [4X[28X<a proj. 8-space in ProjectiveSpace(9, 49)>[128X[104X
+    [4X[25Xgap>[125X [27Xelts := ElementsOfIncidenceStructure(ps,6);[127X[104X
+    [4X[28X<proj. 5-subspaces of ProjectiveSpace(9, 49)>[128X[104X
+    [4X[25Xgap>[125X [27XRandom(elts);[127X[104X
+    [4X[28X<a proj. 5-space in ProjectiveSpace(9, 49)>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(last);[127X[104X
+    [4X[28X[[Z(7)^0,0*Z(7),0*Z(7),0*Z(7),0*Z(7),0*Z(7),Z(7^2)^14,Z(7^2)^44,Z(7^2)^14,[128X[104X
+    [4X[28XZ(7)^5,][128X[104X
+    [4X[28X [0*Z(7),Z(7)^0,0*Z(7),0*Z(7),0*Z(7),0*Z(7),Z(7^2)^29,Z(7^2)^13,Z(7^2)^19,[128X[104X
+    [4X[28XZ(7^2)^27,][128X[104X
+    [4X[28X [0*Z(7),0*Z(7),Z(7)^0,0*Z(7),0*Z(7),0*Z(7),Z(7^2)^20,Z(7^2)^10,Z(7^2)^18,[128X[104X
+    [4X[28XZ(7^2)^27,][128X[104X
+    [4X[28X [0*Z(7),0*Z(7),0*Z(7),Z(7)^0,0*Z(7),0*Z(7),Z(7),Z(7^2)^30,Z(7^2)^18,Z(7^2)^[128X[104X
+    [4X[28X14,][128X[104X
+    [4X[28X [0*Z(7),0*Z(7),0*Z(7),0*Z(7),Z(7)^0,0*Z(7),Z(7^2)^10,Z(7^2)^28,Z(7^2)^47,[128X[104X
+    [4X[28XZ(7^2)^29,][128X[104X
+    [4X[28X [0*Z(7),0*Z(7),0*Z(7),0*Z(7),0*Z(7),Z(7)^0,Z(7^2)^9,Z(7^2)^42,Z(7^2)^34,[128X[104X
+    [4X[28XZ(7^2)^25,][128X[104X
+    [4X[28X][128X[104X
+    [4X[25Xgap>[125X [27XRandomSubspace(ps,3);[127X[104X
+    [4X[28X<a solid in ProjectiveSpace(9, 49)>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(last);[127X[104X
+    [4X[28X[[Z(7)^0,0*Z(7),0*Z(7),0*Z(7),Z(7^2)^17,Z(7^2)^33,Z(7^2)^4,0*Z(7),Z(7^2),[128X[104X
+    [4X[28XZ(7^2)^33,][128X[104X
+    [4X[28X [0*Z(7),Z(7)^0,0*Z(7),0*Z(7),Z(7^2)^30,Z(7)^2,Z(7)^3,Z(7)^0,Z(7^2)^20,Z(7^2)^[128X[104X
+    [4X[28X42,][128X[104X
+    [4X[28X [0*Z(7),0*Z(7),Z(7)^0,0*Z(7),Z(7^2)^20,Z(7^2)^30,Z(7^2)^11,Z(7^2)^39,Z(7)^3,[128X[104X
+    [4X[28XZ(7),][128X[104X
+    [4X[28X [0*Z(7),0*Z(7),0*Z(7),Z(7)^0,Z(7^2)^21,Z(7)^0,Z(7^2)^11,Z(7^2)^45,Z(7^2),[128X[104X
+    [4X[28XZ(7^2)^9,][128X[104X
+    [4X[28X][128X[104X
+    [4X[25Xgap>[125X [27XRandomSubspace(ps,7);[127X[104X
+    [4X[28X<a proj. 7-space in ProjectiveSpace(9, 49)>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(last);[127X[104X
+    [4X[28X[[Z(7)^0,0*Z(7),0*Z(7),0*Z(7),0*Z(7),0*Z(7),0*Z(7),0*Z(7),Z(7^2)^42,Z(7^2)^[128X[104X
+    [4X[28X35,][128X[104X
+    [4X[28X [0*Z(7),Z(7)^0,0*Z(7),0*Z(7),0*Z(7),0*Z(7),0*Z(7),0*Z(7),Z(7^2)^43,Z(7^2),][128X[104X
+    [4X[28X [0*Z(7),0*Z(7),Z(7)^0,0*Z(7),0*Z(7),0*Z(7),0*Z(7),0*Z(7),Z(7^2)^44,Z(7)^4,][128X[104X
+    [4X[28X [0*Z(7),0*Z(7),0*Z(7),Z(7)^0,0*Z(7),0*Z(7),0*Z(7),0*Z(7),Z(7^2)^41,Z(7^2)^[128X[104X
+    [4X[28X10,][128X[104X
+    [4X[28X [0*Z(7),0*Z(7),0*Z(7),0*Z(7),Z(7)^0,0*Z(7),0*Z(7),0*Z(7),Z(7^2)^37,Z(7^2)^[128X[104X
+    [4X[28X12,][128X[104X
+    [4X[28X [0*Z(7),0*Z(7),0*Z(7),0*Z(7),0*Z(7),Z(7)^0,0*Z(7),0*Z(7),Z(7^2)^11,Z(7^2)^[128X[104X
+    [4X[28X39,][128X[104X
+    [4X[28X [0*Z(7),0*Z(7),0*Z(7),0*Z(7),0*Z(7),0*Z(7),Z(7)^0,0*Z(7),Z(7^2)^22,Z(7^2)^[128X[104X
+    [4X[28X10,][128X[104X
+    [4X[28X [0*Z(7),0*Z(7),0*Z(7),0*Z(7),0*Z(7),0*Z(7),0*Z(7),Z(7)^0,Z(7^2)^43,Z(7^2)^[128X[104X
+    [4X[28X22,][128X[104X
+    [4X[28X][128X[104X
+    [4X[25Xgap>[125X [27XRandomSubspace(ps);[127X[104X
+    [4X[28X<a plane in ProjectiveSpace(9, 49)>[128X[104X
+    [4X[25Xgap>[125X [27XRandomSubspace(ps);[127X[104X
+    [4X[28X<a proj. 6-space in ProjectiveSpace(9, 49)>[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X4.2-15 RandomSubspace[101X
+  
+  [33X[1;0Y[29X[2XRandomSubspace[102X( [3Xps[103X, [3Xi[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XRandomSubspace[102X( [3Xps[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe  first  variant  returns  a  random  element  of type [3Xi[103X of the
+            projective  space  [3Xps[103X. The second variant returns a random element
+            of a random type of the projective space [3Xps[103X[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := PG(8,16);[127X[104X
+    [4X[28XProjectiveSpace(8, 16)[128X[104X
+    [4X[25Xgap>[125X [27XRandomSubspace(ps);[127X[104X
+    [4X[28X<a point in ProjectiveSpace(8, 16)>[128X[104X
+    [4X[25Xgap>[125X [27XRandomSubspace(ps);[127X[104X
+    [4X[28X<a proj. 5-space in ProjectiveSpace(8, 16)>[128X[104X
+    [4X[25Xgap>[125X [27XRandomSubspace(ps);[127X[104X
+    [4X[28X<a proj. 7-space in ProjectiveSpace(8, 16)>[128X[104X
+    [4X[25Xgap>[125X [27XRandomSubspace(ps);[127X[104X
+    [4X[28X<a proj. 4-space in ProjectiveSpace(8, 16)>[128X[104X
+    [4X[25Xgap>[125X [27XRandomSubspace(ps);[127X[104X
+    [4X[28X<a plane in ProjectiveSpace(8, 16)>[128X[104X
+    [4X[25Xgap>[125X [27XRandomSubspace(ps);[127X[104X
+    [4X[28X<a plane in ProjectiveSpace(8, 16)>[128X[104X
+    [4X[25Xgap>[125X [27XRandomSubspace(ps);[127X[104X
+    [4X[28X<a plane in ProjectiveSpace(8, 16)>[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X4.2-16 Span[101X
+  
+  [33X[1;0Y[29X[2XSpan[102X( [3Xu[103X, [3Xv[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XSpan[102X( [3Xlist[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan element or the empty subspace or the whole space[133X
+  
+  [33X[0;0YWhen  [3Xu[103X  and [3Xv[103X are elements of a projective space. This function returns the
+  span  of  the  two  elements.  When  [3Xlist[103X  is a list of elements of the same
+  projective  space,  then  this  function returns the span of all elements in
+  [3Xlist[103X.  It  is  checked whether the elements [3Xu[103X and [3Xv[103X are elements of the same
+  projective  space.  Although  the  trivial subspace and the whole projective
+  space  are not objects in the category [10XIsSubspaceOfProjectiveSpace[110X, they are
+  allowed  as arguments for this operation, and also for the second variant of
+  this operation.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := ProjectiveSpace(3,3);[127X[104X
+    [4X[28XProjectiveSpace(3, 3)[128X[104X
+    [4X[25Xgap>[125X [27Xp := Random(Planes(ps));[127X[104X
+    [4X[28X<a plane in ProjectiveSpace(3, 3)>[128X[104X
+    [4X[25Xgap>[125X [27Xq := Random(Planes(ps));[127X[104X
+    [4X[28X<a plane in ProjectiveSpace(3, 3)>[128X[104X
+    [4X[25Xgap>[125X [27Xs := Span(p,q);[127X[104X
+    [4X[28XProjectiveSpace(3, 3)[128X[104X
+    [4X[25Xgap>[125X [27Xs = Span([p,q]);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xt := Span(EmptySubspace(ps),p);[127X[104X
+    [4X[28X<a plane in ProjectiveSpace(3, 3)>[128X[104X
+    [4X[25Xgap>[125X [27Xt = p;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XSpan(ps,p);[127X[104X
+    [4X[28XProjectiveSpace(3, 3)[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X4.2-17 Meet[101X
+  
+  [33X[1;0Y[29X[2XMeet[102X( [3Xu[103X, [3Xv[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XMeet[102X( [3Xlist[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan element or the empty subspace or the whole space[133X
+  
+  [33X[0;0YWhen  [3Xu[103X  and [3Xv[103X are elements of a projective space. This function returns the
+  intersection  of  the  two  elements. When [3Xlist[103X is a list of elements of the
+  same  projective  space,  then this function returns the intersection of all
+  elements in [3Xlist[103X. It is checked whether the elements [3Xu[103X and [3Xv[103X are elements of
+  the  same  projective  space.  Although  the  trivial subspace and the whole
+  projective     space     are     not     objects     in     the     category
+  [10XIsSubspaceOfProjectiveSpace[110X,   they   are  allowed  as  arguments  for  this
+  operation, and also for the second variant of this operation. We remark that
+  the result of a [11XMeet[111X operation can be the empty subspace.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28XProjectiveSpace(7, 8)[128X[104X
+    [4X[25Xgap>[125X [27Xp := Random(Solids(ps));[127X[104X
+    [4X[28X<a solid in ProjectiveSpace(7, 8)>[128X[104X
+    [4X[25Xgap>[125X [27Xq := Random(Solids(ps));[127X[104X
+    [4X[28X<a solid in ProjectiveSpace(7, 8)>[128X[104X
+    [4X[25Xgap>[125X [27Xs := Meet(p,q);[127X[104X
+    [4X[28X< empty subspace >[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(s);[127X[104X
+    [4X[28X< empty subspace >[128X[104X
+    [4X[25Xgap>[125X [27Xr := Random(Hyperplanes(ps));[127X[104X
+    [4X[28X<a proj. 6-space in ProjectiveSpace(7, 8)>[128X[104X
+    [4X[25Xgap>[125X [27XMeet(p,r);[127X[104X
+    [4X[28X<a plane in ProjectiveSpace(7, 8)>[128X[104X
+    [4X[25Xgap>[125X [27XMeet(q,r);[127X[104X
+    [4X[28X<a plane in ProjectiveSpace(7, 8)>[128X[104X
+    [4X[25Xgap>[125X [27XMeet([p,q,r]);[127X[104X
+    [4X[28X< empty subspace >[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X4.2-18 FlagOfIncidenceStructure[101X
+  
+  [33X[1;0Y[29X[2XFlagOfIncidenceStructure[102X( [3Xps[103X, [3Xels[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe  flag  of the projetcive space [3Xps[103X, determined by the subspaces
+            of  [3Xps[103X  in  the  list  [3Xels[103X.  When  [3Xels[103X is empty, the empty flag is
+            returned.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := ProjectiveSpace(12,11);[127X[104X
+    [4X[28XProjectiveSpace(12, 11)[128X[104X
+    [4X[25Xgap>[125X [27Xs1 := RandomSubspace(ps,8);[127X[104X
+    [4X[28X<a proj. 8-space in ProjectiveSpace(12, 11)>[128X[104X
+    [4X[25Xgap>[125X [27Xs2 := RandomSubspace(s1,6);[127X[104X
+    [4X[28X<a proj. 6-space in ProjectiveSpace(12, 11)>[128X[104X
+    [4X[25Xgap>[125X [27Xs3 := RandomSubspace(s2,4);[127X[104X
+    [4X[28X<a proj. 4-space in ProjectiveSpace(12, 11)>[128X[104X
+    [4X[25Xgap>[125X [27Xs4 := Random(Solids(s3));[127X[104X
+    [4X[28X<a solid in ProjectiveSpace(12, 11)>[128X[104X
+    [4X[25Xgap>[125X [27Xs5 := Random(Points(s4));[127X[104X
+    [4X[28X<a point in ProjectiveSpace(12, 11)>[128X[104X
+    [4X[25Xgap>[125X [27Xflag := FlagOfIncidenceStructure(ps,[s1,s3,s2,s5,s4]);[127X[104X
+    [4X[28X<a flag of ProjectiveSpace(12, 11)>[128X[104X
+    [4X[25Xgap>[125X [27Xps := PG(4,5);[127X[104X
+    [4X[28XProjectiveSpace(4, 5)[128X[104X
+    [4X[25Xgap>[125X [27Xp := Random(Points(ps));[127X[104X
+    [4X[28X<a point in ProjectiveSpace(4, 5)>[128X[104X
+    [4X[25Xgap>[125X [27Xl := Random(Lines(ps));[127X[104X
+    [4X[28X<a line in ProjectiveSpace(4, 5)>[128X[104X
+    [4X[25Xgap>[125X [27Xv := Random(Solids(ps));[127X[104X
+    [4X[28X<a solid in ProjectiveSpace(4, 5)>[128X[104X
+    [4X[25Xgap>[125X [27Xflag := FlagOfIncidenceStructure(ps,[v,l,p]);[127X[104X
+    [4X[28XError, <els> does not determine a flag> called from[128X[104X
+    [4X[28X<function "unknown">( <arguments> )[128X[104X
+    [4X[28X called from read-eval loop at line 19 of *stdin*[128X[104X
+    [4X[28Xyou can 'quit;' to quit to outer loop, or[128X[104X
+    [4X[28Xyou can 'return;' to continue[128X[104X
+    [4X[26Xbrk>[126X [27Xquit;[127X[104X
+    [4X[25Xgap>[125X [27Xflag := FlagOfIncidenceStructure(ps,[]);[127X[104X
+    [4X[28X<a flag of ProjectiveSpace(4, 5)>[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X4.2-19 IsEmptyFlag[101X
+  
+  [33X[1;0Y[29X[2XIsEmptyFlag[102X( [3Xflag[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yreturn true if [3Xflag[103X is the empty flag[133X
+  
+  [1X4.2-20 IsChamberOfIncidenceStructure[101X
+  
+  [33X[1;0Y[29X[2XIsChamberOfIncidenceStructure[102X( [3Xflag[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ytrue if [3Xflag[103X is a chamber[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := PG(3,13);[127X[104X
+    [4X[28XProjectiveSpace(3, 13)[128X[104X
+    [4X[25Xgap>[125X [27Xplane := Random(Planes(ps));[127X[104X
+    [4X[28X<a plane in ProjectiveSpace(3, 13)>[128X[104X
+    [4X[25Xgap>[125X [27Xline := Random(Lines(plane));[127X[104X
+    [4X[28X<a line in ProjectiveSpace(3, 13)>[128X[104X
+    [4X[25Xgap>[125X [27Xpoint := Random(Points(line));[127X[104X
+    [4X[28X<a point in ProjectiveSpace(3, 13)>[128X[104X
+    [4X[25Xgap>[125X [27Xflag := FlagOfIncidenceStructure(ps,[point,line,plane]);[127X[104X
+    [4X[28X<a flag of ProjectiveSpace(3, 13)>[128X[104X
+    [4X[25Xgap>[125X [27XIsChamberOfIncidenceStructure(flag);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  
+  [1X4.3 [33X[0;0YShadows of Projective Subspaces[133X[101X
+  
+  [1X4.3-1 ShadowOfElement[101X
+  
+  [33X[1;0Y[29X[2XShadowOfElement[102X( [3Xps[103X, [3Xel[103X, [3Xi[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XShadowOfElement[102X( [3Xps[103X, [3Xel[103X, [3Xstr[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe  elements  of  type  [3Xi[103X  incident  with  [3Xel[103X. The second variant
+            determines  the  type  [3Xi[103X  from  the  position  of  [3Xstr[103X in the list
+            returned by [11XTypesOfElementsOfIncidenceStructurePlural[111X[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := PG(4,3);[127X[104X
+    [4X[28XProjectiveSpace(4, 3)[128X[104X
+    [4X[25Xgap>[125X [27Xplane := Random(Planes(ps));[127X[104X
+    [4X[28X<a plane in ProjectiveSpace(4, 3)>[128X[104X
+    [4X[25Xgap>[125X [27Xshadowpoints := ShadowOfElement(ps,plane,1);[127X[104X
+    [4X[28X<shadow points in ProjectiveSpace(4, 3)>[128X[104X
+    [4X[25Xgap>[125X [27XList(shadowpoints);[127X[104X
+    [4X[28X[ <a point in ProjectiveSpace(4, 3)>, <a point in ProjectiveSpace(4, 3)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(4, 3)>, <a point in ProjectiveSpace(4, 3)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(4, 3)>, <a point in ProjectiveSpace(4, 3)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(4, 3)>, <a point in ProjectiveSpace(4, 3)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(4, 3)>, <a point in ProjectiveSpace(4, 3)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(4, 3)>, <a point in ProjectiveSpace(4, 3)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(4, 3)> ][128X[104X
+    [4X[25Xgap>[125X [27Xshadowlines := ShadowOfElement(ps,plane,2);[127X[104X
+    [4X[28X<shadow lines in ProjectiveSpace(4, 3)>[128X[104X
+    [4X[25Xgap>[125X [27XList(shadowlines);[127X[104X
+    [4X[28X[ <a line in ProjectiveSpace(4, 3)>, <a line in ProjectiveSpace(4, 3)>, [128X[104X
+    [4X[28X  <a line in ProjectiveSpace(4, 3)>, <a line in ProjectiveSpace(4, 3)>, [128X[104X
+    [4X[28X  <a line in ProjectiveSpace(4, 3)>, <a line in ProjectiveSpace(4, 3)>, [128X[104X
+    [4X[28X  <a line in ProjectiveSpace(4, 3)>, <a line in ProjectiveSpace(4, 3)>, [128X[104X
+    [4X[28X  <a line in ProjectiveSpace(4, 3)>, <a line in ProjectiveSpace(4, 3)>, [128X[104X
+    [4X[28X  <a line in ProjectiveSpace(4, 3)>, <a line in ProjectiveSpace(4, 3)>, [128X[104X
+    [4X[28X  <a line in ProjectiveSpace(4, 3)> ][128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X4.3-2 ShadowOfFlag[101X
+  
+  [33X[1;0Y[29X[2XShadowOfFlag[102X( [3Xps[103X, [3Xflag[103X, [3Xi[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XShadowOfFlag[102X( [3Xps[103X, [3Xflag[103X, [3Xstr[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe  type [3Xi[103X shadow elements of the flag [3Xflag[103X, i.e. the elements of
+            type  [3Xi[103X  incident  with  all  elements of [3Xflag[103X. The second variant
+            determines  the  type  [3Xi[103X  from  the  position  of  [3Xstr[103X in the list
+            returned by [11XTypesOfElementsOfIncidenceStructurePlural[111X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := PG(5,7);[127X[104X
+    [4X[28XProjectiveSpace(5, 7)[128X[104X
+    [4X[25Xgap>[125X [27Xp := VectorSpaceToElement(ps,[1,0,0,0,0,0]*Z(7)^0);[127X[104X
+    [4X[28X<a point in ProjectiveSpace(5, 7)>[128X[104X
+    [4X[25Xgap>[125X [27Xl := VectorSpaceToElement(ps,[[1,0,0,0,0,0],[0,1,0,0,0,0]]*Z(7)^0);[127X[104X
+    [4X[28X<a line in ProjectiveSpace(5, 7)>[128X[104X
+    [4X[25Xgap>[125X [27Xv := VectorSpaceToElement(ps,[[1,0,0,0,0,0],[0,1,0,0,0,0],[0,0,1,0,0,0]]*Z(7)^0);[127X[104X
+    [4X[28X<a plane in ProjectiveSpace(5, 7)>[128X[104X
+    [4X[25Xgap>[125X [27Xflag := FlagOfIncidenceStructure(ps,[v,l,p]);[127X[104X
+    [4X[28X<a flag of ProjectiveSpace(5, 7)>[128X[104X
+    [4X[25Xgap>[125X [27Xs := ShadowOfFlag(ps,flag,4);[127X[104X
+    [4X[28X<shadow solids in ProjectiveSpace(5, 7)>[128X[104X
+    [4X[25Xgap>[125X [27Xs := ShadowOfFlag(ps,flag,"solids");[127X[104X
+    [4X[28X<shadow solids in ProjectiveSpace(5, 7)>[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X4.3-3 ElementsIncidentWithElementOfIncidenceStructure[101X
+  
+  [33X[1;0Y[29X[2XElementsIncidentWithElementOfIncidenceStructure[102X( [3Xel[103X, [3Xi[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe  elements of type [3Xi[103X incident with [3Xel[103X, in other words, the type
+            [3Xi[103X shadow of the element [3Xel[103X[133X
+  
+  [33X[0;0YInternally,  the  function [11XFlagOfIncidenceStructure[111X is used to create a flag
+  from [3Xlist[103X. This function also performs the checking.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := PG(6,9);[127X[104X
+    [4X[28XProjectiveSpace(6, 9)[128X[104X
+    [4X[25Xgap>[125X [27Xp := VectorSpaceToElement(ps,[1,0,1,0,0,0,0]*Z(9)^0);[127X[104X
+    [4X[28X<a point in ProjectiveSpace(6, 9)>[128X[104X
+    [4X[25Xgap>[125X [27Xels := ElementsIncidentWithElementOfIncidenceStructure(p,3);[127X[104X
+    [4X[28X<shadow planes in ProjectiveSpace(6, 9)>[128X[104X
+    [4X[25Xgap>[125X [27Xline := VectorSpaceToElement(ps,[[1,1,1,1,0,0,0],[0,0,0,0,1,1,1]]*Z(9)^0);[127X[104X
+    [4X[28X<a line in ProjectiveSpace(6, 9)>[128X[104X
+    [4X[25Xgap>[125X [27Xels := ElementsIncidentWithElementOfIncidenceStructure(line,1);[127X[104X
+    [4X[28X<shadow points in ProjectiveSpace(6, 9)>[128X[104X
+    [4X[25Xgap>[125X [27XList(els);[127X[104X
+    [4X[28X[ <a point in ProjectiveSpace(6, 9)>, <a point in ProjectiveSpace(6, 9)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(6, 9)>, <a point in ProjectiveSpace(6, 9)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(6, 9)>, <a point in ProjectiveSpace(6, 9)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(6, 9)>, <a point in ProjectiveSpace(6, 9)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(6, 9)>, <a point in ProjectiveSpace(6, 9)> ][128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  
+  [1X4.3-4 [33X[0;0YShort names for [11XElementsIncidentWithElementOfIncidenceStructure[111X[101X[1X[133X[101X
+  
+  [33X[1;0Y[29X[2XPoints[102X( [3Xps[103X, [3Xv[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XLines[102X( [3Xps[103X, [3Xv[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XPlanes[102X( [3Xps[103X, [3Xv[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XSolids[102X( [3Xps[103X, [3Xv[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XHyperplanes[102X( [3Xinc[103X, [3Xv[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XPoints[102X( [3Xv[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XLines[102X( [3Xv[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XPlanes[102X( [3Xv[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XSolids[102X( [3Xv[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XHyperplanes[102X( [3Xv[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YThe  elements  of the incidence geometry of the according type. If
+            [3Xps[103X  is  not  given  as  an  argument,  it is deduced from [3Xv[103X as its
+            ambient geometry.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := PG(6,13);[127X[104X
+    [4X[28XProjectiveSpace(6, 13)[128X[104X
+    [4X[25Xgap>[125X [27Xplane := Random(Planes(ps));[127X[104X
+    [4X[28X<a plane in ProjectiveSpace(6, 13)>[128X[104X
+    [4X[25Xgap>[125X [27XPoints(plane);[127X[104X
+    [4X[28X<shadow points in ProjectiveSpace(6, 13)>[128X[104X
+    [4X[25Xgap>[125X [27XLines(plane);[127X[104X
+    [4X[28X<shadow lines in ProjectiveSpace(6, 13)>[128X[104X
+    [4X[25Xgap>[125X [27XSolids(plane);[127X[104X
+    [4X[28X<shadow solids in ProjectiveSpace(6, 13)>[128X[104X
+    [4X[25Xgap>[125X [27XHyperplanes(plane);[127X[104X
+    [4X[28X<shadow lines in ProjectiveSpace(6, 13)>[128X[104X
+    [4X[25Xgap>[125X [27XElementsIncidentWithElementOfIncidenceStructure(plane,6);[127X[104X
+    [4X[28X<shadow proj. 5-subspaces in ProjectiveSpace(6, 13)>[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  
+  [1X4.4 [33X[0;0YEnumerating subspaces of a projective space[133X[101X
+  
+  [1X4.4-1 Iterator[101X
+  
+  [33X[1;0Y[29X[2XIterator[102X( [3Xsubspaces[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan iterator for the collection [3Xsubspaces[103X[133X
+  
+  [33X[0;0YWe refer to the GAP operation [2XIterator[102X for the definition of an iterator.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xpg := PG(5,7);[127X[104X
+    [4X[28XProjectiveSpace(5, 7)[128X[104X
+    [4X[25Xgap>[125X [27Xplanes := Planes(pg);[127X[104X
+    [4X[28X<planes of ProjectiveSpace(5, 7)>[128X[104X
+    [4X[25Xgap>[125X [27Xiter := Iterator(planes);[127X[104X
+    [4X[28X<iterator>[128X[104X
+    [4X[25Xgap>[125X [27XNextIterator(iter);[127X[104X
+    [4X[28X<a plane in ProjectiveSpace(5, 7)>[128X[104X
+    [4X[25Xgap>[125X [27XNextIterator(iter);[127X[104X
+    [4X[28X<a plane in ProjectiveSpace(5, 7)>[128X[104X
+    [4X[25Xgap>[125X [27XNextIterator(iter);[127X[104X
+    [4X[28X<a plane in ProjectiveSpace(5, 7)>[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X4.4-2 Enumerator[101X
+  
+  [33X[1;0Y[29X[2XEnumerator[102X( [3Xsubspaces[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan enumerator for the collection [3Xsubspaces[103X[133X
+  
+  [33X[0;0YFor complete collections of subspaces of a given type of a projective space,
+  currently,  no non-trivial enumerator is installed, i.e. this operation just
+  returns  a  list containing all elements of the collection [3Xsubspaces[103X. Such a
+  list  can,  of  course,  be  used  as  an enumerator, but this might be time
+  consuming.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xpg := PG(3,4);[127X[104X
+    [4X[28XProjectiveSpace(3, 4)[128X[104X
+    [4X[25Xgap>[125X [27Xlines := Lines(pg);[127X[104X
+    [4X[28X<lines of ProjectiveSpace(3, 4)>[128X[104X
+    [4X[25Xgap>[125X [27Xenum := Enumerator(lines);;[127X[104X
+    [4X[25Xgap>[125X [27XLength(enum);[127X[104X
+    [4X[28X357[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X4.4-3 List[101X
+  
+  [33X[1;0Y[29X[2XList[102X( [3Xsubspaces[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAsList[102X( [3Xsubspaces[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe complete list of elements in the collection [3Xsubspaces[103X[133X
+  
+  [33X[0;0YThe  operation  [11XList[111X  will return a complete list, the operation [11XAsList[111X will
+  return  an  [5Xorb[105X  object, representing a complete orbit, i.e. representing in
+  this  case  a  complete  list. To obtain the elements explicitly, one has to
+  issue  the  [11XList[111X  operation  with as argument the [5Xorb[105X object again. Applying
+  [11XList[111X directly to a collection of subspaces, refers to the enumerator for the
+  collection,  while  using [11XAsList[111X uses the [5Xorb[105X to compute all subspaces as an
+  orbit.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xpg := PG(3,4);[127X[104X
+    [4X[28XProjectiveSpace(3, 4)[128X[104X
+    [4X[25Xgap>[125X [27Xlines := Lines(pg);[127X[104X
+    [4X[28X<lines of ProjectiveSpace(3, 4)>[128X[104X
+    [4X[25Xgap>[125X [27Xlist := List(lines);;[127X[104X
+    [4X[25Xgap>[125X [27XLength(list);[127X[104X
+    [4X[28X357[128X[104X
+    [4X[25Xgap>[125X [27Xaslist := AsList(lines);[127X[104X
+    [4X[28X<closed orbit, 357 points>[128X[104X
+    [4X[25Xgap>[125X [27Xlist2 := List(aslist);;[127X[104X
+    [4X[25Xgap>[125X [27XLength(list2);[127X[104X
+    [4X[28X357[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  

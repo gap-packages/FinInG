@@ -1,0 +1,68 @@
+  
+  
+  [1XReferences[101X
+  
+  [[20XBC13[120X]  [16XBuekenhout,  F.  and  Cohen,  A.  M.[116X,  [17XDiagram  geometry[117X,  Springer,
+  Heidelberg,  Ergebnisse  der  Mathematik und ihrer Grenzgebiete. 3. Folge. A
+  Series  of Modern Surveys in Mathematics [Results in Mathematics and Related
+  Areas.  3rd  Series.  A Series of Modern Surveys in Mathematics], [19X57[119X (2013),
+  xiv+592 pages, (Related to classical groups and buildings).
+  
+  [[20XBS74[120X]  [16XBuekenhout,  F. and Shult, E.[116X, [17XOn the foundations of polar geometry[117X,
+  [18XGeometriae Dedicata[118X, [19X3[119X (1974), 155--170.
+  
+  [[20XCam00a[120X]    [16XCameron,    P.    J.[116X,    [17XClassical    Groups[117X,    Online   notes,
+  \url{http://www.maths.qmul.ac.uk/~pjc/class_gps/} (2000).
+  
+  [[20XCam00b[120X]  [16XCameron,  P.  J.[116X,  [17XProjective  and  Polar  Spaces[117X,  Online  notes,
+  \url{http://www.maths.qmul.ac.uk/~pjc/pps/} (2000).
+  
+  [[20XDem97[120X]  [16XDembowski, P.[116X, [17XFinite geometries[117X, Springer-Verlag, Berlin, Classics
+  in Mathematics (1997), xii+375 pages, (Reprint of the 1968 original).
+  
+  [[20XGil08[120X] [16XGill, N.[116X, [17XPolar spaces and embeddings of classical groups[117X, [18Xto appear
+  in New Zealand J. Math.[118X (2008).
+  
+  [[20XHT91[120X]  [16XHirschfeld, J. W. P. and Thas, J. A.[116X, [17XGeneral Galois geometries[117X, The
+  Clarendon Press Oxford University Press, Oxford Mathematical Monographs, New
+  York (1991), xiv+407 pages, (Oxford Science Publications).
+  
+  [[20XKL90[120X]  [16XKleidman,  P.  and Liebeck, M.[116X, [17XThe subgroup structure of the finite
+  classical  groups[117X,  Cambridge  University Press, London Mathematical Society
+  Lecture Note Series, [19X129[119X, Cambridge (1990), x+303 pages.
+  
+  [[20XLVdV13[120X]  [16XLavrauw, M. and Van de Voorde, G.[116X, [17XField reduction and linear sets
+  in finite geometry[117X, [18Xto appear in AMS Contemp. Math[118X (2013).
+  
+  [[20XOff00[120X]  [16XOffer,  A.[116X,  [17XSpreads  and Ovoids of the Split Cayley Hexagon[117X, Ph.D.
+  thesis, The university of Adelaide (2000).
+  
+  [[20XPT84[120X]  [16XPayne, S. E. and Thas, J. A.[116X, [17XFinite generalized quadrangles[117X, Pitman
+  (Advanced  Publishing  Program), Research Notes in Mathematics, [19X110[119X, Boston,
+  MA (1984), vi+312 pages.
+  
+  [[20XTit59[120X]   [16XTits,   J.[116X,  [17XSur  la  trialit\'e  et  certains  groupes  qui  s'en
+  d\'eduisent[117X, [18XInst. Hautes \'Etudes Sci. Publ. Math.[118X, 2 (1959), 13--60.
+  
+  [[20XTit74[120X]   [16XTits,  J.[116X,  [17XBuildings  of  spherical  type  and  finite  BN-pairs[117X,
+  Springer-Verlag,  Berlin (1974), x+299 pages, (Lecture Notes in Mathematics,
+  Vol. 386).
+  
+  [[20XVel59[120X]  [16XVeldkamp,  F.  D.[116X, [17XPolar geometry. I, II, III, IV, V[117X, [18XNederl. Akad.
+  Wetensch.  Proc. Ser. A 62; 63 = Indag. Math. 21 (1959), 512-551[118X, [19X22[119X (1959),
+  207--212.
+  
+  [[20XVM98[120X]  [16XVan Maldeghem, H.[116X, [17XGeneralized polygons[117X, Birkh\"auser/Springer Basel
+  AG,  Basel,  Modern  Birkh\"auser  Classics  (1998),  xvi+502  pages, ([2011
+  reprint of the 1998 original] [MR1725957]).
+  
+  [[20XVY65a[120X]  [16XVeblen, O. and Young, J. W.[116X, [17XProjective geometry. Vol. 1[117X, Blaisdell
+  Publishing Co. Ginn and Co.\, New York-Toronto-London (1965), x+345 pages.
+  
+  [[20XVY65b[120X]  [16XVeblen, O. and Young, J. W.[116X, [17XProjective geometry. Vol. 2 (by Oswald
+  Veblen)[117X,  Blaisdell  Publishing  Co.  Ginn and Co.\, New York-Toronto-London
+  (1965), x+511 pages.
+  
+  
+  
+  [32X

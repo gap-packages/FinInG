@@ -1,0 +1,174 @@
+  
+  [1XC [33X[0;0YLow level functions for morphisms[133X[101X
+  
+  
+  [1XC.1 [33X[0;0YField reduction and vector spaces[133X[101X
+  
+  [1XC.1-1 ShrinkVec[101X
+  
+  [33X[1;0Y[29X[2XShrinkVec[102X( [3Xf1[103X, [3Xf2[103X, [3Xv[103X, [3Xbasis[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XShrinkVec[102X( [3Xf1[103X, [3Xf2[103X, [3Xv[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya vector[133X
+  
+  [33X[0;0YThe  argument [3Xf2[103X is a subfield of [3Xf1[103X and v is vector in a vectorspace [22XV[122X over
+  [3Xf2[103X.  The  second  flavour  Returns  return  the  vector of length [22Xd/t[122X, where
+  [22Xd=dim(V)[122X,   and   [22Xt=[f1:f2][122X.  The  first  flavour  uses  the  natural  basis
+  [11XBasis(AsVectorSpace(f2,f1))[111X.  It  is not checked whether [3Xf2[103X is a subfield of
+  [3Xf1[103X,  but it is checked whether the lengt of [3Xv[103X is a multiple of the degree of
+  the field extension.[133X
+  
+  [1XC.1-2 ShrinkMat[101X
+  
+  [33X[1;0Y[29X[2XShrinkMat[102X( [3Xbasis[103X, [3Xmatrix[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XShrinkMat[102X( [3Xf1[103X, [3Xf2[103X, [3Xmatrix[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya matrix[133X
+  
+  [33X[0;0YLet  [22XK[122X be the field [22XGF(q)[122X and let [22XL[122X be the field [22XGF(q^t)[122X. Asumme that [22XB[122X is a
+  basis  for  [22XL[122X as [22XK[122X vector space. Let A=(a<sub>ij </sub>) be a matrix over [22XL[122X.
+  The  result  of  [11XBlownUpMat(B,A)[111X  is  the matrix [22XM=(m_ij)[122X , where each entry
+  [22Xa=a_ij[122X is replaced by the [22Xt × t[122X matrix [22XM_a[122X , representing the linear map [22Xx ↦
+  ax[122X  with  respect  to  the basis [22XB[122X. This means that if [22XB={b_1,b_2,...,b_t}[122X ,
+  then  row  [22Xj[122X  is  the row of the [22Xt[122X coefficients of [22Xab_j[122X with resepect to the
+  basis  [22XB[122X.  The operation [11XShrinkMat[111X implements the converse of [11XBlownUpMat[111X. It
+  is  checked if the input is a blown up matrix as follows. Let [22XA[122X be a [22Xtm × tn[122X
+  matrix.  For  each [22Xt × t[122X block, say [22XM[122X, we need to check that the set [22X{b_i^-1
+  ∑_j=1^t  m_ij b_j: i ∈ {1,..,t}}[122X . has size one, since the unique element in
+  that case is the element [22Xa ∈ L[122X represented as a linear map by M with respect
+  to the basis [22XB[122X.[133X
+  
+  [33X[0;0YThe  first  flavour  of  this  operation  requires  a  given  basis as first
+  argument.  The second flavour requires a field [3Xf1[103X and a subfield [3Xf2[103X as first
+  two  arguments  and calls the first flavour with [11XBasis(AsVectorSpace(f2,f1))[111X
+  as basis. It is not checked whether [3Xf2[103X is a subfield of [3Xf1[103X.[133X
+  
+  [1XC.1-3 BlownUpProjectiveSpace[101X
+  
+  [33X[1;0Y[29X[2XBlownUpProjectiveSpace[102X( [3Xbasis[103X, [3Xpg1[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya projective space[133X
+  
+  [33X[0;0YLet  [3Xbasis[103X  be  a  basis  of  the  field [22XGF(q^t)[122X that is an extension of the
+  basefield  of  the  [22Xr-1[122X  dimensional  projective  space  [3Xpg1[103X. This operation
+  returns  the  [22Xrt-1[122X dimensional projective space over [22XGF(q)[122X. The basis itself
+  is only used to determine the field [22XGF(q^t)[122X.[133X
+  
+  [1XC.1-4 BlownUpProjectiveSpaceBySubfield[101X
+  
+  [33X[1;0Y[29X[2XBlownUpProjectiveSpaceBySubfield[102X( [3Xsubfield[103X, [3Xpg[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya projective space[133X
+  
+  [33X[0;0YBlows  up  a  projective  space [3Xpg[103X with respect to the standard basis of the
+  basefield of [3Xpg[103X over the [3Xsubfield[103X.[133X
+  
+  [1XC.1-5 BlownUpSubspaceOfProjectiveSpace[101X
+  
+  [33X[1;0Y[29X[2XBlownUpSubspaceOfProjectiveSpace[102X( [3Xbasis[103X, [3Xsubspace[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XBlownUpSubspaceOfProjectiveSpace[102X( [3Xbasis[103X, [3Xspace[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya subspace of a projective space[133X
+  
+  [33X[0;0YThe  first flavour blows up a [3Xsubspace[103X of a projective space with respect to
+  the  [3Xbasis[103X  using  field  reduction and returns a subspace of the projective
+  space obtained from blowing up the ambient projective space of [3Xsubspace[103X with
+  respect to [3Xbasis[103X using field reduction. This operation relies on [11XBlownUpMat[111X.[133X
+  
+  [1XC.1-6 BlownUpSubspaceOfProjectiveSpaceBySubfield[101X
+  
+  [33X[1;0Y[29X[2XBlownUpSubspaceOfProjectiveSpaceBySubfield[102X( [3Xsubfield[103X, [3Xsubspace[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya subspace of a projective space[133X
+  
+  [33X[0;0YBlows up a [3Xsubspace[103X of a projective space with respect to the standard basis
+  of  the  basefield  of [3Xsubspace[103X over the [3Xsubfield[103X, using field reduction and
+  returns  it  a subspace of the projective space obtained from blowing up the
+  ambient projective space of [3Xsubspace[103X over the subfield.[133X
+  
+  [1XC.1-7 IsDesarguesianSpreadElement[101X
+  
+  [33X[1;0Y[29X[2XIsDesarguesianSpreadElement[102X( [3Xbasis[103X, [3Xsubspace[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ytrue or false[133X
+  
+  [33X[0;0YChecks wether the [3Xsubspace[103X is a subspace which is obtained from a blowing up
+  a projective point using field reduction with respect to [3Xbasis[103X.[133X
+  
+  
+  [1XC.2 [33X[0;0YField reduction and forms[133X[101X
+  
+  [33X[0;0YThe  embedding  of polar spaces by field reduction is explained in detail in
+  Section [14X10.5-3[114X, and relies on the following three operations.[133X
+  
+  [1XC.2-1 QuadraticFormFieldReduction[101X
+  
+  [33X[1;0Y[29X[2XQuadraticFormFieldReduction[102X( [3Xqf1[103X, [3Xf2[103X, [3Xalpha[103X, [3Xbasis[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XQuadraticFormFieldReduction[102X( [3Xqf1[103X, [3Xf2[103X, [3Xalpha[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya quadratic form[133X
+  
+  [33X[0;0YLet  [22Xf[122X  be  quadratic  form  determining a polar space over the field [22XL[122X This
+  operation  returns the quadratic form [22XT_α ∘ f ∘ Φ^-1[122X over a subfield [22XK[122X of [22XL[122X,
+  as explained in Section [14X10.5-3[114X.[133X
+  
+  [1XC.2-2 BilinearFormFieldReduction[101X
+  
+  [33X[1;0Y[29X[2XBilinearFormFieldReduction[102X( [3Xbil11[103X, [3Xf2[103X, [3Xalpha[103X, [3Xbasis[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XBilinearFormFieldReduction[102X( [3Xbil11[103X, [3Xf2[103X, [3Xalpha[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya bilinear form[133X
+  
+  [33X[0;0YLet  [22Xf[122X  be  bilinear  form  determining  a polar space over the field [22XL[122X This
+  operation  returns  the bilinear form [22XT_α ∘ f ∘ Φ^-1[122X over a subfield [22XK[122X of [22XL[122X,
+  as explained in Section [14X10.5-3[114X.[133X
+  
+  [1XC.2-3 HermitianFormFieldReduction[101X
+  
+  [33X[1;0Y[29X[2XHermitianFormFieldReduction[102X( [3Xhf1[103X, [3Xf2[103X, [3Xalpha[103X, [3Xbasis[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XHermitianFormFieldReduction[102X( [3Xhf1[103X, [3Xf2[103X, [3Xalpha[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya hermitian form[133X
+  
+  [33X[0;0YLet  [22Xf[122X  be  bilinear  form  determining  a polar space over the field [22XL[122X This
+  operation  returns the hermitian form [22XT_α ∘ f ∘ Φ^-1[122X over a subfield [22XK[122X of [22XL[122X,
+  as explained in Section [14X10.5-3[114X.[133X
+  
+  
+  [1XC.3 [33X[0;0YLow level functions[133X[101X
+  
+  [1XC.3-1 PluckerCoordinates[101X
+  
+  [33X[1;0Y[29X[2XPluckerCoordinates[102X( [3Xmatrix[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XInversePluckerCoordinates[102X( [3Xvector[103X ) [32X operation[133X
+  
+  [33X[0;0YThe first operation can also take a matrix representing a line of [22XPG(3,q)[122X as
+  argument.  No  checks  are  performed  in  this case. It returns the plucker
+  coordinates  of  the  argument  as list of finite field elements. The second
+  operation  is  the  inverse  of the first. No check is performed whether the
+  argument  represents  a  point  of  the  correct  hyperbolic  quadric.  Both
+  operations are to be used internally only.[133X
+  
+  [1XC.3-2 IsomorphismPolarSpacesProjectionFromNucleus[101X
+  
+  [33X[1;0Y[29X[2XIsomorphismPolarSpacesProjectionFromNucleus[102X( [3Xquadric[103X, [3Xw[103X, [3Xboolean[103X ) [32X operation[133X
+  
+  [33X[0;0YThis  operation  returns  the  isomorphism between a parabolic quadric and a
+  sympletic  polar  space.  Although  it is checked whether the base field and
+  rank  of  both  polar spaces are equal, this operation is menat for internal
+  use only. This operation is called by the operation [11XIsomorphismPolarSpaces[111X.[133X
+  
+  [1XC.3-3 IsomorphismPolarSpacesNC[101X
+  
+  [33X[1;0Y[29X[2XIsomorphismPolarSpacesNC[102X( [3Xps1[103X, [3Xps2[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsomorphismPolarSpacesNC[102X( [3Xps1[103X, [3Xps2[103X, [3Xboolean[103X ) [32X operation[133X
+  
+  [33X[0;0Y[11XIsomorphismPolarSpacesNC[111X  is  the version of [11XIsomorphismPolarSpaces[111X where no
+  checks  are built in, and which is only applicable when the two polar spaces
+  are  equivalent.  As  no  checks  are built in, this operation is to be used
+  internally only.[133X
+  
+  [1XC.3-4 NaturalEmbeddingBySubspaceNC[101X
+  
+  [33X[1;0Y[29X[2XNaturalEmbeddingBySubspaceNC[102X( [3Xgeom1[103X, [3Xgeom2[103X, [3Xv[103X ) [32X operation[133X
+  
+  [33X[0;0YThe  operation  [11XNaturalEmbeddingBySubspaceNC[111X  is the ``no check'' version of
+  [11XNaturalEmbeddingBySubspace[111X.[133X
+  
+  [1XC.3-5 NaturalProjectionBySubspaceNC[101X
+  
+  [33X[1;0Y[29X[2XNaturalProjectionBySubspaceNC[102X( [3Xps[103X, [3Xv[103X ) [32X operation[133X
+  
+  [33X[0;0YThe  operation  [11XNaturalEmbeddingBySubspaceNC[111X  is the ``no check'' version of
+  [11XNaturalEmbeddingBySubspace[111X.[133X
+  

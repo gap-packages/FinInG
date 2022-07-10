@@ -1,0 +1,1149 @@
+  
+  [1X10 [33X[0;0YGeometry Morphisms[133X[101X
+  
+  [33X[0;0YHere  we  describe  what  is  meant by a [13Xgeometry morphism[113X in [5XFinInG[105X and the
+  various  operations  and  tools  available to the user. When using groups in
+  [5XGAP[105X,  we often use homomorphisms to pass from one situation to another, even
+  though  mathematically  it  may  appear  to  be  unneccessary,  there can be
+  ambiguities  if  the  functionality  is  too  flexible. This also applies to
+  finite  geometry.  Take  for  example  the  usual  exercise of thinking of a
+  hyperplane  in  a  projective  space as another projective space. To conform
+  with  similar  situations  in  [5XGAP[105X,  the  right  thing to do is to embed one
+  projective  space  into  another,  rather  than  having one projective space
+  automatically  as  a  substructure  of  another. The reason for this is that
+  there  are  many ways one can do this embedding, even though we may dispense
+  with  this choice when we are working mathematically. So to avoid ambiguity,
+  we stipulate that one should construct the embedding explicitly. How this is
+  done will be described this chapter.[133X
+  
+  [33X[0;0YSuppose that [22XS[122X and [22XS'[122X are two incidence geometries. A [13Xgeometry morphism[113X from
+  [22XS[122X  to [22XS'[122X is defined to be a map from the elements of [22XS[122X to the elements of [22XS'[122X
+  which  preserves  incidence and induces a function from the type set of [22XS[122X to
+  the  type  set  of  [22XS'[122X.  For  instance, a correlation and a collineation are
+  examples  of  geometry  morphisms,  but  they  have  been dealt with in more
+  specific ways in [5XFinInG[105X. We will mainly be concerned with geometry morphisms
+  where  the source and range are different. Hence, the natural embedding of a
+  projective  space in a larger projective space, the mapping induced by field
+  reduction,  and  e.g. the Klein correspondence are examples of such geometry
+  morphisms.[133X
+  
+  [33X[0;0YAs  a  geometry morphism from [22XS[122X to [22XS'[122X preserves incidence, it also preserves
+  the symmetry, and hence it induces also a map from the collineation group of
+  [22XS[122X  into  the  collineation  group  of  [22XS'[122X.  Such  a  map  will  be called an
+  [13XIntertwiner[113X,  and  [5XFinInG[105X  can  provide  these maps for some of the geometry
+  morphisms.[133X
+  
+  [33X[0;0YNote that quite some technicalities are needed in the implementation of some
+  geometry  morphisms.  This chapters deals only with the user interface. Some
+  low level functions for geometry morphisms are described in Appendix [14XC[114X.[133X
+  
+  
+  [1X10.1 [33X[0;0YGeometry morphisms in FinInG[133X[101X
+  
+  [1X10.1-1 IsGeometryMorphism[101X
+  
+  [33X[1;0Y[29X[2XIsGeometryMorphism[102X [32X family[133X
+  
+  [33X[0;0YThe  category [10XIsGeometryMorphism[110X represents a special object in [5XFinInG[105X which
+  carries  attributes and the given element map. The element map is given as a
+  [10XIsGeneralMapping[110X, and so has a source and range.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XShowImpliedFilters(IsGeometryMorphism);[127X[104X
+    [4X[28XImplies:[128X[104X
+    [4X[28X   IsGeneralMapping[128X[104X
+    [4X[28X   IsTotal[128X[104X
+    [4X[28X   Tester(IsTotal)[128X[104X
+    [4X[28X   IsSingleValued[128X[104X
+    [4X[28X   Tester(IsSingleValued)[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  usual  operations  of [10XImageElm[110X, and [10XPreImageElm[110X, have methods installed
+  for geometry morphisms, as well as the overload operator [10X\^[110X.[133X
+  
+  [1X10.1-2 Intertwiner[101X
+  
+  [33X[1;0Y[29X[2XIntertwiner[102X( [3Xf[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya group homomorphism[133X
+  
+  [33X[0;0YThe  argument  [3Xf[103X  is a geometry morphism. If [3Xf[103X comes equipped with a natural
+  intertwiner   from  an  automorphism  group  of  the  source  of  [3Xf[103X  to  the
+  automorphism  group  to  the image of [3Xf[103X, then the user may is able to obtain
+  the  intertwiner  by  calling  this  operation  (see the individual geometry
+  morphism  constructions).  For  most  geometry  morphisms,  there is also an
+  accompanying  intertwiner  for  the  automorphism  groups  of the source and
+  range.  Given  a geometry morphism [22Xf[122X from [22XS[122X to [22XS'[122X, an intertwiner [22Xϕ[122X is a map
+  from  the automorphism group of [22XS[122X to the automorphism group of [22XS'[122X, such that
+  for  every  element  [22Xp[122X  of [22XS[122X and every automorphism [22Xg[122X of [22XS[122X, we have [22Xf(p^g) =
+  f(p)^ϕ(g).[122X[133X
+  
+  [33X[0;0YThere  is no method to compute an intertwiner for a given geometry morphism,
+  the  attribute  is  or  is  not  set during the construction of the geometry
+  morphism,  depending  whether  the Source and Range of the morphism have the
+  appropriate automorphism group known as an attribute. When this condition is
+  not  satisfied,  the  user  is expected to call the appropriate automorphism
+  groups,  so  that  they are computed, and to recompute the geometry morphism
+  (which  will  not  cost  a lot of computation time then). This will make the
+  attribute [11XIntertwiner[111X available. Here is a simple example of the intertwiner
+  for   the  isomorphism  of  two  polar  spaces  (see  [2XIsomorphismPolarSpaces[102X
+  ([14X10.2-1[114X)). The source of the homomorphism is dependent on the geometry.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xform := BilinearFormByMatrix( IdentityMat(3,GF(3)), GF(3) );[127X[104X
+    [4X[28X< bilinear form >[128X[104X
+    [4X[25Xgap>[125X [27Xps := PolarSpace(form);[127X[104X
+    [4X[28X<polar space in ProjectiveSpace(2,GF(3)): x_1^2+x_2^2+x_3^2=0 >[128X[104X
+    [4X[25Xgap>[125X [27Xpq := ParabolicQuadric(2,3);[127X[104X
+    [4X[28Xstandard Q(2, 3)[128X[104X
+    [4X[25Xgap>[125X [27Xiso := IsomorphismPolarSpaces(ps, pq);[127X[104X
+    [4X[28X#I  Computing nice monomorphism...[128X[104X
+    [4X[28X<geometry morphism from <Elements of <polar space in ProjectiveSpace(2,GF([128X[104X
+    [4X[28X3)): x_1^2+x_2^2+x_3^2=0 >> to <Elements of standard Q(2, 3)>>[128X[104X
+    [4X[25Xgap>[125X [27XKnownAttributesOfObject(iso);[127X[104X
+    [4X[28X[ "Range", "Source", "Intertwiner" ][128X[104X
+    [4X[25Xgap>[125X [27Xhom := Intertwiner(iso);[127X[104X
+    [4X[28XMappingByFunction( <projective semilinear group with [128X[104X
+    [4X[28X3 generators>, PGammaO(3,3), function( y ) ... end, function( x ) ... end )[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  
+  [1X10.2 [33X[0;0YType preserving bijective geometry morphisms[133X[101X
+  
+  [33X[0;0YAn  important  class  of  geometry  morphisms in [5XFinInG[105X are the isomorphisms
+  between  polar  spaces  of  the  same  kind  that  are induced by coordinate
+  transformations.[133X
+  
+  [1X10.2-1 IsomorphismPolarSpaces[101X
+  
+  [33X[1;0Y[29X[2XIsomorphismPolarSpaces[102X( [3Xps1[103X, [3Xps2[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsomorphismPolarSpaces[102X( [3Xps1[103X, [3Xps2[103X, [3Xboolean[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya geometry morphism[133X
+  
+  [33X[0;0YThe arguments [3Xps1[103X and [3Xps2[103X are [13Xequivalent[113X polar spaces, i.e. up to coordinate
+  transformation, the underlying sesquilinear or quadratic form determines the
+  same  polar  space,  or, [3Xps1[103X is a parabolic quadric over a finite field [22Xf[122X of
+  even  charateristic  in dimension [22X2n[122X and [3Xps2[103X is a symplectic space over [22Xf[122X in
+  dimension  [22X2n-1[122X,  then this operation returns a geometry isomorphism between
+  them.  The  optional third argument [3Xboolean[103X can take either [10Xtrue[110X or [10Xfalse[110X as
+  input,  and  then  the  operation  will  or will not compute the intertwiner
+  accordingly.  The  user  may  wish that the intertwiner is not computed when
+  working  with  large  polar  spaces. The default (when calling the operation
+  with two arguments) is set to [10Xtrue[110X, and in this case, if at least one of [3Xps1[103X
+  or  [3Xps2[103X  has  a  collineation  group  installed  as  an  attribute,  then an
+  intertwining  homomorphism  is  installed  as  an attribute of the resulting
+  geometry morphism. Hence we also obtain a natural group isomorphism from the
+  collineation  group  of  [3Xps1[103X  onto  the  collineation group of [3Xps2[103X (see also
+  [2XIntertwiner[102X ([14X10.1-2[114X)).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat1 := IdentityMat(6,GF(5));[127X[104X
+    [4X[28X< mutable compressed matrix 6x6 over GF(5) >[128X[104X
+    [4X[25Xgap>[125X [27Xform1 := BilinearFormByMatrix(mat1,GF(5));[127X[104X
+    [4X[28X< bilinear form >[128X[104X
+    [4X[25Xgap>[125X [27Xps1 := PolarSpace(form1);[127X[104X
+    [4X[28X<polar space in ProjectiveSpace([128X[104X
+    [4X[28X5,GF(5)): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2=0 >[128X[104X
+    [4X[25Xgap>[125X [27Xmat2 := [[0,0,0,0,0,1],[0,0,0,0,1,0],[0,0,0,1,0,0],[127X[104X
+    [4X[25X>[125X [27X[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]]*Z(5)^0;[127X[104X
+    [4X[28X[ [ 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), Z(5)^0 ], [128X[104X
+    [4X[28X  [ 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), Z(5)^0, 0*Z(5) ], [128X[104X
+    [4X[28X  [ 0*Z(5), 0*Z(5), 0*Z(5), Z(5)^0, 0*Z(5), 0*Z(5) ], [128X[104X
+    [4X[28X  [ 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5) ], [128X[104X
+    [4X[28X  [ 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5) ], [128X[104X
+    [4X[28X  [ 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xform2 := QuadraticFormByMatrix(mat2,GF(5));[127X[104X
+    [4X[28X< quadratic form >[128X[104X
+    [4X[25Xgap>[125X [27Xps2 := PolarSpace(form2);[127X[104X
+    [4X[28X<polar space in ProjectiveSpace(5,GF(5)): x_1*x_6+x_2*x_5+x_3*x_4=0 >[128X[104X
+    [4X[25Xgap>[125X [27Xiso := IsomorphismPolarSpaces(ps1,ps2,true);[127X[104X
+    [4X[28X#I  No intertwiner computed. One of the polar spaces must have a collineation group computed[128X[104X
+    [4X[28X<geometry morphism from <Elements of Q+(5, [128X[104X
+    [4X[28X5): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2=0> to <Elements of Q+(5, [128X[104X
+    [4X[28X5): x_1*x_6+x_2*x_5+x_3*x_4=0>>[128X[104X
+    [4X[25Xgap>[125X [27XCollineationGroup(ps1);[127X[104X
+    [4X[28X#I  Computing collineation group of canonical polar space...[128X[104X
+    [4X[28X<projective collineation group of size 58032000000 with 4 generators>[128X[104X
+    [4X[25Xgap>[125X [27XCollineationGroup(ps2);[127X[104X
+    [4X[28X#I  Computing collineation group of canonical polar space...[128X[104X
+    [4X[28X<projective collineation group of size 58032000000 with 4 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xiso := IsomorphismPolarSpaces(ps1,ps2,true);[127X[104X
+    [4X[28X<geometry morphism from <Elements of Q+(5, [128X[104X
+    [4X[28X5): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2=0> to <Elements of Q+(5, [128X[104X
+    [4X[28X5): x_1*x_6+x_2*x_5+x_3*x_4=0>>[128X[104X
+    [4X[25Xgap>[125X [27Xhom := Intertwiner( iso );[127X[104X
+    [4X[28XMappingByFunction( <projective collineation group of size 58032000000 with [128X[104X
+    [4X[28X4 generators>, <projective collineation group of size 58032000000 with [128X[104X
+    [4X[28X4 generators>, function( y ) ... end, function( x ) ... end )[128X[104X
+    [4X[25Xgap>[125X [27Xps1 := ParabolicQuadric(6,8);[127X[104X
+    [4X[28XQ(6, 8)[128X[104X
+    [4X[25Xgap>[125X [27Xps2 := SymplecticSpace(5,8);[127X[104X
+    [4X[28XW(5, 8)[128X[104X
+    [4X[25Xgap>[125X [27Xem := IsomorphismPolarSpaces(ps1,ps2);[127X[104X
+    [4X[28X#I  Have 36171 points.[128X[104X
+    [4X[28X#I  Have 37381 points in new orbit.[128X[104X
+    [4X[28X#I  Have 36171 points.[128X[104X
+    [4X[28X#I  Have 37388 points in new orbit.[128X[104X
+    [4X[28X<geometry morphism from <Elements of Q(6, 8)> to <Elements of W(5, 8)>>[128X[104X
+    [4X[25Xgap>[125X [27Xhom := Intertwiner(em);[127X[104X
+    [4X[28XMappingByFunction( PGammaO(7,8), <projective collineation group of size [128X[104X
+    [4X[28X27231016821530296320 with [128X[104X
+    [4X[28X3 generators>, function( el ) ... end, function( el ) ... end )[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  
+  [1X10.3 [33X[0;0YKlein correspondence and derived dualities[133X[101X
+  
+  [33X[0;0YThe Klein correspondence is a well known geometry morphism from the lines of
+  [22XPG(3,q)[122X  to the points of a hyperbolic quadric in [22XPG(5,q)[122X. This morphism and
+  some  derived  morphisms  are  provided in [5XFinInG[105X. The bare essential of the
+  Klein corresondence is the so-called Plücker map.[133X
+  
+  [1X10.3-1 PluckerCoordinates[101X
+  
+  [33X[1;0Y[29X[2XPluckerCoordinates[102X( [3Xline[103X ) [32X operation[133X
+  
+  [33X[0;0YThis  operation  takes a line of [22XPG(3,q)[122X as argument. It returns the plucker
+  coordinates  of  the  argument as list of finite field elements. The retured
+  list  can  be  used  in operations as [11XVectorSpaceToElement[111X, and represents a
+  point    of    the    hyperbolic    quadric   in   [22XPG(5,q)[122X   with   equation
+  [22XX_0X_5+X_1X_4+X_2X_3 = 0[122X[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xpg := PG(3,169);[127X[104X
+    [4X[28XProjectiveSpace(3, 169)[128X[104X
+    [4X[25Xgap>[125X [27Xl := Random(Lines(pg));[127X[104X
+    [4X[28X<a line in ProjectiveSpace(3, 169)>[128X[104X
+    [4X[25Xgap>[125X [27Xvec := PluckerCoordinates(l);[127X[104X
+    [4X[28X[ Z(13)^0, Z(13^2)^138, Z(13^2)^93, Z(13^2)^53, Z(13^2)^71, Z(13^2)^106 ][128X[104X
+    [4X[25Xgap>[125X [27Xmat := [[0,0,0,0,0,1],[0,0,0,0,1,0],[0,0,0,1,0,0],[127X[104X
+    [4X[25X>[125X [27X[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]]*Z(13)^0;[127X[104X
+    [4X[28X[ [ 0*Z(13), 0*Z(13), 0*Z(13), 0*Z(13), 0*Z(13), Z(13)^0 ], [128X[104X
+    [4X[28X  [ 0*Z(13), 0*Z(13), 0*Z(13), 0*Z(13), Z(13)^0, 0*Z(13) ], [128X[104X
+    [4X[28X  [ 0*Z(13), 0*Z(13), 0*Z(13), Z(13)^0, 0*Z(13), 0*Z(13) ], [128X[104X
+    [4X[28X  [ 0*Z(13), 0*Z(13), 0*Z(13), 0*Z(13), 0*Z(13), 0*Z(13) ], [128X[104X
+    [4X[28X  [ 0*Z(13), 0*Z(13), 0*Z(13), 0*Z(13), 0*Z(13), 0*Z(13) ], [128X[104X
+    [4X[28X  [ 0*Z(13), 0*Z(13), 0*Z(13), 0*Z(13), 0*Z(13), 0*Z(13) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xform := QuadraticFormByMatrix(mat,GF(169));[127X[104X
+    [4X[28X< quadratic form >[128X[104X
+    [4X[25Xgap>[125X [27Xklein := PolarSpace(form);[127X[104X
+    [4X[28X<polar space in ProjectiveSpace(5,GF(13^2)): x_1*x_6+x_2*x_5+x_3*x_4=0 >[128X[104X
+    [4X[25Xgap>[125X [27XVectorSpaceToElement(klein,vec);[127X[104X
+    [4X[28X<a point in Q+(5, 169): x_1*x_6+x_2*x_5+x_3*x_4=0>[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X10.3-2 KleinCorrespondence[101X
+  
+  [33X[1;0Y[29X[2XKleinCorrespondence[102X( [3Xf[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XKleinCorrespondence[102X( [3Xf[103X, [3Xboolean[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XKleinCorrespondence[102X( [3Xq[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XKleinCorrespondence[102X( [3Xq[103X, [3Xboolean[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya geometry morphism[133X
+  
+  [33X[0;0YThe argument [3Xf[103X is a finite field, the argument [3Xq[103X is a prime power. The first
+  an the third version use [9Xtrue[109X as value for [3Xboolean[103X. When using [9Xtrue[109X as value
+  for  the boolean, the intertwiner is computed. This variant of the operation
+  [11XKleinCorrespondence[111X  has  always  as  ambient  geometry  of  its  range  the
+  hyperbolic  quadric  [22XQ^+(5,q)[122X  with  equation  [22XX_0X_5+X_1X_4+X_2X_3  = 0[122X The
+  returned geometry morphism has the lines of [22XPG(3,q)[122X as source and the points
+  of [22XQ^+(5,q)[122X as range.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xk := KleinCorrespondence( 9 );[127X[104X
+    [4X[28X<geometry morphism from <lines of ProjectiveSpace(3, 9)> to <points of Q+(5, [128X[104X
+    [4X[28X9): x_1*x_6+x_2*x_5+x_3*x_4=0>>[128X[104X
+    [4X[25Xgap>[125X [27XIntertwiner(k);[127X[104X
+    [4X[28XMappingByFunction( The FinInG collineation group PGammaL(4,9), <projective col[128X[104X
+    [4X[28Xlineation group with [128X[104X
+    [4X[28X3 generators>, function( g ) ... end, function( g ) ... end )[128X[104X
+    [4X[25Xgap>[125X [27Xpg := ProjectiveSpace(3, 9);[127X[104X
+    [4X[28XProjectiveSpace(3, 9)[128X[104X
+    [4X[25Xgap>[125X [27XAmbientGeometry(Range(k));[127X[104X
+    [4X[28XQ+(5, 9): x_1*x_6+x_2*x_5+x_3*x_4=0[128X[104X
+    [4X[25Xgap>[125X [27Xl := Random( Lines(pg) );[127X[104X
+    [4X[28X<a line in ProjectiveSpace(3, 9)>[128X[104X
+    [4X[25Xgap>[125X [27Xl^k;[127X[104X
+    [4X[28X<a point in Q+(5, 9): x_1*x_6+x_2*x_5+x_3*x_4=0>[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X10.3-3 KleinCorrespondence[101X
+  
+  [33X[1;0Y[29X[2XKleinCorrespondence[102X( [3Xquadric[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XKleinCorrespondence[102X( [3Xquadric[103X, [3Xboolean[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya geometry morphism[133X
+  
+  [33X[0;0YThe  argument  [3Xquadric[103X is a hyperbolic quadric in a 5 dimensional projective
+  space.  If [3Xboolean[103X is [9Xtrue[109X or not given, this operation returns the geometry
+  morphism  equipped  with  an intertwiner. The returned geometry morphism has
+  the lines of [22XPG(3,q)[122X as source and the points of [22XQ^+(5,q)[122X as range.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xquadric := HyperbolicQuadric(5,3);                                         [127X[104X
+    [4X[28XQ+(5, 3)[128X[104X
+    [4X[25Xgap>[125X [27Xk := KleinCorrespondence( quadric );[127X[104X
+    [4X[28X<geometry morphism from <lines of ProjectiveSpace(3, 3)> to <points of Q+(5, [128X[104X
+    [4X[28X3)>>[128X[104X
+    [4X[25Xgap>[125X [27Xpg := ProjectiveSpace(3, 3);[127X[104X
+    [4X[28XProjectiveSpace(3, 3)[128X[104X
+    [4X[25Xgap>[125X [27Xl := Random( Lines(pg) );[127X[104X
+    [4X[28X<a line in ProjectiveSpace(3, 3)>[128X[104X
+    [4X[25Xgap>[125X [27Xl^k;[127X[104X
+    [4X[28X<a point in Q+(5, 3)>[128X[104X
+    [4X[25Xgap>[125X [27Xid := IdentityMat(6,GF(13));[127X[104X
+    [4X[28X< mutable compressed matrix 6x6 over GF(13) >[128X[104X
+    [4X[25Xgap>[125X [27Xform := QuadraticFormByMatrix(id,GF(13));[127X[104X
+    [4X[28X< quadratic form >[128X[104X
+    [4X[25Xgap>[125X [27Xquadric := PolarSpace(form);[127X[104X
+    [4X[28X<polar space in ProjectiveSpace([128X[104X
+    [4X[28X5,GF(13)): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2=0 >[128X[104X
+    [4X[25Xgap>[125X [27Xk := KleinCorrespondence( quadric );[127X[104X
+    [4X[28X<geometry morphism from <lines of ProjectiveSpace(3, 13)> to <points of Q+(5, [128X[104X
+    [4X[28X13): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2=0>>[128X[104X
+    [4X[25Xgap>[125X [27Xpg := AmbientGeometry(Source(k));[127X[104X
+    [4X[28XProjectiveSpace(3, 13)[128X[104X
+    [4X[25Xgap>[125X [27Xl := Random(Lines(pg));[127X[104X
+    [4X[28X<a line in ProjectiveSpace(3, 13)>[128X[104X
+    [4X[25Xgap>[125X [27Xl^k;[127X[104X
+    [4X[28X<a point in Q+(5, 13): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2=0>[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X10.3-4 KleinCorrespondenceExtended[101X
+  
+  [33X[1;0Y[29X[2XKleinCorrespondenceExtended[102X( [3Xquadric[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XKleinCorrespondenceExtended[102X( [3Xquadric[103X, [3Xboolean[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya geometry morphism[133X
+  
+  [33X[0;0YThe  argument  [3Xquadric[103X is a hyperbolic quadric in a 5 dimensional projective
+  space.  If [3Xboolean[103X is [9Xtrue[109X or not given, this operation returns the geometry
+  morphism  equipped  with  an intertwiner. The returned geometry morphism has
+  all  the elements of [22XPG(3,q)[122X as source (not just the lines) and the elements
+  of  [22XQ^+(5,q)[122X  as  range,  hence  this  operation  is  a kind of extension of
+  [11XKleinCorrespondence[111X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := HyperbolicQuadric(5,7);[127X[104X
+    [4X[28XQ+(5, 7)[128X[104X
+    [4X[25Xgap>[125X [27Xem := KleinCorrespondenceExtended(ps);[127X[104X
+    [4X[28X<geometry morphism from <All elements of ProjectiveSpace(3, [128X[104X
+    [4X[28X7)> to <Elements of Q+(5, 7)>>[128X[104X
+    [4X[25Xgap>[125X [27Xhom := Intertwiner(em);[127X[104X
+    [4X[28XMappingByFunction( The FinInG collineation group PGL(4,7), <projective colline[128X[104X
+    [4X[28Xation group with 2 generators>, function( g ) ... end, function( g ) ... end )[128X[104X
+    [4X[25Xgap>[125X [27Xmat := [[0,0,0,0,0,1],[0,0,0,0,1,0],[0,0,0,1,0,0],[127X[104X
+    [4X[25X>[125X [27X	[0,0,1,0,0,0],[0,1,0,0,0,0],[1,0,0,0,0,0]]*Z(7)^0;[127X[104X
+    [4X[28X[ [ 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^0 ], [128X[104X
+    [4X[28X  [ 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^0, 0*Z(7) ], [128X[104X
+    [4X[28X  [ 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^0, 0*Z(7), 0*Z(7) ], [128X[104X
+    [4X[28X  [ 0*Z(7), 0*Z(7), Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7) ], [128X[104X
+    [4X[28X  [ 0*Z(7), Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7) ], [128X[104X
+    [4X[28X  [ Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xg := Projectivity(mat,GF(7));[127X[104X
+    [4X[28X< a collineation: <cmat 6x6 over GF(7,1)>, F^0>[128X[104X
+    [4X[25Xgap>[125X [27Xg in CollineationGroup(ps);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XPreImageElm(hom,g);[127X[104X
+    [4X[28X#I  <el> is not inducing a collineation of PG(3,q)[128X[104X
+    [4X[28Xfail[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YIt  is  well  known  that  the  classical generalised quadrangles [22XW(3,q)[122X and
+  [22XQ(4,q)[122X  are  dual  incidence  structures,  the  same holds for the classical
+  generalised  quadrangles  [22XQ^-(5,q)[122X  and  [22XH(3,q^2)[122X.  Essentially,  these dual
+  dualities are based on the Klein correspondence, and are implemented through
+  the operation [11XNaturalDuality[111X, this operation will return a geometry morphism
+  with       [10XElementsOfIncidenceStructure(gq1)[110X       as       source       and
+  [10XElementsOfIncidenceStructure(gq2)[110X as range, in other words, it is a geometry
+  morphism  from  all  the  elements  of  [3Xgq1[103X  onto  all  the elements of [3Xgq2[103X,
+  preserving the incidence, and swapping the types.[133X
+  
+  [1X10.3-5 NaturalDuality[101X
+  
+  [33X[1;0Y[29X[2XNaturalDuality[102X( [3Xgq1[103X, [3Xgq2[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XNaturalDuality[102X( [3Xgq1[103X, [3Xgq2[103X, [3Xboolean[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XNaturalDuality[102X( [3Xgq[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XNaturalDuality[102X( [3Xgq[103X, [3Xboolean[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya geometry morphism[133X
+  
+  [33X[0;0YThe  operation  allows  the  construction  of the duality between [22XW(3,q)[122X and
+  [22XQ(4,q)[122X,  respectively  [22XQ^-(5,q)[122X,  in  two  directions.  It is checked if the
+  arguments are appropriate, i.e. the right type of generalised quadrangle(s).
+  The first version requires two arguments: either the symplectic or parabolic
+  quadrangle, in any order, and defined by any suitable bilinear/quadratic and
+  bilinear  form; or the elliptic or hermitian quadrangle (in dimension [22X3[122X), in
+  any  order,  and  defined  by  any suitable bilinear/quadratic and hermitian
+  form.  In  all  cases  the  generalised  quadrangles may be the standard one
+  provided by the package [5XFinInG[105X.[133X
+  
+  [33X[0;0YThe  third  version  requires  only  one  argument,  either  [22XW(3,q)[122X, [22XQ(4,q)[122X,
+  [22XQ^-(5,q)[122X,  or  [22XH(3,q^2)[122X,  standard  or  user  specified using an appropriate
+  bilinear,  quadratic  or  hermitian form. The range of the returned geometry
+  morphism  will  be  the  set  of  all  elements  of  a  suitable generalised
+  quadrangle, in standard form.[133X
+  
+  [33X[0;0YThe  first and third version without a boolean as argument will, if possible
+  return  a  geometry morphism equipped with an intertwiner. Using the boolean
+  argument  [3Xfalse[103X will return a geometry morphism that is not equipped with an
+  intertwiner.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xw := SymplecticSpace(3,5);[127X[104X
+    [4X[28XW(3, 5)[128X[104X
+    [4X[25Xgap>[125X [27Xlines:=AsList(Lines(w));;[127X[104X
+    [4X[25Xgap>[125X [27Xduality := NaturalDuality(w);[127X[104X
+    [4X[28X<geometry morphism from <Elements of W(3, 5)> to <Elements of Q(4, 5)>>[128X[104X
+    [4X[25Xgap>[125X [27Xl:=lines[1];[127X[104X
+    [4X[28X<a line in W(3, 5)>[128X[104X
+    [4X[25Xgap>[125X [27Xl^duality;[127X[104X
+    [4X[28X<a point in Q(4, 5)>[128X[104X
+    [4X[25Xgap>[125X [27XPreImageElm(duality,last);[127X[104X
+    [4X[28X<a line in W(3, 5)>[128X[104X
+    [4X[25Xgap>[125X [27Xhom := Intertwiner(duality);[127X[104X
+    [4X[28XMappingByFunction( PGammaSp(4,5), <projective collineation group of size [128X[104X
+    [4X[28X9360000 with 4 generators>, function( g ) ... end, function( g ) ... end )[128X[104X
+    [4X[25Xgap>[125X [27Xq := 5;[127X[104X
+    [4X[28X5[128X[104X
+    [4X[25Xgap>[125X [27Xq5q := EllipticQuadric(5,q);[127X[104X
+    [4X[28XQ-(5, 5)[128X[104X
+    [4X[25Xgap>[125X [27Xmat := [[0,1,0,0],[1,0,0,0],[0,0,0,Z(q)],[0,0,Z(q),0]]*Z(q)^0;[127X[104X
+    [4X[28X[ [ 0*Z(5), Z(5)^0, 0*Z(5), 0*Z(5) ], [ Z(5)^0, 0*Z(5), 0*Z(5), 0*Z(5) ], [128X[104X
+    [4X[28X  [ 0*Z(5), 0*Z(5), 0*Z(5), Z(5) ], [ 0*Z(5), 0*Z(5), Z(5), 0*Z(5) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xhform := HermitianFormByMatrix(mat,GF(q^2));[127X[104X
+    [4X[28X< hermitian form >[128X[104X
+    [4X[25Xgap>[125X [27Xherm := PolarSpace(hform);[127X[104X
+    [4X[28X<polar space in ProjectiveSpace([128X[104X
+    [4X[28X3,GF(5^2)): x1^5*x2+x1*x2^5+Z(5)*x3^5*x4+Z(5)*x3*x4^5=0 >[128X[104X
+    [4X[25Xgap>[125X [27Xduality := NaturalDuality(q5q,herm,true);[127X[104X
+    [4X[28X<geometry morphism from <Elements of Q-(5, 5)> to <Elements of H(3, [128X[104X
+    [4X[28X5^2): x1^5*x2+x1*x2^5+Z(5)*x3^5*x4+Z(5)*x3*x4^5=0>>[128X[104X
+    [4X[25Xgap>[125X [27Xhom := Intertwiner(duality);[127X[104X
+    [4X[28XMappingByFunction( PDeltaO-(6,5), <projective collineation group of size [128X[104X
+    [4X[28X58968000000 with 3 generators>, function( g ) ... end, function( g ) ... end )[128X[104X
+    [4X[25Xgap>[125X [27Xg := Random(CollineationGroup(q5q));[127X[104X
+    [4X[28X< a collineation: <cmat 6x6 over GF(5,1)>, F^0>[128X[104X
+    [4X[25Xgap>[125X [27Xg^hom;[127X[104X
+    [4X[28X< a collineation: <cmat 4x4 over GF(5,2)>, F^5>[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  combination of the isomorphism of the GQs [22XW(3,q)[122X, [22XQ(4,q)[122X when [22Xq[122X is even
+  and  the  duality  between the same GQs, yields a duality from each of these
+  GQs itself. The operation [11XSelfDuality[111X implements this combination.[133X
+  
+  [1X10.3-6 SelfDuality[101X
+  
+  [33X[1;0Y[29X[2XSelfDuality[102X( [3Xgq[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XSelfDuality[102X( [3Xgq[103X, [3Xboolean[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya geometry morphism[133X
+  
+  [33X[0;0YIt  is checked wheter the base field of [3Xgq[103X is a field of charateristic 2 and
+  whether   [3Xgq[103X   is  a  symplectic  generalised  quadrangle  in  3-dimensional
+  projective  space  or a parabolic quadric in 4-dimensional projective space.
+  The  first  version will return, when possible, a geometry morphism equipped
+  with an intertwiner. Using the boolean argument [3Xfalse[103X will return a geometry
+  morphism that is not equipped with an intertwiner. The example shows the use
+  of the boolean argument.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xq := 16;[127X[104X
+    [4X[28X16[128X[104X
+    [4X[25Xgap>[125X [27Xmat := [[0,1,0,0,0],[0,0,0,0,0],[0,0,1,0,0],[0,0,0,0,0],[0,0,0,1,0]]*Z(q)^0;[127X[104X
+    [4X[28X[ [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ], [128X[104X
+    [4X[28X  [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ], [128X[104X
+    [4X[28X  [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ], [128X[104X
+    [4X[28X  [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ], [128X[104X
+    [4X[28X  [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xform := QuadraticFormByMatrix(mat,GF(q));[127X[104X
+    [4X[28X< quadratic form >[128X[104X
+    [4X[25Xgap>[125X [27Xq4q := PolarSpace(form);[127X[104X
+    [4X[28X<polar space in ProjectiveSpace(4,GF(2^4)): x_1*x_2+x_3^2+x_4*x_5=0 >[128X[104X
+    [4X[25Xgap>[125X [27Xem := SelfDuality(q4q);[127X[104X
+    [4X[28X#I  No intertwiner computed. The polar space must have a collineation group computed[128X[104X
+    [4X[28X<geometry morphism from <Elements of Q(4, [128X[104X
+    [4X[28X16): x_1*x_2+x_3^2+x_4*x_5=0> to <Elements of Q(4, [128X[104X
+    [4X[28X16): x_1*x_2+x_3^2+x_4*x_5=0>>[128X[104X
+    [4X[25Xgap>[125X [27XCollineationGroup(q4q);[127X[104X
+    [4X[28X#I  Computing collineation group of canonical polar space...[128X[104X
+    [4X[28X<projective collineation group of size 4380799795200 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xem := SelfDuality(q4q);[127X[104X
+    [4X[28X<geometry morphism from <Elements of Q(4, [128X[104X
+    [4X[28X16): x_1*x_2+x_3^2+x_4*x_5=0> to <Elements of Q(4, [128X[104X
+    [4X[28X16): x_1*x_2+x_3^2+x_4*x_5=0>>[128X[104X
+    [4X[25Xgap>[125X [27Xhom := Intertwiner(em);[127X[104X
+    [4X[28XMappingByFunction( <projective collineation group of size 4380799795200 with [128X[104X
+    [4X[28X3 generators>, <projective collineation group of size 4380799795200 with [128X[104X
+    [4X[28X3 generators>, function( el ) ... end, function( el ) ... end )[128X[104X
+    [4X[25Xgap>[125X [27Xq := 16;[127X[104X
+    [4X[28X16[128X[104X
+    [4X[25Xgap>[125X [27Xw := SymplecticSpace(3,q);[127X[104X
+    [4X[28XW(3, 16)[128X[104X
+    [4X[25Xgap>[125X [27Xem := SelfDuality(w);[127X[104X
+    [4X[28X<geometry morphism from <Elements of W(3, 16)> to <Elements of W(3, 16)>>[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X10.4 [33X[0;0YEmbeddings of projective spaces[133X[101X
+  
+  [33X[0;0YThe  most  natural of geometry morphisms include, for example, the embedding
+  of  a  projective  space  into  another  via  a subspace, the embedding of a
+  projective  space over a field into a projective space of the same dimension
+  over  an extended field, or the embedding of a projective space over a field
+  into  a  projective  space  of  higher  dimension  over  a  subfield through
+  so-called field reduction.[133X
+  
+  [1X10.4-1 NaturalEmbeddingBySubspace[101X
+  
+  [33X[1;0Y[29X[2XNaturalEmbeddingBySubspace[102X( [3Xgeom1[103X, [3Xgeom2[103X, [3Xv[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya geometry morphism[133X
+  
+  [33X[0;0YThe  arguments  [3Xgeom1[103X  and  [3Xgeom2[103X  are  both  projective spaces, and [3Xv[103X is an
+  element  of  a geom2. This function returns a geometry morphism representing
+  the natural embedding of [3Xgeom1[103X into [3Xgeom2[103X as the subspace [3Xv[103X. Hence [3Xgeom1[103X and
+  [3Xv[103X  must  be  equivalent as geometries. An Intertwiner is not implemented for
+  this geometry morphism.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xgeom1 := ProjectiveSpace(2, 3);[127X[104X
+    [4X[28XProjectiveSpace(2, 3)[128X[104X
+    [4X[25Xgap>[125X [27Xgeom2 := ProjectiveSpace(3, 3);[127X[104X
+    [4X[28XProjectiveSpace(3, 3)[128X[104X
+    [4X[25Xgap>[125X [27Xplanes := Planes(geom2);[127X[104X
+    [4X[28X<planes of ProjectiveSpace(3, 3)>[128X[104X
+    [4X[25Xgap>[125X [27Xhyp := Random(planes);[127X[104X
+    [4X[28X<a plane in ProjectiveSpace(3, 3)>[128X[104X
+    [4X[25Xgap>[125X [27Xem := NaturalEmbeddingBySubspace(geom1, geom2, hyp);[127X[104X
+    [4X[28X<geometry morphism from <All elements of ProjectiveSpace(2, [128X[104X
+    [4X[28X3)> to <All elements of ProjectiveSpace(3, 3)>>[128X[104X
+    [4X[25Xgap>[125X [27Xpoints := Points(geom1);[127X[104X
+    [4X[28X<points of ProjectiveSpace(2, 3)>[128X[104X
+    [4X[25Xgap>[125X [27Xx := Random(points);[127X[104X
+    [4X[28X<a point in ProjectiveSpace(2, 3)>[128X[104X
+    [4X[25Xgap>[125X [27Xx^em;[127X[104X
+    [4X[28X<a point in ProjectiveSpace(3, 3)>[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X10.4-2 NaturalEmbeddingBySubField[101X
+  
+  [33X[1;0Y[29X[2XNaturalEmbeddingBySubField[102X( [3Xgeom1[103X, [3Xgeom2[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XNaturalEmbeddingBySubField[102X( [3Xgeom1[103X, [3Xgeom2[103X, [3Xboolean[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya geometry morphism[133X
+  
+  [33X[0;0YThe  arguments  [3Xgeom1[103X and [3Xgeom2[103X are projective spaces of the same dimension.
+  This function returns a geometry morphism representing the natural embedding
+  of [3Xgeom1[103X into [3Xgeom2[103X as a subfield geometry. The geometry morphism also comes
+  equipped  with an intertwiner (see [2XIntertwiner[102X ([14X10.1-2[114X)). The optional third
+  argument  [3Xboolean[103X  can  take  either  [10Xtrue[110X  or  [10Xfalse[110X as input, and then our
+  operation  will or will not compute the intertwiner accordingly. The default
+  (when  calling  the  operation with two arguments) is set to [10Xtrue[110X. Note that
+  the  source  of  the  intertwiner is the projectivity group of [3Xgeom1[103X and its
+  range  is  a  subgroup  of the projectivity group of [3Xgeom2[103X. Here is a simple
+  example where the geometry morphism embeds PG(2,3) into PG(2,9).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xpg1 := PG(2,3);[127X[104X
+    [4X[28XProjectiveSpace(2, 3)[128X[104X
+    [4X[25Xgap>[125X [27Xpg2 := PG(2,9);[127X[104X
+    [4X[28XProjectiveSpace(2, 9)[128X[104X
+    [4X[25Xgap>[125X [27Xem := NaturalEmbeddingBySubfield(pg1,pg2);[127X[104X
+    [4X[28X<geometry morphism from <All elements of ProjectiveSpace(2, [128X[104X
+    [4X[28X3)> to <All elements of ProjectiveSpace(2, 9)>>[128X[104X
+    [4X[25Xgap>[125X [27Xpoints := AsList(Points( pg1 ));[127X[104X
+    [4X[28X[ <a point in ProjectiveSpace(2, 3)>, <a point in ProjectiveSpace(2, 3)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(2, 3)>, <a point in ProjectiveSpace(2, 3)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(2, 3)>, <a point in ProjectiveSpace(2, 3)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(2, 3)>, <a point in ProjectiveSpace(2, 3)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(2, 3)>, <a point in ProjectiveSpace(2, 3)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(2, 3)>, <a point in ProjectiveSpace(2, 3)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(2, 3)> ][128X[104X
+    [4X[25Xgap>[125X [27Ximage := ImagesSet(em, points);[127X[104X
+    [4X[28X[ <a point in ProjectiveSpace(2, 9)>, <a point in ProjectiveSpace(2, 9)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(2, 9)>, <a point in ProjectiveSpace(2, 9)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(2, 9)>, <a point in ProjectiveSpace(2, 9)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(2, 9)>, <a point in ProjectiveSpace(2, 9)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(2, 9)>, <a point in ProjectiveSpace(2, 9)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(2, 9)>, <a point in ProjectiveSpace(2, 9)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(2, 9)> ][128X[104X
+    [4X[25Xgap>[125X [27Xhom := Intertwiner(em);[127X[104X
+    [4X[28XMappingByFunction( The FinInG projectivity group PGL(3,3), <projective colline[128X[104X
+    [4X[28Xation group of size 5616 with [128X[104X
+    [4X[28X2 generators>, function( x ) ... end, function( y ) ... end )[128X[104X
+    [4X[25Xgap>[125X [27Xgroup1 := ProjectivityGroup(pg1);[127X[104X
+    [4X[28XThe FinInG projectivity group PGL(3,3)[128X[104X
+    [4X[25Xgap>[125X [27Xgens := GeneratorsOfGroup(group1);[127X[104X
+    [4X[28X[ < a collineation: <cmat 3x3 over GF(3,1)>, F^0>, [128X[104X
+    [4X[28X  < a collineation: <cmat 3x3 over GF(3,1)>, F^0> ][128X[104X
+    [4X[25Xgap>[125X [27Xgroup1_image := Group(List(gens,x->x^hom));[127X[104X
+    [4X[28X<projective collineation group with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27XOrder(group1_image);[127X[104X
+    [4X[28X5616[128X[104X
+    [4X[25Xgap>[125X [27Xgroup2 := ProjectivityGroup(pg2);[127X[104X
+    [4X[28XThe FinInG projectivity group PGL(3,9)[128X[104X
+    [4X[25Xgap>[125X [27XOrder(group2);[127X[104X
+    [4X[28X42456960[128X[104X
+    [4X[25Xgap>[125X [27Xg := Random(group2);[127X[104X
+    [4X[28X< a collineation: <cmat 3x3 over GF(3,2)>, F^0>[128X[104X
+    [4X[25Xgap>[125X [27XPreImageElm(hom,g);[127X[104X
+    [4X[28X#I  <el> is not in the range of the intertwiner[128X[104X
+    [4X[28Xfail[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X10.4-3 [33X[0;0YEmbedding of projective spaces by field reduction[133X[101X
+  
+  [33X[0;0YWe briefly describe the mathematics behind field reduction. For more details
+  we  refer  to  [LVdV13].  Consider  the  fields [22XGF(q)[122X and [22XGF(q^t)[122X. The field
+  [22XGF(q^t)[122X is a [22Xt[122X-dimensional vector space over [22XGF(q)[122X. Hence, with respect to a
+  chosen basis [22XB[122X for [22XGF(q^t)[122X as a [22XGF(q)[122X-vectorspace, the bijection between the
+  vectorspaces   [22XV(n,q^t)[122X   and  [22XV(tn,q)[122X  can  be  implemented.  Consider  the
+  projective  space  [22XPG(n-1,q^t)[122X. The elements are represented by subspaces of
+  [22XV(n,q^t)[122X.   Clearly,  a  [22Xk[122X  dimensional  subspace  of  [22XV(n,q^t)[122X  is  also  a
+  [22Xkn[122X-dimensional   subspace   of  [22XV(nt,q)[122X.  This  induces  an  embedding  from
+  [22XPG(n-1,q^t)[122X  into [22XPG(nt-1,q)[122X. The embedding will be determined by the chosen
+  basis of [22XGF(q^t)[122X as a vector space over [22XGF(q)[122X[133X
+  
+  [1X10.4-4 BlownUpSubspaceOfProjectiveSpace[101X
+  
+  [33X[1;0Y[29X[2XBlownUpSubspaceOfProjectiveSpace[102X( [3XB[103X, [3Xsubspace[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya subspace of a projective space[133X
+  
+  [33X[0;0YLet  [3XB[103X  be  a  basis  for  the  field [22XGF(q^t)[122X as [22XGF(q)[122X vector space, and let
+  [3Xsubspace[103X  be  a  [22Xk-1[122X-dimensional  subspace  of  [22XPG(n-1,q^t)[122X represented by a
+  [22Xk[122X-dimensional   subspace   [22XS[122X   of   [22XV(n,q^t)[122X.  This  operation  returns  the
+  [22Xkt-1[122X-dimensional  subspace  of  [22XPG(nt-1,q)[122X  represented by blowing up [22XS[122X with
+  respect  to  the  base  [3XB[103X.  This  operation  relies  on  the  [5XGAP[105X  operation
+  [11XBlownUpMat[111X.  In  the  example,  the  effect of choosing a different basis is
+  shown.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xpg := PG(3,5^2);[127X[104X
+    [4X[28XProjectiveSpace(3, 25)[128X[104X
+    [4X[25Xgap>[125X [27Xbasis := Basis(AsVectorSpace(GF(5),GF(5^2)));[127X[104X
+    [4X[28XCanonicalBasis( GF(5^2) )[128X[104X
+    [4X[25Xgap>[125X [27Xline := Random(Lines(pg));[127X[104X
+    [4X[28X<a line in ProjectiveSpace(3, 25)>[128X[104X
+    [4X[25Xgap>[125X [27Xsolid1 := BlownUpSubspaceOfProjectiveSpace(basis,line);[127X[104X
+    [4X[28X<a solid in ProjectiveSpace(7, 5)>[128X[104X
+    [4X[25Xgap>[125X [27XBasisVectors(basis);[127X[104X
+    [4X[28X[ Z(5)^0, Z(5^2) ][128X[104X
+    [4X[25Xgap>[125X [27Xbasis := Basis(AsVectorSpace(GF(5),GF(5^2)),[Z(5),Z(5^2)^8]);[127X[104X
+    [4X[28XBasis( GF(5^2), [ Z(5), Z(5^2)^8 ] )[128X[104X
+    [4X[25Xgap>[125X [27Xsolid2 := BlownUpSubspaceOfProjectiveSpace(basis,line);[127X[104X
+    [4X[28X<a solid in ProjectiveSpace(7, 5)>[128X[104X
+    [4X[25Xgap>[125X [27Xsolid1 = solid2;[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X10.4-5 NaturalEmbeddingByFieldReduction[101X
+  
+  [33X[1;0Y[29X[2XNaturalEmbeddingByFieldReduction[102X( [3Xgeom1[103X, [3Xf2[103X, [3XB[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XNaturalEmbeddingByFieldReduction[102X( [3Xgeom1[103X, [3Xf2[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XNaturalEmbeddingByFieldReduction[102X( [3Xgeom1[103X, [3Xgeom2[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XNaturalEmbeddingByFieldReduction[102X( [3Xgeom1[103X, [3Xgeom2[103X, [3XB[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya geometry morphism[133X
+  
+  [33X[0;0YThis  operation  comes in four flavours. For the first flavour, the argument
+  [3Xgeom1[103X  is  a  projective  space  over  a field [22XGF(q^t)[122X. The argument [3Xf2[103X is a
+  subfield  [22XGF(q)[122X  of  [22XGF(q^t)[122X.  The  argument  [22XB[122X  is a basis for [22XGF(q^t)[122X as a
+  [22XGF(q)[122X-vectorspace. When this argument is not given, a basis for [22XGF(q^t)[122X over
+  [22XGF(q)[122X  is  computed using [11XBasis(AsVectorSpace(GF(q),GF(q^t)))[111X. It is checked
+  whether  [3Xf2[103X  is  a  subfield of the basefield of [3Xgeom1[103X. The third and fourth
+  flavour  are comparable, where now [22XGF(q)[122X is found as the basefield of [3Xgeom2[103X.
+  In  fact the arguments [3Xgeom1[103X and [3Xgeom2[103X are the projective spaces [22XPG(n-1,q^t)[122X
+  and  [22XPG(nt-1,q)[122X respectively. As in the previous flavours, the argument [3XB[103X is
+  optional.[133X
+  
+  [33X[0;0YAn  intertwiner  is  always  available  for  this geometry morphism, and has
+  source  the  homography  group  of  [3Xgeom1[103X  and  as  range  a subgroup of the
+  homography  group  of  [3Xgeom2[103X  (or  the  projective  space of the appropriate
+  dimension  over [3Xf2[103X. Notice in the example below the difference of a factor 2
+  in  the  orders  of  the  group,  which  comes of course from restricing the
+  homomorphism  to  the  homography  group,  which differs a factor 2 from the
+  collineation group of the projective line, that has an extra automorphism of
+  order two, corresponding with the Frobenius automorphism.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xpg1 := ProjectiveSpace(2,81);[127X[104X
+    [4X[28XProjectiveSpace(2, 81)[128X[104X
+    [4X[25Xgap>[125X [27Xf2 := GF(9);[127X[104X
+    [4X[28XGF(3^2)[128X[104X
+    [4X[25Xgap>[125X [27Xem := NaturalEmbeddingByFieldReduction(pg1,f2);[127X[104X
+    [4X[28X<geometry morphism from <All elements of ProjectiveSpace(2, [128X[104X
+    [4X[28X81)> to <All elements of ProjectiveSpace(5, 9)>>[128X[104X
+    [4X[25Xgap>[125X [27Xf2 := GF(3);[127X[104X
+    [4X[28XGF(3)[128X[104X
+    [4X[25Xgap>[125X [27Xem := NaturalEmbeddingByFieldReduction(pg1,f2);[127X[104X
+    [4X[28X<geometry morphism from <All elements of ProjectiveSpace(2, [128X[104X
+    [4X[28X81)> to <All elements of ProjectiveSpace(11, 3)>>[128X[104X
+    [4X[25Xgap>[125X [27Xpg2 := ProjectiveSpace(11,3);[127X[104X
+    [4X[28XProjectiveSpace(11, 3)[128X[104X
+    [4X[25Xgap>[125X [27Xem := NaturalEmbeddingByFieldReduction(pg1,pg2);[127X[104X
+    [4X[28X<geometry morphism from <All elements of ProjectiveSpace(2, [128X[104X
+    [4X[28X81)> to <All elements of ProjectiveSpace(11, 3)>>[128X[104X
+    [4X[25Xgap>[125X [27Xpg1 := PG(1,9);[127X[104X
+    [4X[28XProjectiveSpace(1, 9)[128X[104X
+    [4X[25Xgap>[125X [27Xem := NaturalEmbeddingByFieldReduction(pg1,GF(3));[127X[104X
+    [4X[28X<geometry morphism from <All elements of ProjectiveSpace(1, [128X[104X
+    [4X[28X9)> to <All elements of ProjectiveSpace(3, 3)>>[128X[104X
+    [4X[25Xgap>[125X [27Xi := Intertwiner(em);[127X[104X
+    [4X[28XMappingByFunction( The FinInG projectivity group PGL(2,9), <projective colline[128X[104X
+    [4X[28Xation group of size 720 with [128X[104X
+    [4X[28X2 generators>, function( m ) ... end, function( m ) ... end )[128X[104X
+    [4X[25Xgap>[125X [27Xspread := List(Points(pg1),x->x^em);[127X[104X
+    [4X[28X[ <a line in ProjectiveSpace(3, 3)>, <a line in ProjectiveSpace(3, 3)>, [128X[104X
+    [4X[28X  <a line in ProjectiveSpace(3, 3)>, <a line in ProjectiveSpace(3, 3)>, [128X[104X
+    [4X[28X  <a line in ProjectiveSpace(3, 3)>, <a line in ProjectiveSpace(3, 3)>, [128X[104X
+    [4X[28X  <a line in ProjectiveSpace(3, 3)>, <a line in ProjectiveSpace(3, 3)>, [128X[104X
+    [4X[28X  <a line in ProjectiveSpace(3, 3)>, <a line in ProjectiveSpace(3, 3)> ][128X[104X
+    [4X[25Xgap>[125X [27Xstab := Stabilizer(CollineationGroup(PG(3,3)),Set(spread),OnSets);[127X[104X
+    [4X[28X<projective collineation group of size 5760 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xhom := HomographyGroup(pg1);[127X[104X
+    [4X[28XThe FinInG projectivity group PGL(2,9)[128X[104X
+    [4X[25Xgap>[125X [27Xgens := GeneratorsOfGroup(hom);;[127X[104X
+    [4X[25Xgap>[125X [27Xgroup := Group(List(gens,x->x^i));[127X[104X
+    [4X[28X<projective collineation group with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27XOrder(group);[127X[104X
+    [4X[28X2880[128X[104X
+    [4X[25Xgap>[125X [27XIsSubgroup(stab,group);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  
+  [1X10.5 [33X[0;0YEmbeddings of polar spaces[133X[101X
+  
+  [1X10.5-1 NaturalEmbeddingBySubspace[101X
+  
+  [33X[1;0Y[29X[2XNaturalEmbeddingBySubspace[102X( [3Xgeom1[103X, [3Xgeom2[103X, [3Xv[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya geometry morphism[133X
+  
+  [33X[0;0YThe  arguments  [3Xgeom1[103X  and [3Xgeom2[103X both polar spaces, and [3Xv[103X is an element of a
+  projective space. This function returns a geometry morphism representing the
+  natural  embedding  of [3Xgeom1[103X into the intersection of [3Xgeom2[103X and [3Xv[103X. Hence the
+  intersection  of  [3Xgeom2[103X  and [3Xv[103X must induce a polar space of the same type as
+  [3Xgeom1[103X  in [3Xv[103X. This operation performs all necessary checks. An Intertwiner is
+  not implemented for this geometry morphism.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xh1 := HermitianPolarSpace(2, 3^2);[127X[104X
+    [4X[28XH(2, 3^2)[128X[104X
+    [4X[25Xgap>[125X [27Xh2 := HermitianPolarSpace(3, 3^2);[127X[104X
+    [4X[28XH(3, 3^2)[128X[104X
+    [4X[25Xgap>[125X [27Xpg := AmbientSpace( h2 );    [127X[104X
+    [4X[28XProjectiveSpace(3, 9)[128X[104X
+    [4X[25Xgap>[125X [27Xpi := VectorSpaceToElement( pg, [[1,0,0,0],[0,1,0,0],[0,0,1,0]] * Z(9)^0 );[127X[104X
+    [4X[28X<a plane in ProjectiveSpace(3, 9)>[128X[104X
+    [4X[25Xgap>[125X [27Xem := NaturalEmbeddingBySubspace( h1, h2, pi );[127X[104X
+    [4X[28X<geometry morphism from <Elements of H(2, 3^2)> to <Elements of H(3, 3^2)>>[128X[104X
+    [4X[25Xgap>[125X [27Xps1 := ParabolicQuadric(4,4);[127X[104X
+    [4X[28XQ(4, 4)[128X[104X
+    [4X[25Xgap>[125X [27Xps2 := ParabolicQuadric(6,4);[127X[104X
+    [4X[28XQ(6, 4)[128X[104X
+    [4X[25Xgap>[125X [27Xpg := AmbientSpace( ps2 );    [127X[104X
+    [4X[28XProjectiveSpace(6, 4)[128X[104X
+    [4X[25Xgap>[125X [27Xpi := VectorSpaceToElement( pg, [[1,0,0,0,0,0,0],[0,1,0,0,0,0,0],[0,0,1,0,0,0,0],[127X[104X
+    [4X[25X>[125X [27X[0,0,0,1,0,0,0],[0,0,0,0,1,0,0]] * Z(4)^0 );[127X[104X
+    [4X[28X<a proj. 4-space in ProjectiveSpace(6, 4)>[128X[104X
+    [4X[25Xgap>[125X [27Xem := NaturalEmbeddingBySubspace( ps1, ps2, pi );[127X[104X
+    [4X[28X<geometry morphism from <Elements of Q(4, 4)> to <Elements of Q(6, 4)>>[128X[104X
+    [4X[25Xgap>[125X [27XList(Lines(ps1),x->x^em);[127X[104X
+    [4X[28X[ <a line in Q(6, 4)>, <a line in Q(6, 4)>, <a line in Q(6, 4)>, [128X[104X
+    [4X[28X  <a line in Q(6, 4)>, <a line in Q(6, 4)>, <a line in Q(6, 4)>, [128X[104X
+    [4X[28X  <a line in Q(6, 4)>, <a line in Q(6, 4)>, <a line in Q(6, 4)>, [128X[104X
+    [4X[28X  <a line in Q(6, 4)>, <a line in Q(6, 4)>, <a line in Q(6, 4)>, [128X[104X
+    [4X[28X  <a line in Q(6, 4)>, <a line in Q(6, 4)>, <a line in Q(6, 4)>, [128X[104X
+    [4X[28X  <a line in Q(6, 4)>, <a line in Q(6, 4)>, <a line in Q(6, 4)>, [128X[104X
+    [4X[28X  <a line in Q(6, 4)>, <a line in Q(6, 4)>, <a line in Q(6, 4)>, [128X[104X
+    [4X[28X  <a line in Q(6, 4)>, <a line in Q(6, 4)>, <a line in Q(6, 4)>, [128X[104X
+    [4X[28X  <a line in Q(6, 4)>, <a line in Q(6, 4)>, <a line in Q(6, 4)>, [128X[104X
+    [4X[28X  <a line in Q(6, 4)>, <a line in Q(6, 4)>, <a line in Q(6, 4)>, [128X[104X
+    [4X[28X  <a line in Q(6, 4)>, <a line in Q(6, 4)>, <a line in Q(6, 4)>, [128X[104X
+    [4X[28X  <a line in Q(6, 4)>, <a line in Q(6, 4)>, <a line in Q(6, 4)>, [128X[104X
+    [4X[28X  <a line in Q(6, 4)>, <a line in Q(6, 4)>, <a line in Q(6, 4)>, [128X[104X
+    [4X[28X  <a line in Q(6, 4)>, <a line in Q(6, 4)>, <a line in Q(6, 4)>, [128X[104X
+    [4X[28X  <a line in Q(6, 4)>, <a line in Q(6, 4)>, <a line in Q(6, 4)>, [128X[104X
+    [4X[28X  <a line in Q(6, 4)>, <a line in Q(6, 4)>, <a line in Q(6, 4)>, [128X[104X
+    [4X[28X  <a line in Q(6, 4)>, <a line in Q(6, 4)>, <a line in Q(6, 4)>, [128X[104X
+    [4X[28X  <a line in Q(6, 4)>, <a line in Q(6, 4)>, <a line in Q(6, 4)>, [128X[104X
+    [4X[28X  <a line in Q(6, 4)>, <a line in Q(6, 4)>, <a line in Q(6, 4)>, [128X[104X
+    [4X[28X  <a line in Q(6, 4)>, <a line in Q(6, 4)>, <a line in Q(6, 4)>, [128X[104X
+    [4X[28X  <a line in Q(6, 4)>, <a line in Q(6, 4)>, <a line in Q(6, 4)>, [128X[104X
+    [4X[28X  <a line in Q(6, 4)>, <a line in Q(6, 4)>, <a line in Q(6, 4)>, [128X[104X
+    [4X[28X  <a line in Q(6, 4)>, <a line in Q(6, 4)>, <a line in Q(6, 4)>, [128X[104X
+    [4X[28X  <a line in Q(6, 4)>, <a line in Q(6, 4)>, <a line in Q(6, 4)>, [128X[104X
+    [4X[28X  <a line in Q(6, 4)>, <a line in Q(6, 4)>, <a line in Q(6, 4)>, [128X[104X
+    [4X[28X  <a line in Q(6, 4)>, <a line in Q(6, 4)>, <a line in Q(6, 4)>, [128X[104X
+    [4X[28X  <a line in Q(6, 4)>, <a line in Q(6, 4)>, <a line in Q(6, 4)>, [128X[104X
+    [4X[28X  <a line in Q(6, 4)>, <a line in Q(6, 4)>, <a line in Q(6, 4)>, [128X[104X
+    [4X[28X  <a line in Q(6, 4)> ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X10.5-2 NaturalEmbeddingBySubField[101X
+  
+  [33X[1;0Y[29X[2XNaturalEmbeddingBySubField[102X( [3Xgeom1[103X, [3Xgeom2[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XNaturalEmbeddingBySubField[102X( [3Xgeom1[103X, [3Xgeom2[103X, [3Xboolean[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya geometry morphism[133X
+  
+  [33X[0;0YThe  arguments  [3Xgeom1[103X  and  [3Xgeom2[103X  are  projective  or  polar spaces with an
+  underlying  vector  space of the same dimension and the basefield [22XL[122X of [3Xgeom2[103X
+  is  an  extension  of the basefield [22XK[122X of [3Xgeom1[103X. The form [22Xf[122X determining [3Xgeom1[103X
+  also defines a form over [22XL[122X, and determines a polar space. By considering the
+  underlying vectorspaces determining the elements of [3Xgeom1[103X over the extension
+  field  [22XL[122X, there is an obvious embedding of [3Xgeom1[103X in the polar space over the
+  extension field. Considering [22Xf[122X over a field extension might change its type.
+  The  possible  embeddings,  where  the  polar  spaces  may  be  chosen up to
+  equivalent form, are listed in the table below (see [KL90]):[133X
+  
+        Polar Space 1 │ Polar Space 2 │ Conditions   
+        ──────────────┼───────────────┼───────────  
+        ──────────────┼───────────────┼───────────  
+        [22XW(2n-1,q)[122X     │ [22XW(2n-1,q^a)[122X   │ --           
+        [22XW(2n-1,q)[122X     │ [22XH(2n-1,q^a)[122X   │ --           
+        [22XH(d,q^2)[122X      │ [22XH(d,q^(2r))[122X   │ [22Xr[122X odd        
+        [22XO^ϵ(d,q)[122X      │ [22XH(d,q^2)[122X      │ [22Xq[122X odd        
+        [22XO^ϵ(d,q)[122X      │ [22XO^ϵ'(d,q^r)[122X   │ [22Xϵ=(ϵ')^r[122X     
+  
+       [1XTable:[101X Subfield embeddings of polar spaces
+  
+  
+  [33X[0;0YThe   geometry  morphism  also  comes  equipped  with  an  intertwiner  (see
+  [2XIntertwiner[102X  ([14X10.1-2[114X)).  The optional third argument [3Xboolean[103X can take either
+  [10Xtrue[110X  or [10Xfalse[110X as input, and then our operation will or will not compute the
+  intertwiner  accordingly. When set [10Xtrue[110X, the intertwiner will be computed if
+  [11XHasCollineationGroup(geom1)[111X  is true. The user may wish that the intertwiner
+  is not computed when embedding large polar spaces. The default (when calling
+  the operation with two arguments) is set to [10Xtrue[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xw := SymplecticSpace(5, 3);[127X[104X
+    [4X[28XW(5, 3)[128X[104X
+    [4X[25Xgap>[125X [27Xh := HermitianPolarSpace(5, 3^2);[127X[104X
+    [4X[28XH(5, 3^2)[128X[104X
+    [4X[25Xgap>[125X [27Xem := NaturalEmbeddingBySubfield(w, h);[127X[104X
+    [4X[28X#I  No intertwiner computed. <geom1> must have a collineation group computed[128X[104X
+    [4X[28X<geometry morphism from <Elements of W(5, 3)> to <Elements of H(5, 3^2)>>[128X[104X
+    [4X[25Xgap>[125X [27Xpoints := AsList(Points(w));;[127X[104X
+    [4X[25Xgap>[125X [27Ximage := ImagesSet(em, points);;[127X[104X
+    [4X[25Xgap>[125X [27XForAll(image, x -> x in h);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xhq:=HyperbolicQuadric(3,4);[127X[104X
+    [4X[28XQ+(3, 4)[128X[104X
+    [4X[25Xgap>[125X [27Xeq:=EllipticQuadric(3,2);[127X[104X
+    [4X[28XQ-(3, 2)[128X[104X
+    [4X[25Xgap>[125X [27Xem:=NaturalEmbeddingBySubfield(eq,hq);[127X[104X
+    [4X[28X#I  No intertwiner computed. <geom1> must have a collineation group computed[128X[104X
+    [4X[28X<geometry morphism from <Elements of Q-(3, 2)> to <Elements of Q+(3, 4)>>[128X[104X
+    [4X[25Xgap>[125X [27Xeqpts:=ImagesSet(em,AsList(Points(eq)));[127X[104X
+    [4X[28X[ <a point in Q+(3, 4)>, <a point in Q+(3, 4)>, <a point in Q+(3, 4)>, [128X[104X
+    [4X[28X  <a point in Q+(3, 4)>, <a point in Q+(3, 4)> ][128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  
+  [1X10.5-3 [33X[0;0YEmbedding of polar spaces by field reduction[133X[101X
+  
+  [33X[0;0YField  reduction  for  polar  spaces  is  somewhat  more  involved  than for
+  projective  spaces,  and  we  give  a  brief description. Let [22XL[122X be the field
+  [22XGF(q^t)[122X  and let [22XK[122X be the field [22XGF(q)[122X Let [22XP[122X be a polar space over a field [22XL[122X.
+  Let  [22Xf[122X be the form on the [22Xr[122X dimensional vector space [22XV[122X over [22XL[122X determining [22XP[122X.
+  Consider the trace map[133X
+  
+  [33X[0;0Y[22XT: L → K: x ↦ x^(q^t)+ x^(q^(t-1)) + ... + x.[122X[133X
+  
+  [33X[0;0YDefine for any [22Xα ∈ L[122X the map[133X
+  
+  [33X[0;0Y[22XT_α: L → K: x ↦ T_α(x) = T(α x).[122X[133X
+  
+  [33X[0;0YConsider  the [22Xrt[122X dimensional vector space [22XW[122X over [22XK[122X. There is a bijective map
+  [22XΦ[122X:  [22XV  →  W[122X  and  [22XT_α  ∘  f  ∘ Φ^-1[122X defines a quadratic or sesquilinear form
+  (depending  on  [22Xα[122X,  and  [22Xf[122X being quadratic or sesquilinear) acting on [22XW[122X, and
+  hence,  if  not  singular  or  degenerate, inducing a polar space [22XS[122X over the
+  finite  field  [22XGF(q)[122X.  An element of [22XP[122X can be mapped onto an element of [22XS[122X by
+  simply  blowing  up  [22XP[122X  using  field reduction for projective spaces. So the
+  resulting polar space [22XS[122X is dependent on the original form [22Xf[122X, the parameter [22Xα[122X
+  and  the  blowing  up  of  elements  by  field  reduction,  the latter being
+  dependent  on  the  basis  of  [22XL[122X  as  a  [22XK[122X vector space. [5XFinInG[105X provides two
+  approaches.  The  first approach starts from [22XP[122X and the parameters [22XK[122X, [22Xα[122X and a
+  basis  for  [22XL[122X  as  [22XK[122X vector space. Then the resulting form [22XT_α ∘ f ∘ Φ^-1[122X is
+  determined,  and  the  associated  polar  space  [22XS[122X  will be the range of the
+  embedding.  Note  that  the  resulting  polar  space will not necessarily be
+  canonical.  The  second approach starts from two given polar spaces [22XP[122X and [22XS[122X.
+  Based on this input, it is determined wheter an embedding based on the above
+  described  principle is possible, and the necessary parameters are computed.
+  The  resulting  embedding  is a geometry morhpism from [22XP[122X to [22XS[122X. Note that the
+  polar  spaces  used as an argument may be freely chosen and are not required
+  to be in the canonical form.[133X
+  
+  [33X[0;0YFor  more  information on the embeddings by field reduction of polar spaces,
+  including  conditions  on the parameter [22Xα[122X, we refer to [Gil08] and [LVdV13].
+  The possible embeddings are listed in the following table.[133X
+  
+        Polar Space 1  │ Polar Space 2         │ Conditions    
+        ───────────────┼───────────────────────┼────────────  
+        ───────────────┼───────────────────────┼────────────  
+        [22XW(2n-1,q^t)[122X    │ [22XW(2nt-1,q)[122X            │ --            
+        [22XQ^+(2n-1,q^t)[122X  │ [22XQ^+(2nt-1,q)[122X          │ --            
+        [22XQ^-(2n-1,q^t)[122X  │ [22XQ^-(2nt-1,q)[122X          │ --            
+        [22XQ(2n,q^(2a+1))[122X │ [22XQ((2a+1)(2n+1)-1,q)[122X   │ [22Xq[122X odd         
+        [22XQ(2n,q^(2a))[122X   │ [22XQ^-(2a(2n+1)-1,q)[122X     │ [22Xq ≡ 1 mod 4[122X   
+        [22XQ(2n,q^(4a+2))[122X │ [22XQ^+((4a+2)(2n+1)-1,q)[122X │ [22Xq ≡ 3 mod 4[122X   
+        [22XQ(2n,q^(4a))[122X   │ [22XQ^-(4a(2n+1)-1,q)[122X     │ [22Xq ≡ 3 mod 4[122X   
+        [22XH(n,q^(2a+1))[122X  │ [22XH((2a+1)(n+1)-1,q)[122X    │ [22Xq[122X square      
+        [22XH(n,q^(2a))[122X    │ [22XW(2a(n+1)-1,q)[122X        │ [22Xq[122X even        
+        [22XH(2n,q^(2a))[122X   │ [22XQ^-(2a(2n+1)-1,q)[122X     │ [22Xq[122X odd         
+        [22XH(2n+1,q^(2a))[122X │ [22XQ^+(2a(2n+2)-1,q)[122X     │ [22Xq[122X odd         
+  
+       [1XTable:[101X Field reduction of polar spaces
+  
+  
+  [1X10.5-4 NaturalEmbeddingByFieldReduction[101X
+  
+  [33X[1;0Y[29X[2XNaturalEmbeddingByFieldReduction[102X( [3Xps1[103X, [3Xf2[103X, [3Xalpha[103X, [3Xbasis[103X, [3Xbool[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XNaturalEmbeddingByFieldReduction[102X( [3Xps1[103X, [3Xf2[103X, [3Xalpha[103X, [3Xbasis[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XNaturalEmbeddingByFieldReduction[102X( [3Xps1[103X, [3Xf2[103X, [3Xalpha[103X, [3Xbool[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XNaturalEmbeddingByFieldReduction[102X( [3Xps1[103X, [3Xf2[103X, [3Xalpha[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XNaturalEmbeddingByFieldReduction[102X( [3Xps1[103X, [3Xf2[103X, [3Xbool[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XNaturalEmbeddingByFieldReduction[102X( [3Xps1[103X, [3Xf2[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya geometry morphism[133X
+  
+  [33X[0;0Y[3Xps1[103X  is a polar space over a field extension [22XL[122X of [3Xf2[103X, [3Xbasis[103X is a basis for [22XL[122X
+  over   [3Xf2[103X,   [3Xalpha[103X   is   a   non-zero   element   of   [22XL[122X.  The  version  of
+  [11XNaturalEmbeddingByFieldReduction[111X  implements the first approach as explained
+  in  [14X10.5-3[114X.  When  no  argument  [3Xbasis[103X  is  given,  a basis for [22XL[122X over [3Xf2[103X is
+  computed  using  [11XBasis(AsVectorSpace(K,L))[111X. When no argument [3Xalpha[103X is given,
+  [11XOne(f2)[111X  is  used  as  value  for  [3Xalpha[103X. When [3Xbool[103X is true or not given, an
+  intertwiner  is  computed,  when  [3Xbool[103X is [3Xfalse[103X, no intertwiner is computed.
+  This  intertwiner  has as its domain the [12Xisometry group[112X of [3Xps1[103X. The user may
+  wish that the intertwiner is not computed when embedding large polar spaces.
+  The  default (when calling the operation with two arguments) is set to [10Xtrue[110X.
+  In the first example, we construct a spread of maximal subspaces (solids) in
+  a  7  dimensional  symplectic space. We compute a subgroup of its stabilizer
+  group  using  the  intertwiner. In the second example, we construct a linear
+  blocking set of the symplectic generalised quadrangle over GF(9).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps1 := SymplecticSpace(1,3^3);[127X[104X
+    [4X[28XW(1, 27)[128X[104X
+    [4X[25Xgap>[125X [27Xem := NaturalEmbeddingByFieldReduction(ps1,GF(3),true);[127X[104X
+    [4X[28X<geometry morphism from <Elements of W(1, [128X[104X
+    [4X[28X27)> to <Elements of <polar space in ProjectiveSpace([128X[104X
+    [4X[28X5,GF(3)): -x1*y6-x2*y5-x3*y4-x3*y6+x4*y3+x5*y2+x6*y1+x6*y3=0 >>>[128X[104X
+    [4X[25Xgap>[125X [27Xps2 := AmbientGeometry(Range(em));[127X[104X
+    [4X[28X<polar space in ProjectiveSpace([128X[104X
+    [4X[28X5,GF(3)): -x1*y6-x2*y5-x3*y4-x3*y6+x4*y3+x5*y2+x6*y1+x6*y3=0 >[128X[104X
+    [4X[25Xgap>[125X [27Xspread := List(Points(ps1),x->x^em);;[127X[104X
+    [4X[25Xgap>[125X [27Xi := Intertwiner(em);[127X[104X
+    [4X[28XMappingByFunction( PSp(2,27), <projective collineation group of size [128X[104X
+    [4X[28X9828 with 2 generators>, function( m ) ... end, function( m ) ... end )[128X[104X
+    [4X[25Xgap>[125X [27Xcoll := CollineationGroup(ps2);[127X[104X
+    [4X[28X#I  Computing collineation group of canonical polar space...[128X[104X
+    [4X[28X<projective collineation group of size 9170703360 with 4 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xstab := Group(ImagesSet(i,GeneratorsOfGroup(IsometryGroup(ps1))));[127X[104X
+    [4X[28X<projective collineation group with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27XIsSubgroup(coll,stab);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XList(Orbit(stab,spread[1]),x->x in spread);[127X[104X
+    [4X[28X[ true, true, true, true, true, true, true, true, true, true, true, true, [128X[104X
+    [4X[28X  true, true, true, true, true, true, true, true, true, true, true, true, [128X[104X
+    [4X[28X  true, true, true, true ][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xps1 := SymplecticSpace(3,9);[127X[104X
+    [4X[28XW(3, 9)[128X[104X
+    [4X[25Xgap>[125X [27Xem := NaturalEmbeddingByFieldReduction(ps1,GF(3),true);[127X[104X
+    [4X[28X<geometry morphism from <Elements of W(3, [128X[104X
+    [4X[28X9)> to <Elements of <polar space in ProjectiveSpace([128X[104X
+    [4X[28X7[128X[104X
+    [4X[28X ,GF(3)): -x1*y3+x1*y4+x2*y3+x3*y1-x3*y2-x4*y1-x5*y7+x5*y8+x6*y7+x7*y5-x7*y6-x8[128X[104X
+    [4X[28X*y5=0 >>>[128X[104X
+    [4X[25Xgap>[125X [27Xps2 := AmbientGeometry(Range(em));[127X[104X
+    [4X[28X<polar space in ProjectiveSpace([128X[104X
+    [4X[28X7[128X[104X
+    [4X[28X ,GF(3)): -x1*y3+x1*y4+x2*y3+x3*y1-x3*y2-x4*y1-x5*y7+x5*y8+x6*y7+x7*y5-x7*y6-x8[128X[104X
+    [4X[28X*y5=0 >[128X[104X
+    [4X[25Xgap>[125X [27Xpg := AmbientSpace(ps2);[127X[104X
+    [4X[28XProjectiveSpace(7, 3)[128X[104X
+    [4X[25Xgap>[125X [27Xspread := List(Points(ps1),x->x^em);;[127X[104X
+    [4X[25Xgap>[125X [27Xel := Random(ElementsOfIncidenceStructure(pg,5));[127X[104X
+    [4X[28X<a proj. 4-space in ProjectiveSpace(7, 3)>[128X[104X
+    [4X[25Xgap>[125X [27Xprebs := Filtered(spread,x->Meet(x,el) <> EmptySubspace(pg));;[127X[104X
+    [4X[25Xgap>[125X [27Xbs := List(prebs,x->PreImageElm(em,x));;[127X[104X
+    [4X[25Xgap>[125X [27XLength(bs);[127X[104X
+    [4X[28X118[128X[104X
+    [4X[25Xgap>[125X [27Xlines := List(Lines(ps1));;[127X[104X
+    [4X[25Xgap>[125X [27XCollected(List(lines,x->Length(Filtered(bs,y->y * x))));[127X[104X
+    [4X[28X[ [ 1, 702 ], [ 4, 117 ], [ 10, 1 ] ][128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X10.5-5 NaturalEmbeddingByFieldReduction[101X
+  
+  [33X[1;0Y[29X[2XNaturalEmbeddingByFieldReduction[102X( [3Xps1[103X, [3Xps2[103X, [3Xbool[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XNaturalEmbeddingByFieldReduction[102X( [3Xps1[103X, [3Xps2[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya geometry morphism[133X
+  
+  [33X[0;0YIf  [3Xps1[103X  and [3Xps2[103X are two polar spaces which are suitable for field reduction
+  as listed in the table with possible embeddings in Section [14X10.5-3[114X, then this
+  operation returns the corresponding embedding. An intertwiner is computed if
+  the  third  argument  [3Xbool[103X  is  true, or if there is no third argument. This
+  intertwiner  has  as its domain the [12Xisometry group[112X of [3Xps1[103X. The example shows
+  two cases where a spread is computed, including a subgroup of its stabiliser
+  group using the intertwiner.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps1 := SymplecticSpace(1,5^3);[127X[104X
+    [4X[28XW(1, 125)[128X[104X
+    [4X[25Xgap>[125X [27Xps2 := SymplecticSpace(5,5);[127X[104X
+    [4X[28XW(5, 5)[128X[104X
+    [4X[25Xgap>[125X [27Xem := NaturalEmbeddingByFieldReduction(ps1,ps2);[127X[104X
+    [4X[28X#I  These polar spaces are suitable for field reduction[128X[104X
+    [4X[28X<geometry morphism from <Elements of W(1, 125)> to <Elements of W(5, 5)>>[128X[104X
+    [4X[25Xgap>[125X [27Xpts := Points(ps1);[127X[104X
+    [4X[28X<points of W(1, 125)>[128X[104X
+    [4X[25Xgap>[125X [27Xspread := List(pts,x->x^em);;[127X[104X
+    [4X[25Xgap>[125X [27Xtest := Union(List(spread,x->List(Points(x))));;[127X[104X
+    [4X[25Xgap>[125X [27XSet(test)=Set(AsList(Points(ps2)));[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xhom := Intertwiner(em);[127X[104X
+    [4X[28XMappingByFunction( PSp(2,125), <projective collineation group of size [128X[104X
+    [4X[28X976500 with 2 generators>, function( m ) ... end, function( m ) ... end )[128X[104X
+    [4X[25Xgap>[125X [27Xgroup := IsometryGroup(ps1);[127X[104X
+    [4X[28XPSp(2,125)[128X[104X
+    [4X[25Xgap>[125X [27XOrder(group);[127X[104X
+    [4X[28X976500[128X[104X
+    [4X[25Xgap>[125X [27Xgens := List(GeneratorsOfGroup(group),x->x^hom);[127X[104X
+    [4X[28X[ < a collineation: <cmat 6x6 over GF(5,1)>, F^0>, [128X[104X
+    [4X[28X  < a collineation: <cmat 6x6 over GF(5,1)>, F^0> ][128X[104X
+    [4X[25Xgap>[125X [27Xgroup2 := Range(hom);[127X[104X
+    [4X[28X<projective collineation group of size 976500 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27XOrder(group2);[127X[104X
+    [4X[28X976500[128X[104X
+    [4X[25Xgap>[125X [27Xbiggroup := CollineationGroup(ps2);[127X[104X
+    [4X[28XPGammaSp(6,5)[128X[104X
+    [4X[25Xgap>[125X [27Xstab := FiningSetwiseStabiliser(biggroup,spread);[127X[104X
+    [4X[28X#I  Computing adjusted stabilizer chain...[128X[104X
+    [4X[28X<projective collineation group with 7 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X6907[128X[104X
+    [4X[25Xgap>[125X [27XOrder(stab);[127X[104X
+    [4X[28X5859000[128X[104X
+    [4X[25Xgap>[125X [27Xps1 := HermitianPolarSpace(2,7^2);[127X[104X
+    [4X[28XH(2, 7^2)[128X[104X
+    [4X[25Xgap>[125X [27Xps2 := EllipticQuadric(5,7);[127X[104X
+    [4X[28XQ-(5, 7)[128X[104X
+    [4X[25Xgap>[125X [27Xem := NaturalEmbeddingByFieldReduction(ps1,ps2);[127X[104X
+    [4X[28X#I  These polar spaces are suitable for field reduction[128X[104X
+    [4X[28X<geometry morphism from <Elements of H(2, 7^2)> to <Elements of Q-(5, 7)>>[128X[104X
+    [4X[25Xgap>[125X [27Xpts := Points(ps1);[127X[104X
+    [4X[28X<points of H(2, 7^2)>[128X[104X
+    [4X[25Xgap>[125X [27Xspread := List(pts,x->x^em);;[127X[104X
+    [4X[25Xgap>[125X [27Xtest := Union(List(spread,x->List(Points(x))));;[127X[104X
+    [4X[25Xgap>[125X [27XSet(test)=Set(AsList(Points(ps2)));[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xhom := Intertwiner(em);[127X[104X
+    [4X[28XMappingByFunction( PGU(3,7^2), <projective collineation group of size [128X[104X
+    [4X[28X5663616 with 2 generators>, function( m ) ... end, function( m ) ... end )[128X[104X
+    [4X[25Xgap>[125X [27Xgroup := IsometryGroup(ps1);[127X[104X
+    [4X[28XPGU(3,7^2)[128X[104X
+    [4X[25Xgap>[125X [27XOrder(group);[127X[104X
+    [4X[28X5663616[128X[104X
+    [4X[25Xgap>[125X [27Xgens := List(GeneratorsOfGroup(group),x->x^hom);[127X[104X
+    [4X[28X[ < a collineation: <cmat 6x6 over GF(7,1)>, F^0>, [128X[104X
+    [4X[28X  < a collineation: <cmat 6x6 over GF(7,1)>, F^0> ][128X[104X
+    [4X[25Xgap>[125X [27Xgroup2 := Range(hom);[127X[104X
+    [4X[28X<projective collineation group of size 5663616 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27XOrder(group2);[127X[104X
+    [4X[28X5663616[128X[104X
+    [4X[25Xgap>[125X [27Xbiggroup := CollineationGroup(ps2);[127X[104X
+    [4X[28XPDeltaO-(6,7)[128X[104X
+    [4X[25Xgap>[125X [27Xstab := FiningSetwiseStabiliser(biggroup,spread);[127X[104X
+    [4X[28X#I  Computing adjusted stabilizer chain...[128X[104X
+    [4X[28X<projective collineation group with 10 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X3438[128X[104X
+    [4X[25Xgap>[125X [27XOrder(stab);[127X[104X
+    [4X[28X90617856[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X10.6 [33X[0;0YProjections[133X[101X
+  
+  [1X10.6-1 NaturalProjectionBySubspace[101X
+  
+  [33X[1;0Y[29X[2XNaturalProjectionBySubspace[102X( [3Xps[103X, [3Xv[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya geometry morphism[133X
+  
+  [33X[0;0YThe  argument  [3Xps[103X is a projective or polar space, and [3Xv[103X is a subspace of [3Xps[103X.
+  In  the  case  that  [3Xps[103X  is  a  projective  space, the geometry of subspaces
+  containing  [3Xv[103X  is  a  projective  space  of  lower  dimension  over the same
+  basefield,  and  this operation returns the corresponding geometry morphism.
+  In  the  case  that  [3Xps[103X  is  a  polar  space, the geometry of elements pf [3Xps[103X
+  containing  [3Xv[103X  is  a polar space of lower rank and of the same type over the
+  same  basefield,  and  this  operation  returns  the  corresponding geometry
+  morphism. It is checked whether [3Xv[103X is a subspace of [3Xps[103X, and whether the input
+  of  the  function and preimage of the returned geometry morphism is valid or
+  not.  There is a shorthand for this operation which is basically an overload
+  of  the  quotient operation. So, for example, [10Xps / v[110X achieves the same thing
+  as     [10XAmbientGeometry(Range(NaturalProjectionBySubspace(ps,     v)))[110X.    An
+  intertwiner is not available for this geometry morphism.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := HyperbolicQuadric(5,3);[127X[104X
+    [4X[28XQ+(5, 3)[128X[104X
+    [4X[25Xgap>[125X [27Xx := Random(Points(ps));;[127X[104X
+    [4X[25Xgap>[125X [27Xplanes_on_x := AsList( Planes(x) );[127X[104X
+    [4X[28X[ <a plane in Q+(5, 3)>, <a plane in Q+(5, 3)>, <a plane in Q+(5, 3)>, [128X[104X
+    [4X[28X  <a plane in Q+(5, 3)>, <a plane in Q+(5, 3)>, <a plane in Q+(5, 3)>, [128X[104X
+    [4X[28X  <a plane in Q+(5, 3)>, <a plane in Q+(5, 3)> ][128X[104X
+    [4X[25Xgap>[125X [27Xproj := NaturalProjectionBySubspace(ps, x);[127X[104X
+    [4X[28X<geometry morphism from <Elements of Q+(5, [128X[104X
+    [4X[28X3)> to <Elements of <polar space in ProjectiveSpace([128X[104X
+    [4X[28X3,GF(3)): x_1*x_2+x_3*x_4=0 >>>[128X[104X
+    [4X[25Xgap>[125X [27Ximage := ImagesSet(proj, planes_on_x);[127X[104X
+    [4X[28X[ <a line in Q+(3, 3): x_1*x_2+x_3*x_4=0>, [128X[104X
+    [4X[28X  <a line in Q+(3, 3): x_1*x_2+x_3*x_4=0>, [128X[104X
+    [4X[28X  <a line in Q+(3, 3): x_1*x_2+x_3*x_4=0>, [128X[104X
+    [4X[28X  <a line in Q+(3, 3): x_1*x_2+x_3*x_4=0>, [128X[104X
+    [4X[28X  <a line in Q+(3, 3): x_1*x_2+x_3*x_4=0>, [128X[104X
+    [4X[28X  <a line in Q+(3, 3): x_1*x_2+x_3*x_4=0>, [128X[104X
+    [4X[28X  <a line in Q+(3, 3): x_1*x_2+x_3*x_4=0>, [128X[104X
+    [4X[28X  <a line in Q+(3, 3): x_1*x_2+x_3*x_4=0> ][128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  
+  [1X10.7 [33X[0;0YProjective completion[133X[101X
+  
+  [1X10.7-1 ProjectiveCompletion[101X
+  
+  [33X[1;0Y[29X[2XProjectiveCompletion[102X( [3Xas[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya geometry morphism[133X
+  
+  [33X[0;0YThe  argument  [3Xas[103X is an affine space. This operation returns an embedding of
+  [3Xas[103X  into  the  projective  space [3Xps[103X of the same dimension, and over the same
+  field.  For example, the point [22X(x, y, z)[122X is mapped onto the projective point
+  with  homogeneous  coordinates  [22X(1, x, y, z)[122X. An intertwiner is unnecessary,
+  [11XCollineationGroup(as)[111X is a subgroup of [11XCollineationGroup(ps)[111X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xas := AffineSpace(3,5);[127X[104X
+    [4X[28XAG(3, 5)[128X[104X
+    [4X[25Xgap>[125X [27Xmap := ProjectiveCompletion(as);[127X[104X
+    [4X[28X<geometry morphism from <Elements of AG(3, [128X[104X
+    [4X[28X5)> to <All elements of ProjectiveSpace(3, 5)>>[128X[104X
+    [4X[25Xgap>[125X [27Xp := Random( Points(as) );[127X[104X
+    [4X[28X<a point in AG(3, 5)>[128X[104X
+    [4X[25Xgap>[125X [27Xp^map;[127X[104X
+    [4X[28X<a point in ProjectiveSpace(3, 5)>[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  

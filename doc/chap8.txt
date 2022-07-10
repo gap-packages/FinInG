@@ -1,0 +1,698 @@
+  
+  [1X8 [33X[0;0YOrbits, stabilisers and actions[133X[101X
+  
+  
+  [1X8.1 [33X[0;0YOrbits[133X[101X
+  
+  [33X[0;0YGAP  provides  generic functionality to compute orbits. These functions are,
+  generally  spoken,  applicable to the groups implemented in [5XFinInG[105X, combined
+  with  the  appropriate  action  functions.  However,  the  generic functions
+  applied  in  such  situations  are  rather  time comsuming. [5XFinInG[105X therefore
+  provides alternative functions to compute orbits.[133X
+  
+  [1X8.1-1 FiningOrbit[101X
+  
+  [33X[1;0Y[29X[2XFiningOrbit[102X( [3Xg[103X, [3Xobj[103X, [3Xact[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YThe orbit of the object [3Xobj[103X under the action [3Xact[103X of the group [3Xg[103X.[133X
+  
+  [33X[0;0YThe  argument  [3Xobj[103X is either a subspace of a projective space, then combined
+  with  the  action  function  [11XOnProjSubspaces[111X,  or  a  set  of  elements of a
+  projective    space,    then    combined    with    the    action   function
+  [11XOnSetsProjSubspaces[111X.  The group [3Xg[103X is a subgroup of a collineation group of a
+  projective  space.  In both cases the action function computes the action of
+  [3Xel[103X under the group element [3Xg[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := ParabolicQuadric(6,3);[127X[104X
+    [4X[28XQ(6, 3)[128X[104X
+    [4X[25Xgap>[125X [27Xg := CollineationGroup(ps);[127X[104X
+    [4X[28XPGammaO(7,3)[128X[104X
+    [4X[25Xgap>[125X [27Xpg := PG(6,3);[127X[104X
+    [4X[28XProjectiveSpace(6, 3)[128X[104X
+    [4X[25Xgap>[125X [27Xs := First(Solids(pg),t -> TypeOfSubspace(ps,t) = "elliptic" );[127X[104X
+    [4X[28X<a solid in ProjectiveSpace(6, 3)>[128X[104X
+    [4X[25Xgap>[125X [27Xorbit := FiningOrbit(g,s,OnProjSubspaces);[127X[104X
+    [4X[28X<closed orbit, 265356 points>[128X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X33555[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe second example shows the possible use of [11XFiningOrbit[111X in combination with
+  the  action  function  [11XOnSetsProjSubspaces[111X. Please note that this variant is
+  probably  not  the  most  efficient  way  to  compute  all elliptic quadrics
+  contained  in  the  parabolic  quadric [22Xps[122X. Experiments show that for [22Xq=5[122X the
+  second  variant  takes  an  unreasonable  amount of time. Also note that the
+  second  argument  [3Xel[103X  must  be a set (and therefore it might be necessary to
+  apply [11XSet[111X on a collection of elements).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := ParabolicQuadric(4,3);[127X[104X
+    [4X[28XQ(4, 3)[128X[104X
+    [4X[25Xgap>[125X [27Xg := CollineationGroup(ps);[127X[104X
+    [4X[28XPGammaO(5,3)[128X[104X
+    [4X[25Xgap>[125X [27Xpg := PG(4,3);[127X[104X
+    [4X[28XProjectiveSpace(4, 3)[128X[104X
+    [4X[25Xgap>[125X [27Xs := First(Solids(pg),t -> TypeOfSubspace(ps,t) = "elliptic" );[127X[104X
+    [4X[28X<a solid in ProjectiveSpace(4, 3)>[128X[104X
+    [4X[25Xgap>[125X [27Xorbit1 := FiningOrbit(g,s,OnProjSubspaces);[127X[104X
+    [4X[28X<closed orbit, 36 points>[128X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X9[128X[104X
+    [4X[25Xgap>[125X [27Xspts := Filtered(Points(s),s->s in ps);[127X[104X
+    [4X[28X[ <a point in ProjectiveSpace(4, 3)>, <a point in ProjectiveSpace(4, 3)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(4, 3)>, <a point in ProjectiveSpace(4, 3)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(4, 3)>, <a point in ProjectiveSpace(4, 3)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(4, 3)>, <a point in ProjectiveSpace(4, 3)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(4, 3)>, <a point in ProjectiveSpace(4, 3)> ][128X[104X
+    [4X[25Xgap>[125X [27Xorbit2 := FiningOrbit(g,Set(spts),OnSetsProjSubspaces);[127X[104X
+    [4X[28X<closed orbit, 36 points>[128X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X18[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X8.1-2 FiningOrbits[101X
+  
+  [33X[1;0Y[29X[2XFiningOrbits[102X( [3Xg[103X, [3Xset[103X, [3Xact[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XFiningOrbits[102X( [3Xg[103X, [3Xcoll[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YThe orbits of the group [3Xg[103X on [3Xset[103X under the action of [3Xact[103X.[133X
+  
+  [33X[0;0YThe  set  is  a  set  of  elements  of  a projective space, the group [3Xg[103X is a
+  subgroup  of  the  collineation  group of a projective space, and [3Xact[103X is the
+  function  [11XOnProjSubspaces[111X.  If  [3Xcoll[103X  is  a  collection  of  elements  of  a
+  projective  space  (i.e.  not a list or set, but and object representing the
+  collection  of  elements  of a given type, such as [11XLines(PG(3,4))[111X), then the
+  second  versions  returns  the orbits of [3Xg[103X on the elements of [3Xcoll[103X under the
+  action [11XOnProjSubspaces[111X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := HermitianPolarSpace(3,9);[127X[104X
+    [4X[28XH(3, 3^2)[128X[104X
+    [4X[25Xgap>[125X [27Xg := CollineationGroup(ps);[127X[104X
+    [4X[28XPGammaU(4,3^2)[128X[104X
+    [4X[25Xgap>[125X [27XFiningOrbits(g,Lines(PG(3,9)));[127X[104X
+    [4X[28X75%..98%..100%..[ <closed orbit, 5670 points>, <closed orbit, 1680 points>, [128X[104X
+    [4X[28X  <closed orbit, 112 points> ][128X[104X
+    [4X[25Xgap>[125X [27XFiningOrbits(g,Planes(PG(3,9)));[127X[104X
+    [4X[28X65%..100%..[ <closed orbit, 540 points>, <closed orbit, 280 points> ][128X[104X
+    [4X[25Xgap>[125X [27Xps := ParabolicQuadric(2,5);[127X[104X
+    [4X[28XQ(2, 5)[128X[104X
+    [4X[25Xgap>[125X [27Xg := CollineationGroup(ps);[127X[104X
+    [4X[28XPGammaO(3,5)[128X[104X
+    [4X[25Xgap>[125X [27Xpts := Filtered(Points(PG(2,5)),x->not x in ps);;[127X[104X
+    [4X[25Xgap>[125X [27XLength(pts);[127X[104X
+    [4X[28X25[128X[104X
+    [4X[25Xgap>[125X [27XFiningOrbits(g,Points(PG(2,5)));[127X[104X
+    [4X[28X48%..67%..100%..[ <closed orbit, 15 points>, <closed orbit, 6 points>, [128X[104X
+    [4X[28X  <closed orbit, 10 points> ][128X[104X
+    [4X[25Xgap>[125X [27XFiningOrbits(g,pts,OnProjSubspaces);[127X[104X
+    [4X[28X60%..100%..[ <closed orbit, 15 points>, <closed orbit, 10 points> ][128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X8.1-3 FiningOrbitsDomain[101X
+  
+  [33X[1;0Y[29X[2XFiningOrbitsDomain[102X( [3Xg[103X, [3Xcoll[103X, [3Xact[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YThe orbits of the group [3Xg[103X on a collection [3Xcoll[103X under the action of
+            [3Xact[103X.[133X
+  
+  [33X[0;0YThe    argument    [3Xcoll[103X    must    be    an    object    in   the   category
+  [10XIsElementsOfIncidenceGeometry[110X,  the  argument  [3Xg[103X can be any group, acting on
+  the  elements of [3Xcoll[103X through a suitable action function [3Xact[103X. This operation
+  is inspired by the GAP operation [11XOrbitsDomain[111X. It computes the orbits of the
+  group  [3Xg[103X on the set of elements in [3Xcoll[103X [13Xassuming[113X that the set of elements of
+  [3Xcoll[103X  is  closed  under  that  action  of  [3Xg[103X.  There is no check whether the
+  assumption is correct, so this operation should typically be used when it is
+  known  that the assumption is correct. The operation is generic in the sense
+  that  it  can be used for different types of incidence geometries as long as
+  the  triple  arguments  consist of a suitable action of [3Xg[103X on the elements of
+  [3Xcoll[103X.  In  general,  if  the  assumption  is correct, this operation will be
+  faster than [11XFiningOrbits[111X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xpg := PG(7,2);[127X[104X
+    [4X[28XProjectiveSpace(7, 2)[128X[104X
+    [4X[25Xgap>[125X [27Xgroup:=CollineationGroup(pg);[127X[104X
+    [4X[28XThe FinInG collineation group PGL(8,2)[128X[104X
+    [4X[25Xgap>[125X [27Xsyl127:=SylowSubgroup(group,127);[127X[104X
+    [4X[28X<projective collineation group of size 127>[128X[104X
+    [4X[25Xgap>[125X [27Xorbits := FiningOrbits(syl127,AsList(Solids(pg)));;[127X[104X
+    [4X[28X1%..2%..3%..4%..5%..6%..7%..8%..9%..10%..11%..12%..13%..14%..15%..16%..17%..18%..19%..20%..21%..[128X[104X
+    [4X[28X22%..23%..24%..25%..26%..27%..28%..29%..30%..31%..32%..33%..34%..35%..36%..37%..38%..39%..40%..41%[128X[104X
+    [4X[28X..42%..43%..44%..45%..46%..47%..48%..49%..50%..51%..52%..53%..54%..55%..56%..57%..58%..59%..60%..[128X[104X
+    [4X[28X61%..62%..63%..64%..65%..66%..67%..68%..69%..70%..71%..72%..73%..74%..75%..76%..77%..78%..79%..[128X[104X
+    [4X[28X80%..81%..82%..83%..84%..85%..86%..87%..88%..89%..90%..91%..92%..93%..94%..95%..96%[128X[104X
+    [4X[28X..97%..98%..99%..100%..[128X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X212661[128X[104X
+    [4X[25Xgap>[125X [27XCollected(List(orbits,x->Length(x)));[127X[104X
+    [4X[28X[ [ 127, 1581 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xorbits := FiningOrbitsDomain(syl127,Solids(pg),OnProjSubspaces);;[127X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X26529[128X[104X
+    [4X[25Xgap>[125X [27XCollected(List(orbits,x->Length(x)));[127X[104X
+    [4X[28X[ [ 127, 1581 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xorbits := OrbitsDomain(syl127,Solids(pg),OnProjSubspaces);;[127X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X35506[128X[104X
+    [4X[25Xgap>[125X [27XCollected(List(orbits,x->Length(x)));[127X[104X
+    [4X[28X[ [ 127, 1581 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xag := AG(4,5);[127X[104X
+    [4X[28XAG(4, 5)[128X[104X
+    [4X[25Xgap>[125X [27Xh := Random(CollineationGroup(ag));[127X[104X
+    [4X[28X< a collineation: <cmat 5x5 over GF(5,1)>, F^0>[128X[104X
+    [4X[25Xgap>[125X [27Xgroup := Group(h);[127X[104X
+    [4X[28X<projective collineation group with 1 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xorbits := FiningOrbitsDomain(group,Points(ag),OnAffineSubspaces);[127X[104X
+    [4X[28X[ <closed orbit, 624 points>, <closed orbit, 1 points> ][128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  
+  [1X8.2 [33X[0;0YStabilisers[133X[101X
+  
+  [33X[0;0YThe  GAP function [11XStabilizer[111X is a generic function to compute stabilisers of
+  one  object  (or  sets  or  tuples  etc.  of objects) under a group, using a
+  specified  action  function. This generic function can be used together with
+  the  in  [5XFinInG[105X  implemented  groups  and  elements  of geometries. However,
+  computing time can be very long, already in small geometries.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := PG(3,8);[127X[104X
+    [4X[28XProjectiveSpace(3, 8)[128X[104X
+    [4X[25Xgap>[125X [27Xg := CollineationGroup(ps);[127X[104X
+    [4X[28XThe FinInG collineation group PGammaL(4,8)[128X[104X
+    [4X[25Xgap>[125X [27Xp := Random(Points(ps));[127X[104X
+    [4X[28X<a point in ProjectiveSpace(3, 8)>[128X[104X
+    [4X[25Xgap>[125X [27XStabilizer(g,p,OnProjSubspaces);[127X[104X
+    [4X[28X<projective collineation group of size 177223237632 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X10026[128X[104X
+    [4X[25Xgap>[125X [27Xline := Random(Lines(ps));[127X[104X
+    [4X[28X<a line in ProjectiveSpace(3, 8)>[128X[104X
+    [4X[25Xgap>[125X [27XStabilizer(g,line,OnProjSubspaces);[127X[104X
+    [4X[28X<projective collineation group of size 21849440256 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X78126[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  packages  [5XGenSS[105X and [5Xorb[105X required by [5XFinInG[105X provide efficient operations
+  to  compute  stabilisers,  and  [5XFinInG[105X  provides  functionality to use these
+  operations for the particular groups and (elements) of geometries.[133X
+  
+  [1X8.2-1 FiningStabiliser[101X
+  
+  [33X[1;0Y[29X[2XFiningStabiliser[102X( [3Xg[103X, [3Xel[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YThe subgroup of [3Xg[103X stabilising the element [3Xel[103X[133X
+  
+  [33X[0;0YThe argument [3Xg[103X is a group of collineations acting on the element [3Xel[103X, being a
+  subspace  of  a  projective space (and hence, all elements of a Lie geometry
+  are  allowed  as  second  argument).  This  operation  relies  on  the [5XGenSS[105X
+  operation [11XStab[111X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := PG(5,4);[127X[104X
+    [4X[28XProjectiveSpace(5, 4)[128X[104X
+    [4X[25Xgap>[125X [27Xg := SpecialHomographyGroup(ps);[127X[104X
+    [4X[28XThe FinInG PSL group PSL(6,4)[128X[104X
+    [4X[25Xgap>[125X [27Xp := Random(Points(ps));[127X[104X
+    [4X[28X<a point in ProjectiveSpace(5, 4)>[128X[104X
+    [4X[25Xgap>[125X [27XFiningStabiliser(g,p);[127X[104X
+    [4X[28X<projective collineation group of size 264696069567283200 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xline := Random(Lines(ps));[127X[104X
+    [4X[28X<a line in ProjectiveSpace(5, 4)>[128X[104X
+    [4X[25Xgap>[125X [27XFiningStabiliser(g,line);[127X[104X
+    [4X[28X<projective collineation group of size 3881174040576000 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xplane := Random(Planes(ps));[127X[104X
+    [4X[28X<a plane in ProjectiveSpace(5, 4)>[128X[104X
+    [4X[25Xgap>[125X [27XFiningStabiliser(g,plane);[127X[104X
+    [4X[28X#I  Have 106048 points.[128X[104X
+    [4X[28X#I  Have 158748 points.[128X[104X
+    [4X[28X<projective collineation group of size 958878292377600 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xps := HyperbolicQuadric(5,5);[127X[104X
+    [4X[28XQ+(5, 5)[128X[104X
+    [4X[25Xgap>[125X [27Xg := IsometryGroup(ps);[127X[104X
+    [4X[28XPGO(1,6,5)[128X[104X
+    [4X[25Xgap>[125X [27Xp := Random(Points(ps));[127X[104X
+    [4X[28X<a point in Q+(5, 5)>[128X[104X
+    [4X[25Xgap>[125X [27XFiningStabiliser(g,p);[127X[104X
+    [4X[28X<projective collineation group of size 36000000 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xline := Random(Lines(ps));[127X[104X
+    [4X[28X<a line in Q+(5, 5)>[128X[104X
+    [4X[25Xgap>[125X [27XFiningStabiliser(g,line);[127X[104X
+    [4X[28X<projective collineation group of size 6000000 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xplane := Random(Planes(ps));[127X[104X
+    [4X[28X<a plane in Q+(5, 5)>[128X[104X
+    [4X[25Xgap>[125X [27XFiningStabiliser(g,plane);[127X[104X
+    [4X[28X<projective collineation group of size 93000000 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xh := SplitCayleyHexagon(3);[127X[104X
+    [4X[28XH(3)[128X[104X
+    [4X[25Xgap>[125X [27Xg := CollineationGroup(h);[127X[104X
+    [4X[28X#I  for Split Cayley Hexagon[128X[104X
+    [4X[28X#I  Computing nice monomorphism...[128X[104X
+    [4X[28X#I  Found permutation domain...[128X[104X
+    [4X[28XG_2(3)[128X[104X
+    [4X[25Xgap>[125X [27Xp := Random(Points(h));[127X[104X
+    [4X[28X<a point in H(3)>[128X[104X
+    [4X[25Xgap>[125X [27XFiningStabiliser(g,p);[127X[104X
+    [4X[28X<projective collineation group of size 11664 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xline := Random(Lines(h));[127X[104X
+    [4X[28X<a line in H(3)>[128X[104X
+    [4X[25Xgap>[125X [27XFiningStabiliser(g,line);[127X[104X
+    [4X[28X<projective collineation group of size 11664 with 2 generators>[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X8.2-2 FiningStabiliserOrb[101X
+  
+  [33X[1;0Y[29X[2XFiningStabiliserOrb[102X( [3Xg[103X, [3Xel[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YThe subgroup of [3Xg[103X stabilising the element [3Xel[103X[133X
+  
+  [33X[0;0YThe argument [3Xg[103X is a group of collineations acting on the element [3Xel[103X, being a
+  subspace  of  a  projective space (and hence, all elements of a Lie geometry
+  are  allowed  as  second argument). This operation relies on some particular
+  [5Xorb[105X functionality.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := PG(5,4);[127X[104X
+    [4X[28XProjectiveSpace(5, 4)[128X[104X
+    [4X[25Xgap>[125X [27Xg := SpecialHomographyGroup(ps);[127X[104X
+    [4X[28XThe FinInG PSL group PSL(6,4)[128X[104X
+    [4X[25Xgap>[125X [27Xp := Random(Points(ps));[127X[104X
+    [4X[28X<a point in ProjectiveSpace(5, 4)>[128X[104X
+    [4X[25Xgap>[125X [27XFiningStabiliserOrb(g,p);[127X[104X
+    [4X[28X<projective collineation group with 15 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xline := Random(Lines(ps));[127X[104X
+    [4X[28X<a line in ProjectiveSpace(5, 4)>[128X[104X
+    [4X[25Xgap>[125X [27XFiningStabiliserOrb(g,line);[127X[104X
+    [4X[28X<projective collineation group with 15 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xplane := Random(Planes(ps));[127X[104X
+    [4X[28X<a plane in ProjectiveSpace(5, 4)>[128X[104X
+    [4X[25Xgap>[125X [27XFiningStabiliserOrb(g,plane);[127X[104X
+    [4X[28X<projective collineation group with 15 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xps := HyperbolicQuadric(5,5);[127X[104X
+    [4X[28XQ+(5, 5)[128X[104X
+    [4X[25Xgap>[125X [27Xg := IsometryGroup(ps);[127X[104X
+    [4X[28XPGO(1,6,5)[128X[104X
+    [4X[25Xgap>[125X [27Xp := Random(Points(ps));[127X[104X
+    [4X[28X<a point in Q+(5, 5)>[128X[104X
+    [4X[25Xgap>[125X [27XFiningStabiliserOrb(g,p);[127X[104X
+    [4X[28X<projective collineation group with 15 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xline := Random(Lines(ps));[127X[104X
+    [4X[28X<a line in Q+(5, 5)>[128X[104X
+    [4X[25Xgap>[125X [27XFiningStabiliserOrb(g,line);[127X[104X
+    [4X[28X<projective collineation group with 15 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xplane := Random(Planes(ps));[127X[104X
+    [4X[28X<a plane in Q+(5, 5)>[128X[104X
+    [4X[25Xgap>[125X [27XFiningStabiliserOrb(g,plane);[127X[104X
+    [4X[28X<projective collineation group with 15 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xh := SplitCayleyHexagon(3);[127X[104X
+    [4X[28XH(3)[128X[104X
+    [4X[25Xgap>[125X [27Xg := CollineationGroup(h);[127X[104X
+    [4X[28X#I  for Split Cayley Hexagon[128X[104X
+    [4X[28X#I  Computing nice monomorphism...[128X[104X
+    [4X[28X#I  Found permutation domain...[128X[104X
+    [4X[28XG_2(3)[128X[104X
+    [4X[25Xgap>[125X [27Xp := Random(Points(h));[127X[104X
+    [4X[28X<a point in H(3)>[128X[104X
+    [4X[25Xgap>[125X [27XFiningStabiliserOrb(g,p);[127X[104X
+    [4X[28X<projective collineation group with 15 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xline := Random(Lines(h));[127X[104X
+    [4X[28X<a line in H(3)>[128X[104X
+    [4X[25Xgap>[125X [27XFiningStabiliserOrb(g,line);[127X[104X
+    [4X[28X<projective collineation group with 15 generators>[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YA  small  example  shows  the  difference  in  computing  time.  Clearly the
+  [11XFiningStabiliserOrb[111X  is  the  fastest  way  to  compute  stabilizers  of one
+  element.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := PG(3,8);[127X[104X
+    [4X[28XProjectiveSpace(3, 8)[128X[104X
+    [4X[25Xgap>[125X [27Xg := CollineationGroup(ps);[127X[104X
+    [4X[28XThe FinInG collineation group PGammaL(4,8)[128X[104X
+    [4X[25Xgap>[125X [27Xp := Random(Points(ps));[127X[104X
+    [4X[28X<a point in ProjectiveSpace(3, 8)>[128X[104X
+    [4X[25Xgap>[125X [27Xg1 := Stabilizer(g,p);[127X[104X
+    [4X[28X<projective collineation group of size 177223237632 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X9576[128X[104X
+    [4X[25Xgap>[125X [27Xg2 := FiningStabiliser(g,p);[127X[104X
+    [4X[28X<projective collineation group of size 177223237632 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X244[128X[104X
+    [4X[25Xgap>[125X [27Xg3 := FiningStabiliserOrb(g,p);[127X[104X
+    [4X[28X<projective collineation group with 15 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X46[128X[104X
+    [4X[25Xgap>[125X [27Xg1=g2;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xg2=g3;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X8.2-3 FiningSetwiseStabiliser[101X
+  
+  [33X[1;0Y[29X[2XFiningSetwiseStabiliser[102X( [3Xg[103X, [3Xels[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YThe subgroup of [3Xg[103X stabilising the set [3Xels[103X[133X
+  
+  [33X[0;0YThe argument [3Xg[103X is a group of collineations acting on the element [3Xel[103X, being a
+  subspace  of  a  projective space (and hence, all elements of a Lie geometry
+  are  allowed  as  second argument). The argument [3Xels[103X is a set of elements of
+  the same type of the same Lie geometry, the elements are all in the category
+  [10XIsSubspaceOfProjectiveSpace[110X. The underlying action function is assumed to be
+  [11XOnProjSubspaces[111X[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := HyperbolicQuadric(5,5);                   [127X[104X
+    [4X[28XQ+(5, 5)[128X[104X
+    [4X[25Xgap>[125X [27Xg := IsometryGroup(ps);[127X[104X
+    [4X[28XPGO(1,6,5)[128X[104X
+    [4X[25Xgap>[125X [27Xplane1 := Random(Planes(ps));[127X[104X
+    [4X[28X<a plane in Q+(5, 5)>[128X[104X
+    [4X[25Xgap>[125X [27Xplane2 := Random(Planes(ps));[127X[104X
+    [4X[28X<a plane in Q+(5, 5)>[128X[104X
+    [4X[25Xgap>[125X [27XFiningSetwiseStabiliser(g,Set([plane1,plane2]));[127X[104X
+    [4X[28X#I  Computing adjusted stabilizer chain...[128X[104X
+    [4X[28X<projective collineation group with 4 generators>[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YComputing  the  setwise  stabiliser  under  a  group  is also possible using
+  [11XStabilizer[111X. But, not suprisingly, the computing time can be very long.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := PG(3,4);[127X[104X
+    [4X[28XProjectiveSpace(3, 4)[128X[104X
+    [4X[25Xgap>[125X [27Xp := Random(Points(ps));[127X[104X
+    [4X[28X<a point in ProjectiveSpace(3, 4)>[128X[104X
+    [4X[25Xgap>[125X [27Xq := Random(Points(ps));[127X[104X
+    [4X[28X<a point in ProjectiveSpace(3, 4)>[128X[104X
+    [4X[25Xgap>[125X [27Xg := CollineationGroup(ps);[127X[104X
+    [4X[28XThe FinInG collineation group PGammaL(4,4)[128X[104X
+    [4X[25Xgap>[125X [27XStabilizer(g,Set([p,q]),OnSets);[127X[104X
+    [4X[28X<projective collineation group of size 552960 with 5 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X10440[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  package  [5XGenSS[105X  provides  an  efficient  operations  to compute setwise
+  stabilisers.   This   is   why   [5XFinInG[105X   provides  functionality,  such  as
+  [11XFiningSetwiseStabiliser[111X,  to  use  these [5XGenSS[105X operations for the particular
+  groups and (elements) of geometries. A small example shows the difference in
+  computing time.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := ParabolicQuadric(4,4);[127X[104X
+    [4X[28XQ(4, 4)[128X[104X
+    [4X[25Xgap>[125X [27Xg := CollineationGroup(ps);[127X[104X
+    [4X[28XPGammaO(5,4)[128X[104X
+    [4X[25Xgap>[125X [27Xl1 := Random(Lines(ps));[127X[104X
+    [4X[28X<a line in Q(4, 4)>[128X[104X
+    [4X[25Xgap>[125X [27Xl2 := Random(Lines(ps));[127X[104X
+    [4X[28X<a line in Q(4, 4)>[128X[104X
+    [4X[25Xgap>[125X [27Xg1 := Stabilizer(g,Set([l1,l2]),OnSets);[127X[104X
+    [4X[28X<projective collineation group of size 2304 with 6 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X2633[128X[104X
+    [4X[25Xgap>[125X [27Xg2 := FiningSetwiseStabiliser(g,Set([l1,l2]));[127X[104X
+    [4X[28X#I  Computing adjusted stabilizer chain...[128X[104X
+    [4X[28X<projective collineation group with 5 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X70[128X[104X
+    [4X[25Xgap>[125X [27Xg1=g2;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YFor  subspaces of projective spaces we can be even more efficient by writing
+  down generators of the stabiliser and then return the generated subgroup.[133X
+  
+  [1X8.2-4 StabiliserGroupOfSubspace[101X
+  
+  [33X[1;0Y[29X[2XStabiliserGroupOfSubspace[102X( [3Xsub[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YThe  subgroup  of  the  collineation  group  of  [3XAmbientSpace(sub)[103X
+            stabilising the subspace [3Xsub[103X[133X
+  
+  [33X[0;0YThe argument [3Xsub[103X is a subspace of a projective space.[133X
+  
+  [1X8.2-5 ProjectiveStabiliserGroupOfSubspace[101X
+  
+  [33X[1;0Y[29X[2XProjectiveStabiliserGroupOfSubspace[102X( [3Xsub[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YThe  subgroup  of  the  projectivity  group  of  [3XAmbientSpace(sub)[103X
+            stabilising the subspace [3Xsub[103X[133X
+  
+  [33X[0;0YThe argument [3Xsub[103X is a subspace of a projective space.[133X
+  
+  [1X8.2-6 SpecialProjectiveStabiliserGroupOfSubspace[101X
+  
+  [33X[1;0Y[29X[2XSpecialProjectiveStabiliserGroupOfSubspace[102X( [3Xsub[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YThe    subgroup    of    the   special   projectivity   group   of
+            [3XAmbientSpace(sub)[103X stabilising the subspace [3Xsub[103X[133X
+  
+  [33X[0;0YThe argument [3Xsub[103X is a subspace of a projective space.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xpg:=ProjectiveSpace(5,9);            [127X[104X
+    [4X[28XProjectiveSpace(5, 9)[128X[104X
+    [4X[25Xgap>[125X [27Xsub:=RandomSubspace(pg,2);     [127X[104X
+    [4X[28X<a plane in ProjectiveSpace(5, 9)>[128X[104X
+    [4X[25Xgap>[125X [27Xcoll:=StabiliserGroupOfSubspace(sub); time;                                [127X[104X
+    [4X[28X<projective collineation group of size 11173786189009966655078400 with [128X[104X
+    [4X[28X6 generators>[128X[104X
+    [4X[28X10[128X[104X
+    [4X[25Xgap>[125X [27Xcomputed:=FiningStabiliserOrb(CollineationGroup(pg),sub); [127X[104X
+    [4X[28X<projective collineation group with 15 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X34923[128X[104X
+    [4X[25Xgap>[125X [27Xcoll = computed;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xproj:=ProjectiveStabiliserGroupOfSubspace(sub); [127X[104X
+    [4X[28X<projective collineation group of size 5586893094504983327539200 with [128X[104X
+    [4X[28X5 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X2[128X[104X
+    [4X[25Xgap>[125X [27XFiningStabiliserOrb(ProjectivityGroup(pg),sub)=proj; [127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xtime;      [127X[104X
+    [4X[28X116113[128X[104X
+    [4X[25Xgap>[125X [27Xspecproj:=SpecialProjectiveStabiliserGroupOfSubspace(sub); [127X[104X
+    [4X[28X<projective collineation group of size 2793446547252491663769600 with [128X[104X
+    [4X[28X5 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X2[128X[104X
+    [4X[25Xgap>[125X [27Xspecproj = FiningStabiliserOrb(SpecialProjectivityGroup(pg),sub); [127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X65564[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  
+  [1X8.3 [33X[0;0YActions and nice monomorphisms revisited[133X[101X
+  
+  [33X[0;0YGAP  provides  generic  functions  to compute action homomorphisms and their
+  images   for  arbitrary  groups.  These  functions  are  applicable  on  the
+  projective groups implemented in [5XFinInG[105X.[133X
+  
+  
+  [1X8.3-1 [33X[0;0YAction functions[133X[101X
+  
+  [33X[1;0Y[29X[2XOnProjSubspaces[102X( [3Xel[103X, [3Xg[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XOnProjSubspacesExtended[102X( [3Xel[103X, [3Xg[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XOnSetsProjSubspaces[102X( [3Xset[103X, [3Xg[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ya element of a Lie geometry[133X
+  
+  [33X[0;0YLet  [3Xel[103X  be an element of any Lie geometry, and [3Xg[103X an element of a projective
+  group  acting  on  the elements of the ambient Lie geometry of [3Xel[103X. Then then
+  [11XOnProjSubspaces[111X  will  return  simply  the image of [3Xel[103X under [3Xg[103X. When [3Xg[103X is an
+  element   of  the  correlationcollineation  group  of  a  projective  space,
+  [11XOnProjSubspacesExtended[111X  returns  the image of [3Xel[103X under [3Xg[103X. Finally, when [3Xset[103X
+  is  a set of elements of a Lie geometry, [11XOnSetsProjSubspaces[111X returns the set
+  of   images   under   [3Xg[103X.   [11XOnProjSubspaces[111X   is  also  explained  in  [14X5.8-1[114X,
+  [11XOnProjSubspacesExtended[111X is also explained in [14X5.8-3[114X.[133X
+  
+  
+  [1X8.3-2 [33X[0;0YGeneric GAP functions[133X[101X
+  
+  [33X[1;0Y[29X[2XActionHomomorphism[102X( [3Xg[103X, [3XS[103X, [3Xact[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAction[102X( [3Xg[103X, [3XS[103X, [3Xact[103X ) [32X operation[133X
+  
+  [33X[0;0Y[3Xg[103X  is  a projective group, [3XS[103X is a set or a collection of elements, [3Xact[103X is an
+  action  function.  [11XAction[111X simply returns [11XImage(hom)[111X, if [3Xhom[103X is the result of
+  [11XActionHomomorphism[111X. The examples are self-explanatory.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xpg := PG(2,3);[127X[104X
+    [4X[28XProjectiveSpace(2, 3)[128X[104X
+    [4X[25Xgap>[125X [27Xconic := Set(Points(ParabolicQuadric(2,3)));;[127X[104X
+    [4X[25Xgap>[125X [27Xcoll := CollineationGroup(pg);[127X[104X
+    [4X[28XThe FinInG collineation group PGL(3,3)[128X[104X
+    [4X[25Xgap>[125X [27Xorb := Orbit(coll,conic,OnSetsProjSubspaces);;[127X[104X
+    [4X[25Xgap>[125X [27XLength(orb);[127X[104X
+    [4X[28X234[128X[104X
+    [4X[25Xgap>[125X [27Xhom := ActionHomomorphism(coll,orb,OnSetsProjSubspaces);[127X[104X
+    [4X[28X<action homomorphism>[128X[104X
+    [4X[25Xgap>[125X [27Xperm := Image(hom);[127X[104X
+    [4X[28X<permutation group with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27XOrder(perm);[127X[104X
+    [4X[28X5616[128X[104X
+    [4X[25Xgap>[125X [27XNrMovedPoints(perm);[127X[104X
+    [4X[28X234[128X[104X
+    [4X[25Xgap>[125X [27Xps := SymplecticSpace(5,2);[127X[104X
+    [4X[28XW(5, 2)[128X[104X
+    [4X[25Xgap>[125X [27Xcoll := CollineationGroup(ps);[127X[104X
+    [4X[28XPGammaSp(6,2)[128X[104X
+    [4X[25Xgap>[125X [27Xperm := Action(coll,Lines(ps),OnProjSubspaces);[127X[104X
+    [4X[28X<permutation group with 4 generators>[128X[104X
+    [4X[25Xgap>[125X [27XNrMovedPoints(perm);[127X[104X
+    [4X[28X315[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YA   nice   monomorphism   of  a  group  [22XG[122X  is  roughly  just  a  permutation
+  representation  of  [22XG[122X  on  a  suitable action domain. An easy example is the
+  permutation  action  of the full collineation group of a projective space on
+  its points.[133X
+  
+  [1X8.3-3 NiceMonomorphism[101X
+  
+  [33X[1;0Y[29X[2XNiceMonomorphism[102X( [3Xgroup[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YA group homomorphism[133X
+  
+  [33X[0;0YThis  is  a  generic  GAP  function,  and returns a homorphism to a "better"
+  representation.[133X
+  
+  [1X8.3-4 NiceObject[101X
+  
+  [33X[1;0Y[29X[2XNiceObject[102X( [3Xgroup[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YA permutation group[133X
+  
+  [33X[0;0Y[3Xgroup[103X  is  a projective group. The object this operation returns is actually
+  equivalent with [11XImage(NiceMonomorphism(group))[111X.[133X
+  
+  
+  [1X8.3-5 [33X[0;0YDifferent behaviour for different collineation groups[133X[101X
+  
+  [33X[0;0YFor  the  different  Lie geometries implemented in [5XFinInG[105X, nicemonomorphisms
+  are   (necessarily)   treated   in   a  different  way.  As  the  aim  of  a
+  nicemonomorphism of group [22XG[122X is to provide a permutation representation, such
+  that  efficient  algorithms  for  permutation  groups  become  available for
+  certain operations applicable on [22XG[122X, clearly the efficiency will be increased
+  if the degree of the permutation representation is as small as possible.[133X
+  
+  [33X[0;0YFor  the  collineation  group,  projectivity  group and special projectivity
+  group  of  a  projective  space,  it  is  clear  that  the  smallest  degree
+  permutation  representation  is  the  action  of the group on the projective
+  points.  In principle, one could also consider the action on the hyerplanes.
+  For  the  collineation  group,  similarity  group  and  isometry  group of a
+  classical  polar  space,  in  most  cases,  the  smallest degree permutation
+  representation is the action on the points. A notorious exception to this is
+  the  hermitian polar space in three dimensions, of which the number of lines
+  is smaller than the number of points, and hence of which the smallest degree
+  permutation  representation  is  the  action of the group on the lines. When
+  constructing  a  collineation  group (or (special) projectiviity group) of a
+  projective  space, the nicemonomorphism is not computed. It is only computed
+  when needed. The reason is that from the underlying field and dimension, the
+  underlying  projective  space  can  be determined at any time, and hence the
+  smallest  degree representation can be computed. For the collineation groups
+  (and  similarity  and  isometry  groups)  of  classical  polar  spaces, this
+  behaviour  is  different.  Indeed,  given a group of collineations, from the
+  underlying  field  and  dimension,  the  original  polar  space  can  not be
+  determined.  Of  course  one  could consider the action on the points of the
+  underlying  projective  space,  but  typically  the  number  of  points of a
+  classical  polar  space  is  much  smaller  than  the  number  points of the
+  underlying   projective   space.   This  explains  why,  currently,  a  nice
+  monomorphism  is  computed at the moment a collineation group of a classical
+  polar  space  is  computed.  As  a consequence, just asking the collineation
+  group of a polar space can be time consuming.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xg := CollineationGroup(PG(5,9));[127X[104X
+    [4X[28XThe FinInG collineation group PGammaL(6,9)[128X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X28[128X[104X
+    [4X[25Xgap>[125X [27XHasNiceMonomorphism(g);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27Xh := CollineationGroup(EllipticQuadric(5,9));[127X[104X
+    [4X[28XPGammaO-(6,9)[128X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X1584[128X[104X
+    [4X[25Xgap>[125X [27XHasNiceMonomorphism(h);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X8.3-6 SetParent[101X
+  
+  [33X[1;0Y[29X[2XSetParent[102X( [3Xgroup[103X ) [32X operation[133X
+  
+  [33X[0;0YAssume  that  [22XG[122X  is a group of collineations. As mentioned already, from the
+  underlying  field and dimension, only the underlying projective space can be
+  determined.  An operation like [11XOrder[111X requires a nice monomorphism, so for an
+  arbitrary  group  [22XG[122X,  the  action on the points of the underlying projective
+  space  will  be  computed,  which can be time consuming for large projective
+  spaces. However, if it is known that [22XG[122X is a subgroup of another collineation
+  group  [22XH[122X,  this  group  [22XH[122X  can  be  set  as  a parent group for [22XG[122X. If a nice
+  monomorphism  is  available  for  [22XH[122X,  it will become available for [22XG[122X. In the
+  example  we  construct  the  collineation  group of the hermtian polar space
+  [22XH(3,81)[122X.  As  explained,  a nice monomorphism is computed upon construction.
+  Then construct a group generated by two random elements of this collineation
+  group  of  [22XH(3,81)[122X,  and  compute its order. Without further information, it
+  will  be  assumed  by  the  system  that this new group is a subgroup of the
+  collineation  group  of  [22XPG(3,81)[122X,  and a nice monomorphism will be computed
+  through  this  group.  In  the  second  part  we set the parent group as the
+  collineation  group  of  [22XH(3,81)[122X,  and  compute the order again. Compare the
+  different timings.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := HermitianPolarSpace(3,81);[127X[104X
+    [4X[28XH(3, 9^2)[128X[104X
+    [4X[25Xgap>[125X [27Xgroup := CollineationGroup(ps);[127X[104X
+    [4X[28XPGammaU(4,9^2)[128X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X2219[128X[104X
+    [4X[25Xgap>[125X [27Xg := Random(group);[127X[104X
+    [4X[28X< a collineation: <cmat 4x4 over GF(3,4)>, F^27>[128X[104X
+    [4X[25Xgap>[125X [27Xh := Random(group);[127X[104X
+    [4X[28X< a collineation: <cmat 4x4 over GF(3,4)>, F^3>[128X[104X
+    [4X[25Xgap>[125X [27Xgroup2 := Group([g,h]);[127X[104X
+    [4X[28X<projective collineation group with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27XHasNiceMonomorphism(group2);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XOrder(group2);[127X[104X
+    [4X[28X407194345728000[128X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X371559[128X[104X
+    [4X[25Xgap>[125X [27XHasNiceMonomorphism(group2);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XNrMovedPoints(NiceObject(group2));[127X[104X
+    [4X[28X538084[128X[104X
+    [4X[25Xgap>[125X [27XSize(Points(PG(3,81)));[127X[104X
+    [4X[28X538084[128X[104X
+    [4X[25Xgap>[125X [27Xgroup2 := Group([g,h]);[127X[104X
+    [4X[28X<projective collineation group with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27XSetParent(group2,group);[127X[104X
+    [4X[25Xgap>[125X [27XHasNiceMonomorphism(group2);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XHasNiceObject(group2);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XOrder(group2);[127X[104X
+    [4X[28X407194345728000[128X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X888[128X[104X
+    [4X[25Xgap>[125X [27XHasNiceObject(group2);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XNrMovedPoints(NiceObject(group2));[127X[104X
+    [4X[28X7300[128X[104X
+    [4X[25Xgap>[125X [27XSize(Lines(ps));[127X[104X
+    [4X[28X7300[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  

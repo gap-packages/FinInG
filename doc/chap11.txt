@@ -1,0 +1,677 @@
+  
+  [1X11 [33X[0;0YAlgebraic Varieties[133X[101X
+  
+  [33X[0;0YIn  [5XFinInG[105X  we  provide  some  basic  functionality  for algebraic varieties
+  defined over finite fields. The algebraic varieties in [5XFinInG[105X are defined by
+  a  list  of  multivariate  polynomials  over  a finite field, and an ambient
+  geometry.  This  ambient geometry is either a projective space, and then the
+  algebraic variety is called a [13Xprojective variety[113X, or an affine geometry, and
+  then  the  algebraic variety is called an [13Xaffine variety[113X. In this chapter we
+  give  a  brief overview of the features of [5XFinInG[105X concerning these two types
+  of  algebraic  varieties.  The  package  [5XFinInG[105X  also  contains the Veronese
+  varieties   [2XVeroneseVariety[102X   ([14X11.7-1[114X),  the  Segre  varieties  [2XSegreVariety[102X
+  ([14X11.6-1[114X)  and  the  Grassmann  varieties  [2XGrassmannVariety[102X  ([14X11.8-1[114X);  three
+  classical  projective varieties. These varieties have an associated [13Xgeometry
+  map[113X  (the [2XVeroneseMap[102X ([14X11.7-3[114X), [2XSegreMap[102X ([14X11.6-3[114X) and [2XGrassmannMap[102X ([14X11.8-3[114X))
+  and [5XFinInG[105X also provides some general functionality for these.[133X
+  
+  
+  [1X11.1 [33X[0;0YAlgebraic Varieties[133X[101X
+  
+  [33X[0;0YAn [13Xalgebraic variety[113X in [5XFinInG[105X is an algebraic variety in a projective space
+  or affine space, defined by a list of polynomials over a finite field.[133X
+  
+  [1X11.1-1 AlgebraicVariety[101X
+  
+  [33X[1;0Y[29X[2XAlgebraicVariety[102X( [3Xspace[103X, [3Xpring[103X, [3Xpollist[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAlgebraicVariety[102X( [3Xspace[103X, [3Xpollist[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan algebraic variety[133X
+  
+  [33X[0;0YThe  argument  [3Xspace[103X is an affine or projective space over a finite field [3XF[103X,
+  the  argument  [3Xpring[103X  is  a  multivariate  polynomial  ring  defined over (a
+  subfield  of) [3XF[103X, and [3Xpollist[103X is a list of polynomials in [3Xpring[103X. If the [3Xspace[103X
+  is  a  projective  space,  then  [3Xpollist[103X  needs  to be a list of homogeneous
+  polynomials.  In  [5XFinInG[105X  there  are  two  types  of  projective  varieties:
+  projective varieties and affine varieties. The following operations apply to
+  both types.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XF:=GF(9);[127X[104X
+    [4X[28XGF(3^2)[128X[104X
+    [4X[25Xgap>[125X [27Xr:=PolynomialRing(F,4);[127X[104X
+    [4X[28XGF(3^2)[x_1,x_2,x_3,x_4][128X[104X
+    [4X[25Xgap>[125X [27Xpg:=PG(3,9);[127X[104X
+    [4X[28XProjectiveSpace(3, 9)[128X[104X
+    [4X[25Xgap>[125X [27Xf1:=r.1*r.3-r.2^2;[127X[104X
+    [4X[28Xx_1*x_3-x_2^2[128X[104X
+    [4X[25Xgap>[125X [27Xf2:=r.4*r.1^2-r.4^3;[127X[104X
+    [4X[28Xx_1^2*x_4-x_4^3[128X[104X
+    [4X[25Xgap>[125X [27Xvar:=AlgebraicVariety(pg,[f1,f2]);[127X[104X
+    [4X[28XProjective Variety in ProjectiveSpace(3, 9)[128X[104X
+    [4X[25Xgap>[125X [27XDefiningListOfPolynomials(var);[127X[104X
+    [4X[28X[ x_1*x_3-x_2^2, x_1^2*x_4-x_4^3 ][128X[104X
+    [4X[25Xgap>[125X [27XAmbientSpace(var);[127X[104X
+    [4X[28XProjectiveSpace(3, 9)[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X11.1-2 DefiningListOfPolynomials[101X
+  
+  [33X[1;0Y[29X[2XDefiningListOfPolynomials[102X( [3Xvar[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya list of polynomials[133X
+  
+  [33X[0;0YThe argument [3Xvar[103X is an algebraic variety. This attribute returns the list of
+  polynomials that was used to define the variety [3Xvar[103X.[133X
+  
+  [1X11.1-3 AmbientSpace[101X
+  
+  [33X[1;0Y[29X[2XAmbientSpace[102X( [3Xvar[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Yan affine or projective space[133X
+  
+  [33X[0;0YThe  argument [3Xvar[103X is an algebraic variety. This attribute returns the affine
+  or projective space in which the variety [3Xvar[103X was defined.[133X
+  
+  [1X11.1-4 PointsOfAlgebraicVariety[101X
+  
+  [33X[1;0Y[29X[2XPointsOfAlgebraicVariety[102X( [3Xvar[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XPoints[102X( [3Xvar[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya list of points[133X
+  
+  [33X[0;0YThe argument [3Xvar[103X is an algebraic variety. This operation returns the list of
+  points  of  the  [2XAmbientSpace[102X  ([14X11.1-3[114X)  of  the algebraic variety [3Xvar[103X whose
+  coordinates  satify  the [2XDefiningListOfPolynomials[102X ([14X11.1-2[114X) of the algebraic
+  variety [3Xvar[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XF:=GF(9);[127X[104X
+    [4X[28XGF(3^2)[128X[104X
+    [4X[25Xgap>[125X [27Xr:=PolynomialRing(F,4);[127X[104X
+    [4X[28XGF(3^2)[x_1,x_2,x_3,x_4][128X[104X
+    [4X[25Xgap>[125X [27Xpg:=PG(3,9);[127X[104X
+    [4X[28XProjectiveSpace(3, 9)[128X[104X
+    [4X[25Xgap>[125X [27Xf1:=r.1*r.3-r.2^2;[127X[104X
+    [4X[28Xx_1*x_3-x_2^2[128X[104X
+    [4X[25Xgap>[125X [27Xf2:=r.4*r.1^2-r.4^3;[127X[104X
+    [4X[28Xx_1^2*x_4-x_4^3[128X[104X
+    [4X[25Xgap>[125X [27Xvar:=AlgebraicVariety(pg,[f1,f2]);[127X[104X
+    [4X[28XProjective Variety in ProjectiveSpace(3, 9)[128X[104X
+    [4X[25Xgap>[125X [27Xpoints:=Points(var);[127X[104X
+    [4X[28X<points of Projective Variety in ProjectiveSpace(3, 9)>[128X[104X
+    [4X[25Xgap>[125X [27XSize(points);[127X[104X
+    [4X[28X28[128X[104X
+    [4X[25Xgap>[125X [27Xiter := Iterator(points);[127X[104X
+    [4X[28X<iterator>[128X[104X
+    [4X[25Xgap>[125X [27Xfor i in [1..4] do[127X[104X
+    [4X[25X>[125X [27X	x := NextIterator(iter);[127X[104X
+    [4X[25X>[125X [27X	Display(x);[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[28X[1...][128X[104X
+    [4X[28X[1..1][128X[104X
+    [4X[28X[1..2][128X[104X
+    [4X[28X[111.][128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X11.1-5 Iterator[101X
+  
+  [33X[1;0Y[29X[2XIterator[102X( [3Xpts[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan iterator[133X
+  
+  [33X[0;0YThe  argument  [3Xpts[103X  is  the  set  of [2XPointsOfAlgebraicVariety[102X ([14X11.1-4[114X) of an
+  algebraic  variety [3Xvar[103X. This operation returns an iterator for the points of
+  an algebraic variety.[133X
+  
+  [1X11.1-6 \in[101X
+  
+  [33X[1;0Y[29X[2X\in[102X( [3Xx[103X, [3Xvar[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2X\in[102X( [3Xx[103X, [3Xpts[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ytrue or false[133X
+  
+  [33X[0;0YThe  argument  [3Xx[103X  is  a  point  of the [2XAmbientSpace[102X ([14X11.1-3[114X) of an algebraic
+  variety  [2XAlgebraicVariety[102X  ([14X11.1-1[114X). This operation also works for a point [3Xx[103X
+  and the collection [3Xpts[103X returned by [2XPointsOfAlgebraicVariety[102X ([14X11.1-4[114X).[133X
+  
+  
+  [1X11.2 [33X[0;0YProjective Varieties[133X[101X
+  
+  [33X[0;0YA [13Xprojective variety[113X in [5XFinInG[105X is an algebraic variety in a projective space
+  defined by a list of homogeneous polynomials over a finite field.[133X
+  
+  [1X11.2-1 ProjectiveVariety[101X
+  
+  [33X[1;0Y[29X[2XProjectiveVariety[102X( [3Xpg[103X, [3Xpring[103X, [3Xpollist[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XProjectiveVariety[102X( [3Xpg[103X, [3Xpollist[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAlgebraicVariety[102X( [3Xpg[103X, [3Xpring[103X, [3Xpollist[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAlgebraicVariety[102X( [3Xpg[103X, [3Xpollist[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya projective algebraic variety[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XF:=GF(9);[127X[104X
+    [4X[28XGF(3^2)[128X[104X
+    [4X[25Xgap>[125X [27Xr:=PolynomialRing(F,4);[127X[104X
+    [4X[28XGF(3^2)[x_1,x_2,x_3,x_4][128X[104X
+    [4X[25Xgap>[125X [27Xpg:=PG(3,9);[127X[104X
+    [4X[28XProjectiveSpace(3, 9)[128X[104X
+    [4X[25Xgap>[125X [27Xf1:=r.1*r.3-r.2^2;[127X[104X
+    [4X[28Xx_1*x_3-x_2^2[128X[104X
+    [4X[25Xgap>[125X [27Xf2:=r.4*r.1^2-r.4^3;[127X[104X
+    [4X[28Xx_1^2*x_4-x_4^3[128X[104X
+    [4X[25Xgap>[125X [27Xvar:=AlgebraicVariety(pg,[f1,f2]);[127X[104X
+    [4X[28XProjective Variety in ProjectiveSpace(3, 9)[128X[104X
+    [4X[25Xgap>[125X [27XDefiningListOfPolynomials(var);[127X[104X
+    [4X[28X[ x_1*x_3-x_2^2, x_1^2*x_4-x_4^3 ][128X[104X
+    [4X[25Xgap>[125X [27XAmbientSpace(var);[127X[104X
+    [4X[28XProjectiveSpace(3, 9)[128X[104X
+    [4X[28X [128X[104X
+    [4X[28X        [128X[104X
+  [4X[32X[104X
+  
+  
+  [1X11.3 [33X[0;0YQuadrics and Hermitian varieties[133X[101X
+  
+  [33X[0;0YQuadrics     ([2XQuadraticVariety[102X    ([14X11.3-2[114X))    and    Hermitian    varieties
+  ([2XHermitianVariety[102X   ([14X11.3-1[114X))   are   projective  varieties  that  have  the
+  associated  quadratic  or  hermitian  form  as an extra attribute installed.
+  Furthermore,  we  provide  a  method  for [11XPolarSpace[111X taking as an argument a
+  projective algebraic variety.[133X
+  
+  [1X11.3-1 HermitianVariety[101X
+  
+  [33X[1;0Y[29X[2XHermitianVariety[102X( [3Xpg[103X, [3Xpring[103X, [3Xpol[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XHermitianVariety[102X( [3Xpg[103X, [3Xpol[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XHermitianVariety[102X( [3Xn[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XHermitianVariety[102X( [3Xn[103X, [3Xq[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya hermitian variety in a projective space[133X
+  
+  [33X[0;0YFor the first two methods, the argument [3Xpg[103X is a projective space, [3Xpring[103X is a
+  polynomial ring, and [3Xpol[103X is polynomial. For the third and fourth variations,
+  the  argument  [3Xn[103X  is  an  integer, the argument [3XF[103X is a finite field, and the
+  argument  [3Xq[103X  is  a prime power. These variations of the operation return the
+  hermitian   variety  associated  to  the  standard  hermitian  form  in  the
+  projective space of dimension [22Xn[122X over the field [22XF[122X of order [22Xq[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XF:=GF(25);[127X[104X
+    [4X[28XGF(5^2)[128X[104X
+    [4X[25Xgap>[125X [27Xr:=PolynomialRing(F,3);[127X[104X
+    [4X[28XGF(5^2)[x_1,x_2,x_3][128X[104X
+    [4X[25Xgap>[125X [27Xx:=IndeterminatesOfPolynomialRing(r);[127X[104X
+    [4X[28X[ x_1, x_2, x_3 ][128X[104X
+    [4X[25Xgap>[125X [27Xpg:=PG(2,F);[127X[104X
+    [4X[28XProjectiveSpace(2, 25)[128X[104X
+    [4X[25Xgap>[125X [27Xf:=x[1]^6+x[2]^6+x[3]^6;[127X[104X
+    [4X[28Xx_1^6+x_2^6+x_3^6[128X[104X
+    [4X[25Xgap>[125X [27Xhv:=HermitianVariety(pg,f);[127X[104X
+    [4X[28XHermitian Variety in ProjectiveSpace(2, 25)[128X[104X
+    [4X[25Xgap>[125X [27XAsSet(List(Lines(pg),l->Size(Filtered(Points(l),x->x in hv))));[127X[104X
+    [4X[28X[ 1, 6 ][128X[104X
+    [4X[25Xgap>[125X [27Xhv:=HermitianVariety(5,4);[127X[104X
+    [4X[28XHermitian Variety in ProjectiveSpace(5, 4)[128X[104X
+    [4X[25Xgap>[125X [27Xhps:=PolarSpace(hv);[127X[104X
+    [4X[28X<polar space in ProjectiveSpace([128X[104X
+    [4X[28X5,GF(2^2)): x_1^3+x_2^3+x_3^3+x_4^3+x_5^3+x_6^3=0 >[128X[104X
+    [4X[25Xgap>[125X [27Xhf:=SesquilinearForm(hv);[127X[104X
+    [4X[28X< hermitian form >[128X[104X
+    [4X[25Xgap>[125X [27XPolynomialOfForm(hf);[127X[104X
+    [4X[28Xx_1^3+x_2^3+x_3^3+x_4^3+x_5^3+x_6^3[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X11.3-2 QuadraticVariety[101X
+  
+  [33X[1;0Y[29X[2XQuadraticVariety[102X( [3Xpg[103X, [3Xpring[103X, [3Xpol[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XQuadraticVariety[102X( [3Xpg[103X, [3Xpol[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XQuadraticVariety[102X( [3Xn[103X, [3XF[103X, [3Xtype[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XQuadraticVariety[102X( [3Xn[103X, [3Xq[103X, [3Xtype[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XQuadraticVariety[102X( [3Xn[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XQuadraticVariety[102X( [3Xn[103X, [3Xq[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya quadratic variety in a projective space[133X
+  
+  [33X[0;0YIn  the first two methods, the argument [3Xpg[103X is a projective space, [3Xpring[103X is a
+  polynomial  ring, and [3Xpol[103X is a polynomial. The latter four return a standard
+  non-degenerate  quadric.  The  argument  [3Xn[103X is a projective dimension, [3XF[103X is a
+  field,  and  [3Xq[103X  is  a  prime power that gives just the order of the defining
+  field.  If  the [3Xtype[103X is given, then it will return a quadric of a particular
+  type as follows:[133X
+  
+      ┌────────────────────┬──────────────────────────────────────────────────────────────────────────┬─────────────────────┬────────────┬───────────────────────────┐
+      │ variety            │ standard form                                                            │ characteristic [22Xp[122X    │ proj. dim. │ type                      │ 
+      ├────────────────────┼──────────────────────────────────────────────────────────────────────────┼─────────────────────┼────────────┼───────────────────────────┤
+      │ hyperbolic quadric │ [22XX_0 X_1 + ... + X_n-1X_n[122X                                                 │ [22Xp ≡ 3 mod 4[122X or [22Xp=2[122X  │ odd        │ "hyperbolic", "+", or "1" │ 
+      │ hyperbolic quadric │ [22X2(X_0 X_1 + ... + X_n-1X_n)[122X                                              │ [22Xp ≡ 1 mod 4[122X         │ odd        │ "hyperbolic", "+", or "1" │ 
+      │ parabolic quadric  │ [22XX_0^2 + X_1X_2 + ... + X_n-1X_n[122X                                          │ [22Xp ≡ 1,3 mod 8[122Xor [22Xp=2[122X │ even       │ "parabolic", "o", or "0"  │ 
+      │ parabolic quadric  │ [22Xt(X_0^2 + X_1X_2 + ... + X_n-1X_n)[122X, t a primitve element of GF(p)        │ [22Xp ≡ 5,7 mod 8[122X       │ even       │ "parabolic", "o", or "0"  │ 
+      │ elliptic quadric   │ [22XX_0^2 + X_1^2 + X_2X_3 + ... + X_n-1X_n[122X                                  │ [22Xp ≡ 3 mod 4[122X         │ odd        │ "elliptic", "-", or "-1"  │ 
+      │ elliptic quadric   │ [22XX_0^2 + tX_1^2 + X_2X_3 + ... + X_n-1X_n[122X, [22Xt[122X a primitive element of [22XGF(p)[122X │ [22Xp ≡ 1 mod 4[122X         │ odd        │ "elliptic", "-", or "-1"  │ 
+      │ elliptic quadric   │ [22XX_0^2 + X_0X_1 + dX_1^2 + X_2X_3 + ... + X_n-1X_n[122X, [22XTr(d)=1[122X               │ even                │ odd        │ "elliptic", "-", or "-1"  │ 
+      └────────────────────┴──────────────────────────────────────────────────────────────────────────┴─────────────────────┴────────────┴───────────────────────────┘
+  
+       [1XTable:[101X standard quadratic varieties
+  
+  
+  [33X[0;0YIf no type is given, and only the dimension and field/field order are given,
+  then  it is assumed that the dimension is even and the user wants a standard
+  parabolic quadric.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XF:=GF(5);[127X[104X
+    [4X[28XGF(5)[128X[104X
+    [4X[25Xgap>[125X [27Xr:=PolynomialRing(F,4);[127X[104X
+    [4X[28XGF(5)[x_1,x_2,x_3,x_4][128X[104X
+    [4X[25Xgap>[125X [27Xx:=IndeterminatesOfPolynomialRing(r);[127X[104X
+    [4X[28X[ x_1, x_2, x_3, x_4 ][128X[104X
+    [4X[25Xgap>[125X [27Xpg:=PG(3,F);[127X[104X
+    [4X[28XProjectiveSpace(3, 5)[128X[104X
+    [4X[25Xgap>[125X [27XQ:=x[2]*x[3]+x[4]^2;[127X[104X
+    [4X[28Xx_2*x_3+x_4^2[128X[104X
+    [4X[25Xgap>[125X [27Xqv:=QuadraticVariety(pg,Q);[127X[104X
+    [4X[28XQuadratic Variety in ProjectiveSpace(3, 5)[128X[104X
+    [4X[25Xgap>[125X [27XAsSet(List(Planes(pg),z->Size(Filtered(Points(z),x->x in qv))));[127X[104X
+    [4X[28X[ 1, 6, 11 ][128X[104X
+    [4X[25Xgap>[125X [27Xqf:=QuadraticForm(qv);[127X[104X
+    [4X[28X< quadratic form >[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(qf);[127X[104X
+    [4X[28XQuadratic form[128X[104X
+    [4X[28XGram Matrix:[128X[104X
+    [4X[28X . . . .[128X[104X
+    [4X[28X . . 1 .[128X[104X
+    [4X[28X . . . .[128X[104X
+    [4X[28X . . . 1[128X[104X
+    [4X[28XPolynomial: [ [  x_2*x_3+x_4^2 ] ][128X[104X
+    [4X[25Xgap>[125X [27XIsDegenerateForm(qf);[127X[104X
+    [4X[28X#I  Testing degeneracy of the *associated bilinear form*[128X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xqv:=QuadraticVariety(3,F,"-");[127X[104X
+    [4X[28XQuadratic Variety in ProjectiveSpace(3, 5)[128X[104X
+    [4X[25Xgap>[125X [27XPolarSpace(qv);[127X[104X
+    [4X[28X<polar space in ProjectiveSpace(3,GF(5)): x_1^2+Z(5)*x_2^2+x_3*x_4=0 >[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(last);[127X[104X
+    [4X[28X<polar space of rank 3 over GF(5)>[128X[104X
+    [4X[28XNon-singular elliptic quadratic form[128X[104X
+    [4X[28XGram Matrix:[128X[104X
+    [4X[28X 1 . . .[128X[104X
+    [4X[28X . 2 . .[128X[104X
+    [4X[28X . . . 1[128X[104X
+    [4X[28X . . . .[128X[104X
+    [4X[28XPolynomial: [ [  x_1^2+Z(5)*x_2^2+x_3*x_4 ] ][128X[104X
+    [4X[28XWitt Index: 1[128X[104X
+    [4X[28XBilinear form[128X[104X
+    [4X[28XGram Matrix:[128X[104X
+    [4X[28X 2 . . .[128X[104X
+    [4X[28X . 4 . .[128X[104X
+    [4X[28X . . . 1[128X[104X
+    [4X[28X . . 1 .[128X[104X
+    [4X[25Xgap>[125X [27Xqv:=QuadraticVariety(3,F,"+");[127X[104X
+    [4X[28XQuadratic Variety in ProjectiveSpace(3, 5)[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(last);[127X[104X
+    [4X[28XQuadratic Variety in ProjectiveSpace(3, 5)[128X[104X
+    [4X[28X Polynomial: [ Z(5)*x_1*x_2+Z(5)*x_3*x_4 ][128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X11.3-3 QuadraticForm[101X
+  
+  [33X[1;0Y[29X[2XQuadraticForm[102X( [3Xvar[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya quadratic form[133X
+  
+  [33X[0;0YWhen  the  argument  [3Xvar[103X  is  a  [2XQuadraticVariety[102X ([14X11.3-2[114X), this returns the
+  associated quadratic form.[133X
+  
+  [1X11.3-4 SesquilinearForm[101X
+  
+  [33X[1;0Y[29X[2XSesquilinearForm[102X( [3Xvar[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya hermitian form[133X
+  
+  [33X[0;0YIf  the  argument  [3Xvar[103X  is  a  [2XHermitianVariety[102X  ([14X11.3-1[114X),  this returns the
+  associated hermitian form.[133X
+  
+  [1X11.3-5 PolarSpace[101X
+  
+  [33X[1;0Y[29X[2XPolarSpace[102X( [3Xvar[103X ) [32X operation[133X
+  
+  [33X[0;0Ythe  argument  [3Xvar[103X  is  a  projective  algebraic  variety.  When its list of
+  definining  polynomial  contains  exactly  one  polynomial, depending on its
+  degree, the operation [11XQuadraticFormByPolynomial[111X or [11XHermitianFormByPolynomial[111X
+  is  used  to  compute a quadratic form or a hermitian form. These operations
+  check  whether this is possible, and produce an error message if not. If the
+  conversion is possible, then the appropriate polar space is returned.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf := GF(25);[127X[104X
+    [4X[28XGF(5^2)[128X[104X
+    [4X[25Xgap>[125X [27Xr := PolynomialRing(f,4);[127X[104X
+    [4X[28XGF(5^2)[x_1,x_2,x_3,x_4][128X[104X
+    [4X[25Xgap>[125X [27Xind := IndeterminatesOfPolynomialRing(r);[127X[104X
+    [4X[28X[ x_1, x_2, x_3, x_4 ][128X[104X
+    [4X[25Xgap>[125X [27Xeq1 := Sum(List(ind,t->t^2));[127X[104X
+    [4X[28Xx_1^2+x_2^2+x_3^2+x_4^2[128X[104X
+    [4X[25Xgap>[125X [27Xvar := ProjectiveVariety(PG(3,f),[eq1]);   [127X[104X
+    [4X[28XProjective Variety in ProjectiveSpace(3, 25)[128X[104X
+    [4X[25Xgap>[125X [27XPolarSpace(var);[127X[104X
+    [4X[28X<polar space in ProjectiveSpace(3,GF(5^2)): x_1^2+x_2^2+x_3^2+x_4^2=0 >[128X[104X
+    [4X[25Xgap>[125X [27Xeq2 := Sum(List(ind,t->t^4));[127X[104X
+    [4X[28Xx_1^4+x_2^4+x_3^4+x_4^4[128X[104X
+    [4X[25Xgap>[125X [27Xvar := ProjectiveVariety(PG(3,f),[eq2]);[127X[104X
+    [4X[28XProjective Variety in ProjectiveSpace(3, 25)[128X[104X
+    [4X[25Xgap>[125X [27XPolarSpace(var);[127X[104X
+    [4X[28XError, <poly> does not generate a Hermitian matrix called from[128X[104X
+    [4X[28XGramMatrixByPolynomialForHermitianForm( pol, gf, n, vars ) called from[128X[104X
+    [4X[28XHermitianFormByPolynomial( pol, pring, n ) called from[128X[104X
+    [4X[28XHermitianFormByPolynomial( eq, r ) called from[128X[104X
+    [4X[28X<function "unknown">( <arguments> )[128X[104X
+    [4X[28X called from read-eval loop at line 16 of *stdin*[128X[104X
+    [4X[28Xyou can 'quit;' to quit to outer loop, or[128X[104X
+    [4X[28Xyou can 'return;' to continue[128X[104X
+    [4X[26Xbrk>[126X [27Xquit;[127X[104X
+    [4X[25Xgap>[125X [27Xeq3 := Sum(List(ind,t->t^6));[127X[104X
+    [4X[28Xx_1^6+x_2^6+x_3^6+x_4^6[128X[104X
+    [4X[25Xgap>[125X [27Xvar := ProjectiveVariety(PG(3,f),[eq3]);[127X[104X
+    [4X[28XProjective Variety in ProjectiveSpace(3, 25)[128X[104X
+    [4X[25Xgap>[125X [27XPolarSpace(var);[127X[104X
+    [4X[28X<polar space in ProjectiveSpace(3,GF(5^2)): x_1^6+x_2^6+x_3^6+x_4^6=0 >[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  
+  [1X11.4 [33X[0;0YAffine Varieties[133X[101X
+  
+  [33X[0;0YAn  [13Xaffine  variety[113X  in  [5XFinInG[105X  is  an algebraic variety in an affine space
+  defined by a list of polynomials over a finite field.[133X
+  
+  [1X11.4-1 AffineVariety[101X
+  
+  [33X[1;0Y[29X[2XAffineVariety[102X( [3Xag[103X, [3Xpring[103X, [3Xpollist[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAffineVariety[102X( [3Xag[103X, [3Xpollist[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAlgebraicVariety[102X( [3Xag[103X, [3Xpring[103X, [3Xpollist[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAlgebraicVariety[102X( [3Xag[103X, [3Xpollist[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan affine algebraic variety[133X
+  
+  [33X[0;0YThe argument [3Xag[103X is an affine space over a finite field [3XF[103X, the argument [3Xpring[103X
+  is  a  multivariate  polynomial  ring  defined  over  (a subfield of) [3XF[103X, and
+  [3Xpollist[103X is a list of polynomials in [3Xpring[103X.[133X
+  
+  
+  [1X11.5 [33X[0;0YGeometry maps[133X[101X
+  
+  [33X[0;0YA  [3Xgeometry  map[103X  is  a map from a set of elements of a geometry to a set of
+  elements  of another geometry, which is not necessarily a geometry morphism.
+  Examples  are  the  [2XSegreMap[102X  ([14X11.6-3[114X),  the  [2XVeroneseMap[102X  ([14X11.7-3[114X), and the
+  [2XGrassmannMap[102X ([14X11.8-3[114X).[133X
+  
+  [1X11.5-1 Source[101X
+  
+  [33X[1;0Y[29X[2XSource[102X( [3Xgm[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe source of a geometry map[133X
+  
+  [33X[0;0YThe argument [3Xgm[103X is a geometry map.[133X
+  
+  [1X11.5-2 Range[101X
+  
+  [33X[1;0Y[29X[2XRange[102X( [3Xgm[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe range of a geometry map[133X
+  
+  [33X[0;0YThe argument [3Xgm[103X is a geometry map.[133X
+  
+  [1X11.5-3 ImageElm[101X
+  
+  [33X[1;0Y[29X[2XImageElm[102X( [3Xgm[103X, [3Xx[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe image of an element under a geometry map[133X
+  
+  [33X[0;0YThe argument [3Xgm[103X is a geometry map, the element [3Xx[103X is an element of the [2XSource[102X
+  ([14X11.5-1[114X) of the geometry map [3Xgm[103X.[133X
+  
+  [1X11.5-4 ImagesSet[101X
+  
+  [33X[1;0Y[29X[2XImagesSet[102X( [3Xgm[103X, [3Xelms[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe image of a subset of the source under a geometry map[133X
+  
+  [33X[0;0YThe  argument  [3Xgm[103X  is  a  geometry map, the elements [3Xelms[103X is a subset of the
+  [2XSource[102X ([14X11.5-1[114X) of the geometry map [3Xgm[103X.[133X
+  
+  [1X11.5-5 \^[101X
+  
+  [33X[1;0Y[29X[2X\^[102X( [3Xx[103X, [3Xgm[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe image of an element of the source under a geometry map[133X
+  
+  [33X[0;0YThe argument [3Xgm[103X is a geometry map, the element [3Xx[103X is an element of the [2XSource[102X
+  ([14X11.5-1[114X) of the geometry map [3Xgm[103X.[133X
+  
+  
+  [1X11.6 [33X[0;0YSegre Varieties[133X[101X
+  
+  [33X[0;0YA  [13XSegre variety[113X in [5XFinInG[105X is a projective algebraic variety in a projective
+  space over a finite field. The set of points that lie on this variety is the
+  image of the [13XSegre map[113X.[133X
+  
+  [1X11.6-1 SegreVariety[101X
+  
+  [33X[1;0Y[29X[2XSegreVariety[102X( [3Xlistofpgs[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XSegreVariety[102X( [3Xlistofdims[103X, [3Xfield[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XSegreVariety[102X( [3Xpg1[103X, [3Xpg2[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XSegreVariety[102X( [3Xd1[103X, [3Xd2[103X, [3Xfield[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XSegreVariety[102X( [3Xd1[103X, [3Xd2[103X, [3Xq[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya Segre variety[133X
+  
+  [33X[0;0YThe  argument [3Xlistofpgs[103X is a list of projective spaces defined over the same
+  finite  field,  say  [22X[PG(n_1-1,q)[122X  ,  [22XPG(n_2-1,q)[122X  , ..., [22XPG(n_k-1,q)][122X . The
+  operation  also  takes  as  input  the list of dimensions ([3Xlistofdims[103X) and a
+  finite  field  [3Xfield[103X  (e.g.  [22X[n_1,n_2,...,n_k,GF(q)][122X ). A Segre variety with
+  only two factors ([22Xk=2[122X), can also be constructed using the operation with two
+  projective  spaces  [3Xpg1[103X and [3Xpg2[103X as arguments, or with two dimensions [3Xd1[103X, [3Xd2[103X,
+  and  a  finite  field  [3Xfield[103X(or  a  prime  power [3Xq[103X). The operation returns a
+  projective  algebraic variety in the projective space of dimension [22Xn_1n_2...
+  n_k-1[122X .[133X
+  
+  [1X11.6-2 PointsOfSegreVariety[101X
+  
+  [33X[1;0Y[29X[2XPointsOfSegreVariety[102X( [3Xsv[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XPoints[102X( [3Xsv[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe points of a Segre variety[133X
+  
+  [33X[0;0YThe  argument  [3Xsv[103X is a Segre variety. This operation returns a set of points
+  of  the  [2XAmbientSpace[102X  ([14X11.1-3[114X)  of  the  Segre  variety. This set of points
+  corresponds to the image of the [2XSegreMap[102X ([14X11.6-3[114X).[133X
+  
+  [1X11.6-3 SegreMap[101X
+  
+  [33X[1;0Y[29X[2XSegreMap[102X( [3Xlistofpgs[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XSegreMap[102X( [3Xlistofdims[103X, [3Xfield[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XSegreMap[102X( [3Xpg1[103X, [3Xpg2[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XSegreMap[102X( [3Xd1[103X, [3Xd2[103X, [3Xfield[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XSegreMap[102X( [3Xd1[103X, [3Xd2[103X, [3Xq[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XSegreMap[102X( [3Xsv[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya geometry map[133X
+  
+  [33X[0;0YThe  argument [3Xlistofpgs[103X is a list of projective spaces defined over the same
+  finite  field,  say  [22X[PG(n_1-1,q)[122X  ,  [22XPG(n_2-1,q)[122X  , ..., [22XPG(n_k-1,q)][122X . The
+  operation  also  takes  as  input  the list of dimensions ([3Xlistofdims[103X) and a
+  finite  field  [3Xfield[103X  (e.g. [22X[n_1,n_2,...,n_k,GF(q)][122X ). A Segre map with only
+  two  factors  ([22Xk=2[122X),  can  also  be constructed using the operation with two
+  projective  spaces  [3Xpg1[103X and [3Xpg2[103X as arguments, or with two dimensions [3Xd1[103X, [3Xd2[103X,
+  and  a  finite  field  [3Xfield[103X(or  a  prime  power [3Xq[103X). The operation returns a
+  function  with  domain the product of the point sets of projective spaces in
+  the list [22X[PG(n_1-1,q)[122X , [22XPG(n_2-1,q)[122X , ..., [22XPG(n_k-1,q)][122X and image the set of
+  points   of   the  Segre  variety  ([2XPointsOfSegreVariety[102X  ([14X11.6-2[114X))  in  the
+  projective  space  of dimension [22Xn_1n_2... n_k-1[122X . When a Segre variety [3Xsv[103X is
+  given as input, the operation returns the associated Segre map.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xsv:=SegreVariety(2,2,9);[127X[104X
+    [4X[28XSegre Variety in ProjectiveSpace(8, 9)[128X[104X
+    [4X[25Xgap>[125X [27Xsm:=SegreMap(sv);[127X[104X
+    [4X[28XSegre Map of [ <points of ProjectiveSpace(2, 9)>, [128X[104X
+    [4X[28X  <points of ProjectiveSpace(2, 9)> ][128X[104X
+    [4X[25Xgap>[125X [27Xcart1:=Cartesian(Points(PG(2,9)),Points(PG(2,9)));;[127X[104X
+    [4X[25Xgap>[125X [27Xim1:=ImagesSet(sm,cart1);;[127X[104X
+    [4X[25Xgap>[125X [27XSpan(im1);[127X[104X
+    [4X[28XProjectiveSpace(8, 9)[128X[104X
+    [4X[25Xgap>[125X [27Xl:=Random(Lines(PG(2,9)));[127X[104X
+    [4X[28X<a line in ProjectiveSpace(2, 9)>[128X[104X
+    [4X[25Xgap>[125X [27Xcart2:=Cartesian(Points(l),Points(PG(2,9)));;[127X[104X
+    [4X[25Xgap>[125X [27Xim2:=ImagesSet(sm,cart2);;[127X[104X
+    [4X[25Xgap>[125X [27XSpan(im2);[127X[104X
+    [4X[28X<a proj. 5-space in ProjectiveSpace(8, 9)>[128X[104X
+    [4X[25Xgap>[125X [27Xx:=Random(Points(PG(2,9)));[127X[104X
+    [4X[28X<a point in ProjectiveSpace(2, 9)>[128X[104X
+    [4X[25Xgap>[125X [27Xcart3:=Cartesian(Points(PG(2,9)),Points(x));;[127X[104X
+    [4X[25Xgap>[125X [27Xim3:=ImagesSet(sm,cart3);;[127X[104X
+    [4X[25Xgap>[125X [27Xpi:=Span(im3);[127X[104X
+    [4X[28X<a plane in ProjectiveSpace(8, 9)>[128X[104X
+    [4X[25Xgap>[125X [27XAsSet(List(Points(pi),y->y in sv));[127X[104X
+    [4X[28X[ true ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X11.6-4 Source[101X
+  
+  [33X[1;0Y[29X[2XSource[102X( [3Xsm[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe source of a Segre map[133X
+  
+  [33X[0;0YThe argument [3Xsm[103X is a [2XSegreMap[102X ([14X11.6-3[114X). This operation returns the cartesian
+  product  of  the  list  consisting of the pointsets of the projective spaces
+  that were used to construct the [2XSegreMap[102X ([14X11.6-3[114X).[133X
+  
+  
+  [1X11.7 [33X[0;0YVeronese Varieties[133X[101X
+  
+  [33X[0;0YA  [13XVeronese  variety[113X  in  [5XFinInG[105X  is  a  projective  algebraic  variety in a
+  projective  space  over  a  finite field. The set of points that lie on this
+  variety is the image of the [13XVeronese map[113X.[133X
+  
+  [1X11.7-1 VeroneseVariety[101X
+  
+  [33X[1;0Y[29X[2XVeroneseVariety[102X( [3Xpg[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XVeroneseVariety[102X( [3Xn-1[103X, [3Xfield[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XVeroneseVariety[102X( [3Xn-1[103X, [3Xq[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya Veronese variety[133X
+  
+  [33X[0;0YThe  argument  [3Xpg[103X  is  a  projective  space defined over a finite field, say
+  [22XPG(n-1,q)[122X.  The  operation  also  takes  as input the dimension and a finite
+  field  [3Xfield[103X  (e.g.  [22X[n-1,q][122X).  The operation returns a projective algebraic
+  variety  in  the  projective  space  of  dimension [22X(n^2+n)/2-1[122X, known as the
+  (quadratic)  Veronese variety. It is the image of the map [22X(x_0,x_1,...,x_n)↦
+  (x_0^2,x_0x_1,...,x_0x_n,x_1^2,x_1x_2,...,x_1x_n,...,x_n^2)[122X[133X
+  
+  [1X11.7-2 PointsOfVeroneseVariety[101X
+  
+  [33X[1;0Y[29X[2XPointsOfVeroneseVariety[102X( [3Xvv[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XPoints[102X( [3Xvv[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe points of a Veronese variety[133X
+  
+  [33X[0;0YThe  argument  [3Xvv[103X  is  a  Veronese  variety. This operation returns a set of
+  points  of  the  [2XAmbientSpace[102X  ([14X11.1-3[114X) of the Veronese variety. This set of
+  points corresponds to the image of the [2XVeroneseMap[102X ([14X11.7-3[114X).[133X
+  
+  [1X11.7-3 VeroneseMap[101X
+  
+  [33X[1;0Y[29X[2XVeroneseMap[102X( [3Xpg[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XVeroneseMap[102X( [3Xn-1[103X, [3Xfield[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XVeroneseMap[102X( [3Xn-1[103X, [3Xq[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XVeroneseMap[102X( [3Xvv[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya geometry map[133X
+  
+  [33X[0;0YThe  argument  [3Xpg[103X  is  a  projective  space defined over a finite field, say
+  [22XPG(n-1,q)[122X.  The  operation  also  takes  as input the dimension and a finite
+  field [3Xfield[103X (e.g. [22X[n-1,q][122X). The operation returns a function with domain the
+  product of the point set of the projective space [22XPG(n-1,q)[122X and image the set
+  of  points of the Veronese variety ([2XPointsOfVeroneseVariety[102X ([14X11.7-2[114X)) in the
+  projective  space  of  dimension  [22X(n^2+n)/2-1[122X. When a Veronese variety [3Xvv[103X is
+  given as input, the operation returns the associated Veronese map.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xpg:=PG(2,5);[127X[104X
+    [4X[28XProjectiveSpace(2, 5)[128X[104X
+    [4X[25Xgap>[125X [27Xvv:=VeroneseVariety(pg);[127X[104X
+    [4X[28XVeronese Variety in ProjectiveSpace(5, 5)[128X[104X
+    [4X[25Xgap>[125X [27XSize(Points(vv))=Size(Points(pg));[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xvm:=VeroneseMap(vv);[127X[104X
+    [4X[28XVeronese Map of <points of ProjectiveSpace(2, 5)>[128X[104X
+    [4X[25Xgap>[125X [27Xr:=PolynomialRing(GF(5),3);[127X[104X
+    [4X[28XGF(5)[x_1,x_2,x_3][128X[104X
+    [4X[25Xgap>[125X [27Xf:=r.1^2-r.2*r.3;[127X[104X
+    [4X[28Xx_1^2-x_2*x_3[128X[104X
+    [4X[25Xgap>[125X [27Xc:=AlgebraicVariety(pg,r,[f]);[127X[104X
+    [4X[28XProjective Variety in ProjectiveSpace(2, 5)[128X[104X
+    [4X[25Xgap>[125X [27Xpts:=List(Points(c));[127X[104X
+    [4X[28X[ <a point in ProjectiveSpace(2, 5)>, <a point in ProjectiveSpace(2, 5)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(2, 5)>, <a point in ProjectiveSpace(2, 5)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(2, 5)>, <a point in ProjectiveSpace(2, 5)> ][128X[104X
+    [4X[25Xgap>[125X [27XDimension(Span(ImagesSet(vm,pts)));[127X[104X
+    [4X[28X4[128X[104X
+    [4X[28X [128X[104X
+    [4X[28X	[128X[104X
+  [4X[32X[104X
+  
+  [1X11.7-4 Source[101X
+  
+  [33X[1;0Y[29X[2XSource[102X( [3Xvm[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe source of a Veronese map[133X
+  
+  [33X[0;0YThe  argument  [3Xvm[103X  is  a  [2XVeroneseMap[102X  ([14X11.7-3[114X).  This operation returns the
+  pointset  of the projective space that was used to construct the [2XVeroneseMap[102X
+  ([14X11.7-3[114X).[133X
+  
+  
+  [1X11.8 [33X[0;0YGrassmann Varieties[133X[101X
+  
+  [33X[0;0YA  [13XGrassmann  variety[113X  in  [5XFinInG[105X  is  a  projective  algebraic variety in a
+  projective  space  over  a  finite field. The set of points that lie on this
+  variety is the image of the [13XGrassmann map[113X.[133X
+  
+  [1X11.8-1 GrassmannVariety[101X
+  
+  [33X[1;0Y[29X[2XGrassmannVariety[102X( [3Xk[103X, [3Xpg[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XGrassmannVariety[102X( [3Xsubspaces[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XGrassmannVariety[102X( [3Xk[103X, [3Xn[103X, [3Xq[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya Grassmann variety[133X
+  
+  [33X[0;0YThe  argument  [3Xpg[103X  is  a  projective  space defined over a finite field, say
+  [22XPG(n,q)[122X,  and  argument  [3Xk[103X  is an integer ([22Xk[122X at least [22X1[122X and at most [22Xn-2[122X) and
+  denotes  the  projective  dimension  determining  the Grassmann Variety. The
+  operation also takes as input the set [3Xsubspaces[103X of subspaces of a projective
+  space,  or  the  dimension  [3Xk[103X,  the dimension [3Xn[103X and the size [3Xq[103X of the finite
+  field  ([22Xk[122X  at  least  [22X1[122X and at most [22Xn-2[122X). The operation returns a projective
+  algebraic variety known as the Grassmann variety.[133X
+  
+  [1X11.8-2 PointsOfGrassmannVariety[101X
+  
+  [33X[1;0Y[29X[2XPointsOfGrassmannVariety[102X( [3Xgv[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XPoints[102X( [3Xgv[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe points of a Grassmann variety[133X
+  
+  [33X[0;0YThe  argument  [3Xgv[103X  is  a  Grassmann variety. This operation returns a set of
+  points  of  the  [2XAmbientSpace[102X ([14X11.1-3[114X) of the Grassmann variety. This set of
+  points corresponds to the image of the [2XGrassmannMap[102X ([14X11.8-3[114X).[133X
+  
+  [1X11.8-3 GrassmannMap[101X
+  
+  [33X[1;0Y[29X[2XGrassmannMap[102X( [3Xk[103X, [3Xpg[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XGrassmannMap[102X( [3Xsubspaces[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XGrassmannMap[102X( [3Xk[103X, [3Xn[103X, [3Xq[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XGrassmannMap[102X( [3Xgv[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya geometry map[133X
+  
+  [33X[0;0YThe  argument  [3Xpg[103X  is  a  projective  space defined over a finite field, say
+  [22XPG(n,q)[122X,  and  argument  [3Xk[103X is an integer ([22Xk[122X at least [22X1[122X and at most [22Xn-2[122X), and
+  denotes  the  projective  dimension  determining  the Grassmann Variety. The
+  operation also takes as input the set [3Xsubspaces[103X of subspaces of a projective
+  space,  or  the  dimension  [3Xk[103X,  the dimension [3Xn[103X and the size [3Xq[103X of the finite
+  field  ([22Xk[122X at least [22X1[122X and at most [22Xn-2[122X). The operation returns a function with
+  domain  the  set of subspaces of dimension [22Xk[122X in the [22Xn[122X-dimensional projective
+  space  over  [22XGF(q)[122X,  and  image  the  set of points of the Grassmann variety
+  ([2XPointsOfGrassmannVariety[102X ([14X11.8-2[114X)). When a Grassmann variety [3Xgv[103X is given as
+  input, the operation returns the associated Grassmann map.[133X
+  
+  [1X11.8-4 Source[101X
+  
+  [33X[1;0Y[29X[2XSource[102X( [3Xgm[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe source of a Grassmann map[133X
+  
+  [33X[0;0YThe  argument  [3Xgm[103X is a [2XGrassmannMap[102X ([14X11.8-3[114X). This operation returns the set
+  of  subspaces  of  the  projective  space  that  was  used  to construct the
+  [2XGrassmannMap[102X ([14X11.8-3[114X).[133X
+  
+  [33X[0;0YThis  is  the  chapter of the documentation describing generalised polygons.
+  -->[133X
+  

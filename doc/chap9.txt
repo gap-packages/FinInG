@@ -1,0 +1,753 @@
+  
+  [1X9 [33X[0;0YAffine Spaces[133X[101X
+  
+  [33X[0;0YIn  this  chapter  we  show  how  one  can work with finite affine spaces in
+  [5XFinInG[105X.[133X
+  
+  
+  [1X9.1 [33X[0;0YAffine spaces and basic operations[133X[101X
+  
+  [33X[0;0YAn  [13Xaffine  space[113X  is  a  point-line incidence geometry, satisfying few well
+  known  axioms.  An  axiomatic  treatment  can  e.g.  be found in [VY65a] and
+  [VY65b].   As  is  the  case  with  projective  spaces,  affine  spaces  are
+  axiomatically  point-line  geometries,  but  may  contain higher dimensional
+  affine  subspaces too. An affine space can also be described as the [21Xgeometry
+  you  get[121X  when  you remove a hyperplane from a projective space. Conversely,
+  each  affine space can be extended to a projective space in a unique way (by
+  "adding  its  hyperplane  at  infinity").  In  [5XFinInG[105X,  we  deal with [13Xfinite
+  Desarguesian  affine  spaces[113X, i.e. an affine space, such that its projective
+  completion  is Desarguesian. Other concepts can be easily defined using this
+  projective  completion.  E.g.  lines  of  the  projective  space  which  are
+  concurrent  in a point of the hyperplane at infinity, become now [13Xparallel[113X in
+  the  affine  space.  In  order  to implement (Desarguesian) affine spaces in
+  [5XFinInG[105X,  we  have  to represent the elements of the affine space (the affine
+  subspaces),  in a standard way. By definition, the points (i.e. the elements
+  of  type 1) of the [22Xn[122X-dimensional affine space [22XAG(n,q)[122X are the vectors of the
+  underlying  [22Xn[122X-dimensional  vector  space  over  the  finite field [22XGF(q)[122X. The
+  [22Xi[122X-dimensional  subspaces  of  [22XAG(n,q)[122X  (i.e.  the  elements of type [22Xi-1[122X) are
+  defined  as  the  cosets  of  the  [22Xi[122X-dimensional subspaces of the underlying
+  vector space. Hence, the common representation of such a subspace is[133X
+  
+  
+  [24X[33X[0;6Yv+S,[133X
+  
+  [124X
+  
+  [33X[0;0Ywhere  v is a vector and S is a subspace of a vector space. Equivalently one
+  can  also  think  of  a subspace of an affine space as consisting of: (i) an
+  affine  point, representing the coset, and and (ii) a [21Xdirection[121X, which is an
+  element  of an [22Xn-1[122X-dimensional projective space, representing the hyperplane
+  at  infinity. In [5XFinInG[105X, we represent an [22Xi[122X-dimensional subspace, [22X1 ≤ i ≤ n-1[122X
+  as[133X
+  
+  
+  [24X[33X[0;6Y[v, mat][133X
+  
+  [124X
+  
+  [33X[0;0Ywhere  [3Xv[103X  is  a  row vector and [3Xmat[103X is a matrix (representing a basis of the
+  projective  element  representing  the  direction  at  infinity). For affine
+  points, we simply use vectors.[133X
+  
+  [1X9.1-1 IsAffineSpace[101X
+  
+  [33X[1;0Y[29X[2XIsAffineSpace[102X [32X Category[133X
+  
+  [33X[0;0YThis  category  is  a  subcategory  of [10XIsIncidenceGeometry[110X, and contains all
+  finite Desarguesian affine spaces.[133X
+  
+  [1X9.1-2 AffineSpace[101X
+  
+  [33X[1;0Y[29X[2XAffineSpace[102X( [3Xd[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAffineSpace[102X( [3Xd[103X, [3Xq[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAG[102X( [3Xd[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAG[102X( [3Xd[103X, [3Xq[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan affine space[133X
+  
+  [33X[0;0Y[3Xd[103X  must  be  a  positive  integer.  In  the first form, [3XF[103X is a field and the
+  function returns the affine space of dimension [3Xd[103X over [3XF[103X. In the second form,
+  [3Xq[103X  is  a prime power specifying the size of the field. The user may also use
+  an alias, namely, the common abbreviation [10XAG(d, q)[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XAffineSpace(3,GF(4));[127X[104X
+    [4X[28XAG(3, 4)[128X[104X
+    [4X[25Xgap>[125X [27XAffineSpace(3,4);[127X[104X
+    [4X[28XAG(3, 4)[128X[104X
+    [4X[25Xgap>[125X [27XAG(3,GF(4));[127X[104X
+    [4X[28XAG(3, 4)[128X[104X
+    [4X[25Xgap>[125X [27XAG(3,4);[127X[104X
+    [4X[28XAG(3, 4)[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X9.1-3 Dimension[101X
+  
+  [33X[1;0Y[29X[2XDimension[102X( [3Xas[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XRank[102X( [3Xas[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ythe dimension of the affine space [3Xas[103X (which is equal to its rank)[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XDimension(AG(5,7));[127X[104X
+    [4X[28X5[128X[104X
+    [4X[25Xgap>[125X [27XRank(AG(5,7));[127X[104X
+    [4X[28X5[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X9.1-4 BaseField[101X
+  
+  [33X[1;0Y[29X[2XBaseField[102X( [3Xas[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yreturns the base field for the affine space [3Xas[103X[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XBaseField(AG(6,49));[127X[104X
+    [4X[28XGF(7^2)[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X9.1-5 UnderlyingVectorSpace[101X
+  
+  [33X[1;0Y[29X[2XUnderlyingVectorSpace[102X( [3Xas[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya vector space[133X
+  
+  [33X[0;0YThe underlying vectorspace of [22XAG(n,q)[122X is simply [22XV(n,q)[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XUnderlyingVectorSpace(AG(4,5));[127X[104X
+    [4X[28X( GF(5)^4 )[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X9.1-6 AmbientSpace[101X
+  
+  [33X[1;0Y[29X[2XAmbientSpace[102X( [3Xas[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Yan affine space[133X
+  
+  [33X[0;0YThe  ambient  space of an affine space [3Xas[103X is the affine space itself. Hence,
+  simply [3Xas[103X will be returned.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XAmbientSpace(AG(4,7));[127X[104X
+    [4X[28XAG(4, 7)[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  
+  [1X9.2 [33X[0;0YSubspaces of affine spaces[133X[101X
+  
+  [1X9.2-1 AffineSubspace[101X
+  
+  [33X[1;0Y[29X[2XAffineSubspace[102X( [3Xgeo[103X, [3Xv[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAffineSubspace[102X( [3Xgeo[103X, [3Xv[103X, [3XM[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya subspace of an affine space[133X
+  
+  [33X[0;0Y[3Xgeo[103X  is an affine space, [3Xv[103X is a row vector, and [3XM[103X is a matrix. There are two
+  representations  necessary  for  affine  subspaces  in  [5XFinInG[105X:  (i)  points
+  represented   as  vectors  and  (ii)  subspaces  of  dimension  at  least  1
+  represented as a coset of a vector subspace:[133X
+  
+  
+  [24X[33X[0;6Yv+S.[133X
+  
+  [124X
+  
+  [33X[0;0YFor  the  former, the underlying object is just a vector, whereas the second
+  is  a  pair  [22X[v,  M][122X  where [22Xv[122X is a vector and [22XM[122X is a matrix representing the
+  basis  of [22XS[122X. Now there is a canonical representative for the coset [22Xv+ S[122X, and
+  the  matrix  [22XM[122X  is in semi-echelon form, therefore we can easily compare two
+  affine subspaces. If no matrix is given in the arguments, then it is assumed
+  that the user is constructing an affine point.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xag := AffineSpace(3, 3);[127X[104X
+    [4X[28XAG(3, 3)[128X[104X
+    [4X[25Xgap>[125X [27Xx := [[1,1,0]]*Z(3)^0;[127X[104X
+    [4X[28X[ [ Z(3)^0, Z(3)^0, 0*Z(3) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xv := [0,-1,1] * Z(3)^0;[127X[104X
+    [4X[28X[ 0*Z(3), Z(3), Z(3)^0 ][128X[104X
+    [4X[25Xgap>[125X [27Xline := AffineSubspace(ag, v, x);[127X[104X
+    [4X[28X<a line in AG(3, 3)>[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X9.2-2 ElementsOfIncidenceStructure[101X
+  
+  [33X[1;0Y[29X[2XElementsOfIncidenceStructure[102X( [3Xas[103X, [3Xj[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe collection of elements of the affine space [3Xas[103X of type [3Xj[103X[133X
+  
+  [33X[0;0YFor  the  affine  space  [3Xas[103X  of  dimension  [22Xd[122X and the type [3Xj[103X, [22X1 ≤ j ≤ d[122X this
+  operation  returns  the  collection  of  [22Xj-1[122X dimensional subspaces. An error
+  message  is  produced  when  the  projective  space  [3Xps[103X has no elements of a
+  required type.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xag := AffineSpace(9, 64);[127X[104X
+    [4X[28XAG(9, 64)[128X[104X
+    [4X[25Xgap>[125X [27XElementsOfIncidenceStructure(ag,1);[127X[104X
+    [4X[28X<points of AG(9, 64)>[128X[104X
+    [4X[25Xgap>[125X [27XElementsOfIncidenceStructure(ag,2);[127X[104X
+    [4X[28X<lines of AG(9, 64)>[128X[104X
+    [4X[25Xgap>[125X [27XElementsOfIncidenceStructure(ag,3);[127X[104X
+    [4X[28X<planes of AG(9, 64)>[128X[104X
+    [4X[25Xgap>[125X [27XElementsOfIncidenceStructure(ag,4);[127X[104X
+    [4X[28X<solids of AG(9, 64)>[128X[104X
+    [4X[25Xgap>[125X [27XElementsOfIncidenceStructure(ag,6);[127X[104X
+    [4X[28X<affine. subspaces of dim. 5 of AG(9, 64)>[128X[104X
+    [4X[25Xgap>[125X [27XElementsOfIncidenceStructure(ag,9);[127X[104X
+    [4X[28X<affine. subspaces of dim. 8 of AG(9, 64)>[128X[104X
+    [4X[25Xgap>[125X [27XElementsOfIncidenceStructure(ag,10);[127X[104X
+    [4X[28XError, <as> has no elements of type <j> called from[128X[104X
+    [4X[28X<function "unknown">( <arguments> )[128X[104X
+    [4X[28X called from read-eval loop at line 15 of *stdin*[128X[104X
+    [4X[28Xyou can 'quit;' to quit to outer loop, or[128X[104X
+    [4X[28Xyou can 'return;' to continue[128X[104X
+    [4X[26Xbrk>[126X [27Xquit;[127X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  
+  [1X9.2-3 [33X[0;0YShort names for ElementsOfIncidenceStructure[133X[101X
+  
+  [33X[1;0Y[29X[2XPoints[102X( [3Xps[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XLines[102X( [3Xps[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XPlanes[102X( [3Xps[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XSolids[102X( [3Xps[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XHyperplanes[102X( [3Xps[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YThe  elements  of  [3Xps[103X  of  respective  type  1,  2,  3, 4, and the
+            hyperplanes[133X
+  
+  [33X[0;0YAn error message is produced when the projective space [3Xps[103X has no elements of
+  a required type.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xas := AG(5,4);[127X[104X
+    [4X[28XAG(5, 4)[128X[104X
+    [4X[25Xgap>[125X [27XPoints(as);[127X[104X
+    [4X[28X<points of AG(5, 4)>[128X[104X
+    [4X[25Xgap>[125X [27XLines(as);[127X[104X
+    [4X[28X<lines of AG(5, 4)>[128X[104X
+    [4X[25Xgap>[125X [27XPlanes(as);[127X[104X
+    [4X[28X<planes of AG(5, 4)>[128X[104X
+    [4X[25Xgap>[125X [27XSolids(as);[127X[104X
+    [4X[28X<solids of AG(5, 4)>[128X[104X
+    [4X[25Xgap>[125X [27XHyperplanes(as);[127X[104X
+    [4X[28X<affine. subspaces of dim. 4 of AG(5, 4)>[128X[104X
+    [4X[25Xgap>[125X [27Xas := AG(2,8);[127X[104X
+    [4X[28XAG(2, 8)[128X[104X
+    [4X[25Xgap>[125X [27XHyperplanes(as);[127X[104X
+    [4X[28X<lines of AG(2, 8)>[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  
+  [1X9.2-4 [33X[0;0YIncidence and containment[133X[101X
+  
+  [33X[1;0Y[29X[2XIsIncident[102X( [3Xel1[103X, [3Xel2[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2X\*[102X( [3Xel1[103X, [3Xel2[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2X\in[102X( [3Xel1[103X, [3Xel2[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ytrue or false[133X
+  
+  [33X[0;0YRecall  that  for affine spaces, incidence is symmetrized containment, where
+  the whole affine space is excluded as one of the arguments for the operation
+  [11XIsIncident[111X,  since  they it is not considered as an element of the geometry,
+  but  the  whole affine space is allowed as one of the arguments for [11X\in[111X. The
+  method for [11X\*[111X is using [11XIsIncident[111X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xas := AG(3,16);[127X[104X
+    [4X[28XAG(3, 16)[128X[104X
+    [4X[25Xgap>[125X [27Xp := AffineSubspace(as,[1,0,0]*Z(16)^0);[127X[104X
+    [4X[28X<a point in AG(3, 16)>[128X[104X
+    [4X[25Xgap>[125X [27Xl := AffineSubspace(as,[1,0,0]*Z(16),[[0,1,1]]*Z(16)^0);[127X[104X
+    [4X[28X<a line in AG(3, 16)>[128X[104X
+    [4X[25Xgap>[125X [27Xplane := AffineSubspace(as,[1,0,0]*Z(16)^0,[[1,0,0],[0,1,1]]*Z(16)^0);[127X[104X
+    [4X[28X<a plane in AG(3, 16)>[128X[104X
+    [4X[25Xgap>[125X [27Xp in p;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xp in l;[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27Xl in p;[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27Xl in plane;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xplane in l;[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27Xp in plane;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xp in as;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xl in as;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xplane in as;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xas in p;[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsIncident(p,l);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsIncident(l,p);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsIncident(l,plane);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsIncident(plane,l);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsIncident(p,plane);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsIncident(plane,p);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X9.2-5 AmbientSpace[101X
+  
+  [33X[1;0Y[29X[2XAmbientSpace[102X( [3Xel[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yreturns the ambient space of an element [3Xel[103X of an affine space[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xas := AG(5,7);[127X[104X
+    [4X[28XAG(5, 7)[128X[104X
+    [4X[25Xgap>[125X [27Xsolid := AffineSubspace(as,[1,0,0,1,0]*Z(7)^3,[[1,0,0,0,0],[0,1,1,1,0]]*Z(7)^0);[127X[104X
+    [4X[28X<a plane in AG(5, 7)>[128X[104X
+    [4X[25Xgap>[125X [27XAmbientSpace(solid);[127X[104X
+    [4X[28XAG(5, 7)[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X9.2-6 BaseField[101X
+  
+  [33X[1;0Y[29X[2XBaseField[102X( [3Xel[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yreturns the base field of an element [3Xel[103X of an affine space[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xas := AG(5,11);[127X[104X
+    [4X[28XAG(5, 11)[128X[104X
+    [4X[25Xgap>[125X [27Xsub := AffineSubspace(as,[1,4,3,1,0]*Z(11)^5,[[1,0,0,0,0],[0,1,1,1,0],[127X[104X
+    [4X[25X>[125X [27X[0,0,0,0,1]]*Z(11)^0);[127X[104X
+    [4X[28X<a solid in AG(5, 11)>[128X[104X
+    [4X[25Xgap>[125X [27XBaseField(sub);[127X[104X
+    [4X[28XGF(11)[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X9.2-7 Span[101X
+  
+  [33X[1;0Y[29X[2XSpan[102X( [3Xu[103X, [3Xv[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya subspace[133X
+  
+  [33X[0;0Y[3Xu[103X  and [3Xv[103X are subspaces of an affine space. This function returns the span of
+  the two subspaces.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xag := AffineSpace(4,5);[127X[104X
+    [4X[28XAG(4, 5)[128X[104X
+    [4X[25Xgap>[125X [27Xp := AffineSubspace(ag, [1,0,0,0] * One(GF(5)) );[127X[104X
+    [4X[28X<a point in AG(4, 5)>[128X[104X
+    [4X[25Xgap>[125X [27Xr := AffineSubspace(ag, [0,1,0,0] * One(GF(5)) );[127X[104X
+    [4X[28X<a point in AG(4, 5)>[128X[104X
+    [4X[25Xgap>[125X [27Xl := Span(p, r);[127X[104X
+    [4X[28X<a line in AG(4, 5)>[128X[104X
+    [4X[25Xgap>[125X [27Xl^_;[127X[104X
+    [4X[28X[ [ 0*Z(5), Z(5)^0, 0*Z(5), 0*Z(5) ], [ [ Z(5)^0, Z(5)^2, 0*Z(5), 0*Z(5) ] ] ][128X[104X
+    [4X[25Xgap>[125X [27XDisplay(l);[127X[104X
+    [4X[28XAffine line:[128X[104X
+    [4X[28XCoset representative: [ 0*Z(5), Z(5)^0, 0*Z(5), 0*Z(5) ][128X[104X
+    [4X[28XCoset (direction): [ [ Z(5)^0, Z(5)^2, 0*Z(5), 0*Z(5) ] ][128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X9.2-8 Meet[101X
+  
+  [33X[1;0Y[29X[2XMeet[102X( [3Xu[103X, [3Xv[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan affine subspace or the empty list[133X
+  
+  [33X[0;0Y[3Xu[103X  and [3Xv[103X are subspaces of an affine space. This function returns the meet of
+  the  two subspaces. If the two subspaces are disjoint, then Meet returns the
+  empty list.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xag := AffineSpace(4,5);[127X[104X
+    [4X[28XAG(4, 5)[128X[104X
+    [4X[25Xgap>[125X [27Xp := AffineSubspace(ag, [1,0,0,0] * One(GF(5)), [127X[104X
+    [4X[25X>[125X [27X       [[1,0,0,-1], [0,1,0,0],[0,0,1,3]] * One(GF(5)));[127X[104X
+    [4X[28X<a solid in AG(4, 5)>[128X[104X
+    [4X[25Xgap>[125X [27Xl := AffineSubspace(ag, [0,0,0,0] * One(GF(5)), [[1,1,0,0]] * One(GF(5)) );[127X[104X
+    [4X[28X<a line in AG(4, 5)>[128X[104X
+    [4X[25Xgap>[125X [27Xx := Meet(p, l);[127X[104X
+    [4X[28X<a point in AG(4, 5)>[128X[104X
+    [4X[25Xgap>[125X [27Xx^_;[127X[104X
+    [4X[28X[ Z(5)^0, Z(5)^0, 0*Z(5), 0*Z(5) ][128X[104X
+    [4X[25Xgap>[125X [27XDisplay(x);[127X[104X
+    [4X[28XAffine point:  1 1 . .[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X9.2-9 IsParallel[101X
+  
+  [33X[1;0Y[29X[2XIsParallel[102X( [3Xu[103X, [3Xv[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ytrue or false[133X
+  
+  [33X[0;0YThe arguments [3Xu[103X and [3Xv[103X must be affine subspaces of a common affine space. Two
+  subspaces  are  parallel  if and only if the direction space of the first is
+  contained in the direction space of the second or viceversa.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xas := AffineSpace(3, 3);[127X[104X
+    [4X[28XAG(3, 3)[128X[104X
+    [4X[25Xgap>[125X [27Xl := AffineSubspace(as,[0,0,0]*Z(3)^0,[[1,0,0]]*Z(3)^0);[127X[104X
+    [4X[28X<a line in AG(3, 3)>[128X[104X
+    [4X[25Xgap>[125X [27Xm := AffineSubspace(as,[1,0,0]*Z(3)^0,[[1,0,0]]*Z(3)^0);[127X[104X
+    [4X[28X<a line in AG(3, 3)>[128X[104X
+    [4X[25Xgap>[125X [27Xn := AffineSubspace(as,[1,0,0]*Z(3)^0,[[0,1,0]]*Z(3)^0);[127X[104X
+    [4X[28X<a line in AG(3, 3)>[128X[104X
+    [4X[25Xgap>[125X [27XIsParallel(l,m);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsParallel(m,n);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsParallel(l,n);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X9.2-10 ParallelClass[101X
+  
+  [33X[1;0Y[29X[2XParallelClass[102X( [3Xas[103X, [3Xv[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XParallelClass[102X( [3Xv[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya collection of affine subspaces[133X
+  
+  [33X[0;0YThe  argument  [3Xv[103X  is  an  affine  subspace  of  [3Xas[103X. This operation returns a
+  collection for which an iterator is installed. The collection represents the
+  set  of  elements  of [3Xas[103X of the same type as [3Xv[103X which are parallel to [3Xv[103X; they
+  have  the  same  direction. If [3Xv[103X is a point, then this operation returns the
+  collection of all points of [3Xas[103X. If one argument is given, then it is assumed
+  that the affine space which we are working with is the ambient space of [3Xv[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xas := AffineSpace(3, 3);[127X[104X
+    [4X[28XAG(3, 3)[128X[104X
+    [4X[25Xgap>[125X [27Xl := Random( Lines( as ) );[127X[104X
+    [4X[28X<a line in AG(3, 3)>[128X[104X
+    [4X[25Xgap>[125X [27Xpclass := ParallelClass( l );[127X[104X
+    [4X[28X<parallel class of lines in AG(3, 3)>[128X[104X
+    [4X[25Xgap>[125X [27XAsList(pclass);[127X[104X
+    [4X[28X[ <a line in AG(3, 3)>, <a line in AG(3, 3)>, <a line in AG(3, 3)>, [128X[104X
+    [4X[28X  <a line in AG(3, 3)>, <a line in AG(3, 3)>, <a line in AG(3, 3)>, [128X[104X
+    [4X[28X  <a line in AG(3, 3)>, <a line in AG(3, 3)>, <a line in AG(3, 3)> ][128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  
+  [1X9.3 [33X[0;0YShadows of Affine Subspaces[133X[101X
+  
+  [1X9.3-1 ShadowOfElement[101X
+  
+  [33X[1;0Y[29X[2XShadowOfElement[102X( [3Xas[103X, [3Xv[103X, [3Xtype[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe  subspaces  of the affine space [3Xas[103X of dimension [3Xtype[103X which are
+            incident with [3Xv[103X[133X
+  
+  [33X[0;0Y[3Xas[103X is an affine space and [3Xv[103X is an element of [3Xas[103X. This operation computes and
+  returns  the subspaces of dimension [3Xtype[103X which are incident with [3Xv[103X. In fact,
+  this  operation  returns  a  collection which is only computed when iterated
+  (e.g.  when  applying [10XAsList[110X to the collection). Some shorthand notation for
+  [10XShadowOfElement[110X  is  available  for  affine spaces: [10XPoints(as,v)[110X, [10XPoints(v)[110X,
+  [10XLines(v)[110X, etc.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xas := AffineSpace(3, 3);[127X[104X
+    [4X[28XAG(3, 3)[128X[104X
+    [4X[25Xgap>[125X [27Xl := Random( Lines( as ) );[127X[104X
+    [4X[28X<a line in AG(3, 3)>[128X[104X
+    [4X[25Xgap>[125X [27Xplanesonl := Planes(l);[127X[104X
+    [4X[28X<shadow planes in AG(3, 3)>[128X[104X
+    [4X[25Xgap>[125X [27XAsList(planesonl);[127X[104X
+    [4X[28X[ <a plane in AG(3, 3)>, <a plane in AG(3, 3)>, <a plane in AG(3, 3)>, [128X[104X
+    [4X[28X  <a plane in AG(3, 3)> ][128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X9.3-2 ShadowOfFlag[101X
+  
+  [33X[1;0Y[29X[2XShadowOfFlag[102X( [3Xas[103X, [3Xlist[103X, [3Xtype[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe  subspaces  of the affine space [3Xas[103X of dimension [3Xtype[103X which are
+            incident with each element of [3Xlist[103X[133X
+  
+  [33X[0;0Y[3Xas[103X  is  an  affine space and [3Xlist[103X is a list of pairwise incident elements of
+  [3Xas[103X.  This  operation  computes  and  returns the subspaces of dimension [3Xtype[103X
+  which  are  incident  with  every  element  of [3Xlist[103X. In fact, this operation
+  returns  a  collection  which  is  only  computed  when  iterated (e.g. when
+  applying [10XAsList[110X to the collection).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xas := AffineSpace(3, 3);[127X[104X
+    [4X[28XAG(3, 3)[128X[104X
+    [4X[25Xgap>[125X [27Xl := Random( Lines( as ) );[127X[104X
+    [4X[28X<a line in AG(3, 3)>[128X[104X
+    [4X[25Xgap>[125X [27Xx := Random( Points( l ) );[127X[104X
+    [4X[28X<a point in AG(3, 3)>[128X[104X
+    [4X[25Xgap>[125X [27Xflag := FlagOfIncidenceStructure(as,[x,l]);[127X[104X
+    [4X[28X<a flag of AffineSpace(3, 3)>[128X[104X
+    [4X[25Xgap>[125X [27Xshadow := ShadowOfFlag( as, flag, 3 );[127X[104X
+    [4X[28X<shadow planes in AG(3, 3)>[128X[104X
+    [4X[25Xgap>[125X [27XAsList(shadow);[127X[104X
+    [4X[28XIterators of shadows of flags in affine spaces are not complete in this versio[128X[104X
+    [4X[28Xn[128X[104X
+    [4X[28X[ <a plane in AG(3, 3)>, <a plane in AG(3, 3)>, <a plane in AG(3, 3)>, [128X[104X
+    [4X[28X  <a plane in AG(3, 3)> ][128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  
+  [1X9.4 [33X[0;0YIterators and enumerators[133X[101X
+  
+  [33X[0;0YRecall  from  Section  [14X4.4[114X  ([21XEnumerating  subspaces  of  a projective space[121X,
+  Chapter  [14X4[114X), that an iterator allows us to obtain elements from a collection
+  one  at a time in sequence, whereas an enumerator for a collection give us a
+  way  of  picking  out  the  i-th  element. In [5XFinInG[105X we have enumerators and
+  iterators for subspace collections of affine spaces.[133X
+  
+  [1X9.4-1 Iterator[101X
+  
+  [33X[1;0Y[29X[2XIterator[102X( [3Xsubs[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan iterator for the given subspaces collection[133X
+  
+  [33X[0;0Y[3Xsubs[103X  is  a  collection  of  subspaces  of  an affine space, such as [11XPoints(
+  AffineSpace(3, 3) )[111X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xag := AffineSpace(3, 3);[127X[104X
+    [4X[28XAG(3, 3)[128X[104X
+    [4X[25Xgap>[125X [27Xlines := Lines( ag );[127X[104X
+    [4X[28X<lines of AG(3, 3)>[128X[104X
+    [4X[25Xgap>[125X [27Xiter := Iterator( lines );[127X[104X
+    [4X[28X<iterator>[128X[104X
+    [4X[25Xgap>[125X [27Xl := NextIterator( iter );[127X[104X
+    [4X[28X<a line in AG(3, 3)>[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X9.4-2 Enumerator[101X
+  
+  [33X[1;0Y[29X[2XEnumerator[102X( [3Xsubs[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan enumerator for the given subspaces collection[133X
+  
+  [33X[0;0Y[3Xsubs[103X  is  a  collection  of  subspaces  of  an affine space, such as [11XPoints(
+  AffineSpace(3, 3) )[111X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xag := AffineSpace(3, 3);[127X[104X
+    [4X[28XAG(3, 3)[128X[104X
+    [4X[25Xgap>[125X [27Xlines := Lines( ag );[127X[104X
+    [4X[28X<lines of AG(3, 3)>[128X[104X
+    [4X[25Xgap>[125X [27Xenum := Enumerator( lines );[127X[104X
+    [4X[28X<enumerator of <lines of AG(3, 3)>>[128X[104X
+    [4X[25Xgap>[125X [27Xl := enum[20];[127X[104X
+    [4X[28X<a line in AG(3, 3)>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(l);[127X[104X
+    [4X[28XAffine line:[128X[104X
+    [4X[28XCoset representative: [ 0*Z(3), 0*Z(3), Z(3)^0 ][128X[104X
+    [4X[28XCoset (direction): [ [ Z(3)^0, 0*Z(3), Z(3) ] ][128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  
+  [1X9.5 [33X[0;0YAffine groups[133X[101X
+  
+  [33X[0;0YA  [13Xcollineation[113X  of  an  affine  space  is a permutation of the points which
+  preserves  the  relation  of  collinearity  within  the  affine  space.  The
+  fundamental  theorem  of  affine  geometry states that the group [22XAΓL(n,q)[122X of
+  collineations of an affine space [22XAG(n,q)[122X is generated by the translations [22XT[122X,
+  the  matrices  of  [22XGL(n,q)[122X  and  the  automorphisms  of the field [22XGF(q)[122X. The
+  translations  [22XT[122X  form  a  normal  subgroup  of [22XAΓL(n,q)[122X, and [22XAΓL(n,q)[122X is the
+  semidirect product of [22XT[122X and [22XΓL(n,q)[122X.[133X
+  
+  [33X[0;0YSuppose we have an affine transformation of the form [22Xx+A[122X where [22Xx[122X is a vector
+  representing  a  translation, and [22XA[122X is a matrix in [22XGL(n,q)[122X Then by using the
+  natural  embedding of [22XAGL(n,q)[122X in [22XPGL(n+1,q)[122X, we can write this collineation
+  as a matrix:[133X
+  
+  
+  [24X[33X[0;6Y\left(\begin{array}{ccccc|c}  &  &  &  & & 0\\ & & A & & & 0\\ & & & & & 0\\
+  \hline & & x & & & 1 \end{array}\right).[133X
+  
+  [124X
+  
+  [33X[0;0YWe  can  extend this idea to the full affine collineation group by adjoining
+  the field automorphisms as we would for projective collineations. Here is an
+  example:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xag := AffineSpace(3,3);[127X[104X
+    [4X[28XAG(3, 3)[128X[104X
+    [4X[25Xgap>[125X [27Xg := AffineGroup(ag);[127X[104X
+    [4X[28XAGL(3,3)[128X[104X
+    [4X[25Xgap>[125X [27Xx:=Random(g);;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay(x);[127X[104X
+    [4X[28X<a collineation , underlying matrix:[128X[104X
+    [4X[28X . 1 1 .[128X[104X
+    [4X[28X 2 2 . .[128X[104X
+    [4X[28X 2 1 . .[128X[104X
+    [4X[28X 1 2 1 1[128X[104X
+    [4X[28X, F^0>[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YHere we see that this affine transformation is[133X
+  
+  [33X[0;0YAs  we  have  seen,  in  [5XFinInG[105X,  we  represent  an  element  of  an  affine
+  collineation  group as a projective semilinear element, i.e. as an object in
+  the  category [10XProjElsWithFrob[110X, so that we can use all the functionality that
+  exists for such objects. However, an affine collineation group (i.e. a group
+  of  collineations  of the affine space [22XAG(n,q)[122X is not by default constructed
+  as  a  subgroup of [22XPΓL(n+1,q)[122X, but the compatibility between the elements of
+  both groups enables testing for such relations.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG := CollineationGroup(AG(3,27));[127X[104X
+    [4X[28XAGammaL(3,27)[128X[104X
+    [4X[25Xgap>[125X [27XH := CollineationGroup(PG(3,27));[127X[104X
+    [4X[28XThe FinInG collineation group PGammaL(4,27)[128X[104X
+    [4X[25Xgap>[125X [27Xg := Random(G);[127X[104X
+    [4X[28X< a collineation: [ [ Z(3^3)^25, Z(3^3)^11, Z(3^3)^23, 0*Z(3) ], [128X[104X
+    [4X[28X  [ Z(3^3)^20, 0*Z(3), Z(3^3), 0*Z(3) ], [128X[104X
+    [4X[28X  [ Z(3^3)^16, Z(3^3)^15, Z(3^3)^21, 0*Z(3) ], [128X[104X
+    [4X[28X  [ Z(3^3)^20, Z(3^3)^4, 0*Z(3), Z(3)^0 ] ], F^3>[128X[104X
+    [4X[25Xgap>[125X [27Xg in H;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsSubgroup(H,G);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X9.5-1 AffineGroup[101X
+  
+  [33X[1;0Y[29X[2XAffineGroup[102X( [3Xas[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya group[133X
+  
+  [33X[0;0YIf  [3Xas[103X is the affine space [22XAG(n,q)[122X This operation returnes the affine linear
+  group  [22XAGL(n,q)[122X  acting on [3Xas[103X. The elements of this group are projectivities
+  of  the  associated  projective  space.  In  order  to get the full group of
+  collineations   of  the  affine  space,  one  needs  to  use  the  operation
+  [10XCollineationGroup[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xas := AffineSpace(4,7);[127X[104X
+    [4X[28XAG(4, 7)[128X[104X
+    [4X[25Xgap>[125X [27Xg := AffineGroup(as);[127X[104X
+    [4X[28XAGL(4,7)[128X[104X
+    [4X[25Xgap>[125X [27Xas := AffineSpace(4,8);[127X[104X
+    [4X[28XAG(4, 8)[128X[104X
+    [4X[25Xgap>[125X [27Xg := AffineGroup(as);[127X[104X
+    [4X[28XAGL(4,8)[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X9.5-2 CollineationGroup[101X
+  
+  [33X[1;0Y[29X[2XCollineationGroup[102X( [3Xas[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya group[133X
+  
+  [33X[0;0YIf  [3Xas[103X  is  the affine space [22XAG(n,q)[122X, then this operation returns the affine
+  semilinear  group  [22XAΓL(n,q)[122X. The elements of this group are collineations of
+  the  associated  projective space. Note that if the defining field has prime
+  order, then the groups [22XAΓL(n,q)[122X and [22XAGL(n,q)[122X coincide.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xas := AffineSpace(4,8);[127X[104X
+    [4X[28XAG(4, 8)[128X[104X
+    [4X[25Xgap>[125X [27Xg := CollineationGroup(as);[127X[104X
+    [4X[28XAGammaL(4,8)[128X[104X
+    [4X[25Xgap>[125X [27Xh := AffineGroup(as);[127X[104X
+    [4X[28XAGL(4,8)[128X[104X
+    [4X[25Xgap>[125X [27XIsSubgroup(g,h);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xas := AffineSpace(4,7);[127X[104X
+    [4X[28XAG(4, 7)[128X[104X
+    [4X[25Xgap>[125X [27Xg := CollineationGroup(as);[127X[104X
+    [4X[28XAGL(4,7)[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X9.5-3 OnAffineSpaces[101X
+  
+  [33X[1;0Y[29X[2XOnAffineSpaces[102X( [3Xsubspace[103X, [3Xel[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2X\^[102X( [3Xsubspace[103X, [3Xel[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan element of an affine space[133X
+  
+  [33X[0;0Y[3Xsubspace[103X  must  be an element of an affine space and [3Xel[103X a collineation of an
+  affine  space  (which  is  in  fact  also  a  collineation  of an associated
+  projective  space).  This  is the action one should use for collineations of
+  affine  spaces,  and  it  acts  on  subspaces of all types of affine spaces:
+  points, lines, planes, etc.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xas := AG(3,27);[127X[104X
+    [4X[28XAG(3, 27)[128X[104X
+    [4X[25Xgap>[125X [27Xp := Random(Points(as));[127X[104X
+    [4X[28X<a point in AG(3, 27)>[128X[104X
+    [4X[25Xgap>[125X [27Xg := Random(CollineationGroup(as));[127X[104X
+    [4X[28X< a collineation: [ [ Z(3^3)^25, Z(3^3)^11, Z(3^3)^23, 0*Z(3) ], [128X[104X
+    [4X[28X  [ Z(3^3)^20, 0*Z(3), Z(3^3), 0*Z(3) ], [128X[104X
+    [4X[28X  [ Z(3^3)^16, Z(3^3)^15, Z(3^3)^21, 0*Z(3) ], [128X[104X
+    [4X[28X  [ Z(3^3)^20, Z(3^3)^4, 0*Z(3), Z(3)^0 ] ], F^3>[128X[104X
+    [4X[25Xgap>[125X [27XOnAffineSubspaces(p,g);[127X[104X
+    [4X[28X<a point in AG(3, 27)>[128X[104X
+    [4X[25Xgap>[125X [27Xp^g;[127X[104X
+    [4X[28X<a point in AG(3, 27)>[128X[104X
+    [4X[25Xgap>[125X [27Xl := Random(Lines(as));[127X[104X
+    [4X[28X<a line in AG(3, 27)>[128X[104X
+    [4X[25Xgap>[125X [27XOnAffineSubspaces(l,g);[127X[104X
+    [4X[28X<a line in AG(3, 27)>[128X[104X
+    [4X[25Xgap>[125X [27Xl^g;[127X[104X
+    [4X[28X<a line in AG(3, 27)>[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  
+  [1X9.6 [33X[0;0YLow level operations[133X[101X
+  
+  [33X[0;0YOne  technical aspect of the design behind affine spaces in [5XFinInG[105X is having
+  canonical  transversals  for  subspaces  of  vector  spaces. We provide some
+  documentation below for the interested user.[133X
+  
+  [1X9.6-1 IsVectorSpaceTransversal[101X
+  
+  [33X[1;0Y[29X[2XIsVectorSpaceTransversal[102X [32X filter[133X
+  
+  [33X[0;0YThe  category [10XIsVectorSpaceTransversal[110X represents a special object in [5XFinInG[105X
+  which  carries  a  record  with  two  components:  [3Xspace[103X  and [3Xsubspace[103X. This
+  category  is  a  subcategory of [10XIsSubspacesOfVectorSpace[110X, however, we do not
+  recommend  the user to apply methods to objects in [10XIsVectorSpaceTransversal[110X,
+  which  are  normally  used  for  the category [10XIsSubspacesOfVectorSpace[110X (they
+  won't work!). The objects in [10XIsVectorSpaceTransversal[110X are only used in order
+  to facilitate computing enumerators of subspace collections.[133X
+  
+  [1X9.6-2 VectorSpaceTransversal[101X
+  
+  [33X[1;0Y[29X[2XVectorSpaceTransversal[102X( [3Xspace[103X, [3Xmat[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya  collection  for  representing a transversal of a subspaces of a
+            vector space[133X
+  
+  [33X[0;0Y[3Xspace[103X  is  a vector space [22XV[122X and [3Xmat[103X is a matrix whose rows are a basis for a
+  subspace  [22XU[122X of [22XV[122X. A transversal for [22XU[122X in [22XV[122X is a set of coset representatives
+  for  the  quotient  [22XV/U[122X.  This  collection comes equipped with an enumerator
+  operation.[133X
+  
+  [1X9.6-3 VectorSpaceTransversalElement[101X
+  
+  [33X[1;0Y[29X[2XVectorSpaceTransversalElement[102X( [3Xspace[103X, [3Xmat[103X, [3Xvector[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya canonical coset representative[133X
+  
+  [33X[0;0Y[3Xspace[103X  is  a  vector  space  [22XV[122X, [3Xmat[103X is a matrix whose rows are a basis for a
+  subspace  [22XU[122X  of [22XV[122X, and [3Xvector[103X is a vector [22Xv[122X of [22XV[122X. A canonical representative
+  [22Xv'[122X is returned for the coset [22XU+v[122X.[133X
+  
+  [1X9.6-4 ComplementSpace[101X
+  
+  [33X[1;0Y[29X[2XComplementSpace[102X( [3Xspace[103X, [3Xmat[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya  collection  for  representing a transversal of a subspaces of a
+            vector space[133X
+  
+  [33X[0;0Y[3Xspace[103X  is  a vector space [22XV[122X and [3Xmat[103X is a matrix whose rows are a basis for a
+  subspace  [22XU[122X  of  [22XV[122X.  The operation is almost a complete copy of the function
+  [10XBaseSteinitzVector[110X  except  that  just  a  basis  for the complement of [22XU[122X is
+  returned instead of a full record.[133X
+  

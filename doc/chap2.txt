@@ -1,0 +1,1325 @@
+  
+  [1X2 [33X[0;0YExamples[133X[101X
+  
+  [33X[0;0YIn this chapter we provide some simple examples of the use of [5XFinInG[105X.[133X
+  
+  
+  [1X2.1 [33X[0;0YElementary examples[133X[101X
+  
+  
+  [1X2.1-1 [33X[0;0Ysubspaces of projective spaces[133X[101X
+  
+  [33X[0;0YThe  following  example  shows  how to create some subspaces of a projective
+  space,  test  their  incidence,  and  determine their span and intersection.
+  Projective  spaces are considered as incidence geometries too. Incidence, to
+  be  tested  with [11XIsIncident[111X or equivalently [11X\*[111X, is symmetrized set-theoretic
+  containment, the latter which can be tested through the operation [11Xin[111X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xpg := PG(3,8);[127X[104X
+    [4X[28XProjectiveSpace(3, 8)[128X[104X
+    [4X[25Xgap>[125X [27Xvec := [0,1,0,1]*Z(8)^0;[127X[104X
+    [4X[28X[ 0*Z(2), Z(2)^0, 0*Z(2), Z(2)^0 ][128X[104X
+    [4X[25Xgap>[125X [27Xpoint := VectorSpaceToElement(pg,vec);[127X[104X
+    [4X[28X<a point in ProjectiveSpace(3, 8)>[128X[104X
+    [4X[25Xgap>[125X [27Xmat := [[0,0,1,1],[0,1,0,0]]*Z(8)^0;[127X[104X
+    [4X[28X[ [ 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0 ], [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xline := VectorSpaceToElement(pg,mat);[127X[104X
+    [4X[28X<a line in ProjectiveSpace(3, 8)>[128X[104X
+    [4X[25Xgap>[125X [27Xmat2 := [[1,0,0,1],[1,0,1,0],[1,1,0,0]]*Z(8)^0;[127X[104X
+    [4X[28X[ [ Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0 ], [ Z(2)^0, 0*Z(2), Z(2)^0, 0*Z(2) ], [128X[104X
+    [4X[28X  [ Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xplane := VectorSpaceToElement(pg,mat2);[127X[104X
+    [4X[28X<a plane in ProjectiveSpace(3, 8)>[128X[104X
+    [4X[25Xgap>[125X [27XIsIncident(point,line);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsIncident(line,point);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27Xpoint * line;[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27Xline * point[127X[104X
+    [4X[25X>[125X [27Xpoint in line;[127X[104X
+    [4X[28XSyntax error: ; expected[128X[104X
+    [4X[28Xpoint in line;[128X[104X
+    [4X[28X    ^[128X[104X
+    [4X[25Xgap>[125X [27Xline in point;[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsIncident(point,plane);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsIncident(line,plane);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27Xline in plane;[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27Xplane2 := Span(point,line);[127X[104X
+    [4X[28X<a plane in ProjectiveSpace(3, 8)>[128X[104X
+    [4X[25Xgap>[125X [27XMeet(plane,plane2);[127X[104X
+    [4X[28X<a line in ProjectiveSpace(3, 8)>[128X[104X
+    [4X[25Xgap>[125X [27Xmat3 := [[1,0,0,0],[0,0,0,1]]*Z(8)^0;[127X[104X
+    [4X[28X[ [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ], [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xline2 := VectorSpaceToElement(pg,mat3);[127X[104X
+    [4X[28X<a line in ProjectiveSpace(3, 8)>[128X[104X
+    [4X[25Xgap>[125X [27XMeet(line,line2);[127X[104X
+    [4X[28X< empty subspace >[128X[104X
+    [4X[25Xgap>[125X [27XSpan(plane,plane2);[127X[104X
+    [4X[28XProjectiveSpace(3, 8)[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.1-2 [33X[0;0YSubspaces of classical polar spaces[133X[101X
+  
+  [33X[0;0Y[5XFinInG[105X  provides  classical  polar  spaces. Subspaces can be constructed the
+  same way as subspaces of projective spaces. Upon construction, it is checked
+  whether the given vector space does determine a subspace of the polar space.
+  Subspaces  of  polar  spaces  are  also  subspaces of the ambient projective
+  space.  Operations like [11XSpan[111X and [11XMeet[111X are naturally applicable. However, the
+  span  of  two  subspaces might not be a subspace of the polar space anymore,
+  and  if  the  two subspaces belong to two different polar spaces in the same
+  ambient  projective  space, it cannot be determined in which polar space the
+  span should be constructed. Therefore the result of [11XSpan[111X of two subspaces of
+  a  polar  space  is  a  subspace  of the ambient projective space. It can be
+  checked  whether  the  result  belongs  to  a  polar  space  using  [11Xin[111X. This
+  illustrates very well a general philosophy: a subspace of a polar space, and
+  more generally, an element of any incidence structure is always aware of its
+  ambient  geometry.  This  example  also illustrates how to create an element
+  that  belongs to the polar space from the subspace of the ambient projective
+  geometry  by using [11XElementToElement[111X. Finally note the behaviour of [11X=[111X applied
+  on  the two subspaces. Clearly, a subspace of a polar space is really also a
+  subspace of the ambient projective space.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := EllipticQuadric(5,7);[127X[104X
+    [4X[28XQ-(5, 7)[128X[104X
+    [4X[25Xgap>[125X [27Xvec := [1,0,0,0,0,0]*Z(7)^0;[127X[104X
+    [4X[28X[ Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7) ][128X[104X
+    [4X[25Xgap>[125X [27Xpoint := VectorSpaceToElement(ps,vec);[127X[104X
+    [4X[28XError, <v> does not generate an element of <geom> called from[128X[104X
+    [4X[28X<function "unknown">( <arguments> )[128X[104X
+    [4X[28X called from read-eval loop at line 10 of *stdin*[128X[104X
+    [4X[28Xyou can 'quit;' to quit to outer loop, or[128X[104X
+    [4X[28Xyou can 'return;' to continue[128X[104X
+    [4X[26Xbrk>[126X [27Xquit;[127X[104X
+    [4X[25Xgap>[125X [27XEquationForPolarSpace(ps);[127X[104X
+    [4X[28Xx_1^2+x_2^2+x_3*x_4+x_5*x_6[128X[104X
+    [4X[25Xgap>[125X [27Xvec := [0,0,1,0,0,0]*Z(7)^0;[127X[104X
+    [4X[28X[ 0*Z(7), 0*Z(7), Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7) ][128X[104X
+    [4X[25Xgap>[125X [27Xpoint := VectorSpaceToElement(ps,vec);[127X[104X
+    [4X[28X<a point in Q-(5, 7)>[128X[104X
+    [4X[25Xgap>[125X [27Xvec2 := [0,0,0,1,0,0]*Z(7)^0;[127X[104X
+    [4X[28X[ 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^0, 0*Z(7), 0*Z(7) ][128X[104X
+    [4X[25Xgap>[125X [27Xpoint2 := VectorSpaceToElement(ps,vec2);[127X[104X
+    [4X[28X<a point in Q-(5, 7)>[128X[104X
+    [4X[25Xgap>[125X [27Xline := Span(point,point2);[127X[104X
+    [4X[28X<a line in ProjectiveSpace(5, 7)>[128X[104X
+    [4X[25Xgap>[125X [27Xmat := [[0,0,1,0,0,0],[0,0,0,0,1,0]]*Z(7)^0;[127X[104X
+    [4X[28X[ [ 0*Z(7), 0*Z(7), Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7) ], [128X[104X
+    [4X[28X  [ 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^0, 0*Z(7) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xline2 := VectorSpaceToElement(ps,mat);[127X[104X
+    [4X[28X<a line in Q-(5, 7)>[128X[104X
+    [4X[25Xgap>[125X [27Xmeet := Meet(line,line2);[127X[104X
+    [4X[28X<a point in ProjectiveSpace(5, 7)>[128X[104X
+    [4X[25Xgap>[125X [27Xmeet in ps;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xpoint3 := ElementToElement(ps,meet);[127X[104X
+    [4X[28X<a point in Q-(5, 7)>[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.1-3 [33X[0;0YUnderlying objects[133X[101X
+  
+  [33X[0;0YSubspaces of projective spaces and polar spaces (and in general, elements of
+  incidence  structures),  are  determined by a mathematical object, called in
+  [5XFinInG[105X  the [13Xunderlying object[113X. The operation [11XUnderlyingObject[111X simply returns
+  this  underlying  object.  For  elements determined by vectors or sub vector
+  spaces,  the underlying objects are a vector or a matrix. To represent these
+  objects and to do very efficient orbit calculations under groups, we use the
+  [5Xcvec[105X. This can be noted when applying [11XUnderlyingObject[111X. The operation [11XUnpack[111X
+  simply  converts the cvec objects into GAP vectors and matrices. The example
+  also illustrates how the underlying object of an element of an affine spaces
+  looks like.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xpg := PG(3,169);[127X[104X
+    [4X[28XProjectiveSpace(3, 169)[128X[104X
+    [4X[25Xgap>[125X [27Xp := Random(Points(pg));[127X[104X
+    [4X[28X<a point in ProjectiveSpace(3, 169)>[128X[104X
+    [4X[25Xgap>[125X [27XUnderlyingObject(p);[127X[104X
+    [4X[28X<cvec over GF(13,2) of length 4>[128X[104X
+    [4X[25Xgap>[125X [27XUnpack(last);[127X[104X
+    [4X[28X[ Z(13)^0, Z(13^2)^49, Z(13^2)^31, Z(13^2)^143 ][128X[104X
+    [4X[25Xgap>[125X [27Xl := Random(Lines(pg));[127X[104X
+    [4X[28X<a line in ProjectiveSpace(3, 169)>[128X[104X
+    [4X[25Xgap>[125X [27XUnderlyingObject(l);[127X[104X
+    [4X[28X<cmat 2x4 over GF(13,2)>[128X[104X
+    [4X[25Xgap>[125X [27XUnpack(last);[127X[104X
+    [4X[28X[ [ Z(13)^0, 0*Z(13), 0*Z(13), Z(13^2)^96 ], [128X[104X
+    [4X[28X  [ 0*Z(13), Z(13)^0, Z(13^2)^113, Z(13^2)^99 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xquadric := EllipticQuadric(5,2);[127X[104X
+    [4X[28XQ-(5, 2)[128X[104X
+    [4X[25Xgap>[125X [27Xline := Random(Lines(quadric));[127X[104X
+    [4X[28X<a line in Q-(5, 2)>[128X[104X
+    [4X[25Xgap>[125X [27XUnderlyingObject(line);[127X[104X
+    [4X[28X<cmat 2x6 over GF(2,1)>[128X[104X
+    [4X[25Xgap>[125X [27XUnpack(last);[127X[104X
+    [4X[28X[ [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0 ], [128X[104X
+    [4X[28X  [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xag := AG(4,3);[127X[104X
+    [4X[28XAG(4, 3)[128X[104X
+    [4X[25Xgap>[125X [27Xplane := Random(Planes(ag));[127X[104X
+    [4X[28X<a plane in AG(4, 3)>[128X[104X
+    [4X[25Xgap>[125X [27XUnderlyingObject(plane);[127X[104X
+    [4X[28X[ <cvec over GF(3,1) of length 4>, <cmat 2x4 over GF(3,1)> ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.1-4 [33X[0;0YConstructing polar spaces[133X[101X
+  
+  [33X[0;0Y[5XFinInG[105X  provides  the  classical polar spaces as the geometries of which the
+  subspaces  are represented by the totally isotropic (resp. totally singular)
+  vector  subspaces  with  relation  to a chosen sesquilinear (resp. quadratic
+  form).  The  user may choose any non-degenerate (resp. non-singular) form to
+  construct  the polar space. The usage of the forms makes [5XFinInG[105X dependent on
+  the  package [5Xforms[105X. Shortcuts to polar spaces in [13Xstandard[113X representation are
+  included. Detailed information can be found in Section [14X7.2[114X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := HermitianPolarSpace(4,9);[127X[104X
+    [4X[28XH(4, 3^2)[128X[104X
+    [4X[25Xgap>[125X [27XEquationForPolarSpace(ps);[127X[104X
+    [4X[28Xx_1^4+x_2^4+x_3^4+x_4^4+x_5^4[128X[104X
+    [4X[25Xgap>[125X [27Xps := HyperbolicQuadric(5,7);[127X[104X
+    [4X[28XQ+(5, 7)[128X[104X
+    [4X[25Xgap>[125X [27XEquationForPolarSpace(ps);[127X[104X
+    [4X[28Xx_1*x_2+x_3*x_4+x_5*x_6[128X[104X
+    [4X[25Xgap>[125X [27Xps := SymplecticSpace(3,3);[127X[104X
+    [4X[28XW(3, 3)[128X[104X
+    [4X[25Xgap>[125X [27XEquationForPolarSpace(ps);[127X[104X
+    [4X[28Xx1*y2-x2*y1+x3*y4-x4*y3[128X[104X
+    [4X[25Xgap>[125X [27Xmat := IdentityMat(4,GF(11));[127X[104X
+    [4X[28X[ [ Z(11)^0, 0*Z(11), 0*Z(11), 0*Z(11) ], [128X[104X
+    [4X[28X  [ 0*Z(11), Z(11)^0, 0*Z(11), 0*Z(11) ], [128X[104X
+    [4X[28X  [ 0*Z(11), 0*Z(11), Z(11)^0, 0*Z(11) ], [128X[104X
+    [4X[28X  [ 0*Z(11), 0*Z(11), 0*Z(11), Z(11)^0 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xform := BilinearFormByMatrix(mat,GF(11));[127X[104X
+    [4X[28X< bilinear form >[128X[104X
+    [4X[25Xgap>[125X [27Xps := PolarSpace(form);[127X[104X
+    [4X[28X<polar space in ProjectiveSpace(3,GF(11)): x_1^2+x_2^2+x_3^2+x_4^2=0 >[128X[104X
+    [4X[25Xgap>[125X [27XRank(ps);[127X[104X
+    [4X[28X2[128X[104X
+    [4X[25Xgap>[125X [27Xps;[127X[104X
+    [4X[28XQ+(3, 11): x_1^2+x_2^2+x_3^2+x_4^2=0[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.1-5 [33X[0;0YSome collineation groups[133X[101X
+  
+  [33X[0;0YIn  principle,  the  full  group  of  collineations  of almost any incidence
+  structure  can be computed in [5XFinInG[105X. Mathematically, this is almost obvious
+  for  projective  spaces  and  affine spaces. For classical polar spaces, the
+  particular  forms  plays  a  role. The coordinate change capabilities of the
+  package  [5Xforms[105X,  together with the standard theory (see [KL90]), ensure that
+  the  full  collineation  group  of a classical polar space can be relatively
+  easily   obtained.  The  computation  of  the  full  collineation  group  of
+  particular  incidence  structures, such as generalised polygons, may rely on
+  the  computation of the automorphism group of an underlying incidence graph,
+  which  is  done  by  using  nauty  through  the package [5XGRAPE[105X. Note that the
+  elements  of  a  projective  collineation  group  are  semilinear maps, they
+  consist of a matrix together with a field automorphism.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xpg := PG(3,4);[127X[104X
+    [4X[28XProjectiveSpace(3, 4)[128X[104X
+    [4X[25Xgap>[125X [27Xcoll := CollineationGroup(pg);[127X[104X
+    [4X[28XThe FinInG collineation group PGammaL(4,4)[128X[104X
+    [4X[25Xgap>[125X [27Xgens := GeneratorsOfGroup(coll);[127X[104X
+    [4X[28X[ < a collineation: <cmat 4x4 over GF(2,2)>, F^0>, [128X[104X
+    [4X[28X  < a collineation: <cmat 4x4 over GF(2,2)>, F^0>, [128X[104X
+    [4X[28X  < a collineation: <cmat 4x4 over GF(2,2)>, F^2> ][128X[104X
+    [4X[25Xgap>[125X [27XUnderlyingMatrix(gens[2]);[127X[104X
+    [4X[28X<cmat 4x4 over GF(2,2)>[128X[104X
+    [4X[25Xgap>[125X [27XUnpack(last);[127X[104X
+    [4X[28X[ [ Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0 ], [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ], [128X[104X
+    [4X[28X  [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ], [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xas := AffineSpace(3,4);[127X[104X
+    [4X[28XAG(3, 4)[128X[104X
+    [4X[25Xgap>[125X [27Xcoll := CollineationGroup(as);[127X[104X
+    [4X[28XAGammaL(3,4)[128X[104X
+    [4X[25Xgap>[125X [27XGeneratorsOfGroup(coll);[127X[104X
+    [4X[28X[ < a collineation: <cmat 4x4 over GF(2,2)>, F^0>, [128X[104X
+    [4X[28X  < a collineation: <cmat 4x4 over GF(2,2)>, F^0>, [128X[104X
+    [4X[28X  < a collineation: <cmat 4x4 over GF(2,2)>, F^0>, [128X[104X
+    [4X[28X  < a collineation: <cmat 4x4 over GF(2,2)>, F^2> ][128X[104X
+    [4X[25Xgap>[125X [27Xgp := SplitCayleyHexagon(3);[127X[104X
+    [4X[28XH(3)[128X[104X
+    [4X[25Xgap>[125X [27Xcoll:= CollineationGroup(gp);[127X[104X
+    [4X[28X#I  for Split Cayley Hexagon[128X[104X
+    [4X[28X#I  Computing nice monomorphism...[128X[104X
+    [4X[28X#I  Found permutation domain...[128X[104X
+    [4X[28XG_2(3)[128X[104X
+    [4X[25Xgap>[125X [27XGeneratorsOfGroup(coll);[127X[104X
+    [4X[28X[ < a collineation: <cmat 7x7 over GF(3,1)>, F^0>, [128X[104X
+    [4X[28X  < a collineation: <cmat 7x7 over GF(3,1)>, F^0>, [128X[104X
+    [4X[28X  < a collineation: <cmat 7x7 over GF(3,1)>, F^0>, [128X[104X
+    [4X[28X  < a collineation: <cmat 7x7 over GF(3,1)>, F^0>, [128X[104X
+    [4X[28X  < a collineation: <cmat 7x7 over GF(3,1)>, F^0> ][128X[104X
+    [4X[25Xgap>[125X [27Xegq := EGQByqClan(LinearqClan(3));[127X[104X
+    [4X[28X#I  Computed Kantor family. Now computing EGQ...[128X[104X
+    [4X[28X<EGQ of order [ 9, 3 ] and basepoint 0>[128X[104X
+    [4X[25Xgap>[125X [27Xcoll := CollineationGroup(egq);[127X[104X
+    [4X[28X#I  Computing incidence graph of generalised polygon...[128X[104X
+    [4X[28X#I  Using elation of the collineation group...[128X[104X
+    [4X[28X<permutation group of size 26127360 with 6 generators>[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.2 [33X[0;0YSome objects with interesting combinatorial properties[133X[101X
+  
+  [33X[0;0YThe  examples here are meant to give a flavour of how to explore geometrical
+  objects from different point of views.[133X
+  
+  
+  [1X2.2-1 [33X[0;0YThe Tits ovoid[133X[101X
+  
+  [33X[0;0YIn  this  example we consider the Tits ovoid in [22XPG(3,8)[122X. We explicitly check
+  the  intersection  number  of  the  Tits-ovoid with planes of the projective
+  space,  and  compute  its  stabiliser  group  inside the homography group of
+  [22XPG(3,8)[122X.  The  use  of  [11X;;[111X  after  a command suppresses its output, which is
+  particularly  interesting  if  the  output  is  a  long  list. The operation
+  [11XCollected[111X  is  self-explanatory, and a very useful GAP command. The computed
+  stabiliser is the Suzuki group [22XSz(8)[122X, a finite simple group.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xq := 8;[127X[104X
+    [4X[28X8[128X[104X
+    [4X[25Xgap>[125X [27Xpg := PG(3,q);[127X[104X
+    [4X[28XProjectiveSpace(3, 8)[128X[104X
+    [4X[25Xgap>[125X [27Xf := GF(q);[127X[104X
+    [4X[28XGF(2^3)[128X[104X
+    [4X[25Xgap>[125X [27Xvecs := Union(List(f,x->List(f,y->[One(f),x*y+x^6+y^4,x,y])));;[127X[104X
+    [4X[25Xgap>[125X [27XAdd(vecs,[0,1,0,0]*Z(q)^0);[127X[104X
+    [4X[25Xgap>[125X [27Xovoid := List(vecs,x->VectorSpaceToElement(pg,x));;[127X[104X
+    [4X[25Xgap>[125X [27Xnumbers := List(Planes(pg),x->Number(ovoid,y->y in x));[127X[104X
+    [4X[28X[ 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, [128X[104X
+    [4X[28X  9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, [128X[104X
+    [4X[28X  9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 1, 1, 9, [128X[104X
+    [4X[28X  9, 9, 9, 9, 9, 9, 9, 9, 1, 9, 9, 1, 9, 9, 9, 9, 9, 1, 1, 9, 9, 9, 9, 9, 9, [128X[104X
+    [4X[28X  9, 9, 9, 9, 9, 9, 1, 9, 9, 9, 9, 1, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, [128X[104X
+    [4X[28X  9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 1, [128X[104X
+    [4X[28X  9, 1, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 1, 9, 9, 9, 9, 9, 1, [128X[104X
+    [4X[28X  9, 9, 1, 9, 9, 1, 9, 9, 9, 9, 9, 1, 1, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, [128X[104X
+    [4X[28X  9, 9, 9, 9, 9, 9, 9, 9, 1, 9, 9, 9, 1, 9, 9, 9, 9, 9, 1, 9, 9, 9, 1, 9, 9, [128X[104X
+    [4X[28X  1, 9, 9, 9, 9, 9, 1, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 1, 9, 1, 9, 9, 9, 9, [128X[104X
+    [4X[28X  9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 1, 1, 9, 9, 9, 9, [128X[104X
+    [4X[28X  9, 9, 9, 9, 9, 9, 1, 9, 1, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, [128X[104X
+    [4X[28X  9, 9, 9, 9, 1, 9, 1, 9, 9, 9, 9, 9, 9, 9, 9, 9, 1, 9, 9, 1, 9, 9, 9, 9, 9, [128X[104X
+    [4X[28X  9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 1, 9, 9, 9, 9, 9, [128X[104X
+    [4X[28X  9, 1, 9, 9, 1, 9, 9, 1, 9, 9, 9, 9, 9, 1, 1, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, [128X[104X
+    [4X[28X  9, 9, 1, 9, 9, 9, 9, 1, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 1, 9, 9, 9, 1, [128X[104X
+    [4X[28X  9, 1, 1, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 1, 9, 1, 9, 9, [128X[104X
+    [4X[28X  9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 1, 9, 9, 9, 9, 1, 9, 9, 9, 9, [128X[104X
+    [4X[28X  9, 9, 9, 9, 9, 9, 9, 9, 1, 9, 1, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, [128X[104X
+    [4X[28X  9, 9, 9, 9, 9, 1, 9, 9, 1, 9, 9, 9, 9, 9, 1, 9, 9, 9, 1, 9, 9, 9, 9, 9, 9, [128X[104X
+    [4X[28X  9, 9, 1, 1, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 1, 9, 9, 9, [128X[104X
+    [4X[28X  9, 9, 9, 9, 9, 9, 1, 9, 9, 9, 9, 9, 9, 9, 9, 9, 1, 9, 9, 9, 9, 9, 9, 9, 9, [128X[104X
+    [4X[28X  9, 1, 9, 9, 1, 9, 9, 9, 9, 9, 9, 9, 9, 9, 1, 9, 9, 9, 9, 9, 9, 9, 9, 9, 1, [128X[104X
+    [4X[28X  9, 1, 9, 9, 9, 9, 9, 9, 9, 1 ][128X[104X
+    [4X[25Xgap>[125X [27XCollected(numbers);[127X[104X
+    [4X[28X[ [ 1, 65 ], [ 9, 520 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xgroup := HomographyGroup(pg);[127X[104X
+    [4X[28XThe FinInG projectivity group PGL(4,8)[128X[104X
+    [4X[25Xgap>[125X [27Xstab := FiningSetwiseStabiliser(group,ovoid);[127X[104X
+    [4X[28X#I  Computing adjusted stabilizer chain...[128X[104X
+    [4X[28X<projective collineation group with 5 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X55290[128X[104X
+    [4X[25Xgap>[125X [27XIsSimple(stab);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XOrder(stab);[127X[104X
+    [4X[28X29120[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.2-2 [33X[0;0YLines meeting a hermitian curve[133X[101X
+  
+  [33X[0;0YHere  we  see how the lines of a projective plane [22XPG(2,q^2)[122X meet a hermitian
+  curve.  It  is  well  known that every line meets in either 1 or [22Xq+1[122X points.
+  Note that the last comment takes a while to complete.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xh:=HermitianPolarSpace(2, 7^2);[127X[104X
+    [4X[28XH(2, 7^2)[128X[104X
+    [4X[25Xgap>[125X [27Xpg := AmbientSpace( h );[127X[104X
+    [4X[28XProjectiveSpace(2, 49)[128X[104X
+    [4X[25Xgap>[125X [27Xlines := Lines( pg );[127X[104X
+    [4X[28X<lines of ProjectiveSpace(2, 49)>[128X[104X
+    [4X[25Xgap>[125X [27Xcurve := AsList( Points( h ) );;[127X[104X
+    [4X[25Xgap>[125X [27XSize(curve);[127X[104X
+    [4X[28X344[128X[104X
+    [4X[25Xgap>[125X [27XCollected( List(lines, t -> Number(curve, c-> c in t)));[127X[104X
+    [4X[28X[ [ 1, 344 ], [ 8, 2107 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xtime;[127X[104X
+    [4X[28X26412[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.2-3 [33X[0;0YThe Patterson ovoid[133X[101X
+  
+  [33X[0;0YIn  this  example,  we  construct  the unique ovoid of the parabolic quadric
+  [22XQ(6,3)[122X,  first  discovered  by  Patterson,  but  for  which was given a nice
+  construction by E. E. Shult. We begin with the ``sums of squares'' quadratic
+  form over [22XGF(3)[122X and the associated polar space.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xid := IdentityMat(7, GF(3));;[127X[104X
+    [4X[25Xgap>[125X [27Xform := QuadraticFormByMatrix(id, GF(3));[127X[104X
+    [4X[28X< quadratic form >[128X[104X
+    [4X[25Xgap>[125X [27Xps := PolarSpace( form );[127X[104X
+    [4X[28X<polar space in ProjectiveSpace([128X[104X
+    [4X[28X6,GF(3)): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2+x_7^2=0 >[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe construction of the ovoid (a la Shult):[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xpsl32 := PSL(3,2);[127X[104X
+    [4X[28XGroup([ (4,6)(5,7), (1,2,4)(3,6,5) ])[128X[104X
+    [4X[25Xgap>[125X [27Xreps:=[[1,1,1,0,0,0,0], [-1,1,1,0,0,0,0],[127X[104X
+    [4X[25X>[125X [27X[1,-1,1,0,0,0,0], [1,1,-1,0,0,0,0]]*Z(3)^0;[127X[104X
+    [4X[28X[ [ Z(3)^0, Z(3)^0, Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ], [128X[104X
+    [4X[28X  [ Z(3), Z(3)^0, Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ], [128X[104X
+    [4X[28X  [ Z(3)^0, Z(3), Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ], [128X[104X
+    [4X[28X  [ Z(3)^0, Z(3)^0, Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xovoid := Union( List(reps, x-> Orbit(psl32, x, Permuted)) );;[127X[104X
+    [4X[25Xgap>[125X [27Xovoid := List(ovoid, x -> VectorSpaceToElement(ps, x));;[127X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YWe  check  that this is indeed an ovoid. The observant reader will notice [13X#I
+  Computing  collineation group of canonical polar space...[113X which is caused by
+  the  command [11XAsList[111X applied to the collection of elements [3Xplanes[103X. The use of
+  [11XAsList[111X  invokes  the computation of all elements in [3Xplanes[103X as an orbit under
+  the  collineation group of the ambient polar space. The reader is invited to
+  redo,  in  a  new GAP session, the same example omitting the [11XAsList[111X command,
+  just  defining  [11Xplanes  := Planes(ps);;[111X. The result will be te same, but the
+  computation  of  all elements will now be done using an enumerator, and will
+  be slower.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xplanes := AsList(Planes( ps ));;[127X[104X
+    [4X[28X#I  Computing collineation group of canonical polar space...[128X[104X
+    [4X[25Xgap>[125X [27XForAll(planes, p -> Number(ovoid, x -> x * p) = 1);[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  stabiliser  is  interesting since it yields the embedding of [22XSp(6,2)[122X in
+  [22XPO(7,3)[122X.  To  efficiently  compute  the set-wise stabiliser, we refer to the
+  induced permutation representation.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xg := IsometryGroup( ps );[127X[104X
+    [4X[28X#I  Computing collineation group of canonical polar space...[128X[104X
+    [4X[28X<projective collineation group of size 9170703360 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xstabovoid := FiningSetwiseStabiliser(g, ovoid);[127X[104X
+    [4X[28X#I  Computing adjusted stabilizer chain...[128X[104X
+    [4X[28X<projective collineation group with 13 generators>[128X[104X
+    [4X[25Xgap>[125X [27XDisplayCompositionSeries(stabovoid);[127X[104X
+    [4X[28XG (size 1451520)[128X[104X
+    [4X[28X | B(3,2) = O(7,2) ~ C(3,2) = S(6,2)[128X[104X
+    [4X[28X1 (size 1)[128X[104X
+    [4X[25Xgap>[125X [27XOrbitLengths(stabovoid, ovoid);[127X[104X
+    [4X[28X[ 28 ][128X[104X
+    [4X[25Xgap>[125X [27XIsTransitive(stabovoid, ovoid);[127X[104X
+    [4X[28Xtrue [128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.2-4 [33X[0;0YA hyperoval[133X[101X
+  
+  [33X[0;0YIn  this  example,  we consider a hyperoval of the projective plane [22XPG(2,4)[122X,
+  that  is,  six points no three collinear. We will construct such a hyperoval
+  by  some  basic  explorations  into  particular properties of the projective
+  plane  [22XPG(2,4)[122X. The projective plane is initialised, its points are computed
+  and  listed;  then  a  standard frame is constructed, of which we may assume
+  that  it  is a subset of the hyperoval. Finally, the stabiliser group of the
+  hyperoval  is computed, and it is checked that this group is isomorphic with
+  the symmetric group on six elements.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xpg := ProjectiveSpace(2,4);[127X[104X
+    [4X[28XProjectiveSpace(2, 4)[128X[104X
+    [4X[25Xgap>[125X [27Xpoints := Points(pg);[127X[104X
+    [4X[28X<points of ProjectiveSpace(2, 4)>[128X[104X
+    [4X[25Xgap>[125X [27Xpointslist := AsList(points);[127X[104X
+    [4X[28X[ <a point in ProjectiveSpace(2, 4)>, <a point in ProjectiveSpace(2, 4)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(2, 4)>, <a point in ProjectiveSpace(2, 4)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(2, 4)>, <a point in ProjectiveSpace(2, 4)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(2, 4)>, <a point in ProjectiveSpace(2, 4)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(2, 4)>, <a point in ProjectiveSpace(2, 4)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(2, 4)>, <a point in ProjectiveSpace(2, 4)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(2, 4)>, <a point in ProjectiveSpace(2, 4)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(2, 4)>, <a point in ProjectiveSpace(2, 4)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(2, 4)>, <a point in ProjectiveSpace(2, 4)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(2, 4)>, <a point in ProjectiveSpace(2, 4)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(2, 4)> ][128X[104X
+    [4X[25Xgap>[125X [27XDisplay(pointslist[1]);[127X[104X
+    [4X[28X . . 1[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YNow we may assume that our hyperoval contains the fundamental frame.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xframe := [[1,0,0],[0,1,0],[0,0,1],[1,1,1]]*Z(2)^0;[127X[104X
+    [4X[28X[ [ Z(2)^0, 0*Z(2), 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2) ], [128X[104X
+    [4X[28X  [ 0*Z(2), 0*Z(2), Z(2)^0 ], [ Z(2)^0, Z(2)^0, Z(2)^0 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xframe := List(frame,x -> VectorSpaceToElement(pg,x));[127X[104X
+    [4X[28X[ <a point in ProjectiveSpace(2, 4)>, <a point in ProjectiveSpace(2, 4)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(2, 4)>, <a point in ProjectiveSpace(2, 4)> ][128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YAlternatively, we could use:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xframe := StandardFrame( pg );[127X[104X
+    [4X[28X[ <a point in ProjectiveSpace(2, 4)>, <a point in ProjectiveSpace(2, 4)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(2, 4)>, <a point in ProjectiveSpace(2, 4)> ][128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThere  are  six  secant lines to this frame (``four choose two''). So we put
+  together these secant lines from the pairs of points of this frame.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xpairs := Combinations(frame,2);[127X[104X
+    [4X[28X[ [ <a point in ProjectiveSpace(2, 4)>, <a point in ProjectiveSpace(2, 4)> ], [128X[104X
+    [4X[28X  [ <a point in ProjectiveSpace(2, 4)>, <a point in ProjectiveSpace(2, 4)> ], [128X[104X
+    [4X[28X  [ <a point in ProjectiveSpace(2, 4)>, <a point in ProjectiveSpace(2, 4)> ], [128X[104X
+    [4X[28X  [ <a point in ProjectiveSpace(2, 4)>, <a point in ProjectiveSpace(2, 4)> ], [128X[104X
+    [4X[28X  [ <a point in ProjectiveSpace(2, 4)>, <a point in ProjectiveSpace(2, 4)> ], [128X[104X
+    [4X[28X  [ <a point in ProjectiveSpace(2, 4)>, <a point in ProjectiveSpace(2, 4)> ] ][128X[104X
+    [4X[25Xgap>[125X [27Xsecants := List(pairs,p -> Span(p[1],p[2]));[127X[104X
+    [4X[28X[ <a line in ProjectiveSpace(2, 4)>, <a line in ProjectiveSpace(2, 4)>, [128X[104X
+    [4X[28X  <a line in ProjectiveSpace(2, 4)>, <a line in ProjectiveSpace(2, 4)>, [128X[104X
+    [4X[28X  <a line in ProjectiveSpace(2, 4)>, <a line in ProjectiveSpace(2, 4)> ][128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YBy  a  counting  argument,  it  is known that the frame of [22XPG(2,4)[122X completes
+  uniquely to a hyperoval.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xleftover := Filtered(pointslist,t->not ForAny(secants,s->t in s));[127X[104X
+    [4X[28X[ <a point in ProjectiveSpace(2, 4)>, <a point in ProjectiveSpace(2, 4)> ][128X[104X
+    [4X[25Xgap>[125X [27Xhyperoval := Union(frame,leftover);[127X[104X
+    [4X[28X[ <a point in ProjectiveSpace(2, 4)>, <a point in ProjectiveSpace(2, 4)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(2, 4)>, <a point in ProjectiveSpace(2, 4)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(2, 4)>, <a point in ProjectiveSpace(2, 4)> ][128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThis  hyperoval  has  the  symmetric group on six symbols as its stabiliser,
+  which can easily be calculated:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xg := CollineationGroup(pg);[127X[104X
+    [4X[28XThe FinInG collineation group PGammaL(3,4)[128X[104X
+    [4X[25Xgap>[125X [27Xstab := Stabilizer(g,Set(hyperoval),OnSets);[127X[104X
+    [4X[28X<projective collineation group of size 720>[128X[104X
+    [4X[25Xgap>[125X [27XStructureDescription(stab);[127X[104X
+    [4X[28X"S6" [128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.3 [33X[0;0YGeometry morphisms[133X[101X
+  
+  [33X[0;0YA geometry morphism in [5XFinInG[105X is a map between (a subset of) the elements of
+  one  geometry to (a subset of) the elements of a second geometry, preserving
+  the  incidence. Geometry morphisms are not necessarily type preserving. This
+  section is meant to illustrate, in a non exhaustive way the basis philisophy
+  behind geometry morphisms in [5XFinInG[105X.[133X
+  
+  
+  [1X2.3-1 [33X[0;0YIsomorphic polar spaces[133X[101X
+  
+  [33X[0;0YWe've  seen  already  that  a  polar  space  can  be  constructed  from  any
+  non-degenerate  sesquilinear  or non-singular quadratic form. An isomorphism
+  between  polar spaces of the same type, can easily be obtained. This example
+  illustrates    [11XIsomorphismPolarSpaces[111X,   which   is   in   its   basic   use
+  self-explanatory,  and  the  use  of  the obtained map to compute images and
+  pre-images of elements.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat1 := IdentityMat(4,GF(16));[127X[104X
+    [4X[28X[ [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ], [128X[104X
+    [4X[28X  [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2) ], [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xform1 := HermitianFormByMatrix(mat1,GF(16));[127X[104X
+    [4X[28X< hermitian form >[128X[104X
+    [4X[25Xgap>[125X [27Xps1 := PolarSpace(form1);[127X[104X
+    [4X[28X<polar space in ProjectiveSpace(3,GF(2^4)): x_1^5+x_2^5+x_3^5+x_4^5=0 >[128X[104X
+    [4X[25Xgap>[125X [27Xmat2 := [[0,1,0,0],[1,0,0,0],[0,0,0,1],[0,0,1,0]]*Z(16)^0;[127X[104X
+    [4X[28X[ [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ], [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ], [128X[104X
+    [4X[28X  [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ], [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xform2 := HermitianFormByMatrix(mat2,GF(16));[127X[104X
+    [4X[28X< hermitian form >[128X[104X
+    [4X[25Xgap>[125X [27Xps2 := PolarSpace(form2);[127X[104X
+    [4X[28X<polar space in ProjectiveSpace([128X[104X
+    [4X[28X3,GF(2^4)): x_1^4*x_2+x_1*x_2^4+x_3^4*x_4+x_3*x_4^4=0 >[128X[104X
+    [4X[25Xgap>[125X [27Xmap := IsomorphismPolarSpaces(ps1,ps2);[127X[104X
+    [4X[28X#I  No intertwiner computed. One of the polar spaces must have a collineation group computed[128X[104X
+    [4X[28X<geometry morphism from <Elements of H(3, [128X[104X
+    [4X[28X4^2): x_1^5+x_2^5+x_3^5+x_4^5=0> to <Elements of H(3, [128X[104X
+    [4X[28X4^2): x_1^4*x_2+x_1*x_2^4+x_3^4*x_4+x_3*x_4^4=0>>[128X[104X
+    [4X[25Xgap>[125X [27Xp := Random(Points(ps1));[127X[104X
+    [4X[28X<a point in H(3, 4^2): x_1^5+x_2^5+x_3^5+x_4^5=0>[128X[104X
+    [4X[25Xgap>[125X [27Xp^map;[127X[104X
+    [4X[28X<a point in H(3, 4^2): x_1^4*x_2+x_1*x_2^4+x_3^4*x_4+x_3*x_4^4=0>[128X[104X
+    [4X[25Xgap>[125X [27Xl := Random(Lines(ps2));[127X[104X
+    [4X[28X<a line in H(3, 4^2): x_1^4*x_2+x_1*x_2^4+x_3^4*x_4+x_3*x_4^4=0>[128X[104X
+    [4X[25Xgap>[125X [27XPreImageElm(map,l);[127X[104X
+    [4X[28X<a line in H(3, 4^2): x_1^5+x_2^5+x_3^5+x_4^5=0>[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.3-2 [33X[0;0YIntertwiners[133X[101X
+  
+  [33X[0;0YWe  reconsider the previous example. The observant reader might have noticed
+  the  message [13X#I No intertwiner computed...[113X. Given a geometry morphism [22Xf[122X from
+  [22XS[122X  to  [22XS'[122X, an intertwiner [22Xϕ[122X is a map from the automorphism group of [22XS[122X to the
+  automorphism  group  of  [22XS'[122X,  such  that  for every element [22Xp[122X of [22XS[122X and every
+  automorphism [22Xg[122X of [22XS[122X, we have[133X
+  
+  
+  [24X[33X[0;6Yf(p^g) = f(p)^{\phi(g)} .[133X
+  
+  [124X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat1 := IdentityMat(4,GF(16));[127X[104X
+    [4X[28X[ [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ], [128X[104X
+    [4X[28X  [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2) ], [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xform1 := HermitianFormByMatrix(mat1,GF(16));[127X[104X
+    [4X[28X< hermitian form >[128X[104X
+    [4X[25Xgap>[125X [27Xps1 := PolarSpace(form1);[127X[104X
+    [4X[28X<polar space in ProjectiveSpace(3,GF(2^4)): x_1^5+x_2^5+x_3^5+x_4^5=0 >[128X[104X
+    [4X[25Xgap>[125X [27Xmat2 := [[0,1,0,0],[1,0,0,0],[0,0,0,1],[0,0,1,0]]*Z(16)^0;[127X[104X
+    [4X[28X[ [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ], [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ], [128X[104X
+    [4X[28X  [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ], [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xform2 := HermitianFormByMatrix(mat2,GF(16));[127X[104X
+    [4X[28X< hermitian form >[128X[104X
+    [4X[25Xgap>[125X [27Xps2 := PolarSpace(form2);[127X[104X
+    [4X[28X<polar space in ProjectiveSpace([128X[104X
+    [4X[28X3,GF(2^4)): x_1^4*x_2+x_1*x_2^4+x_3^4*x_4+x_3*x_4^4=0 >[128X[104X
+    [4X[25Xgap>[125X [27XCollineationGroup(ps1);[127X[104X
+    [4X[28X#I  Computing collineation group of canonical polar space...[128X[104X
+    [4X[28X<projective collineation group of size 4073472000 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xmap := IsomorphismPolarSpaces(ps1,ps2);[127X[104X
+    [4X[28X<geometry morphism from <Elements of H(3, [128X[104X
+    [4X[28X4^2): x_1^5+x_2^5+x_3^5+x_4^5=0> to <Elements of H(3, [128X[104X
+    [4X[28X4^2): x_1^4*x_2+x_1*x_2^4+x_3^4*x_4+x_3*x_4^4=0>>[128X[104X
+    [4X[25Xgap>[125X [27Xphi := Intertwiner(map);[127X[104X
+    [4X[28XMappingByFunction( <projective collineation group of size 4073472000 with [128X[104X
+    [4X[28X3 generators>, <projective collineation group of size 4073472000 with [128X[104X
+    [4X[28X3 generators>, function( y ) ... end, function( x ) ... end )[128X[104X
+    [4X[25Xgap>[125X [27Xg := Random(CollineationGroup(ps1));[127X[104X
+    [4X[28X< a collineation: <cmat 4x4 over GF(2,4)>, F^4>[128X[104X
+    [4X[25Xgap>[125X [27Xh := g^phi;[127X[104X
+    [4X[28X< a collineation: <cmat 4x4 over GF(2,4)>, F^4>[128X[104X
+    [4X[25Xgap>[125X [27Xh in CollineationGroup(ps2);[127X[104X
+    [4X[28X#I  Computing collineation group of canonical polar space...[128X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xh := Random(CollineationGroup(ps2));[127X[104X
+    [4X[28X< a collineation: <cmat 4x4 over GF(2,4)>, F^2>[128X[104X
+    [4X[25Xgap>[125X [27Xg := PreImageElm(phi,h);[127X[104X
+    [4X[28X< a collineation: <cmat 4x4 over GF(2,4)>, F^2>[128X[104X
+    [4X[25Xgap>[125X [27Xg in CollineationGroup(ps1);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.3-3 [33X[0;0YKlein correspondence[133X[101X
+  
+  [33X[0;0YThe  Klein  correspondence  is  well  known.  The  user  may  define its own
+  hyperbolic  quadric  as range for the geometry morphism in [5XFinInG[105X. Note that
+  more  is  possible  than  illustrated in the elementary example, see Section
+  [14X10.3[114X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := HyperbolicQuadric(5,5);[127X[104X
+    [4X[28XQ+(5, 5)[128X[104X
+    [4X[25Xgap>[125X [27Xklein := KleinCorrespondence(ps);[127X[104X
+    [4X[28X<geometry morphism from <lines of ProjectiveSpace(3, 5)> to <points of Q+(5, [128X[104X
+    [4X[28X5)>>[128X[104X
+    [4X[25Xgap>[125X [27Xline1 := Random(Lines(PG(3,5)));[127X[104X
+    [4X[28X<a line in ProjectiveSpace(3, 5)>[128X[104X
+    [4X[25Xgap>[125X [27Xline2 := Random(Lines(PG(3,5)));[127X[104X
+    [4X[28X<a line in ProjectiveSpace(3, 5)>[128X[104X
+    [4X[25Xgap>[125X [27Xp := line1^klein;[127X[104X
+    [4X[28X<a point in Q+(5, 5)>[128X[104X
+    [4X[25Xgap>[125X [27Xq := line2^klein;[127X[104X
+    [4X[28X<a point in Q+(5, 5)>[128X[104X
+    [4X[25Xgap>[125X [27Xp in ps;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xq in ps;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsCollinear(ps,p,q);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XMeet(line1,line2);[127X[104X
+    [4X[28X< empty subspace >[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.3-4 [33X[0;0YEmbedding in a subspace[133X[101X
+  
+  [33X[0;0YA  projective  space  can  be embedded as a subspace in a higher dimensional
+  projective  space.  A  comparable  embedding  is  possible for polar spaces,
+  clearly only when a given subspace intersects the polar space of higher rank
+  in a polar space of the same type as the polar space to be embedded.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xpg2 := PG(2,5);[127X[104X
+    [4X[28XProjectiveSpace(2, 5)[128X[104X
+    [4X[25Xgap>[125X [27Xpg3 := PG(3,5);[127X[104X
+    [4X[28XProjectiveSpace(3, 5)[128X[104X
+    [4X[25Xgap>[125X [27Xhyp := VectorSpaceToElement(pg3,[[1,2,4,0],[0,3,2,0],[1,1,0,1]]*Z(5)^0);[127X[104X
+    [4X[28X<a plane in ProjectiveSpace(3, 5)>[128X[104X
+    [4X[25Xgap>[125X [27Xem := NaturalEmbeddingBySubspace( pg2, pg3, hyp );[127X[104X
+    [4X[28X<geometry morphism from <All elements of ProjectiveSpace(2, [128X[104X
+    [4X[28X5)> to <All elements of ProjectiveSpace(3, 5)>>[128X[104X
+    [4X[25Xgap>[125X [27Xl := Random(Lines(pg2));[127X[104X
+    [4X[28X<a line in ProjectiveSpace(2, 5)>[128X[104X
+    [4X[25Xgap>[125X [27Xl^em;[127X[104X
+    [4X[28X<a line in ProjectiveSpace(3, 5)>[128X[104X
+    [4X[25Xgap>[125X [27Xp := Random(Points(hyp));[127X[104X
+    [4X[28X<a point in ProjectiveSpace(3, 5)>[128X[104X
+    [4X[25Xgap>[125X [27XPreImageElm(em,p);[127X[104X
+    [4X[28X<a point in ProjectiveSpace(2, 5)>[128X[104X
+    [4X[25Xgap>[125X [27Xmat := [[0,0,0,1],[0,0,1,0],[0,-1,0,0],[-1,0,0,0]]*Z(3);[127X[104X
+    [4X[28X[ [ 0*Z(3), 0*Z(3), 0*Z(3), Z(3) ], [ 0*Z(3), 0*Z(3), Z(3), 0*Z(3) ], [128X[104X
+    [4X[28X  [ 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3) ], [ Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xform := BilinearFormByMatrix(mat,GF(3));[127X[104X
+    [4X[28X< bilinear form >[128X[104X
+    [4X[25Xgap>[125X [27Xw3 := PolarSpace(form);[127X[104X
+    [4X[28X<polar space in ProjectiveSpace(3,GF(3)): -x1*y4-x2*y3+x3*y2+x4*y1=0 >[128X[104X
+    [4X[25Xgap>[125X [27Xw5 := SymplecticSpace(5, 3);[127X[104X
+    [4X[28XW(5, 3)[128X[104X
+    [4X[25Xgap>[125X [27Xpg := AmbientSpace( w5 );[127X[104X
+    [4X[28XProjectiveSpace(5, 3)[128X[104X
+    [4X[25Xgap>[125X [27Xsolid := VectorSpaceToElement(pg,[[1,0,0,0,0,0],[0,1,0,0,0,0],[127X[104X
+    [4X[25X>[125X [27X[0,0,1,0,0,0],[0,0,0,1,0,0]]*Z(3)^0);[127X[104X
+    [4X[28X<a solid in ProjectiveSpace(5, 3)>[128X[104X
+    [4X[25Xgap>[125X [27XTypeOfSubspace(w5,solid);[127X[104X
+    [4X[28X"symplectic"[128X[104X
+    [4X[25Xgap>[125X [27Xem := NaturalEmbeddingBySubspace( w3, w5, solid );[127X[104X
+    [4X[28X<geometry morphism from <Elements of <polar space in ProjectiveSpace([128X[104X
+    [4X[28X3,GF(3)): -x1*y4-x2*y3+x3*y2+x4*y1=0 >> to <Elements of W(5, 3)>>[128X[104X
+    [4X[25Xgap>[125X [27Xpoints := Points( w3 );[127X[104X
+    [4X[28X<points of W(3, 3): -x1*y4-x2*y3+x3*y2+x4*y1=0>[128X[104X
+    [4X[25Xgap>[125X [27Xpoints2 := ImagesSet(em, AsSet(points));;[127X[104X
+    [4X[28X#I  Computing collineation group of canonical polar space...[128X[104X
+    [4X[25Xgap>[125X [27XForAll(points2, x -> x in solid);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.3-5 [33X[0;0YSubgeometries[133X[101X
+  
+  [33X[0;0YA projective space can be embedded as a subgeometry in a projective space of
+  the  same dimension but over a field extension. A polar space, determined by
+  a  form [22Xf[122X can be embedded in a polar space considered over a field extension
+  by interpreting the form [22Xf[122X over this field extension. This is an interesting
+  tool to construct geometrical objects in projective and polar spaces.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xpgsub := PG(2,7);[127X[104X
+    [4X[28XProjectiveSpace(2, 7)[128X[104X
+    [4X[25Xgap>[125X [27Xpg := PG(2,7^2);[127X[104X
+    [4X[28XProjectiveSpace(2, 49)[128X[104X
+    [4X[25Xgap>[125X [27Xem := NaturalEmbeddingBySubfield(pgsub,pg);[127X[104X
+    [4X[28X<geometry morphism from <All elements of ProjectiveSpace(2, [128X[104X
+    [4X[28X7)> to <All elements of ProjectiveSpace(2, 49)>>[128X[104X
+    [4X[25Xgap>[125X [27Xbaer := List(Points(pgsub),x->x^em);;[127X[104X
+    [4X[25Xgap>[125X [27Xnumbers := Collected(List(Lines(pg),x->Number(baer,y->y in x)));[127X[104X
+    [4X[28X[ [ 1, 2394 ], [ 8, 57 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xmat := [[0,0,0,1],[0,0,-1,0],[0,1,0,0],[-1,0,0,0]]*Z(5)^0;[127X[104X
+    [4X[28X[ [ 0*Z(5), 0*Z(5), 0*Z(5), Z(5)^0 ], [ 0*Z(5), 0*Z(5), Z(5)^2, 0*Z(5) ], [128X[104X
+    [4X[28X  [ 0*Z(5), Z(5)^0, 0*Z(5), 0*Z(5) ], [ Z(5)^2, 0*Z(5), 0*Z(5), 0*Z(5) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xform := BilinearFormByMatrix(mat,GF(5));[127X[104X
+    [4X[28X< bilinear form >[128X[104X
+    [4X[25Xgap>[125X [27Xsymplecticspace := PolarSpace(form);[127X[104X
+    [4X[28X<polar space in ProjectiveSpace(3,GF(5)): x1*y4-x2*y3+x3*y2-x4*y1=0 >[128X[104X
+    [4X[25Xgap>[125X [27Xhermitianspace := HermitianPolarSpace(3,25);[127X[104X
+    [4X[28XH(3, 5^2)[128X[104X
+    [4X[25Xgap>[125X [27Xem := NaturalEmbeddingBySubfield(symplecticspace,hermitianspace);[127X[104X
+    [4X[28X#I  No intertwiner computed. <geom1> must have a collineation group computed[128X[104X
+    [4X[28X<geometry morphism from <Elements of <polar space in ProjectiveSpace([128X[104X
+    [4X[28X3,GF(5)): x1*y4-x2*y3+x3*y2-x4*y1=0 >> to <Elements of H(3, 5^2)>>[128X[104X
+    [4X[25Xgap>[125X [27Xl := Random(Lines(symplecticspace));[127X[104X
+    [4X[28X<a line in W(3, 5): x1*y4-x2*y3+x3*y2-x4*y1=0>[128X[104X
+    [4X[25Xgap>[125X [27Xl^em;[127X[104X
+    [4X[28X<a line in H(3, 5^2)>[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.3-6 [33X[0;0YEmbedding by field reduction[133X[101X
+  
+  [33X[0;0YField  reduction  is  a power full tool to embedd low dimensional projective
+  (and  polar  spaces)  over  a  field  [22XK[122X in to high dimensional spaces over a
+  subfield  of  [22XK[122X.  The  mathematics  behind  field  reduction is explained in
+  sections  [14X10.4-3[114X  and  [14X10.5-3[114X.  The  examples  here  show  the  use of these
+  embedings  to  construct  a  regular  spread  of  a  projective  space and a
+  so-called Hermitian spread of a hyperbolic quadric.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xpg1 := PG(1,3^2);[127X[104X
+    [4X[28XProjectiveSpace(1, 9)[128X[104X
+    [4X[25Xgap>[125X [27Xpg2 := PG(3,3);[127X[104X
+    [4X[28XProjectiveSpace(3, 3)[128X[104X
+    [4X[25Xgap>[125X [27Xem := NaturalEmbeddingByFieldReduction(pg1,pg2);[127X[104X
+    [4X[28X<geometry morphism from <All elements of ProjectiveSpace(1, [128X[104X
+    [4X[28X9)> to <All elements of ProjectiveSpace(3, 3)>>[128X[104X
+    [4X[25Xgap>[125X [27Xspread := List(Points(pg1),x->x^em);[127X[104X
+    [4X[28X[ <a line in ProjectiveSpace(3, 3)>, <a line in ProjectiveSpace(3, 3)>, [128X[104X
+    [4X[28X  <a line in ProjectiveSpace(3, 3)>, <a line in ProjectiveSpace(3, 3)>, [128X[104X
+    [4X[28X  <a line in ProjectiveSpace(3, 3)>, <a line in ProjectiveSpace(3, 3)>, [128X[104X
+    [4X[28X  <a line in ProjectiveSpace(3, 3)>, <a line in ProjectiveSpace(3, 3)>, [128X[104X
+    [4X[28X  <a line in ProjectiveSpace(3, 3)>, <a line in ProjectiveSpace(3, 3)> ][128X[104X
+    [4X[25Xgap>[125X [27XUnion(List(spread,x->List(Points(x))))=Set(Points(pg2));[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xps1 := HermitianPolarSpace(3,3^2);[127X[104X
+    [4X[28XH(3, 3^2)[128X[104X
+    [4X[25Xgap>[125X [27Xps2 := HyperbolicQuadric(7,3);[127X[104X
+    [4X[28XQ+(7, 3)[128X[104X
+    [4X[25Xgap>[125X [27Xem := NaturalEmbeddingByFieldReduction(ps1,ps2);[127X[104X
+    [4X[28X#I  These polar spaces are suitable for field reduction[128X[104X
+    [4X[28X<geometry morphism from <Elements of H(3, 3^2)> to <Elements of Q+(7, 3)>>[128X[104X
+    [4X[25Xgap>[125X [27Xspread := List(Points(ps1),x->x^em);;[127X[104X
+    [4X[25Xgap>[125X [27XUnion(List(spread,x->List(Points(x))))=Set(Points(ps2));[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.4 [33X[0;0YSome geometrical objects[133X[101X
+  
+  
+  [1X2.4-1 [33X[0;0YSpreads of [22XW(5,3)[122X[101X[1X[133X[101X
+  
+  [33X[0;0YA  spread  of  [22XW(5,q)[122X is a set of [22Xq^3+1[122X planes which partition the points of
+  [22XW(5,q)[122X.  Here  we  enumerate  all  spreads  of  [22XW(5,3)[122X which have a set-wise
+  stabiliser of order a multiple of 13.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xw := SymplecticSpace(5, 3);[127X[104X
+    [4X[28XW(5, 3)[128X[104X
+    [4X[25Xgap>[125X [27Xg := IsometryGroup(w);[127X[104X
+    [4X[28XPSp(6,3)[128X[104X
+    [4X[25Xgap>[125X [27Xsyl := SylowSubgroup(g, 13);[127X[104X
+    [4X[28X<projective collineation group of size 13>[128X[104X
+    [4X[25Xgap>[125X [27Xplanes := Planes( w );[127X[104X
+    [4X[28X<planes of W(5, 3)>[128X[104X
+    [4X[25Xgap>[125X [27Xpoints := Points( w );[127X[104X
+    [4X[28X<points of W(5, 3)>[128X[104X
+    [4X[25Xgap>[125X [27Xorbs := Orbits(syl, planes , OnProjSubspaces);;[127X[104X
+    [4X[25Xgap>[125X [27XIsPartialSpread := x -> Number(points, p ->[127X[104X
+    [4X[25X>[125X [27X         ForAny(x, i-> p in i)) = Size(x)*13;;[127X[104X
+    [4X[25Xgap>[125X [27Xpartialspreads := Filtered(orbs, IsPartialSpread);;[127X[104X
+    [4X[25Xgap>[125X [27XLength(partialspreads);[127X[104X
+    [4X[28X8[128X[104X
+    [4X[25Xgap>[125X [27X13s := Filtered(partialspreads, i -> Size(i) = 13);;[127X[104X
+    [4X[25Xgap>[125X [27XLength(13s);[127X[104X
+    [4X[28X6[128X[104X
+    [4X[25Xgap>[125X [27X13s[1];[127X[104X
+    [4X[28X[ <a plane in W(5, 3)>, <a plane in W(5, 3)>, <a plane in W(5, 3)>, [128X[104X
+    [4X[28X  <a plane in W(5, 3)>, <a plane in W(5, 3)>, <a plane in W(5, 3)>, [128X[104X
+    [4X[28X  <a plane in W(5, 3)>, <a plane in W(5, 3)>, <a plane in W(5, 3)>, [128X[104X
+    [4X[28X  <a plane in W(5, 3)>, <a plane in W(5, 3)>, <a plane in W(5, 3)>, [128X[104X
+    [4X[28X  <a plane in W(5, 3)> ][128X[104X
+    [4X[25Xgap>[125X [27X26s := List(Combinations(13s,2), Union);;[127X[104X
+    [4X[25Xgap>[125X [27Xtwo := Union(Filtered(partialspreads, i -> Size(i) = 1));;[127X[104X
+    [4X[25Xgap>[125X [27Xgood26s := Filtered(26s, x->IsPartialSpread(Union(x, two)));;[127X[104X
+    [4X[25Xgap>[125X [27Xspreads := List(good26s, x->Union(x, two));;[127X[104X
+    [4X[25Xgap>[125X [27XLength(spreads);[127X[104X
+    [4X[28X5[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.4-2 [33X[0;0YDistance-6 spread of the split Cayley hexagon[133X[101X
+  
+  [33X[0;0YA  distance 6 spread of a split Cayley hexagon is a set of lines mutually at
+  maximal  distance in the incidence graph. It is well known that the lines of
+  the  hexagon contained in a hyperplane meeting the ambient polar space in an
+  elliptic  quadric, yield such a spread. This example also illustrates how an
+  element   of   a   geometry   [13Xremembers[113X   its   ambient  geometry,  and  how
+  [11XElementToElement[111X  can  be  used to embed an element in another geometry, see
+  [14X3.8-1[114X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xgh := SplitCayleyHexagon(3);[127X[104X
+    [4X[28XH(3)[128X[104X
+    [4X[25Xgap>[125X [27Xq6 := AmbientPolarSpace(gh);[127X[104X
+    [4X[28XQ(6, 3): -x_1*x_5-x_2*x_6-x_3*x_7+x_4^2=0[128X[104X
+    [4X[25Xgap>[125X [27Xhyp := First(Hyperplanes(PG(6,3)),x->TypeOfSubspace(q6,x)="elliptic");[127X[104X
+    [4X[28X<a proj. 5-space in ProjectiveSpace(6, 3)>[128X[104X
+    [4X[25Xgap>[125X [27Xq5 := EllipticQuadric(5,3);[127X[104X
+    [4X[28XQ-(5, 3)[128X[104X
+    [4X[25Xgap>[125X [27Xlines := AsList(Lines(q5));[127X[104X
+    [4X[28X<closed orbit, 280 points>[128X[104X
+    [4X[25Xgap>[125X [27Xem := NaturalEmbeddingBySubspace(q5,q6,hyp);[127X[104X
+    [4X[28X<geometry morphism from <Elements of Q-(5, 3)> to <Elements of Q(6, [128X[104X
+    [4X[28X3): -x_1*x_5-x_2*x_6-x_3*x_7+x_4^2=0>>[128X[104X
+    [4X[25Xgap>[125X [27Xspread := Filtered(lines,x->x^em in gh);[127X[104X
+    [4X[28X[ <a line in Q-(5, 3)>, <a line in Q-(5, 3)>, <a line in Q-(5, 3)>, [128X[104X
+    [4X[28X  <a line in Q-(5, 3)>, <a line in Q-(5, 3)>, <a line in Q-(5, 3)>, [128X[104X
+    [4X[28X  <a line in Q-(5, 3)>, <a line in Q-(5, 3)>, <a line in Q-(5, 3)>, [128X[104X
+    [4X[28X  <a line in Q-(5, 3)>, <a line in Q-(5, 3)>, <a line in Q-(5, 3)>, [128X[104X
+    [4X[28X  <a line in Q-(5, 3)>, <a line in Q-(5, 3)>, <a line in Q-(5, 3)>, [128X[104X
+    [4X[28X  <a line in Q-(5, 3)>, <a line in Q-(5, 3)>, <a line in Q-(5, 3)>, [128X[104X
+    [4X[28X  <a line in Q-(5, 3)>, <a line in Q-(5, 3)>, <a line in Q-(5, 3)>, [128X[104X
+    [4X[28X  <a line in Q-(5, 3)>, <a line in Q-(5, 3)>, <a line in Q-(5, 3)>, [128X[104X
+    [4X[28X  <a line in Q-(5, 3)>, <a line in Q-(5, 3)>, <a line in Q-(5, 3)>, [128X[104X
+    [4X[28X  <a line in Q-(5, 3)> ][128X[104X
+    [4X[25Xgap>[125X [27Xspread := List(spread,x->ElementToElement(gh,x^em));[127X[104X
+    [4X[28X[ <a line in H(3)>, <a line in H(3)>, <a line in H(3)>, <a line in H(3)>, [128X[104X
+    [4X[28X  <a line in H(3)>, <a line in H(3)>, <a line in H(3)>, <a line in H(3)>, [128X[104X
+    [4X[28X  <a line in H(3)>, <a line in H(3)>, <a line in H(3)>, <a line in H(3)>, [128X[104X
+    [4X[28X  <a line in H(3)>, <a line in H(3)>, <a line in H(3)>, <a line in H(3)>, [128X[104X
+    [4X[28X  <a line in H(3)>, <a line in H(3)>, <a line in H(3)>, <a line in H(3)>, [128X[104X
+    [4X[28X  <a line in H(3)>, <a line in H(3)>, <a line in H(3)>, <a line in H(3)>, [128X[104X
+    [4X[28X  <a line in H(3)>, <a line in H(3)>, <a line in H(3)>, <a line in H(3)> ][128X[104X
+    [4X[25Xgap>[125X [27XCollected(Concatenation(List(spread,x->List(spread,y->DistanceBetweenElements(x,y)))));[127X[104X
+    [4X[28X[ [ 0, 28 ], [ 6, 756 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.5 [33X[0;0YSome particular incidence geometries[133X[101X
+  
+  
+  [1X2.5-1 [33X[0;0YThe split Cayley hexagon[133X[101X
+  
+  [33X[0;0YThe  split  Cayley  hexagon  is  one  the  well  known classical generalised
+  hexagons  that  are obtained using a triality of the hyperbolic quadric in 7
+  dimensions. This example shows some basic properties of this geometry.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xhexagon := SplitCayleyHexagon(5);[127X[104X
+    [4X[28XH(5)[128X[104X
+    [4X[25Xgap>[125X [27XOrder(hexagon);[127X[104X
+    [4X[28X[ 5, 5 ][128X[104X
+    [4X[25Xgap>[125X [27Xg := CollineationGroup( hexagon );[127X[104X
+    [4X[28X#I  for Split Cayley Hexagon[128X[104X
+    [4X[28X#I  Computing nice monomorphism...[128X[104X
+    [4X[28X#I  Found permutation domain...[128X[104X
+    [4X[28XG_2(5)[128X[104X
+    [4X[25Xgap>[125X [27Xincgraph := IncidenceGraph( hexagon );;[127X[104X
+    [4X[28X#I  Computing incidence graph of generalised polygon...[128X[104X
+    [4X[25Xgap>[125X [27XDiameter(incgraph);[127X[104X
+    [4X[28X6[128X[104X
+    [4X[25Xgap>[125X [27XGirth(incgraph);[127X[104X
+    [4X[28X12[128X[104X
+    [4X[25Xgap>[125X [27Xpoints := Points(hexagon);[127X[104X
+    [4X[28X<points of H(5)>[128X[104X
+    [4X[25Xgap>[125X [27Xlines := Lines(hexagon);[127X[104X
+    [4X[28X<lines of H(5)>[128X[104X
+    [4X[25Xgap>[125X [27Xiter := Iterator(points);[127X[104X
+    [4X[28X<iterator>[128X[104X
+    [4X[25Xgap>[125X [27Xx := NextIterator(iter);[127X[104X
+    [4X[28X<a point in H(5)>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(x);[127X[104X
+    [4X[28X[.1.....][128X[104X
+    [4X[25Xgap>[125X [27XUnderlyingObject(x);[127X[104X
+    [4X[28X<cvec over GF(5,1) of length 7>[128X[104X
+    [4X[25Xgap>[125X [27Xonx := Lines(x);[127X[104X
+    [4X[28X<shadow lines in H(5)>[128X[104X
+    [4X[25Xgap>[125X [27Xl := Random(onx);[127X[104X
+    [4X[28X<a line in H(5)>[128X[104X
+    [4X[25Xgap>[125X [27Xonl := Points(l);[127X[104X
+    [4X[28X<shadow points in H(5)>[128X[104X
+    [4X[25Xgap>[125X [27XList(onl, t -> DistanceBetweenElements(x,t));[127X[104X
+    [4X[28X[ 0, 2, 2, 2, 2, 2 ][128X[104X
+    [4X[25Xgap>[125X [27Xstabl := FiningStabiliser(g, l);[127X[104X
+    [4X[28X<projective collineation group of size 1500000 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xgl := Action(stabl, onl);[127X[104X
+    [4X[28XGroup([ (1,6,5,4,3), (1,4,3,6), (1,5,4,3,6,2) ])[128X[104X
+    [4X[25Xgap>[125X [27XStructureDescription(gl);[127X[104X
+    [4X[28X"S5"[128X[104X
+    [4X[25Xgap>[125X [27XTransitivity(gl);[127X[104X
+    [4X[28X3[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.5-2 [33X[0;0YAn (apartment of) a building of type [22XE_6[122X[101X[1X[133X[101X
+  
+  [33X[0;0YThis  example  shows  the  constructions  of  an  incidence  geometry  whose
+  automorphism  group is an exceptional group of type [22XE_6[122X. The construction is
+  done as a coset geometry. This example also illustrates how to get a diagram
+  of such a coset geometry.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XL := SimpleLieAlgebra("E",6,Rationals);[127X[104X
+    [4X[28X<Lie algebra of dimension 78 over Rationals>[128X[104X
+    [4X[25Xgap>[125X [27Xrs := RootSystem(L);[127X[104X
+    [4X[28X<root system of rank 6>[128X[104X
+    [4X[25Xgap>[125X [27Xw := WeylGroup(rs);[127X[104X
+    [4X[28X<matrix group with 6 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xgens := GeneratorsOfGroup(w);;[127X[104X
+    [4X[25Xgap>[125X [27Xpabs := List(gens, g -> Group(Difference(gens, [g])));[127X[104X
+    [4X[28X[ <matrix group with 5 generators>, <matrix group with 5 generators>, [128X[104X
+    [4X[28X  <matrix group with 5 generators>, <matrix group with 5 generators>, [128X[104X
+    [4X[28X  <matrix group with 5 generators>, <matrix group with 5 generators> ][128X[104X
+    [4X[25Xgap>[125X [27Xg := Group(gens);[127X[104X
+    [4X[28X<matrix group with 6 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xcg := CosetGeometry(g,pabs);;[127X[104X
+    [4X[25Xgap>[125X [27Xdiag := DiagramOfGeometry( cg );;[127X[104X
+    [4X[28X#I Using NiceMonomorphism...[128X[104X
+    [4X[28X#I Using NiceMonomorphism...[128X[104X
+    [4X[28X#I Using NiceMonomorphism...[128X[104X
+    [4X[28X#I Using NiceMonomorphism...[128X[104X
+    [4X[28X#I Using NiceMonomorphism...[128X[104X
+    [4X[28X#I Using NiceMonomorphism...[128X[104X
+    [4X[28X#I Using NiceMonomorphism...[128X[104X
+    [4X[28X#I Using NiceMonomorphism...[128X[104X
+    [4X[28X#I Using NiceMonomorphism...[128X[104X
+    [4X[28X#I Using NiceMonomorphism...[128X[104X
+    [4X[28X#I Using NiceMonomorphism...[128X[104X
+    [4X[28X#I Using NiceMonomorphism...[128X[104X
+    [4X[28X#I Using NiceMonomorphism...[128X[104X
+    [4X[28X#I Using NiceMonomorphism...[128X[104X
+    [4X[28X#I Using NiceMonomorphism...[128X[104X
+    [4X[25Xgap>[125X [27XDrawDiagram(diag, "E6");[127X[104X
+    [4X[25Xgap>[125X [27X#Exec("open E6.ps");[127X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.5-3 [33X[0;0YA rank 4 geometry for [22XPSL(2,11)[122X[101X[1X[133X[101X
+  
+  [33X[0;0YHere  we look at a particular flag-transitive geometry constructed from four
+  subgroups  of  [22XPSL(2,11)[122X, and we construct the diagram for this geometry. To
+  view  this  diagram,  you  need to either use a postscript viewer or a dotty
+  viewer (such as GraphViz).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xg := PSL(2,11);[127X[104X
+    [4X[28XGroup([ (3,11,9,7,5)(4,12,10,8,6), (1,2,8)(3,7,9)(4,10,5)(6,12,11) ])[128X[104X
+    [4X[25Xgap>[125X [27Xg1 := Group([ (1,2,3)(4,8,12)(5,10,9)(6,11,7), (1,2)(3,4)(5,12)(6,11)(7,10)(8,9) ]);[127X[104X
+    [4X[28XGroup([ (1,2,3)(4,8,12)(5,10,9)(6,11,7), (1,2)(3,4)(5,12)(6,11)(7,10)(8,9) ])[128X[104X
+    [4X[25Xgap>[125X [27Xg2 := Group([ (1,2,7)(3,9,4)(5,11,10)(6,8,12), (1,2)(3,4)(5,12)(6,11)(7,10)(8,9) ]);[127X[104X
+    [4X[28XGroup([ (1,2,7)(3,9,4)(5,11,10)(6,8,12), (1,2)(3,4)(5,12)(6,11)(7,10)(8,9) ])[128X[104X
+    [4X[25Xgap>[125X [27Xg3 := Group([ (1,2,11)(3,8,7)(4,9,5)(6,10,12), (1,2)(3,12)(4,11)(5,10)(6,9)(7,8) ]);[127X[104X
+    [4X[28XGroup([ (1,2,11)(3,8,7)(4,9,5)(6,10,12), (1,2)(3,12)(4,11)(5,10)(6,9)(7,8) ])[128X[104X
+    [4X[25Xgap>[125X [27Xg4 := Group([ (1,2,11)(3,8,7)(4,9,5)(6,10,12), (1,2)(3,10)(4,9)(5,8)(6,7)(11,12) ]);[127X[104X
+    [4X[28XGroup([ (1,2,11)(3,8,7)(4,9,5)(6,10,12), (1,2)(3,10)(4,9)(5,8)(6,7)(11,12) ])[128X[104X
+    [4X[25Xgap>[125X [27Xcg := CosetGeometry(g, [g1,g2,g3,g4]);[127X[104X
+    [4X[28XCosetGeometry( Group( [ ( 3,11, 9, 7, 5)( 4,12,10, 8, 6), [128X[104X
+    [4X[28X  ( 1, 2, 8)( 3, 7, 9)( 4,10, 5)( 6,12,11) ] ) )[128X[104X
+    [4X[25Xgap>[125X [27XSetName(cg, "Gamma");[127X[104X
+    [4X[25Xgap>[125X [27XParabolicSubgroups(cg);[127X[104X
+    [4X[28X[ Group([ (1,2,3)(4,8,12)(5,10,9)(6,11,7), (1,2)(3,4)(5,12)(6,11)(7,10)[128X[104X
+    [4X[28X  (8,9) ]), Group([ (1,2,7)(3,9,4)(5,11,10)(6,8,12), (1,2)(3,4)(5,12)(6,11)[128X[104X
+    [4X[28X  (7,10)(8,9) ]), Group([ (1,2,11)(3,8,7)(4,9,5)(6,10,12), (1,2)(3,12)(4,11)[128X[104X
+    [4X[28X  (5,10)(6,9)(7,8) ]), Group([ (1,2,11)(3,8,7)(4,9,5)(6,10,12), (1,2)(3,10)[128X[104X
+    [4X[28X  (4,9)(5,8)(6,7)(11,12) ]) ][128X[104X
+    [4X[25Xgap>[125X [27XBorelSubgroup(cg);[127X[104X
+    [4X[28XGroup(())[128X[104X
+    [4X[25Xgap>[125X [27XAmbientGroup(cg);[127X[104X
+    [4X[28XGroup([ (3,11,9,7,5)(4,12,10,8,6), (1,2,8)(3,7,9)(4,10,5)(6,12,11) ])[128X[104X
+    [4X[25Xgap>[125X [27Xtype2 := ElementsOfIncidenceStructure( cg, 2 );[127X[104X
+    [4X[28X<elements of type 2 of Gamma>[128X[104X
+    [4X[25Xgap>[125X [27XIsFlagTransitiveGeometry( cg );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XDrawDiagram( DiagramOfGeometry(cg), "PSL211");[127X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe output of this example uses [10Xdotty[110X which is a sophisticated graph drawing
+  program.  We  also  provide  [11XDrawDiagramWithNeato[111X  to  make  a  diagram with
+  straight  lines,  using  [10Xneato[110X.  Here is what the output looks like with the
+  standard [11XDrawDiagram[111X command:[133X
+  
+  
+  [1X2.5-4 [33X[0;0YThe Ree-Tits octagon of order [22X[2,4][122X[101X[1X as coset geometry[133X[101X
+  
+  [33X[0;0YIn  this example we construct the Ree-Tits octagon of order [22X[2,4][122X as a coset
+  geometry. From the computation of the so-called rank 2 parameters, it can be
+  observed  already  that  the  constructed  geometry  must  be  a generalised
+  octagon.  Then  the  points and lines are computed explicitely, and together
+  with the incidence and the available group as a subgroup of the collineation
+  group, a generalised octagon is constructed.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XLoadPackage( "AtlasRep" );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xtitsgroup:=AtlasGroup("2F4(2)'");[127X[104X
+    [4X[28X<permutation group of size 17971200 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xg1:=AtlasSubgroup(titsgroup,3);[127X[104X
+    [4X[28X<permutation group of size 10240 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xg2:=AtlasSubgroup(titsgroup,5);[127X[104X
+    [4X[28X<permutation group of size 6144 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xconj:=ConjugacyClassSubgroups(titsgroup,g1);;[127X[104X
+    [4X[25Xgap>[125X [27X# Now look for the conjugate of g1 with maximal intersection[127X[104X
+    [4X[25Xgap>[125X [27Xg1:=First(conj, sg -> Size(Intersection(sg,g2))=2048);[127X[104X
+    [4X[28X<permutation group of size 10240 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xcg:=CosetGeometry(titsgroup,[g1,g2]);;[127X[104X
+    [4X[25Xgap>[125X [27XRank2Parameters(cg);[127X[104X
+    [4X[28X[ [ 8, 8, 8 ], [ 2, 1755 ], [ 4, 2925 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xpts := Set(ElementsOfIncidenceStructure(cg,1));;[127X[104X
+    [4X[25Xgap>[125X [27Xlines := Set(ElementsOfIncidenceStructure(cg,2));;[127X[104X
+    [4X[25Xgap>[125X [27Xgp := GeneralisedPolygonByElements(pts,lines,\*,titsgroup,OnCosetGeometryElement);[127X[104X
+    [4X[28X<generalised octagon of order [ 2, 4 ]>[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.6 [33X[0;0YElation generalised quadrangles[133X[101X
+  
+  [33X[0;0YIn  this  section,  we  construct a classical elation generalised quadrangle
+  from a q-clan, and we see that the associated BLT-set is a conic.[133X
+  
+  
+  [1X2.6-1 [33X[0;0YThe classical q-clan[133X[101X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf := GF(3);[127X[104X
+    [4X[28XGF(3)[128X[104X
+    [4X[25Xgap>[125X [27Xid := IdentityMat(2, f);;[127X[104X
+    [4X[25Xgap>[125X [27Xclan := List( f, t -> t*id );;[127X[104X
+    [4X[25Xgap>[125X [27XIsqClan( clan, f );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xclan := qClan(clan, f);[127X[104X
+    [4X[28X<q-clan over GF(3)>[128X[104X
+    [4X[25Xgap>[125X [27Xegq := EGQByqClan( clan );[127X[104X
+    [4X[28X#I  Computed Kantor family. Now computing EGQ...[128X[104X
+    [4X[28X<EGQ of order [ 9, 3 ] and basepoint 0>[128X[104X
+    [4X[25Xgap>[125X [27Xelations := ElationGroup( egq );[127X[104X
+    [4X[28X<matrix group of size 243 with 8 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xpoints := Points( egq );[127X[104X
+    [4X[28X<points of <EGQ of order [ 9, 3 ] and basepoint 0>>[128X[104X
+    [4X[25Xgap>[125X [27Xp := Random(points);[127X[104X
+    [4X[28X<a point of class 2 of <EGQ of order [ 9, 3 ] and basepoint 0>>[128X[104X
+    [4X[25Xgap>[125X [27Xx := Random(elations);[127X[104X
+    [4X[28X[ [ Z(3)^0, 0*Z(3), 0*Z(3), Z(3)^0 ], [ 0*Z(3), Z(3)^0, 0*Z(3), Z(3)^0 ], [128X[104X
+    [4X[28X  [ 0*Z(3), 0*Z(3), Z(3)^0, Z(3)^0 ], [ 0*Z(3), 0*Z(3), 0*Z(3), Z(3)^0 ] ][128X[104X
+    [4X[25Xgap>[125X [27XOnKantorFamily(p,x);[127X[104X
+    [4X[28X<a point of class 2 of <EGQ of order [ 9, 3 ] and basepoint 0>>[128X[104X
+    [4X[25Xgap>[125X [27Xorbs := Orbits( elations, points, OnKantorFamily);;[127X[104X
+    [4X[25Xgap>[125X [27XCollected(List( orbs, Size ));[127X[104X
+    [4X[28X[ [ 1, 1 ], [ 9, 4 ], [ 243, 1 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xblt := BLTSetByqClan( clan );[127X[104X
+    [4X[28X[ <a point in Q(4, 3): -x_1*x_5-x_2*x_4+x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 3): -x_1*x_5-x_2*x_4+x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 3): -x_1*x_5-x_2*x_4+x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 3): -x_1*x_5-x_2*x_4+x_3^2=0> ][128X[104X
+    [4X[25Xgap>[125X [27Xq4q := AmbientGeometry( blt[1] );[127X[104X
+    [4X[28XQ(4, 3): -x_1*x_5-x_2*x_4+x_3^2=0[128X[104X
+    [4X[25Xgap>[125X [27Xspan := Span( blt );[127X[104X
+    [4X[28X<a plane in ProjectiveSpace(4, 3)>[128X[104X
+    [4X[25Xgap>[125X [27XProjectiveDimension( span ); [127X[104X
+    [4X[28X2[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.6-2   [33X[0;0YTwo  ways  to  construct  a  flock  generalised  quadrangle  from  a[101X
+  [1XKantor-Knuth semifield q-clan[133X[101X
+  
+  [33X[0;0YWe  will  construct  an  elation  generalised  quadrangle  directly from the
+  [13XKantor-Knuth  semifield  q-clan[113X  and also via its corresponding BLT-set. The
+  q-clan in question here are the set of matrices [22XC_t[122X of the form where t runs
+  over  the  elements of [22XGF(q)[122X, [22Xq[122X is odd and not prime, [22Xn[122X is a fixed nonsquare
+  and [22Xϕ[122X is a nontrivial automorphism of [22XGF(q)[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xq := 9;[127X[104X
+    [4X[28X9[128X[104X
+    [4X[25Xgap>[125X [27Xf := GF(q);[127X[104X
+    [4X[28XGF(3^2)[128X[104X
+    [4X[25Xgap>[125X [27Xsquares := AsList(Group(Z(q)^2));[127X[104X
+    [4X[28X[ Z(3)^0, Z(3^2)^6, Z(3), Z(3^2)^2 ][128X[104X
+    [4X[25Xgap>[125X [27Xn := First(GF(q), x -> not IsZero(x) and not x in squares);[127X[104X
+    [4X[28XZ(3^2)[128X[104X
+    [4X[25Xgap>[125X [27Xsigma := FrobeniusAutomorphism( f );[127X[104X
+    [4X[28XFrobeniusAutomorphism( GF(3^2) )[128X[104X
+    [4X[25Xgap>[125X [27Xzero := Zero(f);[127X[104X
+    [4X[28X0*Z(3)[128X[104X
+    [4X[25Xgap>[125X [27Xqclan := List(GF(q), t -> [[t, zero], [zero,-n * t^sigma]] );[127X[104X
+    [4X[28X[ [ [ 0*Z(3), 0*Z(3) ], [ 0*Z(3), 0*Z(3) ] ], [128X[104X
+    [4X[28X  [ [ Z(3^2), 0*Z(3) ], [ 0*Z(3), Z(3)^0 ] ], [128X[104X
+    [4X[28X  [ [ Z(3^2)^5, 0*Z(3) ], [ 0*Z(3), Z(3) ] ], [128X[104X
+    [4X[28X  [ [ Z(3)^0, 0*Z(3) ], [ 0*Z(3), Z(3^2)^5 ] ], [128X[104X
+    [4X[28X  [ [ Z(3^2)^2, 0*Z(3) ], [ 0*Z(3), Z(3^2)^3 ] ], [128X[104X
+    [4X[28X  [ [ Z(3^2)^3, 0*Z(3) ], [ 0*Z(3), Z(3^2)^6 ] ], [128X[104X
+    [4X[28X  [ [ Z(3), 0*Z(3) ], [ 0*Z(3), Z(3^2) ] ], [128X[104X
+    [4X[28X  [ [ Z(3^2)^7, 0*Z(3) ], [ 0*Z(3), Z(3^2)^2 ] ], [128X[104X
+    [4X[28X  [ [ Z(3^2)^6, 0*Z(3) ], [ 0*Z(3), Z(3^2)^7 ] ] ][128X[104X
+    [4X[25Xgap>[125X [27XIsqClan( qclan, f );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xqclan := qClan(qclan , f);[127X[104X
+    [4X[28X<q-clan over GF(3^2)>[128X[104X
+    [4X[25Xgap>[125X [27Xegq1 := EGQByqClan( qclan);  [127X[104X
+    [4X[28X#I  Computed Kantor family. Now computing EGQ...[128X[104X
+    [4X[28X<EGQ of order [ 81, 9 ] and basepoint 0>[128X[104X
+    [4X[25Xgap>[125X [27Xblt := BLTSetByqClan( qclan );[127X[104X
+    [4X[28X[ <a point in Q(4, 9): -x_1*x_5-x_2*x_4+Z(3^2)^5*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 9): -x_1*x_5-x_2*x_4+Z(3^2)^5*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 9): -x_1*x_5-x_2*x_4+Z(3^2)^5*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 9): -x_1*x_5-x_2*x_4+Z(3^2)^5*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 9): -x_1*x_5-x_2*x_4+Z(3^2)^5*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 9): -x_1*x_5-x_2*x_4+Z(3^2)^5*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 9): -x_1*x_5-x_2*x_4+Z(3^2)^5*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 9): -x_1*x_5-x_2*x_4+Z(3^2)^5*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 9): -x_1*x_5-x_2*x_4+Z(3^2)^5*x_3^2=0>, [128X[104X
+    [4X[28X  <a point in Q(4, 9): -x_1*x_5-x_2*x_4+Z(3^2)^5*x_3^2=0> ][128X[104X
+    [4X[25Xgap>[125X [27Xegq2 := EGQByBLTSet( blt );[127X[104X
+    [4X[28X#I  Now embedding dual BLT-set into W(5,q)...[128X[104X
+    [4X[28X#I  Computing elation group...[128X[104X
+    [4X[28X<EGQ of order [ 81, 9 ] and basepoint in W(5, 9 ) >[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.7 [33X[0;0YAlgebraic varieties[133X[101X
+  
+  
+  [1X2.7-1 [33X[0;0YA projective variety[133X[101X
+  
+  [33X[0;0YIn this example we demonstrate the construction of projective varieties.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xpg1 := PG(1, 7);[127X[104X
+    [4X[28XProjectiveSpace(1, 7)[128X[104X
+    [4X[25Xgap>[125X [27Xpg3 := PG(3, 7);[127X[104X
+    [4X[28XProjectiveSpace(3, 7)[128X[104X
+    [4X[25Xgap>[125X [27Xpoints := Points(pg1);[127X[104X
+    [4X[28X<points of ProjectiveSpace(1, 7)>[128X[104X
+    [4X[25Xgap>[125X [27Xcoords := List(points, Coordinates);[127X[104X
+    [4X[28X[ [ Z(7)^0, 0*Z(7) ], [ Z(7)^0, Z(7)^0 ], [ Z(7)^0, Z(7) ], [128X[104X
+    [4X[28X  [ Z(7)^0, Z(7)^2 ], [ Z(7)^0, Z(7)^3 ], [ Z(7)^0, Z(7)^4 ], [128X[104X
+    [4X[28X  [ Z(7)^0, Z(7)^5 ], [ 0*Z(7), Z(7)^0 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xcurve := List(coords, t -> VectorSpaceToElement(pg3, [ t[1]^3, t[1]^2 * t[2], t[1] * t[2]^2, t[2]^3  ] ));;[127X[104X
+    [4X[25Xgap>[125X [27Xpgl := ProjectivityGroup( pg3 );[127X[104X
+    [4X[28XThe FinInG projectivity group PGL(4,7)[128X[104X
+    [4X[25Xgap>[125X [27Xstabcurve := FiningSetwiseStabiliser( pgl, curve );[127X[104X
+    [4X[28X#I  Computing adjusted stabilizer chain...[128X[104X
+    [4X[28X<projective collineation group with 6 generators>[128X[104X
+    [4X[25Xgap>[125X [27XStructureDescription( stabcurve );[127X[104X
+    [4X[28X"PSL(3,2) : C2"[128X[104X
+    [4X[25Xgap>[125X [27XSpan( curve );[127X[104X
+    [4X[28XProjectiveSpace(3, 7)[128X[104X
+    [4X[25Xgap>[125X [27Xpg3lines := Lines( pg3 );[127X[104X
+    [4X[28X<lines of ProjectiveSpace(3, 7)>[128X[104X
+    [4X[25Xgap>[125X [27Xorbits := FiningOrbits(stabcurve, pg3lines);[127X[104X
+    [4X[28X2%..3%..9%..15%..16%..21%..22%..28%..34%..40%..46%..52%..64%..75%..81%..84%..88%..94%..95%..99%..100%..[ <closed orbit, 8 points>, <closed orbit, 56 points>, [128X[104X
+    [4X[28X  <closed orbit, 28 points>, <closed orbit, 168 points>, [128X[104X
+    [4X[28X  <closed orbit, 168 points>, <closed orbit, 28 points>, [128X[104X
+    [4X[28X  <closed orbit, 168 points>, <closed orbit, 28 points>, [128X[104X
+    [4X[28X  <closed orbit, 168 points>, <closed orbit, 168 points>, [128X[104X
+    [4X[28X  <closed orbit, 168 points>, <closed orbit, 168 points>, [128X[104X
+    [4X[28X  <closed orbit, 168 points>, <closed orbit, 336 points>, [128X[104X
+    [4X[28X  <closed orbit, 336 points>, <closed orbit, 168 points>, [128X[104X
+    [4X[28X  <closed orbit, 84 points>, <closed orbit, 112 points>, [128X[104X
+    [4X[28X  <closed orbit, 168 points>, <closed orbit, 21 points>, [128X[104X
+    [4X[28X  <closed orbit, 112 points>, <closed orbit, 21 points> ][128X[104X
+    [4X[25Xgap>[125X [27XList(orbits, Size);[127X[104X
+    [4X[28X[ 8, 56, 28, 168, 168, 28, 168, 28, 168, 168, 168, 168, 168, 336, 336, 168, [128X[104X
+    [4X[28X  84, 112, 168, 21, 112, 21 ][128X[104X
+    [4X[25Xgap>[125X [27Xpg3points := Points( pg3 );[127X[104X
+    [4X[28X<points of ProjectiveSpace(3, 7)>[128X[104X
+    [4X[25Xgap>[125X [27Xorbits := FiningOrbits(stabcurve, pg3points);[127X[104X
+    [4X[28X2%..16%..30%..72%..100%..[ <closed orbit, 8 points>, <closed orbit, 56 points>, [128X[104X
+    [4X[28X  <closed orbit, 56 points>, <closed orbit, 168 points>, [128X[104X
+    [4X[28X  <closed orbit, 112 points> ][128X[104X
+    [4X[25Xgap>[125X [27XList(orbits, Size);[127X[104X
+    [4X[28X[ 8, 56, 56, 168, 112 ][128X[104X
+    [4X[25Xgap>[125X [27Xreps := List(orbits, Representative);[127X[104X
+    [4X[28X[ <a point in ProjectiveSpace(3, 7)>, <a point in ProjectiveSpace(3, 7)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(3, 7)>, <a point in ProjectiveSpace(3, 7)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(3, 7)> ][128X[104X
+    [4X[25Xgap>[125X [27Xx := reps[2];[127X[104X
+    [4X[28X<a point in ProjectiveSpace(3, 7)>[128X[104X
+    [4X[25Xgap>[125X [27Xproj := NaturalProjectionBySubspace(pg3, x);[127X[104X
+    [4X[28X<geometry morphism from <All elements of ProjectiveSpace(3, [128X[104X
+    [4X[28X7)> to <All elements of ProjectiveSpace(2, 7)>>[128X[104X
+    [4X[25Xgap>[125X [27Xcurveminusx := Difference(curve, [x]);[127X[104X
+    [4X[28X[ <a point in ProjectiveSpace(3, 7)>, <a point in ProjectiveSpace(3, 7)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(3, 7)>, <a point in ProjectiveSpace(3, 7)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(3, 7)>, <a point in ProjectiveSpace(3, 7)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(3, 7)>, <a point in ProjectiveSpace(3, 7)> ][128X[104X
+    [4X[25Xgap>[125X [27Xcuspidal := ImagesSet(proj, List(curveminusx, t -> Span(x, t)));[127X[104X
+    [4X[28X[ <a point in ProjectiveSpace(2, 7)>, <a point in ProjectiveSpace(2, 7)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(2, 7)>, <a point in ProjectiveSpace(2, 7)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(2, 7)>, <a point in ProjectiveSpace(2, 7)>, [128X[104X
+    [4X[28X  <a point in ProjectiveSpace(2, 7)>, <a point in ProjectiveSpace(2, 7)> ][128X[104X
+    [4X[25Xgap>[125X [27Xcoords := List(cuspidal, Coordinates);[127X[104X
+    [4X[28X[ [ Z(7)^0, 0*Z(7), 0*Z(7) ], [ 0*Z(7), 0*Z(7), Z(7)^0 ], [128X[104X
+    [4X[28X  [ Z(7)^0, Z(7)^0, Z(7)^0 ], [ Z(7)^0, Z(7)^2, Z(7)^0 ], [128X[104X
+    [4X[28X  [ Z(7)^0, Z(7)^4, Z(7)^0 ], [ Z(7)^0, Z(7)^0, Z(7)^3 ], [128X[104X
+    [4X[28X  [ Z(7)^0, Z(7)^2, Z(7)^3 ], [ Z(7)^0, Z(7)^4, Z(7)^3 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xr := PolynomialRing(GF(7), 3);[127X[104X
+    [4X[28XGF(7)[x_1,x_2,x_3][128X[104X
+    [4X[25Xgap>[125X [27Xindets := IndeterminatesOfPolynomialRing(r);[127X[104X
+    [4X[28X[ x_1, x_2, x_3 ][128X[104X
+    [4X[25Xgap>[125X [27Xshapes := Filtered(Tuples([0,1,2,3], 3), t -> Sum(t) = 3);[127X[104X
+    [4X[28X[ [ 0, 0, 3 ], [ 0, 1, 2 ], [ 0, 2, 1 ], [ 0, 3, 0 ], [ 1, 0, 2 ], [128X[104X
+    [4X[28X  [ 1, 1, 1 ], [ 1, 2, 0 ], [ 2, 0, 1 ], [ 2, 1, 0 ], [ 3, 0, 0 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xmat := List(coords, t -> List(shapes, u -> Product([1,2,3], i -> t[i]^u[i])));[127X[104X
+    [4X[28X[ [ 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), [128X[104X
+    [4X[28X      Z(7)^0 ], [128X[104X
+    [4X[28X  [ Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), [128X[104X
+    [4X[28X      0*Z(7) ], [128X[104X
+    [4X[28X  [ Z(7)^0, Z(7)^0, Z(7)^0, Z(7)^0, Z(7)^0, Z(7)^0, Z(7)^0, Z(7)^0, Z(7)^0, [128X[104X
+    [4X[28X      Z(7)^0 ], [128X[104X
+    [4X[28X  [ Z(7)^0, Z(7)^2, Z(7)^4, Z(7)^0, Z(7)^0, Z(7)^2, Z(7)^4, Z(7)^0, Z(7)^2, [128X[104X
+    [4X[28X      Z(7)^0 ], [128X[104X
+    [4X[28X  [ Z(7)^0, Z(7)^4, Z(7)^2, Z(7)^0, Z(7)^0, Z(7)^4, Z(7)^2, Z(7)^0, Z(7)^4, [128X[104X
+    [4X[28X      Z(7)^0 ], [128X[104X
+    [4X[28X  [ Z(7)^3, Z(7)^0, Z(7)^3, Z(7)^0, Z(7)^0, Z(7)^3, Z(7)^0, Z(7)^3, Z(7)^0, [128X[104X
+    [4X[28X      Z(7)^0 ], [128X[104X
+    [4X[28X  [ Z(7)^3, Z(7)^2, Z(7), Z(7)^0, Z(7)^0, Z(7)^5, Z(7)^4, Z(7)^3, Z(7)^2, [128X[104X
+    [4X[28X      Z(7)^0 ], [128X[104X
+    [4X[28X  [ Z(7)^3, Z(7)^4, Z(7)^5, Z(7)^0, Z(7)^0, Z(7), Z(7)^2, Z(7)^3, Z(7)^4, [128X[104X
+    [4X[28X      Z(7)^0 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xmat2 := ShallowCopy(mat);[127X[104X
+    [4X[28X[ [ 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), [128X[104X
+    [4X[28X      Z(7)^0 ], [128X[104X
+    [4X[28X  [ Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), [128X[104X
+    [4X[28X      0*Z(7) ], [128X[104X
+    [4X[28X  [ Z(7)^0, Z(7)^0, Z(7)^0, Z(7)^0, Z(7)^0, Z(7)^0, Z(7)^0, Z(7)^0, Z(7)^0, [128X[104X
+    [4X[28X      Z(7)^0 ], [128X[104X
+    [4X[28X  [ Z(7)^0, Z(7)^2, Z(7)^4, Z(7)^0, Z(7)^0, Z(7)^2, Z(7)^4, Z(7)^0, Z(7)^2, [128X[104X
+    [4X[28X      Z(7)^0 ], [128X[104X
+    [4X[28X  [ Z(7)^0, Z(7)^4, Z(7)^2, Z(7)^0, Z(7)^0, Z(7)^4, Z(7)^2, Z(7)^0, Z(7)^4, [128X[104X
+    [4X[28X      Z(7)^0 ], [128X[104X
+    [4X[28X  [ Z(7)^3, Z(7)^0, Z(7)^3, Z(7)^0, Z(7)^0, Z(7)^3, Z(7)^0, Z(7)^3, Z(7)^0, [128X[104X
+    [4X[28X      Z(7)^0 ], [128X[104X
+    [4X[28X  [ Z(7)^3, Z(7)^2, Z(7), Z(7)^0, Z(7)^0, Z(7)^5, Z(7)^4, Z(7)^3, Z(7)^2, [128X[104X
+    [4X[28X      Z(7)^0 ], [128X[104X
+    [4X[28X  [ Z(7)^3, Z(7)^4, Z(7)^5, Z(7)^0, Z(7)^0, Z(7), Z(7)^2, Z(7)^3, Z(7)^4, [128X[104X
+    [4X[28X      Z(7)^0 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xsol := NullspaceMat(TransposedMat(mat2))[1];[127X[104X
+    [4X[28X[ 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^3, Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7),[128X[104X
+    [4X[28X   0*Z(7) ][128X[104X
+    [4X[25Xgap>[125X [27Xterms := List(shapes, u -> Product([1,2,3], i -> indets[i]^u[i]));[127X[104X
+    [4X[28X[ x_3^3, x_2*x_3^2, x_2^2*x_3, x_2^3, x_1*x_3^2, x_1*x_2*x_3, x_1*x_2^2, [128X[104X
+    [4X[28X  x_1^2*x_3, x_1^2*x_2, x_1^3 ][128X[104X
+    [4X[25Xgap>[125X [27Xpoly := terms * sol;[127X[104X
+    [4X[28Xx_1*x_3^2-x_2^3[128X[104X
+    [4X[25Xgap>[125X [27Xpg2 := AmbientGeometry(Range(proj));[127X[104X
+    [4X[28XProjectiveSpace(2, 7)[128X[104X
+    [4X[25Xgap>[125X [27Xvariety := ProjectiveVariety(pg2, [poly]);[127X[104X
+    [4X[28XProjective Variety in ProjectiveSpace(2, 7)[128X[104X
+    [4X[25Xgap>[125X [27Xpoints := Points(variety);[127X[104X
+    [4X[28X<points of Projective Variety in ProjectiveSpace(2, 7)>[128X[104X
+    [4X[25Xgap>[125X [27XSize(points);[127X[104X
+    [4X[28X8[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  

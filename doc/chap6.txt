@@ -1,0 +1,466 @@
+  
+  [1X6 [33X[0;0YPolarities of Projective Spaces[133X[101X
+  
+  [33X[0;0YA  [13Xpolarity[113X  of  a incidence structure is an incidence reversing, bijective,
+  and  involutory  map  on the elements of the incidence structure. It is well
+  known  that  every  polarity  of  a  projective  space is just an involutory
+  correlation  of  the projective space. The construction of correlations of a
+  projective  space  is  described  in  Chapter [14X5[114X. In this chapter we describe
+  methods  and  operations dealing with the construction and use of polarities
+  of projective spaces in [5XFinInG[105X.[133X
+  
+  
+  [1X6.1 [33X[0;0YCreating polarities of projective spaces[133X[101X
+  
+  [33X[0;0YSince  polarities of a projective space necessarily have an involutory field
+  automorphism  as  companion  automorphism  and  the  standard duality of the
+  projective  space  as the companion projective space isomorphism, a polarity
+  of a projective space is determined completely by a suitable matrix [22XA[122X. Every
+  polarity  of  a  projective  space [22XPG(n,q)[122X is listed in the following table,
+  including the conditions on the matrix [22XA[122X.[133X
+  
+      ┌────────────┬─────────┬───────────────────────┐
+      │            │ [22Xq[122X odd   │ [22Xq[122X even                │ 
+      ├────────────┼─────────┼───────────────────────┤
+      │ hermitian  │ [22XA^θ=A^T[122X │ [22XA^θ=A^T[122X               │ 
+      │ symplectic │ [22XA^T=-A[122X  │ [22XA^T=A[122X, all [22Xa_ii=0[122X     │ 
+      │ orthogonal │ [22XA^T=A[122X   │                       │ 
+      │ pseudo     │         │ [22XA^T=A[122X, not all [22Xa_ii=0[122X │ 
+      └────────────┴─────────┴───────────────────────┘
+  
+       [1XTable:[101X polarities of a projective space
+  
+  
+  [33X[0;0YA  hermitian  polarity of the projective space [22XPG(n,q)[122X exists if and only if
+  the field [22XGF(q)[122X admits an involutory field automorphism.[133X
+  
+  [33X[0;0YIt  is  well  known  that  there  is  a correspondence between polarities of
+  projective  spaces  and  non-degenerate sesquilinear forms on the underlying
+  vector  space.  Consider a sesquilinear form [22Xf[122X on the vector space [22XV(n+1,q)[122X.
+  Then  [22Xf[122X  induces  a map on the elements of [22XPG(n,q)[122X as follows: every element
+  with underlying subspace [22Xα[122X is mapped to the element with underlying subspace
+  [22Xα^perp[122X  ,  i.e. the subspace of [22XV(n+1,q)[122X orthogonal to [22Xα[122X with respect to the
+  form [22Xf[122X. It is clear that this induced map is a polarity of [22XPG(n,q)[122X. Also the
+  converse  is  true,  with any polarity of [22XPG(n,q)[122X corresponds a sesquilinear
+  form  on [22XV(n+1,q)[122X. The above classification of polarities of [22XPG(n,q)[122X follows
+  from  the  classification  of  sesquilinear  forms  on  [22XV(n+1,q)[122X.  For  more
+  information,   we   refer   to  [HT91]  and  [KL90].  We  mention  that  the
+  implementation  of the action of correlations on projective points (see [14X5.8[114X)
+  guarantees  that  a sesquilinear form with matrix [22XM[122X and field automorphism [22Xθ[122X
+  corresponds  to  a  polarity with matrix [22XM[122X and field automorphism [22Xθ[122X and vice
+  versa.[133X
+  
+  [33X[0;0YIn  [5XFinInG[105X,  polarities  of  projective  spaces  are  always  objects in the
+  category [10XIsPolarityOfProjectiveSpace[110X, which is a subcategory of the category
+  [10XIsProjGrpElWithFrobWithPSIsom[110X.[133X
+  
+  [1X6.1-1 PolarityOfProjectiveSpace[101X
+  
+  [33X[1;0Y[29X[2XPolarityOfProjectiveSpace[102X( [3Xmat[103X, [3Xf[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya polarity of a projective space[133X
+  
+  [33X[0;0YThe  underlying  correlation  of  the  projective space is constructed using
+  matrix  [3Xmat[103X,  field  [3Xf[103X,  the  identity mapping as field automorphism and the
+  standard  duality  of the projective space. It is checked whether the matrix
+  [3Xmat[103X satisfies the necessary conditions to induce a polarity.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat := [[0,1,0],[1,0,0],[0,0,1]]*Z(169)^0;[127X[104X
+    [4X[28X[ [ 0*Z(13), Z(13)^0, 0*Z(13) ], [ Z(13)^0, 0*Z(13), 0*Z(13) ], [128X[104X
+    [4X[28X  [ 0*Z(13), 0*Z(13), Z(13)^0 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xphi := PolarityOfProjectiveSpace(mat,GF(169));[127X[104X
+    [4X[28X<polarity of PG(2, GF(13^2)) >[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X6.1-2 PolarityOfProjectiveSpace[101X
+  
+  [33X[1;0Y[29X[2XPolarityOfProjectiveSpace[102X( [3Xmat[103X, [3Xfrob[103X, [3Xf[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XHermitianPolarityOfProjectiveSpace[102X( [3Xmat[103X, [3Xf[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya polarity of a projective space[133X
+  
+  [33X[0;0YThe  underlying  correlation  of  the  projective space is constructed using
+  matrix  [3Xmat[103X,  field  automorphism  [3Xfrob[103X,  [3Xf[103X  and the standard duality of the
+  projective  space.  It  is  checked  whether the [3Xmat[103X satisfies the necessary
+  conditions  to  induce  a  polarity,  and  whether  [3Xfrob[103X  is  a  non-trivial
+  involutory field automorphism. The second operation only needs the arguments
+  [3Xmat[103X  and [3Xf[103X to construct a hermitian polarity of a projective space, provided
+  the  field  [3Xf[103X  allows an involutory field automorphism and [3Xmat[103X satisfies the
+  necessary  conditions.  The latter is checked by constructing the underlying
+  hermitian form.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat := [[Z(11)^0,0*Z(11),0*Z(11)],[0*Z(11),0*Z(11),Z(11)],[127X[104X
+    [4X[25X>[125X [27X    [0*Z(11),Z(11),0*Z(11)]];[127X[104X
+    [4X[28X[ [ Z(11)^0, 0*Z(11), 0*Z(11) ], [ 0*Z(11), 0*Z(11), Z(11) ], [128X[104X
+    [4X[28X  [ 0*Z(11), Z(11), 0*Z(11) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xfrob := FrobeniusAutomorphism(GF(121));[127X[104X
+    [4X[28XFrobeniusAutomorphism( GF(11^2) )[128X[104X
+    [4X[25Xgap>[125X [27Xphi := PolarityOfProjectiveSpace(mat,frob,GF(121));[127X[104X
+    [4X[28X<polarity of PG(2, GF(11^2)) >[128X[104X
+    [4X[25Xgap>[125X [27Xpsi := HermitianPolarityOfProjectiveSpace(mat,GF(121));[127X[104X
+    [4X[28X<polarity of PG(2, GF(11^2)) >[128X[104X
+    [4X[25Xgap>[125X [27Xphi = psi;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X6.1-3 PolarityOfProjectiveSpace[101X
+  
+  [33X[1;0Y[29X[2XPolarityOfProjectiveSpace[102X( [3Xform[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya polarity of a projective space[133X
+  
+  [33X[0;0YThe  polarity  of the projective space is constructed using a non-degenerate
+  sesquilinear   form   [3Xform[103X.   It  is  checked  whether  the  given  form  is
+  non-degenerate.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat := [[0,1,0,0],[1,0,0,0],[0,0,0,1],[0,0,1,0]]*Z(16)^0;[127X[104X
+    [4X[28X[ [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ], [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ], [128X[104X
+    [4X[28X  [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ], [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xform := BilinearFormByMatrix(mat,GF(16));[127X[104X
+    [4X[28X< bilinear form >[128X[104X
+    [4X[25Xgap>[125X [27Xphi := PolarityOfProjectiveSpace(form);[127X[104X
+    [4X[28X<polarity of PG(3, GF(2^4)) >[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X6.1-4 PolarityOfProjectiveSpace[101X
+  
+  [33X[1;0Y[29X[2XPolarityOfProjectiveSpace[102X( [3Xps[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya polarity of a projective space[133X
+  
+  [33X[0;0YThe polarity of the projective space is constructed using the non-degenerate
+  sesquilinear  form  that  defines the polar space [3Xps[103X. When [3Xps[103X is a parabolic
+  quadric  in even characteristic, no polarity of the ambient projective space
+  can be associated to [3Xps[103X, and an error message is returned.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xps := HermitianPolarSpace(4,64);[127X[104X
+    [4X[28XH(4, 8^2)[128X[104X
+    [4X[25Xgap>[125X [27Xphi := PolarityOfProjectiveSpace(ps);[127X[104X
+    [4X[28X<polarity of PG(4, GF(2^6)) >[128X[104X
+    [4X[25Xgap>[125X [27Xps := ParabolicQuadric(6,8);[127X[104X
+    [4X[28XQ(6, 8)[128X[104X
+    [4X[25Xgap>[125X [27XPolarityOfProjectiveSpace(ps);[127X[104X
+    [4X[28XError, no polarity of the ambient projective space can be associated to <ps> called from[128X[104X
+    [4X[28X<function "unknown">( <arguments> )[128X[104X
+    [4X[28X called from read-eval loop at line 11 of *stdin*[128X[104X
+    [4X[28Xyou can 'quit;' to quit to outer loop, or[128X[104X
+    [4X[28Xyou can 'return;' to continue[128X[104X
+    [4X[26Xbrk>[126X [27Xquit;[127X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  
+  [1X6.2  [33X[0;0YOperations,  attributes  and  properties  for  polarities of projective[101X
+  [1Xspaces[133X[101X
+  
+  [1X6.2-1 SesquilinearForm[101X
+  
+  [33X[1;0Y[29X[2XSesquilinearForm[102X( [3Xphi[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya sesquilinear form[133X
+  
+  [33X[0;0YThe sesquilinear form corresponding to the given polarity [3Xphi[103X is returned.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat := [[0,-2,0,1],[2,0,3,0],[0,-3,0,1],[-1,0,-1,0]]*Z(19)^0;[127X[104X
+    [4X[28X[ [ 0*Z(19), Z(19)^10, 0*Z(19), Z(19)^0 ], [128X[104X
+    [4X[28X  [ Z(19), 0*Z(19), Z(19)^13, 0*Z(19) ], [128X[104X
+    [4X[28X  [ 0*Z(19), Z(19)^4, 0*Z(19), Z(19)^0 ], [128X[104X
+    [4X[28X  [ Z(19)^9, 0*Z(19), Z(19)^9, 0*Z(19) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xphi := PolarityOfProjectiveSpace(mat,GF(19));[127X[104X
+    [4X[28X<polarity of PG(3, GF(19)) >[128X[104X
+    [4X[25Xgap>[125X [27Xform := SesquilinearForm(phi);[127X[104X
+    [4X[28X< non-degenerate bilinear form >[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X6.2-2 BaseField[101X
+  
+  [33X[1;0Y[29X[2XBaseField[102X( [3Xphi[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya field[133X
+  
+  [33X[0;0YThe base field over which the polarity [3Xphi[103X was constructed.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat := [[1,0,0],[0,0,2],[0,2,0]]*Z(5)^0;[127X[104X
+    [4X[28X[ [ Z(5)^0, 0*Z(5), 0*Z(5) ], [ 0*Z(5), 0*Z(5), Z(5) ], [128X[104X
+    [4X[28X  [ 0*Z(5), Z(5), 0*Z(5) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xphi := PolarityOfProjectiveSpace(mat,GF(25));[127X[104X
+    [4X[28X<polarity of PG(2, GF(5^2)) >[128X[104X
+    [4X[25Xgap>[125X [27XBaseField(phi);[127X[104X
+    [4X[28XGF(5^2)[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X6.2-3 GramMatrix[101X
+  
+  [33X[1;0Y[29X[2XGramMatrix[102X( [3Xphi[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya matrix[133X
+  
+  [33X[0;0YThe Gram matrix of the polarity [3Xphi[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat := [[1,0,0],[0,0,3],[0,3,0]]*Z(11)^0;[127X[104X
+    [4X[28X[ [ Z(11)^0, 0*Z(11), 0*Z(11) ], [ 0*Z(11), 0*Z(11), Z(11)^8 ], [128X[104X
+    [4X[28X  [ 0*Z(11), Z(11)^8, 0*Z(11) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xphi := PolarityOfProjectiveSpace(mat,GF(11));[127X[104X
+    [4X[28X<polarity of PG(2, GF(11)) >[128X[104X
+    [4X[25Xgap>[125X [27XGramMatrix(phi);[127X[104X
+    [4X[28X<immutable cmat 3x3 over GF(11,1)>[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X6.2-4 CompanionAutomorphism[101X
+  
+  [33X[1;0Y[29X[2XCompanionAutomorphism[102X( [3Xphi[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya field automorphism[133X
+  
+  [33X[0;0YThe involutory field automorphism accompanying the polarity [3Xphi[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat := [[0,2,0,0],[2,0,0,0],[0,0,0,5],[0,0,5,0]]*Z(7)^0;[127X[104X
+    [4X[28X[ [ 0*Z(7), Z(7)^2, 0*Z(7), 0*Z(7) ], [ Z(7)^2, 0*Z(7), 0*Z(7), 0*Z(7) ], [128X[104X
+    [4X[28X  [ 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^5 ], [ 0*Z(7), 0*Z(7), Z(7)^5, 0*Z(7) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xphi := HermitianPolarityOfProjectiveSpace(mat,GF(49));[127X[104X
+    [4X[28X<polarity of PG(3, GF(7^2)) >[128X[104X
+    [4X[25Xgap>[125X [27XCompanionAutomorphism(phi);[127X[104X
+    [4X[28XFrobeniusAutomorphism( GF(7^2) )[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X6.2-5 IsHermitianPolarityOfProjectiveSpace[101X
+  
+  [33X[1;0Y[29X[2XIsHermitianPolarityOfProjectiveSpace[102X( [3Xphi[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Ytrue or false[133X
+  
+  [33X[0;0YThe  polarity  [3Xphi[103X is a hermitian polarity of a projective space if and only
+  if the underlying matrix is hermitian.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat := [[0,2,7,1],[2,0,3,0],[7,3,0,1],[1,0,1,0]]*Z(19)^0;[127X[104X
+    [4X[28X[ [ 0*Z(19), Z(19), Z(19)^6, Z(19)^0 ], [ Z(19), 0*Z(19), Z(19)^13, 0*Z(19) ],[128X[104X
+    [4X[28X  [ Z(19)^6, Z(19)^13, 0*Z(19), Z(19)^0 ], [128X[104X
+    [4X[28X  [ Z(19)^0, 0*Z(19), Z(19)^0, 0*Z(19) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xfrob := FrobeniusAutomorphism(GF(19^4));[127X[104X
+    [4X[28XFrobeniusAutomorphism( GF(19^4) )[128X[104X
+    [4X[25Xgap>[125X [27Xphi := PolarityOfProjectiveSpace(mat,frob^2,GF(19^4));[127X[104X
+    [4X[28X<polarity of PG(3, GF(19^4)) >[128X[104X
+    [4X[25Xgap>[125X [27XIsHermitianPolarityOfProjectiveSpace(phi);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X6.2-6 IsSymplecticPolarityOfProjectiveSpace[101X
+  
+  [33X[1;0Y[29X[2XIsSymplecticPolarityOfProjectiveSpace[102X( [3Xphi[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Ytrue or false[133X
+  
+  [33X[0;0YThe  polarity [3Xphi[103X is a symplectic polarity of a projective space if and only
+  if the underlying matrix is symplectic.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat := [[0,0,1,0],[0,0,0,1],[1,0,0,0],[0,1,0,0]]*Z(8)^0;[127X[104X
+    [4X[28X[ [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2) ], [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ], [128X[104X
+    [4X[28X  [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xphi := PolarityOfProjectiveSpace(mat,GF(8));[127X[104X
+    [4X[28X<polarity of PG(3, GF(2^3)) >[128X[104X
+    [4X[25Xgap>[125X [27XIsSymplecticPolarityOfProjectiveSpace(phi);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X6.2-7 IsOrthogonalPolarityOfProjectiveSpace[101X
+  
+  [33X[1;0Y[29X[2XIsOrthogonalPolarityOfProjectiveSpace[102X( [3Xphi[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Ytrue or false[133X
+  
+  [33X[0;0YThe polarity [3Xphi[103X is an orthogonal polarity of a projective space if and only
+  if the underlying matrix is symmetric and the characteristic of the field is
+  odd.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat := [[1,0,2,0],[0,2,0,1],[2,0,0,0],[0,1,0,0]]*Z(9)^0;[127X[104X
+    [4X[28X[ [ Z(3)^0, 0*Z(3), Z(3), 0*Z(3) ], [ 0*Z(3), Z(3), 0*Z(3), Z(3)^0 ], [128X[104X
+    [4X[28X  [ Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ], [ 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xphi := PolarityOfProjectiveSpace(mat,GF(9));[127X[104X
+    [4X[28X<polarity of PG(3, GF(3^2)) >[128X[104X
+    [4X[25Xgap>[125X [27XIsOrthogonalPolarityOfProjectiveSpace(phi);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X6.2-8 IsPseudoPolarityOfProjectiveSpace[101X
+  
+  [33X[1;0Y[29X[2XIsPseudoPolarityOfProjectiveSpace[102X( [3Xphi[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Ytrue or false[133X
+  
+  [33X[0;0YThe  polarity  [3Xphi[103X is a pseudo-polarity of a projective space if and only if
+  the  underlying  matrix  is symmetric, not all elements on the main diagonal
+  are zero and the characteristic of the field is even.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat := [[1,0,1,0],[0,1,0,1],[1,0,0,0],[0,1,0,0]]*Z(16)^0;[127X[104X
+    [4X[28X[ [ Z(2)^0, 0*Z(2), Z(2)^0, 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2), Z(2)^0 ], [128X[104X
+    [4X[28X  [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xphi := PolarityOfProjectiveSpace(mat,GF(16));[127X[104X
+    [4X[28X<polarity of PG(3, GF(2^4)) >[128X[104X
+    [4X[25Xgap>[125X [27XIsPseudoPolarityOfProjectiveSpace(phi);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  
+  [1X6.3  [33X[0;0YPolarities,  absolute  points,  totally  isotropic  elements and finite[101X
+  [1Xclassical polar spaces[133X[101X
+  
+  [33X[0;0YWe  already  mentioned  the  equivalence  between  polarities of [22XPG(n,q)[122X and
+  sesquilinear forms on [22XV(n+1,q)[122X, hence there is a relation between polarities
+  of  [22XPG(n,q)[122X  and  polar  spaces induced by sesquilinear forms. The following
+  concepts express these relations geometrically.[133X
+  
+  [33X[0;0YSuppose that [22Xϕ[122X is a polarity of [22XPG(n,q)[122X and that [22Xα[122X is an element of [22XPG(n,q)[122X.
+  We  call [22Xα[122X a [13Xtotally isotropic element[113X or an [13Xabsolute element[113X if and only if
+  [22Xα[122X  is incident with [22Xα^ϕ[122X . An absolute element that is a point is also called
+  an  [13Xabsolute  point[113X  or  an  [13Xisotropic point[113X. It is clear that an element of
+  [22XPG(n,q)[122X  is  absolute  if and only if the underlying vector space is totally
+  isotropic  with  respect to the sesquilinear form equivalent to [22Xϕ[122X. Hence the
+  absolute  elements  induce  a [13Xfinite classical polar space[113X, the same that is
+  induced  by  the  equivalent sesquilinear form. When [22Xϕ[122X is a pseudo-polarity,
+  the set of absolute elements are the elements of a hyperplane of [22XPG(n,q)[122X.[133X
+  
+  [33X[0;0YWe  restrict  our  introduction  to  finite  classical  polar spaces in this
+  section  to  the  following  examples.  Many aspects of these geometries are
+  extensively described in Chapter [14X7[114X.[133X
+  
+  [1X6.3-1 GeometryOfAbsolutePoints[101X
+  
+  [33X[1;0Y[29X[2XGeometryOfAbsolutePoints[102X( [3Xf[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya polar space or a hyperplane[133X
+  
+  [33X[0;0YWhen  [3Xf[103X  is  not  a  pseudo-polarity, this operation returns the polar space
+  induced  by  [3Xf[103X.  When  [3Xf[103X  is  a  pseudo-polarity, this operation returns the
+  hyperplane containing all absolute elements.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat := IdentityMat(4,GF(16));[127X[104X
+    [4X[28X[ [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ], [128X[104X
+    [4X[28X  [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2) ], [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xphi := HermitianPolarityOfProjectiveSpace(mat,GF(16));[127X[104X
+    [4X[28X<polarity of PG(3, GF(2^4)) >[128X[104X
+    [4X[25Xgap>[125X [27Xgeom := GeometryOfAbsolutePoints(phi);[127X[104X
+    [4X[28X<polar space in ProjectiveSpace(3,GF(2^4)): x_1^5+x_2^5+x_3^5+x_4^5=0 >[128X[104X
+    [4X[25Xgap>[125X [27Xmat := [[1,0,0,0],[0,0,1,1],[0,1,1,0],[0,1,0,0]]*Z(32)^0;[127X[104X
+    [4X[28X[ [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ], [ 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0 ], [128X[104X
+    [4X[28X  [ 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xphi := PolarityOfProjectiveSpace(mat,GF(32));[127X[104X
+    [4X[28X<polarity of PG(3, GF(2^5)) >[128X[104X
+    [4X[25Xgap>[125X [27Xgeom := GeometryOfAbsolutePoints(phi);[127X[104X
+    [4X[28X<a plane in ProjectiveSpace(3, 32)>[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X6.3-2 AbsolutePoints[101X
+  
+  [33X[1;0Y[29X[2XAbsolutePoints[102X( [3Xf[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya set of points[133X
+  
+  [33X[0;0YThis operation returns all points that are absolute with respect to [3Xf[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat := IdentityMat(4,GF(3));[127X[104X
+    [4X[28X[ [ Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3) ], [ 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3) ], [128X[104X
+    [4X[28X  [ 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3) ], [ 0*Z(3), 0*Z(3), 0*Z(3), Z(3)^0 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xphi := PolarityOfProjectiveSpace(mat,GF(3));[127X[104X
+    [4X[28X<polarity of PG(3, GF(3)) >[128X[104X
+    [4X[25Xgap>[125X [27Xpoints := AbsolutePoints(phi);[127X[104X
+    [4X[28X<points of Q+(3, 3): x_1^2+x_2^2+x_3^2+x_4^2=0>[128X[104X
+    [4X[25Xgap>[125X [27XList(points);[127X[104X
+    [4X[28X[ <a point in Q+(3, 3): x_1^2+x_2^2+x_3^2+x_4^2=0>, [128X[104X
+    [4X[28X  <a point in Q+(3, 3): x_1^2+x_2^2+x_3^2+x_4^2=0>, [128X[104X
+    [4X[28X  <a point in Q+(3, 3): x_1^2+x_2^2+x_3^2+x_4^2=0>, [128X[104X
+    [4X[28X  <a point in Q+(3, 3): x_1^2+x_2^2+x_3^2+x_4^2=0>, [128X[104X
+    [4X[28X  <a point in Q+(3, 3): x_1^2+x_2^2+x_3^2+x_4^2=0>, [128X[104X
+    [4X[28X  <a point in Q+(3, 3): x_1^2+x_2^2+x_3^2+x_4^2=0>, [128X[104X
+    [4X[28X  <a point in Q+(3, 3): x_1^2+x_2^2+x_3^2+x_4^2=0>, [128X[104X
+    [4X[28X  <a point in Q+(3, 3): x_1^2+x_2^2+x_3^2+x_4^2=0>, [128X[104X
+    [4X[28X  <a point in Q+(3, 3): x_1^2+x_2^2+x_3^2+x_4^2=0>, [128X[104X
+    [4X[28X  <a point in Q+(3, 3): x_1^2+x_2^2+x_3^2+x_4^2=0>, [128X[104X
+    [4X[28X  <a point in Q+(3, 3): x_1^2+x_2^2+x_3^2+x_4^2=0>, [128X[104X
+    [4X[28X  <a point in Q+(3, 3): x_1^2+x_2^2+x_3^2+x_4^2=0>, [128X[104X
+    [4X[28X  <a point in Q+(3, 3): x_1^2+x_2^2+x_3^2+x_4^2=0>, [128X[104X
+    [4X[28X  <a point in Q+(3, 3): x_1^2+x_2^2+x_3^2+x_4^2=0>, [128X[104X
+    [4X[28X  <a point in Q+(3, 3): x_1^2+x_2^2+x_3^2+x_4^2=0>, [128X[104X
+    [4X[28X  <a point in Q+(3, 3): x_1^2+x_2^2+x_3^2+x_4^2=0> ][128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  [1X6.3-3 PolarSpace[101X
+  
+  [33X[1;0Y[29X[2XPolarSpace[102X( [3Xf[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya polar space[133X
+  
+  [33X[0;0YWhen  [3Xf[103X  is  not  a  pseudo-polarity, this operation returns the polar space
+  induced by [3Xf[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat := [[1,0,0,0],[0,0,1,1],[0,1,1,0],[0,1,0,0]]*Z(32)^0;[127X[104X
+    [4X[28X[ [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ], [ 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0 ], [128X[104X
+    [4X[28X  [ 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xphi := PolarityOfProjectiveSpace(mat,GF(32));[127X[104X
+    [4X[28X<polarity of PG(3, GF(2^5)) >[128X[104X
+    [4X[25Xgap>[125X [27Xps := PolarSpace(phi);[127X[104X
+    [4X[28XError, <polarity> is pseudo and does not induce a polar space called from[128X[104X
+    [4X[28X<function "unknown">( <arguments> )[128X[104X
+    [4X[28X called from read-eval loop at line 10 of *stdin*[128X[104X
+    [4X[28Xyou can 'quit;' to quit to outer loop, or[128X[104X
+    [4X[28Xyou can 'return;' to continue[128X[104X
+    [4X[26Xbrk>[126X [27Xquit;[127X[104X
+    [4X[25Xgap>[125X [27Xmat := IdentityMat(5,GF(7));[127X[104X
+    [4X[28X[ [ Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7) ], [128X[104X
+    [4X[28X  [ 0*Z(7), Z(7)^0, 0*Z(7), 0*Z(7), 0*Z(7) ], [128X[104X
+    [4X[28X  [ 0*Z(7), 0*Z(7), Z(7)^0, 0*Z(7), 0*Z(7) ], [128X[104X
+    [4X[28X  [ 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^0, 0*Z(7) ], [128X[104X
+    [4X[28X  [ 0*Z(7), 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^0 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xphi := PolarityOfProjectiveSpace(mat,GF(7));[127X[104X
+    [4X[28X<polarity of PG(4, GF(7)) >[128X[104X
+    [4X[25Xgap>[125X [27Xps := PolarSpace(phi);[127X[104X
+    [4X[28X<polar space in ProjectiveSpace(4,GF(7)): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2=0 >[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  
+  
+  [1X6.4 [33X[0;0YCommuting polarities[133X[101X
+  
+  [33X[0;0Y[5XFinInG[105X  constructs  polarities  of  projective  spaces as correlations. This
+  allows  polarities to be multiplied easily, resulting in a collineation. The
+  resulting  collineation  is  constructed in the correlation group but can be
+  mapped  onto its unique representative in the collineation group. We provide
+  an example with two commuting polarities.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat := [[0,1,0,0],[1,0,0,0],[0,0,0,1],[0,0,1,0]]*Z(5)^0;[127X[104X
+    [4X[28X[ [ 0*Z(5), Z(5)^0, 0*Z(5), 0*Z(5) ], [ Z(5)^0, 0*Z(5), 0*Z(5), 0*Z(5) ], [128X[104X
+    [4X[28X  [ 0*Z(5), 0*Z(5), 0*Z(5), Z(5)^0 ], [ 0*Z(5), 0*Z(5), Z(5)^0, 0*Z(5) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xphi := HermitianPolarityOfProjectiveSpace(mat,GF(25));[127X[104X
+    [4X[28X<polarity of PG(3, GF(5^2)) >[128X[104X
+    [4X[25Xgap>[125X [27Xmat2 := IdentityMat(4,GF(5));[127X[104X
+    [4X[28X[ [ Z(5)^0, 0*Z(5), 0*Z(5), 0*Z(5) ], [ 0*Z(5), Z(5)^0, 0*Z(5), 0*Z(5) ], [128X[104X
+    [4X[28X  [ 0*Z(5), 0*Z(5), Z(5)^0, 0*Z(5) ], [ 0*Z(5), 0*Z(5), 0*Z(5), Z(5)^0 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xpsi := PolarityOfProjectiveSpace(mat2,GF(25));[127X[104X
+    [4X[28X<polarity of PG(3, GF(5^2)) >[128X[104X
+    [4X[25Xgap>[125X [27Xphi*psi = psi*phi;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xg := CorrelationCollineationGroup(PG(3,25));[127X[104X
+    [4X[28XThe FinInG correlation-collineation group PGammaL(4,25) : 2[128X[104X
+    [4X[25Xgap>[125X [27Xh := CollineationGroup(PG(3,25));[127X[104X
+    [4X[28XThe FinInG collineation group PGammaL(4,25)[128X[104X
+    [4X[25Xgap>[125X [27Xhom := Embedding(h,g);[127X[104X
+    [4X[28XMappingByFunction( The FinInG collineation group PGammaL(4,25), The FinInG cor[128X[104X
+    [4X[28Xrelation-collineation group PGammaL(4,25) : 2, function( y ) ... end )[128X[104X
+    [4X[25Xgap>[125X [27Xcoll := PreImagesRepresentative(hom,phi*psi);[127X[104X
+    [4X[28X< a collineation: <cmat 4x4 over GF(5,2)>, F^5>[128X[104X
+    [4X[28X [128X[104X
+  [4X[32X[104X
+  

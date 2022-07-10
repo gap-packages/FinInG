@@ -1,0 +1,131 @@
+Attributes
+
+geometry.gd: attributes
+
+A: IsChamberOfIncidenceStructure: IsFlagOfIncidenceStructure
+A: IsEmptyFlag: IsFlagOfIncidenceStructure
+A: RankAttr: IsIncidenceStructure
+A: RankAttr: IsFlagOfIncidenceStructure
+A: TypesOfElementsOfIncidenceStructure: IsIncidenceStructure
+A: TypesOfElementsOfIncidenceStructurePlural: IsIncidenceStructure
+A: CollineationGroup: IsIncidenceStructure
+A: CorrelationCollineationGroup: IsIncidenceStructure
+A: CollineationAction: IsIncidenceStructure
+A: CorrelationAction: IsIncidenceStructure
+A: RepresentativesOfElements: IsIncidenceStructure
+A: AmbientGeometry: IsIncidenceStructure
+A: AmbientGeometry: IsFlagOfIncidenceStructure
+A: Size: IsFlagOfIncidenceStructure
+A: AmbientGeometry: IsElementOfIncidenceStructureandIsElementOfIncidenceStructureRep
+A: AmbientGeometry: IsElementsOfIncidenceStructureandIsElementsOfIncidenceStructureRep
+A: AmbientGeometry: IsAllElementsOfIncidenceStructure
+A: CollineationAction: IsGroup
+
+liegeometry.gd: attributes
+
+A: AmbientSpace: IsLieGeometry
+A: AmbientSpace: IsElementOfLieGeometry
+A: ProjectiveDimension: IsLieGeometry
+A: ProjectiveDimension: IsElementOfLieGeometry
+A: ProjectiveDimension: IsEmptySubspace
+A: Dimension: IsLieGeometry
+
+group.gd: attributes
+
+A: Dimension: IsProjectiveGroupWithFrob
+
+projectivespace.gd: attributes
+
+A: ProjectivityGroup: IsProjectiveSpace
+A: SpecialProjectivityGroup: IsProjectiveSpace
+A: Dimension: IsSubspaceOfProjectiveSpace
+A: Dimension: IsEmpty
+A: Coordinates: IsSubspaceOfProjectiveSpace
+A: CoordinatesOfHyperplane: IsSubspaceOfProjectiveSpace
+A: EquationOfHyperplane: IsSubspaceOfProjectiveSpace
+A: StandardFrame: IsProjectiveSpace
+A: StandardFrame: IsSubspaceOfProjectiveSpace
+
+correlations.gd: attributes
+
+A: Dimension: IsProjGroupWithFrobWithPSIsom
+A: GramMatrix: IsPolarityOfProjectiveSpace
+A: CompanionAutomorphism: IsPolarityOfProjectiveSpace
+A: SesquilinearForm: IsPolarityOfProjectiveSpace
+
+polarspace.gd: attributes
+
+A: SesquilinearForm: IsClassicalPolarSpace
+A: QuadraticForm: IsClassicalPolarSpace
+A: AmbientSpace: IsClassicalPolarSpace
+A: SimilarityGroup: IsClassicalPolarSpace
+A: IsometryGroup: IsClassicalPolarSpace
+A: SpecialIsometryGroup: IsClassicalPolarSpace
+A: IsomorphismCanonicalPolarSpace: IsClassicalPolarSpace
+A: IsomorphismCanonicalPolarSpaceWithIntertwiner: IsClassicalPolarSpace
+A: IsCanonicalPolarSpace: IsClassicalPolarSpace
+A: PolarSpaceType: IsClassicalPolarSpace
+A: CompanionAutomorphism: IsClassicalPolarSpace
+A: ClassicalGroupInfo: IsClassicalPolarSpace
+A: EquationForPolarSpace: IsClassicalPolarSpace
+A: NucleusOfParabolicQuadric: IsClassicalPolarSpace
+
+morphisms.gd: attributes
+
+A: Intertwiner: IsGeometryMorphism
+
+enumerators.gd: attributes
+
+
+diagram.gd: attributes
+
+A: DiagramOfGeometry: IsIncidenceGeometry
+A: IsFlagTransitiveGeometry: IsIncidenceGeometry
+A: IsResiduallyConnected: IsIncidenceGeometry
+A: IsConnected: IsIncidenceGeometry
+A: IsFirmGeometry: IsIncidenceGeometry
+A: IsThinGeometry: IsIncidenceGeometry
+A: IsThickGeometry: IsIncidenceGeometry
+A: BorelSubgroup: IsCosetGeometry
+A: StandardFlagOfCosetGeometry: IsCosetGeometry
+A: Rank2Parameters: IsCosetGeometry
+A: OrderVertex: IsVertexOfDiagram
+A: NrElementsVertex: IsVertexOfDiagram
+A: StabiliserVertex: IsVertexOfDiagram
+A: ResidueLabelForEdge: IsEdgeOfDiagram
+A: GirthEdge: IsEdgeOfDiagram
+A: PointDiamEdge: IsEdgeOfDiagram
+A: LineDiamEdge: IsEdgeOfDiagram
+A: ParametersEdge: IsEdgeOfDiagram
+A: GeometryOfDiagram: IsDiagram
+
+varieties.gd: attributes
+
+A: DefiningListOfPolynomials: IsAlgebraicVariety
+A: AmbientSpace: IsAlgebraicVariety
+A: SesquilinearForm: IsHermitianVariety
+A: QuadraticForm: IsQuadraticVariety
+A: Source: IsGeometryMap
+A: Range: IsGeometryMap
+
+affinespace.gd: attributes
+
+A: Dimension: IsAffineSpace
+A: AmbientSpace: IsAffineSpace
+A: AmbientSpace: IsSubspaceOfAffineSpace
+
+affinegroup.gd: attributes
+
+A: AffineGroup: IsAffineSpace
+
+gpolygons.gd: attributes
+
+A: Order: IsGeneralisedPolygon
+A: IncidenceMatrixOfGeneralisedPolygon: IsGeneralisedPolygon
+A: AmbientPolarSpace: IsGeneralisedHexagon
+A: ElationGroup: IsElationGQ
+A: BasePointOfEGQ: IsElationGQ
+A: IsLinearqClan: IsqClanObj
+A: DefiningPlanesOfEGQByBLTSet: IsElationGQByBLTSet
+A: CollineationSubgroup: IsElationGQByBLTSet
+
