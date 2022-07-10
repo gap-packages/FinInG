@@ -13,8 +13,8 @@ SetPackageInfo( rec(
 
 PackageName := "FinInG",
 Subtitle := "Finite Incidence Geometry",
-Version := "1.4.2dev",
-Date := "03/07/2020", # dd/mm/yyyy format
+Version := "1.5",
+Date := "10/07/2022", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 IssueTrackerURL := "https://github.com/gap-packages/FinInG/issues",
@@ -26,7 +26,7 @@ SourceRepository := rec(
 # TODO: change PackageWWWHome back to http://www.fining.org
 # (or better, https://www.fining.org) once it has the new
 # version
-PackageWWWHome  := Concatenation( "https://gap-packages.github.io/", LowercaseString(~.PackageName) ),
+PackageWWWHome  := "https://gap-packages.github.io/FinInG",
 README_URL      := Concatenation( ~.PackageWWWHome, "/README.md" ),
 PackageInfoURL  := Concatenation( ~.PackageWWWHome, "/PackageInfo.g" ),
 ArchiveURL      := Concatenation( ~.SourceRepository.URL,
