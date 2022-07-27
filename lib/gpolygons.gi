@@ -1934,7 +1934,7 @@ InstallMethod( TwistedTrialityHexagon,
 
 	## Hendrik's canonical point is <(1,0,0,0,0,0,0,0)>
     reppointvect := ([1,0,0,0,0,0,0,0] * One(f));
-    MultRowVector(reppointvect,Inverse( reppointvect[PositionNonZero(reppointvect)] ));
+    MultVector(reppointvect,Inverse( reppointvect[PositionNonZero(reppointvect)] ));
 	#ConvertToVectorRep(reppointvect, f); #useless now.
 
 	## Hendrik's canonical line is <(1,0,0,0,0,0,0,0), (0,0,0,0,0,0,1,0)>
@@ -2088,7 +2088,7 @@ InstallMethod( TwistedTrialityHexagon,
 
 	## Hendrik's canonical point is <(1,0,0,0,0,0,0,0)>
     reppointvect := ([1,0,0,0,0,0,0,0] * One(f)) * change;
-    MultRowVector(reppointvect,Inverse( reppointvect[PositionNonZero(reppointvect)] ));
+    MultVector(reppointvect,Inverse( reppointvect[PositionNonZero(reppointvect)] ));
 	#ConvertToVectorRep(reppointvect, f); #useless now.
 
 	## Hendrik's canonical line is <(1,0,0,0,0,0,0,0), (0,0,0,0,0,0,1,0)>
@@ -2520,7 +2520,7 @@ InstallMethod( VectorSpaceToElement,
 		if IsZero(x) then
 			return EmptySubspace(geom);
 		fi;
-		MultRowVector(x,Inverse( x[PositionNonZero(x)] ));
+		MultVector(x,Inverse( x[PositionNonZero(x)] ));
 		y := NewMatrix(IsCMatRep,geom!.basefield,Length(x),[x])[1];
 		ps := AmbientPolarSpace(geom);
 		if geom!.dimension = 5 then
@@ -2569,7 +2569,7 @@ InstallMethod( VectorSpaceToElement,
 		if IsZero(x) then
 			return EmptySubspace(geom);
 		fi;
-		MultRowVector(x,Inverse( x[PositionNonZero(x)] ));
+		MultVector(x,Inverse( x[PositionNonZero(x)] ));
 		y := NewMatrix(IsCMatRep,geom!.basefield,Length(x),[x])[1];
 		ps := AmbientPolarSpace(geom);
 		if geom!.dimension = 5 then

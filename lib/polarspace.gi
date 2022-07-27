@@ -1877,7 +1877,7 @@ InstallMethod( VectorSpaceToElement,
 					Error("<v> does not generate an element of <geom>");
 				fi;
 			fi;
-			MultRowVector(x,Inverse( x[PositionNonZero(x)] ));
+			MultVector(x,Inverse( x[PositionNonZero(x)] ));
             y := NewMatrix(IsCMatRep,geom!.basefield,Length(x),[x]);
 			return Wrap(geom, 1, y[1]);
 		fi;
@@ -1918,7 +1918,7 @@ InstallMethod( VectorSpaceToElement,
 					Error("<v> does not generate an element of <geom>");
 				fi;
 			fi;			
-			MultRowVector(x,Inverse( x[PositionNonZero(x)] ));
+			MultVector(x,Inverse( x[PositionNonZero(x)] ));
 			y := NewMatrix(IsCMatRep,geom!.basefield,Length(x),[x]);
 			return Wrap(geom, 1, y[1]);
 		fi;

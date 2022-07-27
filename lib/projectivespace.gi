@@ -577,7 +577,7 @@ InstallMethod( VectorSpaceToElement,
 		if IsZero(x) then
 			return EmptySubspace(geom);
 		else
-			MultRowVector(x,Inverse( x[PositionNonZero(x)] ));
+			MultVector(x,Inverse( x[PositionNonZero(x)] ));
 			return Wrap(geom, 1, x);
 		fi;
 	end );
@@ -609,7 +609,7 @@ InstallMethod( VectorSpaceToElement,
 		if IsZero(x) then
 			return EmptySubspace(geom);
 		else
-			MultRowVector(x,Inverse( x[PositionNonZero(x)] ));
+			MultVector(x,Inverse( x[PositionNonZero(x)] ));
 			y := NewMatrix(IsCMatRep,geom!.basefield,Length(x),[x]);
 			#ConvertToVectorRep(x, geom!.basefield);
 			return Wrap(geom, 1, y[1]);
@@ -642,7 +642,7 @@ InstallMethod( VectorSpaceToElement,
 		if IsZero(x) then
 			return EmptySubspace(geom);
 		else
-			MultRowVector(x,Inverse( x[PositionNonZero(x)] ));
+			MultVector(x,Inverse( x[PositionNonZero(x)] ));
 			y := NewMatrix(IsCMatRep,geom!.basefield,Length(x),[x]);
 			#ConvertToVectorRep(x, geom!.basefield);
 			return Wrap(geom, 1, y[1]);
@@ -770,7 +770,7 @@ InstallMethod( DualCoordinatesOfHyperplane,
 				mat:=hyp!.obj;
 				a:=NullspaceMat(TransposedMat(mat));
 				x := Unpack(a[1]);
-                MultRowVector(x,Inverse( x[PositionNonZero(x)] ));
+                MultVector(x,Inverse( x[PositionNonZero(x)] ));
                 return x;
 			fi;
 	end );

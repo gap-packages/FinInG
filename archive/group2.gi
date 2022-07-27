@@ -948,7 +948,7 @@ InstallGlobalFunction( OnProjPointsWithFrobWithPSIsom,
 			if not(IsMutable(vec)) then
 				vec := ShallowCopy(vec);
 			fi;
-			MultRowVector(vec,Inverse( vec[c] ));
+			MultVector(vec,Inverse( vec[c] ));
 		fi;
 		return vec;
 	end );
