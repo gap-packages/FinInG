@@ -21,6 +21,13 @@
 ##
 #############################################################################
 
+#
+# Compatibility between older and newer versions of the MatrixObj interface
+#
+if not IsBound(MultVector) then
+    DeclareSynonym( "MultVector", MultRowVector );
+fi;
+
 ReadPackage("fining","lib/geometry.gd");
 
 ReadPackage("fining","lib/liegeometry.gd");

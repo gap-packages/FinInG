@@ -337,7 +337,7 @@ InstallMethod( TwistedTrialityHexagon,
 
 	## Hendrik's canonical point is <(1,0,0,0,0,0,0,0)>	
     reppointvect := ([1,0,0,0,0,0,0,0] * One(f));
-    MultRowVector(reppointvect,Inverse( reppointvect[PositionNonZero(reppointvect)] ));
+    MultVector(reppointvect,Inverse( reppointvect[PositionNonZero(reppointvect)] ));
 	#ConvertToVectorRep(reppointvect, f); #useless now.
 
 	## Hendrik's canonical line is <(1,0,0,0,0,0,0,0), (0,0,0,0,0,0,1,0)>

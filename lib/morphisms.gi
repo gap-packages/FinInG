@@ -3456,7 +3456,7 @@ InstallMethod( NaturalDualityHermitian,
 				mu := First( AsList(f), m -> m^(q-1) = pl[pos] / pl[7-pos]);
 				pl := mu * pl;
 				vec := pl*x;
-				MultRowVector(vec,Inverse( vec[PositionNonZero(vec)] ));
+				MultVector(vec,Inverse( vec[PositionNonZero(vec)] ));
 				return VectorSpaceToElement(q5q, vec * cq5q^-1);
 			else
 				plane := el^delta;
@@ -3489,7 +3489,7 @@ InstallMethod( NaturalDualityHermitian,
 				mu := First( AsList(f), m -> m^(q-1) = pl[pos] / pl[7-pos]);
 				pl := mu * pl;
 				vec := pl*x;
-				MultRowVector(vec,Inverse( vec[PositionNonZero(vec)] ));
+				MultVector(vec,Inverse( vec[PositionNonZero(vec)] ));
 				return VectorSpaceToElement(q5q, vec * cq5q^-1);
 			else
 				plane := el^delta;
