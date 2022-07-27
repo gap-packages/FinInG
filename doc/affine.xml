@@ -108,7 +108,7 @@ namely, the common abbreviation <C>AG(d, q)</C>.
 <Oper Name="UnderlyingVectorSpace" Arg="as"/>
 <Returns>a vector space</Returns>
 <Description>
-The underlying vectorspace of &agnq; is simply <M>V(n,q)</M>.
+The underlying vector space of &agnq; is simply <M>V(n,q)</M>.
 <Example>
 <#Include SYSTEM "../examples/include/affine_underlyingvs.include"> 
 </Example>
@@ -252,7 +252,7 @@ subspaces are disjoint, then Meet returns the empty list.
 <Returns> true or false
 </Returns>
 <Description>
-The arguments <A>u</A> and <A>v</A> must be affine subspaces of a common affine space. Two subspaces are parallel if and only if the direction space of the first is contained in the direction space of the second or viceversa.
+The arguments <A>u</A> and <A>v</A> must be affine subspaces of a common affine space. Two subspaces are parallel if and only if the direction space of the first is contained in the direction space of the second or vice-versa.
 <Example>
 <#Include SYSTEM "../examples/include/affine_isparallel.include"> 
 </Example>
@@ -502,7 +502,7 @@ between the elements of both groups enables testing for such relations.
 </Returns>
 <Description>
 If <A>as</A> is the affine space &agnq;
-This operation returnes the affine linear group &aglnq; acting
+This operation returns the affine linear group &aglnq; acting
 on <A>as</A>. The elements of this group are projectivities of
 the associated projective space. In order to get the full group
 of collineations of the affine space, one needs to use the

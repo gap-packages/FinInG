@@ -34,7 +34,7 @@ to the user.
 
 When using groups in &GAP;, we often use homomorphisms to pass from
 one situation to another, even though mathematically it may appear to
-be unneccessary, there can be ambiguities if the functionality
+be unnecessary, there can be ambiguities if the functionality
 is too flexible. This also applies to finite geometry. Take for example
 the usual exercise of thinking of a hyperplane in a projective
 space as another projective space. To conform with similar situations in
@@ -135,7 +135,7 @@ polar spaces of the same kind that are induced by coordinate transformations.
 <Description>
 The arguments <A>ps1</A> and <A>ps2</A> are <E>equivalent</E> polar spaces, i.e. up to 
 coordinate transformation, the underlying sesquilinear or quadratic form determines the
-same polar space, or, <A>ps1</A> is a parabolic quadric over a finite field <M>f</M> of even charateristic in 
+same polar space, or, <A>ps1</A> is a parabolic quadric over a finite field <M>f</M> of even characteristic in 
 dimension <M>2n</M> and <A>ps2</A> is a symplectic space over <M>f</M> in dimension <M>2n-1</M>, then
 this operation returns a geometry isomorphism between them. 
 The optional third argument <A>boolean</A> can take either <C>true</C> or
@@ -163,13 +163,13 @@ The Klein correspondence is a well known geometry morphism from the lines
 of &pg3q; to the points of a hyperbolic quadric in &pg5q;.
 This morphism and some derived morphisms are provided in <Package>FinInG</Package>.
 
-The bare essential of the Klein corresondence is the so-called Plücker map.
+The bare essential of the Klein correspondence is the so-called Plücker map.
 
 <ManSection>
 <Oper Name="PluckerCoordinates" Arg="line"/>
 <Description>
 This operation takes a line of &pg3q; as argument. It returns the plucker coordinates of the argument as list of finite
-field elements. The retured list can be used in operations as <F>VectorSpaceToElement</F>, and represents a point of the hyperbolic
+field elements. The returned list can be used in operations as <F>vector spaceToElement</F>, and represents a point of the hyperbolic
 quadric in &pg5q; with equation <Alt Only="HTML MathJax"><M>X_0X_5+X_1X_4+X_2X_3 = 0</M></Alt>
 <Alt Not="HTML"><M>X_0X_5+X_1X_4+X_2X_3 = 0</M></Alt>
 <Alt Only="HTML noMathJax">X&lt;sub>0&lt;/sub>X&lt;sub>5&lt;/sub>+X&lt;sub>1&lt;/sub>X&lt;sub>4&lt;/sub>+X&lt;sub>2&lt;/sub>X&lt;sub>3&lt;/sub> = 0</Alt>
@@ -282,7 +282,7 @@ and the duality between the same GQs, yields a duality from each of these GQs it
 <Oper Name="SelfDuality" Arg="gq, boolean"/>
 <Returns>a geometry morphism</Returns>
 <Description>
-It is checked wheter the base field of <A>gq</A> is a field of charateristic 2 and whether
+It is checked whether the base field of <A>gq</A> is a field of characteristic 2 and whether
 <A>gq</A> is a symplectic generalised quadrangle in 3-dimensional projective space or a parabolic
 quadric in 4-dimensional projective space. The first version will return, when possible,
 a geometry morphism equipped with an intertwiner. Using the boolean argument <A>false</A> will
@@ -349,7 +349,7 @@ of <A>geom2</A>. Here is a simple example where the geometry morphism embeds
 We briefly describe the mathematics behind field reduction. For more details we 
 refer to <Cite Key="LaVa"/>. Consider the fields &gfq; and &gfqt;. The field &gfqt; is a 
 <M>t</M>-dimensional vector space over &gfq;. Hence, with respect to a chosen basis 
-<M>B</M> for &gfqt; as a &gfq;-vectorspace, the bijection between the vectorspaces
+<M>B</M> for &gfqt; as a &gfq;-vector space, the bijection between the vector spaces
 &vnqt; and <M>V(tn,q)</M> can be implemented.
 
 Consider the projective space &pgnminus1qt;. The elements are represented by subspaces 
@@ -385,16 +385,16 @@ of choosing a different basis is shown.
 <Description>
 This operation comes in four flavours. For the first flavour, the argument <A>geom1</A> is a projective 
 space over a field &gfqt;. The argument <A>f2</A> is a subfield &gfq; of &gfqt;. The argument <M>B</M>
-is a basis for &gfqt; as a &gfq;-vectorspace. When this argument is not given, a basis for &gfqt; over &gfq;
-is computed using <F>Basis(AsVectorSpace(GF(q),GF(q^t)))</F>. It is checked whether <A>f2</A> is a 
-subfield of the basefield of <A>geom1</A>. The third and fourth flavour are comparable, 
-where now &gfq; is found as the basefield of <A>geom2</A>. In fact the arguments <A>geom1</A> and 
+is a basis for &gfqt; as a &gfq;-vector space. When this argument is not given, a basis for &gfqt; over &gfq;
+is computed using <F>Basis(Asvector space(GF(q),GF(q^t)))</F>. It is checked whether <A>f2</A> is a 
+subfield of the base field of <A>geom1</A>. The third and fourth flavour are comparable, 
+where now &gfq; is found as the base field of <A>geom2</A>. In fact the arguments <A>geom1</A> and 
 <A>geom2</A> are the projective spaces &pgnminus1qt; and &pgntminus1q; respectively. As in the previous flavours, the 
 argument <A>B</A> is optional. <P/>An intertwiner is always available for this geometry morphism, and has source the
 homography group of <A>geom1</A> and as range a subgroup of the homography group of <A>geom2</A> (or the projective space
 of the appropriate dimension over <A>f2</A>.
 Notice in the example below the difference of a factor 2 in the orders of the group, 
-which comes of course from restricing the homomorphism to the homography group, which 
+which comes of course from restricting the homomorphism to the homography group, which 
 differs a factor 2 from the collineation group of the projective line, that has an extra
 automorphism of order two, corresponding with the Frobenius automorphism.
 <Example>
@@ -429,9 +429,9 @@ An Intertwiner is not implemented for this geometry morphism.
 <Returns>a geometry morphism</Returns>
 <Description>
 The arguments <A>geom1</A> and <A>geom2</A> are projective or polar spaces with an underlying vector
-space of the same dimension and the basefield <M>L</M> of <A>geom2</A> is an extension of the basefield 
+space of the same dimension and the base field <M>L</M> of <A>geom2</A> is an extension of the base field 
 <M>K</M> of <A>geom1</A>. The form <M>f</M> determining <A>geom1</A> also defines a form over <M>L</M>,
-and determines a polar space. By considering the underlying vectorspaces determining the elements of <A>geom1</A>
+and determines a polar space. By considering the underlying vector spaces determining the elements of <A>geom1</A>
 over the extension field <M>L</M>, there is an obvious embedding of <A>geom1</A> in the polar space over the
 extension field. Considering <M>f</M> over a field extension might change its type. The possible embeddings, 
 where the polar spaces may be chosen up to equivalent form,
@@ -493,19 +493,19 @@ field &gfqt; and let <M>K</M> be the field &gfq; Let <M>P</M> be a polar
 space over a field <M>L</M>. Let <M>f</M> be the form on the <M>r</M> dimensional
 vector space <M>V</M> over <M>L</M> determining <M>P</M>. Consider the trace map
 
-<Alt Only="HTML MathJax"><Display>T: L \rightarrow K: x \mapsto x^{q^t}+ x^{q^{t-1}} + \ldots + x.</Display></Alt>
-<Alt Only="HTML noMathJax"><M>T: L \rightarrow K: x \mapsto </M> x&lt;sup>q&lt;sup>t&lt;/sup>&lt;/sup> + x&lt;sup>q&lt;sup>t-1&lt;/sup>&lt;/sup> + &#8230; + x.</Alt> <!-- rightarrow in html: &#8594;-->
-<Alt Only="LaTeX"><Display>T: L \rightarrow K: x \mapsto x^{q^t}+ x^{q^{t-1}} + \ldots + x.</Display></Alt>
-<Alt Only="Text"><M>T: L \rightarrow K: x \mapsto x^(q^t)+ x^(q^(t-1)) + \ldots + x.</M><P/></Alt>
+<Alt Only="HTML MathJax"><Display>T: L \to K: x \mapsto x^{q^t}+ x^{q^{t-1}} + \ldots + x.</Display></Alt>
+<Alt Only="HTML noMathJax"><M>T: L \to K: x \mapsto </M> x&lt;sup>q&lt;sup>t&lt;/sup>&lt;/sup> + x&lt;sup>q&lt;sup>t-1&lt;/sup>&lt;/sup> + &#8230; + x.</Alt> <!-- rightarrow in html: &#8594;-->
+<Alt Only="LaTeX"><Display>T: L \to K: x \mapsto x^{q^t}+ x^{q^{t-1}} + \ldots + x.</Display></Alt>
+<Alt Only="Text"><M>T: L \to K: x \mapsto x^(q^t)+ x^(q^(t-1)) + \ldots + x.</M><P/></Alt>
 
 Define for any <M>\alpha \in L</M> the map
 
-<Alt Only="HTML MathJax"><Display>T_\alpha: L \rightarrow K: x \mapsto T_\alpha(x) = T(\alpha x).</Display></Alt>
+<Alt Only="HTML MathJax"><Display>T_\alpha: L \to K: x \mapsto T_\alpha(x) = T(\alpha x).</Display></Alt>
 <Alt Only="HTML noMathJax">T&lt;sub>&#945;&lt;/sub>: L: &#8594; K: x<M>\mapsto</M> T&lt;sub>&#945;&lt;/sub> = T(&#945; x).</Alt>
-<Alt Only="LaTeX"><Display>T_\alpha: L \rightarrow K: x \mapsto T_\alpha(x) = T(\alpha x).</Display></Alt>
-<Alt Only="Text"><M>T_\alpha: L \rightarrow K: x \mapsto T_\alpha(x) = T(\alpha x).</M><P/></Alt>
+<Alt Only="LaTeX"><Display>T_\alpha: L \to K: x \mapsto T_\alpha(x) = T(\alpha x).</Display></Alt>
+<Alt Only="Text"><M>T_\alpha: L \to K: x \mapsto T_\alpha(x) = T(\alpha x).</M><P/></Alt>
 
-Consider the <M>rt</M> dimensional vector space <M>W</M> over <M>K</M>. There is a bijective map &Phi;: <M>V \rightarrow W</M>
+Consider the <M>rt</M> dimensional vector space <M>W</M> over <M>K</M>. There is a bijective map &Phi;: <M>V \to W</M>
 and <Alt Only="HTML noMathJax">T&lt;sub>&#945;&lt;/sub> &#8226; f &#8226; &#934; &lt;sup>-1&lt;/sup></Alt>
 <Alt Only="HTML MathJax"><M>T_{\alpha} \circ f \circ \Phi^{-1}</M></Alt>
 <Alt Not="HTML"><M>T_{\alpha} \circ f \circ \Phi^{-1}</M></Alt> defines a
@@ -524,9 +524,9 @@ and a basis for <M>L</M> as <M>K</M> vector space. Then the resulting form
 <Alt Not="HTML"><M>T_{\alpha} \circ f \circ \Phi^{-1}</M></Alt>
 is determined, and the associated polar space <M>S</M> will be the range of the embedding.
 Note that the resulting polar space will not necessarily be canonical. The second approach starts
-from two given polar spaces <M>P</M> and <M>S</M>. Based on this input, it is determined wheter an embedding
+from two given polar spaces <M>P</M> and <M>S</M>. Based on this input, it is determined whether an embedding
 based on the above described principle is possible, and the necessary parameters are computed. The resulting
-embedding is a geometry morhpism from <M>P</M> to <M>S</M>. Note that the polar spaces used as an argument
+embedding is a geometry morphism from <M>P</M> to <M>S</M>. Note that the polar spaces used as an argument
 may be freely chosen and are not required to be in the canonical form.<P/>
 For more information on the embeddings by field reduction of polar spaces, including conditions on
 the parameter <M>\alpha</M>, we refer to <Cite Key="Gill"/> and <Cite Key="LaVa"/>.
@@ -622,7 +622,7 @@ The possible embeddings are listed in the following table.
 basis for <M>L</M> over <A>f2</A>, <A>alpha</A> is a non-zero element of <M>L</M>.
 The version of <F>NaturalEmbeddingByFieldReduction</F> implements the first approach as explained in 
 <Ref Sect="polar_red"/>. When no argument <A>basis</A> is given, a basis for <M>L</M> over <A>f2</A>
-is computed using <F>Basis(AsVectorSpace(K,L))</F>. When no argument <A>alpha</A> is given, 
+is computed using <F>Basis(Asvector space(K,L))</F>. When no argument <A>alpha</A> is given, 
 <F>One(f2)</F> is used as value for <A>alpha</A>. When <A>bool</A> is true or not given, an intertwiner
 is computed, when <A>bool</A> is <A>false</A>, no intertwiner is computed. This intertwiner has as 
 its domain the <B>isometry group</B> of <A>ps1</A>. The user may wish that the intertwiner is not computed
@@ -668,10 +668,10 @@ the intertwiner.
 The argument <A>ps</A> is a projective or polar space, and <A>v</A> is a
 subspace of <A>ps</A>. In the case that <A>ps</A> is a projective space,
 the geometry of subspaces containing <A>v</A> is a projective space
-of lower dimension over the same basefield, and this operation returns the
+of lower dimension over the same base field, and this operation returns the
 corresponding geometry morphism. In the case that <A>ps</A> is a polar space,
 the geometry of elements pf <A>ps</A> containing <A>v</A> is a polar space
-of lower rank and of the same type over the same basefield, and this operation
+of lower rank and of the same type over the same base field, and this operation
 returns the corresponding geometry morphism.
 It is checked whether <A>v</A> is a subspace of <A>ps</A>,
 and whether the input of the function and preimage of the returned

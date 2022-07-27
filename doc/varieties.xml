@@ -60,7 +60,7 @@ An <E>algebraic variety</E> in <Package>FinInG</Package> is an algebraic variety
     <Oper Name="Points" Arg="var" />
     <Returns>a list of points</Returns>
     <Description>
-        The argument <A>var</A> is an algebraic variety. This operation returns the list of points of the <Ref Attr="AmbientSpace" /> of the algebraic variety <A>var</A> whose coordinates satify the <Ref Attr="DefiningListOfPolynomials"/> of the algebraic variety <A>var</A>.
+        The argument <A>var</A> is an algebraic variety. This operation returns the list of points of the <Ref Attr="AmbientSpace" /> of the algebraic variety <A>var</A> whose coordinates satisfy the <Ref Attr="DefiningListOfPolynomials"/> of the algebraic variety <A>var</A>.
 <Example>
 <#Include SYSTEM "../examples/include/varieties_points.include"> 
 </Example>
@@ -193,12 +193,12 @@ return a quadric of a particular type as follows:
    <Alt Not="HTML"><M>p \equiv 1,3 \pmod{8}</M></Alt>or <M>p=2</M></Item><Item>even</Item><Item>"parabolic", "o", or "0"</Item></Row>
    
    <Row><Item>parabolic quadric</Item>
-   <Item><Alt Only="Text"><M>t(X_0^2 + X_1X_2 + \ldots + X_{n-1}X_n)</M>, t a primitve element of GF(p)</Alt>
-    <Alt Only="LaTeX">\makecell[cl]{<M>t(X_0^2 + X_1X_2 + \ldots + X_{n-1}X_n),</M> \\ <M>t</M> a primitve element of <M>\mathrm{GF}(p)</M>}</Alt>
+   <Item><Alt Only="Text"><M>t(X_0^2 + X_1X_2 + \ldots + X_{n-1}X_n)</M>, t a primitive element of GF(p)</Alt>
+    <Alt Only="LaTeX">\makecell[cl]{<M>t(X_0^2 + X_1X_2 + \ldots + X_{n-1}X_n),</M> \\ <M>t</M> a primitive element of <M>\mathrm{GF}(p)</M>}</Alt>
     <Alt Only="HTML noMathJax">t(X&lt;sub>0&lt;/sub>&lt;sup>2&lt;/sup> +
 	 X&lt;sub>1&lt;/sub> X&lt;sub>2&lt;/sub> + ... +
 	 X&lt;sub>n-1&lt;/sub>X&lt;sub>n&lt;/sub>), <M>t</M> a primitive element of <M>GF(p)</M></Alt>
-    <Alt Only="HTML MathJax"><M>t(X_0^2 + X_1X_2 + \ldots + X_{n-1}X_n)</M>, <M>t</M> a primitve element of <M>\mathrm{GF}(p)</M></Alt>
+    <Alt Only="HTML MathJax"><M>t(X_0^2 + X_1X_2 + \ldots + X_{n-1}X_n)</M>, <M>t</M> a primitive element of <M>\mathrm{GF}(p)</M></Alt>
     </Item><Item><Alt Only="HTML noMathJax">p &#8801; 5,7 mod 8</Alt>
         <Alt Only="HTML MathJax"><M>p \equiv 5,7 \pmod{8}</M></Alt>
         <Alt Not="HTML"><M>p \equiv 5,7 \pmod{8}</M></Alt>
@@ -264,7 +264,7 @@ If the argument <A>var</A> is a <Ref Oper="HermitianVariety"/>, this returns the
 <ManSection>
 <Oper Name="PolarSpace" Arg="var"/>
 <Description>
-the argument <A>var</A> is a projective algebraic variety. When its list of definining polynomial contains exactly one polynomial,
+the argument <A>var</A> is a projective algebraic variety. When its list of defining polynomial contains exactly one polynomial,
 depending on its degree, the operation <F>QuadraticFormByPolynomial</F> or <F>HermitianFormByPolynomial</F> is used to compute
 a quadratic form or a hermitian form. These operations check whether this is possible, and produce an error message if not. If the
 conversion is possible, then the appropriate polar space is returned.

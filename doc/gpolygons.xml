@@ -95,7 +95,7 @@ belong to <C>IsDesarguesianPlane</C>.
 <C>IsClassicalGQ</C> is declared as a subcategory of <C>IsGeneralisedQuadrangle</C> and 
 <C>IsClassicalPolarSpace</C>. All classical polar spaces of rank 2 belong to <C>IsClassicalGQ</C>.
 <C>IsElationGQ</C> is declared as subcategory of <C>IsGeneralisedQuadrangle</C>. Elation GQs will be 
-discusedd in detail in Section <Ref Sect="EGQ"/>
+discussed in detail in Section <Ref Sect="EGQ"/>
 <Example>
 <#Include SYSTEM "../examples/include/gpolygons_categories1.include">
 </Example>
@@ -330,7 +330,7 @@ generalised quadrangle and it has an elation group, then we use the elation grou
 to efficiently compute the block design.
 
 We should also point out that this method returns a <E>mutable</E> attribute
-of <A>gp</A>, so that accquired information about the block design can be added. For example,
+of <A>gp</A>, so that acquired information about the block design can be added. For example,
 the automorphism group of the block design may be computed after the design is stored
 as an attribute of <A>gp</A>. Normally, attributes of GAP objects are immutable.
 <Example>
@@ -422,7 +422,7 @@ If <A>v</A> and <A>w</A> are incidence with a common point, this point is return
 <K>fail</K> is returned. For generalised polygons constructed with <C>GeneralisedPolygonByBlocks</C>,
 <C>GeneralisedPolygonByElements</C> an <C>GeneralisedPolygonByInidenceMatrix</C>, the underlying graph
 is used. Note that the behavior of <F>Meet</F> is different for elements of
-generalised polygongs that belong to <C>IsLieGeometry</C>, see <Ref Label="liemeet"/>
+generalised polygons that belong to <C>IsLieGeometry</C>, see <Ref Label="liemeet"/>
 <Example>
 <#Include SYSTEM "../examples/include/gpolygons_meet.include">
 </Example>
@@ -487,8 +487,8 @@ natural incidence of the underlying projective space. Denote the set of <M>i</M>
 <Alt Only="HTML MathJax"><M>P^{(i)}</M></Alt>
 <Alt Only="HTML noMathJax">P&lt;sup>(i)&lt;/sup></Alt>, <M>i=0,1,2</M>.<P/>
 A triality of <Alt Only="HTML MathJax"><M>\Omega(7,q)</M></Alt><Alt Not="HTML"><M>\Omega(7,q)</M></Alt>
-<Alt Only="HTML noMathJax">&#937;(7,q)</Alt> is a map <Alt Not="HTML"><M>\tau: P^{(i)} \rightarrow P^{(i+1)}</M></Alt>
-<Alt Only="HTML MathJax"><M>\tau: P^{(i)} \rightarrow P^{(i+1)}</M></Alt>
+<Alt Only="HTML noMathJax">&#937;(7,q)</Alt> is a map <Alt Not="HTML"><M>\tau: P^{(i)} \to P^{(i+1)}</M></Alt>
+<Alt Only="HTML MathJax"><M>\tau: P^{(i)} \to P^{(i+1)}</M></Alt>
 <Alt Only="HTML noMathJax"><M>\tau</M>:P&lt;sup>(i)&lt;/sup>&#8594;P&lt;sup>(i+1)&lt;/sup></Alt>
 (where <M>i+1</M> is computed modulo 3) preserving the incidence and for which <Alt Not="HTML"><M>\tau^3 = 1</M></Alt>
 <Alt Only="HTML MathJax"><M>\tau^3 = 1</M></Alt><Alt Only="HTML noMathJax"><M>\tau</M>&lt;sup>3&lt;/sup>=1</Alt>.
@@ -500,7 +500,7 @@ A generalised hexagon can be constructed as geometry of absolute points of one k
 a fixed triality. Note that not all trialities yield (thick) generalised quadrangles. There are different
 types of trialities, for some of them the absolute geometry is degenerate.<P/>
 The triality used in <Package>FinInG</Package> to construct the classical generalised hexagons is fixed. It is
-described explicitely in <Cite Key="HVM"/>. To describe the triality, a trilinear form expressing the incidence
+described explicitly in <Cite Key="HVM"/>. To describe the triality, a trilinear form expressing the incidence
 between <M>i</M>-points of <M>\Omega(7,q)</M> is used. Given the fact that, because of the existence of a triality,
 the role of the 0, 1 and 2 points are the same, each of the 1 and 2 points can be labelled the same way as the 0-points,
 which are effectively labelled by 8-tuples <M>(x_0,\ldots,x_7) \in V(8,q)=V</M> where each 8-tuples represents a projective point
@@ -548,8 +548,8 @@ where <M>z</M> is a variable, and <M>x</M> is an unknown, gives a set of equatio
 this is the generator of &qplus7q; represented by <M>y</M> as label of a <M>1</M>-point.<P/>
 Let <M>\sigma</M> be an automorphism of &gfq; of order <M>3</M>, or the identity. Consider the map<P/>
 <Alt Only="HTML noMathJax">       &#964;&lt;sub>&#963;&lt;/sub>: P&lt;sup>(i)&lt;/sup>&#8594;P&lt;sup>(i+1)&lt;/sup></Alt>
-<Alt Only="HTML MathJax"><M>\tau_{\sigma}: P^{(i)} \rightarrow P^{(i+1)}</M></Alt>
-<Alt Not="HTML"><M>\tau_{\sigma}: P^{(i)} \rightarrow P^{(i+1)}</M></Alt><P/>
+<Alt Only="HTML MathJax"><M>\tau_{\sigma}: P^{(i)} \to P^{(i+1)}</M></Alt>
+<Alt Not="HTML"><M>\tau_{\sigma}: P^{(i)} \to P^{(i+1)}</M></Alt><P/>
 <Alt Not="HTML"><M>(x_j) \mapsto (x_j^{\sigma})</M>, <M>j=0\ldots 7</M></Alt>
 <Alt Only="HTML MathJax"><M>(x_j) \mapsto (x_j^{\sigma})</M>, <M>j=0\ldots 7</M></Alt>
 <Alt Only="HTML noMathJax">       (x&lt;sub>j&lt;/sub>) &#8594; (x&lt;sub>j&lt;/sub>&lt;sup>&#963;&lt;/sup>), j=0...7</Alt>.<P/>
@@ -575,7 +575,7 @@ So, for <M>K</M> equal to &gfq; and <M>\sigma=1</M>, <Alt Only="HTML noMathJax">
 <Alt Only="HTML MathJax"><M>\Gamma^{(i)}</M></Alt><Alt Not="HTML"><M>\Gamma^{(i)}</M></Alt> is a generalised hexagon
 of order <M>q</M>, which is called the <E>split Cayley hexagon of order <M>q</M></E>, denoted <M>H(q)</M>.
 For <M>K</M> equal to &gfq3;, and
-<M>\sigma</M> a non-trival field automorphism of order <M>3</M>, <Alt Only="HTML noMathJax">&#915;&lt;sup>(i)&lt;/sup></Alt>
+<M>\sigma</M> a non-trivial field automorphism of order <M>3</M>, <Alt Only="HTML noMathJax">&#915;&lt;sup>(i)&lt;/sup></Alt>
 <Alt Only="HTML MathJax"><M>\Gamma^{(i)}</M></Alt><Alt Not="HTML"><M>\Gamma^{(i)}</M></Alt> is a generalised hexagon
 of order <Alt Only="HTML MathJax"><M>(q^3,q)</M></Alt><Alt Not="HTML"><M>(q^3,q)</M></Alt>
 <Alt Only="HTML noMathJax">(q&lt;sup>3&lt;/sup>,q)</Alt>, which is called the <E>twisted triality hexagon
@@ -587,7 +587,7 @@ of order <Alt Only="HTML MathJax"><M>(q^3,q)</M></Alt><Alt Not="HTML"><M>(q^3,q)
 <Alt Only="HTML MathJax"><M>\Gamma^{(0)}</M></Alt><Alt Not="HTML"><M>\Gamma^{(0)}</M></Alt>
 is a point-line geometry of which the point set, line set respectively, is a subset
 of the points, lines respectively of &qplus7q;. Finally, we mention the following important theorem, which was shown by Tits (<Cite Key="Tits1959"/>):
-the split Cayley hexagon, obtained by the triliaty with <M>\sigma=1</M>, is contained in the hyperplane with equation
+the split Cayley hexagon, obtained by the triality with <M>\sigma=1</M>, is contained in the hyperplane with equation
 <Alt Not="HTML"><M>X_3+X_7=0</M></Alt><Alt Only="HTML MathJax"><M>X_3+X_7=0</M></Alt>
 <Alt Only="HTML noMathJax">X&lt;sub>3&lt;/sub> + X&lt;sub>7&lt;/sub></Alt>, which intersects
 the hyperbolic quadric in the parabolic quadric &q6q;.
@@ -637,10 +637,10 @@ described in the appropriate chapters on Lie geometries, projective spaces and p
 </ManSection>
 
 <ManSection>
-<Oper Name="VectorSpaceToElement" Arg="gh, vec"/>
-<Returns>an element of a classical generlised hexagon</Returns>
+<Oper Name="vector spaceToElement" Arg="gh, vec"/>
+<Returns>an element of a classical generalized hexagon</Returns>
 <Description>
-The argument <A>vec</A> is one vector or a list of vectors from the underlying vectorspace of <A>gh</A>.
+The argument <A>vec</A> is one vector or a list of vectors from the underlying vector space of <A>gh</A>.
 This operation checks whether <A>vec</A> represents a point or a line of <A>gh</A>. Note that
 vectors and matrices in different representations are allowed as argument.
 <Example>
@@ -651,9 +651,9 @@ vectors and matrices in different representations are allowed as argument.
 
 <ManSection>
 <Oper Name="ObjectToElement" Arg="gh, obj"/>
-<Returns>an element of a classical generlised hexagon</Returns>
+<Returns>an element of a classical generalized hexagon</Returns>
 <Description>
-The argument <A>obj</A> is one vector or a list of vectors from the underlying vectorspace of <A>gh</A>.
+The argument <A>obj</A> is one vector or a list of vectors from the underlying vector space of <A>gh</A>.
 This operation checks whether <A>obj</A> represents a point or a line of <A>gh</A>. Note that
 vectors and matrices in different representations are allowed as argument.
 <Example>
@@ -774,7 +774,7 @@ and the <M>t</M> lines of type (a) for which <Alt Only="HTML MathJax"><M>Sh \sub
 <Alt Only="HTML noMathJax">Sh <M>\subset</M> S&lt;sup>*&lt;/sup>g</Alt>. Finally, the unique point of type (iii)
 is incident with the lines of type (b), and there are no further incidences.<P/>
 It is shown, see e.g. the standard work in this field of Payne and Thas <Cite Key="FGQ"/>, that this
-point-line geoemtry is a generalised quadrangle of order <M>(s,t)</M>.<P/>
+point-line geometry is a generalised quadrangle of order <M>(s,t)</M>.<P/>
 <Package>FinInG</Package> provides functions to construct elation generalised quadrangles
 directly from a Kantor family. The constructed generalised quadrangles are generalised polygons in the
 sense of <Package>FinInG</Package>, i.e. all generic operations described in Sections <Ref Sect="gp:operations"/> and
@@ -863,7 +863,7 @@ Let <Alt Only="HTML MathJax"><M>C=\{A_i: i=1 \ldots q\}</M></Alt><Alt Not="HTML"
  be a set of <M>q</M> distinct upper triangle <M>2 \times 2</M> 
 matrices over the finite field &gfq;. Then <M>C</M> is called a <E>q-clan</E> if 
 <Alt Only="HTML MathJax"><M>A_r - A_t</M></Alt><Alt Not="HTML"><M>A_r - A_t</M></Alt><Alt Only="HTML noMathJax">A&lt;sub>r&lt;/sub> - A&lt;sub>t&lt;/sub></Alt>
-is anistropic for <M>r \neq t</M>.<P/> Define 
+is anisotropic for <M>r \neq t</M>.<P/> Define 
 <Alt Only="HTML MathJax"><M>G = \{(\alpha,c,\beta): \alpha,\beta \in GF(q)^2, c \in GF(q)\}</M></Alt>
 <Alt Not="HTML"><M>G = \{(\alpha,c,\beta): \alpha,\beta \in GF(q)^2, c \in GF(q)\}</M></Alt>
 <Alt Only="HTML noMathJax">G = {(&#945;,c,&#946;): &#945;,&#946; &#8712; GF(q)&lt;sup>2&lt;/sup>, c &#8712; GF(q) }</Alt>, 
