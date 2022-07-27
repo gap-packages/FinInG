@@ -200,7 +200,7 @@ canonical similarity class. Hence a <E>standard</E> classical polar space is
 always a <E>canonical</E> classical polar space, a canonical polar space is determined
 by a standard form up to a constant factor.
 
-In the following table, we summerise the above information on polar spaces,
+In the following table, we summaries the above information on polar spaces,
 together with the standard forms that are chosen in
 <Package>FinInG</Package>. Note that <Alt Only="LaTeX"><M>\mathrm{Tr}</M></Alt><Alt Not="LaTeX">Tr</Alt> refers to the absolute trace map from
 &gfq; to &gfp;.
@@ -257,12 +257,12 @@ together with the standard forms that are chosen in
    <Item>even</Item></Row>
    
 <Row><Item>parabolic quadric</Item>
-    <Item><Alt Only="Text"><M>t(X_0^2 + X_1X_2 + \ldots + X_{n-1}X_n)</M>, t a primitve element of GF(p)</Alt>
-    <Alt Only="LaTeX">\makecell[cl]{<M>t(X_0^2 + X_1X_2 + \ldots + X_{n-1}X_n),</M> \\ <M>t</M> a primitve element of <M>\mathrm{GF}(p)</M>}</Alt>
+    <Item><Alt Only="Text"><M>t(X_0^2 + X_1X_2 + \ldots + X_{n-1}X_n)</M>, t a primitive element of GF(p)</Alt>
+    <Alt Only="LaTeX">\makecell[cl]{<M>t(X_0^2 + X_1X_2 + \ldots + X_{n-1}X_n),</M> \\ <M>t</M> a primitive element of <M>\mathrm{GF}(p)</M>}</Alt>
     <Alt Only="HTML noMathJax">t(X&lt;sub>0&lt;/sub>&lt;sup>2&lt;/sup> +
 	 X&lt;sub>1&lt;/sub> X&lt;sub>2&lt;/sub> + ... +
 	 X&lt;sub>n-1&lt;/sub>X&lt;sub>n&lt;/sub>), <M>t</M> a primitive element of <M>GF(p)</M></Alt>
-    <Alt Only="HTML MathJax"><M>t(X_0^2 + X_1X_2 + \ldots + X_{n-1}X_n)</M>, <M>t</M> a primitve element of <M>\mathrm{GF}(p)</M></Alt>
+    <Alt Only="HTML MathJax"><M>t(X_0^2 + X_1X_2 + \ldots + X_{n-1}X_n)</M>, <M>t</M> a primitive element of <M>\mathrm{GF}(p)</M></Alt>
     </Item><Item><Alt Only="HTML noMathJax">p &#8801; 5,7 mod 8</Alt>
         <Alt Only="HTML MathJax"><M>p \equiv 5,7 \pmod{8}</M></Alt>
         <Alt Not="HTML"><M>p \equiv 5,7 \pmod{8}</M></Alt>
@@ -437,7 +437,7 @@ The vector space on which <M>f</M> is acting is returned.
 <Returns>the ambient projective space</Returns>
 <Description>
 When <A>ps</A> is a polar space, this operation returns the ambient projective space, i.e. the
-underlying projective space of the sequilinear or quadratic form that defines <A>ps</A>.
+underlying projective space of the sesquilinear or quadratic form that defines <A>ps</A>.
 <Example>
 <#Include SYSTEM "../examples/include/cps_ambientspace.include"> 
 </Example>
@@ -450,7 +450,7 @@ underlying projective space of the sequilinear or quadratic form that defines <A
 <Returns>the dimension of the ambient projective space of <A>ps</A></Returns>
 <Description>When <A>ps</A> is a polar space, an ambient projective space <M>P</M> is 
 uniquely defined and can be asked using <F>AmbientSpace</F>. This operation and
-its synomym <F>Dimension</F> returns the dimension of <M>P</M>.
+its synonym <F>Dimension</F> returns the dimension of <M>P</M>.
 <Example>
 <#Include SYSTEM "../examples/include/cps_projectivedimension.include"> 
 </Example>
@@ -851,7 +851,7 @@ of <M>F</M>.
 <P/>
 
 Collineations of classical polar spaces are induced by semi-similarities of the underlying
-formed vector space, and vice versa, analoguously by factoring out scalar matrices. The only exceptions
+formed vector space, and vice versa, analogously by factoring out scalar matrices. The only exceptions
 are the two-dimensional unitary groups where the the full semi-similarity group can contain
 elements of its centre that are not scalars. In <Package>FinInG</Package>, the subgroups 
 corresponding with similarities and isometries are also implemented, including a <E>special</E> variant, 
@@ -915,7 +915,7 @@ occur in certain cases, and will, as we will see in the following overview.
 <Description>
     In most cases, the full projective semisimilarity group is returned. For two-dimensional
     unitary groups, the centre may contain elements that are not scalars. In this case, we
-    return a central extension of the projective semisimilarity group. If the basefield
+    return a central extension of the projective semisimilarity group. If the base field
     of <A>ps</A> is <Alt Not="HTML"><M>GF(q^2)</M></Alt><Alt Only="HTML">GF(q&lt;sup>2&lt;/sup>)</Alt>,
     <M>q</M> prime, the similarity group is returned.
 

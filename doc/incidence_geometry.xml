@@ -129,7 +129,7 @@ Any incidence structure has a set of types, which is usually
 just the list <M>[1..n]</M>. If specific names are
 given to each type, like points, lines, etc., this attribute returns the names for the
 particular incidence structure <A>inc</A>. The second variant returns the list of plurals
-of these names. For genericly constructed incidence structures, the names of the Elements
+of these names. For generically constructed incidence structures, the names of the Elements
 are also generic: elements of type 1, elements of type 2, etc.
 <Example>
 <#Include SYSTEM "../examples/include/incgeom_typesofels.include"> 
@@ -580,7 +580,7 @@ for these operations is not installed.
 
 <Section>
 <Heading>Enumerating elements of an incidence structure</Heading>
-In several situations, it can be usful to compute a complete list of objects statisfying one or more conditions.
+In several situations, it can be useful to compute a complete list of objects satisfying one or more conditions.
 To list all elements of a given type of an incidence structure, is a typical example. <Package>FinInG</Package> 
 provides functionality that is common in GAP for this purpose.<P/>
 In <Package>FinInG</Package>, typically a list of all elements satisfying a property, e.g. all points of
@@ -662,7 +662,7 @@ to obtain all objects in that collection.
 
 From the example in <Ref Sect="inc:op:list"/> it can be noted that although the number
 of lines is only 315, already 3 seconds of computing time are needed. This is typically
-observed for elements of classicla polar spaces different from points or generators, and
+observed for elements of classical polar spaces different from points or generators, and
 is explained by the recursive nature of the implementation of the enumerator. Computing
 a list of these objects as an orbit under the collineation group is, even taking into account
 the computation of the nice monomorphism of the collineation group, often much faster. Given
@@ -728,7 +728,7 @@ Lie geometries. These operations are applicable to Lie geometries and related ob
 
 <ManSection>
 <Oper Name="UnderlyingVectorSpace" Arg="ig"/>
-<Returns>the underlying vectorspace of the Lie geometry <A>ig</A></Returns>
+<Returns>the underlying vector space of the Lie geometry <A>ig</A></Returns>
 <Description>
 <Example>
 <#Include SYSTEM "../examples/include/incgeom_lie_uvs.include"> 
@@ -846,7 +846,7 @@ of the user, the system cannot decide in which geometry to construct the interse
 with many arguments, in such situations, the resulting element will be constructed in the common ambient projective space.
 Only in clear situations, where the ambient geometry of all elements is the same, and equal to the geometry of the 
 resulting element, the resulting element will be constructed in this common geometry. We provide however conversion
-operations for elements of Lie gometries.
+operations for elements of Lie geometries.
 
 <ManSection Label="inc:elementtoelement">
 <Oper Name="ElementToElement" Arg="ps, el"/>

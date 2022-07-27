@@ -354,7 +354,7 @@ variant of this operation. We remark that the result of a <F>Meet</F> operation 
 
 <ManSection>
 <Oper Name="FlagOfIncidenceStructure" Arg="ps, els"/>
-<Returns>the flag of the projetcive space <A>ps</A>, determined by
+<Returns>the flag of the projective space <A>ps</A>, determined by
 the subspaces of <A>ps</A> in the list <A>els</A>. When <A>els</A> is empty,
 the empty flag is returned.</Returns>
 <Description>

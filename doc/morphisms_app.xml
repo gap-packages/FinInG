@@ -31,12 +31,12 @@ This appendix gives more (technical) information on the low level functions for 
 <Returns>a vector</Returns>
 <Description>
 The argument <A>f2</A> is a subfield of <A>f1</A> and v is vector
-in a vectorspace <M>V</M> over <A>f2</A>. The second flavour Returns
+in a vector space <M>V</M> over <A>f2</A>. The second flavour Returns
 return the vector of length <M>d/t</M>, where <M>d=dim(V)</M>,
 and <M>t=[f1:f2]</M>. The first flavour uses the natural basis
 <F>Basis(AsVectorSpace(f2,f1))</F>. It is not checked whether
 <A>f2</A> is a subfield of <A>f1</A>, but it is checked whether
-the lengt of <A>v</A> is a multiple of the degree of the field extension.
+the length of <A>v</A> is a multiple of the degree of the field extension.
 </Description>
 </ManSection>
 
@@ -47,7 +47,7 @@ the lengt of <A>v</A> is a multiple of the degree of the field extension.
 <Returns>a matrix</Returns>
 <Description>
 Let <M>K</M> be the field &gfq; and let <M>L</M> be the field &gfqt;.
-Asumme that <M>B</M> is a basis for <M>L</M> as <M>K</M> vector space. Let
+Assume that <M>B</M> is a basis for <M>L</M> as <M>K</M> vector space. Let
 <Alt Only="HTML MathJax"><M>A=(a_{ij})</M></Alt><Alt Only="HTML noMathJax">A=(a&lt;sub>ij &lt;/sub>)</Alt>
 <Alt Not="HTML">A=(a&lt;sub>ij &lt;/sub>)</Alt> be a matrix over <M>L</M>.
 The result of <F>BlownUpMat(B,A)</F> is the matrix
@@ -61,7 +61,7 @@ the <M>t \times t</M> matrix <Alt Only="HTML MathJax"><M>M_a</M></Alt><Alt Not="
 <Alt Not="HTML"><M>B=\{b_1,b_2,\ldots,b_t\}</M></Alt>
 <Alt Only="HTML noMathJax">B={b&lt;sub>1&lt;/sub>,b&lt;sub>2&lt;/sub>,...,b&lt;sub>t&lt;/sub>}</Alt>, then row <M>j</M>
 is the row of the <M>t</M> coefficients of <Alt Only="HTML MathJax"><M>ab_j</M></Alt><Alt Not="HTML"><M>ab_j</M></Alt>
-<Alt Only="HTML noMathJax">ab&lt;sub>j&lt;/sub></Alt> with resepect to the basis
+<Alt Only="HTML noMathJax">ab&lt;sub>j&lt;/sub></Alt> with respect to the basis
 <M>B</M>. The operation <F>ShrinkMat</F> implements the converse of <F>BlownUpMat</F>.
 It is checked if the input is a blown up matrix as follows. Let <M>A</M> be a
 <M>tm \times tn</M> matrix. For each <M>t \times t</M> block, say <M>M</M>, we need to check that the
@@ -79,7 +79,7 @@ and calls the first flavour with <F>Basis(AsVectorSpace(f2,f1))</F> as basis. It
 <Returns>a projective space</Returns>
 <Description>
 Let <A>basis</A> be a basis of the field <Alt Not="HTML"><M>GF(q^t)</M></Alt><Alt Only="HTML">GF(q&lt;sup>t&lt;/sup>)</Alt>
-that is an extension of the basefield of the <M>r-1</M> dimensional projective space <A>pg1</A>.
+that is an extension of the base field of the <M>r-1</M> dimensional projective space <A>pg1</A>.
 This operation returns the <M>rt-1</M> dimensional projective space over <M>GF(q)</M>. The basis itself is only used to determine
 the field <Alt Not="HTML"><M>GF(q^t)</M></Alt><Alt Only="HTML">GF(q&lt;sup>t&lt;/sup>)</Alt>.
 </Description>
@@ -89,7 +89,7 @@ the field <Alt Not="HTML"><M>GF(q^t)</M></Alt><Alt Only="HTML">GF(q&lt;sup>t&lt;
 <Oper Name="BlownUpProjectiveSpaceBySubfield" Arg="subfield, pg"/>
 <Returns>a projective space</Returns>
 <Description>
-Blows up a projective space <A>pg</A> with respect to the standard basis of the basefield of <A>pg</A> over the <A>subfield</A>.
+Blows up a projective space <A>pg</A> with respect to the standard basis of the base field of <A>pg</A> over the <A>subfield</A>.
 </Description>
 </ManSection>
 
@@ -110,7 +110,7 @@ This operation relies on <F>BlownUpMat</F>.
 <Returns>a subspace of a projective space</Returns>
 <Description>
 Blows up a <A>subspace</A> of a projective space with respect to the
-standard basis of the basefield of <A>subspace</A> over the <A>subfield</A>, using field reduction and
+standard basis of the base field of <A>subspace</A> over the <A>subfield</A>, using field reduction and
 returns it a subspace of the projective space obtained from blowing up the ambient
 projective space of <A>subspace</A> over the subfield.
 </Description>
@@ -194,8 +194,8 @@ in Section <Ref Sect="polar_red"/>.
     <ManSection>
         <Oper Name="IsomorphismPolarSpacesProjectionFromNucleus" Arg="quadric, w, boolean"/>
         <Description>
-            This operation returns the isomorphism between a parabolic quadric and a sympletic polar space. Although it
-            is checked whether the base field and rank of both polar spaces are equal, this operation is menat for internal use
+            This operation returns the isomorphism between a parabolic quadric and a symplectic polar space. Although it
+            is checked whether the base field and rank of both polar spaces are equal, this operation is meant for internal use
             only. This operation is called by the operation <F>IsomorphismPolarSpaces</F>.
         </Description>
     </ManSection>

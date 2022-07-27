@@ -119,7 +119,7 @@ to the projective hyperplane represented by row vector <Alt Not="HTML"><M>(y_0,y
 </Alt> are the dual coordinates of the hyperplane.<P/>
 
 The product of two correlations of &pgnq; is a collineation, and the
-product of a collineation and a correlaton is a correlation. So the set of all
+product of a collineation and a correlation is a correlation. So the set of all
 collineations and correlations of &pgnq; forms a group, called the
 <E>correlation-collineation group</E> of &pgnq;.
 The correlation-collineation group
@@ -179,7 +179,7 @@ representations.
 <Filt Name="IsProjGrpElWithFrobRep" Type="Representation"/>
 <Filt Name="IsProjGrpElWithFrobWithPSIsomRep" Type="Representation"/>
 <Description>
-<C>IsProjGrpElRep</C> is the representation naturally induced by a projectivity; <C>IsProjGrpElWithFrobRep</C> is the representation naturally induced by the notion of a collineation of projective space; and <C>IsProjGrpElWithFrobWithPSIsomRep</C> is the representation naturally induced by a correlation of a projective space. This means that an object in the category <C>IsProjGrpEl</C> has as underlying object a matrix; an object in the category <C>IsProjGrpElWithFrob</C> has as underlying object a pair consisting of a matrix and a field automorphism; and <C>IsProjGrpElWithFrobWithPSIsom</C> has as underlying object a triple consisting of a matrix, a field automorphism and an isomorphism from the projective space to its dual space. Also the basefield is stored as a
+<C>IsProjGrpElRep</C> is the representation naturally induced by a projectivity; <C>IsProjGrpElWithFrobRep</C> is the representation naturally induced by the notion of a collineation of projective space; and <C>IsProjGrpElWithFrobWithPSIsomRep</C> is the representation naturally induced by a correlation of a projective space. This means that an object in the category <C>IsProjGrpEl</C> has as underlying object a matrix; an object in the category <C>IsProjGrpElWithFrob</C> has as underlying object a pair consisting of a matrix and a field automorphism; and <C>IsProjGrpElWithFrobWithPSIsom</C> has as underlying object a triple consisting of a matrix, a field automorphism and an isomorphism from the projective space to its dual space. Also the base field is stored as a
 component in the representation.
 </Description>
 </ManSection>
@@ -193,14 +193,14 @@ component in the representation.
 <C>IsProjGrpEl</C>, <C>IsProjGrpElWithFrob</C>, and <C>IsProjGrpElWithFrobWithPSIsom</C> are the categories 
 naturally induced the notions of projectivities, collineations, and
 correlations of a projective space.
-This means that an object in the category <C>IsProjGrpEl</C> has as underlying object a matrix; an object in the category <C>IsProjGrpElWithFrob</C> has as underlying object a pair consisting of a matrix and a field automorphism; and <C>IsProjGrpElWithFrobWithPSIsom</C> has as underlying object a triple consisting of a matrix, a field automorphism and an isomorphism from the projective space to its dual space. Also the basefield is stored as a
+This means that an object in the category <C>IsProjGrpEl</C> has as underlying object a matrix; an object in the category <C>IsProjGrpElWithFrob</C> has as underlying object a pair consisting of a matrix and a field automorphism; and <C>IsProjGrpElWithFrobWithPSIsom</C> has as underlying object a triple consisting of a matrix, a field automorphism and an isomorphism from the projective space to its dual space. Also the base field is stored as a
 component in the representation.
 </Description>
 </ManSection>!-->
 
 These are the different type of actions on projective spaces in <Package>FinInG</Package>, and they naturally 
 give rise to the following distinct categories and representations. Note that these categories and representations 
-are to be considered on a non-user level. Below we describe all user constuction methods that hide nicely these
+are to be considered on a non-user level. Below we describe all user construction methods that hide nicely these
 technical details.
 
 <ManSection>
@@ -226,7 +226,7 @@ is the representation naturally induced by a correlation of a projective space.
 This means that an object in the representation <C>IsProjGrpElRep</C> has as underlying object a matrix; an object in the category 
 <C>IsProjGrpElWithFrobRep</C> has as underlying object a pair consisting of a matrix and a field automorphism; and 
 <C>IsProjGrpElWithFrobWithPSIsomRep</C> has as underlying object a triple consisting of a matrix, a field automorphism 
-and an isomorphism from the projective space to its dual space. Also the basefield is stored as a
+and an isomorphism from the projective space to its dual space. Also the base field is stored as a
 component in the representation. 
 </Description>
 </ManSection>
@@ -235,14 +235,14 @@ The above mentioned categories allow us to make a distinction between projectivi
 from their representation. However, in <Package>FinInG</Package>, a group element constructed in the categories <C>IsProjGrpElMore</C>
 is always constructed in the representation <C>IsProjGrpElMoreRep</C>. Furthermore, projectivities of projective spaces (and 
 also collineations of projective spaces) will by default be constructed in the category <C>IsProjGrpElWithFrobRep</C>. 
-This technical choice was made by the developpers to have the projectivity groups naturally embedded in the collineation groups.
+This technical choice was made by the developers to have the projectivity groups naturally embedded in the collineation groups.
 Correlations of projective spaces will be constructed in the category <C>IsProjGrpElWithFrobWithPSIsom</C>. 
 
 <!--This means that an object in the category <C>IsProjGrpEl</C> has as 
 underlying object a matrix; an object in the category <C>IsProjGrpElWithFrob</C> has as underlying 
 object a pair consisting of a matrix and a field automorphism; and <C>IsProjGrpElWithFrobWithPSIsom</C> 
 has as underlying object a triple consisting of a matrix, a field automorphism and an isomorphism 
-from the projective space to its dual space. Also the basefield is stored as a
+from the projective space to its dual space. Also the base field is stored as a
 component in the representation.!-->
 
 <ManSection>
@@ -438,7 +438,7 @@ projective spaces</Heading>
 <Oper Name="Representative" Arg="g"/>
 <Description>
 <A>g</A> is a projectivity, collineation or correlation of a projective space.
-This function returns the reresentative components that determine <A>g</A>, i.e. a matrix, 
+This function returns the representative components that determine <A>g</A>, i.e. a matrix, 
 a matrix and a field automorphism, and a matrix, a field automorphism, and a vector space isomorphism, 
 respectively.
 <Example>
@@ -630,7 +630,7 @@ the dimension of the vector space on which the group acts.
 
 
 <Section>
-<Heading>Natural embedding of a collineation group in a correlationcollineation group</Heading>
+<Heading>Natural embedding of a collineation group in a correlation/collineation group</Heading>
 In <Package>FinInG</Package> a collineation group is not constructed as a subgroup of a correlation group.
 However, collineations can be multiplied with correlations (if they both belong mathematically to the same 
 correlation group.
@@ -835,14 +835,14 @@ and such that there exists exactly one point <Alt Not="HTML"><M>p \in H</M></Alt
 that all hyperplanes through <M>p</M> are stabilized. The hyperplane <M>H</M> is called the <E>axis</E> of 
 <M>\phi</M>, and the point <M>p</M> is called the <E>centre</E> of
 <M>\phi</M>. As a transvection is an element of &slnplus1q;, an elation is an element of &pslnplus1q;.
-An elation is completely determind by its axis and the image of one point (not contained
+An elation is completely determined by its axis and the image of one point (not contained
 in the axis). The group of elations with a given axis and centre, is isomorphic with
 the additive group of &gfq;. Finally, the group
 of all elations with a given axis <M>H</M>, acts regularly on the points of
 <Alt Only="Text"><M>PG(n,q) \setminus H</M></Alt><Alt Only="LaTeX"><M>\mathrm{PG}(n,q) \setminus H</M></Alt>
 <Alt Only="HTML MathJax"><M>\mathrm{PG}(n,q) \setminus H</M></Alt>
 <Alt Only="HTML noMathJax">PG(n,q) &#92; H</Alt>, and is isomorphic with the additive
-group of the vectorspace <M>V(n+1,q)</M>.
+group of the vector space <M>V(n+1,q)</M>.
 
 <ManSection>
 <Oper Name="ElationOfProjectiveSpace" Arg="sub,point1,point2"/>
@@ -975,7 +975,7 @@ The next example requires about 500M of memory.
 <Oper Name="NiceMonomorphismByDomain" Arg="g, dom, op "/>
 <Returns>an action, i.e. a group homomorphism</Returns>
 <Description>
-This operaion is not intended for the user. It relies on <Package>GenSS</Package> and
+This operation is not intended for the user. It relies on <Package>GenSS</Package> and
 <Package>Orb</Package>. The argument <A>g</A> is a projective group (in the category <C>IsProjectiveGroupWithFrob</C>)
 with a set <C>Size</C> attribute, <A>dom</A> is an orbit of <A>g</A>, and <A>op</A> an operation suitable for <A>x</A> and
 <A>g</A>.
@@ -987,7 +987,7 @@ with a set <C>Size</C> attribute, <A>dom</A> is an orbit of <A>g</A>, and <A>op<
     <Oper Name="NiceMonomorphismByOrbit" Arg="g, dom, op, orblen"/>
     <Returns>an action, i.e. a group homomorphism</Returns>
     <Description>
-        This operaion is not intended for the user. It relies on <Package>GenSS</Package> and
+        This operation is not intended for the user. It relies on <Package>GenSS</Package> and
         <Package>Orb</Package>. The argument <A>g</A> is a projective group (in the category <C>IsProjectiveGroupWithFrob</C>)
         with a set <C>Size</C> attribute, <A>dom</A> is an orbit of <A>g</A>, <A>op</A> an operation suitable for <A>x</A> and
         <A>g</A>, and <A>orblen</A> is the length of the final orbit.

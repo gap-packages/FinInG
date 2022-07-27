@@ -173,7 +173,7 @@ symmetric group on six elements.
 A geometry morphism in <Package>FinInG</Package> is a map between (a subset of) the elements
 of one geometry to (a subset of) the elements of a second geometry, preserving the incidence.
 Geometry morphisms are not necessarily type preserving. This section is meant to illustrate,
-in a non exhaustive way the basis philisophy behind geometry morphisms in <Package>FinInG</Package>.
+in a non exhaustive way the basis philosophy behind geometry morphisms in <Package>FinInG</Package>.
 
 <Subsection>
 <Heading>Isomorphic polar spaces</Heading>
@@ -236,10 +236,10 @@ the form <M>f</M> over this field extension. This is an interesting tool to cons
 
 <Subsection>
 <Heading>Embedding by field reduction</Heading>
-Field reduction is a power full tool to embedd low dimensional projective (and polar spaces)
+Field reduction is a power full tool to embed low dimensional projective (and polar spaces)
 over a field <M>K</M> in to high dimensional spaces over a subfield of <M>K</M>. The mathematics behind
 field reduction is explained in sections <Ref Sect="proj_red"/> and <Ref Sect="polar_red"/>.
-The examples here show the use of these embedings to construct a regular spread of a projective space
+The examples here show the use of these embeddings to construct a regular spread of a projective space
 and a so-called Hermitian spread of a hyperbolic quadric.
 <Example>
 <#Include SYSTEM "../examples/include/examples_embedfieldreduction.include">
@@ -323,7 +323,7 @@ Here is what the output looks like with the standard <F>DrawDiagram</F> command:
 In this example we construct the Ree-Tits octagon of order <M>[2,4]</M>
 as a coset geometry. From the computation of the so-called rank 2 parameters,
 it can be observed already that the constructed geometry must be a generalised octagon.
-Then the points and lines are computed explicitely, and together with the incidence
+Then the points and lines are computed explicitly, and together with the incidence
 and the available group as a subgroup of the collineation group, a generalised octagon
 is constructed.<Example>
 <#Include SYSTEM "../examples/include/examples_octagon.include">

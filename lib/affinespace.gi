@@ -227,7 +227,7 @@ InstallMethod( VectorSpaceTransversal,
 #############################################################################
 #O  ViewObj( <trans> )
 InstallMethod( ViewObj, 
-	"for a vectorspace transversal",
+	"for a vector space transversal",
 	[ IsVectorSpaceTransversal and IsVectorSpaceTransversalRep ],
 	function( trans )
 		Print("<vector space transversal of ", trans!.vectorspace,">");
@@ -236,7 +236,7 @@ InstallMethod( ViewObj,
 #############################################################################
 #O  PrintObj( <trans> )
 InstallMethod( PrintObj, 
-	"for a vectorspace transversal",
+	"for a vector space transversal",
 	[ IsVectorSpaceTransversal and IsVectorSpaceTransversalRep ],
 	function( trans )
 		Print("<vector space transversal of ", trans!.vectorspace," subspace spanned by ",trans!.subspace, ">");
@@ -377,7 +377,7 @@ InstallMethod( AffineSubspace,
 		while i < n and ForAll(x[n-i], IsZero) do
 			i := i+1; 
 		od;
-		#if i = n then #this case corresponds simple with the "empty subspace at infty", so a point must be returned.
+		#if i = n then #this case corresponds simple with the "empty subspace at infinity", so a point must be returned.
 		#	return [];
 		#fi;
 		x := x{[1..n-i]};
@@ -833,7 +833,7 @@ InstallMethod( Display,
 
 #############################################################################
 #O  Enumerator( <trans> )
-# return an Enumerator for a vectorspace transversal.
+# return an Enumerator for a vector space transversal.
 ##
 InstallMethod( Enumerator, 
 	"for a vector space transversal",	
@@ -1102,7 +1102,7 @@ InstallMethod( IsIncident,
 
 #############################################################################
 #O  Span( <x>, <y> )
-# cvec/cmat: I took no risk and unpackked everything to do linear algebra.
+# cvec/cmat: I took no risk and unpacked everything to do linear algebra.
 ##
 InstallMethod( Span,
 	"for two affine subspaces",

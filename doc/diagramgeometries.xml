@@ -190,7 +190,7 @@ This is an operation which returns the image of <A>flg</A>, a flag of a coset in
 <Oper Name="IsFirmGeometry" Arg="cg"/>
 <Returns>true if and only if <A>cg</A> is firm.</Returns>
 <Description> 
-An incidence geometry is said to be <E>firm</E> if every nonmaximal flag is contained in at least two chambers. <A>cg</A> must be a coset geometry. 
+An incidence geometry is said to be <E>firm</E> if every non-maximal flag is contained in at least two chambers. <A>cg</A> must be a coset geometry. 
 </Description>
 </ManSection>
 
@@ -198,7 +198,7 @@ An incidence geometry is said to be <E>firm</E> if every nonmaximal flag is cont
 <Oper Name="IsThickGeometry" Arg="cg"/>
 <Returns>true if and only if <A>cg</A> is thick.</Returns>
 <Description> 
-An incidence geometry is said to be <E>thick</E> if every nonmaximal flag is contained in at least three chambers. <A>cg</A> must be a coset geometry. 
+An incidence geometry is said to be <E>thick</E> if every non-maximal flag is contained in at least three chambers. <A>cg</A> must be a coset geometry. 
 </Description>
 </ManSection>
 
@@ -402,7 +402,7 @@ the collection of rank 2 residues of the geometry.<P/>
 
 Technically, the diagram is added to a <F>CosetGeometry</F> object as a mutable attribute. Also the list of rank 2 residues 
 of the geometry is added as an attribute once these have been computed. This is done with the operations <F>Rank2Residues</F> 
-(to add the attribute) and <F>MakeRank2Residue</F> (to actually compute the resiudes). These operations are not for everyday use and hence remain undocumented.<P/> 
+(to add the attribute) and <F>MakeRank2Residue</F> (to actually compute the residues). These operations are not for everyday use and hence remain undocumented.<P/> 
 
 Since the geometry is flag-transitive, all chambers are
 equivalent. Let's fix a chamber <Alt Not="HTML"><M>C=\{c_{1}, c_{2},\ldots,c_{n}\}</M></Alt><Alt Only="HTML MathJax"><M>C=\{c_{1}, c_{2},\ldots,c_{n}\}</M></Alt>
@@ -418,8 +418,8 @@ described by some parameters: the gonality and the point and line
 diameters. For each type <M>i</M>, we also define the <M>i</M>-order
 to be one less than the number of elements of type <M>i</M> in the residue of a(ny) flag of 
 type <M>I\setminus\{i\}</M>. All this information is depicted in
-a <E>diagram</E> which is bascically a labelled graph with vertex set <M>I</M>
-and edges whenever the point diamater, the line diameter and the
+a <E>diagram</E> which is basically a labelled graph with vertex set <M>I</M>
+and edges whenever the point diameter, the line diameter and the
 gonality are all greater than <M>2</M>.
 
 <ManSection>
@@ -457,7 +457,7 @@ you will get an friendly error message and a file <A>filename</A>.dot
 will be written. You can then compile this file later or ask a friend
 to help you.
 
-By default the diagram provides for each type <M>i</M> the <M>i</M>-order and the number of elements of type <M>i</M>. This behaviour can be changed by providing a <A>vertexverbosity</A> level. A value <A>2</A> results in no label under the vertices and a value <A>1</A> gives only the <M>i</M>-order. Any other potitive integer value yields the default behaviour. 
+By default the diagram provides for each type <M>i</M> the <M>i</M>-order and the number of elements of type <M>i</M>. This behaviour can be changed by providing a <A>vertexverbosity</A> level. A value <A>2</A> results in no label under the vertices and a value <A>1</A> gives only the <M>i</M>-order. Any other positive integer value yields the default behaviour. 
 
 The default labels for the edges of the diagram use the standard convention that a <M>[g,dp,dl]</M>-gon with all three parameters equal is labelled only with the number <M>g</M>. Putting <A>edgeverbosity</A> equal to <M>2</M> puts no labels at all. This yields the so called ``basic diagram'' of the geometry. With <A>edgeverbosity</A> equal to any integer greater than <M>2</M> all labels contain girth and both diameters.
 </Description>

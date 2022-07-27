@@ -31,12 +31,12 @@ canonical and standard polar spaces.
 
 <ManSection>
 <Oper Name="CanonicalGramMatrix" Arg="type, d, f"/>
-<Returns>a gram matrix usable as input to construct a sesquilinear form</Returns>
+<Returns>a Gram matrix usable as input to construct a sesquilinear form</Returns>
 <Description>
-The arguments <A>d</A> and <A>f</A> are the vector dimension and the fininte field
-respectively. The argument <A>type</A> is eiter "symplectic", "hermitian",
+The arguments <A>d</A> and <A>f</A> are the vector dimension and the finite field
+respectively. The argument <A>type</A> is either "symplectic", "hermitian",
 "hyperbolic", "elliptic" or "parabolic". <P/>
-If <A>type</A> equals "symplectic", the gram matrix is
+If <A>type</A> equals "symplectic", the Gram matrix is
 <Alt Only="LaTeX"><Display>\left( \begin{array}{ccccccc}
 0 &amp; 1 &amp; 0 &amp; 0 &amp; \ldots &amp; 0 &amp; 0 \\ 
 -1 &amp; 0 &amp; 0 &amp; 0 &amp; \ldots &amp; 0 &amp; 0 \\
@@ -119,8 +119,8 @@ If <A>type</A> equals "symplectic", the gram matrix is
 &lt;/tr>&lt;/table>
 <!-- matrix expression end -->
 </Alt><P/>
-If <A>type</A> equals "hermitian", the gram matrix is the identity matrix of dimension <A>d</A> over the field <M>f=GF(q)</M><P/>
-If <A>type</A> equals "hyperbolic", the gram matrix is
+If <A>type</A> equals "hermitian", the Gram matrix is the identity matrix of dimension <A>d</A> over the field <M>f=GF(q)</M><P/>
+If <A>type</A> equals "hyperbolic", the Gram matrix is
 <Alt Only="LaTeX"><Display>\left( \begin{array}{ccccccc}
 0 &amp; a &amp; 0 &amp; 0 &amp; \ldots &amp; 0 &amp; 0 \\ 
 a &amp; 0 &amp; 0 &amp; 0 &amp; \ldots &amp; 0 &amp; 0 \\
@@ -207,7 +207,7 @@ with
 <Alt Only="HTML">a=(p+1)/2 if p+1 = 0 mod 4, q=p&lt;sup>h&lt;/sup></Alt><Alt Only="LaTeX"><M>a=\frac{p+1}{2}</M> if <M>p+1 \equiv 0\,\, \mathrm{mod}\,\, 4, q=p^h</M></Alt>
 and <M>a=1</M> otherwise.
 <P/>
-If <A>type</A> equals "ellipic", the gram matrix is
+If <A>type</A> equals "elliptic", the Gram matrix is
 <Alt Only="LaTeX"><Display>\left( \begin{array}{ccccccc}
 1 &amp; 0 &amp; 0 &amp; 0 &amp; \ldots &amp; 0 &amp; 0 \\ 
 0 &amp; t &amp; 0 &amp; 0 &amp; \ldots &amp; 0 &amp; 0 \\
@@ -296,7 +296,7 @@ with
 and <Alt Only="HTML">a=(p+1)/2 if p+1 = 0 mod 4, q=p&lt;sup>h&lt;/sup></Alt><Alt Not="HTML"><M>a=\frac{p+1}{2}</M> if <M>p+1 \equiv 0\,\, \mathrm{mod}\,\, 4, q=p^h</M></Alt>
 and <M>a=1</M> otherwise.
 <P/>
-If <A>type</A> equals "parabolic", the gram matrix is
+If <A>type</A> equals "parabolic", the Gram matrix is
 <Alt Only="LaTeX"><Display>\left( \begin{array}{cccccc}
 t &amp; 0 &amp; 0 &amp;  \ldots &amp; 0 &amp; 0 \\ 
 0 &amp; 0 &amp; a &amp;  \ldots &amp; 0 &amp; 0 \\
@@ -376,16 +376,16 @@ For this reason, <F>CanonicalGramMatrix</F> is not a operation designed for the 
 
 <ManSection>
 <Oper Name="CanonicalQuadraticForm" Arg="type, d, f"/>
-<Returns>a gram matrix usable as input to construct a quadratic form</Returns>
+<Returns>a Gram matrix usable as input to construct a quadratic form</Returns>
 <Description>
-The arguments <A>d</A> and <A>f</A> are the vector dimension and the fininte field
-respectively. The argument <A>type</A> is eiter "hyperbolic", "elliptic" or "parabolic". 
+The arguments <A>d</A> and <A>f</A> are the vector dimension and the finite field
+respectively. The argument <A>type</A> is either "hyperbolic", "elliptic" or "parabolic". 
 The matrix returned can be used to construct a quadratic form.
 <P/>
-If <A>type</A> equals "hyperbolic", the gram matrix returned will result in the quadratic form
+If <A>type</A> equals "hyperbolic", the Gram matrix returned will result in the quadratic form
 <Alt Only="HTML">x&lt;sub>1&lt;/sub>x&lt;sub>2&lt;/sub>+...+ x&lt;sub>d-1&lt;/sub>x&lt;sub>d&lt;/sub></Alt>
 <Alt Not="HTML"><M>x_1x_2+ x_3x_4+\ldots+ x_{d-1}x_d</M></Alt><P/>
-If <A>type</A> equals "elliptic", the gram matrix returned will result in the quadratic form
+If <A>type</A> equals "elliptic", the Gram matrix returned will result in the quadratic form
 <Alt Only="HTML">x&lt;sub>1&lt;/sub>&lt;sup>2&lt;/sup>+x&lt;sub>1&lt;/sub>x&lt;sub>2&lt;/sub>+&#957;x&lt;sub>2&lt;/sub>&lt;sup>2&lt;/sup>
 ...+ x&lt;sub>d-1&lt;/sub>x&lt;sub>d&lt;/sub></Alt><Alt Not="HTML"><M>x_1^2+x_1x_2+\nu x_2^2 + x_3x_4+\ldots+ x_{d-1}x_d</M></Alt>with 
 <Alt Only="HTML">&#957;=&#945;&lt;sup>i&lt;/sup></Alt><Alt Not="HTML"><M>\nu=\alpha^i</M></Alt>, with <Alt Only="HTML">&#945;</Alt>
@@ -393,7 +393,7 @@ If <A>type</A> equals "elliptic", the gram matrix returned will result in the qu
 the first number in <M>[0,1,...,q-2]</M> for which <Alt Only="HTML">x&lt;sup>2&lt;/sup>+x+&#957;</Alt><Alt Not="HTML"><M>x^2+x+\nu</M>
 </Alt> is irreducible over <M>GF(q)</M>.
 <P/>
-If <A>type</A> equals "parabolic", the gram matrix returned will result in the quadratic form
+If <A>type</A> equals "parabolic", the Gram matrix returned will result in the quadratic form
 <Alt Only="HTML">x&lt;sub>1&lt;/sub>&lt;sup>2&lt;/sup>+x&lt;sub>2&lt;/sub>x&lt;sub>3&lt;/sub>+...
 + x&lt;sub>d-1&lt;/sub>x&lt;sub>d&lt;/sub></Alt><Alt Not="HTML"><M>x_1^2+x_2x_3 + \ldots x_{d-1}x_d</M></Alt><P/>
 This function is intended to be used only when the characteristic of <A>f</A> is two, but there is no error message is this is not the case.
@@ -415,11 +415,11 @@ Section <Ref Sect="polar:classicalgroups"/>.
 <Oper Name="SOdesargues" Arg="e, d, f"/>
 <Returns>the special isometry group of a canonical orthogonal polar space</Returns>
 <Description>
-The argument <A>e</A> determines the type of the othogonal polar space, i.e. -1,0,1 for
+The argument <A>e</A> determines the type of the orthogonal polar space, i.e. -1,0,1 for
 an elliptic, hyperbolic, parabolic orthogonal space, respectively. The argument <A>d</A> is
 the dimension of the underlying vector space, <A>f</A> is the finite field. The method relies
 on <F>SO</F>, a GAP command returning the appropriate matrix group. Internally, the invariant form
-is asked, and the base chage to our canonical form is obtained using the package <Package>form</Package>
+is asked, and the base change to our canonical form is obtained using the package <Package>form</Package>
 <Example>
 <#Include SYSTEM "../examples/include/groups_app_sodesargues.include"> 
 </Example>
@@ -430,11 +430,11 @@ is asked, and the base chage to our canonical form is obtained using the package
 <Oper Name="GOdesargues" Arg="e, d, f"/>
 <Returns>the isometry group of a canonical orthogonal polar space</Returns>
 <Description>
-The argument <A>e</A> determines the type of the othogonal polar space, i.e. -1,0,1 for
+The argument <A>e</A> determines the type of the orthogonal polar space, i.e. -1,0,1 for
 an elliptic, hyperbolic, parabolic orthogonal space, respectively. The argument <A>d</A> is
 the dimension of the underlying vector space, <A>f</A> is the finite field. The method relies
 on <F>GO</F>, a GAP command returning the appropriate matrix group. Internally, the invariant form
-is asked, and the base chage to our canonical form is obtained using the package <Package>form</Package>
+is asked, and the base change to our canonical form is obtained using the package <Package>form</Package>
 <Example>
 <#Include SYSTEM "../examples/include/groups_app_godesargues.include"> 
 </Example>
@@ -447,7 +447,7 @@ is asked, and the base chage to our canonical form is obtained using the package
 <Description>
 The argument <A>d</A> is the dimension of the underlying vector space, <A>f</A> is the finite field. 
 The method relies on <F>SU</F>, a GAP command returning the appropriate matrix group. Internally, the invariant form
-is asked, and the base chage to our canonical form is obtained using the package <Package>form</Package>
+is asked, and the base change to our canonical form is obtained using the package <Package>form</Package>
 <Example>
 <#Include SYSTEM "../examples/include/groups_app_sudesargues.include"> 
 </Example>
@@ -460,7 +460,7 @@ is asked, and the base chage to our canonical form is obtained using the package
 <Description>
 The argument <A>d</A> is the dimension of the underlying vector space, <A>f</A> is the finite field. 
 The method relies on <F>GU</F>, a GAP command returning the appropriate matrix group. Internally, the invariant form
-is asked, and the base chage to our canonical form is obtained using the package <Package>form</Package>
+is asked, and the base change to our canonical form is obtained using the package <Package>form</Package>
 <Example>
 <#Include SYSTEM "../examples/include/groups_app_gudesargues.include"> 
 </Example>
@@ -473,7 +473,7 @@ is asked, and the base chage to our canonical form is obtained using the package
 <Description>
 The argument <A>d</A> is the dimension of the underlying vector space, <A>f</A> is the finite field. 
 The method relies on <F>Sp</F>, a GAP command returning the appropriate matrix group. Internally, the invariant form
-is asked, and the base chage to our canonical form is obtained using the package <Package>form</Package>
+is asked, and the base change to our canonical form is obtained using the package <Package>form</Package>
 <Example>
 <#Include SYSTEM "../examples/include/groups_app_spdesargues.include"> 
 </Example>
@@ -485,7 +485,7 @@ is asked, and the base chage to our canonical form is obtained using the package
 <Returns>the isometry group of a canonical symplectic form</Returns>
 <Description>
 The argument <A>d</A> is the dimension of the underlying vector space, <A>f</A> is the finite field. Internally, the invariant form
-is asked, and the base chage to our canonical form is obtained using the package <Package>form</Package>
+is asked, and the base change to our canonical form is obtained using the package <Package>form</Package>
 <Example>
 <#Include SYSTEM "../examples/include/groups_app_generalsymplectic.include"> 
 </Example>
@@ -498,7 +498,7 @@ is asked, and the base chage to our canonical form is obtained using the package
 <Description>
 The argument <A>d</A> is the dimension of the underlying vector space, <A>f</A> is the finite field. 
 The method relies on <F>Sp</F>, a GAP command returning the appropriate matrix group. Internally, the invariant form
-is asked, and the base chage to our canonical form is obtained using the package <Package>form</Package>
+is asked, and the base change to our canonical form is obtained using the package <Package>form</Package>
 <Example>
 <#Include SYSTEM "../examples/include/groups_app_gspdesargues.include"> 
 </Example>
@@ -559,7 +559,7 @@ The method relies on <F>DeltaOminus</F>, and computes the generators to be added
 <Description>
 The argument <A>d</A> is the dimension of the underlying vector space, <A>f</A> is the finite field. 
 The method relies on <F>GO</F>, a GAP command returning the appropriate matrix group. Internally, the invariant form
-is asked, and the base chage to our canonical form is obtained using the package <Package>form</Package>. Furthermore,
+is asked, and the base change to our canonical form is obtained using the package <Package>form</Package>. Furthermore,
 the generators to be added are computed.
 <Example>
 <#Include SYSTEM "../examples/include/groups_app_gammao.include"> 
@@ -585,7 +585,7 @@ The method relies on <F>DeltaOplus</F>, and computes the generators to be added.
 <Description>
 The argument <A>d</A> is the dimension of the underlying vector space, <A>f</A> is the finite field. 
 The method relies on <F>GU</F>, a GAP command returning the appropriate matrix group. Internally, the invariant form
-is asked, and the base chage to our canonical form is obtained using the package <Package>form</Package>. Furthermore,
+is asked, and the base change to our canonical form is obtained using the package <Package>form</Package>. Furthermore,
 the generators to be added are computed.
 <Example>
 <#Include SYSTEM "../examples/include/groups_app_gammau.include"> 
@@ -595,28 +595,28 @@ the generators to be added are computed.
 
 <ManSection>
 <Oper Name="G2fining" Arg="d, f"/>
-<Returns>the chevalley group G_2(q)</Returns>
+<Returns>the Chevalley group G_2(q)</Returns>
 <Description>
-This group is the group of projectivities stabilising the split Cayley hexagon embedded in the paraboloc
+This group is the group of projectivities stabilising the split Cayley hexagon embedded in the parabolic
 quadric <M>Q(6,q):</M><Alt Not="HTML"><M>X_0X_4+X_1X_5+X_2X_6=X_3^2</M></Alt>
 <Alt Only="HTML">X&lt;sub>0&lt;/sub>X&lt;sub>4&lt;/sub>+X&lt;sub>1&lt;/sub>X&lt;sub>5&lt;/sub>+X&lt;sub>2&lt;/sub>X&lt;sub>6&lt;/sub>=X&lt;sub>3&lt;/sub>&lt;sup>2&lt;/sup></Alt>.
 <A>f</A> must be a finite field and <A>d</A> must be 5 or 6. When <A>d</A> is 5, <A>F</A> must be a field of even order, and then
-the returned group consists of projectivities of <M>W(5,q)</M>. The generators of this group are described exaplicitely in
+the returned group consists of projectivities of <M>W(5,q)</M>. The generators of this group are described explicitly in
 <Cite Key="HVM"/>, Appendix D. A correction can be found in <Cite Key="PhDOffer"/>. However, also this source contains
 a mistake.
 </Description>
 </ManSection>
 
 <ManSection>
-<Oper Name="3D4fining" Arg="d, f"/>
-<Returns>the chevalley group 3D4(q)</Returns>
+<Oper Name="3D4fining" Arg="f"/>
+<Returns>the Chevalley group 3D4(q)</Returns>
 <Description>
-<A>d</A> must equal 7 and <A>f</A> must be a field of order <Alt Not="HTML"><M>q^3</M></Alt><Alt Only="HTML">q&lt;sup>3&lt;/sup></Alt>
+The argument <A>f</A> must be a field of order <Alt Not="HTML"><M>q^3</M></Alt><Alt Only="HTML">q&lt;sup>3&lt;/sup></Alt>
 This group is the group of collineations stabilising the twisted triality hexagon embedded in the
 hyperbolic quadric <Alt Not="HTML"><M>Q+(7,q)</M></Alt><Alt Only="HTML">Q&lt;sup>+&lt;/sup>(7,q)</Alt>:
 <Alt Not="HTML"><M>X_0X_4+X_1X_5+X_2X_6+X_3X_7</M></Alt>
 <Alt Only="HTML">X&lt;sub>0&lt;/sub>X&lt;sub>4&lt;/sub>+X&lt;sub>1&lt;/sub>X&lt;sub>5&lt;/sub>+X&lt;sub>2&lt;/sub>X&lt;sub>6&lt;/sub>+X&lt;sub>3&lt;/sub>X&lt;sub>7&lt;/sub></Alt>
-The generators of this group are described exaplicitely in <Cite Key="HVM"/>, Appendix D.
+The generators of this group are described explicitly in <Cite Key="HVM"/>, Appendix D.
 </Description>
 </ManSection>
 

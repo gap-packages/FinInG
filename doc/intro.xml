@@ -27,7 +27,7 @@ behind the package.
 <Section Label="philosophy">
 <Heading>Philosophy</Heading>
 
-<Package>FinInG</Package> (pronounciation: [<Alt Only="LaTeX">\textipa{f\;I{}n\;I{}N}</Alt><Alt Only="HTML">f&#618;n&#618;&#331;</Alt>])
+<Package>FinInG</Package> (pronunciation: [<Alt Only="LaTeX">\textipa{f\;I{}n\;I{}N}</Alt><Alt Only="HTML">f&#618;n&#618;&#331;</Alt>])
 is a package for computation in
 Finite Incidence Geometry. It provides users with the basic tools to
 work in various areas of finite geometry from the realms of
@@ -35,7 +35,7 @@ projective spaces to the flat lands of generalised polygons.
 The algebraic power of GAP is employed, particularly in its 
 facility with matrix and permutation groups.<P/>
 
-<Alt Only="HTML">A sample making FinInG's pronounciation crystal clear can be found &lt;a href="fining1.m4a">here&lt;/a>. 
+<Alt Only="HTML">A sample making FinInG's pronunciation crystal clear can be found &lt;a href="fining1.m4a">here&lt;/a>. 
 &lt;p>&lt;audio controls>
 &lt;source src="fining1.m4a" type="audio/mpeg"/>
 &lt;embed height="50" width="100" src="fining1.m4a"/>
@@ -90,7 +90,7 @@ When linking to FinInG from a web page you can use the link
 <Heading>Overview of this manual</Heading>
 
 This chapter (section <Ref Sect="install"/>) describes the installation of the package. Chapter <Ref
-Chap="examples"/> contains some extended examples to introduce the user to the basic functionality and philosophy to get started. Chapter <Ref Chap="incidencegeometry"/> contains a rigorous discription of the basic structures. This chapter can be omitted at first reading, since the set of consequent chapters is also self contained. Chapters <Ref Chap="projective_spaces"/>, <Ref Chap="projgroup"/> and <Ref Chap="polaritiesofps"/>
+Chap="examples"/> contains some extended examples to introduce the user to the basic functionality and philosophy to get started. Chapter <Ref Chap="incidencegeometry"/> contains a rigorous description of the basic structures. This chapter can be omitted at first reading, since the set of consequent chapters is also self contained. Chapters <Ref Chap="projective_spaces"/>, <Ref Chap="projgroup"/> and <Ref Chap="polaritiesofps"/>
 deal with projective spaces, projective semilinear groups and polarities of projective spaces, respectively.
 In Chapter <Ref Chap="classicalpolarspaces"/> the functionality for classical polar spaces is treated and in Chapter <Ref Chap="affine"/> affine spaces and their groups are considered. <E>Geometry morphisms</E> between various geometries that are 
 available in the package, are introduced and discussed in Chapter <Ref Chap="morphisms"/>. The final three chapters, <Ref Chap="varieties"/>, <Ref Chap="gpolygons"/>, and <Ref Chap="diagramgeometries"/> explain the basic functionality which is provided for algebraic varieties (in projective or affine spaces), generalised polygons, of which several models can be constructed, and finally coset geometries and diagrams.
@@ -108,12 +108,12 @@ and <Package>cvec</Package>, version 2.5.7 or higher. These required packages
 are all part of the standard &GAP; distribution. However, the packages <Package>cvec</Package>, <Package>GRAPE</Package>,
 <Package>IO</Package>, and <Package>Orb</Package> may require additional compilation (cfr. infra for detailed instructions).
 Note that the <Package>IO</Package> is a package required by <Package>cvec</Package> and <Package>Orb</Package>, and
-is also part of the standard &GAP; distrubution.
+is also part of the standard &GAP; distribution.
 
 Shortly summarized, to get <Package>FinInG</Package> working, download and install &GAP; as explained in its installation
 instructions, and, under UNIX like systems (including MacOS), make sure that the compilation of the
 packages <Package>cvec</Package>, <Package>GRAPE</Package>, <Package>IO</Package>, and <Package>Orb</Package> is done. Note
-that the windows distrubution of &GAP; contains precompiled binaries of these packages, so under Windows,
+that the windows distribution of &GAP; contains precompiled binaries of these packages, so under Windows,
 no further steps are required after installing &GAP; according to its installation instructions.
 
 In the next section we summarize the installation procedure under UNIX like systems.
@@ -126,7 +126,7 @@ distribution too, but it is not a requirement.--><!--This remark is very true, b
 <Heading>Installation procedure under UNIX like systems</Heading>
 
 The installation of &GAP; itself is generic for each UNIX like system, including the different flavours of
-Mac OS. You only need a terminal application, and you need acces to the standard unix tools gunzip and tar,
+Mac OS. You only need a terminal application, and you need access to the standard unix tools gunzip and tar,
 and the make tools. Detailed information on how to install &GAP;, can be found in the documentation of &GAP;.
 
 The installation procedure for <Package>FinInG</Package>, a standard GAP package, does <E>not</E> 
@@ -168,7 +168,7 @@ Locate your &GAP; installation. The examples below are generated using a GAP4.8.
 in "/opt/gap4r8". Clearly, subsequent versions of gap will reside in a differently named directory, e.g.
 "/opt/gap4r9". Another commonly used directory under UNIX like systems to install software is "/usr/local", so
 gap might reside in "/usr/local/gap4r8" too. In all examples in this section, we assume your &GAP; installation
-resides in "/opt/gap4r8". Therefore, replace any occurence of "/opt/gap4r8" with the actual directory
+resides in "/opt/gap4r8". Therefore, replace any occurrence of "/opt/gap4r8" with the actual directory
 of your &GAP; installation when executing the installation steps.
 
 Three steps will be necessary to compile the <Package>IO</Package> package: go into the correct directory, and
@@ -205,7 +205,7 @@ cp .libs/io.so bin/x86_64-apple-darwin16.7.0-gcc-default64/io.so
 </Example>
 
 Now starting &GAP; should produce the following output, notice the presence
-of "IO 4.4.6" as one of the loaded packges.
+of "IO 4.4.6" as one of the loaded packages.
 
 <Example>
 jdebeule ~  $ gap4r8
@@ -264,7 +264,7 @@ root /opt/gap4r8/pkg/grape  $
 </Example>
 
 Note that warnings may occur during the compilation process, which can all be ignored. If compilation of
-these packages has been succesful, restart &GAP; and load <Package>FinInG</Package> using "LoadPackage("fining")".
+these packages has been successful, restart &GAP; and load <Package>FinInG</Package> using "LoadPackage("fining")".
 The output should look as follows.
 
 <Example>
@@ -433,7 +433,7 @@ true
 
 <Section>
 <Heading>The Development Team</Heading>
-This is the development team (without Anton),  meeting in St. Andrews in september 2008,
+This is the development team (without Anton), meeting in St. Andrews in September 2008,
 from left to right: Philippe Cara, Michel Lavrauw, Max Neunh&#246;ffer, Jan De Beule and John Bamberg.
 <P/>
 <Alt Only="HTML">&lt;img src="./graphics/devteamstasep08.jpg">&lt;/img></Alt>
