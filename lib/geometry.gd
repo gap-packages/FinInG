@@ -216,9 +216,6 @@ DeclareAttribute( "AmbientGeometry", IsFlagOfIncidenceStructure );
 #
 #############################################################################
 
-InstallTrueMethod( IsFinite, IsElementsOfIncidenceStructure );
-InstallTrueMethod( IsFinite, IsAllElementsOfIncidenceStructure );
-
 DeclareOperation( "FlagOfIncidenceStructure", [ IsIncidenceStructure, IsElementOfIncidenceStructureCollection ]);
 DeclareOperation( "FlagOfIncidenceStructure", [ IsIncidenceStructure, IsList and IsEmpty ]);
 DeclareOperation( "ChamberOfIncidenceStructure", [ IsElementOfIncidenceStructureCollection ]);
