@@ -147,7 +147,7 @@ Persons := [
     PostalAddress := Concatenation(
                        "Fachbereich Mathematik\n",
                        "TU Kaiserslautern\n",
-                       "Gottlieb-Daimler-Straﬂe 48\n",
+                       "Gottlieb-Daimler-Stra√üe 48\n",
                        "67663 Kaiserslautern\n",
                        "Germany" ),
     Place         := "Kaiserslautern, Germany",
