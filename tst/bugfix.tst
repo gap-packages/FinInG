@@ -14,5 +14,11 @@ gap> q := VectorSpaceToElement(ps, [1, 1, 0]*Z(8)^0);
 gap> ElationOfProjectiveSpace(l, p, q);
 < a collineation: <cmat 3x3 over GF(2,3)>, F^0>
 
+# verify SingerCycleCollineation does not run into an error,
+# at least when using cvec >= 2.7.6;
+# see <https://github.com/gap-packages/FinInG/issues/21>
+gap> SingerCycleCollineation(2, 2^6);
+< a collineation: <cmat 3x3 over GF(2,6)>, F^0>
+
 #
 gap> STOP_TEST("bugfix.tst", 1 );

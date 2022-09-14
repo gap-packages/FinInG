@@ -185,7 +185,7 @@ PackageDoc := rec(
 Dependencies := rec(
   GAP := ">=4.10",
   NeededOtherPackages := [
-          ["cvec", ">=2.7.4"],
+          ["cvec", ">=2.7.6"],
           ["Forms", ">=1.2.5"],
           ["GAPDoc", ">= 1.6.3"],
           ["GenSS", ">=1.6.6"],
