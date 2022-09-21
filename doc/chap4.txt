@@ -623,7 +623,7 @@
   [1X4.2-18 FlagOfIncidenceStructure[101X
   
   [33X[1;0Y[29X[2XFlagOfIncidenceStructure[102X( [3Xps[103X, [3Xels[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10Ythe  flag  of the projetcive space [3Xps[103X, determined by the subspaces
+  [6XReturns:[106X  [33X[0;10Ythe  flag  of the projective space [3Xps[103X, determined by the subspaces
             of  [3Xps[103X  in  the  list  [3Xels[103X.  When  [3Xels[103X is empty, the empty flag is
             returned.[133X
   

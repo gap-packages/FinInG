@@ -201,7 +201,7 @@
   determining  form  is  the  fixed representative of the canonical similarity
   class.  Hence  a  [13Xstandard[113X  classical  polar  space  is  always  a [13Xcanonical[113X
   classical  polar  space, a canonical polar space is determined by a standard
-  form up to a constant factor. In the following table, we summerise the above
+  form up to a constant factor. In the following table, we summaries the above
   information  on  polar  spaces,  together  with  the standard forms that are
   chosen  in  [5XFinInG[105X. Note that Tr refers to the absolute trace map from [22XGF(q)[122X
   to [22XGF(p)[122X.[133X
@@ -214,7 +214,7 @@
       │ hyperbolic quadric    │ [22XX_0 X_1 + ... + X_n-1X_n[122X                                                 │ [22Xp ≡ 3 mod 4[122X or [22Xp=2[122X  │ odd                  │ 
       │ hyperbolic quadric    │ [22X2(X_0 X_1 + ... + X_n-1X_n)[122X                                              │ [22Xp ≡ 1 mod 4[122X         │ odd                  │ 
       │ parabolic quadric     │ [22XX_0^2 + X_1X_2 + ... + X_n-1X_n[122X                                          │ [22Xp ≡ 1,3 mod 8[122Xor [22Xp=2[122X │ even                 │ 
-      │ parabolic quadric     │ [22Xt(X_0^2 + X_1X_2 + ... + X_n-1X_n)[122X, t a primitve element of GF(p)        │ [22Xp ≡ 5,7 mod 8[122X       │ even                 │ 
+      │ parabolic quadric     │ [22Xt(X_0^2 + X_1X_2 + ... + X_n-1X_n)[122X, t a primitive element of GF(p)       │ [22Xp ≡ 5,7 mod 8[122X       │ even                 │ 
       │ elliptic quadric      │ [22XX_0^2 + X_1^2 + X_2X_3 + ... + X_n-1X_n[122X                                  │ [22Xp ≡ 3 mod 4[122X         │ odd                  │ 
       │ elliptic quadric      │ [22XX_0^2 + tX_1^2 + X_2X_3 + ... + X_n-1X_n[122X, [22Xt[122X a primitive element of [22XGF(p)[122X │ [22Xp ≡ 1 mod 4[122X         │ odd                  │ 
       │ elliptic quadric      │ [22XX_0^2 + X_0X_1 + dX_1^2 + X_2X_3 + ... + X_n-1X_n[122X, [22XTr(d)=1[122X               │ even                │ odd                  │ 
@@ -511,7 +511,7 @@
   [6XReturns:[106X  [33X[0;10Ythe ambient projective space[133X
   
   [33X[0;0YWhen  [3Xps[103X  is  a  polar  space, this operation returns the ambient projective
-  space,  i.e. the underlying projective space of the sequilinear or quadratic
+  space, i.e. the underlying projective space of the sesquilinear or quadratic
   form that defines [3Xps[103X.[133X
   
   [4X[32X  Example  [32X[104X
@@ -533,7 +533,7 @@
   [6XReturns:[106X  [33X[0;10Ythe dimension of the ambient projective space of [3Xps[103X[133X
   
   [33X[0;0YWhen  [3Xps[103X is a polar space, an ambient projective space [22XP[122X is uniquely defined
-  and  can  be  asked  using  [11XAmbientSpace[111X.  This  operation  and  its synomym
+  and  can  be  asked  using  [11XAmbientSpace[111X.  This  operation  and  its synonym
   [11XDimension[111X returns the dimension of [22XP[122X.[133X
   
   [4X[32X  Example  [32X[104X
@@ -1308,11 +1308,11 @@
   [33X[0;0Yfor some non-zero [22Xλ ∈ F[122X and a field automorphism [22Xα[122X of [22XF[122X.[133X
   
   [33X[0;0YCollineations  of classical polar spaces are induced by semi-similarities of
-  the  underlying  formed  vector  space,  and  vice  versa,  analoguously  by
-  factoring  out  scalar matrices. The only exceptions are the two-dimensional
-  unitary groups where the the full semi-similarity group can contain elements
-  of  its  centre that are not scalars. In [5XFinInG[105X, the subgroups corresponding
-  with  similarities  and isometries are also implemented, including a [13Xspecial[113X
+  the underlying formed vector space, and vice versa, analogously by factoring
+  out  scalar  matrices.  The  only exceptions are the two-dimensional unitary
+  groups  where the the full semi-similarity group can contain elements of its
+  centre  that  are  not  scalars. In [5XFinInG[105X, the subgroups corresponding with
+  similarities  and  isometries  are  also  implemented,  including  a [13Xspecial[113X
   variant,  corresponding  with  the matrices having determinant one. We use a
   consistent terminology, where isometries, similarities, respectively, of the
   polar  space, correspond with isometries, similarities, respectively, of the
@@ -1429,7 +1429,7 @@
   [33X[0;0YIn  most  cases,  the  full projective semisimilarity group is returned. For
   two-dimensional unitary groups, the centre may contain elements that are not
   scalars.  In  this  case,  we  return  a central extension of the projective
-  semisimilarity  group.  If  the  basefield  of  [3Xps[103X  is [22XGF(q^2)[122X, [22Xq[122X prime, the
+  semisimilarity  group.  If  the  base  field  of [3Xps[103X is [22XGF(q^2)[122X, [22Xq[122X prime, the
   similarity group is returned.[133X
   
   [4X[32X  Example  [32X[104X

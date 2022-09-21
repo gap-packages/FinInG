@@ -234,7 +234,7 @@ Incidence structure of rank 4
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TypesOfElementsOfIncidenceStructurePlural</code>( <var class="Arg">inc</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: a list of strings or integers</p>
 
-<p>Both attributes are declared for objects in the category <code class="code">IsIncidenceStructure</code>. Any incidence structure has a set of types, which is usually just the list <span class="SimpleMath">\([1..n]\)</span>. If specific names are given to each type, like points, lines, etc., this attribute returns the names for the particular incidence structure <var class="Arg">inc</var>. The second variant returns the list of plurals of these names. For genericly constructed incidence structures, the names of the Elements are also generic: elements of type 1, elements of type 2, etc.</p>
+<p>Both attributes are declared for objects in the category <code class="code">IsIncidenceStructure</code>. Any incidence structure has a set of types, which is usually just the list <span class="SimpleMath">\([1..n]\)</span>. If specific names are given to each type, like points, lines, etc., this attribute returns the names for the particular incidence structure <var class="Arg">inc</var>. The second variant returns the list of plurals of these names. For generically constructed incidence structures, the names of the Elements are also generic: elements of type 1, elements of type 2, etc.</p>
 
 
 <div class="example"><pre>
@@ -1046,7 +1046,7 @@ Incidence structure of rank 2
 
 <h4>3.5 <span class="Heading">Enumerating elements of an incidence structure</span></h4>
 
-<p>In several situations, it can be usful to compute a complete list of objects statisfying one or more conditions. To list all elements of a given type of an incidence structure, is a typical example. <strong class="pkg">FinInG</strong> provides functionality that is common in GAP for this purpose.</p>
+<p>In several situations, it can be useful to compute a complete list of objects satisfying one or more conditions. To list all elements of a given type of an incidence structure, is a typical example. <strong class="pkg">FinInG</strong> provides functionality that is common in GAP for this purpose.</p>
 
 <p>In <strong class="pkg">FinInG</strong>, typically a list of all elements satisfying a property, e.g. all points of a projective space, are represented by a GAP object that is a <em>collection</em>. The word 'collection' is important here. E.g. subspaces of a vector space are not calculated on calling <code class="file">Subspaces</code>, rather primitive information is stored in an <code class="file">IsComponentObjectRep</code>. So for example</p>
 
@@ -1276,7 +1276,7 @@ Q(6, 2)
 
 </pre></div>
 
-<p>From the example in <a href="chap3_mj.html#X7EBA57FC7CCF8449"><span class="RefLink">3.5-3</span></a> it can be noted that although the number of lines is only 315, already 3 seconds of computing time are needed. This is typically observed for elements of classicla polar spaces different from points or generators, and is explained by the recursive nature of the implementation of the enumerator. Computing a list of these objects as an orbit under the collineation group is, even taking into account the computation of the nice monomorphism of the collineation group, often much faster. Given a collection <var class="Arg">C</var>, the function <code class="file">AsList</code> performs this computation using the collineation group.</p>
+<p>From the example in <a href="chap3_mj.html#X7EBA57FC7CCF8449"><span class="RefLink">3.5-3</span></a> it can be noted that although the number of lines is only 315, already 3 seconds of computing time are needed. This is typically observed for elements of classical polar spaces different from points or generators, and is explained by the recursive nature of the implementation of the enumerator. Computing a list of these objects as an orbit under the collineation group is, even taking into account the computation of the nice monomorphism of the collineation group, often much faster. Given a collection <var class="Arg">C</var>, the function <code class="file">AsList</code> performs this computation using the collineation group.</p>
 
 <p><a id="X8289FCCC8274C89D" name="X8289FCCC8274C89D"></a></p>
 
@@ -1443,7 +1443,7 @@ ProjectiveSpace(6, 3)
 <h5>3.6-3 UnderlyingVectorSpace</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingVectorSpace</code>( <var class="Arg">ig</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: the underlying vectorspace of the Lie geometry <var class="Arg">ig</var></p>
+<p>Returns: the underlying vector space of the Lie geometry <var class="Arg">ig</var></p>
 
 
 <div class="example"><pre>
@@ -1606,7 +1606,7 @@ W(7, 3)
 
 <h4>3.8 <span class="Heading">Changing the ambient geometry of elements of a Lie geometry</span></h4>
 
-<p>A Lie geometry, i.e., an object in the category <code class="code">IsLieGeometry</code>, is naturally embedded in a projective space. This is of course in a mathematical sense. In <strong class="pkg">FinInG</strong>, certain embeddings are implemented by providing a mapping between geometries. The Lie geometries are in some sense <em>hard wired</em> embedded, just simply because a category containing elements of a Lie geometry, is always a subcategory of <code class="code">IsSubspaceOfProjectiveSpace</code>. As a consequence, operations applicable to objects in the category <code class="code">IsSubspaceOfProjectiveSpace</code> are by default applicable to objects in any subcategory, so to elements of any Lie geometry. When dealing with elements of e.g. different polar spaces in the same projective space, this yields a natural way of working with them, and investigating relations between them, without bothering about all necessary mappings. On the other hand, in some situations, it is impossible to decide in which geometry an element has to be considered. An easy example is the following. Consider two different quadrics in the same projective space. The intersection of two elements, one of each quadric, is clearly an element of the ambient projective space. But also of both quadrics. Without extra input of the user, the system cannot decide in which geometry to construct the intersection. To avoid complicated methods with many arguments, in such situations, the resulting element will be constructed in the common ambient projective space. Only in clear situations, where the ambient geometry of all elements is the same, and equal to the geometry of the resulting element, the resulting element will be constructed in this common geometry. We provide however conversion operations for elements of Lie gometries.</p>
+<p>A Lie geometry, i.e., an object in the category <code class="code">IsLieGeometry</code>, is naturally embedded in a projective space. This is of course in a mathematical sense. In <strong class="pkg">FinInG</strong>, certain embeddings are implemented by providing a mapping between geometries. The Lie geometries are in some sense <em>hard wired</em> embedded, just simply because a category containing elements of a Lie geometry, is always a subcategory of <code class="code">IsSubspaceOfProjectiveSpace</code>. As a consequence, operations applicable to objects in the category <code class="code">IsSubspaceOfProjectiveSpace</code> are by default applicable to objects in any subcategory, so to elements of any Lie geometry. When dealing with elements of e.g. different polar spaces in the same projective space, this yields a natural way of working with them, and investigating relations between them, without bothering about all necessary mappings. On the other hand, in some situations, it is impossible to decide in which geometry an element has to be considered. An easy example is the following. Consider two different quadrics in the same projective space. The intersection of two elements, one of each quadric, is clearly an element of the ambient projective space. But also of both quadrics. Without extra input of the user, the system cannot decide in which geometry to construct the intersection. To avoid complicated methods with many arguments, in such situations, the resulting element will be constructed in the common ambient projective space. Only in clear situations, where the ambient geometry of all elements is the same, and equal to the geometry of the resulting element, the resulting element will be constructed in this common geometry. We provide however conversion operations for elements of Lie geometries.</p>
 
 <p><a id="X8561C0117FD76C94" name="X8561C0117FD76C94"></a></p>
 

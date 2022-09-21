@@ -111,7 +111,7 @@
   [33X[1;0Y[29X[2XUnderlyingVectorSpace[102X( [3Xas[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya vector space[133X
   
-  [33X[0;0YThe underlying vectorspace of [22XAG(n,q)[122X is simply [22XV(n,q)[122X.[133X
+  [33X[0;0YThe underlying vector space of [22XAG(n,q)[122X is simply [22XV(n,q)[122X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XUnderlyingVectorSpace(AG(4,5));[127X[104X
@@ -388,7 +388,7 @@
   
   [33X[0;0YThe arguments [3Xu[103X and [3Xv[103X must be affine subspaces of a common affine space. Two
   subspaces  are  parallel  if and only if the direction space of the first is
-  contained in the direction space of the second or viceversa.[133X
+  contained in the direction space of the second or vice-versa.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xas := AffineSpace(3, 3);[127X[104X
@@ -622,7 +622,7 @@
   [33X[1;0Y[29X[2XAffineGroup[102X( [3Xas[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya group[133X
   
-  [33X[0;0YIf  [3Xas[103X is the affine space [22XAG(n,q)[122X This operation returnes the affine linear
+  [33X[0;0YIf  [3Xas[103X  is the affine space [22XAG(n,q)[122X This operation returns the affine linear
   group  [22XAGL(n,q)[122X  acting on [3Xas[103X. The elements of this group are projectivities
   of  the  associated  projective  space.  In  order  to get the full group of
   collineations   of  the  affine  space,  one  needs  to  use  the  operation

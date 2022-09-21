@@ -13,8 +13,8 @@ SetPackageInfo( rec(
 
 PackageName := "FinInG",
 Subtitle := "Finite Incidence Geometry",
-Version := "1.5",
-Date := "10/07/2022", # dd/mm/yyyy format
+Version := "1.5.1",
+Date := "21/09/2022", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 IssueTrackerURL := "https://github.com/gap-packages/FinInG/issues",
@@ -147,7 +147,7 @@ Persons := [
     PostalAddress := Concatenation(
                        "Fachbereich Mathematik\n",
                        "TU Kaiserslautern\n",
-                       "Gottlieb-Daimler-Straße 48\n",
+                       "Gottlieb-Daimler-StraÃŸe 48\n",
                        "67663 Kaiserslautern\n",
                        "Germany" ),
     Place         := "Kaiserslautern, Germany",
@@ -185,7 +185,7 @@ PackageDoc := rec(
 Dependencies := rec(
   GAP := ">=4.10",
   NeededOtherPackages := [
-          ["cvec", ">=2.7.4"],
+          ["cvec", ">=2.7.6"],
           ["Forms", ">=1.2.5"],
           ["GAPDoc", ">= 1.6.3"],
           ["GenSS", ">=1.6.6"],

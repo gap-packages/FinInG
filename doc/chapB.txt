@@ -11,28 +11,28 @@
   [1XB.1-1 CanonicalGramMatrix[101X
   
   [33X[1;0Y[29X[2XCanonicalGramMatrix[102X( [3Xtype[103X, [3Xd[103X, [3Xf[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10Ya gram matrix usable as input to construct a sesquilinear form[133X
+  [6XReturns:[106X  [33X[0;10Ya Gram matrix usable as input to construct a sesquilinear form[133X
   
-  [33X[0;0YThe  arguments  [3Xd[103X  and  [3Xf[103X  are  the  vector  dimension and the fininte field
-  respectively.   The   argument  [3Xtype[103X  is  eiter  "symplectic",  "hermitian",
+  [33X[0;0YThe  arguments  [3Xd[103X  and  [3Xf[103X  are  the  vector  dimension  and the finite field
+  respectively.   The  argument  [3Xtype[103X  is  either  "symplectic",  "hermitian",
   "hyperbolic", "elliptic" or "parabolic".[133X
   
-  [33X[0;0YIf [3Xtype[103X equals "symplectic", the gram matrix is[133X
+  [33X[0;0YIf [3Xtype[103X equals "symplectic", the Gram matrix is[133X
   
-  [33X[0;0YIf  [3Xtype[103X  equals  "hermitian",  the  gram  matrix  is the identity matrix of
+  [33X[0;0YIf  [3Xtype[103X  equals  "hermitian",  the  Gram  matrix  is the identity matrix of
   dimension [3Xd[103X over the field [22Xf=GF(q)[122X[133X
   
-  [33X[0;0YIf [3Xtype[103X equals "hyperbolic", the gram matrix is[133X
+  [33X[0;0YIf [3Xtype[103X equals "hyperbolic", the Gram matrix is[133X
   
   [33X[0;0Ywith and [22Xa=1[122X otherwise.[133X
   
-  [33X[0;0YIf [3Xtype[103X equals "ellipic", the gram matrix is[133X
+  [33X[0;0YIf [3Xtype[103X equals "elliptic", the Gram matrix is[133X
   
   [33X[0;0Ywith  [22Xt[122X  the primitive root of [22XGF(q)[122X if [22Xq ≡ 1 mathrmmod 4[122X or [22Xq ≡ 2 mathrmmod
   4[122X,  and  [22Xt=1[122X otherwise; and [22Xa=fracp+12[122X if [22Xp+1 ≡ 0 mathrmmod 4, q=p^h[122X and [22Xa=1[122X
   otherwise.[133X
   
-  [33X[0;0YIf [3Xtype[103X equals "parabolic", the gram matrix is[133X
+  [33X[0;0YIf [3Xtype[103X equals "parabolic", the Gram matrix is[133X
   
   [33X[0;0Ywith [22Xt[122X the primitive root of [22XGF(p)[122X and [22Xa=tfracp+12[122X if [22Xq ≡ 5 mathrmmod 8[122X or [22Xq
   ≡ 7 mathrmmod 8[122X, and [22Xt=a=1[122X otherwise.[133X
@@ -46,22 +46,22 @@
   [1XB.1-2 CanonicalQuadraticForm[101X
   
   [33X[1;0Y[29X[2XCanonicalQuadraticForm[102X( [3Xtype[103X, [3Xd[103X, [3Xf[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10Ya gram matrix usable as input to construct a quadratic form[133X
+  [6XReturns:[106X  [33X[0;10Ya Gram matrix usable as input to construct a quadratic form[133X
   
-  [33X[0;0YThe  arguments  [3Xd[103X  and  [3Xf[103X  are  the  vector  dimension and the fininte field
-  respectively.  The  argument  [3Xtype[103X  is  eiter  "hyperbolic",  "elliptic"  or
+  [33X[0;0YThe  arguments  [3Xd[103X  and  [3Xf[103X  are  the  vector  dimension  and the finite field
+  respectively.  The  argument  [3Xtype[103X  is  either  "hyperbolic",  "elliptic" or
   "parabolic". The matrix returned can be used to construct a quadratic form.[133X
   
-  [33X[0;0YIf  [3Xtype[103X  equals  "hyperbolic",  the gram matrix returned will result in the
+  [33X[0;0YIf  [3Xtype[103X  equals  "hyperbolic",  the Gram matrix returned will result in the
   quadratic form [22Xx_1x_2+ x_3x_4+...+ x_d-1x_d[122X[133X
   
-  [33X[0;0YIf  [3Xtype[103X  equals  "elliptic",  the  gram  matrix returned will result in the
+  [33X[0;0YIf  [3Xtype[103X  equals  "elliptic",  the  Gram  matrix returned will result in the
   quadratic  form  [22Xx_1^2+x_1x_2+ν x_2^2 + x_3x_4+...+ x_d-1x_d[122Xwith [22Xν=α^i[122X, with
   \alpha  the primitive element of the multiplicative group of [22XGF(q)[122X, which is
   in  GAP  [11XZ(q)[111X,  and [22Xi[122X the first number in [22X[0,1,...,q-2][122X for which [22Xx^2+x+ν[122X is
   irreducible over [22XGF(q)[122X.[133X
   
-  [33X[0;0YIf  [3Xtype[103X  equals  "parabolic",  the  gram matrix returned will result in the
+  [33X[0;0YIf  [3Xtype[103X  equals  "parabolic",  the  Gram matrix returned will result in the
   quadratic form [22Xx_1^2+x_2x_3 + ... x_d-1x_d[122X[133X
   
   [33X[0;0YThis  function  is  intended to be used only when the characteristic of [3Xf[103X is
@@ -82,12 +82,13 @@
   [33X[1;0Y[29X[2XSOdesargues[102X( [3Xe[103X, [3Xd[103X, [3Xf[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ythe special isometry group of a canonical orthogonal polar space[133X
   
-  [33X[0;0YThe argument [3Xe[103X determines the type of the othogonal polar space, i.e. -1,0,1
-  for  an  elliptic, hyperbolic, parabolic orthogonal space, respectively. The
-  argument  [3Xd[103X is the dimension of the underlying vector space, [3Xf[103X is the finite
-  field.  The  method  relies  on  [11XSO[111X, a GAP command returning the appropriate
-  matrix group. Internally, the invariant form is asked, and the base chage to
-  our canonical form is obtained using the package [5Xform[105X[133X
+  [33X[0;0YThe  argument  [3Xe[103X  determines  the  type  of the orthogonal polar space, i.e.
+  -1,0,1   for   an   elliptic,   hyperbolic,   parabolic   orthogonal  space,
+  respectively.  The  argument  [3Xd[103X  is  the  dimension of the underlying vector
+  space,  [3Xf[103X  is  the  finite  field.  The  method  relies on [11XSO[111X, a GAP command
+  returning  the  appropriate  matrix group. Internally, the invariant form is
+  asked,  and  the  base  change  to  our canonical form is obtained using the
+  package [5Xform[105X[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XSOdesargues(-1,6,GF(9));[127X[104X
@@ -104,12 +105,13 @@
   [33X[1;0Y[29X[2XGOdesargues[102X( [3Xe[103X, [3Xd[103X, [3Xf[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ythe isometry group of a canonical orthogonal polar space[133X
   
-  [33X[0;0YThe argument [3Xe[103X determines the type of the othogonal polar space, i.e. -1,0,1
-  for  an  elliptic, hyperbolic, parabolic orthogonal space, respectively. The
-  argument  [3Xd[103X is the dimension of the underlying vector space, [3Xf[103X is the finite
-  field.  The  method  relies  on  [11XGO[111X, a GAP command returning the appropriate
-  matrix group. Internally, the invariant form is asked, and the base chage to
-  our canonical form is obtained using the package [5Xform[105X[133X
+  [33X[0;0YThe  argument  [3Xe[103X  determines  the  type  of the orthogonal polar space, i.e.
+  -1,0,1   for   an   elliptic,   hyperbolic,   parabolic   orthogonal  space,
+  respectively.  The  argument  [3Xd[103X  is  the  dimension of the underlying vector
+  space,  [3Xf[103X  is  the  finite  field.  The  method  relies on [11XGO[111X, a GAP command
+  returning  the  appropriate  matrix group. Internally, the invariant form is
+  asked,  and  the  base  change  to  our canonical form is obtained using the
+  package [5Xform[105X[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XGOdesargues(-1,6,GF(9));[127X[104X
@@ -129,7 +131,7 @@
   [33X[0;0YThe  argument  [3Xd[103X  is  the dimension of the underlying vector space, [3Xf[103X is the
   finite  field.  The  method  relies  on  [11XSU[111X,  a  GAP  command  returning the
   appropriate  matrix  group. Internally, the invariant form is asked, and the
-  base chage to our canonical form is obtained using the package [5Xform[105X[133X
+  base change to our canonical form is obtained using the package [5Xform[105X[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XSUdesargues(4,GF(9));[127X[104X
@@ -145,7 +147,7 @@
   [33X[0;0YThe  argument  [3Xd[103X  is  the dimension of the underlying vector space, [3Xf[103X is the
   finite  field.  The  method  relies  on  [11XGU[111X,  a  GAP  command  returning the
   appropriate  matrix  group. Internally, the invariant form is asked, and the
-  base chage to our canonical form is obtained using the package [5Xform[105X[133X
+  base change to our canonical form is obtained using the package [5Xform[105X[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XGUdesargues(4,GF(9));[127X[104X
@@ -161,7 +163,7 @@
   [33X[0;0YThe  argument  [3Xd[103X  is  the dimension of the underlying vector space, [3Xf[103X is the
   finite  field.  The  method  relies  on  [11XSp[111X,  a  GAP  command  returning the
   appropriate  matrix  group. Internally, the invariant form is asked, and the
-  base chage to our canonical form is obtained using the package [5Xform[105X[133X
+  base change to our canonical form is obtained using the package [5Xform[105X[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XSpdesargues(6,GF(11));[127X[104X
@@ -175,8 +177,8 @@
   [6XReturns:[106X  [33X[0;10Ythe isometry group of a canonical symplectic form[133X
   
   [33X[0;0YThe  argument  [3Xd[103X  is  the dimension of the underlying vector space, [3Xf[103X is the
-  finite field. Internally, the invariant form is asked, and the base chage to
-  our canonical form is obtained using the package [5Xform[105X[133X
+  finite  field.  Internally, the invariant form is asked, and the base change
+  to our canonical form is obtained using the package [5Xform[105X[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XGeneralSymplecticGroup(6,GF(7));[127X[104X
@@ -192,7 +194,7 @@
   [33X[0;0YThe  argument  [3Xd[103X  is  the dimension of the underlying vector space, [3Xf[103X is the
   finite  field.  The  method  relies  on  [11XSp[111X,  a  GAP  command  returning the
   appropriate  matrix  group. Internally, the invariant form is asked, and the
-  base chage to our canonical form is obtained using the package [5Xform[105X[133X
+  base change to our canonical form is obtained using the package [5Xform[105X[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XGSpdesargues(4,GF(9));[127X[104X
@@ -272,7 +274,7 @@
   [33X[0;0YThe  argument  [3Xd[103X  is  the dimension of the underlying vector space, [3Xf[103X is the
   finite  field.  The  method  relies  on  [11XGO[111X,  a  GAP  command  returning the
   appropriate  matrix  group. Internally, the invariant form is asked, and the
-  base  chage  to  our  canonical  form  is  obtained  using the package [5Xform[105X.
+  base  change  to  our  canonical  form  is  obtained using the package [5Xform[105X.
   Furthermore, the generators to be added are computed.[133X
   
   [4X[32X  Example  [32X[104X
@@ -305,7 +307,7 @@
   [33X[0;0YThe  argument  [3Xd[103X  is  the dimension of the underlying vector space, [3Xf[103X is the
   finite  field.  The  method  relies  on  [11XGU[111X,  a  GAP  command  returning the
   appropriate  matrix  group. Internally, the invariant form is asked, and the
-  base  chage  to  our  canonical  form  is  obtained  using the package [5Xform[105X.
+  base  change  to  our  canonical  form  is  obtained using the package [5Xform[105X.
   Furthermore, the generators to be added are computed.[133X
   
   [4X[32X  Example  [32X[104X
@@ -317,25 +319,25 @@
   [1XB.2-15 G2fining[101X
   
   [33X[1;0Y[29X[2XG2fining[102X( [3Xd[103X, [3Xf[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10Ythe chevalley group G_2(q)[133X
+  [6XReturns:[106X  [33X[0;10Ythe Chevalley group G_2(q)[133X
   
   [33X[0;0YThis  group  is  the  group  of  projectivities stabilising the split Cayley
-  hexagon  embedded in the paraboloc quadric [22XQ(6,q):[122X[22XX_0X_4+X_1X_5+X_2X_6=X_3^2[122X
+  hexagon  embedded in the parabolic quadric [22XQ(6,q):[122X[22XX_0X_4+X_1X_5+X_2X_6=X_3^2[122X
   .  [3Xf[103X  must  be a finite field and [3Xd[103X must be 5 or 6. When [3Xd[103X is 5, [3XF[103X must be a
   field  of even order, and then the returned group consists of projectivities
-  of  [22XW(5,q)[122X.  The  generators  of  this  group  are described exaplicitely in
-  [VM98], Appendix D. A correction can be found in [Off00]. However, also this
-  source contains a mistake.[133X
+  of  [22XW(5,q)[122X. The generators of this group are described explicitly in [VM98],
+  Appendix  D. A correction can be found in [Off00]. However, also this source
+  contains a mistake.[133X
   
   [1XB.2-16 3D4fining[101X
   
-  [33X[1;0Y[29X[2X3D4fining[102X( [3Xd[103X, [3Xf[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10Ythe chevalley group 3D4(q)[133X
+  [33X[1;0Y[29X[2X3D4fining[102X( [3Xf[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe Chevalley group 3D4(q)[133X
   
-  [33X[0;0Y[3Xd[103X must equal 7 and [3Xf[103X must be a field of order [22Xq^3[122X This group is the group of
+  [33X[0;0YThe  argument  [3Xf[103X  must  be  a  field of order [22Xq^3[122X This group is the group of
   collineations  stabilising  the  twisted  triality  hexagon  embedded in the
   hyperbolic  quadric  [22XQ+(7,q)[122X:  [22XX_0X_4+X_1X_5+X_2X_6+X_3X_7[122X The generators of
-  this group are described exaplicitely in [VM98], Appendix D.[133X
+  this group are described explicitly in [VM98], Appendix D.[133X
   
   
   [1XB.3 [33X[0;0YBasis of the collineation groups[133X[101X

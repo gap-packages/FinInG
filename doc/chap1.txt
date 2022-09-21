@@ -4,7 +4,7 @@
   
   [1X1.1 [33X[0;0YPhilosophy[133X[101X
   
-  [33X[0;0Y[5XFinInG[105X (pronounciation: []) is a package for computation in Finite Incidence
+  [33X[0;0Y[5XFinInG[105X  (pronunciation: []) is a package for computation in Finite Incidence
   Geometry. It provides users with the basic tools to work in various areas of
   finite  geometry  from  the realms of projective spaces to the flat lands of
   generalised  polygons.  The algebraic power of GAP is employed, particularly
@@ -32,7 +32,7 @@
     [4X[28X        Author = {Bamberg, John and Betten, Anton and Cara, Philippe and[128X[104X
     [4X[28X            De Beule, Jan and Lavrauw, Michel and Neunh\"offer, Max },[128X[104X
     [4X[28X        Key = {fining},[128X[104X
-    [4X[28X        Title = {{FinInG -- Finite Incidence Geometry, Version 1.5}},[128X[104X
+    [4X[28X        Title = {{FinInG -- Finite Incidence Geometry, Version 1.5.1}},[128X[104X
     [4X[28X        Url = {\verb+(http://www.fining.org)+},[128X[104X
     [4X[28X        Year = 2022}[128X[104X
   [4X[32X[104X
@@ -46,7 +46,7 @@
     [4X[28XJ.~Bamberg, A.~Betten, {Ph}. Cara, J.~De~Beule, M.~Lavrauw, and[128X[104X
     [4X[28X  M.~Neunh\"offer.[128X[104X
     [4X[28X\newblock {\em Finite Incidence Geometry}.[128X[104X
-    [4X[28X\newblock FInInG -- a {GAP} package, version 1.5, 2022.[128X[104X
+    [4X[28X\newblock FInInG -- a {GAP} package, version 1.5.1, 2022.[128X[104X
   [4X[32X[104X
   
   [33X[0;0YWhen linking to FinInG from a web page you can use the link[133X
@@ -61,7 +61,7 @@
   [33X[0;0YThis  chapter  (section  [14X1.4[114X)  describes  the  installation  of the package.
   Chapter [14X2[114X contains some extended examples to introduce the user to the basic
   functionality  and  philosophy to get started. Chapter [14X3[114X contains a rigorous
-  discription  of  the  basic structures. This chapter can be omitted at first
+  description  of  the  basic structures. This chapter can be omitted at first
   reading,  since  the  set  of  consequent  chapters  is also self contained.
   Chapters  [14X4[114X,  [14X5[114X  and  [14X6[114X  deal  with projective spaces, projective semilinear
   groups  and  polarities of projective spaces, respectively. In Chapter [14X7[114X the
@@ -84,11 +84,11 @@
   distribution.  However,  the  packages  [5Xcvec[105X, [5XGRAPE[105X, [5XIO[105X, and [5XOrb[105X may require
   additional compilation (cfr. infra for detailed instructions). Note that the
   [5XIO[105X  is  a package required by [5Xcvec[105X and [5XOrb[105X, and is also part of the standard
-  [5XGAP[105X  distrubution.  Shortly  summarized, to get [5XFinInG[105X working, download and
+  [5XGAP[105X  distribution.  Shortly  summarized, to get [5XFinInG[105X working, download and
   install  [5XGAP[105X  as explained in its installation instructions, and, under UNIX
   like  systems  (including  MacOS),  make  sure  that  the compilation of the
   packages   [5Xcvec[105X,  [5XGRAPE[105X,  [5XIO[105X,  and  [5XOrb[105X  is  done.  Note  that  the  windows
-  distrubution  of  [5XGAP[105X  contains  precompiled  binaries of these packages, so
+  distribution  of  [5XGAP[105X  contains  precompiled  binaries of these packages, so
   under  Windows, no further steps are required after installing [5XGAP[105X according
   to  its  installation  instructions.  In  the  next section we summarize the
   installation procedure under UNIX like systems.[133X
@@ -98,7 +98,7 @@
   
   [33X[0;0YThe  installation  of  [5XGAP[105X  itself  is  generic  for  each UNIX like system,
   including  the  different  flavours  of  Mac  OS.  You  only need a terminal
-  application,  and  you need acces to the standard unix tools gunzip and tar,
+  application,  and you need access to the standard unix tools gunzip and tar,
   and the make tools. Detailed information on how to install [5XGAP[105X, can be found
   in  the  documentation  of  [5XGAP[105X.  The  installation  procedure for [5XFinInG[105X, a
   standard  GAP  package,  does  [13Xnot[113X require compilation, however the packages
@@ -141,7 +141,7 @@
   commonly  used  directory  under  UNIX  like  systems to install software is
   "/usr/local",  so  gap  might  reside  in  "/usr/local/gap4r8"  too.  In all
   examples  in  this  section,  we  assume  your  [5XGAP[105X  installation resides in
-  "/opt/gap4r8".  Therefore,  replace  any occurence of "/opt/gap4r8" with the
+  "/opt/gap4r8".  Therefore,  replace any occurrence of "/opt/gap4r8" with the
   actual  directory  of  your [5XGAP[105X installation when executing the installation
   steps.  Three steps will be necessary to compile the [5XIO[105X package: go into the
   correct  directory,  and  issue  the  'configure' command and then issue the
@@ -179,7 +179,7 @@
   [4X[32X[104X
   
   [33X[0;0YNow starting [5XGAP[105X should produce the following output, notice the presence of
-  "IO 4.4.6" as one of the loaded packges.[133X
+  "IO 4.4.6" as one of the loaded packages.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28Xjdebeule ~  $ gap4r8[128X[104X
@@ -239,8 +239,8 @@
   [4X[32X[104X
   
   [33X[0;0YNote  that  warnings may occur during the compilation process, which can all
-  be ignored. If compilation of these packages has been succesful, restart [5XGAP[105X
-  and  load  [5XFinInG[105X  using  "LoadPackage("fining")". The output should look as
+  be  ignored.  If  compilation of these packages has been successful, restart
+  [5XGAP[105X and load [5XFinInG[105X using "LoadPackage("fining")". The output should look as
   follows.[133X
   
   [4X[32X  Example  [32X[104X
@@ -425,7 +425,7 @@
   [1X1.5 [33X[0;0YThe Development Team[133X[101X
   
   [33X[0;0YThis  is  the  development  team  (without Anton), meeting in St. Andrews in
-  september  2008,  from  left  to  right:  Philippe Cara, Michel Lavrauw, Max
+  September  2008,  from  left  to  right:  Philippe Cara, Michel Lavrauw, Max
   Neunhöffer, Jan De Beule and John Bamberg.[133X
   
   [33X[0;0YThe  development  team meeting again (without Anton and Max), now in Vicenza

@@ -236,7 +236,7 @@
   [33X[1;0Y[29X[2XIsFirmGeometry[102X( [3Xcg[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ytrue if and only if [3Xcg[103X is firm.[133X
   
-  [33X[0;0YAn  incidence  geometry  is  said  to  be  [13Xfirm[113X  if every nonmaximal flag is
+  [33X[0;0YAn  incidence  geometry  is  said  to  be  [13Xfirm[113X if every non-maximal flag is
   contained in at least two chambers. [3Xcg[103X must be a coset geometry.[133X
   
   [1X13.1-15 IsThickGeometry[101X
@@ -244,7 +244,7 @@
   [33X[1;0Y[29X[2XIsThickGeometry[102X( [3Xcg[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ytrue if and only if [3Xcg[103X is thick.[133X
   
-  [33X[0;0YAn  incidence  geometry  is  said  to  be  [13Xthick[113X if every nonmaximal flag is
+  [33X[0;0YAn  incidence  geometry  is  said  to  be [13Xthick[113X if every non-maximal flag is
   contained in at least three chambers. [3Xcg[103X must be a coset geometry.[133X
   
   [1X13.1-16 IsThinGeometry[101X
@@ -829,7 +829,7 @@
   attribute.  Also  the list of rank 2 residues of the geometry is added as an
   attribute  once  these  have been computed. This is done with the operations
   [11XRank2Residues[111X  (to  add  the  attribute)  and  [11XMakeRank2Residue[111X (to actually
-  compute  the  resiudes). These operations are not for everyday use and hence
+  compute  the  residues). These operations are not for everyday use and hence
   remain undocumented.[133X
   
   [33X[0;0YSince  the  geometry  is flag-transitive, all chambers are equivalent. Let's
@@ -840,8 +840,8 @@
   by  some parameters: the gonality and the point and line diameters. For each
   type  [22Xi[122X,  we  also  define  the  [22Xi[122X-order  to  be one less than the number of
   elements  of  type  [22Xi[122X  in  the residue of a(ny) flag of type [22XI∖{i}[122X. All this
-  information  is  depicted  in a [13Xdiagram[113X which is bascically a labelled graph
-  with  vertex  set [22XI[122X and edges whenever the point diamater, the line diameter
+  information  is  depicted  in  a [13Xdiagram[113X which is basically a labelled graph
+  with  vertex  set [22XI[122X and edges whenever the point diameter, the line diameter
   and the gonality are all greater than [22X2[122X.[133X
   
   [1X13.3-1 DiagramOfGeometry[101X
@@ -879,7 +879,7 @@
   for  each  type  [22Xi[122X  the  [22Xi[122X-order  and the number of elements of type [22Xi[122X. This
   behaviour  can  be  changed  by providing a [3Xvertexverbosity[103X level. A value [3X2[103X
   results in no label under the vertices and a value [3X1[103X gives only the [22Xi[122X-order.
-  Any  other  potitive integer value yields the default behaviour. The default
+  Any  other  positive integer value yields the default behaviour. The default
   labels  for  the  edges  of  the  diagram use the standard convention that a
   [22X[g,dp,dl][122X-gon  with  all  three  parameters  equal is labelled only with the
   number  [22Xg[122X.  Putting  [3Xedgeverbosity[103X  equal  to  [22X2[122X puts no labels at all. This

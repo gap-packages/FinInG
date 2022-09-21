@@ -1,7 +1,7 @@
 name: FinInG
-version: "1.5"
+version: "1.5.1"
 license: "GPL-2.0-or-later"
-date: 2022-07-10
+date: 2022-09-21
 description: |
     Finite Incidence Geometry
 
@@ -35,7 +35,7 @@ GAP: ">=4.10"
 
 needed-pkgs:
     - name: "cvec"
-      version: ">=2.7.4"
+      version: ">=2.7.6"
       url: "https://gap-packages.github.io/cvec"
     - name: "Forms"
       version: ">=1.2.5"
@@ -59,9 +59,9 @@ packageinfo: https://gap-packages.github.io/FinInG/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/gap-packages/FinInG/releases/download/v1.5/fining-1.5.tar.gz
+      url: https://github.com/gap-packages/FinInG/releases/download/v1.5.1/fining-1.5.1.tar.gz
     - name: .tar.bz2
-      url: https://github.com/gap-packages/FinInG/releases/download/v1.5/fining-1.5.tar.bz2
+      url: https://github.com/gap-packages/FinInG/releases/download/v1.5.1/fining-1.5.1.tar.bz2
 
 abstract: |
     <span class="pkgname">FinInG</span> is a package for computation in Finite Incidence Geometry. It provides users with the basic tools to work in  various areas of finite geometry from the realms of projective spaces to the flat  lands of generalised polygons. The algebraic power of GAP is employed, particularly  in its facility with matrix and permutation groups.
@@ -75,7 +75,7 @@ citeas: |
     <p class='BibEntry'>
     [<span class='BibKey'>BBCBLNH22</span>]   <b class='BibAuthor'>Bamberg, J., Betten, A., Cara, P., De Beule, J., Lavrauw, M., Neunhoeffer, M. and Horn, M.</b>,
      <i class='BibTitle'>FinInG, Finite Incidence Geometry,
-             Version 1.5</i>
+             Version 1.5.1</i>
      (<span class='BibYear'>2022</span>)<br />
     (<span class='BibNote'>Refereed GAP package</span>),
     <span class='BibHowpublished'><a href="https://gap-packages.github.io/FinInG">https://gap-packages.github.io/FinInG</a></span>.
@@ -83,11 +83,11 @@ citeas: |
     
 
 bibtex: |
-    @misc{ FinInG1.5,
+    @misc{ FinInG1.5.1,
       author =           {Bamberg,  J. and Betten, A. and Cara, P. and De Beule,
                           J. and Lavrauw, M. and Neunhoeffer, M. and Horn, M.},
-      title =            {{FinInG}, Finite Incidence Geometry, {V}ersion 1.5},
-      month =            {Jul},
+      title =            {{FinInG}, Finite Incidence Geometry, {V}ersion 1.5.1},
+      month =            {Sep},
       year =             {2022},
       note =             {Refereed GAP package},
       howpublished =     {\href          {https://gap-packages.github.io/FinInG}

@@ -75,7 +75,7 @@
   [33X[0;0Y[10XIsClassicalGQ[110X  is  declared  as a subcategory of [10XIsGeneralisedQuadrangle[110X and
   [10XIsClassicalPolarSpace[110X.  All  classical  polar  spaces  of  rank  2 belong to
   [10XIsClassicalGQ[110X.     [10XIsElationGQ[110X     is    declared    as    subcategory    of
-  [10XIsGeneralisedQuadrangle[110X.  Elation GQs will be discusedd in detail in Section
+  [10XIsGeneralisedQuadrangle[110X.  Elation GQs will be discussed in detail in Section
   [14X12.6[114X[133X
   
   [4X[32X  Example  [32X[104X
@@ -721,10 +721,10 @@
   is easier to work with. Likewise, if [3Xgp[103X is an elation generalised quadrangle
   and  it  has  an  elation  group,  then we use the elation group's action to
   efficiently  compute  the  block  design. We should also point out that this
-  method  returns  a  [13Xmutable[113X  attribute  of [3Xgp[103X, so that accquired information
-  about  the block design can be added. For example, the automorphism group of
-  the  block design may be computed after the design is stored as an attribute
-  of [3Xgp[103X. Normally, attributes of GAP objects are immutable.[133X
+  method returns a [13Xmutable[113X attribute of [3Xgp[103X, so that acquired information about
+  the  block  design  can be added. For example, the automorphism group of the
+  block  design  may be computed after the design is stored as an attribute of
+  [3Xgp[103X. Normally, attributes of GAP objects are immutable.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XLoadPackage("design");[127X[104X
@@ -934,7 +934,7 @@
   is   returned.   Otherwise   [9Xfail[109X  is  returned.  For  generalised  polygons
   constructed with [10XGeneralisedPolygonByBlocks[110X, [10XGeneralisedPolygonByElements[110X an
   [10XGeneralisedPolygonByInidenceMatrix[110X,  the underlying graph is used. Note that
-  the behavior of [11XMeet[111X is different for elements of generalised polygongs that
+  the  behavior of [11XMeet[111X is different for elements of generalised polygons that
   belong to [10XIsLieGeometry[110X, see [14X4.2-17[114X[133X
   
   [4X[32X  Example  [32X[104X
@@ -1071,7 +1071,7 @@
   natural  incidence  of  the  underlying  projective space. Denote the set of
   [22Xi[122X-points as [22XP^(i)[122X , [22Xi=0,1,2[122X.[133X
   
-  [33X[0;0YA  triality  of  [22XΩ(7,q)[122X  is  a map [22Xτ: P^(i) → P^(i+1)[122X (where [22Xi+1[122X is computed
+  [33X[0;0YA  triality  of  [22XΩ(7,q)[122X  is a map [22Xτ: P^(i) -> P^(i+1)[122X (where [22Xi+1[122X is computed
   modulo  3)  preserving  the  incidence and for which [22Xτ^3 = 1[122X . Note that the
   image  of  a  line under [22Xτ[122X is determined by the image of the points incident
   with the line.[133X
@@ -1086,7 +1086,7 @@
   types of trialities, for some of them the absolute geometry is degenerate.[133X
   
   [33X[0;0YThe  triality used in [5XFinInG[105X to construct the classical generalised hexagons
-  is fixed. It is described explicitely in [VM98]. To describe the triality, a
+  is  fixed. It is described explicitly in [VM98]. To describe the triality, a
   trilinear  form expressing the incidence between [22Xi[122X-points of [22XΩ(7,q)[122X is used.
   Given the fact that, because of the existence of a triality, the role of the
   0,  1  and 2 points are the same, each of the 1 and 2 points can be labelled
@@ -1109,7 +1109,7 @@
   [33X[0;0YLet  [22Xσ[122X be an automorphism of [22XGF(q)[122X of order [22X3[122X, or the identity. Consider the
   map[133X
   
-  [33X[0;0Y[22Xτ_σ: P^(i) → P^(i+1)[122X[133X
+  [33X[0;0Y[22Xτ_σ: P^(i) -> P^(i+1)[122X[133X
   
   [33X[0;0Y[22X(x_j) ↦ (x_j^σ)[122X, [22Xj=0... 7[122X .[133X
   
@@ -1127,14 +1127,14 @@
   automorphism  of  order three if and only if its order equals [22Xq^3[122X. So, for [22XK[122X
   equal  to [22XGF(q)[122X and [22Xσ=1[122X, [22XΓ^(i)[122X is a generalised hexagon of order [22Xq[122X, which is
   called  the  [13Xsplit  Cayley  hexagon of order [22Xq[122X[113X, denoted [22XH(q)[122X. For [22XK[122X equal to
-  [22XGF(q^3)[122X,  and  [22Xσ[122X  a  non-trival  field  automorphism  of order [22X3[122X, [22XΓ^(i)[122X is a
+  [22XGF(q^3)[122X,  and  [22Xσ[122X  a  non-trivial  field  automorphism of order [22X3[122X, [22XΓ^(i)[122X is a
   generalised  hexagon of order [22X(q^3,q)[122X , which is called the [13Xtwisted triality
   hexagon  of  order  [22X(q^3,q)[122X  [113X,  denoted  [22XT(q^3,q)[122X  .  Note  that for a given
   triality,  the  hexagons [22XΓ^(i)[122X , [22Xi=0,1,2[122X are isomorphic. Consequently, [22XΓ^(0)[122X
   is a point-line geometry of which the point set, line set respectively, is a
   subset  of  the  points, lines respectively of [22XQ^+(7,q)[122X. Finally, we mention
   the  following  important  theorem,  which  was shown by Tits ([Tit59]): the
-  split Cayley hexagon, obtained by the triliaty with [22Xσ=1[122X, is contained in the
+  split Cayley hexagon, obtained by the triality with [22Xσ=1[122X, is contained in the
   hyperplane with equation [22XX_3+X_7=0[122X , which intersects the hyperbolic quadric
   in  the parabolic quadric [22XQ(6,q)[122X. The points of the split Cayley hexagon are
   the points of [22XQ(6,q)[122X.[133X
@@ -1211,15 +1211,15 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [1X12.5-5 VectorSpaceToElement[101X
+  [1X12.5-5 vector spaceToElement[101X
   
-  [33X[1;0Y[29X[2XVectorSpaceToElement[102X( [3Xgh[103X, [3Xvec[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10Yan element of a classical generlised hexagon[133X
+  [33X[1;0Y[29X[2Xvector spaceToElement[102X( [3Xgh[103X, [3Xvec[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan element of a classical generalized hexagon[133X
   
   [33X[0;0YThe  argument  [3Xvec[103X  is  one  vector or a list of vectors from the underlying
-  vectorspace of [3Xgh[103X. This operation checks whether [3Xvec[103X represents a point or a
-  line  of [3Xgh[103X. Note that vectors and matrices in different representations are
-  allowed as argument.[133X
+  vector  space of [3Xgh[103X. This operation checks whether [3Xvec[103X represents a point or
+  a  line  of  [3Xgh[103X. Note that vectors and matrices in different representations
+  are allowed as argument.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xps := ParabolicQuadric(6,9);[127X[104X
@@ -1247,12 +1247,12 @@
   [1X12.5-6 ObjectToElement[101X
   
   [33X[1;0Y[29X[2XObjectToElement[102X( [3Xgh[103X, [3Xobj[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10Yan element of a classical generlised hexagon[133X
+  [6XReturns:[106X  [33X[0;10Yan element of a classical generalized hexagon[133X
   
   [33X[0;0YThe  argument  [3Xobj[103X  is  one  vector or a list of vectors from the underlying
-  vectorspace of [3Xgh[103X. This operation checks whether [3Xobj[103X represents a point or a
-  line  of [3Xgh[103X. Note that vectors and matrices in different representations are
-  allowed as argument.[133X
+  vector  space of [3Xgh[103X. This operation checks whether [3Xobj[103X represents a point or
+  a  line  of  [3Xgh[103X. Note that vectors and matrices in different representations
+  are allowed as argument.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xmat := IdentityMat(8,GF(5^3));[127X[104X
@@ -1461,7 +1461,7 @@
   there are no further incidences.[133X
   
   [33X[0;0YIt  is  shown,  see  e.g.  the standard work in this field of Payne and Thas
-  [PT84],  that  this point-line geoemtry is a generalised quadrangle of order
+  [PT84],  that  this point-line geometry is a generalised quadrangle of order
   [22X(s,t)[122X.[133X
   
   [33X[0;0Y[5XFinInG[105X  provides  functions  to  construct  elation  generalised quadrangles
@@ -1800,7 +1800,7 @@
   
   [33X[0;0YLet  [22XC={A_i: i=1 ... q}[122X be a set of [22Xq[122X distinct upper triangle [22X2 × 2[122X matrices
   over  the  finite  field  [22XGF(q)[122X.  Then  [22XC[122X is called a [13Xq-clan[113X if [22XA_r - A_t[122X is
-  anistropic for [22Xr ≠ t[122X.[133X
+  anisotropic for [22Xr ≠ t[122X.[133X
   
   [33X[0;0YDefine  [22XG  =  {(α,c,β):  α,β  ∈  GF(q)^2, c ∈ GF(q)}[122X , and define the binary
   operator  [22X×[122X  as  [22X(α,c,β) × (α',c',β') = (α + α',c+c'+β ⋅ α'^T,β + β')[122X . Then

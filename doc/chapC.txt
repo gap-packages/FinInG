@@ -10,11 +10,11 @@
   [33X[1;0Y[29X[2XShrinkVec[102X( [3Xf1[103X, [3Xf2[103X, [3Xv[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya vector[133X
   
-  [33X[0;0YThe  argument [3Xf2[103X is a subfield of [3Xf1[103X and v is vector in a vectorspace [22XV[122X over
+  [33X[0;0YThe argument [3Xf2[103X is a subfield of [3Xf1[103X and v is vector in a vector space [22XV[122X over
   [3Xf2[103X.  The  second  flavour  Returns  return  the  vector of length [22Xd/t[122X, where
   [22Xd=dim(V)[122X,   and   [22Xt=[f1:f2][122X.  The  first  flavour  uses  the  natural  basis
   [11XBasis(AsVectorSpace(f2,f1))[111X.  It  is not checked whether [3Xf2[103X is a subfield of
-  [3Xf1[103X,  but it is checked whether the lengt of [3Xv[103X is a multiple of the degree of
+  [3Xf1[103X, but it is checked whether the length of [3Xv[103X is a multiple of the degree of
   the field extension.[133X
   
   [1XC.1-2 ShrinkMat[101X
@@ -23,12 +23,12 @@
   [33X[1;0Y[29X[2XShrinkMat[102X( [3Xf1[103X, [3Xf2[103X, [3Xmatrix[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya matrix[133X
   
-  [33X[0;0YLet  [22XK[122X be the field [22XGF(q)[122X and let [22XL[122X be the field [22XGF(q^t)[122X. Asumme that [22XB[122X is a
+  [33X[0;0YLet  [22XK[122X be the field [22XGF(q)[122X and let [22XL[122X be the field [22XGF(q^t)[122X. Assume that [22XB[122X is a
   basis  for  [22XL[122X as [22XK[122X vector space. Let A=(a<sub>ij </sub>) be a matrix over [22XL[122X.
   The  result  of  [11XBlownUpMat(B,A)[111X  is  the matrix [22XM=(m_ij)[122X , where each entry
   [22Xa=a_ij[122X is replaced by the [22Xt × t[122X matrix [22XM_a[122X , representing the linear map [22Xx ↦
   ax[122X  with  respect  to  the basis [22XB[122X. This means that if [22XB={b_1,b_2,...,b_t}[122X ,
-  then  row  [22Xj[122X  is  the row of the [22Xt[122X coefficients of [22Xab_j[122X with resepect to the
+  then  row  [22Xj[122X  is  the  row of the [22Xt[122X coefficients of [22Xab_j[122X with respect to the
   basis  [22XB[122X.  The operation [11XShrinkMat[111X implements the converse of [11XBlownUpMat[111X. It
   is  checked if the input is a blown up matrix as follows. Let [22XA[122X be a [22Xtm × tn[122X
   matrix.  For  each [22Xt × t[122X block, say [22XM[122X, we need to check that the set [22X{b_i^-1
@@ -46,10 +46,10 @@
   [33X[1;0Y[29X[2XBlownUpProjectiveSpace[102X( [3Xbasis[103X, [3Xpg1[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya projective space[133X
   
-  [33X[0;0YLet  [3Xbasis[103X  be  a  basis  of  the  field [22XGF(q^t)[122X that is an extension of the
-  basefield  of  the  [22Xr-1[122X  dimensional  projective  space  [3Xpg1[103X. This operation
-  returns  the  [22Xrt-1[122X dimensional projective space over [22XGF(q)[122X. The basis itself
-  is only used to determine the field [22XGF(q^t)[122X.[133X
+  [33X[0;0YLet  [3Xbasis[103X  be a basis of the field [22XGF(q^t)[122X that is an extension of the base
+  field  of  the  [22Xr-1[122X dimensional projective space [3Xpg1[103X. This operation returns
+  the  [22Xrt-1[122X  dimensional projective space over [22XGF(q)[122X. The basis itself is only
+  used to determine the field [22XGF(q^t)[122X.[133X
   
   [1XC.1-4 BlownUpProjectiveSpaceBySubfield[101X
   
@@ -57,7 +57,7 @@
   [6XReturns:[106X  [33X[0;10Ya projective space[133X
   
   [33X[0;0YBlows  up  a  projective  space [3Xpg[103X with respect to the standard basis of the
-  basefield of [3Xpg[103X over the [3Xsubfield[103X.[133X
+  base field of [3Xpg[103X over the [3Xsubfield[103X.[133X
   
   [1XC.1-5 BlownUpSubspaceOfProjectiveSpace[101X
   
@@ -76,7 +76,7 @@
   [6XReturns:[106X  [33X[0;10Ya subspace of a projective space[133X
   
   [33X[0;0YBlows up a [3Xsubspace[103X of a projective space with respect to the standard basis
-  of  the  basefield  of [3Xsubspace[103X over the [3Xsubfield[103X, using field reduction and
+  of  the  base field of [3Xsubspace[103X over the [3Xsubfield[103X, using field reduction and
   returns  it  a subspace of the projective space obtained from blowing up the
   ambient projective space of [3Xsubspace[103X over the subfield.[133X
   
@@ -144,8 +144,8 @@
   [33X[1;0Y[29X[2XIsomorphismPolarSpacesProjectionFromNucleus[102X( [3Xquadric[103X, [3Xw[103X, [3Xboolean[103X ) [32X operation[133X
   
   [33X[0;0YThis  operation  returns  the  isomorphism between a parabolic quadric and a
-  sympletic  polar  space.  Although  it is checked whether the base field and
-  rank  of  both  polar spaces are equal, this operation is menat for internal
+  symplectic  polar  space.  Although it is checked whether the base field and
+  rank  of  both  polar spaces are equal, this operation is meant for internal
   use only. This operation is called by the operation [11XIsomorphismPolarSpaces[111X.[133X
   
   [1XC.3-3 IsomorphismPolarSpacesNC[101X

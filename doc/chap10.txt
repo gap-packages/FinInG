@@ -4,7 +4,7 @@
   [33X[0;0YHere  we  describe  what  is  meant by a [13Xgeometry morphism[113X in [5XFinInG[105X and the
   various  operations  and  tools  available to the user. When using groups in
   [5XGAP[105X,  we often use homomorphisms to pass from one situation to another, even
-  though  mathematically  it  may  appear  to  be  unneccessary,  there can be
+  though  mathematically  it  may  appear  to  be  unnecessary,  there  can be
   ambiguities  if  the  functionality  is  too  flexible. This also applies to
   finite  geometry.  Take  for  example  the  usual  exercise of thinking of a
   hyperplane  in  a  projective  space as another projective space. To conform
@@ -124,7 +124,7 @@
   [33X[0;0YThe arguments [3Xps1[103X and [3Xps2[103X are [13Xequivalent[113X polar spaces, i.e. up to coordinate
   transformation, the underlying sesquilinear or quadratic form determines the
   same  polar  space,  or, [3Xps1[103X is a parabolic quadric over a finite field [22Xf[122X of
-  even  charateristic  in dimension [22X2n[122X and [3Xps2[103X is a symplectic space over [22Xf[122X in
+  even  characteristic in dimension [22X2n[122X and [3Xps2[103X is a symplectic space over [22Xf[122X in
   dimension  [22X2n-1[122X,  then this operation returns a geometry isomorphism between
   them.  The  optional third argument [3Xboolean[103X can take either [10Xtrue[110X or [10Xfalse[110X as
   input,  and  then  the  operation  will  or will not compute the intertwiner
@@ -199,15 +199,15 @@
   [33X[0;0YThe Klein correspondence is a well known geometry morphism from the lines of
   [22XPG(3,q)[122X  to the points of a hyperbolic quadric in [22XPG(5,q)[122X. This morphism and
   some  derived  morphisms  are  provided in [5XFinInG[105X. The bare essential of the
-  Klein corresondence is the so-called Plücker map.[133X
+  Klein correspondence is the so-called Plücker map.[133X
   
   [1X10.3-1 PluckerCoordinates[101X
   
   [33X[1;0Y[29X[2XPluckerCoordinates[102X( [3Xline[103X ) [32X operation[133X
   
   [33X[0;0YThis  operation  takes a line of [22XPG(3,q)[122X as argument. It returns the plucker
-  coordinates  of  the  argument as list of finite field elements. The retured
-  list  can  be  used  in operations as [11XVectorSpaceToElement[111X, and represents a
+  coordinates  of  the argument as list of finite field elements. The returned
+  list  can  be  used in operations as [11Xvector spaceToElement[111X, and represents a
   point    of    the    hyperbolic    quadric   in   [22XPG(5,q)[122X   with   equation
   [22XX_0X_5+X_1X_4+X_2X_3 = 0[122X[133X
   
@@ -441,8 +441,8 @@
   [33X[1;0Y[29X[2XSelfDuality[102X( [3Xgq[103X, [3Xboolean[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya geometry morphism[133X
   
-  [33X[0;0YIt  is checked wheter the base field of [3Xgq[103X is a field of charateristic 2 and
-  whether   [3Xgq[103X   is  a  symplectic  generalised  quadrangle  in  3-dimensional
+  [33X[0;0YIt  is  checked  whether the base field of [3Xgq[103X is a field of characteristic 2
+  and  whether  [3Xgq[103X  is  a  symplectic  generalised quadrangle in 3-dimensional
   projective  space  or a parabolic quadric in 4-dimensional projective space.
   The  first  version will return, when possible, a geometry morphism equipped
   with an intertwiner. Using the boolean argument [3Xfalse[103X will return a geometry
@@ -601,8 +601,8 @@
   [33X[0;0YWe briefly describe the mathematics behind field reduction. For more details
   we  refer  to  [LVdV13].  Consider  the  fields [22XGF(q)[122X and [22XGF(q^t)[122X. The field
   [22XGF(q^t)[122X is a [22Xt[122X-dimensional vector space over [22XGF(q)[122X. Hence, with respect to a
-  chosen basis [22XB[122X for [22XGF(q^t)[122X as a [22XGF(q)[122X-vectorspace, the bijection between the
-  vectorspaces   [22XV(n,q^t)[122X   and  [22XV(tn,q)[122X  can  be  implemented.  Consider  the
+  chosen  basis  [22XB[122X  for [22XGF(q^t)[122X as a [22XGF(q)[122X-vector space, the bijection between
+  the  vector  spaces  [22XV(n,q^t)[122X  and  [22XV(tn,q)[122X can be implemented. Consider the
   projective  space  [22XPG(n-1,q^t)[122X. The elements are represented by subspaces of
   [22XV(n,q^t)[122X.   Clearly,  a  [22Xk[122X  dimensional  subspace  of  [22XV(n,q^t)[122X  is  also  a
   [22Xkn[122X-dimensional   subspace   of  [22XV(nt,q)[122X.  This  induces  an  embedding  from
@@ -653,19 +653,19 @@
   [33X[0;0YThis  operation  comes in four flavours. For the first flavour, the argument
   [3Xgeom1[103X  is  a  projective  space  over  a field [22XGF(q^t)[122X. The argument [3Xf2[103X is a
   subfield  [22XGF(q)[122X  of  [22XGF(q^t)[122X.  The  argument  [22XB[122X  is a basis for [22XGF(q^t)[122X as a
-  [22XGF(q)[122X-vectorspace. When this argument is not given, a basis for [22XGF(q^t)[122X over
-  [22XGF(q)[122X  is  computed using [11XBasis(AsVectorSpace(GF(q),GF(q^t)))[111X. It is checked
-  whether  [3Xf2[103X  is  a  subfield of the basefield of [3Xgeom1[103X. The third and fourth
-  flavour  are comparable, where now [22XGF(q)[122X is found as the basefield of [3Xgeom2[103X.
-  In  fact the arguments [3Xgeom1[103X and [3Xgeom2[103X are the projective spaces [22XPG(n-1,q^t)[122X
-  and  [22XPG(nt-1,q)[122X respectively. As in the previous flavours, the argument [3XB[103X is
-  optional.[133X
+  [22XGF(q)[122X-vector  space.  When  this  argument is not given, a basis for [22XGF(q^t)[122X
+  over  [22XGF(q)[122X  is  computed  using [11XBasis(Asvector space(GF(q),GF(q^t)))[111X. It is
+  checked  whether  [3Xf2[103X is a subfield of the base field of [3Xgeom1[103X. The third and
+  fourth flavour are comparable, where now [22XGF(q)[122X is found as the base field of
+  [3Xgeom2[103X.  In  fact  the  arguments  [3Xgeom1[103X  and [3Xgeom2[103X are the projective spaces
+  [22XPG(n-1,q^t)[122X  and  [22XPG(nt-1,q)[122X  respectively. As in the previous flavours, the
+  argument [3XB[103X is optional.[133X
   
   [33X[0;0YAn  intertwiner  is  always  available  for  this geometry morphism, and has
   source  the  homography  group  of  [3Xgeom1[103X  and  as  range  a subgroup of the
   homography  group  of  [3Xgeom2[103X  (or  the  projective  space of the appropriate
   dimension  over [3Xf2[103X. Notice in the example below the difference of a factor 2
-  in  the  orders  of  the  group,  which  comes of course from restricing the
+  in  the  orders  of  the  group,  which comes of course from restricting the
   homomorphism  to  the  homography  group,  which differs a factor 2 from the
   collineation group of the projective line, that has an extra automorphism of
   order two, corresponding with the Frobenius automorphism.[133X
@@ -794,14 +794,14 @@
   [6XReturns:[106X  [33X[0;10Ya geometry morphism[133X
   
   [33X[0;0YThe  arguments  [3Xgeom1[103X  and  [3Xgeom2[103X  are  projective  or  polar spaces with an
-  underlying  vector  space of the same dimension and the basefield [22XL[122X of [3Xgeom2[103X
-  is  an  extension  of the basefield [22XK[122X of [3Xgeom1[103X. The form [22Xf[122X determining [3Xgeom1[103X
+  underlying  vector space of the same dimension and the base field [22XL[122X of [3Xgeom2[103X
+  is  an  extension of the base field [22XK[122X of [3Xgeom1[103X. The form [22Xf[122X determining [3Xgeom1[103X
   also defines a form over [22XL[122X, and determines a polar space. By considering the
-  underlying vectorspaces determining the elements of [3Xgeom1[103X over the extension
-  field  [22XL[122X, there is an obvious embedding of [3Xgeom1[103X in the polar space over the
-  extension field. Considering [22Xf[122X over a field extension might change its type.
-  The  possible  embeddings,  where  the  polar  spaces  may  be  chosen up to
-  equivalent form, are listed in the table below (see [KL90]):[133X
+  underlying  vector  spaces  determining  the  elements  of  [3Xgeom1[103X  over  the
+  extension field [22XL[122X, there is an obvious embedding of [3Xgeom1[103X in the polar space
+  over  the extension field. Considering [22Xf[122X over a field extension might change
+  its  type.  The possible embeddings, where the polar spaces may be chosen up
+  to equivalent form, are listed in the table below (see [KL90]):[133X
   
         Polar Space 1 │ Polar Space 2 │ Conditions   
         ──────────────┼───────────────┼───────────  
@@ -857,14 +857,14 @@
   Let  [22Xf[122X be the form on the [22Xr[122X dimensional vector space [22XV[122X over [22XL[122X determining [22XP[122X.
   Consider the trace map[133X
   
-  [33X[0;0Y[22XT: L → K: x ↦ x^(q^t)+ x^(q^(t-1)) + ... + x.[122X[133X
+  [33X[0;0Y[22XT: L -> K: x ↦ x^(q^t)+ x^(q^(t-1)) + ... + x.[122X[133X
   
   [33X[0;0YDefine for any [22Xα ∈ L[122X the map[133X
   
-  [33X[0;0Y[22XT_α: L → K: x ↦ T_α(x) = T(α x).[122X[133X
+  [33X[0;0Y[22XT_α: L -> K: x ↦ T_α(x) = T(α x).[122X[133X
   
   [33X[0;0YConsider  the [22Xrt[122X dimensional vector space [22XW[122X over [22XK[122X. There is a bijective map
-  [22XΦ[122X:  [22XV  →  W[122X  and  [22XT_α  ∘  f  ∘ Φ^-1[122X defines a quadratic or sesquilinear form
+  [22XΦ[122X:  [22XV  ->  W[122X  and  [22XT_α  ∘  f ∘ Φ^-1[122X defines a quadratic or sesquilinear form
   (depending  on  [22Xα[122X,  and  [22Xf[122X being quadratic or sesquilinear) acting on [22XW[122X, and
   hence,  if  not  singular  or  degenerate, inducing a polar space [22XS[122X over the
   finite  field  [22XGF(q)[122X.  An element of [22XP[122X can be mapped onto an element of [22XS[122X by
@@ -877,11 +877,11 @@
   determined,  and  the  associated  polar  space  [22XS[122X  will be the range of the
   embedding.  Note  that  the  resulting  polar  space will not necessarily be
   canonical.  The  second approach starts from two given polar spaces [22XP[122X and [22XS[122X.
-  Based on this input, it is determined wheter an embedding based on the above
-  described  principle is possible, and the necessary parameters are computed.
-  The  resulting  embedding  is a geometry morhpism from [22XP[122X to [22XS[122X. Note that the
-  polar  spaces  used as an argument may be freely chosen and are not required
-  to be in the canonical form.[133X
+  Based  on  this  input,  it  is determined whether an embedding based on the
+  above  described  principle  is  possible,  and the necessary parameters are
+  computed.  The  resulting embedding is a geometry morphism from [22XP[122X to [22XS[122X. Note
+  that  the  polar spaces used as an argument may be freely chosen and are not
+  required to be in the canonical form.[133X
   
   [33X[0;0YFor  more  information on the embeddings by field reduction of polar spaces,
   including  conditions  on the parameter [22Xα[122X, we refer to [Gil08] and [LVdV13].
@@ -919,7 +919,7 @@
   over   [3Xf2[103X,   [3Xalpha[103X   is   a   non-zero   element   of   [22XL[122X.  The  version  of
   [11XNaturalEmbeddingByFieldReduction[111X  implements the first approach as explained
   in  [14X10.5-3[114X.  When  no  argument  [3Xbasis[103X  is  given,  a basis for [22XL[122X over [3Xf2[103X is
-  computed  using  [11XBasis(AsVectorSpace(K,L))[111X. When no argument [3Xalpha[103X is given,
+  computed  using [11XBasis(Asvector space(K,L))[111X. When no argument [3Xalpha[103X is given,
   [11XOne(f2)[111X  is  used  as  value  for  [3Xalpha[103X. When [3Xbool[103X is true or not given, an
   intertwiner  is  computed,  when  [3Xbool[103X is [3Xfalse[103X, no intertwiner is computed.
   This  intertwiner  has as its domain the [12Xisometry group[112X of [3Xps1[103X. The user may
@@ -1084,17 +1084,17 @@
   
   [33X[0;0YThe  argument  [3Xps[103X is a projective or polar space, and [3Xv[103X is a subspace of [3Xps[103X.
   In  the  case  that  [3Xps[103X  is  a  projective  space, the geometry of subspaces
-  containing  [3Xv[103X  is  a  projective  space  of  lower  dimension  over the same
-  basefield,  and  this operation returns the corresponding geometry morphism.
-  In  the  case  that  [3Xps[103X  is  a  polar  space, the geometry of elements pf [3Xps[103X
-  containing  [3Xv[103X  is  a polar space of lower rank and of the same type over the
-  same  basefield,  and  this  operation  returns  the  corresponding geometry
-  morphism. It is checked whether [3Xv[103X is a subspace of [3Xps[103X, and whether the input
-  of  the  function and preimage of the returned geometry morphism is valid or
-  not.  There is a shorthand for this operation which is basically an overload
-  of  the  quotient operation. So, for example, [10Xps / v[110X achieves the same thing
-  as     [10XAmbientGeometry(Range(NaturalProjectionBySubspace(ps,     v)))[110X.    An
-  intertwiner is not available for this geometry morphism.[133X
+  containing  [3Xv[103X  is  a  projective space of lower dimension over the same base
+  field,  and  this  operation returns the corresponding geometry morphism. In
+  the case that [3Xps[103X is a polar space, the geometry of elements pf [3Xps[103X containing
+  [3Xv[103X  is  a  polar  space of lower rank and of the same type over the same base
+  field, and this operation returns the corresponding geometry morphism. It is
+  checked whether [3Xv[103X is a subspace of [3Xps[103X, and whether the input of the function
+  and  preimage  of the returned geometry morphism is valid or not. There is a
+  shorthand  for this operation which is basically an overload of the quotient
+  operation.   So,   for   example,   [10Xps  /  v[110X  achieves  the  same  thing  as
+  [10XAmbientGeometry(Range(NaturalProjectionBySubspace(ps,  v)))[110X.  An intertwiner
+  is not available for this geometry morphism.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xps := HyperbolicQuadric(5,3);[127X[104X

@@ -57,7 +57,7 @@
   coordinates of the hyperplane.[133X
   
   [33X[0;0YThe  product  of  two  correlations  of  [22XPG(n,q)[122X  is a collineation, and the
-  product  of  a collineation and a correlaton is a correlation. So the set of
+  product  of a collineation and a correlation is a correlation. So the set of
   all  collineations  and  correlations  of  [22XPG(n,q)[122X forms a group, called the
   [13Xcorrelation-collineation  group[113X  of  [22XPG(n,q)[122X.  The  correlation-collineation
   group  of  [22XPG(n,q)[122X  is  isomorphic to the semidirect product of [22XP Γ L(n+1,q)[122X
@@ -92,7 +92,7 @@
   [33X[0;0YThese  are the different type of actions on projective spaces in [5XFinInG[105X, and
   they   naturally   give  rise  to  the  following  distinct  categories  and
   representations.  Note  that  these categories and representations are to be
-  considered  on  a  non-user  level.  Below  we describe all user constuction
+  considered  on  a  non-user  level.  Below we describe all user construction
   methods that hide nicely these technical details.[133X
   
   
@@ -122,8 +122,8 @@
   has  as  underlying  object  a  pair  consisting  of  a  matrix  and a field
   automorphism;  and [10XIsProjGrpElWithFrobWithPSIsomRep[110X has as underlying object
   a  triple  consisting  of  a matrix, a field automorphism and an isomorphism
-  from the projective space to its dual space. Also the basefield is stored as
-  a component in the representation.[133X
+  from  the  projective space to its dual space. Also the base field is stored
+  as a component in the representation.[133X
   
   [33X[0;0YThe  above  mentioned  categories  allow  us  to  make a distinction between
   projectivities,    collineations   and   correlations   apart   from   their
@@ -132,7 +132,7 @@
   [10XIsProjGrpElMoreRep[110X.  Furthermore,  projectivities  of projective spaces (and
   also  collineations  of projective spaces) will by default be constructed in
   the  category  [10XIsProjGrpElWithFrobRep[110X. This technical choice was made by the
-  developpers  to  have  the  projectivity  groups  naturally  embedded in the
+  developers  to  have  the  projectivity  groups  naturally  embedded  in the
   collineation  groups.  Correlations of projective spaces will be constructed
   in the category [10XIsProjGrpElWithFrobWithPSIsom[110X.[133X
   
@@ -438,7 +438,7 @@
   [33X[1;0Y[29X[2XRepresentative[102X( [3Xg[103X ) [32X operation[133X
   
   [33X[0;0Y[3Xg[103X is a projectivity, collineation or correlation of a projective space. This
-  function  returns  the  reresentative  components  that  determine [3Xg[103X, i.e. a
+  function  returns  the  representative  components  that determine [3Xg[103X, i.e. a
   matrix,   a  matrix  and  a  field  automorphism,  and  a  matrix,  a  field
   automorphism, and a vector space isomorphism, respectively.[133X
   
@@ -748,7 +748,7 @@
   vector space on which the group acts.[133X
   
   
-  [1X5.6  [33X[0;0YNatural  embedding of a collineation group in a correlationcollineation[101X
+  [1X5.6  [33X[0;0YNatural embedding of a collineation group in a correlation/collineation[101X
   [1Xgroup[133X[101X
   
   [33X[0;0YIn  [5XFinInG[105X  a  collineation  group  is  not  constructed  as a subgroup of a
@@ -965,11 +965,11 @@
   hyperplanes through [22Xp[122X are stabilized. The hyperplane [22XH[122X is called the [13Xaxis[113X of
   [22Xϕ[122X,  and  the  point  [22Xp[122X  is  called  the [13Xcentre[113X of [22Xϕ[122X. As a transvection is an
   element  of [22XSL(n+1,q)[122X, an elation is an element of [22XPSL(n+1,q)[122X. An elation is
-  completely  determind  by its axis and the image of one point (not contained
+  completely  determined by its axis and the image of one point (not contained
   in  the  axis).  The  group  of  elations  with  a given axis and centre, is
   isomorphic  with  the  additive  group  of  [22XGF(q)[122X. Finally, the group of all
   elations  with a given axis [22XH[122X, acts regularly on the points of [22XPG(n,q) ∖ H[122X ,
-  and is isomorphic with the additive group of the vectorspace [22XV(n+1,q)[122X.[133X
+  and is isomorphic with the additive group of the vector space [22XV(n+1,q)[122X.[133X
   
   [1X5.9-1 ElationOfProjectiveSpace[101X
   
@@ -1219,7 +1219,7 @@
   [33X[1;0Y[29X[2XNiceMonomorphismByDomain[102X( [3Xg[103X, [3Xdom[103X, [3Xop[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Yan action, i.e. a group homomorphism[133X
   
-  [33X[0;0YThis  operaion is not intended for the user. It relies on [5XGenSS[105X and [5XOrb[105X. The
+  [33X[0;0YThis operation is not intended for the user. It relies on [5XGenSS[105X and [5XOrb[105X. The
   argument [3Xg[103X is a projective group (in the category [10XIsProjectiveGroupWithFrob[110X)
   with  a  set  [10XSize[110X  attribute,  [3Xdom[103X  is  an  orbit of [3Xg[103X, and [3Xop[103X an operation
   suitable for [3Xx[103X and [3Xg[103X.[133X
@@ -1229,7 +1229,7 @@
   [33X[1;0Y[29X[2XNiceMonomorphismByOrbit[102X( [3Xg[103X, [3Xdom[103X, [3Xop[103X, [3Xorblen[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Yan action, i.e. a group homomorphism[133X
   
-  [33X[0;0YThis  operaion is not intended for the user. It relies on [5XGenSS[105X and [5XOrb[105X. The
+  [33X[0;0YThis operation is not intended for the user. It relies on [5XGenSS[105X and [5XOrb[105X. The
   argument [3Xg[103X is a projective group (in the category [10XIsProjectiveGroupWithFrob[110X)
   with  a  set  [10XSize[110X attribute, [3Xdom[103X is an orbit of [3Xg[103X, [3Xop[103X an operation suitable
   for [3Xx[103X and [3Xg[103X, and [3Xorblen[103X is the length of the final orbit.[133X

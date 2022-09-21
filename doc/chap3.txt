@@ -156,7 +156,7 @@
   usually just the list [22X[1..n][122X. If specific names are given to each type, like
   points,  lines,  etc.,  this  attribute returns the names for the particular
   incidence  structure  [3Xinc[103X. The second variant returns the list of plurals of
-  these  names.  For  genericly constructed incidence structures, the names of
+  these  names. For generically constructed incidence structures, the names of
   the Elements are also generic: elements of type 1, elements of type 2, etc.[133X
   
   [4X[32X  Example  [32X[104X
@@ -1010,10 +1010,10 @@
   
   [1X3.5 [33X[0;0YEnumerating elements of an incidence structure[133X[101X
   
-  [33X[0;0YIn several situations, it can be usful to compute a complete list of objects
-  statisfying  one or more conditions. To list all elements of a given type of
-  an  incidence structure, is a typical example. [5XFinInG[105X provides functionality
-  that is common in GAP for this purpose.[133X
+  [33X[0;0YIn  several  situations,  it  can  be  useful  to compute a complete list of
+  objects  satisfying  one or more conditions. To list all elements of a given
+  type  of  an  incidence  structure,  is  a  typical example. [5XFinInG[105X provides
+  functionality that is common in GAP for this purpose.[133X
   
   [33X[0;0YIn  [5XFinInG[105X, typically a list of all elements satisfying a property, e.g. all
   points  of  a  projective  space,  are represented by a GAP object that is a
@@ -1264,7 +1264,7 @@
   
   [33X[0;0YFrom  the example in [14X3.5-3[114X it can be noted that although the number of lines
   is  only  315,  already  3  seconds  of  computing  time are needed. This is
-  typically  observed  for  elements  of classicla polar spaces different from
+  typically  observed  for  elements  of classical polar spaces different from
   points  or  generators,  and  is  explained  by  the recursive nature of the
   implementation  of  the  enumerator. Computing a list of these objects as an
   orbit  under  the  collineation  group  is,  even  taking  into  account the
@@ -1449,7 +1449,7 @@
   [1X3.6-3 UnderlyingVectorSpace[101X
   
   [33X[1;0Y[29X[2XUnderlyingVectorSpace[102X( [3Xig[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10Ythe underlying vectorspace of the Lie geometry [3Xig[103X[133X
+  [6XReturns:[106X  [33X[0;10Ythe underlying vector space of the Lie geometry [3Xig[103X[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XUnderlyingVectorSpace(PG(5,4));[127X[104X
@@ -1646,7 +1646,7 @@
   projective  space.  Only  in clear situations, where the ambient geometry of
   all  elements  is  the  same,  and  equal  to  the geometry of the resulting
   element,  the resulting element will be constructed in this common geometry.
-  We provide however conversion operations for elements of Lie gometries.[133X
+  We provide however conversion operations for elements of Lie geometries.[133X
   
   [1X3.8-1 ElementToElement[101X
   

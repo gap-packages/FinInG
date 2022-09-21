@@ -156,7 +156,7 @@ ProjectiveSpace(3, 9)
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Points</code>( <var class="Arg">var</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a list of points</p>
 
-<p>The argument <var class="Arg">var</var> is an algebraic variety. This operation returns the list of points of the <code class="func">AmbientSpace</code> (<a href="chap11_mj.html#X8606750A8586DF8D"><span class="RefLink">11.1-3</span></a>) of the algebraic variety <var class="Arg">var</var> whose coordinates satify the <code class="func">DefiningListOfPolynomials</code> (<a href="chap11_mj.html#X7D9C2FA47BCDEBDB"><span class="RefLink">11.1-2</span></a>) of the algebraic variety <var class="Arg">var</var>.</p>
+<p>The argument <var class="Arg">var</var> is an algebraic variety. This operation returns the list of points of the <code class="func">AmbientSpace</code> (<a href="chap11_mj.html#X8606750A8586DF8D"><span class="RefLink">11.1-3</span></a>) of the algebraic variety <var class="Arg">var</var> whose coordinates satisfy the <code class="func">DefiningListOfPolynomials</code> (<a href="chap11_mj.html#X7D9C2FA47BCDEBDB"><span class="RefLink">11.1-2</span></a>) of the algebraic variety <var class="Arg">var</var>.</p>
 
 
 <div class="example"><pre>
@@ -337,7 +337,7 @@ x_1^3+x_2^3+x_3^3+x_4^3+x_5^3+x_6^3
 </tr>
 <tr>
 <td class="tdleft">parabolic quadric</td>
-<td class="tdleft"><span class="SimpleMath">\(t(X_0^2 + X_1X_2 + \ldots + X_{n-1}X_n)\)</span>, <span class="SimpleMath">\(t\)</span> a primitve element of <span class="SimpleMath">\(\mathrm{GF}(p)\)</span></td>
+<td class="tdleft"><span class="SimpleMath">\(t(X_0^2 + X_1X_2 + \ldots + X_{n-1}X_n)\)</span>, <span class="SimpleMath">\(t\)</span> a primitive element of <span class="SimpleMath">\(\mathrm{GF}(p)\)</span></td>
 <td class="tdleft"><span class="SimpleMath">\(p \equiv 5,7 \pmod{8}\)</span></td>
 <td class="tdleft">even</td>
 <td class="tdleft">"parabolic", "o", or "0"</td>
@@ -448,7 +448,7 @@ Quadratic Variety in ProjectiveSpace(3, 5)
 <h5>11.3-5 PolarSpace</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PolarSpace</code>( <var class="Arg">var</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>the argument <var class="Arg">var</var> is a projective algebraic variety. When its list of definining polynomial contains exactly one polynomial, depending on its degree, the operation <code class="file">QuadraticFormByPolynomial</code> or <code class="file">HermitianFormByPolynomial</code> is used to compute a quadratic form or a hermitian form. These operations check whether this is possible, and produce an error message if not. If the conversion is possible, then the appropriate polar space is returned.</p>
+<p>the argument <var class="Arg">var</var> is a projective algebraic variety. When its list of defining polynomial contains exactly one polynomial, depending on its degree, the operation <code class="file">QuadraticFormByPolynomial</code> or <code class="file">HermitianFormByPolynomial</code> is used to compute a quadratic form or a hermitian form. These operations check whether this is possible, and produce an error message if not. If the conversion is possible, then the appropriate polar space is returned.</p>
 
 
 <div class="example"><pre>

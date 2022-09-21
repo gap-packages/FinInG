@@ -536,7 +536,7 @@
   [33X[0;0YA geometry morphism in [5XFinInG[105X is a map between (a subset of) the elements of
   one  geometry to (a subset of) the elements of a second geometry, preserving
   the  incidence. Geometry morphisms are not necessarily type preserving. This
-  section is meant to illustrate, in a non exhaustive way the basis philisophy
+  section is meant to illustrate, in a non exhaustive way the basis philosophy
   behind geometry morphisms in [5XFinInG[105X.[133X
   
   
@@ -768,11 +768,11 @@
   
   [1X2.3-6 [33X[0;0YEmbedding by field reduction[133X[101X
   
-  [33X[0;0YField  reduction  is  a power full tool to embedd low dimensional projective
+  [33X[0;0YField  reduction  is  a  power full tool to embed low dimensional projective
   (and  polar  spaces)  over  a  field  [22XK[122X in to high dimensional spaces over a
   subfield  of  [22XK[122X.  The  mathematics  behind  field  reduction is explained in
   sections  [14X10.4-3[114X  and  [14X10.5-3[114X.  The  examples  here  show  the  use of these
-  embedings  to  construct  a  regular  spread  of  a  projective  space and a
+  embeddings  to  construct  a  regular  spread  of  a  projective space and a
   so-called Hermitian spread of a hyperbolic quadric.[133X
   
   [4X[32X  Example  [32X[104X
@@ -1051,7 +1051,7 @@
   [33X[0;0YIn  this example we construct the Ree-Tits octagon of order [22X[2,4][122X as a coset
   geometry. From the computation of the so-called rank 2 parameters, it can be
   observed  already  that  the  constructed  geometry  must  be  a generalised
-  octagon.  Then  the  points and lines are computed explicitely, and together
+  octagon.  Then  the  points  and lines are computed explicitly, and together
   with the incidence and the available group as a subgroup of the collineation
   group, a generalised octagon is constructed.[133X
   

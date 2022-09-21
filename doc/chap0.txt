@@ -6,10 +6,10 @@
                            [1XFinite Incidence Geometry[101X
   
   
-                                      1.5
+                                     1.5.1
   
   
-                                   10/07/2022
+                                   21/09/2022
   
   
                                   John Bamberg
@@ -257,8 +257,8 @@
     5.5 [33X[0;0YBasic operations for projective groups[133X
       5.5-1 BaseField
       5.5-2 Dimension
-    5.6 [33X[0;0YNatural embedding of a collineation group in a correlationcollineation
-    group[133X
+    5.6 [33X[0;0YNatural embedding of a collineation group in a
+    correlation/collineation group[133X
       5.6-1 Embedding
     5.7 [33X[0;0YBasic action of projective group elements[133X
       5.7-1 \^
@@ -509,7 +509,7 @@
       12.5-2 IsLieGeometry
       12.5-3 SplitCayleyHexagon
       12.5-4 TwistedTrialityHexagon
-      12.5-5 VectorSpaceToElement
+      12.5-5 vector spaceToElement
       12.5-6 ObjectToElement
       12.5-7 UnderlyingObject
       12.5-8 \in

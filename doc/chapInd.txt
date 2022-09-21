@@ -329,7 +329,8 @@
   [2XTypesOfElementsOfIncidenceStructurePlural[102X 3.1-6 
   [2XUnderlyingObject[102X 3.2-2  3.7-2  12.4-3  12.5-7  12.6-5  12.6-17 
   [2XUnderlyingVectorSpace[102X 3.6-3  4.1-5  7.3-1  9.1-5  14.3-1  14.3-4 
-  [2XVectorSpaceToElement[102X 3.7-1  3.7-1  4.2-1  7.4-1  12.5-5  14.4-1 
+  [2Xvector spaceToElement[102X 12.5-5 
+  [2XVectorSpaceToElement[102X 3.7-1  3.7-1  4.2-1  7.4-1  14.4-1 
   [2XVectorSpaceTransversal[102X 9.6-2 
   [2XVectorSpaceTransversalElement[102X 9.6-3 
   [2XVeroneseMap[102X 11.7-3  11.7-3  11.7-3  11.7-3 
