@@ -409,7 +409,7 @@ InstallMethod( FiningStabiliserPerm, [IsProjectiveGroupWithFrob, IsElementOfInci
 		nr:=Position(enum,el);
 		stab:=Stabilizer(Image(hom),nr); 
 		gens:=GeneratorsOfGroup(stab);;
-		gens:=List(gens,x->PreImagesRepresentative(hom,x));
+		gens:=List(gens,x->PreImagesRepresentativeNC(hom,x));
 		stab:=GroupWithGenerators(gens);
 		return stab;
 end );
@@ -431,7 +431,7 @@ InstallMethod( FiningStabiliserPerm2,
 		stab:=Stab(im,nr,OnPoints,rec( DoEstimate := size )).stab;
 		#stab:=Stabiliser(Image(hom),nr);
 		gens:=GeneratorsOfGroup(stab);;
-		gens:=List(gens,x->PreImagesRepresentative(hom,x));
+		gens:=List(gens,x->PreImagesRepresentativeNC(hom,x));
 		stab:=GroupWithGenerators(gens);
 		return stab;
 end );

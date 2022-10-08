@@ -15,7 +15,7 @@ DisplayCompositionSeries(stab); # yep it works!
 pg := AmbientSpace(h);
 em := Embedding( CollineationGroup(pg), CorrelationCollineationGroup(pg));
 tau2 := PreImageElm(em,tau); # minor bug, but can be easily fixed
-tau2 := PreImagesRepresentative(em,tau);
+tau2 := PreImagesRepresentativeNC(em,tau);
 cent := Centralizer(g, tau2);
 DisplayCompositionSeries(cent);
 quit;

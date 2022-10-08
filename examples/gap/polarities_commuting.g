@@ -7,5 +7,5 @@ phi*psi = psi*phi;
 g := CorrelationCollineationGroup(PG(3,25));
 h := CollineationGroup(PG(3,25));
 hom := Embedding(h,g);
-coll := PreImagesRepresentative(hom,phi*psi);
+coll := PreImagesRepresentativeNC(hom,phi*psi);
 quit;
