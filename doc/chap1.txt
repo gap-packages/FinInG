@@ -32,7 +32,7 @@
     [4X[28X        Author = {Bamberg, John and Betten, Anton and Cara, Philippe and[128X[104X
     [4X[28X            De Beule, Jan and Lavrauw, Michel and Neunh\"offer, Max },[128X[104X
     [4X[28X        Key = {fining},[128X[104X
-    [4X[28X        Title = {{FinInG -- Finite Incidence Geometry, Version 1.5.2}},[128X[104X
+    [4X[28X        Title = {{FinInG -- Finite Incidence Geometry, Version 1.5.3}},[128X[104X
     [4X[28X        Url = {\verb+(http://www.fining.org)+},[128X[104X
     [4X[28X        Year = 2022}[128X[104X
   [4X[32X[104X
@@ -46,7 +46,7 @@
     [4X[28XJ.~Bamberg, A.~Betten, {Ph}. Cara, J.~De~Beule, M.~Lavrauw, and[128X[104X
     [4X[28X  M.~Neunh\"offer.[128X[104X
     [4X[28X\newblock {\em Finite Incidence Geometry}.[128X[104X
-    [4X[28X\newblock FInInG -- a {GAP} package, version 1.5.2, 2022.[128X[104X
+    [4X[28X\newblock FInInG -- a {GAP} package, version 1.5.3, 2022.[128X[104X
   [4X[32X[104X
   
   [33X[0;0YWhen linking to FinInG from a web page you can use the link[133X

@@ -6,7 +6,7 @@
                            [1XFinite Incidence Geometry[101X
   
   
-                                     1.5.2
+                                     1.5.3
   
   
                                    10/12/2022

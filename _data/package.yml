@@ -1,5 +1,5 @@
 name: FinInG
-version: "1.5.2"
+version: "1.5.3"
 license: "GPL-2.0-or-later"
 date: 2022-12-10
 description: |
@@ -59,9 +59,9 @@ packageinfo: https://gap-packages.github.io/FinInG/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/gap-packages/FinInG/releases/download/v1.5.2/fining-1.5.2.tar.gz
+      url: https://github.com/gap-packages/FinInG/releases/download/v1.5.3/fining-1.5.3.tar.gz
     - name: .tar.bz2
-      url: https://github.com/gap-packages/FinInG/releases/download/v1.5.2/fining-1.5.2.tar.bz2
+      url: https://github.com/gap-packages/FinInG/releases/download/v1.5.3/fining-1.5.3.tar.bz2
 
 abstract: |
     <span class="pkgname">FinInG</span> is a package for computation in Finite Incidence Geometry. It provides users with the basic tools to work in  various areas of finite geometry from the realms of projective spaces to the flat  lands of generalised polygons. The algebraic power of GAP is employed, particularly  in its facility with matrix and permutation groups.
@@ -75,7 +75,7 @@ citeas: |
     <p class='BibEntry'>
     [<span class='BibKey'>BBCBLNH22</span>]   <b class='BibAuthor'>Bamberg, J., Betten, A., Cara, P., De Beule, J., Lavrauw, M., Neunhoeffer, M. and Horn, M.</b>,
      <i class='BibTitle'>FinInG, Finite Incidence Geometry,
-             Version 1.5.2</i>
+             Version 1.5.3</i>
      (<span class='BibYear'>2022</span>)<br />
     (<span class='BibNote'>Refereed GAP package</span>),
     <span class='BibHowpublished'><a href="https://gap-packages.github.io/FinInG">https://gap-packages.github.io/FinInG</a></span>.
@@ -83,10 +83,10 @@ citeas: |
     
 
 bibtex: |
-    @misc{ FinInG1.5.2,
+    @misc{ FinInG1.5.3,
       author =           {Bamberg,  J. and Betten, A. and Cara, P. and De Beule,
                           J. and Lavrauw, M. and Neunhoeffer, M. and Horn, M.},
-      title =            {{FinInG}, Finite Incidence Geometry, {V}ersion 1.5.2},
+      title =            {{FinInG}, Finite Incidence Geometry, {V}ersion 1.5.3},
       month =            {Dec},
       year =             {2022},
       note =             {Refereed GAP package},
