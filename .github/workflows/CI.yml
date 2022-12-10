@@ -47,6 +47,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: gap-actions/setup-gap@v2
+      - run: sudo apt-get install tipa # for textipa
       - uses: gap-actions/build-pkg-docs@v1
         with:
           use-latex: 'true'
