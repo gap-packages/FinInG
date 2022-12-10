@@ -129,7 +129,9 @@ InstallMethod( FiningOrbits,
         newupto := Int(100 * (Size(set)-Size(set2))/Size(set));
 		if newupto <> upto then
 			upto:=newupto;
-			Print(upto, "%..\c");
+			if InfoLevel(InfoFinInG) > 0 then
+				Print(upto, "%..\c");
+			fi;
 		fi;
 	until IsEmpty(set2);
 	return orbs;
