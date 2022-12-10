@@ -13,7 +13,7 @@ SetPackageInfo( rec(
 
 PackageName := "FinInG",
 Subtitle := "Finite Incidence Geometry",
-Version := "1.5.2",
+Version := "1.5.3",
 Date := "10/12/2022", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
