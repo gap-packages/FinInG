@@ -21,6 +21,7 @@
 /doc/maketest.g
 /doc/manual.lab
 /doc/manual.six
+/doc/output/
 
 /tst/output/*
 /examples/output/*
