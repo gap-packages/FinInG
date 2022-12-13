@@ -82,7 +82,7 @@ InstallMethod( StandardDualityOfProjectiveSpace,
 		obj := rec( fun := f, invFun := f, preFun := f, ps := ps );
 		one := IdentityMappingOfElementsOfProjectiveSpace(ps);
 		ObjectifyWithAttributes(obj, ty, Order, 2, IsOne, false, One, one); #this command I learned in st andrews!
-		Setter(InverseAttr)(obj,obj); #cannot set this attribute in previous line, because map does not exist then
+		Setter(InverseImmutable)(obj,obj); #cannot set this attribute in previous line, because map does not exist then
 		return obj;
 	end );
 
