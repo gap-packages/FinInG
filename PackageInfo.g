@@ -13,8 +13,8 @@ SetPackageInfo( rec(
 
 PackageName := "FinInG",
 Subtitle := "Finite Incidence Geometry",
-Version := "1.5.3",
-Date := "10/12/2022", # dd/mm/yyyy format
+Version := "1.5.4",
+Date := "13/12/2022", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 IssueTrackerURL := "https://github.com/gap-packages/FinInG/issues",
