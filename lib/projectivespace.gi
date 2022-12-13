@@ -1857,7 +1857,7 @@ InstallMethod( Span,
                 if not Size(AsDuplicateFreeList(List(listels,x->AmbientGeometry(x))))=1 then
                     Error("The elements in the list do not have a common ambient space");
                 else
-                    return Span(listels); #now we may assume that listels is homogenous.
+                    return Span(listels); #now we may assume that listels is homogeneous.
                 fi;
             else
                 listgeos := Filtered(l,x->IsProjectiveSpace(x));

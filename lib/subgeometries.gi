@@ -718,9 +718,9 @@ InstallMethod( Span,
 
 #############################################################################
 #O Span( <l> )
-# for a homogenous lis of subspaces of a subgeometry. Note that the necessary
+# for a homogeneous lis of subspaces of a subgeometry. Note that the necessary
 # checks are built in. We rely again on the Span in the ambient space.
-# Compare this method with the method for Span for a homogenous list of
+# Compare this method with the method for Span for a homogeneous list of
 # subspaces of a projective space.
 ##
 InstallMethod( Span,
@@ -831,9 +831,9 @@ InstallMethod( Meet,
 
 #############################################################################
 #O Meet( <l> )
-# for a homogenous lis of subspaces of a subgeometry. Note that the necessary
+# for a homogeneous lis of subspaces of a subgeometry. Note that the necessary
 # checks are built in. We rely again on the Meet in the ambient space.
-# Compare this method with the method for Meet for a homogenous list of
+# Compare this method with the method for Meet for a homogeneous list of
 # subspaces of a projective space.
 ##
 InstallMethod( Meet,
