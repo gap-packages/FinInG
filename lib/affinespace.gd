@@ -54,7 +54,7 @@ BindGlobal( "SoASCollFamily", CollectionsFamily(SoASFamily) );
 #############################################################################
 
 DeclareCategory( "IsVectorSpaceTransversal", IsSubspacesVectorSpace );
-DeclareRepresentation( "IsVectorSpaceTransversalRep", IsVectorSpaceTransversal, [ "vectorspace", "subspace" ]);
+DeclareRepresentation( "IsVectorSpaceTransversalRep", IsVectorSpaceTransversal and IsComponentObjectRep, [ "vectorspace", "subspace" ]);
 
 DeclareOperation( "VectorSpaceTransversal", [IsVectorSpace, IsFFECollColl]);
 DeclareOperation( "VectorSpaceTransversalElement", [IsVectorSpace, IsFFECollColl, IsVector]);
