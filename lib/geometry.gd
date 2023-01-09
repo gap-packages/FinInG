@@ -253,7 +253,11 @@ DeclareOperation( "Unwrap", [IsElementOfIncidenceStructure] );
 # three general operations. Methods to be installed for several filters.
 DeclareOperation( "ObjectToElement", [IsIncidenceStructure, IsPosInt, IsObject] );
 DeclareOperation( "ObjectToElement", [IsIncidenceStructure, IsObject] );
-DeclareOperation( "UnderlyingObject", [IsElementOfIncidenceStructure] );
+if IsBoundGlobal( "UnderlyingObject" ) and IsAttribute( ValueGlobal( "UnderlyingObject" ) ) then
+    DeclareAttribute( "UnderlyingObject", IsElementOfIncidenceStructure );
+else
+    DeclareOperation( "UnderlyingObject", [IsElementOfIncidenceStructure] );
+fi;
 
 DeclareGlobalFunction( "HashFuncForElements" );
 DeclareGlobalFunction( "HashFuncForSetElements" );
