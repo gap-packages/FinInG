@@ -6,10 +6,10 @@
                            [1XFinite Incidence Geometry[101X
   
   
-                                     1.5.4
+                                     1.5.5
   
   
-                                   13/12/2022
+                                   09/02/2023
   
   
                                   John Bamberg
