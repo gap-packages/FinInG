@@ -1376,15 +1376,15 @@ InstallMethod( ActionOnAllPointsHyperplanes,
 	"for a correlation group",
 	[ IsProjGroupWithFrobWithPSIsom ],
 	function( pg )
-		local a,d,f,o,orb,orb2,zero, m, j, flip, vs, ps;
+		local a,d,f,o,orb,orb2, m, j, flip, vs, ps;
 		f := BaseField(pg);
 		d := Dimension(pg);
 		ps := ProjectiveSpace(d-1,f);
 		vs := f^d;
-		o := One(f); zero := Zero(f);
+		o := One(f);
 		orb := [];
 		for m in vs do
-			j := PositionNot(m, zero);
+			j := PositionNonZero(m);
 			if j <= d and m[j] = o then
 				Add(orb, m);
 			fi;
