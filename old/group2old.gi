@@ -502,17 +502,17 @@ InstallMethod( ActionOnPointsHyperplanes,
   "for a projective group with Frobenius with vspace isomorphism",
   [ IsProjGroupWithFrobWithVSIsom ],
   function( pg )
-    local a,d,f,o,on,orb,orb2,v,zero, m, j, flip, vs;
+    local a,d,f,o,on,orb,orb2,v, m, j, flip, vs;
     f := BaseField(pg);
     d := Dimension(pg);
     vs := f^d;
-    o := One(f); zero := Zero(f);
+    o := One(f);
     on := One(pg);
     v := ZeroMutable(on!.mat[1]);
     v[1] := o;  
     orb := [];
     for m in f^d do
-      j := PositionNot(m, zero);
+      j := PositionNonZero(m);
       	if j <= d and m[j] = o then
 	  Add(orb, m);
 	fi;

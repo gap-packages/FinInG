@@ -1049,14 +1049,14 @@ InstallMethod( \in,
 			nrows := typx - 1;
 
 			ncols:= amby!.dimension ;
-			zero:= Zero( mat[1][1] );
+			zero:= ZeroOfBaseDomain( mat );
 
 		# here we are going to treat "vectors" as a list of basis vectors. first
 		# figure out which column is the first nonzero column for each row
 			nzheads := [];
 			for i in [ 1 .. nvectors ] do
 				row := vectors[i];
-				j := PositionNot( row, zero );
+				j := PositionNonZero( row );
 				Add(nzheads,j);
 			od;
 
@@ -1071,7 +1071,7 @@ InstallMethod( \in,
 				od;
 
 		# if the row is now not zero then y is not a subspace of x
-				j := PositionNot( row, zero );
+				j := PositionNonZero( row );
 				if j <= ncols then
 					flag := false; break;
 				fi;
@@ -1311,14 +1311,14 @@ InstallMethod( IsParallel,
 		mat := MutableCopyMat(x!.obj[2]);
 		nrows := x!.type - 1;
 		ncols:= y!.geo!.dimension ;
-		zero:= Zero( mat[1][1] );
+		zero:= ZeroOfBaseDomain( mat );
 
 		# here we are going to treat "vectors" as a list of basis vectors. first
 		# figure out which column is the first nonzero column for each row
 		nzheads := [];
 		for i in [ 1 .. nvectors ] do
 			row := vectors[i];
-			j := PositionNot( row, zero );
+			j := PositionNonZero( row );
 			Add(nzheads,j);
 		od;
 
@@ -1333,7 +1333,7 @@ InstallMethod( IsParallel,
 			od;
 
 			# if the row is now not zero then y is not a subspace of x
-			j := PositionNot( row, zero );
+			j := PositionNonZero( row );
 			if j <= ncols then
 				flag := false; break;
 			fi;

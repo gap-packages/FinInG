@@ -685,14 +685,14 @@ InstallMethod( \in,
 
       mat := MutableCopyMat(mat);
       ncols:= amby!.dimension + 1;
-      zero:= Zero( mat[1][1] );
+      zero:= ZeroOfBaseDomain( mat );
 
       # here we are going to treat "vectors" as a list of basis vectors. first
       # figure out which column is the first nonzero column for each row
       nzheads := [];
       for i in [ 1 .. nvectors ] do
         row := vectors[i];
-        j := PositionNot( row, zero );
+        j := PositionNonZero( row );
         Add(nzheads,j);
       od;
 
@@ -707,9 +707,9 @@ InstallMethod( \in,
         od;
 
         # if the row is now not zero then y is not a subvariety of x
-        j := PositionNot( row, zero );
+        j := PositionNonZero( row );
         if j <= ncols then
-                return false;
+            return false;
         fi;
 
       od;

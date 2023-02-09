@@ -2058,7 +2058,7 @@ InstallMethod( ActionOnAllProjPoints,
     "for a projective collineation group",
 	[ IsProjectiveGroupWithFrob ],
 	function( pg )
-		local a,d,f,o,on,orb,v,zero, m, j;
+		local a,d,f,o,on,orb,v, m, j;
 		Info(InfoFinInG,4,"Using ActionOnAllProjPoints");
 		f := BaseField(pg);
 		d := Dimension(pg);
@@ -2068,10 +2068,9 @@ InstallMethod( ActionOnAllProjPoints,
 		v[1] := o;
 		#orb := Orbit(pg,v,OnProjPointsWithFrob);
 		#orb := Orb(pg,v,OnProjPointsWithFrob);
-		zero := Zero(f);
 		orb := [];
 		for m in f^d do
-			j := PositionNot(m, zero);
+			j := PositionNonZero(m);
 		if j <= d and m[j] = o then
 			Add(orb, CVec(m,f)); #here is the change.
 		fi;
@@ -2844,9 +2843,9 @@ InstallMethod( DeltaOminus, [IsPosInt, IsField and IsFinite],
        twobytwo := [[a,b],[b,-a]];
        mat{[1,2]}{[1,2]} := twobytwo;
     elif q mod 4 = 1 then
+       z := Z(q);
+       zero := Zero(f);
        for i in [1..d/2] do
-           z := Z(q);
-           zero := Zero(f);
            mat{[2*i-1,2*i]}{[2*i-1,2*i]} := [[ zero, one ], [z, zero]];
        od;
     else 
