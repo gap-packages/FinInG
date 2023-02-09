@@ -675,7 +675,7 @@ InstallMethod( \in,
         else
           vectors := y!.obj;
           nvectors := typy;
-          mat := MutableCopyMat(x!.obj);
+          mat := x!.obj;
           nrows := typx;
         fi;
       # subspaces of type 1 need to be nested to make them lists of vectors
@@ -683,6 +683,7 @@ InstallMethod( \in,
       if nrows = 1 then mat := [mat]; fi;
       if nvectors = 1 then vectors := [vectors]; fi;
 
+      mat := MutableCopyMat(mat);
       ncols:= amby!.dimension + 1;
       zero:= Zero( mat[1][1] );
 
