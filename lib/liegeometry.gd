@@ -77,7 +77,7 @@ DeclareOperation( "VectorSpaceToElement", [IsLieGeometry, IsCVecRep] );
 DeclareOperation( "VectorSpaceToElement", [IsLieGeometry, IsCMatRep] );
 
 
-#DeclareOperation( "UnderlyingObject", [IsElementOfLieGeometry] ); #made more general and moved to geometry.gd
+#DeclareAttribute( "UnderlyingObject", IsElementOfLieGeometry ); #made more general and moved to geometry.gd
 #DeclareOperation( "EmptySubspace", [IsClassicalPolarSpace] );
 #DeclareOperation( "EmptySubspace", [IsProjectiveSpace] );
 DeclareOperation( "EmptySubspace", [IsLieGeometry] );
