@@ -132,7 +132,6 @@ DeclareGlobalFunction( "OnProjSubspacesNoFrob" );
 # as a projective semilinear group (i.e. a collineation group), and for these
 # groups we have the operations defined (ml 05/11/2012)
 #DeclareOperation( "ActionOnAllProjPoints", [IsProjectivityGroup] );
-#DeclareOperation( "SetAsNiceMono", [IsProjectivityGroup, IsGroupHomomorphism] );
 #DeclareAttribute( "Dimension", IsProjectivityGroup );
 #DeclareProperty( "CanComputeActionOnPoints", IsProjectivityGroup );
 
@@ -158,7 +157,6 @@ DeclareGlobalFunction( "OnProjPointsWithFrob" );
 DeclareGlobalFunction( "OnProjSubspacesWithFrob" );
 
 DeclareOperation( "ActionOnAllProjPoints", [IsProjectiveGroupWithFrob] );
-DeclareOperation( "SetAsNiceMono", [IsProjectiveGroupWithFrob, IsGroupHomomorphism] );
 
 DeclareAttribute( "Dimension", IsProjectiveGroupWithFrob );
 DeclareProperty( "CanComputeActionOnPoints", IsProjectiveGroupWithFrob );

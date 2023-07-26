@@ -44,8 +44,5 @@ DeclareOperation( "ProjElWithFrobWithVSIsom",
 
 DeclareOperation( "ProjElsWithFrobWithVSIsom", [IsList, IsField] );
 
-DeclareOperation( "SetAsNiceMono", 
-                  [IsProjGroupWithFrobWithVSIsom, IsGroupHomomorphism] );
-
 DeclareAttribute( "Dimension", IsProjGroupWithFrobWithVSIsom );
 DeclareProperty( "CanComputeActionOnPoints", IsProjGroupWithFrobWithVSIsom );

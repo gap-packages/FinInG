@@ -72,8 +72,6 @@ DeclareOperation( "ProjElWithFrobWithPSIsom",
    [IsMatrix and IsFFECollColl, IsMapping, IsField,
    IsGeneralMapping and IsSPGeneralMapping and IsOne] ); 
 DeclareOperation( "ProjElsWithFrobWithPSIsom", [IsList, IsField] );
-DeclareOperation( "SetAsNiceMono", 
-                  [IsProjGroupWithFrobWithPSIsom, IsGroupHomomorphism] );
 DeclareAttribute( "Dimension", IsProjGroupWithFrobWithPSIsom );
 DeclareProperty( "CanComputeActionOnPoints", IsProjGroupWithFrobWithPSIsom );
 DeclareOperation( "CorrelationOfProjectiveSpace", [ IsList, IsField] );

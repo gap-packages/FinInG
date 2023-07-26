@@ -1425,17 +1425,6 @@ InstallMethod( CanComputeActionOnPoints,
 		fi;
 	end );
 
-## A grep of SetAsNiceMono on all *.gi files gives only the InstallMethod( parts. (jdb 20/9/11), see also comment in 
-## group.gi
-
-InstallMethod( SetAsNiceMono, 
-  "for a projective group with Frobenius with pspace isomorphism and an action hom",
-  [IsProjGroupWithFrobWithPSIsom, IsGroupHomomorphism and IsInjective],
-  function( pg, a )
-    SetNiceMonomorphism(pg,a);
-    SetNiceObject(pg,Image(a));
-  end );
-
 # CHECKED 20/09/11 jdb
 #############################################################################
 #O  NiceMonomorphism( <pg> )
