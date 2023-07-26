@@ -2133,15 +2133,15 @@ InstallGlobalFunction( NiceMonomorphismByDomain,
     # op the operation suitable for x and g
     # It is guaranteed that g acts faithfully on the orbit.
     local cand,gens,h,ht,i,iso,nr,pgens;
-    ht := NewHT(dom[1],Length(dom)*2);
+    ht := HTCreate(dom[1],rec(hashlen:=Length(dom)*2));
     for i in [1..Length(dom)] do
-      AddHT(ht,dom[i],i);
+      HTAdd(ht,dom[i],i);
     od;
     pgens := [];
     gens := GeneratorsOfGroup(g);
     for i in [1..Length(gens)] do
         Add(pgens,PermList( List([1..Length(dom)],
-                                 j->ValueHT(ht,op(dom[j],gens[i]))) ));
+                                 j->HTValue(ht,op(dom[j],gens[i]))) ));
     od;
     h := GroupWithGenerators(pgens);
     SetSize(h,Size(g));
