@@ -530,14 +530,6 @@ InstallMethod( ActionOnPointsHyperplanes,
     return a;
   end );
 
-#InstallMethod( SetAsNiceMono, 
-#  "for a projective group with Frobenius with vspace isomorphism and an action hom",
-#  [IsProjGroupWithFrobWithVSIsom, IsGroupHomomorphism and IsInjective],
-#  function( pg, a )
-#    SetNiceMonomorphism(pg,a);
-#    SetNiceObject(pg,Image(a));
-#  end );
-
 #InstallMethod( NiceMonomorphism, 
 #  "for a projective group with Frobenius with vspace isomorphism (feasible case)",
 #  [IsProjGroupWithFrobWithVSIsom and CanComputeActionOnPoints and

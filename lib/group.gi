@@ -2154,26 +2154,6 @@ InstallGlobalFunction( NiceMonomorphismByDomain,
     return iso;  
   end );
 
-## Is this operation ever used? I think it obselete (JB: 26/09/08)
-## John is probably right. A grep of SetAsNiceMono on all *.gi files gives only the InstallMethod( parts. (jdb 6/9/11). 
-
-# ml 07/11/2012: I have taken out the view, print and display methods
-# for projectivity groups, since these are also collineation groups in FinInG
-#InstallMethod( SetAsNiceMono, "for a projective group and an action hom",
-#  [IsProjectivityGroup, IsGroupHomomorphism and IsInjective],
-#  function( pg, a )
-#    SetNiceMonomorphism(pg,a);
-#    SetNiceObject(pg,Image(a));
-#  end );
-  
-InstallMethod( SetAsNiceMono, 
-  "for a projective collineation group and an action hom",
-  [IsProjectiveGroupWithFrob, IsGroupHomomorphism and IsInjective],
-  function( pg, a )
-    SetNiceMonomorphism(pg,a);
-    SetNiceObject(pg,Image(a));
-  end );
-
 # CHECKED 6/09/11 jdb
 # cvec change 19/3/14
 #############################################################################
