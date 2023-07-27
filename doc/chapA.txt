@@ -132,7 +132,6 @@
     [4X[28XO: MatrixOfCollineation: [IsProjGrpElandIsProjGrpElRep][128X[104X
     [4X[28XO: FieldAutomorphism: [IsProjGrpElWithFrobandIsProjGrpElWithFrobRep][128X[104X
     [4X[28XO: ActionOnAllProjPoints: [IsProjectiveGroupWithFrob][128X[104X
-    [4X[28XO: SetAsNiceMono: [IsProjectiveGroupWithFrob, IsGroupHomomorphism][128X[104X
     [4X[28XO: CanonicalGramMatrix: [IsString, IsPosInt, IsField][128X[104X
     [4X[28XO: CanonicalQuadraticForm: [IsString, IsPosInt, IsField][128X[104X
     [4X[28XO: SOdesargues: [IsInt, IsPosInt, IsFieldandIsFinite][128X[104X
@@ -190,7 +189,6 @@
     [4X[28XO: ProjElWithFrobWithPSIsom:    [IsMatrix and IsFFECollColl,  IsMapping,  IsField,    IsStandardDualityOfProjectiveSpace] [128X[104X
     [4X[28XO: ProjElWithFrobWithPSIsom:    [IsMatrix and IsFFECollColl,  IsMapping,  IsField,    IsGeneralMapping and IsSPGeneralMapping and IsOne] [128X[104X
     [4X[28XO: ProjElsWithFrobWithPSIsom: [IsList, IsField][128X[104X
-    [4X[28XO: SetAsNiceMono:                   [IsProjGroupWithFrobWithPSIsom,  IsGroupHomomorphism] [128X[104X
     [4X[28XO: CorrelationOfProjectiveSpace: [IsList, IsField][128X[104X
     [4X[28XO: CorrelationOfProjectiveSpace: [IsList, IsMapping, IsField][128X[104X
     [4X[28XO: CorrelationOfProjectiveSpace: [IsList, IsField, IsStandardDualityOfProjectiveSpace][128X[104X
@@ -1028,7 +1026,6 @@
     [4X[28XM: OneImmutable, # was [IsGroup and IsProjectiveGroupWithFrob], I think might be[128X[104X
     [4X[28XM: CanComputeActionOnPoints, [IsProjectiveGroupWithFrob],[128X[104X
     [4X[28XM: ActionOnAllProjPoints, [ IsProjectiveGroupWithFrob ],[128X[104X
-    [4X[28XM: SetAsNiceMono, [IsProjectiveGroupWithFrob, IsGroupHomomorphism and IsInjective],[128X[104X
     [4X[28XM: NiceMonomorphism, [IsProjectivityGroup and CanComputeActionOnPoints and IsHandledByNiceMonomorphism],[128X[104X
     [4X[28XM: NiceMonomorphism, [IsProjectiveGroupWithFrob and IsHandledByNiceMonomorphism],[128X[104X
     [4X[28XM: NiceMonomorphism, [IsProjectiveGroupWithFrob and CanComputeActionOnPoints and IsHandledByNiceMonomorphism], 1,[128X[104X
@@ -1222,7 +1219,6 @@
     [4X[28XM: Dimension, [IsProjGroupWithFrobWithPSIsom],[128X[104X
     [4X[28XM: ActionOnAllPointsHyperplanes, [ IsProjGroupWithFrobWithPSIsom ],[128X[104X
     [4X[28XM: CanComputeActionOnPoints, [IsProjGroupWithFrobWithPSIsom],[128X[104X
-    [4X[28XM: SetAsNiceMono, [IsProjGroupWithFrobWithPSIsom, IsGroupHomomorphism and IsInjective],[128X[104X
     [4X[28XM: NiceMonomorphism, [IsProjGroupWithFrobWithPSIsom and CanComputeActionOnPoints and IsHandledByNiceMonomorphism], 50,[128X[104X
     [4X[28XM: NiceMonomorphism, [IsProjGroupWithFrobWithPSIsom and IsHandledByNiceMonomorphism], 50,[128X[104X
     [4X[28XM: ViewObj, [IsProjGroupWithFrobWithPSIsom],[128X[104X
