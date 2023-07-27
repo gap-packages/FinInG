@@ -103,7 +103,7 @@ end);
 InstallGlobalFunction(IsFiningScalarMatrix,
 	function( a )
 	local n;
-	n := a[1][1];
+	n := a[1,1];
 	if IsZero(n) then 
 		return false;
 	else
@@ -190,7 +190,7 @@ InstallMethod( Projectivity, [ IsMatrix and IsFFECollColl, IsField],
   	function( mat, gf )
 		local el, m2, fld, frob, cmat;
 		m2 := ShallowCopy(mat);
-		#if RowLength(m2) <> Length(m2) then
+		#if NrCols(m2) <> NrRows(m2) then
 		#	Error("<mat> must be a square matrix");
 		#fi;
 		if Rank(m2) <> Size(m2) then
@@ -213,10 +213,10 @@ InstallMethod( Projectivity, [ IsCMatRep and IsFFECollColl, IsField],
   	function( mat, gf )
 		local el, m2, fld, frob, cmat;
 		m2 := ShallowCopy(mat);
-		#if RowLength(m2) <> Length(m2) then 
+		#if NrCols(m2) <> NrRows(m2) then
 		#	Error("<mat> must be a square matrix");
 		#fi;
-		if Rank(m2) <> Length(m2) then
+		if Rank(m2) <> NrRows(m2) then
 			Error("<mat> must not be singular");
 		fi;
 		#ConvertToMatrixRep( m2, gf );
@@ -239,14 +239,14 @@ InstallMethod( Projectivity, [ IsProjectiveSpace, IsMatrix],
 		local d,gf,m2;
 		d:=Dimension(pg);
 		gf:=pg!.basefield;
-		if d <> Size(mat)-1 then
+		if d <> NrRows(mat)-1 then
 			Error("The arguments <mat> and <pg> are incompatible");
 		fi;
 		m2 := ShallowCopy(mat);
-		#if RowLength(m2) <> Length(m2) then 
+		#if NrCols(m2) <> NrRows(m2) then
 		#	Error("<mat> must be a square matrix");
 		#fi;
-		if Rank(m2) <> Size(m2) then
+		if Rank(m2) <> NrRows(m2) then
 			Error("<mat> must not be singular");
 		fi;
 		return Projectivity(mat,gf);
@@ -265,14 +265,14 @@ InstallMethod( Projectivity, [ IsProjectiveSpace, IsCMatRep],
 		local d,gf,m2;
 		d:=Dimension(pg);
 		gf:=pg!.basefield;
-		if d <> Size(mat)-1 then
+		if d <> NrRows(mat)-1 then
 			Error("The arguments <mat> and <pg> are incompatible");
 		fi;
 		m2 := ShallowCopy(mat);
-		#if RowLength(m2) <> Length(m2) then 
+		#if NrCols(m2) <> NrRows(m2) then
 		#	Error("<mat> must be a square matrix");
 		#fi;
-		if Rank(m2) <> Size(m2) then
+		if Rank(m2) <> NrRows(m2) then
 			Error("<mat> must not be singular");
 		fi;
 		return Projectivity(mat,gf);
@@ -427,7 +427,7 @@ InstallMethod( ProjElWithFrob,
 		local el, m2, cmat;
 		m2 := ShallowCopy(m);
 		#ConvertToMatrixRep( m2, f );
-		cmat := NewMatrix(IsCMatRep,f,Length(m2[1]),m2);
+		cmat := NewMatrix(IsCMatRep,f,NrCols(m2),m2);
 		el := rec( mat := cmat, fld := f, frob := frob );
 		Objectify( ProjElsWithFrobType, el );
 		return el;
@@ -583,7 +583,7 @@ InstallMethod( ProjElsWithFrob,
 InstallMethod( CollineationOfProjectiveSpace, 
 	[ IsMatrix and IsFFECollColl, IsField],
 	function( mat, gf )
-    if Rank(mat) <> Size(mat) then
+    if Rank(mat) <> NrRows(mat) then
 		Error("<mat> must not be singular");
     fi;
     return ProjElWithFrob( mat, IdentityMapping(gf), gf);
@@ -600,7 +600,7 @@ InstallMethod( CollineationOfProjectiveSpace, [ IsProjectiveSpace, IsMatrix],
 		local d,gf;
 		d:=Dimension(pg);
 		gf:=pg!.basefield;
-		if d <> Size(mat)-1 then
+		if d <> NrRows(mat)-1 then
 			Error("The arguments <mat> and <pg> are incompatible");
 		fi;
 		return ProjElWithFrob( mat, IdentityMapping(gf), gf);
@@ -637,7 +637,7 @@ InstallMethod( CollineationOfProjectiveSpace, [ IsProjectiveSpace, IsMatrix, IsM
 		local d,gf;
 		d:=Dimension(pg);
 		gf:=pg!.basefield;
-		if d <> Size(mat)-1 then
+		if d <> NrRows(mat)-1 then
 			Error("The arguments <mat> and <pg> are incompatible");
 		fi;
 		return ProjElWithFrob( mat, frob, gf);
@@ -682,7 +682,7 @@ InstallMethod( CollineationOfProjectiveSpace,
 	[ IsMatrix and IsFFECollColl, IsRingHomomorphism and
     IsMultiplicativeElementWithInverse, IsField], 
 	function( mat, frob, gf )
-    if Rank(mat) <> Size(mat) then
+    if Rank(mat) <> NrRows(mat) then
 		Error("<mat> must not be singular");
     fi;
     if Source(frob) <> gf then
@@ -889,7 +889,7 @@ InstallMethod( \=, "for two projective group elements",
     aa := a!.mat;
     bb := b!.mat;
     p := PositionNonZero(aa[1]);
-    s := bb[1][p] / aa[1][p];
+    s := bb[1,p] / aa[1,p];
     for i in [1..Length(aa)] do
         if s*aa[i] <> bb[i] then return false; fi;
     od;
@@ -910,8 +910,8 @@ InstallMethod(\<,
     elif pa < pb then
         return false;
     fi;
-    sa := aa[1][pa]^-1;
-    sb := bb[1][pb]^-1;
+    sa := aa[1,pa]^-1;
+    sb := bb[1,pb]^-1;
     for i in [1..Length(aa)] do
         va := sa*aa[i];
         vb := sb*bb[i];
@@ -931,7 +931,7 @@ InstallMethod( \=, "for two projective group elements with Frobenius",
     aa := a!.mat;
     bb := b!.mat;
     p := PositionNonZero(aa[1]);
-    s := bb[1][p] / aa[1][p];
+    s := bb[1,p] / aa[1,p];
     if s*aa <> bb then return false; fi;
 	#for i in [1..Length(aa)] do
         #if s*aa[i] <> bb[i] then return false; fi;
@@ -958,8 +958,8 @@ InstallMethod(\<,
     elif pa < pb then
         return false;
     fi;
-    sa := aa[1][pa]^-1;
-    sb := bb[1][pb]^-1;
+    sa := aa[1,pa]^-1;
+    sb := bb[1,pb]^-1;
     for i in [1..Length(aa)] do
         va := sa*aa[i];
         vb := sb*bb[i];
@@ -1031,7 +1031,7 @@ InstallMethod( IsOne,
 	[IsProjGrpEl and IsProjGrpElRep],
 	function( el )
     local s;
-    s := el!.mat[1][1];
+    s := el!.mat[1,1];
     if IsZero(s) then 
 		return false; 
 	fi;
@@ -1052,7 +1052,7 @@ InstallMethod( IsOne,
     if not(IsOne(el!.frob)) then 
 		return false; 
 	fi;
-    s := el!.mat[1][1];
+    s := el!.mat[1,1];
     if IsZero(s) then return false; fi;
     s := s^-1;
     return IsOne( s*el!.mat );
@@ -1396,7 +1396,7 @@ InstallOtherMethod( \^,
   function( m, f )
     local w,l,i;
     l := [];
-    for i in [1..Length(m)] do
+    for i in [1..NrRows(m)] do
         w := List(m[i],x->x^f);
         ConvertToVectorRepNC(w,2);
         Add(l,w);
@@ -1412,7 +1412,7 @@ InstallOtherMethod( \^,
   function( m, f )
     local w,l,i;
     l := [];
-    for i in [1..Length(m)] do
+    for i in [1..NrRows(m)] do
         w := List(m[i],x->x^f);
         ConvertToVectorRepNC(w,2);
         Add(l,w);
@@ -1443,7 +1443,7 @@ InstallOtherMethod( \^,
     local w,l,i,q;
     l := [];
     q := Q_VEC8BIT(m[1]);
-    for i in [1..Length(m)] do
+    for i in [1..NrRows(m)] do
         w := List(m[i],x->x^f);
         ConvertToVectorRepNC(w,q);
         Add(l,w);
@@ -1460,7 +1460,7 @@ InstallOtherMethod( \^,
     local w,l,i,q;
     l := [];
     q := Q_VEC8BIT(m[1]);
-    for i in [1..Length(m)] do
+    for i in [1..NrRows(m)] do
         w := List(m[i],x->x^f);
         ConvertToVectorRepNC(w,q);
         Add(l,w);
@@ -1788,7 +1788,7 @@ InstallMethod( BaseField,
  #   # Now start to investigate:
 #		gens := GeneratorsOfGroup(g);
 #		if Length(gens) > 0 then
-#			return Length(gens[1]!.mat);
+#			return NrRows(gens[1]!.mat);
 #		fi;
 #		Error("dimension could not be determined");
 #	end );
@@ -1812,9 +1812,9 @@ InstallMethod( Dimension,
     # Now start to investigate:
 		gens := GeneratorsOfGroup(g);
 		if Length(gens) > 0 then
-			return Length(gens[1]!.mat);
+			return NrRows(gens[1]!.mat);
 		elif IsTrivial(g) then				#JB: 22/03/2014: The trivial group with no generators slipped through.
-		 	return Length(One(g)!.mat);
+		 	return NrRows(One(g)!.mat);
 		fi;
 		Error("dimension could not be determined");
 	end );
@@ -2259,7 +2259,7 @@ InstallMethod( FindBasePointCandidates,
     gens := GeneratorsOfGroup(g);
     if IsObjWithMemory(gens[1]) then
         f := BaseField(gens[1]!.el);
-        d := Length(gens[1]!.el!.mat);
+        d := NrRows(gens[1]!.el!.mat);
     else
         f := BaseField(g);
         d := Dimension(g);
@@ -2286,7 +2286,7 @@ InstallMethod( FindBasePointCandidates,
     gens := GeneratorsOfGroup(g);
     if IsObjWithMemory(gens[1]) then
         f := BaseField(gens[1]!.el);
-        d := Length(gens[1]!.el!.mat);
+        d := NrRows(gens[1]!.el!.mat);
     else
         f := BaseField(g);
         d := Dimension(g);
@@ -2323,7 +2323,7 @@ InstallMethod( FindBasePointCandidates,
     gens := GeneratorsOfGroup(g);
     if IsObjWithMemory(gens[1]) then
         f := BaseField(gens[1]!.el);
-        d := Length(gens[1]!.el!.mat);
+        d := NrRows(gens[1]!.el!.mat);
     else
         f := BaseField(g);
         d := Dimension(g);
@@ -2373,8 +2373,8 @@ InstallMethod( CanonicalGramMatrix,
 			fi;    
 			m := List( 0 * IdentityMat(d, f), ShallowCopy );
 			for i  in [ 1 .. d/2 ]  do
-				m[2*i][2*i-1] := -one;
-				m[2*i-1][2*i] := one;
+				m[2*i,2*i-1] := -one;
+				m[2*i-1,2*i] := one;
 			od;
     
       # Unitary Gram matrix      
@@ -2394,8 +2394,8 @@ InstallMethod( CanonicalGramMatrix,
 				w := one;
 			fi; 
 			for i  in [ 1 .. d/2 ]  do
-				m[2*i-1][2*i] := w;
-				m[2*i][2*i-1] := w;
+				m[2*i-1,2*i] := w;
+				m[2*i,2*i-1] := w;
 			od;
 		elif type = "elliptic" then   
 			m := List( 0*IdentityMat(d, f), ShallowCopy );
@@ -2415,8 +2415,8 @@ InstallMethod( CanonicalGramMatrix,
 				w := one;
 			fi; 
 			for i in [ 2 .. d/2 ]  do
-				m[2*i-1][2*i] := w;
-				m[2*i][2*i-1] := w;
+				m[2*i-1,2*i] := w;
+				m[2*i,2*i-1] := w;
 			od;
 		elif type = "parabolic" then 
 			m := List( 0*IdentityMat(d, f), ShallowCopy );          
@@ -2430,14 +2430,14 @@ InstallMethod( CanonicalGramMatrix,
 				else
 					t := one;
 				fi;
-				m[1][1] := t;
+				m[1,1] := t;
 				w := t * ((p + 1) / 2);
 			else
 				w := one;
 			fi; 
 			for i in [ 1 .. (d-1)/2 ]  do
-				m[2*i][2*i+1] := w;
-				m[2*i+1][2*i] := w;
+				m[2*i,2*i+1] := w;
+				m[2*i+1,2*i] := w;
 			od;
 		else Error( "type is unknown or not implemented" );
 		fi;
@@ -2465,31 +2465,31 @@ InstallMethod( CanonicalQuadraticForm,
         if type = "hyperbolic" then
 			m := MutableCopyMat(0 * IdentityMat(d, f));
 			for j in [ 1 .. d/2 ]  do
-				m[ 2*j-1 ][ 2*j ] := one;
+				m[ 2*j-1 , 2*j ] := one;
 			od;
 		elif type = "elliptic" then
 			m := MutableCopyMat(0 * IdentityMat(d, f));
-			m[1][1] := one;
-			m[2][1] := one; 
-			m[d][d-1] := one;
+			m[1,1] := one;
+			m[2,1] := one; 
+			m[d,d-1] := one;
 			for j in [ 2 .. d/2-1 ]  do
-				m[ 2*j-1 ][ 2*j ] := one;
+				m[ 2*j-1 , 2*j ] := one;
 			od;
 			p := Characteristic(f);
 			q := Size(f);
 			if IsOddInt(Log(q, p)) then
-				m[2][2] := one;
+				m[2,2] := one;
 			else
 				R := PolynomialRing( f, 1 );
 				x := Indeterminate( f );
-				m[2][2] := Z(q)^First( [ 0 .. q-2 ], u -> 
+				m[2,2] := Z(q)^First( [ 0 .. q-2 ], u -> 
 					Length( Factors( R, x^2+x+PrimitiveRoot( f )^u ) ) = 1 );         
 			fi;
 		elif type = "parabolic" then
 			m := MutableCopyMat(0 * IdentityMat(d, f));
-			m[1][1] := one;
+			m[1,1] := one;
 			for j in [ 1 .. (d-1)/2 ]  do
-				m[ 2*j+1 ][ 2*j ] := one;
+				m[ 2*j+1 , 2*j ] := one;
 			od;
 		else Error( "type is unknown or not implemented" );
 		fi;
@@ -2705,8 +2705,8 @@ InstallMethod( GeneralSymplecticGroup, [IsPosInt, IsField and IsFinite],
   sp := Sp(d, q);
   gens := GeneratorsOfGroup(sp);
   z := PrimitiveRoot( f );
-  delta := ShallowCopy(IdentityMat(d, f));
-  for i in [1..d/2] do delta[i][i] := z; od;
+  delta := IdentityMat(d, f);
+  for i in [1..d/2] do delta[i,i] := z; od;
   gens := Concatenation(gens, [delta]);
   g := GroupWithGenerators( gens );
   SetName( g, Concatenation("GSp(",String(d),",",String(q),")") );
@@ -2812,8 +2812,8 @@ InstallMethod( DeltaOminus, [IsPosInt, IsField and IsFinite],
 
     if q mod 4 = 3 then
        for i in [2..d/2] do
-           mat[2*i-1][2*i] := one;   
-           mat[2*i][2*i-1] := -one;  
+           mat[2*i-1,2*i] := one;   
+           mat[2*i,2*i-1] := -one;  
        od;  
        mu := z^((q-1)/2);;
        combs := Combinations(AsList(f),2);;
@@ -2878,8 +2878,8 @@ InstallMethod( GammaOminus, [IsPosInt, IsField and IsFinite],
   elif IsOddInt(q) then
      gram := CanonicalGramMatrix("elliptic", d, f);
      mat := MutableCopyMat( gram );
-	 mat[1][1] := gram[3][4] * gram[1][1]^((1-p)/2); 
-	 mat[2][2] := gram[3][4] * gram[2][2]^((1-p)/2);
+	 mat[1,1] := gram[3,4] * gram[1,1]^((1-p)/2); 
+	 mat[2,2] := gram[3,4] * gram[2,2]^((1-p)/2);
 	 ConvertToMatrixRep( mat, f );
 	 frob := FrobeniusAutomorphism( f );
 	 a := ProjElWithFrob( mat, frob, f);
@@ -2985,7 +2985,7 @@ InstallMethod( DeltaOplus, [IsPosInt, IsField and IsFinite],
 
       mu := IdentityMat(d,f);
       for i in [1..d/2] do
-        mu[2*i-1][2*i-1] := w;
+        mu[2*i-1,2*i-1] := w;
       od;
 
       gens := List(gens, t->b*t*b^-1);; 

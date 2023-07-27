@@ -200,7 +200,7 @@ InstallMethod( IsProjectivityGroup, [ IsProjGroupWithFrobWithPSIsom ],
     local gens, F, d, set, g, set2;
 		gens:=GeneratorsOfMagmaWithInverses(G);
 		F:=gens[1]!.fld;
-		d:=Size(gens[1]!.mat)-1;
+		d:=NrRows(gens[1]!.mat)-1;
 		set:=AsSet(List(gens,g->g!.frob));
 		set2:=AsSet(List(gens,g->g!.psisom));
 		if set = AsSet([FrobeniusAutomorphism(F)^0]) and 
@@ -220,7 +220,7 @@ InstallMethod( IsCollineationGroup, [ IsProjGroupWithFrobWithPSIsom ],
     local gens, F, d, set, g, set2;
 		gens:=GeneratorsOfMagmaWithInverses(G);
 		F:=gens[1]!.fld;
-		d:=Size(gens[1]!.mat)-1;
+		d:=NrRows(gens[1]!.mat)-1;
 		set2:=AsSet(List(gens,g->g!.psisom));
 		if set2 = AsSet([IdentityMappingOfElementsOfProjectiveSpace(PG(d,F))])
 		then return true;
@@ -414,7 +414,7 @@ InstallMethod( ProjElWithFrobWithPSIsom,
 	  IsField, IsStandardDualityOfProjectiveSpace],
 	function( m, frob, f, delta )
 		local el,cmat;
-		cmat := NewMatrix(IsCMatRep,f,Length(m[1]),m);
+		cmat := NewMatrix(IsCMatRep,f,NrCols(m),m);
 		el := rec( mat := cmat, fld := f, frob := frob, psisom := delta );
 		Objectify( ProjElsWithFrobWithPSIsomType, el );
 		return el;
@@ -435,9 +435,8 @@ InstallMethod( ProjElWithFrobWithPSIsom,
 	[IsCMatRep and IsFFECollColl, IsRingHomomorphism and IsMultiplicativeElementWithInverse,
 	  IsField],
 	function( m, frob, f )
-		local el,isom,q,n;
-		q := Size(f); 
-		n := Length(m);
+		local el,isom,n;
+		n := NrRows(m);
 		isom := IdentityMappingOfElementsOfProjectiveSpace(ProjectiveSpace(n-1,f));  
 		## I hope this works! was wrong, for godsake, don't tell Celle about this type of mistakes :-(
 		el := rec( mat := m, fld := f, frob := frob, psisom := isom);
@@ -458,10 +457,9 @@ InstallMethod( ProjElWithFrobWithPSIsom,
 	[IsMatrix and IsFFECollColl, IsRingHomomorphism and IsMultiplicativeElementWithInverse,
 	  IsField],
 	function( m, frob, f )
-		local el,isom,q,n,cmat;
-		q := Size(f); 
-		n := Length(m);
-		cmat := NewMatrix(IsCMatRep,f,Length(m[1]),m);
+		local el,isom,n,cmat;
+		n := NrRows(m);
+		cmat := NewMatrix(IsCMatRep,f,NrCols(m),m);
 		isom := IdentityMappingOfElementsOfProjectiveSpace(ProjectiveSpace(n-1,f));  
 		## I hope this works! was wrong, for godsake, don't tell Celle about this type of mistakes :-(
 		el := rec( mat := cmat, fld := f, frob := frob, psisom := isom);
@@ -502,7 +500,7 @@ InstallMethod( ProjElWithFrobWithPSIsom,
 	  IsField, IsGeneralMapping	and IsSPGeneralMapping and IsOne],
 	function( m, frob, f, delta )
 		local el,cmat;
-		cmat := NewMatrix(IsCMatRep,f,Length(m[1]),m);
+		cmat := NewMatrix(IsCMatRep,f,NrCols(m),m);
 		el := rec( mat := cmat, fld := f, frob := frob, psisom := delta );
 		Objectify( ProjElsWithFrobWithPSIsomType, el );
 		return el;
@@ -1008,7 +1006,7 @@ InstallMethod( CorrelationOfProjectiveSpace,
 	"for a matrix and a finite field",
 	[ IsMatrix and IsFFECollColl, IsField],
 	function( mat, gf )
-		if Rank(mat) <> Size(mat) then
+		if Rank(mat) <> NrRows(mat) then
 			Error("<mat> must not be singular");
 		fi;
 		return ProjElWithFrobWithPSIsom( mat, IdentityMapping(gf), gf);
@@ -1027,7 +1025,7 @@ InstallMethod( CorrelationOfProjectiveSpace,
 	[ IsMatrix and IsFFECollColl, IsRingHomomorphism and
     IsMultiplicativeElementWithInverse, IsField], 
 	function( mat, frob, gf )
-		if Rank(mat) <> Size(mat) then
+		if Rank(mat) <> NrRows(mat) then
 			Error("<mat> must not be singular");
 		fi;
 		return ProjElWithFrobWithPSIsom( mat, frob, gf);
@@ -1045,7 +1043,7 @@ InstallMethod( CorrelationOfProjectiveSpace,
 	"for a matrix, a finite field, and a projective space isomorphism",
 	[ IsMatrix and IsFFECollColl, IsField, IsStandardDualityOfProjectiveSpace], 
 	function( mat, gf, delta )
-		if Rank(mat) <> Size(mat) then
+		if Rank(mat) <> NrRows(mat) then
 			Error("<mat> must not be singular");
 		fi;
 		if delta!.ps!.basefield <> gf then
@@ -1064,10 +1062,10 @@ InstallMethod( CorrelationOfProjectiveSpace,
 	"for a matrix, a finite field, and a projective space isomorphism",
 	[ IsMatrix and IsFFECollColl, IsField, IsIdentityMappingOfElementsOfProjectiveSpace], 
 	function( mat, gf, delta )
-		if Rank(mat) <> Size(mat) then
+		if Rank(mat) <> NrRows(mat) then
 			Error("<mat> must not be singular");
 		fi;
-		if Source(delta)!.geometry <> PG(Size(mat)-1,gf) then
+		if Source(delta)!.geometry <> PG(NrRows(mat)-1,gf) then
 			Error("<delta> is not the identity mapping of the correct projective space");
 		fi;
 		return ProjElWithFrobWithPSIsom( mat, IdentityMapping(gf), gf, delta);
@@ -1085,7 +1083,7 @@ InstallMethod( CorrelationOfProjectiveSpace,
 	[ IsMatrix and IsFFECollColl, IsRingHomomorphism and IsMultiplicativeElementWithInverse, IsField, 
     IsStandardDualityOfProjectiveSpace], 
 	function( mat, frob, gf, delta )
-		if Rank(mat) <> Size(mat) then
+		if Rank(mat) <> NrRows(mat) then
 			Error("<mat> must not be singular");
 		fi;
 		if delta!.ps!.basefield <> gf then
@@ -1105,10 +1103,10 @@ InstallMethod( CorrelationOfProjectiveSpace,
 	[ IsMatrix and IsFFECollColl, IsRingHomomorphism and IsMultiplicativeElementWithInverse, IsField, 
     IsIdentityMappingOfElementsOfProjectiveSpace], 
 	function( mat, frob, gf, delta )
-		if Rank(mat) <> Size(mat) then
+		if Rank(mat) <> NrRows(mat) then
 			Error("<mat> must not be singular");
 		fi;
-		if Source(delta)!.geometry <> PG(Size(mat)-1,gf) then
+		if Source(delta)!.geometry <> PG(NrRows(mat)-1,gf) then
 			Error("<delta> is not the identity mapping of the correct projective space");
 		fi;
 		return ProjElWithFrobWithPSIsom( mat, frob, gf, delta);
@@ -1125,7 +1123,7 @@ InstallMethod( CorrelationOfProjectiveSpace,
 	[ IsProjectiveSpace, IsMatrix and IsFFECollColl, IsRingHomomorphism and IsMultiplicativeElementWithInverse, 
     IsStandardDualityOfProjectiveSpace], 
 	function( pg, mat, frob, delta )
-		if Dimension(pg)+1 <> Size(mat) then
+		if Dimension(pg)+1 <> NrRows(mat) then
 			Error("The arguments <pg> and <mat> are not compatible");
 		fi;
 		return CorrelationOfProjectiveSpace( mat, frob, BaseField(pg), delta);
@@ -1142,7 +1140,7 @@ InstallMethod( CorrelationOfProjectiveSpace,
 	[ IsProjectiveSpace, IsMatrix and IsFFECollColl, IsRingHomomorphism and IsMultiplicativeElementWithInverse, 
     IsIdentityMappingOfElementsOfProjectiveSpace], 
 	function( pg, mat, frob, delta )
-		if Dimension(pg)+1 <> Size(mat) then
+		if Dimension(pg)+1 <> NrRows(mat) then
 			Error("The arguments <pg> and <mat> are not compatible");
 		fi;
 		if Source(delta)!.geometry <> pg then
@@ -1162,7 +1160,7 @@ InstallMethod( Correlation,
 	[ IsProjectiveSpace, IsMatrix and IsFFECollColl, IsRingHomomorphism and IsMultiplicativeElementWithInverse, 
     IsStandardDualityOfProjectiveSpace], 
 	function( pg, mat, frob, delta )
-		if Dimension(pg)+1 <> Size(mat) then
+		if Dimension(pg)+1 <> NrRows(mat) then
 			Error("The arguments <pg> and <mat> are not compatible");
 		fi;
 		return CorrelationOfProjectiveSpace( mat, frob, BaseField(pg), delta);
@@ -1179,7 +1177,7 @@ InstallMethod( Correlation,
 	[ IsProjectiveSpace, IsMatrix and IsFFECollColl, IsRingHomomorphism and IsMultiplicativeElementWithInverse, 
     IsIdentityMappingOfElementsOfProjectiveSpace], 
 	function( pg, mat, frob, delta )
-		if Dimension(pg)+1 <> Size(mat) then
+		if Dimension(pg)+1 <> NrRows(mat) then
 			Error("The arguments <pg> and <mat> are not compatible");
 		fi;
 		if Source(delta)!.geometry <> pg then
@@ -1361,7 +1359,7 @@ InstallMethod( Dimension,
     # Now start to investigate:
     gens := GeneratorsOfGroup(g);
     if Length(gens) > 0 then
-        return Length(gens[1]!.mat);
+        return NrRows(gens[1]!.mat);
     fi;
     Error("dimension could not be determined");
   end );
@@ -1537,7 +1535,7 @@ InstallMethod(PolarityOfProjectiveSpaceOp,
   fi;
   mat := GramMatrix(form);
   field := BaseField(form);
-  n := Size(mat);
+  n := NrRows(mat);
   aut := CompanionAutomorphism(form);
   v := field^n;
   ps := ProjectiveSpace(n-1,field);
@@ -1559,7 +1557,7 @@ InstallMethod( ViewObj,
   function(el)
   local dim, field;
   field := el!.fld;
-  dim := Size(el!.mat);
+  dim := NrRows(el!.mat);
   Print("<polarity of PG(", dim-1, ", ", field, ")");
   #ViewObj(el!.mat);
   #if IsOne(el!.frob) then
@@ -1576,7 +1574,7 @@ InstallMethod( PrintObj,
   function( f )
   local dim, field;
   field := f!.fld;
-  dim := Size(f!.mat);
+  dim := NrRows(f!.mat);
   Print("<polarity of PG(", dim-1, ", ", field, ")>, underlying matrix\n");
   PrintObj(f!.mat);
   Print(",");
@@ -1588,7 +1586,7 @@ InstallMethod( Display, "for a projective group element with Frobenius with proj
   [IsPolarityOfProjectiveSpace and IsPolarityOfProjectiveSpaceRep],
   function(f)
     local dim, field;
-    dim := Size(f!.mat);
+    dim := NrRows(f!.mat);
     field := f!.fld;
     Print("<polarity of PG(", dim-1, ", ", field, ")>, underlying matrix\n");
     Display(f!.mat);
@@ -1619,7 +1617,7 @@ InstallMethod(PolarityOfProjectiveSpace,
   [IsMatrix,IsField and IsFinite],
   function(matrix,field)
   local form;
-  if Rank(matrix) <> Size(matrix) then
+  if Rank(matrix) <> NrRows(matrix) then
     Error("<matrix> must not be singular");
   fi;
   form := BilinearFormByMatrix(matrix,field);  
@@ -1631,7 +1629,7 @@ InstallMethod(PolarityOfProjectiveSpace,
   [IsMatrix, IsFrobeniusAutomorphism, IsField and IsFinite],
   function(matrix,frob,field)
   local form;
-  if Rank(matrix) <> Size(matrix) then
+  if Rank(matrix) <> NrRows(matrix) then
     Error("<matrix> must not be singular");
   fi;
   if Order(frob)<>2 then
@@ -1647,7 +1645,7 @@ InstallMethod(HermitianPolarityOfProjectiveSpace,
   [IsMatrix,IsField and IsFinite],
   function(matrix,field)
   local form;
-  if Rank(matrix) <> Size(matrix) then
+  if Rank(matrix) <> NrRows(matrix) then
     Error("<matrix> must not be singular");
   fi;
   if not IsInt(Sqrt(Size(field))) then

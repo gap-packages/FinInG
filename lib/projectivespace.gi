@@ -2292,19 +2292,19 @@ InstallMethod( ComplementSpace,
     local  z, l, b, i, j, k, stop, v, dim, bas;
     bas := MutableCopyMat( BasisVectors( Basis(space) ));
     z := Zero( bas[1][1] );
-    if Length( mat ) > 0  then
+    if NrRows( mat ) > 0  then
         mat := MutableCopyMat( mat );
         TriangulizeMat( mat );
     fi;
     dim := Length( bas[1] );
-    l := Length( bas ) - Length( mat );
+    l := Length( bas ) - NrRows( mat );
     b := [  ];
     i := 1;
     j := 1;
     while Length( b ) < l  do
         stop := false;
         repeat
-            if j <= dim and (Length( mat ) < i or mat[i][j] = z)  then
+            if j <= dim and (NrRows( mat ) < i or mat[i,j] = z)  then
                 v := PositionProperty( bas, k -> k[j] <> z );
                 if v <> fail  then
                     v := bas[v];
@@ -2313,7 +2313,7 @@ InstallMethod( ComplementSpace,
                 fi;
             else
                 stop := true;
-                if i <= Length( mat )  then
+                if i <= NrRows( mat )  then
                     v := mat[i];
                     v := 1 / v[j] * v;
                 else
@@ -2370,9 +2370,9 @@ InstallMethod( ElationOfProjectiveSpace,
 	ei := BasisVectors(Basis(ComplementSpace(vssub,[e0])));
 	en := UnderlyingObject(point1);
 	M := Concatenation([e0],ei,[en]);
-	el := ShallowCopy(IdentityMat(n+1,f));
+	el := IdentityMat(n+1,f);
 	p2vect := UnderlyingObject(point2)*M^-1;
-	el[n+1][1] := p2vect[1]/p2vect[n+1];
+	el[n+1,1] := p2vect[1]/p2vect[n+1];
 	el := M^(-1)*el*M;
 	return CollineationOfProjectiveSpace(el,f);
 end );
@@ -2402,11 +2402,11 @@ InstallMethod( ProjectiveElationGroup,
 	ei := BasisVectors(Basis(ComplementSpace(vssub,[e0])));
 	en := BasisVectors(Basis(ComplementSpace(f^(n+1),mat)))[1];
 	M := Concatenation([e0],ei,[en]);
-	el := ShallowCopy(IdentityMat(n+1,f));
+	el := IdentityMat(n+1,f);
 	gens := [];
 	fbas := BasisVectors(Basis(f));
 	for x in fbas do
-		el[n+1][1] := x;
+		el[n+1,1] := x;
 		Add(gens,ShallowCopy(M^(-1)*el*M));
 	od;
 	#group := SubgroupNC(ProjectivityGroup(ps),List(gens,x->CollineationOfProjectiveSpace(x,f)));
@@ -2442,7 +2442,7 @@ InstallMethod( ProjectiveElationGroup,
 	fbas := BasisVectors(Basis(f));
 	for x in fbas do
 		for i in [1..n] do
-		el[n+1][i] := x;
+			el[n+1,i] := x;
 			Add(gens,ShallowCopy(M^(-1)*el*M));
 		od;
 	od;
@@ -2481,10 +2481,10 @@ InstallMethod( HomologyOfProjectiveSpace,
 	ei := BasisVectors(Basis(ComplementSpace(vssub,[e0])));
 	en := UnderlyingObject(centre);
 	M := Concatenation([e0],ei,[en]);
-	el := ShallowCopy(IdentityMat(n+1,f));
+	el := IdentityMat(n+1,f);
 	p1vect := UnderlyingObject(point1)*M^-1;
 	p2vect := UnderlyingObject(point2)*M^-1;
-	el[n+1][n+1] := (p2vect[n+1]*p1vect[1])/(p2vect[1]*p1vect[n+1]);
+	el[n+1,n+1] := (p2vect[n+1]*p1vect[1])/(p2vect[1]*p1vect[n+1]);
 	el := M^(-1)*el*M;
 	return CollineationOfProjectiveSpace(el,f);
 end );
@@ -2511,8 +2511,8 @@ InstallMethod( ProjectiveHomologyGroup,
 	M := Concatenation(Unpack(UnderlyingObject(sub)),[Unpack(UnderlyingObject(centre))]);
 	f := BaseField(sub);
 	q := Size(f);
-	el := ShallowCopy(IdentityMat(n+1,f));
-	el[n+1][n+1] := Z(q);
+	el := IdentityMat(n+1,f);
+	el[n+1,n+1] := Z(q);
 	return Group(CollineationOfProjectiveSpace(M^(-1)*el*M,f));
 end );
 
