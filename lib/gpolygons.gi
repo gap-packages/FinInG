@@ -3577,7 +3577,7 @@ InstallMethod( FisherqClan,
 	nonsquares := Difference(AsList(GF(q)),squares);;
 	n := First(nonsquares, t -> t-1 in squares);
 
-	zeta := PrimitiveRoot(GF(q^2));
+	zeta := Z(q^2);
 	omega := zeta^(q+1);
 	i := zeta^((q+1)/2);
 	z := zeta^(q-1);

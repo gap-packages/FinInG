@@ -2225,7 +2225,7 @@ InstallMethod( BaerSublineOnThreePoints,
 	fi;
 	geo := AmbientSpace(x);
 	gfq2 := geo!.basefield;
-	if RootInt(Size(gfq2),2)^2 <> Size(gfq2) then
+	if IsOddInt(DegreeOverPrimeField(gfq2)) then
 		Error( "the order of the basefield must be a square" );
 	fi;
 	gfq := GF(Sqrt(Size(gfq2)));
