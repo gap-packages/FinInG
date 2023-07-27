@@ -962,7 +962,7 @@ InstallMethod( CanonicalPolarSpace,
 			form1 := QuadraticForm( ps );
 			isometric := IsometricCanonicalForm(form1); #be careful with the notion Canonical in Forms package, its meaning is different than canonical in FinInG :-)
 			gram := GramMatrix(isometric);
-			canonicalmatrix := gram[1][1]*CanonicalGramMatrix("parabolic", d+1, f); 
+			canonicalmatrix := gram[1,1]*CanonicalGramMatrix("parabolic", d+1, f); 
 			canonicalform := BilinearFormByMatrix(canonicalmatrix, f);
 			canonicalps := PolarSpaceStandard( canonicalform, false );
 			SetRankAttr( canonicalps, d/2 );
@@ -2668,8 +2668,8 @@ InstallMethod( GeometryOfAbsolutePoints,
 		form := SesquilinearForm(polarity);
 		if IsPseudoForm(form) then
 			mat := polarity!.mat;
-			n := Length(mat);
-			vect := List([1..n],i->mat[i][i]);
+			n := NrRows(mat);
+			vect := List([1..n],i->mat[i,i]);
 			sub := NullspaceMat(TransposedMat([vect]));
 			ps := ProjectiveSpace(n-1,polarity!.fld);
 			return VectorSpaceToElement(ps,sub);

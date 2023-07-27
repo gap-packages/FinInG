@@ -38,7 +38,7 @@ InstallMethod(PolarityOfProjectiveSpaceOp,
   fi;
   mat := GramMatrix(form);
   field := BaseField(form);
-  n := Size(mat);
+  n := NrRows(mat);
   aut := CompanionAutomorphism(form);
   v := field^n;
   ps := ProjectiveSpace(n-1,field);
@@ -60,7 +60,7 @@ InstallMethod( ViewObj,
   function(el)
   local dim, field;
   field := el!.fld;
-  dim := Size(el!.mat);
+  dim := NrRows(el!.mat);
   Print("<polarity of PG(", dim-1, ", ", field, ")");
   #ViewObj(el!.mat);
   #if IsOne(el!.frob) then
@@ -77,7 +77,7 @@ InstallMethod( PrintObj,
   function( f )
   local dim, field;
   field := f!.fld;
-  dim := Size(f!.mat);
+  dim := NrRows(f!.mat);
   Print("<polarity of PG(", dim-1, ", ", field, ")>, underlying matrix\n");
   PrintObj(f!.mat);
   Print(",");
@@ -89,7 +89,7 @@ InstallMethod( Display, "for a projective group element with Frobenius with proj
   [IsPolarityOfProjectiveSpace and IsPolarityOfProjectiveSpaceRep],
   function(f)
     local dim, field;
-    dim := Size(f!.mat);
+    dim := NrRows(f!.mat);
     field := f!.fld;
     Print("<polarity of PG(", dim-1, ", ", field, ")>, underlying matrix\n");
     Display(f!.mat);
@@ -120,7 +120,7 @@ InstallMethod(PolarityOfProjectiveSpace,
   [IsMatrix,IsField and IsFinite],
   function(matrix,field)
   local form;
-  if Rank(matrix) <> Size(matrix) then
+  if Rank(matrix) <> NrRows(matrix) then
     Error("<matrix> must not be singular");
   fi;
   form := BilinearFormByMatrix(matrix,field);  
@@ -132,7 +132,7 @@ InstallMethod(PolarityOfProjectiveSpace,
   [IsMatrix, IsFrobeniusAutomorphism, IsField and IsFinite],
   function(matrix,frob,field)
   local form;
-  if Rank(matrix) <> Size(matrix) then
+  if Rank(matrix) <> NrRows(matrix) then
     Error("<matrix> must not be singular");
   fi;
   if Order(frob)<>2 then
@@ -148,7 +148,7 @@ InstallMethod(HermitianPolarityOfProjectiveSpace,
   [IsMatrix,IsField and IsFinite],
   function(matrix,field)
   local form;
-  if Rank(matrix) <> Size(matrix) then
+  if Rank(matrix) <> NrRows(matrix) then
     Error("<matrix> must not be singular");
   fi;
   if not IsInt(Sqrt(Size(field))) then

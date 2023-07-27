@@ -733,8 +733,8 @@ InstallMethod( ShrinkMat,
 	local d,vecs,m,n,bmat,blocks,bl,submat,i,j,ij,checklist,row,newmat;
 	d:=Size(B);
 	vecs:=BasisVectors(B);
-	m:=DimensionsMat(mat)[1];
-	n:=DimensionsMat(mat)[2];
+	m:=NrRows(mat);
+	n:=NrCols(mat);
   # First we check if m and n are multiples of d
 	if not (IsInt(m/d) and IsInt(n/d)) then 
 		Error("The matrix does not have the right dimensions");
@@ -759,25 +759,6 @@ InstallMethod( ShrinkMat,
 	end);	
 		
 		
-## THE OLD ShrinkMat function:		
-# InstallGlobalFunction( ShrinkMat, "preimage of BlownUpMat",
-#  function( B, mat )
-#    local result, vectors, row, i, j, resrow, b;
-#    vectors := BasisVectors( B );
-#    result := [];
-#    b := Size(B);
-#    for i in [1..Size(mat)/b] do
-#        resrow := [];
-#        for j in [1..Size(mat[1])/b] do
-#            row :=  mat[(i-1) * b + 1]{[(j-1) * b + 1 .. j * b]};
-#            Add(resrow, row * vectors);
-#        od;
-#        Add(result, resrow);
-#    od;
-#    ConvertToMatrixRepNC( result );
-#    return result;
-#  end );
-
 InstallMethod( ShrinkMat, 
 	"for a field, a subfield and a matrix",
 	[ IsField,IsField, IsMatrix ],
@@ -1205,7 +1186,7 @@ InstallMethod( BilinearFormFieldReduction,
 	local mat1,f1,d1,t,d2,V2,V1,phi,b2,b2vecs,mat2,i,row,j,bil2;
 	mat1:=bil1!.matrix;
 	f1:=bil1!.basefield;
-	d1:=Size(mat1);
+	d1:=NrRows(mat1);
 	t:=Dimension(AsVectorSpace(f2,f1));
 	d2:=d1*t;
 	V2:=f2^d2;
@@ -1255,7 +1236,7 @@ InstallMethod( QuadraticFormFieldReduction,
 	local f1,basvecs,d1,t,d2,V2,V1,phi,b2,b2vecs,mat2,i,bil1,j,qf2;
 	f1:=qf1!.basefield;
 	basvecs:=BasisVectors(basis);
-	d1:=Size(qf1!.matrix);
+	d1:=NrRows(qf1!.matrix);
 	t:=Dimension(AsVectorSpace(f2,f1));
 	d2:=d1*t;
 	V2:=f2^d2;
@@ -1264,13 +1245,13 @@ InstallMethod( QuadraticFormFieldReduction,
 	b2vecs:=BasisVectors(b2);
 	mat2:=IdentityMat(d2,f2);
 	for i in [1..d2] do
-		mat2[i][i]:=Trace(f1,f2,alpha*((ShrinkVec(f1,f2,b2vecs[i],basis))^qf1));
+		mat2[i,i]:=Trace(f1,f2,alpha*((ShrinkVec(f1,f2,b2vecs[i],basis))^qf1));
 	od;
 	for i in [1..d2-1] do
 		for j in [i+1..d2] do
-			mat2[i][j]:=Trace(f1,f2,alpha*((ShrinkVec(f1,f2,b2vecs[i]+b2vecs[j],basis))^qf1
+			mat2[i,j]:=Trace(f1,f2,alpha*((ShrinkVec(f1,f2,b2vecs[i]+b2vecs[j],basis))^qf1
 							-(ShrinkVec(f1,f2,b2vecs[i],basis))^qf1-(ShrinkVec(f1,f2,b2vecs[j],basis))^qf1));
-			#mat2[j][i]:=mat2[i][j]; THESE entries need to be zero
+			#mat2[j,i]:=mat2[i,j]; THESE entries need to be zero
 		od;
 	od;
 	qf2:=QuadraticFormByMatrix(mat2,f2);
@@ -1313,7 +1294,7 @@ InstallMethod( HermitianFormFieldReduction,
 	# here the basefield is always a square
 	local f1,d1,t,d2,V2,V1,phi,b2,b2vecs,mat2,i,row,j,hf2;
 	f1:=hf1!.basefield;
-	d1:=Size(hf1!.matrix);
+	d1:=NrRows(hf1!.matrix);
 	t:=Dimension(AsVectorSpace(f2,f1));
 	d2:=d1*t;
 	V2:=f2^d2;
@@ -1995,7 +1976,7 @@ InstallMethod( NaturalEmbeddingBySubfield,
 		bmat := NullMat(d,d*n,f1);
 		one := One(f1);
 		for i in [1..d] do
-			bmat[i][1+(i-1)*n] := one;
+			bmat[i,1+(i-1)*n] := one;
 		od;
 
 		func := function( el )
@@ -2652,7 +2633,7 @@ InstallMethod( KleinCorrespondence,
 	
 		mat := NullMat(6, 6, f);
 		for i in [1..3] do
-			mat[i][7-i] := one;
+			mat[i,7-i] := one;
 		od;
 		form := QuadraticFormByMatrix(mat, f);
 		ps := PolarSpace( form );
@@ -2793,7 +2774,7 @@ InstallMethod( KleinCorrespondence,
 	
 		mat := NullMat(6, 6, f);
 		for i in [1..3] do
-			mat[i][7-i] := one;
+			mat[i,7-i] := one;
 		od;
 		form := QuadraticFormByMatrix(mat, f);
 		ps := PolarSpace( form );
@@ -2925,7 +2906,7 @@ InstallMethod( KleinCorrespondenceExtended,
 	
 		mat := NullMat(6, 6, f);
 		for i in [1..3] do
-			mat[i][7-i] := one;
+			mat[i,7-i] := one;
 		od;
 		form := QuadraticFormByMatrix(mat, f);
 		ps := PolarSpace( form );
@@ -3011,7 +2992,7 @@ InstallMethod( KleinCorrespondenceExtended,
 	
 		mat := NullMat(6, 6, f);
 		for i in [1..3] do
-			mat[i][7-i] := one;
+			mat[i,7-i] := one;
 		od;
 		form := QuadraticFormByMatrix(mat, f);
 		ps := PolarSpace( form );
@@ -3128,9 +3109,9 @@ InstallMethod( NaturalDualitySymplectic,
     f := w!.basefield;
     one := One(f);
     mat := NullMat(5, 5, f);
-    mat[1][1] := one;
-    mat[2][5] := -one;
-    mat[3][4] := -one;
+    mat[1,1] := one;
+    mat[2,5] := -one;
+    mat[3,4] := -one;
     form_quadric := QuadraticFormByMatrix(mat, f);
 	c1 := BaseChangeToCanonical( form_quadric );
     if not IsCanonicalPolarSpace(q4q) then
@@ -3143,7 +3124,7 @@ InstallMethod( NaturalDualitySymplectic,
 	formw := SesquilinearForm( w );
     delta := PolarityOfProjectiveSpace(w);
     hyp := IdentityMat(6,f){[1..5]}; #this and next are in fact HyperplaneByDualCoorindates([1,0,0,0,0,1]..)
-    hyp[1][6] := -one;
+    hyp[1,6] := -one;
    	if IsCanonicalPolarSpace( w ) then
         func := function( el )
             local list,plane,vec;
@@ -3409,7 +3390,7 @@ InstallMethod( NaturalDualityHermitian,
     mat1 := IdentityMat(6, GF(q));
     mat2 := NullMat(6, 6, f);
     for i in [1..3] do
-       mat2[2*i-1][8-2*i] := one;
+       mat2[2*i-1,8-2*i] := one;
     od; 
     mat1 := mat1 - e * mat2;
     form_quadric := QuadraticFormByMatrix(mat1, GF(q));
@@ -3430,7 +3411,7 @@ InstallMethod( NaturalDualityHermitian,
 	mat1 := IdentityMat(6, f) * alpha;
     mat2 := NullMat(6, 6, f);
     for i in [1..6] do
-       mat2[i][7-i] := one;
+       mat2[i,7-i] := one;
     od;
     x := mat1 + mat2 * alpha^q;
     x := List(x,y->y);
@@ -3441,7 +3422,7 @@ InstallMethod( NaturalDualityHermitian,
     delta := PolarityOfProjectiveSpace(h);
 	bmat := NullMat(6,12,GF(q));
 	for i in [1..6] do
-		bmat[i][2*i-1] := one;
+		bmat[i,2*i-1] := one;
 	od;
 	basis := Basis(AsVectorSpace(GF(q),GF(q^2)));
 
@@ -3940,7 +3921,7 @@ InstallMethod( IsomorphismPolarSpacesProjectionFromNucleus,
         #compute the first column of newmat (except for newmat[1][1].
 		for i in [2..n] do
 			vec := Concatenation([0*Z(q)^0],mat[i-1])^frob;
-			newmat[i][1] := ((vec^can_form)^(q/2))^(frob^-1);
+			newmat[i,1] := ((vec^can_form)^(q/2))^(frob^-1);
 		od;
 		#vec := List(TransposedMat(mat),x->Sum(x)^frob); #is the image of (1,1,...,1) under el.
         
@@ -3958,9 +3939,9 @@ InstallMethod( IsomorphismPolarSpacesProjectionFromNucleus,
         
         #image of (alpha,1,1,...,1) under el (symplectic point!)
 
-            newmat[1][1] := (zprime+y)/z;
+            newmat[1,1] := (zprime+y)/z;
         else
-            newmat[1][1] := one;
+            newmat[1,1] := one;
         fi;
 
 		return ProjElWithFrob(cquadricinv * newmat * cquadric^(frob^-1), frob, f);
@@ -4026,7 +4007,7 @@ InstallMethod( SelfDualitySymplectic,
 	formw := SesquilinearForm( w );
     delta := PolarityOfProjectiveSpace(w);
     hyp := IdentityMat(6,f){[1..5]}; #this and next are in fact HyperplaneByDualCoorindates([1,0,0,0,0,1]..)
-    hyp[1][6] := -one;
+    hyp[1,6] := -one;
     nucleus := [1,0,0,0,0]*one;
 	mat := IdentityMat(5,f);
     hyp2 := mat{[2..5]};
@@ -4112,10 +4093,10 @@ InstallMethod( SelfDualitySymplectic,
 		newmat := NullMat(5,5,f);
 		newmat{[2..5]}{[2..5]} := mat;
 
-        #compute the first column of newmat (except for newmat[1][1].
+        #compute the first column of newmat (except for newmat[1,1].
 		for i in [2..5] do
 			vec := Concatenation([0*Z(q)^0],mat[i-1])^frob;
-			newmat[i][1] := ((vec^can_form)^(q/2))^(frob^-1);
+			newmat[i,1] := ((vec^can_form)^(q/2))^(frob^-1);
 		od;
 
         if not q = 2 then
@@ -4132,9 +4113,9 @@ InstallMethod( SelfDualitySymplectic,
         
         #image of (alpha,1,1,...,1) under el (symplectic point!)
 
-            newmat[1][1] := (zprime+y)/z;
+            newmat[1,1] := (zprime+y)/z;
         else
-            newmat[1][1] := one;
+            newmat[1,1] := one;
         fi;
 		
         mat := perm5 * newmat * perm5;
@@ -4331,10 +4312,10 @@ InstallMethod( SelfDualityParabolic,
 		newmat := NullMat(5,5,f);
 		newmat{[2..5]}{[2..5]} := mat;
 
-        #compute the first column of newmat (except for newmat[1][1].
+        #compute the first column of newmat (except for newmat[1,1].
 		for i in [2..5] do
 			vec := Concatenation([0*Z(q)^0],mat[i-1])^frob;
-			newmat[i][1] := ((vec^can_form)^(q/2))^(frob^-1);
+			newmat[i,1] := ((vec^can_form)^(q/2))^(frob^-1);
 		od;
 
         if not q = 2 then
@@ -4351,9 +4332,9 @@ InstallMethod( SelfDualityParabolic,
         
         #image of (alpha,1,1,...,1) under el (symplectic point!)
 
-            newmat[1][1] := (zprime+y)/z;
+            newmat[1,1] := (zprime+y)/z;
         else
-            newmat[1][1] := one;
+            newmat[1,1] := one;
         fi;
 		
         return ProjElWithFrob(cqinv * newmat * cq^(frob^-1),frob,f);

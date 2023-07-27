@@ -1511,24 +1511,24 @@ InstallMethod( Display, [ IsDiagram and IsDiagramRep ],
     edges := diag!.edges;
     mat := Drawing_Diagram( verts, edges, way ); 
 
-    for i in [1..Size(mat)] do
-      for j in [1..Size(mat[1])] do 
-          if mat[i][j] = 0 then Print(" ");
+    for i in [1..NrRows(mat)] do
+      for j in [1..NrCols(mat)] do 
+          if mat[i,j] = 0 then Print(" ");
             # if IsOddInt(j) then Print( " " );
             # else Print( "  " );
             # fi;
-          elif mat[i][j] = -1 then
+          elif mat[i,j] = -1 then
              Print( "o" );
-          elif mat[i][j] = 1 then
+          elif mat[i,j] = 1 then
              Print( "-" );
-          elif mat[i][j] = 2 then
+          elif mat[i,j] = 2 then
              Print( "|" );
-          elif mat[i][j] = 3 then
+          elif mat[i,j] = 3 then
              Print( " /" );
-          elif mat[i][j] = 4 then
+          elif mat[i,j] = 4 then
              Print( " \\" );
           else 
-             Print( mat[i][j] );
+             Print( mat[i,j] );
           fi;
       od;
       Print("\n");

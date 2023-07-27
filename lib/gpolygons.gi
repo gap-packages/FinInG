@@ -237,7 +237,7 @@ InstallMethod( GeneralisedPolygonByBlocks,
 
 #############################################################################
 #O  GeneralisedPolygonByIncidenceMatrix( <matrix> )
-# returns a GP. points are [1..Size(matrix)], blocks are sets of entries equal to one.
+# returns a GP. points are [1..NrRows(matrix)], blocks are sets of entries equal to one.
 # Blocks are then used through GeneralisedPolygonByBlocks.
 # the commented out check dates from the times that this was only use to construct
 # projective planes.
@@ -248,7 +248,7 @@ InstallMethod( GeneralisedPolygonByIncidenceMatrix,
     function( mat )
     ## Rows represent blocks and columns represent points...
     local v, q, row, blocks, gp;
-    v := Size(mat);
+    v := NrRows(mat);
     #if not ForAll(mat, t->Size(t)=v) then
     #   Error("Matrix is not square");
     #fi;
@@ -1428,7 +1428,7 @@ InstallGlobalFunction( SplitCayleyPointToPlane,
 		Add(z,[0,0,0,1,0,0,0,1]*One(f));
 		spacevec := NullspaceMat(TransposedMat(z));
 		int := IdentityMat(8,f){[1..7]};
-		int[4][8] := -One(f);
+		int[4,8] := -One(f);
 		vec := SumIntersectionMat(spacevec, int)[2];
 		return vec{[1..3]}{[1..7]};
 	end );
@@ -3730,7 +3730,7 @@ InstallMethod( BLTSetByqClan,
     f := clan!.basefield;
     q := Size(f);
     i := One(f);
-    blt := List(clan!.matrices, t -> [i, t[2][2], -t[1][2], t[1][1],  t[1][2]^2 -t[1][1]*t[2][2]]);
+    blt := List(clan!.matrices, t -> [i, t[2,2], -t[1,2], t[1,1],  t[1,2]^2 -t[1,1]*t[2,2]]);
     Add(blt, [0,0,0,0,1]*i);  ## last point is distinguished point.
     for x in blt do
 		ConvertToVectorRepNC(x,f);
@@ -4035,7 +4035,7 @@ InstallMethod( EGQByBLTSet,
             local m;
             m := IdentityMat(6, f);
             m[6]{[1..5]} := [e,d,c,-b,-a];
-            m[2][1] := a; m[3][1] := b; m[4][1] := c; m[5][1] := d;
+            m[2,1] := a; m[3,1] := b; m[4,1] := c; m[5,1] := d;
             return m;
           end;
 	bas := AsList(Basis(f));
@@ -4319,7 +4319,7 @@ InstallMethod( FlockGQByqClan, [ IsqClanObj ],
             local m;
             m := IdentityMat(6, f);
             m[6]{[1..5]} := [e,d,c,-b,-a];
-            m[2][1] := a; m[3][1] := b; m[4][1] := c; m[5][1] := d;
+            m[2,1] := a; m[3,1] := b; m[4,1] := c; m[5,1] := d;
             return m;
          end;
   bas := AsList(Basis(f));

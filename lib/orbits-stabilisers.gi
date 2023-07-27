@@ -488,7 +488,7 @@ for A in GeneratorsOfGroup(G1) do for B in GeneratorsOfGroup(G2) do
     od;
     Add(genlist,mat);
 od;od;
-N2[1][1]:=One(F); I1:=IdentityMat(t,F); I2:=IdentityMat(n-t,F);
+N2[1,1]:=One(F); I1:=IdentityMat(t,F); I2:=IdentityMat(n-t,F);
 mat:=[];
 for i in [1..t] do Add(mat,Concatenation(I1[i],N1[i]));
 od;
@@ -537,7 +537,7 @@ for A in GeneratorsOfGroup(G1) do for B in GeneratorsOfGroup(G2) do
     od;
     Add(genlist,mat);
 od;od;
-N2[1][1]:=One(F); I1:=IdentityMat(t,F); I2:=IdentityMat(n-t,F);
+N2[1,1]:=One(F); I1:=IdentityMat(t,F); I2:=IdentityMat(n-t,F);
 mat:=[];
 for i in [1..t] do Add(mat,Concatenation(I1[i],N1[i]));
 od;
@@ -594,7 +594,7 @@ for A in GeneratorsOfGroup(G1) do for B in GeneratorsOfGroup(G2) do
     mat[1]:=det*mat[1]; # rescale first row
     Add(genlist,mat);
 od;od;
-N2[1][1]:=One(F); I1:=IdentityMat(t,F); I2:=IdentityMat(n-t,F);
+N2[1,1]:=One(F); I1:=IdentityMat(t,F); I2:=IdentityMat(n-t,F);
 mat:=[];
 for i in [1..t] do Add(mat,Concatenation(I1[i],N1[i]));
 od;
