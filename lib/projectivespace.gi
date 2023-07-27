@@ -973,7 +973,7 @@ InstallMethod( CollineationGroup,
 		if d <= -1 then 
 			Error("The dimension of the projective spaces needs to be at least 0");
 		fi;
-		g := GL(d+1,q);
+		g := GL(d+1,f);
 		frob := FrobeniusAutomorphism(f);
 		newgens := List(GeneratorsOfGroup(g),x->[x,frob^0]);
 		if not IsOne(frob) then
@@ -1013,7 +1013,7 @@ InstallMethod( ProjectivityGroup,
 		if d <= -1 then 
 			Error("The dimension of the projective spaces needs to be at least 0");
 		fi;
-		g := GL(d+1,q);
+		g := GL(d+1,f);
 		frob := FrobeniusAutomorphism(f); #needs this, jdb 05/11/2012, see two lines further.
 		#newgens:=GeneratorsOfGroup(g); # this replaces the next line (ml 02/11/12)
 		newgens := List(GeneratorsOfGroup(g),x->[x,frob^0]); # I changed back, and uncommented previous line (jdb 05/11/12)

@@ -58,7 +58,7 @@ InstallMethod( AffineGroup,
     newgens := ProjElsWithFrob(newgens);
     agl := GroupWithGenerators(newgens);
     SetName(agl, Concatenation("AGL(",String(d),",",String(q),")") );
-    SetSize(agl, q^d * Size(GL(d,q)));
+    SetSize(agl, Size(semi));
     return agl;
   end );
 
@@ -91,7 +91,7 @@ InstallMethod( CollineationGroup,
     else
        SetName( coll, Concatenation("AGL(",String(d),",",String(q),")") );
     fi;
-    SetSize(coll, q^d * Size(GL(d,q)) * Order(frob));
+    SetSize(coll, Size(semi) * Order(frob));
     return coll;
   end );
 

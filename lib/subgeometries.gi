@@ -129,15 +129,13 @@ InstallMethod( CanonicalSubgeometryOfProjectiveSpace,
     "for a projective space, and a prime power",
     [ IsProjectiveSpace, IsField and IsFinite],
     function(pg,subfield)
-    local geo, subpg, d, frame, ty, em, sigma, h, t, p, frob, q, proj;
+    local geo, subpg, d, frame, ty, em, sigma, h, t, frob, proj;
     if IsSubgeometryOfProjectiveSpace(pg) then
         Error("recursive construction of subgeometries not (yet) possible");
     fi;
     d := ProjectiveDimension(pg);
-    q := Size(subfield);
-    p := Characteristic(GF(q));
-    h := Log(q,p);
-    t := Log(Size(pg!.basefield),p);
+    h := DegreeOverPrimeField(subfield);
+    t := DegreeOverPrimeField(BaseField(pg));
     if not t mod h = 0 then
         Error(" <subfield> is not a subfield of the base field of <pg>");
     elif t = h then #We may consider to return an error here.
@@ -149,7 +147,7 @@ InstallMethod( CanonicalSubgeometryOfProjectiveSpace,
     frob := FrobeniusAutomorphism(BaseField(pg))^h;
     sigma := CollineationOfProjectiveSpace(pg,frob);
     proj := CollineationOfProjectiveSpace(IdentityMat(d+1,pg!.basefield),pg!.basefield);
-    geo := rec(dimension := d, basefield := pg!.basefield, subfield := GF(q), ambientspace := pg, isomorphicsubgeometry := subpg, frame := frame,
+    geo := rec(dimension := d, basefield := pg!.basefield, subfield := subfield, ambientspace := pg, isomorphicsubgeometry := subpg, frame := frame,
         embedding := em, vectorspace := FullRowSpace(pg!.basefield, d+1), sigma := sigma, projectivity := proj );
     ty := NewType( SubgeometriesFamily,
                   IsSubgeometryOfProjectiveSpace and IsSubgeometryOfProjectiveSpaceRep );
@@ -170,7 +168,7 @@ InstallMethod( SubgeometryOfProjectiveSpaceByFrame,
     "for a projective space, and a prime power",
     [ IsProjectiveSpace, IsList, IsField and IsFinite],
     function(pg,frame,subfield)
-    local geo, subpg, d, ty, matrix, proj, n, i, vecs, basis, coefs, em, sigma, h, t, p, frob, q, can;
+    local geo, subpg, d, ty, matrix, proj, n, i, vecs, basis, coefs, em, sigma, h, t, frob, can;
     if not IsFrameOfProjectiveSpace(frame) then
         Error(" <frame> must be a frame of <pg>");
     fi;
@@ -178,10 +176,8 @@ InstallMethod( SubgeometryOfProjectiveSpaceByFrame,
         Error("recursive construction of subgeometries not (yet) possible");
     fi;
     d := ProjectiveDimension(pg);
-    q := Size(subfield);
-    p := Characteristic(GF(q));
-    h := Log(q,p);
-    t := Log(Size(pg!.basefield),p);
+    h := DegreeOverPrimeField(subfield);
+    t := DegreeOverPrimeField(BaseField(pg));
     if not t mod h = 0 then
         Error(" <subfield> is not a subfield of the base field of <pg>");
     elif t = h then #We may consider to return an error here.
@@ -204,7 +200,7 @@ InstallMethod( SubgeometryOfProjectiveSpaceByFrame,
         sigma := proj^(-1)*CollineationOfProjectiveSpace(pg,frob)*proj;
     fi;
     em := NaturalEmbeddingBySubfield(subpg,pg);
-    geo := rec(dimension := d, basefield := pg!.basefield, subfield := GF(q), ambientspace := pg, isomorphicsubgeometry := subpg,
+    geo := rec(dimension := d, basefield := pg!.basefield, subfield := subfield, ambientspace := pg, isomorphicsubgeometry := subpg,
         frame := ShallowCopy(frame), embedding := em, vectorspace := FullRowSpace(pg!.basefield, d+1), sigma := sigma,
         projectivity := proj );
     ty := NewType( SubgeometriesFamily,
@@ -1236,9 +1232,9 @@ InstallMethod( CollineationGroup,
 		if d <= -1 then
 			Error("The dimension of the projective spaces needs to be at least 0");
 		fi;
-		g := GL(d+1,q);
+		g := GL(d+1,f);
 		frob := FrobeniusAutomorphism(sub!.basefield); #frobenius automorphism of big field
-        h := LogInt(Size(sub!.basefield),q);
+        h := DegreeOverPrimeField(BaseField(sub));
         newgens := List(GeneratorsOfGroup(g),x->[x,frob^0]);
         #baer := frob^Length(FactorsInt(q)); #this is precisely the Baer collineation for the canonical subgeometry.
         #Add(newgens,[One(g),baer]);
@@ -1291,7 +1287,7 @@ InstallMethod( ProjectivityGroup,
 		if d <= -1 then
 			Error("The dimension of the projective spaces needs to be at least 0");
 		fi;
-		g := GL(d+1,q);
+		g := GL(d+1,f);
 		frob := FrobeniusAutomorphism(sub!.basefield); #frobenius automorphism of big field
 		newgens := List(GeneratorsOfGroup(g),x->[x,frob^0]);
         #baer := frob^Length(FactorsInt(q)); #this is precisely the Baer collineation for the canonical subgeometry.
@@ -1304,7 +1300,7 @@ InstallMethod( ProjectivityGroup,
 		coll := GroupWithGenerators(newgens);
         SetName( coll, Concatenation("The FinInG projectivity group PGL(",String(d+1),",",String(q),") of ",ViewString(sub)) );
         #s := q^(d*(d+1)/2)*Product(List([2..d+1], i->q^i-1)) * Order(baer);
-		s := Size(ProjectivityGroup(PG(d,q)));
+		s := Size(ProjectivityGroup(PG(d,f)));
         SetSize( coll, s );
         # only for making generalised polygons section more generic:
         if d = 2 then
