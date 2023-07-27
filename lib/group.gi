@@ -2379,7 +2379,7 @@ InstallMethod( CanonicalGramMatrix,
     
       # Unitary Gram matrix      
 		elif type = "hermitian" then
-			if IsOddInt(PrimePowersInt(Size(f))[2]) then
+			if IsOddInt(DegreeOverPrimeField(f)) then
 				Error("field order must be a square");
 			fi;
 			m := IdentityMat(d, f);

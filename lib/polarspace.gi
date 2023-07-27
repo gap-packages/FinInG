@@ -763,7 +763,7 @@ InstallMethod( HermitianPolarSpace,
 	[ IsPosInt, IsField ],
 	function( d, f )
 		local h,m,types,max,reps,q,creps,degree;
-		if PrimePowersInt(Size(f))[2] mod 2 <> 0 then
+		if IsOddInt(DegreeOverPrimeField(f)) then
 			Error("field order must be a square");
 			return;
 		fi;
@@ -2141,9 +2141,9 @@ InstallMethod( NumberOfTotallySingularSubspaces,
 		elif type = "hyperbolic" then e:= 0; qe := q^e;
 		elif type = "parabolic" or type = "symplectic" then e:=1; qe := q^e;
 		elif type = "hermitian" and IsEvenInt(ps!.dimension) then e:=3; 
-			qe := RootInt(q,2)^e;
+			qe := Sqrt(q)^e;
 		elif type = "hermitian" and IsOddInt(ps!.dimension) then e:=1; 
-			qe := RootInt(q,2)^e;
+			qe := Sqrt(q)^e;
 		else Error("Polar space doesn't know its type!");
 		fi;
 

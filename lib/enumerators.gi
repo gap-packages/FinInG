@@ -1580,7 +1580,7 @@ InstallGlobalFunction( HermElementNumber,
     a2 := a - 1;
     v := ListWithIdenticalEntries(d+1,Z(q)^0);
 	n := Int((d+1) / 2);
-	FG_herm_Sbar_unrank(RootInt(q,2),v,1,d+1,a2);
+	FG_herm_Sbar_unrank(Sqrt(q),v,1,d+1,a2);
     return v;
 end );
 
@@ -1594,11 +1594,11 @@ InstallGlobalFunction( HermNumberElement,
 	v := StructuralCopy(var!.obj);        
 	y := v[PositionNonZeroFromRight(v)];
 	if IsOddInt(q) then
-	  y := y/(Z(q)^((RootInt(q,2)-1)/2)); #Strange Anton normalization...
+	  y := y/(Z(q)^((Sqrt(q)-1)/2)); #Strange Anton normalization...
 	fi;
 	v := v/y;
     #wittindex := (d+1)/2;
-    a := FG_herm_Sbar_rank(RootInt(q,2), v, 1, d+1);
+    a := FG_herm_Sbar_rank(Sqrt(q), v, 1, d+1);
     return a + 1; ## adjustment for lists beginning at 1
 end );
 

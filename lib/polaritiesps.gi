@@ -151,7 +151,7 @@ InstallMethod(HermitianPolarityOfProjectiveSpace,
   if Rank(matrix) <> NrRows(matrix) then
     Error("<matrix> must not be singular");
   fi;
-  if not IsInt(Sqrt(Size(field))) then
+  if IsOddInt(DegreeOverPrimeField(field)) then
     Error("Size of <field> must be a square" );
   fi;
   form := HermitianFormByMatrix(matrix,field);  
