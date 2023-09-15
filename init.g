@@ -21,6 +21,14 @@
 ##
 #############################################################################
 
+#  introducing globally the NC version of PreImagesSet etc.  
+if not IsBound( PreImagesSetNC ) then 
+    BindGlobal( "PreImagesSetNC", PreImagesSet ); 
+fi; 
+if not IsBound( PreImagesRepresentativeNC ) then 
+    BindGlobal( "PreImagesRepresentativeNC", PreImagesRepresentative ); 
+fi; 
+
 #
 # Compatibility between older and newer versions of the MatrixObj interface
 #

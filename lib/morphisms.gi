@@ -204,9 +204,9 @@ InstallOtherMethod( PreImageElm,
   
 # CHECKED 27/09/11 jdb
 #############################################################################
-#O  PreImagesSet( <em>, <x> )
+#O  PreImagesSetNC( <em>, <x> )
 ##
-InstallOtherMethod( PreImagesSet,
+InstallOtherMethod( PreImagesSetNC,
 	"for a geometry morphism and an element of an incidence structure",
 	[IsGeometryMorphism, IsElementOfIncidenceStructureCollection],
 	function(em, x)

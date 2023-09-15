@@ -4020,7 +4020,7 @@ InstallMethod( EGQByBLTSet,
                                        [0,0,0,1,0,0],[0,0,0,0,1,0]]*One(f));
 	q4qcanonical := Range(duality)!.geometry;
 	iso := IsomorphismPolarSpaces(q4q, q4qcanonical);
-	bltdual := PreImagesSet(duality, ImagesSet(iso, blt));
+	bltdual := PreImagesSetNC(duality, ImagesSet(iso, blt));
 
 	Info(InfoFinInG, 1, "Now embedding dual BLT-set into W(5,q)...");
 
@@ -4301,7 +4301,7 @@ InstallMethod( FlockGQByqClan, [ IsqClanObj ],
   imgs := Filtered([1..Size(omega)], x -> omega[x] in blt);;
   stabblt := Stabilizer(Image(hom), imgs, OnSets);
   gens := GeneratorsOfGroup(stabblt);
-  gens := List(gens, x -> PreImagesRepresentative(hom, x));
+  gens := List(gens, x -> PreImagesRepresentativeNC(hom, x));
   stabblt := GroupWithGenerators(gens);
 
   Info(InfoFinInG, 1, "..computed stabiliser of BLT set");
