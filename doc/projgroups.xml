@@ -619,6 +619,7 @@ the base field of the vector space on which the group acts.
 </Description>
 </ManSection>
 
+<!-- 
 <ManSection>
 <Attr Name="Dimension" Arg="g"/>
 <Returns>a number</Returns>
@@ -627,6 +628,7 @@ the dimension of the vector space on which the group acts.
 </Description>
 </ManSection>
 </Section>
+ -->
 
 
 <Section>
