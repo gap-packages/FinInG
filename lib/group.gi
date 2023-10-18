@@ -1858,7 +1858,7 @@ InstallMethod( CanComputeActionOnPoints,
 	[IsProjectiveGroupWithFrob],
 	function( g )
 		local d,q;
-		d := Dimension( g );
+		d := NrRows(GeneratorsOfGroup(g)[1]!.mat);;
 		q := Size( BaseField( g ) );
 		if (q^d - 1)/(q-1) > FINING.LimitForCanComputeActionOnPoints then
 			return false;
@@ -2008,7 +2008,7 @@ InstallMethod( ActionOnAllProjPoints,
 		local a,d,f,o,on,orb,v, m, j;
 		Info(InfoFinInG,4,"Using ActionOnAllProjPoints");
 		f := BaseField(pg);
-		d := Dimension(pg);
+		d := NrRows(GeneratorsOfGroup(pg)[1]!.mat);;
 		o := One(f);
 		on := One(pg);
 		v := ZeroMutable(on!.mat[1]);
@@ -2273,7 +2273,7 @@ InstallMethod( FindBasePointCandidates,
         d := NrRows(gens[1]!.el!.mat);
     else
         f := BaseField(g);
-        d := Dimension(g);
+        d := NrRows(gens[1]!.mat);
     fi;
     cand := rec( points := NewMatrix(IsCMatRep, f,d, IdentityMat(d,f)), used := 0,
                  ops := ListWithIdenticalEntries(d,OnProjPointsWithFrob) );

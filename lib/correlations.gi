@@ -1390,7 +1390,7 @@ InstallMethod( CanComputeActionOnPoints,
 	[IsProjGroupWithFrobWithPSIsom],
 	function( g )
 		local d,q;
-		d := Dimension( g );
+		d := NrRows(GeneratorsOfGroup(g)[1]!.mat);;
 		q := Size( BaseField( g ) );
 		if (q^d - 1)/(q-1) > FINING.LimitForCanComputeActionOnPoints then
 			return false;
