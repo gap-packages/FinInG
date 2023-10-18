@@ -30,10 +30,6 @@ A: ProjectiveDimension: IsElementOfLieGeometry
 A: ProjectiveDimension: IsEmptySubspace
 A: Dimension: IsLieGeometry
 
-group.gd: attributes
-
-A: Dimension: IsProjectiveGroupWithFrob
-
 projectivespace.gd: attributes
 
 A: ProjectivityGroup: IsProjectiveSpace
@@ -48,7 +44,6 @@ A: StandardFrame: IsSubspaceOfProjectiveSpace
 
 correlations.gd: attributes
 
-A: Dimension: IsProjGroupWithFrobWithPSIsom
 A: GramMatrix: IsPolarityOfProjectiveSpace
 A: CompanionAutomorphism: IsPolarityOfProjectiveSpace
 A: SesquilinearForm: IsPolarityOfProjectiveSpace

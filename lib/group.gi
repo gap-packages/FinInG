@@ -1765,59 +1765,6 @@ InstallMethod( BaseField,
 	
 # TO DO (22/03/2014): We ought to set the basefield on creating collineation groups.
 
-# CHECKED 6/09/11 jdb
-#############################################################################
-#O  Dimension( <g> )
-# returns the dimension of the projective group <g>. The dimension of this 
-# group is defined as the vector space dimension of the projective space  
-# of which <g> was defined as a projective group, or, in other words, as the 
-# size of the matrices.
-## 
-
-# ml 07/11/2012: I have taken out the view, print and display methods
-# for projectivity groups, since these are also collineation groups in FinInG
-
-#InstallMethod( Dimension, 
-#	"for a projective group",
-#	[IsProjectivityGroup],
-#	function( g )
-#		local gens;
-#		if HasParent(g) then
-#			return Dimension(Parent(g));
-#		fi;
- #   # Now start to investigate:
-#		gens := GeneratorsOfGroup(g);
-#		if Length(gens) > 0 then
-#			return NrRows(gens[1]!.mat);
-#		fi;
-#		Error("dimension could not be determined");
-#	end );
-
-# CHECKED 6/09/11 jdb
-#############################################################################
-#O  Dimension( <g> )
-# returns the dimension of the projective collineation group <g>. The dimension of this 
-# group is defined as the vector space dimension of the projective space  
-# of which <g> was defined as a projective group, or, in other words, as the 
-# size of the matrices.
-## 
-InstallMethod( Dimension, 
-	"for a projective collineation group",
-	[IsProjectiveGroupWithFrob],
-	function( g )
-		local gens;
-		if HasParent(g) and HasDimension(Parent(g)) then	#JB: 22/03/2014: Made sure the parent had a dimension first
-			return Dimension(Parent(g));
-		fi;
-    # Now start to investigate:
-		gens := GeneratorsOfGroup(g);
-		if Length(gens) > 0 then
-			return NrRows(gens[1]!.mat);
-		elif IsTrivial(g) then				#JB: 22/03/2014: The trivial group with no generators slipped through.
-		 	return NrRows(One(g)!.mat);
-		fi;
-		Error("dimension could not be determined");
-	end );
 
 # CHECKED 6/09/11 jdb
 #############################################################################
@@ -1911,7 +1858,7 @@ InstallMethod( CanComputeActionOnPoints,
 	[IsProjectiveGroupWithFrob],
 	function( g )
 		local d,q;
-		d := Dimension( g );
+		d := NrRows(GeneratorsOfGroup(g)[1]!.mat);;
 		q := Size( BaseField( g ) );
 		if (q^d - 1)/(q-1) > FINING.LimitForCanComputeActionOnPoints then
 			return false;
@@ -2061,7 +2008,7 @@ InstallMethod( ActionOnAllProjPoints,
 		local a,d,f,o,on,orb,v, m, j;
 		Info(InfoFinInG,4,"Using ActionOnAllProjPoints");
 		f := BaseField(pg);
-		d := Dimension(pg);
+		d := NrRows(GeneratorsOfGroup(pg)[1]!.mat);;
 		o := One(f);
 		on := One(pg);
 		v := ZeroMutable(on!.mat[1]);
@@ -2326,7 +2273,7 @@ InstallMethod( FindBasePointCandidates,
         d := NrRows(gens[1]!.el!.mat);
     else
         f := BaseField(g);
-        d := Dimension(g);
+        d := NrRows(gens[1]!.mat);
     fi;
     cand := rec( points := NewMatrix(IsCMatRep, f,d, IdentityMat(d,f)), used := 0,
                  ops := ListWithIdenticalEntries(d,OnProjPointsWithFrob) );

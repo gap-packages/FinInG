@@ -482,22 +482,6 @@ InstallGlobalFunction( OnPointsHyperplanesWithFrobWithVSIsom,
     fi;
   end );
 
-InstallMethod( Dimension, 
-  "for a projective group with Frobenius with vspace isomorphism",
-  [IsProjGroupWithFrobWithVSIsom],
-  function( g )
-    local gens;
-    if HasParent(g) then
-        return Dimension(Parent(g));
-    fi;
-    # Now start to investigate:
-    gens := GeneratorsOfGroup(g);
-    if Length(gens) > 0 then
-        return Length(gens[1]!.mat);
-    fi;
-    Error("dimension could not be determined");
-  end );
-
 InstallMethod( ActionOnPointsHyperplanes, 
   "for a projective group with Frobenius with vspace isomorphism",
   [ IsProjGroupWithFrobWithVSIsom ],
