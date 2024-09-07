@@ -31,7 +31,7 @@ files := ["tst_regular13system", "tst_segrevariety", "tst_hermitianspreads", "ts
 
 
 homedir := DirectoryCurrent();
-scriptfile := Filename(homedir,"generate_output_forms_testfiles.sh");
+scriptfile := Filename(homedir,"generate_output_fining_testfiles.sh");
 PrintTo(scriptfile,"");
 
 #these will be global variables for the generate_script function :-)
@@ -65,11 +65,13 @@ filesprsp := ["pg", "prdim", "basefield", "uderlyingvs", "ambientspace",
                 "vspacetoel", "emptysub", "prdim_el", "elements_inc", "elshort",
                 "inc", "frame", "coordinates", "dualcoordinates", "hyperplanedual",
                 "equationhyp", "ambientspaceel", "basefieldel", "random",
-                "randomsubspace", "span"];
+                "randomsubspace", "span", "meet", "flagofinc", "shadowofelement",
+                "shadowofflag", "elincel", "shortnames", "iterator", "aslist"];
                 
 sub := "prsp";
 
 generate_script(sub,filesprsp);
+Exec("generate_output_fining_testfiles_prsp.sh");
 
 #create tst files
 
@@ -121,6 +123,9 @@ for filename in files do
   AppendTo(o,Concatenation("gap> STOP_TEST(\"",filename,".tst\", 10000 );\n"));
 od;
 end;
+
+create_tst_files(sub,filesprsp);
+
 
 
 homedir := DirectoryCurrent();
