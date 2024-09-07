@@ -70,7 +70,13 @@ filesprsp := ["pg", "prdim", "basefield", "uderlyingvs", "ambientspace",
                 
 sub := "prsp";
 
-generate_script(sub,filesprsp);
+filesprgrp := ["projectivity", "collineation", "projsemilinear"];
+
+
+sub := "prgrp";
+
+
+generate_script(sub,filesprgrp);
 Exec("generate_output_fining_testfiles_prsp.sh");
 
 #create tst files
