@@ -69,7 +69,8 @@ filesprsp := ["pg", "prdim", "basefield", "uderlyingvs", "ambientspace",
 
 filesprgrp := ["projectivity", "collineation", "projsemilinear", "identity",
                 "projectivity", "projsemilinear", "representatives", "projgroups",
-                "representatives", "onprojsubspaces", "actionall", "onprojsubspacesext"];
+                "representatives", "onprojsubspaces", "actionall", "onprojsubspacesext",
+                "elations"];
 
 
 
