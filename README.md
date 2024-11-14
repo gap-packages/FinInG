@@ -7,7 +7,7 @@
 - Anton Betten (Colorado State University, Fort Collins)
 - Philippe Cara (Vrije Universiteit Brussel)
 - Jan De Beule (Vrije Universiteit Brussel)
-- Michel Lavrauw (Sabancı Üniversitesi, and Università degli Studi di Padova)
+- Michel Lavrauw (University of Primorska)
 - Max Neunhoeffer (University of St. Andrews)
                                    
 
