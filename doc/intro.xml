@@ -8,11 +8,11 @@ intro.xml            FinInG package documentation
                                                                 Max Neunhoeffer
 
   Copyright (C) 2018,	Colorado State University
-                        Sabancı Üniversitesi
-						Università degli Studi di Padova
-						Universiteit Gent
-						University of St. Andrews
-						University of Western Australia
+                        University of Primorska
+			Università degli Studi di Padova
+			Universiteit Gent
+			University of St. Andrews
+			University of Western Australia
                         Vrije Universiteit Brussel
  
  
@@ -81,7 +81,7 @@ J.~Bamberg, A.~Betten, {Ph}. Cara, J.~De~Beule, M.~Lavrauw, and
 When linking to FinInG from a web page you can use the link
 
 <Example>
-&lt;a href="http://www.fining.org">FinInG&lt;/a>.
+&lt;a href="https://github.com/gap-packages/FinInG /a>.
 </Example>
 
 </Section>
