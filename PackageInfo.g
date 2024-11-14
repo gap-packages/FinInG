@@ -117,7 +117,7 @@ Persons := [
         "University of Primorska\n",
         "Glagoljaška 8 \n",
         "6000 Koper\n",
-        "Slovenia\n" ] ),
+        "Slovenia" ] ),
     Place         := "Koper",
     Institution   := "University of Primorska",
   ),
