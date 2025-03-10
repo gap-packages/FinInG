@@ -44,5 +44,4 @@ DeclareOperation( "ProjElWithFrobWithVSIsom",
 
 DeclareOperation( "ProjElsWithFrobWithVSIsom", [IsList, IsField] );
 
-DeclareAttribute( "Dimension", IsProjGroupWithFrobWithVSIsom );
 DeclareProperty( "CanComputeActionOnPoints", IsProjGroupWithFrobWithVSIsom );
