@@ -1,6 +1,6 @@
 #elation group with axis (and centre)
 ps := PG(2,27);
-sub := VectorSpaceToElement(ps,[[1,0,1,],[0,1,0]]*Z(3)^0);
+sub := VectorSpaceToElement(ps,[[1,0,1],[0,1,0]]*Z(3)^0);
 p := VectorSpaceToElement(ps,[1,1,1]*Z(3)^0);
 g := ProjectiveElationGroup(sub,p);
 Order(g);
