@@ -63,6 +63,8 @@ AppendTo(scriptfile,cmd);
 od;
 end;
 
+sub := "prsp";
+
 filesprsp := ["pg", "prdim", "basefield", "uderlyingvs", "ambientspace",
                 "vspacetoel", "emptysub", "prdim_el", "elements_inc", "elshort",
                 "inc", "frame", "coordinates", "dualcoordinates", "hyperplanedual",
@@ -70,14 +72,13 @@ filesprsp := ["pg", "prdim", "basefield", "uderlyingvs", "ambientspace",
                 "randomsubspace", "span", "meet", "flagofinc", "shadowofelement",
                 "shadowofflag", "elincel", "shortnames", "iterator", "aslist"];
                 
-sub := "prsp";
-
-filesprgrp := ["actionall", "collineation", "elations", "identity", "onprojsubspaces",
-                "onprojsubspacesext", "projectivity", "projsemilinear", "representatives" ];
-
 sub := "prgrp";
 
-filesprgrp := ["correlation", "duality"];
+filesprgrp := ["actionall", "collineation", "correlation", "duality", "elations", "identity",
+                "onprojsubspaces", "onprojsubspacesext", "projectivity", "projsemilinear",
+                "representatives" ];
+
+
 
 generate_script(sub,filesprgrp);
 Exec("generate_output_fining_testfiles_prsp.sh");
