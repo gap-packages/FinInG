@@ -1,41 +1,15 @@
-TestMyPackage := function( pkgname )
-local pkgdir, testfiles, testresult, ff, fn;
-LoadPackage( pkgname );
-pkgdir := DirectoriesPackageLibrary( pkgname, "tst" );
+LoadPackage("fining");
 
-# Arrange chapters as required
-testfiles := [
-"bugfix.tst",
-"tst_regular13system.tst",
-"tst_segrevariety.tst",
-"tst_hermitianspreads.tst",
-"tst_andrebruckbose.tst",
-"tst_titsovoid.tst",
-"tst_finingorbits.tst",
-"tst_enumerators.tst"
-];
+exclude := [];
+#if not IsBound(DescribesInvariantQuadraticForm) then
+  # classic.tst should only run in 4.12
+#  Add( exclude, "adv/classic.tst" );
+#fi;
 
-testresult:=true;
-for ff in testfiles do
-  fn := Filename( pkgdir, ff );
-  Print("#I  Testing ", fn, "\n");
-  if not Test( fn, rec(compareFunction := "uptowhitespace") ) then
-    testresult:=false;
-  fi;
-od;
-if testresult then
-  Print("#I  No errors detected while testing package ", pkgname, "\n");
-  QUIT_GAP(0);
-else
-  Print("#I  Errors detected while testing package ", pkgname, "\n");
-  QUIT_GAP(1);
-fi;
-end;
-
-# Set the name of the package here
-Print("EXecuting this file\n");
-
-TestMyPackage( "fining" );
-
-QUIT_GAP(0);
-
+TestDirectory(DirectoriesPackageLibrary("fining", "tst"),
+    rec(
+      exitGAP := true,
+      exclude := exclude,
+      #rewriteToFile := true,  # enable this line to update tests
+    ));
+FORCE_QUIT_GAP(1);

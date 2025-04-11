@@ -105,8 +105,8 @@ InstallMethod( PolarSpace,
 			eq := PolynomialOfForm( m );
 		fi;
 		if IsZero(eq) then
-			i1 := List([1..Length(gram)],i->Concatenation("x",String(i)));
-			i2 := List([1..Length(gram)],i->Concatenation("y",String(i)));
+			i1 := List([1..Length(gram)],i->Concatenation("x_",String(i))); #was "x" in previous version, caused strange printing behaviour when using variables again
+			i2 := List([1..Length(gram)],i->Concatenation("y_",String(i))); #was "y" in previous version, caused strange printing behaviour when using variables again
 			#r := PolynomialRing(f,Concatenation(i1,i2):old);     ## there was an error here for gap4r5
 			#i2 := IndeterminatesOfPolynomialRing(r){[Length(gram)+1..2*Length(gram)]};
 			#there was a proble with the above lines. If say x_4 existed already, and i1 just ran until 3, than
@@ -179,8 +179,8 @@ InstallMethod( PolarSpaceStandard,
 		fi;
 		if IsZero(eq) then
 			#Print("eq is zero\n");
-			i1 := List([1..Length(gram)],i->Concatenation("x",String(i)));
-			i2 := List([1..Length(gram)],i->Concatenation("y",String(i)));
+			i1 := List([1..Length(gram)],i->Concatenation("x_",String(i))); #was "x" in previous version, caused strange printing behaviour when using variables again
+			i2 := List([1..Length(gram)],i->Concatenation("y_",String(i))); #was "y" in previous version, caused strange printing behaviour when using variables again
 			#r := PolynomialRing(f,Concatenation(i1,i2):old);     ## there was an error here for gap4r5
 			#i2 := IndeterminatesOfPolynomialRing(r){[Length(gram)+1..2*Length(gram)]};
 			#there was a proble with the above lines. If say x_4 existed already, and i1 just ran until 3, than
@@ -291,8 +291,8 @@ InstallMethod( PolarSpace,
 		fi;
 		if IsZero(eq) then
 			#Print("eq is zero\n");
-			i1 := List([1..Length(gram)],i->Concatenation("x",String(i)));
-			i2 := List([1..Length(gram)],i->Concatenation("y",String(i)));
+			i1 := List([1..Length(gram)],i->Concatenation("x_",String(i))); #was "x" in previous version, caused strange printing behaviour when using variables again
+			i2 := List([1..Length(gram)],i->Concatenation("y_",String(i))); #was "y" in previous version, caused strange printing behaviour when using variables again
 			#r := PolynomialRing(f,Concatenation(i1,i2):old);     ## there was an error here for gap4r5
 			#i2 := IndeterminatesOfPolynomialRing(r){[Length(gram)+1..2*Length(gram)]};
 			#there was a proble with the above lines. If say x_4 existed already, and i1 just ran until 3, than
