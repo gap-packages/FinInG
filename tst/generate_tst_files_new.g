@@ -36,7 +36,9 @@ PrintTo(scriptfile,"");
 
 #these will be global variables for the generate_script function :-)
 
-gapstart := "gap4r13.1"; #might be different on your computer
+#gapstart := "gap4r13.1"; #might be different on your computer
+gapstart := "gap4r14"; #might be different on your computer
+
 gap := Filename(Directory("/usr/local/bin/"),gapstart);
 paths := JoinStringsWithSeparator(GAPInfo.RootPaths{[3,4]},";");
 pathsstr := Concatenation("\"",paths,"\"");
@@ -70,20 +72,21 @@ filesprsp := ["pg", "prdim", "basefield", "uderlyingvs", "ambientspace",
                 
 sub := "prsp";
 
-filesprgrp := ["projectivity", "collineation", "projsemilinear"];
-
+filesprgrp := ["actionall", "collineation", "elations", "identity", "onprojsubspaces",
+                "onprojsubspacesext", "projectivity", "projsemilinear", "representatives" ];
 
 sub := "prgrp";
 
+filesprgrp := ["correlation", "duality"];
 
 generate_script(sub,filesprgrp);
 Exec("generate_output_fining_testfiles_prsp.sh");
 
 #create tst files
 
-preambledir := DirectoriesPackageLibrary("forms","examples/")[1];
-outputdir := DirectoriesPackageLibrary("forms","tst/output")[1];
-cmddir := "dir \:\= DirectoriesPackageLibrary\(\"forms\"\,\"tst\/output\"\)\[1\]\;";
+preambledir := DirectoriesPackageLibrary("fining","examples/")[1];
+outputdir := DirectoriesPackageLibrary("fining","tst/output")[1];
+cmddir := "dir \:\= DirectoriesPackageLibrary\(\"fining\"\,\"tst\/output\"\)\[1\]\;";
 
 #create .tst files
 #the nested ifs together with the SizeScreen make sure that input lines (plural),
@@ -130,7 +133,7 @@ for filename in files do
 od;
 end;
 
-create_tst_files(sub,filesprsp);
+create_tst_files(sub,filesprgrp);
 
 
 
