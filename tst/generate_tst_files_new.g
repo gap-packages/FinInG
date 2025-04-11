@@ -94,13 +94,13 @@ cmddir := "dir \:\= DirectoriesPackageLibrary\(\"fining\"\,\"tst\/output\"\)\[1\
 #subfolder. Make your choice:
 
 #for easy "tst/easy"
-sub := "tst/easy";
+#sub := "tst/easy";
 
 #for examples
-sub := "tst/examples";
+#sub := "tst/examples";
 
 #for advanced:
-sub := "tst/adv";
+#sub := "tst/adv";
 
 create_tst_files := function(sub,files)
 local includedir,str,filename,i,o,input_stream,line,outputdir;
@@ -135,6 +135,8 @@ end;
 
 create_tst_files(sub,filesprgrp);
 
+
+#This is currently the end of the file. The rest is obsolete.
 
 
 homedir := DirectoryCurrent();
