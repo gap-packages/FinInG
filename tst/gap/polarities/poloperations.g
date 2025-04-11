@@ -1,0 +1,24 @@
+#Operations for polarities
+mat := [[1,0,0],[0,0,2],[0,2,0]]*Z(5)^0;
+phi := PolarityOfProjectiveSpace(mat,GF(25));
+BaseField(phi);
+mat := [[1,0,0],[0,0,3],[0,3,0]]*Z(11)^0;
+phi := PolarityOfProjectiveSpace(mat,GF(11));
+GramMatrix(phi);
+mat := [[0,2,7,1],[2,0,3,0],[7,3,0,1],[1,0,1,0]]*Z(19)^0;
+frob := FrobeniusAutomorphism(GF(19^4));
+phi := PolarityOfProjectiveSpace(mat,frob^2,GF(19^4));
+IsHermitianPolarityOfProjectiveSpace(phi);
+mat := [[1,0,2,0],[0,2,0,1],[2,0,0,0],[0,1,0,0]]*Z(9)^0;
+phi := PolarityOfProjectiveSpace(mat,GF(9));
+IsOrthogonalPolarityOfProjectiveSpace(phi);
+mat := [[1,0,1,0],[0,1,0,1],[1,0,0,0],[0,1,0,0]]*Z(16)^0;
+phi := PolarityOfProjectiveSpace(mat,GF(16));
+IsPseudoPolarityOfProjectiveSpace(phi);
+mat := [[0,0,1,0],[0,0,0,1],[1,0,0,0],[0,1,0,0]]*Z(8)^0;
+phi := PolarityOfProjectiveSpace(mat,GF(8));
+IsSymplecticPolarityOfProjectiveSpace(phi);
+mat := [[0,-2,0,1],[2,0,3,0],[0,-3,0,1],[-1,0,-1,0]]*Z(19)^0;
+phi := PolarityOfProjectiveSpace(mat,GF(19));
+form := SesquilinearForm(phi);
+quit;

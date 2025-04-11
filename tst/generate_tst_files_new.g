@@ -78,9 +78,11 @@ filesprgrp := ["actionall", "collineation", "correlation", "duality", "elations"
                 "onprojsubspaces", "onprojsubspacesext", "projectivity", "projsemilinear",
                 "representatives" ];
 
+sub := "polarities";
 
+filespolarities := ["polaritiesps", "poloperations", "polaritiesnice"];
 
-generate_script(sub,filesprgrp);
+generate_script(sub,filespolarities);
 Exec("generate_output_fining_testfiles_prsp.sh");
 
 #create tst files
@@ -134,7 +136,7 @@ for filename in files do
 od;
 end;
 
-create_tst_files(sub,filesprgrp);
+create_tst_files(sub,filespolarities);
 
 
 #This is currently the end of the file. The rest is obsolete.
