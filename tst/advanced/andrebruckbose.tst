@@ -1,5 +1,4 @@
-gap> START_TEST("fining: tst_andrebruckbose.tst");
-gap> # Desarguesian plane in Andre Bruck Bose construction
+gap> START_TEST("Forms: andrebruckbose.tst");
 gap> q := 3;
 3
 gap> pg1 := PG(1,q^2);
@@ -38,4 +37,4 @@ gap> gp := GeneralisedPolygonByElements(pts,lines,\*,stab2,OnProjSubspaces);
 gap> coll := CollineationGroup(gp);;
 gap> Order(CollineationGroup(PG(2,q^2)))=Order(coll);
 true
-gap> STOP_TEST("tst_andrebruckbose.tst", 10000 );
+gap> STOP_TEST("andrebruckbose.tst", 10000 );

@@ -1,5 +1,4 @@
-gap> START_TEST("fining: tst_hermitianspreads.tst");
-gap> #maximal partial spreads of H(5,4)
+gap> START_TEST("Forms: hermitianspreads.tst");
 gap> ps := HermitianPolarSpace(5,4);
 H(5, 2^2)
 gap> planes := AsList(Planes(ps));;
@@ -11,8 +10,10 @@ gap> adj := function(x,y)
 function( x, y ) ... end
 gap> graph := Graph(coll,planes,OnProjSubspaces,adj,true);;
 gap> cliques := CompleteSubgraphs(graph);;
-gap> Set(cliques,x->Length(x));
-[ 7, 9 ]
+gap> Length(cliques);
+338
+gap> Collected(List(cliques,x->Length(x)));
+[ [ 7, 312 ], [ 9, 26 ] ]
 gap> cliques9 := CompleteSubgraphs(graph,9,2);
 [ [ 1, 2, 24, 37, 68, 172, 324, 455, 854 ], 
   [ 1, 2, 24, 37, 68, 172, 497, 508, 708 ], 
@@ -25,4 +26,4 @@ gap> groups := List(partial_spreads,x->FiningSetwiseStabiliser(coll,x));;
 #I  Computing adjusted stabilizer chain...
 gap> List(groups,x->Order(x));
 [ 162, 168, 9072 ]
-gap> STOP_TEST("tst_hermitianspreads.tst", 10000 );
+gap> STOP_TEST("hermitianspreads.tst", 10000 );

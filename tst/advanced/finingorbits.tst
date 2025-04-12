@@ -1,5 +1,4 @@
-gap> START_TEST("fining: tst_finingorbits.tst");
-gap> #test FiningOrbits functions.
+gap> START_TEST("Forms: finingorbits.tst");
 gap> pg := PG(2,16);
 ProjectiveSpace(2, 16)
 gap> group := CollineationGroup(ParabolicQuadric(2,16));
@@ -42,8 +41,8 @@ gap> orbs := FiningOrbits(group,Points(pg));
 85%..100%..[ <closed orbit, 2107 points>, <closed orbit, 344 points> ]
 gap> orbs := FiningOrbits(group,List(Points(pg)),OnProjSubspaces);
 85%..100%..[ <closed orbit, 2107 points>, <closed orbit, 344 points> ]
-gap> orbs := FiningOrbits(group,Lines(pg));
+gap> orbs := FiningOrbits(group,Lines(pg)); 
 85%..100%..[ <closed orbit, 2107 points>, <closed orbit, 344 points> ]
-gap> orbs := FiningOrbits(group,List(Lines(pg)),OnProjSubspaces);
+gap> orbs := FiningOrbits(group,List(Lines(pg)),OnProjSubspaces); 
 85%..100%..[ <closed orbit, 2107 points>, <closed orbit, 344 points> ]
-gap> STOP_TEST("tst_finingorbits.tst", 10000 );
+gap> STOP_TEST("finingorbits.tst", 10000 );

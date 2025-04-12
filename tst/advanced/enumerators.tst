@@ -1,5 +1,4 @@
-gap> START_TEST("fining: tst_enumerators.tst");
-gap> #test some enumerators of polar spaces. We have to make a selection
+gap> START_TEST("Forms: enumerators.tst");
 gap> ps := ParabolicQuadric(4,8);
 Q(4, 8)
 gap> els := Points(ps);
@@ -148,4 +147,4 @@ gap> enum := Enumerator(els);
 EnumeratorOfSubspacesOfClassicalPolarSpace( <lines of W(3, 9)> )
 gap> Collected(List(AsList(els),x->enum[Position(enum,x)]=x));
 [ [ true, 820 ] ]
-gap> STOP_TEST("tst_enumerators.tst", 10000 );
+gap> STOP_TEST("enumerators.tst", 10000 );

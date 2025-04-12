@@ -1,5 +1,4 @@
-gap> START_TEST("fining: tst_segrevariety.tst");
-gap> # Segre variety. Notice ;; in line 9, since the number of generators can be different, and then ReadTest will print this difference. We do StructureDescription as a hard test here.
+gap> START_TEST("Forms: segrevariety.tst");
 gap> q := 2;
 2
 gap> pg:=PG(1,q);
@@ -28,4 +27,4 @@ gap> secants:=AsSet(List(pairs,x->Span(x[1],x[2])));;
 gap> 4lines:=Filtered(secants,l->Size(Filtered(Points(l),x->x in o5))=q+1);
 [ <a line in ProjectiveSpace(7, 2)>, <a line in ProjectiveSpace(7, 2)>, 
   <a line in ProjectiveSpace(7, 2)>, <a line in ProjectiveSpace(7, 2)> ]
-gap> STOP_TEST("tst_segrevariety.tst", 10000 );
+gap> STOP_TEST("segrevariety.tst", 10000 );

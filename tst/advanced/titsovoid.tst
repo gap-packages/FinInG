@@ -1,5 +1,4 @@
-gap> START_TEST("fining: tst_titsovoid.tst");
-gap> #Tits ovoid, taken from one of the examples wit less output
+gap> START_TEST("Forms: titsovoid.tst");
 gap> q := 8;
 8
 gap> pg := PG(3,q);
@@ -12,4 +11,4 @@ gap> ovoid := List(vecs,x->VectorSpaceToElement(pg,x));;
 gap> numbers := List(Planes(pg),x->Number(ovoid,y->y in x));;
 gap> Collected(numbers);
 [ [ 1, 65 ], [ 9, 520 ] ]
-gap> STOP_TEST("tst_titsovoid.tst", 10000 );
+gap> STOP_TEST("titsovoid.tst", 10000 );
