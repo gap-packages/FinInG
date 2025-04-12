@@ -82,12 +82,12 @@ sub := "polarities";
 
 filespolarities := ["polaritiesps", "poloperations", "polaritiesnice"];
 
-sub := "lie";
+sub := "geometry";
 
-fileslie := ["empty", "shortcuts", "subspaces", "elements"];
+filesgeometry := ["incstructure", "incstrucflag", "empty", "shortcuts", "subspaces", "elements"];
 
 
-generate_script(sub,fileslie);
+generate_script(sub,filesgeometry);
 Exec("generate_output_fining_testfiles_prsp.sh");
 
 #create tst files
@@ -141,7 +141,7 @@ for filename in files do
 od;
 end;
 
-create_tst_files(sub,fileslie);
+create_tst_files(sub,filesgeometry);
 
 
 #This is currently the end of the file. The rest is obsolete.
