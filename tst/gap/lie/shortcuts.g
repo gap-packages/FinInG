@@ -1,0 +1,20 @@
+#shortcuts to operations in liegeometry.gi
+pg := PG(6,47);
+p := VectorSpaceToElement(pg,[1,0,0,0,0,0,0]*Z(47)^0);
+r := VectorSpaceToElement(pg,[0,1,0,0,0,0,0]*Z(47)^0);
+l := Span(p,r);
+Points(l);
+Points(pg,l);
+Lines(l);
+Lines(pg,l);
+s := VectorSpaceToElement(pg,[0,0,1,0,0,0,0]*Z(47)^0);
+plane := Span([p,r,s]);
+Planes(plane);
+Planes(pg,plane);
+Hyperplanes(l);
+Hyperplanes(pg,l);
+Solids(pg,l);
+Solids(pg,plane);
+l in p;
+p in Points(l);
+quit;
