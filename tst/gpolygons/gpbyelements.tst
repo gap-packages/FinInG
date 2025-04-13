@@ -48,4 +48,10 @@ gap> List(Points(p));
 [ <a point in <projective plane order 2>>, 
   <a point in <projective plane order 2>>, 
   <a point in <projective plane order 2>> ]
+gap> DistanceBetweenElements(p,q);
+2
+gap> DistanceBetweenElements(m,l);
+2
+gap> DistanceBetweenElements(p,l);
+1
 gap> STOP_TEST("gpbyelements.tst", 10000 );

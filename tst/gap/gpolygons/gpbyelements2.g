@@ -1,9 +1,11 @@
 #GP by elements.
-struc := PG(2,2);
+struc := PG(2,3);
 pts := Set(List(Points(struc)));;
 lines := Set(List(Lines(struc)));;
 inc := \*;
-gp := GeneralisedPolygonByElements(lines,pts,inc);
+group := CollineationGroup(struc);
+act := OnProjSubspaces;
+gp := GeneralisedPolygonByElements(lines,pts,inc,group,act);
 p := ObjectToElement(gp,2,pts[1]);
 q := ObjectToElement(gp,2,pts[2]);
 r := Meet(p,q);
