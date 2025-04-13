@@ -65,7 +65,7 @@ end;
 
 #We have severral subdirectories with .g files to convert.
 
-subs := ["geometry", "prsp", "prgrp", "polarities", "advanced"];
+subs := ["geometry", "prsp", "prgrp", "polarities", "gpolygons", "advanced"];
 
 filesgeometry := ["incstructure", "incstrucflag", "empty", "shortcuts", "subspaces", "elements"];
 
@@ -82,6 +82,8 @@ filesprgrp := ["actionall", "collineation", "correlation", "duality", "elations"
 
 filespolarities := ["polaritiesps", "poloperations", "polaritiesnice"];
 
+filesgpolygons := ["gpbyblocks"];
+
 filesadvanced := ["regular13system", "segrevariety", "hermitianspreads", "andrebruckbose",
             "titsovoid", "finingorbits", "enumerators"];
 
@@ -89,6 +91,7 @@ generate_script("geometry",filesgeometry);
 generate_script("prsp",filesprsp);
 generate_script("prgrp",filesprgrp);
 generate_script("polarities",filespolarities);
+generate_script("gpolygons",filesgpolygons);
 generate_script("advanced",filesadvanced);
 
 
@@ -149,4 +152,5 @@ create_tst_files("geometry",filesgeometry);
 create_tst_files("prsp",filesprsp);
 create_tst_files("prgrp",filesprgrp);
 create_tst_files("polarities",filespolarities);
+create_tst_files("gpolygons",filesgpolygons);
 create_tst_files("advanced",filesadvanced);
