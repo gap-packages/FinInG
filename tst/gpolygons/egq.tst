@@ -79,20 +79,6 @@ gap> group := ElationGroup(egq);
 <projective collineation group with 5 generators>
 gap> Order(group);
 243
-gap> CollineationGroup(egq);
-#I  Using elation group to enumerate elements
-#I  Using elation group to enumerate elements
-#I  Computing incidence graph of generalised polygon...
-#I  Using elation of the collineation group...
-#I  Using elation group to enumerate elements
-<permutation group of size 26127360 with 11 generators>
-gap> egq := EGQByqClan(clan);
-#I  Computed Kantor family. Now computing EGQ...
-<EGQ of order [ 9, 3 ] and basepoint 0>
-gap> CollineationGroup(egq);
-#I  Computing incidence graph of generalised polygon...
-#I  Using elation of the collineation group...
-<permutation group of size 26127360 with 9 generators>
 gap> g := ElementaryAbelianGroup(27);
 <pc group of size 27 with 3 generators>
 gap> flist1 := [ Group(g.1), Group(g.2), Group(g.3), Group(g.1*g.2*g.3) ];;

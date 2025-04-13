@@ -23,34 +23,6 @@ gap> ps := SymplecticSpace(5,8);
 W(5, 8)
 gap> gh := SplitCayleyHexagon(ps);
 H(8) in W(5, 8)
-gap> vec := [ Z(2)^0, Z(2^3)^6, Z(2^3)^5, Z(2^3)^6, Z(2)^0, Z(2^3) ];
-[ Z(2)^0, Z(2^3)^6, Z(2^3)^5, Z(2^3)^6, Z(2)^0, Z(2^3) ]
-gap> p := VectorSpaceToElement(gh,vec);
-<a point in H(8) in W(5, 8)>
-gap> vec := [ 0*Z(2), Z(2)^0, 0*Z(2), Z(2^3), Z(2^3)^6, Z(2^3)^6 ];
-[ 0*Z(2), Z(2)^0, 0*Z(2), Z(2^3), Z(2^3)^6, Z(2^3)^6 ]
-gap> q := VectorSpaceToElement(gh,vec);
-<a point in H(8) in W(5, 8)>
-gap> span := Span(p,q);
-<a line in ProjectiveSpace(5, 8)>
-gap> ElementToElement(gh,span);
-<a line in H(8) in W(5, 8)>
-gap> vec := [ [ Z(2)^0, 0*Z(2), Z(2^3)^4, Z(2^3)^5, Z(2^3)^6, Z(2^3)^2 ],
->   [ 0*Z(2), Z(2)^0, 0*Z(2), Z(2^3)^2, Z(2^3)^6, Z(2^3)^5 ] ];
-[ [ Z(2)^0, 0*Z(2), Z(2^3)^4, Z(2^3)^5, Z(2^3)^6, Z(2^3)^2 ], 
-  [ 0*Z(2), Z(2)^0, 0*Z(2), Z(2^3)^2, Z(2^3)^6, Z(2^3)^5 ] ]
-gap> l := VectorSpaceToElement(gh,vec);
-<a line in H(8) in W(5, 8)>
-gap> vec := [ [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), Z(2^3), Z(2^3)^5 ],
->   [ 0*Z(2), Z(2)^0, Z(2^3)^5, Z(2^3)^4, Z(2^3)^5, Z(2)^0 ] ];
-[ [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), Z(2^3), Z(2^3)^5 ], 
-  [ 0*Z(2), Z(2)^0, Z(2^3)^5, Z(2^3)^4, Z(2^3)^5, Z(2)^0 ] ]
-gap> m := VectorSpaceToElement(gh,vec);
-<a line in H(8) in W(5, 8)>
-gap> Meet(l,m);
-< empty subspace >
-gap> DistanceBetweenElements(l,m);
-6
 gap> hexagon := TwistedTrialityHexagon(2^3);
 T(8, 2)
 gap> AmbientPolarSpace(hexagon);
