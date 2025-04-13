@@ -8,6 +8,8 @@ blocks := [
   [ 4, 8, 10, 15, 21 ], [ 4, 9, 11, 14, 20 ], [ 5, 6, 13, 15, 20 ], 
   [ 5, 7, 12, 14, 21 ], [ 5, 8, 11, 17, 18 ], [ 5, 9, 10, 16, 19 ] ];;
 gp := GeneralisedPolygonByBlocks( blocks );
+List(Points(gp));
+List(Lines(gp));
 blocks := [ 
   [ 1, 4, 5 ], [ 1, 8, 9 ], [ 1, 12, 13 ], [ 2, 4, 6 ], [ 2, 8, 10 ], 
   [ 2, 12, 14 ], [ 3, 4, 7 ], [ 3, 8, 11 ], [ 3, 12, 15 ], [ 5, 10, 15 ], 
@@ -32,10 +34,14 @@ blocks := [
 gp := GeneralisedPolygonByBlocks( blocks );
 p := ObjectToElement(gp,1,1);
 q := ObjectToElement(gp,1,16);
-Span(p,q);
+s := Span(p,q);
+p * s;
+s * q;
 l := ObjectToElement(gp,2,[7,24,31]);
 m := ObjectToElement(gp,2,[7,40,47]);
-Meet(l,m);
+r := Meet(l,m);
+r * l;
+m * r;
 List(Lines(p));
 List(Points(l));
 matrix := IncidenceMatrixOfGeneralisedPolygon(gp);;

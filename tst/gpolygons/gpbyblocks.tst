@@ -9,6 +9,43 @@ gap> blocks := [
 >   [ 5, 7, 12, 14, 21 ], [ 5, 8, 11, 17, 18 ], [ 5, 9, 10, 16, 19 ] ];;
 gap> gp := GeneralisedPolygonByBlocks( blocks );
 <projective plane order 4>
+gap> List(Points(gp));
+[ <a point in <projective plane order 4>>, 
+  <a point in <projective plane order 4>>, 
+  <a point in <projective plane order 4>>, 
+  <a point in <projective plane order 4>>, 
+  <a point in <projective plane order 4>>, 
+  <a point in <projective plane order 4>>, 
+  <a point in <projective plane order 4>>, 
+  <a point in <projective plane order 4>>, 
+  <a point in <projective plane order 4>>, 
+  <a point in <projective plane order 4>>, 
+  <a point in <projective plane order 4>>, 
+  <a point in <projective plane order 4>>, 
+  <a point in <projective plane order 4>>, 
+  <a point in <projective plane order 4>>, 
+  <a point in <projective plane order 4>>, 
+  <a point in <projective plane order 4>>, 
+  <a point in <projective plane order 4>>, 
+  <a point in <projective plane order 4>>, 
+  <a point in <projective plane order 4>>, 
+  <a point in <projective plane order 4>>, 
+  <a point in <projective plane order 4>> ]
+gap> List(Lines(gp));
+[ <a line in <projective plane order 4>>, <a line in <projective plane order 
+    4>>, <a line in <projective plane order 4>>, 
+  <a line in <projective plane order 4>>, <a line in <projective plane order 
+    4>>, <a line in <projective plane order 4>>, 
+  <a line in <projective plane order 4>>, <a line in <projective plane order 
+    4>>, <a line in <projective plane order 4>>, 
+  <a line in <projective plane order 4>>, <a line in <projective plane order 
+    4>>, <a line in <projective plane order 4>>, 
+  <a line in <projective plane order 4>>, <a line in <projective plane order 
+    4>>, <a line in <projective plane order 4>>, 
+  <a line in <projective plane order 4>>, <a line in <projective plane order 
+    4>>, <a line in <projective plane order 4>>, 
+  <a line in <projective plane order 4>>, <a line in <projective plane order 
+    4>>, <a line in <projective plane order 4>> ]
 gap> blocks := [ 
 >   [ 1, 4, 5 ], [ 1, 8, 9 ], [ 1, 12, 13 ], [ 2, 4, 6 ], [ 2, 8, 10 ], 
 >   [ 2, 12, 14 ], [ 3, 4, 7 ], [ 3, 8, 11 ], [ 3, 12, 15 ], [ 5, 10, 15 ], 
@@ -37,14 +74,22 @@ gap> p := ObjectToElement(gp,1,1);
 <a point in <generalised hexagon of order [ 2, 2 ]>>
 gap> q := ObjectToElement(gp,1,16);
 <a point in <generalised hexagon of order [ 2, 2 ]>>
-gap> Span(p,q);
+gap> s := Span(p,q);
 <a line in <generalised hexagon of order [ 2, 2 ]>>
+gap> p * s;
+true
+gap> s * q;
+true
 gap> l := ObjectToElement(gp,2,[7,24,31]);
 <a line in <generalised hexagon of order [ 2, 2 ]>>
 gap> m := ObjectToElement(gp,2,[7,40,47]);
 <a line in <generalised hexagon of order [ 2, 2 ]>>
-gap> Meet(l,m);
+gap> r := Meet(l,m);
 <a point in <generalised hexagon of order [ 2, 2 ]>>
+gap> r * l;
+true
+gap> m * r;
+true
 gap> List(Lines(p));
 [ <a line in <generalised hexagon of order [ 2, 2 ]>>, 
   <a line in <generalised hexagon of order [ 2, 2 ]>>, 

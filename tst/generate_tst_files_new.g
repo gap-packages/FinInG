@@ -82,7 +82,7 @@ filesprgrp := ["actionall", "collineation", "correlation", "duality", "elations"
 
 filespolarities := ["polaritiesps", "poloperations", "polaritiesnice"];
 
-filesgpolygons := ["gpbyblocks"];
+filesgpolygons := ["gpbyblocks", "gpbyelements"];
 
 filesadvanced := ["regular13system", "segrevariety", "hermitianspreads", "andrebruckbose",
             "titsovoid", "finingorbits", "enumerators"];
