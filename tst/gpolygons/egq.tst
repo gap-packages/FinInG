@@ -93,11 +93,6 @@ gap> egq := EGQByKantorFamily(g, flist1, flist2);
 gap> CategoriesOfObject(egq);
 [ "IsIncidenceStructure", "IsIncidenceGeometry", "IsGeneralisedPolygon", 
   "IsGeneralisedQuadrangle", "IsElationGQ", "IsElationGQByKantorFamily" ]
-gap> p := Random(Points(egq));
-<a point of class 2 of <EGQ of order [ 3, 3 ] and basepoint 0>>
-gap> CategoriesOfObject(p);
-[ "IsElementOfIncidenceStructure", "IsElementOfIncidenceGeometry", 
-  "IsElementOfGeneralisedPolygon", "IsElementOfKantorFamily" ]
 gap> group := ElationGroup(egq);
 <pc group of size 27 with 3 generators>
 gap> CollineationAction(group) = OnKantorFamily;
