@@ -185,7 +185,7 @@ PackageDoc := rec(
 ##  Are there restrictions on the operating system for this package? Or does
 ##  the package need other packages to be available?
 Dependencies := rec(
-  GAP := ">=4.10",
+  GAP := ">=4.12",
   NeededOtherPackages := [
           ["cvec", ">=2.7.6"],
           ["Forms", ">=1.2.5"],
