@@ -109,7 +109,7 @@ Persons := [
     IsAuthor      := true,
     IsMaintainer  := true,
     Email         := "michel.lavrauw@upr.si",
-    WWWHome       := "https://sites.google.com/view/mlavrauw",
+    WWWHome       := "https://mlavrauw.github.io",
     PostalAddress := Concatenation( [
         "Michel Lavrauw\n",
         "Department of Mathematics \n",
