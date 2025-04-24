@@ -1,5 +1,5 @@
-<!-- 
-intro.xml            FinInG package documentation
+<!--
+fining.xml        FinInG package documentation
                                                                    John Bamberg
                                                                    Anton Betten
                                                                   Philippe Cara
@@ -7,18 +7,13 @@ intro.xml            FinInG package documentation
                                                                  Michel Lavrauw
                                                                 Max Neunhoeffer
 
-  Copyright (C) 2018,	Colorado State University
+  Copyright (C) 2018,    Colorado State University
                         University of Primorska
-			Università degli Studi di Padova
-			Universiteit Gent
-			University of St. Andrews
-			University of Western Australia
+                        Università degli Studi di Padova
+                        Universiteit Gent
+                        University of St. Andrews
+                        University of Western Australia
                         Vrije Universiteit Brussel
- 
- 
-This chapter gives a short introduction and explains the philosophy
-behind the package.
-
 -->
 
 <Chapter Label="intro">
@@ -35,25 +30,14 @@ projective spaces to the flat lands of generalised polygons.
 The algebraic power of GAP is employed, particularly in its 
 facility with matrix and permutation groups.<P/>
 
-<Alt Only="HTML">A sample making FinInG's pronunciation crystal clear can be found &lt;a href="fining1.m4a">here&lt;/a>. 
-&lt;p>&lt;audio controls>
-&lt;source src="fining1.m4a" type="audio/mpeg"/>
-&lt;embed height="50" width="100" src="fining1.m4a"/>
-&lt;/audio>
+<Alt Only="HTML">A sample making FinInG's pronunciation crystal clear can be found &lt;a href="fining1.m4a">here&lt;/a>.
 </Alt>
 
 </Section>
 
 <Section Label="cite">
 <Heading>How to cite <Package>FinInG</Package></Heading>
-
-  The development group of <Package>FinInG</Package> welcomes contact with users. In case you have obtained the
-  package as a deposited package part of archive during the installation of GAP,
-  we call on your beneficence to register at <Homepage>http://www.fining.org</Homepage> when you use <Package>FinInG</Package> or to
-  tell us by sending a message to <Email>council@fining.org</Email>.<P/>
-  Please tell us about the use of <Package>FinInG</Package> in your research or teaching. We are very interested in results obtained
-  using <Package>FinInG</Package> and we might refer to your work in the future.
-  If your work is published, we ask you to cite <Package>FinInG</Package> like a journal article or book.<P/>
+The development group of <Package>FinInG</Package> welcomes contact with users. We are very interested in results obtained using <Package>FinInG</Package>, so please tell us about the use of <Package>FinInG</Package> in your research or teaching by sending an e-mail to <Email>council@fining.org</Email>. We might refer to your work in the future. If your work is published, we ask you to cite <Package>FinInG</Package> like a journal article or book. <P/>
 
 If you are using BibTeX, you can use the following BibTeX entry for the current <Package>FinInG</Package> version:
 
@@ -63,12 +47,11 @@ If you are using BibTeX, you can use the following BibTeX entry for the current 
             De Beule, Jan and Lavrauw, Michel and Neunh\"offer, Max },
         Key = {fining},
         Title = {{FinInG -- Finite Incidence Geometry, Version &VERSION;}},
-        Url = {\verb+(http://www.fining.org)+},
+        Url = {\verb+(https://github.com/gap-packages/FinInG)+},
         Year = &YEAR;}
 </Example>
 
-Here is the bibliography entry produced by BibTeX (in bibliography style `alpha'), to
-be pasted directly inside the bibliography environment of your LaTeX document:
+Here is the bibliography entry produced by BibTeX (in bibliography style `alpha'), to be pasted directly inside the bibliography environment of your LaTeX document:
 
 <Example>
 \bibitem[FinInG]{fining}
@@ -89,34 +72,17 @@ When linking to FinInG from a web page you can use the link
 <Section Label="overview">
 <Heading>Overview of this manual</Heading>
 
-This chapter (section <Ref Sect="install"/>) describes the installation of the package. Chapter <Ref
-Chap="examples"/> contains some extended examples to introduce the user to the basic functionality and philosophy to get started. Chapter <Ref Chap="incidencegeometry"/> contains a rigorous description of the basic structures. This chapter can be omitted at first reading, since the set of consequent chapters is also self contained. Chapters <Ref Chap="projective_spaces"/>, <Ref Chap="projgroup"/> and <Ref Chap="polaritiesofps"/>
-deal with projective spaces, projective semilinear groups and polarities of projective spaces, respectively.
-In Chapter <Ref Chap="classicalpolarspaces"/> the functionality for classical polar spaces is treated and in Chapter <Ref Chap="affine"/> affine spaces and their groups are considered. <E>Geometry morphisms</E> between various geometries that are 
-available in the package, are introduced and discussed in Chapter <Ref Chap="morphisms"/>. The final three chapters, <Ref Chap="varieties"/>, <Ref Chap="gpolygons"/>, and <Ref Chap="diagramgeometries"/> explain the basic functionality which is provided for algebraic varieties (in projective or affine spaces), generalised polygons, of which several models can be constructed, and finally coset geometries and diagrams.
+This chapter (section <Ref Sect="install"/>) describes the installation of the package. Chapter <Ref Chap="examples"/> contains some extended examples to introduce the user to the basic functionality and philosophy to get started. Chapter <Ref Chap="incidencegeometry"/> contains a rigorous description of the basic structures. This chapter can be omitted at first reading, since the set of consequent chapters is also self contained. Chapters <Ref Chap="projective_spaces"/>, <Ref Chap="projgroup"/> and <Ref Chap="polaritiesofps"/> deal with projective spaces, projective semilinear groups and polarities of projective spaces, respectively.
+In Chapter <Ref Chap="classicalpolarspaces"/> the functionality for classical polar spaces is treated and in Chapter <Ref Chap="affine"/> affine spaces and their groups are considered. <E>Geometry morphisms</E> between various geometries that are available in the package, are introduced and discussed in Chapter <Ref Chap="morphisms"/>. The final three chapters, <Ref Chap="varieties"/>, <Ref Chap="gpolygons"/>, and <Ref Chap="diagramgeometries"/> explain the basic functionality which is provided for algebraic varieties (in projective or affine spaces), generalised polygons, of which several models can be constructed, and finally coset geometries and diagrams.
 </Section>
 
 <Section Label="install">
 <Heading>Getting and installing <Package>FinInG</Package></Heading>
 <Index><Package>FinInG</Package></Index>
 
-Since version 4.7.8, the official &GAP; distribution includes the <Package>FinInG</Package> package. The
-<Package>FinInG</Package> package requires the GAP packages <Package>GAPDoc</Package>, version 1.6 or higher,
-<Package>Forms</Package>, version 1.2.3 or higher, <Package>Orb</Package>, version 4.7.6 or higher,
-<Package>GenSS</Package>, version 1.6.4 or higher, and <Package>GRAPE</Package>, version 4.7 or higher,
-and <Package>cvec</Package>, version 2.5.7 or higher. These required packages
-are all part of the standard &GAP; distribution. However, the packages <Package>cvec</Package>, <Package>GRAPE</Package>,
-<Package>IO</Package>, and <Package>Orb</Package> may require additional compilation (cfr. infra for detailed instructions).
-Note that the <Package>IO</Package> is a package required by <Package>cvec</Package> and <Package>Orb</Package>, and
-is also part of the standard &GAP; distribution.
+Since version 4.7.8, the official &GAP; distribution includes the <Package>FinInG</Package> package. The <Package>FinInG</Package> package requires the GAP packages <Package>GAPDoc</Package>, version 1.6 or higher, <Package>Forms</Package>, version 1.2.3 or higher, <Package>Orb</Package>, version 4.7.6 or higher, <Package>GenSS</Package>, version 1.6.4 or higher, and <Package>GRAPE</Package>, version 4.7 or higher, and <Package>cvec</Package>, version 2.5.7 or higher. These required packages are all part of the standard &GAP; distribution. However, the packages <Package>cvec</Package>, <Package>GRAPE</Package>, <Package>IO</Package>, and <Package>Orb</Package> may require additional compilation (cfr. infra for detailed instructions). Note that the <Package>IO</Package> is a package required by <Package>cvec</Package> and <Package>Orb</Package>, and is also part of the standard &GAP; distribution.<P />
 
-Shortly summarized, to get <Package>FinInG</Package> working, download and install &GAP; as explained in its installation
-instructions, and, under UNIX like systems (including MacOS), make sure that the compilation of the
-packages <Package>cvec</Package>, <Package>GRAPE</Package>, <Package>IO</Package>, and <Package>Orb</Package> is done. Note
-that the windows distribution of &GAP; contains precompiled binaries of these packages, so under Windows,
-no further steps are required after installing &GAP; according to its installation instructions.
-
-In the next section we summarize the installation procedure under UNIX like systems.
+Summarized, to get <Package>FinInG</Package> working, download and install &GAP; as explained in its installation instructions, and, under UNIX like systems (including MacOS), make sure that the compilation of the packages <Package>cvec</Package>, <Package>GRAPE</Package>, <Package>IO</Package>, and <Package>Orb</Package> is done. Note that the windows distribution of &GAP; contains precompiled binaries of these packages, so under Windows, no further steps are required after installing &GAP; according to its installation instructions. In the next section we summarize the installation procedure under UNIX like systems.
 
 <!--Finally note that currently, one <Package>FinInG</Package> function will use the
 <Package>Design</Package> package. This package is part of the standard &GAP;
@@ -125,16 +91,7 @@ distribution too, but it is not a requirement.--><!--This remark is very true, b
 <Subsection>
 <Heading>Installation procedure under UNIX like systems</Heading>
 
-The installation of &GAP; itself is generic for each UNIX like system, including the different flavours of
-Mac OS. You only need a terminal application, and you need access to the standard unix tools gunzip and tar,
-and the make tools. Detailed information on how to install &GAP;, can be found in the documentation of &GAP;.
-
-The installation procedure for <Package>FinInG</Package>, a standard GAP package, does <E>not</E> 
-require compilation, however the packages <Package>cvec</Package>, <Package>GRAPE</Package>, <Package>IO</Package>, 
-and <Package>Orb</Package> do. First install &GAP; according to the installation instructions. 
-If you start &GAP; the output might look like in the example below. Note that <Package>IO</Package> is not 
-listed as loaded package (see line starting with 'Packages' in the example output). This means that 
-<Package>IO</Package> has not been compiled. Trying to load the <Package>IO</Package> will result in an error message.
+The installation of &GAP; itself is generic for each UNIX like system, including the different flavours of Mac OS. You only need a terminal application, and you need access to the standard unix tools gunzip and tar, and the make tools. Detailed information on how to install &GAP;, can be found in the documentation of &GAP;. The installation procedure for <Package>FinInG</Package>, a standard GAP package, does <E>not</E> require compilation, however the packages <Package>cvec</Package>, <Package>GRAPE</Package>, <Package>IO</Package>, and <Package>Orb</Package> do. First install &GAP; according to the installation instructions. If you start &GAP; the output might look like in the example below. Note that <Package>IO</Package> is not listed as loaded package (see line starting with 'Packages' in the example output). This means that <Package>IO</Package> has not been compiled. Trying to load the <Package>IO</Package> will result in an error message.
 
 <Example>
 jdebeule ~  $ gap4r8
@@ -160,28 +117,15 @@ fail
 
 <Subsection>
 <Heading>Compiling packages</Heading>
-In this subsection it is explained how to compile the necessary packages in case this is not yet done
-for your &GAP; installation. We assume that you have write access to the &GAP; installation on your computer.
-If this is not the case, you should ask your system administrator to do this for you.
+In this subsection it is explained how to compile the necessary packages in case this is not yet done for your &GAP; installation. We assume that you have write access to the &GAP; installation on your computer. If this is not the case, you should ask your system administrator to do this for you. Locate your &GAP; installation. The examples below are generated using a GAP4.8.8 installation residing in "/opt/gap4r8". Clearly, subsequent versions of gap will reside in a differently named directory, e.g. "/opt/gap4r9". Another commonly used directory under UNIX like systems to install software is "/usr/local", so gap might reside in "/usr/local/gap4r8" too. In all examples in this section, we assume your &GAP; installation resides in "/opt/gap4r8". Therefore, replace any occurrence of "/opt/gap4r8" with the actual directory of your &GAP; installation when executing the installation steps.<P/>
 
-Locate your &GAP; installation. The examples below are generated using a GAP4.8.8 installation residing
-in "/opt/gap4r8". Clearly, subsequent versions of gap will reside in a differently named directory, e.g.
-"/opt/gap4r9". Another commonly used directory under UNIX like systems to install software is "/usr/local", so
-gap might reside in "/usr/local/gap4r8" too. In all examples in this section, we assume your &GAP; installation
-resides in "/opt/gap4r8". Therefore, replace any occurrence of "/opt/gap4r8" with the actual directory
-of your &GAP; installation when executing the installation steps.
-
-Three steps will be necessary to compile the <Package>IO</Package> package: go into the correct directory, and
-issue the 'configure' command and then issue the 'make' command. Note that the directory name
-of the package is dependent on its version number. The correct name can be found as follows:
-
+Three steps will be necessary to compile the <Package>IO</Package> package: go into the correct directory, and issue the 'configure' command and then issue the 'make' command. Note that the directory name of the package is dependent on its version number. The correct name can be found as follows:
 <Example>
 jdebeule ~  $ ls /opt/gap4r8/pkg/ |grep io-
 io-4.4.6
 </Example>
 
-From this output, it can be determined that the <Package>IO</Package> resides in "/opt/gap4r8/pkg/io-4.4.6/". The three
-steps to be taken to compile <Package>io</Package> are demonstrated in the example below.
+From this output, it can be determined that the <Package>IO</Package> resides in "/opt/gap4r8/pkg/io-4.4.6/". The three steps to be taken to compile <Package>io</Package> are demonstrated in the example below.
 
 <Example>
 root ~  $ cd /opt/gap4r8/pkg/io-4.4.6/
@@ -433,14 +377,10 @@ true
 
 <Section>
 <Heading>The Development Team</Heading>
-This is the development team (without Anton), meeting in St. Andrews in September 2008,
-from left to right: Philippe Cara, Michel Lavrauw, Max Neunh&#246;ffer, Jan De Beule and John Bamberg.
+This is the development team (without Anton), meeting in St. Andrews in September 2008, from left to right: Philippe Cara, Michel Lavrauw, Max Neunh&#246;ffer, Jan De Beule and John Bamberg.
 <P/>
 <Alt Only="HTML">&lt;img src="./graphics/devteamstasep08.jpg">&lt;/img></Alt>
-<Alt Only="LaTeX">\includegraphics[scale=0.6]{./graphics/devteamstasep08.jpg}</Alt><P/>
-The development team meeting again (without Anton and Max), now
-in Vicenza in april 2011. from left to right: Michel Lavrauw, John Bamberg, Philippe
-Cara, Jan De Beule.<P/>
+<Alt Only="LaTeX">\includegraphics[scale=0.6]{./graphics/devteamstasep08.jpg}</Alt><P/> The development team meeting again (without Anton and Max), now in Vicenza in april 2011. from left to right: Michel Lavrauw, John Bamberg, Philippe Cara, Jan De Beule.<P/>
 <Alt Only="HTML">&lt;img src="./graphics/devteamvicapr11.jpg">&lt;/img></Alt>
 <Alt Only="LaTeX">\includegraphics[scale=0.6]{./graphics/devteamvicapr11.jpg}</Alt><P/>
 Survivors of the first version of <Package>FinInG</Package>, enjoying a trip to Chioggia, december 2011.
