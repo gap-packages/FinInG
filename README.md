@@ -28,7 +28,7 @@ This package provides:
 
 For further information see:
 	
-	http://www.fining.org
+	https://github.com/gap-packages/FinInG
 
 ## INSTALLATION AND DEPENDENCIES
 
