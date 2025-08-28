@@ -773,9 +773,7 @@ InstallMethod( SegreMap,
 	range:=Points(SegreVariety(listofspaces));
 	
 	map:=rec( source:=source, range:=range, map:=segremap );
-	ty:=NewType( NewFamily("SegreMapsFamily"), IsSegreMap and 
-								IsSegreMapRep );
-	Objectify(ty, map);
+	Objectify(SegreMapsType, map);
 	return map;
 
 end );

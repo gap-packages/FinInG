@@ -139,6 +139,10 @@ DeclareOperation( "AffineVariety", [IsAffineSpace, IsPolynomialRing, IsList] );
 DeclareOperation( "AffineVariety", [IsAffineSpace, IsList] );
 
 ### 4. Segre Varieties ###
+
+BindGlobal("SegreMapsFamily", NewFamily("SegreMapsFamily"));
+BindGlobal("SegreMapsType", NewType(SegreMapsFamily, IsSegreMap and IsSegreMapRep));
+
 DeclareOperation( "SegreMap", [ IsHomogeneousList ] ); # list of projective spaces
 DeclareOperation( "SegreMap", [ IsHomogeneousList, IsField ] ); # list of dimensions
 
