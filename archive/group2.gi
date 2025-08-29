@@ -1001,30 +1001,6 @@ InstallGlobalFunction( OnProjSubspacesExtended,
 		return VectorSpaceToElement(ps,newvec);
 	end );	
 
-# CHECKED 19/09/11 jdb
-#############################################################################
-#O  Dimension( <g> )
-# returns the dimension of the correlation group <g>. The dimension of this 
-# group is defined as the vector space dimension of the projective space  
-# of which <g> was defined as a projective group, or, in other words, as the 
-# size of the matrices.
-## 
-InstallMethod( Dimension, 
-  "for a projective group with Frobenius with vspace isomorphism",
-  [IsProjGroupWithFrobWithPSIsom],
-  function( g )
-    local gens;
-    if HasParent(g) then
-        return Dimension(Parent(g));
-    fi;
-    # Now start to investigate:
-    gens := GeneratorsOfGroup(g);
-    if Length(gens) > 0 then
-        return Length(gens[1]!.mat);
-    fi;
-    Error("dimension could not be determined");
-  end );
-
 # CHECKED 20/09/11 jdb
 #############################################################################
 #P  ActionOnAllPointsHyperplanes( <g> )
