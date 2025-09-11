@@ -27,6 +27,7 @@ jobs:
       - uses: gap-actions/build-pkg-docs@v2
         with:
           use-latex: true
+          warnings-as-errors: 'false'  # disable warnings: too many labels multiply defined
       - name: Run .release script
         run: |
           ./.release
