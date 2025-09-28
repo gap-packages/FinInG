@@ -6,7 +6,7 @@ adj := function(x,y)
     return ProjectiveDimension(Meet(x,y))=-1;
 end;
 graph := Graph(coll,planes,OnProjSubspaces,adj,true);;
-cliques := CompleteSubgraphs(graph);;
+cliques := CompleteSubgraphs(graph,-1,2);;
 Length(cliques);
 Collected(List(cliques,x->Length(x)));
 cliques9 := CompleteSubgraphs(graph,9,2);

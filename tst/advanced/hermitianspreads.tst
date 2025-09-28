@@ -9,11 +9,11 @@ gap> adj := function(x,y)
 > end;
 function( x, y ) ... end
 gap> graph := Graph(coll,planes,OnProjSubspaces,adj,true);;
-gap> cliques := CompleteSubgraphs(graph);;
+gap> cliques := CompleteSubgraphs(graph,-1,2);;
 gap> Length(cliques);
-338
+5
 gap> Collected(List(cliques,x->Length(x)));
-[ [ 7, 312 ], [ 9, 26 ] ]
+[ [ 7, 2 ], [ 9, 3 ] ]
 gap> cliques9 := CompleteSubgraphs(graph,9,2);
 [ [ 1, 2, 24, 37, 68, 172, 324, 455, 854 ], 
   [ 1, 2, 24, 37, 68, 172, 497, 508, 708 ], 
