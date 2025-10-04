@@ -75,7 +75,8 @@ Persons := [
     IsAuthor      := true,
     IsMaintainer  := true,
     Email         := "pcara@vub.ac.be",
-    WWWHome       := "http://homepages.vub.ac.be/~pcara",
+    WWWHome       := "https://wids.research.vub.be/nl/philippe-cara",
+    GitHubUsername:= "pcara",
     PostalAddress := Concatenation( [
                        "Philippe Cara\n",
                        "Department of Mathematics\n",
