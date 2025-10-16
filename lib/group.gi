@@ -463,11 +463,9 @@ InstallMethod( ProjElWithFrob,
 		
 		# figure out a field which contains the matrices and admits the
 		# automorphisms (nontrivially)
-		dim := Lcm(
-		  LogInt(Size(matrixfield),mchar),
-			LogInt(Size(frobfield),fchar)
-			);
-	return ProjElWithFrob( m, frob, GF(mchar^dim) );
+		dim := LcmInt(DegreeOverPrimeField(matrixfield),
+			          DegreeOverPrimeField(frobfield));
+	    return ProjElWithFrob(m, frob, GF(mchar^dim));
 	end);
  
 # CHECKED 5/09/11 jdb
@@ -535,7 +533,7 @@ InstallMethod( ProjElsWithFrob,
 	[IsList],
 	function( l )
     local matrixfield, frobfield, mchar, fchar, oldchar, f, dim, m, objectlist;
-    if(IsEmpty(l)) then
+    if IsEmpty(l) then
 		return [];
 		fi;
 		dim := 1;
@@ -557,8 +555,8 @@ InstallMethod( ProjElsWithFrob,
 		# so that it contains all the matrices and admits all the automorphisms
 		# (nontrivially.)
   
-  		dim := Lcm( dim, LogInt(Size(matrixfield),mchar),
-  			LogInt(Size(frobfield),fchar));
+  		dim := LcmInt(dim, DegreeOverPrimeField(matrixfield));
+  		dim := LcmInt(dim, DegreeOverPrimeField(frobfield));
 		od;
 
 		f := GF(oldchar ^ dim);
@@ -2477,7 +2475,7 @@ InstallMethod( CanonicalQuadraticForm,
 			od;
 			p := Characteristic(f);
 			q := Size(f);
-			if IsOddInt(Log(q, p)) then
+			if IsOddInt(DegreeOverPrimeField(f)) then
 				m[2,2] := one;
 			else
 				R := PolynomialRing( f, 1 );
@@ -3019,7 +3017,7 @@ InstallMethod( GammaOplus, [IsPosInt, IsField and IsFinite],
     Add(gens, ProjElWithFrob( IdentityMat(d, f), frob, f ));
     g := GroupWithGenerators( gens );
     SetName( g, Concatenation("PGammaO+(",String(d),",",String(q),")") );
-    SetSize( g, Log(q, Characteristic(f)) * Size(deltao) );
+    SetSize( g, DegreeOverPrimeField(f) * Size(deltao) );
     return g;
   end );
 
