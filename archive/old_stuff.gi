@@ -3,10 +3,10 @@
 # CHECKED 28/09/11 jdb
 #############################################################################
 #O  NaturalDuality( <w> )
-# returns the well known isomorphism between H(3,q^2) and Q-(5,q). The latter 
+# returns the well known isomorphism between H(3,q^2) and Q-(5,q). The latter
 # will be the standard one, the former a user defined one.
 ##
-InstallMethod( NaturalDuality, 
+InstallMethod( NaturalDuality,
 	"for a hermitian variety of rank 2",
 	[ IsHermitianPolarSpace and IsGeneralisedPolygon ],
 	function( h )
@@ -20,8 +20,8 @@ InstallMethod( NaturalDuality,
     f := h!.basefield;
     frob := FrobeniusAutomorphism(f);
     q := Sqrt(Size(f));
-    one := One(f);   
-   
+    one := One(f);
+
     eq := EllipticQuadric(5, q);
     pg5 := AmbientSpace( eq );
 
@@ -41,19 +41,19 @@ InstallMethod( NaturalDuality,
     e := alpha^(q-1) + alpha^(1-q);
 
     ## The form for the Elliptic Quadric that we get is
-    ## x1^2+x2^2+x3^2+x4^2+x5^2+x6^2 - e(x1x6+x2x5+x3x4)  
+    ## x1^2+x2^2+x3^2+x4^2+x5^2+x6^2 - e(x1x6+x2x5+x3x4)
 
     mat1 := IdentityMat(6, GF(q));
     mat2 := NullMat(6, 6, f);
     for i in [1..3] do
        mat2[2*i-1][8-2*i] := one;
-    od; 
+    od;
     mat1 := mat1 - e * mat2;
 
     if IsOddInt( q ) then
        form := BilinearFormByMatrix(mat1 + TransposedMat(mat1), GF(q));
     else
-       form := QuadraticFormByMatrix(mat1, GF(q));  
+       form := QuadraticFormByMatrix(mat1, GF(q));
     fi;
     ps := PolarSpace( form );
     iso2 := IsomorphismPolarSpaces(ps, eq);
@@ -72,36 +72,36 @@ InstallMethod( NaturalDuality,
          ## that our vector is really in this form (up to no scalar!).
 
          pos := PositionNonZero( pl );
-         mu := First( AsList(f), m -> m^(q-1) = pl[pos] / pl[7-pos]);      
+         mu := First( AsList(f), m -> m^(q-1) = pl[pos] / pl[7-pos]);
          pl := mu * pl;
          return VectorSpaceToElement(ps, pl * x)^iso2;
        end;
- 
+
        pre := function( p )
          local p2, invpl;
-         p2 := PreImageElm(iso2, p); 
+         p2 := PreImageElm(iso2, p);
          p2 := VectorSpaceToElement(pg5, p2!.obj * xinv);
          invpl := InversePluckerCoordinates( p2!.obj );
-         return VectorSpaceToElement(h,invpl);         
+         return VectorSpaceToElement(h,invpl);
        end;
     else
        iso := IsomorphismCanonicalPolarSpace( h );
-    
+
        func := function( l )
          local pl, mu, pos;
          pl := PluckerCoordinates( PreImageElm(iso, l)!.obj );
          pos := PositionNonZero( pl );
-         mu := First( AsList(f), m -> m^(q-1) = pl[pos] / pl[7-pos]);      
+         mu := First( AsList(f), m -> m^(q-1) = pl[pos] / pl[7-pos]);
          pl := mu * pl;
-         return VectorSpaceToElement(ps, pl * x)^iso2; 
+         return VectorSpaceToElement(ps, pl * x)^iso2;
        end;
- 
+
        pre := function( p )
          local p2, invpl;
-         p2 := PreImageElm(iso2, p); 
+         p2 := PreImageElm(iso2, p);
          p2 := VectorSpaceToElement(pg5, p2!.obj * xinv);
          invpl := InversePluckerCoordinates( p2!.obj );
-         return ImageElm(iso, VectorSpaceToElement(h,invpl));         
+         return ImageElm(iso, VectorSpaceToElement(h,invpl));
        end;
     fi;
 

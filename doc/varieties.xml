@@ -8,12 +8,12 @@ varieties.xml    FinInG package documentation
                                                                  Michel Lavrauw
                                                                 Max Neunhoeffer
 
-  Copyright (C) 2018,	Colorado State University
+  Copyright (C) 2018,   Colorado State University
                         Sabancı Üniversitesi
-						Università degli Studi di Padova
-						Universiteit Gent
-						University of St. Andrews
-						University of Western Australia
+                        Università degli Studi di Padova
+                        Universiteit Gent
+                        University of St. Andrews
+                        University of Western Australia
                         Vrije Universiteit Brussel
  
 This is the chapter of the documentation describing the algebraic varieties.
@@ -39,7 +39,7 @@ An <E>algebraic variety</E> in <Package>FinInG</Package> is an algebraic variety
 <Example>
 <#Include SYSTEM "../examples/include/varieties_general.include"> 
 </Example>
-	</Description>
+    </Description>
 </ManSection>
 <ManSection>
     <Attr Name="DefiningListOfPolynomials" Arg="var"/>
@@ -65,7 +65,7 @@ An <E>algebraic variety</E> in <Package>FinInG</Package> is an algebraic variety
 <#Include SYSTEM "../examples/include/varieties_points.include"> 
 </Example>
 
-	</Description>
+    </Description>
 </ManSection>
 <ManSection>
     <Oper Name="Iterator" Arg="pts"/>
@@ -186,8 +186,8 @@ return a quadric of a particular type as follows:
    <Row><Item>parabolic quadric</Item>
    <Item><Alt Not="HTML"><M> X_0^2 + X_1X_2 + \ldots + X_{n-1}X_n
          </M></Alt><Alt Only="HTML">X&lt;sub>0&lt;/sub>&lt;sup>2&lt;/sup> +
-	 X&lt;sub>1&lt;/sub> X&lt;sub>2&lt;/sub> + ... +
-	 X&lt;sub>n-1&lt;/sub>X&lt;sub>n&lt;/sub></Alt>
+     X&lt;sub>1&lt;/sub> X&lt;sub>2&lt;/sub> + ... +
+     X&lt;sub>n-1&lt;/sub>X&lt;sub>n&lt;/sub></Alt>
    </Item><Item><Alt Only="HTML noMathJax">p &#8801; 1,3 mod 8</Alt>
    <Alt Only="HTML MathJax"><M>p \equiv 1,3 \pmod{8}</M></Alt>
    <Alt Not="HTML"><M>p \equiv 1,3 \pmod{8}</M></Alt>or <M>p=2</M></Item><Item>even</Item><Item>"parabolic", "o", or "0"</Item></Row>
@@ -196,8 +196,8 @@ return a quadric of a particular type as follows:
    <Item><Alt Only="Text"><M>t(X_0^2 + X_1X_2 + \ldots + X_{n-1}X_n)</M>, t a primitive element of GF(p)</Alt>
     <Alt Only="LaTeX">\makecell[cl]{<M>t(X_0^2 + X_1X_2 + \ldots + X_{n-1}X_n),</M> \\ <M>t</M> a primitive element of <M>\mathrm{GF}(p)</M>}</Alt>
     <Alt Only="HTML noMathJax">t(X&lt;sub>0&lt;/sub>&lt;sup>2&lt;/sup> +
-	 X&lt;sub>1&lt;/sub> X&lt;sub>2&lt;/sub> + ... +
-	 X&lt;sub>n-1&lt;/sub>X&lt;sub>n&lt;/sub>), <M>t</M> a primitive element of <M>GF(p)</M></Alt>
+     X&lt;sub>1&lt;/sub> X&lt;sub>2&lt;/sub> + ... +
+     X&lt;sub>n-1&lt;/sub>X&lt;sub>n&lt;/sub>), <M>t</M> a primitive element of <M>GF(p)</M></Alt>
     <Alt Only="HTML MathJax"><M>t(X_0^2 + X_1X_2 + \ldots + X_{n-1}X_n)</M>, <M>t</M> a primitive element of <M>\mathrm{GF}(p)</M></Alt>
     </Item><Item><Alt Only="HTML noMathJax">p &#8801; 5,7 mod 8</Alt>
         <Alt Only="HTML MathJax"><M>p \equiv 5,7 \pmod{8}</M></Alt>
@@ -207,7 +207,7 @@ return a quadric of a particular type as follows:
    <Row><Item>elliptic quadric</Item>
    <Item><Alt Not="HTML"><M>X_0^2 + X_1^2 + X_2X_3 + \ldots + X_{n-1}X_n</M></Alt>
        <Alt Only="HTML noMathJax">X&lt;sub>0&lt;/sub>&lt;sup>2&lt;/sup> + X&lt;sub>1&lt;/sub>&lt;sup>2&lt;/sup> +  X&lt;sub>2&lt;/sub>
-	 X&lt;sub>3&lt;/sub> + ... + X&lt;sub>n-1&lt;/sub>X&lt;sub>n&lt;/sub></Alt>
+     X&lt;sub>3&lt;/sub> + ... + X&lt;sub>n-1&lt;/sub>X&lt;sub>n&lt;/sub></Alt>
        <Alt Only="HTML MathJax"><M>X_0^2 + X_1^2 + X_2X_3 + \ldots + X_{n-1}X_n</M></Alt></Item>
    <Item><Alt Only="HTML noMathJax">p &#8801; 3 mod 4</Alt>
        <Alt Only="HTML MathJax"><M>p \equiv 3 \pmod{4}</M></Alt>
@@ -230,9 +230,9 @@ return a quadric of a particular type as follows:
    <Alt Only="LaTeX">\makecell[cl]{<M>X_0^2 + X_0X_1 + dX_1^2 + X_2X_3 + \ldots + X_{n-1}X_n</M>,\\ <M>\mathrm{Tr}(d)=1</M>}</Alt>
    <Alt Only="HTML MathJax"><M>X_0^2 + X_0X_1 + dX_1^2 + X_2X_3 + \ldots + X_{n-1}X_n</M>, <M>\mathrm{Tr}(d)=1</M></Alt>
    <Alt Only="HTML noMathJax">X&lt;sub>0&lt;/sub>&lt;sup>2&lt;/sup> + X&lt;sub>0&lt;/sub>X&lt;sub>1&lt;/sub> +
-	 d X&lt;sub>1&lt;/sub>&lt;sup>2&lt;/sup> +  X&lt;sub>2&lt;/sub> 
-	 X&lt;sub>3&lt;/sub> + ... + X&lt;sub>n-1&lt;/sub>X&lt;sub>n&lt;/sub>
-	 , Tr(d) = 1</Alt>
+     d X&lt;sub>1&lt;/sub>&lt;sup>2&lt;/sup> +  X&lt;sub>2&lt;/sub> 
+     X&lt;sub>3&lt;/sub> + ... + X&lt;sub>n-1&lt;/sub>X&lt;sub>n&lt;/sub>
+     , Tr(d) = 1</Alt>
    </Item><Item>even</Item><Item>odd</Item><Item>"elliptic", "-", or "-1"</Item></Row>
 <HorLine/>
 </Table>
@@ -415,7 +415,7 @@ A <E>Veronese variety</E> in <Package>FinInG</Package> is a projective algebraic
 <Alt Not="HTML"><M>(x_0,x_1,\ldots,x_n)\mapsto (x_0^2,x_0x_1,\ldots,x_0x_n,x_1^2,x_1x_2,\ldots,x_1x_n,\ldots,x_n^2)</M></Alt><Alt Only="HTML">(x&lt;sub>0&lt;/sub>,x&lt;sub>1&lt;/sub>,...,x&lt;sub>n&lt;/sub>)&#8594;
 (x&lt;sub>0&lt;/sub>&lt;sup>2&lt;/sup>,x&lt;sub>0&lt;/sub>x&lt;sub>1&lt;/sub>,...,x&lt;sub>0&lt;/sub>x&lt;sub>n&lt;/sub>,x&lt;sub>1&lt;/sub>&lt;sup>2&lt;/sup>,x&lt;sub>1&lt;/sub>x&lt;sub>2&lt;/sub>,...,x&lt;sub>1&lt;/sub>x&lt;sub>n&lt;/sub>,...,x&lt;sub>n&lt;/sub>&lt;sup>2&lt;/sup>)
 </Alt>
-		
+        
     </Description>
 </ManSection>
 <ManSection>
@@ -438,8 +438,8 @@ A <E>Veronese variety</E> in <Package>FinInG</Package> is a projective algebraic
         When a Veronese variety <A>vv</A> is given as input, the operation returns the associated Veronese map.
     <Example>
 <#Include SYSTEM "../examples/include/varieties_veronese.include"> 
-	</Example>
-	</Description>
+    </Example>
+    </Description>
 </ManSection>
 
 
@@ -485,7 +485,7 @@ A <E>Grassmann variety</E> in <Package>FinInG</Package> is a projective algebrai
         The argument <A>pg</A> is a projective space defined over a finite field, say <M>PG(n,q)</M>, and argument <A>k</A> is an integer (<M>k</M> at least <M>1</M> and at most <M>n-2</M>), and denotes the projective dimension determining the Grassmann Variety. The operation also takes as input the set <A>subspaces</A> of subspaces of a projective space, or the dimension <A>k</A>, the dimension <A>n</A> and the size <A>q</A> of the finite field (<M>k</M> at least <M>1</M> and at most <M>n-2</M>).
        The operation returns a function with domain the set of subspaces of dimension <M>k</M> in the <M>n</M>-dimensional projective space over <M>GF(q)</M>, and image the set of points of the Grassmann variety (<Ref Oper="PointsOfGrassmannVariety"/>).
        When a Grassmann variety <A>gv</A> is given as input, the operation returns the associated Grassmann map.
-	</Description>
+    </Description>
 </ManSection>
 
 

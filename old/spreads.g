@@ -17,7 +17,7 @@ two := Union(Filtered(partialspreads, i -> Size(i) = 1));;
 good26s := Filtered(26s, x->IsPartialSpread(Union(x, two)));;
 spreads := List(good26s, x->Union(x, two));;
 
-## There will be 5 spreads: two Hering spreads, two Albert twisted field, 
+## There will be 5 spreads: two Hering spreads, two Albert twisted field,
 ## and the regular spread.
 
 for s in spreads do

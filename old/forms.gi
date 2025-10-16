@@ -9,7 +9,7 @@
 ##  Copyright 2006 University of Western Australia
 ##                 Lehrstuhl D fuer Mathematik
 ##
-##  Implementation stuff for sesquilinear and quadratic 
+##  Implementation stuff for sesquilinear and quadratic
 ##  forms in a polar space.
 ##
 #############################################################################
@@ -33,17 +33,17 @@ InstallMethod( MakeBlockHyperbolicPair,
         c1 := id[2*i-1];
         while c1*m*c1 <> o or ForAny(pairs, x-> c1*m*x <> o) do
           c1 := Random(v);
-        od; 
-      
+        od;
+
       ## Find t.i. c2 which is linearly indepent to c1
 
         c2 := Random(v);
-        while c2*m*c2 <> o or Rank([c1,c2]) < 2 or c1*m*c2 = o 
+        while c2*m*c2 <> o or Rank([c1,c2]) < 2 or c1*m*c2 = o
               or ForAny(pairs, x-> c2*m*x <> o) do
               c2 := Random(v);
         od;
 
-      ## normalise 
+      ## normalise
         c2 := c2/(c1*m*c2);
         pairs := Concatenation(pairs, [c1,c2]);
     od;
@@ -51,19 +51,19 @@ InstallMethod( MakeBlockHyperbolicPair,
     return pairs;
   end );
 
-InstallMethod( WittIndex, [IsSesquilinearForm], 
+InstallMethod( WittIndex, [IsSesquilinearForm],
   function( m )
     local type, d, i;
     type := m!.type;
     d := Size(m!.matrix);
-    if type = "symplectic" or 
-      type = "hyperbolic" or 
+    if type = "symplectic" or
+      type = "hyperbolic" or
       (type = "hermitian" and IsEvenInt(d))
           then i := d/2;
-    elif type = "parabolic" or 
-        (type = "hermitian" and IsOddInt(d)) 
+    elif type = "parabolic" or
+        (type = "hermitian" and IsOddInt(d))
             then i := (d-1)/2;
-    else i := d/2 - 1; 
+    else i := d/2 - 1;
     fi;
     return i;
   end);
@@ -72,14 +72,14 @@ InstallMethod( WittIndex, [IsSesquilinearForm],
 InstallMethod( ChangeFormToCanonicalModuloGerm, [IsSesquilinearForm],
 
   function( m )
-    return MakeBlockHyperbolicPair(m!.matrix, m!.basefield, WittIndex(m)); 
+    return MakeBlockHyperbolicPair(m!.matrix, m!.basefield, WittIndex(m));
   end );
 
 InstallMethod( ChangeFormToCanonical, [IsSesquilinearForm],
 
 ## This operation returns an isometry g such that g m g^T is
 ## the form arising from the block diagonal matrix
-## with each block equal to J=[[0,1],[+-1,0]]. 
+## with each block equal to J=[[0,1],[+-1,0]].
 
 ## this works modular the germ for the moment
 
@@ -90,15 +90,15 @@ InstallMethod( ChangeFormToCanonical, [IsSesquilinearForm],
     d := Size(m!.matrix);
     f := m!.basefield;
 
-    if IsEvenInt(d) and WittIndex = d/2 then 
+    if IsEvenInt(d) and WittIndex = d/2 then
       basechange :=  ChangeFormToCanonicalModuloGerm(m);
-    elif IsOddInt(d) then 
+    elif IsOddInt(d) then
       basechange :=  ChangeFormToCanonicalModuloGerm(m);
 
       ## Here we find an extra vector which is orthogonal to
       ## the hyperbolic pairs we have already obtained. Note
       ## that we are only changing form up to similarity.
-      
+
       o := Zero(f);
       v := f^d;
       c := Random( v );
@@ -107,24 +107,24 @@ InstallMethod( ChangeFormToCanonical, [IsSesquilinearForm],
         c:= Random( v );
       od;
       Add(basechange, c);
-    else 
+    else
 
       ## In this case, we need to find two vectors
 
-      basechange :=  ChangeFormToCanonicalModuloGerm(m);       
+      basechange :=  ChangeFormToCanonicalModuloGerm(m);
       o := Zero(f);
       v := f^d;
-    #  c := Random( v ); 
+    #  c := Random( v );
     #  while ForAny(basechange, x -> c * mm * x <> o) do
     #    c:= Random( v );
     #  od;
     fi;
-    
+
     return basechange;
 
   end );
 
-InstallMethod( MatrixToSesquilinearForm, 
+InstallMethod( MatrixToSesquilinearForm,
   [ IsMatrix and IsFFECollColl, IsField, IsString ],
   function( m, f, s )
     local newm;
@@ -145,7 +145,7 @@ InstallMethod( MatrixToSesquilinearForm,
 # Display methods:
 #############################################################################
 
-InstallMethod( ViewObj, 
+InstallMethod( ViewObj,
   [ IsHermitianForm ],
   function( f )
     Print("< hermitian form >");
@@ -165,7 +165,7 @@ InstallMethod( Display,
    end);
 
 
-InstallMethod( ViewObj, 
+InstallMethod( ViewObj,
   [ IsQuadraticForm ],
   function( f )
     Print("< quadratic form >");
@@ -185,7 +185,7 @@ InstallMethod( Display,
   end );
 
 
-InstallMethod( ViewObj, 
+InstallMethod( ViewObj,
   [ IsBilinearForm ],
   function( f )
     Print("< bilinear form >");

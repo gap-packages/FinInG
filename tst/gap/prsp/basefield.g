@@ -1,4 +1,4 @@
-#base field 
+#base field
 ps := ProjectiveSpace(3,81);
 BaseField(ps);
 ps := PG(1,2^16);

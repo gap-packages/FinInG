@@ -34,7 +34,7 @@ n := 1;
 
 ps1 := ParabolicQuadric(2*n,q^(2*a));
 ps2 := EllipticQuadric(2*a*(2*n+1)-1,q);
-#pts := AsList(Points(ps1));    #bug with AsList 
+#pts := AsList(Points(ps1));    #bug with AsList
 pts := List(Points(ps1));;
 em := NaturalEmbeddingByFieldReduction(ps1,ps2,false);
 Set(List(pts,x->x^em in ps2));
@@ -45,7 +45,7 @@ n := 1;
 
 ps1 := ParabolicQuadric(2*n,q^(2*a));
 ps2 := EllipticQuadric(2*a*(2*n+1)-1,q);
-#pts := AsList(Points(ps1));    #bug with AsList 
+#pts := AsList(Points(ps1));    #bug with AsList
 pts := List(Points(ps1));;
 em := NaturalEmbeddingByFieldReduction(ps1,ps2,false);
 Set(List(pts,x->x^em in ps2));
@@ -57,7 +57,7 @@ n := 1;
 
 ps1 := ParabolicQuadric(2*n,q^(2*a));
 ps2 := EllipticQuadric(2*a*(2*n+1)-1,q);
-#pts := AsList(Points(ps1));    #bug with AsList 
+#pts := AsList(Points(ps1));    #bug with AsList
 pts := List(Points(ps1));;
 em := NaturalEmbeddingByFieldReduction(ps1,ps2,false);
 Set(List(pts,x->x^em in ps2));
@@ -68,7 +68,7 @@ n := 1;
 
 ps1 := ParabolicQuadric(2*n,q^(2*a));
 ps2 := EllipticQuadric(2*a*(2*n+1)-1,q);
-#pts := AsList(Points(ps1));    #bug with AsList 
+#pts := AsList(Points(ps1));    #bug with AsList
 pts := List(Points(ps1));;
 em := NaturalEmbeddingByFieldReduction(ps1,ps2,false);
 Set(List(pts,x->x^em in ps2));

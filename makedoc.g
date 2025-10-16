@@ -1,6 +1,6 @@
 ##  this creates the documentation, needs: GAPDoc package, latex, pdflatex,
 ##  mkindex, dvips
-##  
+##
 ##  Call this with GAP.
 ##  We will use PackageInfo to find fining's path.
 

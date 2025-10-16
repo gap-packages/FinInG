@@ -8,12 +8,12 @@
 ##                                                            Michel Lavrauw
 ##                                                           Max Neunhoeffer
 ##
-##  Copyright 2018	Colorado State University
+##  Copyright 2018  Colorado State University
 ##                  Sabancı Üniversitesi
-##					Università degli Studi di Padova
-##					Universiteit Gent
-##					University of St. Andrews
-##					University of Western Australia
+##                  Università degli Studi di Padova
+##                  Universiteit Gent
+##                  University of St. Andrews
+##                  University of Western Australia
 ##                  Vrije Universiteit Brussel
 ##
 ##
@@ -43,7 +43,7 @@ DeclareRepresentation( "IsParallelClassOfAffineSpaceRep", IsElementsOfIncidenceG
 
 DeclareCategoryCollections("IsSubspaceOfAffineSpace");
 
-BindGlobal( "SoASFamily", 
+BindGlobal( "SoASFamily",
   NewFamily( "SoASFamily", IsSubspaceOfAffineSpace, IsSubspaceOfAffineSpace));
 BindGlobal( "SoASCollFamily", CollectionsFamily(SoASFamily) );
 
@@ -60,11 +60,11 @@ DeclareOperation( "VectorSpaceTransversal", [IsVectorSpace, IsFFECollColl]);
 DeclareOperation( "VectorSpaceTransversalElement", [IsVectorSpace, IsFFECollColl, IsVector]);
 
 #############################################################################
-# Flags of affine spaces 
+# Flags of affine spaces
 #############################################################################
 DeclareCategory( "IsFlagOfAffineSpace", IsFlagOfIncidenceGeometry );
 
-BindGlobal( "FlagsOfAS", NewFamily( "FlagsOfASFamily", IsObject ));  
+BindGlobal( "FlagsOfAS", NewFamily( "FlagsOfASFamily", IsObject ));
 
 BindGlobal( "IsFlagOfASType", NewType( FlagsOfAS,
                                     IsFlagOfAffineSpace and IsFlagOfIncidenceStructureRep) );
@@ -77,7 +77,7 @@ BindGlobal( "IsFlagOfASType", NewType( FlagsOfAS,
 
 DeclareOperation( "AffineSpace", [IsPosInt, IsField] );
 DeclareOperation( "AffineSpace", [IsPosInt, IsPosInt] );
-DeclareSynonym( "AG", AffineSpace ); 
+DeclareSynonym( "AG", AffineSpace );
 DeclareOperation( "Hyperplanes", [IsAffineSpace] );
 
 

@@ -31,35 +31,35 @@ DeclareCategory( "IsHermitianForm", IsForm );
 DeclareCategoryCollections( "IsHermitianForm" );
 
 
-BindGlobal( "QuadraticFormFamily", 
-            NewFamily( "QuadraticFormFamily", IsObject, IsQuadraticForm ) );  
+BindGlobal( "QuadraticFormFamily",
+            NewFamily( "QuadraticFormFamily", IsObject, IsQuadraticForm ) );
 BindGlobal( "QuadraticFormCollFamily", CollectionsFamily(QuadraticFormFamily) );
-BindGlobal( "QuadraticFormType", NewType( QuadraticFormFamily, 
+BindGlobal( "QuadraticFormType", NewType( QuadraticFormFamily,
                                     IsQuadraticForm and IsFormRep) );
 
 
-BindGlobal( "SesquilinearFormFamily", 
-            NewFamily( "SesquilinearFormFamily", IsObject, IsSesquilinearForm ) );	
+BindGlobal( "SesquilinearFormFamily",
+            NewFamily( "SesquilinearFormFamily", IsObject, IsSesquilinearForm ) );
 BindGlobal( "SesquilinearFormCollFamily", CollectionsFamily(SesquilinearFormFamily) );
-BindGlobal( "SesquilinearFormType", NewType( SesquilinearFormFamily, 
+BindGlobal( "SesquilinearFormType", NewType( SesquilinearFormFamily,
                                     IsSesquilinearForm and IsFormRep) );
 
-BindGlobal( "HermitianFormFamily", 
-            NewFamily( "HermitianFormFamily", IsObject, IsHermitianForm ) );	    
+BindGlobal( "HermitianFormFamily",
+            NewFamily( "HermitianFormFamily", IsObject, IsHermitianForm ) );
 BindGlobal( "HermitianFormCollFamily", CollectionsFamily(HermitianFormFamily) );
-BindGlobal( "HermitianFormType", NewType( HermitianFormFamily, 
+BindGlobal( "HermitianFormType", NewType( HermitianFormFamily,
                                     IsHermitianForm and IsFormRep) );
 
 
 #############################################################################
 # Constructor operations:
 #############################################################################
-				    
-DeclareOperation( "FormByMatrix", 
+
+DeclareOperation( "FormByMatrix",
                       [IsMatrix and IsFFECollColl, IsField, IsString] );
 DeclareOperation( "BaseChange", [IsForm] );
 
-DeclareOperation( "MatrixToSesquilinearForm", 
+DeclareOperation( "MatrixToSesquilinearForm",
                     [ IsMatrix and IsFFECollColl, IsField, IsString ] );
 
 DeclareOperation( "ChangeFormToCanonical", [IsForm] );

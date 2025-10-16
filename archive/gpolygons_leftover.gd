@@ -40,7 +40,7 @@
 
 
 #############################################################################
-# Operations and functions 
+# Operations and functions
 #############################################################################
 
 
@@ -57,7 +57,7 @@
 #---------------------
 ## obselete operations
 # DeclareOperation( "EGQByqClan", [ IsFFECollCollColl, IsField and IsFinite ]);
-# DeclareOperation( "KantorFamilyByqClan", [ IsFFECollCollColl, IsField and IsFinite ]); 
+# DeclareOperation( "KantorFamilyByqClan", [ IsFFECollCollColl, IsField and IsFinite ]);
 # DeclareOperation( "BLTSetByqClan", [ IsFFECollCollColl, IsField and IsFinite ]);
 #---------------------
 

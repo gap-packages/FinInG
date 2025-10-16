@@ -15,5 +15,5 @@ sub := Random(Hyperplanes(ps));
 g := ProjectiveElationGroup(sub);
 Order(g);
 Transitivity(g,Difference(Points(ps),Points(sub)),OnProjSubspaces);
-StructureDescription(g); 
+StructureDescription(g);
 quit;
