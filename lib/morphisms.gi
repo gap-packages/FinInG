@@ -3509,7 +3509,7 @@ InstallMethod( NaturalDualityHermitian,
 		id := IdentityMat(4,f);
 		id6 := IdentityMat(6,f);
 		special := List([1..6],i->id6[7-i]);
-		i := Log(q,Characteristic(f));
+		i := DegreeOverPrimeField(f)/2;
 		theta := FrobeniusAutomorphism(f)^i;
 
 		if IsCanonicalPolarSpace( h ) then
