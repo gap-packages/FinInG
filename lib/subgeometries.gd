@@ -8,12 +8,12 @@
 ##                                                            Michel Lavrauw
 ##                                                           Max Neunhoeffer
 ##
-##  Copyright 2020	Colorado State University, Fort Collins
-##					Università degli Studi di Padova
-##					University of St. Andrews
-##					University of Western Australia, Perth
+##  Copyright 2020  Colorado State University, Fort Collins
+##                  Università degli Studi di Padova
+##                  University of St. Andrews
+##                  University of Western Australia, Perth
 ##                  Vrije Universiteit Brussel
-##                 
+##
 ##
 ##  Declaration stuff for subgeometries of a projective spaces.
 ##

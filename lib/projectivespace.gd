@@ -8,14 +8,14 @@
 ##                                                            Michel Lavrauw
 ##                                                           Max Neunhoeffer
 ##
-##  Copyright 2018	Colorado State University
+##  Copyright 2018  Colorado State University
 ##                  Sabancı Üniversitesi
-##					Università degli Studi di Padova
-##					Universiteit Gent
-##					University of St. Andrews
-##					University of Western Australia
+##                  Università degli Studi di Padova
+##                  Universiteit Gent
+##                  University of St. Andrews
+##                  University of Western Australia
 ##                  Vrije Universiteit Brussel
-##                 
+##
 ##
 ##  Declaration stuff for projective spaces.
 ##
@@ -39,23 +39,23 @@ DeclareCategory( "IsShadowSubspacesOfProjectiveSpace", IsShadowElementsOfLieGeom
 
 DeclareRepresentation( "IsSubspacesOfProjectiveSpaceRep", IsElementsOfLieGeometryRep, [ "geometry", "type" ] );
 DeclareRepresentation( "IsAllSubspacesOfProjectiveSpaceRep", IsAllElementsOfLieGeometryRep, [ "geometry", "type" ] );
-     	       
+
 DeclareRepresentation( "IsShadowSubspacesOfProjectiveSpaceRep", IsShadowElementsOfLieGeometryRep, [ "geometry", "type", "inner", "outer", "factorspace" ]);
 
 # The following allows us to have recognisable lists of subspaces
 # from projective spaces etc.
 
 DeclareCategoryCollections("IsSubspaceOfProjectiveSpace");
-BindGlobal( "SoPSFamily", 
+BindGlobal( "SoPSFamily",
   NewFamily( "SoPSFamily", IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace));
 BindGlobal( "SoPSCollFamily", CollectionsFamily(SoPSFamily) );
 
 
-BindGlobal( "FlagsOfPS", NewFamily( "FlagsOfPSFamily", IsObject ));  
+BindGlobal( "FlagsOfPS", NewFamily( "FlagsOfPSFamily", IsObject ));
 
 BindGlobal( "IsFlagOfPSType", NewType( FlagsOfPS,
                                     IsFlagOfProjectiveSpace and IsFlagOfIncidenceStructureRep) );
-									
+
 #############################################################################
 #
 # Constructor operations, and attributes
@@ -96,7 +96,7 @@ DeclareOperation( "IsIncident", [IsProjectiveSpace, IsProjectiveSpace]);
 DeclareSynonymAttr( "HomographyGroup", ProjectivityGroup );
 DeclareSynonymAttr( "SpecialHomographyGroup", SpecialProjectivityGroup );
 
-DeclareSynonym( "PG", ProjectiveSpace ); 
+DeclareSynonym( "PG", ProjectiveSpace );
 
 DeclareOperation( "Hyperplanes", [IsProjectiveSpace] );
 
@@ -105,17 +105,17 @@ DeclareOperation( "Hyperplanes", [IsProjectiveSpace] );
 # higher order filers (e.g., IsCollection)
 #
 #DeclareAttribute( "Size", IsSubspacesOfProjectiveSpace);
-  
+
 #############################################################################
 #
 # Some user operations.
 #
 #############################################################################
 
-DeclareOperation( "BaerSublineOnThreePoints", 
+DeclareOperation( "BaerSublineOnThreePoints",
   [ IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace] );
-DeclareOperation( "BaerSubplaneOnQuadrangle", 
-  [ IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace, 
+DeclareOperation( "BaerSubplaneOnQuadrangle",
+  [ IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace,
     IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace ] );
 
 #DeclareOperation("RandomSubspace",[IsVectorSpace,IsInt]); #is for vector spaces -> moves to liegeometry.gd
@@ -154,8 +154,8 @@ DeclareOperation( "ElationOfProjectiveSpace", [ IsSubspaceOfProjectiveSpace, IsS
 DeclareOperation( "ProjectiveElationGroup", [ IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace ] );
 DeclareOperation( "ProjectiveElationGroup", [ IsSubspaceOfProjectiveSpace ] );
 
-DeclareOperation( "HomologyOfProjectiveSpace", [ IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace, 
-	IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace ] );
+DeclareOperation( "HomologyOfProjectiveSpace", [ IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace,
+    IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace ] );
 DeclareOperation( "ProjectiveHomologyGroup", [ IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace ] );
 
 #############################################################################

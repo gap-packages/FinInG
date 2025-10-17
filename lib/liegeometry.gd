@@ -8,12 +8,12 @@
 ##                                                            Michel Lavrauw
 ##                                                           Max Neunhoeffer
 ##
-##  Copyright 2018	Colorado State University
+##  Copyright 2018  Colorado State University
 ##                  Sabancı Üniversitesi
-##					Università degli Studi di Padova
-##					Universiteit Gent
-##					University of St. Andrews
-##					University of Western Australia
+##                  Università degli Studi di Padova
+##                  Universiteit Gent
+##                  University of St. Andrews
+##                  University of Western Australia
 ##                  Vrije Universiteit Brussel
 ##
 ##
@@ -40,7 +40,7 @@ DeclareCategory( "IsElementsOfLieGeometry", IsElementsOfIncidenceGeometry );
 DeclareCategory( "IsAllElementsOfLieGeometry", IsAllElementsOfIncidenceGeometry );
 
 DeclareRepresentation( "IsAllElementsOfLieGeometryRep", IsAllElementsOfIncidenceStructureRep, [ "geometry", "type" ] );
-  
+
 DeclareRepresentation( "IsElementsOfLieGeometryRep", IsElementsOfIncidenceStructureRep, [ "geometry", "type" ] );
 
 DeclareCategory( "IsFlagOfLieGeometry", IsFlagOfIncidenceGeometry );
@@ -55,7 +55,7 @@ DeclareRepresentation( "IsShadowElementsOfLieGeometryRep", IsElementsOfIncidence
 
 DeclareOperation( "UnderlyingVectorSpace", [IsLieGeometry] );
 DeclareOperation( "UnderlyingVectorSpace", [IsElementOfLieGeometry] );
-DeclareOperation( "UnderlyingVectorSpace", [IsFlagOfLieGeometry]	); #came from projectivespaces.gd
+DeclareOperation( "UnderlyingVectorSpace", [IsFlagOfLieGeometry]    ); #came from projectivespaces.gd
 
 DeclareAttribute( "AmbientSpace", IsLieGeometry );
 DeclareAttribute( "AmbientSpace", IsElementOfLieGeometry );

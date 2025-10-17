@@ -1,22 +1,22 @@
 DeclareCategory( "IsStandardDualityOfVectorSpace", IsSPGeneralMapping);
 DeclareCategory( "IsStandardDualityOfProjectiveSpace", IsSPGeneralMapping);
-DeclareCategory( "IsProjGrpElWithFrobWithVSIsom", 
+DeclareCategory( "IsProjGrpElWithFrobWithVSIsom",
                  IsComponentObjectRep and IsMultiplicativeElementWithInverse );
 DeclareCategoryCollections( "IsProjGrpElWithFrobWithVSIsom" );
 InstallTrueMethod( IsGeneratorsOfMagmaWithInverses, IsProjGrpElWithFrobWithVSIsomCollection );
 
-DeclareRepresentation( "IsProjGrpElWithFrobWithVSIsomRep", IsProjGrpElWithFrobWithVSIsom, 
+DeclareRepresentation( "IsProjGrpElWithFrobWithVSIsomRep", IsProjGrpElWithFrobWithVSIsom,
 		       ["mat","fld","frob","vsisom"] );
 
-BindGlobal( "ProjElsWithFrobWithVSIsomFamily", 
+BindGlobal( "ProjElsWithFrobWithVSIsomFamily",
             NewFamily( "ProjElsWithFrobWithVSIsomFamily",IsObject,
-	                 IsProjGrpElWithFrobWithVSIsom) );  
+	                 IsProjGrpElWithFrobWithVSIsom) );
 BindGlobal( "ProjElsWithFrobWithVSIsomCollFamily",
             CollectionsFamily(ProjElsWithFrobWithVSIsomFamily) );
 
 BindGlobal( "ProjElsWithFrobWithVSIsomType",
-     NewType( ProjElsWithFrobWithVSIsomFamily, 
-              IsProjGrpElWithFrobWithVSIsom and 
+     NewType( ProjElsWithFrobWithVSIsomFamily,
+              IsProjGrpElWithFrobWithVSIsom and
 	      IsProjGrpElWithFrobWithVSIsomRep) );
 
 InstallTrueMethod( IsHandledByNiceMonomorphism, IsProjectiveGroupWithFrob );
@@ -30,17 +30,17 @@ DeclareSynonym( "IsProjGroupWithFrobWithVSIsom", IsGroup and IsProjGrpElWithFrob
 InstallTrueMethod( IsHandledByNiceMonomorphism, IsProjGroupWithFrobWithVSIsom );
 
 DeclareOperation( "ActionOnPointsHyperplanes", [IsProjGroupWithFrobWithVSIsom] );
-	      
+
 DeclareOperation( "ProjElWithFrobWithVSIsom",
-   [IsMatrix and IsFFECollColl, IsMapping, IsField] ); 
+   [IsMatrix and IsFFECollColl, IsMapping, IsField] );
 
 DeclareOperation( "ProjElWithFrobWithVSIsom",
    [IsMatrix and IsFFECollColl, IsMapping, IsField,
-   IsStandardDualityOfVectorSpace] ); 
+   IsStandardDualityOfVectorSpace] );
 
 DeclareOperation( "ProjElWithFrobWithVSIsom",
    [IsMatrix and IsFFECollColl, IsMapping, IsField,
-   IsGeneralMapping and IsSPGeneralMapping and IsOne] ); 
+   IsGeneralMapping and IsSPGeneralMapping and IsOne] );
 
 DeclareOperation( "ProjElsWithFrobWithVSIsom", [IsList, IsField] );
 

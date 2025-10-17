@@ -1,8 +1,8 @@
 # VectorSpaceToElement for subgeometries
 pg := PG(2,5^6);
-vecs := [ [ Z(5)^0, Z(5^6)^13972, Z(5^6)^11653 ], 
+vecs := [ [ Z(5)^0, Z(5^6)^13972, Z(5^6)^11653 ],
 [ Z(5)^0, Z(5^6)^9384, Z(5^6)^1372 ],
-[ Z(5)^0, Z(5^6)^14447, Z(5^6)^15032 ], 
+[ Z(5)^0, Z(5^6)^14447, Z(5^6)^15032 ],
 [ Z(5)^0, Z(5^6)^8784, Z(5^6)^10360 ] ];;
 frame := List(vecs,x->VectorSpaceToElement(pg,x));
 sub := SubgeometryOfProjectiveSpaceByFrame(pg,frame,5^3);

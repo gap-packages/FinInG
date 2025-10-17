@@ -13,13 +13,13 @@ f := First(combs, x -> ForAll(Combinations(x,3), y->
        IsTrivial(Intersection(DoubleCoset(y[1],One(g),y[2]), y[3]))));
 
 ## tangent spaces
-fstar := List(f, x -> First(subs9, y -> IsSubgroup(y,x) and 
+fstar := List(f, x -> First(subs9, y -> IsSubgroup(y,x) and
            ForAll(Difference(f,[x]), z->IsTrivial(Intersection(z,y)))));
 
 ## the kantor family is (g, f, fstar)
 IsKantorFamily( g, f, fstar );
 egq := EGQByKantorFamily(g, f, fstar);
-coll := ElationGroup(egq); 
+coll := ElationGroup(egq);
 points := Points( egq );
 p:=Random(points);
 x:=Random(coll);

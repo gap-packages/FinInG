@@ -22,14 +22,14 @@ InstallMethod( BilinearFormByMatrix, "for a ffe matrix and a field",
        el := rec( matrix := m, basefield := f, type := "symplectic" );
        Objectify(NewType( BilinearFormFamily ,  IsFormRep),  el);
 	   return el;
-    elif (IsOrthogonalMatrix(m) and IsOddInt(Size(f))) then 
+    elif (IsOrthogonalMatrix(m) and IsOddInt(Size(f))) then
        el := rec( matrix := m, basefield := f, type := "orthogonal" );
        Objectify(NewType( BilinearFormFamily ,  IsFormRep),  el);
  	   return el;
     elif (IsOrthogonalMatrix(m) and IsEvenInt(Size(f))) then
        el := rec( matrix := m, basefield := f, type := "pseudo" );
        Objectify(NewType( BilinearFormFamily ,  IsFormRep),  el);
- 	   return el; 
+ 	   return el;
     else
        Error("Invalid Gram matrix\n");
     fi;
@@ -56,7 +56,7 @@ InstallMethod( QuadraticFormByMatrix, "for a ffe matrix and a field",
 InstallMethod( HermitianFormByMatrix, "for a ffe matrix and a field",
   [IsMatrix and IsFFECollColl, IsField and IsFinite],
   function( m, f )
-    local el;    
+    local el;
     if not (m[1][1] in f) then
       Error("<m> is not a matrix over <f>");
     fi;
@@ -69,7 +69,7 @@ InstallMethod( HermitianFormByMatrix, "for a ffe matrix and a field",
        return el;
     else
        Error("Given matrix does not define a hermitian form\n" );
-    fi;   
+    fi;
   end );
 
 #############################################################################
@@ -99,7 +99,7 @@ InstallMethod( RadicalOfFormMat, [IsQuadraticForm],
     gf := f!.basefield;
     d := Size(m);
     null := NullspaceMat( m );
-    if IsEvenInt(Size(gf)) then 
+    if IsEvenInt(Size(gf)) then
       null := Filtered(null, x -> IsZero(x^f)); #checks each vector for f(v)=0
     fi;
     return null;
@@ -161,7 +161,7 @@ InstallMethod(OrthogonalSubspaceMat,
 end );
 
 #this method computes the base of the subspace orthogonal to a given one wrt a
-#given bil form 
+#given bil form
 InstallMethod(OrthogonalSubspaceMat,
   "for a form and a basis of a subspace",
   [IsBilinearForm, IsMatrix],
@@ -176,7 +176,7 @@ InstallMethod(OrthogonalSubspaceMat,
 end );
 
 #this method computes the base of the subspace orthogonal to a vector wrt a
-#given hermitian form 
+#given hermitian form
 InstallMethod(OrthogonalSubspaceMat,
   "for a form and a vector",
   [IsHermitianForm, IsVector and IsFFECollection],
@@ -193,7 +193,7 @@ InstallMethod(OrthogonalSubspaceMat,
 end );
 
 #this method computes the base of the subspace orthogonal to a given one wrt a
-#given hermitian form 
+#given hermitian form
 InstallMethod(OrthogonalSubspaceMat,
   "for a form and a basis of a subspace",
   [IsHermitianForm, IsMatrix],
@@ -223,7 +223,7 @@ InstallMethod(IsIsotropicVector,
 end );
 
 #this method returns true if and only if sub is a basis of a t.i. subspace wrt a
-#sesquilinear f. 
+#sesquilinear f.
 InstallMethod(IsTotallyIsotropicSubspace,
   "for a form and a basis of a subspace",
   [IsSesquilinearForm, IsMatrix],
@@ -233,9 +233,9 @@ InstallMethod(IsTotallyIsotropicSubspace,
     mat := f!.matrix;
     if f!.type = "hermitian" then
        return IsZero( (sub^CompanionAutomorphism( f )) * mat * TransposedMat(sub) );
-    else 
-       return IsZero( sub * mat * TransposedMat(sub) ); 
-    fi;  
+    else
+       return IsZero( sub * mat * TransposedMat(sub) );
+    fi;
   #local osub,span;
   #osub := OrthogonalSubspaceMat(f,sub);
   #span := Concatenation(sub,osub);
@@ -248,7 +248,7 @@ end );
 #############################################################################
 
 #this method computes the base of the subspace orthogonal to a given one wrt a
-#given quadratic form 
+#given quadratic form
 InstallMethod(OrthogonalSubspaceMat,
   "for a form and a vector",
   [IsQuadraticForm, IsVector and IsFFECollection],
@@ -265,9 +265,9 @@ InstallMethod(OrthogonalSubspaceMat,
   "for a form and a basis of a subspace",
   [IsQuadraticForm, IsMatrix],
   function(f,sub)
-  
-  
-  
+
+
+
   local bilf;
   bilf := AssociatedBilinearForm(f);
   return OrthogonalSubspaceMat(bilf,sub); #note that this call will perform dim

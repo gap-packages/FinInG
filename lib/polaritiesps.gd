@@ -8,12 +8,12 @@
 ##                                                            Michel Lavrauw
 ##                                                           Max Neunhoeffer
 ##
-##  Copyright 2018	Colorado State University
+##  Copyright 2018  Colorado State University
 ##                  Sabancı Üniversitesi
-##					Università degli Studi di Padova
-##					Universiteit Gent
-##					University of St. Andrews
-##					University of Western Australia
+##                  Università degli Studi di Padova
+##                  Universiteit Gent
+##                  University of St. Andrews
+##                  University of Western Australia
 ##                  Vrije Universiteit Brussel
 ##
 ##
@@ -41,7 +41,7 @@ DeclareCategory( "IsPolarityOfProjectiveSpace", IsProjGrpElWithFrobWithPSIsomRep
 DeclareRepresentation( "IsPolarityOfProjectiveSpaceRep", IsProjGrpElWithFrobWithPSIsomRep, ["mat","fld","frob","psisom", "form"] );
 
 #############################################################################
-# polarities are equivalent with sesquilinear forms. 
+# polarities are equivalent with sesquilinear forms.
 # This explains the basic constructor
 #############################################################################
 
@@ -61,7 +61,7 @@ DeclareAttribute( "SesquilinearForm", IsPolarityOfProjectiveSpace );
 
 
 #############################################################################
-# operations and attributes for polarities of projective space. 
+# operations and attributes for polarities of projective space.
 #############################################################################
 
 DeclareProperty( "IsHermitianPolarityOfProjectiveSpace", IsPolarityOfProjectiveSpace );

@@ -23,9 +23,9 @@ DeclareProperty( "IsParabolicForm", IsSesquilinearForm );
 DeclareProperty( "IsEllipticForm", IsSesquilinearForm );
 DeclareProperty( "IsHermitianForm", IsSesquilinearForm);
 
-DeclareOperation( "MatrixToSesquilinearForm", 
+DeclareOperation( "MatrixToSesquilinearForm",
                     [ IsMatrix and IsFFECollColl, IsField, IsString ] );
 DeclareOperation( "ChangeFormToCanonical", [IsSesquilinearForm] );
 DeclareOperation( "ChangeFormToCanonicalModuloGerm", [IsSesquilinearForm] );
-DeclareOperation( "MakeBlockHyperbolicPair", 
+DeclareOperation( "MakeBlockHyperbolicPair",
                     [IsMatrix and IsFFECollColl, IsField, IsPosInt] );

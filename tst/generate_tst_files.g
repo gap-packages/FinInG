@@ -134,7 +134,7 @@ input_stream := InputTextFile(part2);
 AppendTo(o,ReadAll(input_stream));
 
 
-#old and unused stuff. 
+#old and unused stuff.
 
 #AppendTo(o,"TestMyPackage(\"fining\")");
 

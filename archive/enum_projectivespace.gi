@@ -5,7 +5,7 @@
 
 InstallGlobalFunction( FinInGFieldNumbering,
 	function(a,q)
-	# returns the integer i+1 such that a=w^i, with w the 
+	# returns the integer i+1 such that a=w^i, with w the
 	# PrimitiveRoot(GF(q)); returns q if a=Zero(GF(q)).
 		local F;
 		F:=GF(q);
@@ -36,14 +36,14 @@ end);
 
 InstallMethod( Enumerator, [ IsSubspacesOfProjectiveSpace ],
   function( elms )
-  
+
   local pg,t,e,enum;
 
 	pg:=elms!.geometry;
 	t:=elms!.type;
-	
+
 	e:=enum_projective(pg,t);
-	
+
 	enum:=EnumeratorByFunctions(elms, rec(
 		NumberElement:=e!.NumberElement,
 		ElementNumber:=e!.ElementNumber,
@@ -68,11 +68,11 @@ InstallGlobalFunction( enum_projective,
 	n:=pg!.dimension+1;
 	F:=pg!.basefield;
 	q:=Size(F);
-	
+
 	if t=1 then
-	
+
 		enum:=EnumeratorByFunctions(elms,rec(
-		
+
 			NumberElement:=function(point)
 			# This function labels the points of a projective space
 			local v,i,num,w,flag,coefs,x,j;
@@ -81,19 +81,19 @@ InstallGlobalFunction( enum_projective,
 			# First we find the first nonzero coordinate
 			i:=0;
 			num:=0;
-			repeat i:=i+1; 
+			repeat i:=i+1;
 			if v[i] = One(GF(q)) then
 				flag:=true;
 			else # this means v[i] = Zero(GF(q))
 				num:=num+q^(n-i); # for each 0 we add q^(n-i) to the number
-			fi;	
+			fi;
 			until flag=true;
 			if i=n then return (q^n-1)/(q-1);
 			else
 				# with each coordinate associate the FinInGFieldNumbering minus one,
 				# and use this as a coefficient in the q-ary expansion
 				coefs:=List(v,x->FinInGFieldNumbering(x,q)-1);
-				# we substract one because we want the coefs to take values from [0..q-1]		
+				# we substract one because we want the coefs to take values from [0..q-1]
 				return num+Sum([i+1..n],j->coefs[j]*q^(n-j))+1;
 				# we have to add one because we want the output to have values [1..(q^n-1)/(q-1)]
 			fi;

@@ -39,15 +39,15 @@ InstallTrueMethod( IsGeneratorsOfMagmaWithInverses, IsProjGrpElWithFrobWithPSIso
 
 DeclareRepresentation( "IsProjGrpElWithFrobWithPSIsomRep", IsProjGrpElWithFrobWithPSIsom, ["mat","fld","frob","psisom"] );
 
-BindGlobal( "ProjElsWithFrobWithPSIsomFamily", 
+BindGlobal( "ProjElsWithFrobWithPSIsomFamily",
             NewFamily( "ProjElsWithFrobWithPSIsomFamily",IsObject,
-	                 IsProjGrpElWithFrobWithPSIsom ) );  
+	                 IsProjGrpElWithFrobWithPSIsom ) );
 BindGlobal( "ProjElsWithFrobWithPSIsomCollFamily",
             CollectionsFamily(ProjElsWithFrobWithPSIsomFamily) );
 
 BindGlobal( "ProjElsWithFrobWithPSIsomType",
-     NewType( ProjElsWithFrobWithPSIsomFamily, 
-              IsProjGrpElWithFrobWithPSIsom and 
+     NewType( ProjElsWithFrobWithPSIsomFamily,
+              IsProjGrpElWithFrobWithPSIsom and
 	      IsProjGrpElWithFrobWithPSIsomRep ) );
 
 InstallTrueMethod( IsHandledByNiceMonomorphism, IsProjectiveGroupWithFrob );
@@ -62,15 +62,15 @@ DeclareGlobalFunction( "OnProjSubspacesExtended" );
 
 DeclareOperation( "StandardDualityOfProjectiveSpace", [IsProjectiveSpace] );
 DeclareOperation( "IdentityMappingOfElementsOfProjectiveSpace", [IsProjectiveSpace] );
-DeclareOperation( "ActionOnAllPointsHyperplanes", [IsProjGroupWithFrobWithPSIsom] );    
+DeclareOperation( "ActionOnAllPointsHyperplanes", [IsProjGroupWithFrobWithPSIsom] );
 DeclareOperation( "ProjElWithFrobWithPSIsom",
-   [IsMatrix and IsFFECollColl, IsMapping, IsField] ); 
-DeclareOperation( "ProjElWithFrobWithPSIsom",
-   [IsMatrix and IsFFECollColl, IsMapping, IsField,
-   IsStandardDualityOfProjectiveSpace] ); 
+   [IsMatrix and IsFFECollColl, IsMapping, IsField] );
 DeclareOperation( "ProjElWithFrobWithPSIsom",
    [IsMatrix and IsFFECollColl, IsMapping, IsField,
-   IsGeneralMapping and IsSPGeneralMapping and IsOne] ); 
+   IsStandardDualityOfProjectiveSpace] );
+DeclareOperation( "ProjElWithFrobWithPSIsom",
+   [IsMatrix and IsFFECollColl, IsMapping, IsField,
+   IsGeneralMapping and IsSPGeneralMapping and IsOne] );
 DeclareOperation( "ProjElsWithFrobWithPSIsom", [IsList, IsField] );
 DeclareAttribute( "Dimension", IsProjGroupWithFrobWithPSIsom );
 DeclareProperty( "CanComputeActionOnPoints", IsProjGroupWithFrobWithPSIsom );

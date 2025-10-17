@@ -1,13 +1,13 @@
 ## In this example, we construct a 2-ovoid of W(3, q), q = 5.
 ## The construction is as follows:
 ## (1) We start with an elliptic quadric Q- lying in PG(3,q).
-## (2) We define a null polarity sigma such that at each point 
-## of Q, there is a unique self-polar tangent line (w.r.t sigma). 
-## (3) We use the two polarities to construct the 2-ovoid; 
-## the orthogonal polarity rho arising from Q- and the null 
+## (2) We define a null polarity sigma such that at each point
+## of Q, there is a unique self-polar tangent line (w.r.t sigma).
+## (3) We use the two polarities to construct the 2-ovoid;
+## the orthogonal polarity rho arising from Q- and the null
 ## polarity sigma.
 
-q := 5; 
+q := 5;
 pg := ProjectiveSpace(3, q);
 eq := EllipticQuadric(3, q);
 eqpoints := Points( eq );
@@ -41,4 +41,4 @@ g := CollineationGroup(w);
 stab := SetwiseStabilizer(g, OnProjSubspaces, twoovoid )!.setstab;
 StructureDescription(stab);
 
-# The group should be C2 x (C13 : C4) 
+# The group should be C2 x (C13 : C4)

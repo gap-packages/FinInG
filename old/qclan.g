@@ -1,4 +1,4 @@
-# Two ways to construct a flock quadrangle from a Kantor-Knuth semifield q-clan 
+# Two ways to construct a flock quadrangle from a Kantor-Knuth semifield q-clan
 
 A_t = [[t, 0], [0,-nt^sigma]]
 q odd, not prime

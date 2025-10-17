@@ -23,15 +23,15 @@ InstallMethod( FormByMatrix, "for a ffe matrix, a field and a string",
     if IsEvenInt(Size(f)) and
       (string = "elliptic" or string = "hyperbolic" or string = "parabolic") then
       Objectify(NewType( QuadraticFormFamily ,  IsFormRep),  el);
-    elif string = "hermitian" then 
+    elif string = "hermitian" then
       Objectify(NewType( HermitianFormFamily ,  IsFormRep),  el);
-    else 
+    else
       Objectify(NewType( SesquilinearFormFamily ,  IsFormRep),  el);
     fi;
     return el;
   end );
 
-InstallMethod( MatrixToSesquilinearForm, 
+InstallMethod( MatrixToSesquilinearForm,
   [ IsMatrix and IsFFECollColl, IsField, IsString ],
   function( m, f, s )
     return FormByMatrix(m, f, s);
@@ -60,7 +60,7 @@ InstallMethod( BaseChange, "for an hermitian form",
   [IsHermitianForm and IsFormRep],
   function(f)
     local m,n,q;
-    m := f!.matrix; 
+    m := f!.matrix;
     n := Length(m)-1;
     q := Size(f!.basefield);
   return BASE_REDUCTION3(m,n,q);
@@ -79,7 +79,7 @@ InstallMethod( ChangeFormToCanonical, [IsForm],
 # Viewing methods:
 #############################################################################
 
-InstallMethod( ViewObj, 
+InstallMethod( ViewObj,
   [ IsHermitianForm ],
   function( f )
     Print("< hermitian form >");
@@ -99,7 +99,7 @@ InstallMethod( Display,
    end);
 
 
-InstallMethod( ViewObj, 
+InstallMethod( ViewObj,
   [ IsQuadraticForm ],
   function( f )
     Print("< quadratic form >");
@@ -119,7 +119,7 @@ InstallMethod( Display,
   end );
 
 
-InstallMethod( ViewObj, 
+InstallMethod( ViewObj,
   [ IsSesquilinearForm ],
   function( f )
     Print("< sesquilinear form >");
@@ -166,7 +166,7 @@ InstallGlobalFunction(SUM_OF_SQUARES,
         stop := true;
       else
         i := i + 1;
-      fi;  
+      fi;
     until stop;
     return [v1,v2];
 end);
@@ -207,12 +207,12 @@ InstallGlobalFunction(REDUCE4,
     return P;
 end);
 
- 
+
 InstallGlobalFunction(DIFF_2_S,
     function(start,stop,n,q)
     local i,P;
     i := start;
-    P := IdentityMat(n,GF(q)); 
+    P := IdentityMat(n,GF(q));
     while i < stop do
       P[i][i] := 1/2*One(GF(q));
       P[i][i+1] := 1/2*One(GF(q));
@@ -235,7 +235,7 @@ InstallGlobalFunction(BASE_REDUCTION1,
     D := IdentityMat(nplus1,GF(q));
     row := 0;
     stop := false;
-    repeat       
+    repeat
 
     # We search for an element different from zero on
     # the main diagonal from row + 1 onwards
@@ -264,7 +264,7 @@ InstallGlobalFunction(BASE_REDUCTION1,
         i := 1 + row;
         dummy := false;
         while i <= n and dummy = false do
-          k := i + 1; 
+          k := i + 1;
           while k <= nplus1 and dummy = false do
             if A[i][k] = Zero(GF(q)) then
               k := k + 1;
@@ -306,7 +306,7 @@ InstallGlobalFunction(BASE_REDUCTION1,
         fi;
       fi;   # end if 2+row <= i and i <= nplus1 ... elif ... fi
 
-      #Er staat een niet nul element op de hoofddiagonaal, maak de rest nul      
+      #Er staat een niet nul element op de hoofddiagonaal, maak de rest nul
 
       if not stop then
         P := IdentityMat(nplus1,GF(q));
@@ -319,7 +319,7 @@ InstallGlobalFunction(BASE_REDUCTION1,
       fi;
     until row = n or stop;
 
-#Tel hoeveel variabelen er gebruikt zijn.    
+#Tel hoeveel variabelen er gebruikt zijn.
 
     if not stop then
       if A[nplus1][nplus1] <> Zero(GF(q)) then
@@ -361,7 +361,7 @@ InstallGlobalFunction(BASE_REDUCTION1,
     od; #einde while (not stop) and i < r do
     if LogFFE(A[r][r],Z(q)) mod 2 = 0 then
        s := s + 1;
-    fi; 
+    fi;
 
 #We gaan naar de vorm x_0^2 + ... + x_s^2 + v(x_s+1^2 + ... + x_r^2)
 #s"le.u.t:e.l:twee = 6
@@ -378,12 +378,12 @@ InstallGlobalFunction(BASE_REDUCTION1,
     D := P*D;
 
 #We gooien nu zoveel mogelijk niet kwadraten weg:
-    
+
     s := s - 1;
     r := r - 1;
-    
+
 #We schrijven eerst v=v1^2 + v2^2
-    
+
     dummy := SUM_OF_SQUARES(v,q);
     v1 := dummy[1];
     v2 := dummy[2];
@@ -432,7 +432,7 @@ InstallGlobalFunction(BASE_REDUCTION1,
         fi; #einde if r mod 2 = 0
       fi; #einde if (r-s) mod 2 = 0
     fi; #einde if not (s=-1 or r=s) then
-    
+
 #Naar standaardvormen:
 
     if r mod 2 <> 0 then
@@ -492,13 +492,13 @@ InstallGlobalFunction(BASE_REDUCTION1,
               P := REDUCE4(3,r+1,nplus1,q);
             else
               P := IdentityMat(nplus1,GF(q));
-            fi;  
+            fi;
             b := Z(q)^(LogFFE(-v,Z(q))/2);
             P[1][1] := 1/2;
             P[2][1] := 1/2;
             P[1][2] := -1/(2*b);
             P[2][2] := 1/(2*b);
-            D := P*D;              
+            D := P*D;
             if 1 < r then
               P := DIFF_2_S(3,r+1,nplus1,q);
               D := P*D;
@@ -564,8 +564,8 @@ InstallGlobalFunction(RESET,
       B[i][i] := t;
     od;
     A := A + B;
-    for i in [2..n] do  
-      for j in [1..i-1] do 
+    for i in [2..n] do
+      for j in [1..i-1] do
         A[i][j] := t;
       od;
     od;
@@ -598,7 +598,7 @@ end);
 
 InstallGlobalFunction(C1,
     function(q,h)
-    local i; 
+    local i;
     if h mod 2 = 0 then
       i := 1;
       while i <= h - 1 do
@@ -630,19 +630,19 @@ end);
 
 
 InstallGlobalFunction(BASE_REDUCTION2,
-    function(mat,n,q)  
+    function(mat,n,q)
     local A,r,w,row,dummy,i,j,h,D,P,t,a,b,c,d,e,s,
       zeros,posr,posk,nplus1,control;
 #n is de meetkundige dimensie!!!!!!
     nplus1 := n + 1;
-    r := nplus1;   
+    r := nplus1;
     row := 1;
     A := List(mat,ShallowCopy);
     D := IdentityMat(nplus1,GF(q));
     zeros := [];
     for i in [1..nplus1] do
       zeros[i] := Zero(GF(q));
-    od;      
+    od;
     h := Length(Factors(q));
     while row + 2 <= r do
       if A[row][row] <> Zero(GF(q)) then
@@ -659,7 +659,7 @@ InstallGlobalFunction(BASE_REDUCTION2,
 #Als er ergens een nul staat, ga ze halen
         if control then
           P := SWR(row,i,nplus1);
-          A := P*A*P;   
+          A := P*A*P;
           D := P*D;
           A := RESET(A,nplus1,q);
           #dummy := false;
@@ -672,11 +672,11 @@ InstallGlobalFunction(BASE_REDUCTION2,
             while j <= r and dummy do
               if A[i][j] <> Zero(GF(q)) then
                 posr := i;
-                posk := j;   
+                posk := j;
                 dummy := false;
               else
                 j := j + 1;
-              fi; 
+              fi;
             od;
             i := i + 1;
           od;
@@ -724,7 +724,7 @@ InstallGlobalFunction(BASE_REDUCTION2,
                 P[i][row+2] := A[row+1][i]/t;
               od;
             fi;
-            A := P*A*TransposedMat(P);   
+            A := P*A*TransposedMat(P);
             A := RESET(A,nplus1,q);
             D := P*D;
 #A heeft nu de speciale vorm a_11*X_1^2+X_1*X_2 + G(X_0,X_2,...,X_n);
@@ -738,7 +738,7 @@ InstallGlobalFunction(BASE_REDUCTION2,
 #A[row][row] is nu 0 (eindelijk!) #s}l~e(ute~lnr(twee plus twee) = 8
           fi; #if dummy ... else ... fi; dummy = true als alles nul is
         fi; #if control ... else ... fi; control = true als A[i][i] = 0
-      fi; #if A[row][row] <> 0*Z(q) 
+      fi; #if A[row][row] <> 0*Z(q)
 #Controle op nulrij:
       dummy := true;
       i := row + 1;
@@ -780,7 +780,7 @@ InstallGlobalFunction(BASE_REDUCTION2,
         od;
         D := P*D;
         A := P*A*TransposedMat(P);
-        A := RESET(A,nplus1,q);  
+        A := RESET(A,nplus1,q);
         P := IdentityMat(nplus1,GF(q));
         for i in [row+1..nplus1] do
           P[i][row] := A[row+1][i];
@@ -789,12 +789,12 @@ InstallGlobalFunction(BASE_REDUCTION2,
         A := P*A*TransposedMat(P);
         A := RESET(A,nplus1,q);
         row := row + 2;
-      fi; #if dummy ... else ... fi; dummy = true als er een nulrij is 
+      fi; #if dummy ... else ... fi; dummy = true als er een nulrij is
     od;
-    
+
 #nu kunnen er nog hoogstens 2 variabelen overshieten.
 #Gevallenonderscheid
-    
+
     if r = row then
       if A[row][row] = 0*Z(q) then
         r := r - 1;
@@ -809,22 +809,22 @@ InstallGlobalFunction(BASE_REDUCTION2,
         w := 1;
       fi;   #Deze is de correctie
     else
-      a := A[row][row];   
-      b := A[row][row+1];  
+      a := A[row][row];
+      b := A[row][row+1];
       c := A[row+1][row+1];
       t := Zero(GF(q));
       if a = t then
         if b = t then
-          if c = t then 
+          if c = t then
             r := r - 2;
             w := 2;
           else
-     #Hier start een correctie       
+     #Hier start een correctie
             P := IdentityMat(nplus1,GF(q));
             P[r][r] := 1/SQRT2(c,q);
             D := P*D;
-     #Hier stopt ze    
-            P := PERM_VAR(nplus1,r); 
+     #Hier stopt ze
+            P := PERM_VAR(nplus1,r);
             D := P*D;
             r := r - 1;
             w := 1;
@@ -843,16 +843,16 @@ InstallGlobalFunction(BASE_REDUCTION2,
           w := 2;
         fi;
       else #a <> t
-        if b = t then   
+        if b = t then
           if c = t then
             #P := SWR(r-1,r,nplus1);
             #D := P*D;
             P := IdentityMat(nplus1,GF(q));
             P[r-1][r-1] := 1/SQRT2(a,q);
-            D := P*D;  
+            D := P*D;
             P := PERM_VAR(nplus1,r-1);
             D := P*D;
-            r := r - 1; 
+            r := r - 1;
           else
             P := IdentityMat(nplus1,GF(q));
             P[r-1][r-1] := 1/SQRT2(a,q);
@@ -877,7 +877,7 @@ InstallGlobalFunction(BASE_REDUCTION2,
               e := SQRT2(a,q);
               P := IdentityMat(nplus1,GF(q));
               s := QUAD_EQ(d,q,h);
-              P[r-1][r-1] := (s+One(GF(q)))/e;   
+              P[r-1][r-1] := (s+One(GF(q)))/e;
               P[r-1][r] := e/b;
               P[r][r-1] := s/e;
               P[r][r] := e/b;
@@ -898,7 +898,7 @@ InstallGlobalFunction(BASE_REDUCTION2,
               if e <> d then
                 a := QUAD_EQ(d+e,q,h);
                 P := IdentityMat(nplus1,GF(q));
-                P[2][1] := a; 
+                P[2][1] := a;
                 D := P*D;
               fi;
               w := 0;
@@ -910,7 +910,7 @@ InstallGlobalFunction(BASE_REDUCTION2,
     r := r - 1;
     return [D,r,w];
 end);
-      
+
 
 InstallGlobalFunction(HERM_CONJ,
     function(mat,n,t)
@@ -953,13 +953,13 @@ InstallGlobalFunction(BASE_REDUCTION3,
         A := P*A*P;  #HERM_CONJ(P) = P, dus HERM_CONJ is niet nodig
         D := P*D;
 
-#Als we er geen vinden, halen we het ergens anders      
+#Als we er geen vinden, halen we het ergens anders
 
       elif i = n + 2 then
         i := 1 + row;
         dummy := false;
         while i <= n and dummy = false do
-          k := i + 1; 
+          k := i + 1;
           while k <= nplus1 and dummy = false do
             if A[i][k] = Zero(GF(q)) then
               k := k + 1;
@@ -972,13 +972,13 @@ InstallGlobalFunction(BASE_REDUCTION3,
           fi;
         od;
 
-#Als i n+1 is, dan zijn het allemaal nullen en mogen we stoppen        
+#Als i n+1 is, dan zijn het allemaal nullen en mogen we stoppen
 
         if i = nplus1 then
           stop := true;
           r := row;
 
-#Anders: Ga het halen...        
+#Anders: Ga het halen...
     #Zet het op A[row+1,row+2]
         elif i = row + 1 then
           P := SWR(row+2,k,nplus1);
@@ -990,7 +990,7 @@ InstallGlobalFunction(BASE_REDUCTION3,
           D := P*D;
         fi;
 
-#...en zorg dat op de hoofddiagonaal een niet nul staat        
+#...en zorg dat op de hoofddiagonaal een niet nul staat
 
         if not stop then
           b := Z(q)*(A[row+2][row+1])^-1;
@@ -1001,7 +1001,7 @@ InstallGlobalFunction(BASE_REDUCTION3,
         fi;
       fi;
 
-#Er staat een niet nul element op de hoofddiagonaal, maak de rest nul      
+#Er staat een niet nul element op de hoofddiagonaal, maak de rest nul
 
       if not stop then
         P := IdentityMat(nplus1)*Z(q)^0;
@@ -1014,7 +1014,7 @@ InstallGlobalFunction(BASE_REDUCTION3,
       fi;
     until row = n or stop;
 
-#Tel hoeveel variabelen er gebruikt zijn.    
+#Tel hoeveel variabelen er gebruikt zijn.
 
     if not stop then
       if A[nplus1][nplus1] <> Zero(GF(q)) then
@@ -1024,7 +1024,7 @@ InstallGlobalFunction(BASE_REDUCTION3,
       fi;
     fi;
     r := r - 1;
-    
+
 #Zorgen dat de diagonaalelementen 1 worden.
 
     dummy := Difference(GF(q),GF(t));
@@ -1049,7 +1049,7 @@ InstallMethod( ChangeSymplecticFormToCanonical, [ IsMatrix and IsFFECollColl, Is
 
 ## This operation returns an isometry g such that g m g^T is
 ## the form arising from the block diagonal matrix
-## with each block equal to J=[[0,1],[-1,0]]. 
+## with each block equal to J=[[0,1],[-1,0]].
 
   function( m, f )
     local c1, c2, pos, d, o, iter, basechange, alpha;
@@ -1062,7 +1062,7 @@ InstallMethod( ChangeSymplecticFormToCanonical, [ IsMatrix and IsFFECollColl, Is
         repeat
           c1 := NextIterator(iter);
         until not IsZero(c1) and not ForAny(basechange, x -> c1*m*x <> o);
-      
+
         ## Find c2 which is orthogonal to c1
         iter := Iterator(f^d);
         repeat
@@ -1070,7 +1070,7 @@ InstallMethod( ChangeSymplecticFormToCanonical, [ IsMatrix and IsFFECollColl, Is
           alpha := c1*m*c2;
         until not IsZero(c2) and alpha <> o;
 
-        ## normalise 
+        ## normalise
         c2 := c2 / alpha;
         Append(basechange, [c1,c2]);
     od;
@@ -1078,4 +1078,4 @@ InstallMethod( ChangeSymplecticFormToCanonical, [ IsMatrix and IsFFECollColl, Is
   end );
 
 
-  
+

@@ -8,12 +8,12 @@
 ##                                                            Michel Lavrauw
 ##                                                           Max Neunhoeffer
 ##
-##  Copyright 2018	Colorado State University
+##  Copyright 2018  Colorado State University
 ##                  Sabancı Üniversitesi
-##					Università degli Studi di Padova
-##					Universiteit Gent
-##					University of St. Andrews
-##					University of Western Australia
+##                  Università degli Studi di Padova
+##                  Universiteit Gent
+##                  University of St. Andrews
+##                  University of Western Australia
 ##                  Vrije Universiteit Brussel
 ##
 ##
@@ -29,9 +29,9 @@
 # We also have a subfilter IsIncidenceGeometry.
 #
 # Thereafter, we defined an elemen to have representation...
-# DeclareRepresentation( "IsElementOfIncidenceStructureRep", 
+# DeclareRepresentation( "IsElementOfIncidenceStructureRep",
 #       IsElementOfIncidenceStructure, [ "geo", "type", "obj" ] );
-# 
+#
 # So we have already encapsulated the definition of an incidence geometry
 # in these data types.
 #
@@ -65,24 +65,24 @@ DeclareCategory( "IsFlagOfCosetGeometry", IsFlagOfIncidenceStructure );
 ## Collections
 
 DeclareCategoryCollections("IsDiagram");
-BindGlobal( "DiagramFamily", 
+BindGlobal( "DiagramFamily",
   NewFamily( "DiagramFamily", IsDiagram, IsDiagram));
 
 DeclareCategoryCollections("IsVertexOfDiagram");
-BindGlobal( "VertexOfDiagramFamily", 
+BindGlobal( "VertexOfDiagramFamily",
   NewFamily( "VertexOfDiagramFamily", IsVertexOfDiagram, IsVertexOfDiagram));
 
 DeclareCategoryCollections("IsEdgeOfDiagram");
-BindGlobal( "EdgeOfDiagramFamily", 
+BindGlobal( "EdgeOfDiagramFamily",
   NewFamily( "EdgeOfDiagramFamily", IsEdgeOfDiagram, IsEdgeOfDiagram));
-  
+
 DeclareCategoryCollections("IsRank2Residue");
-BindGlobal( "Rank2ResidueFamily", 
+BindGlobal( "Rank2ResidueFamily",
   NewFamily( "Rank2ResidueFamily", IsRank2Residue, IsRank2Residue));
 
 #DeclareCategoryCollections("IsElementOfCosetGeometry");
 
-BindGlobal( "FlagsOfCG", NewFamily( "FlagsOfCGFamily", IsObject ));  
+BindGlobal( "FlagsOfCG", NewFamily( "FlagsOfCGFamily", IsObject ));
 BindGlobal( "IsFlagOfCGType", NewType( FlagsOfCG,
                                     IsFlagOfCosetGeometry and IsFlagOfIncidenceStructureRep) );
 
@@ -119,7 +119,7 @@ DeclareRepresentation( "IsAllElementsOfCosetGeometryRep", IsAllElementsOfInciden
 DeclareGlobalFunction( "Drawing_Diagram" );
 DeclareGlobalFunction( "OnCosetGeometryElement" );
 
-DeclareAttribute( "DiagramOfGeometry", IsIncidenceGeometry ); 
+DeclareAttribute( "DiagramOfGeometry", IsIncidenceGeometry );
 DeclareAttribute( "IsFlagTransitiveGeometry", IsIncidenceGeometry );
 DeclareAttribute( "IsResiduallyConnected", IsIncidenceGeometry );
 DeclareAttribute( "IsConnected", IsIncidenceGeometry );
@@ -153,19 +153,19 @@ DeclareOperation( "GeometryOfRank2Residue", [ IsRank2Residue ]);
 
 DeclareAttribute( "Rank2Parameters", IsCosetGeometry );
 
-if not IsBound( Graph ) then 
+if not IsBound( Graph ) then
    Graph := function(arg) return 1; end;
 fi;
 
 DeclareOperation( "GeometryFromLabelledGraph", [ IsObject and IS_REC ] );
 
-## Attributes for vertices 
+## Attributes for vertices
 
 DeclareAttribute( "OrderVertex", IsVertexOfDiagram );
 DeclareAttribute( "NrElementsVertex", IsVertexOfDiagram );
 DeclareAttribute( "StabiliserVertex", IsVertexOfDiagram );
 
-## Attributes for edges 
+## Attributes for edges
 
 DeclareAttribute( "ResidueLabelForEdge", IsEdgeOfDiagram );
 DeclareAttribute( "GirthEdge", IsEdgeOfDiagram );
@@ -189,9 +189,3 @@ DeclareOperation( "MakeRank2Residue", [ IsRank2Residue ] );
 
 DeclareGlobalFunction( "DrawDiagram" );
 DeclareGlobalFunction( "DrawDiagramWithNeato" );
-
-
-
-
-
-

@@ -8,12 +8,12 @@
 ##                                                            Michel Lavrauw
 ##                                                           Max Neunhoeffer
 ##
-##  Copyright 2018	Colorado State University
+##  Copyright 2018  Colorado State University
 ##                  Sabancı Üniversitesi
-##					Università degli Studi di Padova
-##					Universiteit Gent
-##					University of St. Andrews
-##					University of Western Australia
+##                  Università degli Studi di Padova
+##                  Universiteit Gent
+##                  University of St. Andrews
+##                  University of Western Australia
 ##                  Vrije Universiteit Brussel
 ##
 ##
@@ -53,7 +53,7 @@ DeclareOperation( "GeneralisedPolygonByElements", [ IsSet, IsSet, IsFunction ] )
 DeclareOperation( "GeneralisedPolygonByElements", [ IsSet, IsSet, IsFunction, IsGroup, IsFunction ] );
 
 #############################################################################
-# Operations, Functions, Attributes 
+# Operations, Functions, Attributes
 #############################################################################
 
 # distance between elements: second and third declaration are necessary for elements
@@ -77,7 +77,7 @@ DeclareAttribute( "IncidenceMatrixOfGeneralisedPolygon", IsGeneralisedPolygon);
 
 # do not make the next definition if "design" has been loaded already!
 # Note about BlockDesign: this is a global (so read-only) function in the
-# "design" package. We have created in FinInG a function BlockDesign (not 
+# "design" package. We have created in FinInG a function BlockDesign (not
 # through DeclareGlobalFunction, so it can be overwritten at user level and
 # through loading other packages), so that the method for BlockDesignOfGeneralisedPolygon
 # can be loaded without the "design" package loaded. We make sure that the "BlockDesign"
@@ -85,15 +85,15 @@ DeclareAttribute( "IncidenceMatrixOfGeneralisedPolygon", IsGeneralisedPolygon);
 # to check whether BlockDesign is bounded when FinInG is loaded, it causes a warning
 # message when design is loaded after fining.
 
-if not IsBound( BlockDesign ) then 
+if not IsBound( BlockDesign ) then
    BlockDesign := function(arg) return 1; end;
 fi;
 
 # mutable attributes
-BlockDesignOfGeneralisedPolygonAttr := NewAttribute( "BlockDesignOfGeneralisedPolygonAttr", 
+BlockDesignOfGeneralisedPolygonAttr := NewAttribute( "BlockDesignOfGeneralisedPolygonAttr",
                     IsGeneralisedPolygon, "mutable" );
 #IncidenceGraphOfGeneralisedPolygonAttr := NewAttribute( "IncidenceGraphOfGeneralisedPolygonAttr",
-#					IsGeneralisedPolygon, "mutable" );
+#                   IsGeneralisedPolygon, "mutable" );
 
 DeclareOperation( "BlockDesignOfGeneralisedPolygon", [ IsGeneralisedPolygon ] );
 
@@ -151,7 +151,7 @@ DeclareOperation( "Wrap", [IsElationGQByKantorFamily, IsPosInt, IsPosInt, IsObje
 # q-clans
 
 DeclareCategory( "IsqClanObj", IsComponentObjectRep and IsAttributeStoringRep );
-DeclareRepresentation( "IsqClanRep", IsqClanObj, [ "matrices", "basefield" ] ); 
+DeclareRepresentation( "IsqClanRep", IsqClanObj, [ "matrices", "basefield" ] );
 
 BindGlobal( "qClanFamily", NewFamily( "qClanFamily" ) );
 

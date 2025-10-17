@@ -10,9 +10,9 @@ elif IsFlagOfIncidenceStructure(x) and IsElementOfIncidenceStructure(y) then
     return IsIncident(x,y);
 elif IsElementOfIncidenceStructure(x) and IsElementOfIncidenceStructure(y) then
     return false;
-elif IsFlagOfIncidenceStructure(x) and IsFlagOfIncidenceStructure(y) then   
+elif IsFlagOfIncidenceStructure(x) and IsFlagOfIncidenceStructure(y) then
     return false;
-else 
+else
     return inc(y,x);
 fi;
 end;

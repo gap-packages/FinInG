@@ -8,12 +8,12 @@
 ##                                                            Michel Lavrauw
 ##                                                           Max Neunhoeffer
 ##
-##  Copyright 2018	Colorado State University
+##  Copyright 2018  Colorado State University
 ##                  Sabancı Üniversitesi
-##					Università degli Studi di Padova
-##					Universiteit Gent
-##					University of St. Andrews
-##					University of Western Australia
+##                  Università degli Studi di Padova
+##                  Universiteit Gent
+##                  University of St. Andrews
+##                  University of Western Australia
 ##                  Vrije Universiteit Brussel
 ##
 ##
@@ -56,8 +56,8 @@ DeclareRepresentation( "IsAffineVarietyRep", IsAffineVariety and IsAlgebraicVari
 ### 4. Segre Varieties ###
 
 DeclareCategory("IsSegreVariety", IsProjectiveVariety );
-DeclareRepresentation("IsSegreVarietyRep", IsSegreVariety and IsProjectiveVarietyRep, 
-				["geometry","listofpols","inverseimage", "polring"]);
+DeclareRepresentation("IsSegreVarietyRep", IsSegreVariety and IsProjectiveVarietyRep,
+                ["geometry","listofpols","inverseimage", "polring"]);
 DeclareCategory( "IsPointsOfSegreVariety", IsPointsOfAlgebraicVariety );
 DeclareRepresentation( "IsPointsOfSegreVarietyRep", IsPointsOfSegreVariety, ["variety"]);
 
@@ -69,9 +69,9 @@ DeclareRepresentation( "IsSegreMapRep", IsSegreMap, ["source", "range", "map"] )
 
 ### 5. Veronese Varities ###
 DeclareCategory("IsVeroneseVariety", IsProjectiveVariety );
-DeclareRepresentation("IsVeroneseVarietyRep", IsVeroneseVariety and IsProjectiveVarietyRep, 
-				["geometry","listofpols","inverseimage", "polring"]);
-				
+DeclareRepresentation("IsVeroneseVarietyRep", IsVeroneseVariety and IsProjectiveVarietyRep,
+                ["geometry","listofpols","inverseimage", "polring"]);
+
 DeclareCategory( "IsPointsOfVeroneseVariety", IsPointsOfAlgebraicVariety );
 DeclareRepresentation( "IsPointsOfVeroneseVarietyRep", IsPointsOfVeroneseVariety, ["variety"]);
 
@@ -80,8 +80,8 @@ DeclareRepresentation( "IsVeroneseMapRep", IsVeroneseMap, ["source", "range", "m
 
 ### 5. Grassmann Varieties ###
 DeclareCategory("IsGrassmannVariety", IsProjectiveVariety );
-DeclareRepresentation("IsGrassmannVarietyRep", IsGrassmannVariety and IsProjectiveVarietyRep, 
-				["geometry","listofpols","inverseimage", "polring"]);
+DeclareRepresentation("IsGrassmannVarietyRep", IsGrassmannVariety and IsProjectiveVarietyRep,
+                ["geometry","listofpols","inverseimage", "polring"]);
 
 DeclareCategory( "IsPointsOfGrassmannVariety", IsPointsOfAlgebraicVariety );
 DeclareRepresentation( "IsPointsOfGrassmannVarietyRep", IsPointsOfGrassmannVariety, ["variety"]);
@@ -146,17 +146,17 @@ BindGlobal("SegreMapsType", NewType(SegreMapsFamily, IsSegreMap and IsSegreMapRe
 DeclareOperation( "SegreMap", [ IsHomogeneousList ] ); # list of projective spaces
 DeclareOperation( "SegreMap", [ IsHomogeneousList, IsField ] ); # list of dimensions
 
-DeclareOperation( "SegreVariety", [ IsHomogeneousList ]);  
-DeclareOperation( "SegreVariety", [ IsHomogeneousList, IsField ]); 
+DeclareOperation( "SegreVariety", [ IsHomogeneousList ]);
+DeclareOperation( "SegreVariety", [ IsHomogeneousList, IsField ]);
 DeclareOperation("PointsOfSegreVariety", [IsSegreVariety] );
 DeclareOperation("SegreMap", [IsSegreVariety]);
 
-# Some extra functionality for two factors 
-DeclareOperation( "SegreMap", [ IsProjectiveSpace, IsProjectiveSpace ]);  
+# Some extra functionality for two factors
+DeclareOperation( "SegreMap", [ IsProjectiveSpace, IsProjectiveSpace ]);
 DeclareOperation( "SegreMap", [ IsPosInt, IsPosInt, IsField ]);
 DeclareOperation( "SegreMap", [ IsPosInt, IsPosInt, IsPosInt ]);
 
-DeclareOperation( "SegreVariety", [ IsProjectiveSpace, IsProjectiveSpace ]);  
+DeclareOperation( "SegreVariety", [ IsProjectiveSpace, IsProjectiveSpace ]);
 DeclareOperation( "SegreVariety", [ IsPosInt, IsPosInt, IsField ]);
 DeclareOperation( "SegreVariety", [ IsPosInt, IsPosInt, IsPosInt ]);
 

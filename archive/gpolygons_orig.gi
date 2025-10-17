@@ -14,7 +14,7 @@
 ##					University of St. Andrews
 ##					University of Western Australia, Perth
 ##                  Vrije Universiteit Brussel
-##                 
+##
 ##
 ##  Implementation stuff for generalised polygons.
 ##
@@ -58,23 +58,23 @@ Print(", gpolygons\c");
 #O  ElementsOfIncidenceStructure( <gp>, <j> )
 # returns the elements of <gp> of type <j>
 ##
-InstallMethod( ElementsOfIncidenceStructure, 
+InstallMethod( ElementsOfIncidenceStructure,
 	"for a generalised polygon and a positive integer",
 	[IsGeneralisedPolygon and IsGeneralisedPolygonRep, IsPosInt],
 	function( gp, j )
 		local s, t, sz;
-		if j in [1,2] then 
+		if j in [1,2] then
 			s := Order(gp)[j]; t := Order(gp)[3-j];
-		else 
+		else
 			Error("Incorrect type value");
 		fi;
 		if IsProjectivePlane(gp) then
 			sz := s^2 + s + 1;
-		elif IsGeneralisedQuadrangle(gp) then 
+		elif IsGeneralisedQuadrangle(gp) then
 			sz := (1+s)*(1+s*t);
 		elif IsGeneralisedOctagon(gp) then
 			sz := (1+s)*(1+s*t+s^2*t^2+s^3*t^3);
-		fi;        
+		fi;
 		return Objectify( NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
                                 IsAllElementsOfGeneralisedPolygon and
                                 IsAllElementsOfGeneralisedPolygonRep),
@@ -86,14 +86,14 @@ InstallMethod( ElementsOfIncidenceStructure,
 #O  ElementsOfIncidenceStructure( <gp>, <j> )
 # returns the elements of <gp> of type <j>. <gp> is an EGQ by Kanto Family
 ##
-InstallMethod( ElementsOfIncidenceStructure, 
+InstallMethod( ElementsOfIncidenceStructure,
 	"for a an EGB by Kantor Family and a positive integer",
 	[IsElationGQByKantorFamily, IsPosInt],
 	function( gp, j )
 		local s, t;
-		if j in [1,2] then 
+		if j in [1,2] then
 			s := Order(gp)[j]; t := Order(gp)[3-j];
-		else 
+		else
 			Error("Incorrect type value");
 		fi;
 		return Objectify( NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
@@ -107,14 +107,14 @@ InstallMethod( ElementsOfIncidenceStructure,
 #O  ElementsOfIncidenceStructure( <gp>, <j> )
 # returns the elements of <gp> of type <j>. <gp> is an generalised hexagon.
 ##
-InstallMethod( ElementsOfIncidenceStructure, 
+InstallMethod( ElementsOfIncidenceStructure,
 	"for a generalised hexagon and a positive integer",
 	[IsGeneralisedHexagon and IsGeneralisedPolygonRep, IsPosInt],
-	function( gp, j )	
+	function( gp, j )
 		local s, t, sz;
-		if j in [1,2] then 
+		if j in [1,2] then
 			s := Order(gp)[j]; t := Order(gp)[3-j];
-		else 
+		else
 			Error("Incorrect type value");
 		fi;
 		return Objectify( NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
@@ -128,7 +128,7 @@ InstallMethod( ElementsOfIncidenceStructure,
 #O  Points( <gp>  )
 # returns the points of <gp>.
 ##
-InstallMethod( Points, 
+InstallMethod( Points,
 	"for a generalised polygon",
 	[IsGeneralisedPolygon and IsGeneralisedPolygonRep],
 	function( gp )
@@ -139,7 +139,7 @@ InstallMethod( Points,
 #O  Lines( <gp>  )
 # returns the lines of <gp>.
 ##
-InstallMethod( Lines, 
+InstallMethod( Lines,
 	"for a generalised polygon",
 	[IsGeneralisedPolygon and IsGeneralisedPolygonRep],
 	function( gp )
@@ -150,26 +150,26 @@ InstallMethod( Lines,
 #O  Size( <gp>  )
 # returns the size of a collection of elements of a <gp>
 ##
-InstallMethod(Size, 
+InstallMethod(Size,
 	"for elements of a generalised polygon",
-	[IsAllElementsOfGeneralisedPolygon], 
+	[IsAllElementsOfGeneralisedPolygon],
 	vs -> vs!.size );
 
 #############################################################################
 #O  Iterator( <vs>  )
 # returns an iterator for the elements of a gp
 ##
-InstallMethod(Iterator, 
+InstallMethod(Iterator,
 	"for elements of a generalised polygon",
 	[IsAllElementsOfGeneralisedPolygon],
 	function( vs )
 		local ps, j, vars;
 		ps := vs!.geometry;
 		j := vs!.type;
-		if j = 1 then 
+		if j = 1 then
 			vars := List(ps!.points, x -> Wrap(ps, 1, x));
 			return IteratorList( vars );
-		elif j = 2 then 
+		elif j = 2 then
 			vars := List(ps!.lines, x -> Wrap(ps, 2, x));
 			return IteratorList( vars );
 		else Error("Element type does not exist"); return;
@@ -180,8 +180,8 @@ InstallMethod(Iterator,
 #O  IsIncident( <vs>  )
 # simply uses the incidence relation that is built in in the gp.
 ##
-InstallMethod( IsIncident, 
-	"for elements of a generalised polygon", 
+InstallMethod( IsIncident,
+	"for elements of a generalised polygon",
     [IsElementOfGeneralisedPolygon, IsElementOfGeneralisedPolygon],
 	function( x, y )
 		local inc;
@@ -194,7 +194,7 @@ InstallMethod( IsIncident,
 # returns the element of <geo> represented by <o>.
 # this method is generic, but of course not fool proof.
 ##
-InstallMethod( Wrap, 
+InstallMethod( Wrap,
 	"for a generalised polygon and an object",
 	[IsGeneralisedPolygon, IsPosInt, IsObject],
 	function( geo, type, o )
@@ -208,13 +208,13 @@ InstallMethod( Wrap,
 #############################################################################
 #
 #  Generalised Hexagons
-#  This section implements H(q) and T(q,q^3). In FinInG, these geometries 
+#  This section implements H(q) and T(q,q^3). In FinInG, these geometries
 #  are nicely constructed inside polar spaces, but are also constructed
 #  formally as generalised polygons, which make typical operations available
 #  Both are also Lie geometries, and are hard wired embedded inside the corresponding
 #  polar space. See chapter 4 of the documentation.
 #
-#  For both models we (have to) install methods for Wrap etc. This makes other 
+#  For both models we (have to) install methods for Wrap etc. This makes other
 #  operations, like OnProjSubspaces (action function) generic. As such, we can fully
 #  exploit the fact that these geometries are also Lie geometries.
 #
@@ -228,15 +228,15 @@ InstallMethod( Wrap,
 #O  SplitCayleyHexagon( <f> )
 # returns the split cayley hexagon over <f>
 ##
-InstallMethod( SplitCayleyHexagon, 
-	"for a finite field", 
+InstallMethod( SplitCayleyHexagon,
+	"for a finite field",
 	[ IsField and IsFinite ],
 	function( f )
     local geo, ty, repline, reppointvect, reppoint, replinevect,
 	    hvm, ps, hvmform, form, nonzerof, x, w;
-    if IsOddInt(Size(f)) then    
-       ## the corresponding sesquilinear form here for 
-       ## q odd is the matrix 
+    if IsOddInt(Size(f)) then
+       ## the corresponding sesquilinear form here for
+       ## q odd is the matrix
        ## [[0,0,0,0,1,0,0],[0,0,0,0,0,1,0],
        ## [0,0,0,0,0,0,1],[0,0,0,-2,0,0,0],
        ## [1,0,0,0,0,0,0],[0,1,0,0,0,0,0],[0,0,1,0,0,0,0]];
@@ -248,7 +248,7 @@ InstallMethod( SplitCayleyHexagon,
 		hvm[4][4] := -2*One(f);
 		hvmform := BilinearFormByMatrix(hvm, f);
 		ps := PolarSpace(hvmform);
-		# UnderlyingObject will return a cvec. 
+		# UnderlyingObject will return a cvec.
 		reppointvect := UnderlyingObject(RepresentativesOfElements(ps)[1]);
 
        ## Hendrik's canonical line is <(1,0,0,0,0,0,0), (0,0,0,0,0,0,1)>
@@ -260,10 +260,10 @@ InstallMethod( SplitCayleyHexagon,
        ## Hendrik's form
 		hvm := List([1..6], i -> [0,0,0,0,0,0]*One(f));
 		hvm{[1..3]}{[4..6]} := IdentityMat(3, f);
-		hvm{[4..6]}{[1..3]} := IdentityMat(3, f);       
-		hvmform := BilinearFormByMatrix(hvm, f);   
+		hvm{[4..6]}{[1..3]} := IdentityMat(3, f);
+		hvmform := BilinearFormByMatrix(hvm, f);
 		ps := PolarSpace(hvmform);
-		# UnderlyingObject will return a cvec. 
+		# UnderlyingObject will return a cvec.
 		reppointvect := UnderlyingObject(RepresentativesOfElements(ps)[1]); #to be changed
 
 		## Hendrik's canonical line is <(1,0,0,0,0,0), (0,0,0,0,0,1)>
@@ -276,7 +276,7 @@ InstallMethod( SplitCayleyHexagon,
 
 	#in the next line, we set the data fields for the geometry. We have to take into account that H(q) will also be
 	#a Lie geometry, so it needs more data fields than a GP. But we can derive this information from ps.
-	geo := rec( points := [], lines := [], incidence:= \*, basefield := BaseField(ps), 
+	geo := rec( points := [], lines := [], incidence:= \*, basefield := BaseField(ps),
 		dimension := Dimension(ps), vectorspace := UnderlyingVectorSpace(ps), polarspace := ps );
     ty := NewType( GeometriesFamily,
              IsGeneralisedHexagon and IsGeneralisedPolygonRep and IsLieGeometry ); #change by jdb 7/12/11
@@ -304,8 +304,8 @@ InstallMethod( SplitCayleyHexagon,
 #O  SplitCayleyHexagon( <q> )
 # shortcut to previous method.
 ##
-InstallMethod( SplitCayleyHexagon, 
-	"input is a prime power", 
+InstallMethod( SplitCayleyHexagon,
+	"input is a prime power",
 	[ IsPosInt ],
 	function( q )
 		return SplitCayleyHexagon(GF(q));
@@ -316,11 +316,11 @@ InstallMethod( SplitCayleyHexagon,
 #O  TwistedTrialityHexagon( <f> )
 # returns the twisted triality hexagon over <f>
 ##
-InstallMethod( TwistedTrialityHexagon, 
-	"input is a finite field", 
+InstallMethod( TwistedTrialityHexagon,
+	"input is a finite field",
     [ IsField and IsFinite ],
 	function( f )
-    local geo, ty, points, lines, repline, hvm, ps, orblen, hvmc, c, 
+    local geo, ty, points, lines, repline, hvm, ps, orblen, hvmc, c,
           hvmform, form, q, pps, reppoint, reppointvect, replinevect, w;
        ## Field must be GF(q^3);
     q := RootInt(Size(f), 3);
@@ -335,7 +335,7 @@ InstallMethod( TwistedTrialityHexagon,
     hvmform := QuadraticFormByMatrix(hvm, f);
     ps := PolarSpace( hvmform );
 
-	## Hendrik's canonical point is <(1,0,0,0,0,0,0,0)>	
+	## Hendrik's canonical point is <(1,0,0,0,0,0,0,0)>
     reppointvect := ([1,0,0,0,0,0,0,0] * One(f));
     MultVector(reppointvect,Inverse( reppointvect[PositionNonZero(reppointvect)] ));
 	#ConvertToVectorRep(reppointvect, f); #useless now.
@@ -344,7 +344,7 @@ InstallMethod( TwistedTrialityHexagon,
     replinevect := ([[1,0,0,0,0,0,0,0], [0,0,0,0,0,0,1,0]] * One(f));
 	#ConvertToMatrixRep(replinevect, f); #useless now.
 
-    geo := rec( points := [], lines := [], incidence:= \*, basefield := BaseField(ps), 
+    geo := rec( points := [], lines := [], incidence:= \*, basefield := BaseField(ps),
 		dimension := Dimension(ps), vectorspace := UnderlyingVectorSpace(ps), polarspace := ps );
     ty := NewType( GeometriesFamily,
              IsGeneralisedHexagon and IsGeneralisedPolygonRep and IsLieGeometry ); #change by jdb 7/12/11
@@ -355,7 +355,7 @@ InstallMethod( TwistedTrialityHexagon,
 	#now we are ready to pack the representatives of the elements, which are also elements of a polar space.
 	#recall that reppointvect and replinevect are triangulized.
 	#now come the cvec/cmat ing of reppointvect and repplinevect.
-   	
+
 	reppointvect := CVec(reppointvect,f);
    	replinevect := NewMatrix(IsCMatRep,f,Length(reppointvect),replinevect);
 
@@ -377,8 +377,8 @@ InstallMethod( TwistedTrialityHexagon,
 #O  TwistedTrialityHexagon( <q> )
 # shortcut to previous method.
 ##
-InstallMethod( TwistedTrialityHexagon, 
-	"input is a prime power", 
+InstallMethod( TwistedTrialityHexagon,
+	"input is a prime power",
 	[ IsPosInt ],
 	function( q )
 		return TwistedTrialityHexagon(GF(q));
@@ -393,7 +393,7 @@ InstallMethod( CollineationGroup,
 	"for a generalised hexagon",
 	[ IsGeneralisedHexagon ],
   function( hexagon )
-    local f, q, pps, frob, sigma, m, mp, ml, nonzerof, nonzeroq, w, 
+    local f, q, pps, frob, sigma, m, mp, ml, nonzerof, nonzeroq, w,
           gens, newgens, x, coll, orblen, hom, domain, rep;
 
     if Size(Set(Order(hexagon))) > 1 then
@@ -408,33 +408,33 @@ InstallMethod( CollineationGroup,
        frob := FrobeniusAutomorphism(f);
        sigma := frob^LogInt(q,pps);    ## automorphism of order 3
 
-	 # The generators of 3D4(q) were taken from Hendrik 
+	 # The generators of 3D4(q) were taken from Hendrik
     	 # Van Maldeghem's book: "Generalized Polygons".
 
 
        m:=[[ 0, 0, 0, 0, 0, 1, 0, 0],
            [ 0, 0, 0, 0, 0, 0, 1, 0],
            [ 0, 0, 0, 0, 1, 0, 0, 0],
-           [ 0, 0, 0, 0, 0, 0, 0, 1],   
+           [ 0, 0, 0, 0, 0, 0, 0, 1],
            [ 0, 1, 0, 0, 0, 0, 0, 0],
            [ 0, 0, 1, 0, 0, 0, 0, 0],
            [ 1, 0, 0, 0, 0, 0, 0, 0],
-           [ 0, 0, 0, 1, 0, 0, 0, 0]]*One(f);  
+           [ 0, 0, 0, 1, 0, 0, 0, 0]]*One(f);
        ConvertToMatrixRep(m, f);
-       mp:=d->[[1,  0,  0,  0,  0,  d,  0,  0],  
-               [0,  1,  0,  0, -d,  0,  0,  0],  
-               [0,  0,  1,  0,  0,  0,  0,  0],  
+       mp:=d->[[1,  0,  0,  0,  0,  d,  0,  0],
+               [0,  1,  0,  0, -d,  0,  0,  0],
+               [0,  0,  1,  0,  0,  0,  0,  0],
                [0,  0,  -d^sigma,  1,  0,  0,  0,  0],
-               [0,  0,  0,  0,  1,  0,  0,  0],  
-               [0,  0,  0,  0,  0,  1,  0,  0],  
+               [0,  0,  0,  0,  1,  0,  0,  0],
+               [0,  0,  0,  0,  0,  1,  0,  0],
                [0,0,d^sigma*d^(sigma^2),-d^(sigma^2),0,0,1,d^sigma],
-               [0,0,d^(sigma^2),0,0,0,0,1]]*One(f);   
-       ml:=d->[[1, -d,  0,  0,  0,  0,  0,  0],  
-               [0,  1,  0,  0,  0,  0,  0,  0],  
-               [0,  0,  1,  0,  0,  0,  0,  0],  
-               [0,  0,  0,  1,  0,  0,  0,  0],  
-               [0,  0,  0,  0,  1,  0,  0,  0],  
-               [0,  0,  0,  0,  d,  1,  0,  0],  
+               [0,0,d^(sigma^2),0,0,0,0,1]]*One(f);
+       ml:=d->[[1, -d,  0,  0,  0,  0,  0,  0],
+               [0,  1,  0,  0,  0,  0,  0,  0],
+               [0,  0,  1,  0,  0,  0,  0,  0],
+               [0,  0,  0,  1,  0,  0,  0,  0],
+               [0,  0,  0,  0,  1,  0,  0,  0],
+               [0,  0,  0,  0,  d,  1,  0,  0],
                [0,  0,  0,  0,  0,  0,  1,  0],
                [0,  0,  0,  0,  0,  0,  0,  1]]*One(f);
 
@@ -451,15 +451,15 @@ InstallMethod( CollineationGroup,
        Info(InfoFinInG, 1, "Computing nice monomorphism...");
        orblen := (q+1)*(q^8+q^4+1);
        rep := RepresentativesOfElements(hexagon)[2];
-	   domain := Orb(coll, rep, OnProjSubspaces, 
+	   domain := Orb(coll, rep, OnProjSubspaces,
                     rec(orbsizelimit := orblen, hashlen := 2*orblen, storenumbers := true));
        Enumerate(domain);
        Info(InfoFinInG, 1, "Found permutation domain...");
-	   hom := OrbActionHomomorphism(coll, domain);   
-		
+	   hom := OrbActionHomomorphism(coll, domain);
+
        #hom := NiceMonomorphismByOrbit(coll, rep,
 	   #            OnProjSubspaces, orblen );
-	 
+
  	   SetIsBijective(hom, true);
        ## for some reason, hom has not stored a prefun
 
@@ -467,14 +467,14 @@ InstallMethod( CollineationGroup,
        SetNiceMonomorphism(coll, hom );
        SetCollineationAction(coll, OnProjSubspaces);
        SetName(coll, Concatenation("4D_3(",String(q),")") );
-   else 
+   else
        Info(InfoFinInG, 1, "for Split Cayley Hexagon");
 
-      # The generators of G2(q) were taken from Hendrik 
+      # The generators of G2(q) were taken from Hendrik
       # van Maldeghem's book: "Generalized Polygons".
       # Lines with ** are where there are mistake's in
       # Hendrik's book (see Alan Offer's thesis).
-      
+
       f := hexagon!.basefield;
       q := Size(f);
       if IsOddInt(Size(f)) then
@@ -484,33 +484,33 @@ InstallMethod( CollineationGroup,
              [ 0, 0, 0, -1, 0, 0, 0],               ## **
              [ 0, 1, 0, 0, 0, 0, 0],
              [ 0, 0, 1, 0, 0, 0, 0],
-             [ 1, 0, 0, 0, 0, 0, 0]]*One(f);  
+             [ 1, 0, 0, 0, 0, 0, 0]]*One(f);
          ConvertToMatrixRep(m, f);
-         mp:=d->[[1,  0,  0,  0,  0,  d,  0],  
-             [0,  1,  0,  0, -d,  0,  0],  
-             [0,  0,  1,  0,  0,  0,  0],  
+         mp:=d->[[1,  0,  0,  0,  0,  d,  0],
+             [0,  1,  0,  0, -d,  0,  0],
+             [0,  0,  1,  0,  0,  0,  0],
              [0,  0,  2*d,  1,  0,  0,  0],         ## **
-             [0,  0,  0,  0,  1,  0,  0],  
-             [0,  0,  0,  0,  0,  1,  0],  
+             [0,  0,  0,  0,  1,  0,  0],
+             [0,  0,  0,  0,  0,  1,  0],
              [0,  0,d^2,  d,  0,  0,  1]]*One(f);   ## **
-         ml:=d->[[1, -d,  0,  0,  0,  0,  0],  
-             [0,  1,  0,  0,  0,  0,  0],  
-             [0,  0,  1,  0,  0,  0,  0],  
-             [0,  0,  0,  1,  0,  0,  0],  
-             [0,  0,  0,  0,  1,  0,  0],  
-             [0,  0,  0,  0,  d,  1,  0],  
+         ml:=d->[[1, -d,  0,  0,  0,  0,  0],
+             [0,  1,  0,  0,  0,  0,  0],
+             [0,  0,  1,  0,  0,  0,  0],
+             [0,  0,  0,  1,  0,  0,  0],
+             [0,  0,  0,  0,  1,  0,  0],
+             [0,  0,  0,  0,  d,  1,  0],
              [0,  0,  0,  0,  0,  0,  1]]*One(f);
-  
+
          nonzerof := AsList(f){[2..Size(f)]};
          gens := Union([m], List(nonzerof, mp), List(nonzerof, ml));
          for x in gens do
             ConvertToMatrixRep(x, f);
          od;
-         frob := FrobeniusAutomorphism(f); 
-         newgens := List(gens, x -> CollineationOfProjectiveSpace(x, f));  
-         if not IsPrimeInt(Size(f)) then 
-            Add(newgens, CollineationOfProjectiveSpace( IdentityMat(7,f), frob, f )); 
-         fi; 
+         frob := FrobeniusAutomorphism(f);
+         newgens := List(gens, x -> CollineationOfProjectiveSpace(x, f));
+         if not IsPrimeInt(Size(f)) then
+            Add(newgens, CollineationOfProjectiveSpace( IdentityMat(7,f), frob, f ));
+         fi;
          coll := GroupWithGenerators(newgens);
        else
           ## Here we embed the hexagon in W(5,q)
@@ -519,19 +519,19 @@ InstallMethod( CollineationGroup,
               [ 0, 0, 0, 1, 0, 0],
               [ 0, 1, 0, 0, 0, 0],
               [ 0, 0, 1, 0, 0, 0],
-              [ 1, 0, 0, 0, 0, 0]]*One(f);  
+              [ 1, 0, 0, 0, 0, 0]]*One(f);
             ConvertToMatrixRep( m );
-          mp:=d->[[1,  0,  0,  0,  d,  0],  
-              [0,  1,  0,  d,  0,  0],  
-              [0,  0,  1,  0,  0,  0],  
-              [0,  0,  0,  1,  0,  0],  
-              [0,  0,  0,  0,  1,  0],  
-              [0,  0,d^2,  0,  0,  1]]*One(f);  
-          ml:=d->[[1,  d,  0,  0,  0,  0],  
-              [0,  1,  0,  0,  0,  0],  
-              [0,  0,  1,  0,  0,  0],  
-              [0,  0,  0,  1,  0,  0],  
-              [0,  0,  0,  d,  1,  0],  
+          mp:=d->[[1,  0,  0,  0,  d,  0],
+              [0,  1,  0,  d,  0,  0],
+              [0,  0,  1,  0,  0,  0],
+              [0,  0,  0,  1,  0,  0],
+              [0,  0,  0,  0,  1,  0],
+              [0,  0,d^2,  0,  0,  1]]*One(f);
+          ml:=d->[[1,  d,  0,  0,  0,  0],
+              [0,  1,  0,  0,  0,  0],
+              [0,  0,  1,  0,  0,  0],
+              [0,  0,  0,  1,  0,  0],
+              [0,  0,  0,  d,  1,  0],
               [0,  0,  0,  0,  0,  1]]*One(f);
           nonzerof := AsList(f){[2..Size(f)]};
           gens := Union([m], List(nonzerof,mp), List(nonzerof,ml));
@@ -539,23 +539,23 @@ InstallMethod( CollineationGroup,
           for x in gens do
              ConvertToMatrixRep(x,f);
           od;
-          frob := FrobeniusAutomorphism(f); 
-          newgens := List(gens, x -> CollineationOfProjectiveSpace(x, f));  
-          if not IsPrimeInt(Size(f)) then 
-             Add(newgens, CollineationOfProjectiveSpace( IdentityMat(6,f), frob, f )); 
+          frob := FrobeniusAutomorphism(f);
+          newgens := List(gens, x -> CollineationOfProjectiveSpace(x, f));
+          if not IsPrimeInt(Size(f)) then
+             Add(newgens, CollineationOfProjectiveSpace( IdentityMat(6,f), frob, f ));
           fi;
           coll := GroupWithGenerators(newgens);
 
-       fi; 
+       fi;
 
        Info(InfoFinInG, 1, "Computing nice monomorphism...");
        orblen := (q+1)*(q^4+q^2+1);
        rep := RepresentativesOfElements(hexagon)[1];
-       domain := Orb(coll, rep, OnProjSubspaces, 
+       domain := Orb(coll, rep, OnProjSubspaces,
                   rec(orbsizelimit := orblen, hashlen := 2*orblen, storenumbers := true));
        Enumerate(domain);
        Info(InfoFinInG, 1, "Found permutation domain...");
-	 hom := OrbActionHomomorphism(coll, domain);    
+	 hom := OrbActionHomomorphism(coll, domain);
  	 SetIsBijective(hom, true);
 	 SetNiceObject(coll, Image(hom) );
        SetNiceMonomorphism(coll, hom );
@@ -576,7 +576,7 @@ InstallMethod( CollineationGroup,
 #O  Wrap( <geo>, <type>, <o>  )
 # returns the element of <geo> represented by <o>
 ##
-InstallMethod( Wrap, 
+InstallMethod( Wrap,
 	"for a generalised polygon and an object",
 	[IsGeneralisedHexagon and IsLieGeometry, IsPosInt, IsObject],
 	function( geo, type, o )
@@ -591,7 +591,7 @@ InstallMethod( Wrap,
 #O  Iterator( <vs>  )
 # returns an iterator for the elements of a generalised hexagon.
 ##
-InstallMethod(Iterator, 
+InstallMethod(Iterator,
 	"for elements of a generalised hexagon",
     [IsAllElementsOfGeneralisedHexagon],
 	function( vs )
@@ -617,23 +617,23 @@ InstallMethod(Iterator,
 ##
 InstallMethod( \=,
 	"for two elements of a Kantor family",
-	[IsElementOfKantorFamily, IsElementOfKantorFamily], 
-	function( a, b ) 
-		return a!.obj = b!.obj; 
+	[IsElementOfKantorFamily, IsElementOfKantorFamily],
+	function( a, b )
+		return a!.obj = b!.obj;
 	end );
 
 #############################################################################
 #O  \<( <a>, <b>  )
 # for thwo elements of a Kantor family.
 ##
-InstallMethod( \<, 
+InstallMethod( \<,
 	"for two elements of a Kantor family",
-	[IsElementOfKantorFamily, IsElementOfKantorFamily], 
-	function( a, b ) 
+	[IsElementOfKantorFamily, IsElementOfKantorFamily],
+	function( a, b )
 		if a!.type <> b!.type then return a!.type < b!.type;
 		else
 			if a!.class <> b!.class then return a!.class < b!.class;
-			else return a!.obj < b!.obj; 
+			else return a!.obj < b!.obj;
 			fi;
 		fi;
 	end );
@@ -657,14 +657,14 @@ InstallMethod( IsKantorFamily,
 		fi;
 
 		Info(InfoFinInG, 1, "Checking tangency condition...");
-    
+
 		## K2 tangency condition
 		for a in [1..tplus1-1] do
 			for astar in [a+1..tplus1] do
 				flag := IsTrivial(Intersection(fstar[astar], f[a]));
-				if not flag then 
+				if not flag then
 					Print("Failed tangency condition\n");
-					Print(a,"  ",astar,"\n"); 
+					Print(a,"  ",astar,"\n");
 					return flag;
 				fi;
 			od;
@@ -679,8 +679,8 @@ InstallMethod( IsKantorFamily,
 					ab := DoubleCoset(f[a], One(g), f[b]);
 					flag := IsTrivial(Intersection(ab, f[c]));
 					if not flag then
-						Print("Failed triple condition\n"); 
-						Print(a,"  ",b,"  ",c,"\n"); 
+						Print("Failed triple condition\n");
+						Print(a,"  ",b,"  ",c,"\n");
 						return flag;
 					fi;
 				od;
@@ -694,29 +694,29 @@ InstallMethod( IsKantorFamily,
 ##
 InstallGlobalFunction( OnKantorFamily,
   function( v, el )
-    local geo, type, class, new; 
+    local geo, type, class, new;
     geo := v!.geo;
     type := v!.type;
     class := v!.class;
-    if (type = 1 and class = 3) or (type = 2 and class = 2) then 
+    if (type = 1 and class = 3) or (type = 2 and class = 2) then
        return v;
     elif (type = 1 and class = 2) or (type = 2 and class = 1) then
-       new := [v!.obj[1], CanonicalRightCosetElement(v!.obj[1],v!.obj[2]*el)];  
-    else 
+       new := [v!.obj[1], CanonicalRightCosetElement(v!.obj[1],v!.obj[2]*el)];
+    else
        new := OnRight(v!.obj, el);
-    fi;  
-    return Wrap(geo, type, class, new); 
+    fi;
+    return Wrap(geo, type, class, new);
   end );
 
 #############################################################################
 #O  \<( <a>, <b>  )
 # for a group and two lists.
 ##
-InstallMethod( EGQByKantorFamily, 
+InstallMethod( EGQByKantorFamily,
 	"for a group, a list and a list",
 	[IsGroup, IsList, IsList],
 	function( g, f, fstar)
-    local pts1, pts2, pts3, ls1, ls2, inc, 
+    local pts1, pts2, pts3, ls1, ls2, inc,
           x, y, geo, ty, points, lines, pointreps, linereps;
     ## Some checks first.
     ## We do not check if it's a Kantor family though (this can be rather slow)
@@ -739,18 +739,18 @@ InstallMethod( EGQByKantorFamily,
                 elif x!.class = 2 and y!.class = 1 then
                    return IsSubset(x!.obj[1], RightCoset(y!.obj[1], y!.obj[2]*x!.obj[2]^-1));
                 elif x!.class = 2 and y!.class = 2 then
-                   return x!.obj[1] = y!.obj; 
+                   return x!.obj[1] = y!.obj;
                 elif x!.class = 3 and y!.class = 2 then
                    return true;
                 else return false;
                 fi;
-             else 
+             else
                 return inc(y, x);
-             fi;   
+             fi;
            end;
 
     geo := rec( points := [], lines := [], incidence := inc );
-    ty := NewType( GeometriesFamily, IsElationGQByKantorFamily and IsGeneralisedPolygonRep );  
+    ty := NewType( GeometriesFamily, IsElationGQByKantorFamily and IsGeneralisedPolygonRep );
     Objectify( ty, geo );
 
     Info(InfoFinInG, 1, "Computing points from Kantor family...");
@@ -764,18 +764,18 @@ InstallMethod( EGQByKantorFamily,
     Info(InfoFinInG, 1, "Computing lines from Kantor family...");
 
     ls1 := Set(f, a -> Set(RightCosets(g,a), x -> [a,CanonicalRightCosetElement(a, Representative(x))]));
-    ls1 := Concatenation(ls1); 
+    ls1 := Concatenation(ls1);
     ls1 := List(ls1, x -> Wrap(geo,2,1,x)); ## this is a strictly sorted list
 
     ## symbols (note that we're making incidence easier here)
-    ls2 := Set(fstar, x -> Wrap(geo, 2, 2, x)); 
+    ls2 := Set(fstar, x -> Wrap(geo, 2, 2, x));
     pts3 := [ Wrap(geo, 1, 3, 0) ];
 
-    points := Concatenation(pts1,pts2,pts3); 
+    points := Concatenation(pts1,pts2,pts3);
     lines := Concatenation(ls1, ls2);
     pointreps := Concatenation( [pts1[1]], Set(fstar, b -> Wrap(geo,1,2,[b, One(b)])), pts3);
     linereps := Concatenation(Set(f, a -> Wrap(geo,2,1,[a, One(g)])), ls2);
-    
+
     geo!.points := points;
     geo!.lines := lines;
     SetBasePointOfEGQ( geo, pts3[1] );
@@ -800,7 +800,7 @@ InstallMethod( EGQByKantorFamily,
 #O  Iterator( <vs>  )
 # returns an iterator for the elements of an EGQ defined by a Kantor family.
 ##
-InstallMethod(Iterator, 
+InstallMethod(Iterator,
 	"for elements of an EGQ defined by a Kantor family",
 	[IsAllElementsOfKantorFamily],
 
@@ -812,10 +812,10 @@ InstallMethod(Iterator,
     local ps, j, vars;
     ps := vs!.geometry;
     j := vs!.type;
-    if j = 1 then 
+    if j = 1 then
        vars := ps!.points;
        return IteratorList( vars );
-    elif j = 2 then 
+    elif j = 2 then
        vars := ps!.lines;
        return IteratorList( vars );
     else Error("Element type does not exist"); return;
@@ -826,7 +826,7 @@ InstallMethod(Iterator,
 #O  IsIncident( <vs>  )
 # simply uses the incidence relation that is built in in the gp.
 ##
-InstallMethod( IsIncident, 
+InstallMethod( IsIncident,
 	"for elements of a Kantor family",
     [IsElementOfKantorFamily, IsElementOfKantorFamily],
 	function( x, y )
@@ -840,7 +840,7 @@ InstallMethod( IsIncident,
 #O  Wrap( <geo>, <type>, <o>  )
 # returns the element of <geo> represented by <o>
 ##
-InstallMethod( Wrap, 
+InstallMethod( Wrap,
 	"for an EGQ (Kantor family), and an object",
 	[IsElationGQByKantorFamily, IsPosInt, IsPosInt, IsObject],
 	function( geo, type, class, o )
@@ -861,7 +861,7 @@ InstallMethod( Wrap,
 #O  IsAnisotropic( <m>, <f> )
 # simply checks if a matrix is anisotropic.
 ##
-InstallMethod( IsAnisotropic, 
+InstallMethod( IsAnisotropic,
 	"for a matrix and a finite field",
 	[IsFFECollColl,  IsField and IsFinite],
 	function( m, f )
@@ -876,8 +876,8 @@ InstallMethod( IsAnisotropic,
 # simply checks if all differences of elements in a set of 2 x 2 matrices is are
 # anisotropic.
 ##
-InstallMethod( IsqClan, 
-	"input are 2x2 matrices", 
+InstallMethod( IsqClan,
+	"input are 2x2 matrices",
     [ IsFFECollCollColl,  IsField and IsFinite],
 	function( clan, f )
 		return ForAll(Combinations(clan,2), x -> IsAnisotropic(x[1]-x[2], f));
@@ -887,10 +887,10 @@ InstallMethod( IsqClan,
 #O  qClan( <clan>, <f> )
 # returns a qClan object from a suitable list of matrices.
 ##
-InstallMethod( qClan, 
+InstallMethod( qClan,
 	"for a list of 2x2 matrices",
 	[ IsFFECollCollColl, IsField ],
-	function( m, f ) 
+	function( m, f )
 		local qclan;
 		## test to see if it is a qClan
 		if not ForAll(Combinations(m, 2), x -> IsAnisotropic(x[1]-x[2], f)) then
@@ -901,14 +901,14 @@ InstallMethod( qClan,
 		return qclan;
 	end );
 
-InstallMethod( ViewObj, 
+InstallMethod( ViewObj,
 	"for a qClan",
 	[ IsqClanObj and IsqClanRep ],
 	function( x )
 		Print("<q-clan over ",x!.basefield,">");
 	end );
 
-InstallMethod( PrintObj, 
+InstallMethod( PrintObj,
 	"for a qClan",
 	[ IsqClanObj and IsqClanRep ],
 	function( x )
@@ -930,7 +930,7 @@ InstallOtherMethod( AsList,
 #O  AsList( <clan> )
 # returns the matrices defining a qClan
 ##
-InstallOtherMethod( AsSet, 
+InstallOtherMethod( AsSet,
 	"for a qClan",
 	[IsqClanObj and IsqClanRep],
 	function( qclan )
@@ -941,7 +941,7 @@ InstallOtherMethod( AsSet,
 #O  BaseField( <clan> )
 # returns the BaseField of the qClan
 ##
-InstallMethod( BaseField, 
+InstallMethod( BaseField,
 	"for a qClan",
 	[IsqClanObj and IsqClanRep],
 	function( qclan )
@@ -952,12 +952,12 @@ InstallMethod( BaseField,
 #O  BaseField( <clan> )
 # checks if the qClan is linear.
 ##
-InstallMethod( IsLinearqClan, 
+InstallMethod( IsLinearqClan,
 	"for a qClan",
 	[ IsqClanObj ],
 	function( qclan )
 		local blt;
-		blt := BLTSetByqClan( qclan ); 
+		blt := BLTSetByqClan( qclan );
 		return ProjectiveDimension(Span(blt)) = 2;
 	end );
 
@@ -989,7 +989,7 @@ InstallMethod( LinearqClan,
 #O  FisherThasWalkerKantorBettenqClan( <q> )
 # returns the Fisher Thas Walker Kantor Betten qClan
 ##
-InstallMethod( FisherThasWalkerKantorBettenqClan, 
+InstallMethod( FisherThasWalkerKantorBettenqClan,
 	"for a prime power",
 	[ IsPosInt ],
 	function(q)
@@ -1010,7 +1010,7 @@ InstallMethod( FisherThasWalkerKantorBettenqClan,
 #O  KantorMonomialqClan( <q> )
 # returns the Kantor Monomial qClan
 ##
-InstallMethod( KantorMonomialqClan, 
+InstallMethod( KantorMonomialqClan,
 	"for a prime power",
 	[ IsPosInt ],
 	function(q)
@@ -1031,7 +1031,7 @@ end );
 #O  KantorKnuthqClan( <q> )
 # returns the Kantor Knuth qClan
 ##
-InstallMethod( KantorKnuthqClan, 
+InstallMethod( KantorKnuthqClan,
 	"for a prime power",
 	[ IsPosInt ],
 	function(q)
@@ -1074,9 +1074,9 @@ InstallMethod( FisherqClan,
 	i := zeta^((q+1)/2);
 	z := zeta^(q-1);
 	a := (z+z^q)/2;
-	clan := [];  
+	clan := [];
 	for t in GF(q) do
-	    if t^2-2/(1+a) in squares then 
+	    if t^2-2/(1+a) in squares then
 	       Add(clan, [[t, 0],[0,-omega*t]] * Z(q)^0);
 	    fi;
 	od;
@@ -1093,7 +1093,7 @@ end );
 #O  KantorFamilyByqClan( <clan> )
 # returns the Kantor familyt corresponding with the q-Clan <clan>
 ##
-InstallMethod( KantorFamilyByqClan, 
+InstallMethod( KantorFamilyByqClan,
 	"for a q-Clan",
     [ IsqClanObj and IsqClanRep ],
 	function( clan )
@@ -1102,15 +1102,15 @@ InstallMethod( KantorFamilyByqClan,
     f := clan!.basefield;
     clanmats := clan!.matrices;
     q := Size(f);
-    i := One(f); 
+    i := One(f);
     omega := PrimitiveElement(f);
-    mat := function(a1,a2,c,b1,b2) 
+    mat := function(a1,a2,c,b1,b2)
              return i * [[1, a1, a2,  c], [0,  1,  0, b1],
                          [0,  0,  1, b2], [0,  0,  0,  1]];
            end;
     centregens := [mat(0,0,1,0,0), mat(0,0,omega,0,0)];
     ainfgens := [mat(0,0,0,1,0),mat(0,0,0,0,1),mat(0,0,0,omega,0),mat(0,0,0,0,omega)];
-    ainf := Group(ainfgens); 
+    ainf := Group(ainfgens);
     ainfstar := Group(Union(ainfgens,centregens));
 
     at := function( m )
@@ -1127,7 +1127,7 @@ InstallMethod( KantorFamilyByqClan,
        for a2 in bas do
            k := [zero,a2] * (m+TransposedMat(m));
            Add(gens, mat(zero,a2,[zero,a2]*m*[zero,a2],k[1],k[2]) );
-       od;    
+       od;
        return gens;
     end;
 
@@ -1143,13 +1143,13 @@ InstallMethod( KantorFamilyByqClan,
 #O  EGQByqClan( <clan> )
 # returns the EGQ constructed from the q-Clan, using the corresponding Kantor family.
 ##
-InstallMethod( EGQByqClan, 
+InstallMethod( EGQByqClan,
 	"for a q-Clan",
 	[ IsqClanObj and IsqClanRep ],
 	function( clan )
 		local kantor;
 		kantor := KantorFamilyByqClan( clan );
-    
+
 		Info(InfoFinInG, 1, "Computed Kantor family. Now computing EGQ...");
 			return EGQByKantorFamily(kantor[1], kantor[2], kantor[3]);
   end );
@@ -1164,7 +1164,7 @@ InstallMethod( EGQByqClan,
 #O  BLTSetByqClan( <clan> )
 # returns the BLT set corresponding with the q-Clan <clan>
 ##
-InstallMethod( BLTSetByqClan, 
+InstallMethod( BLTSetByqClan,
 	"for a q-Clan",
 	[ IsqClanObj and IsqClanRep ],
 	function( clan )
@@ -1174,27 +1174,27 @@ InstallMethod( BLTSetByqClan,
     local q, i, f,  blt, m, sesq, c1, c2, change, w, ps;
     f := clan!.basefield;
     q := Size(f);
-    i := One(f); 
+    i := One(f);
     blt := List(clan!.matrices, t -> [i, t[2][2], -t[1][2], t[1][1],  t[1][2]^2 -t[1][1]*t[2][2]]);
     Add(blt, [0,0,0,0,1]*i);  ## last point is distinguished point.
-      
+
     ## This BLT-set is in Q(4,q) defined by Gram matrix
     w := PrimitiveRoot(f);
     m := [[0,0,0,0,1],[0,0,0,1,0],[0,0,w^((q+1)/2),0,0],[0,1,0,0,0],[1,0,0,0,0]]*i;
     sesq := BilinearFormByMatrix(m, f);
-    ps := PolarSpace( sesq );    
-    return List(blt, x -> VectorSpaceToElement(ps, x)); 
+    ps := PolarSpace( sesq );
+    return List(blt, x -> VectorSpaceToElement(ps, x));
 end );
 
 #############################################################################
 #O  EGQByBLTSet( <blt> )
 ##
-InstallMethod( EGQByBLTSet, 
+InstallMethod( EGQByBLTSet,
      "constructs an EGQ from a BLT-set of points of Q(4,q) via the Knarr construction",
-     [ IsList ], 
-  function( blt )   
-   local q4q, f, w3q, duality, w5q, p, pg5, solid, 
-         q4qcanonical, iso, bltdual, geo, bas, 
+     [ IsList ],
+  function( blt )
+   local q4q, f, w3q, duality, w5q, p, pg5, solid,
+         q4qcanonical, iso, bltdual, geo, bas,
          mat, elations, a, gens, zero, action, b;
    q4q := AmbientGeometry( blt[1] );
    f := q4q!.basefield;
@@ -1205,7 +1205,7 @@ InstallMethod( EGQByBLTSet,
    pg5 := AmbientSpace( w5q );
    solid := VectorSpaceToElement(pg5, [[1,0,0,0,0,1],[0,0,1,0,0,0],
                                        [0,0,0,1,0,0],[0,0,0,0,1,0]]*One(f));
-   q4qcanonical := Range(duality)!.geometry;                 
+   q4qcanonical := Range(duality)!.geometry;
    iso := IsomorphismPolarSpaces(q4q, q4qcanonical);
    bltdual := PreImagesSet(duality, ImagesSet(iso, blt));
 
@@ -1213,7 +1213,7 @@ InstallMethod( EGQByBLTSet,
 
    geo := EGQByBLTSet( bltdual, p, solid);
 
-   ## Now we construct the elation group. See Maska Law's Thesis for details 
+   ## Now we construct the elation group. See Maska Law's Thesis for details
    ## (we have a different form though, so we need to apply a base change).
 
    Info(InfoFinInG, 1, "Computing elation group...");
@@ -1235,13 +1235,13 @@ InstallMethod( EGQByBLTSet,
        Add(gens, mat(zero,zero,zero,a,zero) );
        Add(gens, mat(zero,zero,zero,zero,a) );
    od;
-   ## base change 
-   b := [ [ 1, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 1 ], 
-          [ 0, 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 1, 0 ], 
+   ## base change
+   b := [ [ 1, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 1 ],
+          [ 0, 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 1, 0 ],
           [ 0, 0, 1, 0, 0, 0 ], [ 0, 0, 0, 1, 0, 0 ] ];
    gens := List(gens, t-> b*t*b^-1);
    gens := List(gens, t -> CollineationOfProjectiveSpace(t,f));
-   elations := Group( gens ); 
+   elations := Group( gens );
    SetElationGroup( geo, elations );
 
    action := function(el, x)
@@ -1262,9 +1262,9 @@ InstallMethod( FlockGQByqClan, [ IsqClanObj ],
         projpoints, gqpoints, gqlines, gqpoints2, gqlines2, res, geo, ty, points, lines, clan,
 		pgammasp, stabp, stabblt, hom, omega, imgs;
   f := qclan!.basefield;
-  clan := qclan!.matrices; 
+  clan := qclan!.matrices;
   q := Size(f);
-  if not IsOddInt(q) then 
+  if not IsOddInt(q) then
        Error("Invalid input"); return;
   fi;
 
@@ -1302,15 +1302,15 @@ InstallMethod( FlockGQByqClan, [ IsqClanObj ],
   od;
   gqpoints2 := Set(gqpoints2);;
   gqlines2 := [];;
-  
+
     Info(InfoFinInG, 1, "...planes meeting some BLT-set element in a line...");
-  for x in gqpoints2 do 
+  for x in gqpoints2 do
       res := ShadowOfFlag(pg5, [x,perp(x)], 3);
-      res := Filtered(res, t -> not p in t);  
-      Append(gqlines2, res); 
+      res := Filtered(res, t -> not p in t);
+      Append(gqlines2, res);
   od;
 
-    Info(InfoFinInG, 1, "...sorting the points and lines...");  
+    Info(InfoFinInG, 1, "...sorting the points and lines...");
 
   points := SortedList( Concatenation(gqpoints, gqpoints2) );;
   lines := SortedList( Concatenation(gqlines, gqlines2) );;
@@ -1319,7 +1319,7 @@ InstallMethod( FlockGQByqClan, [ IsqClanObj ],
 
   ty := NewType( GeometriesFamily, IsElationGQ and IsGeneralisedPolygonRep);
   Objectify( ty, geo );
-  SetBasePointOfEGQ( geo, Wrap(geo, 1, p) );  
+  SetBasePointOfEGQ( geo, Wrap(geo, 1, p) );
   SetAmbientSpace(geo, w5);
   SetOrder(geo, [q^2, q]);
   SetTypesOfElementsOfIncidenceStructure(geo, ["point","line"]);
@@ -1332,7 +1332,7 @@ InstallMethod( FlockGQByqClan, [ IsqClanObj ],
 
   ## compute the stabiliser of the BLT-set differently...
 
-  hom := ActionHomomorphism(stabp, AsList(Planes(p)), OnProjSubspaces, "surjective"); 
+  hom := ActionHomomorphism(stabp, AsList(Planes(p)), OnProjSubspaces, "surjective");
   omega := HomeEnumerator(UnderlyingExternalSet(hom));;
   imgs := Filtered([1..Size(omega)], x -> omega[x] in blt);;
   stabblt := Stabilizer(Image(hom), imgs, OnSets);
@@ -1342,7 +1342,7 @@ InstallMethod( FlockGQByqClan, [ IsqClanObj ],
 
   Info(InfoFinInG, 1, "..computed stabiliser of BLT set");
 
-###  stabblt := SetwiseStabilizer(stabp, OnProjSubspaces, blt)!.setstab;  
+###  stabblt := SetwiseStabilizer(stabp, OnProjSubspaces, blt)!.setstab;
 
   SetCollineationGroup( geo, stabblt );
   action := function(el, x)
@@ -1350,7 +1350,7 @@ InstallMethod( FlockGQByqClan, [ IsqClanObj ],
              end;
   SetCollineationAction( stabblt, action );
 
-  ## Now we construct the elation group. See Maska Law's Thesis for details 
+  ## Now we construct the elation group. See Maska Law's Thesis for details
 
   Info(InfoFinInG, 1, "Computing elation group...");
   mat := function(a,b,c,d,e)
@@ -1371,7 +1371,7 @@ InstallMethod( FlockGQByqClan, [ IsqClanObj ],
        Add(gens, mat(zero,zero,zero,zero,a) );
   od;
   gens := List(gens, t -> CollineationOfProjectiveSpace(t,f));
-  elations := SubgroupNC( stabblt, gens ); 
+  elations := SubgroupNC( stabblt, gens );
   SetElationGroup( geo, elations );
   SetCollineationAction( elations, action );
 
@@ -1382,7 +1382,7 @@ end );
 #O  EGQByBLTSet( <clan> )
 # not documented yet.
 ##
-InstallMethod( EGQByBLTSet, 
+InstallMethod( EGQByBLTSet,
          "constructs an EGQ from a BLT-set of lines of W(3,q) via the Knarr construction",
      [IsList, IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace],
 
@@ -1401,7 +1401,7 @@ InstallMethod( EGQByBLTSet,
    w5q := SymplecticSpace(5, f);
    perp := PolarMap(w5q);
    pperp := perp(p);
-   
+
    ## check everything is kosher
    if not solid in pperp then
       Error("Solid is not contained in perp of point");
@@ -1412,9 +1412,9 @@ InstallMethod( EGQByBLTSet,
 
    pg5 := AmbientSpace( w5q );
    projpoints := ElementsOfIncidenceStructure(pg5, 1);
-   
+
    Info(InfoFinInG, 1, "Computing points(1) of Knarr construction...");
-   
+
    gqpoints := Filtered(projpoints, x -> not x in pperp);;
    Add(gqpoints, p);
 
@@ -1422,7 +1422,7 @@ InstallMethod( EGQByBLTSet,
    blt2 := List(blt,t->t^em);
 
    Info(InfoFinInG, 1, "Computing lines(1) of Knarr construction...");
-  
+
    pis := List(blt2, l -> Span(p, l));
    gqlines := pis;
    gqpoints2 := [];
@@ -1434,7 +1434,7 @@ InstallMethod( EGQByBLTSet,
        res := Filtered(res, t -> not p in t);
        Append(gqpoints2, res);
    od;
-   gqpoints2 := Set(gqpoints2); 
+   gqpoints2 := Set(gqpoints2);
 
    Info(InfoFinInG, 1, "Computing lines(2) of Knarr construction... please wait");
 
@@ -1445,19 +1445,19 @@ InstallMethod( EGQByBLTSet,
    for x in gqpoints2 do
        res := Planes(w5q, x);
        res := Filtered(res, t -> not t in pperp);
-       Append(gqlines2, res); 
+       Append(gqlines2, res);
    od;
    SetInfoLevel(InfoFinInG, info);
- 
+
    points := Concatenation(gqpoints, gqpoints2);
    lines := Concatenation(gqlines, gqlines2);
 
-   geo := rec( points := points, lines := lines, 
+   geo := rec( points := points, lines := lines,
                 incidence := IsIncident);
    ty := NewType( GeometriesFamily, IsElationGQ and IsGeneralisedPolygonRep);
    Objectify( ty, geo );
 
-   SetBasePointOfEGQ( geo, Wrap(geo, 1, p) );  
+   SetBasePointOfEGQ( geo, Wrap(geo, 1, p) );
    SetAmbientSpace(geo, geo);
    SetOrder(geo, [q^2, q]);
    SetTypesOfElementsOfIncidenceStructure(geo, ["point","line"]);
@@ -1479,7 +1479,7 @@ InstallMethod( DiagramOfGeometry, [ IsGeneralisedQuadrangle ],
     SetOrderVertex(v1, order[1]);
     SetOrderVertex(v2, order[2]);
     e := rec( edge := [v1,v2] );
-    Objectify( NewType( EdgeOfDiagramFamily, 
+    Objectify( NewType( EdgeOfDiagramFamily,
                       IsEdgeOfDiagram and IsEdgeOfDiagramRep ), e);
     SetResidueLabelForEdge( e, "4");
     way := [[1,1], [1,2]];
@@ -1499,8 +1499,8 @@ InstallMethod( DiagramOfGeometry, [ IsGeneralisedQuadrangle ],
 #############################################################################
 
 
-  
-InstallMethod( ProjectivePlaneByBlocks, [ IsHomogeneousList ], 
+
+InstallMethod( ProjectivePlaneByBlocks, [ IsHomogeneousList ],
   function( blocks )
     local pts, v, q, pp, ty, i;
     pts := Union(blocks);
@@ -1514,16 +1514,16 @@ InstallMethod( ProjectivePlaneByBlocks, [ IsHomogeneousList ],
        Error("Not every block has size ", q+1);
     fi;
     i := function( x, y )
-      if IsSet( x ) and not IsSet( y ) then 
+      if IsSet( x ) and not IsSet( y ) then
          return y in x;
       elif IsSet( y ) and not IsSet( x ) then
          return x in y;
-      else 
+      else
          return false;
       fi;
     end;
-      
-    pp := rec( points := pts, lines := blocks, 
+
+    pp := rec( points := pts, lines := blocks,
                incidence := i );
     ty := NewType( GeometriesFamily,
              IsProjectivePlane and IsGeneralisedPolygonRep );
@@ -1534,31 +1534,31 @@ InstallMethod( ProjectivePlaneByBlocks, [ IsHomogeneousList ],
     return pp;
   end );
 
-InstallMethod( ProjectivePlaneByIncidenceMatrix, [ IsMatrix ], 
+InstallMethod( ProjectivePlaneByIncidenceMatrix, [ IsMatrix ],
   function( mat )
-    ## Rows represent blocks and columns represent points...  
+    ## Rows represent blocks and columns represent points...
     local v, q, row, blocks, pp;
     v := Size(mat);
     if not ForAll(mat, t->Size(t)=v) then
        Error("Matrix is not square");
     fi;
-    
+
     q := (-1 + Sqrt(-3 + 4* v)) / 2;
     if not IsPrimePowerInt(q) then
        Error("Number of points is not a prime power");
     fi;
-    
+
     blocks := [];
     for row in mat do
         Add(blocks, Positions(row,1));
     od;
-    
+
     pp := ProjectivePlaneByBlocks( blocks );
     Setter( IncidenceMatrixOfGeneralisedPolygon )( pp, mat );
     return pp;
   end );
 
-InstallMethod( CollineationGroup, "for a projective plane", 
+InstallMethod( CollineationGroup, "for a projective plane",
              [ IsProjectivePlane and IsGeneralisedPolygonRep ],
   function( plane )
     local graph, aut, act, stab, coll;
@@ -1574,7 +1574,7 @@ InstallMethod( CollineationGroup, "for a projective plane",
              fi;
            end;
     SetCollineationAction( coll, act );
-    return coll;   
+    return coll;
   end );
 
 InstallMethod( Span, "for two elements of a projective plane",
@@ -1634,7 +1634,7 @@ InstallOtherMethod( \^, [IsElementOfGeneralisedPolygon, IsPerm],
   end );
 
 InstallMethod( BlockDesignOfGeneralisedPolygon,
-             [ IsProjectivePlane and IsGeneralisedPolygonRep ], 
+             [ IsProjectivePlane and IsGeneralisedPolygonRep ],
   function( gp )
     local points, lines, des;
     if not "design" in RecNames(GAPInfo.PackagesLoaded) then
@@ -1652,7 +1652,7 @@ InstallMethod( BlockDesignOfGeneralisedPolygon,
   end );
 
 InstallMethod( BlockDesignOfGeneralisedPolygon,
-             [ IsGeneralisedPolygon and IsGeneralisedPolygonRep ], 
+             [ IsGeneralisedPolygon and IsGeneralisedPolygonRep ],
   function( gp )
     local points, lines, des, blocks, l, b, elations, gg, orbs;
     if not "design" in RecNames(GAPInfo.PackagesLoaded) then
@@ -1662,7 +1662,7 @@ InstallMethod( BlockDesignOfGeneralisedPolygon,
        return gp!.BlockDesignOfGeneralisedPolygonAttr;
     fi;
     points := AsList(Points(gp));;
-    lines := AsList(Lines(gp));;    
+    lines := AsList(Lines(gp));;
 
 
     if IsElationGQ(gp) and HasElationGroup( gp ) then
@@ -1671,8 +1671,8 @@ InstallMethod( BlockDesignOfGeneralisedPolygon,
 	   orbs := List( Orbits(elations, lines, CollineationAction(elations)), Representative);
 	   orbs := List(orbs, l -> Filtered([1..Size(points)], i -> points[i] * l));
 	   gg := Action(elations, points, CollineationAction( elations ) );
-          Info(InfoFinInG, 1, "Computing block design of generalised polygon...");    
-	   des := BlockDesign(Size(points), orbs, gg ); 
+          Info(InfoFinInG, 1, "Computing block design of generalised polygon...");
+	   des := BlockDesign(Size(points), orbs, gg );
 	elif HasCollineationGroup(gp) then
 	   gg := CollineationGroup(gp);
 	   orbs := List( Orbits(gg, lines, CollineationAction(gg)), Representative);
@@ -1684,7 +1684,7 @@ InstallMethod( BlockDesignOfGeneralisedPolygon,
        for l in lines do
           b := Filtered([1..Size(points)], i -> points[i] * l);
           Add(blocks, b);
-       od;   
+       od;
        des := BlockDesign(Size(points), Set(blocks));
 	fi;
 
@@ -1693,7 +1693,7 @@ InstallMethod( BlockDesignOfGeneralisedPolygon,
   end );
 
 InstallMethod( IncidenceGraphOfGeneralisedPolygon,
-             [ IsGeneralisedPolygon ], 
+             [ IsGeneralisedPolygon ],
   function( gp )
     local points, lines, graph, sz, adj, elations, gg, coll;
     if not "grape" in RecNames(GAPInfo.PackagesLoaded) then
@@ -1702,11 +1702,11 @@ InstallMethod( IncidenceGraphOfGeneralisedPolygon,
     if IsBound(gp!.IncidenceGraphOfGeneralisedPolygonAttr) then
        return gp!.IncidenceGraphOfGeneralisedPolygonAttr;
     fi;
-    points := AsList( Points( gp ) );;  
-    lines := AsList( Lines( gp ) );;    
+    points := AsList( Points( gp ) );;
+    lines := AsList( Lines( gp ) );;
 
     Info(InfoFinInG, 1, "Computing incidence graph of generalised polygon...");
-    
+
     sz := Size(points);
     adj := function(i,j)
              if i <= sz and j > sz then
@@ -1721,13 +1721,13 @@ InstallMethod( IncidenceGraphOfGeneralisedPolygon,
 	if HasCollineationGroup(gp) then
 	   coll := CollineationGroup(gp);
 	   gg := Action(coll, Concatenation(points, lines));  ## here we have not assumed an action!
-	   graph := Graph( gg, [1..sz+Size(lines)], OnPoints, adj );  
+	   graph := Graph( gg, [1..sz+Size(lines)], OnPoints, adj );
 	elif IsElationGQ(gp) and HasElationGroup( gp ) then
 	   elations := ElationGroup(gp);
 	   gg := Action(elations, Concatenation(points, lines), CollineationAction( elations ) );
-	   graph := Graph( gg, [1..sz+Size(lines)], OnPoints, adj );  
+	   graph := Graph( gg, [1..sz+Size(lines)], OnPoints, adj );
 	else
-	   graph := Graph( Group(()), [1..sz+Size(lines)], OnPoints, adj );  
+	   graph := Graph( Group(()), [1..sz+Size(lines)], OnPoints, adj );
 	fi;
 
     Setter( IncidenceGraphOfGeneralisedPolygonAttr )( gp, graph );
@@ -1735,7 +1735,7 @@ InstallMethod( IncidenceGraphOfGeneralisedPolygon,
   end );
 
 InstallMethod( IncidenceGraphOfGeneralisedPolygon,
-             [ IsProjectivePlane and IsGeneralisedPolygonRep ], 
+             [ IsProjectivePlane and IsGeneralisedPolygonRep ],
   function( gp )
     local points, lines, graph, sz, adj;
     if not "grape" in RecNames(GAPInfo.PackagesLoaded) then
@@ -1744,8 +1744,8 @@ InstallMethod( IncidenceGraphOfGeneralisedPolygon,
     if IsBound(gp!.IncidenceGraphOfGeneralisedPolygonAttr) then
        return gp!.IncidenceGraphOfGeneralisedPolygonAttr;
     fi;
-    points := AsList( Points( gp ) );;  
-    lines := AsList( Lines( gp ) );;    
+    points := AsList( Points( gp ) );;
+    lines := AsList( Lines( gp ) );;
 
     Info(InfoFinInG, 1, "Computing incidence graph of projective plane...");
     sz := Size(points);
@@ -1758,7 +1758,7 @@ InstallMethod( IncidenceGraphOfGeneralisedPolygon,
                 return false;
              fi;
            end;
-    graph := Graph( Group(()), [1..2 * sz], OnPoints, adj );  
+    graph := Graph( Group(()), [1..2 * sz], OnPoints, adj );
     Setter( IncidenceGraphOfGeneralisedPolygonAttr )( gp, graph );
     return graph;
   end );
@@ -1772,7 +1772,7 @@ InstallMethod( IncidenceMatrixOfGeneralisedPolygon,
 
     ## The matrix above is the adjacency matrix of the
     ## bipartite incidence graph.
-    
+
     szpoints := Size(Points(gp));
     szlines := Size(Lines(gp));
 
@@ -1805,7 +1805,7 @@ InstallMethod( ViewObj, [ IsElationGQ and HasOrder],
 
 InstallMethod( ViewObj, [ IsElationGQ and HasOrder and HasBasePointOfEGQ ],
   function( p )
-    Print("<EGQ of order ",Order(p), 
+    Print("<EGQ of order ",Order(p),
      " and basepoint ", BasePointOfEGQ(p),">");
   end );
 
@@ -1815,7 +1815,7 @@ InstallMethod( PrintObj, [ IsElationGQ and HasOrder],
      ", consisting of ", Size(p!.points), " points and ", Size(p!.lines)," lines");
   end );
 
-InstallMethod( ViewObj, 
+InstallMethod( ViewObj,
 	"for a projective plane in GP rep that maybe has no order",
 	[ IsProjectivePlane and IsGeneralisedPolygonRep],
 	function( p )
@@ -1830,7 +1830,7 @@ InstallMethod( ViewObj,
 		Print("<projective plane of order ",Order(p)[1],">");
 	end );
 
-InstallMethod( PrintObj, 
+InstallMethod( PrintObj,
 	"for a projective plane in GP rep that has an order",
     [ IsProjectivePlane and IsGeneralisedPolygonRep and HasOrder ],
     function( p )
@@ -1850,7 +1850,7 @@ InstallMethod( PrintObj, [ IsGeneralisedQuadrangle and HasOrder ],
   end );
 
 
-InstallMethod( ViewObj, 
+InstallMethod( ViewObj,
   [ IsClassicalGQ and HasOrder and IsEllipticQuadric],
   function( p )
     Print("Q-(5, ",Size(p!.basefield),")");
@@ -1862,7 +1862,7 @@ InstallMethod( PrintObj,
           Print("EllipticQuadric(5, ",p!.basefield,")");
         end );
 
-InstallMethod( Display, 
+InstallMethod( Display,
   [ IsClassicalGQ and HasOrder and IsEllipticQuadric ],
   function( p )
     Print("Q-(5, ",Size(p!.basefield),")\n");
@@ -1919,42 +1919,42 @@ InstallMethod( PrintObj,
         function( p )
           Print("HermitianPolarSpace(",p!.dimension,",",p!.basefield,")");
         end);
-		
+
 InstallMethod( ViewObj, [ IsClassicalGQ and HasOrder],
   function( p )
-    Print("<classical ", SesquilinearForm(p)!.type, 
+    Print("<classical ", SesquilinearForm(p)!.type,
        " generalised quadrangle of order ",Order(p),">");
   end );
 
 InstallMethod( PrintObj, [ IsClassicalGQ and HasOrder],
   function( p )
-    Print("<classical ", SesquilinearForm(p)!.type, 
-       " generalised quadrangle of order ",Order(p),">"); 
+    Print("<classical ", SesquilinearForm(p)!.type,
+       " generalised quadrangle of order ",Order(p),">");
   end );
 
-InstallMethod( ViewObj, 
-	"for a generalised hexagon with an order",	
+InstallMethod( ViewObj,
+	"for a generalised hexagon with an order",
 	[ IsGeneralisedHexagon and HasOrder ],
 	function( p )
 		Print("<generalised hexagon of order ",Order(p), ">");
 	end );
 
-InstallMethod( Display, 
-	"for a generalised hexagon with an order",	
+InstallMethod( Display,
+	"for a generalised hexagon with an order",
 	[ IsGeneralisedHexagon and HasOrder ],
 	function( p )
 		Print("Generalised hexagon of order ",Order(p),
 			", consisting of ", Size(p!.points), " points and ", Size(p!.lines)," lines");
 	end );
 
-InstallMethod( ViewObj, 
-	"for a generalised hexagon with an order",	
+InstallMethod( ViewObj,
+	"for a generalised hexagon with an order",
 	[ IsGeneralisedOctagon and HasOrder ],
 	function( p )
 		Print("<generalised octagon of order ",Order(p), ">");
 	end );
 
-InstallMethod( PrintObj, 
+InstallMethod( PrintObj,
 	"for a generalised octagon with an order",
 	[ IsGeneralisedOctagon and HasOrder ],
 	function( p )
@@ -1977,7 +1977,7 @@ InstallMethod( ViewObj,
 		Print(">");
 	end );
 
-InstallMethod( PrintObj, 
+InstallMethod( PrintObj,
 	"for elements of a generalised polygon",
 	[ IsAllElementsOfGeneralisedPolygon and IsAllElementsOfGeneralisedPolygonRep ],
 	function( vs )
@@ -1988,7 +1988,7 @@ InstallMethod( PrintObj,
 # Display methods: Elements
 #############################################################################
 
-InstallMethod( ViewObj, 
+InstallMethod( ViewObj,
 	"for an element of a Kantor family",
 	[ IsElementOfKantorFamily ],
 	function( v )
@@ -1997,14 +1997,14 @@ InstallMethod( ViewObj,
 		fi;
 	end );
 
-InstallMethod( PrintObj, 
+InstallMethod( PrintObj,
 	"for an element of a Kantor family",
 	[ IsElementOfKantorFamily ],
 	function( v )
 		Print(v!.obj);
 	end );
 
-InstallMethod( ViewObj, 
+InstallMethod( ViewObj,
 	"for an element of a generalised polygon",
 	[ IsElementOfGeneralisedPolygon ],
 	function( v )
@@ -2018,5 +2018,5 @@ InstallMethod( PrintObj,
 	[ IsElementOfGeneralisedPolygon ],
 	function( v )
 		Print(v!.obj);
-	end );  
-    
+	end );
+

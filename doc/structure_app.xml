@@ -7,12 +7,12 @@ groups_app.xml    FinInG package documentation
                                                                  Michel Lavrauw
                                                                 Max Neunhoeffer
 
-  Copyright (C) 2018,	Colorado State University
+  Copyright (C) 2018,   Colorado State University
                         Sabancı Üniversitesi
-						Università degli Studi di Padova
-						Universiteit Gent
-						University of St. Andrews
-						University of Western Australia
+                        Università degli Studi di Padova
+                        Universiteit Gent
+                        University of St. Andrews
+                        University of Western Australia
                         Vrije Universiteit Brussel
  
 This appendix gives more (technical) information on structure of FinInG.

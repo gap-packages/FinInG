@@ -17,7 +17,7 @@ pg := PG(2,49);
 group := CollineationGroup(HermitianPolarSpace(2,49));
 orbs := FiningOrbits(group,Points(pg));
 orbs := FiningOrbits(group,List(Points(pg)),OnProjSubspaces);
-orbs := FiningOrbits(group,Lines(pg)); 
-orbs := FiningOrbits(group,List(Lines(pg)),OnProjSubspaces); 
+orbs := FiningOrbits(group,Lines(pg));
+orbs := FiningOrbits(group,List(Lines(pg)),OnProjSubspaces);
 quit;
 

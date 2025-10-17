@@ -6,9 +6,9 @@ blocks := [
   [ 3, 6, 11, 16, 21 ], [ 3, 7, 10, 17, 20 ], [ 3, 8, 13, 14, 19 ],
   [ 3, 9, 12, 15, 18 ], [ 4, 6, 12, 17, 19 ], [ 4, 7, 13, 16, 18 ],
   [ 4, 8, 10, 15, 21 ], [ 4, 9, 11, 14, 20 ], [ 5, 6, 13, 15, 20 ],
-  [ 5, 7, 12, 14, 21 ], [ 5, 8, 11, 17, 18 ], [ 5, 9, 10, 16, 19 ] ];; 
-gp := GeneralisedPolygonByBlocks( blocks ); 
-l := Random(Lines(gp)); 
+  [ 5, 7, 12, 14, 21 ], [ 5, 8, 11, 17, 18 ], [ 5, 9, 10, 16, 19 ] ];;
+gp := GeneralisedPolygonByBlocks( blocks );
+l := Random(Lines(gp));
 pts := ShadowOfElement(gp,l,1);
 List(pts);
 p := Random(Points(gp));

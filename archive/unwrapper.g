@@ -12,7 +12,7 @@ DeclareOperation( "\^", [IsElementOfIncidenceStructure, IsUnwrapper ] );
 #############################################################################
 #O  \^( <e>, <u> )
 # unwrapping the element x
-## 
+##
 InstallMethod(
 InstallMethod( \^,
 	"for an element of a incidence structure and an unwrapper",
@@ -31,7 +31,7 @@ DeclareOperation( "\^", [IsEmptySubspace, IsUnwrapper] );
 #############################################################################
 #O  \^( <e>, <u> )
 # unwrapping the empty subspace
-## 
+##
 InstallMethod( \^, "unwrapping an empty subspace",
   [ IsEmptySubspace, IsUnwrapper ],
   function( e, u )
@@ -46,7 +46,7 @@ InstallMethod( \^, "unwrapping an empty subspace",
 # If the object "v" to be unwrapped is a point of a vector space, then we do not want to use
 # return v!.obj, but we want to return a list with one vector, i.e. [v!.obj]
 # e.g. if p is a point of a projective space
-# gap> p^_; 
+# gap> p^_;
 # will return a list, with the coordinate vector of the point p
 ##
 InstallMethod( \^,

@@ -79,17 +79,17 @@ DeclareOperation( "VeroneseVariety", [IsPosInt, IsField ]);
 DeclareOperation( "VeroneseVariety", [IsPosInt, IsPosInt]);
 
 ## List of projective spaces
-DeclareOperation( "SegreVariety", [ IsHomogeneousList ]);  
+DeclareOperation( "SegreVariety", [ IsHomogeneousList ]);
 
 ## List of dimensions and field
-DeclareOperation( "SegreVariety", [ IsHomogeneousList, IsField ]);  
+DeclareOperation( "SegreVariety", [ IsHomogeneousList, IsField ]);
 
 ## Just two projective spaces
-DeclareOperation( "SegreVariety", [ IsProjectiveSpace, IsProjectiveSpace ]);  
-DeclareOperation( "SegreVariety", [ IsPosInt, IsPosInt, IsField ]);  
+DeclareOperation( "SegreVariety", [ IsProjectiveSpace, IsProjectiveSpace ]);
+DeclareOperation( "SegreVariety", [ IsPosInt, IsPosInt, IsField ]);
 
 DeclareOperation( "ProductOfIterators", [IsList]);
-DeclareOperation( "ConicOnFivePoints",  [ IsHomogeneousList and 
+DeclareOperation( "ConicOnFivePoints",  [ IsHomogeneousList and
                               IsSubspaceOfProjectiveSpaceCollection ] );
 
 

@@ -1,6 +1,6 @@
 ## The example below computes the image of a plane in
 ## projective space under a random element, and then
-## computes all planes. 
+## computes all planes.
 
 
 pg := ProjectiveSpace(3, 3);

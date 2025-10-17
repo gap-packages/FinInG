@@ -103,7 +103,7 @@ gens := GeneratorsOfGroup(group2);
 pts := AsList(Points(gq2));
 List(gens,g->Collected(List(pts,x->PreImageElm(em,x^g)=PreImageElm(em,x)^(PreImageElm(hom,g)))));
 
-#use one argument (1) 
+#use one argument (1)
 gq1 := PolarSpace(qform);
 em := NaturalDuality(gq1);
 gq2 := AmbientGeometry(Range(em));
@@ -120,7 +120,7 @@ gens := GeneratorsOfGroup(group2);
 pts := AsList(Points(gq2));
 List(gens,g->Collected(List(pts,x->PreImageElm(em,x^g)=PreImageElm(em,x)^(PreImageElm(hom,g)))));
 
-#use one argument (2) 
+#use one argument (2)
 gq1 := PolarSpace(wform);
 em := NaturalDuality(gq1);
 gq2 := AmbientGeometry(Range(em));
@@ -247,7 +247,7 @@ gens := GeneratorsOfGroup(group2);
 pts := AsList(Points(gq2));
 List(gens,g->Collected(List(pts,x->PreImageElm(em,x^g)=PreImageElm(em,x)^(PreImageElm(hom,g)))));
 
-#use one argument (1) 
+#use one argument (1)
 gq1 := PolarSpace(qform);
 CollineationGroup(gq1);
 em := NaturalDuality(gq1);
@@ -265,7 +265,7 @@ gens := GeneratorsOfGroup(group2);
 pts := AsList(Lines(gq2));
 List(gens,g->Collected(List(pts,x->PreImageElm(em,x^g)=PreImageElm(em,x)^(PreImageElm(hom,g)))));
 
-#use one argument (2) 
+#use one argument (2)
 gq1 := PolarSpace(hform);
 CollineationGroup(gq1);
 em := NaturalDuality(gq1);
@@ -680,13 +680,13 @@ List(gens2,g->Collected(List(els,x->PreImageElm(em,x^g)=PreImageElm(em,x)^(PreIm
 geom1 := SymplecticSpace(n,q);
 geom2 := HermitianPolarSpace(n,q^h);
 
-f1 := geom1!.basefield; q1 := Size(f1); 
-f2 := geom2!.basefield; q2 := Size(f2);       
+f1 := geom1!.basefield; q1 := Size(f1);
+f2 := geom2!.basefield; q2 := Size(f2);
 type1 := PolarSpaceType(geom1);
 type2 := PolarSpaceType(geom2);
 
 gram := GramMatrix( SesquilinearForm(geom1) );
-gamma := First( f2, t -> not IsZero(t) and IsZero(t^q1+t)); 
+gamma := First( f2, t -> not IsZero(t) and IsZero(t^q1+t));
 newgram := gamma * gram;
 form := HermitianFormByMatrix(newgram, f2);
 geom3 := PolarSpace(form);
@@ -696,7 +696,7 @@ invchange := change^-1;
 
 func := function( el )
 	return VectorSpaceToElement(geom2,Unpack(el!.obj) * invchange);
-end; 
+end;
 
 basis := Basis(AsVectorSpace(f1,f2));
 d := geom1!.dimension+1;
@@ -719,7 +719,7 @@ prefun := function( el )
 		nvec := vec / First(vec,x->not IsZero(x));
 		if not ForAll( nvec, i -> i in f1 ) then
 			Error("Element is not in the range of the geometry morphism");
-		fi;	
+		fi;
 		ConvertToVectorRepNC(nvec,f1); #necessary, also if appearantly vec is already over f1.
 	else
 		bgen := BlownUpMat(basis,vec);
@@ -733,4 +733,4 @@ prefun := function( el )
 	fi;
 	return VectorSpaceToElement(geom1,nvec);
 end;
-	
+
