@@ -42,7 +42,7 @@ Persons := [
     IsAuthor      := true,
     IsMaintainer  := true,
     Email         := "bamberg@maths.uwa.edu.au",
-    WWWHome       := "http://school.maths.uwa.edu.au/~bamberg/",
+    WWWHome       := "https://johnbamberg.github.io",
     PostalAddress := Concatenation( [
                        "John Bamberg\n",
                        "School of Mathematics and Statistics\n",
