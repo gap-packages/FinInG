@@ -1,13 +1,13 @@
 #############################################################################
-##  
-##  PackageInfo.g for the package `FinInG'                 
+##
+##  PackageInfo.g for the package `FinInG'
 ##                                                               John Bamberg
 ##                                                               Anton Betten
 ##                                                              Philippe Cara
 ##                                                               Jan De Beule
 ##                                                             Michel Lavrauw
 ##                                                            Max Neunhoeffer
-##  
+##
 
 SetPackageInfo( rec(
 
@@ -36,7 +36,7 @@ ArchiveURL      := Concatenation( ~.SourceRepository.URL,
 ArchiveFormats := ".tar.gz .tar.bz2",
 
 Persons := [
-  rec( 
+  rec(
     LastName      := "Bamberg",
     FirstNames    := "John",
     IsAuthor      := true,
@@ -53,7 +53,7 @@ Persons := [
     Place         := "Perth",
     Institution   := "The University of Western Australia",
   ),
-  rec( 
+  rec(
     LastName      := "Betten",
     FirstNames    := "Anton",
     IsAuthor      := true,
@@ -104,7 +104,7 @@ Persons := [
     Place         := "Brussels",
     Institution   := "Vrije Universiteit Brussel",
   ),
-  rec( 
+  rec(
     LastName      := "Lavrauw",
     FirstNames    := "Michel",
     IsAuthor      := true,
@@ -122,7 +122,7 @@ Persons := [
     Place         := "Koper",
     Institution   := "University of Primorska",
   ),
-  rec( 
+  rec(
     LastName      := "Neunhoeffer",
     FirstNames    := "Max",
     IsAuthor      := true,
@@ -170,7 +170,7 @@ AbstractHTML := "<span class=\"pkgname\">FinInG</span> is a package for computat
  in its facility with matrix and permutation groups.",
 
 PackageDoc := rec(
-  # use same as in GAP            
+  # use same as in GAP
   BookName  := "FinInG",
   ArchiveURLSubset := ["doc"],
   HTMLStart := "doc/chap0_mj.html",

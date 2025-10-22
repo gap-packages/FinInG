@@ -8,12 +8,12 @@
 ##                                                            Michel Lavrauw
 ##                                                           Max Neunhoeffer
 ##
-##  Copyright 2018	Colorado State University
+##  Copyright 2018  Colorado State University
 ##                  Sabancı Üniversitesi
-##					Università degli Studi di Padova
-##					Universiteit Gent
-##					University of St. Andrews
-##					University of Western Australia
+##                  Università degli Studi di Padova
+##                  Universiteit Gent
+##                  University of St. Andrews
+##                  University of Western Australia
 ##                  Vrije Universiteit Brussel
 ##
 ##
@@ -23,7 +23,7 @@
 ##
 ## 11/02/13 ml
 ## These methods have been tested on all projective spaces and classical polar spaces
-## The champion in ALL cases is FiningStabiliserOrb ... BY FAR!!! using the ORB 
+## The champion in ALL cases is FiningStabiliserOrb ... BY FAR!!! using the ORB
 ## package command ORB_EstimateOrbitSize.
 ## Next fastest method is the FiningStabiliser using the Stab method from the ORB package.
 ## There are small cases where the FiningStabiliserPerm (using permutation representation)
@@ -32,7 +32,7 @@
 ## in some small dimensional hermitian cases (e.g. H(3,5^2), H(2,7^2), H(2,9^2)), but
 ## in all other cases the FiningStabiliser is the faster.
 ##
-## 
+##
 #############################################################################
 
 
@@ -47,11 +47,11 @@
 #  returns the orbit of e under g, using action function act.
 ##
 InstallMethod( FiningOrbit,
-	"for a collineation group, an element of a projective space and an action function",
-	[ IsProjectiveGroupWithFrob, IsElementOfIncidenceStructure, IsFunction],
-	function(g,e,act)
-		return Enumerate(Orb(g,e,act));
-	end );
+    "for a collineation group, an element of a projective space and an action function",
+    [ IsProjectiveGroupWithFrob, IsElementOfIncidenceStructure, IsFunction],
+    function(g,e,act)
+        return Enumerate(Orb(g,e,act));
+    end );
 
 # ADDED 26/03/14 ml
 # CHANGED 08/04/14 jb
@@ -61,11 +61,11 @@ InstallMethod( FiningOrbit,
 # and g a collineation group, such that OnProjSubspaces will be the natural action to use.
 ##
 InstallMethod( FiningOrbit,
-	"for a collineation group, an element of a projective space",
-	[ IsProjectiveGroupWithFrob,  IsSubspaceOfProjectiveSpace ],
-	function(g,e )
-		return FiningOrbit(g,e,OnProjSubspaces);
-	end );
+    "for a collineation group, an element of a projective space",
+    [ IsProjectiveGroupWithFrob,  IsSubspaceOfProjectiveSpace ],
+    function(g,e )
+        return FiningOrbit(g,e,OnProjSubspaces);
+    end );
 
 # ADDED 08/04/14 jb
 #############################################################################
@@ -74,23 +74,23 @@ InstallMethod( FiningOrbit,
 # and g a collineation group, such that OnAffineSubspaces will be the natural action to use.
 ##
 InstallMethod( FiningOrbit,
-	"for a collineation group, an element of a affine space",
-	[ IsProjectiveGroupWithFrob,  IsSubspaceOfAffineSpace ],
-	function(g,e )
-		return FiningOrbit(g,e,OnAffineSubspaces);
-	end );
-	
+    "for a collineation group, an element of a affine space",
+    [ IsProjectiveGroupWithFrob,  IsSubspaceOfAffineSpace ],
+    function(g,e )
+        return FiningOrbit(g,e,OnAffineSubspaces);
+    end );
+
 # 26/03/14 CHECKED ml
 #############################################################################
 #O  FiningOrbit( <g>, <e>, <act> )
 #  returns the orbit of e under g, using action function act.
 ##
 InstallMethod( FiningOrbit,
-	"for a collineation group, an element of a projective space and an action function",
-	[ IsProjectiveGroupWithFrob, CategoryCollections(IsElementOfIncidenceStructure), IsFunction],
-	function(g,e,act)
-		return Enumerate(Orb(g,e,act));
-	end );
+    "for a collineation group, an element of a projective space and an action function",
+    [ IsProjectiveGroupWithFrob, CategoryCollections(IsElementOfIncidenceStructure), IsFunction],
+    function(g,e,act)
+        return Enumerate(Orb(g,e,act));
+    end );
 
 
 # ADDED 26/03/14 ml
@@ -100,11 +100,11 @@ InstallMethod( FiningOrbit,
 # and g a collineation group, such that OnProjSubspaces will be the natural action to use.
 ##
 InstallMethod( FiningOrbit,
-	"for a collineation group, an element of a projective space",
-	[ IsProjectiveGroupWithFrob, CategoryCollections(IsElementOfIncidenceStructure) ],
-	function(g,e )
-		return FiningOrbit(g,e,OnProjSubspaces);
-	end );
+    "for a collineation group, an element of a projective space",
+    [ IsProjectiveGroupWithFrob, CategoryCollections(IsElementOfIncidenceStructure) ],
+    function(g,e )
+        return FiningOrbit(g,e,OnProjSubspaces);
+    end );
 
 # CHECKED 26/03/14 ml
 # CHANGED 08/04/14 jb
@@ -113,29 +113,29 @@ InstallMethod( FiningOrbit,
 #  returns the orbits of e under g, using action function act.
 ##
 InstallMethod( FiningOrbits,
-	"for a group, a homogeneous list, and an action function",
-	[ IsGroup, IsHomogeneousList, IsFunction],
-	function(g,set,action)
-	local orbs, set2, x, o, upto, newupto;
-	orbs := [];
-	set2 := ShallowCopy(set);
-	set2 := Set(set2);;
-	upto := 0;
-	repeat
-		x := set2[1];
-		o := Enumerate(Orb(g, x, action));
-		Add(orbs, o);
-		SubtractSet(set2, AsList(o));
+    "for a group, a homogeneous list, and an action function",
+    [ IsGroup, IsHomogeneousList, IsFunction],
+    function(g,set,action)
+    local orbs, set2, x, o, upto, newupto;
+    orbs := [];
+    set2 := ShallowCopy(set);
+    set2 := Set(set2);;
+    upto := 0;
+    repeat
+        x := set2[1];
+        o := Enumerate(Orb(g, x, action));
+        Add(orbs, o);
+        SubtractSet(set2, AsList(o));
         newupto := Int(100 * (Size(set)-Size(set2))/Size(set));
-		if newupto <> upto then
-			upto:=newupto;
-			if InfoLevel(InfoFinInG) > 0 then
-				Print(upto, "%..\c");
-			fi;
-		fi;
-	until IsEmpty(set2);
-	return orbs;
-	end );
+        if newupto <> upto then
+            upto:=newupto;
+            if InfoLevel(InfoFinInG) > 0 then
+                Print(upto, "%..\c");
+            fi;
+        fi;
+    until IsEmpty(set2);
+    return orbs;
+    end );
 
 # ADDED 21/06/16 jdb
 #############################################################################
@@ -175,11 +175,11 @@ InstallMethod( FiningOrbitsDomain,
 # and g a collineation group, such that OnProjSubspaces will be the natural action to use.
 ##
 InstallMethod( FiningOrbits,
-	"for a collineation group, elements of a projective space",
-	[ IsProjectiveGroupWithFrob,  IsSubspaceOfProjectiveSpaceCollection and IsHomogeneousList  ],
-	function(g,e )
-		return FiningOrbits(g,e,OnProjSubspaces);
-	end );
+    "for a collineation group, elements of a projective space",
+    [ IsProjectiveGroupWithFrob,  IsSubspaceOfProjectiveSpaceCollection and IsHomogeneousList  ],
+    function(g,e )
+        return FiningOrbits(g,e,OnProjSubspaces);
+    end );
 
 # ADDED 08/04/14 jb
 #############################################################################
@@ -188,11 +188,11 @@ InstallMethod( FiningOrbits,
 # and g a collineation group, such that OnAffineSubspaces will be the natural action to use.
 ##
 InstallMethod( FiningOrbits,
-	"for a collineation group, elements of an affine space",
-	[ IsProjectiveGroupWithFrob, IsSubspaceOfAffineSpaceCollection and IsHomogeneousList ],
-	function(g,e )
-		return FiningOrbits(g,e,OnAffineSubspaces);
-	end );
+    "for a collineation group, elements of an affine space",
+    [ IsProjectiveGroupWithFrob, IsSubspaceOfAffineSpaceCollection and IsHomogeneousList ],
+    function(g,e )
+        return FiningOrbits(g,e,OnAffineSubspaces);
+    end );
 
 # ADDED 14/04/14 jb
 #############################################################################
@@ -201,12 +201,12 @@ InstallMethod( FiningOrbits,
 #  and g a collineation group, such that OnProjSubspaces will be the natural action to use.
 ##
 InstallMethod( FiningOrbits,
-	"for a collineation group, elements-collection of a projective space",
-	[ IsProjectiveGroupWithFrob,  IsSubspacesOfProjectiveSpace ],
-	function(g,e )
-		return FiningOrbits(g,AsList(e),OnProjSubspaces);
-	end );
-	
+    "for a collineation group, elements-collection of a projective space",
+    [ IsProjectiveGroupWithFrob,  IsSubspacesOfProjectiveSpace ],
+    function(g,e )
+        return FiningOrbits(g,AsList(e),OnProjSubspaces);
+    end );
+
 # ADDED 14/04/14 jb
 #############################################################################
 #O  FiningOrbits( <g>, <e> )
@@ -214,11 +214,11 @@ InstallMethod( FiningOrbits,
 #  and g a collineation group, such that OnAffineSubspaces will be the natural action to use.
 ##
 InstallMethod( FiningOrbits,
-	"for a collineation group, elements-collection of an affine space",
-	[ IsProjectiveGroupWithFrob,  IsSubspacesOfAffineSpace ],
-	function(g,e )
-		return FiningOrbits(g,AsList(e),OnAffineSubspaces);
-	end );
+    "for a collineation group, elements-collection of an affine space",
+    [ IsProjectiveGroupWithFrob,  IsSubspacesOfAffineSpace ],
+    function(g,e )
+        return FiningOrbits(g,AsList(e),OnAffineSubspaces);
+    end );
 
 # ADDED 14/04/14 jb
 #############################################################################
@@ -227,11 +227,11 @@ InstallMethod( FiningOrbits,
 # and g a collineation group, such that OnProjSubspaces will be the natural action to use.
 ##
 InstallMethod( FiningOrbits,
-	"for a collineation group, shadow space of a projective space",
-	[ IsProjectiveGroupWithFrob, IsShadowSubspacesOfProjectiveSpace	],
-	function(g,e )
-		return FiningOrbits(g,AsList(e),OnProjSubspaces);
-	end );
+    "for a collineation group, shadow space of a projective space",
+    [ IsProjectiveGroupWithFrob, IsShadowSubspacesOfProjectiveSpace ],
+    function(g,e )
+        return FiningOrbits(g,AsList(e),OnProjSubspaces);
+    end );
 
 # ADDED 14/04/14 jb
 #############################################################################
@@ -240,12 +240,12 @@ InstallMethod( FiningOrbits,
 # and g a collineation group, such that OnAffineSubspaces will be the natural action to use.
 ##
 InstallMethod( FiningOrbits,
-	"for a collineation group, shadow space of an affine space",
-	[ IsProjectiveGroupWithFrob, IsShadowSubspacesOfAffineSpace	],
-	function(g,e )
-		return FiningOrbits(g,AsList(e),OnAffineSubspaces);
-	end );
-	
+    "for a collineation group, shadow space of an affine space",
+    [ IsProjectiveGroupWithFrob, IsShadowSubspacesOfAffineSpace ],
+    function(g,e )
+        return FiningOrbits(g,AsList(e),OnAffineSubspaces);
+    end );
+
 # ADDED 14/04/14 jb
 #############################################################################
 #O  FiningOrbits( <g>, <e> )
@@ -253,11 +253,11 @@ InstallMethod( FiningOrbits,
 # and g a collineation group, such that OnProjSubspaces will be the natural action to use.
 ##
 InstallMethod( FiningOrbits,
-	"for a collineation group, shadow space of a polar space",
-	[ IsProjectiveGroupWithFrob, IsShadowSubspacesOfClassicalPolarSpace	],
-	function(g,e )
-		return FiningOrbits(g,AsList(e),OnProjSubspaces);
-	end );
+    "for a collineation group, shadow space of a polar space",
+    [ IsProjectiveGroupWithFrob, IsShadowSubspacesOfClassicalPolarSpace ],
+    function(g,e )
+        return FiningOrbits(g,AsList(e),OnProjSubspaces);
+    end );
 
 # ADDED 14/04/14 jb
 #############################################################################
@@ -266,11 +266,11 @@ InstallMethod( FiningOrbits,
 # and g a collineation group, such that OnAffineSubspaces will be the natural action to use.
 ##
 InstallMethod( FiningOrbits,
-	"for a collineation group, parallel class of an affine space",
-	[ IsProjectiveGroupWithFrob, IsParallelClassOfAffineSpace	],
-	function(g,e )
-		return FiningOrbits(g,AsList(e),OnAffineSubspaces);
-	end );
+    "for a collineation group, parallel class of an affine space",
+    [ IsProjectiveGroupWithFrob, IsParallelClassOfAffineSpace   ],
+    function(g,e )
+        return FiningOrbits(g,AsList(e),OnAffineSubspaces);
+    end );
 
 
 ############################################################
@@ -283,23 +283,23 @@ InstallMethod( FiningOrbits,
 # helper operation, returns the stabiliser of e under g, using action function act.
 ##
 InstallMethod( FiningElementStabiliserOp,
-	"for a collineation group, an element of an incidence structure, and an action function",
-	[ IsGroup, IsElementOfIncidenceStructure, IsFunction],
-	
-	# JB: 13/04/14
-	# Not happy with this code. Some flaws:
-	# (1) the record "size" is wrong. It should be the degree.
-	# (2) it assumes that the size of g is known, so it computes it. I've asked Max what best-practice should be.
-	
-	function(g,e,act)
-		local t,size, stab;
-		t := e!.type;
-		size := Size(ElementsOfIncidenceStructure(e!.geo,e!.type)); #strongly using here that we know the representation well...
-		stab := Stab(g,e,act,rec( Size:=Size(g), DoEstimate := size )).stab;
-		return stab;
-		
-	end );
-		
+    "for a collineation group, an element of an incidence structure, and an action function",
+    [ IsGroup, IsElementOfIncidenceStructure, IsFunction],
+
+    # JB: 13/04/14
+    # Not happy with this code. Some flaws:
+    # (1) the record "size" is wrong. It should be the degree.
+    # (2) it assumes that the size of g is known, so it computes it. I've asked Max what best-practice should be.
+
+    function(g,e,act)
+        local t,size, stab;
+        t := e!.type;
+        size := Size(ElementsOfIncidenceStructure(e!.geo,e!.type)); #strongly using here that we know the representation well...
+        stab := Stab(g,e,act,rec( Size:=Size(g), DoEstimate := size )).stab;
+        return stab;
+
+    end );
+
 # # 26/03/14 CHECKED ml
 #############################################################################
 #O  FiningStabiliser( <g>, <e> )
@@ -307,11 +307,11 @@ InstallMethod( FiningElementStabiliserOp,
 # and g a collineation group, such that OnProjSubspaces will be the natural action to use.
 # then the FiningElementStabiliserOp is called.
 ##
-InstallMethod( FiningStabiliser,	
-	"for a collineation group and a subspace of a projective space",
-	[ IsProjectiveGroupWithFrob, IsSubspaceOfProjectiveSpace],
-	function(fining_group,el)
-	return FiningElementStabiliserOp(fining_group,el,OnProjSubspaces);
+InstallMethod( FiningStabiliser,
+    "for a collineation group and a subspace of a projective space",
+    [ IsProjectiveGroupWithFrob, IsSubspaceOfProjectiveSpace],
+    function(fining_group,el)
+    return FiningElementStabiliserOp(fining_group,el,OnProjSubspaces);
 end );
 
 # # 29/03/14 CHECKED jb
@@ -321,11 +321,11 @@ end );
 # and g a collineation group, such that OnAffineSubspaces will be the natural action to use.
 # then the FiningElementStabiliserOp is called.
 ##
-InstallMethod( FiningStabiliser,	
-	"for a collineation group and a subspace of a affine space",
-	[ IsProjectiveGroupWithFrob, IsSubspaceOfAffineSpace],
-	function(fining_group,el)
-	return FiningElementStabiliserOp(fining_group,el,OnAffineSubspaces);
+InstallMethod( FiningStabiliser,
+    "for a collineation group and a subspace of a affine space",
+    [ IsProjectiveGroupWithFrob, IsSubspaceOfAffineSpace],
+    function(fining_group,el)
+    return FiningElementStabiliserOp(fining_group,el,OnAffineSubspaces);
 end );
 
 # # 26/03/14 CHECKED ml
@@ -336,12 +336,12 @@ end );
 # it is extremely fast. Much faster than the other methods here, in ALL cases.
 # again the natural action OnProjSubspaces is assumed.
 ##
-InstallMethod( FiningStabiliserOrb, 
-	[IsProjectiveGroupWithFrob, IsSubspaceOfProjectiveSpace],
-	function(fining_group,el)
-		local stab;
-		stab := SubgroupNC(fining_group, ORB_EstimateOrbitSize(ProductReplacer(fining_group),el,OnProjSubspaces,15,1000000,60000).Sgens);
-	return stab;
+InstallMethod( FiningStabiliserOrb,
+    [IsProjectiveGroupWithFrob, IsSubspaceOfProjectiveSpace],
+    function(fining_group,el)
+        local stab;
+        stab := SubgroupNC(fining_group, ORB_EstimateOrbitSize(ProductReplacer(fining_group),el,OnProjSubspaces,15,1000000,60000).Sgens);
+    return stab;
 end );
 
 # # 29/03/14 CHECKED jb
@@ -352,12 +352,12 @@ end );
 # it is extremely fast. Much faster than the other methods here, in ALL cases.
 # again the natural action OnAffineSubspaces is assumed.
 ##
-InstallMethod( FiningStabiliserOrb, 
-	[IsProjectiveGroupWithFrob, IsSubspaceOfAffineSpace],
-	function(fining_group,el)
-		local stab;
-		stab := Group(ORB_EstimateOrbitSize(ProductReplacer(fining_group),el,OnAffineSubspaces,15,1000000,60000).Sgens);
-	return stab;
+InstallMethod( FiningStabiliserOrb,
+    [IsProjectiveGroupWithFrob, IsSubspaceOfAffineSpace],
+    function(fining_group,el)
+        local stab;
+        stab := Group(ORB_EstimateOrbitSize(ProductReplacer(fining_group),el,OnAffineSubspaces,15,1000000,60000).Sgens);
+    return stab;
 end );
 
 # # 26/03/14 CHECKED jb
@@ -368,13 +368,13 @@ end );
 # assumed.
 ##
 InstallMethod( FiningSetwiseStabiliser,
-	"for a set of elements of an projective space of a given type",
-	[IsProjectiveGroupWithFrob,  IsSubspaceOfProjectiveSpaceCollection and IsHomogeneousList],
-	function(g,set)
-		local stab;
-		stab := SetwiseStabilizer(g, OnProjSubspaces, set)!.setstab;
-		SetParent(stab, g);    # since Max forgot to put this command in his code
-		return stab;
+    "for a set of elements of an projective space of a given type",
+    [IsProjectiveGroupWithFrob,  IsSubspaceOfProjectiveSpaceCollection and IsHomogeneousList],
+    function(g,set)
+        local stab;
+        stab := SetwiseStabilizer(g, OnProjSubspaces, set)!.setstab;
+        SetParent(stab, g);    # since Max forgot to put this command in his code
+        return stab;
 end );
 
 # # 29/03/14 CHECKED jb
@@ -385,13 +385,13 @@ end );
 # assumed.
 ##
 InstallMethod( FiningSetwiseStabiliser,
-	"for a set of elements of an affine space of a given type",
-	[IsProjectiveGroupWithFrob,  IsSubspaceOfAffineSpaceCollection and IsHomogeneousList],
-	function(g,set)
-		local stab;
-		stab := SetwiseStabilizer(g, OnAffineSubspaces, set)!.setstab;		
-		SetParent(stab, g);    # since Max forgot to put this command in his code
-		return stab;
+    "for a set of elements of an affine space of a given type",
+    [IsProjectiveGroupWithFrob,  IsSubspaceOfAffineSpaceCollection and IsHomogeneousList],
+    function(g,set)
+        local stab;
+        stab := SetwiseStabilizer(g, OnAffineSubspaces, set)!.setstab;
+        SetParent(stab, g);    # since Max forgot to put this command in his code
+        return stab;
 end );
 
 #############################
@@ -401,59 +401,59 @@ end );
 
 # 27/03/14 CHECKED ml
 InstallMethod( FiningStabiliserPerm, [IsProjectiveGroupWithFrob, IsElementOfIncidenceStructure],
-	# this uses the ActionHomomorphism and the Stabiliser method in standard gap
-		function(fining_group,el)
-		local type,geo,hom,enum,nr,stab,gens,x;
-		type:=el!.type;
-		geo:=el!.geo;
-		hom:=ActionHomomorphism(fining_group,ElementsOfIncidenceStructure(geo,type),OnProjSubspaces);
-		enum:=HomeEnumerator(UnderlyingExternalSet(hom));;
-		nr:=Position(enum,el);
-		stab:=Stabilizer(Image(hom),nr); 
-		gens:=GeneratorsOfGroup(stab);;
-		gens:=List(gens,x->PreImagesRepresentative(hom,x));
-		stab:=GroupWithGenerators(gens);
-		return stab;
+    # this uses the ActionHomomorphism and the Stabiliser method in standard gap
+        function(fining_group,el)
+        local type,geo,hom,enum,nr,stab,gens,x;
+        type:=el!.type;
+        geo:=el!.geo;
+        hom:=ActionHomomorphism(fining_group,ElementsOfIncidenceStructure(geo,type),OnProjSubspaces);
+        enum:=HomeEnumerator(UnderlyingExternalSet(hom));;
+        nr:=Position(enum,el);
+        stab:=Stabilizer(Image(hom),nr);
+        gens:=GeneratorsOfGroup(stab);;
+        gens:=List(gens,x->PreImagesRepresentative(hom,x));
+        stab:=GroupWithGenerators(gens);
+        return stab;
 end );
 
 # 27/03/14 CHECKED ml
-InstallMethod( FiningStabiliserPerm2, 
-	[IsProjectiveGroupWithFrob, IsElementOfIncidenceStructure],
-	# this uses the Stab method from the genss package AND the ActionHomomorphism
-		function(fining_group,el)
-		local type,geo,hom,enum,nr,size,stab,gens,x,im;
-		type:=el!.type;
-		geo:=el!.geo;
-		hom:=ActionHomomorphism(fining_group,ElementsOfIncidenceStructure(geo,type),OnProjSubspaces);
-		enum:=HomeEnumerator(UnderlyingExternalSet(hom));;
-		nr:=Position(enum,el);
-		size:=Size(ElementsOfIncidenceStructure(geo,type));
-		im:=Image(hom);
-		SetSize(im,Size(fining_group));
-		stab:=Stab(im,nr,OnPoints,rec( DoEstimate := size )).stab;
-		#stab:=Stabiliser(Image(hom),nr);
-		gens:=GeneratorsOfGroup(stab);;
-		gens:=List(gens,x->PreImagesRepresentative(hom,x));
-		stab:=GroupWithGenerators(gens);
-		return stab;
+InstallMethod( FiningStabiliserPerm2,
+    [IsProjectiveGroupWithFrob, IsElementOfIncidenceStructure],
+    # this uses the Stab method from the genss package AND the ActionHomomorphism
+        function(fining_group,el)
+        local type,geo,hom,enum,nr,size,stab,gens,x,im;
+        type:=el!.type;
+        geo:=el!.geo;
+        hom:=ActionHomomorphism(fining_group,ElementsOfIncidenceStructure(geo,type),OnProjSubspaces);
+        enum:=HomeEnumerator(UnderlyingExternalSet(hom));;
+        nr:=Position(enum,el);
+        size:=Size(ElementsOfIncidenceStructure(geo,type));
+        im:=Image(hom);
+        SetSize(im,Size(fining_group));
+        stab:=Stab(im,nr,OnPoints,rec( DoEstimate := size )).stab;
+        #stab:=Stabiliser(Image(hom),nr);
+        gens:=GeneratorsOfGroup(stab);;
+        gens:=List(gens,x->PreImagesRepresentative(hom,x));
+        stab:=GroupWithGenerators(gens);
+        return stab;
 end );
 
 
 # 27/03/14 CHECKED ml
 InstallMethod( FixedSubspaces,
-	"for a projectivity and a projective space",
-	[IsProjectiveGroupWithFrob, IsProjectiveSpace],
-	# fixed subspaces by John.
-	function(g,pg)
-	local gens, md, fixed, flag;
-	gens := GeneratorsOfGroup(g);
-	flag := ForAll(gens, t -> IsOne(t!.frob));
-	if not flag then
-		Error("Group contains field automorphisms.");
-	fi;
-	md := GModuleByMats(List(gens,t->Unpack(t!.mat)), pg!.basefield);
-	fixed := Filtered(MTX.BasesSubmodules(md),t->not Size(t) in [0,Rank(pg)+1]);
-	return List(fixed,t->VectorSpaceToElement(pg,t));
+    "for a projectivity and a projective space",
+    [IsProjectiveGroupWithFrob, IsProjectiveSpace],
+    # fixed subspaces by John.
+    function(g,pg)
+    local gens, md, fixed, flag;
+    gens := GeneratorsOfGroup(g);
+    flag := ForAll(gens, t -> IsOne(t!.frob));
+    if not flag then
+        Error("Group contains field automorphisms.");
+    fi;
+    md := GModuleByMats(List(gens,t->Unpack(t!.mat)), pg!.basefield);
+    fixed := Filtered(MTX.BasesSubmodules(md),t->not Size(t) in [0,Rank(pg)+1]);
+    return List(fixed,t->VectorSpaceToElement(pg,t));
 end );
 
 
@@ -548,8 +548,8 @@ Add(genlist,mat);
 frob := FrobeniusAutomorphism(F);
 frobgens := List(genlist,x->[x,frob^0]);
 if not IsOne(frob) then
-	Add(frobgens,[IdentityMat(n,F),frob]);
-fi; 
+    Add(frobgens,[IdentityMat(n,F),frob]);
+fi;
 pgenlist := ProjElsWithFrob(frobgens);
 newgenlist:=List(pgenlist,x->x^basechangeproj);
 stab:=GroupWithGenerators(newgenlist);

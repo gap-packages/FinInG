@@ -1,4 +1,4 @@
-# behaviour 2 (takes about 400 seconds to complete) 
+# behaviour 2 (takes about 400 seconds to complete)
 ps := HermitianPolarSpace(3,81);
 group := CollineationGroup(ps);
 time;

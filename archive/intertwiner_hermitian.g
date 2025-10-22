@@ -49,7 +49,7 @@ n := First(newmat2[1],x->not IsZero(x));
 newmat2 := newmat2/n;
 if not IsOne(frob) then
 j := Log(frob!.power,Characteristic(f));
-else 
+else
 j := 0;
 fi;
 frob2 := FrobeniusAutomorphism(GF(q))^(j mod q);
@@ -69,13 +69,13 @@ ProjElWithFrob(test,frob2,GF(q));
 q := 9;
 
 mat2 := [ [ 0*Z(q), Z(q)^0, 0*Z(q), 0*Z(q), 0*Z(q), 0*Z(q) ],
-  [ 0*Z(q), 0*Z(q), 0*Z(q), 0*Z(q), 0*Z(q), 0*Z(q) ], 
-  [ 0*Z(q), 0*Z(q), 0*Z(q), Z(q)^0, 0*Z(q), 0*Z(q) ], 
-  [ 0*Z(q), 0*Z(q), 0*Z(q), 0*Z(q), 0*Z(q), 0*Z(q) ], 
-  [ 0*Z(q), 0*Z(q), 0*Z(q), 0*Z(q), Z(q)^0, 0*Z(q) ], 
+  [ 0*Z(q), 0*Z(q), 0*Z(q), 0*Z(q), 0*Z(q), 0*Z(q) ],
+  [ 0*Z(q), 0*Z(q), 0*Z(q), Z(q)^0, 0*Z(q), 0*Z(q) ],
+  [ 0*Z(q), 0*Z(q), 0*Z(q), 0*Z(q), 0*Z(q), 0*Z(q) ],
+  [ 0*Z(q), 0*Z(q), 0*Z(q), 0*Z(q), Z(q)^0, 0*Z(q) ],
   [ 0*Z(q), 0*Z(q), 0*Z(q), 0*Z(q), 0*Z(q), Z(q) ] ];
-  
-mat := [ [ 0*Z(q), Z(q)^0, 0*Z(q), 0*Z(q) ], [ Z(q)^0, 0*Z(q), 0*Z(q), 0*Z(q) ], 
+
+mat := [ [ 0*Z(q), Z(q)^0, 0*Z(q), 0*Z(q) ], [ Z(q)^0, 0*Z(q), 0*Z(q), 0*Z(q) ],
   [ 0*Z(q), 0*Z(q), 0*Z(q), Z(q)^0 ], [ 0*Z(q), 0*Z(q), Z(q)^0, 0*Z(q) ] ];
 
 
@@ -224,13 +224,13 @@ one := One(f);
     #first set up the elliptic quadric we get if we start from the standard hermitian polar space.
 
     ## The form for the Elliptic Quadric that we get is
-    ## x1^2+x2^2+x3^2+x4^2+x5^2+x6^2 - e(x1x6+x2x5+x3x4)  
+    ## x1^2+x2^2+x3^2+x4^2+x5^2+x6^2 - e(x1x6+x2x5+x3x4)
 
     mat1 := IdentityMat(6, GF(q));
     mat2 := NullMat(6, 6, f);
     for i in [1..3] do
        mat2[2*i-1][8-2*i] := one;
-    od; 
+    od;
     mat1 := mat1 - e * mat2;
     form_quadric := QuadraticFormByMatrix(mat1, GF(q));
 

@@ -8,14 +8,14 @@
 ##                                                            Michel Lavrauw
 ##                                                           Max Neunhoeffer
 ##
-##  Copyright 2017	Colorado State University, Fort Collins
-##					Sabancı Üniversitesi
-##					Università degli Studi di Padova
-##					Universeit Gent
-##					University of St. Andrews
-##					University of Western Australia, Perth
+##  Copyright 2017  Colorado State University, Fort Collins
+##                  Sabancı Üniversitesi
+##                  Università degli Studi di Padova
+##                  Universeit Gent
+##                  University of St. Andrews
+##                  University of Western Australia, Perth
 ##                  Vrije Universiteit Brussel
-##                 
+##
 ##
 ##  Reading the declaration part of the FinInG package.
 ##

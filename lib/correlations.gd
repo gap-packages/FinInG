@@ -8,12 +8,12 @@
 ##                                                            Michel Lavrauw
 ##                                                           Max Neunhoeffer
 ##
-##  Copyright 2018	Colorado State University
+##  Copyright 2018  Colorado State University
 ##                  Sabancı Üniversitesi
-##					Università degli Studi di Padova
-##					Universiteit Gent
-##					University of St. Andrews
-##					University of Western Australia
+##                  Università degli Studi di Padova
+##                  Universiteit Gent
+##                  University of St. Andrews
+##                  University of Western Australia
 ##                  Vrije Universiteit Brussel
 ##
 ##
@@ -29,9 +29,9 @@ DeclareCategory( "IsIdentityMappingOfElementsOfProjectiveSpace", IsProjectiveSpa
 DeclareCategory( "IsProjGrpElWithFrobWithPSIsom", IsComponentObjectRep and IsMultiplicativeElementWithInverse );
 DeclareSynonym( "IsCorrelationCollineation", IsProjGrpElWithFrobWithPSIsom);
 
-DeclareProperty( "IsCorrelation", IsProjGrpElWithFrobWithPSIsom );# user-friendly functionality 
-DeclareProperty( "IsCorrelation", IsProjGrpElWithFrob );# user-friendly functionality 
-DeclareProperty( "IsCorrelation", IsProjGrpEl );# user-friendly functionality 
+DeclareProperty( "IsCorrelation", IsProjGrpElWithFrobWithPSIsom );# user-friendly functionality
+DeclareProperty( "IsCorrelation", IsProjGrpElWithFrob );# user-friendly functionality
+DeclareProperty( "IsCorrelation", IsProjGrpEl );# user-friendly functionality
 
 #DeclareProperty( "IsCollineation", IsProjGrpElWithFrobWithPSIsom );
 
@@ -40,16 +40,16 @@ InstallTrueMethod( IsGeneratorsOfMagmaWithInverses, IsProjGrpElWithFrobWithPSIso
 
 DeclareRepresentation( "IsProjGrpElWithFrobWithPSIsomRep", IsProjGrpElWithFrobWithPSIsom, ["mat","fld","frob","psisom"] );
 
-BindGlobal( "ProjElsWithFrobWithPSIsomFamily", 
+BindGlobal( "ProjElsWithFrobWithPSIsomFamily",
             NewFamily( "ProjElsWithFrobWithPSIsomFamily",IsObject,
-	                 IsProjGrpElWithFrobWithPSIsom ) );  
+                     IsProjGrpElWithFrobWithPSIsom ) );
 BindGlobal( "ProjElsWithFrobWithPSIsomCollFamily",
             CollectionsFamily(ProjElsWithFrobWithPSIsomFamily) );
 
 BindGlobal( "ProjElsWithFrobWithPSIsomType",
-     NewType( ProjElsWithFrobWithPSIsomFamily, 
-              IsProjGrpElWithFrobWithPSIsom and 
-	      IsProjGrpElWithFrobWithPSIsomRep ) );
+     NewType( ProjElsWithFrobWithPSIsomFamily,
+              IsProjGrpElWithFrobWithPSIsom and
+          IsProjGrpElWithFrobWithPSIsomRep ) );
 
 InstallTrueMethod( IsHandledByNiceMonomorphism, IsProjectiveGroupWithFrob );
 
@@ -64,15 +64,15 @@ DeclareGlobalFunction( "OnProjSubspacesExtended" );
 
 DeclareOperation( "StandardDualityOfProjectiveSpace", [IsProjectiveSpace] );
 DeclareOperation( "IdentityMappingOfElementsOfProjectiveSpace", [IsProjectiveSpace] );
-DeclareOperation( "ActionOnAllPointsHyperplanes", [IsProjGroupWithFrobWithPSIsom] );    
+DeclareOperation( "ActionOnAllPointsHyperplanes", [IsProjGroupWithFrobWithPSIsom] );
 DeclareOperation( "ProjElWithFrobWithPSIsom",
-   [IsMatrix and IsFFECollColl, IsMapping, IsField] ); 
-DeclareOperation( "ProjElWithFrobWithPSIsom",
-   [IsMatrix and IsFFECollColl, IsMapping, IsField,
-   IsStandardDualityOfProjectiveSpace] ); 
+   [IsMatrix and IsFFECollColl, IsMapping, IsField] );
 DeclareOperation( "ProjElWithFrobWithPSIsom",
    [IsMatrix and IsFFECollColl, IsMapping, IsField,
-   IsGeneralMapping and IsSPGeneralMapping and IsOne] ); 
+   IsStandardDualityOfProjectiveSpace] );
+DeclareOperation( "ProjElWithFrobWithPSIsom",
+   [IsMatrix and IsFFECollColl, IsMapping, IsField,
+   IsGeneralMapping and IsSPGeneralMapping and IsOne] );
 DeclareOperation( "ProjElsWithFrobWithPSIsom", [IsList, IsField] );
 DeclareAttribute( "Dimension", IsProjGroupWithFrobWithPSIsom );
 DeclareProperty( "CanComputeActionOnPoints", IsProjGroupWithFrobWithPSIsom );
@@ -130,7 +130,7 @@ DeclareCategory( "IsPolarityOfProjectiveSpace", IsProjGrpElWithFrobWithPSIsomRep
 DeclareRepresentation( "IsPolarityOfProjectiveSpaceRep", IsProjGrpElWithFrobWithPSIsomRep, ["mat","fld","frob","psisom", "form"] );
 
 #############################################################################
-# polarities are equivalent with sesquilinear forms. 
+# polarities are equivalent with sesquilinear forms.
 # This explains the basic constructor
 #############################################################################
 
@@ -150,7 +150,7 @@ DeclareAttribute( "SesquilinearForm", IsPolarityOfProjectiveSpace );
 
 
 #############################################################################
-# operations and attributes for polarities of projective space. 
+# operations and attributes for polarities of projective space.
 #############################################################################
 
 DeclareProperty( "IsHermitianPolarityOfProjectiveSpace", IsPolarityOfProjectiveSpace );

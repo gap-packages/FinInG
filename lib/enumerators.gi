@@ -8,12 +8,12 @@
 ##                                                            Michel Lavrauw
 ##                                                           Max Neunhoeffer
 ##
-##  Copyright 2018	Colorado State University
+##  Copyright 2018  Colorado State University
 ##                  Sabancı Üniversitesi
-##					Università degli Studi di Padova
-##					Universiteit Gent
-##					University of St. Andrews
-##					University of Western Australia
+##                  Università degli Studi di Padova
+##                  Universiteit Gent
+##                  University of St. Andrews
+##                  University of Western Australia
 ##                  Vrije Universiteit Brussel
 ##
 ##
@@ -26,7 +26,7 @@
 
 #############################################################################
 # The enumerator functionality is quite technical. We need many tiny and less
-# tiny helping functions. We go for a bottom up approach, where we first 
+# tiny helping functions. We go for a bottom up approach, where we first
 # declare the helping functions, and then the real user stuff in the end.
 #############################################################################
 
@@ -40,36 +40,36 @@
 # <x> a vector
 ##
 InstallGlobalFunction( PositionNonZeroFromRight,
-	function(x)
-	local perm;
-		perm := PermList( List([1..Length(x)],y->Length(x)-y+1) );
-		return Length(x)-PositionNonZero( Permuted(x, perm) )+1;
-	end );
+    function(x)
+    local perm;
+        perm := PermList( List([1..Length(x)],y->Length(x)-y+1) );
+        return Length(x)-PositionNonZero( Permuted(x, perm) )+1;
+    end );
 
 #############################################################################
 #F  FG_pos( q, x ): inverse function of FG_ffenumber
 # q: prime power, x element of GF(q).
 ##
 #InstallGlobalFunction( FG_pos,
-#	function(q, x)
-#		return Position(AsList(GF(q)), x) - 1;
-#	end );
+#   function(q, x)
+#       return Position(AsList(GF(q)), x) - 1;
+#   end );
 #
 #  JB (10/04/2013): Changed this slightly, but I don't think it makes a difference.
 
 InstallGlobalFunction( FG_pos,
-		function(q, x)
-			return Position(Enumerator(GF(q)), x) - 1;
-		end );
+        function(q, x)
+            return Position(Enumerator(GF(q)), x) - 1;
+        end );
 
 #############################################################################
-#F  FG_div(	a, b )
+#F  FG_div( a, b )
 # a,b: integers
 ##
 #InstallGlobalFunction( FG_div,
-#	function(a, b)
-#		return (a - (a mod b)) / b;
-#	end );
+#   function(a, b)
+#       return (a - (a mod b)) / b;
+#   end );
 
 #############################################################################
 #F  FG_ffenumber( q, a )
@@ -77,15 +77,15 @@ InstallGlobalFunction( FG_pos,
 # element a (<>0) = Z(q)^(a-1)
 ##
 #InstallGlobalFunction( FG_ffenumber,
-#	function(q, a)       
-#		if a = 0 then 
-#			return 0 * Z(q);
-#		else 
-#			return Z(q)^(a-1);
-#		fi;
-#	end );
+#   function(q, a)
+#       if a = 0 then
+#           return 0 * Z(q);
+#       else
+#           return Z(q)^(a-1);
+#       fi;
+#   end );
 #
-#  JB (10/04/2013). First, happy birthday Jan! A simple change to the 
+#  JB (10/04/2013). First, happy birthday Jan! A simple change to the
 #  method FG_ffenumber now solves the problems with enumerators. Apparently
 #  GAP stores the list of GF(q) elements as an attribute for GF(q) ... so we
 #  can simply call Enumerator(GF(q)) for the correct ordering. Otherwise, if
@@ -93,9 +93,9 @@ InstallGlobalFunction( FG_pos,
 #  For the moment, let us just make sure that it works.
 
 InstallGlobalFunction( FG_ffenumber,
-	function(q, a)       
-		return Enumerator(GF(q))[a+1];
-	end );
+    function(q, a)
+        return Enumerator(GF(q))[a+1];
+    end );
 
 
 
@@ -105,85 +105,85 @@ InstallGlobalFunction( FG_ffenumber,
 # q: prime power, rk: natural number
 ##
 #InstallGlobalFunction( FG_unrank_GFQ,
-#	function(q, rk)
-#		#local Q;
-#		#Q := q * q;
-#		if rk = 0 then
-#			return 0*Z(q^2);
-#		fi;
-#		return Z(q^2)^(rk-1);
-#	end );
+#   function(q, rk)
+#       #local Q;
+#       #Q := q * q;
+#       if rk = 0 then
+#           return 0*Z(q^2);
+#       fi;
+#       return Z(q^2)^(rk-1);
+#   end );
 
 #the next function seems never used.
 #############################################################################
 #F  FG_rank_GFQ( q, x )
 # q: prme power, x element of GF(q)
 ##
-#InstallGlobalFunction( FG_rank_GFQ, 
-#	function(q, x)
-#		if IsZero(x) then
-#			return 0;
-#		else
-#			return LogFFE(x,Z(q^2))+1;
-#		fi;
-#	end );
+#InstallGlobalFunction( FG_rank_GFQ,
+#   function(q, x)
+#       if IsZero(x) then
+#           return 0;
+#       else
+#           return LogFFE(x,Z(q^2))+1;
+#       fi;
+#   end );
 
 #############################################################################
 #F  FG_alpha_power( q, a )
 # q: prime power, a: integer
-##	
+##
 InstallGlobalFunction( FG_alpha_power,
-	function(q, a)
-		return Z(q^2)^a;
-	end );
+    function(q, a)
+        return Z(q^2)^a;
+    end );
 
 #############################################################################
 #F  FG_log_alpha( q, x )
 # q: prime power, x element of GF(q^2)
 ##
 InstallGlobalFunction( FG_log_alpha,
-	function(q, x)   
-		return LogFFE(x, Z(q^2));
-	end );
+    function(q, x)
+        return LogFFE(x, Z(q^2));
+    end );
 
 #the next function seems never used.
 #############################################################################
 #F  FG_beta_power( q, a )
 # q: prime power, a: integer
-##	
+##
 InstallGlobalFunction( FG_beta_power,
-	function(q, a)
-		return Z(q^2)^((q + 1) * a);
-	end );
+    function(q, a)
+        return Z(q^2)^((q + 1) * a);
+    end );
 
 #############################################################################
 #F  FG_log_beta( q, x )
 # q: prime power, x element in GF(q^2)
 ##
 InstallGlobalFunction( FG_log_beta,
-	function(q, x)
-	#local Q;
-	#Q := q * q;
-		return LogFFE(x,Z(q^2)^(q+1));
-	end );
+    function(q, x)
+    #local Q;
+    #Q := q * q;
+        return LogFFE(x,Z(q^2)^(q+1));
+    end );
 
 #############################################################################
 #F  FG_norm_one_element( q, a )
 # q: prime power, a an integer
 ##
 InstallGlobalFunction( FG_norm_one_element,
-	function(q, a)
-		return Z(q^2)^((q - 1) * a);
-	end );
+    function(q, a)
+        return Z(q^2)^((q - 1) * a);
+    end );
 
 #############################################################################
 #F  FG_index_of_norm_one_element( q, x )
 # q: prime power, x an element of GF(q^2)
 ##
 InstallGlobalFunction( FG_index_of_norm_one_element,
-	function(q, x)
-		return LogFFE(x,Z(q^2)^(q-1));
-	end );
+    function(q, x)
+        return LogFFE(x,Z(q^2)^(q-1));
+    end );
 
 #############################################################################
 #F PG_element_normalize( v, offset, n )
@@ -192,36 +192,36 @@ InstallGlobalFunction( FG_index_of_norm_one_element,
 ## by this element.
 ##
 InstallGlobalFunction( PG_element_normalize,
-	function(v, offset, n)
-	local ii, i, a, one;
-		one := One(v[1]);	   
-		for ii in [0..n - 1] do 
-			i := n - 1 - ii;    
-			a := v[offset + i]; 
-			if not IsZero(a) then
-				if IsOne(a) then  
-					return;
-				fi;
-				a := a^-1;
-				v{[offset..i-1+offset]} := a * v{[offset..i-1+offset]};
-				v[offset + i] := one;
-				return;
-			fi;
-		od;
-		Error("zero vector");
-	end );
+    function(v, offset, n)
+    local ii, i, a, one;
+        one := One(v[1]);
+        for ii in [0..n - 1] do
+            i := n - 1 - ii;
+            a := v[offset + i];
+            if not IsZero(a) then
+                if IsOne(a) then
+                    return;
+                fi;
+                a := a^-1;
+                v{[offset..i-1+offset]} := a * v{[offset..i-1+offset]};
+                v[offset + i] := one;
+                return;
+            fi;
+        od;
+        Error("zero vector");
+    end );
 
 #############################################################################
 #F FG_evaluate_hyperbolic_quadratic_form( q, v, offset, n )
 # a low level way for EvaluateForm
 ##
-InstallGlobalFunction( FG_evaluate_hyperbolic_quadratic_form, 
+InstallGlobalFunction( FG_evaluate_hyperbolic_quadratic_form,
   function(q, v, offset, n)
-    local alpha, beta, u;	
+    local alpha, beta, u;
     alpha := 0*Z(q);
     for u in [0..n-1] do
-	 beta := v[offset + 2 * u] * v[offset + 2 * u + 1];
-	 alpha := alpha + beta;
+     beta := v[offset + 2 * u] * v[offset + 2 * u + 1];
+     alpha := alpha + beta;
     od;
     return alpha;
 end );
@@ -230,14 +230,14 @@ end );
 #F FG_evaluate_hermitian_form( q, v, offset, n )
 # a low level way for EvaluateForm
 ##
-InstallGlobalFunction(FG_evaluate_hermitian_form, 
+InstallGlobalFunction(FG_evaluate_hermitian_form,
   function(q, v, offset, n)
     local alpha, beta, u, Q;
-	Q := q * q;	
+    Q := q * q;
     alpha := 0*Z(Q);
     for u in [0..n-1] do
-	 beta := v[offset + u]^(q + 1);
-	 alpha := alpha + beta;
+     beta := v[offset + u]^(q + 1);
+     alpha := alpha + beta;
     od;
     return alpha;
 end );
@@ -252,11 +252,11 @@ end );
 #F  FG_nb_pts_Nbar( n, q )
 # n: integer, q: prime power.
 ##
-InstallGlobalFunction( FG_nb_pts_Nbar,  
+InstallGlobalFunction( FG_nb_pts_Nbar,
   function(n, q)
-	if n = 1 then
-		return q - 1;
-	fi;
+    if n = 1 then
+        return q - 1;
+    fi;
   end );
 
 #############################################################################
@@ -265,13 +265,13 @@ InstallGlobalFunction( FG_nb_pts_Nbar,
 ##
 InstallGlobalFunction( FG_nb_pts_S,
   function(n, q)
-	local a;	
-	if n = 1 then
-		return 2 * q - 1;
-	fi;
-	a := FG_nb_pts_S(1, q) * FG_nb_pts_S(n - 1, q);
-	a := a + FG_nb_pts_N(1, q) * FG_nb_pts_N1(n - 1, q);
-	return a;
+    local a;
+    if n = 1 then
+        return 2 * q - 1;
+    fi;
+    a := FG_nb_pts_S(1, q) * FG_nb_pts_S(n - 1, q);
+    a := a + FG_nb_pts_N(1, q) * FG_nb_pts_N1(n - 1, q);
+    return a;
   end );
 
 #############################################################################
@@ -280,14 +280,14 @@ InstallGlobalFunction( FG_nb_pts_S,
 ##
 InstallGlobalFunction( FG_nb_pts_N,
   function(n, q)
-	local a;
-	if n = 1 then
-		return (q - 1) * (q - 1);
-	fi;
-	a := FG_nb_pts_S(1, q) * FG_nb_pts_N(n - 1, q);
-	a := a + FG_nb_pts_N(1, q) * FG_nb_pts_S(n - 1, q);
-	a := a + FG_nb_pts_N(1, q) * (q - 2) * FG_nb_pts_N1(n - 1, q);
-	return a;
+    local a;
+    if n = 1 then
+        return (q - 1) * (q - 1);
+    fi;
+    a := FG_nb_pts_S(1, q) * FG_nb_pts_N(n - 1, q);
+    a := a + FG_nb_pts_N(1, q) * FG_nb_pts_S(n - 1, q);
+    a := a + FG_nb_pts_N(1, q) * (q - 2) * FG_nb_pts_N1(n - 1, q);
+    return a;
   end );
 
 #############################################################################
@@ -297,13 +297,13 @@ InstallGlobalFunction( FG_nb_pts_N,
 InstallGlobalFunction( FG_nb_pts_N1,
   function(n, q)
       local a;
-	if n = 1 then
-		return q - 1;
-	fi;
-	a := FG_nb_pts_S(1, q) * FG_nb_pts_N1(n - 1, q);
-	a := a + FG_nb_pts_N1(1, q) * FG_nb_pts_S(n - 1, q);
-	a := a + FG_nb_pts_N1(1, q) * (q - 2) * FG_nb_pts_N1(n - 1, q);
-	return a;
+    if n = 1 then
+        return q - 1;
+    fi;
+    a := FG_nb_pts_S(1, q) * FG_nb_pts_N1(n - 1, q);
+    a := a + FG_nb_pts_N1(1, q) * FG_nb_pts_S(n - 1, q);
+    a := a + FG_nb_pts_N1(1, q) * (q - 2) * FG_nb_pts_N1(n - 1, q);
+    return a;
   end );
 
 #############################################################################
@@ -312,14 +312,14 @@ InstallGlobalFunction( FG_nb_pts_N1,
 ##
 InstallGlobalFunction( FG_nb_pts_Sbar,
   function(n, q)
-	local a;
-	if n = 1 then
-		return 2;
-	fi;
-	a := FG_nb_pts_Sbar(n - 1, q);
-	a := a + FG_nb_pts_Sbar(1, q) * FG_nb_pts_S(n - 1, q);
-	a := a + FG_nb_pts_Nbar(1, q) * FG_nb_pts_N1(n - 1, q);
-	return a;
+    local a;
+    if n = 1 then
+        return 2;
+    fi;
+    a := FG_nb_pts_Sbar(n - 1, q);
+    a := a + FG_nb_pts_Sbar(1, q) * FG_nb_pts_S(n - 1, q);
+    a := a + FG_nb_pts_Nbar(1, q) * FG_nb_pts_N1(n - 1, q);
+    return a;
   end );
 
 #counting functions for hermitian. to be renamed.
@@ -330,67 +330,67 @@ InstallGlobalFunction( FG_nb_pts_Sbar,
 #F  FG_herm_nb_pts_N( n, q )
 # n: integer, q: prime power.
 ##
-InstallGlobalFunction( FG_herm_nb_pts_N,  
+InstallGlobalFunction( FG_herm_nb_pts_N,
   function(n, q)
-	local Q, a, b, c;
-	Q := q * q;
-	if n = 1 then
-		return Q - 1;
-	fi;
-	a := FG_herm_nb_pts_N(n - 1, q) * (Q - q - 1);
-	b := FG_herm_nb_pts_S(n - 1, q) * (Q - 1);
-	c := a + b;
-	return c;
+    local Q, a, b, c;
+    Q := q * q;
+    if n = 1 then
+        return Q - 1;
+    fi;
+    a := FG_herm_nb_pts_N(n - 1, q) * (Q - q - 1);
+    b := FG_herm_nb_pts_S(n - 1, q) * (Q - 1);
+    c := a + b;
+    return c;
   end );
 
 #############################################################################
 #F  FG_herm_nb_pts_S( n, q )
 # n: integer, q: prime power.
 ##
-InstallGlobalFunction( FG_herm_nb_pts_S,  
+InstallGlobalFunction( FG_herm_nb_pts_S,
   function(n, q)
-	local a, b, c;
-	#Q := q * q;
-	if n = 1 then
-		return 1;
-	fi;
-	a := FG_herm_nb_pts_N(n - 1, q) * (q + 1);
-	b := FG_herm_nb_pts_S(n - 1, q);
-	c := a + b;
-	return c;
+    local a, b, c;
+    #Q := q * q;
+    if n = 1 then
+        return 1;
+    fi;
+    a := FG_herm_nb_pts_N(n - 1, q) * (q + 1);
+    b := FG_herm_nb_pts_S(n - 1, q);
+    c := a + b;
+    return c;
   end );
 
 #############################################################################
 #F  FG_herm_nb_pts_N1( n, q )
 # n: integer, q: prime power.
 ##
-InstallGlobalFunction( FG_herm_nb_pts_N1,  
+InstallGlobalFunction( FG_herm_nb_pts_N1,
   function(n, q)
-	local a, b, c;
-	#Q := q * q;
-	if n = 1 then
-		return q + 1;
-	fi;
-	a := FG_herm_nb_pts_N1(n - 1, q);
-	b := FG_herm_nb_pts_N1(n - 1, q) * (q - 2) * (q + 1);
-	c := FG_herm_nb_pts_S(n - 1, q) * (q + 1);
-	return a + b + c;
+    local a, b, c;
+    #Q := q * q;
+    if n = 1 then
+        return q + 1;
+    fi;
+    a := FG_herm_nb_pts_N1(n - 1, q);
+    b := FG_herm_nb_pts_N1(n - 1, q) * (q - 2) * (q + 1);
+    c := FG_herm_nb_pts_S(n - 1, q) * (q + 1);
+    return a + b + c;
   end );
 
 #############################################################################
 #F  FG_herm_nb_pts_Sbar( n, q )
 # n: integer, q: prime power.
 ##
-InstallGlobalFunction( FG_herm_nb_pts_Sbar,  
+InstallGlobalFunction( FG_herm_nb_pts_Sbar,
   function(n, q)
-	local  a, b;
-	#Q := q * q;
-	if n = 1 then
-		return 0;
-	fi;
-	a := FG_herm_nb_pts_Sbar(n - 1, q);
-	b := FG_herm_nb_pts_N1(n - 1, q);
-	return a + b;
+    local  a, b;
+    #Q := q * q;
+    if n = 1 then
+        return 0;
+    fi;
+    a := FG_herm_nb_pts_Sbar(n - 1, q);
+    b := FG_herm_nb_pts_N1(n - 1, q);
+    return a + b;
   end );
 
 #############################################################################
@@ -401,7 +401,7 @@ InstallGlobalFunction( FG_herm_nb_pts_Sbar,
 #F  FG_N1_unrank( q, v, offset, n, a )
 #v: FFE vector.
 ##
-InstallGlobalFunction( FG_N1_unrank, 
+InstallGlobalFunction( FG_N1_unrank,
   function(q, v, offset, n, a)
   local l, i, j, k, j1, x, y, z, yz, u, alpha, beta, gamma, one, zero;
   one := Z(q)^0;
@@ -412,7 +412,7 @@ InstallGlobalFunction( FG_N1_unrank,
         alpha := FG_ffenumber(q,a+1);
         beta := alpha^-1;
         v[offset + 0] := alpha;
-        v[offset + 1] := beta;	
+        v[offset + 1] := beta;
         return;
      fi;
      Error("Error in FG_N1_unrank");
@@ -421,7 +421,7 @@ InstallGlobalFunction( FG_N1_unrank,
   y := FG_nb_pts_N1(n - 1, q);
   l := x * y;
   if a < l then
-     i := QuoInt(a, y);    
+     i := QuoInt(a, y);
      j := RemInt(a,y);
      FG_S_unrank(q, v, offset + (n - 1) * 2, 1, i);
      FG_N1_unrank(q, v, offset, n - 1, j);
@@ -451,13 +451,13 @@ InstallGlobalFunction( FG_N1_unrank,
      j := QuoInt(j1, z);
      k := RemInt(j1, z);
      FG_N1_unrank(q, v, offset + (n - 1) * 2, 1, i);
-     alpha := FG_ffenumber(q,2+j);  
+     alpha := FG_ffenumber(q,2+j);
      v[offset + 2 * (n - 1)] := alpha * v[offset + 2 * (n - 1)];
      FG_N1_unrank(q, v, offset, n - 1, k);
      beta := -alpha;
      gamma := one + beta;
      for u in [0..n-2] do
-	   v[offset + 2 * u] := gamma * v[offset + 2 * u];
+       v[offset + 2 * u] := gamma * v[offset + 2 * u];
      od;
      return;
   fi;
@@ -468,20 +468,20 @@ end );
 #F  FG_S_unrank( q, v, offset, n, a )
 #v: FFE vector.
 ##
-InstallGlobalFunction( FG_S_unrank, 
+InstallGlobalFunction( FG_S_unrank,
   function(q, v, offset, n, a)
   local l, i, j, x, y, u, alpha, beta, one, zero;
   one := Z(q)^0;
   zero := 0*Z(q);
 
-  if n = 1 then 
-     if a < q then 
+  if n = 1 then
+     if a < q then
         v[offset + 0] := FG_ffenumber(q,a);
-        v[offset + 1] := zero;		
+        v[offset + 1] := zero;
         return;
      fi;
      a := a - (q - 1);
-     if a < q then	
+     if a < q then
         v[offset + 0] := zero;
         v[offset + 1] := FG_ffenumber(q,a);
         return;
@@ -491,7 +491,7 @@ InstallGlobalFunction( FG_S_unrank,
   x := FG_nb_pts_S(1, q);
   y := FG_nb_pts_S(n - 1, q);
   l := x * y;
-  if a < l then 
+  if a < l then
      i := QuoInt(a, y);
      j := RemInt(a, y);
      FG_S_unrank(q, v, offset + (n - 1) * 2, 1, i);
@@ -521,17 +521,17 @@ end );
 #F  FG_Sbar_unrank( q, v, offset, n, a )
 #v: FFE vector.
 ##
-InstallGlobalFunction( FG_Sbar_unrank, 
+InstallGlobalFunction( FG_Sbar_unrank,
   function(q, v, offset, n, a)
-	local l, i, j, x, y, u, alpha, beta, one, zero;
-  one := Z(q)^0; 
+    local l, i, j, x, y, u, alpha, beta, one, zero;
+  one := Z(q)^0;
   zero := 0*Z(q);
 
-  if n = 1 then 
-     if a = 0 then 
-	  v[offset + 0] := one;
-	  v[offset + 1] := zero;
-	  return;
+  if n = 1 then
+     if a = 0 then
+      v[offset + 0] := one;
+      v[offset + 1] := zero;
+      return;
      fi;
      if a = 1 then
         v[offset + 0] := zero;
@@ -542,7 +542,7 @@ InstallGlobalFunction( FG_Sbar_unrank,
   fi;
   y := FG_nb_pts_Sbar(n - 1, q);
   l := y;
-  if a < l then 
+  if a < l then
      u := n - 1;
      v[offset + 2 * u] := zero;
      v[offset + 2 * u + 1] := zero;
@@ -572,7 +572,7 @@ InstallGlobalFunction( FG_Sbar_unrank,
      alpha := v[offset + 2 * (n - 1)] * v[offset + 2 * (n - 1) + 1];
      beta := -alpha;
      for u in [0..n-2] do
-	   v[offset + 2 * u] := beta * v[offset + 2 * u];
+       v[offset + 2 * u] := beta * v[offset + 2 * u];
      od;
      return;
   fi;
@@ -583,14 +583,14 @@ end );
 #F  FG_Nbar_unrank( q, v, offset, n, a )
 #v: FFE vector.
 ##
-InstallGlobalFunction( FG_Nbar_unrank, 
+InstallGlobalFunction( FG_Nbar_unrank,
   function(q, v, offset, n, a)
   if n = 1 then
-	if a < q - 1 then
-		v[offset + 0] := FG_ffenumber(q,a+1);
-		v[offset + 1] := Z(q)^0;
-		return;
-	fi;
+    if a < q - 1 then
+        v[offset + 0] := FG_ffenumber(q,a+1);
+        v[offset + 1] := Z(q)^0;
+        return;
+    fi;
       Error("Error in FG_Nbar_unrank");
   fi;
   Error("Error in FG_Nbar_unrank (2)");
@@ -600,9 +600,9 @@ end );
 #F  FG_N_unrank( q, v, offset, n, a )
 #v: FFE vector.
 ##
-InstallGlobalFunction( FG_N_unrank, 
+InstallGlobalFunction( FG_N_unrank,
   function(q, v, offset, n, a)
-	local l, i, j, k, j1, x, y, z, yz, u, alpha, beta, gamma, delta, epsilon, 
+    local l, i, j, k, j1, x, y, z, yz, u, alpha, beta, gamma, delta, epsilon,
             one, zero, w;
   w := Z(q);
   one := w^0;
@@ -614,7 +614,7 @@ InstallGlobalFunction( FG_N_unrank,
      if a < l then
         i := QuoInt(a, y);
         j := RemInt(a, y);
-        v[offset + 0] := FG_ffenumber(q,1+j); 
+        v[offset + 0] := FG_ffenumber(q,1+j);
         v[offset + 1] := FG_ffenumber(q,1+i);
         return;
      fi;
@@ -654,7 +654,7 @@ InstallGlobalFunction( FG_N_unrank,
      k := RemInt(j1, z);
      FG_N_unrank(q, v, offset + (n - 1) * 2, 1, i);
      FG_N1_unrank(q, v, offset, n - 1, k);
-     alpha := w;  
+     alpha := w;
      beta := alpha^(j + 1);
      gamma := v[offset + (n - 1) * 2] * v[offset + (n - 1) * 2 + 1];
      delta := -gamma;
@@ -673,7 +673,7 @@ end );
 #F  FG_herm_N_unrank( q, v, offset, n, a )
 #v: FFE vector.
 ##
-InstallGlobalFunction( FG_herm_N_unrank, 
+InstallGlobalFunction( FG_herm_N_unrank,
   function(q, v, offset, n, a)
   local Q, A, coset, rk1, x, one, zero, val, coset0, rk0, m_val, log, nb, l;
   Q := q * q;
@@ -693,7 +693,7 @@ InstallGlobalFunction( FG_herm_N_unrank,
 
   if a < A * nb then
     coset := QuoInt(a, nb);
-	rk1 := RemInt(a, nb);
+    rk1 := RemInt(a, nb);
     FG_herm_N_unrank(q, v, offset, n - 1, rk1);
 
     if coset = 0 then
@@ -708,11 +708,11 @@ InstallGlobalFunction( FG_herm_N_unrank,
       if coset0 >= log then
         coset0 := coset0 + 1;
       fi;
-      v[offset + n - 1] := FG_alpha_power(q, coset0) * FG_norm_one_element(q, rk0);     
+      v[offset + n - 1] := FG_alpha_power(q, coset0) * FG_norm_one_element(q, rk0);
     fi;
   else
     a := a - A * nb;
-	nb := FG_herm_nb_pts_S(n - 1, q);
+    nb := FG_herm_nb_pts_S(n - 1, q);
     rk1 := RemInt(a, nb);
     coset := QuoInt(a, nb);
     FG_herm_S_unrank(q, v, offset, n - 1, rk1);
@@ -730,8 +730,8 @@ InstallGlobalFunction( FG_herm_N_rank,
   Q := q * q;
   if n = 1 then
      alpha := v[offset + 0];
-     rk := FG_log_alpha(q, alpha);  
-	 return rk;
+     rk := FG_log_alpha(q, alpha);
+     return rk;
   fi;
   val := FG_evaluate_hermitian_form(q, v, offset, n - 1);
   nb := FG_herm_nb_pts_N(n - 1, q);
@@ -743,21 +743,21 @@ InstallGlobalFunction( FG_herm_N_rank,
       m_val := -val;
       log := FG_log_beta(q, m_val);
       a := v[offset + n - 1]^(q + 1);
-      coset0 := FG_log_beta(q, a); 
-      beta := v[offset + n - 1] * FG_alpha_power(q, coset0)^-1;  
+      coset0 := FG_log_beta(q, a);
+      beta := v[offset + n - 1] * FG_alpha_power(q, coset0)^-1;
       if coset0 > log then
          coset0 := coset0 - 1;
        fi;
-      rk0 := FG_index_of_norm_one_element(q, beta); 
+      rk0 := FG_index_of_norm_one_element(q, beta);
       coset := coset0 * (q + 1) + rk0;
-      coset := coset + 1; 
+      coset := coset + 1;
     fi;
-	rk := coset * nb + rk1;
+    rk := coset * nb + rk1;
   else
     A := Q - q - 1;
     rk := A * nb;
     coset := FG_log_alpha(q, v[offset + n - 1]);
-	rk1 := FG_herm_S_rank(q, v, offset, n - 1);
+    rk1 := FG_herm_S_rank(q, v, offset, n - 1);
     rk := rk + coset * FG_herm_nb_pts_S(n - 1, q) + rk1;
   fi;
   return rk;
@@ -767,7 +767,7 @@ end );
 #F  FG_herm_S_unrank( q, v, offset, n, a )
 #v: FFE vector.
 ##
-InstallGlobalFunction( FG_herm_S_unrank, 
+InstallGlobalFunction( FG_herm_S_unrank,
   function(q, v, offset, n, rk)
   local Q, zero, nb, coset, rk1, log, val, m_val;
   Q := q * q;
@@ -806,7 +806,7 @@ InstallGlobalFunction( FG_herm_S_rank,
   if not IsZero(v[offset + n - 1]) then
     rk1 := FG_herm_N_rank(q, v, offset, n - 1);
     val := FG_evaluate_hermitian_form(q, v, offset, n - 1);
-    m_val := - val;  	
+    m_val := - val;
     log := FG_log_beta(q, m_val);
    a := v[offset + n - 1]^(q + 1);
     log1 := FG_log_beta(q, a);
@@ -820,7 +820,7 @@ InstallGlobalFunction( FG_herm_S_rank,
   else
     nb := FG_herm_nb_pts_N(n - 1, q);
     rk := FG_herm_S_rank(q, v, offset, n - 1);
-    rk := rk + (q + 1) * nb;            
+    rk := rk + (q + 1) * nb;
   fi;
   return rk;
 end );
@@ -829,7 +829,7 @@ end );
 #F  FG_herm_N1_unrank( q, v, offset, n, rk )
 #v: FFE vector.
 ##
-InstallGlobalFunction( FG_herm_N1_unrank, 
+InstallGlobalFunction( FG_herm_N1_unrank,
   function(q, v, offset, n, rk)
   local Q, i, one, zero, nb, rk1, rk2, coset, coset1, coset2, nb1, a, val, new_val, log, A;
   Q := q * q;
@@ -864,7 +864,7 @@ InstallGlobalFunction( FG_herm_N1_unrank,
       new_val := one - val;
       log := FG_log_beta(q, new_val);
       v[offset + n - 1] := FG_alpha_power(q, log) * FG_norm_one_element(q, coset1);
-	else
+    else
       rk := rk - A;
       nb := FG_herm_nb_pts_S(n - 1, q);
       coset := QuoInt(rk, nb);
@@ -896,30 +896,30 @@ InstallGlobalFunction( FG_herm_N1_rank,
   rk := nb;
   nb1 := (q - 2) * nb;
   A := (q + 1) * nb1;
-	val := FG_evaluate_hermitian_form(q, v, offset, n - 1);
-	if not IsZero(val) then
-		coset2 := FG_log_beta(q, val);
-		a := FG_alpha_power(q, coset2);
-		av := a^(-1);
-		for i in [0 .. n - 2] do
-			v[offset + i] := av * v[offset + i];
-		od;
-		rk2 := FG_herm_N1_rank(q, v, offset, n - 1);
-		coset2 := coset2 - 1;
-		new_val := one - val; 
-		log := FG_log_beta(q, new_val);
-		a := v[offset + n - 1]^(q + 1);
-		log1 := FG_log_beta(q, a);
-		a := FG_alpha_power(q, log)^(-1);
-		a := a * v[offset + n - 1];
-		coset1 := FG_index_of_norm_one_element(q, a);
-		rk1 := coset2 * nb + rk2;
-		rk := rk + coset1 * nb1 + rk1;
-	else
-		rk := rk + A;
-		rk1 := FG_herm_S_rank(q, v, offset, n - 1); 
-		coset := FG_index_of_norm_one_element(q, v[offset + n - 1]);
-		rk := rk + coset * FG_herm_nb_pts_S(n - 1, q) + rk1;  
+    val := FG_evaluate_hermitian_form(q, v, offset, n - 1);
+    if not IsZero(val) then
+        coset2 := FG_log_beta(q, val);
+        a := FG_alpha_power(q, coset2);
+        av := a^(-1);
+        for i in [0 .. n - 2] do
+            v[offset + i] := av * v[offset + i];
+        od;
+        rk2 := FG_herm_N1_rank(q, v, offset, n - 1);
+        coset2 := coset2 - 1;
+        new_val := one - val;
+        log := FG_log_beta(q, new_val);
+        a := v[offset + n - 1]^(q + 1);
+        log1 := FG_log_beta(q, a);
+        a := FG_alpha_power(q, log)^(-1);
+        a := a * v[offset + n - 1];
+        coset1 := FG_index_of_norm_one_element(q, a);
+        rk1 := coset2 * nb + rk2;
+        rk := rk + coset1 * nb1 + rk1;
+    else
+        rk := rk + A;
+        rk1 := FG_herm_S_rank(q, v, offset, n - 1);
+        coset := FG_index_of_norm_one_element(q, v[offset + n - 1]);
+        rk := rk + coset * FG_herm_nb_pts_S(n - 1, q) + rk1;
     fi;
   return rk;
 end );
@@ -928,7 +928,7 @@ end );
 #F  FG_herm_Sbar_unrank( q, v, offset, n, rk )
 #v: FFE vector.
 ##
-InstallGlobalFunction( FG_herm_Sbar_unrank, 
+InstallGlobalFunction( FG_herm_Sbar_unrank,
   function(q, v, offset, n, rk)
   local Q, one, zero, a, b, log, nb, i;
   Q := q * q;
@@ -939,21 +939,21 @@ InstallGlobalFunction( FG_herm_Sbar_unrank,
   fi;
     nb := FG_herm_nb_pts_Sbar(n - 1, q);
 
-	if rk < nb then
-		FG_herm_Sbar_unrank(q, v, offset, n - 1, rk);
-		v[offset + n - 1] := zero;
-	else
-		rk := rk - nb;
+    if rk < nb then
+        FG_herm_Sbar_unrank(q, v, offset, n - 1, rk);
+        v[offset + n - 1] := zero;
+    else
+        rk := rk - nb;
 
-		FG_herm_N1_unrank(q, v, offset, n - 1, rk);
-		a := - one;
-		log := FG_log_beta(q, a);
+        FG_herm_N1_unrank(q, v, offset, n - 1, rk);
+        a := - one;
+        log := FG_log_beta(q, a);
         b := FG_alpha_power(q, log);
         for i in [0..n - 2] do
           v[offset + i] := v[offset + i] * b;
         od;
         v[offset + n - 1] := one;
-	fi;
+    fi;
 end );
 
 #############################################################################
@@ -963,37 +963,37 @@ end );
 InstallGlobalFunction( FG_herm_Sbar_rank,
   function(q, v, offset, n)
   local Q, one, val, rk, rk0, nb, i, a, b, bv, log;
-  
+
   Q := q * q;
   one := Z(Q)^0;
   if n = 1 then
     Error("FG_herm_Sbar_rank error: n = 1");
   fi;
-	if IsZero(v[offset + n - 1]) then
-		rk := FG_herm_Sbar_rank(q, v, offset, n - 1);
-	else
+    if IsZero(v[offset + n - 1]) then
+        rk := FG_herm_Sbar_rank(q, v, offset, n - 1);
+    else
         #my_PG_element_normalize(v, offset, n);
         PG_element_normalize(v, offset, n);
-  		nb := FG_herm_nb_pts_Sbar(n - 1, q);
-		rk := nb;
-		val := FG_evaluate_hermitian_form(q, v, offset, n - 1);
+        nb := FG_herm_nb_pts_Sbar(n - 1, q);
+        rk := nb;
+        val := FG_evaluate_hermitian_form(q, v, offset, n - 1);
         a := - one;
-		if val <> a then
-			Error("FG_herm_Sbar_rank error: val <> -1");
-		fi;
-		log := FG_log_beta(q, a);
-		b := FG_alpha_power(q, log);
-		bv := b^(-1);
-		for i in [0 .. n - 2] do
-			v[offset + i] := bv * v[offset + i];
-		od;
-		val := FG_evaluate_hermitian_form(q, v, offset, n - 1);
-		if not IsOne(val) then
-			Error("FG_herm_Sbar_rank not IsOne(val)");
-		fi;
-		rk0 := FG_herm_N1_rank(q, v, offset, n - 1);
-		rk := rk + rk0;
-	fi;
+        if val <> a then
+            Error("FG_herm_Sbar_rank error: val <> -1");
+        fi;
+        log := FG_log_beta(q, a);
+        b := FG_alpha_power(q, log);
+        bv := b^(-1);
+        for i in [0 .. n - 2] do
+            v[offset + i] := bv * v[offset + i];
+        od;
+        val := FG_evaluate_hermitian_form(q, v, offset, n - 1);
+        if not IsOne(val) then
+            Error("FG_herm_Sbar_rank not IsOne(val)");
+        fi;
+        rk0 := FG_herm_N1_rank(q, v, offset, n - 1);
+        rk := rk + rk0;
+    fi;
   return rk;
 end );
 
@@ -1004,13 +1004,13 @@ end );
 InstallGlobalFunction( FG_S_rank,
   function(q, v, offset, n)
   local a, l, i, j, x, y, u, alpha, beta, gamma, delta, epsilon;
-  if n = 1 then				
+  if n = 1 then
      if IsZero(v[offset + 1]) then
         a := FG_pos(q, v[offset + 0]);
         return a;
-     fi;	
-     a := q - 1;		
-     a := a + FG_pos(q, v[offset + 1]);	
+     fi;
+     a := q - 1;
+     a := a + FG_pos(q, v[offset + 1]);
      return a;
    fi;
    x := FG_nb_pts_S(1, q);
@@ -1022,17 +1022,17 @@ InstallGlobalFunction( FG_S_rank,
       j := FG_S_rank(q, v, offset, n - 1);
       a := i * y + j;
       return a;
-   fi;				
+   fi;
    a := l;
    y := FG_nb_pts_N1(n - 1, q);
-   i := FG_N_rank(q, v, offset + 2 * (n - 1), 1);	
+   i := FG_N_rank(q, v, offset + 2 * (n - 1), 1);
    beta := -alpha;
-   delta := beta^-1;			# JB 18/08/2014: Found a bug here and fixed it
+   delta := beta^-1;            # JB 18/08/2014: Found a bug here and fixed it
    for u in [0..n-2] do
        v[offset + 2 * u] := delta * v[offset + 2 * u];
    od;
-   j := FG_N1_rank(q, v, offset, n - 1);	
-   a := a + i * y + j;	
+   j := FG_N1_rank(q, v, offset, n - 1);
+   a := a + i * y + j;
    return a;
 end );
 
@@ -1043,14 +1043,14 @@ end );
 InstallGlobalFunction( FG_N_rank,
   function(q, v, offset, n)
   local a, l, i, j, k, x, y, z, yz, u, alpha, beta, one,
-            gamma, delta, epsilon, gamma2, epsilon_inv;		
+            gamma, delta, epsilon, gamma2, epsilon_inv;
   one := Z(q)^0;
-  if n = 1 then	
+  if n = 1 then
      y := q - 1;
      j := FG_pos(q,v[offset + 0]) - 1;
      i := FG_pos(q, v[offset + 1]) - 1;
 ######     a := FG_ffenumber(q, i * y + j); # JB: 18/08/2014, found the bug here ####
-	 a := i * y + j; 	# it was hard to find!
+     a := i * y + j;    # it was hard to find!
      return a;
   fi;
 
@@ -1104,13 +1104,13 @@ end );
 ##
 InstallGlobalFunction( FG_N1_rank,
   function(q, v, offset, n)
-  local a, l, i, j, k, x, y, z, yz, u, alpha, 
+  local a, l, i, j, k, x, y, z, yz, u, alpha,
         alpha_inv, beta, gamma, gamma2, gamma_inv;
   if n = 1 then
      alpha := v[offset + 0];
      # beta := v[offset + 1];
      # gamma := alpha^-1;
-     a := FG_pos(q, alpha) - 1;  	
+     a := FG_pos(q, alpha) - 1;
      return a;
   fi;
   a := 0;
@@ -1119,9 +1119,9 @@ InstallGlobalFunction( FG_N1_rank,
   y := FG_nb_pts_N1(n - 1, q);
   l := x * y;
   if IsZero(alpha) then
-     i := FG_S_rank(q, v, offset + 2 * (n - 1), 1);		
+     i := FG_S_rank(q, v, offset + 2 * (n - 1), 1);
      j := FG_N1_rank(q, v, offset, n - 1);
-     a := i * y + j; 			
+     a := i * y + j;
      return a;
   fi;
   a := a + l;
@@ -1131,8 +1131,8 @@ InstallGlobalFunction( FG_N1_rank,
   l := x * y;
   if IsZero(gamma2) then
      i := FG_N1_rank(q, v, offset + 2 * (n - 1), 1);
-     j := FG_S_rank(q, v, offset, n - 1);	
-     a := a + i * y + j;		
+     j := FG_S_rank(q, v, offset, n - 1);
+     a := a + i * y + j;
      return a;
   fi;
   a := a + l;
@@ -1167,8 +1167,8 @@ InstallGlobalFunction( FG_Sbar_rank,
   PG_element_normalize(v, offset, 2 * n);
   if n = 1 then
      if IsOne(v[offset + 0]) and IsZero(v[offset + 1]) then
-	 a := 0;
-	 return a;
+     a := 0;
+     return a;
      fi;
      if IsZero(v[offset + 0]) and IsOne(v[offset + 1]) then
         a := 1;
@@ -1186,12 +1186,12 @@ InstallGlobalFunction( FG_Sbar_rank,
   x := FG_nb_pts_Sbar(1, q);
   y := FG_nb_pts_S(n - 1, q);
   l := x * y;
-  if IsZero(alpha) then		
-     i := FG_Sbar_rank(q, v, offset + 2 * (n - 1), 1);	
-     j := FG_S_rank(q, v, offset, n - 1);	
-     a := a + i * y + j;	
+  if IsZero(alpha) then
+     i := FG_Sbar_rank(q, v, offset + 2 * (n - 1), 1);
+     j := FG_S_rank(q, v, offset, n - 1);
+     a := a + i * y + j;
      return a;
-  fi; 
+  fi;
   a := a + l;
   x := FG_nb_pts_Nbar(1, q);
   y := FG_nb_pts_N1(n - 1, q);
@@ -1227,17 +1227,17 @@ InstallGlobalFunction( QElementNumber,
   function(d, q, a)
 
   ## Anton uses the bilinear form (for the 4 dimensional case)
-	# 0 1 0 0 0
-	# 1 0 0 0 0
-	# 0 0 0 1 0
-	# 0 0 1 0 0
-	# 0 0 0 0 2
+    # 0 1 0 0 0
+    # 1 0 0 0 0
+    # 0 0 0 1 0
+    # 0 0 1 0 0
+    # 0 0 0 0 2
   ## Need to change form to canonical. We use the form
-	# 2 0 0 0 0
-	# 0 0 1 0 0
-	# 0 1 0 0 0
-	# 0 0 0 0 1
-	# 0 0 0 1 0
+    # 2 0 0 0 0
+    # 0 0 1 0 0
+    # 0 1 0 0 0
+    # 0 0 0 0 1
+    # 0 0 0 1 0
  ## So we just permute the result by a cycle. Later we should just
  ## change the code so that we do not need this overhead.
  #
@@ -1262,7 +1262,7 @@ InstallGlobalFunction( QElementNumber,
     FG_N1_unrank(q, v, 1, n, a2);
     if IsOddInt(q) then
        for i in [0..n-1] do
-	     v[1 + 2 * i] := -v[1 + 2 * i];
+         v[1 + 2 * i] := -v[1 + 2 * i];
        od;
     fi;
     return Permuted(v,cyc);
@@ -1279,7 +1279,7 @@ InstallGlobalFunction( QplusElementNumber,
       # result as there is no anisotropic part.
 
     local n, v, i, zero, a2;
-    zero := 0*Z(q);	
+    zero := 0*Z(q);
     a2 := a - 1;
     v := List([1..d+1], i -> zero);
     n := (d+1) / 2;
@@ -1295,7 +1295,7 @@ InstallGlobalFunction( QminusElementNumber,
     local n, x, i, one, zero, v, w, a2, form, c1, c2, c3,
           b, c, minusz, x1, x2, u, vv, wprim, z, perm;
 
-      # The quadratic form here is 
+      # The quadratic form here is
       # "sums of hyperbolic pairs" form x1x2 + x3x4 +...
       # plus c1 x_{2n}^2 + c2 x_{2n}x_{2n+1} + c3 x_{2n+1}^2
       #
@@ -1311,8 +1311,8 @@ InstallGlobalFunction( QminusElementNumber,
        form := QuadraticForm( EllipticQuadric(d, q) )!.matrix;
     else
        form := SesquilinearForm( EllipticQuadric(d, q) )!.matrix;
-    fi; 
-   
+    fi;
+
     c1 := form[1][1];
     c2 := form[1][2];
     c3 := form[2][2];
@@ -1323,7 +1323,7 @@ InstallGlobalFunction( QminusElementNumber,
     a2 := a - 1;
     v := List([1..d+1], i -> zero);
     n := (d-1) / 2;
-    x := FG_nb_pts_Sbar(n, q); 
+    x := FG_nb_pts_Sbar(n, q);
     if a2 < x then
        v[1 + 2 * n] := zero;
        v[1 + 2 * n + 1] := zero;
@@ -1331,12 +1331,12 @@ InstallGlobalFunction( QminusElementNumber,
        return Permuted(v, perm);
     fi;
     a2 := a2 - x;
-    x := FG_nb_pts_N1(n, q); 
+    x := FG_nb_pts_N1(n, q);
     b := QuoInt(a2, x);
     c := RemInt(a2, x);
     if IsZero(b) then
        x1 := one;
-	 x2 := zero;
+     x2 := zero;
     else
        b := b - 1;
        x1 := FG_ffenumber(q, b);
@@ -1344,9 +1344,9 @@ InstallGlobalFunction( QminusElementNumber,
     fi;
 
     v[1 + 2 * n] := x1;
-    v[1 + 2 * n + 1] := x2; 
+    v[1 + 2 * n + 1] := x2;
     u := x1 * x1;
-    u := c1 * u;	# different to Anton's code
+    u := c1 * u;    # different to Anton's code
     vv := x1 * x2;
     vv := c2 * vv;
     w := x2 * x2;
@@ -1371,24 +1371,24 @@ end );
 ##
 InstallGlobalFunction( QNumberElement,
   function(d, q, var)
-    local wittindex, x, a, b, v, i, cyc; 
+    local wittindex, x, a, b, v, i, cyc;
     cyc := PermList( Concatenation([2..d+1], [1]));
 
     v := Permuted(StructuralCopy(var!.obj), cyc^-1);
-    wittindex := d/2; 
+    wittindex := d/2;
     x := FG_nb_pts_Sbar(wittindex, q);
     if IsZero(v[2 * wittindex + 1]) then
-	 a := FG_Sbar_rank(q, v, 1, wittindex);
-	 return a + 1;
+     a := FG_Sbar_rank(q, v, 1, wittindex);
+     return a + 1;
     fi;
     a := x;
     if not IsOne(v[1 + 2 * wittindex]) then
-	 	PG_element_normalize(v, 1, d + 1);
-    fi;  
+        PG_element_normalize(v, 1, d + 1);
+    fi;
     if IsOddInt(q) then
-	   for i in [0..d/2-1] do
-	       v[2 * i+1] := -v[2 * i+1];
-	   od;
+       for i in [0..d/2-1] do
+           v[2 * i+1] := -v[2 * i+1];
+       od;
     fi;
     b := FG_N1_rank(q, v, 1, wittindex);
     return a + b + 1; ## adjustment for lists beginning at 1
@@ -1400,8 +1400,8 @@ end );
 ##
 InstallGlobalFunction( QplusNumberElement,
   function(d, q, var)
-    local wittindex, a, v; 
-    v := StructuralCopy(var!.obj);        
+    local wittindex, a, v;
+    v := StructuralCopy(var!.obj);
     wittindex := (d+1)/2;
     a := FG_Sbar_rank(q, v, 1, wittindex);
     return a + 1; ## adjustment for lists beginning at 1
@@ -1416,14 +1416,14 @@ InstallGlobalFunction( QminusNumberElement,
   function(d, q, var)
     local wittindex, a, v, x, x1, x2, c1, c2, c3, perm,
           form, i, u, w, vv, z, minusz, minuszv, c, b;
-	
+
     # Choose [c1, c2, c3] compatible with FinInG:
     if IsEvenInt(q) then
        form := QuadraticForm( EllipticQuadric(d, q) )!.matrix;
     else
        form := SesquilinearForm( EllipticQuadric(d, q) )!.matrix;
-    fi; 
-   
+    fi;
+
     c1 := form[1][1];
     c2 := form[1][2];
     c3 := form[2][2];
@@ -1432,7 +1432,7 @@ InstallGlobalFunction( QminusNumberElement,
 
     perm := (1,d)(2,d+1);   ## it would be nice to remove this permutation
 
-    v := StructuralCopy(var!.obj); 
+    v := StructuralCopy(var!.obj);
     v := Permuted(v, perm);
 
     PG_element_normalize(v, 1, d + 1);
@@ -1448,32 +1448,32 @@ InstallGlobalFunction( QminusNumberElement,
     a := FG_nb_pts_Sbar(wittindex, q);
 
     if IsOne( x1 ) and IsZero( x2 ) then
-	 	b := 0;
-    else 
-	 	if not IsOne( x2 ) then
-	    	Error("ERROR in Qminus_rank x2 <> 1");
-	 	fi;
-	 	b := FG_pos(q, x1) + 1;  
+        b := 0;
+    else
+        if not IsOne( x2 ) then
+            Error("ERROR in Qminus_rank x2 <> 1");
+        fi;
+        b := FG_pos(q, x1) + 1;
     fi;
 
     x := FG_nb_pts_N1(wittindex, q);
-    u := c1 * x1 * x1; 	
+    u := c1 * x1 * x1;
     vv := c2 * x1 * x2;
-    w := c3 * x2 * x2;  
-    z := u + vv;  
-    z := z + w;   
-	if IsZero(z) then
-		Error("ERROR Qminus_rank z = 0");
-	fi;
+    w := c3 * x2 * x2;
+    z := u + vv;
+    z := z + w;
+    if IsZero(z) then
+        Error("ERROR Qminus_rank z = 0");
+    fi;
 
-    minusz := -z; 
-    minuszv := minusz^-1; 
+    minusz := -z;
+    minuszv := minusz^-1;
 
-	# JB (19/08/2014): Found the bug and it was that only the odd places need to be multiplied
+    # JB (19/08/2014): Found the bug and it was that only the odd places need to be multiplied
     if not IsOne( minusz ) then
-		for i in [0..wittindex-1] do
-			v[1 + 2 * i] := minuszv * v[1 + 2 * i];
-		od;
+        for i in [0..wittindex-1] do
+            v[1 + 2 * i] := minuszv * v[1 + 2 * i];
+        od;
         #v := minuszv * v;
     fi;
     c := FG_N1_rank(q, v, 1, wittindex);
@@ -1487,48 +1487,48 @@ end );
 
 #InstallGlobalFunction( enum_line,
 #  function( A, B, n )
-  
+
     ## This function returns the n-th point on the interval
     ## ]A,B[. This routine uses the ordering of a finite field GF(q).
     ## For instance, we know that 0 and 1 are the first two elements of GF(q).
     ## The integer n must be between 1 and q - 1.
-   
+
 #    local pg, q, x, C;
 #    pg := A!.geo;
 #    q := Size( pg!.basefield );
 #    x := FG_ffenumber( q, n + 1 );  ## n = 1 -> primitive root
-#    C := VectorSpaceToElement( pg, A!.obj + x * B!.obj ); 
+#    C := VectorSpaceToElement( pg, A!.obj + x * B!.obj );
 #    return C;
 #  end );
 
 #InstallGlobalFunction( enum_BaerSubline,
 #  function( q, n )
-  
+
     ## This function returns the n-th point on the canonical Baer subline
     ## X0^(q+1) + X1^(q+1), of PG(1, q^2).
     ## Note: Z(q^2)^(q+1) = Z(q) in GAP.
 
 #    local k, x;
-    
+
     ## Our points are (1, Z(q^2)^i) such that Z(q)^i=-1  (i in [1..q^2-1]).
-    ## This condition holds iff i = j (q-1) + k with j in [0..q], 
+    ## This condition holds iff i = j (q-1) + k with j in [0..q],
     ## k = (q-1)/2 for q odd, k = q-1 for q even.
-    
-#    if IsEvenInt(q) then 
-#       k := q - 1; 
-#    else 
-#       k := (q - 1)/2; 
+
+#    if IsEvenInt(q) then
+#       k := q - 1;
+#    else
+#       k := (q - 1)/2;
 #    fi;
-#    x := [ Z(q)^0, Z(q^2)^( (n-1) * (q-1) + k ) ];        
-#    return x;    
+#    x := [ Z(q)^0, Z(q^2)^( (n-1) * (q-1) + k ) ];
+#    return x;
 #  end );
-   
+
 #InstallGlobalFunction( enum_unital,
 #  function( q, n )
-  
+
     ## This function returns the n-th point on the canonical unital
     ## X0^(q+1) + X1^(q+1) + X2^(q+1).
-    ##    
+    ##
     ## First we use the representation of the classical unital U_{0,beta}
     ## from page 70 of Barwick and Ebert's book "Unitals in Projective Planes".
     ## That is:
@@ -1537,14 +1537,14 @@ end );
     ## elements of GF(q^2) x GF(q) (plus one extra point (0,1,0)).
     ## The Gram matrix for this Hermitian curve is
     ##    [[beta-beta^q,0,0],[0,0,-1],[0,1,0]] * e where e^q+e=0.
-    ## 
-        
+    ##
+
 #    local beta, one, i, j, x, r, point, e, mat, b, binv;
-    
+
 #    beta := Z(q^2);
 #    one := beta^0;
-    
-#    if n = q^3 + 1 then 
+
+#    if n = q^3 + 1 then
 #       point := [0,1,0] * one;
 #    else
 #       i := (n-1) mod q^2;                 ## an integer in [0..q^2-1]
@@ -1561,26 +1561,26 @@ end );
 #    mat := [[beta-beta^q,0,0],[0,0,-1],[0,1,0]] * e;
 #    b := BaseChangeToCanonical( HermitianFormByMatrix(mat, GF(q^2)) );
 #    binv := b^-1;
-#    return point * binv; 
+#    return point * binv;
 #  end );
 
 #############################################################################
 
 #############################################################################
-#F  HermElementNumber( d, q, a ) returns element number a of H(d,q^2). see 
+#F  HermElementNumber( d, q, a ) returns element number a of H(d,q^2). see
 # below for form.
 ##
 InstallGlobalFunction( HermElementNumber,
   function(d, q, a)
-      # The hermitian form here is simply 
+      # The hermitian form here is simply
       # x(1) x(2)^q + ... + x(n-1) x(n)^q
 
     local n, v, i, a2;
-    #zero := 0*Z(q);	
+    #zero := 0*Z(q);
     a2 := a - 1;
     v := ListWithIdenticalEntries(d+1,Z(q)^0);
-	n := Int((d+1) / 2);
-	FG_herm_Sbar_unrank(Sqrt(q),v,1,d+1,a2);
+    n := Int((d+1) / 2);
+    FG_herm_Sbar_unrank(Sqrt(q),v,1,d+1,a2);
     return v;
 end );
 
@@ -1591,12 +1591,12 @@ end );
 InstallGlobalFunction( HermNumberElement,
   function(d, q, var)
     local wittindex, a, v,y;
-	v := StructuralCopy(var!.obj);        
-	y := v[PositionNonZeroFromRight(v)];
-	if IsOddInt(q) then
-	  y := y/(Z(q)^((Sqrt(q)-1)/2)); #Strange Anton normalization...
-	fi;
-	v := v/y;
+    v := StructuralCopy(var!.obj);
+    y := v[PositionNonZeroFromRight(v)];
+    if IsOddInt(q) then
+      y := y/(Z(q)^((Sqrt(q)-1)/2)); #Strange Anton normalization...
+    fi;
+    v := v/y;
     #wittindex := (d+1)/2;
     a := FG_herm_Sbar_rank(Sqrt(q), v, 1, d+1);
     return a + 1; ## adjustment for lists beginning at 1
@@ -1605,7 +1605,7 @@ end );
 #############################################################################
 # The enumerator for points of a polar space, bundled in one operation.
 #############################################################################
-InstallMethod( AntonEnumerator, 
+InstallMethod( AntonEnumerator,
   "for a collection of subspaces of a polar space",
   [IsSubspacesOfClassicalPolarSpace],
 
@@ -1617,14 +1617,14 @@ InstallMethod( AntonEnumerator,
 
   function( vs )
     local ps, enum, flavour, d, q, projenum;
-    if vs!.type <> 1 then 
+    if vs!.type <> 1 then
        Error("Only applicable to points");
     fi;
 
     ps := vs!.geometry;
     flavour := PolarSpaceType(ps);
     d := ps!.dimension;
-    q := Size(ps!.basefield);   
+    q := Size(ps!.basefield);
 
     if flavour = "parabolic" then
 
@@ -1635,8 +1635,8 @@ InstallMethod( AntonEnumerator,
            return VectorSpaceToElement(ps, QElementNumber(d, q, n));
          end,
          NumberElement := function( e, x )
-           return QNumberElement(d, q, x); 
-         end ) 
+           return QNumberElement(d, q, x);
+         end )
        );
     elif flavour = "hyperbolic" then
 
@@ -1648,7 +1648,7 @@ InstallMethod( AntonEnumerator,
          end,
          NumberElement := function( e, x )
            return QplusNumberElement(d, q, x);
-         end ) 
+         end )
        );
     elif flavour = "elliptic" then
 
@@ -1659,13 +1659,13 @@ InstallMethod( AntonEnumerator,
            return VectorSpaceToElement(ps, QminusElementNumber(d, q, n));
          end,
          NumberElement := function( e, x )
-           return QminusNumberElement(d, q, x); 
-         end ) 
+           return QminusNumberElement(d, q, x);
+         end )
        );
 
     elif flavour = "symplectic" then
 
-       ## Symplectic (uses just the enumerator for the points of 
+       ## Symplectic (uses just the enumerator for the points of
        ##             the ambient projective space)
 
        projenum := Enumerator( Points(AmbientSpace(ps)) );
@@ -1675,21 +1675,21 @@ InstallMethod( AntonEnumerator,
          end,
          NumberElement := function( e, x )
            return Position(projenum, x);
-         end ) 
+         end )
        );
     elif flavour = "hermitian" then
 
-       ## Hermitian 
-       
+       ## Hermitian
+
        enum := EnumeratorByFunctions( vs, rec(
          ElementNumber := function( e, n )
            return VectorSpaceToElement(ps, HermElementNumber(d, q, n));
          end,
          NumberElement := function( e, x )
-           return HermNumberElement(d, q, x); 
-         end ) 
+           return HermNumberElement(d, q, x);
+         end )
        );
-       
+
 
     #   projenum := EnumeratorByOrbit( Points( ps ) );  ## this computes the whole list of points!!
     #   enum := EnumeratorByFunctions( vs, rec(
@@ -1699,7 +1699,7 @@ InstallMethod( AntonEnumerator,
 
     #     NumberElement := function( e, x )
     #       return Position(projenum, x);
-    #     end ) 
+    #     end )
     #   );
     else
        Error("not implemented for this polar space");
@@ -1713,20 +1713,20 @@ InstallMethod( AntonEnumerator,
 
 #############################################################################
 #F FG_specialresidual: our special helper enumerator function that returns
-# an enumerator (actually just a list) of elements of dimension j on a given j-1 
+# an enumerator (actually just a list) of elements of dimension j on a given j-1
 # space, not in a given hyperplane.
 ##
-InstallGlobalFunction(FG_specialresidual, 
+InstallGlobalFunction(FG_specialresidual,
   function(ps, v, hyp)
 
-  ## This function returns an enumerator for the j spaces on a 
+  ## This function returns an enumerator for the j spaces on a
   ## given j-1 space v which are not contained in a hyperplane hyp.
   ## This could be made more efficient.
 
   local j, enum, res;
-    j := v!.type + 1; 
+    j := v!.type + 1;
     res := Enumerator( ShadowOfElement(ps, v, j) );
-    enum := Filtered(res, x -> not x in hyp); 
+    enum := Filtered(res, x -> not x in hyp);
     return enum;
   end );
 
@@ -1735,10 +1735,10 @@ InstallGlobalFunction(FG_specialresidual,
 # for a set of elements of a canonical orthogonal space.
 ##
 InstallGlobalFunction( FG_enum_orthogonal,
- 
+
   function( ps, j )
-  local hyp, pg, d, f, iter, x, ps2, vs, ressize, 
-        em, varsps2jmin1, varsps2j, enum2, enum, enumextra, 
+  local hyp, pg, d, f, iter, x, ps2, vs, ressize,
+        em, varsps2jmin1, varsps2j, enum2, enum, enumextra,
         vars, rep, disc, sqs, type, q, zero, one;
 
   vs := ElementsOfIncidenceStructure(ps, j);
@@ -1749,55 +1749,55 @@ InstallGlobalFunction( FG_enum_orthogonal,
     type := PolarSpaceType(ps);
     d := ps!.dimension;
     f := ps!.basefield;
-    q := Size(f);   
+    q := Size(f);
     zero := Zero(f);
     one := One(f);
-    
+
     ## The number of j spaces on a j-1 space is the number of points
     ## in the quotient polar space (over a j-1 space)
-    
+
     x := List([1..d], i -> zero);
-    hyp := ShallowCopy(IdentityMat(d,f));    
-    if type = "parabolic" or type = "elliptic" then       
-       hyp := Concatenation([x], hyp);     
-    else 
+    hyp := ShallowCopy(IdentityMat(d,f));
+    if type = "parabolic" or type = "elliptic" then
+       hyp := Concatenation([x], hyp);
+    else
        x[2] := one;
        x[d] := one;
        Append(hyp, [x]);
     fi;
     hyp := TransposedMat(hyp);
-    hyp := VectorSpaceToElement(pg, hyp);               
-    disc := TypeOfSubspace(ps, hyp); 
+    hyp := VectorSpaceToElement(pg, hyp);
+    disc := TypeOfSubspace(ps, hyp);
 
          ## Here ps2 is the polar space induced by the hyperplane section.
-         ## ressize is the number of j spaces not contained in hyp 
+         ## ressize is the number of j spaces not contained in hyp
          ## incident with a j-1 space contained in hyp. Of course, we
          ## have a special case when j is the Witt index.
 
     if type = "hyperbolic" then
        ps2 := ParabolicQuadric(d-1, f);
-       ressize := Size(ElementsOfIncidenceStructure(HyperbolicQuadric(d+2-2*j, f), 1)); 
-       #if j <= WittIndex( SesquilinearForm(ps2) ) then 
+       ressize := Size(ElementsOfIncidenceStructure(HyperbolicQuadric(d+2-2*j, f), 1));
+       #if j <= WittIndex( SesquilinearForm(ps2) ) then
        if j <= WittIndex( QuadraticForm(ps2) ) then #was "SesquilinearForm"
            ressize := ressize - Size(ElementsOfIncidenceStructure(ParabolicQuadric(d+1-2*j, f), 1));
        fi;
-    elif type = "elliptic" then   
+    elif type = "elliptic" then
        ps2 := ParabolicQuadric(d-1, f);
        ressize := Size(ElementsOfIncidenceStructure(EllipticQuadric(d+2-2*j, f), 1));
        #if j <= WittIndex( SesquilinearForm(ps2) ) then
-	   if j <= WittIndex( QuadraticForm(ps2) ) then #was "SesquilinearForm"
+       if j <= WittIndex( QuadraticForm(ps2) ) then #was "SesquilinearForm"
           ressize := ressize - Size(ElementsOfIncidenceStructure(ParabolicQuadric(d+1-2*j, f), 1));
        fi;
     # type = "parabolic" in what follows
     elif disc = "elliptic" then
        ps2 := EllipticQuadric(d-1, f);
-       ressize := Size(ElementsOfIncidenceStructure(ParabolicQuadric(d+2-2*j, f), 1)); 
+       ressize := Size(ElementsOfIncidenceStructure(ParabolicQuadric(d+2-2*j, f), 1));
        #if j <= WittIndex( SesquilinearForm(ps2) ) then
-	   if j <= WittIndex( QuadraticForm(ps2) ) then #was "SesquilinearForm"
+       if j <= WittIndex( QuadraticForm(ps2) ) then #was "SesquilinearForm"
           ressize := ressize - Size(ElementsOfIncidenceStructure(EllipticQuadric(d+1-2*j, f), 1));
        fi;
-    else 
-       ps2 := HyperbolicQuadric(d-1, f);        
+    else
+       ps2 := HyperbolicQuadric(d-1, f);
        ressize := Size(ElementsOfIncidenceStructure(ParabolicQuadric(d+2-2*j, f), 1));
        #if j <= WittIndex( SesquilinearForm(ps2) ) then
        if j <= WittIndex( QuadraticForm(ps2) ) then #was "SesquilinearForm"
@@ -1807,7 +1807,7 @@ InstallGlobalFunction( FG_enum_orthogonal,
 
     em := NaturalEmbeddingBySubspace(ps2, ps, hyp);
 
-    ## Enumerate last the j-spaces contained in the non-deg hyperplane  
+    ## Enumerate last the j-spaces contained in the non-deg hyperplane
 
     #if j <= WittIndex( SesquilinearForm(ps2) ) then
     if j <= WittIndex( QuadraticForm(ps2) ) then #was SesquilinearForm
@@ -1815,13 +1815,13 @@ InstallGlobalFunction( FG_enum_orthogonal,
        varsps2j := ElementsOfIncidenceStructure( ps2, j );
        enumextra := Enumerator( varsps2j );
     fi;
-      
+
     varsps2jmin1 := ElementsOfIncidenceStructure( ps2, j-1 );
-    enum2 := FG_enum_orthogonal( ps2, j-1);  
+    enum2 := FG_enum_orthogonal( ps2, j-1);
 
     enum := EnumeratorByFunctions( vs, rec(
          ElementNumber := function( e, n )
-           local l, k, enumres, t, v;   
+           local l, k, enumres, t, v;
            if n > Size(enum2) * ressize then
               l := n - Size(enum2) * ressize;
               return enumextra[l]^em;
@@ -1832,10 +1832,10 @@ InstallGlobalFunction( FG_enum_orthogonal,
            ## of vars2ps2. So we must first decompose n as n=(k-1)ressize+l.
 
               l := RemInt(n, ressize);
-              if l = 0 then l := ressize; fi;  
-              k := (n-l) / ressize + 1;    
-              v := enum2[k]^em;   
-              enumres := FG_specialresidual(vs!.geometry, v, hyp);  
+              if l = 0 then l := ressize; fi;
+              k := (n-l) / ressize + 1;
+              v := enum2[k]^em;
+              enumres := FG_specialresidual(vs!.geometry, v, hyp);
               return enumres[l];
            fi;
          end,
@@ -1852,16 +1852,16 @@ InstallGlobalFunction( FG_enum_orthogonal,
                 numinhyp := Size(enum2) * ressize;
                 prew := em!.prefun(x);
                 return numinhyp + Position(enumextra, prew);
-             else            
-                w := Meet(hyp, x);        
-                prew := em!.prefun(w);    
-				k := Position(enum2, prew);   
-                enumres := FG_specialresidual(vs!.geometry, w, hyp); 
+             else
+                w := Meet(hyp, x);
+                prew := em!.prefun(w);
+                k := Position(enum2, prew);
+                enumres := FG_specialresidual(vs!.geometry, w, hyp);
                 l := Position(enumres, x);
                 return (k-1)*ressize + l;
              fi;
          end ) );
-  else 
+  else
      Error("j must be a positive integer");
   fi;
   return enum;
@@ -1870,12 +1870,12 @@ InstallGlobalFunction( FG_enum_orthogonal,
 #############################################################################
 #F FG_enum_hermitian.  This is a "helper" function which makes the enumerator
 # for a set of elements of a canonical hermitian space.
-# bug repaired in NumberElement function. Bug found by Frédéric Vanhove. 
+# bug repaired in NumberElement function. Bug found by Frédéric Vanhove.
 ##
 InstallGlobalFunction( FG_enum_hermitian,
 
   function( ps, j )
-  local hyp, pg, d, f, ps2, vs, ressize, em, varsps2jmin1, 
+  local hyp, pg, d, f, ps2, vs, ressize, em, varsps2jmin1,
         varsps2j, enum2, enum, enumextra, vars;
   vs := ElementsOfIncidenceStructure(ps, j);
   if j = 1 then
@@ -1885,38 +1885,38 @@ InstallGlobalFunction( FG_enum_hermitian,
     d := ps!.dimension;
     f := ps!.basefield;
     hyp := NullMat(d,d+1,f);
-    hyp{[1..d]}{[2..d+1]} := IdentityMat(d, f);    
+    hyp{[1..d]}{[2..d+1]} := IdentityMat(d, f);
     hyp := VectorSpaceToElement(pg, hyp);
-    
+
          ## ps2 is the polar space induced by the hyperplane section.
-         ## ressize is the number of j spaces not contained in hyp 
-         ## incident with a j-1 space contained in hyp. 
+         ## ressize is the number of j spaces not contained in hyp
+         ## incident with a j-1 space contained in hyp.
 
      ps2 := HermitianPolarSpace(d-1, f);
-	 ressize := Size(ElementsOfIncidenceStructure(HermitianPolarSpace(d+2-2*j, f), 1)); 
+     ressize := Size(ElementsOfIncidenceStructure(HermitianPolarSpace(d+2-2*j, f), 1));
 
      if j <= WittIndex( SesquilinearForm(ps2) ) then
         ressize := ressize - Size(ElementsOfIncidenceStructure(HermitianPolarSpace(d+1-2*j, f), 1));
         varsps2j := ElementsOfIncidenceStructure( ps2, j );
         enumextra := Enumerator( varsps2j );
      fi;
-     
-     em := NaturalEmbeddingBySubspace(ps2, ps, hyp);        
+
+     em := NaturalEmbeddingBySubspace(ps2, ps, hyp);
      varsps2jmin1 := ElementsOfIncidenceStructure( ps2, j-1 );
-     enum2 := FG_enum_hermitian( ps2, j-1 ); 
+     enum2 := FG_enum_hermitian( ps2, j-1 );
 
      enum := EnumeratorByFunctions( vs, rec(
          ElementNumber := function( e, n )
-           local l, k, enumres, t, v;  
+           local l, k, enumres, t, v;
            if n > Size(enum2) * ressize then
               l := n - Size(enum2) * ressize;
               return enumextra[l]^em;
            else
               l := RemInt(n, ressize);
-              if l = 0 then l := ressize; fi;  
-              k := (n-l) / ressize + 1;    
-              v := enum2[k]^em;                     
-              enumres := FG_specialresidual(vs!.geometry, v, hyp);  
+              if l = 0 then l := ressize; fi;
+              k := (n-l) / ressize + 1;
+              v := enum2[k]^em;
+              enumres := FG_specialresidual(vs!.geometry, v, hyp);
               return enumres[l];
            fi;
          end,
@@ -1926,26 +1926,26 @@ InstallGlobalFunction( FG_enum_hermitian,
                 numinhyp := Size(enum2) * ressize;
                 #prew := PreImage(em, x); #this was bug 1
                 prew := em!.prefun(x);
-				return numinhyp + Position(enumextra, prew);
-             else            
+                return numinhyp + Position(enumextra, prew);
+             else
                 w := Meet(hyp, x);
                 #prew := PreImage(em, w); #this was bug 2
                 prew := em!.prefun(w);
-				#k := Position(varsps2jmin1, prew); this was bug 3
-				k := Position(enum2, prew);
-                enumres := FG_specialresidual(vs!.geometry, w, hyp); 
+                #k := Position(varsps2jmin1, prew); this was bug 3
+                k := Position(enum2, prew);
+                enumres := FG_specialresidual(vs!.geometry, w, hyp);
                 l := Position(enumres, x);
                 return (k-1)*ressize + l;
              fi;
          end ) );
-  else 
+  else
      Error("j must be a positive integer");
   fi;
   return enum;
 end );
 
 #############################################################################
-#F FG_enum_symplectic.  
+#F FG_enum_symplectic.
 ##
 InstallGlobalFunction( FG_enum_symplectic,
 
@@ -1979,21 +1979,21 @@ end );
 #merge these two, give it a sensible name, see if one can be thrown away... done.
 
 #InstallGlobalFunction(my_PG_element_normalize,
-#	[IsFFECollection, IsPosInt, IsPosInt],
-#	function(v, offset, n)
+#   [IsFFECollection, IsPosInt, IsPosInt],
+#   function(v, offset, n)
 
   ## This function takes the first nonzero element
   ## from the right (!) and normalises the vector v
   ## by this element.
 
 #  local ii, i, a, one;
-#  one := One(v[1]);	   
-#  for ii in [0..n - 1] do 
-#      i := n - 1 - ii;    
-#      a := v[offset + i]; 
+#  one := One(v[1]);
+#  for ii in [0..n - 1] do
+#      i := n - 1 - ii;
+#      a := v[offset + i];
 #      if not IsZero(a) then
-#         if IsOne(a) then  
-#	     return;
+#         if IsOne(a) then
+#        return;
 #         fi;
 #         a := a^-1;
 #         v{[offset..i-1+offset]} := a * v{[offset..i-1+offset]};
@@ -2006,34 +2006,34 @@ end );
 #end );
 
 #############################################################################
-# The enumerator using the orbit. This is the only operation declaration in 
-# this file for a user intended operation. 
+# The enumerator using the orbit. This is the only operation declaration in
+# this file for a user intended operation.
 #############################################################################
 
 #############################################################################
-#O EnumeratorByOrbit. returns an enumerator using the orbit.  
+#O EnumeratorByOrbit. returns an enumerator using the orbit.
 ##
-InstallMethod( EnumeratorByOrbit, 
+InstallMethod( EnumeratorByOrbit,
   "for a collection of subspaces of a polar space",
   [ IsSubspacesOfClassicalPolarSpace ],
   function( vs )
 
   ## In this operation, we provide a way to compute the full
   ## list of elements by using the transitive action of the isometry
-  ## group. Using an enumerator to get a full list is much slower.                              
+  ## group. Using an enumerator to get a full list is much slower.
 
   ## We use the package "orb" by Mueller, Neunhoeffer and Noeske,
   ## which is much quicker than using the standard orbit algorithm
   ## that exists in GAP.
 
-    local ps, j, rep, vars, isom, gens;    
+    local ps, j, rep, vars, isom, gens;
      ps := vs!.geometry;
      j := vs!.type;
      isom := IsometryGroup(ps);
      gens := GeneratorsOfGroup(isom);
      rep := RepresentativesOfElements(ps)[j];
-     vars := Orb(gens,rep,OnProjSubspaces, rec( hashlen:=Int(5/4*Size(vs)) )); 
-     Enumerate(vars, Size(vs));   
+     vars := Orb(gens,rep,OnProjSubspaces, rec( hashlen:=Int(5/4*Size(vs)) ));
+     Enumerate(vars, Size(vs));
      return vars;
    end );
 
@@ -2041,50 +2041,50 @@ InstallMethod( EnumeratorByOrbit,
 #############################################################################
 #O AsList. Lists all elements in a collection of subspaces of polar space.
 ##
-InstallMethod( AsList, 
-	"for subspaces of a polar space", 
-	[IsSubspacesOfClassicalPolarSpace],
-	function( vs )
-		return AsList(EnumeratorByOrbit( vs ));
-	end );
+InstallMethod( AsList,
+    "for subspaces of a polar space",
+    [IsSubspacesOfClassicalPolarSpace],
+    function( vs )
+        return AsList(EnumeratorByOrbit( vs ));
+    end );
 
 # jdb: patched 15/2/2016, using a patch file from Max Horn.
 #############################################################################
-#O AsSortedList. Lists all elements in a collection of subspaces of polar space.  
+#O AsSortedList. Lists all elements in a collection of subspaces of polar space.
 ##
-InstallMethod( AsSortedList, 
-	"for subspaces of a polar space", 
-	[IsSubspacesOfClassicalPolarSpace],
-	function( vs )
-		return AsSortedList(EnumeratorByOrbit( vs ));
-	end );
+InstallMethod( AsSortedList,
+    "for subspaces of a polar space",
+    [IsSubspacesOfClassicalPolarSpace],
+    function( vs )
+        return AsSortedList(EnumeratorByOrbit( vs ));
+    end );
 
 #Exactly the same as above?
 #############################################################################
-#O AsSortedList. Lists all elements in a collection of subspaces of polar space.  
+#O AsSortedList. Lists all elements in a collection of subspaces of polar space.
 ##
-InstallMethod( AsSSortedList, 
-	"for subspaces of a polar space", 
-	[IsSubspacesOfClassicalPolarSpace],
-	function( vs )
-		return AsSortedList(EnumeratorByOrbit( vs ));
-	end );
+InstallMethod( AsSSortedList,
+    "for subspaces of a polar space",
+    [IsSubspacesOfClassicalPolarSpace],
+    function( vs )
+        return AsSortedList(EnumeratorByOrbit( vs ));
+    end );
 
 #############################################################################
-#O Enumerator. 
+#O Enumerator.
 # This is it! This is the big method that returns an enumerator for a collection
 # of all elements of a given type of the polar space <ps>
 ##
-InstallMethod( Enumerator, 
-	"for subspaces of a polar space",
-	[ IsSubspacesOfClassicalPolarSpace ],
-	function( vs )
+InstallMethod( Enumerator,
+    "for subspaces of a polar space",
+    [ IsSubspacesOfClassicalPolarSpace ],
+    function( vs )
 
     ## This method returns the enumerator for the elements of
     ## a polar space, of a given type. There are three "helper"
     ## operations involved here: FG_enum_orthogonal, FG_enum_hermitian,
     ## and FG_enum_symplectic. At the moment, we do not have nice methods
-    ## for the points of a hermitian space, and for varieties of 
+    ## for the points of a hermitian space, and for varieties of
     ## a symplectic space.
 
     local ps, j, rep, enum, e, type, eEN, eNE, iso, pscanonical;
@@ -2095,14 +2095,14 @@ InstallMethod( Enumerator,
      ## A bug here was fixed. When using non-canonical polar spaces, there was some problem
      ## in using the enum_* commands before an isomorphism was made. Fixed now. John 02/06/2010
 
-     if HasIsCanonicalPolarSpace( ps ) and IsCanonicalPolarSpace( ps ) then     
+     if HasIsCanonicalPolarSpace( ps ) and IsCanonicalPolarSpace( ps ) then
 
-		if type in [ "hyperbolic", "elliptic", "parabolic" ] then
+        if type in [ "hyperbolic", "elliptic", "parabolic" ] then
            e := FG_enum_orthogonal(ps, j);
         elif type = "hermitian" then
            e := FG_enum_hermitian(ps, j);
         elif type = "symplectic" then
-           e := FG_enum_symplectic(ps, j);  
+           e := FG_enum_symplectic(ps, j);
         else
            Error("Unknown polar space type");
         fi;
@@ -2112,7 +2112,7 @@ InstallMethod( Enumerator,
                   NumberElement := e!.NumberElement,
                   PrintObj := function ( e )
                     Print( "EnumeratorOfSubspacesOfClassicalPolarSpace( " );
-                    View( vs ); 
+                    View( vs );
                     Print( " )" );
                     return;
                   end,
@@ -2122,16 +2122,16 @@ InstallMethod( Enumerator,
                 ) );
      else
         ## The following is an isomorphism from the canonical polar space TO ps
-  
+
         iso := IsomorphismCanonicalPolarSpace( ps );
-        pscanonical := Source(iso)!.geometry;     
+        pscanonical := Source(iso)!.geometry;
 
         if type in [ "hyperbolic", "elliptic", "parabolic" ] then
            e := FG_enum_orthogonal(pscanonical, j);
         elif type = "hermitian" then
            e := FG_enum_hermitian(pscanonical, j);
         elif type = "symplectic" then
-           e := FG_enum_symplectic(pscanonical, j);  
+           e := FG_enum_symplectic(pscanonical, j);
         else
            Error("Unknown polar space type");
         fi;
@@ -2140,7 +2140,7 @@ InstallMethod( Enumerator,
 
         eEN := e!.ElementNumber;
         eNE := e!.NumberElement;
-                                                                        
+
         enum := EnumeratorByFunctions( vs, rec(
                    ElementNumber := function(e, n)
                      return iso!.fun( eEN( e, n ) );
@@ -2150,14 +2150,14 @@ InstallMethod( Enumerator,
                    end,
                    PrintObj := function ( e )
                      Print( "EnumeratorOfSubspacesOfClassicalPolarSpace( " );
-                     View( vs ); 
+                     View( vs );
                      Print( " )" );
                      return;
                    end,
                    Length := function( e )
                      return Size(vs);
                    end
-                 ) );  
+                 ) );
      fi;
   ##   SetIsSSortedList( enum, true );  this line introduces a bug. It would be nice for it to be sorted though
      return enum;
@@ -2165,21 +2165,21 @@ InstallMethod( Enumerator,
 
 # 7/4/2018 adapted enumerator to work for shadow of flags of cps too.
 #############################################################################
-#O Enumerator. 
+#O Enumerator.
 # returns an enumerator for a collection of shadow subspaces of an element of
 # a polar space.
 ##
-InstallMethod( Enumerator, 
-	"for shadow subspaces of a polar space",
-	[IsShadowSubspacesOfClassicalPolarSpace and IsShadowSubspacesOfClassicalPolarSpaceRep ],
-	function( res )
-    
+InstallMethod( Enumerator,
+    "for shadow subspaces of a polar space",
+    [IsShadowSubspacesOfClassicalPolarSpace and IsShadowSubspacesOfClassicalPolarSpaceRep ],
+    function( res )
+
     # Here we use the quotient geometry over res!.inner to compute
     # the residual.
 
-    local pstype, psdim, f, b, vardim, perp, vs, 
+    local pstype, psdim, f, b, vardim, perp, vs,
           ps2, newdim, canon_quot, Wvectors, mb, compl,
-          gen, m, newform, changeform_inv, cquot_to_res, 
+          gen, m, newform, changeform_inv, cquot_to_res,
           enumps2, enum, ps, var, j, out, m2, iso, proj, higherels,
           img, changeform, res_to_cquot, bas, canbas, zero, basimgs,
           flag, flagtypes, flagpg, pg;
@@ -2200,13 +2200,13 @@ InstallMethod( Enumerator,
 
     if IsEmpty(var) then # old situation must be kept.
        ## This is the residual for varieties contained in a subspace, such
-       ## as "points on a line". Hence we need only use a method which 
+       ## as "points on a line". Hence we need only use a method which
        ## simulates the residual of a projective subspace.
 
-       ps2 := res!.factorspace; 
-	
+       ps2 := res!.factorspace;
+
        enumps2 := Enumerator( Subspaces(ps2, j));
-	
+
        enum := EnumeratorByFunctions( res, rec(
           ElementNumber := function(e, num)
              local x;
@@ -2215,18 +2215,18 @@ InstallMethod( Enumerator,
                 return Wrap(ps, j, x[1]);
              else
                 return Wrap(ps, j, x);
-             fi;           
-          end, 
+             fi;
+          end,
           NumberElement := function( e, elm )
              local unelm;
              unelm := elm!.obj;
              if j = 1 then
-                unelm := [ unelm ]; 
+                unelm := [ unelm ];
              fi;
              return Position(enumps2, SubspaceNC(ps2, unelm));
           end ) );
 
-    elif var = out then    
+    elif var = out then
 
        ## This is the trivial residual for the variety itself, i.e.,
        ## "lines incident with line" = "just the line itself".
@@ -2234,7 +2234,7 @@ InstallMethod( Enumerator,
        enum := EnumeratorByFunctions( res, rec(
           ElementNumber := function(e, num)
              return VectorSpaceToElement(ps, var);
-          end, 
+          end,
           NumberElement := function( e, elm )
              return 1;
           end ) );
@@ -2287,4 +2287,3 @@ InstallMethod( Enumerator,
     fi;
     return enum;
   end );
-

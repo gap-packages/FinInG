@@ -19,21 +19,21 @@ quit;
 
 #initialize filenames
 
-affinefiles := ["affine_parallel", "affine_shadow1", "affine_shadow2", "affine_basic", 
+affinefiles := ["affine_parallel", "affine_shadow1", "affine_shadow2", "affine_basic",
                "affine_elements", "affine_iterator", "affine_enumerator", "affine_join", "affine_meet"];;
 
-examplesfiles := ["examples_pg24", "examples_hermitian", "examples_embedW", "examples_spreads", 
+examplesfiles := ["examples_pg24", "examples_hermitian", "examples_embedW", "examples_spreads",
                   "examples_qclan", "examples_KantorKnuth","examples_PSL211"];;
 
-incgeomfiles := ["incgeom_incstruct", "incgeom_categories1", "incgeom_typesofels", "incgeom_rank", "incgeom_ambientspace", 
+incgeomfiles := ["incgeom_incstruct", "incgeom_categories1", "incgeom_typesofels", "incgeom_rank", "incgeom_ambientspace",
 				 "incgeom_categories2", "incgeom_elementsj", "incgeom_short", "incgeom_isincident", "incgeom_random",
-				 "incgeom_el_ambient", "incgeom_flag", "incgeom_flag_chamber", "incgeom_shadowofelement", "incgeom_shadowofelement2", 
-                 "incgeom_shadowofflag", "incgeom_shadowshort", "incgeom_iterator", "incgeom_enum", "incgeom_lie_uvs", 
+				 "incgeom_el_ambient", "incgeom_flag", "incgeom_flag_chamber", "incgeom_shadowofelement", "incgeom_shadowofelement2",
+                 "incgeom_shadowofflag", "incgeom_shadowshort", "incgeom_iterator", "incgeom_enum", "incgeom_lie_uvs",
 				 "incgeom_lie_projdimension", "incgeom_lie_elementtovectorspace", "incgeom_lie_vectorspacetoelement", "incgeom_lie_in",
 				 "incgeom_lie_elementtoelement", "incgeom_lie_hyperplanesof" ]; #"incgeom_lie_convert"
 
 projspfiles := ["projsp_projectivespace", "projsp_projdimension", "projsp_basefieldps", "projsp_underlyingvs", "projsp_element1",
-				"projsp_emptysubspace", "projsp_projdimension_element", "projsp_elements", "projsp_short", "projsp_incident", 
+				"projsp_emptysubspace", "projsp_projdimension_element", "projsp_elements", "projsp_short", "projsp_incident",
 				"projsp_standardframe", "projsp_coordinates", "projsp_eqhyperplane", "projsp_ambientspaceelps", "projsp_basefieldelps",
 				"projsp_randomeltps", "projsp_randomeltsps", "projsp_span", "projsp_meet", "projsp_flag", "projsp_chamber",
 				"projsp_shadowofelement", "projsp_shadowofflag", "projsp_elsel", "projsp_enumerator", "projsp_iterator", "projsp_list" ];
@@ -43,24 +43,24 @@ projgroupsfiles := ["projgroups_basefield",
 	  "projgroups_correlation", "projgroups_fieldautomorphism",
 	  "projgroups_projectivity", "projgroups_psisomorphism",
 	  "projgroups_stduality", "projgroups_underlyingmatrix", "projgroups_onprojsubspaces",
-	  "projgroups_onprojsubspacesreversing", "projgroups_simgroup", 
-	  "projgroups_isomgroup", "projgroups_specialisomgroup", 
+	  "projgroups_onprojsubspacesreversing", "projgroups_simgroup",
+	  "projgroups_isomgroup", "projgroups_specialisomgroup",
 	  "projgroups_mult", "projgroups_embedding", "projgroups_representative",
 	  "projgroups_order", "projgroups_projectivitygroup","projgroups_specialprojectivitygroup",
 	  "projgroups_nicem", "projgroups_niceo", "projgroups_cancompute"];;
 
 polaritiespsfiles := ["polarities_construct1", "polarities_construct2",
-          "polarities_fromform", "polarities_toform", "polarities_basefield", 
-	  "polarities_automorphism", "polarities_grammatrix", "polarities_ishermitian", 
-	  "polarities_issymplectic", "polarities_ispseudo", "polarities_isorthogonal", 
-	  "polarities_geometryofabsolutepoints", "polarities_absolutepoints", 
-	  "polarities_polarspace", "polarities_frompolarspace", 
+          "polarities_fromform", "polarities_toform", "polarities_basefield",
+	  "polarities_automorphism", "polarities_grammatrix", "polarities_ishermitian",
+	  "polarities_issymplectic", "polarities_ispseudo", "polarities_isorthogonal",
+	  "polarities_geometryofabsolutepoints", "polarities_absolutepoints",
+	  "polarities_polarspace", "polarities_frompolarspace",
 	  "polarities_commuting"];
 
 classicalpolfiles :=   ["cps_polarspaceform", "cps_example", "cps_symplectic", "cps_hermitian", "cps_parabolic", "cps_hyperbolic",
 						"cps_elliptic", "cps_underlyingvs", "cps_ambientspace", "cps_projectivedimension", "cps_rank",
-						"cps_basefield", "cps_element1", "cps_emptysubspace", "cps_projdimension_element", "cps_elements", 
-						"cps_ambientspaceelps", "cps_coordinates", "cps_incident", "cps_span", "cps_typesubspace", 
+						"cps_basefield", "cps_element1", "cps_emptysubspace", "cps_projdimension_element", "cps_elements",
+						"cps_ambientspaceelps", "cps_coordinates", "cps_incident", "cps_span", "cps_typesubspace",
 						"cps_specialisometry", "cps_isometry", "cps_similarity", "cps_collineation", "cps_aslist",
 						"cps_ishyperbolicquadric", "cps_isellipticquadric", "cps_isparabolicquadric", "cps_enumerator",
 						"cps_iterator" ];
@@ -74,12 +74,12 @@ classicalpolfiles :=   ["cps_polarspaceform", "cps_example", "cps_symplectic", "
 projpolfiles1 := ["projpol_projectivespace", "projpol_projdimension",
                  "projpol_underlyingvs", "projpol_element1", "projpol_emptysubspace",
 		 "projpol_projdimension_element", "projpol_coordinates",
-		  "projpol_eqhyperplane", "projpol_basefieldps", "projpol_ambientspaceelps", 
+		  "projpol_eqhyperplane", "projpol_basefieldps", "projpol_ambientspaceelps",
 		  "projpol_basefieldelps", "projpol_randomeltsps", "projpol_randomelps",
 		  "projpol_span", "projpol_meet", "projpol_shadowofelement", "projpol_flag",
 		  "projpol_shadowofflag"];
-		 
-		 
+
+
 		 "projpol_hermitian", "projpol_elliptic",
 		 "projpol_parabolic", "projpol_hyperbolic", "projpol_element1", "projpol_in"];
 
@@ -95,12 +95,12 @@ projspacefiles := ["projpol_projectivespace", "projpol_projdimension", "projpol_
 projpolfiles1 := ["projpol_projectivespace", "projpol_polarspaceform",
                  "projpol_symplectic", "projpol_hermitian", "projpol_elliptic",
 		 "projpol_parabolic", "projpol_hyperbolic", "projpol_element1", "projpol_in"];
-		 
+
 
 morphismsfiles := ["morphisms_intertwiners","morphisms_embedding1","morphisms_embedding2","morphisms_typesubspace",
           "morphisms_fieldreduc1", "morphisms_fieldreduc2","morphisms_subfield1","morphisms_subfield2",
           "morphisms_isopolar","morphisms_projection","morphisms_completion","morphisms_klein","morphisms_duality"];;
-		  
+
 varieties_files := ["varieties_general", "varieties_polarspace", "varieties_veronese", "varieties_segre", "varieties_hermitian", "varieties_quadratic", "varieties_grassmann" ];
 
 
@@ -130,10 +130,10 @@ files := [ "gpolygons_EGQByqClan" ];
 files := ["examples_test"];
 
 homedir := DirectoryCurrent();
-exampledir := DirectoriesPackageLibrary("fining","examples/gap")[1]; 
-preambledir := DirectoriesPackageLibrary("fining","examples/")[1]; 
+exampledir := DirectoriesPackageLibrary("fining","examples/gap")[1];
+preambledir := DirectoriesPackageLibrary("fining","examples/")[1];
 outputdir := DirectoriesPackageLibrary("fining","examples/output")[1];
-gap := Filename(Directory("/usr/bin/"),"gap4r4");  
+gap := Filename(Directory("/usr/bin/"),"gap4r4");
 paths := JoinStringsWithSeparator(GAP_ROOT_PATHS,";");
 args := JoinStringsWithSeparator(["-l ",paths," -L fining.ws"," -o 4G"]," ");
 
@@ -214,7 +214,7 @@ for filename in files do
   # while line <> fail do
     if line <> "\n" then
       line := ReplacedString(line,"\\\n","\n");
-      line := ReplacedString(ReplacedString(line,"<","&lt;"),">","&gt;"); 
+      line := ReplacedString(ReplacedString(line,"<","&lt;"),">","&gt;");
       #ReplacedString(line,"<","&lt;");
       AppendTo(o,ReplacedString(line,"\n","<br>\n"));
     fi;

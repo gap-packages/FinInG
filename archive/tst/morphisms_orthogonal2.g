@@ -122,7 +122,7 @@ em := NaturalEmbeddingByFieldReduction(ps1,ps2);
 Set(List(pts,x->x^em in ps2));
 
 #now with lines
- 
+
 q := 2;
 a := 2;
 n := 3;
