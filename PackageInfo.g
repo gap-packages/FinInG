@@ -211,7 +211,7 @@ BannerString := Concatenation(
     "   ", ~.Persons[5].FirstNames, " ", ~.Persons[5].LastName,
         " (", ~.Persons[5].WWWHome, ")\n",
     "   ", ~.Persons[6].FirstNames, " ", ~.Persons[6].LastName,
-        " (", ~.Persons[6].WWWHome, ")\n",
+        "\n",
     "For help, type: ?FinInG \n",
     "---------------------------------------------------------------------\n" ),
 
