@@ -441,6 +441,124 @@ InstallMethod( Display,
     end );
 
 #############################################################################
+#O  PointsOfQuadraticVariety ( <var> )
+# returns the points of a quadratic variety using the associated polar space.
+##
+InstallMethod( PointsOfQuadraticVariety,
+    "for a quadratic variety",
+    [ IsQuadraticVariety and IsQuadraticVarietyRep ],
+    function( var )
+        local pts;
+        pts := rec(
+                geometry := var!.geometry,
+                type := 1,
+                variety := var
+                );
+        return Objectify(
+            NewType( ElementsCollFamily, IsPointsOfQuadraticVariety and
+                                        IsPointsOfQuadraticVarietyRep),
+            pts
+            );
+    end );
+
+#############################################################################
+#O  Points( <var> )
+# shortcut to PointsOfQuadraticVariety
+##
+InstallMethod( Points,
+    "for a quadratic variety",
+    [ IsQuadraticVariety and IsQuadraticVarietyRep ],
+    function( var )
+        return PointsOfQuadraticVariety( var );
+    end );
+
+#############################################################################
+#O  ViewObj ( <pts> )
+##
+InstallMethod( ViewObj,
+    "for a collection representing the points of a quadratic variety",
+    [ IsPointsOfQuadraticVariety and IsPointsOfQuadraticVarietyRep ],
+    function( pts )
+        Print("<points of ", pts!.variety, ">");
+    end );
+
+#############################################################################
+#O  PrintObj ( <pts> )
+##
+InstallMethod( PrintObj,
+    "for a collection representing the points of a quadratic variety",
+    [ IsPointsOfQuadraticVariety and IsPointsOfQuadraticVarietyRep ],
+    function( pts )
+        Print("Points( ", pts!.variety, " )");
+    end );
+
+#############################################################################
+#O  Iterator ( <pts> )
+# iterator for the points of a quadratic variety via its polar space
+##
+InstallMethod( Iterator,
+    "for points of a quadratic variety",
+    [ IsPointsOfQuadraticVariety ],
+    function( pts )
+        local qv, ps, ambient, inner;
+        qv := pts!.variety;
+        ps := PolarSpace( qv );
+        ambient := qv!.geometry;
+        inner := Iterator( Points( ps ) );
+        return IteratorByFunctions( rec(
+            NextIterator := function(iter)
+                local p, obj;
+                p := NextIterator(iter!.inner);
+                obj := UnderlyingObject(p);
+                if IsCVecRep(obj) or IsCMatRep(obj) then
+                    obj := Unpack(obj);
+                fi;
+                return VectorSpaceToElement( ambient, obj );
+            end,
+            IsDoneIterator := function(iter)
+                return IsDoneIterator(iter!.inner);
+            end,
+            ShallowCopy := function(iter)
+                return rec( inner := ShallowCopy(iter!.inner) );
+            end,
+            inner := inner
+        ));
+    end );
+
+#############################################################################
+#O  Enumerator ( <pts> )
+# enumerator for the points of a quadratic variety via its polar space
+##
+InstallMethod( Enumerator,
+    "for points of a quadratic variety",
+    [ IsPointsOfQuadraticVariety ],
+    function( pts )
+        local qv, ps, ambient;
+        qv := pts!.variety;
+        ps := PolarSpace( qv );
+        ambient := qv!.geometry;
+        return List( Enumerator( Points( ps ) ),
+                     function(p)
+                        local obj;
+                        obj := UnderlyingObject(p);
+                        if IsCVecRep(obj) or IsCMatRep(obj) then
+                            obj := Unpack(obj);
+                        fi;
+                        return VectorSpaceToElement( ambient, obj );
+                     end );
+    end );
+
+#############################################################################
+#O  Size( <pts> )
+##
+InstallMethod( Size,
+    "for points of a quadratic variety",
+    [ IsPointsOfQuadraticVariety ],
+    function( pts )
+        return Size( Points( PolarSpace( pts!.variety ) ) );
+    end );
+
+#############################################################################
 #O  PolarSpace ( <var> )
 # returns the polar space defined by the equation in the list of polynomials
 # of <var>. It is of course checked that this list contains only one equation.
@@ -1764,8 +1882,6 @@ InstallMethod( Size,
         gv:=pts!.variety;
         return Size(gv!.inverseimage);
     end );
-
-
 
 
 

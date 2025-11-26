@@ -46,6 +46,9 @@ DeclareRepresentation( "IsHermitianVarietyRep", IsHermitianVariety and IsProject
 
 DeclareCategory( "IsQuadraticVariety", IsProjectiveVariety );
 DeclareRepresentation( "IsQuadraticVarietyRep", IsQuadraticVariety and IsProjectiveVarietyRep, ["geometry","polring","listofpols"]);
+DeclareCategory( "IsPointsOfQuadraticVariety", IsPointsOfAlgebraicVariety );
+DeclareRepresentation( "IsPointsOfQuadraticVarietyRep", IsPointsOfQuadraticVariety, ["variety"]);
+DeclareOperation( "PointsOfQuadraticVariety", [IsQuadraticVariety] );
 
 ### 3. Affine Varieties ###
 
@@ -209,4 +212,3 @@ DeclareOperation( "ConicOnFivePoints",  [ IsHomogeneousList and
 
 
 ## List of dimensions and field
-
