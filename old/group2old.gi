@@ -11,11 +11,11 @@ InstallMethod( UnderlyingVectorSpace,
    function(ps)
    return ps!.vectorspace;
 end);
-   
+
 ###################################################################
-# Code for the "standard duality" of a vectorspace. We want it to 
-# be an involutory mapping. To be used later on in the objects 
-# representing a correlation. 
+# Code for the "standard duality" of a vectorspace. We want it to
+# be an involutory mapping. To be used later on in the objects
+# representing a correlation.
 # Difficulty: make it a mapping and overload the \* operator
 # (because we know that delta^-1 = delta.
 ###################################################################
@@ -52,10 +52,10 @@ InstallMethod( StandardDualityOfProjectiveSpace, [IsProjectiveSpace],
         b := v!.obj;
         if ty = 1 then
            b := [b];
-        fi;       
+        fi;
         newb := NullspaceMat(TransposedMat(b));
         rk := Rank(newb);
-        if rk = 1 then 
+        if rk = 1 then
            newb := newb[1];
         fi;
         return Wrap(ps, rk, newb);
@@ -129,16 +129,16 @@ end);
 
 
 ###################################################################
-# Code for "projective elements with frobenius with vector space 
-# isomorphism", 
-# Such an object represent a collineation (delta = identity) OR 
+# Code for "projective elements with frobenius with vector space
+# isomorphism",
+# Such an object represent a collineation (delta = identity) OR
 # a correlation (delta = standard duality).
 ###################################################################
 
 ###################################################################
 # Basic construction methods en viewing, displaying, printing...
 ###################################################################
-InstallMethod( ProjElWithFrobWithVSIsom, 
+InstallMethod( ProjElWithFrobWithVSIsom,
   "for a ffe matrix and a Frobenius automorphism, a field and the st. duality",
   [IsMatrix and IsFFECollColl,
 	  IsRingHomomorphism and IsMultiplicativeElementWithInverse,
@@ -149,15 +149,15 @@ InstallMethod( ProjElWithFrobWithVSIsom,
     Objectify( ProjElsWithFrobWithVSIsomType, el );
     return el;
   end );
-  
-InstallMethod( ProjElWithFrobWithVSIsom, 
+
+InstallMethod( ProjElWithFrobWithVSIsom,
   "for a ffe matrix and a Frobenius automorphism and a field, no 4th argument, will be identity",
   [IsMatrix and IsFFECollColl,
 	  IsRingHomomorphism and IsMultiplicativeElementWithInverse,
 	  IsField],
   function( m, frob, f )
     local el,isom,q,n;
-    q := Size(f); 
+    q := Size(f);
     n := Length(m);
     isom := IdentityMapping(Subspaces(FullRowSpace(GF(q),n)));
     el := rec( mat := m, fld := f, frob := frob, vsisom := isom);
@@ -165,7 +165,7 @@ InstallMethod( ProjElWithFrobWithVSIsom,
     return el;
   end );
 
-InstallMethod( ProjElWithFrobWithVSIsom, 
+InstallMethod( ProjElWithFrobWithVSIsom,
   "for a ffe matrix and a Frobenius automorphism, a field and the identity mapping",
   [IsMatrix and IsFFECollColl,
 	  IsRingHomomorphism and IsMultiplicativeElementWithInverse,
@@ -216,7 +216,7 @@ InstallMethod( PrintObj, "for a projective group element with Frobenius with vec
     Print(")");
   end );
 
-InstallOtherMethod( Representative, 
+InstallOtherMethod( Representative,
   "for a projective group element with Frobenius with vectorspace isomorphism",
   [IsProjGrpElWithFrobWithVSIsom and IsProjGrpElWithFrobWithVSIsomRep],
   function( el )
@@ -234,7 +234,7 @@ InstallMethod( BaseField, "for a projective group element with Frobenius with ve
 # code for multiplying elements with themselves and other elements...
 ###################################################################
 
-InstallMethod( \=, 
+InstallMethod( \=,
   "for two projective group els with Frobenius with vectorspace isomorphism",
   [IsProjGrpElWithFrobWithVSIsom and IsProjGrpElWithFrobWithVSIsomRep,
    IsProjGrpElWithFrobWithVSIsom and IsProjGrpElWithFrobWithVSIsomRep],
@@ -253,7 +253,7 @@ InstallMethod( \=,
     return true;
   end );
 
-InstallMethod( IsOne, 
+InstallMethod( IsOne,
   "for a projective group elm with Frobenius with vectorspace isomorphism",
   [IsProjGrpElWithFrobWithVSIsom and IsProjGrpElWithFrobWithVSIsomRep],
   function( el )
@@ -266,7 +266,7 @@ InstallMethod( IsOne,
     return IsOne( s*el!.mat );
   end );
 
-InstallOtherMethod( OneImmutable, 
+InstallOtherMethod( OneImmutable,
   "for a projective group elm with Frobenius with vectorspace isomorphism",
   [IsProjGrpElWithFrobWithVSIsom and IsProjGrpElWithFrobWithVSIsomRep],
   function( el )
@@ -277,7 +277,7 @@ InstallOtherMethod( OneImmutable,
     return o;
   end );
 
-InstallOtherMethod( OneImmutable, 
+InstallOtherMethod( OneImmutable,
   "for a projective group with Frobenius with vectorspace isomorphism",
   [IsGroup and IsProjGrpElWithFrobWithVSIsom],
   function( g )
@@ -296,7 +296,7 @@ InstallOtherMethod( OneImmutable,
     return o;
   end );
 
-InstallMethod( OneSameMutability, 
+InstallMethod( OneSameMutability,
   "for a projective group element with Frobenius with vectorspace isomorphism",
   [IsProjGrpElWithFrobWithVSIsom and IsProjGrpElWithFrobWithVSIsomRep],
   function( el )
@@ -307,13 +307,13 @@ InstallMethod( OneSameMutability,
     return o;
   end );
 
-InstallMethod( \*, 
+InstallMethod( \*,
   "for two projective group elements with frobenius with vectorspace isomorphism",
   [IsProjGrpElWithFrobWithVSIsom and IsProjGrpElWithFrobWithVSIsomRep,
    IsProjGrpElWithFrobWithVSIsom and IsProjGrpElWithFrobWithVSIsomRep],
   function( a, b )
-    local el;  
-    el := rec( mat := (a!.mat * (b!.mat^(a!.frob^-1)))^a!.vsisom, fld := a!.fld, 
+    local el;
+    el := rec( mat := (a!.mat * (b!.mat^(a!.frob^-1)))^a!.vsisom, fld := a!.fld,
                frob := a!.frob * b!.frob, vsisom := a!.vsisom * b!.vsisom );
     Objectify( ProjElsWithFrobWithVSIsomType, el);
     return el;
@@ -337,7 +337,7 @@ InstallMethod(\<,  [IsProjGrpElWithFrobWithVSIsom, IsProjGrpElWithFrobWithVSIsom
     bb := b!.mat;
     pa := PositionNonZero(aa[1]);
     pb := PositionNonZero(bb[1]);
-    if pa > pb then 
+    if pa > pb then
         return true;
     elif pa < pb then
         return false;
@@ -354,10 +354,10 @@ InstallMethod(\<,  [IsProjGrpElWithFrobWithVSIsom, IsProjGrpElWithFrobWithVSIsom
   end);
 
 ## Let M be a matrix, f be a Frobenius aut, and t be a vsisom.
-## Then the inverse of Mft is 
+## Then the inverse of Mft is
 ##        t^-1 f^-1 M^-1 = M^(ft) f^-1 t^-1
 
-InstallMethod( InverseSameMutability, 
+InstallMethod( InverseSameMutability,
   "for a projective group element with Frobenius with vectorspace isomorphism",
   [IsProjGrpElWithFrobWithVSIsom and IsProjGrpElWithFrobWithVSIsomRep],
   function( el )
@@ -370,7 +370,7 @@ InstallMethod( InverseSameMutability,
     return m;
   end );
 
-InstallMethod( InverseMutable, 
+InstallMethod( InverseMutable,
   "for a projective group element with Frobenius with vectorspace isomorphism",
   [IsProjGrpElWithFrobWithVSIsom and IsProjGrpElWithFrobWithVSIsomRep],
   function( el )
@@ -393,14 +393,14 @@ InstallOtherMethod( \^, "for a FFE vector and a trivial st. duality",
     return v;
   end );
 
-InstallOtherMethod( \^, 
+InstallOtherMethod( \^,
   "for a compressed GF2 vector and a st. duality",
   [ IsVector and IsFFECollection and IsGF2VectorRep, IsMapping and IsOne ],
   function( v, f )
     return v;
   end );
 
-InstallOtherMethod( \^, 
+InstallOtherMethod( \^,
   "for a compressed 8bit vector and a trivial st. duality",
   [ IsVector and IsFFECollection and Is8BitVectorRep, IsMapping and IsOne ],
   function( v, f )
@@ -482,7 +482,7 @@ InstallGlobalFunction( OnPointsHyperplanesWithFrobWithVSIsom,
     fi;
   end );
 
-InstallMethod( Dimension, 
+InstallMethod( Dimension,
   "for a projective group with Frobenius with vspace isomorphism",
   [IsProjGroupWithFrobWithVSIsom],
   function( g )
@@ -498,7 +498,7 @@ InstallMethod( Dimension,
     Error("dimension could not be determined");
   end );
 
-InstallMethod( ActionOnPointsHyperplanes, 
+InstallMethod( ActionOnPointsHyperplanes,
   "for a projective group with Frobenius with vspace isomorphism",
   [ IsProjGroupWithFrobWithVSIsom ],
   function( pg )
@@ -509,7 +509,7 @@ InstallMethod( ActionOnPointsHyperplanes,
     o := One(f);
     on := One(pg);
     v := ZeroMutable(on!.mat[1]);
-    v[1] := o;  
+    v[1] := o;
     orb := [];
     for m in f^d do
       j := PositionNonZero(m);
@@ -530,15 +530,15 @@ InstallMethod( ActionOnPointsHyperplanes,
     return a;
   end );
 
-#InstallMethod( NiceMonomorphism, 
+#InstallMethod( NiceMonomorphism,
 #  "for a projective group with Frobenius with vspace isomorphism (feasible case)",
 #  [IsProjGroupWithFrobWithVSIsom and CanComputeActionOnPoints and
 #   IsHandledByNiceMonomorphism], 50,
 #  function( pg )
 #    return ActionOnPointsHyperplanes( pg );
 #  end );
-  
-#InstallMethod( NiceMonomorphism, 
+
+#InstallMethod( NiceMonomorphism,
 #  "for a projective group with Frobenius with vspace isomorphism (nasty case)",
 #  [IsProjGroupWithFrobWithVSIsom and IsHandledByNiceMonomorphism], 50,
 #  function( pg )

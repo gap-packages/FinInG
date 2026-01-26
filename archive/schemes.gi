@@ -104,7 +104,7 @@ InstallMethod( Wrap, "for a projective algebraic variety and an object (point)",
 InstallMethod( NrIndeterminatesPolynomial, [IsPolynomial],
   function( poly )
     local ll, oddnums;
-    ll := ExtRepPolynomialRatFun(poly); 
+    ll := ExtRepPolynomialRatFun(poly);
     oddnums := [1, 3..Size(ll)-1];;
     ll := Concatenation(Set(ll{oddnums}));
     oddnums := [1, 3..Size(ll)-1];;
@@ -164,7 +164,7 @@ InstallMethod( ElementsOfIncidenceStructure, [IsGrassmannVariety, IsPosInt],
     return vars;
   end );
 
-InstallMethod( Size, [ IsAllElementsOfGrassmannVariety and 
+InstallMethod( Size, [ IsAllElementsOfGrassmannVariety and
                        IsAllElementsOfGrassmannVarietyRep],
   function( vars )
     local geo, F, d, k;
@@ -172,7 +172,7 @@ InstallMethod( Size, [ IsAllElementsOfGrassmannVariety and
     F := geo!.basefield;
     d := geo!.ddim;
     k := geo!.kdim;
-    return Size(ElementsOfIncidenceStructure(ProjectiveSpace(d, F), k+1)); 
+    return Size(ElementsOfIncidenceStructure(ProjectiveSpace(d, F), k+1));
   end );
 
 InstallMethod( Wrap, "for a GrassmannVariety and a vector/matrix",
@@ -215,17 +215,17 @@ InstallMethod( CollineationGroup, [ IsGrassmannVariety ],
           od;
       return matb;
     end;
-      
+
     hom := function( m )
       ## m is a matrix, and we consider
       ## its action on basis elements
       local basis1, basis2, image;
       basis1 := IdentityMat(d, f);
       basis2 := List(basis1, betainv);
-      image := List(basis2, b -> beta( TransposedMat(m) * b * m ));         
+      image := List(basis2, b -> beta( TransposedMat(m) * b * m ));
       return image;
     end;
-    
+
     gens := GeneratorsOfGroup( GL(d2, f) );
     newgens := List(gens, hom);
     frob := FrobeniusAutomorphism(f)^0;;
@@ -243,9 +243,9 @@ InstallMethod( Iterator, "for varieties of a GrassmannVariety",
     k := gr!.kdim;
 
     ## the domain of the Grassmann map
-    
-    pg := ProjectiveSpace(d, F); 
-    vmap := GrassmannMap( k, pg )!.fun; 
+
+    pg := ProjectiveSpace(d, F);
+    vmap := GrassmannMap( k, pg )!.fun;
     iterpg := Iterator( ElementsOfIncidenceStructure(pg, k+1) );
 
     iter := IteratorByFunctions( rec(
@@ -275,12 +275,12 @@ InstallMethod( Iterator, "for varieties of a GrassmannVariety",
 InstallMethod( VeroneseVariety, [ IsPosInt, IsField and IsFinite ],
   function( d, f )
     local geo, ty, pg, p;
-    geo := rec( dimension := d, basefield := f, 
+    geo := rec( dimension := d, basefield := f,
                 vectorspace := FullRowSpace(f, d+1) );
     ty := NewType( GeometriesFamily, IsVeroneseVariety and
                       IsVeroneseVarietyRep );
     pg := ProjectiveSpace(d, f);
-     # p := VectorSpaceToElement(pg, IdentityMat(d,f)[1]); 
+     # p := VectorSpaceToElement(pg, IdentityMat(d,f)[1]);
     ObjectifyWithAttributes( geo, ty,
            AmbientSpace, pg );
         #   RepresentativesTypesOfElementsOfIncidenceStructure, [p] );
@@ -304,7 +304,7 @@ InstallMethod( ElementsOfIncidenceStructure, [IsVeroneseVariety, IsPosInt],
     return vars;
   end );
 
-InstallMethod( Size, [ IsAllElementsOfVeroneseVariety and 
+InstallMethod( Size, [ IsAllElementsOfVeroneseVariety and
                        IsAllElementsOfVeroneseVarietyRep],
   function( vars )
     local geo, j, F, d, d2;
@@ -313,7 +313,7 @@ InstallMethod( Size, [ IsAllElementsOfVeroneseVariety and
     F := geo!.basefield;
     d := geo!.dimension;
     d2 := (-1 + Sqrt(1+8*(d+1)))/2 - 1;
-    return Size(ElementsOfIncidenceStructure(ProjectiveSpace(d2, F), j)); 
+    return Size(ElementsOfIncidenceStructure(ProjectiveSpace(d2, F), j));
   end );
 
 InstallMethod( Wrap, "for a veronsean and a vector/matrix",
@@ -344,7 +344,7 @@ InstallMethod( Iterator, "for varieties of a VeroneseVariety",
     n := vero!.dimension;
     F := vero!.basefield;
 
-    ## the following is the dimension of the smaller 
+    ## the following is the dimension of the smaller
     ## projective space (the domain of the Veronese map)
 
     n2 := (-1 + Sqrt(1+8*(n+1)))/2 - 1;
@@ -353,10 +353,10 @@ InstallMethod( Iterator, "for varieties of a VeroneseVariety",
     fi;
 
     ## the domain of the veronese map
-    
-    pg := ProjectiveSpace(n2, F); 
 
-    vmap := VeroneseMap( pg )!.fun; 
+    pg := ProjectiveSpace(n2, F);
+
+    vmap := VeroneseMap( pg )!.fun;
     iterpg := Iterator( ElementsOfIncidenceStructure(pg, j) );
 
     iter := IteratorByFunctions( rec(
@@ -388,40 +388,40 @@ InstallMethod( Iterator, "for varieties of a VeroneseVariety",
 ## dimensions as algebraic dimensions.
 
 
-InstallMethod( SegreVariety, "for a list of projective spaces", 
+InstallMethod( SegreVariety, "for a list of projective spaces",
          [ IsHomogeneousList ],
   function( listspaces )
     local F, listofdims, l, geo, ty, d;
     F := listspaces[1]!.basefield;
     listofdims := List(listspaces, i -> ProjectiveDimension(i) + 1);
     for l in listspaces do
-        if l!.basefield <> F then 
-           Error("The proj. spaces need to be defined over the same field"); 
+        if l!.basefield <> F then
+           Error("The proj. spaces need to be defined over the same field");
         fi;
     od;
-  
+
     d:= Product( listofdims );
     geo := rec( dimension := d-1, basefield := F, dimlist := listofdims,
                 vectorspace := FullRowSpace(F, d) );
-    ty := NewType( GeometriesFamily, IsSegreVariety and IsSegreVarietyRep ); 
+    ty := NewType( GeometriesFamily, IsSegreVariety and IsSegreVarietyRep );
     ObjectifyWithAttributes( geo, ty, AmbientSpace, ProjectiveSpace(d-1, F));
     return geo;
   end );
 
 InstallMethod( SegreVariety, "for a list of dimensions and a field",
-           [ IsHomogeneousList, IsField ], 
+           [ IsHomogeneousList, IsField ],
   function( listofdims, F )
     return SegreVariety( List(listofdims, d -> ProjectiveSpace(d, F)) );
   end );
 
 InstallMethod( SegreVariety, "for two projective spaces",
-           [ IsProjectiveSpace, IsProjectiveSpace ], 
+           [ IsProjectiveSpace, IsProjectiveSpace ],
   function( pg1, pg2 )
     return SegreVariety( [pg1, pg2] );
   end );
 
 InstallMethod( SegreVariety, "for two dimensions and a field",
-           [ IsPosInt, IsPosInt, IsField ], 
+           [ IsPosInt, IsPosInt, IsField ],
   function( d1, d2, F )
     return SegreVariety( [ProjectiveSpace(d1, F), ProjectiveSpace(d2, F)] );
   end );
@@ -438,16 +438,16 @@ InstallMethod( ElementsOfIncidenceStructure, [IsSegreVariety, IsPosInt],
     return vars;
   end );
 
-InstallMethod( Size, [ IsAllElementsOfSegreVariety and 
+InstallMethod( Size, [ IsAllElementsOfSegreVariety and
                        IsAllElementsOfSegreVarietyRep],
   function( vars )
     local geo, F, dimlist, listsizes;
     geo := vars!.geometry;
     F := geo!.basefield;
     dimlist := geo!.dimlist;
-    listsizes := List(dimlist, d -> 
+    listsizes := List(dimlist, d ->
             Size(ElementsOfIncidenceStructure(ProjectiveSpace(d-1, F),1)));
-    return Product(listsizes); 
+    return Product(listsizes);
   end );
 
 InstallMethod( Wrap, "for a SegreVariety and a vector/matrix",
@@ -476,25 +476,25 @@ InstallMethod( ProductOfIterators, [IsList],
 
     nextIterator:=function(iter)
        local i, j, val;
- 
+
        ## take care of the first step (initialisation)
 
        if not IsBound(iter!.value[Size(iterlist)]) then
-          val := [];  
+          val := [];
           for i in [1..Size(iterlist)] do
               Add( val, NextIterator( iter!.iters[i] ) );
-          od;  
-          iter!.value := ShallowCopy(val); 
+          od;
+          iter!.value := ShallowCopy(val);
        else
 
-          # find the first position i such that iterlist[i] is not done. 
+          # find the first position i such that iterlist[i] is not done.
 
           i := 1;
           while i < Size(iterlist) and IsDoneIterator( iter!.iters[i] ) do
                 i := i + 1;
           od;
 
-          # increment in this position 
+          # increment in this position
           #  *****  (this is where the problem with "choiceiter" occurs) ******
 
           iter!.value[i] := ShallowCopy(NextIterator( iter!.iters[i] ));
@@ -504,11 +504,11 @@ InstallMethod( ProductOfIterators, [IsList],
           for j in [1..i-1] do
              if IsDoneIterator( iter!.iters[j] ) then
                 iter!.iters[j] := ShallowCopy(iterlist[j]);
-                iter!.value[j] := NextIterator( iter!.iters[j] ); 
+                iter!.value[j] := NextIterator( iter!.iters[j] );
              fi;
           od;
        fi;
-       val := StructuralCopy(iter!.value); 
+       val := StructuralCopy(iter!.value);
        return val;
     end;
 
@@ -531,7 +531,7 @@ InstallMethod( ProductOfIterators, [IsList],
                        ShallowCopy:=shallowCopy);
         fi;
     end;
-    
+
     return IteratorByFunctions(rec(iters:=iters,
               value := [],
               IsDoneIterator:=isDoneIterator,
@@ -551,7 +551,7 @@ InstallMethod( Iterator, "for varieties of a Segre variety",
     pglist := List(dimlist, d -> ProjectiveSpace(d-1, F));
 
     ## Need to take Cartesian product of iterators
-    
+
     iters := List(pglist, p -> Iterator(ElementsOfIncidenceStructure(p, 1)));
     vmap := SegreMap( pglist );
     proditer := ProductOfIterators( iters );
@@ -571,9 +571,9 @@ InstallMethod( Iterator, "for varieties of a Segre variety",
 #
 #############################################################################
 
-InstallMethod( ConicOnFivePoints, "given a set of five points of a projective plane", 
+InstallMethod( ConicOnFivePoints, "given a set of five points of a projective plane",
    [ IsHomogeneousList and IsSubspaceOfProjectiveSpaceCollection ],
-  
+
   function( pts )
 
   #  To find the conic, we simply solve an equation
@@ -583,7 +583,7 @@ InstallMethod( ConicOnFivePoints, "given a set of five points of a projective pl
   #
   #  This function returns a projective algebraic variety
 
-    local gf, r, vecs, mat, sol, poly, mat2, plane, embed, 
+    local gf, r, vecs, mat, sol, poly, mat2, plane, embed,
           pg, d, dplus1, pairs, vars, indets;
     if Size(pts) < 5 then
        Error("Not enough points");
@@ -594,7 +594,7 @@ InstallMethod( ConicOnFivePoints, "given a set of five points of a projective pl
     fi;
 
     ## check that the points span a plane
- 
+
     if Rank( List(pts, t -> t!.obj) ) <> 3 then
        Error("Points do not span a plane");
     fi;
@@ -615,7 +615,7 @@ InstallMethod( ConicOnFivePoints, "given a set of five points of a projective pl
     poly := vars * sol;
 
     return ProjectiveAlgebraicVariety( pg, poly );
-  end );  
+  end );
 
 
 
@@ -623,19 +623,19 @@ InstallMethod( ConicOnFivePoints, "given a set of five points of a projective pl
 # View methods:
 #############################################################################
 
-InstallMethod( ViewObj, [ IsProjectiveAlgebraicVariety and 
+InstallMethod( ViewObj, [ IsProjectiveAlgebraicVariety and
                            IsProjectiveAlgebraicVarietyRep ],
   function( geo )
     Print("V( ", geo!.poly, " )");
   end );
 
-InstallMethod( PrintObj, [ IsProjectiveAlgebraicVariety and 
+InstallMethod( PrintObj, [ IsProjectiveAlgebraicVariety and
                            IsProjectiveAlgebraicVarietyRep ],
   function( geo )
     Print("ProjectiveAlgebraicVariety( ", geo!.poly, " ) of ", AmbientSpace(geo));
   end );
 
-InstallMethod( ViewObj, [ IsAllElementsOfProjectiveAlgebraicVariety and 
+InstallMethod( ViewObj, [ IsAllElementsOfProjectiveAlgebraicVariety and
                            IsAllElementsOfProjectiveAlgebraicVarietyRep ],
   function( vars )
     Print("<points of ");
@@ -643,7 +643,7 @@ InstallMethod( ViewObj, [ IsAllElementsOfProjectiveAlgebraicVariety and
     Print( ">");
   end );
 
-InstallMethod( PrintObj, [ IsAllElementsOfProjectiveAlgebraicVariety and 
+InstallMethod( PrintObj, [ IsAllElementsOfProjectiveAlgebraicVariety and
                            IsAllElementsOfProjectiveAlgebraicVarietyRep  ],
   function( vars )
     Print("<points of ");

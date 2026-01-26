@@ -1,10 +1,10 @@
 psdim := ps!.dimension;
 f := ps!.basefield;
 b := Unpack(v!.obj); #cmat unpack necessary for infra.
-vdim := v!.type;  
+vdim := v!.type;
 if vdim = 1 then b:=[b]; fi;
 vs := ps!.vectorspace;
-sub := Subspace(vs, b);  
+sub := Subspace(vs, b);
 
 group1 := List(coll1);;
 objs := List(Points(quadric));;
@@ -190,7 +190,7 @@ cs := SolutionMat(systemmat,ie);
 id := IdentityMat(4,f);
 
 twinerprefun := function( el )
-local mat, newmat, id, lines, 
+local mat, newmat, id, lines,
 mat := Unpack(el!.mat);
 lines := [];
 lines[1] := [[id[1],id[2]],[id[1],id[3]],[id[1],id[4]]];
@@ -634,7 +634,7 @@ end );
 # Added april 2014 jdb.
 #############################################################################
 #O  NaturalDuality( <gq1>, <gq2>, <bool> )
-# This is the interface to the helper functions. It simply checks the input 
+# This is the interface to the helper functions. It simply checks the input
 # and decides which NaturalDuality... to use.
 ##
 InstallMethod( NaturalDuality,
@@ -645,7 +645,7 @@ InstallMethod( NaturalDuality,
 # Added april 2014 jdb.
 #############################################################################
 #O  NaturalDuality( <gq1>, <computeintertwiner> )
-# This is the interface to the helper functions. It simply checks the input 
+# This is the interface to the helper functions. It simply checks the input
 # and decides which NaturalDuality... to use.
 ##
 InstallMethod( NaturalDuality,

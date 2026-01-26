@@ -8,12 +8,12 @@
 ##                                                            Michel Lavrauw
 ##                                                           Max Neunhoeffer
 ##
-##  Copyright 2018	Colorado State University
+##  Copyright 2018  Colorado State University
 ##                  Sabancı Üniversitesi
-##					Università degli Studi di Padova
-##					Universiteit Gent
-##					University of St. Andrews
-##					University of Western Australia
+##                  Università degli Studi di Padova
+##                  Universiteit Gent
+##                  University of St. Andrews
+##                  University of Western Australia
 ##                  Vrije Universiteit Brussel
 ##
 ##
@@ -29,7 +29,7 @@ DeclareGlobalFunction("IsFiningScalarMatrix");
 
 if PackageInfo("GenSS")[1]!.Version > "0.95" then
    DeclareOperation( "FindBasePointCandidates", [ IsGroup, IsRecord, IsInt ] );
- else 
+ else
    DeclareOperation( "FindBasePointCandidates", [ IsGroup, IsRecord, IsInt, IsObject ] );
 fi;
 
@@ -44,11 +44,11 @@ InstallTrueMethod( IsGeneratorsOfMagmaWithInverses, IsProjGrpElCollection );
 
 DeclareRepresentation( "IsProjGrpElRep", IsProjGrpEl, ["mat","fld"] );
 
-BindGlobal( "ProjElsFamily", 
+BindGlobal( "ProjElsFamily",
             NewFamily( "ProjElsFamily", IsObject, IsProjGrpEl ) );
 BindGlobal( "ProjElsCollFamily", CollectionsFamily(ProjElsFamily) );
 
-BindGlobal( "ProjElsType", NewType( ProjElsFamily, 
+BindGlobal( "ProjElsType", NewType( ProjElsFamily,
                                     IsProjGrpEl and IsProjGrpElRep) );
 
 DeclareOperation( "ProjEl", [IsMatrix and IsFFECollColl] );
@@ -71,12 +71,12 @@ InstallTrueMethod( IsGeneratorsOfMagmaWithInverses, IsProjGrpElWithFrobCollectio
 
 DeclareRepresentation( "IsProjGrpElWithFrobRep", IsProjGrpElWithFrob, ["mat","fld","frob"] );
 
-BindGlobal( "ProjElsWithFrobFamily", 
+BindGlobal( "ProjElsWithFrobFamily",
             NewFamily( "ProjElsWithFrobFamily",IsObject,IsProjGrpElWithFrob) );
 BindGlobal( "ProjElsWithFrobCollFamily",
             CollectionsFamily(ProjElsWithFrobFamily) );
 BindGlobal( "ProjElsWithFrobType",
-     NewType( ProjElsWithFrobFamily, 
+     NewType( ProjElsWithFrobFamily,
               IsProjGrpElWithFrob and IsProjGrpElWithFrobRep) );
 
 DeclareOperation( "ProjElWithFrob", [IsMatrix and IsFFECollColl, IsMapping] );
@@ -170,11 +170,11 @@ DeclareGlobalFunction( "NiceMonomorphismByDomain" );
 
 ## helper operations for canonical matrices, for classical groups.
 
-DeclareOperation( "CanonicalGramMatrix", [IsString, IsPosInt, IsField]); 
-DeclareOperation( "CanonicalQuadraticForm", [IsString, IsPosInt, IsField]); 
+DeclareOperation( "CanonicalGramMatrix", [IsString, IsPosInt, IsField]);
+DeclareOperation( "CanonicalQuadraticForm", [IsString, IsPosInt, IsField]);
 
 ## The following are conjugates of the groups in the classical groups
-## library which are compatible with the canonical forms in FinInG 
+## library which are compatible with the canonical forms in FinInG
 
 DeclareOperation( "SOdesargues", [IsInt, IsPosInt, IsField and IsFinite]);
 DeclareOperation( "GOdesargues", [IsInt, IsPosInt, IsField and IsFinite]);
@@ -182,7 +182,7 @@ DeclareOperation( "SUdesargues", [IsPosInt, IsField and IsFinite]);
 DeclareOperation( "GUdesargues", [IsPosInt, IsField and IsFinite]);
 DeclareOperation( "Spdesargues", [IsPosInt, IsField and IsFinite]);
 
-## The following are methods which return the full group of invertible 
+## The following are methods which return the full group of invertible
 ## matrices which preserve a form up to scalars
 
 DeclareOperation( "GeneralSymplecticGroup", [IsPosInt, IsField and IsFinite]);
@@ -190,7 +190,7 @@ DeclareOperation( "GSpdesargues", [IsPosInt, IsField and IsFinite]);
 DeclareOperation( "DeltaOminus", [IsPosInt, IsField and IsFinite]);
 DeclareOperation( "DeltaOplus", [IsPosInt, IsField and IsFinite]);
 
-## The following are methods which return the full group of invertible 
+## The following are methods which return the full group of invertible
 ## matrices which preserve a form up to scalars and a field aut.
 
 DeclareOperation( "GammaOminus", [IsPosInt, IsField and IsFinite]);

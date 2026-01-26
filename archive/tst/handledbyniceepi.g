@@ -14,7 +14,7 @@ SetNiceEpimorphism(g,epi);
 SetNiceEpiObject(g,Image(epi));
 SetNiceEpiKernelGens(g,[One(g)*Z(5)]);
 
-InstallMethod( SylowSubgroupOp, "via nice epi", 
+InstallMethod( SylowSubgroupOp, "via nice epi",
   [IsGroup and IsHandledByNiceEpimorphism, IsPosInt],
   function( g, p )
     local epi,gens,h,ps,s;

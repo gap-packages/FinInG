@@ -17,7 +17,7 @@
 ##					University of St. Andrews
 ##					University of Western Australia, Perth
 ##                  Vrije Universiteit Brussel
-##                 
+##
 ##
 ##  Implementation stuff for projective groups (correlation groups, elation groups etc.)
 ##
@@ -36,9 +36,9 @@
 ########################################
 
 ###################################################################
-# Code for the "standard duality" of a projective space. We want it to 
-# be an involutory mapping. To be used later on in the objects 
-# representing a correlation. 
+# Code for the "standard duality" of a projective space. We want it to
+# be an involutory mapping. To be used later on in the objects
+# representing a correlation.
 # Difficulty: make it a mapping and overload the \* operator
 # (because we know that delta^-1 = delta.
 ###################################################################
@@ -47,8 +47,8 @@
 #############################################################################
 #O  IdentityMappingOfElementsOfProjectiveSpace( <ps> )
 # returns the identity mapping on the collection of subspaces of a projective space <ps>
-## 
-InstallMethod( IdentityMappingOfElementsOfProjectiveSpace, 
+##
+InstallMethod( IdentityMappingOfElementsOfProjectiveSpace,
    "for a projective space",
    [IsProjectiveSpace],
    function(ps)
@@ -62,8 +62,8 @@ InstallMethod( IdentityMappingOfElementsOfProjectiveSpace,
 #############################################################################
 #O  IdentityMappingOfElementsOfProjectiveSpace( <ps> )
 # returns the identity mapping on the collection of subspaces of a projective space <ps>
-## 
-InstallMethod( StandardDualityOfProjectiveSpace, 
+##
+InstallMethod( StandardDualityOfProjectiveSpace,
 	"for a projective space",
 	[IsProjectiveSpace],
 	function( ps )
@@ -76,10 +76,10 @@ InstallMethod( StandardDualityOfProjectiveSpace,
         b := v!.obj;
         if ty = 1 then
 			b := [b];
-        fi;       
+        fi;
         newb := NullspaceMat(TransposedMat(b));
         rk := Rank(newb);
-        if rk = 1 then 
+        if rk = 1 then
 			newb := newb[1];
         fi;
         return VectorSpaceToElement(ps, newb);  ## check that this normalises the element
@@ -128,8 +128,8 @@ InstallMethod( PrintObj,
 # multiplying projective space isomorphisms. Actually, these methods
 # are not intended for the user, since there is not check to see
 # if the arguments are projective space isomorphisms of the same
-# projective space. On the other hand, the user should only use these 
-# objects as an argument for constructor functions of corrlelations. 
+# projective space. On the other hand, the user should only use these
+# objects as an argument for constructor functions of corrlelations.
 # The methods here are in the first place helper methods for the methods
 # multiplying correlations. So we allow ourselves here some sloppyness.
 ###################################################################
@@ -138,7 +138,7 @@ InstallMethod( PrintObj,
 #############################################################################
 #O  \*( <delta1>, <delta2> )
 # returns the product of two standard dualities of a projective space.
-## 
+##
 InstallMethod( \*,
 	"for multiplying a standard-duality of a projective space",
 	[IsStandardDualityOfProjectiveSpace, IsStandardDualityOfProjectiveSpace],
@@ -150,7 +150,7 @@ InstallMethod( \*,
 #############################################################################
 #O  \*( <delta1>, <delta2> )
 # returns the product of the identitymap and the standard duality of a projective space.
-## 
+##
 InstallMethod( \*,
 	"for multiplying a standard-duality of a projective space",
 	[IsIdentityMappingOfElementsOfProjectiveSpace, IsStandardDualityOfProjectiveSpace],
@@ -162,7 +162,7 @@ InstallMethod( \*,
 #############################################################################
 #O  \*( <delta1>, <delta2> )
 # returns the product of the standard duality and the identitymap of a projective space.
-## 
+##
 InstallMethod( \*,
 	"for multiplying a standard-duality of a projective space",
 	[IsStandardDualityOfProjectiveSpace, IsIdentityMappingOfElementsOfProjectiveSpace],
@@ -174,7 +174,7 @@ InstallMethod( \*,
 #############################################################################
 #O  \*( <delta1>, <delta2> )
 # returns the product of two identitymaps of a projective space.
-## 
+##
 InstallMethod( \*,
 	"for multiplying a standard-duality of a projective space",
 	[IsIdentityMappingOfElementsOfProjectiveSpace, IsIdentityMappingOfElementsOfProjectiveSpace],
@@ -186,7 +186,7 @@ InstallMethod( \*,
 #############################################################################
 #O  \*( <delta1>, 0 )
 # returns One(delta1), <delta1> a projective space isomorphism
-## 
+##
 InstallMethod( \^,
     "for psisom and zero",
     [ IsProjectiveSpaceIsomorphism, IsZeroCyc ],
@@ -198,7 +198,7 @@ InstallMethod( \^,
 #############################################################################
 #O  \*( <delta1>, <delta2> )
 # returns true iff <delta1>=<delta2>, two standard dualities.
-## 
+##
 InstallMethod( \=,
 	"for two standard-dualities of a projective space",
 	[IsStandardDualityOfProjectiveSpace, IsStandardDualityOfProjectiveSpace],
@@ -232,7 +232,7 @@ InstallMethod( \=,
 #############################################################################
 #O  \*( <delta1>, <delta2> )
 # returns true iff <delta1>=<delta2>, two identitymaps of a projective space.
-## 
+##
 InstallMethod( \=,
 	"for two identity maps of a projective space",
 	[IsIdentityMappingOfElementsOfProjectiveSpace, IsIdentityMappingOfElementsOfProjectiveSpace],
@@ -241,9 +241,9 @@ InstallMethod( \=,
 	end);
 
 ###################################################################
-# Constructor methods for "projective elements with frobenius with 
-# vector space isomorphism", 
-# Such an object represents a collineation (delta = identity) OR 
+# Constructor methods for "projective elements with frobenius with
+# vector space isomorphism",
+# Such an object represents a collineation (delta = identity) OR
 # a correlation (delta = standard duality).
 ###################################################################
 
@@ -252,11 +252,11 @@ InstallMethod( \=,
 #############################################################################
 #O  ProjElWithFrob( <mat>, <frob>, <f>, <delta> )
 # method to construct an object in the category IsProjGrpElWithFrobWithPSIsom,
-# i.e. correlations. This method is not intended for the users, it has no 
+# i.e. correlations. This method is not intended for the users, it has no
 # checks built in. the fourth argument must be the standard duality of a projective
 # space.
 ##
-InstallMethod( ProjElWithFrobWithPSIsom, 
+InstallMethod( ProjElWithFrobWithPSIsom,
 	"for a ffe matrix, a Frobenius automorphism, a field and the st. duality",
 	[IsMatrix and IsFFECollColl, IsRingHomomorphism and IsMultiplicativeElementWithInverse,
 	  IsField, IsStandardDualityOfProjectiveSpace],
@@ -271,17 +271,17 @@ InstallMethod( ProjElWithFrobWithPSIsom,
 #############################################################################
 #O  ProjElWithFrob( <mat>, <frob>, <f> )
 # method to construct an object in the category IsProjGrpElWithFrobWithPSIsom,
-# i.e. correlations. This method is not intended for the users, it has no 
+# i.e. correlations. This method is not intended for the users, it has no
 # checks built in. There is no fourth argument, the projective space isomorphism
 # will be the identity mapping of the projective space.
 ##
-InstallMethod( ProjElWithFrobWithPSIsom, 
+InstallMethod( ProjElWithFrobWithPSIsom,
 	"for a ffe matrix, a Frobenius automorphism and a field",
 	[IsMatrix and IsFFECollColl, IsRingHomomorphism and IsMultiplicativeElementWithInverse,
 	  IsField],
 	function( m, frob, f )
 		local el,isom,q,n;
-		q := Size(f); 
+		q := Size(f);
 		n := Length(m);
 		isom := IdentityMappingOfElementsOfProjectiveSpace(ProjectiveSpace(n-1,f));  ## I hope this works! was wrong, for godsake, don't tell Celle about this type of mistakes :-(
 		el := rec( mat := m, fld := f, frob := frob, psisom := isom);
@@ -293,10 +293,10 @@ InstallMethod( ProjElWithFrobWithPSIsom,
 #############################################################################
 #O  ProjElWithFrob( <mat>, <frob>, <f>, <delta> )
 # method to construct an object in the category IsProjGrpElWithFrobWithPSIsom,
-# i.e. correlations. This method is not intended for the users, it has no 
+# i.e. correlations. This method is not intended for the users, it has no
 # checks built in. The fourth argument must be the identity mapping of a projective space.
 ##
-InstallMethod( ProjElWithFrobWithPSIsom, 
+InstallMethod( ProjElWithFrobWithPSIsom,
 	"for a ffe matrix and a Frobenius automorphism, a field and the identity mapping",
 	[IsMatrix and IsFFECollColl, IsRingHomomorphism and IsMultiplicativeElementWithInverse,
 	  IsField, IsGeneralMapping	and IsSPGeneralMapping and IsOne],
@@ -312,7 +312,7 @@ InstallMethod( ProjElWithFrobWithPSIsom,
 ###################################################################
 # CHECKED 14/09/11 jdb
 
-InstallMethod( ViewObj, 
+InstallMethod( ViewObj,
 	"for a projective group element with Frobenius with duality",
 	[IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep],
 	function(el)
@@ -327,7 +327,7 @@ InstallMethod( ViewObj,
 		Print(" >");
 	end);
 
-InstallMethod( Display, 
+InstallMethod( Display,
 	"for a projective group element with Frobenius with projective space isomorphism",
 	[IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep],
 	function(el)
@@ -341,7 +341,7 @@ InstallMethod( Display,
 		Print(", underlying projective space isomorphism:\n",el!.psisom,">\n");
 	end );
 
-InstallMethod( PrintObj, 
+InstallMethod( PrintObj,
 	"for a projective group element with Frobenius with projective space isomorphism",
 	[IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep],
 	function(el)
@@ -364,7 +364,7 @@ InstallMethod( PrintObj,
 # returns the underlying matrix, field automorphism and projective space isomorphism
 # of the correlation <el>
 ##
-InstallOtherMethod( Representative, 
+InstallOtherMethod( Representative,
 	"for a projective group element with Frobenius with projective space isomorphism",
 	[IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep],
 	function( el )
@@ -374,8 +374,8 @@ InstallOtherMethod( Representative,
 # CHECKED 14/09/11 jdb
 #############################################################################
 #O  BaseField( <el> )
-# returns the underlying field of the correlation <el> 
-##  
+# returns the underlying field of the correlation <el>
+##
 InstallMethod( BaseField,
 	"for a projective group element with Frobenius with proj space isomorphism",
 	[IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep],
@@ -387,7 +387,7 @@ InstallMethod( BaseField,
 #############################################################################
 #O  BaseField( <g> )
 # returns the base field of the correlation group group <g>
-## 
+##
 InstallMethod( BaseField, "for a projective group with Frobenius with proj space isomorphism",
   [IsProjGroupWithFrobWithPSIsom],
   function( g )
@@ -411,7 +411,7 @@ InstallMethod( BaseField, "for a projective group with Frobenius with proj space
   end );
 
 ###################################################################
-# code for multiplying, comparing... correlations with themselves and 
+# code for multiplying, comparing... correlations with themselves and
 # other elements, and more operations.
 ###################################################################
 
@@ -420,7 +420,7 @@ InstallMethod( BaseField, "for a projective group with Frobenius with proj space
 #O  \=( <a>, <b> )
 # returns true iff the correlations <a> and <b> are the same.
 ##
-InstallMethod( \=, 
+InstallMethod( \=,
 	"for two projective group els with Frobenius with projective space isomorphism",
 	[IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep,
 	IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep],
@@ -444,7 +444,7 @@ InstallMethod( \=,
 #O  IsOne( <a> )
 # returns true if the correlation <a> is the identity.
 ##
-InstallMethod( IsOne, 
+InstallMethod( IsOne,
   "for a projective group elm with Frobenius with projective space isomorphism",
   [IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep],
   function( el )
@@ -461,8 +461,8 @@ InstallMethod( IsOne,
 #############################################################################
 #O  OneImmutable( <el> )
 # returns immutable one of the group the correlation <el>
-## 
-InstallOtherMethod( OneImmutable, 
+##
+InstallOtherMethod( OneImmutable,
 	"for a projective group elm with Frobenius with projective space isomorphism",
 	[IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep],
 	function( el )
@@ -477,8 +477,8 @@ InstallOtherMethod( OneImmutable,
 #############################################################################
 #O  OneImmutable( <g> )
 # returns immutable one of the group the correlation group <g>
-## 
-InstallOtherMethod( OneImmutable, 
+##
+InstallOtherMethod( OneImmutable,
 	"for a projective group with Frobenius with projective space isomorphism",
 	[IsGroup and IsProjGrpElWithFrobWithPSIsom],
 	function( g )
@@ -501,8 +501,8 @@ InstallOtherMethod( OneImmutable,
 #############################################################################
 #O  OneSameMutability( <el> )
 # returns one of the group of <el> with same mutability of <el>.
-## 
-InstallMethod( OneSameMutability, 
+##
+InstallMethod( OneSameMutability,
 	"for a projective group element with Frobenius with projective space isomorphism",
 	[IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep],
 	function( el )
@@ -515,9 +515,9 @@ InstallMethod( OneSameMutability,
 
 
 ###################################################################
-# The things that make it a group :-) 
+# The things that make it a group :-)
 ###################################################################
-# we first need: 
+# we first need:
 ###################################
 # Methods for \^ (standard duality)
 ###################################
@@ -529,14 +529,14 @@ InstallOtherMethod( \^, "for a FFE vector and a id. mapping of el. of ps.",
     return v;
   end );
 
-InstallOtherMethod( \^, 
+InstallOtherMethod( \^,
   "for a compressed GF2 vector and a id. mapping of el. of ps.",
   [ IsVector and IsFFECollection and IsGF2VectorRep, IsIdentityMappingOfElementsOfProjectiveSpace ],
   function( v, f )
     return v;
   end );
 
-InstallOtherMethod( \^, 
+InstallOtherMethod( \^,
   "for a compressed 8bit vector and a id. mapping of el. of ps.",
   [ IsVector and IsFFECollection and Is8BitVectorRep, IsIdentityMappingOfElementsOfProjectiveSpace ],
   function( v, f )
@@ -571,13 +571,13 @@ InstallOtherMethod( \^, "for an elements of a projective space and a st. duality
 #############################################################################
 #O  \*( <a>, <b> )
 # returns a*b, for two correlations <a> and <b>
-## 
-InstallMethod( \*, 
+##
+InstallMethod( \*,
 	"for two projective group elements with frobenius with projective space isomorphism",
 	[IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep,
 	IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep],
 	function( a, b )
-		local el;  
+		local el;
 		el := rec( mat := a!.mat * ((b!.mat^(a!.frob^-1)))^a!.psisom, fld := a!.fld, #O Celle, dear friend, you missed this correction :-)
 				frob := a!.frob * b!.frob, psisom := a!.psisom * b!.psisom );
 		Objectify( ProjElsWithFrobWithPSIsomType, el);
@@ -588,8 +588,8 @@ InstallMethod( \*,
 #############################################################################
 #O  \<( <a>, <b> )
 # method for LT, for two correlations.
-## 
-InstallMethod(\<, 
+##
+InstallMethod(\<,
 	"for two correlations",
 	[IsProjGrpElWithFrobWithPSIsom, IsProjGrpElWithFrobWithPSIsom],
 	function(a,b)
@@ -609,7 +609,7 @@ InstallMethod(\<,
 		bb := b!.mat;
 		pa := PositionNonZero(aa[1]);
 		pb := PositionNonZero(bb[1]);
-		if pa > pb then 
+		if pa > pb then
 			return true;
 		elif pa < pb then
 			return false;
@@ -626,15 +626,15 @@ InstallMethod(\<,
 	end);
 
 ## Let M be a matrix, f be a Frobenius aut, and t be a psisom.
-## Then the inverse of Mft is 
+## Then the inverse of Mft is
 ##        t^-1 f^-1 M^-1 = (M^-1)^(ft) f^-1 t^-1
 
 # CHECKED 19/09/11 jdb
 #############################################################################
 #O  InverseSameMutability( <el> )
 # returns el^-1, for IsProjGrpElWithFrobWithPSIsom, keeps mutability (of matrix).
-## 
-InstallMethod( InverseSameMutability, 
+##
+InstallMethod( InverseSameMutability,
   "for a projective group element with Frobenius with projective space isomorphism",
   [IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep],
   function( el )
@@ -651,8 +651,8 @@ InstallMethod( InverseSameMutability,
 #############################################################################
 #O  InverseMutable( <el> )
 # returns el^-1 (mutable) for IsProjGrpElWithFrobWithPSIsom
-## 
-InstallMethod( InverseMutable, 
+##
+InstallMethod( InverseMutable,
   "for a projective group element with Frobenius with projective space isomorphism",
   [IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep],
   function( el )
@@ -670,37 +670,37 @@ InstallMethod( InverseMutable,
 #############################################################################################
 
 #the following method is wrong, and is btw never used.
-#InstallMethod( \*, 
+#InstallMethod( \*,
 #  "for two projective group elements with frobenius with projective space isomorphism",
 #  [IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep,
 #   IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
 #  function( a, b )
-#    local el;  
-#    el := rec( mat := (a!.mat * (b!.mat^(a!.frob^-1)))^a!.psisom, fld := a!.fld, 
+#    local el;
+#    el := rec( mat := (a!.mat * (b!.mat^(a!.frob^-1)))^a!.psisom, fld := a!.fld,
 #               frob := a!.frob * b!.frob, psisom := a!.psisom * b!.psisom );
 #    Objectify( ProjElsWithFrobWithPSIsomType, el);
 #	return el;
 #  end );
 
-InstallMethod( \*, 
+InstallMethod( \*,
 	"for a projective group element with frobenius and a correlation",
 	[IsProjGrpElWithFrob and IsProjGrpElWithFrobRep,
 	IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep],
 	function( a, b )
-		local el;  
-		el := rec( mat := (a!.mat * (b!.mat^(a!.frob^-1))), fld := a!.fld, 
+		local el;
+		el := rec( mat := (a!.mat * (b!.mat^(a!.frob^-1))), fld := a!.fld,
 				frob := a!.frob * b!.frob, psisom := b!.psisom );
 		Objectify( ProjElsWithFrobWithPSIsomType, el);
 		return el;
 	end );
 
-InstallMethod( \*, 
+InstallMethod( \*,
 	"for a correlation and a projective group element with frobenius",
 	[IsProjGrpElWithFrobWithPSIsom and IsProjGrpElWithFrobWithPSIsomRep,
 	IsProjGrpElWithFrob and IsProjGrpElWithFrobRep],
 	function( a, b )
-		local el;  
-		el := rec( mat := (a!.mat * (b!.mat^(a!.frob^-1)))^a!.psisom, fld := a!.fld, 
+		local el;
+		el := rec( mat := (a!.mat * (b!.mat^(a!.frob^-1)))^a!.psisom, fld := a!.fld,
 				frob := a!.frob * b!.frob, psisom := a!.psisom  );
 		Objectify( ProjElsWithFrobWithPSIsomType, el);
 		return el;
@@ -716,8 +716,8 @@ InstallMethod( \*,
 # method to construct a list of objects in the category IsProjGrpElWithFrobWithPSIsom,
 # using a list of triples of matrix/frobenius automorphism/projective space isomorphism, and a field.
 # This method relies of ProjElWithFrobWithPSIsom, and is not inteded for the user.
-# no checks are built in. This could result in e.g. the use of a field that is 
-# not compatible with (some of) the matrices, and result in a non user friendly 
+# no checks are built in. This could result in e.g. the use of a field that is
+# not compatible with (some of) the matrices, and result in a non user friendly
 # error
 ##
 InstallMethod( ProjElsWithFrobWithPSIsom,
@@ -737,7 +737,7 @@ InstallMethod( ProjElsWithFrobWithPSIsom,
 #A  CorrelationGroup( <ps> )
 # returns the collineation group of the projective space <ps>
 ##
-InstallMethod( CorrelationGroup, 
+InstallMethod( CorrelationGroup,
 	"for a full projective space",
 	[ IsProjectiveSpace and IsProjectiveSpaceRep ],
 	function( ps )
@@ -755,7 +755,7 @@ InstallMethod( CorrelationGroup,
 		corr := GroupWithGenerators(newgens);
 		SetSize(corr, Size(g) / (q - 1) * Order(frob) * 2); #* 2 for the standard duality.
 	    pow := LogInt(q, Characteristic(f));
-		if pow > 1 then 
+		if pow > 1 then
 			string := Concatenation("PGammaL(",String(d+1),",",String(q),")");
 		else
 			string := Concatenation("PGL(",String(d+1),",",String(q),")");
@@ -772,12 +772,12 @@ InstallMethod( CorrelationGroup,
 # CHECKED 19/09/11 jdb
 #############################################################################
 #O  CorrelationOfProjectiveSpace( <mat>, <gf> )
-# method to construct an object in the category IsProjGrpElWithFrobWithPSIsom, i.e. a 
+# method to construct an object in the category IsProjGrpElWithFrobWithPSIsom, i.e. a
 # correlation of a projective space. This method is intended for the user, and contains
 # a check whether the matrix is non-singular. The method relies on ProjElWithFrobWithPSIsom,
 # the field automorphism and the projective space automorphism will be trivial
-## 
-InstallMethod( CorrelationOfProjectiveSpace, 
+##
+InstallMethod( CorrelationOfProjectiveSpace,
 	"for a matrix and a finite field",
 	[ IsMatrix and IsFFECollColl, IsField],
 	function( mat, gf )
@@ -790,15 +790,15 @@ InstallMethod( CorrelationOfProjectiveSpace,
 # CHECKED 19/09/11 jdb
 #############################################################################
 #O  CorrelationOfProjectiveSpace( <mat>, <frob>, <gf> )
-# method to construct an object in the category IsProjGrpElWithFrobWithPSIsom, i.e. a 
+# method to construct an object in the category IsProjGrpElWithFrobWithPSIsom, i.e. a
 # correlation of a projective space. This method is intended for the user, and contains
 # a check whether the matrix is non-singular. The method relies on ProjElWithFrobWithPSIsom,
 # the projective space automorphism will be trivial
-## 
+##
 InstallMethod( CorrelationOfProjectiveSpace,
 	"for a matrix, a frobenius automorphism, and a finite field",
 	[ IsMatrix and IsFFECollColl, IsRingHomomorphism and
-    IsMultiplicativeElementWithInverse, IsField], 
+    IsMultiplicativeElementWithInverse, IsField],
 	function( mat, frob, gf )
 		if Rank(mat) <> Size(mat) then
 			Error("<mat> must not be singular");
@@ -809,14 +809,14 @@ InstallMethod( CorrelationOfProjectiveSpace,
 # CHECKED 19/09/11 jdb
 #############################################################################
 #O  CorrelationOfProjectiveSpace( <mat>, <gf>, <delta> )
-# method to construct an object in the category IsProjGrpElWithFrobWithPSIsom, i.e. a 
+# method to construct an object in the category IsProjGrpElWithFrobWithPSIsom, i.e. a
 # correlation of a projective space. This method is intended for the user, and contains
 # a check whether the matrix is non-singular. The method relies on ProjElWithFrobWithPSIsom,
 # the field automorphism will be trivial
-## 
+##
 InstallMethod( CorrelationOfProjectiveSpace,
 	"for a matrix, a finite field, and a projective space isomorphism",
-	[ IsMatrix and IsFFECollColl, IsField, IsStandardDualityOfProjectiveSpace], 
+	[ IsMatrix and IsFFECollColl, IsField, IsStandardDualityOfProjectiveSpace],
 	function( mat, gf, delta )
 		if Rank(mat) <> Size(mat) then
 			Error("<mat> must not be singular");
@@ -830,14 +830,14 @@ InstallMethod( CorrelationOfProjectiveSpace,
 # CHECKED 19/09/11 jdb
 #############################################################################
 #O  CorrelationOfProjectiveSpace( <mat>, <frob>, <gf>, <delta> )
-# method to construct an object in the category IsProjGrpElWithFrobWithPSIsom, i.e. a 
+# method to construct an object in the category IsProjGrpElWithFrobWithPSIsom, i.e. a
 # correlation of a projective space. This method is intended for the user, and contains
 # a check whether the matrix is non-singular. The method relies on ProjElWithFrobWithPSIsom.
-## 
+##
 InstallMethod( CorrelationOfProjectiveSpace,
 	"for a matrix, a frobenius automorphism, a finite field, and a projective space isomorphism",
-	[ IsMatrix and IsFFECollColl, IsRingHomomorphism and IsMultiplicativeElementWithInverse, IsField, 
-    IsStandardDualityOfProjectiveSpace], 
+	[ IsMatrix and IsFFECollColl, IsRingHomomorphism and IsMultiplicativeElementWithInverse, IsField,
+    IsStandardDualityOfProjectiveSpace],
 	function( mat, frob, gf, delta )
 		if Rank(mat) <> Size(mat) then
 			Error("<mat> must not be singular");
@@ -846,7 +846,7 @@ InstallMethod( CorrelationOfProjectiveSpace,
 			Error("<delta> is not a duality of the correct projective space");
 		fi;
 		return ProjElWithFrobWithPSIsom( mat, frob, gf, delta);
-	end ); 
+	end );
 
 ###################################################################
 # Some operations for correlations
@@ -856,27 +856,27 @@ InstallMethod( CorrelationOfProjectiveSpace,
 # CHECKED 19/09/11 jdb
 #############################################################################
 #O  UnderlyingMatrix( <c> )
-# returns the underlying matrix of <c> 
+# returns the underlying matrix of <c>
 ##
-InstallMethod( UnderlyingMatrix, [ IsProjGrpElWithFrobWithPSIsom and 
+InstallMethod( UnderlyingMatrix, [ IsProjGrpElWithFrobWithPSIsom and
                                    IsProjGrpElWithFrobWithPSIsomRep],
   c -> c!.mat );
-  
+
 # CHECKED 19/09/11 jdb
 #############################################################################
 #O  FieldAutomorphism( <c> )
-# returns the underlying field automorphism of <c> 
+# returns the underlying field automorphism of <c>
 ##
-InstallMethod( FieldAutomorphism, [ IsProjGrpElWithFrobWithPSIsom and 
+InstallMethod( FieldAutomorphism, [ IsProjGrpElWithFrobWithPSIsom and
                                     IsProjGrpElWithFrobWithPSIsomRep],
   c -> c!.frob );
 
 # CHECKED 19/09/11 jdb
 #############################################################################
 #O  ProjectiveSpaceIsomorphism( <c> )
-# returns the underlying projective space isomorphism of <c> 
+# returns the underlying projective space isomorphism of <c>
 ##
-InstallMethod( ProjectiveSpaceIsomorphism, [ IsProjGrpElWithFrobWithPSIsom and 
+InstallMethod( ProjectiveSpaceIsomorphism, [ IsProjGrpElWithFrobWithPSIsom and
                                     IsProjGrpElWithFrobWithPSIsomRep],
   c -> c!.psisom );
 
@@ -907,7 +907,7 @@ InstallOtherMethod( Embedding,
 			Print("method prefun");
 		else
 			Error("<x> has no preimage");
-		fi; 
+		fi;
 	end);
 	SetIsInjective(hom,true);
 	return hom;
@@ -915,15 +915,15 @@ InstallOtherMethod( Embedding,
 
 #####################################################################
 # Actions
-# We follow almost the same approach as in goup.gi. We  define the 
+# We follow almost the same approach as in goup.gi. We  define the
 # action of a correlation on vectorspaces, but we our user function
 # for actions does not rely on it, since it would cause more function
-# calls. 
+# calls.
 # Also recall that in group.gi we have implemented the methods that do algebraic
-# stuff. The user methods, related to the projective geometry stuff, are 
+# stuff. The user methods, related to the projective geometry stuff, are
 # in projectivespace.gi. Here we have both parts, since this file
 # is anyway related to projectivespace.gi
-# 
+#
 #####################################################################
 
 # CHECKED 19/09/11 jdb
@@ -935,10 +935,10 @@ InstallOtherMethod( Embedding,
 # it is assumed that the input is normalized.
 # Important: despite its natural name, this function is *not* intended for the user.
 # <line>: just a row vector, representing a projective point.
-# <el>: a correlation. 
+# <el>: a correlation.
 # Important: since this function is just "doing the algebra", it returns a vector that
-# must be interpreted as the coordinates of a hyperplane now. 
-## 
+# must be interpreted as the coordinates of a hyperplane now.
+##
 InstallGlobalFunction( OnProjPointsWithFrobWithPSIsom,
 	function( line, el )
 		local vec,c;
@@ -958,7 +958,7 @@ InstallGlobalFunction( OnProjPointsWithFrobWithPSIsom,
 #F  OnProjSubspacesWithFrobWithPSIsom( <subspace>, <el> )
 # computes <subspace>^<el> where this action is the "natural" one, and <subspace> represents
 # a projective subspace. This function relies on the GAP action function
-# OnRight, which computes the action of a matrix on a sub vector space. 
+# OnRight, which computes the action of a matrix on a sub vector space.
 # Important: despite its natural name, this function is *not* intended for the user.
 # <el>: a projective group element (so a projectivity, *not* a projective semilinear element.
 ##
@@ -977,7 +977,7 @@ InstallGlobalFunction( OnProjSubspacesWithFrobWithPSIsom,
 # CHECKED 20/09/11 jdb
 #############################################################################
 #F  OnProjSubspacesExtended( <sub>, <el> )
-# computes <sub>^<el>, where <sub> is an element of a projective space, and 
+# computes <sub>^<el>, where <sub> is an element of a projective space, and
 # <el> a correlation. This function is stand alone now, and hence we still have
 # to do the canonization. Therefore we use VectorSpaceToElement.
 ##
@@ -990,26 +990,26 @@ InstallGlobalFunction( OnProjSubspacesExtended,
 		newvec := (vec*el!.mat)^el!.frob;
 		if ty = 1 then
 			newvec := [newvec];
-		fi;       
+		fi;
 		if not IsOne(el!.psisom) then
 			newvec := NullspaceMat(TransposedMat(newvec));
 		fi;
 		rk := Rank(newvec);
-		if rk = 1 then 
+		if rk = 1 then
 			newvec := newvec[1];
 		fi;
 		return VectorSpaceToElement(ps,newvec);
-	end );	
+	end );
 
 # CHECKED 19/09/11 jdb
 #############################################################################
 #O  Dimension( <g> )
-# returns the dimension of the correlation group <g>. The dimension of this 
-# group is defined as the vector space dimension of the projective space  
-# of which <g> was defined as a projective group, or, in other words, as the 
+# returns the dimension of the correlation group <g>. The dimension of this
+# group is defined as the vector space dimension of the projective space
+# of which <g> was defined as a projective group, or, in other words, as the
 # size of the matrices.
-## 
-InstallMethod( Dimension, 
+##
+InstallMethod( Dimension,
   "for a projective group with Frobenius with vspace isomorphism",
   [IsProjGroupWithFrobWithPSIsom],
   function( g )
@@ -1030,8 +1030,8 @@ InstallMethod( Dimension,
 #P  ActionOnAllPointsHyperplanes( <g> )
 # returns the action of the correlation group <g> on the projective points
 # an hyperplanes of the underlying projective space.
-## 
-InstallMethod( ActionOnAllPointsHyperplanes, 
+##
+InstallMethod( ActionOnAllPointsHyperplanes,
 	"for a correlation group",
 	[ IsProjGroupWithFrobWithPSIsom ],
 	function( pg )
@@ -1069,8 +1069,8 @@ InstallMethod( ActionOnAllPointsHyperplanes,
 #P  CanComputeActionOnPoints( <g> )
 # is set true if we consider the computation of the action feasible.
 # for correlation groups.
-## 
-InstallMethod( CanComputeActionOnPoints, 
+##
+InstallMethod( CanComputeActionOnPoints,
 	"for a projective group with frob with pspace isomorphism",
 	[IsProjGroupWithFrobWithPSIsom],
 	function( g )
@@ -1089,20 +1089,20 @@ InstallMethod( CanComputeActionOnPoints,
 #O  NiceMonomorphism( <pg> )
 # <pg> is a correlation group. This operation returns a nice monomorphism.
 ##
-InstallMethod( NiceMonomorphism, 
+InstallMethod( NiceMonomorphism,
 	"for a projective group with Frobenius with pspace isomorphism (feasible case)",
 	[IsProjGroupWithFrobWithPSIsom and CanComputeActionOnPoints and
 	IsHandledByNiceMonomorphism], 50,
 	function( pg )
 		return ActionOnAllPointsHyperplanes( pg );
 	end );
-  
+
 # CHECKED 20/09/11 jdb
 #############################################################################
 #O  NiceMonomorphism( <pg> )
 # <pg> is a correlation group. This operation returns a nice monomorphism.
 ##
-InstallMethod( NiceMonomorphism, 
+InstallMethod( NiceMonomorphism,
 	"for a projective group with Frobenius with pspace isomorphism (nasty case)",
 	[IsProjGroupWithFrobWithPSIsom and IsHandledByNiceMonomorphism], 50,
 	function( pg )
@@ -1117,25 +1117,25 @@ InstallMethod( NiceMonomorphism,
 
 # CHECKED 19/09/11 jdb
 ###################################################################
-# View methods of groups of projective elements with frobenius with 
+# View methods of groups of projective elements with frobenius with
 # projective space isomorphism
 ###################################################################
 
-InstallMethod( ViewObj, 
+InstallMethod( ViewObj,
   "for a projective group with frobenius with pspace isomorphism",
   [IsProjGroupWithFrobWithPSIsom],
   function( g )
     Print("<projective group with Frobenius with proj. space isomorphism>");
   end );
 
-InstallMethod( ViewObj, 
+InstallMethod( ViewObj,
   "for a trivial projective group with frobenius with pspace isomorphism ",
   [IsProjGroupWithFrobWithPSIsom and IsTrivial],
   function( g )
     Print("<trivial projective group with Frobenius with proj. space isomorphism>");
   end );
 
-InstallMethod( ViewObj, 
+InstallMethod( ViewObj,
   "for a projective group with Frobenius with proj. space isomorphism with gens",
   [IsProjGroupWithFrobWithPSIsom and HasGeneratorsOfGroup],
   function( g )
@@ -1149,7 +1149,7 @@ InstallMethod( ViewObj,
     fi;
   end );
 
-InstallMethod( ViewObj, 
+InstallMethod( ViewObj,
   "for a projective group with frobenius with pspace isomorphism with size",
   [IsProjGroupWithFrobWithPSIsom and HasSize],
   function( g )
@@ -1160,7 +1160,7 @@ InstallMethod( ViewObj,
     fi;
   end );
 
-InstallMethod( ViewObj, 
+InstallMethod( ViewObj,
   "for a projective group with frobenius with pspace isomorphism with gens and size",
   [IsProjGroupWithFrobWithPSIsom and HasGeneratorsOfGroup and HasSize],
   function( g )

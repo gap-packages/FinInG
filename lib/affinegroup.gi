@@ -8,12 +8,12 @@
 ##                                                            Michel Lavrauw
 ##                                                           Max Neunhoeffer
 ##
-##  Copyright 2018	Colorado State University
+##  Copyright 2018  Colorado State University
 ##                  Sabancı Üniversitesi
-##					Università degli Studi di Padova
-##					Universiteit Gent
-##					University of St. Andrews
-##					University of Western Australia
+##                  Università degli Studi di Padova
+##                  Universiteit Gent
+##                  University of St. Andrews
+##                  University of Western Australia
 ##                  Vrije Universiteit Brussel
 ##
 ##
@@ -37,15 +37,15 @@
 # CHECKED 25/3/14 jdb
 #############################################################################
 #O  AffineGroup( <as> )
-# returns AGL(d,q)  
+# returns AGL(d,q)
 ##
-InstallMethod( AffineGroup, 
-	"for an affine space",
-	[ IsAffineSpace ],
-	function( as )
-  
+InstallMethod( AffineGroup,
+    "for an affine space",
+    [ IsAffineSpace ],
+    function( as )
+
   ## This operation returns the group commonly known as AGL(d,F)
-  
+
     local d, gf, vec, semi, gens, frob, newgens, agl, q;
     d := as!.dimension;
     gf := as!.basefield;
@@ -65,15 +65,15 @@ InstallMethod( AffineGroup,
 # CHECKED 27/3/2012 jdb
 #############################################################################
 #O  CollineationGroup( <as> )
-# returns AGammaL(d,q)  
+# returns AGammaL(d,q)
 ##
-InstallMethod( CollineationGroup, 
-	"for an affine space",
-	[ IsAffineSpace ],
-	function( as )
-  
+InstallMethod( CollineationGroup,
+    "for an affine space",
+    [ IsAffineSpace ],
+    function( as )
+
     ## This operation returns the group commonly known as AGammaL(d,F)
-  
+
     local d, gf, vec, semi, gens, frob, newgens, coll, q;
     d := as!.dimension;
     gf := as!.basefield;
@@ -86,7 +86,7 @@ InstallMethod( CollineationGroup,
     Add(newgens, [One(semi), frob]);
     newgens := ProjElsWithFrob(newgens);
     coll := GroupWithGenerators(newgens);
-    if LogInt(q, Characteristic(gf)) > 1 then 
+    if LogInt(q, Characteristic(gf)) > 1 then
        SetName( coll, Concatenation("AGammaL(",String(d),",",String(q),")") );
     else
        SetName( coll, Concatenation("AGL(",String(d),",",String(q),")") );
@@ -103,15 +103,15 @@ InstallMethod( CollineationGroup,
 # <y> is subspace
 # <el> is group element.
 ##
-InstallGlobalFunction( OnAffinePoints, 
+InstallGlobalFunction( OnAffinePoints,
   function( y, el )
-       # Note that 
+       # Note that
        #        |     0|
        # [y, 1] |  A  0| = [yA + x, 1]
        #        |     0|
        #        |  x  1|
     local yobj, new, d, geo, bf;
-	geo := y!.geo;
+    geo := y!.geo;
     bf := geo!.basefield;
     d := geo!.dimension;
     yobj := Unpack(y!.obj);
@@ -145,20 +145,20 @@ InstallGlobalFunction( OnAffineNotPoints,
      frob := el!.frob;
      newdir := dir * mat{[1..d]}{[1..d]};
      newdir := newdir^frob;
-	 TriangulizeMat(newdir);   
+     TriangulizeMat(newdir);
      newv := Concatenation(v, [ One(ag!.basefield) ]); #will be a plain list.
      newv := newv * mat;
      newv := newv^frob;
      newv := newv{[1..d]};
      newv := VectorSpaceTransversalElement(vec, newdir, newv);
      return AffineSubspace(ag,newv,newdir);
-	 #return Wrap(ag, subspace!.type, [newv, newdir]);
+     #return Wrap(ag, subspace!.type, [newv, newdir]);
   end );
 
 # CHECKED 27/3/2012 jdb
 #############################################################################
 #F  OnAffineSubspaces( <y>, <el> )
-# This is the group action of an affine group on affine subspaces that 
+# This is the group action of an affine group on affine subspaces that
 # the user should use.
 ##
 InstallGlobalFunction( OnAffineSubspaces,
@@ -176,9 +176,8 @@ InstallGlobalFunction( OnAffineSubspaces,
 # shorcut to OnAffineSubspaces.
 ##
 InstallOtherMethod( \^,
-	"for a subspace of an affine space and a projective element with frob",
-	[IsSubspaceOfAffineSpace, IsProjGrpElWithFrob],
-	function(x, em)
-		return OnAffineSubspaces(x,em);
-	end );
-
+    "for a subspace of an affine space and a projective element with frob",
+    [IsSubspaceOfAffineSpace, IsProjGrpElWithFrob],
+    function(x, em)
+        return OnAffineSubspaces(x,em);
+    end );

@@ -8,12 +8,12 @@
 ##                                                            Michel Lavrauw
 ##                                                           Max Neunhoeffer
 ##
-##  Copyright 2018	Colorado State University
+##  Copyright 2018  Colorado State University
 ##                  Sabancı Üniversitesi
-##					Università degli Studi di Padova
-##					Universiteit Gent
-##					University of St. Andrews
-##					University of Western Australia
+##                  Università degli Studi di Padova
+##                  Universiteit Gent
+##                  University of St. Andrews
+##                  University of Western Australia
 ##                  Vrije Universiteit Brussel
 ##
 ##
@@ -22,7 +22,7 @@
 #############################################################################
 
 #############################################################################
-# 
+#
 # An info class:
 #
 #############################################################################
@@ -53,7 +53,7 @@ DeclareCategory( "IsIncidenceStructure", IsComponentObjectRep and IsAttributeSto
 # categories for elements of incidence structures.
 
 DeclareCategory( "IsElementOfIncidenceStructure", IsComponentObjectRep and IsAttributeStoringRep
-											and CanEasilyCompareElements and CanEasilySortElements );
+                                            and CanEasilyCompareElements and CanEasilySortElements );
 
 #DeclareCategory( "IsElementsOfIncidenceStructure", IsDomain and IsCollection and IsComponentObjectRep );
 #DeclareCategory( "IsAllElementsOfIncidenceStructure", IsDomain and IsCollection and IsComponentObjectRep);
@@ -62,7 +62,7 @@ DeclareCategory( "IsAnyElementsOfIncidenceStructure", IsDomain and IsCollection 
    ## e.g.,  Points(PG(3,4)) or ElementsOfIncidenceStructure(PG(3,4));
 
 DeclareCategory( "IsElementsOfIncidenceStructure", IsAnyElementsOfIncidenceStructure );
-   ## e.g.,  Points(PG(3,4)) 
+   ## e.g.,  Points(PG(3,4))
 
 DeclareCategory( "IsAllElementsOfIncidenceStructure", IsAnyElementsOfIncidenceStructure);
    ## e.g.,  ElementsOfIncidenceStructure(PG(3,4));
@@ -116,9 +116,9 @@ DeclareCategory( "IsGeneralisedQuadrangle", IsGeneralisedPolygon );
 DeclareCategory( "IsGeneralisedHexagon", IsGeneralisedPolygon );
 DeclareCategory( "IsGeneralisedOctagon", IsGeneralisedPolygon );
 
-DeclareCategory( "IsDesarguesianPlane", IsProjectivePlaneCategory and IsProjectiveSpace ); 
-DeclareCategory( "IsClassicalGQ", IsGeneralisedQuadrangle and IsClassicalPolarSpace ); 
-DeclareCategory( "IsClassicalGeneralisedHexagon", IsGeneralisedHexagon and IsLieGeometry ); 
+DeclareCategory( "IsDesarguesianPlane", IsProjectivePlaneCategory and IsProjectiveSpace );
+DeclareCategory( "IsClassicalGQ", IsGeneralisedQuadrangle and IsClassicalPolarSpace );
+DeclareCategory( "IsClassicalGeneralisedHexagon", IsGeneralisedHexagon and IsLieGeometry );
 
 #
 #############################################################################
@@ -129,7 +129,7 @@ DeclareCategory( "IsClassicalGeneralisedHexagon", IsGeneralisedHexagon and IsLie
 
 # representations for geometries.
 
-DeclareRepresentation( "IsIncidenceStructureRep", IsIncidenceStructure, ["elements", "increl", "typefun", "typeset" ] ); 
+DeclareRepresentation( "IsIncidenceStructureRep", IsIncidenceStructure, ["elements", "increl", "typefun", "typeset" ] );
 DeclareRepresentation( "IsAffineSpaceRep", IsAffineSpace, [ "basefield", "vectorspace" ] );
 DeclareRepresentation( "IsClassicalPolarSpaceRep", IsClassicalPolarSpace, [ "basefield", "vectorspace" ] );
 DeclareRepresentation( "IsProjectiveSpaceRep", IsProjectiveSpace, [ "basefield", "vectorspace" ] );
@@ -156,7 +156,7 @@ BindGlobal( "GeometriesFamily", NewFamily( "GeometriesFamily" ) );
 BindGlobal( "ElementsOfIncidenceStructureFamily", NewFamily( "ElementsOfIncidenceStructureFamily", IsElementOfIncidenceStructure ));
 BindGlobal( "ElementsCollFamily", CollectionsFamily(ElementsOfIncidenceStructureFamily) );
 
-BindGlobal( "FlagsOfIncidenceStructureFamily", NewFamily( "FlagsOfIncidenceStructureFamily", IsObject ));   
+BindGlobal( "FlagsOfIncidenceStructureFamily", NewFamily( "FlagsOfIncidenceStructureFamily", IsObject ));
 
 # types
 
@@ -281,7 +281,7 @@ DeclareOperation( "ShadowOfFlag", [IsIncidenceStructure, IsFlagOfIncidenceStruct
 DeclareOperation( "ShadowOfFlag", [IsIncidenceStructure, IsList, IsPosInt] );
 DeclareOperation( "ShadowOfFlag", [IsIncidenceStructure, IsList, IsString] );
 
-#now a very general operation. 
+#now a very general operation.
 DeclareOperation( "ElementsIncidentWithElementOfIncidenceStructure", [ IsElementOfIncidenceStructure, IsPosInt ] );
 DeclareOperation( "Points", [ IsElementOfIncidenceStructure ] );
 DeclareOperation( "Lines", [ IsElementOfIncidenceStructure ] );
@@ -302,8 +302,8 @@ DeclareProperty( "IsConstellation", IsIncidenceStructure );
 
 #############################################################################
 #
-# The representation of a collineation group of a geometry could be, 
-# in a natural way, incompatible with the elements of the geometry. In such 
+# The representation of a collineation group of a geometry could be,
+# in a natural way, incompatible with the elements of the geometry. In such
 # cases, this attribute can be installed returning an appropriate action
 # function.
 #

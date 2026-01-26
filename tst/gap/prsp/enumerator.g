@@ -1,4 +1,4 @@
-#Enumerator 
+#Enumerator
 pg := PG(3,4);
 lines := Lines(pg);
 enum := Enumerator(lines);;

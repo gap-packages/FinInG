@@ -10,8 +10,8 @@ for i in [1..Length(elements)] do
 	enum!.NumberElement(s,elements[i]);
 od;
 
-	
-	
+
+
 tests := [];
 for q in [2,3,4,5,7,8,9,11,13,16,17] do
 ps := ParabolicQuadric(2,q);

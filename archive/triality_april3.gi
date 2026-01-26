@@ -3,7 +3,7 @@ TrialitySplitCayleyPoint := function(el)
     local z, hyps, q, y, pg;
     q := Size(BaseField(el));
     y := Unpack(UnderlyingObject(el));
-    y[8] := -y[4]; 
+    y[8] := -y[4];
     pg := AmbientSpace(el);
     z := [];
     z[1] := [0,y[3],-y[2],y[5],y[8],0,0,0]*Z(q)^0;
@@ -152,8 +152,8 @@ List([1..Length(pts)],i->List(lines_pts[i],y->y in planes[i]));
 
 
 planespts := List(planes,x->List(Points(x)));;
-numbers := List(planespts,x->Length(Intersection(x,q6qpts)));;  
-numberssub := List(planespts,x->Length(Intersection(x,q6qsubpts)));;  
+numbers := List(planespts,x->Length(Intersection(x,q6qpts)));;
+numberssub := List(planespts,x->Length(Intersection(x,q6qsubpts)));;
 
 ZeroPointToOnePointsSpaceByTriality := function(elvec,frob,f)
 # elvec represents a point of T(q,q^3)
@@ -461,7 +461,7 @@ InstallMethod( VectorSpaceToElement,
     fi;
 end );
 
-    
+
 #############################################################################
 #O  VectorSpaceToElement( <geom>, <v> ) returns the elements in <geom> determined
 # by the rowvector <v>. <geom> is a generalised hexagong, so an ambient polar space
@@ -499,7 +499,7 @@ InstallMethod( VectorSpaceToElement,
             Error("<vec> does not represent a line of <geom>");
         fi;
     elif IsHyperbolicQuadric(ps) then
-        if p1 in ZeroPointToOnePointsSpaceByTriality(p1) and 
+        if p1 in ZeroPointToOnePointsSpaceByTriality(p1) and
                 p2 in ZeroPointToOnePointsSpaceByTriality(p2) and
                 p1 in ZeroPointToOnePointsSpaceByTriality(p2)
         then
@@ -514,49 +514,49 @@ end );
 
 
      mp:=d->[[1,  0,  0,  0,  0,  d,  0],
-             [0,  1,  0,  0, -d,  0,  0],  
-             [0,  0,  1,  0,  0,  0,  0],  
+             [0,  1,  0,  0, -d,  0,  0],
+             [0,  0,  1,  0,  0,  0,  0],
              [0,  0,  2*d,  1,  0,  0,  0],         ## **
-             [0,  0,  0,  0,  1,  0,  0],  
-             [0,  0,  0,  0,  0,  1,  0],  
+             [0,  0,  0,  0,  1,  0,  0],
+             [0,  0,  0,  0,  0,  1,  0],
              [0,  0,d^2,  d,  0,  0,  1]]*One(f);  ## **
 
      ml:=d->[[1, -d,  0,  0,  0,  0,  0],
-             [0,  1,  0,  0,  0,  0,  0],  
-             [0,  0,  1,  0,  0,  0,  0],  
-             [0,  0,  0,  1,  0,  0,  0],  
-             [0,  0,  0,  0,  1,  0,  0],  
-             [0,  0,  0,  0,  d,  1,  0],  
+             [0,  1,  0,  0,  0,  0,  0],
+             [0,  0,  1,  0,  0,  0,  0],
+             [0,  0,  0,  1,  0,  0,  0],
+             [0,  0,  0,  0,  1,  0,  0],
+             [0,  0,  0,  0,  d,  1,  0],
              [0,  0,  0,  0,  0,  0,  1]]*One(f);
 
 #hvm boek: (ok for q=3).
 
      mp:=d->[[1,  0,  0,  0,  0,  d,  0],
-             [0,  1,  0,  0, -d,  0,  0],  
-             [0,  0,  1,  0,  0,  0,  0],  
+             [0,  1,  0,  0, -d,  0,  0],
+             [0,  0,  1,  0,  0,  0,  0],
              [0,  0,  d,  1,  0,  0,  0],         ## **
-             [0,  0,  0,  0,  1,  0,  0],  
-             [0,  0,  0,  0,  0,  1,  0],  
+             [0,  0,  0,  0,  1,  0,  0],
+             [0,  0,  0,  0,  0,  1,  0],
              [0,  0,d^2,  2*d,  0,  0,  1]]*One(f);  ## **
 
 #try (ok for q=4)
 
      mp:=d->[[1,  0,  0,  0,  0,  d,  0],
              [0,  1,  0,  0, -d,  0,  0],
-             [0,  0,  1,  0,  0,  0,  0],  
+             [0,  0,  1,  0,  0,  0,  0],
              [0,  0,  2*d,  1,  0,  0,  0],         ## **
-             [0,  0,  0,  0,  1,  0,  0],  
-             [0,  0,  0,  0,  0,  1,  0],  
+             [0,  0,  0,  0,  1,  0,  0],
+             [0,  0,  0,  0,  0,  1,  0],
              [0,  0,d^2,  d,  0,  0,  1]]*One(f);  ## **
 
 #try (ok for q=3,4)
 
      mp:=d->[[1,  0,  0,  0,  0,  d,  0],
              [0,  1,  0,  0, -d,  0,  0],
-             [0,  0,  1,  0,  0,  0,  0],  
+             [0,  0,  1,  0,  0,  0,  0],
              [0,  0,  4*d,  1,  0,  0,  0],         ## **
-             [0,  0,  0,  0,  1,  0,  0],  
-             [0,  0,  0,  0,  0,  1,  0],  
+             [0,  0,  0,  0,  1,  0,  0],
+             [0,  0,  0,  0,  0,  1,  0],
              [0,  0,d^2,  -d,  0,  0,  1]]*One(f);  ## **
 
 
@@ -564,20 +564,20 @@ end );
 
      mp:=d->[[1,  0,  0,  0,  0,  d,  0],
              [0,  1,  0,  0, -d,  0,  0],
-             [0,  0,  1,  0,  0,  0,  0],  
+             [0,  0,  1,  0,  0,  0,  0],
              [0,  0,  8*d,  1,  0,  0,  0],         ## **
-             [0,  0,  0,  0,  1,  0,  0],  
-             [0,  0,  0,  0,  0,  1,  0],  
+             [0,  0,  0,  0,  1,  0,  0],
+             [0,  0,  0,  0,  0,  1,  0],
              [0,  0,d^2,  -d,  0,  0,  1]]*One(f);  ## **
 
 #try (ok for q=3,4,5,7)
 
      mp:=d->[[1,  0,  0,  0,  0,  d,  0],
              [0,  1,  0,  0, -d,  0,  0],
-             [0,  0,  1,  0,  0,  0,  0],  
+             [0,  0,  1,  0,  0,  0,  0],
              [0,  0,  -2*d,  1,  0,  0,  0],         ## **
-             [0,  0,  0,  0,  1,  0,  0],  
-             [0,  0,  0,  0,  0,  1,  0],  
+             [0,  0,  0,  0,  1,  0,  0],
+             [0,  0,  0,  0,  0,  1,  0],
              [0,  0,d^2,  -d,  0,  0,  1]]*One(f);  ## **
 
 
@@ -655,7 +655,7 @@ InstallMethod( VectorSpaceToElement,
     [ IsLieGeometry and IsGeneralisedHexagon, IsPlistRep ],
     function(geom,vec)
 		local x,y, ps, el, p1, p2, pg, mat, form, y, frob, f;
-		## when v is empty... 
+		## when v is empty...
 		if IsEmpty(v) then
 			Error("<v> does not represent any element");
 		fi;
@@ -671,7 +671,7 @@ InstallMethod( VectorSpaceToElement,
         n := Length(x);
 		i := 0;
 		while i < n and ForAll(x[n-i], IsZero) do
-			i := i+1; 
+			i := i+1;
 		od;
 		if i = n then
 			return EmptySubspace(geom);
@@ -699,9 +699,9 @@ InstallMethod( VectorSpaceToElement,
 				f := ps!.basefield;
 				frob := FrobeniusAutomorphism(f);
 				ZeroPointToOnePointsSpaceByTriality(y,frob,f)
-				
-	
-	
+
+
+
 	ps := AmbientPolarSpace(geom);
     #first check wheter vec makes a point of ps
 	if ps!.dimension <> 5 then
@@ -739,7 +739,7 @@ InstallMethod( VectorSpaceToElement,
             Error("<vec> does not represent a line of <geom>");
         fi;
     #elif IsHyperbolicQuadric(ps) then
-    #    if p1 in ZeroPointToOnePointsSpaceByTriality(p1) and 
+    #    if p1 in ZeroPointToOnePointsSpaceByTriality(p1) and
     #            p2 in ZeroPointToOnePointsSpaceByTriality(p2) and
     #            p1 in ZeroPointToOnePointsSpaceByTriality(p2)
     #    then

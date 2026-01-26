@@ -22,14 +22,14 @@
 
 #############################################################################
 # Collections, families
-# Recall that we declared some categories in geometry.gd that are relevant 
+# Recall that we declared some categories in geometry.gd that are relevant
 # for gpolygons.
 #############################################################################
 
 DeclareCategory( "IsElationGQ", IsGeneralisedQuadrangle );
 DeclareCategory( "IsElationGQByKantorFamily", IsElationGQ );
 
-# Important notice: in the next line, "points" and "lines" are the underlying objects (or a representative) 
+# Important notice: in the next line, "points" and "lines" are the underlying objects (or a representative)
 # of the real points and lines of the GP to be constructed.
 # "incidence" is a function that determines whether the wrapped elements with given underlying objects, are incident.
 DeclareRepresentation( "IsGeneralisedPolygonRep", IsGeneralisedPolygon, [ "incidence", "points", "lines" ]);
@@ -56,7 +56,7 @@ DeclareRepresentation( "IsElementOfKantorFamilyRep", IsElementOfKantorFamily, [ 
 ### new stuff
 
 DeclareCategory( "IsqClanObj", IsComponentObjectRep and IsAttributeStoringRep );
-DeclareRepresentation( "IsqClanRep", IsqClanObj, [ "matrices", "basefield" ] ); 
+DeclareRepresentation( "IsqClanRep", IsqClanObj, [ "matrices", "basefield" ] );
 
 BindGlobal( "qClanFamily", NewFamily( "qClanFamily" ) );
 
@@ -80,7 +80,7 @@ DeclareAttribute( "AmbientPolarSpace", IsGeneralisedHexagon);
 
 
 #############################################################################
-# Operations and functions 
+# Operations and functions
 #############################################################################
 
 #DeclareOperation("Span",[IsElementOfGeneralisedPolygon, IsElementOfGeneralisedPolygon]);
@@ -113,7 +113,7 @@ DeclareOperation( "IsKantorFamily", [IsGroup, IsList, IsList]);
 #---------------------
 ## obselete operations
 # DeclareOperation( "EGQByqClan", [ IsFFECollCollColl, IsField and IsFinite ]);
-# DeclareOperation( "KantorFamilyByqClan", [ IsFFECollCollColl, IsField and IsFinite ]); 
+# DeclareOperation( "KantorFamilyByqClan", [ IsFFECollCollColl, IsField and IsFinite ]);
 # DeclareOperation( "BLTSetByqClan", [ IsFFECollCollColl, IsField and IsFinite ]);
 #---------------------
 
@@ -138,14 +138,14 @@ DeclareOperation( "ProjectivePlaneByIncidenceMatrix", [ IsMatrix ] );
 # Mutable attributes
 #############################################################################
 
-if not IsBound( BlockDesign ) then 
+if not IsBound( BlockDesign ) then
    BlockDesign := function(arg) return 1; end;
 fi;
 
 
-BlockDesignOfGeneralisedPolygonAttr := NewAttribute( "BlockDesignOfGeneralisedPolygonAttr", 
+BlockDesignOfGeneralisedPolygonAttr := NewAttribute( "BlockDesignOfGeneralisedPolygonAttr",
                     IsGeneralisedPolygon, "mutable" );
-IncidenceGraphOfGeneralisedPolygonAttr := NewAttribute( "IncidenceGraphOfGeneralisedPolygonAttr", 
+IncidenceGraphOfGeneralisedPolygonAttr := NewAttribute( "IncidenceGraphOfGeneralisedPolygonAttr",
 					IsGeneralisedPolygon, "mutable" );
 
 DeclareOperation( "BlockDesignOfGeneralisedPolygon", [ IsGeneralisedPolygon ] );

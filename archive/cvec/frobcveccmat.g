@@ -4,7 +4,7 @@ InstallOtherMethod( \^, "for a cvec and a trivial frobenius automorphism",
     return v;
   end );
 
-InstallOtherMethod( \^, 
+InstallOtherMethod( \^,
   "for a mutable cvec and a trivial frobenius automorphism",
   [IsCVecRep and IsFFECollection and IsMutable, IsMapping and IsOne],
   function( v, f )

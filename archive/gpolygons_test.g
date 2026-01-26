@@ -107,14 +107,14 @@ InstallMethod( GeneralisedPolygonByBlocks,
     "for a homogeneous list",
     [ IsHomogeneousList ],
     function( blocks )
-        local pts, gp, ty, i, graph, sz, adj, girth, shadpoint, shadline, s, t, dist, vn, 
+        local pts, gp, ty, i, graph, sz, adj, girth, shadpoint, shadline, s, t, dist, vn,
 		listels, objs;
         pts := Union(blocks);
         s := Size(blocks[1]) - 1;
         if not ForAll(blocks, b -> Size(b) = s + 1 ) then
             Error("Not every block has size ", s + 1);
         fi;
-        
+
         i := function( x, y )
         if IsSet( x!.obj ) and not IsSet( y!.obj ) then
             return y!.obj in x!.obj;
@@ -124,9 +124,9 @@ InstallMethod( GeneralisedPolygonByBlocks,
             return false;
         fi;
         end;
-        
+
         sz := Size(pts);
-        
+
         adj := function(x,y)
              if x <= sz and y > sz then
                 return x in blocks[y-sz];
@@ -147,7 +147,7 @@ InstallMethod( GeneralisedPolygonByBlocks,
         else
             Error("<blocks are not defining a generalised polygon");
         fi;
-        
+
         if girth = 6 then
             ty := NewType( GeometriesFamily, IsProjectivePlane and IsGeneralisedPolygonRep );
         elif girth = 8 then
@@ -159,7 +159,7 @@ InstallMethod( GeneralisedPolygonByBlocks,
         else
             Error("<blocks> do not define a thick finite generalised polygon");
         fi;
-        
+
         listels := function( geom, i )
 			if i = 1 then
 				return List(pts,x->Wrap(geom,i,x));
@@ -167,17 +167,17 @@ InstallMethod( GeneralisedPolygonByBlocks,
 				return List(blocks,x->Wrap(geom,i,x));
 			fi;
 		end;
-				
+
 		vn := VertexNames(graph);
-		
+
         shadpoint := function( pt )
             return List(Filtered(blocks,x->pt!.obj in x),y->Wrap(pt!.geo,2,y));
         end;
-        
+
         shadline := function( line )
             return List(line!.obj,x->Wrap(line!.geo,1,x));
         end;
-		
+
 		#we have the graph now, the following is efficient.
 		t := Length(Adjacency(graph,1)); # number of linbes on a point minus 1.
 
@@ -188,12 +188,12 @@ InstallMethod( GeneralisedPolygonByBlocks,
 				return Distance(graph,Position(pts,el1!.obj),sz+Position(blocks,el2!.obj));
 			elif el1!.type=2 and el2!.type=1 then
 				return Distance(graph,sz+Position(blocks,el1!.obj),Position(pts,el2!.obj));
-			else 
+			else
 				return Distance(graph,sz+Position(blocks,el1!.obj),sz+Position(blocks,el2!.obj));
 			fi;
         end;
 
-        gp := rec( pointsobj := pts, linesobj := blocks, incidence := i, listelements := listels, 
+        gp := rec( pointsobj := pts, linesobj := blocks, incidence := i, listelements := listels,
 					shadowofpoint := shadpoint, shadowofline := shadline, distance := dist );
 
         Objectify( ty, gp );
@@ -210,7 +210,7 @@ InstallMethod( GeneralisedPolygonByBlocks,
 #############################################################################
 #O  CollineationGroup( <gp> )
 ###
-InstallMethod( CollineationGroup, 
+InstallMethod( CollineationGroup,
     "for a generalised polygon",
     [ IsElationGQ and IsGeneralisedPolygonRep ],
     function( gp )
@@ -227,7 +227,7 @@ InstallMethod( CollineationGroup,
 				img := src^g;
 				return VertexNames(graph)[img];
 			elif el!.type = 2 then
-				src := Position(VertexNames(graph),el); #change wrt generic funciton ... 
+				src := Position(VertexNames(graph),el); #change wrt generic funciton ...
 				img := src^g;
 				return VertexNames(graph)[img];
 			fi;

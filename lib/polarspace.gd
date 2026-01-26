@@ -8,12 +8,12 @@
 ##                                                            Michel Lavrauw
 ##                                                           Max Neunhoeffer
 ##
-##  Copyright 2018	Colorado State University
+##  Copyright 2018  Colorado State University
 ##                  Sabancı Üniversitesi
-##					Università degli Studi di Padova
-##					Universiteit Gent
-##					University of St. Andrews
-##					University of Western Australia
+##                  Università degli Studi di Padova
+##                  Universiteit Gent
+##                  University of St. Andrews
+##                  University of Western Australia
 ##                  Vrije Universiteit Brussel
 ##
 ##
@@ -37,14 +37,14 @@ DeclareCategory( "IsShadowSubspacesOfClassicalPolarSpace", IsShadowElementsOfLie
 DeclareRepresentation( "IsShadowSubspacesOfClassicalPolarSpaceRep", IsShadowElementsOfLieGeometryRep, [ "geometry", "type", "inner", "outer", "factorspace" ]);
 
 #DeclareCategoryCollections("IsSubspaceOfClassicalPolarSpace");
-#BindGlobal( "SoCPSFamily", 
+#BindGlobal( "SoCPSFamily",
 #  NewFamily( "SoCPSFamily", IsSubspaceOfClassicalPolarSpace, IsSubspaceOfClassicalPolarSpace));
 
 #BindGlobal( "SoCPSCollFamily", CollectionsFamily(SoCPSFamily) );
 
 DeclareCategory( "IsFlagOfClassicalPolarSpace", IsFlagOfProjectiveSpace );
 
-BindGlobal( "FlagsOfCPS", NewFamily( "FlagsOfCPSFamily", IsObject ));  
+BindGlobal( "FlagsOfCPS", NewFamily( "FlagsOfCPSFamily", IsObject ));
 
 BindGlobal( "IsFlagOfCPSType", NewType( FlagsOfCPS,
                                     IsFlagOfClassicalPolarSpace and IsFlagOfIncidenceStructureRep) );

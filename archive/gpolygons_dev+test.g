@@ -36,14 +36,14 @@ end;
 #O  ElementsOfIncidenceStructure( <gp>, <j> )
 # returns the elements of <gp> of type <j>. <gp> is an EGQ by Kanto Family
 ##
-InstallMethod( ElementsOfIncidenceStructure, 
+InstallMethod( ElementsOfIncidenceStructure,
 	"for a an EGB by Kantor Family and a positive integer",
 	[IsElationGQByKantorFamily, IsPosInt],
 	function( gp, j )
 		local s, t;
-		if j in [1,2] then 
+		if j in [1,2] then
 			s := Order(gp)[j]; t := Order(gp)[3-j];
-		else 
+		else
 			Error("Incorrect type value");
 		fi;
 		return Objectify( NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
@@ -57,14 +57,14 @@ InstallMethod( ElementsOfIncidenceStructure,
 #O  ElementsOfIncidenceStructure( <gp>, <j> )
 # returns the elements of <gp> of type <j>. <gp> is an generalised hexagon.
 ##
-InstallMethod( ElementsOfIncidenceStructure, 
+InstallMethod( ElementsOfIncidenceStructure,
 	"for a generalised hexagon and a positive integer",
 	[IsGeneralisedHexagon and IsGeneralisedPolygonRep, IsPosInt],
-	function( gp, j )	
+	function( gp, j )
 		local s, t, sz;
-		if j in [1,2] then 
+		if j in [1,2] then
 			s := Order(gp)[j]; t := Order(gp)[3-j];
-		else 
+		else
 			Error("Incorrect type value");
 		fi;
 		return Objectify( NewType( ElementsCollFamily, IsElementsOfIncidenceStructure and
@@ -116,7 +116,7 @@ InstallMethod( CollineationGroup,
 	"for a generalised hexagon",
 	[ IsGeneralisedHexagon ],
   function( hexagon )
-    local f, q, pps, frob, sigma, m, mp, ml, nonzerof, nonzeroq, w, 
+    local f, q, pps, frob, sigma, m, mp, ml, nonzerof, nonzeroq, w,
           gens, newgens, x, coll, orblen, hom, domain, rep;
 
     if Size(Set(Order(hexagon))) > 1 then
@@ -131,33 +131,33 @@ InstallMethod( CollineationGroup,
        frob := FrobeniusAutomorphism(f);
        sigma := frob^LogInt(q,pps);    ## automorphism of order 3
 
-	 # The generators of 3D4(q) were taken from Hendrik 
+	 # The generators of 3D4(q) were taken from Hendrik
     	 # Van Maldeghem's book: "Generalized Polygons".
 
 
        m:=[[ 0, 0, 0, 0, 0, 1, 0, 0],
            [ 0, 0, 0, 0, 0, 0, 1, 0],
            [ 0, 0, 0, 0, 1, 0, 0, 0],
-           [ 0, 0, 0, 0, 0, 0, 0, 1],   
+           [ 0, 0, 0, 0, 0, 0, 0, 1],
            [ 0, 1, 0, 0, 0, 0, 0, 0],
            [ 0, 0, 1, 0, 0, 0, 0, 0],
            [ 1, 0, 0, 0, 0, 0, 0, 0],
-           [ 0, 0, 0, 1, 0, 0, 0, 0]]*One(f);  
+           [ 0, 0, 0, 1, 0, 0, 0, 0]]*One(f);
        ConvertToMatrixRep(m, f);
-       mp:=d->[[1,  0,  0,  0,  0,  d,  0,  0],  
-               [0,  1,  0,  0, -d,  0,  0,  0],  
-               [0,  0,  1,  0,  0,  0,  0,  0],  
+       mp:=d->[[1,  0,  0,  0,  0,  d,  0,  0],
+               [0,  1,  0,  0, -d,  0,  0,  0],
+               [0,  0,  1,  0,  0,  0,  0,  0],
                [0,  0,  -d^sigma,  1,  0,  0,  0,  0],
-               [0,  0,  0,  0,  1,  0,  0,  0],  
-               [0,  0,  0,  0,  0,  1,  0,  0],  
+               [0,  0,  0,  0,  1,  0,  0,  0],
+               [0,  0,  0,  0,  0,  1,  0,  0],
                [0,0,d^sigma*d^(sigma^2),-d^(sigma^2),0,0,1,d^sigma],
-               [0,0,d^(sigma^2),0,0,0,0,1]]*One(f);   
-       ml:=d->[[1, -d,  0,  0,  0,  0,  0,  0],  
-               [0,  1,  0,  0,  0,  0,  0,  0],  
-               [0,  0,  1,  0,  0,  0,  0,  0],  
-               [0,  0,  0,  1,  0,  0,  0,  0],  
-               [0,  0,  0,  0,  1,  0,  0,  0],  
-               [0,  0,  0,  0,  d,  1,  0,  0],  
+               [0,0,d^(sigma^2),0,0,0,0,1]]*One(f);
+       ml:=d->[[1, -d,  0,  0,  0,  0,  0,  0],
+               [0,  1,  0,  0,  0,  0,  0,  0],
+               [0,  0,  1,  0,  0,  0,  0,  0],
+               [0,  0,  0,  1,  0,  0,  0,  0],
+               [0,  0,  0,  0,  1,  0,  0,  0],
+               [0,  0,  0,  0,  d,  1,  0,  0],
                [0,  0,  0,  0,  0,  0,  1,  0],
                [0,  0,  0,  0,  0,  0,  0,  1]]*One(f);
 
@@ -174,15 +174,15 @@ InstallMethod( CollineationGroup,
        Info(InfoFinInG, 1, "Computing nice monomorphism...");
        orblen := (q+1)*(q^8+q^4+1);
        rep := RepresentativesOfElements(hexagon)[2];
-	   domain := Orb(coll, rep, OnProjSubspaces, 
+	   domain := Orb(coll, rep, OnProjSubspaces,
                     rec(orbsizelimit := orblen, hashlen := 2*orblen, storenumbers := true));
        Enumerate(domain);
        Info(InfoFinInG, 1, "Found permutation domain...");
-	   hom := OrbActionHomomorphism(coll, domain);   
-		
+	   hom := OrbActionHomomorphism(coll, domain);
+
        #hom := NiceMonomorphismByOrbit(coll, rep,
 	   #            OnProjSubspaces, orblen );
-	 
+
  	   SetIsBijective(hom, true);
        ## for some reason, hom has not stored a prefun
 
@@ -190,14 +190,14 @@ InstallMethod( CollineationGroup,
        SetNiceMonomorphism(coll, hom );
        SetCollineationAction(coll, OnProjSubspaces);
        SetName(coll, Concatenation("4D_3(",String(q),")") );
-   else 
+   else
        Info(InfoFinInG, 1, "for Split Cayley Hexagon");
 
-      # The generators of G2(q) were taken from Hendrik 
+      # The generators of G2(q) were taken from Hendrik
       # van Maldeghem's book: "Generalized Polygons".
       # Lines with ** are where there are mistake's in
       # Hendrik's book (see Alan Offer's thesis).
-      
+
       f := hexagon!.basefield;
       q := Size(f);
       if IsOddInt(Size(f)) then
@@ -207,33 +207,33 @@ InstallMethod( CollineationGroup,
              [ 0, 0, 0, -1, 0, 0, 0],               ## **
              [ 0, 1, 0, 0, 0, 0, 0],
              [ 0, 0, 1, 0, 0, 0, 0],
-             [ 1, 0, 0, 0, 0, 0, 0]]*One(f);  
+             [ 1, 0, 0, 0, 0, 0, 0]]*One(f);
          ConvertToMatrixRep(m, f);
-         mp:=d->[[1,  0,  0,  0,  0,  d,  0],  
-             [0,  1,  0,  0, -d,  0,  0],  
-             [0,  0,  1,  0,  0,  0,  0],  
+         mp:=d->[[1,  0,  0,  0,  0,  d,  0],
+             [0,  1,  0,  0, -d,  0,  0],
+             [0,  0,  1,  0,  0,  0,  0],
              [0,  0,  -2*d,  1,  0,  0,  0],         ## **
-             [0,  0,  0,  0,  1,  0,  0],  
-             [0,  0,  0,  0,  0,  1,  0],  
+             [0,  0,  0,  0,  1,  0,  0],
+             [0,  0,  0,  0,  0,  1,  0],
              [0,  0,d^2,  -d,  0,  0,  1]]*One(f);   ## **
-         ml:=d->[[1, -d,  0,  0,  0,  0,  0],  
-             [0,  1,  0,  0,  0,  0,  0],  
-             [0,  0,  1,  0,  0,  0,  0],  
-             [0,  0,  0,  1,  0,  0,  0],  
-             [0,  0,  0,  0,  1,  0,  0],  
-             [0,  0,  0,  0,  d,  1,  0],  
+         ml:=d->[[1, -d,  0,  0,  0,  0,  0],
+             [0,  1,  0,  0,  0,  0,  0],
+             [0,  0,  1,  0,  0,  0,  0],
+             [0,  0,  0,  1,  0,  0,  0],
+             [0,  0,  0,  0,  1,  0,  0],
+             [0,  0,  0,  0,  d,  1,  0],
              [0,  0,  0,  0,  0,  0,  1]]*One(f);
-  
+
          nonzerof := AsList(f){[2..Size(f)]};
          gens := Union([m], List(nonzerof, mp), List(nonzerof, ml));
          for x in gens do
             ConvertToMatrixRep(x, f);
          od;
-         frob := FrobeniusAutomorphism(f); 
-         newgens := List(gens, x -> CollineationOfProjectiveSpace(x, f));  
-         if not IsPrimeInt(Size(f)) then 
-            Add(newgens, CollineationOfProjectiveSpace( IdentityMat(7,f), frob, f )); 
-         fi; 
+         frob := FrobeniusAutomorphism(f);
+         newgens := List(gens, x -> CollineationOfProjectiveSpace(x, f));
+         if not IsPrimeInt(Size(f)) then
+            Add(newgens, CollineationOfProjectiveSpace( IdentityMat(7,f), frob, f ));
+         fi;
          coll := GroupWithGenerators(newgens);
        else
           ## Here we embed the hexagon in W(5,q)
@@ -242,19 +242,19 @@ InstallMethod( CollineationGroup,
               [ 0, 0, 0, 1, 0, 0],
               [ 0, 1, 0, 0, 0, 0],
               [ 0, 0, 1, 0, 0, 0],
-              [ 1, 0, 0, 0, 0, 0]]*One(f);  
+              [ 1, 0, 0, 0, 0, 0]]*One(f);
             ConvertToMatrixRep( m );
-          mp:=d->[[1,  0,  0,  0,  d,  0],  
-              [0,  1,  0,  d,  0,  0],  
-              [0,  0,  1,  0,  0,  0],  
-              [0,  0,  0,  1,  0,  0],  
-              [0,  0,  0,  0,  1,  0],  
-              [0,  0,d^2,  0,  0,  1]]*One(f);  
-          ml:=d->[[1,  d,  0,  0,  0,  0],  
-              [0,  1,  0,  0,  0,  0],  
-              [0,  0,  1,  0,  0,  0],  
-              [0,  0,  0,  1,  0,  0],  
-              [0,  0,  0,  d,  1,  0],  
+          mp:=d->[[1,  0,  0,  0,  d,  0],
+              [0,  1,  0,  d,  0,  0],
+              [0,  0,  1,  0,  0,  0],
+              [0,  0,  0,  1,  0,  0],
+              [0,  0,  0,  0,  1,  0],
+              [0,  0,d^2,  0,  0,  1]]*One(f);
+          ml:=d->[[1,  d,  0,  0,  0,  0],
+              [0,  1,  0,  0,  0,  0],
+              [0,  0,  1,  0,  0,  0],
+              [0,  0,  0,  1,  0,  0],
+              [0,  0,  0,  d,  1,  0],
               [0,  0,  0,  0,  0,  1]]*One(f);
           nonzerof := AsList(f){[2..Size(f)]};
           gens := Union([m], List(nonzerof,mp), List(nonzerof,ml));
@@ -262,23 +262,23 @@ InstallMethod( CollineationGroup,
           for x in gens do
              ConvertToMatrixRep(x,f);
           od;
-          frob := FrobeniusAutomorphism(f); 
-          newgens := List(gens, x -> CollineationOfProjectiveSpace(x, f));  
-          if not IsPrimeInt(Size(f)) then 
-             Add(newgens, CollineationOfProjectiveSpace( IdentityMat(6,f), frob, f )); 
+          frob := FrobeniusAutomorphism(f);
+          newgens := List(gens, x -> CollineationOfProjectiveSpace(x, f));
+          if not IsPrimeInt(Size(f)) then
+             Add(newgens, CollineationOfProjectiveSpace( IdentityMat(6,f), frob, f ));
           fi;
           coll := GroupWithGenerators(newgens);
 
-       fi; 
+       fi;
 
        Info(InfoFinInG, 1, "Computing nice monomorphism...");
        orblen := (q+1)*(q^4+q^2+1);
        rep := RepresentativesOfElements(hexagon)[1];
-       domain := Orb(coll, rep, OnProjSubspaces, 
+       domain := Orb(coll, rep, OnProjSubspaces,
                   rec(orbsizelimit := orblen, hashlen := 2*orblen, storenumbers := true));
        Enumerate(domain);
        Info(InfoFinInG, 1, "Found permutation domain...");
-	 hom := OrbActionHomomorphism(coll, domain);    
+	 hom := OrbActionHomomorphism(coll, domain);
  	 SetIsBijective(hom, true);
 	 SetNiceObject(coll, Image(hom) );
        SetNiceMonomorphism(coll, hom );
@@ -580,9 +580,9 @@ elif IsFlagOfIncidenceStructure(x) and IsElementOfIncidenceStructure(y) then
     return IsIncident(x,y);
 elif IsElementOfIncidenceStructure(x) and IsElementOfIncidenceStructure(y) then
     return false;
-elif IsFlagOfIncidenceStructure(x) and IsFlagOfIncidenceStructure(y) then   
+elif IsFlagOfIncidenceStructure(x) and IsFlagOfIncidenceStructure(y) then
     return false;
-else 
+else
     return inc(y,x);
 fi;
 end;
@@ -675,7 +675,7 @@ IsIncident(ElementsOfFlag(flag)[1], ElementsOfFlag(flag)[2]);
 resi:=ResidueOfFlag(flag);
 
 List(Cartesian(ElementsOfIncidenceStructure(resi,1),
- ElementsOfIncidenceStructure(resi,2)), x -> IsIncident(x[1],x[2]));  
+ ElementsOfIncidenceStructure(resi,2)), x -> IsIncident(x[1],x[2]));
 
 # Great! We have a generalized digon
 
@@ -699,13 +699,13 @@ for pair in combis do
   np:=NrElementsOfIncidenceStructure(res,1);
   locp:=LocalInfo(ig,1);
   locl:=LocalInfo(ig,np+1); # first line
-  Print("edge ", pair,": g = ", locp.localGirth/2,", dp = ", 
+  Print("edge ", pair,": g = ", locp.localGirth/2,", dp = ",
 locp.localDiameter, ", dl = ", locl.localDiameter, "\n");
 od;
 
 
 gamma:=IncidenceGraph(struc);;
-aut:=AutomorphismGroup(gamma); 
+aut:=AutomorphismGroup(gamma);
 
 pabs:=[Stabilizer(aut, 1)];
 Append(pabs, List([1..Rank(struc)-1], i -> Stabilizer(aut, Sum([1..i],
@@ -727,9 +727,9 @@ LocalInfo(ig,32); # a line
 
 # Generalised triangle!
 
-gp:=SplitCayleyHexagon(3);  
+gp:=SplitCayleyHexagon(3);
 incgr:=IncidenceGraph(gp);;  # Have a coffee or two...
-LocalInfo(incgr, 1);  
+LocalInfo(incgr, 1);
 NrElementsOfIncidenceStructure(gp,1);
 LocalInfo(incgr, 3907);
 

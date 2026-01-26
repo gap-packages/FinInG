@@ -8,12 +8,12 @@
 ##                                                            Michel Lavrauw
 ##                                                           Max Neunhoeffer
 ##
-##  Copyright 2018	Colorado State University
+##  Copyright 2018  Colorado State University
 ##                  Sabancı Üniversitesi
-##					Università degli Studi di Padova
-##					Universiteit Gent
-##					University of St. Andrews
-##					University of Western Australia
+##                  Università degli Studi di Padova
+##                  Universiteit Gent
+##                  University of St. Andrews
+##                  University of Western Australia
 ##                  Vrije Universiteit Brussel
 ##
 ##
@@ -38,15 +38,15 @@ DeclareAttribute( "Intertwiner", IsGeometryMorphism );
 #############################################################################
 
 
-DeclareOperation( "GeometryMorphismByFunction", 
+DeclareOperation( "GeometryMorphismByFunction",
   [ IsAnyElementsOfIncidenceStructure, IsAnyElementsOfIncidenceStructure,
     IsFunction, IsBool, IsFunction ] );
-    
-DeclareOperation( "GeometryMorphismByFunction", 
+
+DeclareOperation( "GeometryMorphismByFunction",
   [ IsAnyElementsOfIncidenceStructure, IsAnyElementsOfIncidenceStructure,
     IsFunction, IsFunction ] );
 
-DeclareOperation( "GeometryMorphismByFunction", 
+DeclareOperation( "GeometryMorphismByFunction",
   [ IsAnyElementsOfIncidenceStructure, IsAnyElementsOfIncidenceStructure,
     IsFunction ] );
 
@@ -60,25 +60,25 @@ DeclareOperation( "IsomorphismPolarSpacesProjectionFromNucleus", [IsClassicalPol
 
 # the NC versions of the isomorphisms, for internal use, not including the previous one.
 
-DeclareOperation( "IsomorphismPolarSpacesNC", 
-					 [ IsClassicalPolarSpace, IsClassicalPolarSpace, IsBool ]);
-DeclareOperation( "IsomorphismPolarSpacesNC", 
+DeclareOperation( "IsomorphismPolarSpacesNC",
+                     [ IsClassicalPolarSpace, IsClassicalPolarSpace, IsBool ]);
+DeclareOperation( "IsomorphismPolarSpacesNC",
                      [ IsClassicalPolarSpace, IsClassicalPolarSpace ]);
 
 # the user operations.
 
-DeclareOperation( "IsomorphismPolarSpaces", 
+DeclareOperation( "IsomorphismPolarSpaces",
                      [ IsClassicalPolarSpace, IsClassicalPolarSpace, IsBool ]);
-DeclareOperation( "IsomorphismPolarSpaces", 
+DeclareOperation( "IsomorphismPolarSpaces",
                      [ IsClassicalPolarSpace, IsClassicalPolarSpace ]);
 
 #############################################################################
 ## C1 morphisms
 #############################################################################
 
-DeclareOperation( "NaturalEmbeddingBySubspace", 
+DeclareOperation( "NaturalEmbeddingBySubspace",
                      [ IsLieGeometry, IsLieGeometry, IsSubspaceOfProjectiveSpace ]);
-DeclareOperation( "NaturalEmbeddingBySubspaceNC", 
+DeclareOperation( "NaturalEmbeddingBySubspaceNC",
                      [ IsLieGeometry, IsLieGeometry, IsSubspaceOfProjectiveSpace ]);
 
 DeclareOperation( "NaturalProjectionBySubspace",
@@ -89,7 +89,7 @@ DeclareOperation( "NaturalProjectionBySubspaceNC",
                      [ IsClassicalPolarSpace, IsSubspaceOfClassicalPolarSpace ]);
 DeclareOperation( "NaturalProjectionBySubspaceNC",
                      [ IsProjectiveSpace, IsSubspaceOfProjectiveSpace ]);
-                     
+
 #############################################################################
 ## C3 morphisms
 #############################################################################
@@ -101,29 +101,29 @@ DeclareOperation( "ShrinkVec", [IsField,IsField,IsVector]);
 DeclareOperation( "ShrinkVec", [IsField,IsField,IsVector,IsBasis]);
 
 DeclareGlobalFunction( "LeukBasis" );
-DeclareOperation( "BlownUpProjectiveSpace", [IsBasis, IsProjectiveSpace ] );  
-DeclareOperation( "BlownUpProjectiveSpaceBySubfield", [ IsField, IsProjectiveSpace ] ); 
+DeclareOperation( "BlownUpProjectiveSpace", [IsBasis, IsProjectiveSpace ] );
+DeclareOperation( "BlownUpProjectiveSpaceBySubfield", [ IsField, IsProjectiveSpace ] );
 DeclareOperation( "BlownUpSubspaceOfProjectiveSpace", [ IsBasis, IsSubspaceOfProjectiveSpace ] );
-DeclareOperation( "BlownUpSubspaceOfProjectiveSpaceBySubfield", [IsField, IsSubspaceOfProjectiveSpace ] ); 
-DeclareOperation( "IsDesarguesianSpreadElement", [ IsBasis, IsSubspaceOfProjectiveSpace ] ); 
-DeclareOperation( "IsBlownUpSubspaceOfProjectiveSpace", [IsBasis, IsSubspaceOfProjectiveSpace ] ); 
+DeclareOperation( "BlownUpSubspaceOfProjectiveSpaceBySubfield", [IsField, IsSubspaceOfProjectiveSpace ] );
+DeclareOperation( "IsDesarguesianSpreadElement", [ IsBasis, IsSubspaceOfProjectiveSpace ] );
+DeclareOperation( "IsBlownUpSubspaceOfProjectiveSpace", [IsBasis, IsSubspaceOfProjectiveSpace ] );
 
 
-DeclareOperation( "NaturalEmbeddingByFieldReduction", 
+DeclareOperation( "NaturalEmbeddingByFieldReduction",
                      [ IsProjectiveSpace, IsField, IsBasis ]);
-DeclareOperation( "NaturalEmbeddingByFieldReduction", 
+DeclareOperation( "NaturalEmbeddingByFieldReduction",
                      [ IsProjectiveSpace, IsField ]);
 
 DeclareOperation( "NaturalEmbeddingByFieldReduction",
                      [ IsProjectiveSpace, IsProjectiveSpace ]);
-DeclareOperation( "NaturalEmbeddingByFieldReduction", 
+DeclareOperation( "NaturalEmbeddingByFieldReduction",
                      [ IsProjectiveSpace, IsProjectiveSpace, IsBasis ]);
 
-DeclareOperation( "BilinearFormFieldReduction",	[ IsBilinearForm, IsField, IsFFE, IsBasis ]);
+DeclareOperation( "BilinearFormFieldReduction", [ IsBilinearForm, IsField, IsFFE, IsBasis ]);
 DeclareOperation( "QuadraticFormFieldReduction", [ IsQuadraticForm, IsField, IsFFE, IsBasis ]);
 DeclareOperation( "HermitianFormFieldReduction", [ IsHermitianForm, IsField, IsFFE, IsBasis ]);
 
-DeclareOperation( "BilinearFormFieldReduction",	[ IsBilinearForm, IsField, IsFFE ]);
+DeclareOperation( "BilinearFormFieldReduction", [ IsBilinearForm, IsField, IsFFE ]);
 DeclareOperation( "QuadraticFormFieldReduction", [ IsQuadraticForm, IsField, IsFFE ]);
 DeclareOperation( "HermitianFormFieldReduction", [ IsHermitianForm, IsField, IsFFE ]);
 
@@ -152,10 +152,10 @@ DeclareOperation( "NaturalEmbeddingByFieldReduction", [ IsClassicalPolarSpace, I
 DeclareOperation( "NaturalEmbeddingByFieldReduction", [ IsClassicalPolarSpace, IsClassicalPolarSpace]);
 
 
-DeclareOperation( "CanonicalEmbeddingByFieldReduction", 
-					[ IsClassicalPolarSpace, IsField, IsBool ]);  
-DeclareOperation( "CanonicalEmbeddingByFieldReduction", 
-					[ IsClassicalPolarSpace, IsClassicalPolarSpace, IsBool ]);
+DeclareOperation( "CanonicalEmbeddingByFieldReduction",
+                    [ IsClassicalPolarSpace, IsField, IsBool ]);
+DeclareOperation( "CanonicalEmbeddingByFieldReduction",
+                    [ IsClassicalPolarSpace, IsClassicalPolarSpace, IsBool ]);
 
 #############################################################################
 ## C5 morphisms
@@ -164,7 +164,7 @@ DeclareOperation( "CanonicalEmbeddingByFieldReduction",
 DeclareOperation( "NaturalEmbeddingBySubfield",
                      [ IsProjectiveSpace, IsProjectiveSpace ]);
 DeclareOperation( "NaturalEmbeddingBySubfield",
-					 [ IsClassicalPolarSpace, IsClassicalPolarSpace, IsBool ]);
+                     [ IsClassicalPolarSpace, IsClassicalPolarSpace, IsBool ]);
 DeclareOperation( "NaturalEmbeddingBySubfield",
                      [ IsClassicalPolarSpace, IsClassicalPolarSpace ]);
 
@@ -198,7 +198,7 @@ DeclareOperation( "KleinCorrespondenceExtended", [ IsPosInt ]);
 DeclareOperation( "KleinCorrespondenceExtended", [ IsClassicalPolarSpace, IsBool ]);
 DeclareOperation( "KleinCorrespondenceExtended", [ IsClassicalPolarSpace ]);
 
-# derived dualities. 
+# derived dualities.
 # first: helper operations
 
 DeclareOperation( "NaturalDualitySymplectic", [ IsClassicalGQ, IsClassicalGQ, IsBool, IsBool ]);

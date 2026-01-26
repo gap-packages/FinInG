@@ -1,4 +1,4 @@
-files := ["geometry.gd", "liegeometry.gd", "group.gd", "projectivespace.gd", "correlations.gd", 
+files := ["geometry.gd", "liegeometry.gd", "group.gd", "projectivespace.gd", "correlations.gd",
 		"polarspace.gd", "morphisms.gd", "enumerators.gd", "diagram.gd", "varieties.gd", "affinespace.gd",
 		"affinegroup.gd", "gpolygons.gd", "orbits-stabilisers.gd" ];
 
@@ -52,7 +52,7 @@ makevertex := function(str)
     writestring := Concatenation("\"", str, "\" [color = lightblue2];\n");
     AppendTo(output, writestring);
 end;
-    
+
 makeedge := function(src, dest)
   local writestring;
     writestring := Concatenation("\"", src, "\" -> \"", dest, "\";\n");
@@ -105,7 +105,7 @@ splitfilters := function(str)
     Add(flist, str);
     return(flist);
 end;
-    
+
 eclareCategory := function(filter, supfilters)
   local supfilterlist;
     Add(packagefilters, filter);
@@ -130,9 +130,9 @@ Print("Categories ");
 
 Read("eclairs3.tmp");
 
-Exec("rm eclairs.tmp"); 
-Exec("rm eclairs2.tmp"); 
-Exec("rm eclairs3.tmp"); 
+Exec("rm eclairs.tmp");
+Exec("rm eclairs2.tmp");
+Exec("rm eclairs3.tmp");
 
 Print(" Done\nRepresentations");
 
@@ -159,7 +159,7 @@ makevertex := function(str)
     writestring := Concatenation("\"", str, "\" [color = lightblue2];\n");
     AppendTo(output, writestring);
 end;
-    
+
 makeedge := function(src, dest)
   local writestring;
     writestring := Concatenation("\"", src, "\" -> \"", dest, "\";\n");

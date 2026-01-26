@@ -8,12 +8,12 @@
 ##                                                            Michel Lavrauw
 ##                                                           Max Neunhoeffer
 ##
-##  Copyright 2018	Colorado State University
+##  Copyright 2018  Colorado State University
 ##                  Sabancı Üniversitesi
-##					Università degli Studi di Padova
-##					Universiteit Gent
-##					University of St. Andrews
-##					University of Western Australia
+##                  Università degli Studi di Padova
+##                  Universiteit Gent
+##                  University of St. Andrews
+##                  University of Western Australia
 ##                  Vrije Universiteit Brussel
 ##
 ##
@@ -22,7 +22,7 @@
 #############################################################################
 
 #############################################################################
-# operations to create polarities of projective spaces 
+# operations to create polarities of projective spaces
 #############################################################################
 
 # operation to construct polarity of projective space using a sesquilinear form.
@@ -51,10 +51,10 @@ InstallMethod(PolarityOfProjectiveSpaceOp,
 end );
 
 #############################################################################
-# standard View, Display and Print operations 
+# standard View, Display and Print operations
 #############################################################################
 
-InstallMethod( ViewObj, 
+InstallMethod( ViewObj,
   "for a polarity",
   [IsPolarityOfProjectiveSpace and IsPolarityOfProjectiveSpaceRep],
   function(el)
@@ -102,7 +102,7 @@ InstallMethod( Display, "for a projective group element with Frobenius with proj
   end );
 
 #############################################################################
-# Constructor operations 
+# Constructor operations
 #############################################################################
 
 #First user function to create polarity of projective space.
@@ -123,7 +123,7 @@ InstallMethod(PolarityOfProjectiveSpace,
   if Rank(matrix) <> NrRows(matrix) then
     Error("<matrix> must not be singular");
   fi;
-  form := BilinearFormByMatrix(matrix,field);  
+  form := BilinearFormByMatrix(matrix,field);
   return PolarityOfProjectiveSpaceOp(form);
 end );
 
@@ -154,7 +154,7 @@ InstallMethod(HermitianPolarityOfProjectiveSpace,
   if IsOddInt(DegreeOverPrimeField(field)) then
     Error("Size of <field> must be a square" );
   fi;
-  form := HermitianFormByMatrix(matrix,field);  
+  form := HermitianFormByMatrix(matrix,field);
   return PolarityOfProjectiveSpaceOp(form);
 end );
 

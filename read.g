@@ -8,14 +8,14 @@
 ##                                                            Michel Lavrauw
 ##                                                           Max Neunhoeffer
 ##
-##  Copyright 2017	Colorado State University, Fort Collins
-##					Sabancı Üniversitesi
-##					Università degli Studi di Padova
-##					Universeit Gent
-##					University of St. Andrews
-##					University of Western Australia, Perth
+##  Copyright 2017  Colorado State University, Fort Collins
+##                  Sabancı Üniversitesi
+##                  Università degli Studi di Padova
+##                  Universeit Gent
+##                  University of St. Andrews
+##                  University of Western Australia, Perth
 ##                  Vrije Universiteit Brussel
-##                 
+##
 ##
 ##  Reading the implementation part of the FinInG package.
 ##
@@ -23,9 +23,9 @@
 
 ReadPackage("fining","lib/geometry.gi");
 
-ReadPackage("fining","lib/liegeometry.gi"); 
+ReadPackage("fining","lib/liegeometry.gi");
 
-ReadPackage("fining","lib/group.gi"); 
+ReadPackage("fining","lib/group.gi");
 
 ReadPackage("fining","lib/projectivespace.gi");
 

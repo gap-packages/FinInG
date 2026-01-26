@@ -24,9 +24,9 @@ quit;
 # examples.xml
 # files for chapter "Examples"
 
-examplesfiles := ["examples_hyperoval24", "examples_hermitian", "examples_embedW", "examples_patterson",  
+examplesfiles := ["examples_hyperoval24", "examples_hermitian", "examples_embedW", "examples_patterson",
 				  "examples_spreads", "examples_qclan", "examples_KantorKnuth", "examples_PSL211",
-                  "examples_sub1", "examples_sub2", "examples_underlyingobject", "examples_cps1", "examples_collgroup", 
+                  "examples_sub1", "examples_sub2", "examples_underlyingobject", "examples_cps1", "examples_collgroup",
 				  "examples_splitcayley", "examples_e6", "examples_varieties", "examples_tits",
 				  "examples_morphism1", "examples_morphism2", "examples_klein", "examples_embedsubfield",
                   "examples_embedfieldreduction", "examples_embedfieldreduction", "examples_octagon"];;
@@ -35,18 +35,18 @@ incgeomfiles := ["incgeom_incstruct", "incgeom_categories1", "incgeom_typesofels
                  "incgeom_underlyingobject", "incgeom_type",
                  "incgeom_categories2", "incgeom_elementsj","incgeom_short", "incgeom_isincident", "incgeom_random",
 				 "incgeom_el_ambient", "incgeom_flag", "incgeom_elementsofflag", "incgeom_rankofflag", "incgeom_sizeofflag",
-                 "incgeom_ambientgeometry", "incgeom_typeofflag", "incgeom_isincidentwithflag", "incgeom_flag_chamber", 
+                 "incgeom_ambientgeometry", "incgeom_typeofflag", "incgeom_isincidentwithflag", "incgeom_flag_chamber",
                  "incgeom_shadowofelement", "incgeom_shadowofelement2", "incgeom_shadowofflag", "incgeom_residueofflag",
-                 "incgeom_shadowshort", "incgeom_iterator", "incgeom_iteratorexample", "incgeom_enum", "incgeom_enumexample", 
+                 "incgeom_shadowshort", "incgeom_iterator", "incgeom_iteratorexample", "incgeom_enum", "incgeom_enumexample",
                  "incgeom_list", "incgeom_aslist", "incgeom_lie_uvs",
-				 "incgeom_lie_projdimension", "incgeom_ambientspace", "incgeom_lie_vectorspacetoelement", "incgeom_lie_elementtovectorspace", 
+				 "incgeom_lie_projdimension", "incgeom_ambientspace", "incgeom_lie_vectorspacetoelement", "incgeom_lie_elementtovectorspace",
 				 "incgeom_lie_in", "incgeom_lie_hyperplanesof", "incgeom_lie_elementtoelement", "incgeom_nrelements" ]; #"incgeom_lie_convert"
 
 projspfiles := ["projsp_projectivespace", "projsp_projdimension", "projsp_basefieldps", "projsp_underlyingvs", "projsp_element1",
-				"projsp_emptysubspace", "projsp_projdimension_element", "projsp_elements", "projsp_short", "projsp_incident", 
+				"projsp_emptysubspace", "projsp_projdimension_element", "projsp_elements", "projsp_short", "projsp_incident",
 				"projsp_standardframe", "projsp_coordinates", "projsp_eqhyperplane", "projsp_ambientspaceelps", "projsp_basefieldelps",
 				"projsp_randomeltps", "projsp_randomeltsps", "projsp_span", "projsp_meet", "projsp_flag", "projsp_chamber",
-				"projsp_shadowofelement", "projsp_shadowofflag", "projsp_elsel", "projsp_short", "projsp_iterator", "projsp_enumerator", 
+				"projsp_shadowofelement", "projsp_shadowofflag", "projsp_elsel", "projsp_short", "projsp_iterator", "projsp_enumerator",
 				"projsp_list", "projsp_short2" ];
 
 projgroupsfiles := ["projgroups_isprojectivity", "projgroups_iscollineation", "projgroups_isstrictlysemilinear", "projgroups_iscorrelation",
@@ -57,23 +57,23 @@ projgroupsfiles := ["projgroups_isprojectivity", "projgroups_iscollineation", "p
 					"projgroups_embedding", "projgroups_onprojsubspaces", "projgroups_onprojsubspacesextended", "projgroups_elation1", "projgroups_elation2",
 					"projgroups_homology1", "projgroups_homology2", "projgroups_nicem", "projgroups_niceo", "projgroups_cancompute", "projgroups_random",
                     "projgroups_correlationcollineationgroup"];;
-	   
-polaritiespsfiles := ["polarities_construct1", "polarities_construct2", "polarities_fromform", "polarities_frompolarspace", 
+
+polaritiespsfiles := ["polarities_construct1", "polarities_construct2", "polarities_fromform", "polarities_frompolarspace",
 					"polarities_toform", "polarities_basefield", "polarities_grammatrix", "polarities_automorphism", "polarities_ishermitian",
 					"polarities_issymplectic", "polarities_isorthogonal", "polarities_ispseudo", "polarities_geometryofabsolutepoints",
 					"polarities_absolutepoints", "polarities_polarspace", "polarities_commuting"];
 
 classicalpolfiles := ["cps_polarspaceform", "cps_example", "cps_symplectic", "cps_hermitian", "cps_parabolic", "cps_hyperbolic",
 						"cps_elliptic", "cps_iscanonicalps", "cps_underlyingvs", "cps_ambientspace", "cps_projectivedimension", "cps_rank",
-						"cps_basefield", "cps_ishyperbolicquadric", "cps_isellipticquadric", "cps_isparabolicquadric", 
-						"cps_element1", "cps_emptysubspace", "cps_projdimension_element", "cps_elements", 
+						"cps_basefield", "cps_ishyperbolicquadric", "cps_isellipticquadric", "cps_isparabolicquadric",
+						"cps_element1", "cps_emptysubspace", "cps_projdimension_element", "cps_elements",
 						"cps_ambientspaceelps", "cps_coordinates", "cps_incident", "cps_span", "cps_typesubspace", "cps_shadowofelement",
 						"cps_elementsincidentwithelement", "cps_specialisometry", "cps_isometry", "cps_similarity", "cps_collineation",
 						 "cps_enumerator", "cps_iterator", "cps_aslist", "cps_polarityofps", "cps_iscollinear",
 						 "cps_tangentspace", "cps_pole", "cps_evaluateform" ];
-	   
-stab_orbsfiles := [ "stab_orbs_finingorbit1", "stab_orbs_finingorbit2", "stab_orbs_finingorbits1", "stab_orbs_example1", "stab_orbs_finingstabiliser", 
-					"stab_orbs_finingstabiliserorb", "stab_orbs_timing1", "stab_orbs_setwisegeneric", "stab_orbs_finingsetwisestabiliser", 
+
+stab_orbsfiles := [ "stab_orbs_finingorbit1", "stab_orbs_finingorbit2", "stab_orbs_finingorbits1", "stab_orbs_example1", "stab_orbs_finingstabiliser",
+					"stab_orbs_finingstabiliserorb", "stab_orbs_timing1", "stab_orbs_setwisegeneric", "stab_orbs_finingsetwisestabiliser",
 					"stab_orbs_timing2", "stab_orbs_action1", "stab_orbs_behaviour1", "stab_orbs_behaviour2", "stab_orbs_stabofsubspace",
                     "stab_orbits_finingorbitsdomain"];
 
@@ -91,19 +91,19 @@ morphismsfiles := ["morphisms_filters", "morphisms_isopolar", "morphisms_embeddi
 gpolygonfiles := [ "gpolygons_categories1", "gpolygons_categories2", "gpolygons_gpbyblocks", "gpolygons_gpbyincmat", "gpolygons_gpbyelements", "gpolygons_order",
                     "gpolygons_incgraph", "gpolygons_incmatrix", "gpolygons_collineationgroup1", "gpolygons_collineationgroup2", "gpolygons_collineationgroup3",
                     "gpolygons_collineations", "gpolygons_blockdesign", "gpolygons_objectselements", "gpolygons_span", "gpolygons_meet", "gpolygons_shadow",
-                    "gpolygons_distance", "gpolygons_SplitCayleyHexagon", "gpolygons_TwistedTrialityHexagon", "gpolygons_cghvectorspacetoelement", 
+                    "gpolygons_distance", "gpolygons_SplitCayleyHexagon", "gpolygons_TwistedTrialityHexagon", "gpolygons_cghvectorspacetoelement",
                     "gpolygons_cghobjecttoelement", "gpolygons_cghin", "gpolygons_spanmeet", "gpolygons_collineationgroup4", "gpolygons_EGQByKantorFamily",
-                    "gpolygons_objectselementsofegq", "gpolygons_elationgroup", "gpolygons_EGQByqClan", "gpolygons_bltsetbyqclan", 
+                    "gpolygons_objectselementsofegq", "gpolygons_elationgroup", "gpolygons_EGQByqClan", "gpolygons_bltsetbyqclan",
                     "gpolygons_EGQByBLTSet", "gpolygons_definingplanes", "gpolygons_objectselementsblt", "gpolygons_collineationsubgroup"];
 
-varieties_files := ["varieties_general", "varieties_polarspace", "varieties_veronese", "varieties_segre", 
+varieties_files := ["varieties_general", "varieties_polarspace", "varieties_veronese", "varieties_segre",
 					"varieties_hermitian", "varieties_quadratic", "varieties_grassmann", "varieties_points",
 					"varieties_quadratic"  ];
 
 diagramfiles := ["diagram_cosetgeom", "diagram_neumaier", "diagram_nearoctagon", "diagram_autiso", "diagram_autcor",
                     "diagram_random", "diagram_notFT", "diagram_firmthinthick", "diagram_connectedness", "diagram_flagmapping",
                     "diagram_residues"];
-                    
+
 subgeometriesfiles := ["subgeometries_canonical", "subgeometries_categories", "subgeometries_randomframe", "subgeometries_isframe", "subgeometries_underlyingstructures", "subgeometries_definingframe",
                         "subgeometries_collineationfixingsubgeometry", "subgeometries_vectorspacetoelement", "subgeometries_extendelement", "subgeometries_emptysubspace", "subgeometries_projdimension_element.g", "subgeometries_coordinates" ];
 

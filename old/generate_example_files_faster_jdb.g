@@ -19,10 +19,10 @@ quit;
 
 #initialize filenames
 
-examplesfiles := ["examples_pg24", "examples_hermitian", "examples_embedW", "examples_spreads", 
+examplesfiles := ["examples_pg24", "examples_hermitian", "examples_embedW", "examples_spreads",
                   "examples_qclan", "examples_KantorKnuth","examples_PSL211"];;
 
-incgeomfiles := [ "incgeom_incstruct", "incgeom_categories1", "incgeom_typesofels", "incgeom_rank", 
+incgeomfiles := [ "incgeom_incstruct", "incgeom_categories1", "incgeom_typesofels", "incgeom_rank",
 				"incgeom_categories2", "incgeom_elementsj", "incgeom_short", "incgeom_isincident",
 				"incgeom_random", "incgeom_el_ambient", "incgeom_flag", "incgeom_flag_chamber",
 				"incgeom_shadowofelement", "incgeom_shadowofelement2", "incgeom_shadowofflag",
@@ -30,9 +30,9 @@ incgeomfiles := [ "incgeom_incstruct", "incgeom_categories1", "incgeom_typesofel
 				"incgeom_lie_projdimension", "incgeom_ambientspace", "incgeom_lie_vectorspacetoelement",
 				"incgeom_lie_elementtovectorspace", "incgeom_lie_in", "incgeom_lie_hyperplanesof",
 				"incgeom_lie_elementtoelement"];
-				
+
 projspfiles := ["projsp_projectivespace", "projsp_projdimension", "projsp_basefieldps", "projsp_underlyingvs", "projsp_element1",
-				"projsp_emptysubspace", "projsp_projdimension_element", "projsp_elements", "projsp_short", "projsp_incident", 
+				"projsp_emptysubspace", "projsp_projdimension_element", "projsp_elements", "projsp_short", "projsp_incident",
 				"projsp_standardframe", "projsp_coordinates", "projsp_eqhyperplane", "projsp_ambientspaceelps", "projsp_basefieldelps",
 				"projsp_randomeltps", "projsp_randomeltsps", "projsp_span", "projsp_meet", "projsp_flag", "projsp_chamber",
 				"projsp_shadowofelement", "projsp_shadowofflag", "projsp_elsel", "projsp_enumerator", "projsp_short2",
@@ -47,9 +47,9 @@ projgroupsfiles := [ "projgroups_projectivity", "projgroups_collineation", "proj
 
 
 affinefiles := ["affine_affinespace", "affine_dimension", "affine_basefield", "affine_underlyingvs",
-				"affine_ambientspace", "affine_subspaces", "affine_elements", "affine_short", 
-				"affine_incident", "affine_ambientspaceelas", "affine_basefieldelas", "affine_span", 
-				"affine_meet", "affine_isparallel", "affine_parallel", "affine_shadow1", "affine_shadow2", 
+				"affine_ambientspace", "affine_subspaces", "affine_elements", "affine_short",
+				"affine_incident", "affine_ambientspaceelas", "affine_basefieldelas", "affine_span",
+				"affine_meet", "affine_isparallel", "affine_parallel", "affine_shadow1", "affine_shadow2",
 				"affine_iterator", "affine_enumerator", "affine_affinegroupexample", "affine_affinegroupexample2",
 				"affine_affinegroup", "affine_collineationgroup", "affine_actions"];;
 
@@ -65,12 +65,12 @@ morphismsfiles := ["morphisms_filters", "morphisms_intertwiners","morphisms_embe
 projpolfiles1 := ["projpol_projectivespace", "projpol_projdimension",
                  "projpol_underlyingvs", "projpol_element1", "projpol_emptysubspace",
 		 "projpol_projdimension_element", "projpol_standardframe", "projpol_coordinates",
-		  "projpol_eqhyperplane", "projpol_basefieldps", "projpol_ambientspaceelps", 
+		  "projpol_eqhyperplane", "projpol_basefieldps", "projpol_ambientspaceelps",
 		  "projpol_basefieldelps", "projpol_randomeltsps", "projpol_randomelps",
 		  "projpol_span", "projpol_meet", "projpol_shadowofelement", "projpol_flag",
 		  "projpol_shadowofflag", "projpol_shadowofflag2", "projpol_elsel"];
-		 
-		 
+
+
 		 "projpol_hermitian", "projpol_elliptic",
 		 "projpol_parabolic", "projpol_hyperbolic", "projpol_element1", "projpol_in"];
 
@@ -83,16 +83,16 @@ projgroupsfiles := ["projgroups_basefield",
 	  "projgroups_correlation", "projgroups_fieldautomorphism",
 	  "projgroups_projectivity", "projgroups_psisomorphism",
 	  "projgroups_stduality", "projgroups_underlyingmatrix", "projgroups_onprojsubspaces",
-	  "projgroups_onprojsubspacesreversing", "projgroups_simgroup", 
-	  "projgroups_isomgroup", "projgroups_specialisomgroup", 
+	  "projgroups_onprojsubspacesreversing", "projgroups_simgroup",
+	  "projgroups_isomgroup", "projgroups_specialisomgroup",
 	  "projgroups_mult", "projgroups_elation1" ,"projgroups_elation2", "projgroups_homology1", "projgroups_homology2"];;
 
 polaritiespsfiles := ["polarities_construct1", "polarities_construct2",
-          "polarities_fromform", "polarities_toform", "polarities_basefield", 
-	  "polarities_automorphism", "polarities_grammatrix", "polarities_ishermitian", 
-	  "polarities_issymplectic", "polarities_ispseudo", "polarities_isorthogonal", 
-	  "polarities_geometryofabsolutepoints", "polarities_absolutepoints", 
-	  "polarities_polarspace", "polarities_frompolarspace", 
+          "polarities_fromform", "polarities_toform", "polarities_basefield",
+	  "polarities_automorphism", "polarities_grammatrix", "polarities_ishermitian",
+	  "polarities_issymplectic", "polarities_ispseudo", "polarities_isorthogonal",
+	  "polarities_geometryofabsolutepoints", "polarities_absolutepoints",
+	  "polarities_polarspace", "polarities_frompolarspace",
 	  "polarities_commuting"];
 
 gpolygonfiles := [ "gpolygons_EGQByBLTSet", "gpolygons_EGQByKantorFamily", "gpolygons_iskantorfamily", "gpolygons_EGQByqClan", "gpolygons_isqclan",
@@ -114,10 +114,10 @@ files := [ "projgroups_mult" ];
 #name of script to start gap version. The user has to fill this in!
 
 homedir := DirectoryCurrent();
-exampledir := DirectoriesPackageLibrary("fining","examples/gap")[1]; 
-preambledir := DirectoriesPackageLibrary("fining","examples/")[1]; 
+exampledir := DirectoriesPackageLibrary("fining","examples/gap")[1];
+preambledir := DirectoriesPackageLibrary("fining","examples/")[1];
 outputdir := DirectoriesPackageLibrary("fining","examples/output")[1];
-gap := Filename(Directory("/usr/bin/"),"gap4r4");  
+gap := Filename(Directory("/usr/bin/"),"gap4r4");
 paths := JoinStringsWithSeparator(GAP_ROOT_PATHS,";");
 args := JoinStringsWithSeparator(["-l ",paths," -L fining.ws","-o 1G"]," ");
 
@@ -195,7 +195,7 @@ for filename in files do
   # while line <> fail do
     if line <> "\n" then
       line := ReplacedString(line,"\\\n","\n");
-      line := ReplacedString(ReplacedString(line,"<","&lt;"),">","&gt;"); 
+      line := ReplacedString(ReplacedString(line,"<","&lt;"),">","&gt;");
       #ReplacedString(line,"<","&lt;");
       AppendTo(o,ReplacedString(line,"\n","<br>\n"));
     fi;

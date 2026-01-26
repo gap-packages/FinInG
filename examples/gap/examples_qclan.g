@@ -15,5 +15,5 @@ Collected(List( orbs, Size ));
 blt := BLTSetByqClan( clan );
 q4q := AmbientGeometry( blt[1] );
 span := Span( blt );
-ProjectiveDimension( span ); 
+ProjectiveDimension( span );
 quit;
