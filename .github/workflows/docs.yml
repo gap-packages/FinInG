@@ -31,8 +31,8 @@ jobs:
           warnings-as-errors: 'false'
           # Disabled due to a gazillion multiply defined label warnings
       - name: 'Upload documentation'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
-          name: manual
+          archive: false
           path: ./doc/manual.pdf
           if-no-files-found: error
