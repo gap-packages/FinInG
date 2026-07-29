@@ -48,7 +48,7 @@ Persons := [
                        "School of Mathematics and Statistics\n",
                        "The University of Western Australia\n",
                        "35 Stirling Highway\n",
-                       "CrawleyY WA 6009, Perth\n",
+                       "Crawley WA 6009, Perth\n",
                        "Australia" ] ),
     Place         := "Perth",
     Institution   := "The University of Western Australia",
