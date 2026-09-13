@@ -204,14 +204,24 @@ InstallOtherMethod( PreImageElm,
 
 # CHECKED 27/09/11 jdb
 #############################################################################
-#O  PreImagesSet( <em>, <x> )
+#O  PreImagesSetNC( <em>, <x> )
 ##
-InstallOtherMethod( PreImagesSet,
+InstallOtherMethod( PreImagesSetNC,
     "for a geometry morphism and an element of an incidence structure",
     [IsGeometryMorphism, IsElementOfIncidenceStructureCollection],
     function(em, x)
         return List(x, t -> em!.prefun(t));
     end );
+
+# The generic PreImagesSet fails its IsSubset( Range( em ), x ) check for
+# geometry morphisms. Without PreImagesSetNC in GAP, both names denote the
+# same operation, see init.g.
+if not IsIdenticalObj( PreImagesSet, PreImagesSetNC ) then
+    InstallOtherMethod( PreImagesSet,
+        "for a geometry morphism and an element of an incidence structure",
+        [IsGeometryMorphism, IsElementOfIncidenceStructureCollection],
+        PreImagesSetNC );
+fi;
 
 ##########################################################
 ## User methods for the "natural geometry morphisms"
