@@ -505,52 +505,47 @@ InstallMethod( BorelSubgroup, "for coset geometries",
 InstallMethod( IsFlagTransitiveGeometry, "for coset geometries",
                [ IsCosetGeometry ],
   function( cg )
-    ## From Buekenhout's chapter in the "Handbook of Incidence Geometry"
-    ## a coset geometry with parabolics {Gi} is flag-transitive if
-    ## (G1 G2) \cap (G1 G3) \cap ... \cap (G1 Gn) = G1( G2 \cap...\cap Gn),
-    ## (G2 G3) \cap ...\cap (G2 Gn) = G2( G3 \cap ... \cap Gn),
-    ## ..., (G(n-2) G(n-1)) \cap (G(n-2) G(n)) = G(n-2)( G(n-1)\cap Gn )
-    ## For each case, we have that the right-hand side is contained in
-    ## the left-hand side, so it suffices to compute sizes of the entities
-    ## in each equation.
+    ## Buekenhout and Hermand: a coset geometry with parabolics {Gi} is
+    ## flag-transitive if and only if for every set J of types with |J| >= 3,
+    ## and a = min(J), K = J - {a}:
+    ##   \cap_{j in K} (Ga Gj) = Ga (\cap_{j in K} Gj).
+    ## The right-hand side is contained in the left-hand side, so it suffices
+    ## to compare sizes, both divided by |Ga|. The left-hand side corresponds
+    ## to the intersection of the orbits of the Gj on the trivial coset in the
+    ## action of G on the right cosets of Ga.
 
-    local g, parabolics, gi, gj, orb, trans, rank,
-          left, int, newint, act, right, i, j;
+    local g, parabolics, rank, orbits, act, J, a, K, orb, int, left, right, i, j;
 
     g := cg!.group;
     parabolics := cg!.parabolics;
     rank := Size(parabolics);
 
-    ## Note that |G1( G2 \cap...\cap Gn)| = |( G2 \cap...\cap Gn) : (G1\cap G2 \cap...\cap Gn)|.
-    ## So to efficiently compute the right hand side, we do the "shortest one" first
-    ## and iterate. To compute the left hand sides is much more difficult.
-    ## For the first case, we need to compute the intersections of the orbits
-    ## of G2, G3, ..., Gn on the trivial coset G1 in the action of G on
-    ## the right cosets of G1.
-
-    ## Start from the end, where the number of intersections are shortest
-    ## and go upwards.
-
-    int := Intersection( parabolics[rank - 1], parabolics[rank] );
-
-    for i in [2..rank-1] do
-        # compute right-hand side
-        newint := Intersection( int, parabolics[rank - i] );
-        right := Size(int) / Size(newint);
-
-        # compute left-hand side
-        gi := parabolics[rank-i];
-        act := FactorCosetAction(g, gi);
-        orb := [1..Index(g,gi)];
-        for j in [rank-i+1..rank] do
-            gj := Image(act, parabolics[j]);
-            orb := Intersection(orb, Orbit(gj, 1));
+    ## orbits[i][j] is the orbit of Gj on the trivial coset of Gi, for i < j
+    orbits := [];
+    for i in [1..rank-2] do
+        act := FactorCosetAction(g, parabolics[i]);
+        orbits[i] := [];
+        for j in [i+1..rank] do
+            orbits[i][j] := Set(Orbit(Image(act, parabolics[j]), 1));
         od;
+    od;
+
+    for J in Combinations([1..rank]) do
+        if Size(J) < 3 then
+            continue;
+        fi;
+        a := J[1];
+        K := J{[2..Size(J)]};
+
+        orb := Intersection(orbits[a]{K});
         left := Size(orb);
+
+        int := Intersection(parabolics{K});
+        right := Index(int, Intersection(int, parabolics[a]));
+
         if left > right then
            return false;
         fi;
-        int := newint;
     od;
     return true;
 end );
