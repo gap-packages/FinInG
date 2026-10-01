@@ -67,9 +67,9 @@ This category is a subcategory of <C>IsIncidenceGeometry</C>, and contains all f
 
 <ManSection>
 <Oper Name="AffineSpace" Arg="d, F"/>
-<Oper Name="AffineSpace" Arg="d, q"/>    
+<Oper Name="AffineSpace" Arg="d, q" Label="for an integer and a prime power"/>    
 <Oper Name="AG" Arg="d, F"/>   
-<Oper Name="AG" Arg="d, q"/>    
+<Oper Name="AG" Arg="d, q" Label="for an integer and a prime power"/>    
 <Returns>an affine space</Returns>
 <Description><A>d</A> must be a positive integer. 
 In the first form, <A>F</A> is a field and the function returns the affine
@@ -83,8 +83,8 @@ namely, the common abbreviation <C>AG(d, q)</C>.
 </ManSection>
 
 <ManSection>
-<Attr Name="Dimension" Arg="as"/>
-<Attr Name="Rank" Arg="as"/>
+<Attr Name="Dimension" Arg="as" Label="for an affine space"/>
+<Attr Name="Rank" Arg="as" Label="for an affine space"/>
 <Returns>the dimension of the affine space <A>as</A> (which is equal to its rank)</Returns>
 <Description>
 <Example>
@@ -94,7 +94,7 @@ namely, the common abbreviation <C>AG(d, q)</C>.
 </ManSection>
 
 <ManSection>
-<Oper Name="BaseField" Arg="as"/>
+<Oper Name="BaseField" Arg="as" Label="for an affine space"/>
 <Returns>returns the base field for the affine space <A>as</A>
 </Returns>
 <Description>
@@ -105,7 +105,7 @@ namely, the common abbreviation <C>AG(d, q)</C>.
 </ManSection>
 
 <ManSection>
-<Oper Name="UnderlyingVectorSpace" Arg="as"/>
+<Oper Name="UnderlyingVectorSpace" Arg="as" Label="for an affine space"/>
 <Returns>a vector space</Returns>
 <Description>
 The underlying vector space of &agnq; is simply <M>V(n,q)</M>.
@@ -116,7 +116,7 @@ The underlying vector space of &agnq; is simply <M>V(n,q)</M>.
 </ManSection>
 
 <ManSection>
-<Attr Name="AmbientSpace" Arg="as"/>
+<Attr Name="AmbientSpace" Arg="as" Label="for an affine space"/>
 <Returns>an affine space</Returns>
 <Description>The ambient space of an affine space <A>as</A> is the affine space itself.
 Hence, simply <A>as</A> will be returned.
@@ -133,7 +133,7 @@ Hence, simply <A>as</A> will be returned.
 
 <ManSection>
 <Oper Name="AffineSubspace" Arg="geo, v"/>
-<Oper Name="AffineSubspace" Arg="geo, v, M"/>
+<Oper Name="AffineSubspace" Arg="geo, v, M" Label="for an affine space, a vector and a matrix"/>
 <Returns> a subspace of an affine space </Returns>
 <Description>
 <A>geo</A> is an affine space,
@@ -158,7 +158,7 @@ user is constructing an affine point.
 </ManSection>
 
 <ManSection>
-<Oper Name="ElementsOfIncidenceStructure" Arg="as, j"/>
+<Oper Name="ElementsOfIncidenceStructure" Arg="as, j" Label="for an affine space and an integer"/>
 <Returns>the collection of elements of the affine space <A>as</A> of type <A>j</A></Returns>
 <Description>
 For the affine space <A>as</A> of dimension <M>d</M> and the type <A>j</A>, <M>1 \leq j \leq d</M>
@@ -171,11 +171,11 @@ An error message is produced when the projective space <A>ps</A> has no elements
 
 <ManSection>
 <Heading>Short names for ElementsOfIncidenceStructure</Heading>
-<Oper Name="Points" Arg="ps"/>
-<Oper Name="Lines" Arg="ps"/>
-<Oper Name="Planes" Arg="ps"/>
-<Oper Name="Solids" Arg="ps"/>
-<Oper Name="Hyperplanes" Arg="ps"/>
+<Oper Name="Points" Arg="ps" Label="for an affine space"/>
+<Oper Name="Lines" Arg="ps" Label="for an affine space"/>
+<Oper Name="Planes" Arg="ps" Label="for an affine space"/>
+<Oper Name="Solids" Arg="ps" Label="for an affine space"/>
+<Oper Name="Hyperplanes" Arg="ps" Label="for an affine space"/>
 <Returns>The elements of <A>ps</A> of respective type 1, 2, 3, 4, and the hyperplanes</Returns>
 <Description>
 An error message is produced when the projective space <A>ps</A> has no elements of a required type.
@@ -187,9 +187,9 @@ An error message is produced when the projective space <A>ps</A> has no elements
 
 <ManSection>
 <Heading>Incidence and containment</Heading>
-<Oper Name="IsIncident" Arg="el1, el2"/>
-<Oper Name="\*" Arg="el1, el2"/>
-<Oper Name="\in" Arg="el1, el2"/>
+<Oper Name="IsIncident" Arg="el1, el2" Label="for elements of an affine space"/>
+<Oper Name="\*" Arg="el1, el2" Label="for elements of an affine space"/>
+<Oper Name="\in" Arg="el1, el2" Label="for elements of an affine space"/>
 <Returns>true or false</Returns>
 <Description>
 Recall that for affine spaces, incidence is symmetrized containment, where the whole affine space is
@@ -203,7 +203,7 @@ for <F>\in</F>. The method for <F>\*</F> is using <F>IsIncident</F>.
 </ManSection>
 
 <ManSection>
-<Oper Name="AmbientSpace" Arg="el"/>
+<Oper Name="AmbientSpace" Arg="el" Label="for an element of an affine space"/>
 <Returns>returns the ambient space of an element <A>el</A> of an affine space</Returns>
 <Description>
 <Example>
@@ -213,7 +213,7 @@ for <F>\in</F>. The method for <F>\*</F> is using <F>IsIncident</F>.
 </ManSection>
 
 <ManSection>
-<Oper Name="BaseField" Arg="el"/>
+<Oper Name="BaseField" Arg="el" Label="for an element of an affine space"/>
 <Returns>returns the base field of an element <A>el</A> of an affine space</Returns>
 <Description>
 <Example>
@@ -223,7 +223,7 @@ for <F>\in</F>. The method for <F>\*</F> is using <F>IsIncident</F>.
 </ManSection>
 
 <ManSection>
-<Oper Name="Span" Arg="u, v"/>
+<Oper Name="Span" Arg="u, v" Label="for two subspaces of an affine space"/>
 <Returns> a subspace </Returns>
 <Description>
 <A>u</A> and <A>v</A> are subspaces of an affine space.
@@ -235,7 +235,7 @@ This function returns the span of the two subspaces.
 </ManSection>
 
 <ManSection>
-<Oper Name="Meet" Arg="u, v"/>
+<Oper Name="Meet" Arg="u, v" Label="for two subspaces of an affine space"/>
 <Returns> an affine subspace or the empty list</Returns>
 <Description>
 <A>u</A> and <A>v</A> are subspaces of an affine space.
@@ -261,7 +261,7 @@ The arguments <A>u</A> and <A>v</A> must be affine subspaces of a common affine 
 
 <ManSection>
 <Oper Name="ParallelClass" Arg="as, v"/>
-<Oper Name="ParallelClass" Arg="v"/>
+<Oper Name="ParallelClass" Arg="v" Label="for a subspace of an affine space"/>
 <Returns> a collection of affine subspaces
 </Returns>
 <Description>
@@ -287,7 +287,7 @@ with is the ambient space of <A>v</A>.
 <Heading>Shadows of Affine Subspaces</Heading>
 
 <ManSection>
-<Oper Name="ShadowOfElement" Arg="as, v, type"/>
+<Oper Name="ShadowOfElement" Arg="as, v, type" Label="for an affine space, an element and an integer"/>
 <Returns> the subspaces of the affine space <A>as</A> of dimension <A>type</A> which 
 are incident with <A>v</A>
 </Returns>
@@ -305,7 +305,7 @@ for affine spaces: <C>Points(as,v)</C>, <C>Points(v)</C>, <C>Lines(v)</C>, etc.
 </ManSection>
 
 <ManSection>
-<Oper Name="ShadowOfFlag" Arg="as, list, type"/>
+<Oper Name="ShadowOfFlag" Arg="as, list, type" Label="for an affine space, a list and an integer"/>
 <Returns> the subspaces of the affine space <A>as</A> of dimension <A>type</A> which 
 are incident with each element of <A>list</A>
 </Returns>
@@ -336,7 +336,7 @@ subspace collections of affine spaces.
 
 
 <ManSection>
-<Oper Name="Iterator" Arg="subs"/>
+<Oper Name="Iterator" Arg="subs" Label="for a collection of subspaces of an affine space"/>
 <Returns> an iterator for the given subspaces collection </Returns>
 <Description>
 <A>subs</A>  is a collection of subspaces of an affine space, such as
@@ -348,7 +348,7 @@ subspace collections of affine spaces.
 </ManSection>
 
 <ManSection>
-<Oper Name="Enumerator" Arg="subs"/>
+<Oper Name="Enumerator" Arg="subs" Label="for a collection of subspaces of an affine space"/>
 <Returns> an enumerator for the given subspaces collection </Returns>
 <Description>
 <A>subs</A>  is a collection of subspaces of an affine space, such as
@@ -514,7 +514,7 @@ operation <C>CollineationGroup</C>.
 </ManSection>
 
 <ManSection>
-<Oper Name="CollineationGroup" Arg="as"/>
+<Oper Name="CollineationGroup" Arg="as" Label="for an affine space"/>
 <Returns> a group
 </Returns>
 <Description>
@@ -532,7 +532,7 @@ groups &agammalnq; and &aglnq; coincide.
 
 <ManSection>
 <Oper Name="OnAffineSpaces" Arg="subspace, el"/>
-<Oper Name="\^" Arg="subspace, el"/>
+<Oper Name="\^" Arg="subspace, el" Label="for an element of an affine space and a collineation"/>
 <Returns> an element of an affine space
 </Returns>
 <Description>

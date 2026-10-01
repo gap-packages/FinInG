@@ -22,12 +22,12 @@ This appendix gives more (technical) information on the low level functions for 
 <Appendix Label="morphisms_app">
 <Heading>Low level functions for morphisms</Heading>
 
-<Section Label="field_red_forms">
+<Section Label="field_red_vectorspaces">
 <Heading>Field reduction and vector spaces</Heading>
 
 <ManSection>
 <Oper Name="ShrinkVec" Arg="f1, f2, v, basis"/>
-<Oper Name="ShrinkVec" Arg="f1, f2, v"/>
+<Oper Name="ShrinkVec" Arg="f1, f2, v" Label="for two fields and a vector"/>
 <Returns>a vector</Returns>
 <Description>
 The argument <A>f2</A> is a subfield of <A>f1</A> and v is vector
@@ -43,7 +43,7 @@ the length of <A>v</A> is a multiple of the degree of the field extension.
 
 <ManSection>
 <Oper Name="ShrinkMat" Arg="basis, matrix"/>
-<Oper Name="ShrinkMat" Arg="f1, f2, matrix"/>
+<Oper Name="ShrinkMat" Arg="f1, f2, matrix" Label="for two fields and a matrix"/>
 <Returns>a matrix</Returns>
 <Description>
 Let <M>K</M> be the field &gfq; and let <M>L</M> be the field &gfqt;.
@@ -94,8 +94,8 @@ Blows up a projective space <A>pg</A> with respect to the standard basis of the 
 </ManSection>
 
 <ManSection>
-<Oper Name="BlownUpSubspaceOfProjectiveSpace" Arg="basis, subspace"/>
-<Oper Name="BlownUpSubspaceOfProjectiveSpace" Arg="basis, space"/>
+<Oper Name="BlownUpSubspaceOfProjectiveSpace" Arg="basis, subspace" Label="for a basis and a subspace"/>
+<Oper Name="BlownUpSubspaceOfProjectiveSpace" Arg="basis, space" Label="for a basis and a projective space"/>
 <Returns>a subspace of a projective space</Returns>
 <Description>
 The first flavour blows up a <A>subspace</A> of a projective space with respect to the <A>basis</A> using
@@ -136,7 +136,7 @@ and relies on the following three operations.
 
 <ManSection>
 <Oper Name="QuadraticFormFieldReduction" Arg="qf1, f2, alpha, basis"/>
-<Oper Name="QuadraticFormFieldReduction" Arg="qf1, f2, alpha"/>
+<Oper Name="QuadraticFormFieldReduction" Arg="qf1, f2, alpha" Label="for a quadratic form, a field and a field element"/>
 <Returns>a quadratic form</Returns>
 <Description>
 Let <M>f</M> be quadratic form determining a polar space over the field <M>L</M> This operation returns
@@ -149,7 +149,7 @@ in Section <Ref Sect="polar_red"/>.
 
 <ManSection>
 <Oper Name="BilinearFormFieldReduction" Arg="bil11, f2, alpha, basis"/>
-<Oper Name="BilinearFormFieldReduction" Arg="bil11, f2, alpha"/>
+<Oper Name="BilinearFormFieldReduction" Arg="bil11, f2, alpha" Label="for a bilinear form, a field and a field element"/>
 <Returns>a bilinear form</Returns>
 <Description>
     Let <M>f</M> be bilinear form determining a polar space over the field <M>L</M> This operation returns
@@ -162,7 +162,7 @@ in Section <Ref Sect="polar_red"/>.
 
 <ManSection>
 <Oper Name="HermitianFormFieldReduction" Arg="hf1, f2, alpha, basis"/>
-<Oper Name="HermitianFormFieldReduction" Arg="hf1, f2, alpha"/>
+<Oper Name="HermitianFormFieldReduction" Arg="hf1, f2, alpha" Label="for a hermitian form, a field and a field element"/>
 <Returns>a hermitian form</Returns>
 <Description>
     Let <M>f</M> be bilinear form determining a polar space over the field <M>L</M> This operation returns
@@ -180,7 +180,7 @@ in Section <Ref Sect="polar_red"/>.
     <Heading>Low level functions</Heading>
     
     <ManSection>
-        <Oper Name="PluckerCoordinates" Arg="matrix"/>
+        <Oper Name="PluckerCoordinates" Arg="matrix" Label="for a matrix"/>
         <Oper Name="InversePluckerCoordinates" Arg="vector"/>
         <Description>
             The first operation can also take a matrix representing a line of &pg3q; as argument.
@@ -202,7 +202,7 @@ in Section <Ref Sect="polar_red"/>.
     
     <ManSection>
         <Oper Name="IsomorphismPolarSpacesNC" Arg="ps1, ps2"/>
-        <Oper Name="IsomorphismPolarSpacesNC" Arg="ps1, ps2, boolean"/>
+        <Oper Name="IsomorphismPolarSpacesNC" Arg="ps1, ps2, boolean" Label="for two polar spaces and a boolean"/>
         <Description>
             <F>IsomorphismPolarSpacesNC</F> is the version of <F>IsomorphismPolarSpaces</F> where no checks are built in, and
             which is only applicable when the two polar spaces are equivalent. As no checks are built in, this operation is to

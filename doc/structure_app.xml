@@ -18,7 +18,7 @@ groups_app.xml    FinInG package documentation
 This appendix gives more (technical) information on structure of FinInG.
 -->
 
-<Appendix Label="groups_app">
+<Appendix Label="structure_app">
 <Heading>The structure of <Package>FinInG</Package> </Heading>
 <Section>
 <Heading>The different components</Heading>

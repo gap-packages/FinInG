@@ -83,7 +83,7 @@ of <A>l</A>.
 </ManSection>
 
 <ManSection>
-<Oper Name="IsIncident" Arg="ele1,ele2"/>
+<Oper Name="IsIncident" Arg="ele1,ele2" Label="for elements of a coset geometry"/>
 <Returns>true if and only if <A>ele1</A> and <A>ele2</A> are incident</Returns>
 <Description> 
 <A>ele1</A> and <A>ele2</A> must be two elements in the same coset geometry.
@@ -171,7 +171,7 @@ The group element <A>g</A> must belong to <F>AmbientGroup(AmbientGeometry(ele))<
 </ManSection>
 
 <ManSection>
-    <Oper Name="\^" Arg="ele,g"/>
+    <Oper Name="\^" Arg="ele,g" Label="for an element of a coset geometry and a group element"/>
  <Returns>an element of a coset geometry</Returns>
 <Description>
 This is an operation which returns the image of <A>ele</A>, an element of a coset incidence structure, under <A>g</A>, an element of <F>AmbientGroup(AmbientGeometry(ele))</F>.
@@ -179,7 +179,7 @@ This is an operation which returns the image of <A>ele</A>, an element of a cose
 </ManSection>
 
 <ManSection>
-    <Oper Name="\^" Arg="flg,g"/>
+    <Oper Name="\^" Arg="flg,g" Label="for a flag of a coset geometry and a group element"/>
  <Returns>a flag of a coset geometry</Returns>
 <Description>
 This is an operation which returns the image of <A>flg</A>, a flag of a coset incidence structure, under <A>g</A>, an element of <F>AmbientGroup(AmbientGeometry(flg))</F>.
@@ -280,7 +280,7 @@ set <M>\{i_1,i_2,\ldots ,i_k\}</M> of <A>fl</A>.
 </ManSection>
 
 <ManSection>
-<Oper Name="ResidueOfFlag" Arg="fl"/>
+<Oper Name="ResidueOfFlag" Arg="fl" Label="for a flag of a coset geometry"/>
 <Returns>the residue of <A>fl</A> in <F>AmbientGeometry(fl)</F>.</Returns>
 <Description> 
 This is a <F>CosetGeometry</F> method for the <F>ResidueOfFlag</F> operation given in Chapter <Ref Chap="incidencegeometry"/>.
@@ -293,7 +293,7 @@ Note that the related operation <F>CanonicalResidueOfFlag</F> takes <E>two</E> a
 </Example>
 
 <ManSection>
-<Oper Name="IncidenceGraph" Arg="cg"/>
+<Oper Name="IncidenceGraph" Arg="cg" Label="for a coset geometry"/>
 <Returns>incidence graph of <A>cg</A>.</Returns>
 <Description> 
 <A>cg</A> must be a coset geometry. The graph returned is
@@ -443,8 +443,8 @@ used to check flag-transitivity if needed.
 
 <ManSection>
 <Oper Name="DrawDiagram" Arg="diag,filename"/>
-<Oper Name="DrawDiagram" Arg="diag,filename,vertexverbosity"/>
-<Oper Name="DrawDiagram" Arg="diag,filename,vertexverbosity,edgeverbosity"/>
+<Oper Name="DrawDiagram" Arg="diag,filename,vertexverbosity" Label="with vertex verbosity"/>
+<Oper Name="DrawDiagram" Arg="diag,filename,vertexverbosity,edgeverbosity" Label="with vertex and edge verbosity"/>
 <Returns>does not return anything but writes a file <A>filename</A>.ps</Returns>
 <Description> 
 <A>diag</A> must be a diagram. Writes a file <A>filename</A>.ps in the

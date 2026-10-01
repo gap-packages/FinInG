@@ -130,7 +130,7 @@ polar spaces of the same kind that are induced by coordinate transformations.
 
 <ManSection>
 <Oper Name="IsomorphismPolarSpaces" Arg="ps1, ps2"/>
-<Oper Name="IsomorphismPolarSpaces" Arg="ps1, ps2, boolean"/>
+<Oper Name="IsomorphismPolarSpaces" Arg="ps1, ps2, boolean" Label="for two polar spaces and a boolean"/>
 <Returns>a geometry morphism</Returns>
 <Description>
 The arguments <A>ps1</A> and <A>ps2</A> are <E>equivalent</E> polar spaces, i.e. up to 
@@ -181,9 +181,9 @@ quadric in &pg5q; with equation <Alt Only="HTML MathJax"><M>X_0X_5+X_1X_4+X_2X_3
 
 <ManSection>
 <Oper Name="KleinCorrespondence" Arg="f"/>
-<Oper Name="KleinCorrespondence" Arg="f, boolean"/>
-<Oper Name="KleinCorrespondence" Arg="q"/>
-<Oper Name="KleinCorrespondence" Arg="q, boolean"/>
+<Oper Name="KleinCorrespondence" Arg="f, boolean" Label="for a field and a boolean"/>
+<Oper Name="KleinCorrespondence" Arg="q" Label="for a prime power"/>
+<Oper Name="KleinCorrespondence" Arg="q, boolean" Label="for a prime power and a boolean"/>
 <Returns>a geometry morphism</Returns>
 <Description>
 The argument <A>f</A> is a finite field, the argument <A>q</A> is a prime power.
@@ -201,8 +201,8 @@ The returned geometry morphism has the lines of &pg3q; as source and the points 
 </ManSection>
     
 <ManSection>
-<Oper Name="KleinCorrespondence" Arg="quadric"/>
-<Oper Name="KleinCorrespondence" Arg="quadric, boolean"/>
+<Oper Name="KleinCorrespondence" Arg="quadric" Label="for a hyperbolic quadric"/>
+<Oper Name="KleinCorrespondence" Arg="quadric, boolean" Label="for a hyperbolic quadric and a boolean"/>
 <Returns>a geometry morphism</Returns>
 <Description>
 The argument <A>quadric</A> is a hyperbolic quadric in a 5 dimensional projective space.
@@ -217,7 +217,7 @@ and the points of &qplus5q; as range.
 
 <ManSection>
 <Oper Name="KleinCorrespondenceExtended" Arg="quadric"/>
-<Oper Name="KleinCorrespondenceExtended" Arg="quadric, boolean"/>
+<Oper Name="KleinCorrespondenceExtended" Arg="quadric, boolean" Label="for a hyperbolic quadric and a boolean"/>
 <Returns>a geometry morphism</Returns>
 <Description>
 The argument <A>quadric</A> is a hyperbolic quadric in a 5 dimensional projective space.
@@ -243,9 +243,9 @@ and swapping the types.<P/>
 
 <ManSection>
 <Oper Name="NaturalDuality" Arg="gq1, gq2"/>
-<Oper Name="NaturalDuality" Arg="gq1, gq2, boolean"/>
-<Oper Name="NaturalDuality" Arg="gq"/>
-<Oper Name="NaturalDuality" Arg="gq, boolean"/>
+<Oper Name="NaturalDuality" Arg="gq1, gq2, boolean" Label="for two generalised quadrangles and a boolean"/>
+<Oper Name="NaturalDuality" Arg="gq" Label="for a generalised quadrangle"/>
+<Oper Name="NaturalDuality" Arg="gq, boolean" Label="for a generalised quadrangle and a boolean"/>
 <Returns>a geometry morphism</Returns>
 <Description>
 The operation allows the construction of the duality between &w3q; and &q4q;,
@@ -279,7 +279,7 @@ and the duality between the same GQs, yields a duality from each of these GQs it
 
 <ManSection>
 <Oper Name="SelfDuality" Arg="gq"/>
-<Oper Name="SelfDuality" Arg="gq, boolean"/>
+<Oper Name="SelfDuality" Arg="gq, boolean" Label="for a generalised quadrangle and a boolean"/>
 <Returns>a geometry morphism</Returns>
 <Description>
 It is checked whether the base field of <A>gq</A> is a field of characteristic 2 and whether
@@ -320,7 +320,7 @@ be equivalent as geometries. An Intertwiner is not implemented for this geometry
 
 <ManSection>
 <Oper Name="NaturalEmbeddingBySubField" Arg="geom1, geom2"/>
-<Oper Name="NaturalEmbeddingBySubField" Arg="geom1, geom2, boolean"/>
+<Oper Name="NaturalEmbeddingBySubField" Arg="geom1, geom2, boolean" Label="for two projective spaces and a boolean"/>
 <Returns>a geometry morphism</Returns>
 <Description>
 The arguments <A>geom1</A> and <A>geom2</A> are projective spaces of
@@ -378,9 +378,9 @@ of choosing a different basis is shown.
 
 <ManSection>
 <Oper Name="NaturalEmbeddingByFieldReduction" Arg="geom1, f2, B"/>
-<Oper Name="NaturalEmbeddingByFieldReduction" Arg="geom1, f2"/>
-<Oper Name="NaturalEmbeddingByFieldReduction" Arg="geom1, geom2"/>
-<Oper Name="NaturalEmbeddingByFieldReduction" Arg="geom1, geom2, B"/>
+<Oper Name="NaturalEmbeddingByFieldReduction" Arg="geom1, f2" Label="for a projective space and a field"/>
+<Oper Name="NaturalEmbeddingByFieldReduction" Arg="geom1, geom2" Label="for two projective spaces"/>
+<Oper Name="NaturalEmbeddingByFieldReduction" Arg="geom1, geom2, B" Label="for two projective spaces and a basis"/>
 <Returns>a geometry morphism</Returns>
 <Description>
 This operation comes in four flavours. For the first flavour, the argument <A>geom1</A> is a projective 
@@ -409,7 +409,7 @@ automorphism of order two, corresponding with the Frobenius automorphism.
 <Heading>Embeddings of polar spaces</Heading>
 
 <ManSection>
-<Oper Name="NaturalEmbeddingBySubspace" Arg="geom1, geom2, v"/>
+<Oper Name="NaturalEmbeddingBySubspace" Arg="geom1, geom2, v" Label="for two polar spaces and a subspace"/>
 <Returns>a geometry morphism</Returns>
 <Description>
 The arguments <A>geom1</A> and <A>geom2</A> both polar spaces, and <A>v</A> is an element of a projective space.
@@ -424,8 +424,8 @@ An Intertwiner is not implemented for this geometry morphism.
 </ManSection>
 
 <ManSection>
-<Oper Name="NaturalEmbeddingBySubField" Arg="geom1, geom2"/>
-<Oper Name="NaturalEmbeddingBySubField" Arg="geom1, geom2, boolean"/>
+<Oper Name="NaturalEmbeddingBySubField" Arg="geom1, geom2" Label="for two polar spaces"/>
+<Oper Name="NaturalEmbeddingBySubField" Arg="geom1, geom2, boolean" Label="for two polar spaces and a boolean"/>
 <Returns>a geometry morphism</Returns>
 <Description>
 The arguments <A>geom1</A> and <A>geom2</A> are projective or polar spaces with an underlying vector
@@ -610,12 +610,12 @@ The possible embeddings are listed in the following table.
 </Subsection>
 
 <ManSection>
-<Oper Name="NaturalEmbeddingByFieldReduction" Arg="ps1,f2, alpha, basis, bool"/>
-<Oper Name="NaturalEmbeddingByFieldReduction" Arg="ps1,f2, alpha, basis"/>
-<Oper Name="NaturalEmbeddingByFieldReduction" Arg="ps1,f2, alpha, bool"/>
-<Oper Name="NaturalEmbeddingByFieldReduction" Arg="ps1,f2, alpha"/>
-<Oper Name="NaturalEmbeddingByFieldReduction" Arg="ps1,f2, bool"/>
-<Oper Name="NaturalEmbeddingByFieldReduction" Arg="ps1,f2"/>
+<Oper Name="NaturalEmbeddingByFieldReduction" Arg="ps1,f2, alpha, basis, bool" Label="for a polar space, a field, a field element, a basis and a boolean"/>
+<Oper Name="NaturalEmbeddingByFieldReduction" Arg="ps1,f2, alpha, basis" Label="for a polar space, a field, a field element and a basis"/>
+<Oper Name="NaturalEmbeddingByFieldReduction" Arg="ps1,f2, alpha, bool" Label="for a polar space, a field, a field element and a boolean"/>
+<Oper Name="NaturalEmbeddingByFieldReduction" Arg="ps1,f2, alpha" Label="for a polar space, a field and a field element"/>
+<Oper Name="NaturalEmbeddingByFieldReduction" Arg="ps1,f2, bool" Label="for a polar space, a field and a boolean"/>
+<Oper Name="NaturalEmbeddingByFieldReduction" Arg="ps1,f2" Label="for a polar space and a field"/>
 <Returns>a geometry morphism</Returns>
 <Description>
 <A>ps1</A> is a polar space over a field extension <M>L</M> of <A>f2</A>, <A>basis</A> is a 
@@ -640,8 +640,8 @@ symplectic generalised quadrangle over <Alt Only="HTML MathJax"><M>\mathrm{GF}(9
 </ManSection>
 
 <ManSection>
-<Oper Name="NaturalEmbeddingByFieldReduction" Arg="ps1, ps2, bool"/>
-<Oper Name="NaturalEmbeddingByFieldReduction" Arg="ps1, ps2"/>
+<Oper Name="NaturalEmbeddingByFieldReduction" Arg="ps1, ps2, bool" Label="for two polar spaces and a boolean"/>
+<Oper Name="NaturalEmbeddingByFieldReduction" Arg="ps1, ps2" Label="for two polar spaces"/>
 <Returns>a geometry morphism</Returns>
 <Description>
 If <A>ps1</A> and <A>ps2</A> are two polar spaces which are suitable for field
