@@ -55,7 +55,7 @@ a set (and therefore it might be necessary to apply <F>Set</F> on a collection o
 
 <ManSection>
 <Oper Name="FiningOrbits" Arg="g, set, act"/>
-<Oper Name="FiningOrbits" Arg="g, coll"/>
+<Oper Name="FiningOrbits" Arg="g, coll" Label="for a group and a collection"/>
 <Returns>The orbits of the group <A>g</A> on <A>set</A> under the action of <A>act</A>.</Returns>
 <Description>
 The set is a set of elements of a projective space, the group <A>g</A> is a subgroup of the collineation group
@@ -197,8 +197,8 @@ functions are applicable on the projective groups implemented in <Package>FinInG
 
 <ManSection>
 <Heading>Action functions</Heading>
-<Func Name="OnProjSubspaces" Arg="el, g"/>
-<Func Name="OnProjSubspacesExtended" Arg="el, g"/>
+<Func Name="OnProjSubspaces" Arg="el, g" Label="for an element of a Lie geometry and a group element"/>
+<Func Name="OnProjSubspacesExtended" Arg="el, g" Label="for an element of a Lie geometry and a group element"/>
 <Func Name="OnSetsProjSubspaces" Arg="set, g"/>
 <Returns>a element of a Lie geometry</Returns>
 <Description>
@@ -230,7 +230,7 @@ suitable action domain. An easy example is the permutation action of the full co
 group of a projective space on its points.<P/>
 
 <ManSection>
-<Attr Name="NiceMonomorphism" Arg="group"/>
+<Attr Name="NiceMonomorphism" Arg="group" Label="for a group"/>
 <Returns>A group homomorphism</Returns>
 <Description>
 This is a generic GAP function, and returns a homomorphism to a "better" representation.
@@ -238,7 +238,7 @@ This is a generic GAP function, and returns a homomorphism to a "better" represe
 </ManSection>
 
 <ManSection>
-<Attr Name="NiceObject" Arg="group"/>
+<Attr Name="NiceObject" Arg="group" Label="for a group"/>
 <Returns>A permutation group</Returns>
 <Description>
 <A>group</A> is a projective group. The object this operation returns is actually equivalent with <F>Image(NiceMonomorphism(group))</F>.

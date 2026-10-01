@@ -112,7 +112,7 @@ A subspace of a subgeometry belongs to the category <C>IsSubspaceOfSubgeometryOf
 
 <ManSection>
 <Oper Name="CanonicalSubgeometryOfProjectiveSpace" Arg="pg, subfield"/>
-<Oper Name="CanonicalSubgeometryOfProjectiveSpace" Arg="pg, q"/>
+<Oper Name="CanonicalSubgeometryOfProjectiveSpace" Arg="pg, q" Label="for a projective space and a prime power"/>
 <Returns>a subgeometry of <A>pg</A></Returns>
 <Description>This operation returns the subgeometry of <A>pg</A> induced by the standard frame
 over the subfield <A>subfield</A>. Alternatively, a prime power <A>q</A> can be used as the order of the
@@ -150,7 +150,7 @@ in <A>list</A> belong to the same projective space.
 
 <ManSection>
 <Oper Name="SubgeometryOfProjectiveSpaceByFrame" Arg="pg, list, field"/>
-<Oper Name="SubgeometryOfProjectiveSpaceByFrame" Arg="pg, list, q"/>
+<Oper Name="SubgeometryOfProjectiveSpaceByFrame" Arg="pg, list, q" Label="for a projective space, a frame and a prime power"/>
 <Returns>a subgeometry of <A>pg</A></Returns>
 <Description>
 The argument <A>pg</A> is a projective space which is not a subgeometry itself, the argument
@@ -177,8 +177,8 @@ so <A>pg</A> may not be a subgeometry itself. If the specified subfield equals t
 
 <ManSection>
 <Heading>Underlying vector space and ambient projective space</Heading>
-<Oper Name="UnderlyingVectorSpace" Arg="sub"/>
-<Oper Name="AmbientSpace" Arg="sub"/>
+<Oper Name="UnderlyingVectorSpace" Arg="sub" Label="for a subgeometry"/>
+<Oper Name="AmbientSpace" Arg="sub" Label="for a subgeometry"/>
 <Description>
 Let <M>P</M> be a projective space over the field <M>F</M>. Let <A>sub</A> be a subgeometry
 of <M>P</M> over the subfield <M>F'</M>. The underlying vector space of <A>sub</A>
@@ -206,9 +206,9 @@ of points, and it is also a set in the GAP sense, i.e. an ordered list without d
 
 <ManSection>
 <Heading>Projective dimension and rank</Heading>
-<Oper Name="ProjectiveDimension" Arg="sub"/>
-<Oper Name="Dimension" Arg="sub"/>
-<Oper Name="Rank" Arg="sub"/>
+<Oper Name="ProjectiveDimension" Arg="sub" Label="for a subgeometry"/>
+<Oper Name="Dimension" Arg="sub" Label="for a subgeometry"/>
+<Oper Name="Rank" Arg="sub" Label="for a subgeometry"/>
 <Returns>an integer</Returns>
 <Description>
 If <A>sub</A> is a subgeometry of a projective space, then it is a projective space
@@ -222,15 +222,14 @@ see also <Ref Sect="proj:dimension"/>.
 
 <ManSection>
 <Heading>Underlying algebraic structures</Heading>
-<Oper Name="UnderlyingVectorSpace" Arg="sub"/>
-<Oper Name="BaseField" Arg="sub"/>
+<Oper Name="BaseField" Arg="sub" Label="for a subgeometry"/>
 <Oper Name="SubfieldOfSubgeometry" Arg="sub"/>
-<Returns>the first operation returns a vector space, the second and third operations return a finite field</Returns>
+<Returns>a finite field</Returns>
 <Description>
-The operations <F>UnderlyingVectorSpace</F> and <F>BaseField</F> are defined for
-projective spaces, see <Ref Sect="proj:underlyingvs"/> and <Ref Sect="proj:basefield"/>.
+The operation <F>BaseField</F> is defined for
+projective spaces, see <Ref Sect="proj:basefield"/>.
 For a subgeometry of a projective space <A>sub</A> with ambient space <A>ps</A>,
-these operations return <F>UnderlyingVectorSpace(ps)</F>, <F>BaseField(ps)</F> respectively.
+it returns <F>BaseField(ps)</F>.
 The operation <F>SubfieldOfSubgeometry</F> returns the subfield over which <A>sub</A> is defined.
 <Example>
 <#Include SYSTEM "../examples/include/subgeometries_underlyingstructures.include">
@@ -262,7 +261,7 @@ this collineation is known in the literature as the Baer involution of the subge
 <Heading>Constructing elements of a subgeometry</Heading>
 
 <ManSection>
-<Oper Name="VectorSpaceToElement" Arg="sub, v"/>
+<Oper Name="VectorSpaceToElement" Arg="sub, v" Label="for a subgeometry and a vector or matrix"/>
 <Returns>a subspace of a subgeometry</Returns>
 <Description>
 <A>sub</A> is a subgeometry of a projective space, and <A>v</A> is either a row vector
@@ -290,7 +289,7 @@ Note that the set <M>S</M> can be obtained using <F>UnderlyingObject</F>, see <R
 </ManSection>
 
 <ManSection>
-<Oper Name="AmbientGeometry" Arg="el"/>
+<Oper Name="AmbientGeometry" Arg="el" Label="for an element of a subgeometry"/>
 <Returns>an incidence geometry</Returns>
 <Description>
 For <A>el</A> an element of a subgeometry <M>P</M>, which is also a projective space, this operation
@@ -300,9 +299,9 @@ returns <M>P</M>.
 
 <ManSection>
 <Heading>Flags</Heading>
-<Oper Name="FlagOfIncidenceStructure" Arg="sub, els"/>
-<Oper Name="IsEmptyFlag" Arg="flag"/>
-<Oper Name="IsChamberOfIncidenceStructure" Arg="flag"/>
+<Oper Name="FlagOfIncidenceStructure" Arg="sub, els" Label="for a subgeometry and a list of subspaces"/>
+<Oper Name="IsEmptyFlag" Arg="flag" Label="for a flag of a subgeometry"/>
+<Oper Name="IsChamberOfIncidenceStructure" Arg="flag" Label="for a flag of a subgeometry"/>
 <Returns>true or false</Returns>
 <Description>
 These operations are defined for projective spaces and so they are also applicable to subgeometries.
@@ -326,9 +325,9 @@ the projective space isomorphic to <M>P'</M>.
 
 <ManSection>
 <Heading>Groups of collineations</Heading>
-<Oper Name="CollineationGroup" Arg="sub"/>
-<Oper Name="ProjectivityGroup" Arg="sub"/>
-<Oper Name="SpecialProjectivityGroup" Arg="sub"/>
+<Oper Name="CollineationGroup" Arg="sub" Label="for a subgeometry"/>
+<Oper Name="ProjectivityGroup" Arg="sub" Label="for a subgeometry"/>
+<Oper Name="SpecialProjectivityGroup" Arg="sub" Label="for a subgeometry"/>
 
 <Returns>a group of collineations</Returns>
 

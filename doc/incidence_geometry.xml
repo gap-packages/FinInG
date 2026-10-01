@@ -103,9 +103,9 @@ generalised polygons have their own category, which is a subcategory of <C>IsInc
 <ManSection>
 <Heading>Main categories in <C>IsIncidenceGeometry</C></Heading>
 <Filt Name="IsLieGeometry" Type="Category"/>
-<Filt Name="IsAffineSpace" Type="Category"/>
-<Filt Name="IsGeneralisedPolygon" Type="Category"/>
-<Filt Name="IsCosetGeometry" Type="Category"/>
+<Filt Name="IsAffineSpace" Type="Category" Label="subcategory of IsIncidenceGeometry"/>
+<Filt Name="IsGeneralisedPolygon" Type="Category" Label="subcategory of IsIncidenceGeometry"/>
+<Filt Name="IsCosetGeometry" Type="Category" Label="subcategory of IsIncidenceGeometry"/>
 <Description>
 Within each category, several subcategories are declared. Subcategories of <C>IsLieGeometry</C> are discussed
 in Section <Ref Sect="liegeometries1"/> and subcategories of <C>IsGeneralisedPolygon</C> are discussed in Chapter <Ref Chap="gpolygons"/>
@@ -267,7 +267,7 @@ the general operation <F>ElementsOfIncidenceStructure</F>.
 
 <ManSection>
 <Oper Name="ElementsOfIncidenceStructure" Arg="inc, j"/>
-<Oper Name="ElementsOfIncidenceStructure" Arg="inc, str"/>
+<Oper Name="ElementsOfIncidenceStructure" Arg="inc, str" Label="for an incidence structure and a string"/>
 <Returns>a collection of elements</Returns>
 <Description><A>inc</A> must be an incidence structure, <A>j</A> must be
 a type of element of <A>inc</A>. This function returns all elements
@@ -287,7 +287,7 @@ if <A>inc</A> has elements of the deduced type. <Example>
 </ManSection>
 
 <ManSection>
-<Oper Name="ElementsOfIncidenceStructure" Arg="inc"/>
+<Oper Name="ElementsOfIncidenceStructure" Arg="inc" Label="for an incidence structure"/>
 <Returns>a collection of elements</Returns>
 <Description><A>inc</A> must be an incidence structure, then this operation returns
 the collection of all elements of <A>inc</A>. Such a collection can e.g. be the range
@@ -316,7 +316,7 @@ equal to 1,2,3,4, respectively.
 
 <ManSection>
 <Oper Name="NrElementsOfIncidenceStructure" Arg="inc, j"/>
-<Oper Name="NrElementsOfIncidenceStructure" Arg="inc, str"/>
+<Oper Name="NrElementsOfIncidenceStructure" Arg="inc, str" Label="for an incidence structure and a string"/>
 <Returns>a positive integer</Returns>
 <Description><A>inc</A> must be an incidence structure, <A>j</A> must be
 a type of element of <A>inc</A>. This function returns the number of elements
@@ -433,7 +433,7 @@ This operations simply returns the list of elements that define <A>flag</A>
 </ManSection>
 
 <ManSection>
-<Attr Name="Rank" Arg="flag"/>
+<Attr Name="Rank" Arg="flag" Label="for a flag"/>
 <Returns>an integer</Returns>
 <Description>
 This operations returns the number of elements that define <A>flag</A>
@@ -455,7 +455,7 @@ This operations returns the number of elements that define <A>flag</A>
 </ManSection>
 
 <ManSection>
-<Attr Name="AmbientGeometry" Arg="flag"/>
+<Attr Name="AmbientGeometry" Arg="flag" Label="for a flag"/>
 <Returns>an incidence structure</Returns>
 <Description>
 This operations returns the ambient geometry of the <A>flag</A>
@@ -466,7 +466,7 @@ This operations returns the ambient geometry of the <A>flag</A>
 </ManSection>
 
 <ManSection>
-<Oper Name="Type" Arg="flag"/>
+<Oper Name="Type" Arg="flag" Label="for a flag"/>
 <Returns>an list of integers</Returns>
 <Description>
 This operations returns the list of types of the elements defining <A>flag</A>
@@ -477,8 +477,8 @@ This operations returns the list of types of the elements defining <A>flag</A>
 </ManSection>
 
 <ManSection>
-<Oper Name="IsIncident" Arg="el, flag"/>
-<Oper Name="IsIncident" Arg="flag, el"/>
+<Oper Name="IsIncident" Arg="el, flag" Label="for an element and a flag"/>
+<Oper Name="IsIncident" Arg="flag, el" Label="for a flag and an element"/>
 <Returns>true or false</Returns>
 <Description>
 An element is incident with a flag if and only if it is incident with all elements defining the flag.
@@ -495,7 +495,7 @@ An element is incident with a flag if and only if it is incident with all elemen
 
 <ManSection>
 <Oper Name="ShadowOfElement" Arg="inc, v, str"/>
-<Oper Name="ShadowOfElement" Arg="inc, v, j"/>
+<Oper Name="ShadowOfElement" Arg="inc, v, j" Label="for an incidence structure, an element and an integer"/>
 <Returns> The collection of elements of type <A>str</A> or type <A>j</A> incident with <A>v</A></Returns>
 <Description>
 <A>inc</A> is an incidence structure, <A>v</A> must be an element of <A>inc</A>, <A>str</A> must
@@ -523,9 +523,9 @@ and is a shortcut to <F>ShadowOfElement(AmbientGeometry(v),v,j)</F>.
 
 <ManSection>
 <Oper Name="ShadowOfFlag" Arg="inc, flag, str"/>
-<Oper Name="ShadowOfFlag" Arg="inc, list, str"/>
-<Oper Name="ShadowOfFlag" Arg="inc, flag, j"/>
-<Oper Name="ShadowOfFlag" Arg="inc, list, j"/>
+<Oper Name="ShadowOfFlag" Arg="inc, list, str" Label="for an incidence structure, a list and a string"/>
+<Oper Name="ShadowOfFlag" Arg="inc, flag, j" Label="for an incidence structure, a flag and an integer"/>
+<Oper Name="ShadowOfFlag" Arg="inc, list, j" Label="for an incidence structure, a list and an integer"/>
 <Returns>The collection of elements of type <A>str</A> or type <A>j</A> incident with all elements of <A>flag</A>,
 or with all elements of <A>list</A></Returns>
 <Description>
@@ -555,14 +555,14 @@ of the Category of <M>G</M>, the returned incidence structure is constructed usi
 
 <ManSection>
 <Heading>Short names for ElementsIncidentWithElementOfIncidenceStructure</Heading>
-<Oper Name="Points" Arg="inc, v"/>
-<Oper Name="Lines" Arg="inc, v"/>
-<Oper Name="Planes" Arg="inc, v"/>
-<Oper Name="Solids" Arg="inc, v"/>
-<Oper Name="Points" Arg="v"/>
-<Oper Name="Lines" Arg="v"/>
-<Oper Name="Planes" Arg="v"/>
-<Oper Name="Solids" Arg="v"/>
+<Oper Name="Points" Arg="inc, v" Label="for an incidence structure and an element"/>
+<Oper Name="Lines" Arg="inc, v" Label="for an incidence structure and an element"/>
+<Oper Name="Planes" Arg="inc, v" Label="for an incidence structure and an element"/>
+<Oper Name="Solids" Arg="inc, v" Label="for an incidence structure and an element"/>
+<Oper Name="Points" Arg="v" Label="for an element"/>
+<Oper Name="Lines" Arg="v" Label="for an element"/>
+<Oper Name="Planes" Arg="v" Label="for an element"/>
+<Oper Name="Solids" Arg="v" Label="for an element"/>
 <Returns>The collections of elements of <A>inc</A> of respective type 1, 2, 3 and 4, 
 that are incident with <A>v</A></Returns>
 <Description>
@@ -687,8 +687,8 @@ the operation <F>List</F>.
 
 <ManSection>
 <Heading>Main categories in <C>IsLieGeometry</C></Heading>
-<Filt Name="IsProjectiveSpace" Type="Category"/>
-<Filt Name="IsClassicalPolarSpace" Type="Category"/>
+<Filt Name="IsProjectiveSpace" Type="Category" Label="subcategory of IsLieGeometry"/>
+<Filt Name="IsClassicalPolarSpace" Type="Category" Label="subcategory of IsLieGeometry"/>
 <Description>
 In <Package>FinInG</Package>, a <E>Lie geometry</E> <M>G</M> refers to a geometry whose automorphism group
 is a (subgroup of a) group of Lie type. Generally spoken, one could say that a Lie geometry
@@ -769,7 +769,7 @@ Lie geometries check whether the subspace of the vector space represents an elem
 
 <ManSection>
 <Oper Name="VectorSpaceToElement" Arg="ig, v"/>
-<Oper Name="VectorSpaceToElement" Arg="ig, l"/>
+<Oper Name="VectorSpaceToElement" Arg="ig, l" Label="for a Lie geometry and a matrix"/>
 <Returns>the element of <A>ig</A>, represented by the subspace spanned by <A>v</A> or <A>l</A>, or returns the empty subspace.</Returns>
 <Description>
 The first variant of this operation takes as second argument a vector of the underlying vector space of <A>ig</A>.
@@ -785,7 +785,7 @@ argument.
 </ManSection>
 
 <ManSection>
-<Oper Name="UnderlyingObject" Arg="v"/>
+<Oper Name="UnderlyingObject" Arg="v" Label="for an element of a Lie geometry"/>
 <Returns>a CVEC object, which is the vector or matrix representing the element <A>v</A></Returns>
 <Description>
 The argument <A>v</A> must be an element, so it is not allowed that <A>v</A> is the empty subspace, 
@@ -813,7 +813,7 @@ use this method to test incidence between elements.
 <ManSection>
 <Heading>More short names for <F>ElementsIncidentWithElementOfIncidenceStructure</F></Heading>
 <Oper Name="Hyperplanes" Arg="inc, v"/>
-<Oper Name="Hyperplanes" Arg="v"/>
+<Oper Name="Hyperplanes" Arg="v" Label="for an element"/>
 <Heading>Hyperplanes of an element of a Lie geometry</Heading>
 <Returns>the elements of type <M>j-1</M> incident with <A>v</A>, which is an element of type <M>j</M></Returns>
 <Description>

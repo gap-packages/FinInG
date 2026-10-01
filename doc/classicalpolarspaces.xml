@@ -100,8 +100,8 @@ symmetric bilinear forms are equivalent. Therefore, we call polar spaces with an
 underlying quadratic form in even characteristic also <E>orthogonal</E> polar spaces.
 
 <ManSection>
-<Oper Name="PolarSpace" Arg="form"/>
-<Oper Name="PolarSpace" Arg="pol"/>
+<Oper Name="PolarSpace" Arg="form" Label="for a form"/>
+<Oper Name="PolarSpace" Arg="pol" Label="for a polarity"/>
 <Returns>a classical polar space</Returns>
 <Description><A>form</A> must be a sesquilinear or quadratic form
 created by use of the GAP package <Package>Forms</Package>. In the second variant,
@@ -314,7 +314,7 @@ The following five operations always return polar spaces induced by one of the a
 
 <ManSection>
 <Oper Name="SymplecticSpace" Arg="d,F"/>
-<Oper Name="SymplecticSpace" Arg="d,q"/>
+<Oper Name="SymplecticSpace" Arg="d,q" Label="for an integer and a prime power"/>
 <Returns>a symplectic polar space</Returns>
 <Description>
 This function returns the symplectic polar space of dimension <A>d</A>
@@ -328,7 +328,7 @@ over <A>F</A> for a field <A>F</A> or over GF(<A>q</A>) for a prime power
 
 <ManSection>
 <Oper Name="HermitianPolarSpace" Arg="d,F"/>
-<Oper Name="HermitianPolarSpace" Arg="d,q"/>
+<Oper Name="HermitianPolarSpace" Arg="d,q" Label="for an integer and a prime power"/>
 <Returns>a Hermitian polar space</Returns>
 <Description>
 This function returns the Hermitian polar space of dimension <A>d</A>
@@ -342,7 +342,7 @@ over <A>F</A> for a field <A>F</A> or over GF(<A>q</A>) for a prime power
 
 <ManSection>
 <Oper Name="ParabolicQuadric" Arg="d,F"/>
-<Oper Name="ParabolicQuadric" Arg="d,q"/>
+<Oper Name="ParabolicQuadric" Arg="d,q" Label="for an integer and a prime power"/>
 <Returns>a parabolic quadric</Returns>
 <Description> <A>d</A> must be an even positive integer.
 This function returns the parabolic quadric of dimension <A>d</A>
@@ -356,7 +356,7 @@ over <A>F</A> for a field <A>F</A> or over GF(<A>q</A>) for a prime power
 
 <ManSection>
 <Oper Name="HyperbolicQuadric" Arg="d,F"/>
-<Oper Name="HyperbolicQuadric" Arg="d,q"/>
+<Oper Name="HyperbolicQuadric" Arg="d,q" Label="for an integer and a prime power"/>
 <Returns>a hyperbolic quadric</Returns>
 <Description> <A>d</A> must be an odd positive integer.
 This function returns the hyperbolic quadric of dimension <A>d</A>
@@ -370,7 +370,7 @@ over <A>F</A> for a field <A>F</A> or over GF(<A>q</A>) for a prime power
 
 <ManSection>
 <Oper Name="EllipticQuadric" Arg="d,F"/>
-<Oper Name="EllipticQuadric" Arg="d,q"/>
+<Oper Name="EllipticQuadric" Arg="d,q" Label="for an integer and a prime power"/>
 <Returns>an elliptic quadric</Returns>
 <Description> <A>d</A> must be an odd positive integer.
 This function returns the elliptic quadric of dimension <A>d</A>
@@ -400,7 +400,7 @@ as can be noted by the different printing of <A>ps</A> before and after executio
 
 <ManSection>
 <Oper Name="CanonicalPolarSpace" Arg="form"/>
-<Oper Name="CanonicalPolarSpace" Arg="P"/>
+<Oper Name="CanonicalPolarSpace" Arg="P" Label="for a polar space"/>
 <Returns>a classical polar space</Returns>
 <Description>the canonical polar space isometric to the given polar space <A>P</A> or
 the classical polar space with underlying form <A>form</A>. 
@@ -409,7 +409,7 @@ the classical polar space with underlying form <A>form</A>.
 
 <ManSection>
 <Oper Name="StandardPolarSpace" Arg="form"/>
-<Oper Name="StandardPolarSpace" Arg="P"/>
+<Oper Name="StandardPolarSpace" Arg="P" Label="for a polar space"/>
 <Returns>a classical polar space</Returns>
 <Description>the polar space induced by a standard form and similar to the given polar space <A>P</A> or
 the classical polar space with underlying form <A>form</A>. 
@@ -422,7 +422,7 @@ the classical polar space with underlying form <A>form</A>.
 <Heading>Basic operations for finite classical polar spaces</Heading>
 
 <ManSection>
-<Oper Name="UnderlyingVectorSpace" Arg="ps"/>
+<Oper Name="UnderlyingVectorSpace" Arg="ps" Label="for a polar space"/>
 <Returns>a vector space</Returns>
 <Description>The polar space <A>ps</A> is the geometry associated with a sesquilinear or quadratic form <M>f</M>.
 The vector space on which <M>f</M> is acting is returned.
@@ -433,7 +433,7 @@ The vector space on which <M>f</M> is acting is returned.
 </ManSection>
 
 <ManSection>
-<Oper Name="AmbientSpace" Arg="ps"/>
+<Oper Name="AmbientSpace" Arg="ps" Label="for a polar space"/>
 <Returns>the ambient projective space</Returns>
 <Description>
 When <A>ps</A> is a polar space, this operation returns the ambient projective space, i.e. the
@@ -445,8 +445,8 @@ underlying projective space of the sesquilinear or quadratic form that defines <
 </ManSection>
 
 <ManSection>
-<Oper Name="ProjectiveDimension" Arg="ps"/>
-<Oper Name="Dimension" Arg="ps"/>
+<Oper Name="ProjectiveDimension" Arg="ps" Label="for a polar space"/>
+<Oper Name="Dimension" Arg="ps" Label="for a polar space"/>
 <Returns>the dimension of the ambient projective space of <A>ps</A></Returns>
 <Description>When <A>ps</A> is a polar space, an ambient projective space <M>P</M> is 
 uniquely defined and can be asked using <F>AmbientSpace</F>. This operation and
@@ -458,7 +458,7 @@ its synonym <F>Dimension</F> returns the dimension of <M>P</M>.
 </ManSection>
 
 <ManSection>
-<Oper Name="Rank" Arg="ps"/>
+<Oper Name="Rank" Arg="ps" Label="for a polar space"/>
 <Returns>the rank of <A>ps</A></Returns>
 <Description>When <A>ps</A> is a polar space, its rank, i.e. the number of different types, equals 
 the Witt index of the defining sesquilinear or quadratic form.
@@ -469,7 +469,7 @@ the Witt index of the defining sesquilinear or quadratic form.
 </ManSection>
 
 <ManSection>
-<Oper Name="BaseField" Arg="ps"/>
+<Oper Name="BaseField" Arg="ps" Label="for a polar space"/>
 <Returns>the base field of the polar space <A>ps</A></Returns>
 <Description>
 <Example>
@@ -524,7 +524,7 @@ sense, but not as an element of the incidence geometry, and hence do in <Package
 not belong to the category <C>IsSubspaceOfClassicalPolarSpace</C>.
 
 <ManSection>
-<Oper Name="VectorSpaceToElement" Arg="ps, v"/>
+<Oper Name="VectorSpaceToElement" Arg="ps, v" Label="for a polar space and a vector or matrix"/>
 <Returns>an element of the polar space <A>geo</A></Returns>
 <Description>
 Let <A>ps</A> be a polar space, and <A>v</A> is either a row vector (for points) or an <M>m</M>x<M>n</M> matrix (for an <M>(m-1)</M>-subspace of a polar space with an <M>(n-1)</M>-dimensional ambient projective space.
@@ -539,7 +539,7 @@ defining <A>ps</A>.
 </ManSection>
 
 <ManSection>
-<Oper Name = "EmptySubspace" Arg="ps"/>
+<Oper Name = "EmptySubspace" Arg="ps" Label="for a polar space"/>
 <Returns>the trivial subspace in the projective <A>ps</A></Returns>
 <Description>
 The object returned by this operation is contained in
@@ -552,8 +552,8 @@ incidence results in an error message.
 </ManSection>
 
 <ManSection>
-<Oper Name="ProjectiveDimension" Arg="sub"/>
-<Oper Name="Dimension" Arg="sub"/>
+<Oper Name="ProjectiveDimension" Arg="sub" Label="for an element of a polar space"/>
+<Oper Name="Dimension" Arg="sub" Label="for an element of a polar space"/>
 <Returns>the projective dimension of a subspace of a polar space. The operation <F>ProjectiveDimension</F> 
 is also applicable on the EmptySubspace
 </Returns>
@@ -565,7 +565,7 @@ is also applicable on the EmptySubspace
 </ManSection>
 
 <ManSection>
-<Oper Name="ElementsOfIncidenceStructure" Arg="ps, j"/>
+<Oper Name="ElementsOfIncidenceStructure" Arg="ps, j" Label="for a polar space and an integer"/>
 <Returns>the collection of elements of the projective space <A>ps</A> of type <A>j</A></Returns>
 <Description>
 For the projective space <A>ps</A> of dimension <M>d</M> and the type <A>j</A>, <M>1 \leq j \leq d</M>
@@ -576,7 +576,7 @@ this operation returns the collection of <M>j-1</M> dimensional subspaces.  <Exa
 </ManSection>
 
 <ManSection>
-<Oper Name="AmbientSpace" Arg="el"/>
+<Oper Name="AmbientSpace" Arg="el" Label="for an element of a polar space"/>
 <Returns>returns the ambient space of an element <A>el</A> of a polar space</Returns>
 <Description>
 This operation is also applicable on the trivial subspace. For a Lie geometry, the ambient space of
@@ -588,7 +588,7 @@ an element is defined as the ambient space of the Lie geometry, i.e. a projectiv
 </ManSection>
 
 <ManSection>
-<Oper Name="Coordinates" Arg="p"/>
+<Oper Name="Coordinates" Arg="p" Label="for a point of a polar space"/>
 <Returns>the homogeneous coordinates of the point <A>p</A>
 </Returns>
 <Description>
@@ -605,9 +605,9 @@ an element is defined as the ambient space of the Lie geometry, i.e. a projectiv
 
 <ManSection>
 <Heading>Incidence and containment</Heading>
-<Oper Name="IsIncident" Arg="el1, el2"/>
-<Oper Name="\*" Arg="el1, el2"/>
-<Oper Name="\in" Arg="el1, el2"/>
+<Oper Name="IsIncident" Arg="el1, el2" Label="for elements of a polar space"/>
+<Oper Name="\*" Arg="el1, el2" Label="for elements of a polar space"/>
+<Oper Name="\in" Arg="el1, el2" Label="for elements of a polar space"/>
 <Returns>true or false</Returns>
 <Description>
 Recall that for projective spaces, incidence is symmetrized containment, where the empty subspace and the 
@@ -620,7 +620,7 @@ of the geometry, but both the empty subspace and the whole projective space are 
 </ManSection>
 
 <ManSection Label="polar:span">
-<Oper Name="Span" Arg="u,v"/>
+<Oper Name="Span" Arg="u,v" Label="for two elements of a polar space"/>
 <Returns> an element </Returns>
 <Description>
 <A>u</A> and <A>v</A> are elements of a projective or polar space.
@@ -633,7 +633,7 @@ of the two subspaces.
 </ManSection>
 
 <ManSection Label="polar:meet">
-<Oper Name="Meet" Arg="u,v"/>
+<Oper Name="Meet" Arg="u,v" Label="for two elements of a polar space"/>
 <Returns>an element</Returns>
 <Description>
 <A>u</A> and <A>v</A> are elements of a projective or polar space.
@@ -665,7 +665,7 @@ in <A>ps</A>. Note that belonging to <A>ps</A> is a necessary condition for
 </ManSection>
 
 <ManSection>
-<Oper Name="PolarityOfProjectiveSpace" Arg="ps"/>
+<Oper Name="PolarityOfProjectiveSpace" Arg="ps" Label="for a polar space"/>
 <Returns>a polarity of a projective space</Returns>
 <Description> <A>ps</A> must be a polar space. This operation 
 returns, when possible a polarity of the ambient projective
@@ -698,7 +698,7 @@ with the type of subspace: <Q>degenerate</Q>, <Q>symplectic</Q>, <Q>hermitian</Q
 
 <ManSection>
 <Oper Name="TangentSpace" Arg="el"/>
-<Oper Name="TangentSpace" Arg="ps, el"/>
+<Oper Name="TangentSpace" Arg="ps, el" Label="for a polar space and an element"/>
 <Returns>A subspace of a projective space</Returns>
 <Description>
 Let <A>el</A> be an element of a classical polar space. The first version
@@ -726,9 +726,9 @@ returns the pole of <A>el</A> with relation to the polar space <A>ps</A>.
 
 <ManSection>
 <Oper Name="EvaluateForm" Arg="form, el1"/>
-<Oper Name="EvaluateForm" Arg="form, el1, el2"/>
-<Oper Name="\^" Arg="form, el1"/>
-<Oper Name="\^" Arg="form, el1, el2"/>
+<Oper Name="EvaluateForm" Arg="form, el1, el2" Label="for a form and two elements"/>
+<Oper Name="\^" Arg="form, el1" Label="for a form and an element"/>
+<Oper Name="\^" Arg="form, el1, el2" Label="for a form and two elements"/>
 <Returns>a finite field element or a list (of lists) of finite field elements</Returns>
 <Description>
 This method passes <A>form</A> and the underlying vector or matrix of <A>el1</A>, when <A>form</A> is a quadratic form,
@@ -752,8 +752,8 @@ are described in Section <Ref Sect="projsp:shadows"/>. The generic description o
 can be found in Section <Ref Sect="inc_geom:shadows"/>.
 
 <ManSection>
-<Oper Name="ShadowOfElement" Arg="ps, el, i"/>
-<Oper Name="ShadowOfElement" Arg="ps, el, str"/>
+<Oper Name="ShadowOfElement" Arg="ps, el, i" Label="for a polar space, an element and an integer"/>
+<Oper Name="ShadowOfElement" Arg="ps, el, str" Label="for a polar space, an element and a string"/>
 <Returns>the elements of type <A>i</A> incident with <A>el</A>. The second variant determines 
 the type <A>i</A> from the position of <A>str</A> in the list returned by 
 <F>TypesOfElementsOfIncidenceStructurePlural</F></Returns>
@@ -765,7 +765,7 @@ the type <A>i</A> from the position of <A>str</A> in the list returned by
 </ManSection>
 
 <ManSection>
-<Oper Name="ElementsIncidentWithElementOfIncidenceStructure" Arg="el, i"/>
+<Oper Name="ElementsIncidentWithElementOfIncidenceStructure" Arg="el, i" Label="for an element of a polar space and an integer"/>
 <Returns>the elements of type <A>i</A> incident with <A>el</A>, in other words,
 the type <A>i</A> shadow of the element <A>el</A>
 </Returns>
@@ -910,7 +910,7 @@ occur in certain cases, and will, as we will see in the following overview.
 </ManSection>
 
 <ManSection>
-<Oper Name="CollineationGroup" Arg="ps"/>
+<Oper Name="CollineationGroup" Arg="ps" Label="for a polar space"/>
 <Returns>the collineation group of the polar space <A>ps</A></Returns>
 <Description>
     In most cases, the full projective semisimilarity group is returned. For two-dimensional
@@ -939,8 +939,8 @@ such a collection, then <F>List(C)</F> will use the enumerator to compute a list
 
 
 <ManSection>
-<Oper Name="Enumerator" Arg="C"/>
-<Oper Name="List" Arg="C"/>
+<Oper Name="Enumerator" Arg="C" Label="for a collection of elements of a polar space"/>
+<Oper Name="List" Arg="C" Label="for a collection of elements of a polar space"/>
 <Returns> an enumerator for the collection <A>C</A> and a list with all elements of <A>C</A></Returns>
 <Description>
 The argument <A>C</A> is a collection of subspaces of a polar space.
@@ -956,7 +956,7 @@ For all polar spaces an iterator is constructed using <F>IteratorList(enum)</F>,
 </Subsection>
 
 <ManSection>
-<Oper Name="Iterator" Arg="elements"/>
+<Oper Name="Iterator" Arg="elements" Label="for a collection of elements of a polar space"/>
 <Returns> an iterator </Returns>
 <Description>
 <A>C</A> is a collection of subspaces of a polar space.
@@ -967,7 +967,7 @@ For all polar spaces an iterator is constructed using <F>IteratorList(enum)</F>,
 </ManSection>
 
 <ManSection>
-<Oper Name="AsList" Arg="subspaces"/>
+<Oper Name="AsList" Arg="subspaces" Label="for a collection of elements of a polar space"/>
 <Returns>an Orb object or list</Returns>
 <Description>
 <Example>
