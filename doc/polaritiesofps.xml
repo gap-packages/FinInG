@@ -108,7 +108,7 @@ objects in the category <C>IsPolarityOfProjectiveSpace</C>, which is a
 subcategory of the category <C>IsProjGrpElWithFrobWithPSIsom</C>. 
 
 <ManSection>
-<Oper Name="PolarityOfProjectiveSpace" Arg="mat, f"/>
+<Oper Name="PolarityOfProjectiveSpace" Arg="mat, f" Label="for a matrix and a field"/>
 <Returns>a polarity of a projective space</Returns>
 <Description>The underlying correlation of
 the projective space is constructed using matrix <A>mat</A>, field <A>f</A>, the identity
@@ -122,7 +122,7 @@ induce a polarity.
 </ManSection>
 
 <ManSection>
-<Oper Name="PolarityOfProjectiveSpace" Arg="mat, frob, f"/>
+<Oper Name="PolarityOfProjectiveSpace" Arg="mat, frob, f" Label="for a matrix, a field automorphism and a field"/>
 <Oper Name="HermitianPolarityOfProjectiveSpace" Arg="mat, f"/>
 <Returns>a polarity of a projective space</Returns>
 <Description>The underlying correlation of
@@ -142,7 +142,7 @@ hermitian form.
 </ManSection>
 
 <ManSection>
-<Oper Name="PolarityOfProjectiveSpace" Arg="form"/>
+<Oper Name="PolarityOfProjectiveSpace" Arg="form" Label="for a form"/>
 <Returns>a polarity of a projective space</Returns>
 <Description>The polarity of the projective space is constructed using a
 non-degenerate sesquilinear form <A>form</A>. It is checked whether the given
@@ -185,7 +185,7 @@ error message is returned.
 </ManSection>
 
 <ManSection>
-<Attr Name="BaseField" Arg="phi"/>
+<Attr Name="BaseField" Arg="phi" Label="for a polarity"/>
 <Returns>a field</Returns>
 <Description>The base field over which the polarity <A>phi</A> was constructed.
 <Example>

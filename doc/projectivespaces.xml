@@ -51,7 +51,7 @@ We refer the reader to
 
 <ManSection>
 <Oper Name="ProjectiveSpace" Arg="d, F"/>
-<Oper Name="ProjectiveSpace" Arg="d, q"/>    
+<Oper Name="ProjectiveSpace" Arg="d, q" Label="for an integer and a prime power"/>    
 <Oper Name="PG" Arg="d, q"/>    
 
 <Returns>a projective space</Returns>
@@ -67,9 +67,9 @@ namely, the common abbreviation <C>PG(d, q)</C>.
 </ManSection>
 
 <ManSection Label="proj:dimension">
-<Attr Name="ProjectiveDimension" Arg="ps"/>
+<Attr Name="ProjectiveDimension" Arg="ps" Label="for a projective space"/>
 <Attr Name="Dimension" Arg="ps"/>
-<Attr Name="Rank" Arg="ps"/>
+<Attr Name="Rank" Arg="ps" Label="for a projective space"/>
 <Returns>the projective dimension of the projective space <A>ps</A></Returns>
 <Description>
 <Example>
@@ -90,7 +90,7 @@ namely, the common abbreviation <C>PG(d, q)</C>.
 </ManSection>
 
 <ManSection Label="proj:underlyingvs">
-<Oper Name="UnderlyingVectorSpace" Arg="ps"/>
+<Oper Name="UnderlyingVectorSpace" Arg="ps" Label="for a projective space"/>
 
 <Returns>a vector space</Returns>
 <Description>If <A>ps</A> is a projective space of dimension <M>n</M> over the field of order
@@ -103,7 +103,7 @@ vector space over the field of order <M>q</M>.
 </ManSection>
 
 <ManSection>
-<Attr Name="AmbientSpace" Arg="ps"/>
+<Attr Name="AmbientSpace" Arg="ps" Label="for a projective space"/>
 <Returns>a projective space</Returns>
 <Description>The ambient space of a projective space <A>ps</A> is the projective space itself.
 Hence, simply <A>ps</A> will be returned.
@@ -128,7 +128,7 @@ incidence geometry, and hence do in <Package>FinInG</Package>
 <B>not</B> belong to the category <C>IsSubspaceOfProjectiveSpace</C>.
 
 <ManSection>
-<Oper Name="VectorSpaceToElement" Arg="geo, v"/>
+<Oper Name="VectorSpaceToElement" Arg="geo, v" Label="for a projective space and a vector or matrix"/>
 <Returns>an element</Returns>
 <Description>
 <A>geo</A> is a projective space, and <A>v</A> is either a row vector (for points) or an <M>m \times
@@ -156,7 +156,7 @@ incidence results in an error message.
 </ManSection>
 
 <ManSection>
-<Oper Name="ProjectiveDimension" Arg="sub"/>
+<Oper Name="ProjectiveDimension" Arg="sub" Label="for an element of a projective space"/>
 <Returns>the projective dimension of a subspace of a projective space. The operation <F>ProjectiveDimension</F>
 is also applicable on the EmptySubspace.
 </Returns>
@@ -168,7 +168,7 @@ is also applicable on the EmptySubspace.
 </ManSection>
 
 <ManSection>
-<Oper Name="ElementsOfIncidenceStructure" Arg="ps, j"/>
+<Oper Name="ElementsOfIncidenceStructure" Arg="ps, j" Label="for a projective space and an integer"/>
 <Returns>the collection of elements of the projective space <A>ps</A> of type <A>j</A></Returns>
 <Description>
 For the projective space <A>ps</A> of dimension <M>d</M> and the type <A>j</A> (where <M>1 \leq j \leq d</M>),
@@ -181,11 +181,11 @@ An error message is produced when the projective space <A>ps</A> has no elements
 
 <ManSection>
 <Heading>Short names for ElementsOfIncidenceStructure</Heading>
-<Oper Name="Points" Arg="ps"/>
-<Oper Name="Lines" Arg="ps"/>
-<Oper Name="Planes" Arg="ps"/>
-<Oper Name="Solids" Arg="ps"/>
-<Oper Name="Hyperplanes" Arg="ps"/>
+<Oper Name="Points" Arg="ps" Label="for a projective space"/>
+<Oper Name="Lines" Arg="ps" Label="for a projective space"/>
+<Oper Name="Planes" Arg="ps" Label="for a projective space"/>
+<Oper Name="Solids" Arg="ps" Label="for a projective space"/>
+<Oper Name="Hyperplanes" Arg="ps" Label="for a projective space"/>
 <Returns>The elements of <A>ps</A> of respective type 1, 2, 3, 4, and the hyperplanes</Returns>
 <Description>
 An error message is produced when the projective space <A>ps</A> has no elements of a required type.
@@ -197,9 +197,9 @@ An error message is produced when the projective space <A>ps</A> has no elements
 
 <ManSection>
 <Heading>Incidence and containment</Heading>
-<Oper Name="IsIncident" Arg="el1, el2"/>
-<Oper Name="\*" Arg="el1, el2"/>
-<Oper Name="\in" Arg="el1, el2"/>
+<Oper Name="IsIncident" Arg="el1, el2" Label="for elements of a projective space"/>
+<Oper Name="\*" Arg="el1, el2" Label="for elements of a projective space"/>
+<Oper Name="\in" Arg="el1, el2" Label="for elements of a projective space"/>
 <Returns>true or false</Returns>
 <Description>
 Recall that for projective spaces, incidence is symmetrized containment, where the empty subspace and the 
@@ -264,7 +264,7 @@ list of coefficients of the equation defining the hyperplane as an algebraic var
 </ManSection>
 
 <ManSection>
-<Oper Name="AmbientSpace" Arg="el"/>
+<Oper Name="AmbientSpace" Arg="el" Label="for an element of a projective space"/>
 <Returns>returns the ambient space of an element <A>el</A> of a projective space</Returns>
 <Description>
 This operation is also applicable on the empty subspace and the whole space.
@@ -275,7 +275,7 @@ This operation is also applicable on the empty subspace and the whole space.
 </ManSection>
 
 <ManSection>
-<Oper Name="BaseField" Arg="el"/>
+<Oper Name="BaseField" Arg="el" Label="for an element of a projective space"/>
 <Returns>returns the base field of an element <A>el</A> of a projective space</Returns>
 <Description>
 This operation is also applicable on the trivial subspace and the whole space.
@@ -287,7 +287,7 @@ This operation is also applicable on the trivial subspace and the whole space.
 
 
 <ManSection>
-<Oper Name="Random" Arg="elements"/>
+<Oper Name="Random" Arg="elements" Label="for a collection of subspaces of a projective space"/>
 <Returns>a random element from the collection <A>elements</A></Returns>
 <Description>
 The collection <A>elements</A> is an object in the category <C>IsElementsOfIncidenceStructure</C>,
@@ -301,7 +301,7 @@ latter information can be derived e.g. using <C>AmbientSpace</C> and <C>Type</C>
 
 <ManSection>
 <Oper Name="RandomSubspace" Arg="ps, i"/>
-<Oper Name="RandomSubspace" Arg="ps"/>
+<Oper Name="RandomSubspace" Arg="ps" Label="for a projective space"/>
 <Returns>the first variant returns a random element of type <A>i</A> of the projective space <A>ps</A>.
 The second variant returns a random element of a random type of the projective space <A>ps</A>
 </Returns>
@@ -314,7 +314,7 @@ The second variant returns a random element of a random type of the projective s
 
 <ManSection Label="liespan">
 <Oper Name="Span" Arg="u,v"/>
-<Oper Name="Span" Arg="list"/>
+<Oper Name="Span" Arg="list" Label="for a list of subspaces"/>
 <Returns> an element or the empty subspace or the whole space</Returns>
 <Description>
 When <A>u</A> and <A>v</A> are elements of a projective space.
@@ -334,7 +334,7 @@ variant of this operation.
 
 <ManSection Label="liemeet">
 <Oper Name="Meet" Arg="u,v"/>
-<Oper Name="Meet" Arg="list"/>
+<Oper Name="Meet" Arg="list" Label="for a list of subspaces"/>
 <Returns>an element or the empty subspace or the whole space</Returns>
 <Description>
 When <A>u</A> and <A>v</A> are elements of a projective space.
@@ -353,7 +353,7 @@ variant of this operation. We remark that the result of a <F>Meet</F> operation 
 </ManSection>
 
 <ManSection>
-<Oper Name="FlagOfIncidenceStructure" Arg="ps, els"/>
+<Oper Name="FlagOfIncidenceStructure" Arg="ps, els" Label="for a projective space and a list of subspaces"/>
 <Returns>the flag of the projective space <A>ps</A>, determined by
 the subspaces of <A>ps</A> in the list <A>els</A>. When <A>els</A> is empty,
 the empty flag is returned.</Returns>
@@ -365,14 +365,14 @@ the empty flag is returned.</Returns>
 </ManSection>
 
 <ManSection>
-<Oper Name="IsEmptyFlag" Arg="flag"/>
+<Oper Name="IsEmptyFlag" Arg="flag" Label="for a flag of a projective space"/>
 <Returns>return true if <A>flag</A> is the empty flag</Returns>
 <Description>
 </Description>
 </ManSection>
 
 <ManSection>
-<Oper Name="IsChamberOfIncidenceStructure" Arg="flag"/>
+<Oper Name="IsChamberOfIncidenceStructure" Arg="flag" Label="for a flag of a projective space"/>
 <Returns>true if <A>flag</A> is a chamber</Returns>
 <Description>
 <Example>
@@ -388,8 +388,8 @@ the empty flag is returned.</Returns>
 <Heading>Shadows of Projective Subspaces</Heading>
 
 <ManSection>
-<Oper Name="ShadowOfElement" Arg="ps, el, i"/>
-<Oper Name="ShadowOfElement" Arg="ps, el, str"/>
+<Oper Name="ShadowOfElement" Arg="ps, el, i" Label="for a projective space, an element and an integer"/>
+<Oper Name="ShadowOfElement" Arg="ps, el, str" Label="for a projective space, an element and a string"/>
 <Returns>the elements of type <A>i</A> incident with <A>el</A>. The second variant determines 
 the type <A>i</A> from the position of <A>str</A> in the list returned by 
 <F>TypesOfElementsOfIncidenceStructurePlural</F></Returns>
@@ -401,8 +401,8 @@ the type <A>i</A> from the position of <A>str</A> in the list returned by
 </ManSection>
 
 <ManSection>
-<Oper Name="ShadowOfFlag" Arg="ps, flag, i"/>
-<Oper Name="ShadowOfFlag" Arg="ps, flag, str"/>
+<Oper Name="ShadowOfFlag" Arg="ps, flag, i" Label="for a projective space, a flag and an integer"/>
+<Oper Name="ShadowOfFlag" Arg="ps, flag, str" Label="for a projective space, a flag and a string"/>
 <Returns>the type <A>i</A> shadow elements of the flag <A>flag</A>, i.e. the elements of type
 <A>i</A> incident with all elements of <A>flag</A>. The
 second variant determines the type <A>i</A> from the position of <A>str</A> in the list
@@ -416,7 +416,7 @@ returned by <F>TypesOfElementsOfIncidenceStructurePlural</F>.
 </ManSection>
 
 <ManSection>
-<Oper Name="ElementsIncidentWithElementOfIncidenceStructure" Arg="el, i"/>
+<Oper Name="ElementsIncidentWithElementOfIncidenceStructure" Arg="el, i" Label="for an element of a projective space and an integer"/>
 <Returns>the elements of type <A>i</A> incident with <A>el</A>, in other words,
 the type <A>i</A> shadow of the element <A>el</A>
 </Returns>
@@ -431,16 +431,16 @@ also performs the checking.
 
 <ManSection>
 <Heading>Short names for <F>ElementsIncidentWithElementOfIncidenceStructure</F></Heading>
-<Oper Name="Points" Arg="ps, v"/>
-<Oper Name="Lines" Arg="ps, v"/>
-<Oper Name="Planes" Arg="ps, v"/>
-<Oper Name="Solids" Arg="ps, v"/>
-<Oper Name="Hyperplanes" Arg="inc, v"/>
-<Oper Name="Points" Arg="v"/>
-<Oper Name="Lines" Arg="v"/>
-<Oper Name="Planes" Arg="v"/>
-<Oper Name="Solids" Arg="v"/>
-<Oper Name="Hyperplanes" Arg="v"/>
+<Oper Name="Points" Arg="ps, v" Label="for a projective space and an element"/>
+<Oper Name="Lines" Arg="ps, v" Label="for a projective space and an element"/>
+<Oper Name="Planes" Arg="ps, v" Label="for a projective space and an element"/>
+<Oper Name="Solids" Arg="ps, v" Label="for a projective space and an element"/>
+<Oper Name="Hyperplanes" Arg="inc, v" Label="for a projective space and an element"/>
+<Oper Name="Points" Arg="v" Label="for an element of a projective space"/>
+<Oper Name="Lines" Arg="v" Label="for an element of a projective space"/>
+<Oper Name="Planes" Arg="v" Label="for an element of a projective space"/>
+<Oper Name="Solids" Arg="v" Label="for an element of a projective space"/>
+<Oper Name="Hyperplanes" Arg="v" Label="for an element of a projective space"/>
 <Returns>The elements of the incidence geometry of the according type. If <A>ps</A> is not given as an argument, it is deduced from <A>v</A> as its
 ambient geometry.
 </Returns>
@@ -457,7 +457,7 @@ ambient geometry.
 <Heading>Enumerating subspaces of a projective space</Heading>
 
 <ManSection>
-<Oper Name="Iterator" Arg="subspaces"/>
+<Oper Name="Iterator" Arg="subspaces" Label="for a collection of subspaces of a projective space"/>
 <Returns>an iterator for the collection <A>subspaces</A></Returns>
 <Description>
 We refer to the GAP operation <Ref Oper="Iterator"/> for the definition of an iterator.
@@ -469,7 +469,7 @@ We refer to the GAP operation <Ref Oper="Iterator"/> for the definition of an it
 
 
 <ManSection>
-<Oper Name="Enumerator" Arg="subspaces"/>
+<Oper Name="Enumerator" Arg="subspaces" Label="for a collection of subspaces of a projective space"/>
 <Returns>an enumerator for the collection <A>subspaces</A></Returns>
 <Description>
 For complete collections of subspaces of a given type of a projective space, currently, no non-trivial enumerator is installed, 
@@ -482,8 +482,8 @@ be used as an enumerator, but this might be time consuming.
 </ManSection>
 
 <ManSection>
-<Oper Name="List" Arg="subspaces"/>
-<Oper Name="AsList" Arg="subspaces"/>
+<Oper Name="List" Arg="subspaces" Label="for a collection of subspaces of a projective space"/>
+<Oper Name="AsList" Arg="subspaces" Label="for a collection of subspaces of a projective space"/>
 <Returns>the complete list of elements in the collection <A>subspaces</A></Returns>
 <Description>
 The operation <F>List</F> will return a complete list, the operation <F>AsList</F> will return an <Package>orb</Package> object,

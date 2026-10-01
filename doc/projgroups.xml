@@ -307,7 +307,7 @@ semilinear maps from projectivities inside the category of collineations of a pr
 
 <ManSection>
 <Heading>Correlations and collineations</Heading>
-<Filt Name="IsProjGrpElWithFrobWithPSIsom" Type="Category"/>
+<Filt Name="IsProjGrpElWithFrobWithPSIsom" Type="Category" Label="correlations and collineations"/>
 <Filt Name="IsCorrelationCollineation" Type="Category"/>
 <Filt Name="IsCorrelation" Type="Property"/>
 <Description>
@@ -334,7 +334,7 @@ category <C>IsProjGrpElWithFrobWithPSIsom</C>.
 
 <ManSection>
 <Oper Name="Projectivity" Arg="mat, f"/>
-<Oper Name="Projectivity" Arg="pg, mat"/>
+<Oper Name="Projectivity" Arg="pg, mat" Label="for a projective space and a matrix"/>
 <Returns>a projectivity of a projective space</Returns>
 <Description>The argument <A>mat</A> must be a nonsingular matrix over the finite field
 <A>f</A>. In the second variant, the size of the nonsingular matrix <A>mat</A>
@@ -349,13 +349,11 @@ belongs to <C>IsProjGrpElWithFrob</C>!
 
 <ManSection>
 <Oper Name="CollineationOfProjectiveSpace" Arg="mat, frob, f"/>
-<Oper Name="CollineationOfProjectiveSpace" Arg="mat, f"/>
-<Oper Name="CollineationOfProjectiveSpace" Arg="mat, frob, f"/>
-<Oper Name="CollineationOfProjectiveSpace" Arg="mat, f"/>
-<Oper Name="CollineationOfProjectiveSpace" Arg="pg,mat"/>
-<Oper Name="CollineationOfProjectiveSpace" Arg="pg,mat,frob"/>
+<Oper Name="CollineationOfProjectiveSpace" Arg="mat, f" Label="for a matrix and a field"/>
+<Oper Name="CollineationOfProjectiveSpace" Arg="pg,mat" Label="for a projective space and a matrix"/>
+<Oper Name="CollineationOfProjectiveSpace" Arg="pg,mat,frob" Label="for a projective space, a matrix and a field automorphism"/>
 <Oper Name="Collineation" Arg="pg,mat"/>
-<Oper Name="Collineation" Arg="pg,mat,frob"/>
+<Oper Name="Collineation" Arg="pg,mat,frob" Label="for a projective space, a matrix and a field automorphism"/>
 <Description>
 <A>mat</A> is a nonsingular matrix, <A>frob</A> is a field automorphism, <A>f</A>
 is a field, and <A>pg</A> is a projective space. This function
@@ -407,10 +405,10 @@ This operation returns the standard duality of the projective space <A>ps</A>
 
 <ManSection>
 <Oper Name="CorrelationOfProjectiveSpace" Arg="mat, f"/>
-<Oper Name="CorrelationOfProjectiveSpace" Arg="mat, frob, f"/>
-<Oper Name="CorrelationOfProjectiveSpace" Arg="mat, f, delta"/>
-<Oper Name="CorrelationOfProjectiveSpace" Arg="mat, frob, f, delta"/>
-<Oper Name="CorrelationOfProjectiveSpace" Arg="pg,mat,frob,delta"/>
+<Oper Name="CorrelationOfProjectiveSpace" Arg="mat, frob, f" Label="for a matrix, a field automorphism and a field"/>
+<Oper Name="CorrelationOfProjectiveSpace" Arg="mat, f, delta" Label="for a matrix, a field and a duality"/>
+<Oper Name="CorrelationOfProjectiveSpace" Arg="mat, frob, f, delta" Label="for a matrix, a field automorphism, a field and a duality"/>
+<Oper Name="CorrelationOfProjectiveSpace" Arg="pg,mat,frob,delta" Label="for a projective space, a matrix, a field automorphism and a duality"/>
 <Oper Name="Correlation" Arg="pg,mat,frob,delta"/>
 <Description>
 <A>mat</A> is a nonsingular matrix, <A>frob</A> is a field automorphism, <A>f</A>
@@ -470,7 +468,7 @@ This function returns the matrix that was used to construct <A>g</A>.
 </ManSection>
 
 <ManSection>
-<Oper Name="BaseField" Arg="g"/>
+<Oper Name="BaseField" Arg="g" Label="for a projective group element"/>
 <Returns>a field</Returns>
 <Description>
 <A>g</A> is a projectivity, collineation or correlation of a projective space.
@@ -509,7 +507,7 @@ companion isomorphism of the projective space which defines <A>g</A>.
 
 
 <ManSection>
-<Oper Name="Order" Arg="g"/>
+<Oper Name="Order" Arg="g" Label="for a projective group element"/>
 <Description>
 <A>g</A> is a projectivity, collineation or correlation of a projective space.
 This function returns the order of <A>g</A>.
@@ -612,7 +610,7 @@ This operation returns the correlations and collineations of &pgnq;.
 <Heading>Basic operations for projective groups</Heading>
 
 <ManSection>
-<Oper Name="BaseField" Arg="g"/>
+<Oper Name="BaseField" Arg="g" Label="for a projective group"/>
 <Returns>a field</Returns>
 <Description><A>g</A> must be a projective group. This function finds
 the base field of the vector space on which the group acts.
@@ -620,7 +618,7 @@ the base field of the vector space on which the group acts.
 </ManSection>
 
 <ManSection>
-<Attr Name="Dimension" Arg="g"/>
+<Attr Name="Dimension" Arg="g" Label="for a projective group"/>
 <Returns>a number</Returns>
 <Description><A>g</A> must be a projective group. This function finds
 the dimension of the vector space on which the group acts.
@@ -858,7 +856,7 @@ identity mapping is returned.
 
 <ManSection>
 <Oper Name="ProjectiveElationGroup" Arg="axis,centre"/>
-<Oper Name="ProjectiveElationGroup" Arg="axis"/>
+<Oper Name="ProjectiveElationGroup" Arg="axis" Label="for an axis"/>
 <Returns>A group of elations</Returns>
 <Description>
 The first version returns the group of elations with with given axis <A>axis</A> and centre <A>centre</A>. 

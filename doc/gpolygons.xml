@@ -161,7 +161,7 @@ by <F>GeneralisedPolygonByBlocks</F>.
 
 <ManSection>
 <Oper Name="GeneralisedPolygonByElements" Arg="pts, lns, inc"/>
-<Oper Name="GeneralisedPolygonByElements" Arg="pts, lns, inc, grp, act"/>
+<Oper Name="GeneralisedPolygonByElements" Arg="pts, lns, inc, grp, act" Label="for points, lines, incidence, a group and an action"/>
 <Returns>a generalised polygon</Returns>
 <Description>
 The argument <A>pts</A>, <A>lns</A> and <A>inc</A> are respectively a set of objects, a set of objects
@@ -215,7 +215,7 @@ attribute and can be accessed by the operation <F>IncidenceGraph</F>.
 </ManSection>
 
 <ManSection>
-<Oper Name="IncidenceGraph" Arg="gp"/>
+<Oper Name="IncidenceGraph" Arg="gp" Label="for a generalised polygon"/>
 <Returns>a graph</Returns>
 <Description>
 The argument <A>gp</A> is a generalised polygon. This operation returns the incidence graph of
@@ -256,7 +256,7 @@ for some generalised polygons, it is necessary to compute a collineation group f
 </ManSection>
 
 <ManSection>
-<Attr Name="CollineationGroup" Arg="gp"/>
+<Attr Name="CollineationGroup" Arg="gp" Label="for a generalised polygon"/>
 <Returns>a group</Returns>
 <Description>
 This attribute returns the full collineation group of the generalised polygon <A>gp</A>. 
@@ -346,9 +346,9 @@ as an attribute of <A>gp</A>. Normally, attributes of GAP objects are immutable.
 
 <ManSection>
 <Heading>Collections of elements of generalised polygons</Heading>
-<Attr Name="ElementsOfIncidencStructure" Arg="gp, i"/>
-<Attr Name="Points" Arg="gp"/>
-<Attr Name="Lines" Arg="gp"/>
+<Attr Name="ElementsOfIncidenceStructure" Arg="gp, i" Label="for a generalised polygon and an integer"/>
+<Attr Name="Points" Arg="gp" Label="for a generalised polygon"/>
+<Attr Name="Lines" Arg="gp" Label="for a generalised polygon"/>
 <Returns>a collection of elements of a generalised polygon</Returns>
 <Description>
 <A>gp</A> is any generalised polygon, <A>i</A> is a natural number, necessarily <M>1</M> or <M>2</M>.
@@ -358,7 +358,7 @@ and <F>Lines</F> are the usual shortcuts.
 </ManSection>
 
 <ManSection>
-<Oper Name="Size" Arg="els"/>
+<Oper Name="Size" Arg="els" Label="for a collection of elements of a generalised polygon"/>
 <Returns>a number</Returns>
 <Description>
 <A>els</A> is a collection of elements of a generalised polygon. This operation returns
@@ -368,9 +368,9 @@ the number of element in <A>els</A>.
 
 <ManSection>
 <Heading>Creating elements from objects and retrieving objects from elements</Heading>
-<Oper Name="ObjectToElement" Arg="gp, obj"/>
-<Oper Name="ObjectToElement" Arg="gp, type, obj"/>
-<Oper Name="UnderlyingObject" Arg="el"/>
+<Oper Name="ObjectToElement" Arg="gp, obj" Label="for a generalised polygon and an object"/>
+<Oper Name="ObjectToElement" Arg="gp, type, obj" Label="for a generalised polygon, a type and an object"/>
+<Oper Name="UnderlyingObject" Arg="el" Label="for an element of a generalised polygon"/>
 <Returns>a collection of elements of a generalised polygon</Returns>
 <Description>
 To create elements in <A>gp</A> (of type <A>type</A>), one of the versions of
@@ -385,8 +385,8 @@ can be used.
 
 <ManSection>
 <Heading>Incidence</Heading>
-<Oper Name="IsIncident" Arg="v,w"/>
-<Oper Name="\*" Arg="v,w"/>
+<Oper Name="IsIncident" Arg="v,w" Label="for elements of a generalised polygon"/>
+<Oper Name="\*" Arg="v,w" Label="for elements of a generalised polygon"/>
 <Returns>true or false</Returns>
 <Description>
 Let <A>v</A> and <A>w</A> be two elements of a generalised polygon. It is checked if
@@ -396,7 +396,7 @@ the two elements are incident in their ambient geometry.
 </ManSection>
 
 <ManSection>
-<Oper Name="Span" Arg="v,w"/>
+<Oper Name="Span" Arg="v,w" Label="for two elements of a generalised polygon"/>
 <Returns>a line of a generalised polygon or fail</Returns>
 <Description>
 Let <A>v</A> and <A>w</A> be two elements of a generalised polygon. It is checked if
@@ -413,7 +413,7 @@ generalised polygons that belong to <C>IsLieGeometry</C>, see <Ref Label="liespa
 </ManSection>
 
 <ManSection>
-<Oper Name="Meet" Arg="v,w"/>
+<Oper Name="Meet" Arg="v,w" Label="for two elements of a generalised polygon"/>
 <Returns>a point of a generalised polygon or fail</Returns>
 <Description>
 Let <A>v</A> and <A>w</A> be two elements of a generalised polygon. It is checked if
@@ -431,10 +431,10 @@ generalised polygons that belong to <C>IsLieGeometry</C>, see <Ref Label="liemee
 
 <ManSection>
 <Heading>Shadow elements</Heading>
-<Oper Name="ShadowOfElement" Arg="geo, v, j"/>
-<Oper Name="Points" Arg="el"/>
-<Oper Name="Lines" Arg="el"/>
-<Oper Name="ElementsIncidentWithElementOfIncidenceStructure" Arg="el, i"/>
+<Oper Name="ShadowOfElement" Arg="geo, v, j" Label="for a generalised polygon, an element and an integer"/>
+<Oper Name="Points" Arg="el" Label="for an element of a generalised polygon"/>
+<Oper Name="Lines" Arg="el" Label="for an element of a generalised polygon"/>
+<Oper Name="ElementsIncidentWithElementOfIncidenceStructure" Arg="el, i" Label="for an element of a generalised polygon and an integer"/>
 <Returns> A collection of elements</Returns>
 <Description>
 <A>geo</A> is a generalised polygon, <A>v</A> must be an element of <A>geo</A>,
@@ -605,7 +605,7 @@ of both generalised hexagons.
 </Subsection>
 
 <ManSection>
-<Filt Name="IsLieGeometry" Type="Category"/>
+<Filt Name="IsLieGeometry" Type="Category" Label="for generalised hexagons"/>
 <Description>
 Recall that the classical generalised hexagons are constructed as an object in <F>IsLieGeometry</F>. This makes most operations
 described in the appropriate chapters on Lie geometries, projective spaces and polar spaces applicable.
@@ -614,8 +614,8 @@ described in the appropriate chapters on Lie geometries, projective spaces and p
 
 <ManSection>
 <Oper Name="SplitCayleyHexagon" Arg="q"/>
-<Oper Name="SplitCayleyHexagon" Arg="f"/>
-<Oper Name="SplitCayleyHexagon" Arg="ps"/>
+<Oper Name="SplitCayleyHexagon" Arg="f" Label="for a field"/>
+<Oper Name="SplitCayleyHexagon" Arg="ps" Label="for a polar space"/>
 <Returns>a generalised hexagon</Returns>
 <Description>
 <Example>
@@ -626,8 +626,8 @@ described in the appropriate chapters on Lie geometries, projective spaces and p
 
 <ManSection>
 <Oper Name="TwistedTrialityHexagon" Arg="q"/>
-<Oper Name="TwistedTrialityHexagon" Arg="f"/>
-<Oper Name="TwistedTrialityHexagon" Arg="ps"/>
+<Oper Name="TwistedTrialityHexagon" Arg="f" Label="for a field"/>
+<Oper Name="TwistedTrialityHexagon" Arg="ps" Label="for a polar space"/>
 <Returns>a generalised hexagon</Returns>
 <Description>
 <Example>
@@ -650,7 +650,7 @@ vectors and matrices in different representations are allowed as argument.
 </ManSection>
 
 <ManSection>
-<Oper Name="ObjectToElement" Arg="gh, obj"/>
+<Oper Name="ObjectToElement" Arg="gh, obj" Label="for a generalised hexagon and an object"/>
 <Returns>an element of a classical generalized hexagon</Returns>
 <Description>
 The argument <A>obj</A> is one vector or a list of vectors from the underlying vector space of <A>gh</A>.
@@ -663,14 +663,14 @@ vectors and matrices in different representations are allowed as argument.
 </ManSection>
 
 <ManSection>
-<Oper Name="UnderlyingObject" Arg="gh, obj"/>
+<Oper Name="UnderlyingObject" Arg="gh, obj" Label="for a generalised hexagon and an object"/>
 <Returns>a vector or a matrix</Returns>
 <Description>
 </Description>
 </ManSection>
 
 <ManSection>
-<Oper Name="\in" Arg="x, gh"/>
+<Oper Name="\in" Arg="x, gh" Label="for an element and a generalised hexagon"/>
 <Returns>true or false</Returns>
 <Description>
 <Example>
@@ -681,8 +681,8 @@ vectors and matrices in different representations are allowed as argument.
 
 <ManSection>
 <Heading>Span and meet of elements</Heading>
-<Oper Name="Span" Arg="x, y"/>
-<Oper Name="Meet" Arg="x, y"/>
+<Oper Name="Span" Arg="x, y" Label="for two elements of a generalised hexagon"/>
+<Oper Name="Meet" Arg="x, y" Label="for two elements of a generalised hexagon"/>
 <Returns>a subspace of a projective space</Returns>
 <Description>
 <A>x</A> and <A>y</A> are two elements of a classical generalised hexagon. The operation <F>Span</F> returns the projective
@@ -696,7 +696,7 @@ the operations <F>Span</F> and <F>Meet</F> behave as described in <Ref Sect="pol
 </ManSection>
 
 <ManSection>
-<Attr Name="CollineationGroup" Arg="gh"/>
+<Attr Name="CollineationGroup" Arg="gh" Label="for a generalised hexagon"/>
 <Returns>a group of collineations</Returns>
 <Description>
 <A>gh</A> is a classical generalised hexagon. This attribute returns the full collineation group, equipped with a nice monomorphism.
@@ -821,10 +821,10 @@ demonstrated, and some categories are displayed.
 
 <ManSection>
 <Heading>Representation of elements and underlying objects</Heading>
-<Oper Name="ObjectToElement" Arg="egq, t, obj"/>
-<Oper Name="ObjectToElement" Arg="egq, obj"/>
+<Oper Name="ObjectToElement" Arg="egq, t, obj" Label="for an EGQ by Kantor family, a type and an object"/>
+<Oper Name="ObjectToElement" Arg="egq, obj" Label="for an EGQ by Kantor family and an object"/>
 <Oper Name="BasePointOfEGQ" Arg="egq"/>
-<Oper Name="UnderlyingObject" Arg="el"/>
+<Oper Name="UnderlyingObject" Arg="el" Label="for an element of an EGQ by Kantor family"/>
 <Description>
 For technical reasons, the underlying objects of the elements of an elation generalised quadrangle constructed from a Kantor family,
 are not exactly the mathematical objects from the definition. However, these technicalities are almost completely hidden for the user, except
@@ -843,7 +843,7 @@ the base-point of an elation generalised quadrangle constructed from a Kantor fa
 <Heading>Elation group and natural action on elements</Heading>
 <Attr Name="ElationGroup" Arg="egq"/>
 <Func Name="OnKantorFamily" Arg="g,el"/>
-<Attr Name="CollineationAction" Arg="g"/>
+<Attr Name="CollineationAction" Arg="g" Label="for an elation group"/>
 <Description>
 The attribute <F>ElationGroup</F> is naturally set upon creation of an elation generalised quadrangle from a Kantor
 family. The elements of the elation group act "naturally" on the elements of the elation generalised quadrangle. This
@@ -1042,9 +1042,9 @@ completely. This attribute returns these <M>q</M> planes of &w5q;.
 
 <ManSection>
 <Heading>Representation of elements and underlying objects</Heading>
-<Oper Name="ObjectToElement" Arg="egq, t, obj"/>
-<Oper Name="ObjectToElement" Arg="egq, obj"/>
-<Oper Name="UnderlyingObject" Arg="el"/>
+<Oper Name="ObjectToElement" Arg="egq, t, obj" Label="for an EGQ by BLT-set, a type and an object"/>
+<Oper Name="ObjectToElement" Arg="egq, obj" Label="for an EGQ by BLT-set and an object"/>
+<Oper Name="UnderlyingObject" Arg="el" Label="for an element of an EGQ by BLT-set"/>
 <Description>
 The underlying objects of the elements of an elation generalised quadrangle in the category <C>IsEGQByBLTSet</C> 
 are elements of the polar space &w5q; in its standard representation. These elements can be used as underlying

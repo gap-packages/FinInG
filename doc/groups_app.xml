@@ -403,7 +403,7 @@ For this reason, <F>CanonicalQuadraticForm</F> is not an operation designed for 
 
 </Section>
 
-<Section Label="groups_app_forms">
+<Section Label="groups_app_direct">
 <Heading>Direct commands to construct the projective classical groups in <Package>FinInG</Package></Heading>
 
 As explained in Chapter <Ref Chap="classicalpolarspaces"/>, Section <Ref Sect="polar:classicalgroups"/>, we have assumed that
@@ -622,7 +622,7 @@ The generators of this group are described explicitly in <Cite Key="HVM"/>, Appe
 
 </Section>
 
-<Section Label="groups_app_forms">
+<Section Label="groups_app_basis">
 <Heading>Basis of the collineation groups</Heading>
 
 The <Package>GenSS</Package> uses a function <F>FindBasePointCandidates</F> taking a group as one of the arguments.

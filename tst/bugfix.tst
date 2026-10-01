@@ -20,5 +20,13 @@ gap> ElationOfProjectiveSpace(l, p, q);
 gap> SingerCycleCollineation(2, 2^6);
 < a collineation: <cmat 3x3 over GF(2,6)>, F^0>
 
+# GAP >= 4.17 calls PreImagesSetNC internally
+gap> d := NaturalDuality(SymplecticSpace(3, 3));;
+gap> pts := AsList(Points(Range(d)!.geometry)){[1..3]};;
+gap> PreImagesSetNC(d, pts) = List(pts, x -> PreImageElm(d, x));
+true
+gap> PreImagesSet(d, pts) = PreImagesSetNC(d, pts);
+true
+
 #
 gap> STOP_TEST("bugfix.tst", 1 );

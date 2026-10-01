@@ -31,7 +31,7 @@ The package <Package>FinInG</Package> also contains the Veronese varieties <Ref 
 An <E>algebraic variety</E> in <Package>FinInG</Package> is an algebraic variety in a projective space or affine space, defined by a list of polynomials over a finite field.
 <ManSection>
     <Oper Name="AlgebraicVariety" Arg="space, pring, pollist"/>
-    <Oper Name="AlgebraicVariety" Arg="space, pollist"/>
+    <Oper Name="AlgebraicVariety" Arg="space, pollist" Label="for a space and a list of polynomials"/>
     <Returns>an algebraic variety</Returns>
     <Description>
         The argument <A>space</A> is an affine or projective space over a finite field <A>F</A>, the argument <A>pring</A> is a multivariate polynomial ring defined over 
@@ -49,7 +49,7 @@ An <E>algebraic variety</E> in <Package>FinInG</Package> is an algebraic variety
     </Description>
 </ManSection>
 <ManSection>
-    <Attr Name="AmbientSpace" Arg="var"/>
+    <Attr Name="AmbientSpace" Arg="var" Label="for an algebraic variety"/>
     <Returns>an affine or projective space</Returns>
     <Description>
         The argument <A>var</A> is an algebraic variety. This attribute returns the affine or projective space in which the variety <A>var</A> was defined.
@@ -57,10 +57,10 @@ An <E>algebraic variety</E> in <Package>FinInG</Package> is an algebraic variety
 </ManSection>
 <ManSection>
     <Oper Name="PointsOfAlgebraicVariety" Arg="var"/>
-    <Oper Name="Points" Arg="var" />
+    <Oper Name="Points" Arg="var"  Label="for an algebraic variety"/>
     <Returns>a list of points</Returns>
     <Description>
-        The argument <A>var</A> is an algebraic variety. This operation returns the list of points of the <Ref Attr="AmbientSpace" /> of the algebraic variety <A>var</A> whose coordinates satisfy the <Ref Attr="DefiningListOfPolynomials"/> of the algebraic variety <A>var</A>.
+        The argument <A>var</A> is an algebraic variety. This operation returns the list of points of the <Ref Attr="AmbientSpace" Label="for an algebraic variety"/> of the algebraic variety <A>var</A> whose coordinates satisfy the <Ref Attr="DefiningListOfPolynomials"/> of the algebraic variety <A>var</A>.
 <Example>
 <#Include SYSTEM "../examples/include/varieties_points.include"> 
 </Example>
@@ -68,18 +68,18 @@ An <E>algebraic variety</E> in <Package>FinInG</Package> is an algebraic variety
     </Description>
 </ManSection>
 <ManSection>
-    <Oper Name="Iterator" Arg="pts"/>
+    <Oper Name="Iterator" Arg="pts" Label="for the points of an algebraic variety"/>
     <Returns>an iterator</Returns>
     <Description>
         The argument <A>pts</A> is the set of <Ref Oper="PointsOfAlgebraicVariety" /> of an algebraic variety <A>var</A>. This operation returns an iterator for the points of an algebraic variety.
     </Description>
 </ManSection>
 <ManSection>
-    <Oper Name="\in" Arg="x,var"/>
-    <Oper Name="\in" Arg="x,pts"/>
+    <Oper Name="\in" Arg="x,var" Label="for a point and an algebraic variety"/>
+    <Oper Name="\in" Arg="x,pts" Label="for a point and the points of an algebraic variety"/>
     <Returns>true or false</Returns>
     <Description>
-        The argument <A>x</A> is a point of the <Ref Attr="AmbientSpace" /> of an algebraic variety <Ref Oper="AlgebraicVariety" />. This operation also works for a point <A>x</A> and the collection <A>pts</A> returned by <Ref Oper="PointsOfAlgebraicVariety"/>.
+        The argument <A>x</A> is a point of the <Ref Attr="AmbientSpace" Label="for an algebraic variety"/> of an algebraic variety <Ref Oper="AlgebraicVariety" />. This operation also works for a point <A>x</A> and the collection <A>pts</A> returned by <Ref Oper="PointsOfAlgebraicVariety"/>.
         </Description>
 </ManSection>
 
@@ -91,9 +91,9 @@ An <E>algebraic variety</E> in <Package>FinInG</Package> is an algebraic variety
 A <E>projective variety</E> in <Package>FinInG</Package> is an algebraic variety in a projective space defined by a list of homogeneous polynomials over a finite field.
 <ManSection>
     <Oper Name="ProjectiveVariety" Arg="pg, pring, pollist"/>
-    <Oper Name="ProjectiveVariety" Arg="pg, pollist"/>
-    <Oper Name="AlgebraicVariety" Arg="pg, pring, pollist"/>
-    <Oper Name="AlgebraicVariety" Arg="pg, pollist"/>
+    <Oper Name="ProjectiveVariety" Arg="pg, pollist" Label="for a projective space and a list of polynomials"/>
+    <Oper Name="AlgebraicVariety" Arg="pg, pring, pollist" Label="for a projective space, a polynomial ring and a list of polynomials"/>
+    <Oper Name="AlgebraicVariety" Arg="pg, pollist" Label="for a projective space and a list of polynomials"/>
     <Returns>a projective algebraic variety</Returns>
     <Description>
             <Example>
@@ -113,9 +113,9 @@ attribute installed.
 Furthermore, we provide a method for <F>PolarSpace</F> taking as an argument a projective algebraic variety. 
 <ManSection>
 <Oper Name="HermitianVariety" Arg="pg, pring, pol"/>
-<Oper Name="HermitianVariety" Arg="pg, pol"/>
-<Oper Name="HermitianVariety" Arg="n,F"/>
-<Oper Name="HermitianVariety" Arg="n,q"/>
+<Oper Name="HermitianVariety" Arg="pg, pol" Label="for a projective space and a polynomial"/>
+<Oper Name="HermitianVariety" Arg="n,F" Label="for an integer and a field"/>
+<Oper Name="HermitianVariety" Arg="n,q" Label="for an integer and a prime power"/>
 <Returns>a hermitian variety in a projective space</Returns>
 <Description>
 For the first two methods, the argument <A>pg</A> is a projective space, <A>pring</A> is a polynomial ring,
@@ -144,11 +144,11 @@ and the argument <A>q</A> is a prime power. This function returns the hermitian 
 
 <ManSection>
 <Oper Name="QuadraticVariety" Arg="pg, pring, pol"/>
-<Oper Name="QuadraticVariety" Arg="pg, pol"/>
-<Oper Name="QuadraticVariety" Arg="n, F, type"/>
-<Oper Name="QuadraticVariety" Arg="n, q, type"/>
-<Oper Name="QuadraticVariety" Arg="n, F"/>
-<Oper Name="QuadraticVariety" Arg="n, q"/>
+<Oper Name="QuadraticVariety" Arg="pg, pol" Label="for a projective space and a polynomial"/>
+<Oper Name="QuadraticVariety" Arg="n, F, type" Label="for an integer, a field and a string"/>
+<Oper Name="QuadraticVariety" Arg="n, q, type" Label="for an integer, a prime power and a string"/>
+<Oper Name="QuadraticVariety" Arg="n, F" Label="for an integer and a field"/>
+<Oper Name="QuadraticVariety" Arg="n, q" Label="for an integer and a prime power"/>
 <Returns>a quadratic variety in a projective space</Returns>
 <Description> 
 In the first two methods, the argument <A>pg</A> is a projective space, <A>pring</A> is a polynomial ring, 
@@ -253,7 +253,7 @@ When the argument <A>var</A> is a <Ref Oper="QuadraticVariety"/>, this returns t
 </ManSection>
 
 <ManSection>
-<Attr Name="SesquilinearForm" Arg="var"/>
+<Attr Name="SesquilinearForm" Arg="var" Label="for a hermitian variety"/>
 <Returns> a hermitian form</Returns>
 <Description>
 If the argument <A>var</A> is a <Ref Oper="HermitianVariety"/>, this returns the associated hermitian form.
@@ -262,7 +262,7 @@ If the argument <A>var</A> is a <Ref Oper="HermitianVariety"/>, this returns the
 
 
 <ManSection>
-<Oper Name="PolarSpace" Arg="var"/>
+<Oper Name="PolarSpace" Arg="var" Label="for an algebraic variety"/>
 <Description>
 the argument <A>var</A> is a projective algebraic variety. When its list of defining polynomial contains exactly one polynomial,
 depending on its degree, the operation <F>QuadraticFormByPolynomial</F> or <F>HermitianFormByPolynomial</F> is used to compute
@@ -282,9 +282,9 @@ An <E>affine variety</E> in <Package>FinInG</Package> is an algebraic variety in
 
 <ManSection>
     <Oper Name="AffineVariety" Arg="ag, pring, pollist"/>
-    <Oper Name="AffineVariety" Arg="ag, pollist"/>
-    <Oper Name="AlgebraicVariety" Arg="ag, pring, pollist"/>
-    <Oper Name="AlgebraicVariety" Arg="ag, pollist"/>
+    <Oper Name="AffineVariety" Arg="ag, pollist" Label="for an affine space and a list of polynomials"/>
+    <Oper Name="AlgebraicVariety" Arg="ag, pring, pollist" Label="for an affine space, a polynomial ring and a list of polynomials"/>
+    <Oper Name="AlgebraicVariety" Arg="ag, pollist" Label="for an affine space and a list of polynomials"/>
     <Returns>an affine algebraic variety</Returns>
     <Description>
         The argument <A>ag</A> is an affine space over a finite field <A>F</A>, the
@@ -329,7 +329,7 @@ A <A>geometry map</A> is a map from a set of elements of a geometry to a set of 
    </Description>
 </ManSection>
 <ManSection>
-    <Oper Name="\^" Arg="x,gm"/>
+    <Oper Name="\^" Arg="x,gm" Label="for an element and a geometry map"/>
     <Returns>the image of an element of the source under a geometry map</Returns>
     <Description>
         The argument <A>gm</A> is a geometry map, the element <A>x</A> is an element of the <Ref Oper="Source"/> of the geometry map <A>gm</A>.
@@ -346,10 +346,10 @@ A <E>Segre variety</E> in <Package>FinInG</Package> is a projective algebraic va
 
 <ManSection>
     <Oper Name="SegreVariety" Arg="listofpgs"/>
-    <Oper Name="SegreVariety" Arg="listofdims,field"/>
-    <Oper Name="SegreVariety" Arg="pg1,pg2"/>
-    <Oper Name="SegreVariety" Arg="d1,d2,field"/>
-    <Oper Name="SegreVariety" Arg="d1,d2,q"/>
+    <Oper Name="SegreVariety" Arg="listofdims,field" Label="for a list of integers and a field"/>
+    <Oper Name="SegreVariety" Arg="pg1,pg2" Label="for two projective spaces"/>
+    <Oper Name="SegreVariety" Arg="d1,d2,field" Label="for two integers and a field"/>
+    <Oper Name="SegreVariety" Arg="d1,d2,q" Label="for two integers and a prime power"/>
     <Returns>a Segre variety</Returns>
     <Description>
         The argument <A>listofpgs</A> is a list of projective spaces defined over the same finite field, say <Alt Not="HTML"><M>[PG(n_1-1,q)</M></Alt> <Alt Only="HTML">[PG(n&lt;sub>1 &lt;/sub>-1,q)</Alt>, <Alt Not="HTML"><M>PG(n_2-1,q)</M></Alt> <Alt Only="HTML">PG(n&lt;sub>2 &lt;/sub>-1,q)</Alt>, ..., <Alt Not="HTML"><M>PG(n_k-1,q)]</M></Alt> <Alt Only="HTML">PG(n&lt;sub>k &lt;/sub>-1,q)]</Alt>. The operation also takes as input the list of dimensions (<A>listofdims</A>) and a finite field <A>field</A> (e.g. 
@@ -361,19 +361,19 @@ A <E>Segre variety</E> in <Package>FinInG</Package> is a projective algebraic va
 </ManSection>
 <ManSection>
     <Oper Name="PointsOfSegreVariety" Arg="sv"/>
-    <Oper Name="Points" Arg="sv"/>
+    <Oper Name="Points" Arg="sv" Label="for a Segre variety"/>
     <Returns>the points of a Segre variety</Returns>
     <Description>
-        The argument <A>sv</A> is a Segre variety. This operation returns a set of points of the <Ref Attr="AmbientSpace" /> of the Segre variety. This set of points corresponds to the image of the <Ref Oper="SegreMap"/>.
+        The argument <A>sv</A> is a Segre variety. This operation returns a set of points of the <Ref Attr="AmbientSpace" Label="for an algebraic variety"/> of the Segre variety. This set of points corresponds to the image of the <Ref Oper="SegreMap"/>.
     </Description>
 </ManSection>
 <ManSection>
     <Oper Name="SegreMap" Arg="listofpgs"/>
-    <Oper Name="SegreMap" Arg="listofdims,field"/>
-    <Oper Name="SegreMap" Arg="pg1,pg2"/>
-    <Oper Name="SegreMap" Arg="d1,d2,field"/>
-    <Oper Name="SegreMap" Arg="d1,d2,q"/>
-    <Oper Name="SegreMap" Arg="sv"/>
+    <Oper Name="SegreMap" Arg="listofdims,field" Label="for a list of integers and a field"/>
+    <Oper Name="SegreMap" Arg="pg1,pg2" Label="for two projective spaces"/>
+    <Oper Name="SegreMap" Arg="d1,d2,field" Label="for two integers and a field"/>
+    <Oper Name="SegreMap" Arg="d1,d2,q" Label="for two integers and a prime power"/>
+    <Oper Name="SegreMap" Arg="sv" Label="for a Segre variety"/>
     <Returns>a geometry map</Returns>
     <Description>
         The argument <A>listofpgs</A> is a list of projective spaces defined over the same finite field, say <Alt Not="HTML"><M>[PG(n_1-1,q)</M></Alt> <Alt Only="HTML">[PG(n&lt;sub>1 &lt;/sub>-1,q)</Alt>, <Alt Not="HTML"><M>PG(n_2-1,q)</M></Alt> <Alt Only="HTML">PG(n&lt;sub>2 &lt;/sub>-1,q)</Alt>, ..., <Alt Not="HTML"><M>PG(n_k-1,q)]</M></Alt> <Alt Only="HTML">PG(n&lt;sub>k &lt;/sub>-1,q)]</Alt>. The operation also takes as input the list of dimensions (<A>listofdims</A>) and a finite field <A>field</A> (e.g. 
@@ -389,7 +389,7 @@ A <E>Segre variety</E> in <Package>FinInG</Package> is a projective algebraic va
 </ManSection>
 
 <ManSection>
-    <Oper Name="Source" Arg="sm"/>
+    <Oper Name="Source" Arg="sm" Label="for a Segre map"/>
      <Returns>the source of a Segre map</Returns>
     <Description>
         The argument <A>sm</A> is a <Ref Oper="SegreMap"/>. This operation returns the cartesian product of the list consisting of the pointsets of the projective spaces that were used to construct the <Ref Oper="SegreMap"/>.
@@ -405,8 +405,8 @@ A <E>Veronese variety</E> in <Package>FinInG</Package> is a projective algebraic
 
 <ManSection>
     <Oper Name="VeroneseVariety" Arg="pg"/>
-    <Oper Name="VeroneseVariety" Arg="n-1,field"/>
-    <Oper Name="VeroneseVariety" Arg="n-1,q"/>
+    <Oper Name="VeroneseVariety" Arg="n-1,field" Label="for an integer and a field"/>
+    <Oper Name="VeroneseVariety" Arg="n-1,q" Label="for an integer and a prime power"/>
     <Returns>a Veronese variety</Returns>
     <Description>
         The argument <A>pg</A> is a projective space defined over a finite field, say <M>PG(n-1,q)</M>. The operation also takes as input the dimension and a finite field <A>field</A> (e.g. <M>[n-1,q]</M>).
@@ -420,17 +420,17 @@ A <E>Veronese variety</E> in <Package>FinInG</Package> is a projective algebraic
 </ManSection>
 <ManSection>
     <Oper Name="PointsOfVeroneseVariety" Arg="vv"/>
-    <Oper Name="Points" Arg="vv"/>
+    <Oper Name="Points" Arg="vv" Label="for a Veronese variety"/>
     <Returns>the points of a Veronese variety</Returns>
     <Description>
-        The argument <A>vv</A> is a Veronese variety. This operation returns a set of points of the <Ref Attr="AmbientSpace" /> of the Veronese variety. This set of points corresponds to the image of the <Ref Oper="VeroneseMap"/>.
+        The argument <A>vv</A> is a Veronese variety. This operation returns a set of points of the <Ref Attr="AmbientSpace" Label="for an algebraic variety"/> of the Veronese variety. This set of points corresponds to the image of the <Ref Oper="VeroneseMap"/>.
     </Description>
 </ManSection>
 <ManSection>
     <Oper Name="VeroneseMap" Arg="pg"/>
-    <Oper Name="VeroneseMap" Arg="n-1,field"/>
-    <Oper Name="VeroneseMap" Arg="n-1,q"/>
-    <Oper Name="VeroneseMap" Arg="vv"/>
+    <Oper Name="VeroneseMap" Arg="n-1,field" Label="for an integer and a field"/>
+    <Oper Name="VeroneseMap" Arg="n-1,q" Label="for an integer and a prime power"/>
+    <Oper Name="VeroneseMap" Arg="vv" Label="for a Veronese variety"/>
     <Returns>a geometry map</Returns>
     <Description>
     The argument <A>pg</A> is a projective space defined over a finite field, say <M>PG(n-1,q)</M>. The operation also takes as input the dimension and a finite field <A>field</A> (e.g. <M>[n-1,q]</M>).
@@ -444,7 +444,7 @@ A <E>Veronese variety</E> in <Package>FinInG</Package> is a projective algebraic
 
 
 <ManSection>
-    <Oper Name="Source" Arg="vm"/>
+    <Oper Name="Source" Arg="vm" Label="for a Veronese map"/>
      <Returns>the source of a Veronese map</Returns>
     <Description>
         The argument <A>vm</A> is a <Ref Oper="VeroneseMap"/>. This operation returns the pointset of the projective space that was used to construct the <Ref Oper="VeroneseMap"/>.
@@ -459,8 +459,8 @@ A <E>Veronese variety</E> in <Package>FinInG</Package> is a projective algebraic
 A <E>Grassmann variety</E> in <Package>FinInG</Package> is a projective algebraic variety in a projective space over a finite field. The set of points that lie on this variety is the image of the <E>Grassmann map</E>.
 <ManSection>
     <Oper Name="GrassmannVariety" Arg="k,pg"/>
-    <Oper Name="GrassmannVariety" Arg="subspaces"/>
-    <Oper Name="GrassmannVariety" Arg="k,n,q"/>
+    <Oper Name="GrassmannVariety" Arg="subspaces" Label="for a collection of subspaces"/>
+    <Oper Name="GrassmannVariety" Arg="k,n,q" Label="for two integers and a prime power"/>
     <Returns>a Grassmann variety</Returns>
     <Description>
         The argument <A>pg</A> is a projective space defined over a finite field, say <M>PG(n,q)</M>, and argument <A>k</A> is an integer (<M>k</M> at least <M>1</M> and at most <M>n-2</M>) and denotes the projective dimension determining the Grassmann Variety. The operation also takes as input the set <A>subspaces</A> of subspaces of a projective space, or the dimension <A>k</A>, the dimension <A>n</A> and the size <A>q</A> of the finite field (<M>k</M> at least <M>1</M> and at most <M>n-2</M>).
@@ -469,17 +469,17 @@ A <E>Grassmann variety</E> in <Package>FinInG</Package> is a projective algebrai
 </ManSection>
 <ManSection>
     <Oper Name="PointsOfGrassmannVariety" Arg="gv"/>
-    <Oper Name="Points" Arg="gv"/>
+    <Oper Name="Points" Arg="gv" Label="for a Grassmann variety"/>
     <Returns>the points of a Grassmann variety</Returns>
     <Description>
-        The argument <A>gv</A> is a Grassmann variety. This operation returns a set of points of the <Ref Attr="AmbientSpace" /> of the Grassmann variety. This set of points corresponds to the image of the <Ref Oper="GrassmannMap"/>.
+        The argument <A>gv</A> is a Grassmann variety. This operation returns a set of points of the <Ref Attr="AmbientSpace" Label="for an algebraic variety"/> of the Grassmann variety. This set of points corresponds to the image of the <Ref Oper="GrassmannMap"/>.
     </Description>
 </ManSection>
 <ManSection>
     <Oper Name="GrassmannMap" Arg="k,pg"/>
-    <Oper Name="GrassmannMap" Arg="subspaces"/>
-    <Oper Name="GrassmannMap" Arg="k,n,q"/>
-    <Oper Name="GrassmannMap" Arg="gv"/>
+    <Oper Name="GrassmannMap" Arg="subspaces" Label="for a collection of subspaces"/>
+    <Oper Name="GrassmannMap" Arg="k,n,q" Label="for two integers and a prime power"/>
+    <Oper Name="GrassmannMap" Arg="gv" Label="for a Grassmann variety"/>
     <Returns>a geometry map</Returns>
     <Description>
         The argument <A>pg</A> is a projective space defined over a finite field, say <M>PG(n,q)</M>, and argument <A>k</A> is an integer (<M>k</M> at least <M>1</M> and at most <M>n-2</M>), and denotes the projective dimension determining the Grassmann Variety. The operation also takes as input the set <A>subspaces</A> of subspaces of a projective space, or the dimension <A>k</A>, the dimension <A>n</A> and the size <A>q</A> of the finite field (<M>k</M> at least <M>1</M> and at most <M>n-2</M>).
@@ -490,7 +490,7 @@ A <E>Grassmann variety</E> in <Package>FinInG</Package> is a projective algebrai
 
 
 <ManSection>
-    <Oper Name="Source" Arg="gm"/>
+    <Oper Name="Source" Arg="gm" Label="for a Grassmann map"/>
      <Returns>the source of a Grassmann map</Returns>
     <Description>
         The argument <A>gm</A> is a <Ref Oper="GrassmannMap"/>. This operation returns the set of subspaces of the projective space that was used to construct the <Ref Oper="GrassmannMap"/>.
