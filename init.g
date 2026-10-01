@@ -28,6 +28,22 @@ if not IsBound(MultVector) then
     DeclareSynonym( "MultVector", MultRowVector );
 fi;
 
+#
+# GAP >= 4.17 has unchecked NC variants of the PreImages operations
+#
+if not IsBound( PreImagesNC ) then
+    BindGlobal( "PreImagesNC", PreImages );
+fi;
+if not IsBound( PreImagesElmNC ) then
+    BindGlobal( "PreImagesElmNC", PreImagesElm );
+fi;
+if not IsBound( PreImagesSetNC ) then
+    BindGlobal( "PreImagesSetNC", PreImagesSet );
+fi;
+if not IsBound( PreImagesRepresentativeNC ) then
+    BindGlobal( "PreImagesRepresentativeNC", PreImagesRepresentative );
+fi;
+
 ReadPackage("fining","lib/geometry.gd");
 
 ReadPackage("fining","lib/liegeometry.gd");
